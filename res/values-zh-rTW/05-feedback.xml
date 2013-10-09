@@ -23,7 +23,7 @@
   <string name="error_ok">回報錯誤</string>
   <string name="error_cancel">不要回報錯誤</string>
   <string name="error_reporting_choice">錯誤報告模式</string>
-  <string name="error_reporting_choice_summary">若有錯誤，可以自動報告、從不報告，也可以請問您</string>
+  <string name="error_reporting_choice_summary">你可以選擇自動報告錯誤、或者不報告，或是在有錯誤時提醒您報告</string>
   <string name="feedback_disclaimer">免責聲明：我們不會收集任何個人資訊，如您的電子信箱、電話號碼、IP或手機IMEI。但我們會收集關於您手機的資訊，例如製造商、型號和Android版本，及報告錯誤本身的一些資訊。</string>
   <string name="feedback_title">回饋意見</string>
   <string name="feedback_send_feedback">回饋您的意見</string>

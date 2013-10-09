@@ -31,14 +31,14 @@
   <string name="delete_card_title">Odstranit poznámku</string>
   <string name="delete_card_message">Opravdu chcete smazat všechny karty této poznámky? \nVyhledávací pole: %s</string>
   <string name="card_browser_show_marked">Filtrovat označené</string>
-  <string name="card_browser_field">Change CardBrowser Field</string>
-  <string name="card_browser_field_title">Change CardBrowser Field</string>
+  <string name="card_browser_field">Změnit pole prohlížeče</string>
+  <string name="card_browser_field_title">Změnit pole prohlížeče</string>
   <string name="card_browser_show_suspended">Filtrovat vyřazené</string>
   <string name="card_browser_search_by_tag">Filtrovat podle tagu</string>
   <string name="card_browser_tags_shown">Štítky: %1$s</string>
   <string name="card_browser_change_display_order">Změnit řazení</string>
   <string name="card_browser_change_display_order_title">Zvolte řazení</string>
-  <string name="card_browser_change_display_order_reverse">Select a field twice to reverse.</string>
+  <string name="card_browser_change_display_order_reverse">Pro obrácené řazení vyberte dvakrát.</string>
   <string name="card_browser_order_reverse">(naopak)</string>
   <string name="card_browser_card_details">Detail karty</string>
   <string name="card_details_question">Otázka</string>
@@ -61,7 +61,7 @@
   <string name="card_details_card_model">Šablona karty</string>
   <string-array name="card_browser_order_labels">
     <item>Žádné třídění (rychlejší)</item>
-    <item>By search field</item>
+    <item>Podle pole hledání</item>
     <item>Podle času vytvoření</item>
     <item>Podle času úpravy</item>
     <item>Podle času změny</item>
@@ -69,7 +69,7 @@
     <item>Podle intervalu</item>
     <item>Podle obtížnosti</item>
     <item>Podle opakování</item>
-    <item>By lapses</item>
+    <item>Podle zapomínání</item>
   </string-array>
   <plurals name="card_browser_subtitle">
     <item quantity="one">zobrazena 1 z %2$d karet</item>

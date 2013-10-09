@@ -80,7 +80,7 @@
   <string name="menu_unmark_card">Kaart demarkeren</string>
   <string name="new_deck">Nieuwe leerset</string>
   <string name="create">Maak</string>
-  <string name="new_dynamic_deck">Nieuwe dynamische set</string>
+  <string name="new_dynamic_deck">Nieuwe gefilterde set</string>
   <string name="studyoptions_feedback">Feedback</string>
   <string name="studyoptions_load_tutorial_deck">Maak handleiding</string>
   <string name="night_mode">Nachtmodus</string>
@@ -92,18 +92,29 @@
   <string name="rebuild_cram_label">Opnieuw opbouwen</string>
   <string name="empty_cram_label">Leeg</string>
   <string name="empty_cram_deck">Set om te stampen aan het leegmaken.\n Even geduld alstublieft...</string>
-  <string name="studyoptions_new_filtercram">Filteren/Cram</string>
-  <string name="custom_study_deck_name">Custom Study Session</string>
-  <string name="custom_study_deck_exists">Please rename the existing Custom Study deck first.</string>
+  <string name="studyoptions_new_filtercram">Filteren/Blokken</string>
+  <string name="custom_study_deck_name">Aangepaste studiesessie</string>
+  <string name="custom_study_deck_exists">Gelieve eerst de bestaande aangepaste studieset te hernoemen.</string>
   <string name="studyoptions_congrats_finished">Gefeliciteerd! Je bent nu klaar.</string>
   <string name="studyoptions_congrats_more_rev">Je hebt de overhoringslimiet bereikt, maar er wachten nog kaarten om overhoord te worden. Voor een optimale geheugentraining, overweeg om de dagelijkse limiet te verhogen bij instellingen.</string>
   <string name="studyoptions_congrats_more_new">Er zijn meer nieuwe kaarten beschikbaar, maar de dagelijkse limiet is bereikt. Je kunt de limiet verhogen in de instellingen, maar houd er rekening mee dat dit de werklast voor de korte termijn zal verhogen.</string>
   <string name="studyoptions_congrats_custom">Om buiten het normale schema te studeren, klik op onderstaande knop Aangepast Studeren.</string>
-  <string name="sd_card_not_mounted">SD card is not mounted.\n\nYou can store your collection in the internal memory too, though it\'s not recommended as you cannot access the file that easily. You can activate this in the preferences (open them by clicking this text).</string>
+  <string name="sd_card_not_mounted">SD-kaart is niet aanwezig.\n\nU kan uw collectie ook in het interne geheugen opslaan, maar dit is niet aangeraden omdat het dan lastiger wordt voor u om het bestand te vinden. U kan dit activeren in de voorkeuren (klik op deze tekst om die te openen).</string>
   <string name="studyoptions_options">Instellingen</string>
   <string name="empty_cloze_warning">Gelieve deze notitie te bewerken en woord(en) te selecteren die moeten worden weggelaten.(%1$s)</string>
   <string name="help_cloze">help</string>
-  <string name="button_sync">Syncroniseer</string>
+  <string name="button_sync">Synchroniseer</string>
+  <string name="restart">Herstarten</string>
+  <string name="do_nothing">Niets doen</string>
+  <string name="more_options">Meer instellingen</string>
+  <string name="now">Nu</string>
+  <string name="back">Terug</string>
+  <string name="ankiweb">AnkiWeb</string>
+  <string name="usb">USB</string>
+  <string name="_import">Importeren</string>
+  <string name="confirm">Bevestigen</string>
+  <string name="internet">Internet</string>
+  <string name="pc">PC</string>
   <string-array name="next_review_s">
     <item>1 seconde</item>
     <item>1 minuut</item>

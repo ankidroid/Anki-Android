@@ -80,7 +80,7 @@
   <string name="menu_unmark_card">Desmarcar tarjeta</string>
   <string name="new_deck">Nuevo mazo</string>
   <string name="create">Crear</string>
-  <string name="new_dynamic_deck">Nuevo mazo dinámico</string>
+  <string name="new_dynamic_deck">Nuevo mazo filtrado</string>
   <string name="studyoptions_feedback">Comentarios</string>
   <string name="studyoptions_load_tutorial_deck">Crear tutorial</string>
   <string name="night_mode">Modo nocturno</string>
@@ -104,6 +104,17 @@
   <string name="empty_cloze_warning">Por favor, edite esta nota y agregue algunos espacios en blanco. (%1$s)</string>
   <string name="help_cloze">Ayuda</string>
   <string name="button_sync">Sincronización</string>
+  <string name="restart">Reiniciar</string>
+  <string name="do_nothing">No hacer nada</string>
+  <string name="more_options">Más opciones</string>
+  <string name="now">Ahora</string>
+  <string name="back">Atrás</string>
+  <string name="ankiweb">AnkiWeb</string>
+  <string name="usb">USB</string>
+  <string name="_import">Importar</string>
+  <string name="confirm">Confirmar</string>
+  <string name="internet">Internet</string>
+  <string name="pc">PC</string>
   <string-array name="next_review_s">
     <item>1 segundo</item>
     <item>1 minuto</item>

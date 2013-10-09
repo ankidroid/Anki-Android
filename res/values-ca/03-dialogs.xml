@@ -25,8 +25,8 @@
   <string name="check_db_result_message">S\'ha comprovat i optimitzat la base de dades.\nComprimida en %d kb</string>
   <string name="contextmenu_deckpicker_delete_deck">Suprimeix el paquet</string>
   <string name="delete_deck_title">Suprimeix el paquet</string>
-  <string name="delete_deck_message">Esteu segur que voleu suprimir totes les targetes de %s?</string>
-  <string name="delete_cram_deck_message">Are you sure you wish to send all cards in %s back to their original decks?</string>
+  <string name="delete_deck_message">Esteu segur que voleu suprimir totes les fitxes de %s?</string>
+  <string name="delete_cram_deck_message">Esteu segur que voleu enviar totes les fitxes de %s als seus paquets inicials?</string>
   <string name="delete_deck_confirm">Suprimeix</string>
   <string name="new_version_message">Noves funcions:</string>
   <string name="no_tts_available_title">Síntesi de veu</string>
@@ -35,14 +35,14 @@
   <string name="dont_show_again">No ho tornis a mostrar</string>
   <string name="sync_log_title">Registre de sincronització</string>
   <string name="notify_ticker">Actualització de l\'aplicació</string>
-  <string name="notify_title">S\'ha actualitzat Ankidroid</string>
+  <string name="notify_title">S\'ha actualitzat l\'Ankidroid</string>
   <string name="notify_message">Baixeu la nova versió</string>
   <string name="notification_title">Confirmeu l\'actualització d\'Ankidroid</string>
   <string name="notification_message">Hi ha una nova versió d\'Ankidroid disponible al Mercat.\n\nLa voleu baixar?</string>
   <string name="notification_stop">No tornis a avisar-me d\'aquesta actualització</string>
-  <string name="reset_card_dialog_title">Reinicia el progrés de les targetes</string>
-  <string name="reset_card_dialog_message">Això reinicia el progrès d\'aprenentatge per a totes les targetes d\'aquest paquet (es mostraran com a targetes noves).\nSegur que voleu continuar?</string>
-  <string name="reset_card_dialog_confirmation">Reinicia totes les targetes d\'aquesta nota</string>
+  <string name="reset_card_dialog_title">Reinicia el progrés de les fitxes</string>
+  <string name="reset_card_dialog_message">Això reinicia el progrès d\'aprenentatge per a totes les fitxes d\'aquest paquet (es mostraran com a fitxes noves).\nSegur que voleu continuar?</string>
+  <string name="reset_card_dialog_confirmation">Reinicia totes les fitxes d\'aquesta nota</string>
   <string name="answering_error_title">Error de la base de dades</string>
   <string name="answering_error_message">S\'ha produït un error en escriure a la col·lecció. Això podria estar relacionat amb una base de dades defectuosa o amb espai insuficient al disc.\n\nSi passa molt sovint, si us plau, intenteu comprovar la base de dades, reparar la col·lecció o restaurar-ho des d\'una còpia de seguretat. Feu clic a \"opcions\" per a fer-ho.\n\nTot i així, també podria ser un error d\'AnkiDroid; si us plau envieu l\'error i podrem comprovar-ho.</string>
   <string name="answering_error_report">Informa dels errors</string>
@@ -50,22 +50,55 @@
   <string name="intent_add_saved_information">Dades desades</string>
   <string name="intent_add_clear_all">Neteja-ho tot</string>
   <string name="intent_aedict_empty">La categoria \'per omissió\' és buida</string>
-  <string name="intent_aedict_category">Per afegir targetes de AnkiDroid treieu totes les categories del bloc de notes o afegiu-ne una anomenada \'per omissió\'</string>
-  <string name="custom_study_new_total_new">New cards in deck: %s</string>
-  <string name="custom_study_rev_total_rev">Reviews due in deck: %s</string>
-  <string name="custom_study_new_extend">Increase today\'s new card limit by</string>
-  <string name="custom_study_rev_extend">Increase today\'s review limit by</string>
-  <string name="custom_study_forgotten">Review cards forgotten in last x days:</string>
-  <string name="custom_study_ahead">Review ahead by x days:</string>
-  <string name="custom_study_random">Select x cards randomly from the deck:</string>
-  <string name="custom_study_preview">Preview new cards added in the last x days:</string>
-  <string name="custom_study_tags">Enter tags:</string>
-  <string name="rebuild_custom_study_deck">Rebuilding custom study deck.\nPlease wait...</string>
+  <string name="intent_aedict_category">Per afegir fitxes d\'AnkiDroid treieu totes les categories del bloc de notes o afegiu-ne una anomenada \'per omissió\'</string>
+  <string name="custom_study_new_total_new">Noves fitxes al paquet: %s</string>
+  <string name="custom_study_rev_total_rev">Revisions vençudes al paquet: %s</string>
+  <string name="custom_study_new_extend">Augmenta el límit de fitxes d\'avui en</string>
+  <string name="custom_study_rev_extend">Augmenta el límit de revisió d\'avui en</string>
+  <string name="custom_study_forgotten">Revisa les fitxes oblidades en els darrers x dies:</string>
+  <string name="custom_study_ahead">Revisió de x dies endavant:</string>
+  <string name="custom_study_random">Tria aleatòriament x fitxes del paquet:</string>
+  <string name="custom_study_preview">Mostra les fitxes noves afegides en els últims x dies:</string>
+  <string name="custom_study_tags">Entreu les etiquetes:</string>
+  <string name="rebuild_custom_study_deck">S\'està reconstruïnt el paquet d\'estudi personalitzat. \nUn moment si us plau...</string>
+  <string name="deck_upgrade_title">Actualitza el paquet</string>
+  <string name="deck_upgrade_rename_warning">Tingueu en compte que amb això s\'exportarà la col·lecció actual a un fitxer anomenat \"%1$ s\" i es crearà una nova amb els fitxers antics de l\'anki 1. x. Si voleu, podeu importar de forma manual l\'arxiu citat apkg després de completar l\'auxiliar. Segur que voleu continuar?</string>
+  <string name="deck_upgrade_already_upgraded">La Versió 2 d\'AnkiDroid utilitza un nou format de paquets. \nSi no heu actualitzat correctament els vostres paquets, podeu reiniciar ara l\'actualització per actualitzar els vostres paquets.</string>
+  <string name="deck_upgrade_major_warning"><![CDATA[Això és una important actualització de l\'Ankidroid i el procés d\'actualització portarà com a mínim uns 10-20 minuts. <br><br>voleu continuar ara o més endavant? <br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en"> Més informació</a>]]></string>
+  <string name="deck_upgrade_start_again_to_upgrade_toast">Si us plau, reinicieu l\'Ankidroid quan tingueu temps d\'actualitzar-ho!</string>
+  <string name="deck_upgrade_recommended_method"><![CDATA[El mètode d\'actualització recomanat és sincronitzar amb un Ordinador i actualització amb la versió d\'Anki per a l\'escriptori. <br><br>Hi ha també un mètode alternatiu per actualitzar per internet si no teniu accés a un PC, i la vostra col. lecció no és massa gran.]]></string>
+  <string name="deck_upgrade_more_options_exit">Podeu sortir de l\'auxiliar d\'actualització sense importar les vostres fitxes antigues fent clic al botó de sortida de sota.</string>
+  <string name="deck_upgrade_more_options_new_collection">Podeu crear una nova col·lecció buida fent clic a continuació.</string>
+  <string name="deck_upgrade_more_options_downgrade"><![CDATA[<br><br>Si voleu tornar a la versió anterior d\'AnkiDroid 1 llavors si us plau llegiu <a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Continuing_to_use_AnkiDroid_1.1.3"> aquestes instruccions</a>.]]></string>
+  <string name="deck_upgrade_create_new_collection">Nova col·lecció</string>
+  <string name="deck_upgrade_create_new_collection_title">Nova col·lecció</string>
+  <string name="deck_upgrade_not_import_warning">Esteu segur que voleu fer això? Les dades antigues no es poden importar.</string>
+  <string name="deck_upgrade_via_web"><![CDATA[<b>Aquest mètode d\'actualització no es recomana si utilitzeu arxius de media, o teniu una gran col lecció!</b><br><br>El vostres paquets d\'Anki1 es comprimiran en zip i es pujaran a AnkiWeb, i llavors es baixara la col·lecció convertida. <br><br>Si us plau penseu que cal una connexió a internet estable, i que hi ha un límit de 50 mb a la mida dels arxius.<br><br>Es recomana seriosament als usuaris d\'Anki d\'escriptori que utilitzin el mètode d\'actualització basat en PC. <br><br>Encara voleu continuar?]]></string>
+  <string name="deck_upgrade_via_anki_desktop"><![CDATA[Si teniu una versió actualitzada de la vostra col lecció de AnkiDroid en el programari d\'Escriptori de l\'Anki, podeu actualitzar des d\'allà i llavors descarregar la vostra col·lecció actualitzada sincronitzant-la amb AnkiWeb.<br><br>Com a alternativa, podeu copiar la vostra col·lecció d\'AnkiDroid al vostre PC mitjançant USB, i a continuació, actualitzar la col. lecció i còpiar-la de nou a l\'AnkiDroid actualització.]]></string>
+  <string name="deck_upgrade_auto_upgrade"><![CDATA[si us plau, instal leu la versió 2.0.4 d\'\'Escriptori de l\'Anki o superior per actualitzar la vostra col lecció, i sincronitzeu la vostra col. lecció ya actualitzada amb AnkiWeb i premeu el botó "Descarrega". <br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_2:_Using_AnkiWeb_sync">Informació més detallada sobre l\'actualització amb l\'AnkiWeb</a>]] ></string>
+  <string name="deck_upgrade_manual"><![CDATA[Copieu si us plau tots els vostres fitxers *.anki (i les carpetes de *.media) de la vostra carpeta d\'AnkiDroid a la vostra carpeta de l\'Anki d\'escriptori i després instal·leu l\'Anki d\'escriptori versió 2.0.4 o superior per actualitzar la vostra col lecció. <br><br>Quan s\'hagi acabat l\'actualització, si us plau exporteu la vostra col·lecció d\'Anki2 i copiar l\'arxiu de la col·leccio.apkg a la vostra carpeta de l\'AnkiDroid i premeu el botó Importa de sota. <br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_1:_Using_USB_(recommended)"> Més informació detallada sobre l\'actualització utilitzant USB.</a>]]></string>
+  <string name="upgrade_deck_cancelled_title">S\'ha anul·lat l\'actualització</string>
+  <string name="upgrade_deck_cancelled_description">S\'ha cancel·lat l\'intent d\'actualització, si us plau proveu algun altre dels mètodes d\'actualització disponibles.</string>
+  <string name="upgrade_deck_web_upgrade_failed">El procés d\'actualització no ha tingut èxit. Si us plau proveu-ho de nou, o trieu un altre mètode d\'actualització</string>
+  <string name="upgrade_deck_web_upgrade_exceeds">La mida total dels paquets comprimits d\'Anki1 supera el límit que el servidor pot processar (50 mb), si us plau, proveu d\'actualitzar amb un mètode diferent.</string>
+  <string name="upgrade_deck_web_upgrade_sdcard">L\'actualització s\'ha acabat, però hi ha hagut un error en desempaquetar la col·lecció resultant, assegureu-vos que teniu prou espai de disc (calen %1$d mb) i torneu-ho a intentar, o proveu d\'actualitzar amb un mètode diferent.</string>
+  <string name="export_progress_title">Exporta la col·lecció</string>
+  <string name="export_progress_exporting">S\'està exportant la col·lecció, un moment si us plau...</string>
+  <string name="upgrade_deck_export_successful">S\'ha exportat correctament la vostra col·lecció, el procés d\'actualització continúa.</string>
+  <string name="upgrade_deck_export_error">Hi ha hagut un error en exportar la vostra col lecció. Voleu continuar amb el procés d\'actualització de tota manera (es perdrà la vostra antiga col. lecció)?</string>
+  <string name="upgrade_deck_sync_from_ankiweb">Sincronitza-ho amb AnkiWeb</string>
+  <string name="upgrade_deck_have_you_synced">Esteu segur que heu actualitzat la vostre col·lecció amb l\'Anki de l\'Escriptori versió 2 i que l\'heu sincronitzada amb AnkiWeb?</string>
+  <string name="upgrade_deck_dont_upgrade">No ho actualitzis</string>
+  <string name="import_unpacking">S\'està desempaquetant l\'arxiu. \nUn moment si us plau...</string>
+  <string name="importing_collection">S\'està important la col. lecció. \nUn moment si us plau ...</string>
+  <string name="import_media_count">S\'estant importació els continguts multimèdia %1$d%%\nun moment si us plau...</string>
+  <string name="import_update_counts">S\'està actualitzant el número de paquets. \nUn moment si us plau...</string>
+  <string name="import_add_progress">• S\'està desempaquetant l\'arxiu %1$s\n• importació de notes %2$d%%\n• importació de fitxes %3$d%%\n• Neteja %4$ s</string>
   <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s: <br/> Targetes per memoritzar per Android </h2> AnkiDroid és una aplicació de gestió de tagetes per memoritzar, totalment compatible amb el programari d\'escriptori <a href=\"%2$s\">Anki</a>. Podeu generar, descarregar i aprendre els continguts als dos programaris, a l\'Escriptori i a AnkiDroid Anki, i sincronitzar-los amb molta facilitat.]]></item>
-    <item><![CDATA[Per ajudar-nos a millorar AnkiDroid, podeu informar de qualsevol error <a href=\"%1$s\">aquí</a>; les noves idees també són benvingudes ! Si us plau, utilitzeu el <a href=\"%2$s\">wiki</a> i presenteu-vos al <a href=\"%3$s\"> Fòrum</a>.]]></item>
-    <item><![CDATA[AnkiDroid és <a href=\"%1$s\">programari de codi obert<a/>, així que us animem a <a href=\"%2$s\">unir-vos</a> als <a href=\"%3$s\">col·laboradors</a>:-)]]></item>
-    <item><![CDATA[Els no desenvolupadors també podeu ajudar, per exemple <a href=\"%1$s\">amb la traducció</a> d\'AnkiDroid, l\'actualització de la wiki i de les captures de pantalla, <a href=\"%2$s\">col·labora amb</a> l\'Anki taula d\'Escriptori, o critant AnkiDroid al vostre blog!]]></item>
-    <item><![CDATA[AnkiDroid és publica sota la <a href=\"%1$s\">llicència GNU GPL v3</a> i el codi font està disponible <a href=\"%2$s\">aquí</a>.]]></item>
+    <item><![CDATA[<h2>%1$s: <br/> Fitxes per memoritzar per Android </h2> AnkiDroid és una aplicació de gestió de fitxes per memoritzar, totalment compatible amb el programari d\'escriptori <a href="%2$s">Anki</a>. Podeu generar, descarregar i aprendre els continguts als dos programaris, a l\'Escriptori i a AnkiDroid Anki, i sincronitzar-los amb molta facilitat.]]></item>
+    <item><![CDATA[Per ajudar-nos a millorar AnkiDroid, podeu informar de qualsevol error <a href="%1$s">aquí</a>; les noves idees també són benvingudes ! Si us plau, utilitzeu el <a href="%2$s">wiki</a> i presenteu-vos al <a href="%3$s"> Fòrum</a>.]]></item>
+    <item><![CDATA[AnkiDroid és <a href="%1$s">programari de codi obert<a/>, així que us animem a <a href="%2$s">unir-vos</a> als <a href="%3$s">col·laboradors</a>:-)]]></item>
+    <item><![CDATA[Els no desenvolupadors també podeu ajudar, per exemple <a href="%1$s">amb la traducció</a> d\'AnkiDroid, l\'actualització de la wiki i de les captures de pantalla, <a href="%2$s">col·labora amb</a> l\'Anki taula d\'Escriptori, o critant l\'AnkiDroid al vostre blog!]]></item>
+    <item><![CDATA[AnkiDroid és publica sota la <a href="%1$s">llicència GNU GPL v3</a> i el codi font està disponible <a href="%2$s">aquí</a>.]]></item>
   </string-array>
 </resources>

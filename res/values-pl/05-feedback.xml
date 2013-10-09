@@ -24,7 +24,7 @@
   <string name="error_cancel">Nie zgłaszaj błędów</string>
   <string name="error_reporting_choice">Tryb raportowania błędów</string>
   <string name="error_reporting_choice_summary">Błędy mogą być zgłaszane automatycznie, nigdy nie zgłaszane, lub może zostać wyświetlony monit</string>
-  <string name="feedback_disclaimer">Disclaimer: Nie zbieramy żadnych informacji osobistych typu adres e-mail, numer telefonu, adres IP lub numer IMEI.  Pobierane są niektóre informacje na temat twojego urządzenia: producent, model, wersja Androida oraz rodzaj zgłaszanych błędów.</string>
+  <string name="feedback_disclaimer">Disclaimer: Nie zbieramy żadnych informacji osobistych typu adres e-mail, numer telefonu, adres IP lub numer IMEI. Pobierane są niektóre informacje na temat twojego urządzenia: producent, model, wersja Androida oraz rodzaj zgłaszanych błędów.</string>
   <string name="feedback_title">Opinie</string>
   <string name="feedback_send_feedback">Wyślij nam swoją opinię</string>
   <string name="feedback_send_feedback_and_errors">Wyślij błędy i swoje opinie</string>

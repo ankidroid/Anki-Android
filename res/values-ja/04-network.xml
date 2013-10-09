@@ -78,7 +78,7 @@
   <string name="sync_downloading_media">メディア %1$d/%2$d をダウンロード中...</string>
   <string name="sync_log_uploading_message">サーバ側への完全同期</string>
   <string name="sync_log_downloading_message">サーバー側からの完全同期</string>
-  <string name="sync_log_clocks_unsynchronized">お使いの端末の時刻はサーバの時刻と%1$d秒%2$s異なっています; 同期できませんでした.</string>
+  <string name="sync_log_clocks_unsynchronized">端末の時計が正しくありません（%1$d 秒 %2$s）；データ同期時のエラー発生を防止するため、時計を正しくセットしてください。日付、時刻、およびタイムゾーンが正しく設定した後、再び同期を開始してください。</string>
   <string name="sync_log_clocks_unsynchronized_tz">, 端末のタイムゾーンが間違っています</string>
   <string name="sync_log_clocks_unsynchronized_date">, 端末の日付が間違っています</string>
   <string name="sync_log_old_version">同期プロトコルに変更がありました。%sを参照し、最新のアンキドロイドにアップグレードしてください。</string>
@@ -110,6 +110,7 @@
   <string name="sync_media_sanity_check">メディアの総数を確認しています</string>
   <string name="sync_media_no_changes">メディアファイルへの変更はありません</string>
   <string name="sync_media_success">メディアは正常に同期しました</string>
+  <string name="sync_sanity_failed">同期後にコレクションの不整合が発見されました。この問題を解決するためにコレクションの完全な同期が必要です。Ankiweb側か、AnkiDroid側のデータを保持するかを選択して同期するか、同期をキャンセルしてください。</string>
   <string name="sync_media_sanity_failed">メディア同期化は完了しました。しかし、メディア数は、許容されません。次にメディアを同期するときには、すべてのエラーを修正できなくなります。</string>
   <string name="sync_media_error">メディアデータの同期中のエラー</string>
   <string name="register_error">エラーが発生しました。後でもう一度実行してください。</string>
@@ -117,10 +118,10 @@
   <string name="register_mismatch">ユーザー名/パスワードが一致しません。再入力してください。</string>
   <string name="registering_message">アカウントを作成しています\nしばらくお待ちください</string>
   <string name="upgrade_decks_zipping">アップロードするために単語帳を圧縮しています\nしばらくお待ちください</string>
-  <string name="upgrade_decks_upload">単語帳をアップロードしています\nしばらくお待ちください</string>
+  <string name="upgrade_decks_upload">圧縮された単語帳をアップロードしています。\nキャンセルすることができます。\nしばらくお待ちください。</string>
   <string name="upgrade_decks_waiting">処理中です%s\nしばらくお待ちください</string>
-  <string name="upgrade_decks_upgrade_started">アップグレードを開始しました\nしばらくお待ちください</string>
-  <string name="upgrade_decks_downloading">更新されたコレクションをダウンロードしています。\nしばらくお待ちください</string>
+  <string name="upgrade_decks_upgrade_started">アップグレードを開始しました。\nしばらくお待ちください。</string>
+  <string name="upgrade_decks_downloading">アップグレードしたコレクションをダウンロードしています。\nキャンセルすることができます。\nしばらくお待ちください。</string>
   <string name="upgrade_decks_media">古いメディアファイルを新しい場所へコピーしています\nしばらくお待ちください</string>
   <string name="upgrade_decks_message">Anki 2.0 のコレクションがありません。しかし、いくつかの古いAnki 1.2 形式のものが見つかりました:%s新しいAnkiDroid で使用するために変換が必要ですので、単独のコレクション毎に新しい Anki-2.0形式に変換してください。変換には３種類の方法があります。</string>
   <string name="upgrade_decks_message_pos1">Anki Desktop 2.0を使えば、最初の操作で古い形式の単語帳は新しい形式の単語帳に変換できます。新しい単語帳をAnkiWeb へ同期させれば、Mobileでも使用できるようになります。まず、 Mobileの中のAnkiDroid フォルダー(%s)にあるファイルを、パソコンへコピーしてください。コピーするパソコン上のフォルダはAnki Desktop 1.2 フォルダです(コピーした後は同期操作はしないで下さい) そして、Anki Desktop 2.0をスタートさせてください。</string>
@@ -132,4 +133,6 @@
   <string name="upgrade_decks_failed">単語帳を更新できませんでした:\n%s 単語帳をAnki Desktopで開いて、単語帳の内容を検査してください。そのあと、Anki Desktopを経由して単語帳を取得してください</string>
   <string name="upgrade_decks_media_failed">新しいフォルダー(%1$s)に、この単語帳のメディアファイルをコピーできません:\n%2$sメディアファイルを手動で移動してください</string>
   <string name="download_deck">単語帳をダウンロードしています(%d kb)\nしばらくお待ちください</string>
+  <string name="sync_sanity_local">ローカル</string>
+  <string name="sync_sanity_remote">リモート</string>
 </resources>

@@ -68,7 +68,7 @@
   <string name="tutorial_load">Voorbeeld set wordt gecreëerd.\nEven geduld alstublieft...</string>
   <string name="tutorial_loading_error">Voorbeeld set kon niet worden aangemaakt</string>
   <string name="rename">Naam wijzigen</string>
-  <string name="rename_error">Leerset %s kon niet hernoemd worden</string>
+  <string name="rename_error">Leerset %s kon niet worden hernoemd</string>
   <string name="help_title">Help</string>
   <string name="help_online">Online help</string>
   <string name="help_faq">Veelgestelde vragen</string>
@@ -81,21 +81,23 @@
   <string name="show_hint">Toon tip</string>
   <string name="pref_lang_other">Taalinstellingen</string>
   <string name="pref_font_UI">Aangepast lettertype</string>
-  <string name="info_rate">Geef AnkiDroid een cijfer</string>
+  <string name="info_rate">Beoordeel AnkiDroid</string>
   <string name="col_load_failed">Laden van collectie mislukt.\nKlik \'terug\' om AnkiDroid te sluiten.</string>
   <string name="import_title">Importeer kaarten</string>
   <string name="import_message">Wilt u de inhoud van bestand %s aan uw collectie toevoegen, of wilt u dat de inhoud uw collectie vervangt?</string>
   <string name="import_message_add">Toevoegen</string>
   <string name="import_message_replace">Vervangen</string>
   <string name="import_message_replace_confirm">Deze actie zal uw bestaande collectie verwijderen en vervangen door de data van bestand %s. Bent u zeker?</string>
-  <string name="import_log_success">%d kaarten zijn succesvol geimporteerd</string>
+  <string name="import_log_success">%d kaarten zijn succesvol geïmporteerd</string>
   <string name="import_log_error">Importeren mislukt</string>
   <string name="import_log_no_apkg">Dit is geen geldig apkg-bestand</string>
   <string name="import_importing">Kaarten importeren.\n Even geduld alstublieft...</string>
   <string name="import_hint">Om kaarten te importeren, plaats het apkg bestand in map %s en klik ok</string>
-  <string name="upgrade_import_no_file_found">Geen importeerbaar apkg bestand gevonden</string>
-  <string name="custom_study">Custom Study</string>
-  <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
+  <string name="upgrade_import_no_file_found">Geen %1$s bestand gevonden om te importeren</string>
+  <string name="custom_study">Aangepast studeren</string>
+  <string name="dyn_deck_desc">Dit is een speciale set bedoeld om buiten het normale schema te studeren. Kaarten keren onmiddellijk terug naar hun oorspronkelijke set nadat u hen herhaald heeft. Als u deze set verwijdert, keren alle overgebleven kaarten onmiddellijk terug naar hun oorspronkelijke set.</string>
+  <string name="restart_upgrade_process">Upgradeproces herstarten</string>
+  <string name="exit_wizard">Wizard afsluiten</string>
   <string-array name="dynOrderLabels">
     <item>Langst niet gezien eerst</item>
     <item>Willekeurig</item>

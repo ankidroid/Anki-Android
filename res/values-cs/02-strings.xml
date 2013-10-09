@@ -93,15 +93,17 @@
   <string name="import_log_no_apkg">Toto není platný apkg soubor</string>
   <string name="import_importing">Import karet.\nProsím čekejte...</string>
   <string name="import_hint">Pro import karet umístěte soubor apkg do adresáře %s a stiskněte ok</string>
-  <string name="upgrade_import_no_file_found">Nebyl nalezen žádný soubor apkg pro import</string>
+  <string name="upgrade_import_no_file_found">Iportvatelný soubor %1$s nebyl nenalezen</string>
   <string name="custom_study">Vlastní učení</string>
   <string name="dyn_deck_desc">Toto je speciální balíček pro studium mimo normální plán. Karty se automaticky po opakování vrátí do svého původního balíčku. Odstraněním tohoto balíčku ze seznamu se všechny zbývající karty vrátí to jejich původního balíčku.</string>
+  <string name="restart_upgrade_process">Restartovat proces upgradu</string>
+  <string name="exit_wizard">Ukončit průvodce</string>
   <string-array name="dynOrderLabels">
     <item>Nejstarší první</item>
     <item>Náhodně</item>
     <item>Rostoucí intervaly</item>
     <item>Klesající intervaly</item>
-    <item>Most lapses</item>
+    <item>Nejvíce zapomínané</item>
     <item>V pořádí přidání</item>
     <item>V pořadí zkoušení</item>
   </string-array>

@@ -26,7 +26,7 @@
   <string name="contextmenu_deckpicker_delete_deck">Ta bort kortlek</string>
   <string name="delete_deck_title">Ta bort kortlek</string>
   <string name="delete_deck_message">Är du säker på att du vill ta bort alla kort i %s?</string>
-  <string name="delete_cram_deck_message">Are you sure you wish to send all cards in %s back to their original decks?</string>
+  <string name="delete_cram_deck_message">Är du säker du vill skicka alla kort i %s tillbaka till deras ursprungliga kortlekar?</string>
   <string name="delete_deck_confirm">Ta bort den</string>
   <string name="new_version_message">Nya features:</string>
   <string name="no_tts_available_title">Text-till-tal</string>
@@ -51,18 +51,51 @@
   <string name="intent_add_clear_all">Rensa allt</string>
   <string name="intent_aedict_empty">Kategori \'default\' är tom</string>
   <string name="intent_aedict_category">För att lägga till kort till AnkiDroid, ta bort alla Notepadkategorier eller lägg till en som heter \'default\'</string>
-  <string name="custom_study_new_total_new">New cards in deck: %s</string>
-  <string name="custom_study_rev_total_rev">Reviews due in deck: %s</string>
-  <string name="custom_study_new_extend">Increase today\'s new card limit by</string>
-  <string name="custom_study_rev_extend">Increase today\'s review limit by</string>
-  <string name="custom_study_forgotten">Review cards forgotten in last x days:</string>
-  <string name="custom_study_ahead">Review ahead by x days:</string>
-  <string name="custom_study_random">Select x cards randomly from the deck:</string>
-  <string name="custom_study_preview">Preview new cards added in the last x days:</string>
-  <string name="custom_study_tags">Enter tags:</string>
-  <string name="rebuild_custom_study_deck">Rebuilding custom study deck.\nPlease wait...</string>
+  <string name="custom_study_new_total_new">Nya kort i kortlek: %s</string>
+  <string name="custom_study_rev_total_rev">Repetitioner i kö i kortlek: %s</string>
+  <string name="custom_study_new_extend">Öka dagens gräns för nya kort med</string>
+  <string name="custom_study_rev_extend">Öka dagens repetitionsgräns med</string>
+  <string name="custom_study_forgotten">Repetera kort glömda de senaste x dagarna:</string>
+  <string name="custom_study_ahead">Repetera i förväg för x dagar:</string>
+  <string name="custom_study_random">Välj x kort slumpmässigt från kortleken:</string>
+  <string name="custom_study_preview">Granska nya kort tillagda de senaste x dagarna:</string>
+  <string name="custom_study_tags">Fyll i taggar:</string>
+  <string name="rebuild_custom_study_deck">Bygger om anpassad studiekortlek.\nVar god vänta...</string>
+  <string name="deck_upgrade_title">Kortleksuppgradering</string>
+  <string name="deck_upgrade_rename_warning">Be aware that this will export your current collection to a file called \'%1$s\' and will create a new one from your old anki 1.x files. If desired, you can manually re-import the above apkg file after completing the wizard. Do you really want to continue?</string>
+  <string name="deck_upgrade_already_upgraded">Version 2 of AnkiDroid uses a new format for decks.\nIf you did not successfully upgrade your decks, you can restart the upgrade now to upgrade your decks.</string>
+  <string name="deck_upgrade_major_warning"><![CDATA[This is a major update to Ankidroid and the upgrade process will take at least 10-20 minutes.<br><br>Do you want to proceed now or later?<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en">More info</a>]]></string>
+  <string name="deck_upgrade_start_again_to_upgrade_toast">Vänligen starta om Ankidroid när du har tid att uppgradera!</string>
+  <string name="deck_upgrade_recommended_method"><![CDATA[The recommended upgrade method is to sync with a PC and upgrade with the desktop version of Anki.<br><br>There is also an alternative method where you can upgrade over the internet if you do not have access to a PC, and your collection is not too big.]]></string>
+  <string name="deck_upgrade_more_options_exit">You can exit the upgrade wizard without importing your old cards by clicking the exit button below.</string>
+  <string name="deck_upgrade_more_options_new_collection">Du kan skapa en ny tom samling genom att klicka nedan.</string>
+  <string name="deck_upgrade_more_options_downgrade"><![CDATA[<br><br>If you want to downgrade back to AnkiDroid 1 then please read <a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Continuing_to_use_AnkiDroid_1.1.3">these instructions</a>.]]></string>
+  <string name="deck_upgrade_create_new_collection">Skapa ny samling</string>
+  <string name="deck_upgrade_create_new_collection_title">Skapa ny samling</string>
+  <string name="deck_upgrade_not_import_warning">Är du säker att du vill göra detta? Dina gamla data kommer inte att importeras.</string>
+  <string name="deck_upgrade_via_web"><![CDATA[<b>This upgrade method is not recommended if you used media files, or have a big collection!</b><br><br>Your Anki1 decks will be zipped and uploaded to AnkiWeb, and the converted collection will then be downloaded.<br><br>Please note that a stable internet connection is required, and that there is a 50MB file limit.<br><br>Users of Anki Desktop are strongly encouraged to use the PC based upgrade method.<br><br>Do you still want to proceed?]]></string>
+  <string name="deck_upgrade_via_anki_desktop"><![CDATA[If you currently have an up-to-date version of your AnkiDroid collection in the Anki desktop software, you can upgrade from there and then download your upgraded collection by syncing with AnkiWeb.<br><br>Alternatively, you can copy your AnkiDroid collection to your PC using USB, then upgrade the collection and copy back to AnkiDroid.]]></string>
+  <string name="deck_upgrade_auto_upgrade"><![CDATA[Please install and start Anki Desktop version 2.0.4 or greater to upgrade your collection, then sync your upgraded collection with AnkiWeb and press the "Download" button.<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_2:_Using_AnkiWeb_sync">More detailed information on upgrading using AnkiWeb</a>]]></string>
+  <string name="deck_upgrade_manual"><![CDATA[Please copy all of your *.anki files (and any *.media folders) from your AnkiDroid folder to your Anki Desktop folder, and then install and start Anki Desktop version 2.0.4 or greater to upgrade your collection.<br><br>When the upgrade is completed, please export your collection from Anki2 and copy the collection.apkg file to your AnkiDroid folder and press the Import button below.<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_1:_Using_USB_(recommended)">More detailed information on upgrading using USB.</a>]]></string>
+  <string name="upgrade_deck_cancelled_title">Uppgradering avbruten</string>
+  <string name="upgrade_deck_cancelled_description">Uppgraderingsförsöket avbröts, försök igen med en av de tillgängliga uppgraderingsmetoderna.</string>
+  <string name="upgrade_deck_web_upgrade_failed">Uppgraderingsprocessen misslyckades. Försök igen, eller välj en annan uppgraderingsmetod</string>
+  <string name="upgrade_deck_web_upgrade_exceeds">Den totala komprimerade storleken av dina Anki1-kortlekar överskrider serverns gräns (50 mb), var god försök uppgradera med en annan metod.</string>
+  <string name="upgrade_deck_web_upgrade_sdcard">The upgrade was completed, but there was an error while unpacking the resulting collection, please ensure that you have enough available disk (needed %1$d mb) and try again, or try upgrading with a different method.</string>
+  <string name="export_progress_title">Export av samling</string>
+  <string name="export_progress_exporting">Exporterar samling, var god vänta…</string>
+  <string name="upgrade_deck_export_successful">Din gamla samling har exporterats, fortsätter nu med uppgraderingsprocessen.</string>
+  <string name="upgrade_deck_export_error">Ett fel uppstod under exporten av din gamla samling. Vill du fortsätta med uppgraderingen i alla fall (din gamla samling kommer att förloras)?</string>
+  <string name="upgrade_deck_sync_from_ankiweb">Synka från AnkiWeb</string>
+  <string name="upgrade_deck_have_you_synced">Är du säker att du uppgraderat din samling med Anki Desktop 2 och synkat med AnkiWeb?</string>
+  <string name="upgrade_deck_dont_upgrade">Uppgradera inte</string>
+  <string name="import_unpacking">Packar upp arkiv.\nVar god vänta…</string>
+  <string name="importing_collection">Importerar samling.\nVar god vänta…</string>
+  <string name="import_media_count">Importing media files %1$d%%\nPlease wait…</string>
+  <string name="import_update_counts">Updating deck counts.\nPlease wait…</string>
+  <string name="import_add_progress">• Unpacking archive %1$s\n• Import of notes %2$d%%\n• Import of cards %3$d%%\n• Cleanup %4$s</string>
   <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s:<br/>Flashcards till Android</h2>AnkiDroid är en flashcardapplikation som är fullt kompitabel med skrivbordsmjukvaran <a href="%2$s">Anki</a>. Du kan skapa, ladda ner och lära dig nya saker via både AnkiDroid och Anki Desktop, och därefter enkelt synkronisera dem.]]></item>
+    <item><![CDATA[<h2>%1$s:<br/>Flashcards till Android</h2>AnkiDroid är en flashcardapplikation som är fullt kompatibel med skrivbordsmjukvaran <a href="%2$s">Anki</a>. Du kan skapa, ladda ner och lära dig nya saker via både AnkiDroid och Anki Desktop, och därefter enkelt synkronisera dem.]]></item>
     <item><![CDATA[Hjälp gärna till att göra AnkiDroid ännu bättre genom att rapportera buggar <a href="%1$s">här</a>; Idéer på nya funktioner är också välkomna! Använd också <a href="%2$s">wikin</a> och säg Hej på <a href="%3$s">forumet</a>.]]></item>
     <item><![CDATA[AnkiDroid är <a href="%1$s">öppen källkodsmjukvara<a/>, så alla uppmanas att <a href="%2$s">gå med</a> och <a href="%3$s">bidra</a>:-)]]></item>
     <item><![CDATA[De som inte är utvecklare kan också hjälpa till, t.ex. genom att <a href="%1$s">översätta</a> AnkiDroid, uppdatera wikin och skärmdumpar, <a href="%2$s">donera</a> till Anki Desktop, eller blogga om AnkiDroid!]]></item>

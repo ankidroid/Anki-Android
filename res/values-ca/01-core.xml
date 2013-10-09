@@ -28,8 +28,8 @@
   <string name="ok">D\'acord</string>
   <string name="studyoptions_deck_name">Nom del paquet</string>
   <string name="studyoptions_due_today">Venç avui:</string>
-  <string name="studyoptions_new_total">Total noves targetes:</string>
-  <string name="studyoptions_total_cards">Total de argetes:</string>
+  <string name="studyoptions_new_total">Total de noves fitxes:</string>
+  <string name="studyoptions_total_cards">Total de fitxes:</string>
   <string name="studyoptions_eta">Temps estimat (min.):</string>
   <string name="studyoptions_start">Comença</string>
   <string name="show_answer">Mostra la resposta</string>
@@ -38,13 +38,13 @@
   <string name="ease3_successive">Correcte</string>
   <string name="ease3_learning">Fàcil</string>
   <string name="studyoptions_congrats_undo">Desfés %s</string>
-  <string name="studyoptions_congrats_custom_study">Custom Study</string>
+  <string name="studyoptions_congrats_custom_study">Estudi a mida</string>
   <string name="studyoptions_congrats_open_other_deck">Obre un altre paquet</string>
   <string name="studyoptions_congrats_finish">Torna a la pantalla d\'aprenentatge</string>
-  <string name="card_unsuspended">Suspensió de targeta desfeta</string>
-  <string name="card_suspended">Targeta suspesa de nou</string>
-  <string name="menu_rotate">Girar</string>
-  <string name="menu_import">Importació de les targetes</string>
+  <string name="card_unsuspended">S\'ha desfet la suspensió de la fitxa</string>
+  <string name="card_suspended">Fitxa suspesa de nou</string>
+  <string name="menu_rotate">Gira</string>
+  <string name="menu_import">Importació de les fitxes</string>
   <string name="undo">Desfés</string>
   <string name="undo_action_review">Revisió</string>
   <string name="undo_action_edit">Edita la nota</string>
@@ -61,7 +61,7 @@
   <string name="contextmenu_deckpicker_rename_deck">Canvia el nom del paquet</string>
   <string name="contextmenu_deckpicker_collapse_deck">Tanca el paquet</string>
   <string name="contextmenu_deckpicker_inflate_deck">Amplia el paquet</string>
-  <string name="contextmenu_deckpicker_set_custom_dictionary">Establir diccionari personalitzat</string>
+  <string name="contextmenu_deckpicker_set_custom_dictionary">Diccionari personalitzat</string>
   <string name="menu_download_deck">Baixa el paquet</string>
   <string name="menu_download_shared_deck">Paquet compartit</string>
   <string name="menu_my_account">Compte de sincronització</string>
@@ -72,15 +72,15 @@
   <string name="menu_suspend_card">Suspèn la fitxa</string>
   <string name="menu_suspend_note">Suspen la nota</string>
   <string name="menu_delete_note">Suprimeix la nota</string>
-  <string name="delete_note_message">Segur que voleu suprimir aquesta nota i tots les seves targetes?\n%s</string>
+  <string name="delete_note_message">Segur que voleu suprimir aquesta nota i tots les seves fitxes?\n%s</string>
   <string name="menu_edit_card">Edita la fitxa</string>
   <string name="menu_select">Selecciona text</string>
   <string name="menu_search">Cerca-ho a %1$s</string>
   <string name="menu_mark_card">Marca la fitxa</string>
-  <string name="menu_unmark_card">Desmarca la targeta</string>
+  <string name="menu_unmark_card">Desmarca la fitxa</string>
   <string name="new_deck">Nou paquet</string>
   <string name="create">Genera</string>
-  <string name="new_dynamic_deck">Nou paquet dinàmic</string>
+  <string name="new_dynamic_deck">Nou paquet filtrat</string>
   <string name="studyoptions_feedback">Comentaris</string>
   <string name="studyoptions_load_tutorial_deck">Genera el tutorial</string>
   <string name="night_mode">Mode Nit</string>
@@ -91,19 +91,30 @@
   <string name="rebuild_cram_deck">S\'està reconstruïnt el paquet cram \nEspereu...</string>
   <string name="rebuild_cram_label">Reconstrueix</string>
   <string name="empty_cram_label">Buit</string>
-  <string name="empty_cram_deck">S\'està buidant eñ paquet cram. \nEspereu...</string>
+  <string name="empty_cram_deck">S\'està buidant el paquet cram. \nEspereu...</string>
   <string name="studyoptions_new_filtercram">Filtre/Cram</string>
-  <string name="custom_study_deck_name">Custom Study Session</string>
-  <string name="custom_study_deck_exists">Please rename the existing Custom Study deck first.</string>
-  <string name="studyoptions_congrats_finished">Felicitats! Ja heu acabat per ara.</string>
-  <string name="studyoptions_congrats_more_rev">S\'ha assolit el límit de revisió d\'avui, però encara hi ha targrtes per a revisar. Per a optimitzar la memòria, considereu augmentar el límit diari a les opcions.</string>
-  <string name="studyoptions_congrats_more_new">Hi ha més targetes noves, però s\'ha assolit el límit diari. Podeu augmentar el límit a les opcions, però si us plau, tingueu en compte que això farà augmentar la càrrega de treball de la revisió a curt termini.</string>
-  <string name="studyoptions_congrats_custom">To study outside of the normal schedule, click the Custom Study button below.</string>
-  <string name="sd_card_not_mounted">SD card is not mounted.\n\nYou can store your collection in the internal memory too, though it\'s not recommended as you cannot access the file that easily. You can activate this in the preferences (open them by clicking this text).</string>
+  <string name="custom_study_deck_name">Sessió d\'estudi a mida</string>
+  <string name="custom_study_deck_exists">Si us plau, primer canvieu de nom el paquet Estudi a Mida.</string>
+  <string name="studyoptions_congrats_finished">Felicitats! De moment ja heu acabat.</string>
+  <string name="studyoptions_congrats_more_rev">S\'ha assolit el límit de revisió d\'avui, però encara hi ha fitxes per a revisar. Per a optimitzar la memòria, considereu augmentar el límit diari a les opcions.</string>
+  <string name="studyoptions_congrats_more_new">Hi ha més fitxes noves, però s\'ha assolit el límit diari. Podeu augmentar el límit a les opcions, però si us plau, tingueu en compte que això farà augmentar la càrrega de treball de la revisió a curt termini.</string>
+  <string name="studyoptions_congrats_custom">Per a estudiar fora de la planificació normal, cliqueu al botó Estudi a Mida d\'aquí sota.</string>
+  <string name="sd_card_not_mounted">La targeta SD no està muntada.\n\n També podeu desar la vostra col·lecció a la memòria interna, tot i que no es recomana, ja que no podreu accedir al fitxer tan fàcilment. Podeu habilitar aquesta opció a les preferències (obriu-les clicant aquest text).</string>
   <string name="studyoptions_options">Opcions</string>
-  <string name="empty_cloze_warning">Si us plau editeu aquesta nota i afegir algunes supressions cloze. (%1$s)</string>
+  <string name="empty_cloze_warning">Si us plau editeu aquesta nota i afegiu algunes supressions cloze. (%1$s)</string>
   <string name="help_cloze">ajuda</string>
   <string name="button_sync">Sincronització</string>
+  <string name="restart">Reinicia</string>
+  <string name="do_nothing">No facis res</string>
+  <string name="more_options">Més opcions</string>
+  <string name="now">Ara</string>
+  <string name="back">Torna</string>
+  <string name="ankiweb">AnkiWeb</string>
+  <string name="usb">USB</string>
+  <string name="_import">Importa</string>
+  <string name="confirm">Confirma</string>
+  <string name="internet">Internet</string>
+  <string name="pc">PC</string>
   <string-array name="next_review_s">
     <item>1 segon</item>
     <item>1 minut</item>
@@ -137,11 +148,11 @@
     <item quantity="other">queden %d minuts</item>
   </plurals>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Demà hi haurà: 1 targeta per revisar i %2$s.\n temps aproximat: %3$s</item>
-    <item quantity="other">Demà hi haurà: %1$d targeta per revisar i %2$s.\n Temps aproximat: %3$s</item>
+    <item quantity="one">Demà hi haurà: 1 fitxa per revisar i %2$s.\n temps aproximat: %3$s</item>
+    <item quantity="other">Demà hi haurà: %1$d fitxes per revisar i %2$s.\n Temps aproximat: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">1 nova targeta</item>
+    <item quantity="one">1 fitxa nova</item>
     <item quantity="other">%1$d fitxes noves</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">

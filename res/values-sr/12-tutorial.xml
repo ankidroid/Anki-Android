@@ -17,33 +17,33 @@
  
 <resources> 
  <string-array name="tutorial_questions"> 
-    <item><![CDATA[Thanks for installing AnkiDroid!<br />This is a short introduction.<br />What you see now is the <span style=\'font-weight:600;\'>question</span> part of a flashcard.<br />Please click on the large button below...]]></item> 
-    <item><![CDATA[The next card is shown now.<br />The idea is straightforward: Just like in &quot;real world&quot; paper flashcards, you write a question on the front and the answer on the back side of your cards.<br />(click the button to show the back side)]]></item> 
-    <item><![CDATA[&quot;What is the capital of Burkina Faso?&quot;<br />Think a bit about the answer and click then &quot;show answer&quot;]]></item> 
-    <item><![CDATA[Above every answer buttons, you find information about the time, after which the card will be shown again when answered by this button.]]></item> 
-    <item><![CDATA[The intention is to show you the card again, immediately before you would forget it. Empirical studies have shown that by this means information can be learned most efficiently.]]></item> 
-    <item><![CDATA[Some words about the organisation in AnkiDroid:<br /><br>All information has to be put into pairs of question and answer. If you want to learn in the other direction, you should create another card with swapped information.]]></item> 
-    <item><![CDATA[Cards are put together in decks and can there be organised by help of all sorts of tags.]]></item> 
-    <item><![CDATA[There are mainly two ways of getting new cards:<br />You either add premade decks of other users (choose &quot;shared decks&quot; in the decks summary) or create them by yourself.]]></item> 
-    <item><![CDATA[But anyway, creating own decks is essential to suit your needs perfectly. You can do this directly in AnkiDroid...]]></item> 
-    <item><![CDATA[Let\'s have a look on the top bar:<br />In the left top corner you find some numbers. The blue one tells you, how many new cards are still projected for today. The red number counts the failed cards (answered by &quot;again&quot;),]]></item> 
-    <item><![CDATA[On the right corner you find information about your thinking time of this card and about your performance.]]></item> 
-    <item><![CDATA[Albeit you can use AnkiDroid stand alone, it is fully connected to AnkiWeb, the syncing server of Anki Desktop (available for Linux, Windows, Mac).]]></item> 
-    <item><![CDATA[These have been the main points of AnkiDroid usage.<br /><br>For more information about the key concept of Anki, visit http://ankisrs.net/]]></item> 
+    <item><![CDATA[Хвала за инсталирање AnkiDroid!<br />Кратак увод.<br />Ово што видите је <span style=\'font-weight:600;\'>питање</span> карте.<br />Кликните на велико дугме испод...]]></item> 
+    <item><![CDATA[Приказана је следећа карта.<br />Идеја је једноставна: Исто је као и у &quot;реалном свету&quot; где папирне карте имају питање на предњој и одговор на задњој страни карте.<br />(кликните на дугме да се прикаже задња страна)]]></item> 
+    <item><![CDATA[&quot;Који је главни град Буркине Фасо?&quot;<br />Размислите мало о одговору и притисните дугме &quot;прикажи одговор&quot;]]></item> 
+    <item><![CDATA[На сваком дугмету, које показује лакоћу одговора, наћи ћете информацију о времену, кроз које ће карта бити приказана поново при клику на то дугме.]]></item> 
+    <item><![CDATA[Циљ је да вам се покаже карта пре него што је заборавите. Емпиријска истраживања су показала да се на тај начин информација може ефикасније научити.]]></item> 
+    <item><![CDATA[Неколико речи о уређеју AnkiDroid:<br /><br>Сва информација треба да буде унета у виду пара питање-одговор. Ако желите да учите у другом смеру, да питање буде одговор и обрнуто, неопходно је да направите још једну карту, где су те стране замењене.]]></item> 
+    <item><![CDATA[Шпил се састоји од карата и њима се може манипулисати користећи ознаке.]]></item> 
+    <item><![CDATA[Постоји два начина добијања нових карата:<br />Можете додати доступне шпилове других корисника (изаберите &quot;дељени шпилови&quot;) или их направити сами.]]></item> 
+    <item><![CDATA[Могућност креирања ваших сопствених шпилова, треба да задовољи ваше потребе. Можете то урадити директно у AnkiDroid...]]></item> 
+    <item><![CDATA[Хајде да погледамо горњи панел:<br />Лево ћете наћи бројеве. Плави показују колико је планирано нових карата за данас. Црвени, колико карата нисте могли да се сетите (одговор &quot;поново&quot;),]]></item> 
+    <item><![CDATA[У десном углу ћете наћи информацију о времену вашег размишљања над овом картом и о вашим перформансама.]]></item> 
+    <item><![CDATA[Мада можете користити AnkiDroid офлајн, ом може бити повезан са AnkiWeb, синхронизован са сервером Anki Desktop (за Linux, Windows, Mac).]]></item> 
+    <item><![CDATA[Ово су били основни моменти коришћења AnkiDroid.<br /><br>Детаљније на сајту Anki http://ankisrs.net/]]></item> 
  </string-array>
  <string-array name="tutorial_answers">
-    <item><![CDATA[... in order to see the <span style=\'font-weight:600;\'>answer</span> part of the flashcard (below the line).<br />Click on the button on the right]]></item> 
-    <item><![CDATA[Let\'s assume you want to learn the world\'s capitals. Let the question be...<br />(click on one of the buttons to show the next card)]]></item> 
-    <item><![CDATA[&quot;Ouagadougou&quot; is the right answer. <br />You didn\'t know it? Click &quot;again&quot; to see the card again in a couple of minutes. Otherwise, click on the other buttons, depending on the easiness of the answer.]]></item> 
-    <item><![CDATA[This time period is calculated of the last time you answered the card, the current ease choice and ease choices of previous answers of that card.]]></item> 
-    <item><![CDATA[If you want to learn more about spaced repetition, visit:<br>http://en.wikipedia.org/wiki/Spaced_repetition_system]]></item> 
-    <item><![CDATA[Don\'t worry, this can be done automatically. There is no need of inserting the same information twice.]]></item> 
-    <item><![CDATA[You will learn about that quickly when you start to use AnkiDroid.]]></item> 
-    <item><![CDATA[You\'ll find thousands of premade decks to download and there are probably some which are useful for you.]]></item> 
-    <item><![CDATA[... or (a bit more convenient) with the desktop application Anki (downloadable for free under http://ankisrs.net/).<br><br>You can sync your decks with the desktop application very easily, so transfering the data is not a problem.]]></item> 
-    <item><![CDATA[the green one shows the number of cards you\'ve already learned before and which are due to review today.<br />The type of the actual cards is specified by an underline.]]></item> 
-    <item><![CDATA[The upper bar shows your progress, the lower one indicates the percentage of yes answers.]]></item> 
-    <item><![CDATA[Thus, you can easily sync your collection between AnkiDroid and Anki Desktop and use the latter for a more convenient card adding and managing.]]></item> 
-    <item><![CDATA[Just try it a bit out now and see, if it fits your needs.<br><br>Maybe start with the deck overview (hit menu on the main screen and choose &quot;all decks&quot;), where you can download premade decks or create your own (just use the menu there).]]></item> 
+    <item><![CDATA[... да бисте видели <span style=\'font-weight:600;\'>одговор</span> карте (испод црте).<br />Кликните на десно дугме]]></item> 
+    <item><![CDATA[Претпоставимо да желите да научите главне градове. Нека питање буде...<br />(кликните на једно од дугмади испод)]]></item> 
+    <item><![CDATA[&quot;Уагадугу&quot; је тачан одговор. <br />Нисте знали? Кликните онда &quot;поново&quot; да бисте поново видели ту карту кроз неко време. У противном, кликните на другу дугмад-одговоре, у зависности от тога, колико добро сте знали одговор.]]></item> 
+    <item><![CDATA[Тај временски интервал зависи од тога, када је карта приказана последњи пут, од сложености последњег одговора и од сложености свих претходних одговора за ту карту.]]></item> 
+    <item><![CDATA[Ако желите више да сазнате о алгоритму интервалског понављања, посетите:<br>http://en.wikipedia.org/wiki/Spaced_repetition_system]]></item> 
+    <item><![CDATA[Не брините, то се може урадити аутоматски. Нема потребе да додајете исту информацију два пута.]]></item> 
+    <item><![CDATA[То је једноставно за разумевање, ако пробате да ту функцију искористите у AnkiDroid.]]></item> 
+    <item><![CDATA[Наћи ћете на хиљаде дељених шпилова и вероватно ће вам неки бити корисни.]]></item> 
+    <item><![CDATA[... или (много удобније) користећи Anki на рачунару (бесплатно га можете преузети на сајту http://ankisrs.net/).<br><br>Искористите синхронизацију или једноставно копирање датотека шпилова.]]></item> 
+    <item><![CDATA[зелени колико раније учених карата треба данас да поновите.<br />Подвлачење једног од тих бројева, показује вам ком типу припада текућа карта.]]></item> 
+    <item><![CDATA[Горња трака показује ваш напредак, доња проценат одговора \"да\".]]></item> 
+    <item><![CDATA[Тј. могућа је лака синхронизација ваших колекција између AnkiDroid и Anki Desktop, да бисте последњи искористили као удобнији начин за додавање и управљање картама.]]></item> 
+    <item><![CDATA[Испробајте га и видите да ли одговара вашим потребама.<br><br>Нпр. можете почети од назива шпилова (изаберите &quot;сви шпилови&quot;), преузети шпилове или направити сопствене (искористите мени у називу шпилова).]]></item> 
  </string-array>
 </resources>

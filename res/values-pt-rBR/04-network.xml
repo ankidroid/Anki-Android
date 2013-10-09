@@ -78,7 +78,7 @@
   <string name="sync_downloading_media">Baixando mídia %1$d/%2$d...</string>
   <string name="sync_log_uploading_message">Sincronização completa do local</string>
   <string name="sync_log_downloading_message">Sincronização completa do servidor</string>
-  <string name="sync_log_clocks_unsynchronized">O tempo do seu dispositivo é diferente do servidor por %1$d seg %2$s; não é possível sincronizar.</string>
+  <string name="sync_log_clocks_unsynchronized">A hora no seu dispositivo está incorreta por %1$d segundos %2$s; A sincronização precisa que o horário e o fuso horário estejam corretos para evitar erros. Por favor, certifique-se que a data, o horário e o fuso horário do seu telefone esteja correto, e depois tente sincronizar novamente.</string>
   <string name="sync_log_clocks_unsynchronized_tz">, a zona de tempo do dispositivo possivelmente está errada</string>
   <string name="sync_log_clocks_unsynchronized_date">, a data do dispositivo possivelmente está errada</string>
   <string name="sync_log_old_version">O protocolo de sincronização foi alterado, por favor atualize para o AnkiDroid mais recente. Veja %s</string>
@@ -110,6 +110,7 @@
   <string name="sync_media_sanity_check">Verificando contagem de mídia...</string>
   <string name="sync_media_no_changes">Sem mudanças nos arquivos de mídia.</string>
   <string name="sync_media_success">Mídias sincronizadas com sucesso.</string>
+  <string name="sync_sanity_failed">Depois de sincronizar, a coleção apresentou um estado inconsistente. Para corrigi isso, o AnkiDroid irá forçar uma sincronização completa. Por favor, escolha qual versão você gostaria de manter, ou cancele se preferir sincronizar depois.</string>
   <string name="sync_media_sanity_failed">Sincronização de mídia completada, mas a contagem de mídias não equivale com a do servidor. A próxima sincronização de mídia estará cheia para corrigir qualquer erro.</string>
   <string name="sync_media_error">Erro ao sincronizar dados de mídia.</string>
   <string name="register_error">Ocorreu um erro. Por favor, tente novamente mais tarde.</string>
@@ -117,10 +118,10 @@
   <string name="register_mismatch">O nome do usuário/senha não bate com a repetição ou está vazio. Por favor, digite novamente.</string>
   <string name="registering_message">Criando conta.\nPor favor aguarde...</string>
   <string name="upgrade_decks_zipping">Comprimindo decks para upload.\nPor favor aguarde...</string>
-  <string name="upgrade_decks_upload">Fazendo upload dos decks comprimidos.\n Por favor aguarde...</string>
+  <string name="upgrade_decks_upload">Enviando decks compactados\nVocê pode cancelar isso apertando voltar.\nPor favor aguarde...</string>
   <string name="upgrade_decks_waiting">Aguarde, posição na fila de espera: %s\n Por favor aguarde...</string>
   <string name="upgrade_decks_upgrade_started">Atualização iniciada\nPor favor aguarde...</string>
-  <string name="upgrade_decks_downloading">Baixando deck atualizado.\n Por favor aguarde...</string>
+  <string name="upgrade_decks_downloading">Baixando coleção atualizada\nVocê pode cancelar isso apertando voltar.\nPor favor aguarde...</string>
   <string name="upgrade_decks_media">Copiando arquivos de mídia antigos para novos locais de midia.\nPor favor aguardar...</string>
   <string name="upgrade_decks_message">Não há coleção do Anki 2.0 disponível mas um ou mais decks do antigo formato Anki 1.2 foram encontrados:%sPara poder usar seus decks na nova versão do AnkiDroid eles primeiro precisam ser convertidos em uma única coleção do novo formato Anki-2.0. Existem 3 possibilidades para isso:</string>
   <string name="upgrade_decks_message_pos1">Ao usar Anki Desktop 2.0, seus decks serão convertidos em seu primeiro início. Após isso você pode sincronizar à AnkiWeb ou simplesmente copiar as coleções ao seu aparelho móvel. Copie seus decks do diretório de seu AnkiDroid(%s) para o diretório de seu Anki Desktop 1.2 em seu computador(Se não tiver sincronizado-o) e inicie o Anki Desktop 2.0.</string>
@@ -132,4 +133,6 @@
   <string name="upgrade_decks_failed">Estes decks não puderam ser atualizados\n%sPor favor abra-os no Anki Desktop e faça uma checagem no banco de dados Após você pode importa-los atraves do Anki Desktop.</string>
   <string name="upgrade_decks_media_failed">A copia dos arquivos de mídia ao novo diretório de mídias(%1$s)  falhou para estes decks:\n%2$sPor favor mova os arquivos de mídia manualmente.</string>
   <string name="download_deck">Baixando deck (%d kb).\nAguarde...</string>
+  <string name="sync_sanity_local">Local</string>
+  <string name="sync_sanity_remote">Remota</string>
 </resources>
