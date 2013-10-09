@@ -3,13 +3,13 @@
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry kind="lib" path="libs/android-support-v4.jar"/>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="lib" path="libs/gson-2.2.3.jar" sourcepath="libs/google-gson-2.2.3/gson-2.2.3-sources.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="jar:platform:/resource/AnkiAndroid/libs/google-gson-2.2.3/gson-2.2.3-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
