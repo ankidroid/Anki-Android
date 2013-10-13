@@ -158,8 +158,7 @@ public class DeckPicker extends FragmentActivity {
     private static final int MENU_CARDBROWSER = 13;
     private static final int MENU_IMPORT = 14;
     private static final int MENU_REUPGRADE = 15;
-    /** Evernote */
-    private static final int MENU_EVERNOTE_SYNC = 18;
+    private static final int MENU_EVERNOTESYNC = 18;
 
     /**
      * Context Menus
@@ -2414,10 +2413,9 @@ public class DeckPicker extends FragmentActivity {
         item = menu.add(Menu.NONE, MENU_PREFERENCES, Menu.NONE, R.string.menu_preferences);
         item.setIcon(R.drawable.ic_menu_preferences);
         
-        /** Evernote */
         mEvernoteSession = EvernoteSession.getInstance(this, CONSUMER_KEY , CONSUMER_SECRET , EVERNOTE_SERVICE );
         if (mEvernoteSession.isLoggedIn()) {
-	        item = menu.add(Menu.NONE, MENU_EVERNOTE_SYNC, Menu.NONE, R.string.menu_evernote_sync);
+	        item = menu.add(Menu.NONE, MENU_EVERNOTESYNC, Menu.NONE, R.string.menu_evernoteSync);
 	        item.setIcon(R.drawable.ic_menu_preferences);
         }
         
@@ -2575,8 +2573,7 @@ public class DeckPicker extends FragmentActivity {
                 startActivityForResult(new Intent(DeckPicker.this, Preferences.class), PREFERENCES_UPDATE);
                 return true;
             
-             /** Evernote */
-            case MENU_EVERNOTE_SYNC:
+            case MENU_EVERNOTESYNC:
             	new EvernoteSync(this).sync();
             	return true;
 
@@ -2627,18 +2624,7 @@ public class DeckPicker extends FragmentActivity {
         super.onActivityResult(requestCode, resultCode, intent);
 
         mDontSaveOnStop = false;
-        /** Evernote */
-        if (requestCode == EvernoteSession.REQUEST_CODE_OAUTH){
-	        if (resultCode == Activity.RESULT_OK) {
-	        	Toast.makeText(DeckPicker.this, "Evernote: Logged in", Toast.LENGTH_SHORT).show();
-	        	new EvernoteSync.UpdateUsername(this).execute();
-	        	new EvernoteSync(this).sync();
-	        }
-	        else if(resultCode == Activity.RESULT_CANCELED)
-	        {
-	        	Toast.makeText(DeckPicker.this, "Evernote: Login failed",Toast.LENGTH_SHORT).show();
-	        }
-	    }
+
         if (resultCode == RESULT_MEDIA_EJECTED) {
             showDialog(DIALOG_SD_CARD_NOT_MOUNTED);
             return;

@@ -154,7 +154,7 @@
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/pref_cat_evernoteSync">
 	    <Preference android:key="evernoteSync" android:title="@string/evernoteSync_login" android:summary="@string/evernoteSync_logged_out"/>
-	    <EditTextPreference android:key="evernoteSearchString" android:title="@string/evernoteSync_SearchString" android:summary="@string/evernoteSync_SearchString_list" android:defaultValue="any: tag:review" />
+	    <EditTextPreference android:key="evernoteSync_SearchString" android:title="@string/evernoteSync_SearchString_title" android:summary="@string/evernoteSync_SearchString_list" android:defaultValue="any: tag:review" />
 	</PreferenceCategory>
     </PreferenceScreen>
     <PreferenceScreen android:title="@string/pref_cat_qadisplay" >

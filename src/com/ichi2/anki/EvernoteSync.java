@@ -10,6 +10,7 @@ import android.app.Activity;
 import android.util.Log;
 import android.widget.Toast;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 
@@ -17,6 +18,7 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Note;
 
 import com.evernote.client.android.AsyncNoteStoreClient;
+import com.evernote.client.android.EvernoteOAuthActivity;
 import com.evernote.client.android.EvernoteSession;
 import com.evernote.client.android.InvalidAuthenticationException;
 import com.evernote.client.android.OnClientCallback;
@@ -49,19 +51,19 @@ public class EvernoteSync {
 	public EvernoteSync(Activity act){
 		this.activity = act;
 		prefs = act.getSharedPreferences(AnkiDroidApp.SHARED_PREFS_NAME, Context.MODE_PRIVATE);
-		LastSync = prefs.getLong("evernoteLastSync", new Date().getTime());
-		searchString = prefs.getString("evernoteSearchString","");
+		LastSync = prefs.getLong("evernoteSync_LastSync", new Date().getTime());
+		searchString = prefs.getString("evernoteSync_SearchString","");
 		mCol = AnkiDroidApp.getCol();
 		mEvernoteSession = EvernoteSession.getInstance(this.activity , CONSUMER_KEY , CONSUMER_SECRET , EVERNOTE_SERVICE );
 	}
 
-	public static void evernote_login(Context ctx) {
+	public static void login(Context ctx) {
 		//Toast.makeText(ctx ,"Evernote: Login..." , Toast.LENGTH_SHORT ).show();
 		mEvernoteSession = EvernoteSession.getInstance(ctx , CONSUMER_KEY , CONSUMER_SECRET , EVERNOTE_SERVICE );
 		mEvernoteSession.authenticate(ctx);
 	}
 
-	public static void evernote_logout(Context ctx) {
+	public static void logout(Context ctx) {
 		try {
 			mEvernoteSession = EvernoteSession.getInstance(ctx , CONSUMER_KEY , CONSUMER_SECRET , EVERNOTE_SERVICE );
 			mEvernoteSession.logOut(ctx);
@@ -73,11 +75,11 @@ public class EvernoteSync {
 
 	public void sync(){
 		if (!mEvernoteSession.isLoggedIn()) {
-			evernote_login(this.activity);
+			login(this.activity);
 			return;
 		};
 
-		check_requirements();
+		checkRequirements();
 
 		NoteFilter filter = new NoteFilter();
 		filter.setAscending(true);
@@ -182,20 +184,16 @@ public class EvernoteSync {
 		Date date = new Date(System.currentTimeMillis());
 		long millis = date.getTime();
 		SharedPreferences.Editor editor = prefs.edit();
-		editor.putLong("evernoteLastSync" , millis);
+		editor.putLong("evernoteSync_LastSync" , millis);
 		editor.commit();
 	}
 
 	private void delete_aNotes() {
-		// Delete anki notes if assigned evernote notes don't exist any more
-
 		java.util.ArrayList<Long> s = new java.util.ArrayList<Long>();
-
 		long did = 0L;
 		try {
 			did = mCol.getDecks().byName("Evernote").getLong("id");
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		long [] aCards = mCol.getDecks().cids(did);
@@ -211,13 +209,10 @@ public class EvernoteSync {
 		long[] to_delete = new long[s.size()];
 		for (int i = 0; i < s.size(); i++)
 			to_delete[i] = s.get(i);
-		//mCol.findNotes(query);
 		mCol.remNotes(to_delete);
-
 	}
 
 	private void create_aNote(com.evernote.edam.type.Note note) {
-		// creates a new anki note
 		JSONObject model = mCol.getModels().byName("Evernote");
 		Note aNote = new Note(mCol , model);
 		aNote.setitem("title", note.getTitle());
@@ -233,7 +228,6 @@ public class EvernoteSync {
 			e.printStackTrace();
 		}
 		mCol.addNote(aNote);
-		//append anki note ID to the evernote note application data entry
 		String guid = note.getGuid();
 		String adid = Long.toString(aNote.getId());
 		try {
@@ -254,11 +248,10 @@ public class EvernoteSync {
 		Log.i(AnkiDroidApp. TAG, "Evernote: " + note.getTitle() + " - anki note ID appended");
 	}
 
-	public static class UpdateUsername extends AsyncTask<Void, String, String> {
-
+	
+	public static class updateUsername extends AsyncTask<Void, String, String> {
 		private Context mContext;
-
-		public UpdateUsername(Context ctx){
+		public updateUsername(Context ctx){
 			mContext = ctx;
 		}
 
@@ -285,8 +278,29 @@ public class EvernoteSync {
 		protected void onPostExecute(String username) {
 			SharedPreferences prefs = mContext.getSharedPreferences(AnkiDroidApp.SHARED_PREFS_NAME, Context.MODE_PRIVATE);
 			SharedPreferences.Editor editor = prefs.edit();
-			editor.putString("evernoteUsername", username);
+			editor.putString("evernoteSync_Username", username);
 			editor.commit();
+		}
+	}
+	
+
+	public void checkRequirements() {
+		if (mCol.getDecks().byName("Evernote").isNull("id")){
+			mCol.getDecks().id("Evernote", true);
+		}
+		if (mCol.getModels().byName("Evernote").isNull("did")){
+			JSONObject m = mCol.getModels().newModel("Evernote");
+			mCol.getModels().addField(m, mCol.getModels().newField("title"));
+			mCol.getModels().addField(m, mCol.getModels().newField("guid"));			
+			JSONObject t = mCol.getModels().newTemplate("Card");
+			try {
+				t.put("qfmt", "{{title}}");
+				t.put("afmt", "");
+			} catch (JSONException e) {
+				throw new RuntimeException(e);
+			}
+			mCol.getModels().addTemplate(m, t);
+			mCol.getModels().add(m);
 		}
 	}
 
@@ -308,24 +322,4 @@ public class EvernoteSync {
 		}	
 	}
 
-	public void check_requirements() {
-
-		if (mCol.getDecks().byName("Evernote").isNull("id")){
-			mCol.getDecks().id("Evernote", true);
-		}
-		if (mCol.getModels().byName("Evernote").isNull("did")){
-			JSONObject m = mCol.getModels().newModel("Evernote");
-			mCol.getModels().addField(m, mCol.getModels().newField("title"));
-			mCol.getModels().addField(m, mCol.getModels().newField("guid"));			
-			JSONObject t = mCol.getModels().newTemplate("Card");
-			try {
-				t.put("qfmt", "{{title}}");
-				t.put("afmt", "");
-			} catch (JSONException e) {
-				throw new RuntimeException(e);
-			}
-			mCol.getModels().addTemplate(m, t);
-			mCol.getModels().add(m);
-		}
-	}
 }
