@@ -172,26 +172,7 @@ public class Sched {
         return card;
     }
 
-    /* NOT IN LIBANKI */
-    public void decrementCounts(Card card) {
-    	int type = card.getQueue();
-    	switch (type) {
-    	case 0:
-    		mNewCount--;
-    		break;
-    	case 1:
-    		mLrnCount -= card.getLeft() / 1000;
-    		break;
-    	case 2:
-    		mRevCount--;
-    		break;
-    	case 3:
-    		mLrnCount--;
-    		break;
-    	}
-    }
-
-
+    
     public void reset() {
         _updateCutoff();
         _resetLrn();
@@ -324,34 +305,6 @@ public class Sched {
     }
 
 
-    // /**
-    // * A very rough estimate of time to review.
-    // */
-    // public int eta() {
-    // Cursor cur = null;
-    // int cnt = 0;
-    // int sum = 0;
-    // try {
-    // cur = mDb.getDatabase().rawQuery(
-    // "SELECT count(), sum(taken) FROM (SELECT * FROM revlog " +
-    // "ORDER BY time DESC LIMIT 10)", null);
-    // if (cur.moveToFirst()) {
-    // cnt = cur.getInt(0);
-    // sum = cur.getInt(1);
-    // }
-    // } finally {
-    // if (cur != null && !cur.isClosed()) {
-    // cur.close();
-    // }
-    // }
-    // if (cnt == 0) {
-    // return 0;
-    // }
-    // double avg = sum / ((float) cnt);
-    // int[] c = counts();
-    // return (int) ((avg * c[0] * 3 + avg * c[1] * 3 + avg * c[2]) / 1000.0);
-    // }
-
     /**
      * Rev/lrn/time daily stats *************************************************
      * **********************************************
@@ -477,61 +430,6 @@ public class Sched {
     /**
      * Deck list **************************************************************** *******************************
      */
-
-    /** LIBANKI: not in libanki */
-    public Object[] deckCounts() {
-        TreeSet<Object[]> decks = deckDueTree(0);
-        int[] counts = new int[] { 0, 0, 0 };
-        for (Object[] deck : decks) {
-            if (((String[]) deck[0]).length == 1) {
-                counts[0] += (Integer) deck[2];
-                counts[1] += (Integer) deck[3];
-                counts[2] += (Integer) deck[4];
-            }
-        }
-        TreeSet<Object[]> decksNet = new TreeSet<Object[]>(new DeckNameCompare());
-        for (Object[] d : decks) {
-        	try {
-        		boolean show = true;
-        		for (JSONObject o : mCol.getDecks().parents((Long) d[1])) {
-        			if (o.getBoolean("collapsed")) {
-        				show = false;
-        				break;
-        			}
-        		}
-        		if (show) {
-        			JSONObject deck = mCol.getDecks().get((Long) d[1]);
-        			if (deck.getBoolean("collapsed")) {
-        				String[] name = (String[]) d[0];
-        				name[name.length - 1] = name[name.length - 1] + " (+)";
-        				d[0] = name;
-        			}
-    				decksNet.add(new Object[]{d[0], d[1], d[2], d[3], d[4], deck.getInt("dyn") != 0});
-        		}
-			} catch (JSONException e) {
-				throw new RuntimeException(e);
-			}
-        }
-        return new Object[] { decksNet, eta(counts), mCol.cardCount() };
-    }
-
-    public boolean getSpreadRev() {
-        return mSpreadRev;
-    }
-
-    public void setSpreadRev(boolean mSpreadRev) {
-        this.mSpreadRev = mSpreadRev;
-    }
-
-    public class DeckDueListComparator implements Comparator<JSONObject> {
-        public int compare(JSONObject o1, JSONObject o2) {
-            try {
-				return o1.getString("name").compareTo(o2.getString("name"));
-			} catch (JSONException e) {
-				throw new RuntimeException(e);
-			}
-        }
-    }
 
 
     /**
@@ -715,49 +613,6 @@ public class Sched {
         return _getLrnCard(true);
     }
 
-
-    //
-    // /** LIBANKI: not in libanki */
-    // public boolean removeCardFromQueues(Card card) {
-    // long id = card.getId();
-    // Iterator<long[]> i = mNewQueue.iterator();
-    // while (i.hasNext()) {
-    // long cid = i.next()[0];
-    // if (cid == id) {
-    // i.remove();
-    // mNewCount -= 1;
-    // return true;
-    // }
-    // }
-    // i = mLrnQueue.iterator();
-    // while (i.hasNext()) {
-    // long cid = i.next()[1];
-    // if (cid == id) {
-    // i.remove();
-    // mLrnCount -= card.getLeft();
-    // return true;
-    // }
-    // }
-    // i = mLrnDayQueue.iterator();
-    // while (i.hasNext()) {
-    // long cid = i.next()[1];
-    // if (cid == id) {
-    // i.remove();
-    // mLrnCount -= card.getLeft();
-    // return true;
-    // }
-    // }
-    // i = mRevQueue.iterator();
-    // while (i.hasNext()) {
-    // long cid = i.next()[0];
-    // if (cid == id) {
-    // i.remove();
-    // mRevCount -= 1;
-    // return true;
-    // }
-    // }
-    // return false;
-    // }
 
     /**
      * New cards **************************************************************** *******************************
@@ -1179,23 +1034,6 @@ public class Sched {
             }
         }
         _logLrn(card, ease, conf, leaving, type, lastLeft);
-    }
-
-
-    /**
-     * Sorts a card into the lrn queue LIBANKI: not in libanki
-     */
-    private void _sortIntoLrn(long due, long id) {
-        Iterator i = mLrnQueue.listIterator();
-        int idx = 0;
-        while (i.hasNext()) {
-            if (((long[]) i.next())[0] > due) {
-                break;
-            } else {
-                idx++;
-            }
-        }
-        mLrnQueue.add(idx, new long[] { due, id });
     }
 
 
@@ -1741,7 +1579,7 @@ public class Sched {
      * Given IDEALIVL, return an IVL away from siblings.
      */
     private int _adjRevIvl(Card card, int idealIvl) {
-        if (getSpreadRev()) {
+        if (mSpreadRev) {
             idealIvl = _fuzzedIvl(idealIvl);
         }
         int idealDue = mToday + idealIvl;
@@ -1980,22 +1818,6 @@ public class Sched {
     }
 
 
-    /** LIBANKI: not in libanki */
-    public boolean leechActionSuspend(Card card) {
-        JSONObject conf;
-        try {
-            conf = _cardConf(card).getJSONObject("lapse");
-            if (conf.getInt("leechAction") == 0) {
-                return true;
-            } else {
-                return false;
-            }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
     /**
      * Tools ******************************************************************** ***************************
      */
@@ -2169,19 +1991,6 @@ public class Sched {
         return sb;
     }
 
-
-    // public String _tomorrowDueMsg(Context context) {
-    // int newCards = 12;// deck.getSched().newTomorrow();
-    // int revCards = 1;// deck.getSched().revTomorrow() +
-    // int eta = 0; // TODO
-    // Resources res = context.getResources();
-    // String newCardsText = res.getQuantityString(
-    // R.plurals.studyoptions_congrats_new_cards, newCards, newCards);
-    // String etaText = res.getQuantityString(
-    // R.plurals.studyoptions_congrats_eta, eta, eta);
-    // return res.getQuantityString(R.plurals.studyoptions_congrats_message,
-    // revCards, revCards, newCardsText, etaText);
-    // }
 
     public String _nextDueMsg(Context context) {
         StringBuilder sb = new StringBuilder();
@@ -2359,282 +2168,6 @@ public class Sched {
 
 
     /**
-     * Counts ******************************************************************* ****************************
-     */
-
-    /** LIBANKI: not in libanki */
-    public int cardCount() {
-        return cardCount(_deckLimit());
-    }
-
-
-    public int cardCount(String dids) {
-        return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE did IN " + dids, false);
-    }
-
-
-    /** LIBANKI: not in libanki */
-    public int matureCount() {
-        return matureCount(_deckLimit());
-    }
-
-
-    public int matureCount(String dids) {
-        return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE type = 2 AND ivl >= 21 AND did IN " + dids,
-                false);
-    }
-
-
-    /** returns today's progress 
-     * 
-     * @param counts (if empty, cached version will be used if any)
-     * @param card
-     * @return [progressCurrentDeck, progressAllDecks, leftCards, eta]
-     */
-    public float[] progressToday(TreeSet<Object[]> counts, Card card, boolean eta) {
-    	try {
-        	int doneCurrent = 0;
-        	int[] leftCurrent = new int[]{0, 0, 0};
-        	String[] cs = new String[]{"new", "lrn", "rev"};
-        	long currentDid = 0;
-
-        	// current selected deck
-        	if (counts == null) {
-        		JSONObject deck = mCol.getDecks().current();
-        		currentDid = deck.getLong("id");
-        		for (String s : cs) {
-        			doneCurrent += deck.getJSONArray(s + "Today").getInt(1);
-        		}
-        		if (card != null) {
-            		int idx = countIdx(card);
-            		leftCurrent[idx] += idx == 1 ? card.getLeft() / 1000 : 1;
-        		} else {
-        			reset();
-        		}
-        		leftCurrent[0] += mNewCount;
-        		leftCurrent[1] += mLrnCount;
-        		leftCurrent[2] += mRevCount;
-        	}
-
-        	// refresh deck progresses with fresh counts if necessary
-        	if (counts != null || mCachedDeckCounts == null) {
-        		if (mCachedDeckCounts == null) {
-        			mCachedDeckCounts = new HashMap<Long, Pair<String[], long[]>>();
-        		}
-        		mCachedDeckCounts.clear();
-        		if (counts == null) {
-        			// reload counts
-        			counts = (TreeSet<Object[]>)deckCounts()[0];
-        		}
-            	for (Object[] d : counts) {
-            		int done = 0;
-        			JSONObject deck = mCol.getDecks().get((Long) d[1]);
-            		for (String s : cs) {
-            			done += deck.getJSONArray(s + "Today").getInt(1);
-            		}
-            		mCachedDeckCounts.put((Long)d[1], new Pair<String[], long[]> ((String[])d[0], new long[]{done, (Integer)d[2], (Integer)d[3], (Integer)d[4]}));
-            	}
-        	}
-
-        	int doneAll = 0;
-        	int[] leftAll = new int[]{0, 0, 0};
-        	for (Map.Entry<Long, Pair<String[], long[]>> d : mCachedDeckCounts.entrySet()) {
-        		boolean exclude = d.getKey() == currentDid; // || mCol.getDecks().isDyn(d.getKey());
-        		if (d.getValue().first.length == 1) {
-        			if (exclude) {
-        				// don't count cached version of current deck
-        				continue;
-        			}
-        			long[] c = d.getValue().second;
-            		doneAll += c[0];
-            		leftAll[0] += c[1];
-            		leftAll[1] += c[2];
-            		leftAll[2] += c[3];
-        		} else if (exclude) {
-        			// exclude cached values for current deck in order to avoid double count
-        			long[] c = d.getValue().second;
-            		doneAll -= c[0];
-            		leftAll[0] -= c[1];
-            		leftAll[1] -= c[2];
-            		leftAll[2] -= c[3];
-        		}
-        	}
-        	doneAll += doneCurrent;
-        	leftAll[0] += leftCurrent[0];
-        	leftAll[1] += leftCurrent[1];
-        	leftAll[2] += leftCurrent[2];
-        	int totalAll = doneAll + leftAll[0] + leftAll[1] + leftAll[2];
-        	int totalCurrent = doneCurrent + leftCurrent[0] + leftCurrent[1] + leftCurrent[2];
-
-        	float progressCurrent = -1;
-        	if (totalCurrent != 0) {
-        		progressCurrent = (float) doneCurrent / (float) totalCurrent;
-        	}
-        	float progressTotal = -1;
-        	if (totalAll != 0) {
-        		progressTotal = (float) doneAll / (float) totalAll;
-        	}
-        	return new float[]{ progressCurrent, progressTotal, totalAll - doneAll, eta ? eta(leftAll, false) : -1};
-    	} catch (JSONException e) {
-    		throw new RuntimeException(e);
-    	}
-    }
-
-
-    /** LIBANKI: not in libanki */
-    public int eta(int[] counts) {
-        return eta(counts, true);
-    }
-
-
-    /** estimates remaining time for learning (based on last seven days) */
-    public int eta(int[] counts, boolean reload) {
-        double revYesRate;
-        double revTime;
-        double lrnYesRate;
-        double lrnTime;
-        if (reload || mEtaCache[0] == -1) {
-            Cursor cur = null;
-            try {
-                cur = mCol
-                        .getDb()
-                        .getDatabase()
-                        .rawQuery(
-                                "SELECT avg(CASE WHEN ease > 1 THEN 1.0 ELSE 0.0 END), avg(time) FROM revlog WHERE type = 1 AND id > "
-                                        + ((mCol.getSched().getDayCutoff() - (7 * 86400)) * 1000), null);
-                if (!cur.moveToFirst()) {
-                    return -1;
-                }
-                revYesRate = cur.getDouble(0);
-                revTime = cur.getDouble(1);
-                cur = mCol
-                        .getDb()
-                        .getDatabase()
-                        .rawQuery(
-                                "SELECT avg(CASE WHEN ease = 3 THEN 1.0 ELSE 0.0 END), avg(time) FROM revlog WHERE type != 1 AND id > "
-                                        + ((mCol.getSched().getDayCutoff() - (7 * 86400)) * 1000), null);
-                if (!cur.moveToFirst()) {
-                    return -1;
-                }
-                lrnYesRate = cur.getDouble(0);
-                lrnTime = cur.getDouble(1);
-            } finally {
-                if (cur != null && !cur.isClosed()) {
-                    cur.close();
-                }
-            }
-            mEtaCache[0] = revYesRate;
-            mEtaCache[1] = revTime;
-            mEtaCache[2] = lrnYesRate;
-            mEtaCache[3] = lrnTime;
-        } else {
-            revYesRate = mEtaCache[0];
-            revTime = mEtaCache[1];
-            lrnYesRate = mEtaCache[2];
-            lrnTime = mEtaCache[3];
-        }
-        // rev cards
-        double eta = revTime * counts[2];
-        // lrn cards
-        double factor = Math.min(1 / (1 - lrnYesRate), 10);
-        double lrnAnswers = (counts[0] + counts[1] + counts[2] * (1 - revYesRate)) * factor;
-        eta += lrnAnswers * lrnTime;
-        return (int) (eta / 60000);
-    }
-
-    //
-    // /**
-    // * Time spent learning today, in seconds.
-    // */
-    // public int timeToday(int fid) {
-    // return (int)
-    // mDb.queryScalar("SELECT sum(taken / 1000.0) FROM revlog WHERE time > 1000 * "
-    // + (mDayCutoff - 86400));
-    // // TODO: check for 0?
-    // }
-    //
-    //
-    // /**
-    // * Number of cards answered today.
-    // */
-    // public int repsToday(int fid) {
-    // return (int) mDb.queryScalar("SELECT count() FROM revlog WHERE time > " +
-    // (mDayCutoff - 86400));
-    // }
-    //
-    //
-    // /**
-    // * Dynamic indices
-    // ***********************************************************************************************
-    // */
-    //
-    // private void updateDynamicIndices() {
-    // // Log.i(AnkiDroidApp.TAG, "updateDynamicIndices - Updating indices...");
-    // // // determine required columns
-    // // if (mDeck.getQconf().getInt("revOrder")) {
-    // //
-    // // }
-    // // HashMap<String, String> indices = new HashMap<String, String>();
-    // // indices.put("intervalDesc", "(queue, interval desc, factId, due)");
-    // // indices.put("intervalAsc", "(queue, interval, factId, due)");
-    // // indices.put("randomOrder", "(queue, factId, ordinal, due)");
-    // // // new cards are sorted by due, not combinedDue, so that even if
-    // // // they are spaced, they retain their original sort order
-    // // indices.put("dueAsc", "(queue, due, factId, due)");
-    // // indices.put("dueDesc", "(queue, due desc, factId, due)");
-    // //
-    // // ArrayList<String> required = new ArrayList<String>();
-    // // if (mRevCardOrder == REV_CARDS_OLD_FIRST) {
-    // // required.add("intervalDesc");
-    // // }
-    // // if (mRevCardOrder == REV_CARDS_NEW_FIRST) {
-    // // required.add("intervalAsc");
-    // // }
-    // // if (mRevCardOrder == REV_CARDS_RANDOM) {
-    // // required.add("randomOrder");
-    // // }
-    // // if (mRevCardOrder == REV_CARDS_DUE_FIRST || mNewCardOrder ==
-    // NEW_CARDS_OLD_FIRST
-    // // || mNewCardOrder == NEW_CARDS_RANDOM) {
-    // // required.add("dueAsc");
-    // // }
-    // // if (mNewCardOrder == NEW_CARDS_NEW_FIRST) {
-    // // required.add("dueDesc");
-    // // }
-    // //
-    // // // Add/delete
-    // // boolean analyze = false;
-    // // Set<Entry<String, String>> entries = indices.entrySet();
-    // // Iterator<Entry<String, String>> iter = entries.iterator();
-    // // String indexName = null;
-    // // while (iter.hasNext()) {
-    // // Entry<String, String> entry = iter.next();
-    // // indexName = "ix_cards_" + entry.getKey();
-    // // if (required.contains(entry.getKey())) {
-    // // Cursor cursor = null;
-    // // try {
-    // // cursor = getDB().getDatabase().rawQuery(
-    // // "SELECT 1 FROM sqlite_master WHERE name = '" + indexName + "'", null);
-    // // if ((!cursor.moveToNext()) || (cursor.getInt(0) != 1)) {
-    // // getDB().execute("CREATE INDEX " + indexName +
-    // " ON cards " + entry.getValue());
-    // // analyze = true;
-    // // }
-    // // } finally {
-    // // if (cursor != null) {
-    // // cursor.close();
-    // // }
-    // // }
-    // // } else {
-    // // getDB().execute("DROP INDEX IF EXISTS " + indexName);
-    // // }
-    // // }
-    // // if (analyze) {
-    // // getDB().execute("ANALYZE");
-    // // }
-    // }
-
-    /**
      * Resetting **************************************************************** *******************************
      */
 
@@ -2759,10 +2292,12 @@ public class Sched {
         }
     }
 
-    /**
-     * ************************************************************************* **********************
-     */
 
+    /**
+     ***********************************************
+     * Everything below here is not in libanki.
+     ***********************************************
+     */
     public String getName() {
         return mName;
     }
@@ -2793,11 +2328,11 @@ public class Sched {
     }
 
     public int getReps(){
-    	return mReps;
+        return mReps;
     }
     
     public void setReps(int reps){
-    	mReps = reps;
+        mReps = reps;
     }
     
 
@@ -2834,4 +2369,288 @@ public class Sched {
         }
     }
 
+    
+
+    /**
+     * Counts
+     */
+
+    public int cardCount() {
+        return cardCount(_deckLimit());
+    }
+
+
+    public int cardCount(String dids) {
+        return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE did IN " + dids, false);
+    }
+
+
+    public int matureCount() {
+        return matureCount(_deckLimit());
+    }
+
+
+    public int matureCount(String dids) {
+        return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE type = 2 AND ivl >= 21 AND did IN " + dids,
+                false);
+    }
+
+
+    /** returns today's progress
+     *
+     * @param counts (if empty, cached version will be used if any)
+     * @param card
+     * @return [progressCurrentDeck, progressAllDecks, leftCards, eta]
+     */
+    public float[] progressToday(TreeSet<Object[]> counts, Card card, boolean eta) {
+        try {
+            int doneCurrent = 0;
+            int[] leftCurrent = new int[]{0, 0, 0};
+            String[] cs = new String[]{"new", "lrn", "rev"};
+            long currentDid = 0;
+
+            // current selected deck
+            if (counts == null) {
+                JSONObject deck = mCol.getDecks().current();
+                currentDid = deck.getLong("id");
+                for (String s : cs) {
+                    doneCurrent += deck.getJSONArray(s + "Today").getInt(1);
+                }
+                if (card != null) {
+                    int idx = countIdx(card);
+                    leftCurrent[idx] += idx == 1 ? card.getLeft() / 1000 : 1;
+                } else {
+                    reset();
+                }
+                leftCurrent[0] += mNewCount;
+                leftCurrent[1] += mLrnCount;
+                leftCurrent[2] += mRevCount;
+            }
+
+            // refresh deck progresses with fresh counts if necessary
+            if (counts != null || mCachedDeckCounts == null) {
+                if (mCachedDeckCounts == null) {
+                    mCachedDeckCounts = new HashMap<Long, Pair<String[], long[]>>();
+                }
+                mCachedDeckCounts.clear();
+                if (counts == null) {
+                    // reload counts
+                    counts = (TreeSet<Object[]>)deckCounts()[0];
+                }
+                for (Object[] d : counts) {
+                    int done = 0;
+                    JSONObject deck = mCol.getDecks().get((Long) d[1]);
+                    for (String s : cs) {
+                        done += deck.getJSONArray(s + "Today").getInt(1);
+                    }
+                    mCachedDeckCounts.put((Long)d[1], new Pair<String[], long[]> ((String[])d[0], new long[]{done, (Integer)d[2], (Integer)d[3], (Integer)d[4]}));
+                }
+            }
+
+            int doneAll = 0;
+            int[] leftAll = new int[]{0, 0, 0};
+            for (Map.Entry<Long, Pair<String[], long[]>> d : mCachedDeckCounts.entrySet()) {
+                boolean exclude = d.getKey() == currentDid; // || mCol.getDecks().isDyn(d.getKey());
+                if (d.getValue().first.length == 1) {
+                    if (exclude) {
+                        // don't count cached version of current deck
+                        continue;
+                    }
+                    long[] c = d.getValue().second;
+                    doneAll += c[0];
+                    leftAll[0] += c[1];
+                    leftAll[1] += c[2];
+                    leftAll[2] += c[3];
+                } else if (exclude) {
+                    // exclude cached values for current deck in order to avoid double count
+                    long[] c = d.getValue().second;
+                    doneAll -= c[0];
+                    leftAll[0] -= c[1];
+                    leftAll[1] -= c[2];
+                    leftAll[2] -= c[3];
+                }
+            }
+            doneAll += doneCurrent;
+            leftAll[0] += leftCurrent[0];
+            leftAll[1] += leftCurrent[1];
+            leftAll[2] += leftCurrent[2];
+            int totalAll = doneAll + leftAll[0] + leftAll[1] + leftAll[2];
+            int totalCurrent = doneCurrent + leftCurrent[0] + leftCurrent[1] + leftCurrent[2];
+
+            float progressCurrent = -1;
+            if (totalCurrent != 0) {
+                progressCurrent = (float) doneCurrent / (float) totalCurrent;
+            }
+            float progressTotal = -1;
+            if (totalAll != 0) {
+                progressTotal = (float) doneAll / (float) totalAll;
+            }
+            return new float[]{ progressCurrent, progressTotal, totalAll - doneAll, eta ? eta(leftAll, false) : -1};
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public int eta(int[] counts) {
+        return eta(counts, true);
+    }
+
+
+    /** estimates remaining time for learning (based on last seven days) */
+    public int eta(int[] counts, boolean reload) {
+        double revYesRate;
+        double revTime;
+        double lrnYesRate;
+        double lrnTime;
+        if (reload || mEtaCache[0] == -1) {
+            Cursor cur = null;
+            try {
+                cur = mCol
+                        .getDb()
+                        .getDatabase()
+                        .rawQuery(
+                                "SELECT avg(CASE WHEN ease > 1 THEN 1.0 ELSE 0.0 END), avg(time) FROM revlog WHERE type = 1 AND id > "
+                                        + ((mCol.getSched().getDayCutoff() - (7 * 86400)) * 1000), null);
+                if (!cur.moveToFirst()) {
+                    return -1;
+                }
+                revYesRate = cur.getDouble(0);
+                revTime = cur.getDouble(1);
+                cur = mCol
+                        .getDb()
+                        .getDatabase()
+                        .rawQuery(
+                                "SELECT avg(CASE WHEN ease = 3 THEN 1.0 ELSE 0.0 END), avg(time) FROM revlog WHERE type != 1 AND id > "
+                                        + ((mCol.getSched().getDayCutoff() - (7 * 86400)) * 1000), null);
+                if (!cur.moveToFirst()) {
+                    return -1;
+                }
+                lrnYesRate = cur.getDouble(0);
+                lrnTime = cur.getDouble(1);
+            } finally {
+                if (cur != null && !cur.isClosed()) {
+                    cur.close();
+                }
+            }
+            mEtaCache[0] = revYesRate;
+            mEtaCache[1] = revTime;
+            mEtaCache[2] = lrnYesRate;
+            mEtaCache[3] = lrnTime;
+        } else {
+            revYesRate = mEtaCache[0];
+            revTime = mEtaCache[1];
+            lrnYesRate = mEtaCache[2];
+            lrnTime = mEtaCache[3];
+        }
+        // rev cards
+        double eta = revTime * counts[2];
+        // lrn cards
+        double factor = Math.min(1 / (1 - lrnYesRate), 10);
+        double lrnAnswers = (counts[0] + counts[1] + counts[2] * (1 - revYesRate)) * factor;
+        eta += lrnAnswers * lrnTime;
+        return (int) (eta / 60000);
+    }
+    
+
+    public void decrementCounts(Card card) {
+        int type = card.getQueue();
+        switch (type) {
+        case 0:
+            mNewCount--;
+            break;
+        case 1:
+            mLrnCount -= card.getLeft() / 1000;
+            break;
+        case 2:
+            mRevCount--;
+            break;
+        case 3:
+            mLrnCount--;
+            break;
+        }
+    }
+    
+
+    public Object[] deckCounts() {
+        TreeSet<Object[]> decks = deckDueTree(0);
+        int[] counts = new int[] { 0, 0, 0 };
+        for (Object[] deck : decks) {
+            if (((String[]) deck[0]).length == 1) {
+                counts[0] += (Integer) deck[2];
+                counts[1] += (Integer) deck[3];
+                counts[2] += (Integer) deck[4];
+            }
+        }
+        TreeSet<Object[]> decksNet = new TreeSet<Object[]>(new DeckNameCompare());
+        for (Object[] d : decks) {
+            try {
+                boolean show = true;
+                for (JSONObject o : mCol.getDecks().parents((Long) d[1])) {
+                    if (o.getBoolean("collapsed")) {
+                        show = false;
+                        break;
+                    }
+                }
+                if (show) {
+                    JSONObject deck = mCol.getDecks().get((Long) d[1]);
+                    if (deck.getBoolean("collapsed")) {
+                        String[] name = (String[]) d[0];
+                        name[name.length - 1] = name[name.length - 1] + " (+)";
+                        d[0] = name;
+                    }
+                    decksNet.add(new Object[]{d[0], d[1], d[2], d[3], d[4], deck.getInt("dyn") != 0});
+                }
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return new Object[] { decksNet, eta(counts), mCol.cardCount() };
+    }
+
+
+    public void setSpreadRev(boolean mSpreadRev) {
+        this.mSpreadRev = mSpreadRev;
+    }
+
+    public class DeckDueListComparator implements Comparator<JSONObject> {
+        public int compare(JSONObject o1, JSONObject o2) {
+            try {
+                return o1.getString("name").compareTo(o2.getString("name"));
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+    
+    /**
+     * Sorts a card into the lrn queue LIBANKI: not in libanki
+     */
+    private void _sortIntoLrn(long due, long id) {
+        Iterator i = mLrnQueue.listIterator();
+        int idx = 0;
+        while (i.hasNext()) {
+            if (((long[]) i.next())[0] > due) {
+                break;
+            } else {
+                idx++;
+            }
+        }
+        mLrnQueue.add(idx, new long[] { due, id });
+    }
+    
+
+    public boolean leechActionSuspend(Card card) {
+        JSONObject conf;
+        try {
+            conf = _cardConf(card).getJSONObject("lapse");
+            if (conf.getInt("leechAction") == 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
