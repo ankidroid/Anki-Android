@@ -267,7 +267,7 @@ public class Sched {
             if (card.getODid() != 0 && card.getQueue() == 2) {
                 return 4;
             }
-            JSONObject conf = _lapseConf(card);
+            JSONObject conf = _lrnConf(card);
             try {
                 if (card.getType() == 0 || conf.getJSONArray("delays").length() > 1) {
                     return 3;
