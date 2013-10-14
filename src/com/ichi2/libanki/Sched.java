@@ -1724,6 +1724,10 @@ public class Sched {
             case DYN_DUE:
                 t = "c.due";
                 break;
+            case DYN_DUEPRIORITY:
+                t = String.format(Locale.US,
+                        "(case when queue=2 and due <= %d then (ivl / cast(%d-due+0.001 as real)) else 10000+due end)",
+                        mToday, mToday);
             default:
             	// if we don't understand the term, default to due order
             	t = "c.due";
