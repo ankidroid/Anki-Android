@@ -272,7 +272,7 @@
             android:configChanges="keyboardHidden|orientation"
             android:label="@string/title_activity_search_image" >
         </activity>
-        <activity 
+		<activity 
             android:name="com.evernote.client.android.EvernoteOAuthActivity" 
             android:label="EvernoteOAuth" 
             android:configChanges="orientation|keyboardHidden" >
