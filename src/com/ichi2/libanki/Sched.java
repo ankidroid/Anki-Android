@@ -269,7 +269,7 @@ public class Sched {
             }
             JSONObject conf = _lrnConf(card);
             try {
-                if (card.getType() == 0 || conf.getJSONArray("delays").length() > 1) {
+                if (card.getType() == 0 || card.getType() == 1 || conf.getJSONArray("delays").length() > 1) {
                     return 3;
                 }
             } catch (JSONException e) {
