@@ -2045,16 +2045,16 @@ public class Sched {
     public String nextIvlStr(Card card, int ease, boolean _short) {
         int ivl = nextIvl(card, ease);
         if (ivl == 0) {
-            return "";
+            return AnkiDroidApp.getAppResources().getString(R.string.sched_end);
         }
         String s = Utils.fmtTimeSpan(ivl, _short);
-//        try {
-//			if (ivl < mCol.getConf().getInt("collapseTime")) {
-//				s = "< " + s;
-//			}
-//		} catch (JSONException e) {
-//			throw new RuntimeException(e);
-//		}
+        try {
+            if (ivl < mCol.getConf().getInt("collapseTime")) {
+                s = "<" + s;
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
         return s;
     }
 
