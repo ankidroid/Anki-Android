@@ -2189,7 +2189,16 @@ public class Sched {
                 "update cards set type=2,queue=2,ivl=?,due=?, " + "usn=?, mod=?, factor=? where id=? and odid=0", d);
     }
 
-    // resetCards
+    /**
+     * Completely reset cards for export.
+     */
+    public void resetCards(long[] ids) {
+        long[] nonNew = Utils.arrayList2array(mCol.getDb().queryColumn(Long.class, String.format(Locale.US,
+                        "select id from cards where id in %s and (queue != 0 or type != 0)", Utils.ids2str(ids)), 0));
+        mCol.getDb().execute("update cards set reps=0, lapses=0 where id in " + Utils.ids2str(nonNew));
+        forgetCards(nonNew);
+    }
+
 
     /**
      * Repositioning new cards **************************************************
