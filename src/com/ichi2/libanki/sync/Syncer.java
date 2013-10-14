@@ -370,7 +370,7 @@ public class Syncer {
             }
             mCol.getSched().reset();
             // check for missing parent decks
-            mCol.getSched().deckDueList(Sched.DECK_INFORMATION_SIMPLE_COUNTS);
+            mCol.getSched().deckDueList();
             // return summary of deck
             JSONArray ja = new JSONArray();
             JSONArray sa = new JSONArray();
