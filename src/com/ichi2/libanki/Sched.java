@@ -51,6 +51,8 @@ import java.util.TreeSet;
 
 public class Sched {
 
+    // These constants are from consts.py
+    
     // whether new cards should be mixed with reviews, or shown first or last
     public static final int NEW_CARDS_DISTRIBUTE = 0;
     public static final int NEW_CARDS_LAST = 1;
@@ -59,10 +61,6 @@ public class Sched {
     // new card insertion order
     public static final int NEW_CARDS_RANDOM = 0;
     public static final int NEW_CARDS_DUE = 1;
-    // review card sort order
-    public static final int REV_CARDS_RANDOM = 0;
-    public static final int REV_CARDS_OLD_FIRST = 1;
-    public static final int REV_CARDS_NEW_FIRST = 2;
 
     // removal types
     public static final int REM_CARD = 0;
@@ -87,18 +85,14 @@ public class Sched {
     public static final int DYN_ADDED = 5;
     public static final int DYN_DUE = 6;
     public static final int DYN_REVADDED = 7;
+    public static final int DYN_DUEPRIORITY = 8;
 
     // model types
     public static final int MODEL_STD = 0;
     public static final int MODEL_CLOZE = 1;
 
-    private static final String[] REV_ORDER_STRINGS = { "ivl DESC", "ivl" };
+    // Not in libanki
     private static final int[] FACTOR_ADDITION_VALUES = { -150, 0, 150 };
-
-    // not in libanki
-    public static final int DECK_INFORMATION_NAMES = 0;
-    public static final int DECK_INFORMATION_SIMPLE_COUNTS = 1;
-    public static final int DECK_INFORMATION_EXTENDED_COUNTS = 2;
 
     private Collection mCol;
     private String mName = "std";
@@ -435,7 +429,7 @@ public class Sched {
     /**
      * Returns [deckname, did, rev, lrn, new]
      */
-    public ArrayList<Object[]> deckDueList(int counts) {
+    public ArrayList<Object[]> deckDueList() {
         _checkDay();
         mCol.getDecks().recoverOrphans();
         unburyCards();
@@ -449,7 +443,7 @@ public class Sched {
             	// invalid duplicate and reload
             	if (lims.containsKey(deck.getString("name"))) {
             		mCol.getDecks().rem(deck.getLong("id"), false, true);
-            		return deckDueList(counts);
+            		return deckDueList();
             	}
             	String p;
             	String[] parts = deck.getString("name").split("::");
@@ -471,7 +465,7 @@ public class Sched {
             		if (!lims.containsKey(p)) {
                 		// if parent was missing, this deck is invalid, and we need to reload the deck list
                 		mCol.getDecks().rem(deck.getLong("id"), false, true);
-            			return deckDueList(counts);
+            			return deckDueList();
             		}
             		nlim = Math.min(nlim, lims.get(p)[0]);
             	}
@@ -497,8 +491,8 @@ public class Sched {
     }
 
 
-    public TreeSet<Object[]> deckDueTree(int counts) {
-        return _groupChildren(deckDueList(counts));
+    public TreeSet<Object[]> deckDueTree() {
+        return _groupChildren(deckDueList());
     }
 
 
@@ -2573,7 +2567,7 @@ public class Sched {
     
 
     public Object[] deckCounts() {
-        TreeSet<Object[]> decks = deckDueTree(0);
+        TreeSet<Object[]> decks = deckDueTree();
         int[] counts = new int[] { 0, 0, 0 };
         for (Object[] deck : decks) {
             if (((String[]) deck[0]).length == 1) {
