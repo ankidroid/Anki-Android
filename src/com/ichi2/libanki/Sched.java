@@ -2281,12 +2281,35 @@ public class Sched {
         }
     }
 
+    /**
+     * for post-import
+     */
+    public void maybeRandomizeDeck() {
+        maybeRandomizeDeck(null);
+    }
+    
+    public void maybeRandomizeDeck(Long did) {
+        if (did == null) {
+            did = mCol.getDecks().selected();
+        }
+        JSONObject conf = mCol.getDecks().confForDid(did);
+        // in order due?
+        try {
+            if (conf.getJSONObject("new").getInt("order") == NEW_CARDS_RANDOM) {
+                randomizeCards(did);
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     /**
      ***********************************************
      * Everything below here is not in libanki.
      ***********************************************
      */
+
     public String getName() {
         return mName;
     }
