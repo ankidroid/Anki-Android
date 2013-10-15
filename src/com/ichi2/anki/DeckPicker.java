@@ -61,6 +61,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.receiver.SdCardReceiver;
@@ -77,6 +78,10 @@ import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
+import com.ichi2.anki.DeckPicker;
+import com.ichi2.anki.EvernoteSync;
+import com.ichi2.anki.R;
+import com.evernote.client.android.EvernoteSession;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -153,6 +158,7 @@ public class DeckPicker extends FragmentActivity {
     private static final int MENU_CARDBROWSER = 13;
     private static final int MENU_IMPORT = 14;
     private static final int MENU_REUPGRADE = 15;
+    private static final int MENU_EVERNOTESYNC = 18;
 
     /**
      * Context Menus
@@ -238,6 +244,12 @@ public class DeckPicker extends FragmentActivity {
     private GestureDetector gestureDetector;
     View.OnTouchListener gestureListener;
     private boolean mSwipeEnabled;
+    
+    /** Evernote */
+	private static final String CONSUMER_KEY = "matthiasv-3883" ;
+	private static final String CONSUMER_SECRET = "a944056d8952611c" ;
+	private static final EvernoteSession.EvernoteService EVERNOTE_SERVICE = EvernoteSession.EvernoteService.PRODUCTION;
+    protected static EvernoteSession mEvernoteSession;
 
     // ----------------------------------------------------------------------------
     // LISTENERS
@@ -2400,6 +2412,13 @@ public class DeckPicker extends FragmentActivity {
 
         item = menu.add(Menu.NONE, MENU_PREFERENCES, Menu.NONE, R.string.menu_preferences);
         item.setIcon(R.drawable.ic_menu_preferences);
+
+        mEvernoteSession = EvernoteSession.getInstance(this, CONSUMER_KEY , CONSUMER_SECRET , EVERNOTE_SERVICE );
+        if (mEvernoteSession.isLoggedIn()) {
+	        item = menu.add(Menu.NONE, MENU_EVERNOTESYNC, Menu.NONE, R.string.menu_evernoteSync);
+	        item.setIcon(R.drawable.ic_menu_preferences);
+        }
+        
         item = menu.add(Menu.NONE, MENU_ADD_SHARED_DECK, Menu.NONE, R.string.menu_get_shared_decks);
         item.setIcon(R.drawable.ic_menu_download);
         item = menu.add(Menu.NONE, MENU_CREATE_DECK, Menu.NONE, R.string.new_deck);
@@ -2553,6 +2572,10 @@ public class DeckPicker extends FragmentActivity {
             case MENU_PREFERENCES:
                 startActivityForResult(new Intent(DeckPicker.this, Preferences.class), PREFERENCES_UPDATE);
                 return true;
+            
+            case MENU_EVERNOTESYNC:
+            	new EvernoteSync(this).sync();
+            	return true;
 
             case MENU_FEEDBACK:
                 Intent i = new Intent(DeckPicker.this, Feedback.class);
@@ -2601,6 +2624,7 @@ public class DeckPicker extends FragmentActivity {
         super.onActivityResult(requestCode, resultCode, intent);
 
         mDontSaveOnStop = false;
+
         if (resultCode == RESULT_MEDIA_EJECTED) {
             showDialog(DIALOG_SD_CARD_NOT_MOUNTED);
             return;
@@ -2653,9 +2677,9 @@ public class DeckPicker extends FragmentActivity {
         	String oldPath = mPrefDeckPath;
             SharedPreferences pref = restorePreferences();
             String newLanguage = pref.getString("language", "");
-            if (AnkiDroidApp.setLanguage(newLanguage)) {
+            //if (AnkiDroidApp.setLanguage(newLanguage)) {
                 mInvalidateMenu = true;
-            }
+            //}
             if (mNotMountedDialog != null && mNotMountedDialog.isShowing() && pref.getBoolean("internalMemory", false)) {
                 showStartupScreensAndDialogs(pref, 0);            	
             } else if (!mPrefDeckPath.equals(oldPath)) {

@@ -30,8 +30,8 @@
     </instrumentation>
 
     <uses-sdk
-        android:minSdkVersion="4"
-        android:targetSdkVersion="18" />
+        android:minSdkVersion="11"
+        android:targetSdkVersion="17" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -271,6 +271,15 @@
             android:name="com.ichi2.anki.multimediacard.activity.SearchImageActivity"
             android:configChanges="keyboardHidden|orientation"
             android:label="@string/title_activity_search_image" >
+        </activity>
+<<<<<<< HEAD
+		<activity 
+=======
+        <activity 
+>>>>>>> Added evernote app integration
+            android:name="com.evernote.client.android.EvernoteOAuthActivity" 
+            android:label="EvernoteOAuth" 
+            android:configChanges="orientation|keyboardHidden" >
         </activity>
     </application>
 </manifest>

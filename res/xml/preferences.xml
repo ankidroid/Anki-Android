@@ -152,7 +152,11 @@
                 android:summary="@string/sync_fetch_missing_media_summ"
                 android:title="@string/sync_fetch_missing_media" />
 	</PreferenceCategory>
-      </PreferenceScreen>
+	<PreferenceCategory android:title="@string/pref_cat_evernoteSync">
+	    <Preference android:key="evernoteSync" android:title="@string/evernoteSync_login" android:summary="@string/evernoteSync_logged_out"/>
+	    <EditTextPreference android:key="evernoteSync_SearchString" android:title="@string/evernoteSync_SearchString_title" android:summary="@string/evernoteSync_SearchString_list" android:defaultValue="any: tag:review" />
+	</PreferenceCategory>
+    </PreferenceScreen>
     <PreferenceScreen android:title="@string/pref_cat_qadisplay" >
         <PreferenceCategory android:title="@string/pref_cat_themes" >
 <!--             <ListPreference
