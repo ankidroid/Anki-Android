@@ -1454,7 +1454,12 @@ public class Reviewer extends AnkiActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+		
+		/** Evernote App Integration*/
+        if (requestCode == 99) {
+        	displayCardAnswer();
+        }
+		
         if (resultCode == DeckPicker.RESULT_DB_ERROR) {
             closeReviewer(DeckPicker.RESULT_DB_ERROR, false);
         }
@@ -2362,6 +2367,24 @@ public class Reviewer extends AnkiActivity {
             mTimeoutHandler.removeCallbacks(mShowAnswerTask);
             mTimeoutHandler.postDelayed(mShowAnswerTask, mWaitAnswerSecond * 1000);
         }
+		/** Evernote App Integration */
+        long aMID = 0;
+		try {
+			aMID = mCurrentCard.getCol().getModels().byName("Evernote").getLong("id");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+        
+        try {
+			if (aMID == mCurrentCard.note().model().getLong("id")) {
+				 Intent sendIntent = new Intent("com.evernote.action.VIEW_NOTE");
+				 String eID[] = mCurrentCard.note().getFields();
+				 sendIntent.putExtra("NOTE_GUID", eID[1]);
+				 startActivityForResult(sendIntent, 99);        	
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
     }
 
 

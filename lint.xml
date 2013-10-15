@@ -3,4 +3,7 @@
     <issue id="MissingTranslation">
         <ignore path="res/values/constants.xml" />
     </issue>
+	<issue id="NewApi">
+        <ignore path="src\com\evernote\client\android\EvernoteOAuthActivity.java" />
+    </issue>
 </lint>
