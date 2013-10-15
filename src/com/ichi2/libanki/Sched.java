@@ -1244,7 +1244,7 @@ public class Sched {
                             + " LIMIT " + mReportLimit + ")", false);
             return cnt + mCol.getDb().queryScalar(
                     "SELECT count() FROM (SELECT 1 FROM cards WHERE did = " + did
-                            + " AND queue = 3 AND due < " + mToday
+                            + " AND queue = 3 AND due <= " + mToday
                             + " LIMIT " + mReportLimit + ")", false);
         } catch (SQLException e) {
             throw new RuntimeException(e);
