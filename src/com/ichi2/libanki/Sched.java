@@ -1383,7 +1383,7 @@ public class Sched {
 
     public int totalRevForCurrentDeck() {
         return mCol.getDb().queryScalar(String.format(Locale.US,
-        		"SELECT count() FROM cards WHERE did IN (SELECT id FROM cards WHERE did IN %s AND queue = 2 AND due <= %d LIMIT %s)",
+        		"SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN %s AND queue = 2 AND due <= %d LIMIT %s)",
         		Utils.ids2str(mCol.getDecks().active()), mToday, mReportLimit), false);
     }
 
