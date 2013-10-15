@@ -119,8 +119,8 @@ public class Sched {
     // Queues
     private final LinkedList<Long> mNewQueue = new LinkedList<Long>();
     private final LinkedList<long[]> mLrnQueue = new LinkedList<long[]>();
-    private final LinkedList<long[]> mLrnDayQueue = new LinkedList<long[]>();
-    private final LinkedList<long[]> mRevQueue = new LinkedList<long[]>();
+    private final LinkedList<Long> mLrnDayQueue = new LinkedList<Long>();
+    private final LinkedList<Long> mRevQueue = new LinkedList<Long>();
 
     private LinkedList<Long> mNewDids;
     private LinkedList<Long> mLrnDids;
@@ -917,7 +917,7 @@ public class Sched {
                                 "SELECT id FROM cards WHERE did = " + did + " AND queue = 3 AND due <= " + mToday
                                         + " LIMIT " + mQueueLimit, null);
                 while (cur.moveToNext()) {
-                    mLrnDayQueue.add(new long[] { cur.getLong(0) });
+                    mLrnDayQueue.add(cur.getLong(0));
                 }
             } finally {
                 if (cur != null && !cur.isClosed()) {
@@ -945,7 +945,7 @@ public class Sched {
     private Card _getLrnDayCard() {
         if (_fillLrnDay()) {
             mLrnCount -= 1;
-            return mCol.getCard(mLrnDayQueue.remove()[0]);
+            return mCol.getCard(mLrnDayQueue.remove());
         }
         return null;
     }
@@ -1320,9 +1320,9 @@ public class Sched {
         while (mRevDids.size() > 0) {
             long did = mRevDids.getFirst();
             int lim = Math.min(mQueueLimit, _deckRevLimit(did));
-            mRevQueue.clear();
             Cursor cur = null;
             if (lim != 0) {
+                mRevQueue.clear();
                 // fill the queue with the current did
                 try {
                     cur = mCol
@@ -1332,7 +1332,7 @@ public class Sched {
                                     "SELECT id FROM cards WHERE did = " + did + " AND queue = 2 AND due <= " + mToday
                                             + " LIMIT " + lim, null);
                     while (cur.moveToNext()) {
-                        mRevQueue.add(new long[] { cur.getLong(0) });
+                        mRevQueue.add(cur.getLong(0));
                     }
                 } finally {
                     if (cur != null && !cur.isClosed()) {
@@ -1344,6 +1344,9 @@ public class Sched {
                     try {
                         if (mCol.getDecks().get(did).getInt("dyn") != 0) {
                             // dynamic decks need due order preserved
+                            // Note: libanki reverses mRevQueue and returns the last element in _getRevCard().
+                            // AnkiDroid differs by leaving the queue intact and returning the *first* element
+                            // in _getRevCard().
                         } else {
                             Random r = new Random();
                             r.setSeed(mToday);
@@ -1371,11 +1374,12 @@ public class Sched {
     private Card _getRevCard() {
         if (_fillRev()) {
             mRevCount -= 1;
-            return mCol.getCard(mRevQueue.remove()[0]);
+            return mCol.getCard(mRevQueue.remove());
         } else {
             return null;
         }
     }
+
 
     public int totalRevForCurrentDeck() {
         return mCol.getDb().queryScalar(String.format(Locale.US,
