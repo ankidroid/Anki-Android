@@ -1530,6 +1530,7 @@ public class Sched {
         return (new Random().nextInt(minMax[1] - minMax[0] + 1)) + minMax[0];
     }
 
+
     public int[] _fuzzedIvlRange(int ivl) {
         int fuzz;
         if (ivl < 2) {
@@ -1537,16 +1538,17 @@ public class Sched {
         } else if (ivl == 2) {
             return new int[]{2, 3};
         } else if (ivl < 7) {
-            fuzz = (int) (ivl * 0.25);
+            fuzz = (int)(ivl * 0.25);
         } else if (ivl < 30) {
-            fuzz = (int) (ivl * 0.15);
+            fuzz = Math.max(2, (int)(ivl * 0.15));
         } else {
-            fuzz = (int) (ivl * 0.05);
+            fuzz = Math.max(4, (int)(ivl * 0.05));
         }
         // fuzz at least a day
         fuzz = Math.max(fuzz, 1);
         return new int[]{ivl - fuzz, ivl + fuzz};
     }
+
 
     /** Integer interval after interval factor and prev+1 constraints applied */
     private int _constrainedIvl(int ivl, JSONObject conf, double prev) {
