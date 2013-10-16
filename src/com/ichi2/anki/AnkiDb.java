@@ -51,11 +51,7 @@ public class AnkiDb {
                 (SQLiteDatabase.OPEN_READWRITE + SQLiteDatabase.CREATE_IF_NECESSARY)
                         | SQLiteDatabase.NO_LOCALIZED_COLLATORS);
         if (mDatabase != null) {
-            if (AnkiDroidApp.SDK_VERSION >= 11) {
-                queryString("PRAGMA journal_mode = WAL");
-            } else {
-                queryString("PRAGMA journal_mode = DELETE");
-            }
+            setJournalMode();
             if (AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getBoolean("asyncMode", false)) {
                 mDatabase.rawQuery("PRAGMA synchronous = 0", null);
             } else {
@@ -302,6 +298,19 @@ public class AnkiDb {
         } finally {
             mDatabase.endTransaction();
         }
+    }
+
+    private void setJournalMode() {
+        String journalMode = "WAL";
+        if (AnkiDroidApp.SDK_VERSION <= 10) {
+            journalMode = "DELETE";
+        } else if (android.os.Build.BRAND.equals("NOOK")) {
+            if (android.os.Build.MODEL.equals("BNTV400") /* Nook HD */
+                    || android.os.Build.MODEL.equals("BNTV600") /* Nook HD+ */) {
+                journalMode = "DELETE";
+            }
+        }
+        queryString("PRAGMA journal_mode = " + journalMode);
     }
 
 }
