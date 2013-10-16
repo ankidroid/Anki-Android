@@ -68,6 +68,7 @@ import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.OldAnkiDeckFilter;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.async.DeckTask;
+import com.ichi2.async.DeckTask.Listener;
 import com.ichi2.async.DeckTask.TaskData;
 import com.ichi2.charts.ChartBuilder;
 import com.ichi2.libanki.Collection;
@@ -618,8 +619,11 @@ public class DeckPicker extends FragmentActivity {
             	mOpenCollectionDialog.dismiss();
         	}
             try {
-                // Ensure we have the correct deck selected in the deck list after we have updated it
-                setSelectedDeck(AnkiDroidApp.getCol().getDecks().current().getLong("id"));
+                // Ensure we have the correct deck selected in the deck list after we have updated it. Check first
+                // if the collection is open since it might have been closed before this task completes.
+                if (AnkiDroidApp.getCol() != null) {
+                    setSelectedDeck(AnkiDroidApp.getCol().getDecks().current().getLong("id"));
+                }
             } catch (JSONException e) {
                 throw  new RuntimeException();
             }
@@ -1268,29 +1272,25 @@ public class DeckPicker extends FragmentActivity {
         } else if (mImportPath != null && AnkiDroidApp.colIsOpen()) {
             showDialog(DIALOG_IMPORT);
         } else {
-            // if the collection is empty, user has already upgraded the app but maybe did not successfully upgrade the decks
-            if (!preferences.getString("lastUpgradeVersion", "").equals(AnkiDroidApp.getPkgVersion()) &&
-                    (new File(AnkiDroidApp.getCurrentAnkiDroidDirectory()).listFiles(new OldAnkiDeckFilter()).length) > 0) {
-                StyledDialog.Builder builder = new StyledDialog.Builder(DeckPicker.this);
-                builder.setTitle(R.string.deck_upgrade_title);
-                builder.setIcon(R.drawable.ic_dialog_alert);
-                builder.setMessage(R.string.deck_upgrade_already_upgraded);
-                builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+            // AnkiDroid is being updated and a collection already exists. Run a database check here since we could
+            // have added database fixes in between releases.
+            if (!preferences.getString("lastUpgradeVersion", "").equals(AnkiDroidApp.getPkgVersion())) {
+                preferences.edit().putString("lastUpgradeVersion", AnkiDroidApp.getPkgVersion()).commit();
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPEN_COLLECTION, new Listener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        restartUpgradeProcess();
+                    public void onPostExecute(DeckTask task, TaskData result) {
+                        mOpenCollectionHandler.onPostExecute(result);
+                        integrityCheck();
                     }
-                });
-                builder.setCancelable(false);
-                builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext())
-                                .edit().putString("lastUpgradeVersion", AnkiDroidApp.getPkgVersion()).commit();
-                        loadCollection();
+                    public void onPreExecute(DeckTask task) {
                     }
-                });
-                builder.show();
+
+                    @Override
+                    public void onProgressUpdate(DeckTask task, TaskData... values) {
+                    }
+                }, new DeckTask.TaskData(AnkiDroidApp.getCollectionPath()));
             } else {
                 loadCollection();
             }
