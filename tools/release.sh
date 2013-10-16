@@ -43,3 +43,7 @@ python tools/lib/googlecode_upload.py --summary "AnkiDroid $VERSION" --project a
 git add AndroidManifest.xml
 git commit -m "Bumped version to $VERSION"
 git push
+
+# Tag the release
+git tag v$VERSION
+git push --tags
