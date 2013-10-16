@@ -48,7 +48,7 @@
   <string name="undo">Deshacer</string>
   <string name="undo_action_review">repasar</string>
   <string name="undo_action_edit">editar nota</string>
-  <string name="undo_action_bury">enterrar nota</string>
+  <string name="undo_action_bury">ocultar nota</string>
   <string name="undo_action_suspend_card">suspender tarjeta</string>
   <string name="undo_action_suspend_note">suspender nota</string>
   <string name="undo_action_delete">eliminar nota</string>
@@ -68,7 +68,7 @@
   <string name="menu_preferences">Preferencias</string>
   <string name="menu_about">Acerca de</string>
   <string name="menu_dismiss_note">Descartar Nota...</string>
-  <string name="menu_bury_note">Enterrar Nota</string>
+  <string name="menu_bury_note">Ocultar Nota</string>
   <string name="menu_suspend_card">Suspender Tarjeta</string>
   <string name="menu_suspend_note">Suspender Nota</string>
   <string name="menu_delete_note">Eliminar Nota</string>

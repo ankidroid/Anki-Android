@@ -38,13 +38,13 @@
   <string name="session_time_limit_reached">Temps limite de session atteint</string>
   <string name="cram_edit_warning">L\'édition de cartes n\'est pas autorisées pendant le bachotage</string>
   <string name="suspend_leeches">Masquer les cartes encombrantes</string>
-  <string name="leech_suspend_notification">La carte, marquée « encombrante », est masquée</string>
+  <string name="leech_suspend_notification">La carte a été marquée « pénible » et est masquée</string>
   <string name="leech_notification">Carte marquée « encombrante »</string>
   <string name="corrupt_font">Fichier de police corrompu %s</string>
   <string name="about_title">À propos</string>
   <string name="cardeditor_title_add_note">Ajouter une note</string>
   <string name="cardeditor_title_edit_card">Modifier la note</string>
-  <string name="factadder_saving_error">La note ne peut être enregistrée</string>
+  <string name="factadder_saving_error">Erreur à l\'enregistrement de la note</string>
   <string name="pref_lang_support">Langue</string>
   <string name="saving_facts">Enregistrer la note</string>
   <string name="deck">Paquet</string>
@@ -74,7 +74,7 @@
   <string name="help_faq">FAQ</string>
   <string name="help_tutorial">Paquet-tutoriel</string>
   <string name="check_db">Vérification de la base de données</string>
-  <string name="check_db_message">Vérifie la base de données. \nVeuillez patienter…</string>
+  <string name="check_db_message">Vérification de la base de données. \nVeuillez patienter…</string>
   <string name="simple_interface_hint">%s vide. Gardez à l\'esprit que l\'interface simplifiée ne peut afficher ni d\'images, ni de sons, etc.</string>
   <string name="delete_deck">Suppression du paquet…\nVeuillez patienter.</string>
   <string name="menu_cardbrowser">Examiner les cartes</string>
@@ -101,10 +101,10 @@
   <string-array name="dynOrderLabels">
     <item>Des plus au moins anciennes</item>
     <item>Aléatoirement</item>
-    <item>Des plus au moins fréquentes</item>
-    <item>Des moins au plus fréquentes</item>
-    <item>Des plus au moins fautives</item>
-    <item>Les plus anciennement ajoutées</item>
+    <item>Des plus fréquentes aux plus rares</item>
+    <item>Des plus rares aux plus fréquentes</item>
+    <item>Des plus fautives au plus correctes</item>
+    <item>Selon l\'ordre de leur ajout</item>
     <item>Les plus urgentes d’abord</item>
   </string-array>
   <plurals name="factadder_cards_added">

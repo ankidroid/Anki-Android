@@ -120,40 +120,40 @@
     <item>1秒</item>
     <item>1分鐘</item>
     <item>1小時</item>
-    <item>一天</item>
+    <item>1天</item>
     <item>1個月</item>
-    <item>一年</item>
+    <item>1年</item>
   </string-array>
   <string-array name="next_review_p">
     <item>%s秒</item>
     <item>%s分鐘</item>
-    <item>%s個小時</item>
+    <item>%s小時</item>
     <item>%s天</item>
     <item>%s個月</item>
     <item>%s年</item>
   </string-array>
   <plurals name="deckpicker_title">
-    <item quantity="one">1 of %2$d 到期(%3$s)</item>
-    <item quantity="other">%1$d of %2$d 到期(%3$s)</item>
+    <item quantity="one">%2$d之1到期(%3$s)</item>
+    <item quantity="other">%2$d之%1$d到期(%3$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">1分鐘</item>
     <item quantity="other">%d分鐘</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item quantity="one">1 of %2$d 到期</item>
-    <item quantity="other">%1$d of %2$d 到期</item>
+    <item quantity="one">%2$d之1到期</item>
+    <item quantity="other">%2$d之%1$d到期</item>
   </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">剩餘一分鐘</item>
     <item quantity="other">還有 %d 分鐘</item>
   </plurals>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">明天有: 一張卡片待複習和%2$s。\n估計時間: %3$s</item>
+    <item quantity="one">明天有: 1張卡片待複習和%2$s。\n估計時間: %3$s</item>
     <item quantity="other">明天有: %1$d 張卡片待複習和%2$s。\n估計時間: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">一張新卡片</item>
+    <item quantity="one">1張新卡片</item>
     <item quantity="other">%1$d 張新卡片</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
