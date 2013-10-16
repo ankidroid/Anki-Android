@@ -65,10 +65,10 @@
   <string name="card_editor_copy_card">کپی کارت</string>
   <string name="card_editor_reset_card">پیشرفت تنظیم مجدد</string>
   <string name="error_insufficient_memory">عملیات به علت نبود حافظه کافی در دستگاه شما امکان پذیر نیست</string>
-  <string name="tutorial_load">ساختن خودآموز دسته کارت.\nلطفا صبر کنید...</string>
-  <string name="tutorial_loading_error">خودآموز دسته کارت نمی تواند ایجاد شود</string>
+  <string name="tutorial_load">در حال ساختن خودآموز دسته کارت.\nلطفا صبر کنید...</string>
+  <string name="tutorial_loading_error">ساختن دسته کارت خودآموز ممکن نشد</string>
   <string name="rename">تغییر نام</string>
-  <string name="rename_error">دسته کارت %s نامگذاري مجدد نشد</string>
+  <string name="rename_error">نامگذاری مجدد دسته کارت %s ممکن نشد</string>
   <string name="help_title">کمک</string>
   <string name="help_online">راهنمای آنلاین</string>
   <string name="help_faq">پرسش و پاسخ</string>

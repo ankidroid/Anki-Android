@@ -50,7 +50,7 @@
   <string name="intent_add_saved_information">儲存的資料</string>
   <string name="intent_add_clear_all">全部清除</string>
   <string name="intent_aedict_empty">\'default\'類別是空的</string>
-  <string name="intent_aedict_category">To add cards to AnkiDroid remove all Notepad categories or add one named \'default\'</string>
+  <string name="intent_aedict_category">若要增加新卡片至 AnkiDroid，刪除所有的記事本類別或新增一個 \'default\' 牌組</string>
   <string name="custom_study_new_total_new">牌組 %s 的新卡片</string>
   <string name="custom_study_rev_total_rev">牌組 %s 複習到期的卡片</string>
   <string name="custom_study_new_extend">增加今天的新卡片限制</string>

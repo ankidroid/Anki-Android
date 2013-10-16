@@ -32,7 +32,7 @@
   <string name="studyoptions_total_cards">کل کارتها:</string>
   <string name="studyoptions_eta">زمان برآورد شده (دقیقه):</string>
   <string name="studyoptions_start">شروع مرور</string>
-  <string name="show_answer">نشان دادن پاسخ</string>
+  <string name="show_answer">نمایش پاسخ</string>
   <string name="ease1_successive">دوباره</string>
   <string name="ease2_successive">سخت</string>
   <string name="ease3_successive">خوب</string>
