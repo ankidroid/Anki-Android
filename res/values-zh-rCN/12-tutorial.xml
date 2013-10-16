@@ -18,16 +18,32 @@
 <resources> 
  <string-array name="tutorial_questions"> 
     <item><![CDATA[感谢安装AnkiDroid！<br/>这是一段简单的介绍<br/>你现在看到的是卡牌的<span style=\'font-weight:600;\'>问题部分</span><br />试着点击一下下面那个大按钮]]></item> 
+    <item><![CDATA[现在是下一张卡片。<br/>和现实中的卡片一样，你在正面写出问题，在反面写下答案。<br/>(点击按钮显示卡片的反面)。]]></item> 
     <item><![CDATA[&quot;布吉纳法索的首都是什么？&quot;<br /> 想一下答案，然后点击&quot;显示答案&quot;]]></item> 
+    <item><![CDATA[每个答案按钮上面，您可以找到时间信息，这个时间就是卡牌再次显示的时间。]]></item> 
+    <item><![CDATA[目的是在您即将忘记某个卡牌之前，再次显示它。实证研究表明，通过这种方法可以最有效地学习。]]></item> 
+    <item><![CDATA[关于AnkiDroid的组织：<br/><br/>所有信息都以问题和答案的方式成对出现。如果你想换成答案-问题的方式学习，就应该创建一张新卡片，把问题-答案交换。]]></item> 
+    <item><![CDATA[卡牌集中存放在牌组里，并可用各种标记来组织。]]></item> 
+    <item><![CDATA[获取新卡的方式主要有两种：<br/>通过“分享”添加别的用户制作的卡牌，或者自己制作。]]></item> 
     <item><![CDATA[但无论如何，创建自己的牌组才能真正符合您的需要。您可以直接在 AnkiDroid 中 ... ]]></item> 
     <item><![CDATA[现在看一下顶栏<br/>你可以在左上角找到一些数字。蓝色的表示今天还有多少新的卡牌要学习，红色的表示失败的卡牌（点击了\"再次学习\"),]]></item> 
+    <item><![CDATA[在右上角，您可以找到这张卡牌的思考时间，和你的表现。]]></item> 
     <item><![CDATA[尽管您可以独立的使用AnkiDroid，它也完全能够连接到AnkiWeb，Anki 桌面客户端(可用于Linux、Windows和Mac)的同步服务器。]]></item> 
+    <item><![CDATA[这些就是AnkiDroid的主要用法了。<br/><br/>想找到更多信息，访问http://ankisrs.net]]></item> 
  </string-array>
  <string-array name="tutorial_answers">
     <item><![CDATA[... 来查看卡牌上那条线下的<span style=\'font-weight:600;\'>答案</span><br />点击右边的按钮]]></item> 
+    <item><![CDATA[现在假设你要学习世界的首都名称。第一个问题是...<br/>(点击按钮开始)]]></item> 
     <item><![CDATA[&quot;瓦加杜古&quot;是正确的答案。 <br /> 不知道？单击&quot;再次&quot;可以在几分钟后再次看到这张牌。否则，请根据难易程度，点击其他按钮。]]></item> 
+    <item><![CDATA[此时间是这样算出来的，根据上次您的复习时间，回答的难易按钮，以及之前本卡牌的“容易”答案选择。]]></item> 
+    <item><![CDATA[如果您想要了解更多有关间隔重复的信息，访问:<br>http://en.wikipedia.org/wiki/Spaced_repetition_system]]></item> 
+    <item><![CDATA[在AnkiDroid上这可以自动完成。你不必重复两次信息。]]></item> 
+    <item><![CDATA[当你开始使用AnkiDroid后，会马上了解到如何组织卡牌。]]></item> 
+    <item><![CDATA[你可以找到许多别人已经制作好的卡牌，这其中肯定有适合你的。]]></item> 
     <item><![CDATA[...或 (更方便地）用桌面应用程序 Anki （可免费下载 http://ankisrs.net/)。<br><br>可以与桌面应用程序轻松同步牌组，所以传输数据不是问题。]]></item> 
     <item><![CDATA[绿色的表示之前已学而今天要复习的卡牌数。<br/>下划线标注的，就是当前的卡牌类型。]]></item> 
+    <item><![CDATA[上面的菜单栏显示您的进度，下面的菜单栏显示答案是“是”的百分比。<separator>]]></item> 
     <item><![CDATA[因此，您可以轻松地同步AnkiDroid 和 Anki桌面客户端的集合，使用后者可以更方便的添加和管理卡牌。]]></item> 
+    <item><![CDATA[现在你可以开始使用一下AnkiDroid看它合不合适自己。<br/><br/>你可以点一下所有牌组(在主界面点击所有牌组)，在那里可以下载别人做好的牌组，也可以自己创建。]]></item> 
  </string-array>
 </resources>

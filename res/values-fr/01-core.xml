@@ -60,7 +60,7 @@
   <string name="contextmenu_deckpicker_optimize_deck">Optimiser la base de données</string>
   <string name="contextmenu_deckpicker_rename_deck">Renommer le jeu de cartes</string>
   <string name="contextmenu_deckpicker_collapse_deck">Réduire le paquet</string>
-  <string name="contextmenu_deckpicker_inflate_deck">Développer le jeu de cartes</string>
+  <string name="contextmenu_deckpicker_inflate_deck">Développer le paquet</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Définir un dictionnaire personnalisé</string>
   <string name="menu_download_deck">Télécharger le jeu de cartes</string>
   <string name="menu_download_shared_deck">Jeu de cartes partagé</string>
@@ -88,14 +88,14 @@
   <string name="later">Plus tard</string>
   <string name="download">Télécharger</string>
   <string name="open_collection">Chargement de la collection.\nVeuillez patienter…</string>
-  <string name="rebuild_cram_deck">Reconstruction du jeu de cartes bachoteur.\nVeuillez patienter…</string>
+  <string name="rebuild_cram_deck">Reconstruction du paquet de bachotage.\nVeuillez patienter…</string>
   <string name="rebuild_cram_label">Réparer</string>
   <string name="empty_cram_label">Vider</string>
   <string name="empty_cram_deck">Jeu de cartes de bachotage en cours de vidage.\n
 Veuillez patienter...</string>
   <string name="studyoptions_new_filtercram">Filtrer/Bachoter</string>
   <string name="custom_study_deck_name">Session d\'étude personnalisée</string>
-  <string name="custom_study_deck_exists">Merci de renommer d\'abord le jeu de cartes d\'étude personnalisé.</string>
+  <string name="custom_study_deck_exists">Merci de renommer d\'abord le paquet d\'étude personnalisée.</string>
   <string name="studyoptions_congrats_finished">FÉLICITATIONS ! Vous avez terminé… pour l’instant !</string>
   <string name="studyoptions_congrats_more_rev">Vous avez atteint votre quota de révisions, mais il reste des cartes à reviser pour aujourd’hui. Pour une meilleure mémorisation, vous devriez peut-être augmenter le quota journalier dans les options.</string>
   <string name="studyoptions_congrats_more_new">Il reste des nouvelles cartes disponibles, mais la limite journalière a été atteinte. Vous pouvez augmenter cette limite dans les options, mais gardez à l\'esprit que cela augmentera votre charge de travail à court terme.</string>
@@ -107,7 +107,7 @@ Veuillez patienter...</string>
   <string name="button_sync">Synchroniser</string>
   <string name="restart">Redémarrer</string>
   <string name="do_nothing">Ne rien faire</string>
-  <string name="more_options">Plus d\'options</string>
+  <string name="more_options">Options supplémentaires</string>
   <string name="now">Maintenant</string>
   <string name="back">Retour</string>
   <string name="ankiweb">AnkiWeb</string>

@@ -128,8 +128,8 @@
   <string name="pref_cat_scrolling">硬體 上/下 按鈕</string>
   <string name="more_scrolling_buttons">電子書閱讀器</string>
   <string name="more_scrolling_buttons_summ">也使用漢字/片假名，Emoji/Kao-moji 表情符號按鈕來捲動。</string>
-  <string name="double_scrolling_gap">Double scrolling</string>
-  <string name="double_scrolling_gap_summ">Enable this if you want to double the scroll gap.</string>
+  <string name="double_scrolling_gap">加速捲動</string>
+  <string name="double_scrolling_gap_summ">將捲動的速度加倍</string>
   <string name="swipe_sensibility">撥動靈敏度</string>
   <string name="swipe_sensibility_summ">手勢靈敏度：XXX</string>
   <string name="tts">朗讀文字</string>

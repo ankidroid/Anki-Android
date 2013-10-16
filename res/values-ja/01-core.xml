@@ -67,7 +67,7 @@
   <string name="menu_my_account">アカウントの設定と同期</string>
   <string name="menu_preferences">設定</string>
   <string name="menu_about">このプログラムについて</string>
-  <string name="menu_dismiss_note">非表示カードへの切替</string>
+  <string name="menu_dismiss_note">非表示ノートへの切替</string>
   <string name="menu_bury_note">カードの一時非表示</string>
   <string name="menu_suspend_card">カードの非表示</string>
   <string name="menu_suspend_note">ノートの非表示</string>
