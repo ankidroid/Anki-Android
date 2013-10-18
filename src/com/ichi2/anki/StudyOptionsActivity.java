@@ -125,7 +125,7 @@ public class StudyOptionsActivity extends FragmentActivity {
     
     @Override
     public boolean onMenuOpened(int featureId, Menu menu) {
-        if (mInvalidateMenu) {
+        if (menu != null && mInvalidateMenu) {
             menu.clear();
             onCreateOptionsMenu(menu);
             mInvalidateMenu = false;
