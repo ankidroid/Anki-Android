@@ -298,8 +298,7 @@ public class Sched {
             throw new RuntimeException(e);
         }
         
-        mCol.getDb().execute("update cards set mod=?,usn=?,queue=type where queue = -2",
-                new Object[]{Utils.intNow(), mCol.usn()});
+        mCol.getDb().execute("update cards set queue=type where queue = -2");
     }
 
 
