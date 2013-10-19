@@ -335,6 +335,7 @@ public class Collection {
             }
         }
         mScm = Utils.intNow(1000);
+        setMod();
     }
 
 
