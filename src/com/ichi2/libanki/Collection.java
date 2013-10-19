@@ -1366,23 +1366,50 @@ public class Collection {
                 	problems.add("Deleted " + ids.size() + " note(s) with missing note type.");
 	                _remNotes(Utils.arrayList2array(ids));
                 }
-                // cards with invalid ordinal
+                // for each model
                 for (JSONObject m : mModels.all()) {
-                	// ignore clozes
-                	if (m.getInt("type") != Sched.MODEL_STD) {
-                		continue;
-                	}
-                	ArrayList<Integer> ords = new ArrayList<Integer>();
-                	JSONArray tmpls = m.getJSONArray("tmpls");
-                	for (int t = 0; t < tmpls.length(); t++) {
-                		ords.add(tmpls.getJSONObject(t).getInt("ord"));
-                	}
-                	ids = mDb.queryColumn(Long.class,
-                            "SELECT id FROM cards WHERE ord NOT IN " + Utils.ids2str(ords) + " AND nid IN (SELECT id FROM notes WHERE mid = " + m.getLong("id") + ")", 0);
-                	if (ids.size() > 0) {
-                    	problems.add("Deleted " + ids.size() + " card(s) with missing template.");
-    	                remCards(Utils.arrayList2array(ids));
-                	}
+                    // cards with invalid ordinal
+                    if (m.getInt("type") == Sched.MODEL_STD) {
+                        ArrayList<Integer> ords = new ArrayList<Integer>();
+                        JSONArray tmpls = m.getJSONArray("tmpls");
+                        for (int t = 0; t < tmpls.length(); t++) {
+                            ords.add(tmpls.getJSONObject(t).getInt("ord"));
+                        }
+                        ids = mDb.queryColumn(Long.class,
+                                "SELECT id FROM cards WHERE ord NOT IN " + Utils.ids2str(ords) + " AND nid IN ( " +
+                                "SELECT id FROM notes WHERE mid = " + m.getLong("id") + ")", 0);
+                        if (ids.size() > 0) {
+                            problems.add("Deleted " + ids.size() + " card(s) with missing template.");
+                            remCards(Utils.arrayList2array(ids));
+                        }
+                    }
+                    // notes with invalid field counts
+                    ids = new ArrayList<Long>();
+                    Cursor cur = null;
+                    try {
+                        cur = mDb.getDatabase().rawQuery("select id, flds from notes where mid = " + m.getLong("id"), null);
+                        while (cur.moveToNext()) {
+                            String flds = cur.getString(1);
+                            long id = cur.getLong(0);
+                            int fldsCount = 0;
+                            for (int i = 0; i < flds.length(); i++) {
+                                if (flds.charAt(i) == 0x1f) {
+                                    fldsCount++;
+                                }
+                            }
+                            if (fldsCount + 1 != m.getJSONArray("flds").length()) {
+                                ids.add(id);
+                            }
+                        }
+                        if (ids.size() > 0) {
+                            problems.add("Deleted " + ids.size() + " note(s) with wrong field count.");
+                            _remNotes(Utils.arrayList2array(ids));
+                        }
+                    } finally {
+                        if (cur != null && !cur.isClosed()) {
+                            cur.close();
+                        }
+                    }
                 }
                 // delete any notes with missing cards
                 ids = mDb.queryColumn(Long.class,
@@ -1391,7 +1418,7 @@ public class Collection {
                 	problems.add("Deleted " + ids.size() + " note(s) with missing no cards.");
 	                _remNotes(Utils.arrayList2array(ids));
                 }
-
+                // cards with missing notes
                 ids = mDb.queryColumn(Long.class,
                         "SELECT id FROM cards WHERE nid NOT IN (SELECT id FROM notes)", 0);
                 if (ids.size() != 0) {
