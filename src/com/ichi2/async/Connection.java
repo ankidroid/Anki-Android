@@ -359,7 +359,6 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 // set journal mode to delete
                 try {
                     AnkiDb d = AnkiDatabaseManager.getDatabase(deckPath);
-                    d.queryString("PRAGMA journal_mode = DELETE");
                 } catch (SQLiteDatabaseCorruptException e) {
                     // ignore invalid .anki files
                     corruptFiles.add(f.getName());

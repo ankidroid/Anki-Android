@@ -1027,7 +1027,6 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         try {
             try {
                 AnkiDb d = AnkiDatabaseManager.getDatabase(colPath);
-                d.queryString("PRAGMA journal_mode = DELETE");
             } catch (SQLiteDatabaseCorruptException e) {
                 // collection is invalid
                 return new TaskData(false);
