@@ -32,7 +32,7 @@
   <string name="studyoptions_total_cards">کل کارتها:</string>
   <string name="studyoptions_eta">زمان برآورد شده (دقیقه):</string>
   <string name="studyoptions_start">شروع مرور</string>
-  <string name="show_answer">نشان دادن پاسخ</string>
+  <string name="show_answer">نمایش پاسخ</string>
   <string name="ease1_successive">دوباره</string>
   <string name="ease2_successive">سخت</string>
   <string name="ease3_successive">خوب</string>
@@ -64,7 +64,7 @@
   <string name="contextmenu_deckpicker_set_custom_dictionary">تعیین واژه نامه سفارشی</string>
   <string name="menu_download_deck">دانلود دسته</string>
   <string name="menu_download_shared_deck">اشتراک گذاشتن دسته</string>
-  <string name="menu_my_account">همگامسازی حساب</string>
+  <string name="menu_my_account">همگام سازی حساب</string>
   <string name="menu_preferences">تنظیمات</string>
   <string name="menu_about">درباره</string>
   <string name="menu_dismiss_note">نادیده گرفتن یادداشت...</string>
@@ -80,14 +80,14 @@
   <string name="menu_unmark_card">برداشتن نشانه کارت</string>
   <string name="new_deck">دسته جدید</string>
   <string name="create">ساختن</string>
-  <string name="new_dynamic_deck">دسته پویای جدید</string>
+  <string name="new_dynamic_deck">دسته فیلتر شده جدید</string>
   <string name="studyoptions_feedback">پیشنهادات و انتقادات</string>
   <string name="studyoptions_load_tutorial_deck">ساختن خودآموز</string>
   <string name="night_mode">حالت شب</string>
   <string name="visit">مشاهده شده</string>
   <string name="later">بعدا</string>
   <string name="download">دانلود</string>
-  <string name="open_collection">افتتاح مجموعه.\nلطفا صبر کنید...</string>
+  <string name="open_collection">باز کردن مجموعه.\nلطفا صبر کنید...</string>
   <string name="rebuild_cram_deck">درحال بازسازی دسته کارت آزمون.\nلطفا صبر کنید...</string>
   <string name="rebuild_cram_label">بازسازی</string>
   <string name="empty_cram_label">خالی</string>
@@ -95,15 +95,26 @@
   <string name="studyoptions_new_filtercram">فیلتر / مطالعه فشرده</string>
   <string name="custom_study_deck_name">جلسه مطالعه سفارشی</string>
   <string name="custom_study_deck_exists">لطفا ابتدا دسته مطالعه سفارشی را مجددا نام گذاری کنید.</string>
-  <string name="studyoptions_congrats_finished">تبریک ! این کار را به پایان رسانده اید.</string>
+  <string name="studyoptions_congrats_finished">تبریک ! فعلا کارتان تمام شد.</string>
   <string name="studyoptions_congrats_more_rev">به حد روزانه مرور رسیده اید، ولی هنوز کارتهایی هستند که باید مرور شوند. برای بهینه سازی حافظه، می توانید حد روزانه مرور را در بخش گزینه ها افزایش دهید.</string>
-  <string name="studyoptions_congrats_more_new">کارتهای جدید بیشتری موجودند ، ولی شما به حد روزانه مرور رسیده اید. می توانید این حد را در بخش گزینه ها افزایش دهید، ولی خواهشا به یاد داشته باشید که بار کاری مرور کوتاه مدت شما افزایش خواهد یافت.</string>
+  <string name="studyoptions_congrats_more_new">کارتهای جدید بیشتری موجودند ، ولی شما به حد روزانه مرور رسیده اید. می توانید این حد را در بخش گزینه ها افزایش دهید، ولی لطفا به یاد داشته باشید که بار کاری مرور کوتاه مدت شما افزایش خواهد یافت.</string>
   <string name="studyoptions_congrats_custom">جهت مطالعه خارج از برنامه ، بر روی دکمه مطالعه سفارشی زیر کلیک کنید.</string>
-  <string name="sd_card_not_mounted">کارت حافظه قرار داده نشده.\n\nمی توانید مجموعه تان را روی یک حافظه داخلی ذخیره کنید, البته این عمل توصیه نمی شود. زیرا دستیابی به فایل ها به آسانی صورت نخواهد گرفت. در تنظیمات می توانید آن را فعال کنید (با کلیک بر روی این متن آنها را باز کنید).</string>
+  <string name="sd_card_not_mounted">کارت حافظه قرار داده نشده است.\n\nمی توانید مجموعه تان را روی یک حافظه داخلی نیز ذخیره کنید, البته این عمل توصیه نمی شود. زیرا دستیابی به فایل ها به آسانی صورت نخواهد گرفت. در تنظیمات می توانید آن را فعال کنید (با کلیک بر روی این متن آنها را باز کنید).</string>
   <string name="studyoptions_options">گزینه ها</string>
   <string name="empty_cloze_warning">لطفا این یادداشت را ویرایش کنید و اضافه کنید بعضی cloze deletions  . (%1$s)</string>
   <string name="help_cloze">راهنما</string>
   <string name="button_sync">همگام سازی</string>
+  <string name="restart">راه اندازی مجدد</string>
+  <string name="do_nothing">هیچ چیز</string>
+  <string name="more_options">گزینه های بیشتر</string>
+  <string name="now">حالا</string>
+  <string name="back">بازگشت</string>
+  <string name="ankiweb">آنکی وب</string>
+  <string name="usb">یواس بی</string>
+  <string name="_import">درون ریز</string>
+  <string name="confirm">تایید</string>
+  <string name="internet">اینترنت</string>
+  <string name="pc">رایانه</string>
   <string-array name="next_review_s">
     <item>1 ثانیه</item>
     <item>1 دقیقه</item>

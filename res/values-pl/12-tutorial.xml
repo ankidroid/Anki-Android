@@ -17,33 +17,33 @@
  
 <resources> 
  <string-array name="tutorial_questions"> 
-    <item><![CDATA[Thanks for installing AnkiDroid!<br />This is a short introduction.<br />What you see now is the <span style=\'font-weight:600;\'>question</span> part of a flashcard.<br />Please click on the large button below...]]></item> 
-    <item><![CDATA[The next card is shown now.<br />The idea is straightforward: Just like in &quot;real world&quot; paper flashcards, you write a question on the front and the answer on the back side of your cards.<br />(click the button to show the back side)]]></item> 
-    <item><![CDATA[&quot;What is the capital of Burkina Faso?&quot;<br />Think a bit about the answer and click then &quot;show answer&quot;]]></item> 
+    <item><![CDATA[Dziękujemy za instalację AnkiDroid!<br />To jest krótkie wprowadzenie.<br />To co widzisz to <span style=\'font-weight:600;\'>pytająca</span> część karty.<br />Kliknij duży przycisk poniżej…]]></item> 
+    <item><![CDATA[Teraz pokazano następną kartę.<br />Idea jest prosta: tak jak w prawdziwych fiszkach, na jednej stronie jest pytanie a na drugiej – odpowiedź.<br />(kliknij przycisk aby zobaczyć tył karty)]]></item> 
+    <item><![CDATA[&quot;Jaka jest stolica Burkina Faso?&quot;<br />Pomyśl chwilę nad odpowiedzią i kliknij &quot;pokaż odpowiedź&quot;]]></item> 
     <item><![CDATA[Powyżej każdego z przycisków odpowiedzi pokazany jest czas, po jakim karta ponownie się pojawi, jeśli odpowiesz na nią za pomocą tego przycisku.]]></item> 
-    <item><![CDATA[Celem jest ponowne pokazanie karty tuż przed jej zapomnieniem.  Badania empiryczne wykazały, że w ten sposób można skuteczniej opanowywać materiał pamięciowy.]]></item> 
+    <item><![CDATA[Celem jest ponowne pokazanie karty tuż przed jej zapomnieniem. Badania empiryczne wykazały, że w ten sposób można skuteczniej opanowywać materiał pamięciowy.]]></item> 
     <item><![CDATA[Parę słów na temat organizacji danych w AnkiDroidzie:<br /><br>Materiał do nauki musi być podzielony na pary pytań i odpowiedzi.  Do nauki w drugą stronę należy utworzyć nową kartę z odwróconą kolejnością pytania i odpowiedzi.]]></item> 
     <item><![CDATA[Karty grupowane są w taliach, w których można je organizować za pomocą przeróżnych etykiet.]]></item> 
-    <item><![CDATA[There are mainly two ways of getting new cards:<br />You either add premade decks of other users (choose &quot;shared decks&quot; in the decks summary) or create them by yourself.]]></item> 
-    <item><![CDATA[W każdym razie, tworzenie własnych talii jest nieodzowne, jeśli chcesz je mieć idealnie dopasowane do swoich potrzeb.  Można to robić bezpośrednio w AnkiDroidzie...]]></item> 
-    <item><![CDATA[Let\'s have a look on the top bar:<br />In the left top corner you find some numbers. The blue one tells you, how many new cards are still projected for today. The red number counts the failed cards (answered by &quot;again&quot;),]]></item> 
+    <item><![CDATA[Są dwie metody pozyskiwania nowych kart:<br />Albo dodajesz karty zrobione przez innych użytkowników (wybierz &quot;udostępnione talie&quot; w podsumowaniu talii) albo tworzysz je sam.]]></item> 
+    <item><![CDATA[W każdym razie, tworzenie własnych talii jest nieodzowne, jeśli chcesz je mieć idealnie dopasowane do swoich potrzeb. Można to robić bezpośrednio w AnkiDroidzie...]]></item> 
+    <item><![CDATA[Popatrz na górny pasek:<br />W lewym górnym rogu znajdziesz różne numery. Niebieski oznacza ile kart jeszcze dzisiaj oczekuje na przejrzenie. Czerwony oznacza karty, na które nie znałeś odpowiedzi (gdzie kliknąłeś &quot;ponownie&quot;),]]></item> 
     <item><![CDATA[W prawym rogu pokazane jest, jak długo zajęło Ci zastanawianie się nad odpowiedzią i Twoje wyniki.]]></item> 
-    <item><![CDATA[Albeit you can use AnkiDroid stand alone, it is fully connected to AnkiWeb, the syncing server of Anki Desktop (available for Linux, Windows, Mac).]]></item> 
+    <item><![CDATA[Chociaż możesz używać AnkiDroid oddzielnie, możesz go w pełni zintegrować z AnkiWeb, serwerem do synchronizacji Anki Desktop (dostępny dla systemów Linux, Windows, Mac).]]></item> 
     <item><![CDATA[To były najważniejsze zasady użytkowania AnkiDroida.<br /><br>Aby dowiedzieć się więcej na temat Anki, odwiedź http://ankisrs.net/]]></item> 
  </string-array>
  <string-array name="tutorial_answers">
-    <item><![CDATA[... in order to see the <span style=\'font-weight:600;\'>answer</span> part of the flashcard (below the line).<br />Click on the button on the right]]></item> 
-    <item><![CDATA[Let\'s assume you want to learn the world\'s capitals. Let the question be...<br />(click on one of the buttons to show the next card)]]></item> 
-    <item><![CDATA[&quot;Ouagadougou&quot; is the right answer. <br />You didn\'t know it? Click &quot;again&quot; to see the card again in a couple of minutes. Otherwise, click on the other buttons, depending on the easiness of the answer.]]></item> 
+    <item><![CDATA[… aby zobaczyć część karty z <span style=\'font-weight:600;\'>odpowiedzią</span> (poniżej linii).<br />Kliknij przycisk po prawej]]></item> 
+    <item><![CDATA[Załóżmy, że chcesz się nauczyć stolic państw świata. Niech pytaniem będzie…<br />(kliknij jeden z przycisków aby pokazać następną kartę)]]></item> 
+    <item><![CDATA[&quot;Ouagadougou&quot; jest prawidłową odpowiedzią. <br />Nie wiedziałeś? Kliknij &quot;ponownie&quot; abby zobaczyć kartę ponownie za kilka minut. W przeciwnym wypadku, kliknij jeden z pozostałych guzików, w zależności od trudności pytania.]]></item> 
     <item><![CDATA[Czas ten wyliczany jest na podstawie ostatniej daty powtórki, obecnej oceny oraz poprzednich ocen aktualnej karty.]]></item> 
     <item><![CDATA[Jeśli chcesz dowiedzieć się więcej na temat metody planowanych powtórek, zobacz: http://en.wikipedia.org/wiki/Spaced_repetition_system]]></item> 
-    <item><![CDATA[Nie martw się, można to zrobić automatycznie.  Nie ma potrzeby wprowadzania tych samych informacji dwa razy.]]></item> 
+    <item><![CDATA[Nie martw się, można to zrobić automatycznie. Nie ma potrzeby wprowadzania tych samych informacji dwa razy.]]></item> 
     <item><![CDATA[Szybko to zauważysz, gdy zaczniesz używać AnkiDroida.]]></item> 
-    <item><![CDATA[You\'ll find thousands of premade decks to download and there are probably some which are useful for you.]]></item> 
+    <item><![CDATA[Znajdziesz do ściągnięcia tysiące już utworzonych talii i prawdopodobnie niektóre z nich mogą być przydatne i Tobie.]]></item> 
     <item><![CDATA[...lub (co jest trochę bardziej wygodne) za pomocą desktopowej aplikacji Anki (do pobrania za darmo z http://ankisrs.net/).<br><br>Talie można łatwo synchronizować z aplikacją desktopową, zatem przesyłanie danych nie stanowi problemu.]]></item> 
-    <item><![CDATA[the green one shows the number of cards you\'ve already learned before and which are due to review today.<br />The type of the actual cards is specified by an underline.]]></item> 
+    <item><![CDATA[zielony pokazuje ile kart już się nauczyłeś i które są dziś do przejrzenia.<br />Typ aktualnych kart będzie wskazany podkreśleniem.]]></item> 
     <item><![CDATA[Górna belka pokazuje postęp, dolna procent poprawnych odpowiedzi.]]></item> 
-    <item><![CDATA[Thus, you can easily sync your collection between AnkiDroid and Anki Desktop and use the latter for a more convenient card adding and managing.]]></item> 
+    <item><![CDATA[Możesz więc łatwo synchronizować swoją kolekcję pomiędzy AnkiDroid i Anki Desktop a wersji desktopowej używać w celu łatwiejszego zarządzania kartami i taliami.]]></item> 
     <item><![CDATA[Spróbuj poużywać trochę programu i przekonaj się, czy odpowiada Twoim oczekiwaniom.<br><br>Zacznij może od przeglądarki talii (z menu okna głównego wybierz &quot;Wszystkie talie&quot;), gdzie możesz pobrać gotowe talie lub tworzyć własne (użyj menu tego okna).]]></item> 
  </string-array>
 </resources>

@@ -26,21 +26,21 @@
   <string name="CardEditorLaterMessage">Information für später gespeichert</string>
   <string name="CardEditorCardDeck">Karten-Stapel: %s</string>
   <string name="CardEditorNoteDeck">Notiz-Stapel: %s</string>
-  <string name="CardEditorModel">Notiz-Typ: %s</string>
+  <string name="CardEditorModel">Notiztyp: %s</string>
   <string name="CardEditorTags">Schlagworte: %1$s</string>
-  <string name="add_new_tag">Neues Schlagwort</string>
-  <string name="note_type">Notiz-Typ</string>
-  <string name="sdcard_missing_message">SD-Karte ist nicht verfügbar, da sie als USB-Speicher verwendet wird. Trennen Sie die Verbindung, um auf Ihre Stapel zuzugreifen.</string>
+  <string name="add_new_tag">Neues Schlagwort hinzufügen</string>
+  <string name="note_type">Notiztyp</string>
+  <string name="sdcard_missing_message">Die SD-Karte ist nicht verfügbar, da sie als USB-Speicher verwendet wird. Trennen Sie die Verbindung, um auf Ihre Stapel zuzugreifen.</string>
   <string name="show_whiteboard">Whiteboard an</string>
   <string name="hide_whiteboard">Whiteboard aus</string>
-  <string name="clear_whiteboard">Tafel säubern</string>
-  <string name="session_question_limit_reached">Sitzungs-Fragenlimit erreicht</string>
-  <string name="session_time_limit_reached">Sitzungs-Zeitlimit erreicht</string>
+  <string name="clear_whiteboard">Whiteboard säubern</string>
+  <string name="session_question_limit_reached">Fragenlimit der Sitzung erreicht</string>
+  <string name="session_time_limit_reached">Zeitlimit der Sitzung erreicht</string>
   <string name="cram_edit_warning">Kartenbearbeitung während des Paukens nicht erlaubt</string>
   <string name="suspend_leeches">Lernbremsen aussetzen</string>
   <string name="leech_suspend_notification">Karte als Lernbremse markiert und ausgesetzt</string>
   <string name="leech_notification">Karte als Lernbremse markiert</string>
-  <string name="corrupt_font">Unbenutzbare Schrift-Datei %s</string>
+  <string name="corrupt_font">Fehlerhafte Schriftartdatei %s</string>
   <string name="about_title">Über</string>
   <string name="cardeditor_title_add_note">Notiz hinzufügen</string>
   <string name="cardeditor_title_edit_card">Notiz bearbeiten</string>
@@ -55,7 +55,7 @@
   <string name="timebox_reached">Zeitlimit erreicht!</string>
   <string name="studyoptions_welcome_title">Willkommen in AnkiDroid!</string>
   <string name="studyoptions_no_external_storage_title">Externer Speicher nicht verfügbar</string>
-  <string name="studyoptions_no_external_storage_message">Kein externer Speicher verfügbar. AnkiDroid braucht Zugang zur SD-Karte um Stapel zu öffnen oder zu lesen. Überprüfen Sie, ob Ihre SD-Karte eingehängt ist und versuchen Sie es erneut.</string>
+  <string name="studyoptions_no_external_storage_message">Kein externer Speicher verfügbar. AnkiDroid benötigt Zugang zur SD-Karte, um Anki-Stapel zu öffnen und zu lesen. Überprüfen Sie, ob Ihre SD-Karte eingehängt ist, und versuchen Sie es erneut.</string>
   <string name="fact_adder_intent_title">AnkiDroid-Karte</string>
   <string name="fact_adder_swap">Tauschen</string>
   <string name="deckpicker_select_dictionary_title">Wörterbuch wählen</string>
@@ -70,21 +70,21 @@
   <string name="rename">Umbenennen</string>
   <string name="rename_error">Stapel %s konnte nicht umbenannt werden</string>
   <string name="help_title">Hilfe</string>
-  <string name="help_online">Online-Hilfe</string>
-  <string name="help_faq">Häufige Fragen</string>
+  <string name="help_online">Onlinehilfe</string>
+  <string name="help_faq">Häufig gestellte Fragen</string>
   <string name="help_tutorial">Einführungsstapel</string>
   <string name="check_db">Datenbank überprüfen</string>
   <string name="check_db_message">Prüfe Datenbank.\nBitte warten...</string>
-  <string name="simple_interface_hint">Leere %s. Beachten Sie, dass die einfache Oberfläche keine Bilder/Sounds etc. anzeigen kann.</string>
+  <string name="simple_interface_hint">Leere %s. Beachten Sie, dass die vereinfachte Oberfläche keine Bilder/Sounds etc. anzeigen kann.</string>
   <string name="delete_deck">Lösche Stapel…\nBitte warten.</string>
   <string name="menu_cardbrowser">Kartenübersicht</string>
   <string name="show_hint">Hinweis zeigen</string>
-  <string name="pref_lang_other">Sprach-Einstellungen</string>
-  <string name="pref_font_UI">Benutzerdefinierte UI-Schriftart</string>
+  <string name="pref_lang_other">Spracheinstellungen</string>
+  <string name="pref_font_UI">Benutzerdefinierte Oberflächenschriftart</string>
   <string name="info_rate">AnkiDroid bewerten</string>
   <string name="col_load_failed">Laden der Sammlung fehlgeschlagen.\nDrücken Sie \"zurück\", um AnkiDroid zu schließen.</string>
   <string name="import_title">Karten importieren</string>
-  <string name="import_message">Möchten Sie den Inhalt der Datei %s zu Ihrer Sammlung hinzufügen oder Ihre Sammlung damit ersetzen?</string>
+  <string name="import_message">Möchten Sie den Inhalt der Datei %s zu Ihrer Sammlung hinzufügen, oder Ihre Sammlung damit ersetzen?</string>
   <string name="import_message_add">Hinzufügen</string>
   <string name="import_message_replace">Ersetzen</string>
   <string name="import_message_replace_confirm">Ihre bestehende Sammlung wird gelöscht und durch die aus der Datei %s ersetzt. Sind Sie sicher?</string>
@@ -92,16 +92,18 @@
   <string name="import_log_error">Import fehlgeschlagen</string>
   <string name="import_log_no_apkg">Dies ist keine gültige apgk-Datei</string>
   <string name="import_importing">Karten werden importiert.\nBitte warten...</string>
-  <string name="import_hint">Um Karten zu importieren, kopieren Sie die apkg-Datei ins Verzeichnis %s und drücken \'Ok\'</string>
-  <string name="upgrade_import_no_file_found">Keine importierbaren apkg-Dateien gefunden</string>
-  <string name="custom_study">Benutzerdefinierte Sitzung</string>
-  <string name="dyn_deck_desc">Dies ist ein besonderer Stapel, um außerhalb der normalen Planung zu lernen. Karten werden nach dem Lernen automatisch in ihren Originalstapel zurückgeschickt. Wird der Stapel gelöscht, werden alle verbleibenden Karten in ihren Originalstapel einsortiert.</string>
+  <string name="import_hint">Um Karten zu importieren, kopieren Sie die apkg-Datei ins Verzeichnis %s und drücken Sie Ok</string>
+  <string name="upgrade_import_no_file_found">Keine importierbare Datei %1$s gefunden</string>
+  <string name="custom_study">Benutzerdefiniertes Lernen</string>
+  <string name="dyn_deck_desc">Dies ist ein besonderer Stapel, um außerhalb der normalen Planung zu lernen. Karten werden nach dem Lernen automatisch in ihren Originalstapel zurückgeschickt. Beim Löschen dieses Stapels werden alle verbleibenden Karten in ihren Originalstapel zurückgeschickt.</string>
+  <string name="restart_upgrade_process">Aktualisierung neustarten</string>
+  <string name="exit_wizard">Assistent verlassen</string>
   <string-array name="dynOrderLabels">
     <item>Am frühesten gesehene zuerst</item>
     <item>Zufällig</item>
     <item>Steigende Intervalle</item>
     <item>Sinkende Intervalle</item>
-    <item>Meiste Falsch-Antworten</item>
+    <item>Meiste Fehler</item>
     <item>Erstellungsreihenfolge</item>
     <item>Fälligkeitsreihenfolge</item>
   </string-array>

@@ -80,7 +80,7 @@
   <string name="menu_unmark_card">Ξεμαρκάρισμα Κάρτας</string>
   <string name="new_deck">Νέα τράπουλα</string>
   <string name="create">Δημιουργία</string>
-  <string name="new_dynamic_deck">Νέα δυναμική τράπουλα</string>
+  <string name="new_dynamic_deck">Νέα φιλτραρισμένη τράπουλα</string>
   <string name="studyoptions_feedback">Σχόλια</string>
   <string name="studyoptions_load_tutorial_deck">Δημιουργία φροντιστηρίου</string>
   <string name="night_mode">Νυκτερινή λειτουργία</string>
@@ -104,6 +104,17 @@
   <string name="empty_cloze_warning">Παρακαλούμε συντάξτε αυτή τη σημείωση και προσθέστε μερικές κενές φράσεις. (%1$s)</string>
   <string name="help_cloze">βοήθεια</string>
   <string name="button_sync">Συγχρονισμός</string>
+  <string name="restart">Επανεκκίνηση</string>
+  <string name="do_nothing">Να μη γίνει τίποτα</string>
+  <string name="more_options">Περισσότερες επιλογές</string>
+  <string name="now">Τώρα</string>
+  <string name="back">Πίσω</string>
+  <string name="ankiweb">AnkiWeb</string>
+  <string name="usb">USB</string>
+  <string name="_import">Εισαγωγή</string>
+  <string name="confirm">Confirm</string>
+  <string name="internet">Internet</string>
+  <string name="pc">PC</string>
   <string-array name="next_review_s">
     <item>1 δευτερόλεπτο</item>
     <item>1 λεπτό</item>

@@ -27,7 +27,7 @@
   <string name="widget_minimum_cards_due_blink">Blinken</string>
   <string name="widget_minimum_cards_due_notification_ticker_title">Fällige Karten</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid-Karten fällig</string>
-  <string name="widget_no_cards_due">Keine Karten fällig</string>
+  <string name="widget_no_cards_due">Keine fälligen Karten</string>
   <string name="widget_loading">Widget wird geladen…</string>
   <string name="widget_medium">AnkiDroid Mittel</string>
   <string name="widget_small">AnkiDroid Klein</string>

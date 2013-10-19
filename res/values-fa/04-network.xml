@@ -78,7 +78,7 @@
   <string name="sync_downloading_media">درحال دانلود رسانه %1$d/%2$d...</string>
   <string name="sync_log_uploading_message">همگام سازی کامل از محلی</string>
   <string name="sync_log_downloading_message">همگام سازی کامل از سرور</string>
-  <string name="sync_log_clocks_unsynchronized">زمان دستگاه شما با زمان سرور متفاوت است تا %1$d sec%2$s; قادر به همگام سازی نیست.</string>
+  <string name="sync_log_clocks_unsynchronized">ساعت دستگاهتان تا %1$d ثانیه%2$s صحیح نیست; برای همگامسازی و به منظور  جلوگیری از خطا لازم است که هر دو ساعت دستگاه و منطقه زمانی به طور صحیح تنظیم شوند. لطفا مطمئن شوید که تاریخ و زمان دستگاه شما بطور صحیح تنظیم گردیده, سپس دوباره همگامسازی کنید.</string>
   <string name="sync_log_clocks_unsynchronized_tz">منطقه زماني دستگاه احتمالا اشتباه است</string>
   <string name="sync_log_clocks_unsynchronized_date">تاريخ دستگاه احتمالا اشتباه است</string>
   <string name="sync_log_old_version">پروتکل همگام سازی تغییر کرده است، لطفا به AnkiDroid آخرین ارتقاء داده شده. %S را ببینید</string>
@@ -110,6 +110,7 @@
   <string name="sync_media_sanity_check">بررسی شماره رسانه...</string>
   <string name="sync_media_no_changes">فایل رسانه تغییری نکرده است.</string>
   <string name="sync_media_success">رسانه با موفقیت همگام سازی شد.</string>
+  <string name="sync_sanity_failed">پس از همگام سازی، این مجموعه در وضعیت متناقض بود. برای رفع این مشکل آنکی دروید یک همگامسازی کامل و تحمیلی انجام خواهد داد. لطفا آنچه را که دوست دارید نگه دارید انتخاب کنید، یا اگر ترجیح می دهید بعدا همگامسازی کنید آن را لغو کنید.</string>
   <string name="sync_media_sanity_failed">همگام سازی رسانه کامل شد, اما تعداد رسانه با سرور یکسان نیست. برای رفع هر خطایی رسانه بعدی بطور کامل همگام سازی خواهد شد.</string>
   <string name="sync_media_error">خطا در همگام سازی اطلاعات رسانه.</string>
   <string name="register_error">خطایی رخ داده است. لطفا بعدا مجددا امتحان نمایید.</string>
@@ -117,10 +118,10 @@
   <string name="register_mismatch">نام کاربری یا تکرار کلمه عبور یا مطابقت ندارد یا خالی است. لطفا مجددا وارد نمایید.</string>
   <string name="registering_message">ساخت حساب کاربریt.\nلطفا صبر کنید...</string>
   <string name="upgrade_decks_zipping">فشرده سازی دسته ها برای بارگذاری.\nلطفا صبر کنید...</string>
-  <string name="upgrade_decks_upload">بارگذاری دسته های فشرده شده.\nلطفا صبر کنید...</string>
+  <string name="upgrade_decks_upload">در حال بارگذاری فایلهای فشرده شده\nبرای لغو می توانید کلید برگشت را فشار دهید.\nلطفا صبر کنید...</string>
   <string name="upgrade_decks_waiting">انتظار, وضعیت صف: %s\nلطفا صبر کنید...</string>
-  <string name="upgrade_decks_upgrade_started">ارتقاء شروع شده\nلطفا برای اتمام صبر کنید...</string>
-  <string name="upgrade_decks_downloading">دانلود مجموعه ارتقاء داده شده.\nلطفا صبر کنید...</string>
+  <string name="upgrade_decks_upgrade_started">ارتقاء شروع شد\nلطفا صبر کنید...</string>
+  <string name="upgrade_decks_downloading">در حال بارگیری مجموعه ارتقاء یافته\nبرای لغو می توانید دکمه برگشت را فشار دهید.\nلطفا صبر کنیدt...</string>
   <string name="upgrade_decks_media">در حال کپی کردن فایل های رسانه قدیمی با مجموعه رسانه جدید.\nلطفا صبر کنید...</string>
   <string name="upgrade_decks_message">در آنکی 2.0 مجموعه قابل دسترسی وجود ندارد ولی یک یا چند دسته در قالب  آنکی 1.2 پیدا شد:%sبه منظور استفاده از  دسته ها با نسخه جدید آنکی دروید  لازم است که اول آن مجموعه به قالب نسخه جدید آنکی 2.0 تبدیل شود. برای انجام این کار سه راه وجود دارد:</string>
   <string name="upgrade_decks_message_pos1">برای استفاده از نرم افزار رایانه آنکی 2.0, در شروع کار ابتدا دسته های شما تبدیل خواهد شد. شما می توانید یا روی آنکی وب همگام سازی نمایید یا مجموعه جدید را بر روی گوشی موبایل خود کپی کنید. دسته های خود را از دایرکتوری آنکی دروید کپی کنید (%s) به دایرکتور نرم افزار 
@@ -133,4 +134,6 @@
   <string name="upgrade_decks_failed">دسته های غیرقابل ارتقاء:\n%sلطفا آنها را در نرم افزار رایانه آنکی باز کنید و پایگاه داده را بررسی نمایید. سپس می توانید  از طریق نرم افزار رایانه آنکی آنها را وارد کنید.</string>
   <string name="upgrade_decks_media_failed">درحال کپی کردن فایلهای رسانه به پوشه جدید رسانه (%1$s) عدم موفقیت در این دسته:\n%2$sلطفا فایل های رسانه را بصورت دستی انتقال دهید.</string>
   <string name="download_deck">در حال دانلود دسته(%d kb).\nلطفا صبر کنید...</string>
+  <string name="sync_sanity_local">محلی</string>
+  <string name="sync_sanity_remote">از راه دور</string>
 </resources>

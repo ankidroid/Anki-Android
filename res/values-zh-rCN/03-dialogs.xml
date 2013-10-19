@@ -61,6 +61,39 @@
   <string name="custom_study_preview">预览过去 x 天中新增的卡牌:</string>
   <string name="custom_study_tags">输入标签：</string>
   <string name="rebuild_custom_study_deck">重建自定义学习牌组\n 请等待...</string>
+  <string name="deck_upgrade_title">牌组升级</string>
+  <string name="deck_upgrade_rename_warning">注意，此操作会将您当前卡牌集合导出到文件 \'%1$s\', 并从此老版本的anki 1.x 文件中创建新卡牌集合。如果需要，在完成此向导后，您可以手动重新导入上面的apkg文件。您想继续吗？</string>
+  <string name="deck_upgrade_already_upgraded">第二个版本的AnkiDroid使用一种新的词库格式。\n如果您没能成功升级您的词库，您可以在现在重新启动去升级词库</string>
+  <string name="deck_upgrade_major_warning"><![CDATA[这是一个关于Ankidroid的重要更新，升级过程将持续至少10到20分钟。<br><br>您想要现在马上更新还是以后再更新？<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en">More info</a>]]></string>
+  <string name="deck_upgrade_start_again_to_upgrade_toast">当您有时间更新的时候请重新启动Ankidroid！</string>
+  <string name="deck_upgrade_recommended_method"><![CDATA[推荐的更新方法是与电脑进行同步并且在桌面版的Anki上进行升级。<br><br>另外一种方法是您可以通过网络进行更新，当您无法连接到自己的电脑上并且您的收藏并不是特别大的时候。]]></string>
+  <string name="deck_upgrade_more_options_exit">您可以通过不用导入您的旧卡片而是点击下面的推出按钮的方式退出升级向导。</string>
+  <string name="deck_upgrade_more_options_new_collection">您可以通过点击下面的按钮来创造一个新的空收藏。</string>
+  <string name="deck_upgrade_more_options_downgrade"><![CDATA[<br><br>如果您想升级回到AnkiDroid1那么请阅读 <a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Continuing_to_use_AnkiDroid_1.1.3">下面的指南。</a>.]]></string>
+  <string name="deck_upgrade_create_new_collection">创造新的收藏集</string>
+  <string name="deck_upgrade_create_new_collection_title">创造新的收藏集</string>
+  <string name="deck_upgrade_not_import_warning">您确定您要这么做？您的旧数据将不会被导入。</string>
+  <string name="deck_upgrade_via_web"><![CDATA[<b> 当您在使用媒体文件或者您的收藏集较大时，这个升级方法并不被推荐！</b><br><br>您在Anki1中的牌组将会被压缩并且上传到AnkiWeb, 转化后的牌组随后将被下载。<br><br>请注意，一个稳定的网络连接是必要的，并且您有50MB的容量限制。<br><br>强烈鼓励桌面Anki用户使用基于电脑的升级方法。<br><br>您仍然要继续吗？]]></string>
+  <string name="deck_upgrade_via_anki_desktop"><![CDATA[ 如果在Anki桌面软件中您有最新版本的AnkiDroid收藏集，您可以从那里升级，然后通过与AnkiWeb同步从而下载收藏集。 <br><br> 或者，您可以通过USB链接把您的AnkiDroid收藏集复制到电脑上，升级收藏集然后复制回AnkiDroid.]]></string>
+  <string name="deck_upgrade_auto_upgrade"><![CDATA[请安装和启动桌面Anki 2.0.4版本或者更高来升级您的牌组组合，然后把升级过的牌组组合与AnkiWeb同步，按“下载”按钮。<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_2:_Using_AnkiWeb_sync">关于使用AnkiWeb来升级的详细信息。</a>]]></string>
+  <string name="deck_upgrade_manual"><![CDATA[请将您所有的 *.anki 文件 （和所有的 *.媒体文件夹） 从您的 AnkiDroid 文件夹复制到您的桌面Anki文件夹，然后安装并启动桌面Anki 版本 2.0.4 或更高来升级您的牌组组合。 <br><br>升级完成后，请从 Anki2 导出您的集合并将 collection.apkg 文件复制到您的 AnkiDroid 文件夹中并按下面的导入按钮。 <br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_1:_Using_USB_(recommended)"> 更多详细信息升级使用 USB。</a>]]></string>
+  <string name="upgrade_deck_cancelled_title">升级已取消</string>
+  <string name="upgrade_deck_cancelled_description">升级的尝试被取消，请再试一种升级方法。</string>
+  <string name="upgrade_deck_web_upgrade_failed">升级过程不成功。请再试一次，或选择不同的升级方法</string>
+  <string name="upgrade_deck_web_upgrade_exceeds">您Anki1牌组的总的压缩容量超过了服务器的限制（50mb）,请尝试用另外的方法更新。</string>
+  <string name="upgrade_deck_web_upgrade_sdcard">升级已完成，但打开某些牌组组合时有错误，请确保您有足够的磁盘容量 （需要 %1$ d mb) 然后再尝试，或尝试用另一种方法升级。</string>
+  <string name="export_progress_title">牌组组合导出</string>
+  <string name="export_progress_exporting">正在导出牌组组合，请稍等...</string>
+  <string name="upgrade_deck_export_successful">您的旧牌组组合已经被成功导出，将继续进行升级活动。</string>
+  <string name="upgrade_deck_export_error">在导出您的旧牌组组合时出现错误。您想无论如何继续进行升级活动吗？（您的旧牌组组合将会丢失）?</string>
+  <string name="upgrade_deck_sync_from_ankiweb">于AnkiWeb同步</string>
+  <string name="upgrade_deck_have_you_synced">您确定您已经升级了您桌面Anki2的牌组收藏并且已经与AnkiWeb进行同步了吗？</string>
+  <string name="upgrade_deck_dont_upgrade">不升级</string>
+  <string name="import_unpacking">解压中...请稍候...</string>
+  <string name="importing_collection">正在导入牌组组合.\n请稍等...</string>
+  <string name="import_media_count">正在导入媒体文件。请稍等...</string>
+  <string name="import_update_counts">牌组更新正在倒计时。\n请稍候...</string>
+  <string name="import_add_progress">正在打开存档%1$s导入备忘录%%导入牌组%3$d清除</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>安卓上的快闪卡Flashcards</h2>AnkiDroid是一个快闪卡程序，与桌面客户端<a href="%2$s">Anki</a>完全兼容。在AnkiDroid和Anki桌面客户端上，你可以创建，下载并学习任意内容，轻松实现同步。]]></item>
     <item><![CDATA[帮助我们使AnkiDroid更好，请将bug报告到<a href="%1$s">这里</a>； 也欢迎关于软件特性的各种意见和建议！请使用<a href="%2$s">wiki</a>或者在<a href="%3$s">论坛</a>打招呼。]]></item>

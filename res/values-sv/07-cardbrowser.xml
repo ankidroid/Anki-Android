@@ -38,7 +38,7 @@
   <string name="card_browser_tags_shown">Etiketter: %1$s</string>
   <string name="card_browser_change_display_order">Ändra visningsordning</string>
   <string name="card_browser_change_display_order_title">Välj visningsordning</string>
-  <string name="card_browser_change_display_order_reverse">Select a field twice to reverse.</string>
+  <string name="card_browser_change_display_order_reverse">Välj ett fält två gånger för att vända.</string>
   <string name="card_browser_order_reverse">(reverse)</string>
   <string name="card_browser_card_details">Kortdetaljer</string>
   <string name="card_details_question">Fråga</string>

@@ -96,8 +96,8 @@
   </string-array>
   <string-array name="leech_action_labels">
     <item>Zawieś kartę</item>
-    <item>Tag only</item>
-    <item>Reset as new</item>
+    <item>Tylko znaczniki</item>
+    <item>Resetuj jako nową</item>
   </string-array>
   <string-array name="new_order_labels">
     <item>Nowe karty w kolejności losowej</item>
@@ -108,18 +108,18 @@
     <item>Losowo</item>
     <item>Zwiększane interwałów</item>
     <item>Zmniejszane interwałów</item>
-    <item>Most lapsed</item>
-    <item>Order added</item>
-    <item>Order due</item>
+    <item>Najczęściej zapominane</item>
+    <item>W kolejności dodania</item>
+    <item>W kolejności do przejrzenia</item>
     <item>Ostatnio dodane na początku</item>
   </string-array>
   <string-array name="custom_study_options_labels">
-    <item>Increase today\'s new card limit</item>
-    <item>Increase today\'s review card limit</item>
-    <item>Review forgotten cards</item>
-    <item>Review ahead</item>
-    <item>Study a random selection of cards</item>
+    <item>Zwiększ dzisiejszy limit nowych kart</item>
+    <item>Zwiększ dzisiejszy limit przeglądanych kart</item>
+    <item>Przejrzyj zapomniane karty</item>
+    <item>Przejrzyj z wyprzedzeniem</item>
+    <item>Ucz się losowo wybranych kart</item>
     <item>Przejrzyj nowe karty</item>
-    <item>Limit to particular tags</item>
+    <item>Ogranicz do poszczególnych tagów</item>
   </string-array>
 </resources>

@@ -40,7 +40,7 @@
   <string name="suspend_leeches">Piócák felfüggesztése</string>
   <string name="leech_suspend_notification">Kártya megjelölve piócaként és felfüggesztésre került</string>
   <string name="leech_notification">Kártya megjelölve piócaként</string>
-  <string name="corrupt_font">Corrupt font file %s</string>
+  <string name="corrupt_font">Sérült font fájl %s</string>
   <string name="about_title">Névjegy</string>
   <string name="cardeditor_title_add_note">Jegyzet hozzáadása</string>
   <string name="cardeditor_title_edit_card">Jegyzet szerkesztése</string>
@@ -84,18 +84,20 @@
   <string name="info_rate">AnkiDroid értékelése</string>
   <string name="col_load_failed">A gyűjtemény betöltése sikertelen.\nAz AnkiDroid bezárásához nyomd meg a vissza gombot.</string>
   <string name="import_title">Kártyák importálása</string>
-  <string name="import_message">Would you like to add the content of file %s to your collection, or replace your collection with it?</string>
+  <string name="import_message">Szeretnéd a %s fájl tartalmát hozzáadni a gyűjteményedhez, vagy lecseréled a gyűjteményed ezzel?</string>
   <string name="import_message_add">Hozzáadás</string>
   <string name="import_message_replace">Kicserélés</string>
-  <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s. Are you sure?</string>
+  <string name="import_message_replace_confirm">Ez a művelet törölni fogja a már meglévő gyűjteményed és lecseréli a %s fájl tartalmával. Biztos vagy benne?</string>
   <string name="import_log_success">%d kártya sikeresen importálva</string>
   <string name="import_log_error">Az importálás sikertelen</string>
-  <string name="import_log_no_apkg">This is not a valid apkg file</string>
+  <string name="import_log_no_apkg">Ez egy érvénytelen apkg fájl</string>
   <string name="import_importing">Kártyák importálása\nKis türelmet...</string>
   <string name="import_hint">Kártyák importálásához helyezd az apkg fájlt a %s könyvtárba és nyomd meg az OK gombot</string>
-  <string name="upgrade_import_no_file_found">Nem található importálható apkg fájl</string>
+  <string name="upgrade_import_no_file_found">Nem importálható %1$s fájlt található</string>
   <string name="custom_study">Egyéni tanulás</string>
   <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
+  <string name="restart_upgrade_process">A frissítés újraindítása</string>
+  <string name="exit_wizard">Kilépés a varázslóból</string>
   <string-array name="dynOrderLabels">
     <item>Legrégebbi látott először</item>
     <item>Véletlenszerű</item>

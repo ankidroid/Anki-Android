@@ -48,7 +48,7 @@
   <string name="undo">Deshacer</string>
   <string name="undo_action_review">repasar</string>
   <string name="undo_action_edit">editar nota</string>
-  <string name="undo_action_bury">enterrar nota</string>
+  <string name="undo_action_bury">ocultar nota</string>
   <string name="undo_action_suspend_card">suspender tarjeta</string>
   <string name="undo_action_suspend_note">suspender nota</string>
   <string name="undo_action_delete">eliminar nota</string>
@@ -64,11 +64,11 @@
   <string name="contextmenu_deckpicker_set_custom_dictionary">Establecer diccionario personalizado</string>
   <string name="menu_download_deck">Descargar mazo</string>
   <string name="menu_download_shared_deck">Mazo compartido</string>
-  <string name="menu_my_account">Sincronizar cuenta</string>
+  <string name="menu_my_account">Cuenta de sincronización</string>
   <string name="menu_preferences">Preferencias</string>
   <string name="menu_about">Acerca de</string>
   <string name="menu_dismiss_note">Descartar Nota...</string>
-  <string name="menu_bury_note">Enterrar Nota</string>
+  <string name="menu_bury_note">Ocultar Nota</string>
   <string name="menu_suspend_card">Suspender Tarjeta</string>
   <string name="menu_suspend_note">Suspender Nota</string>
   <string name="menu_delete_note">Eliminar Nota</string>
@@ -80,14 +80,14 @@
   <string name="menu_unmark_card">Desmarcar Tarjeta</string>
   <string name="new_deck">Nuevo mazo</string>
   <string name="create">Crear</string>
-  <string name="new_dynamic_deck">Nuevo mazo dinámico</string>
+  <string name="new_dynamic_deck">Nuevo mazo filtrado</string>
   <string name="studyoptions_feedback">Sugerencias</string>
   <string name="studyoptions_load_tutorial_deck">Crear tutorial</string>
-  <string name="night_mode">Modo Noche</string>
+  <string name="night_mode">Modo Nocturno</string>
   <string name="visit">Visitar</string>
   <string name="later">Más tarde</string>
   <string name="download">Descargar</string>
-  <string name="open_collection">Abriendo colección.\nPor favor, espera...</string>
+  <string name="open_collection">Abriendo colección.\nPor favor, espere...</string>
   <string name="rebuild_cram_deck">Reconstruyendo mazo para empollar.\nPor favor, espera...</string>
   <string name="rebuild_cram_label">Reconstruir</string>
   <string name="empty_cram_label">Vaciar</string>
@@ -98,12 +98,23 @@
   <string name="studyoptions_congrats_finished">¡Felicidades! Has terminado por ahora.</string>
   <string name="studyoptions_congrats_more_rev">Se ha alcanzado el límite de repasos de hoy, pero todavía hay tarjetas a la espera de ser repasadas. Para una memorización óptima, considera la posibilidad de aumentar el límite diario en las opciones.</string>
   <string name="studyoptions_congrats_more_new">Hay más tarjetas nuevas disponibles, pero el límite diario ha sido alcanzado. Puedes aumentar el límite en las opciones, pero ten en cuenta que esto también aumentará tu carga de trabajo de repasos a corto plazo.</string>
-  <string name="studyoptions_congrats_custom">Para estudiar fuera de la agenda normal, haga click en el botón Estudio Personalizado abajo.</string>
+  <string name="studyoptions_congrats_custom">Para estudiar fuera del horario normal, haz click en el botón Estudio Personalizado aquí abajo.</string>
   <string name="sd_card_not_mounted">No hay tarjeta SD insertada.\n\nUsted puede almacenar su colección en la memoria interna, aunque no es recomendable ya que no puede acceder al archivo fácilmente. Esto se puede activar en las preferencias (abrir haciendo clic en este texto).</string>
   <string name="studyoptions_options">Opciones</string>
   <string name="empty_cloze_warning">Por favor, edita esta nota y añade algunos huecos en el texto. (%1$s)</string>
   <string name="help_cloze">Ayuda</string>
   <string name="button_sync">Sincronizar</string>
+  <string name="restart">Reiniciar</string>
+  <string name="do_nothing">No hacer nada</string>
+  <string name="more_options">Más Opciones</string>
+  <string name="now">Ahora</string>
+  <string name="back">Atrás</string>
+  <string name="ankiweb">AnkiWeb</string>
+  <string name="usb">USB</string>
+  <string name="_import">Importar</string>
+  <string name="confirm">Confirmar</string>
+  <string name="internet">Internet</string>
+  <string name="pc">PC</string>
   <string-array name="next_review_s">
     <item>1 segundo</item>
     <item>1 minuto</item>

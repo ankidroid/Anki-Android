@@ -93,9 +93,11 @@
   <string name="import_log_no_apkg">Це некоректний файлом apkg</string>
   <string name="import_importing">Відбувається імпорт карт. \nЗачекайте, будь-ласка...</string>
   <string name="import_hint">Щоб імпортувати карти, помістіть apkg файл в каталог %s і натисніть кнопку ok</string>
-  <string name="upgrade_import_no_file_found">Файл імпорту apkg не знайдено</string>
+  <string name="upgrade_import_no_file_found">Ввізного файлу %1$s не знайдено</string>
   <string name="custom_study">Додатковий трейнінг</string>
   <string name="dyn_deck_desc">Це спеціальна колекція для навчання поза межами нормального розкладу. Картки будуть автоматично повернуті до їх початкових колекцій після повторення. Видалення цієї колекції з списку поврне всі карточки до початкових колекцій.</string>
+  <string name="restart_upgrade_process">Перезапустити процез апгрейду</string>
+  <string name="exit_wizard">Покинути помічника</string>
   <string-array name="dynOrderLabels">
     <item>Найстарші спочатку</item>
     <item>Випадковий порядок</item>

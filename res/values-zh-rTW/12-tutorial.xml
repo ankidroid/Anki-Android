@@ -17,31 +17,33 @@
  
 <resources> 
  <string-array name="tutorial_questions"> 
-    <item><![CDATA[Thanks for installing AnkiDroid!<br />This is a short introduction.<br />What you see now is the <span style=\'font-weight:600;\'>question</span> part of a flashcard.<br />Please click on the large button below...]]></item> 
-    <item><![CDATA[The next card is shown now.<br />The idea is straightforward: Just like in &quot;real world&quot; paper flashcards, you write a question on the front and the answer on the back side of your cards.<br />(click the button to show the back side)]]></item> 
-    <item><![CDATA[&quot;What is the capital of Burkina Faso?&quot;<br />Think a bit about the answer and click then &quot;show answer&quot;]]></item> 
-    <item><![CDATA[Above every answer buttons, you find information about the time, after which the card will be shown again when answered by this button.]]></item> 
-    <item><![CDATA[The intention is to show you the card again, immediately before you would forget it. Empirical studies have shown that by this means information can be learned most efficiently.]]></item> 
-    <item><![CDATA[Some words about the organisation in AnkiDroid:<br /><br>All information has to be put into pairs of question and answer. If you want to learn in the other direction, you should create another card with swapped information.]]></item> 
-    <item><![CDATA[There are mainly two ways of getting new cards:<br />You either add premade decks of other users (choose &quot;shared decks&quot; in the decks summary) or create them by yourself.]]></item> 
-    <item><![CDATA[But anyway, creating own decks is essential to suit your needs perfectly. You can do this directly in AnkiDroid...]]></item> 
-    <item><![CDATA[Let\'s have a look on the top bar:<br />In the left top corner you find some numbers. The blue one tells you, how many new cards are still projected for today. The red number counts the failed cards (answered by &quot;again&quot;),]]></item> 
-    <item><![CDATA[右邊的角落，您可以看到關於您對於這張卡片思考的時間與效率. ]]></item> 
-    <item><![CDATA[儘管您可以獨立的使用AnkiDroid,不過AnkiWeb提供了同步伺服器與個人電腦同步(支援Linux、Windows、Mac).]]></item> 
-    <item><![CDATA[These have been the main points of AnkiDroid usage.<br /><br>For more information about the key concept of Anki, visit http://ankisrs.net/]]></item> 
+    <item><![CDATA[感謝您安裝 AnkiDroid! <br /> 以下是AnkiDroid 的簡單介紹。 <br /> 現在你看到的是單字卡的 <span style=\'font-weight:600;\'> 問題</span> 部分。<br /> 請按一下下面的大按鈕......]]></item> 
+    <item><![CDATA[現在會顯示下一張卡片。<br />這個概念是很直覺的，就像日常生活中的紙本單字卡，卡片其中一面寫著問題，而背面寫著答案。<br />(按一下按鈕可顯示背面)]]></item> 
+    <item><![CDATA[\"布吉納法索的首都是什麼？\"<br /> 稍微想想答案，然後按一下&quot;顯示答案&quot;]]></item> 
+    <item><![CDATA[在每個回答的按鈕上都寫著卡片再次出現的時間。]]></item> 
+    <item><![CDATA[這目的是讓你在快要忘記卡片之前，再次複習卡片。實證研究指出，藉著這種方式來學東西是最有效的。]]></item> 
+    <item><![CDATA[簡短介紹 AnkiDroid 的架構:<br /><br>所有的資訊都必須以問題和答案的形式成對出現。如果要反向學習，你需要建立另一張把題目和答案翻面的卡片。]]></item> 
+    <item><![CDATA[卡片放在一起就叫做牌組，而且可以根據標籤來排序。]]></item> 
+    <item><![CDATA[基本上有兩種方式可以取得新卡片:<br />可以在牌組畫面選擇「共享的牌組」來下載其他人做好的牌組；或是你也可以自行建立新卡片。]]></item> 
+    <item><![CDATA[但無論如何，為不同類型的卡片建立各自的牌組才能完美滿足您的需要。您可以直接在 AnkiDroid...]]></item> 
+    <item><![CDATA[我們先看看最上面的橫條:<br />最左上角有幾個數字，藍色數字代表今天還剩幾張新卡片，紅色數字代表今天失敗 (回答\"再一次\")的卡片數量，]]></item> 
+    <item><![CDATA[右邊的角落，您可以看到您花在這張卡片的時間以及您的表現。 ]]></item> 
+    <item><![CDATA[儘管您可以把 AnkiDroid 拿來單獨使用，不過它可以完全與 AnkiWeb 連線。(AnkiWeb 是電腦版 Anki 的同步伺服器，電腦版 Anki 支援Linux、Windows、Mac)。]]></item> 
+    <item><![CDATA[以上都是 AnkiDroid 的基本用法。<br /><br>關於 Anki 的關鍵概念，請造訪 http://ankisrs.net/]]></item> 
  </string-array>
  <string-array name="tutorial_answers">
-    <item><![CDATA[... in order to see the <span style=\'font-weight:600;\'>answer</span> part of the flashcard (below the line).<br />Click on the button on the right]]></item> 
-    <item><![CDATA[Let\'s assume you want to learn the world\'s capitals. Let the question be...<br />(click on one of the buttons to show the next card)]]></item> 
-    <item><![CDATA[&quot;Ouagadougou&quot; is the right answer. <br />You didn\'t know it? Click &quot;again&quot; to see the card again in a couple of minutes. Otherwise, click on the other buttons, depending on the easiness of the answer.]]></item> 
-    <item><![CDATA[This time period is calculated of the last time you answered the card, the current ease choice and ease choices of previous answers of that card.]]></item> 
-    <item><![CDATA[If you want to learn more about spaced repetition, visit:<br>http://en.wikipedia.org/wiki/Spaced_repetition_system]]></item> 
-    <item><![CDATA[Don\'t worry, this can be done automatically. There is no need of inserting the same information twice.]]></item> 
-    <item><![CDATA[You\'ll find thousands of premade decks to download and there are probably some which are useful for you.]]></item> 
-    <item><![CDATA[... or (a bit more convenient) with the desktop application Anki (downloadable for free under http://ankisrs.net/).<br><br>You can sync your decks with the desktop application very easily, so transfering the data is not a problem.]]></item> 
-    <item><![CDATA[the green one shows the number of cards you\'ve already learned before and which are due to review today.<br />The type of the actual cards is specified by an underline.]]></item> 
-    <item><![CDATA[上方的Bar會顯示您目前的進度，下面的則會顯示您答對的百分比。]]></item> 
-    <item><![CDATA[利用這功能,您可以輕易的在AnkiDroid與個人電腦中的AnkiDesktop同步您的排組.並且可以方便的利用AnkiDesktop增加與管理卡片.]]></item> 
-    <item><![CDATA[Just try it a bit out now and see, if it fits your needs.<br><br>Maybe start with the deck overview (hit menu on the main screen and choose &quot;all decks&quot;), where you can download premade decks or create your own (just use the menu there).]]></item> 
+    <item><![CDATA[...來看單字卡的<span style=\'font-weight:600;\'> 答案</span> 部分(在水平線下方).<br /> 按一下右側按鈕]]></item> 
+    <item><![CDATA[我們假設你想要學習各國首都，假設題目是....<br />(按下方其中一個按鈕來顯示下一張卡片)]]></item> 
+    <item><![CDATA[正確答案是&quot;瓦加杜古&quot;。 <br /> 如果你不知道答案，請按一下&quot;再一次&quot;，卡片會在在幾分鐘後再次出現。你也可以根據答案的難易度，按一下其他按鈕。]]></item> 
+    <item><![CDATA[這些時間的長度是由卡片上次出現至今的時間，以及目前的答案的選擇和上次答案的選擇，這幾項因素所計算出來的。]]></item> 
+    <item><![CDATA[如果您想要更瞭解間隔式複習系統，請造訪:<br>http://en.wikipedia.org/wiki/Spaced_repetition_system]]></item> 
+    <item><![CDATA[別擔心，這可以自動化完成的，任何資訊都不需要手動輸入第二次。]]></item> 
+    <item><![CDATA[您開始使用 AnkiDroid 以後，很快就會知道這一點。]]></item> 
+    <item><![CDATA[你會看到數以千計的牌組可供下載，而其中可能有些你可以用的牌組。]]></item> 
+    <item><![CDATA[......或在電腦版 Anki 中建立牌組 (可在 http://ankisrs.net/ 免費下載）。<br><br>，與電腦版 Ank 同步您的牌組是非常簡單的一件事，所以資料傳輸不是問題。]]></item> 
+    <item><![CDATA[綠色的數字代表今天需要複習的之前學過的卡片。<br />數字下的底線代表目前卡片的類型。]]></item> 
+    <item><![CDATA[上方的橫條會顯示您目前的進度，下面的則會顯示您答對的百分比。]]></item> 
+    <item><![CDATA[利用這功能，您可以輕易的在AnkiDroid 與電腦版 Anki 之間同步您的牌組，然後後者來新增卡片和管理卡片(比較方便)。]]></item> 
+    <item><![CDATA[你可以花點時間試試看，看是否符合你的需求。<br><br>也許可以先從牌組畫面開始，那裡可以下載別人預先做好的牌組，或是你可以建立自己的牌組。]]></item> 
  </string-array>
 </resources>

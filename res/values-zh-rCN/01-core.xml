@@ -29,7 +29,7 @@
   <string name="studyoptions_deck_name">牌组名称</string>
   <string name="studyoptions_due_today">今天到期:</string>
   <string name="studyoptions_new_total">新卡牌合计:</string>
-  <string name="studyoptions_total_cards">全部卡牌合集:</string>
+  <string name="studyoptions_total_cards">全部卡牌:</string>
   <string name="studyoptions_eta">预计所需时间（分钟）：</string>
   <string name="studyoptions_start">开始复习</string>
   <string name="show_answer">显示答案</string>
@@ -64,7 +64,7 @@
   <string name="contextmenu_deckpicker_set_custom_dictionary">设置自定义词典</string>
   <string name="menu_download_deck">下载牌组</string>
   <string name="menu_download_shared_deck">共享牌组</string>
-  <string name="menu_my_account">帐户同步</string>
+  <string name="menu_my_account">同步的帐户</string>
   <string name="menu_preferences">偏好设置</string>
   <string name="menu_about">关于</string>
   <string name="menu_dismiss_note">忽略卡牌记录...</string>
@@ -80,7 +80,7 @@
   <string name="menu_unmark_card">取消已标记卡牌</string>
   <string name="new_deck">新牌组</string>
   <string name="create">创建</string>
-  <string name="new_dynamic_deck">新动态牌组</string>
+  <string name="new_dynamic_deck">新的过滤牌组</string>
   <string name="studyoptions_feedback">反馈</string>
   <string name="studyoptions_load_tutorial_deck">创建教程牌组</string>
   <string name="night_mode">夜间模式</string>
@@ -104,6 +104,17 @@
   <string name="empty_cloze_warning">请编辑此卡牌记录，并增加一些完形填空形式的题目。 (%1$s)</string>
   <string name="help_cloze">帮助</string>
   <string name="button_sync">同步</string>
+  <string name="restart">重新启动</string>
+  <string name="do_nothing">什么也不做</string>
+  <string name="more_options">更多选项</string>
+  <string name="now">现在</string>
+  <string name="back">返回</string>
+  <string name="ankiweb">AnkiWeb网站</string>
+  <string name="usb">USB</string>
+  <string name="_import">导入</string>
+  <string name="confirm">确认</string>
+  <string name="internet">互联网</string>
+  <string name="pc">PC个人电脑</string>
   <string-array name="next_review_s">
     <item>1秒</item>
     <item>1分钟</item>

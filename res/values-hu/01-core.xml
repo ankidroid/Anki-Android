@@ -80,7 +80,7 @@
   <string name="menu_unmark_card">Kártyajelölés törlése</string>
   <string name="new_deck">Új pakli</string>
   <string name="create">Létrehozás</string>
-  <string name="new_dynamic_deck">Új, dinamikus pakli</string>
+  <string name="new_dynamic_deck">Új szűrt fedélzet</string>
   <string name="studyoptions_feedback">Visszajelzés</string>
   <string name="studyoptions_load_tutorial_deck">Bemutató létrehozása</string>
   <string name="night_mode">Éjszakai mód</string>
@@ -104,6 +104,17 @@
   <string name="empty_cloze_warning">Szerkeszd ezt a megjegyzést és adj meg hozzá néhány közeli /törlést/. (%1$s)</string>
   <string name="help_cloze">segítség</string>
   <string name="button_sync">Szinkronizálás</string>
+  <string name="restart">Újraindít</string>
+  <string name="do_nothing">Ne csináljon semmit</string>
+  <string name="more_options">További beállítások</string>
+  <string name="now">Most</string>
+  <string name="back">Vissza</string>
+  <string name="ankiweb">AnkiWeb</string>
+  <string name="usb">USB</string>
+  <string name="_import">Import</string>
+  <string name="confirm">Jóváhagyás</string>
+  <string name="internet">Internet</string>
+  <string name="pc">Számítógép</string>
   <string-array name="next_review_s">
     <item>1 másodperc</item>
     <item>1 perc</item>

@@ -30,21 +30,21 @@
   <string name="CardEditorTags">Marqueurs : %1$s</string>
   <string name="add_new_tag">Ajouter un nouveau marqueur</string>
   <string name="note_type">Type de note</string>
-  <string name="sdcard_missing_message">La carte SD est indisponible car elle sert de mémoire USB. Déconnectez l’USB pour accéder à vos paquets.</string>
+  <string name="sdcard_missing_message">La carte SD n\'est pas disponible car elle est connectée en USB. Déconnectez l\'USB pour accéder aux paquets.</string>
   <string name="show_whiteboard">Afficher tableau blanc</string>
   <string name="hide_whiteboard">Masquer le tableau blanc</string>
   <string name="clear_whiteboard">Effacer le tableau blanc</string>
   <string name="session_question_limit_reached">Limite de questions par session atteinte</string>
   <string name="session_time_limit_reached">Temps limite de session atteint</string>
-  <string name="cram_edit_warning">On ne touche pas aux cartes pendant un bachotage</string>
+  <string name="cram_edit_warning">L\'édition de cartes n\'est pas autorisées pendant le bachotage</string>
   <string name="suspend_leeches">Masquer les cartes encombrantes</string>
-  <string name="leech_suspend_notification">La carte, marquée « encombrante », est masquée</string>
+  <string name="leech_suspend_notification">La carte a été marquée « pénible » et est masquée</string>
   <string name="leech_notification">Carte marquée « encombrante »</string>
   <string name="corrupt_font">Fichier de police corrompu %s</string>
   <string name="about_title">À propos</string>
-  <string name="cardeditor_title_add_note">Ajout de note</string>
+  <string name="cardeditor_title_add_note">Ajouter une note</string>
   <string name="cardeditor_title_edit_card">Modifier la note</string>
-  <string name="factadder_saving_error">La note ne peut être enregistrée</string>
+  <string name="factadder_saving_error">Erreur à l\'enregistrement de la note</string>
   <string name="pref_lang_support">Langue</string>
   <string name="saving_facts">Enregistrer la note</string>
   <string name="deck">Paquet</string>
@@ -54,29 +54,29 @@
   <string name="saving_changes">Enregistrement des modifications…</string>
   <string name="timebox_reached">Le temps imparti est écoulé.</string>
   <string name="studyoptions_welcome_title">Bienvenue sur AnkiDroid</string>
-  <string name="studyoptions_no_external_storage_title">Mémoire externe indisponible</string>
-  <string name="studyoptions_no_external_storage_message">Aucune mémoire externe ne semble disponible. Il faut à AnkiDroid un accès à la carte SD de vos paquets .anki afin de les lire et les charger. Vérifiez si elle est bien montée puis réessayez.</string>
+  <string name="studyoptions_no_external_storage_title">Aucune mémoire externe disponible</string>
+  <string name="studyoptions_no_external_storage_message">Pour l\'instant, aucun stockage externe n\'est disponible. Or, AnkiDroid a besoin d’un accès à la carte SD de vos paquets Anki afin de les lire et les charger. Vérifiez que votre carte SD est montée et essayez à nouveau.</string>
   <string name="fact_adder_intent_title">Carte AnkiDroid</string>
-  <string name="fact_adder_swap">Échanger</string>
+  <string name="fact_adder_swap">Inverser</string>
   <string name="deckpicker_select_dictionary_title">Sélectionner un dictionnaire</string>
   <string name="deckpicker_select_dictionary_default">Par défaut</string>
-  <string name="card_editor_add_card">Ajout de note</string>
-  <string name="card_editor_reset">Remise à zéro</string>
+  <string name="card_editor_add_card">Ajouter une note</string>
+  <string name="card_editor_reset">Réinitialiser</string>
   <string name="card_editor_copy_card">Copier la carte</string>
   <string name="card_editor_reset_card">Remettre les compteurs à 0</string>
-  <string name="error_insufficient_memory">L’opération n\'a pas pu être accomplie car il manque sur votre périphérique de la mémoire disponible</string>
-  <string name="tutorial_load">Mise en place du paquet guide.\nPatience…</string>
-  <string name="tutorial_loading_error">Le paquet guide n’a pas pu être créé</string>
+  <string name="error_insufficient_memory">L’opération n\'a pas pu être accomplie car votre appareil manque de mémoire disponible</string>
+  <string name="tutorial_load">Mise en place du tutoriel.\nPatientez…</string>
+  <string name="tutorial_loading_error">Le paquet-tutoriel n\'a pas pu être créé</string>
   <string name="rename">Renommer</string>
-  <string name="rename_error">Problème avec le renommage du paquet %s</string>
+  <string name="rename_error">Le paquet %s n\'a pas pu être renommé</string>
   <string name="help_title">Aide</string>
   <string name="help_online">Aide en ligne</string>
   <string name="help_faq">FAQ</string>
-  <string name="help_tutorial">Paquet guide</string>
+  <string name="help_tutorial">Paquet-tutoriel</string>
   <string name="check_db">Vérification de la base de données</string>
-  <string name="check_db_message">Vérification de la base de données.\nPatience…</string>
-  <string name="simple_interface_hint">%s vide. Ni le son ni l’image ne peut être reproduit dans l’interface simplifiée.</string>
-  <string name="delete_deck">Suppression du paquet…\nPatience.</string>
+  <string name="check_db_message">Vérification de la base de données. \nVeuillez patienter…</string>
+  <string name="simple_interface_hint">%s vide. Gardez à l\'esprit que l\'interface simplifiée ne peut afficher ni d\'images, ni de sons, etc.</string>
+  <string name="delete_deck">Suppression du paquet…\nVeuillez patienter.</string>
   <string name="menu_cardbrowser">Examiner les cartes</string>
   <string name="show_hint">Afficher l\'astuce</string>
   <string name="pref_lang_other">Préférences linguistiques</string>
@@ -93,16 +93,18 @@
   <string name="import_log_no_apkg">Ce n\'est pas un fichier apkg valide</string>
   <string name="import_importing">Import en cours\nVeuillez patienter...</string>
   <string name="import_hint">Pour importer des cartes, placez le fichier apkg dans le répertoire %s et appuyez sur ok</string>
-  <string name="upgrade_import_no_file_found">Aucun fichier apkg importable n\'a été trouvé</string>
+  <string name="upgrade_import_no_file_found">Pas de fichier %1$s importable trouvé</string>
   <string name="custom_study">Étude personnalisée</string>
   <string name="dyn_deck_desc">Ceci est un paquet pour l\'étude en dehors des horaires normaux. Les cartes reviendront automatiquement à leur paquet d\'origine après leur révision. La suppression de ce paquet remettra toutes les cartes restantes dans leur paquet d\'origine.</string>
+  <string name="restart_upgrade_process">Redémarrage de la mise à jour en cours</string>
+  <string name="exit_wizard">Quitter l\'assistant</string>
   <string-array name="dynOrderLabels">
     <item>Des plus au moins anciennes</item>
     <item>Aléatoirement</item>
-    <item>Des moins au plus fréquentes</item>
-    <item>Des plus au moins fréquentes</item>
-    <item>Des plus au moins fautives</item>
-    <item>Les plus anciennement ajoutées</item>
+    <item>Des plus fréquentes aux plus rares</item>
+    <item>Des plus rares aux plus fréquentes</item>
+    <item>Des plus fautives au plus correctes</item>
+    <item>Selon l\'ordre de leur ajout</item>
     <item>Les plus urgentes d’abord</item>
   </string-array>
   <plurals name="factadder_cards_added">

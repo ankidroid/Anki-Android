@@ -13,9 +13,11 @@ fr: AnkiDroid (Cartes mémoire)
 hu: AnkiDroid tanuló kártyák
 id: Kad imbas AnkiDroid
 ja: アンキドロイド単語帳
-ko: ﻿AnkiDroid 암기카드
+ko: AnkiDroid 플래시 카드
 nl: AnkiDroid flitskaarten
+pl: AnkiDroid - Fiszki
 ru: AnkiDroid флэш-карты
+sr: AnkiDroid флеш-карте
 th: บัตรคำ AnkiDroid
 tr: AnkiDroid Bilgi Kartları
 vi: Thẻ thông minh AnkiDroid

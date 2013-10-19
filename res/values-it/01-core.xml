@@ -80,13 +80,13 @@
   <string name="menu_unmark_card">Deseleziona carta</string>
   <string name="new_deck">Nuovo mazzo</string>
   <string name="create">Crea</string>
-  <string name="new_dynamic_deck">Nuovo mazzo dinamico</string>
+  <string name="new_dynamic_deck">Nuovo mazzo filtrato</string>
   <string name="studyoptions_feedback">Commenti e suggerimenti</string>
   <string name="studyoptions_load_tutorial_deck">Crea mazzo d\'esercizio</string>
   <string name="night_mode">Modalità notturna</string>
   <string name="visit">Visita</string>
   <string name="later">Più tardi</string>
-  <string name="download">Download</string>
+  <string name="download">Scarica</string>
   <string name="open_collection">Apertura collezione.\nAttendi...</string>
   <string name="rebuild_cram_deck">Ricreo mazzo per lo studio focalizzato.\nAttendi...</string>
   <string name="rebuild_cram_label">Ricrea</string>
@@ -104,6 +104,17 @@
   <string name="empty_cloze_warning">Modifica questa nota e aggiungi testo da completare. (%1$s)</string>
   <string name="help_cloze">aiuto</string>
   <string name="button_sync">Sincronizza</string>
+  <string name="restart">Riavvia</string>
+  <string name="do_nothing">Non fare nulla</string>
+  <string name="more_options">Più opzioni</string>
+  <string name="now">Adesso</string>
+  <string name="back">Retro</string>
+  <string name="ankiweb">AnkiWeb</string>
+  <string name="usb">USB</string>
+  <string name="_import">Importazione</string>
+  <string name="confirm">Conferma</string>
+  <string name="internet">Internet</string>
+  <string name="pc">PC</string>
   <string-array name="next_review_s">
     <item>1 secondo</item>
     <item>1 minuto</item>

@@ -203,7 +203,7 @@
   <string name="sync_set_journal_mode">Impostazione modalità journal corretta...</string>
   <string name="async_mode">Disattiva sincronizzazione</string>
   <string name="async_mode_summ">Questo rende AnkiDroid più veloce ma può corrompere i database quando l\'intero sistema Android va in crash. Utilizza i backup</string>
-  <string name="async_mode_message">Nota che questa opzione è meno sicura e potrebbe causare la corruzione del mazzo quando Android va in crash (es. per il consumo di batteria).\nÈ ALTAMENTE raccomandato l\'uso del backup di sistema se si sceglie questa opzione.\nAttivarla comunque?</string>
+  <string name="async_mode_message">Tieni presente che questa opzione è meno sicura e potrebbe causare la corruzione del mazzo quando Android va in crash (es. per il consumo di batteria).\nÈ ALTAMENTE raccomandato l\'uso del backup di sistema se si sceglie questa opzione.\nAttivarla comunque?</string>
   <string name="fix_orientation">Correggi orientamento</string>
   <string name="fix_orientation_summ">Non consentire la rotazione dell\'orientamento durante le ripetizioni</string>
   <string name="per_day">Al giorno</string>

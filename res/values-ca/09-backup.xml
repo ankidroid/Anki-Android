@@ -30,7 +30,7 @@
   <string name="backup_restore">Restaura des d\'una còpia de reserva</string>
   <string name="backup_new_collection">Nova col·lecció</string>
   <string name="backup_del_collection">Suprimeix la col·lecció i genera una nova</string>
-  <string name="backup_del_collection_question">Segur que voleu suprimir la col·lecció i crear-ne una de nova? Això suprimirà totes les dades del vostre progrés d\'aprenentatge i eliminarà totes les targetes!</string>
+  <string name="backup_del_collection_question">Segur que voleu suprimir la col·lecció i crear-ne una de nova? Això suprimirà totes les dades del vostre progrés d\'aprenentatge i eliminarà totes les fitxes!</string>
   <string name="backup_full_sync_from_server">Sincronització completa del servidor</string>
   <string name="backup_full_sync_from_server_question">Realment voleu sobreescriure la col·lecció amb una d\'AnkiWeb? Això eliminarà caure tota la informació sobre el vostre progrés d\'aprenentatge afegida des de la darrera sincronització!</string>
   <string name="error_handling_title">Gestió d\'errors</string>

@@ -70,12 +70,12 @@
   </string-array>
   <string-array name="gestures_labels">
     <item>Tiada tindakan</item>
-    <item>Show answer</item>
-    <item>Answer button 1</item>
-    <item>Answer button 2</item>
-    <item>Answer button 3</item>
-    <item>Answer button 4</item>
-    <item>Answer recommended (green)</item>
+    <item>Tampilkan jawaban</item>
+    <item>Tombol jawaban 1</item>
+    <item>Tombol jawaban 2</item>
+    <item>Tombol jawaban 3</item>
+    <item>Tombol jawaban 4</item>
+    <item>Jawaban direkomendasikan (hijau)</item>
     <item>Answer better than recommended</item>
     <item>Undo</item>
     <item>Edit kad</item>
@@ -85,31 +85,31 @@
     <item>Tangguh kad</item>
     <item>Padam kad</item>
     <item>Padam Papan tulis</item>
-    <item>Play media</item>
+    <item>Putar media</item>
     <item>Abort learning</item>
   </string-array>
   <string-array name="theme_labels">
     <item>Android Gelap</item>
     <item>Android Cahaya</item>
     <item>Biru</item>
-    <item>White</item>
+    <item>Putih</item>
   </string-array>
   <string-array name="leech_action_labels">
-    <item>Suspend card</item>
-    <item>Tag only</item>
-    <item>Reset as new</item>
+    <item>Tangguhkan kartu</item>
+    <item>Hanya tag</item>
+    <item>Reset seperti baru</item>
   </string-array>
   <string-array name="new_order_labels">
-    <item>New cards in random order</item>
+    <item>Kartu-kartu yang baru secara acak</item>
     <item>New cards in order added</item>
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
-    <item>Oldest seen first</item>
-    <item>Random</item>
-    <item>Increasing intervals</item>
-    <item>Decreasing intervals</item>
+    <item>Tertua pertama dilihat</item>
+    <item>Acak</item>
+    <item>Meningkatkan interval</item>
+    <item>Mengurangi interval</item>
     <item>Most lapsed</item>
-    <item>Order added</item>
+    <item>Urutan ditambahkan</item>
     <item>Order due</item>
     <item>Latest added first</item>
   </string-array>
@@ -119,7 +119,7 @@
     <item>Review forgotten cards</item>
     <item>Review ahead</item>
     <item>Study a random selection of cards</item>
-    <item>Preview new cards</item>
-    <item>Limit to particular tags</item>
+    <item>Tinjau ulang kartu baru</item>
+    <item>Batasi untuk tag tertentu</item>
   </string-array>
 </resources>

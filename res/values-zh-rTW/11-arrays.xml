@@ -69,57 +69,57 @@
     <item>3天內顯示失敗的卡片</item>
   </string-array>
   <string-array name="gestures_labels">
-    <item>No action</item>
-    <item>Show answer</item>
-    <item>Answer button 1</item>
-    <item>Answer button 2</item>
-    <item>Answer button 3</item>
-    <item>Answer button 4</item>
-    <item>Answer recommended (green)</item>
-    <item>Answer better than recommended</item>
-    <item>Undo</item>
+    <item>沒有動作</item>
+    <item>顯示答案</item>
+    <item>答案按鈕 1</item>
+    <item>答案按鈕 2</item>
+    <item>答案按鈕 3</item>
+    <item>答案按鈕 4</item>
+    <item>建議的答案 (綠色)</item>
+    <item>優於建議的答案</item>
+    <item>復原</item>
     <item>編輯卡片</item>
     <item>標記卡片</item>
-    <item>Lookup expression</item>
-    <item>Bury card</item>
-    <item>Suspend card</item>
+    <item>查找運算式</item>
+    <item>暫時隱藏卡片</item>
+    <item>長久擱置卡片</item>
     <item>刪除卡片</item>
-    <item>Clear Whiteboard</item>
-    <item>Play media</item>
-    <item>Abort learning</item>
+    <item>清除白板</item>
+    <item>播放媒體檔案</item>
+    <item>中止學習</item>
   </string-array>
   <string-array name="theme_labels">
-    <item>Android Dark</item>
-    <item>Android Dark</item>
-    <item>Blue</item>
-    <item>White</item>
+    <item>Android 暗色</item>
+    <item>Android 亮色</item>
+    <item>藍色</item>
+    <item>白色</item>
   </string-array>
   <string-array name="leech_action_labels">
-    <item>Suspend card</item>
-    <item>Tag only</item>
-    <item>Reset as new</item>
+    <item>長久擱置卡片</item>
+    <item>僅標記</item>
+    <item>重設為新卡片</item>
   </string-array>
   <string-array name="new_order_labels">
-    <item>New cards in random order</item>
-    <item>New cards in order added</item>
+    <item>按隨機順序學習新卡片</item>
+    <item>按創建順序學習新卡片</item>
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
-    <item>Oldest seen first</item>
-    <item>Random</item>
-    <item>Increasing intervals</item>
-    <item>Decreasing intervals</item>
-    <item>Most lapsed</item>
-    <item>Order added</item>
-    <item>Order due</item>
-    <item>Latest added first</item>
+    <item>舊卡先出現</item>
+    <item>隨機</item>
+    <item>間隔由小至大排列</item>
+    <item>間隔由大至小排列</item>
+    <item>最常忘記</item>
+    <item>依新增順序</item>
+    <item>依到期順序</item>
+    <item>最後加入的先</item>
   </string-array>
   <string-array name="custom_study_options_labels">
-    <item>Increase today\'s new card limit</item>
-    <item>Increase today\'s review card limit</item>
-    <item>Review forgotten cards</item>
-    <item>Review ahead</item>
-    <item>Study a random selection of cards</item>
-    <item>Preview new cards</item>
-    <item>Limit to particular tags</item>
+    <item>增加今天的新卡片限制</item>
+    <item>增加今日複習卡的上限</item>
+    <item>複習忘記的卡片</item>
+    <item>提早複習</item>
+    <item>依隨機順序學習卡片</item>
+    <item>預覽新卡片</item>
+    <item>僅限特定標籤的卡片</item>
   </string-array>
 </resources>

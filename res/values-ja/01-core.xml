@@ -67,7 +67,7 @@
   <string name="menu_my_account">アカウントの設定と同期</string>
   <string name="menu_preferences">設定</string>
   <string name="menu_about">このプログラムについて</string>
-  <string name="menu_dismiss_note">非表示カードへの切替</string>
+  <string name="menu_dismiss_note">非表示ノートへの切替</string>
   <string name="menu_bury_note">カードの一時非表示</string>
   <string name="menu_suspend_card">カードの非表示</string>
   <string name="menu_suspend_note">ノートの非表示</string>
@@ -80,7 +80,7 @@
   <string name="menu_unmark_card">マークを消す</string>
   <string name="new_deck">新しい単語帳</string>
   <string name="create">作成</string>
-  <string name="new_dynamic_deck">抽出カード帳の作成</string>
+  <string name="new_dynamic_deck">新しい抽出単語帳</string>
   <string name="studyoptions_feedback">フィードバック</string>
   <string name="studyoptions_load_tutorial_deck">チュートリアルの作成</string>
   <string name="night_mode">夜間表示モード</string>
@@ -90,7 +90,7 @@
   <string name="open_collection">コレクションを開いています\nしばらくお待ちください</string>
   <string name="rebuild_cram_deck">抽出カード帳を再構築しています\nしばらくお待ちください</string>
   <string name="rebuild_cram_label">再構築</string>
-  <string name="empty_cram_label">空です</string>
+  <string name="empty_cram_label">全て戻す</string>
   <string name="empty_cram_deck">空の抽出カード帳を作成しています。\nしばらくお待ちください</string>
   <string name="studyoptions_new_filtercram">選択/抽出</string>
   <string name="custom_study_deck_name">カスタム学習セッション</string>
@@ -104,6 +104,17 @@
   <string name="empty_cloze_warning">ノートを編集して「穴空き設問」を追加してください。(%1$s)</string>
   <string name="help_cloze">ヘルプ</string>
   <string name="button_sync">同期</string>
+  <string name="restart">再起動</string>
+  <string name="do_nothing">何もしない</string>
+  <string name="more_options">詳細オプション</string>
+  <string name="now">直ちに</string>
+  <string name="back">戻る</string>
+  <string name="ankiweb">AnkiWeb</string>
+  <string name="usb">USB</string>
+  <string name="_import">読み込み</string>
+  <string name="confirm">確認</string>
+  <string name="internet">インターネット</string>
+  <string name="pc">PC</string>
   <string-array name="next_review_s">
     <item>1秒</item>
     <item>1分</item>
