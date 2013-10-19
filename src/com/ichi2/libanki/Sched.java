@@ -2118,8 +2118,10 @@ public class Sched {
 
     private void _burySiblings(Card card) {
         LinkedList<Long> toBury = new LinkedList<Long>();
-        JSONObject conf = _newConf(card);
-        boolean buryNew = conf.optBoolean("bury", true);
+        JSONObject nconf = _newConf(card);
+        boolean buryNew = nconf.optBoolean("bury", true);
+        JSONObject rconf = _revConf(card);
+        boolean buryRev = rconf.optBoolean("bury", true);
         // loop through and remove from queues
         Cursor cur = null;
         try {
@@ -2130,7 +2132,10 @@ public class Sched {
                 long cid = cur.getLong(0);
                 int queue = cur.getInt(1);
                 if (queue == 2) {
-                    toBury.add(cid);
+                    if (buryRev) {
+                        toBury.add(cid);
+                    }
+                    // if bury disabled, we still discard to give same-day spacing
                     mRevQueue.remove(cid);
                 } else {
                     // if bury is disabled, we still discard to give same-day spacing
