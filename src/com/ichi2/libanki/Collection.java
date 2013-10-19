@@ -929,7 +929,7 @@ public class Collection {
         for (String fname : fmap.keySet()) {
             fields.put(fname, flist[fmap.get(fname).first]);
         }
-        fields.put("Tags", (String) data[5]);
+        fields.put("Tags", ((String)data[5]).trim());
         try {
             fields.put("Type", (String) model.get("name"));
             fields.put("Deck", mDecks.name((Long) data[3]));
