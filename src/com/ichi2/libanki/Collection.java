@@ -359,16 +359,21 @@ public class Collection {
 
     /** called before a full upload */
     public void beforeUpload() {
-        String[] tables = new String[] { "notes", "cards", "revlog", "graves" };
+        String[] tables = new String[] { "notes", "cards", "revlog" };
         for (String t : tables) {
             mDb.execute("UPDATE " + t + " SET usn=0 WHERE usn=-1");
         }
+        // we can save space by removing the log of deletions
+        mDb.execute("delete from graves");
         mUsn += 1;
         mModels.beforeUpload();
         mTags.beforeUpload();
         mDecks.beforeUpload();
         modSchema();
         mLs = mScm;
+        // ensure db is compacted before upload
+        mDb.execute("vacuum");
+        mDb.execute("analyze");
         close();
     }
 
