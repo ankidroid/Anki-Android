@@ -94,16 +94,19 @@ public class Sched {
     // Not in libanki
     private static final int[] FACTOR_ADDITION_VALUES = { -150, 0, 150 };
 
-    private Collection mCol;
+
     private String mName = "std";
+    private boolean mHaveCustomStudy = true;
+    private boolean mSpreadRev = true;
+    private boolean mBurySiblingsOnAnswer = true;
+    
+    private Collection mCol;
     private int mQueueLimit;
     private int mReportLimit;
     private int mReps;
     private boolean mHaveQueues;
     private int mToday;
     public long mDayCutoff;
-    private boolean mHaveCustomStudy;
-    private boolean mSpreadRev = true;
 
     private int mNewCount;
     private int mLrnCount;
@@ -114,23 +117,22 @@ public class Sched {
     private double[] mEtaCache = new double[] { -1, -1, -1, -1 };
 
     // Queues
-    private LinkedList<long[]> mNewQueue;
-    private LinkedList<long[]> mLrnQueue;
-    private LinkedList<long[]> mLrnDayQueue;
-    private LinkedList<long[]> mRevQueue;
+    private final LinkedList<long[]> mNewQueue = new LinkedList<long[]>();
+    private final LinkedList<long[]> mLrnQueue = new LinkedList<long[]>();
+    private final LinkedList<long[]> mLrnDayQueue = new LinkedList<long[]>();
+    private final LinkedList<long[]> mRevQueue = new LinkedList<long[]>();
 
     private LinkedList<Long> mNewDids;
     private LinkedList<Long> mLrnDids;
     private LinkedList<Long> mRevDids;
 
-    private TreeMap<Integer, Integer> mGroupConfs;
-    private TreeMap<Integer, JSONObject> mConfCache;
-
+    // Not in libanki
     private HashMap<Long, Pair<String[], long[]>> mCachedDeckCounts;
-
+    
     /**
-     * queue types: 0=new/cram, 1=lrn, 2=rev, 3=day lrn, -1=suspended, -2=buried revlog types: 0=lrn, 1=rev, 2=relrn,
-     * 3=cram positive intervals are in positive revlog intervals are in days (rev), negative in seconds (lrn)
+     * queue types: 0=new/cram, 1=lrn, 2=rev, 3=day lrn, -1=suspended, -2=buried
+     * revlog types: 0=lrn, 1=rev, 2=relrn, 3=cram
+     * positive revlog intervals are in days (rev), negative in seconds (lrn)
      */
 
     public Sched(Collection col) {
@@ -138,15 +140,8 @@ public class Sched {
         mQueueLimit = 50;
         mReportLimit = 1000;
         mReps = 0;
-        mHaveCustomStudy = true;
         mHaveQueues = false;
         _updateCutoff();
-
-        // Initialise queues
-        mNewQueue = new LinkedList<long[]>();
-        mLrnQueue = new LinkedList<long[]>();
-        mLrnDayQueue = new LinkedList<long[]>();
-        mRevQueue = new LinkedList<long[]>();
     }
 
 
