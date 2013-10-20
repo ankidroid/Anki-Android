@@ -1302,6 +1302,51 @@ public class Collection {
      * DB maintenance *********************************************************** ************************************
      */
 
+    
+    /*
+     * Basic integrity check for syncing. True if ok.
+     */
+    public boolean basicCheck() {
+        // cards without notes
+        if (mDb.queryScalar("select 1 from cards where nid not in (select id from notes) limit 1", false) > 0) {
+            return false;
+        }
+        boolean badNotes = mDb.queryScalar(String.format(Locale.US,
+                "select 1 from notes where id not in (select distinct nid from cards) " +
+                "or mid not in %s limit 1", Utils.ids2str(mModels.ids())), false) > 0;
+        // notes without cards or models
+        if (badNotes) {
+            return false;
+        }
+        try {
+            // invalid ords
+            for (JSONObject m : mModels.all()) {
+                // ignore clozes
+                if (m.getInt("type") != Sched.MODEL_STD) {
+                    continue;
+                }
+                // Make a list of valid ords for this model
+                JSONArray tmpls = m.getJSONArray("tmpls");
+                int[] ords = new int[tmpls.length()];
+                for (int t = 0; t < tmpls.length(); t++) {
+                    ords[t] = tmpls.getJSONObject(t).getInt("ord");
+                }
+                
+                boolean badOrd = mDb.queryScalar(String.format(Locale.US,
+                        "select 1 from cards where ord not in %s and nid in ( " +
+                        "select id from notes where mid = %d) limit 1",
+                        Utils.ids2str(ords), m.getLong("id")), false) > 0;
+                if (badOrd) {
+                    return false;
+                }
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        return true;
+    }
+    
+
     /** Fix possible problems and rebuild caches. */
     public long fixIntegrity() {
         File file = new File(mPath);
