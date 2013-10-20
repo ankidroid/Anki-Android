@@ -117,7 +117,7 @@ public class Sched {
     private double[] mEtaCache = new double[] { -1, -1, -1, -1 };
 
     // Queues
-    private final LinkedList<long[]> mNewQueue = new LinkedList<long[]>();
+    private final LinkedList<Long> mNewQueue = new LinkedList<Long>();
     private final LinkedList<long[]> mLrnQueue = new LinkedList<long[]>();
     private final LinkedList<long[]> mLrnDayQueue = new LinkedList<long[]>();
     private final LinkedList<long[]> mRevQueue = new LinkedList<long[]>();
@@ -155,13 +155,17 @@ public class Sched {
         }
         Card card = _getCard();
         if (card != null) {
+            if (!mBurySiblingsOnAnswer) {
+                _burySiblings(card);
+            }
             mReps += 1;
             card.startTimer();
+            return card;
         }
-        return card;
+        return null;
     }
 
-    
+
     public void reset() {
         _updateCutoff();
         _resetLrn();
@@ -171,10 +175,12 @@ public class Sched {
     }
 
 
-    public boolean answerCard(Card card, int ease) {
+    public void answerCard(Card card, int ease) {
         Log.i(AnkiDroidApp.TAG, "answerCard - ease:" + ease);
-        boolean isLeech = false;
-        mCol.markUndo(Collection.UNDO_REVIEW, new Object[]{card});
+        mCol.markReview(card);
+        if (mBurySiblingsOnAnswer) {
+            _burySiblings(card);
+        }
         card.setReps(card.getReps() + 1);
         // former is for logging new cards, latter also covers filt. decks
         card.setWasNew((card.getType() == 0));
@@ -204,7 +210,7 @@ public class Sched {
                 _updateStats(card, "lrn");
             }
         } else if (card.getQueue() == 2) {
-            isLeech = _answerRevCard(card, ease);
+            _answerRevCard(card, ease);
             _updateStats(card, "rev");
         } else {
             throw new RuntimeException("Invalid queue");
@@ -213,7 +219,6 @@ public class Sched {
         card.setMod(Utils.intNow());
         card.setUsn(mCol.usn());
         card.flushSched();
-        return isLeech;
     }
 
 
@@ -284,13 +289,25 @@ public class Sched {
     }
 
 
-    /**
-     * Unbury cards when closing.
+    /*
+     * Unbury cards.
      */
     public void unburyCards() {
-    	boolean mod = mCol.getDb().getMod();
-        mCol.getDb().execute("UPDATE cards SET queue = type WHERE queue = -2");
-        mCol.getDb().setMod(mod);
+        try {
+            mCol.getConf().put("lastUnburied", mToday);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        
+        mCol.getDb().execute("update cards set mod=?,usn=?,queue=type where queue = -2",
+                new Object[]{Utils.intNow(), mCol.usn()});
+    }
+
+
+    public void unburyCardsForDeck() {
+        mCol.getDb().execute(
+                "update cards set mod=?,usn=?,queue=type where queue = -2 and did in " + Utils.ids2str(mCol.getDecks().active()),
+                new Object[]{Utils.intNow(), mCol.usn()});
     }
 
 
@@ -427,7 +444,6 @@ public class Sched {
     public ArrayList<Object[]> deckDueList() {
         _checkDay();
         mCol.getDecks().recoverOrphans();
-        unburyCards();
         ArrayList<JSONObject> decks = mCol.getDecks().all();
         Collections.sort(decks, new DeckDueListComparator());
         HashMap<String, Integer[]> lims = new HashMap<String, Integer[]>();
@@ -565,13 +581,14 @@ public class Sched {
         return result;
     }
 
+
     /**
      * Getting the next card ****************************************************
      * *******************************************
      */
 
     /**
-     * Return the next due card, or None.
+     * Return the next due card, or null.
      */
     private Card _getCard() {
         // learning card due?
@@ -581,7 +598,10 @@ public class Sched {
         }
         // new first, or time for one?
         if (_timeForNewCard()) {
-            return _getNewCard();
+            c = _getNewCard();
+            if (c != null) {
+                return c;
+            }
         }
         // Card due for review?
         c = _getRevCard();
@@ -641,17 +661,18 @@ public class Sched {
         while (!mNewDids.isEmpty()) {
             long did = mNewDids.getFirst();
             int lim = Math.min(mQueueLimit, _deckNewLimit(did));
-            mNewQueue.clear();
             Cursor cur = null;
             if (lim != 0) {
+                mNewQueue.clear();
                 try {
+                    // fill the queue with the current did
                     cur = mCol
                             .getDb()
                             .getDatabase()
-                            .rawQuery("SELECT id, due FROM cards WHERE did = " + did + " AND queue = 0 LIMIT " + lim,
+                            .rawQuery("SELECT id FROM cards WHERE did = " + did + " AND queue = 0 LIMIT " + lim,
                                     null);
                     while (cur.moveToNext()) {
-                        mNewQueue.add(new long[] { cur.getLong(0), cur.getLong(1) });
+                        mNewQueue.add(cur.getLong(0));
                     }
                 } finally {
                     if (cur != null && !cur.isClosed()) {
@@ -659,40 +680,27 @@ public class Sched {
                     }
                 }
                 if (!mNewQueue.isEmpty()) {
+                    // Note: libanki reverses mNewQueue and returns the last element in _getNewCard().
+                    // AnkiDroid differs by leaving the queue intact and returning the *first* element
+                    // in _getNewCard().
                     return true;
                 }
             }
             // nothing left in the deck; move to next
             mNewDids.remove();
         }
+        // if count>0 but queue empty, the other cards were buried
+        mNewCount = 0;
         return false;
     }
 
 
     private Card _getNewCard() {
-        if (!_fillNew()) {
-            return null;
+        if (_fillNew()) {
+            mNewCount -= 1;
+            return mCol.getCard(mNewQueue.remove());
         }
-        long[] item = mNewQueue.remove();
-        // move any siblings to the end?
-        try {
-            JSONObject conf = mCol.getDecks().confForDid(mNewDids.getFirst());
-            if (conf.getInt("dyn") != 0 || conf.getJSONObject("new").getBoolean("separate")) {
-                int n = mNewQueue.size();
-                while (!mNewQueue.isEmpty() && mNewQueue.getFirst()[1] == item[1]) {
-                    mNewQueue.add(mNewQueue.remove());
-                    n -= 1;
-                    if (n == 0) {
-                        // we only have one fact in the queue; stop rotating
-                        break;
-                    }
-                }
-            }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-        mNewCount -= 1;
-        return mCol.getCard(item[0]);
+        return null;
     }
 
 
@@ -1354,6 +1362,8 @@ public class Sched {
             // nothing left in the deck; move to next
             mRevDids.remove();
         }
+        // if count>0 but queue empty, the other cards were buried
+        mRevCount = 0;
         return false;
     }
 
@@ -1555,56 +1565,17 @@ public class Sched {
     }
 
 
-    /**
-     * Update CARD's interval, trying to avoid siblings.
-     */
     private void _updateRevIvl(Card card, int ease) {
         int idealIvl = _nextRevIvl(card, ease);
         card.setIvl(_adjRevIvl(card, idealIvl));
     }
 
 
-    /**
-     * Given IDEALIVL, return an IVL away from siblings.
-     */
     private int _adjRevIvl(Card card, int idealIvl) {
         if (mSpreadRev) {
             idealIvl = _fuzzedIvl(idealIvl);
         }
-        int idealDue = mToday + idealIvl;
-        JSONObject conf;
-        try {
-            conf = _revConf(card);
-            // find sibling positions
-            ArrayList<Integer> dues = mCol.getDb()
-                    .queryColumn(
-                            Integer.class,
-                            "SELECT due FROM cards WHERE nid = " + card.getNid() + " AND type = 2 AND id != "
-                                    + card.getId(), 0);
-            if (dues.size() == 0 || !dues.contains(idealDue)) {
-                return idealIvl;
-            } else {
-                int leeway = Math.max(conf.getInt("minSpace"), (int) (idealIvl * conf.getDouble("fuzz")));
-                int fudge = 0;
-                // do we have any room to adjust the interval?
-                if (leeway != 0) {
-                    // loop through possible due dates for an empty one
-                    for (int diff = 1; diff < leeway + 1; diff++) {
-                        // ensure we're due at least tomorrow
-                        if ((idealIvl - diff >= 1) && !dues.contains(idealDue - diff)) {
-                            fudge = -diff;
-                            break;
-                        } else if (!dues.contains(idealDue + diff)) {
-                            fudge = diff;
-                            break;
-                        }
-                    }
-                }
-                return idealIvl + fudge;
-            }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+        return idealIvl;
     }
 
 
@@ -1823,6 +1794,7 @@ public class Sched {
     private JSONObject _newConf(Card card) {
         try {
             JSONObject conf = _cardConf(card);
+            // normal deck
             if (card.getODid() == 0) {
                 return conf.getJSONObject("new");
             }
@@ -1836,6 +1808,7 @@ public class Sched {
             // original deck
             dict.put("ints", oconf.getJSONObject("new").getJSONArray("ints"));
             dict.put("initialFactor", oconf.getJSONObject("new").getInt("initialFactor"));
+            dict.put("bury", oconf.getJSONObject("new").optBoolean("bury", true));
             // overrides
             dict.put("delays", delays);
             dict.put("separate", conf.getBoolean("separate"));
@@ -1938,6 +1911,11 @@ public class Sched {
         for (JSONObject deck : mCol.getDecks().all()) {
             update(deck);
         }
+        // unbury if the day has rolled over
+        int unburied = mCol.getConf().optInt("lastUnburied", 0);
+        if (unburied < mToday) {
+            unburyCards();
+        }
     }
 
 
@@ -1995,14 +1973,24 @@ public class Sched {
             sb.append("\n\n");
             sb.append(context.getString(R.string.studyoptions_congrats_more_new));
         }
+        if (haveBuried()) {
+            String now;
+            if (mHaveCustomStudy) {
+                now = " " + context.getString(R.string.sched_unbury_button);
+            } else {
+                now = "";
+            }
+            sb.append("\n\n");
+            sb.append("" + context.getString(R.string.sched_has_buried) + now);
+        }
         try {
-			if (mHaveCustomStudy && mCol.getDecks().current().getInt("dyn") == 0) {
-			    sb.append("\n\n");
-			    sb.append(context.getString(R.string.studyoptions_congrats_custom));        	
-			}
-		} catch (JSONException e) {
-			throw new RuntimeException(e);
-		}
+            if (mHaveCustomStudy && mCol.getDecks().current().getInt("dyn") == 0) {
+                sb.append("\n\n");
+                sb.append(context.getString(R.string.studyoptions_congrats_custom));
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
         return sb.toString();
     }
 
@@ -2030,6 +2018,14 @@ public class Sched {
     public boolean newDue() {
         return mCol.getDb().queryScalar("SELECT 1 FROM cards WHERE did IN " + _deckLimit() + " AND queue = 0 LIMIT 1",
                 false) != 0;
+    }
+
+
+    private boolean haveBuried() {
+        String sdids = Utils.ids2str(mCol.getDecks().active());
+        int cnt = mCol.getDb().queryScalar(String.format(Locale.US,
+                "select 1 from cards where queue = -2 and did in %s limit 1", sdids));
+        return cnt == 0 ? false : true;
     }
 
 
@@ -2152,11 +2148,50 @@ public class Sched {
      * @param nid The id of the targetted note.
      */
     public void buryNote(long nid) {
-        mCol.setDirty();
         long[] cids = Utils.arrayList2array(mCol.getDb().queryColumn(Long.class,
                 "SELECT id FROM cards WHERE nid = " + nid + " AND queue >= 0", 0));
         removeLrn(cids);
-        mCol.getDb().execute("UPDATE cards SET queue = -2 WHERE id IN " + Utils.ids2str(cids));
+        mCol.getDb().execute("update cards set queue=-2,mod=?,usn=? where id in " + Utils.ids2str(cids),
+                new Object[]{Utils.now(), mCol.usn()});
+    }
+
+    /**
+     * Sibling spacing
+     * ********************
+     */
+
+    private void _burySiblings(Card card) {
+        LinkedList<Long> toBury = new LinkedList<Long>();
+        JSONObject conf = _newConf(card);
+        boolean buryNew = conf.optBoolean("bury", true);
+        // loop through and remove from queues
+        Cursor cur = null;
+        try {
+            cur = mCol.getDb().getDatabase().rawQuery(String.format(Locale.US,
+                    "select id, queue from cards where nid=? and id!=? "+
+                    "and (queue=0 or (queue=2 and due<=?))", new Object[]{card.getNid(), card.getId(), mToday}), null);
+            while (cur.moveToNext()) {
+                long cid = cur.getLong(0);
+                int queue = cur.getInt(1);
+                if (queue == 2) {
+                    toBury.add(cid);
+                    mRevQueue.remove(cid);
+                } else {
+                    // if bury is disabled, we still discard to give same-day spacing
+                    if (buryNew) {
+                        toBury.add(cid);
+                        mNewQueue.remove(cid);
+                    }
+                }
+            }
+        } finally {
+            if (cur != null && !cur.isClosed()) {
+                cur.close();
+            }
+        }
+        // then bury
+        mCol.getDb().execute("update cards set queue=-2,mod=?,usn=? where id in " + Utils.ids2str(toBury),
+                new Object[]{Utils.now(), mCol.usn()});
     }
 
 
@@ -2166,7 +2201,8 @@ public class Sched {
 
     /** Put cards at the end of the new queue. */
     public void forgetCards(long[] ids) {
-        mCol.getDb().execute("update cards set type=0,queue=0,ivl=0,factor=2500 where id in " + Utils.ids2str(ids));
+        mCol.getDb().execute("update cards set type=0,queue=0,ivl=0,due=0,factor=? where odid=0 "+
+                             "and queue >= 0 and id in " + Utils.ids2str(ids));
         int pmax = mCol.getDb().queryScalar("SELECT max(due) FROM cards WHERE type=0", false);
         // takes care of mod + usn
         sortCards(ids, pmax + 1);
@@ -2189,9 +2225,12 @@ public class Sched {
             int r = rnd.nextInt(imax - imin + 1) + imin;
             d.add(new Object[] { Math.max(1, r), r + t, mCol.usn(), mod, 2500, id });
         }
+        removeLrn(ids);
         mCol.getDb().executeMany(
-                "update cards set type=2,queue=2,ivl=?,due=?, " + "usn=?, mod=?, factor=? where id=? and odid=0", d);
+                "update cards set type=2,queue=2,ivl=?,due=?, " +
+                "usn=?, mod=?, factor=? where id=? and odid=0 and queue >=0", d);
     }
+
 
     /**
      * Completely reset cards for export.
@@ -2294,6 +2333,7 @@ public class Sched {
         }
     }
 
+
     /**
      * for post-import
      */
@@ -2362,7 +2402,7 @@ public class Sched {
     
 
     // Needed for tests
-    public LinkedList<long[]> getNewQueue() {
+    public LinkedList<Long> getNewQueue() {
         return mNewQueue;
     }
 

@@ -417,6 +417,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         Card oldCard = params[0].getCard();
         int ease = params[0].getInt();
         Card newCard = null;
+        // TODO: proper leech handling
         int oldCardLeech = 0;
         // 0: normal; 1: leech; 2: leech & suspended
         try {
@@ -424,17 +425,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             ankiDB.getDatabase().beginTransaction();
             try {
                 if (oldCard != null) {
-                    oldCardLeech = sched.answerCard(oldCard, ease) ? 1 : 0;
-                    if (oldCardLeech != 0) {
-                        oldCardLeech += sched.leechActionSuspend(oldCard) ? 1 : 0;
-                    }
-                    // } else if
-                    // (DeckManager.deckIsOpenedInBigWidget(deck.getDeckPath()))
-                    // {
-                    // // first card in reviewer is retrieved
-                    // Log.i(AnkiDroidApp.TAG,
-                    // "doInBackgroundAnswerCard: get card from big widget");
-                    // newCard = AnkiDroidWidgetBig.getCard();
+                    sched.answerCard(oldCard, ease);
                 }
                 if (newCard == null) {
                     newCard = getCard(sched);
