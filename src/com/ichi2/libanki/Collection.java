@@ -1292,6 +1292,11 @@ public class Collection {
     		mUndo.removeFirst();
     	}
     }
+    
+
+    public void markReview(Card card) {
+        markUndo(UNDO_REVIEW, new Object[]{card});
+    }
 
     /**
      * DB maintenance *********************************************************** ************************************

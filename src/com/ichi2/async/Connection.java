@@ -727,7 +727,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             return data;
         } else {
             data.success = true;
-            TreeSet<Object[]> decks = col.getSched().deckDueTree(Sched.DECK_INFORMATION_SIMPLE_COUNTS);
+            TreeSet<Object[]> decks = col.getSched().deckDueTree();
             int[] counts = new int[] { 0, 0, 0 };
             for (Object[] deck : decks) {
                 if (((String[]) deck[0]).length == 1) {
