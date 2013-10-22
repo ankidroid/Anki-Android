@@ -1976,10 +1976,10 @@ public class Sched {
     }
 
 
-    private boolean haveBuried() {
+    public boolean haveBuried() {
         String sdids = Utils.ids2str(mCol.getDecks().active());
         int cnt = mCol.getDb().queryScalar(String.format(Locale.US,
-                "select 1 from cards where queue = -2 and did in %s limit 1", sdids));
+                "select 1 from cards where queue = -2 and did in %s limit 1", sdids), false);
         return cnt == 0 ? false : true;
     }
 
