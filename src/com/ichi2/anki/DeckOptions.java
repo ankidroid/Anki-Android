@@ -101,15 +101,14 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
                 mValues.put("newFactor", Integer.toString(newOptions.getInt("initialFactor") / 10));
                 mValues.put("newOrder", newOptions.getString("order"));
                 mValues.put("newPerDay", newOptions.getString("perDay"));
-                mValues.put("newSeparate", Boolean.toString(newOptions.getBoolean("separate")));
+                mValues.put("newBury", Boolean.toString(newOptions.optBoolean("bury", true)));
                 // rev
                 JSONObject revOptions = mOptions.getJSONObject("rev");
                 mValues.put("revPerDay", revOptions.getString("perDay"));
-                mValues.put("revSpaceMax", Integer.toString((int) (revOptions.getDouble("fuzz") * 100)));
-                mValues.put("revSpaceMin", revOptions.getString("minSpace"));
                 mValues.put("easyBonus", Integer.toString((int) (revOptions.getDouble("ease4") * 100)));
                 mValues.put("revIvlFct", Integer.toString((int) (revOptions.getDouble("ivlFct") * 100)));
                 mValues.put("revMaxIvl", revOptions.getString("maxIvl"));
+                mValues.put("revBury", Boolean.toString(revOptions.optBoolean("bury", true)));
                 // lapse
                 JSONObject lapOptions = mOptions.getJSONObject("lapse");
                 mValues.put("lapSteps", StepsPreference.convertFromJSON(lapOptions.getJSONArray("delays")));
@@ -173,18 +172,18 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
                             ja.put(mOptions.getJSONObject("new").getJSONArray("ints").get(0));
                             ja.put((Integer) value);
                             mOptions.getJSONObject("new").put("ints", ja);
+                        } else if (key.equals("newBury")) {
+                            mOptions.getJSONObject("new").put("bury", (Boolean) value);
                         } else if (key.equals("revPerDay")) {
                             mOptions.getJSONObject("rev").put("perDay", (Integer) value);
-                        } else if (key.equals("revSpaceMax")) {
-                            mOptions.getJSONObject("rev").put("fuzz", (Integer) value / 100.0f);
-                        } else if (key.equals("revSpaceMin")) {
-                            mOptions.getJSONObject("rev").put("minSpace", (Integer) value);
                         } else if (key.equals("easyBonus")) {
                             mOptions.getJSONObject("rev").put("ease4", (Integer) value / 100.0f);
                         } else if (key.equals("revIvlFct")) {
                             mOptions.getJSONObject("rev").put("ivlFct", (Integer) value / 100.0f);
                         } else if (key.equals("revMaxIvl")) {
                             mOptions.getJSONObject("rev").put("maxIvl", (Integer) value);
+                        } else if (key.equals("revBury")) {
+                            mOptions.getJSONObject("rev").put("bury", (Boolean) value);
                         } else if (key.equals("lapMinIvl")) {
                             mOptions.getJSONObject("lapse").put("minInt", (Integer) value);
                         } else if (key.equals("lapLeechThres")) {
@@ -199,8 +198,6 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
                             mOptions.put("autoplay", (Boolean) value);
                         } else if (key.equals("replayQuestion")) {
                             mOptions.put("replayq", (Boolean) value);
-                        } else if (key.equals("newSeparate")) {
-                            mOptions.getJSONObject("new").put("separate", (Boolean) value);
                         } else if (key.equals("name")) {
                             if (!mCol.getDecks().rename(mDeck, (String) value)) {
                                 Themes.showThemedToast(DeckOptions.this,
