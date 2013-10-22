@@ -20,6 +20,12 @@
 		android:layout_height="wrap_content"
 		android:layout_width="fill_parent"
 		android:gravity="center"
+		android:id="@+id/studyoptions_congrats_unbury"
+		android:text="@string/unbury" />
+	<Button
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:gravity="center"
 		android:id="@+id/studyoptions_congrats_open_other_deck"
 		android:text="@string/studyoptions_congrats_open_other_deck" />
 	<Button
@@ -28,10 +34,4 @@
 		android:gravity="center"
 		android:id="@+id/studyoptions_congrats_customstudy"
 		android:text="@string/studyoptions_congrats_custom_study" />
-	<Button
-		android:layout_height="wrap_content"
-		android:layout_width="fill_parent"
-		android:gravity="center"
-		android:id="@+id/studyoptions_congrats_finish"
-		android:text="@string/studyoptions_congrats_finish" />
 </LinearLayout>

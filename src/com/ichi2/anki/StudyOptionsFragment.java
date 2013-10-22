@@ -157,8 +157,8 @@ public class StudyOptionsFragment extends Fragment {
 //    private View mReviewEarlyView;
     private TextView mTextCongratsMessage;
     private Button mButtonCongratsUndo;
+    private Button mButtonCongratsUnbury;
     private Button mButtonCongratsOpenOtherDeck;
-    private Button mButtonCongratsFinish;
     private Button mButtonCongratsCustomStudy;
 
     private View mCustomStudyDetailsView;
@@ -233,15 +233,16 @@ public class StudyOptionsFragment extends Fragment {
                         finishCongrats();
                     }
                     return;
+                case R.id.studyoptions_congrats_unbury:
+                    col.getSched().unburyCards();
+                    resetAndUpdateValuesFromDeck();
+                    finishCongrats();
+                    return;
                 case R.id.studyoptions_congrats_open_other_deck:
                     closeStudyOptions();
                     return;
                 case R.id.studyoptions_congrats_customstudy:
                     showDialog(DIALOG_CUSTOM_STUDY);
-                    return;
-                case R.id.studyoptions_congrats_finish:
-                    updateValuesFromDeck();
-                    finishCongrats();
                     return;
                 case R.id.studyoptions_card_browser:
                     openCardBrowser();
@@ -413,7 +414,6 @@ public class StudyOptionsFragment extends Fragment {
 
         if (getArguments().getBoolean("onlyFnsMsg")) {
         	prepareCongratsView();
-            mButtonCongratsFinish.setVisibility(View.GONE);
             return mCongratsView;
         } else {
         	// clear undo if new deck is opened (do not clear if only congrats msg is shown)
@@ -675,17 +675,18 @@ public class StudyOptionsFragment extends Fragment {
 
         mTextCongratsMessage.setOnClickListener(mButtonClickListener);
         mButtonCongratsUndo = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_undo);
+        mButtonCongratsUnbury = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_unbury);
         mButtonCongratsCustomStudy = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_customstudy);
         mButtonCongratsOpenOtherDeck = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_open_other_deck);
         if (mFragmented) {
             mButtonCongratsOpenOtherDeck.setVisibility(View.GONE);
         }
-        mButtonCongratsFinish = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_finish);
-
+        
+        
         mButtonCongratsUndo.setOnClickListener(mButtonClickListener);
+        mButtonCongratsUnbury.setOnClickListener(mButtonClickListener);
         mButtonCongratsCustomStudy.setOnClickListener(mButtonClickListener);
         mButtonCongratsOpenOtherDeck.setOnClickListener(mButtonClickListener);
-        mButtonCongratsFinish.setOnClickListener(mButtonClickListener);
     }
 
 
@@ -1140,6 +1141,9 @@ public class StudyOptionsFragment extends Fragment {
             Resources res = AnkiDroidApp.getAppResources();
             mButtonCongratsUndo.setText(res.getString(R.string.studyoptions_congrats_undo,
                     AnkiDroidApp.getCol().undoName(res)));
+        }
+        if (AnkiDroidApp.colIsOpen() && !AnkiDroidApp.getCol().getSched().haveBuried()) {
+            mButtonCongratsUnbury.setVisibility(View.GONE);
         }
         mTextCongratsMessage.setText(AnkiDroidApp.getCol().getSched().finishedMsg(getActivity()));
         // Filtered decks must not have a custom study button
