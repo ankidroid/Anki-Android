@@ -2166,7 +2166,7 @@ public class Sched {
 
     /** Put cards at the end of the new queue. */
     public void forgetCards(long[] ids) {
-        mCol.getDb().execute("update cards set type=0,queue=0,ivl=0,due=0,factor=? where odid=0 "+
+        mCol.getDb().execute("update cards set type=0,queue=0,ivl=0,due=0,factor=2500 where odid=0 "+
                              "and queue >= 0 and id in " + Utils.ids2str(ids));
         int pmax = mCol.getDb().queryScalar("SELECT max(due) FROM cards WHERE type=0", false);
         // takes care of mod + usn
