@@ -1595,7 +1595,7 @@ public class Sched {
             int limit = terms.getInt(1);
             int order = terms.getInt(2);
             String orderlimit = _dynOrder(order, limit);
-            search += " -is:suspended -deck:filtered";
+            search += " -is:suspended -is:buried -deck:filtered";
             ids = mCol.findCards(search, orderlimit);
             if (ids.isEmpty()) {
                 return ids;
