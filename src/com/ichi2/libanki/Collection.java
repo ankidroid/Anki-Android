@@ -111,6 +111,8 @@ public class Collection {
     public static final int UNDO_SUSPEND_NOTE = 4;
     public static final int UNDO_DELETE_NOTE = 5;
     public static final int UNDO_MARK_NOTE = 6;
+    public static final int UNDO_BURY_CARD = 7;
+    
     private static final int[] fUndoNames = new int[]{
         R.string.undo_action_review,
         R.string.undo_action_edit,
@@ -1261,6 +1263,9 @@ public class Collection {
     	case UNDO_EDIT_NOTE:
     		mUndo.add(new Object[]{type, ((Note)o[0]).clone(), o[1], o[2]});
     		break;
+        case UNDO_BURY_CARD:
+            mUndo.add(new Object[]{type, o[0], o[1], o[2]});
+            break;
     	case UNDO_BURY_NOTE:
     		mUndo.add(new Object[]{type, o[0], o[1], o[2]});
     		break;
