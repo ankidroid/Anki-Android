@@ -144,8 +144,11 @@ public class Collection {
         mStartReps = 0;
         mStartTime = 0;
         mSched = new Sched(this);
-        // check for improper shutdown
-        cleanup();
+        if (!mConf.optBoolean("newBury", false)) {
+            boolean mod = mDb.getMod();
+            mSched.unburyCards();
+            mDb.setMod(mod);
+        }
     }
 
 
@@ -160,19 +163,20 @@ public class Collection {
      * DB-related *************************************************************** ********************************
      */
 
-    public boolean load() {
+    public void load() {
         Cursor cursor = null;
         try {
             // Read in deck table columns
             cursor = mDb.getDatabase().rawQuery(
-                    "SELECT crt, mod, scm, dty, usn, ls, conf, " + "models, decks, dconf, tags FROM col", null);
+                    "SELECT crt, mod, scm, dty, usn, ls, " +
+                    "conf, models, decks, dconf, tags FROM col", null);
             if (!cursor.moveToFirst()) {
-                return false;
+                return;
             }
             mCrt = cursor.getLong(0);
             mMod = cursor.getLong(1);
             mScm = cursor.getLong(2);
-            mDty = cursor.getInt(3) == 1;
+            mDty = cursor.getInt(3) == 1; // No longer used
             mUsn = cursor.getInt(4);
             mLs = cursor.getLong(5);
             try {
@@ -183,7 +187,6 @@ public class Collection {
             mModels.load(cursor.getString(7));
             mDecks.load(cursor.getString(8), cursor.getString(9));
             mTags.load(cursor.getString(10));
-            return true;
         } finally {
             if (cursor != null) {
                 cursor.close();
@@ -281,12 +284,12 @@ public class Collection {
 
 
     public synchronized void close(boolean save) {
-        // if (wait) {
-        // Wait for any thread working on the deck to finish.
-        // DeckTask.waitToFinish();
-        // }
         if (mDb != null) {
-            cleanup();
+            if (!mConf.optBoolean("newBury", false)) {
+                boolean mod = mDb.getMod();
+                mSched.unburyCards();
+                mDb.setMod(mod);
+            }
             try {
                 SQLiteDatabase db = getDb().getDatabase();
                 if (save) {
@@ -342,28 +345,6 @@ public class Collection {
     /** True if schema changed since last sync. */
     public boolean schemaChanged() {
         return mScm > mLs;
-    }
-
-
-    /**
-     * Signal there are temp. suspended cards that need cleaning up on close.
-     */
-    public void setDirty() {
-        mDty = true;
-    }
-    public void setDirty(boolean dty) {
-        mDty = dty;
-    }
-
-
-    /**
-     * Unsuspend any temporarily suspended cards.
-     */
-    public void cleanup() {
-        if (mDty) {
-            mSched.unburyCards();
-            mDty = false;
-        }
     }
 
 
@@ -1192,6 +1173,9 @@ public class Collection {
             // and delete revlog entry
             long last = mDb.queryLongScalar("SELECT id FROM revlog WHERE cid = " + c.getId() + " ORDER BY id DESC LIMIT 1");
             mDb.execute("DELETE FROM revlog WHERE id = " + last);
+            // restore any siblings
+            mDb.execute("update cards set queue=type,mod=?,usn=? where queue=-2 and nid=?",
+                    new Object[]{ Utils.intNow(), usn(), c.getNid() });
             // and finally, update daily count
             int n = c.getQueue() == 3 ? 1 : c.getQueue();
             String type = (new String[] { "new", "lrn", "rev" })[n];
@@ -1224,7 +1208,6 @@ public class Collection {
     		return 0;
 
     	case UNDO_BURY_NOTE:
-    		setDirty((Boolean)data[1]);
     		for (Card cc : (ArrayList<Card>)data[2]) {
     			cc.flush(false);
     		}
