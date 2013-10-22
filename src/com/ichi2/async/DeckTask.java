@@ -558,6 +558,14 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             col.getDb().getDatabase().beginTransaction();
             try {
                 switch (type) {
+                    case 4:
+                        // collect undo information
+                        col.markUndo(Collection.UNDO_BURY_CARD,
+                                new Object[] { col.getDirty(), note.cards(), card.getId() });
+                        // then bury
+                        sched.buryCards(new long[]{ card.getId() });
+                        sHadCardQueue = true;
+                        break;
                     case 0:
                         // collect undo information
                         col.markUndo(Collection.UNDO_BURY_NOTE,

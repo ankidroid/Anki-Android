@@ -2096,8 +2096,15 @@ public class Sched {
                 "UPDATE cards SET queue = type, mod = " + Utils.intNow() + ", usn = " + mCol.usn()
                         + " WHERE queue = -1 AND id IN " + Utils.ids2str(ids));
     }
-
-
+    
+    
+    public void buryCards(long[] cids) {
+        removeLrn(cids);
+        mCol.getDb().execute("update cards set queue=-2,mod=?,usn=? where id in " + Utils.ids2str(cids),
+                new Object[]{Utils.now(), mCol.usn()});
+    }
+    
+    
     /**
      * Bury all cards for note until next session.
      * @param nid The id of the targetted note.
@@ -2105,9 +2112,7 @@ public class Sched {
     public void buryNote(long nid) {
         long[] cids = Utils.arrayList2array(mCol.getDb().queryColumn(Long.class,
                 "SELECT id FROM cards WHERE nid = " + nid + " AND queue >= 0", 0));
-        removeLrn(cids);
-        mCol.getDb().execute("update cards set queue=-2,mod=?,usn=? where id in " + Utils.ids2str(cids),
-                new Object[]{Utils.now(), mCol.usn()});
+        buryCards(cids);
     }
 
     /**
