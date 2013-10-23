@@ -112,6 +112,9 @@ public class FullSyncer extends BasicHttpSyncer {
         if (!mCol.getDb().queryString("PRAGMA integrity_check").equalsIgnoreCase("ok")) {
             return new Object[] { "dbError" };
         }
+        if (!mCol.basicCheck()) {
+            return new Object[] { "dbError" };
+        }
         // apply some adjustments, then upload
         mCol.beforeUpload();
         String filePath = mCol.getPath();

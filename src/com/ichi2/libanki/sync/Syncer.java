@@ -82,8 +82,6 @@ public class Syncer {
     public Object[] sync(Connection con) {
         // if the deck has any pending changes, flush them first and bump mod time
         mCol.save();
-        // do a cleanup (unbury cards) --> anki desktop does it by closing the collection
-        mCol.cleanup();
         // step 1: login & metadata
         HttpResponse ret = mServer.meta();
         if (ret == null) {

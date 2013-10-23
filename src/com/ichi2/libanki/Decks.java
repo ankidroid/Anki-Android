@@ -67,7 +67,7 @@ public class Decks {
               // currently
               // used
             "'initialFactor': 2500, " + "'separate': True, " + "'order': " + Sched.NEW_CARDS_DUE + ", "
-            + "'perDay': 20 }, " + "'lapse': {" + "'delays': [10], " + "'mult': 0, " + "'minInt': 1, "
+            + "'perDay': 20, 'bury': True }, " + "'lapse': {" + "'delays': [10], " + "'mult': 0, " + "'minInt': 1, "
             + "'leechFails': 8, "
             + "'leechAction': 0 }, "
             // type 0=suspend, 1=tagonly
