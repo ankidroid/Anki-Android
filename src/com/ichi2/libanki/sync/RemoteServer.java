@@ -16,6 +16,7 @@
 
 package com.ichi2.libanki.sync;
 
+import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
@@ -26,6 +27,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Locale;
 
 public class RemoteServer extends BasicHttpSyncer {
 
@@ -68,6 +70,7 @@ public class RemoteServer extends BasicHttpSyncer {
         try {
             JSONObject jo = new JSONObject();
             jo.put("v", Collection.SYNC_VER);
+            jo.put("cv", String.format(Locale.US, "ankidroid,%s,%s", AnkiDroidApp.getPkgVersion(), Utils.platDesc()));
             return super.req("meta", super.getInputStream(Utils.jsonToString(jo)));
         } catch (JSONException e) {
             throw new RuntimeException(e);
