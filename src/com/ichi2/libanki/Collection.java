@@ -57,7 +57,7 @@ public class Collection {
     // collection schema & syncing vars
     public static final int SCHEMA_VERSION = 11;
     public static final String SYNC_URL = "https://ankiweb.net/";
-    public static final int SYNC_VER = 7;
+    public static final int SYNC_VER = 8;
     public static final String HELP_SITE = "http://ankisrs.net/docs/manual.html";
     private static final String TEMPLATE_ERROR = "<div style='background-color:#f44; color:#fff;'>%s</div>%s"+
                                                  "<br><br><code style='font-size:80%%'>%s</code><br><br>"+
