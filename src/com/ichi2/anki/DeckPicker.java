@@ -42,6 +42,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -129,6 +130,7 @@ public class DeckPicker extends FragmentActivity {
     private static final int IMPORT_METHOD_ADD = 1;
     private static final int IMPORT_METHOD_REPLACE = 2;
 
+    private String mSyncMessage;
     private String mDialogMessage;
     private int[] mRepairValues;
     private boolean mLoadFailed;
@@ -369,6 +371,8 @@ public class DeckPicker extends FragmentActivity {
 
         @Override
         public void onPreExecute() {
+            mDialogMessage = "";
+            mSyncMessage = "";
         	mDontSaveOnStop = true;
             countUp = 0;
             countDown = 0;
@@ -417,6 +421,7 @@ public class DeckPicker extends FragmentActivity {
             if (mProgressDialog != null) {
                 mProgressDialog.dismiss();
             }
+            mSyncMessage = data.message;
             if (!data.success) {
                 Object[] result = (Object[]) data.result;
                 if (result[0] instanceof String) {
@@ -484,6 +489,9 @@ public class DeckPicker extends FragmentActivity {
                         col.save();
                         mDialogMessage = res.getString(R.string.sync_sanity_failed);
                         showDialog(DIALOG_SYNC_SANITY_ERROR);
+                    } else if (resultType.equals("serverAbort")) {
+                        // syncMsg has already been set above, no need to fetch it here.
+                        showDialog(DIALOG_SYNC_LOG);
                     } else {
                     	if (result.length > 1 && result[1] instanceof Integer) {
                             int type = (Integer) result[1];
@@ -2020,7 +2028,14 @@ public class DeckPicker extends FragmentActivity {
             case DIALOG_IMPORT_LOG:
             case DIALOG_SYNC_LOG:
             case DIALOG_SYNC_SANITY_ERROR:
-                ad.setMessage(mDialogMessage);
+                // If both have text, separate them by a new line.
+                if (!TextUtils.isEmpty(mDialogMessage) &&  !TextUtils.isEmpty(mSyncMessage)) {
+                    ad.setMessage(mDialogMessage + "\n\n" + mSyncMessage);
+                } else if (!TextUtils.isEmpty(mDialogMessage)) {
+                    ad.setMessage(mDialogMessage);
+                } else {
+                    ad.setMessage(mSyncMessage);
+                }
                 break;
 
             case DIALOG_DB_ERROR:
