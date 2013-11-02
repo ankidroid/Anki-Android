@@ -71,6 +71,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
@@ -3218,11 +3219,13 @@ public class Reviewer extends AnkiActivity {
         /**
          * This is not called on the UI thread. Send a message that will be handled on the UI thread.
          */
+        @JavascriptInterface
         public void playSound(String soundPath) {
             Message msg = Message.obtain();
             msg.obj = soundPath;
             mHandler.sendMessage(msg);
         }
+        @JavascriptInterface
         public int getAvailableWidth() {
             if (mCtx.mAvailableInCardWidth == 0) {
                 mCtx.mAvailableInCardWidth = mCtx.calcAvailableInCardWidth();
