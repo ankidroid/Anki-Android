@@ -639,7 +639,7 @@ public class Sched {
                     cur = mCol
                             .getDb()
                             .getDatabase()
-                            .rawQuery("SELECT id FROM cards WHERE did = " + did + " AND queue = 0 LIMIT " + lim,
+                            .rawQuery("SELECT id FROM cards WHERE did = " + did + " AND queue = 0 order by due LIMIT " + lim,
                                     null);
                     while (cur.moveToNext()) {
                         mNewQueue.add(cur.getLong(0));
