@@ -659,8 +659,13 @@ public class Sched {
             // nothing left in the deck; move to next
             mNewDids.remove();
         }
-        // if count>0 but queue empty, the other cards were buried
-        mNewCount = 0;
+        if (mNewCount != 0) {
+            // if we didn't get a card but the count is non-zero,
+            // we need to check again for any cards that were
+            // removed from the queue but not buried
+            _resetNew();
+            return _fillNew();
+        }
         return false;
     }
 
@@ -1335,8 +1340,13 @@ public class Sched {
             // nothing left in the deck; move to next
             mRevDids.remove();
         }
-        // if count>0 but queue empty, the other cards were buried
-        mRevCount = 0;
+        if (mRevCount != 0) {
+            // if we didn't get a card but the count is non-zero,
+            // we need to check again for any cards that were
+            // removed from the queue but not buried
+            _resetRev();
+            return _fillRev();
+        }
         return false;
     }
 
