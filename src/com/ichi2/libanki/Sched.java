@@ -1595,7 +1595,7 @@ public class Sched {
             int limit = terms.getInt(1);
             int order = terms.getInt(2);
             String orderlimit = _dynOrder(order, limit);
-            search += " -is:suspended -deck:filtered";
+            search += " -is:suspended -is:buried -deck:filtered";
             ids = mCol.findCards(search, orderlimit);
             if (ids.isEmpty()) {
                 return ids;
@@ -1976,10 +1976,10 @@ public class Sched {
     }
 
 
-    private boolean haveBuried() {
+    public boolean haveBuried() {
         String sdids = Utils.ids2str(mCol.getDecks().active());
         int cnt = mCol.getDb().queryScalar(String.format(Locale.US,
-                "select 1 from cards where queue = -2 and did in %s limit 1", sdids));
+                "select 1 from cards where queue = -2 and did in %s limit 1", sdids), false);
         return cnt == 0 ? false : true;
     }
 
@@ -2096,8 +2096,15 @@ public class Sched {
                 "UPDATE cards SET queue = type, mod = " + Utils.intNow() + ", usn = " + mCol.usn()
                         + " WHERE queue = -1 AND id IN " + Utils.ids2str(ids));
     }
-
-
+    
+    
+    public void buryCards(long[] cids) {
+        removeLrn(cids);
+        mCol.getDb().execute("update cards set queue=-2,mod=?,usn=? where id in " + Utils.ids2str(cids),
+                new Object[]{Utils.now(), mCol.usn()});
+    }
+    
+    
     /**
      * Bury all cards for note until next session.
      * @param nid The id of the targetted note.
@@ -2105,9 +2112,7 @@ public class Sched {
     public void buryNote(long nid) {
         long[] cids = Utils.arrayList2array(mCol.getDb().queryColumn(Long.class,
                 "SELECT id FROM cards WHERE nid = " + nid + " AND queue >= 0", 0));
-        removeLrn(cids);
-        mCol.getDb().execute("update cards set queue=-2,mod=?,usn=? where id in " + Utils.ids2str(cids),
-                new Object[]{Utils.now(), mCol.usn()});
+        buryCards(cids);
     }
 
     /**
@@ -2161,7 +2166,7 @@ public class Sched {
 
     /** Put cards at the end of the new queue. */
     public void forgetCards(long[] ids) {
-        mCol.getDb().execute("update cards set type=0,queue=0,ivl=0,due=0,factor=? where odid=0 "+
+        mCol.getDb().execute("update cards set type=0,queue=0,ivl=0,due=0,factor=2500 where odid=0 "+
                              "and queue >= 0 and id in " + Utils.ids2str(ids));
         int pmax = mCol.getDb().queryScalar("SELECT max(due) FROM cards WHERE type=0", false);
         // takes care of mod + usn

@@ -270,12 +270,12 @@
 <string name="deck_conf_days">XXX day(s)</string>
 <string name="deck_conf_easy_ivl">Easy interval</string>
 <string name="deck_conf_start_ease">Starting ease</string>
-<string name="deck_conf_separate">Siblings</string>
-<string name="deck_conf_separate_summ">Try not to show sibling cards next to each other</string>
 <string name="deck_conf_max_rev">Maximum reviews/day</string>
-<string name="deck_conf_sibl_space">Space siblings by up to</string>
+<string name="deck_conf_new_bury">Bury related new cards</string>
+<string name="deck_conf_new_bury_summ">Related new cards are buried until the next day</string>
+<string name="deck_conf_rev_bury">Bury related reviews</string>
+<string name="deck_conf_rev_bury_summ">Related reviews are buried until the next day</string>
 <string name="deck_conf_easy_bonus">Easy bonus</string>
-<string name="deck_conf_min_range">Minimum sibling range</string>
 <string name="deck_conf_ivl_fct">Interval modifier</string>
 <string name="deck_conf_max_ivl">Maximum interval</string>
 <string name="deck_conf_new_lps_ivl">New interval</string>
