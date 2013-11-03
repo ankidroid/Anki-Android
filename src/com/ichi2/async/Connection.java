@@ -615,6 +615,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             Log.i(AnkiDroidApp.TAG, "Sync - starting sync");
             publishProgress(R.string.sync_prepare_syncing);
             Object[] ret = client.sync(this);
+            data.message = client.getSyncMsg();
             mediaUsn = client.getmMediaUsn();
             if (ret == null) {
                 data.success = false;
@@ -1069,6 +1070,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         public boolean success;
         public int returnType;
         public Exception exception;
+        public String message;
 
 
         public Payload() {

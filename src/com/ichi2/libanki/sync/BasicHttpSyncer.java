@@ -42,6 +42,9 @@ import org.json.JSONObject;
 
 import javax.net.ssl.SSLException;
 import java.io.*;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Random;
 import java.util.zip.GZIPOutputStream;
 
 public class BasicHttpSyncer implements HttpSyncer {
@@ -59,11 +62,13 @@ public class BasicHttpSyncer implements HttpSyncer {
      */
 
     private String mHKey;
+    private String mSKey;
     private Connection mCon;
 
 
     public BasicHttpSyncer(String hkey, Connection con) {
         mHKey = hkey;
+        mSKey = Utils.checksum(Float.toString(new Random().nextFloat())).substring(0, 8);
         mCon = con;
     }
 
@@ -102,12 +107,17 @@ public class BasicHttpSyncer implements HttpSyncer {
         try {
             String bdry = "--" + BOUNDARY;
             StringWriter buf = new StringWriter();
+            HashMap<String, Object> vars = new HashMap<String, Object>();
             // compression flag and session key as post vars
-            buf.write(bdry + "\r\n");
-            buf.write("Content-Disposition: form-data; name=\"c\"\r\n\r\n" + (comp != 0 ? 1 : 0) + "\r\n");
+            vars.put("c", comp != 0 ? 1 : 0);
             if (hkey) {
+                vars.put("k", mHKey);
+                vars.put("s", mSKey);
+            }
+            for (String key : vars.keySet()) {
                 buf.write(bdry + "\r\n");
-                buf.write("Content-Disposition: form-data; name=\"k\"\r\n\r\n" + mHKey + "\r\n");
+                buf.write(String.format(Locale.US, "Content-Disposition: form-data; name=\"%s\"\r\n\r\n%s\r\n",
+                        key, vars.get(key)));
             }
             tmpFileBuffer = File.createTempFile("syncer", ".tmp", new File(AnkiDroidApp.getCacheStorageDirectory()));
             FileOutputStream fos = new FileOutputStream(tmpFileBuffer);

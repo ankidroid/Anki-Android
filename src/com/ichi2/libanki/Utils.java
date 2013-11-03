@@ -1259,4 +1259,15 @@ public class Utils {
     public static String jsonToString(JSONArray json) {
         return json.toString().replaceAll("\\\\/", "/");
     }
+    
+    /**
+     * @return A description of the device, including the model and android version. No commas are present in the
+     * returned string.
+     */
+    public static String platDesc() {
+        // AnkiWeb reads this string and uses , and : as delimiters, so we remove them.
+        String model = android.os.Build.MODEL.replace(',', ' ').replace(':', ' ');
+        return String.format(Locale.US, "android:%s:%s",
+                android.os.Build.VERSION.RELEASE, model);
+    }
 }
