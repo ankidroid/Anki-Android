@@ -359,7 +359,6 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 // set journal mode to delete
                 try {
                     AnkiDb d = AnkiDatabaseManager.getDatabase(deckPath);
-                    d.queryString("PRAGMA journal_mode = DELETE");
                 } catch (SQLiteDatabaseCorruptException e) {
                     // ignore invalid .anki files
                     corruptFiles.add(f.getName());
@@ -615,6 +614,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             Log.i(AnkiDroidApp.TAG, "Sync - starting sync");
             publishProgress(R.string.sync_prepare_syncing);
             Object[] ret = client.sync(this);
+            data.message = client.getSyncMsg();
             mediaUsn = client.getmMediaUsn();
             if (ret == null) {
                 data.success = false;
@@ -727,7 +727,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             return data;
         } else {
             data.success = true;
-            TreeSet<Object[]> decks = col.getSched().deckDueTree(Sched.DECK_INFORMATION_SIMPLE_COUNTS);
+            TreeSet<Object[]> decks = col.getSched().deckDueTree();
             int[] counts = new int[] { 0, 0, 0 };
             for (Object[] deck : decks) {
                 if (((String[]) deck[0]).length == 1) {
@@ -1069,6 +1069,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         public boolean success;
         public int returnType;
         public Exception exception;
+        public String message;
 
 
         public Payload() {

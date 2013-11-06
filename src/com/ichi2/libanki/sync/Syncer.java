@@ -62,6 +62,7 @@ public class Syncer {
     int mMinUsn;
     boolean mLNewer;
     JSONObject mRChg;
+    String mSyncMsg;
 
     private LinkedList<String> mTablesLeft;
     private Cursor mCursor;
@@ -73,17 +74,16 @@ public class Syncer {
     }
 
 
-    /** Returns 'noChanges', 'fullSync', or 'success'. */
+    /** Returns 'noChanges', 'fullSync', 'success', etc */
     public Object[] sync() {
         return sync(null);
     }
 
 
     public Object[] sync(Connection con) {
+        mSyncMsg = "";
         // if the deck has any pending changes, flush them first and bump mod time
         mCol.save();
-        // do a cleanup (unbury cards) --> anki desktop does it by closing the collection
-        mCol.cleanup();
         // step 1: login & metadata
         HttpResponse ret = mServer.meta();
         if (ret == null) {
@@ -95,24 +95,32 @@ public class Syncer {
         } else if (returntype != 200) {
             return new Object[] { "error", returntype, ret.getStatusLine().getReasonPhrase() };
         }
-        long rts;
-        long lts;
         try {
             mCol.getDb().getDatabase().beginTransaction();
             try {
-                JSONArray ra = new JSONArray(mServer.stream2String(ret.getEntity().getContent()));
-                mRMod = ra.getLong(0);
-                mRScm = ra.getLong(1);
-                mMaxUsn = ra.getInt(2);
-                rts = ra.getLong(3);
-                mMediaUsn = ra.getInt(4);
-
-                Log.i(AnkiDroidApp.TAG, "Sync: getting meta data");
-                JSONArray la = meta();
-                mLMod = la.getLong(0);
-                mLScm = la.getLong(1);
-                mMinUsn = la.getInt(2);
-                lts = la.getLong(3);
+                Log.i(AnkiDroidApp.TAG, "Sync: getting meta data from server");
+                JSONObject rMeta = new JSONObject(mServer.stream2String(ret.getEntity().getContent()));
+                long rscm = rMeta.getLong("scm");
+                int rts = rMeta.getInt("ts");
+                mRMod = rMeta.getLong("mod");
+                mMaxUsn = rMeta.getInt("usn");
+                mMediaUsn = rMeta.getInt("musn");
+                mSyncMsg = rMeta.getString("msg");
+                // skip uname, AnkiDroid already stores and shows it
+                if (!rMeta.getBoolean("cont")) {
+                    // Don't add syncMsg; it can be fetched by UI code using the accessor
+                    return new Object[] { "serverAbort" };
+                } else {
+                    // don't abort, but ui should show messages after sync finishes
+                    // and require confirmation if it's non-empty
+                }
+                Log.i(AnkiDroidApp.TAG, "Sync: building local meta data");
+                JSONObject lMeta = meta();
+                mLMod = lMeta.getLong("mod");
+                mMinUsn = lMeta.getInt("usn");
+                long lscm = lMeta.getLong("scm");
+                int lts = lMeta.getInt("ts");
+                
                 long diff = Math.abs(rts - lts);
                 if (diff > 300) {
                     return new Object[] { "clockOff", diff };
@@ -120,7 +128,7 @@ public class Syncer {
                 if (mLMod == mRMod) {
                     Log.i(AnkiDroidApp.TAG, "Sync: no changes - returning");
                     return new Object[] { "noChanges" };
-                } else if (mLScm != mRScm) {
+                } else if (lscm != rscm) {
                     Log.i(AnkiDroidApp.TAG, "Sync: full sync necessary - returning");
                     return new Object[] { "fullSync" };
                 }
@@ -244,13 +252,16 @@ public class Syncer {
     }
 
 
-    public JSONArray meta() {
-        JSONArray o = new JSONArray();
-        o.put(mCol.getMod());
-        o.put(mCol.getScm());
-        o.put(mCol.getUsnForSync());
-        o.put(Utils.intNow());
-        return o;
+    public JSONObject meta() throws JSONException {
+        JSONObject j = new JSONObject();
+        j.put("mod", mCol.getMod());
+        j.put("scm", mCol.getScm());
+        j.put("usn", mCol.getUsnForSync());
+        j.put("ts", Utils.intNow());
+        j.put("musn", 0);
+        j.put("msg", "");
+        j.put("cont", true);
+        return j;
     }
 
 
@@ -370,7 +381,7 @@ public class Syncer {
             }
             mCol.getSched().reset();
             // check for missing parent decks
-            mCol.getSched().deckDueList(Sched.DECK_INFORMATION_SIMPLE_COUNTS);
+            mCol.getSched().deckDueList();
             // return summary of deck
             JSONArray ja = new JSONArray();
             JSONArray sa = new JSONArray();
@@ -874,6 +885,10 @@ public class Syncer {
         }
     }
 
+
+    public String getSyncMsg() {
+        return mSyncMsg;
+    }
 
     /**
      * Col config ********************************************************************

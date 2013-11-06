@@ -71,6 +71,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
@@ -168,7 +169,8 @@ public class Reviewer extends AnkiActivity {
     private static final int MENU_CLEAR_WHITEBOARD = 1;
     private static final int MENU_EDIT = 2;
     private static final int MENU_REMOVE = 3;
-    private static final int MENU_REMOVE_BURY = 31;
+    private static final int MENU_REMOVE_BURY_CARD = 30;
+    private static final int MENU_REMOVE_BURY_NOTE = 31;
     private static final int MENU_REMOVE_SUSPEND_CARD = 32;
     private static final int MENU_REMOVE_SUSPEND_NOTE = 33;
     private static final int MENU_REMOVE_DELETE = 34;
@@ -1235,7 +1237,8 @@ public class Reviewer extends AnkiActivity {
 
         SubMenu removeDeckSubMenu = menu.addSubMenu(Menu.NONE, MENU_REMOVE, Menu.NONE, R.string.menu_dismiss_note);
         removeDeckSubMenu.setIcon(R.drawable.ic_menu_stop);
-        removeDeckSubMenu.add(Menu.NONE, MENU_REMOVE_BURY, Menu.NONE, R.string.menu_bury_note);
+        removeDeckSubMenu.add(Menu.NONE, MENU_REMOVE_BURY_CARD, Menu.NONE, R.string.menu_bury_card);
+        removeDeckSubMenu.add(Menu.NONE, MENU_REMOVE_BURY_NOTE, Menu.NONE, R.string.menu_bury_note);
         removeDeckSubMenu.add(Menu.NONE, MENU_REMOVE_SUSPEND_CARD, Menu.NONE, R.string.menu_suspend_card);
         removeDeckSubMenu.add(Menu.NONE, MENU_REMOVE_SUSPEND_NOTE, Menu.NONE, R.string.menu_suspend_note);
         removeDeckSubMenu.add(Menu.NONE, MENU_REMOVE_DELETE, Menu.NONE, R.string.menu_delete_note);
@@ -1410,8 +1413,14 @@ public class Reviewer extends AnkiActivity {
 
             case MENU_EDIT:
                 return editCard();
-
-            case MENU_REMOVE_BURY:
+                
+            case MENU_REMOVE_BURY_CARD:
+                setNextCardAnimation(false);
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
+                        mSched, mCurrentCard, 4));
+                return true;
+                
+            case MENU_REMOVE_BURY_NOTE:
                 setNextCardAnimation(false);
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
                         mSched, mCurrentCard, 0));
@@ -3275,11 +3284,13 @@ public class Reviewer extends AnkiActivity {
         /**
          * This is not called on the UI thread. Send a message that will be handled on the UI thread.
          */
+        @JavascriptInterface
         public void playSound(String soundPath) {
             Message msg = Message.obtain();
             msg.obj = soundPath;
             mHandler.sendMessage(msg);
         }
+        @JavascriptInterface
         public int getAvailableWidth() {
             if (mCtx.mAvailableInCardWidth == 0) {
                 mCtx.mAvailableInCardWidth = mCtx.calcAvailableInCardWidth();

@@ -65,9 +65,9 @@
 <string name="ease3_learning">Easy</string>
 
 <string name="studyoptions_congrats_undo">Undo %s</string>
+<string name="studyoptions_congrats_unbury">Unbury</string>
 <string name="studyoptions_congrats_custom_study">Custom Study</string>
 <string name="studyoptions_congrats_open_other_deck">Open Other Deck</string>
-<string name="studyoptions_congrats_finish">Back to Study Screen</string>
 
 <string name="card_unsuspended">Card suspension undone</string>
 <string name="card_suspended">Card resuspended</string>
@@ -82,6 +82,7 @@
 <string name="undo_action_suspend_note">suspend note</string>
 <string name="undo_action_delete">delete note</string>
 <string name="undo_action_mark">mark note</string>
+<string name="unbury">Unbury</string>
 
 <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
 
@@ -103,6 +104,7 @@
 <string name="menu_about">About</string>
 
 <string name="menu_dismiss_note">Dismiss Note...</string>
+<string name="menu_bury_card">Bury Card</string>
 <string name="menu_bury_note">Bury Note</string>
 <string name="menu_suspend_card">Suspend Card</string>
 <string name="menu_suspend_note">Suspend Note</string>

@@ -62,27 +62,15 @@
                 app:min="100" />
             <CheckBoxPreference
                 android:defaultValue="true"
-                android:key="newSeparate"
-                android:summary="@string/deck_conf_separate_summ"
-                android:title="@string/deck_conf_separate" />
+                android:key="newBury"
+                android:summary="@string/deck_conf_new_bury_summ"
+                android:title="@string/deck_conf_new_bury" />
         </PreferenceScreen>
         <PreferenceScreen android:title="@string/deck_conf_rev_cards" >
             <com.ichi2.preferences.NumberRangePreference
                 android:key="revPerDay"
                 android:title="@string/deck_conf_max_rev"
                 app:max="9999"
-                app:min="0" />
-            <com.ichi2.preferences.NumberRangePreference
-                android:key="revSpaceMax"
-                android:summary="@string/deck_conf_percent"
-                android:title="@string/deck_conf_sibl_space"
-                app:max="100"
-                app:min="0" />
-            <com.ichi2.preferences.NumberRangePreference
-                android:key="revSpaceMin"
-                android:summary="@string/deck_conf_days"
-                android:title="@string/deck_conf_min_range"
-                app:max="99"
                 app:min="0" />
             <com.ichi2.preferences.NumberRangePreference
                 android:key="easyBonus"
@@ -102,6 +90,11 @@
                 android:title="@string/deck_conf_max_ivl"
                 app:max="99999"
                 app:min="1" />
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:key="revBury"
+                android:summary="@string/deck_conf_rev_bury_summ"
+                android:title="@string/deck_conf_rev_bury" />
         </PreferenceScreen>
         <PreferenceScreen android:title="@string/deck_conf_lps_cards" >
             <com.ichi2.preferences.StepsPreference

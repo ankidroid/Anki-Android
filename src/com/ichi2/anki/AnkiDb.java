@@ -69,9 +69,10 @@ public class AnkiDb {
     public void closeDatabase() {
         if (mDatabase != null) {
             // set journal mode again to delete in order to make the db accessible for anki desktop and for full upload
-            queryString("PRAGMA journal_mode = DELETE");
+            setDeleteJournalMode();
             mDatabase.close();
-            Log.i(AnkiDroidApp.TAG, "AnkiDb - closeDatabase, database " + mDatabase.getPath() + " closed = "  + !mDatabase.isOpen());
+            Log.i(AnkiDroidApp.TAG, "AnkiDb - closeDatabase, database " + mDatabase.getPath() + " closed = "
+                    + !mDatabase.isOpen());
             mDatabase = null;
         }
     }
@@ -300,17 +301,34 @@ public class AnkiDb {
         }
     }
 
-    private void setJournalMode() {
-        String journalMode = "WAL";
-        if (AnkiDroidApp.SDK_VERSION <= 10) {
-            journalMode = "DELETE";
-        } else if (android.os.Build.BRAND.equals("NOOK")) {
-            if (android.os.Build.MODEL.equals("BNTV400") /* Nook HD */
-                    || android.os.Build.MODEL.equals("BNTV600") /* Nook HD+ */) {
-                journalMode = "DELETE";
+
+    /**
+     * Anki desktop only uses a journal_mode of DELETE. We therefore set this before database closure to ensure
+     * compatibility. This allows full upload to AnkiWeb and manual collection migration, but has no bearing on partial
+     * progress syncs.
+     */
+    protected void setDeleteJournalMode() {
+        try {
+            SQLiteDatabase db = getDatabase();
+            if (db.inTransaction()) {
+                db.endTransaction();
             }
+            db.disableWriteAheadLogging(); // call necessary on some Nook devices
+        } catch (Exception e) {
+            Log.e(AnkiDroidApp.TAG, "AnkiDb - setDeleteJournalMode, attempting to proceed after following exception: "
+                    + e);
         }
-        queryString("PRAGMA journal_mode = " + journalMode);
+        queryString("PRAGMA journal_mode = DELETE");
+    }
+
+
+    /** to be called for each database upon opening */
+    private void setJournalMode() {
+        if (AnkiDroidApp.SDK_VERSION >= 11) {
+            queryString("PRAGMA journal_mode = WAL");
+        } else {
+            setDeleteJournalMode();
+        }
     }
 
 }

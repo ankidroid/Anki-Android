@@ -459,11 +459,13 @@ public class Finder {
             } else if (val.equals("new")) {
                 n = 0;
             } else {
-		return "queue IN (1, 3)";
+                return "queue IN (1, 3)";
             }
             return "type = " + n;
         } else if (val.equals("suspended")) {
             return "c.queue = -1";
+        } else if (val.equals("buried")) {
+            return "c.queue = -2";
         } else if (val.equals("due")) {
             return "(c.queue in (2,3) and c.due <= " + mCol.getSched().getToday() +
                     ") or (c.queue = 1 and c.due <= " + mCol.getSched().getDayCutoff() + ")";

@@ -155,5 +155,8 @@
 <string name="template_error">Template error:</string>
 <string name="template_error_detail">There is an error in the template of this card.</string>
 <string name="template_error_fix">Please use the card editor on the desktop client to fix the error.</string>
+<string name="sched_end">(end)</string>
+<string name="sched_unbury_button">To see them now, tap the Unbury button.</string>
+<string name="sched_has_buried">Some related or buried cards were delayed until a later session.</string>
 
 </resources>
