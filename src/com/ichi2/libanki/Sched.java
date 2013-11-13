@@ -2109,6 +2109,7 @@ public class Sched {
     
     
     public void buryCards(long[] cids) {
+        remFromDyn(cids);
         removeLrn(cids);
         mCol.getDb().execute("update cards set queue=-2,mod=?,usn=? where id in " + Utils.ids2str(cids),
                 new Object[]{Utils.now(), mCol.usn()});
