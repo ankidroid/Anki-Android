@@ -313,8 +313,12 @@ public class AnkiDb {
             if (db.inTransaction()) {
                 db.endTransaction();
             }
-            db.disableWriteAheadLogging(); // call necessary on some Nook devices
-        } catch (Exception e) {
+            //This call is required on some with custom Android versiones
+            //for example on Nook, where it was backported from Jelly Bean.
+            //So, we can't rely here on API version, to check for availability.
+            //That's why we just catching the error if method is not available.
+            db.disableWriteAheadLogging();
+        } catch (Throwable e) {
             Log.e(AnkiDroidApp.TAG, "AnkiDb - setDeleteJournalMode, attempting to proceed after following exception: "
                     + e);
         }
