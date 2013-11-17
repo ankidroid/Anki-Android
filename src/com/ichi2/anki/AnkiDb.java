@@ -19,6 +19,7 @@
 
 package com.ichi2.anki;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -51,7 +52,7 @@ public class AnkiDb {
                 (SQLiteDatabase.OPEN_READWRITE + SQLiteDatabase.CREATE_IF_NECESSARY)
                         | SQLiteDatabase.NO_LOCALIZED_COLLATORS);
         if (mDatabase != null) {
-            setJournalMode();
+            setWalJournalMode();
             if (AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getBoolean("asyncMode", false)) {
                 mDatabase.rawQuery("PRAGMA synchronous = 0", null);
             } else {
@@ -308,26 +309,37 @@ public class AnkiDb {
      * progress syncs.
      */
     protected void setDeleteJournalMode() {
-        try {
-            SQLiteDatabase db = getDatabase();
-            if (db.inTransaction()) {
-                db.endTransaction();
-            }
-            db.disableWriteAheadLogging(); // call necessary on some Nook devices
-        } catch (Exception e) {
-            Log.e(AnkiDroidApp.TAG, "AnkiDb - setDeleteJournalMode, attempting to proceed after following exception: "
-                    + e);
-        }
+        disableWriteAheadLogging();
         queryString("PRAGMA journal_mode = DELETE");
     }
 
 
     /** to be called for each database upon opening */
-    private void setJournalMode() {
+    private void setWalJournalMode() {
         if (AnkiDroidApp.SDK_VERSION >= 11) {
             queryString("PRAGMA journal_mode = WAL");
         } else {
             setDeleteJournalMode();
+        }
+    }
+
+    /**
+     * Attempts to disable write ahead logging using a method on the {@link SQLiteDatabase} object.
+     *
+     * <p>The method might not exist (it is only included in API level 16) but we attempt anyway since it is part of
+     * present in a number of implementations.
+     */
+    @SuppressLint("NewApi")
+    private void disableWriteAheadLogging() {
+        SQLiteDatabase db = getDatabase();
+        // The call to disableWriteAheadLogging() below requires no transaction is in progress.
+        if (db.inTransaction()) {
+            db.endTransaction();
+        }
+        try {
+            db.disableWriteAheadLogging();
+        } catch (NoSuchMethodError e) {
+            // Ignore this error, since it is expected on devices below API level 16.
         }
     }
 
