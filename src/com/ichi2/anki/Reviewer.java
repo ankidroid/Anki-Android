@@ -1352,7 +1352,8 @@ public class Reviewer extends AnkiActivity {
 
     private CharSequence clipboardGetText() {
         if (mClipboard != null) {
-            return mClipboard.getText();
+            CharSequence charSeq = mClipboard.getText();
+            return charSeq != null ? charSeq : "";
         } else {
         	return "";
         }
