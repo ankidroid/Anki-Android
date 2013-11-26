@@ -19,6 +19,7 @@
 
 package com.ichi2.anki;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -38,6 +39,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.WindowManager.BadTokenException;
+import android.widget.Toast;
 
 import com.hlidskialf.android.preference.SeekBarPreference;
 import com.ichi2.anim.ActivityTransitionAnimation;
@@ -50,6 +52,9 @@ import com.ichi2.preferences.NumberRangePreference;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
+import com.ichi2.anki.EvernoteSync;
+
+import com.evernote.client.android.EvernoteSession;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -73,6 +78,12 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private static final int DIALOG_BACKUP = 2;
     private static final int DIALOG_HEBREW_FONT = 3;
     private static final int DIALOG_WRITE_ANSWERS = 4;
+	
+	/** Evernote App Integration*/
+	private static final String CONSUMER_KEY = "matthiasv-3883" ;
+	private static final String CONSUMER_SECRET = "a944056d8952611c" ;
+	private static final EvernoteSession.EvernoteService EVERNOTE_SERVICE = EvernoteSession.EvernoteService.PRODUCTION;
+    protected static EvernoteSession mEvernoteSession;
 
     // private boolean mVeecheckStatus;
     private Collection mCol;
@@ -102,12 +113,14 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private static String[] mShowValueInSummSeek = { "relativeDisplayFontSize", "relativeCardBrowserFontSize",
             "relativeImageSize", "answerButtonSize", "whiteBoardStrokeWidth", "minShakeIntensity", "swipeSensibility",
             "timeoutAnswerSeconds", "timeoutQuestionSeconds", "animationDuration", "backupMax", "dayOffset" };
-    private static String[] mShowValueInSummEditText = { "simpleInterfaceExcludeTags" };
+    private static String[] mShowValueInSummEditText = { "simpleInterfaceExcludeTags", "evernoteSync_SearchString" };
     private static String[] mShowValueInSummNumRange = { "timeLimit", "learnCutoff" };
     private TreeMap<String, String> mListsToUpdate = new TreeMap<String, String>();
     private StyledProgressDialog mProgressDialog;
     private boolean lockCheckAction = false;
     private String dialogMessage;
+	private Preference evernoteSync;
+    private EditTextPreference evernoteSync_SearchString;
 
     // Used for calculating dayOffset
     private Calendar mStartDate;
@@ -155,6 +168,8 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         useCurrent = (ListPreference) getPreferenceScreen().findPreference("useCurrent");
         newSpread = (ListPreference) getPreferenceScreen().findPreference("newSpread");
         dayOffset = (SeekBarPreference) getPreferenceScreen().findPreference("dayOffset");
+		evernoteSync = (Preference) getPreferenceScreen().findPreference("evernoteSync");
+        evernoteSync_SearchString = (EditTextPreference) getPreferenceScreen().findPreference("evernoteSync_SearchString");
 //        String theme = listpref.getValue();
 //        animationsCheckboxPreference.setEnabled(theme.equals("2") || theme.equals("3"));
         zoomCheckboxPreference.setEnabled(!swipeCheckboxPreference.isChecked());
@@ -212,6 +227,30 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             fadeScrollbars.setChecked(false);
             fadeScrollbars.setEnabled(false);
         }
+		
+		mEvernoteSession = EvernoteSession.getInstance(this, CONSUMER_KEY , CONSUMER_SECRET , EVERNOTE_SERVICE );
+        if (mEvernoteSession.isLoggedIn()) {
+        	SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+            String evernoteSync_Username = preferences.getString("evernoteSync_Username", "unknown");
+			evernoteSync.setSummary(getString(R.string.evernoteSync_logged_in, evernoteSync_Username));
+			evernoteSync.setTitle(getString(R.string.evernoteSync_logout));
+        }
+        evernoteSync.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+			
+			@Override
+			public boolean onPreferenceClick(Preference preference) {
+				if(preference.getTitle().equals("Login")){
+					EvernoteSync.login(preference.getContext());
+				}
+				else {
+					EvernoteSync.logout(preference.getContext());
+					evernoteSync.setSummary(getString(R.string.evernoteSync_logged_out));
+					evernoteSync.setTitle(getString(R.string.evernoteSync_login));
+				}
+				return false;
+			}
+		});
+		
     }
 
 
@@ -471,6 +510,11 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 mCol.setCrt(date.getTimeInMillis() / 1000);
                 mCol.setMod();
             }
+			 else if (key.equals("evernoteSync_SearchString")) {
+	        	SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+	            String tags = preferences.getString("evernoteSync_SearchString", "None");
+	            evernoteSync_SearchString.setSummary(getString(R.string.evernoteSync_SearchString_list, tags));
+            }
             if (Arrays.asList(mShowValueInSummList).contains(key)) {
                 updateListPreference(key);
             } else if (Arrays.asList(mShowValueInSummSeek).contains(key)) {
@@ -619,5 +663,20 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             lockCheckAction = false;
         }
     };
+	
+	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+
+        if (requestCode == EvernoteSession.REQUEST_CODE_OAUTH){
+	        if (resultCode == Activity.RESULT_OK) {
+	        	new EvernoteSync.updateUsername(this).execute();
+				finish();
+	        }
+	        else if(resultCode == Activity.RESULT_CANCELED)
+	        {
+	        	Toast.makeText(this, "Evernote: Login failed",Toast.LENGTH_SHORT).show();
+	        }
+	    }
+    }
 
 }

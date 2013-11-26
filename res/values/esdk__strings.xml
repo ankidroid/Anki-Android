@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="esdk__evernote">Evernote</string>
+    <string name="esdk__evernote_login_failed">Evernote Login Failed</string>
+    <string name="esdk__evernote_login_successful">Evernote login successful</string>
+    <string name="esdk__err_protocol_version">Incomatible EDAM client protocol version</string>
+    <string name="esdk__err_authentication">Error authenticating to Evernote</string>
+    <string name="esdk__err_api_setup">Error intializing Evernote API</string>
+    <string name="esdk__loading">Loading...</string>
+</resources>
