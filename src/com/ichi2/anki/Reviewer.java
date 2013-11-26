@@ -88,6 +88,9 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.Animation3D;
 import com.ichi2.anim.ViewAnimation;
 import com.ichi2.anki.receiver.SdCardReceiver;
+import com.ichi2.anki.reviewer.CustomFontsReviewerExt;
+import com.ichi2.anki.reviewer.ReviewerExt;
+import com.ichi2.anki.reviewer.ReviewerExtRegistry;
 import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
@@ -347,14 +350,6 @@ public class Reviewer extends AnkiActivity {
      * of a bug in some versions of Android.
      */
     private boolean mUseQuickUpdate = false;
-    /**
-     * Maps font names into {@link AnkiFont} objects corresponding to them.
-     *
-     * <p>Should not be accessed directly but via {@link #getCustomFontsMap()}, as it is lazily initialized.
-     */
-    private Map<String, AnkiFont> mCustomFontsMap;
-    private String mCustomDefaultFontCss;
-    private String mCustomFontStyle;
 
     /**
      * Shake Detection
@@ -431,6 +426,8 @@ public class Reviewer extends AnkiActivity {
 
     // Stores kanji to display their meaning after answering cards
     private static HashMap<String, String> sKanjiInfo = new HashMap<String, String>();
+
+    private ReviewerExtRegistry mExtensions;
 
     // private int zEase;
 
@@ -925,6 +922,9 @@ public class Reviewer extends AnkiActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Create the extensions as early as possible, so that they can be offered events.
+        mExtensions = new ReviewerExtRegistry(getBaseContext());
+
         Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
         Log.i(AnkiDroidApp.TAG, "Reviewer - onCreate");
@@ -2186,8 +2186,6 @@ public class Reviewer extends AnkiActivity {
 	                mNextCard.setVisibility(View.GONE);
 	                mCardFrame.addView(mNextCard, 0);
 		            mCard.setBackgroundColor(mCurrentBackgroundColor);
-
-	                mCustomFontStyle = getCustomFontsStyle() + getDefaultFontStyle();
 	            }
 			}
 			if (mCard.getVisibility() != View.VISIBLE || (mSimpleCard != null && mSimpleCard.getVisibility() == View .VISIBLE)) {
@@ -2562,7 +2560,7 @@ public class Reviewer extends AnkiActivity {
 
             Log.i(AnkiDroidApp.TAG, "content card = \n" + content);
             StringBuilder style = new StringBuilder();
-            style.append(mCustomFontStyle);
+            mExtensions.updateCssStyle(style);
             
             // Scale images.
             if (mRelativeImageSize != 100) {
@@ -2823,49 +2821,6 @@ public class Reviewer extends AnkiActivity {
 
     public void showFlashcard(boolean visible) {
         mCardContainer.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
-    }
-
-
-    /**
-     * Returns the CSS used to handle custom fonts.
-     * <p>
-     * Custom fonts live in fonts directory in the directory used to store decks.
-     * <p>
-     * Each font is mapped to the font family by the same name as the name of the font fint without the extension.
-     */
-    private String getCustomFontsStyle() {
-        StringBuilder builder = new StringBuilder();
-        for (AnkiFont font : getCustomFontsMap().values()) {
-            builder.append(font.getDeclaration());
-            builder.append('\n');
-        }
-        return builder.toString();
-    }
-
-
-    /** Returns the CSS used to set the default font. */
-    private String getDefaultFontStyle() {
-        if (mCustomDefaultFontCss == null) {
-            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-            AnkiFont defaultFont = getCustomFontsMap().get(preferences.getString("defaultFont", null));
-            if (defaultFont != null) {
-                mCustomDefaultFontCss = "BODY { " + defaultFont.getCSS() + " }\n";
-            } else {
-                String defaultFontName = Themes.getReviewerFontName();
-                if (TextUtils.isEmpty(defaultFontName)) {
-                    mCustomDefaultFontCss = "";
-                } else {
-                    mCustomDefaultFontCss = String.format(
-                            "BODY {"
-                            + "font-family: '%s';"
-                            + "font-weight: normal;"
-                            + "font-style: normal;"
-                            + "font-stretch: normal;"
-                            + "}\n", defaultFontName);
-                }
-            }
-        }
-        return mCustomDefaultFontCss;
     }
 
 
@@ -3134,23 +3089,6 @@ public class Reviewer extends AnkiActivity {
 
 
     /**
-     * Returns a map from custom fonts names to the corresponding {@link AnkiFont} object.
-     *
-     * <p>The list of constructed lazily the first time is needed.
-     */
-    private Map<String, AnkiFont> getCustomFontsMap() {
-        if (mCustomFontsMap == null) {
-            List<AnkiFont> fonts = Utils.getCustomFonts(getBaseContext());
-            mCustomFontsMap = new HashMap<String, AnkiFont>();
-            for (AnkiFont f : fonts) {
-                mCustomFontsMap.put(f.getName(), f);
-            }
-        }
-        return mCustomFontsMap;
-    }
-
-
-    /**
      * Returns true if we should update the content of a single {@link WebView} (called quick update) instead of switch
      * between two instances.
      *
@@ -3167,7 +3105,7 @@ public class Reviewer extends AnkiActivity {
             return true;
         }
         // Otherwise, use quick update only if there are no custom fonts.
-        return getCustomFontsMap().size() == 0 && !isNookDevice();
+        return mExtensions.supportsQuickUpdate() && !isNookDevice();
     }
 
 
