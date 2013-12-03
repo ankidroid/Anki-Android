@@ -35,6 +35,7 @@ import com.ichi2.async.Connection;
 import com.ichi2.compat.Compat;
 import com.ichi2.compat.CompatV11;
 import com.ichi2.compat.CompatV15;
+import com.ichi2.compat.CompatV16;
 import com.ichi2.compat.CompatV4;
 import com.ichi2.compat.CompatV5;
 import com.ichi2.compat.CompatV9;
@@ -108,6 +109,8 @@ public class AnkiDroidApp extends Application {
         if (android.os.Build.MODEL.toLowerCase(Locale.US).equals("nook")
                 || android.os.Build.DEVICE.toLowerCase(Locale.US).equals("nook")) {
             mCompat = new CompatV4();
+        } else if (AnkiDroidApp.SDK_VERSION >= 16) {
+            mCompat = new CompatV16();
         } else if (AnkiDroidApp.SDK_VERSION >= 15) {
             mCompat = new CompatV15();
         } else if (AnkiDroidApp.SDK_VERSION >= 11) {

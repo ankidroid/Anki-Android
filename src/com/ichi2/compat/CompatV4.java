@@ -16,15 +16,12 @@
 
 package com.ichi2.compat;
 
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-
 import com.ichi2.anki.ReadText;
 
 import android.app.Activity;
+import android.database.sqlite.SQLiteDatabase;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnUtteranceCompletedListener;
-import android.speech.tts.UtteranceProgressListener;
 import android.view.View;
 import android.webkit.WebView;
 
@@ -59,4 +56,8 @@ public class CompatV4 implements Compat {
 
     }
 
+
+    @Override
+    public void disableDatabaseWriteAheadLogging(SQLiteDatabase db) {
+    }
 }
