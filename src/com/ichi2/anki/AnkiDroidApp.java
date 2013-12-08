@@ -35,6 +35,7 @@ import com.ichi2.async.Connection;
 import com.ichi2.compat.Compat;
 import com.ichi2.compat.CompatV11;
 import com.ichi2.compat.CompatV15;
+import com.ichi2.compat.CompatV15NookHdPlus;
 import com.ichi2.compat.CompatV16;
 import com.ichi2.compat.CompatV4;
 import com.ichi2.compat.CompatV5;
@@ -106,8 +107,9 @@ public class AnkiDroidApp extends Application {
     public void onCreate() {
         super.onCreate();
 
-        if (android.os.Build.MODEL.toLowerCase(Locale.US).equals("nook")
-                || android.os.Build.DEVICE.toLowerCase(Locale.US).equals("nook")) {
+        if (isNookHdPlus() && AnkiDroidApp.SDK_VERSION == 15) {
+            mCompat = new CompatV15NookHdPlus();
+        } else if (isNook()) {
             mCompat = new CompatV4();
         } else if (AnkiDroidApp.SDK_VERSION >= 16) {
             mCompat = new CompatV16();
@@ -158,6 +160,18 @@ public class AnkiDroidApp extends Application {
         setLanguage(getSharedPrefs(this).getString("language", ""));
     }
 
+
+    private boolean isNook() {
+        return android.os.Build.MODEL.equalsIgnoreCase("nook")
+                || android.os.Build.DEVICE.equalsIgnoreCase("nook");
+    }
+
+
+    private boolean isNookHdPlus() {
+        return android.os.Build.BRAND.equals("NOOK")
+                && android.os.Build.PRODUCT.equals("HDplus")
+                && android.os.Build.DEVICE.equals("ovation");
+    }
 
     /**
      * Convenience method for accessing Shared preferences
