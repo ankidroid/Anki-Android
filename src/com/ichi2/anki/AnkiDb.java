@@ -336,11 +336,7 @@ public class AnkiDb {
         if (db.inTransaction()) {
             db.endTransaction();
         }
-        try {
-            AnkiDroidApp.getCompat().disableDatabaseWriteAheadLogging(db);
-        } catch (NoSuchMethodError e) {
-            // Ignore this error, since it is expected on devices below API level 16.
-        }
+        AnkiDroidApp.getCompat().disableDatabaseWriteAheadLogging(db);
     }
 
 }
