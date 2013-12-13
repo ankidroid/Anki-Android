@@ -667,18 +667,18 @@ public class Collection {
         return rem;
     }
 
+	public List<Card> previewCards(Note note) {
+	    return previewCards(note, 0);
+	}
 
-	/**
-	 * Return cards of a note, without saving them
-	 * @param note The note whose cards are going to be previewed
+    /**
+     * Return cards of a note, without saving them
+     * @param note The note whose cards are going to be previewed
      * @param type 0 - when previewing in add dialog, only non-empty
      *             1 - when previewing edit, only existing
      *             2 - when previewing in models dialog, all templates
      * @return list of cards
-	 */
-	public List<Card> previewCards(Note note) {
-	    return previewCards(note, 0);
-	}
+     */
 	public List<Card> previewCards(Note note, int type) {
 	    ArrayList<JSONObject> cms = null;
 	    if (type == 0) {
