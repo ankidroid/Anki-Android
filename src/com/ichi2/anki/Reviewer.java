@@ -2485,7 +2485,7 @@ public class Reviewer extends AnkiActivity {
                     // Obtain the diff and send it to updateCard
                     DiffEngine diff = new DiffEngine();
 
-                    StringBuffer span = new StringBuffer();
+                    StringBuilder span = new StringBuilder();
                     span.append("<span style=\"font-family: '").append(mTypeFont)
                     .append("'; font-size: ").append(mTypeSize).append("px\">");
                     span.append(diff.diff_prettyHtml(diff.diff_main(userAnswer, correctAnswer), mNightMode));
@@ -2879,7 +2879,7 @@ public class Reviewer extends AnkiActivity {
      * @return
      */
     private static String enrichWithQADiv(String content, boolean isAnswer) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append("<div class=\"");
         if (isAnswer) {
             sb.append(ANSWER_CLASS);

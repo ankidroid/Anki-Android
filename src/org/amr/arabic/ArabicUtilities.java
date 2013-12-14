@@ -195,7 +195,7 @@ public class ArabicUtilities {
 
 	public static String reshape(String allText) {
 		if (allText != null) {
-			StringBuffer result = new StringBuffer();
+            StringBuilder result = new StringBuilder();
 			String[] sentences = allText.split("\n");
 			for (int i = 0; i < sentences.length; i++) {
 				result.append(reshapeSentence(sentences[i]));
