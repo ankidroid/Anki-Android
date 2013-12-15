@@ -561,7 +561,7 @@ public class Models {
         public String[] transform(String[] fields) {
             ArrayList<String> fl = new ArrayList<String>(Arrays.asList(fields));
             fl.remove(idx);
-            return fl.toArray(new String[] {});
+            return fl.toArray(new String[fl.size()]);
         }
     }
 
@@ -622,7 +622,7 @@ public class Models {
             ArrayList<String> fl = new ArrayList<String>(Arrays.asList(fields));
             fl.remove(oldidx);
             fl.add(idx, val);
-            return fl.toArray(new String[] {});
+            return fl.toArray(new String[fl.size()]);
         }
     }
 
@@ -1026,7 +1026,7 @@ public class Models {
                         flds2.add("");
                     }
                 }
-                String joinedFlds = Utils.joinFields(flds2.toArray(new String[]{}));
+                String joinedFlds = Utils.joinFields(flds2.toArray(new String[flds2.size()]));
                 d.add(new Object[] { joinedFlds, mid, Utils.intNow(), mCol.usn(), nid });
             }
         } finally {

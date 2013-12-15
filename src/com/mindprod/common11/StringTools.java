@@ -31,8 +31,6 @@
 
 package com.mindprod.common11;
 
-import android.graphics.Color;
-
 import java.util.ArrayList;
 import java.util.BitSet;
 
@@ -148,7 +146,7 @@ public class StringTools {
         }
         int len = s.length();
         // have to use StringBuffer for JDK 1.1
-        StringBuffer b = new StringBuffer(len - 1);
+        StringBuilder b = new StringBuilder(len - 1);
         boolean suppressSpaces = false;
         for (int i = 0; i < len; i++) {
             char c = s.charAt(i);
@@ -510,7 +508,7 @@ public class StringTools {
     public static long parseDirtyLong(String numStr) {
         numStr = numStr.trim();
         // strip commas, spaces, decimals + etc
-        StringBuffer b = new StringBuffer(numStr.length());
+        StringBuilder b = new StringBuilder(numStr.length());
         boolean negative = false;
         for (int i = 0, n = numStr.length(); i < n; i++) {
             char c = numStr.charAt(i);
@@ -544,7 +542,7 @@ public class StringTools {
     public static long parseLongPennies(String numStr) {
         numStr = numStr.trim();
         // strip commas, spaces, + etc
-        StringBuffer b = new StringBuffer(numStr.length());
+        StringBuilder b = new StringBuilder(numStr.length());
         boolean negative = false;
         int decpl = -1;
         for (int i = 0, n = numStr.length(); i < n; i++) {
@@ -720,7 +718,7 @@ public class StringTools {
      * @noinspection WeakerAccess,SameParameterValue
      */
     public static String quoteSQL(String sql) {
-        StringBuffer sb = new StringBuffer(sql.length() + 5);
+        StringBuilder sb = new StringBuilder(sql.length() + 5);
         sb.append('\'');
         for (int i = 0; i < sql.length(); i++) {
             char c = sql.charAt(i);
@@ -823,8 +821,8 @@ public class StringTools {
             return s;
         }
         int len = s.length();
-        // have to use StringBuffer for JDK 1.1
-        StringBuffer b = new StringBuffer(len - 1);
+        // StringBuilder has been part of Android since API Level 1
+        StringBuilder b = new StringBuilder(len - 1);
         for (int i = 0; i < len; i++) {
             char c = s.charAt(i);
             if (c != ' ') {
@@ -889,7 +887,6 @@ public class StringTools {
      * @param h number you want to convert to hex
      * @return 0x followed by unsigned hex 8-digit representation
      * @noinspection WeakerAccess
-     * @see #toString(Color)
      */
     public static String toHexString(int h) {
         String s = Integer.toHexString(h);

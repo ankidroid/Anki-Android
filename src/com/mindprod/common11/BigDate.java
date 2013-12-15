@@ -1830,7 +1830,7 @@ public final class BigDate implements Cloneable, Serializable, Comparable<BigDat
         if (ordinal == NULL_ORDINAL) {
             return "";
         }
-        StringBuffer sb = new StringBuffer(13);
+        StringBuilder sb = new StringBuilder(13);
         sb.append(Integer.toString(Math.abs(yyyy)));
         sb.append("-");
         sb.append(StringTools.toLZ(mm, 2));
@@ -1858,7 +1858,7 @@ public final class BigDate implements Cloneable, Serializable, Comparable<BigDat
         if (ordinal == NULL_ORDINAL) {
             return "";
         }
-        StringBuffer sb = new StringBuffer(7);
+        StringBuilder sb = new StringBuilder(7);
         sb.append(Integer.toString(Math.abs(yyyy)));
         if (yyyy < 1000) {
             if (yyyy < 0) {
@@ -1999,7 +1999,7 @@ public final class BigDate implements Cloneable, Serializable, Comparable<BigDat
             // A regex would be lot simpler, but we can't use it since we are constrained to JDK 1.1
 
             // extract the year
-            final StringBuffer yearSB = new StringBuffer(6);
+            final StringBuilder yearSB = new StringBuilder(6);
             final int yyyy_mm_dd_length = yyyy_mm_dd.length();
             String mm_dd = "";
             extractYearLoop: for (int i = 0; i < yyyy_mm_dd_length; i++) {
@@ -2039,7 +2039,7 @@ public final class BigDate implements Cloneable, Serializable, Comparable<BigDat
             final int yyyy = Integer.parseInt(yearSB.toString());
 
             // extract the month
-            final StringBuffer monthSB = new StringBuffer(2);
+            final StringBuilder monthSB = new StringBuilder(2);
             final int mm_dd_length = mm_dd.length();
             String dd_ad = "";
             extractMonthLoop: for (int i = 0; i < mm_dd_length; i++) {
@@ -2079,7 +2079,7 @@ public final class BigDate implements Cloneable, Serializable, Comparable<BigDat
             final int mm = Integer.parseInt(monthSB.toString());
 
             // extract the day
-            final StringBuffer daySB = new StringBuffer(2);
+            final StringBuilder daySB = new StringBuilder(2);
             final int dd_ad_length = dd_ad.length();
             String ad = "";
             extractDayLoop: for (int i = 0; i < dd_ad_length; i++) {
@@ -2122,7 +2122,7 @@ public final class BigDate implements Cloneable, Serializable, Comparable<BigDat
             }
 
             // extract the ad/bc
-            final StringBuffer adSB = new StringBuffer(2);
+            final StringBuilder adSB = new StringBuilder(2);
             final int ad_length = ad.length();
 
             // extract AD loop

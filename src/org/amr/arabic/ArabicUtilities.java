@@ -195,7 +195,7 @@ public class ArabicUtilities {
 
 	public static String reshape(String allText) {
 		if (allText != null) {
-			StringBuffer result = new StringBuffer();
+            StringBuilder result = new StringBuilder();
 			String[] sentences = allText.split("\n");
 			for (int i = 0; i < sentences.length; i++) {
 				result.append(reshapeSentence(sentences[i]));
@@ -209,7 +209,7 @@ public class ArabicUtilities {
 	}
 	/**
 	 * The Main Reshaping Function to be Used in Android Program
-	 * @param allText The text to be Reshaped
+	 * @param sentence The text to be Reshaped
 	 * @param forWebView whether the word will be displayed in a WebView
 	 * @return the Reshaped Text
 	 */
