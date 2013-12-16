@@ -72,8 +72,7 @@ public class AnkiDb {
             // set journal mode again to delete in order to make the db accessible for anki desktop and for full upload
             setDeleteJournalMode();
             mDatabase.close();
-            Log.i(AnkiDroidApp.TAG, "AnkiDb - closeDatabase, database " + mDatabase.getPath() + " closed = "
-                    + !mDatabase.isOpen());
+            Log.i(AnkiDroidApp.TAG, "AnkiDb - closeDatabase, database " + mDatabase.getPath() + " closed = " + !mDatabase.isOpen());
             mDatabase = null;
         }
     }
