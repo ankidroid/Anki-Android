@@ -2784,7 +2784,7 @@ public class Reviewer extends AnkiActivity {
             SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
             AnkiFont defaultFont = getCustomFontsMap().get(preferences.getString("defaultFont", null));
             if (defaultFont != null) {
-                mCustomDefaultFontCss = "BODY { " + defaultFont.getCSS() + " }\n";
+                mCustomDefaultFontCss = "BODY, .card { " + defaultFont.getCSS() + " }\n";
             } else {
                 String defaultFontName = Themes.getReviewerFontName();
                 if (TextUtils.isEmpty(defaultFontName)) {

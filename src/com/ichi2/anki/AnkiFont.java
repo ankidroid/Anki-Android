@@ -90,7 +90,7 @@ public class AnkiFont {
         return sb.toString();
     }
     public String getCSS() {
-        StringBuilder sb = new StringBuilder("font-family: \"").append(mFamily).append("\";");
+        StringBuilder sb = new StringBuilder("font-family: \"").append(mFamily).append("\" !important;");
         for (String attr : mAttributes) {
             sb.append(" ").append(attr);
         }
