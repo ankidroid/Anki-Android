@@ -19,7 +19,6 @@
 
 package com.ichi2.anki;
 
-import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -329,7 +328,6 @@ public class AnkiDb {
      * <p>The method might not exist (it is only included in API level 16) but we attempt anyway since it is part of
      * present in a number of implementations.
      */
-    @SuppressLint("NewApi")
     private void disableWriteAheadLogging() {
         SQLiteDatabase db = getDatabase();
         // The call to disableWriteAheadLogging() below requires no transaction is in progress.
