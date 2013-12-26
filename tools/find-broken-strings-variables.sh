@@ -7,12 +7,12 @@ cd ../res
 grep -R "%1$ s" values*
 grep -R "%1$ d" values*
 
-grep -R '%' values* | 
+grep -RH '%' values* | 
  sed -e 's/%/\n%/g' | # Split lines that contain several expressions
  grep '%'           | # Filter out lines that do not contain expressions
  grep -v ' % '      | # Lone % character, not a variable
  grep -v '%<'       | # Same, at the end of the string
- grep -v '% '       | # Same, at the beginning of the string
+ #grep -v '% '       | # Same, at the beginning of the string
  grep -v '%で'      | # Same, no spaces in Japanese
  grep -v '%s'       | # Single string variable
  grep -v '%d'       | # Single decimal variable
