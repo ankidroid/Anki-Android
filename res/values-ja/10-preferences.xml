@@ -88,7 +88,7 @@
   <string name="display_font_size">相対フォント サイズ</string>
   <string name="display_font_size_summ">フォントサイズを調整します. 現在の相対サイズはXXX%です</string>
   <string name="card_browser_font_size">カード閲覧用のフォントサイズ</string>
-  <string name="card_browser_font_size_summ">カード閲覧時のフォントサイズ。現在は: XXX ％</string>
+  <string name="card_browser_font_size_summ">カード閲覧時のフォントサイズ。現在は: XXX %</string>
   <string name="button_size">ボタンの大きさ</string>
   <string name="button_size_summ">学習画面でのボタンの大きさを設定します. 現在の大きさ: XXX %</string>
   <string name="col_path">コレクションのパス</string>
