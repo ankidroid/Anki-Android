@@ -112,14 +112,6 @@
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="Card Browser" />
         <activity
-            android:name="com.ichi2.anki.PersonalDeckPicker"
-            android:configChanges="keyboardHidden|orientation|locale"
-            android:label="@string/personaldeckpicker_title" />
-        <activity
-            android:name="com.ichi2.anki.SharedDeckPicker"
-            android:configChanges="keyboardHidden|orientation|locale"
-            android:label="@string/shareddeckpicker_title" />
-        <activity
             android:name="com.ichi2.anki.Reviewer"
             android:configChanges="keyboardHidden|orientation|locale|screenSize" />
         <activity
@@ -166,14 +158,6 @@
         <activity
             android:name="com.ichi2.charts.ChartBuilder"
             android:configChanges="keyboardHidden|orientation|locale|screenSize" />
-        <activity
-            android:name="com.ichi2.widget.WidgetDialog"
-            android:launchMode="singleInstance"
-            android:theme="@style/Theme_Translucent" />
-        <activity
-            android:name="com.ichi2.veecheck.Notification"
-            android:configChanges="locale"
-            android:label="@string/notification_title" />
 
         <service android:name="com.ichi2.anki.services.DownloadManagerService" />
         <service android:name="com.ichi2.anki.services.NotificationService" />
@@ -224,8 +208,6 @@
 		<service android:name="com.ichi2.widget.AnkiDroidWidgetBig$UpdateService" />
         -->
 
-        <service android:name="com.ichi2.widget.WidgetContentService" />
-
         <receiver
             android:name="com.ichi2.anki.receiver.SdCardReceiver"
             android:enabled="true"
@@ -256,11 +238,6 @@
             android:name="com.ichi2.anki.multimediacard.activity.TranslationActivity"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/title_activity_translation" >
-        </activity>
-        <activity
-            android:name="com.ichi2.anki.AudioRecorderActivity"
-            android:configChanges="keyboardHidden|orientation|locale|screenSize"
-            android:label="@string/title_activity_audio_recorder" >
         </activity>
         <activity
             android:name="com.ichi2.anki.multimediacard.activity.LoadPronounciationActivity"
