@@ -31,8 +31,6 @@
 
 package com.mindprod.common11;
 
-import android.graphics.Color;
-
 import java.util.ArrayList;
 import java.util.BitSet;
 
@@ -889,7 +887,6 @@ public class StringTools {
      * @param h number you want to convert to hex
      * @return 0x followed by unsigned hex 8-digit representation
      * @noinspection WeakerAccess
-     * @see #toString(Color)
      */
     public static String toHexString(int h) {
         String s = Integer.toHexString(h);

@@ -88,7 +88,7 @@ public class XYMultipleSeriesDataset implements Serializable {
    * @return the XY series array
    */
   public synchronized XYSeries[] getSeries() {
-    return mSeries.toArray(new XYSeries[0]);
+    return mSeries.toArray(new XYSeries[mSeries.size()]);
   }
 
 }

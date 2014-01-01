@@ -56,14 +56,6 @@ A.menuentry:link {
 	color:           #cccccc;
 }
 
-A:menuentry:active {
-	color:		 white;
-}
-
-A:menuentry:hover {
-	color:		 white;
-}
-
 A.menuentry:visited {
 	color:           #cccccc;
 }
@@ -137,7 +129,7 @@ A.selected {
 	padding:	5px;
 }
 
-.example, not {
+.example {
 	color:		#000077;
 	white-space: 	pre;
 	font-family:    monospace;
