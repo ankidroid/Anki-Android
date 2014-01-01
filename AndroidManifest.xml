@@ -64,8 +64,8 @@
             android:theme="@style/Theme_Start" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -272,5 +272,19 @@
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/title_activity_search_image" >
         </activity>
+
+        <!-- stuff for Samsung Multi-Window -->
+        <uses-library
+            android:name="com.sec.android.app.multiwindow"
+            android:required="false" />
+        <meta-data
+            android:name="com.sec.android.support.multiwindow"
+            android:value="true" />
+        <meta-data
+            android:name="com.sec.minimode.icon.portrait.normal"
+            android:resource="@drawable/anki" />
+        <meta-data
+            android:name="com.sec.minimode.icon.landscape.normal"
+            android:resource="@drawable/anki" />
     </application>
 </manifest>
