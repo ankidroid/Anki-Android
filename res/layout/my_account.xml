@@ -73,5 +73,11 @@
 				android:gravity="center"/>
 		</LinearLayout>	
 	</LinearLayout>
-	
+	<TextView
+		    android:id="@+id/terms_conditions_link"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:lineSpacingExtra="8dp"
+		    android:layout_marginLeft="6dp"
+		    android:text="@string/terms_conditions" />
 </LinearLayout>
