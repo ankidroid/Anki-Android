@@ -22,3 +22,6 @@ grep -RH '%' values* |
  grep -v '%.1f'
 
 grep -R '％' values*
+
+cd ..
+lint --check StringFormatInvalid ./res
