@@ -101,6 +101,14 @@ public class AnkiDroidApp extends Application {
     private static final int SWIPE_THRESHOLD_VELOCITY_DIP = 120;
 
     /**
+     * The latest package version number that included important changes to the database
+     * integrity check routine. All collections being upgraded to (or after) this version
+     * must run an integrity check as it will contain fixes that all collections should
+     * have.
+     */
+    public static final int CHECK_DB_AT_VERSION = 40;
+    
+    /**
      * On application creation.
      */
     @Override
@@ -293,11 +301,11 @@ public class AnkiDroidApp extends Application {
 
 
     /**
-     * Get the package version as defined in the manifest.
+     * Get the package versionName as defined in the manifest.
      * 
      * @return the package version.
      */
-    public static String getPkgVersion() {
+    public static String getPkgVersionName() {
         String pkgVersion = "?";
         Context context = sInstance.getApplicationContext();
 
@@ -309,6 +317,22 @@ public class AnkiDroidApp extends Application {
         }
 
         return pkgVersion;
+    }
+
+
+    /**
+     * Get the package versionCode as defined in the manifest.
+     * @return
+     */
+    public static int getPkgVersionCode() {
+        Context context = sInstance.getApplicationContext();
+        try {
+            PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            return pInfo.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e(TAG, "Couldn't find package named " + context.getPackageName(), e);
+        }
+        return 0;
     }
 
 
