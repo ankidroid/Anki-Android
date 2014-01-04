@@ -150,7 +150,7 @@ public class Info extends Activity {
                         break;
                     case TYPE_NEW_VERSION:
                         AnkiDroidApp.getSharedPrefs(Info.this.getBaseContext()).edit()
-                                .putString("lastVersion", AnkiDroidApp.getPkgVersion()).commit();
+                                .putString("lastVersion", AnkiDroidApp.getPkgVersionName()).commit();
                         break;
                     case TYPE_UPGRADE_DECKS:
                         break;
@@ -691,7 +691,7 @@ public class Info extends Activity {
         StringBuilder appName = new StringBuilder();
         appName.append(AnkiDroidApp.getAppName());
         appName.append(" v");
-        appName.append(AnkiDroidApp.getPkgVersion());
+        appName.append(AnkiDroidApp.getPkgVersionName());
         return appName.toString();
     }
 
@@ -735,7 +735,7 @@ public class Info extends Activity {
                 httpParams.setParameter(ConnManagerPNames.MAX_TOTAL_CONNECTIONS, 30);
                 httpParams.setParameter(ConnManagerPNames.MAX_CONNECTIONS_PER_ROUTE, new ConnPerRouteBean(30));
                 httpParams.setParameter(CoreProtocolPNames.USE_EXPECT_CONTINUE, false);
-                httpParams.setParameter(CoreProtocolPNames.USER_AGENT, "AnkiDroid-" + AnkiDroidApp.getPkgVersion());
+                httpParams.setParameter(CoreProtocolPNames.USER_AGENT, "AnkiDroid-" + AnkiDroidApp.getPkgVersionName());
                 HttpProtocolParams.setVersion(httpParams, HttpVersion.HTTP_1_1);
                 HttpConnectionParams.setSoTimeout(httpParams, Connection.CONN_TIMEOUT);
 
