@@ -40,8 +40,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -1878,10 +1880,32 @@ public class Sched {
      */
 
     public void _updateCutoff() {
-        // days since col created
-        mToday = (int) ((Utils.now() - mCol.getCrt()) / 86400);
-        // end of day cutoff
-        mDayCutoff = mCol.getCrt() + ((mToday + 1) * 86400);
+        // calculate days since col created and store in mToday
+        mToday = 0;
+        Calendar fromNow = GregorianCalendar.getInstance();
+        Calendar crt = GregorianCalendar.getInstance();
+        crt.setTimeInMillis(mCol.getCrt()*1000);
+        int yearSpan = fromNow.get(Calendar.YEAR) - crt.get(Calendar.YEAR);
+        if (yearSpan > 2) { // at least one full year has lapsed, avoid some loops for old collections
+            int toJump = 365 * (yearSpan - 2); 
+            fromNow.add(Calendar.YEAR, -toJump);
+            if (fromNow.compareTo(crt) < 0) { // went too far
+                fromNow = GregorianCalendar.getInstance();
+            } else {
+                mToday += toJump;
+            }
+        }
+        // loop through remaining days
+        while (fromNow.compareTo(crt) > 0) {
+            fromNow.add(Calendar.DAY_OF_MONTH, -1);
+            if (fromNow.compareTo(crt) > 0) {
+                mToday++;
+            }
+        }
+            
+        // set end of day cutoff
+        crt.add(Calendar.DAY_OF_YEAR, mToday + 1);
+        mDayCutoff = crt.getTimeInMillis() / 1000;
 
         // update all daily counts, but don't save decks to prevent needless conflicts. we'll save on card answer
         // instead
