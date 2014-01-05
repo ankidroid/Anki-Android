@@ -194,7 +194,12 @@
                 android:defaultValue=""
                 android:key="defaultFont"
                 android:summary="@string/default_font_summ"
-                android:title="@string/default_font" />
+                android:title="@string/default_font" />            
+            <ListPreference
+                android:defaultValue=""
+                android:key="overrideFont"
+                android:summary="@string/override_font_summ"
+                android:title="@string/override_font" />
             <com.hlidskialf.android.preference.SeekBarPreference
                 android:defaultValue="100"
                 android:key="relativeDisplayFontSize"

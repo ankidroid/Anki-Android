@@ -1,6 +1,7 @@
 package com.ichi2.anki;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.util.Log;
@@ -19,6 +20,8 @@ public class AnkiFont {
     private String mFamily;
     private List<String> mAttributes;
     private String mPath;
+    private Boolean mIsDefault;
+    private Boolean mIsOverride;
     private static final String fAssetPathPrefix = "/android_asset/fonts/";
     private static Set<String> corruptFonts = new HashSet<String>();
 
@@ -27,7 +30,9 @@ public class AnkiFont {
         mFamily = family;
         mAttributes = attributes;
         mPath = path;
-    }
+        mIsDefault = false;
+        mIsOverride = false;
+    } 
     
     /**
      * Factory for AnkiFont creation.
@@ -42,7 +47,7 @@ public class AnkiFont {
         String name = Utils.removeExtension(fontfile.getName());
         String family = name;
         List<String> attributes = new ArrayList<String>();
-
+ 
         if (fromAssets) {
             path = fAssetPathPrefix.concat(fontfile.getName());
         }
@@ -81,7 +86,20 @@ public class AnkiFont {
             attributes.add("font-stretch: normal;");
         }
         family = family.replaceFirst("(?i)-?Regular", "");
-        return new AnkiFont(name, family, attributes, path);
+        
+        AnkiFont createdFont = new AnkiFont(name, family, attributes, path);
+        // determine if override font or default font
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(ctx);
+        String overrideFont = preferences.getString("overrideFont", "");
+        if (overrideFont.equalsIgnoreCase(name)) {
+            createdFont.setAsOverride();
+        } else {
+            String defaultFont = preferences.getString("defaultFont", "");
+            if (defaultFont.equalsIgnoreCase(name)) {
+                createdFont.setAsDefault();
+            }
+        }
+        return createdFont;
     }
     
     public String getDeclaration() {
@@ -89,8 +107,13 @@ public class AnkiFont {
         sb.append(getCSS()).append(" src: url(\"file://").append(mPath).append("\");}");
         return sb.toString();
     }
-    public String getCSS() {
-        StringBuilder sb = new StringBuilder("font-family: \"").append(mFamily).append("\" !important;");
+    public String getCSS() {        
+        StringBuilder sb = new StringBuilder("font-family: \"").append(mFamily);
+        if (mIsOverride) {
+            sb.append("\" !important;");
+        } else {
+            sb.append("\";");
+        }
         for (String attr : mAttributes) {
             sb.append(" ").append(attr);
         }
@@ -123,4 +146,12 @@ public class AnkiFont {
             return null;
         }
     }
+    private void setAsDefault() {
+        mIsDefault = true;
+        mIsOverride = false;
+    }
+    private void setAsOverride() {
+        mIsOverride = true;
+        mIsDefault = false;
+    }    
 }

@@ -187,7 +187,7 @@ public class Reviewer extends AnkiActivity {
     // Type answer pattern
     private static final Pattern sTypeAnsPat = Pattern.compile("\\[\\[type:(.+?)\\]\\]");
 
-    /** to be sento to and from the card editor */
+    /** to be sent to and from the card editor */
     private static Card sEditorCard;
 
     private static boolean sDisplayAnswer = false;
@@ -350,7 +350,10 @@ public class Reviewer extends AnkiActivity {
      */
     private Map<String, AnkiFont> mCustomFontsMap;
     private String mCustomDefaultFontCss;
+    private String mCustomOverrideFontCss;
+    private String mThemeFontCss; 
     private String mCustomFontStyle;
+    private String mSystemicFontStyle;
 
     /**
      * Shake Detection
@@ -2179,7 +2182,7 @@ public class Reviewer extends AnkiActivity {
 	                mCardFrame.addView(mNextCard, 0);
 		            mCard.setBackgroundColor(mCurrentBackgroundColor);
 
-	                mCustomFontStyle = getCustomFontsStyle() + getDefaultFontStyle();
+	                mCustomFontStyle = getCustomFontsStyle() + getSystemicFontStyle();
 	            }
 			}
 			if (mCard.getVisibility() != View.VISIBLE || (mSimpleCard != null && mSimpleCard.getVisibility() == View .VISIBLE)) {
@@ -2766,7 +2769,7 @@ public class Reviewer extends AnkiActivity {
      * <p>
      * Custom fonts live in fonts directory in the directory used to store decks.
      * <p>
-     * Each font is mapped to the font family by the same name as the name of the font fint without the extension.
+     * Each font is mapped to the font family by the same name as the name of the font file without the extension.
      */
     private String getCustomFontsStyle() {
         StringBuilder builder = new StringBuilder();
@@ -2777,30 +2780,76 @@ public class Reviewer extends AnkiActivity {
         return builder.toString();
     }
 
+    
+    /** Returns the CSS used to set the theme font.
+     *  @return the font style, or the empty string if no font is set 
+     */
+    private String getThemeFontStyle() {
+        if (mThemeFontCss == null) {
+            String themeFontName = Themes.getReviewerFontName();
+            if (TextUtils.isEmpty(themeFontName)) {
+                mThemeFontCss = "";
+            } else {
+                mThemeFontCss = String.format(
+                        "BODY {"
+                        + "font-family: '%s';"
+                        + "font-weight: normal;"
+                        + "font-style: normal;"
+                        + "font-stretch: normal;"
+                        + "}\n", themeFontName);
+            }
+        }
+        return mThemeFontCss;
+    }    
 
-    /** Returns the CSS used to set the default font. */
+    
+    /** Returns the CSS used to set the default font.
+     *  @return the default font style, or the empty string if no default font is set 
+     */    
     private String getDefaultFontStyle() {
         if (mCustomDefaultFontCss == null) {
             SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
             AnkiFont defaultFont = getCustomFontsMap().get(preferences.getString("defaultFont", null));
             if (defaultFont != null) {
-                mCustomDefaultFontCss = "BODY, .card { " + defaultFont.getCSS() + " }\n";
+                mCustomDefaultFontCss = "BODY { " + defaultFont.getCSS() + " }\n";
             } else {
-                String defaultFontName = Themes.getReviewerFontName();
-                if (TextUtils.isEmpty(defaultFontName)) {
-                    mCustomDefaultFontCss = "";
-                } else {
-                    mCustomDefaultFontCss = String.format(
-                            "BODY {"
-                            + "font-family: '%s';"
-                            + "font-weight: normal;"
-                            + "font-style: normal;"
-                            + "font-stretch: normal;"
-                            + "}\n", defaultFontName);
-                }
+                mCustomDefaultFontCss = "";
             }
         }
         return mCustomDefaultFontCss;
+    }
+    
+    
+    /** Returns the CSS that determines font choice in a global fashion.
+     *  @return the font style, or the empty string if none applies 
+     */
+    private String getSystemicFontStyle() {
+        if (mSystemicFontStyle == null) {
+            mSystemicFontStyle = getOverrideFontStyle();
+            if (mSystemicFontStyle.isEmpty()) {
+                mSystemicFontStyle = getDefaultFontStyle();
+                if (mSystemicFontStyle.isEmpty()) {
+                    mSystemicFontStyle = getThemeFontStyle();
+                }
+            }
+        }
+        return mSystemicFontStyle;
+    }
+    
+    /** Returns the CSS used to set the override font.
+     *  @return the override font style, or the empty string if no override font is set 
+     */
+    private String getOverrideFontStyle() {
+        if (mCustomOverrideFontCss == null) {
+            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+            AnkiFont overrideFont = getCustomFontsMap().get(preferences.getString("overrideFont", null));
+            if (overrideFont != null) {
+                mCustomOverrideFontCss = "BODY, .card, * { " + overrideFont.getCSS() + " }\n";
+            } else {
+                mCustomOverrideFontCss = "";
+            }
+        }
+        return mCustomOverrideFontCss;
     }
 
 
