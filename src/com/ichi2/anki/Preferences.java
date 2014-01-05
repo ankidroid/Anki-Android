@@ -339,7 +339,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     /** Initializes the list of custom fonts shown in the preferences. */
     private void initializeCustomFontsDialog() {
-        ListPreference customFontsPreference = (ListPreference) getPreferenceScreen().findPreference("defaultFont");
+        ListPreference customFontsPreference = (ListPreference) getPreferenceScreen().findPreference("overrideFont");
         customFontsPreference.setEntries(getCustomFonts("System default"));
         customFontsPreference.setEntryValues(getCustomFonts(""));
         ListPreference browserEditorCustomFontsPreference = (ListPreference) getPreferenceScreen().findPreference("browserEditorFont");
@@ -393,13 +393,13 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                     case Themes.THEME_ANDROID_DARK:
                     case Themes.THEME_ANDROID_LIGHT:
                     case Themes.THEME_BLUE:
-                        sharedPreferences.edit().putString("defaultFont", "").commit();
+                        sharedPreferences.edit().putString("overrideFont", "").commit();
                         break;
                     case Themes.THEME_FLAT:
-                        sharedPreferences.edit().putString("defaultFont", "OpenSans").commit();
+                        sharedPreferences.edit().putString("overrideFont", "OpenSans").commit();
                         break;
                     case Themes.THEME_WHITE:
-                        sharedPreferences.edit().putString("defaultFont", "OpenSans").commit();
+                        sharedPreferences.edit().putString("overrideFont", "OpenSans").commit();
                         break;
                 }
                 Intent intent = this.getIntent();

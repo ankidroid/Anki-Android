@@ -349,7 +349,7 @@ public class Reviewer extends AnkiActivity {
      * <p>Should not be accessed directly but via {@link #getCustomFontsMap()}, as it is lazily initialized.
      */
     private Map<String, AnkiFont> mCustomFontsMap;
-    private String mCustomDefaultFontCss;
+    private String mCustomOverrideFontCss;
     private String mCustomFontStyle;
 
     /**
@@ -2179,7 +2179,7 @@ public class Reviewer extends AnkiActivity {
 	                mCardFrame.addView(mNextCard, 0);
 		            mCard.setBackgroundColor(mCurrentBackgroundColor);
 
-	                mCustomFontStyle = getCustomFontsStyle() + getDefaultFontStyle();
+	                mCustomFontStyle = getCustomFontsStyle() + getOverrideFontStyle();
 	            }
 			}
 			if (mCard.getVisibility() != View.VISIBLE || (mSimpleCard != null && mSimpleCard.getVisibility() == View .VISIBLE)) {
@@ -2779,28 +2779,28 @@ public class Reviewer extends AnkiActivity {
 
 
     /** Returns the CSS used to set the default font. */
-    private String getDefaultFontStyle() {
-        if (mCustomDefaultFontCss == null) {
+    private String getOverrideFontStyle() {
+        if (mCustomOverrideFontCss == null) {
             SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-            AnkiFont defaultFont = getCustomFontsMap().get(preferences.getString("defaultFont", null));
-            if (defaultFont != null) {
-                mCustomDefaultFontCss = "BODY, .card { " + defaultFont.getCSS() + " }\n";
+            AnkiFont overrideFont = getCustomFontsMap().get(preferences.getString("overrideFont", null));
+            if (overrideFont != null) {
+                mCustomOverrideFontCss = "BODY, .card { " + overrideFont.getCSS() + " }\n";
             } else {
-                String defaultFontName = Themes.getReviewerFontName();
-                if (TextUtils.isEmpty(defaultFontName)) {
-                    mCustomDefaultFontCss = "";
+                String overrideFontName = Themes.getReviewerFontName();
+                if (TextUtils.isEmpty(overrideFontName)) {
+                    mCustomOverrideFontCss = "";
                 } else {
-                    mCustomDefaultFontCss = String.format(
+                    mCustomOverrideFontCss = String.format(
                             "BODY {"
                             + "font-family: '%s';"
                             + "font-weight: normal;"
                             + "font-style: normal;"
                             + "font-stretch: normal;"
-                            + "}\n", defaultFontName);
+                            + "}\n", overrideFontName);
                 }
             }
         }
-        return mCustomDefaultFontCss;
+        return mCustomOverrideFontCss;
     }
 
 

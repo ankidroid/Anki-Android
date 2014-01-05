@@ -155,6 +155,8 @@
 <string name="fix_hebrew_download_font">Download Font</string>
 <string name="default_font">Default font</string>
 <string name="default_font_summ">The font used for text that has no font formatting specified. Custom fonts should be installed on the SD card in a folder called \'fonts\' in your AnkiDroid folder.</string>
+<string name="override_font">Override font</string>
+<string name="override_font_summ">A font that will be used instead of any fonts specified by a deck. Custom fonts should be installed on the SD card in a folder called \'fonts\' in your AnkiDroid folder.</string>
 <string name="language">Language</string>
 <string name="language_summ">Select the language AnkiDroid should use. At the moment: XXX</string>
 <string name="language_system">System Language</string>
