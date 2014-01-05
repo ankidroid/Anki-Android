@@ -154,7 +154,9 @@
 <string name="fix_hebrew_instructions">This setting bypasses the RTL algorithm of Android to show Hebrew text with vowels correctly.\n\nFor this to work, you need to download font Tohu.ttf and copy it manually to:\n%s/fonts/\n\nYou won\'t have to modify your cards.</string>
 <string name="fix_hebrew_download_font">Download Font</string>
 <string name="default_font">Default font</string>
-<string name="default_font_summ">The font used for text that has no font formatting specified. Custom fonts should be installed on the SD card in a folder called \'fonts\' in your AnkiDroid folder.</string>
+<string name="default_font_summ">The font used for text that has no font formatting specified. Custom fonts should be installed in a folder called \'fonts\' in your AnkiDroid folder.</string>
+<string name="override_font">Override font</string>
+<string name="override_font_summ">A font that will be used instead of any fonts specified, including the default font. Custom fonts should be installed in a folder called \'fonts\' in your AnkiDroid folder.</string>
 <string name="language">Language</string>
 <string name="language_summ">Select the language AnkiDroid should use. At the moment: XXX</string>
 <string name="language_system">System Language</string>
@@ -313,7 +315,7 @@
 <string name="pref_enable_tibetan">Enable Tibetan Support</string>
 <string name="pref_enable_tibetan_summ">Enables tibetan typeface for card browser and card editor. Typeface should be provided in /mnt/sdard/fonts/DDC_Uchen.ttf.</string>
 <string name="pref_browser_editor_font">Browser and Editor font</string>
-<string name="pref_browser_editor_font_summ">Default font to be used in Card Browser and Card Editor. Custom fonts should be installed on the SD card in a folder called \'fonts\' in your AnkiDroid folder.</string>
+<string name="pref_browser_editor_font_summ">Default font to be used in Card Browser and Card Editor. Custom fonts should be installed in a folder called \'fonts\' in your AnkiDroid folder.</string>
 
 <string name="deck_conf_cram_filter">Filter</string>
 <string name="deck_conf_cram_options">Options</string>

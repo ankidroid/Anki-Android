@@ -215,6 +215,29 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     }
 
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+        
+        // syncAccount's summary can change while preferences are still open (user logs
+        // in from preferences screen), so we need to update it here.
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+        String username = preferences.getString("username", "");
+        if (TextUtils.isEmpty(username)) {
+            syncAccount.setSummary(R.string.sync_account_summ_logged_out);
+        } else {
+            syncAccount.setSummary(getString(R.string.sync_account_summ_logged_in, username));
+        }
+    }
+    
+    
     private void updateListPreference(String key) {
         ListPreference listpref = (ListPreference) getPreferenceScreen().findPreference(key);
         String entry;
@@ -339,38 +362,43 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     /** Initializes the list of custom fonts shown in the preferences. */
     private void initializeCustomFontsDialog() {
-        ListPreference customFontsPreference = (ListPreference) getPreferenceScreen().findPreference("defaultFont");
-        customFontsPreference.setEntries(getCustomFonts("System default"));
-        customFontsPreference.setEntryValues(getCustomFonts(""));
+        ListPreference overrideFontPreference = (ListPreference) getPreferenceScreen().findPreference("overrideFont");
+        overrideFontPreference.setEntries(getCustomFonts("None"));
+        overrideFontPreference.setEntryValues(getCustomFonts(""));
+        ListPreference defaultFontPreference = (ListPreference) getPreferenceScreen().findPreference("defaultFont");
+        defaultFontPreference.setEntries(getCustomFonts("System default"));
+        defaultFontPreference.setEntryValues(getCustomFonts(""));        
         ListPreference browserEditorCustomFontsPreference = (ListPreference) getPreferenceScreen().findPreference("browserEditorFont");
         browserEditorCustomFontsPreference.setEntries(getCustomFonts("System default"));
         browserEditorCustomFontsPreference.setEntryValues(getCustomFonts("", true));
     }
-
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
+    
+    
+    /** Returns a list of the names of the installed custom fonts. */
+    private String[] getCustomFonts(String defaultValue) {
+        return getCustomFonts(defaultValue, false);
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
-        
-        // syncAccount's summary can change while preferences are still open (user logs
-        // in from preferences screen), so we need to update it here.
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-        String username = preferences.getString("username", "");
-        if (TextUtils.isEmpty(username)) {
-            syncAccount.setSummary(R.string.sync_account_summ_logged_out);
+    private String[] getCustomFonts(String defaultValue, boolean useFullPath) {
+        List<AnkiFont> mFonts = Utils.getCustomFonts(this);
+        int count = mFonts.size();
+        Log.d(AnkiDroidApp.TAG, "There are " + count + " custom fonts");
+        String[] names = new String[count + 1];
+        names[0] = defaultValue;
+        if (useFullPath) {
+            for (int index = 1; index < count + 1; ++index) {
+                names[index] = mFonts.get(index-1).getPath();
+                Log.d(AnkiDroidApp.TAG, "Adding custom font: " + names[index]);
+            }
         } else {
-            syncAccount.setSummary(getString(R.string.sync_account_summ_logged_in, username));
+            for (int index = 1; index < count + 1; ++index) {
+                names[index] = mFonts.get(index-1).getName();
+                Log.d(AnkiDroidApp.TAG, "Adding custom font: " + names[index]);
+            }
         }
-    }
+        return names;
+    }    
 
-        
+       
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         try {
             if (key.equals("swipe")) {
@@ -487,31 +515,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         } catch (JSONException e) {
             throw new RuntimeException();
         }
-    }
-
-
-    /** Returns a list of the names of the installed custom fonts. */
-    private String[] getCustomFonts(String defaultValue) {
-        return getCustomFonts(defaultValue, false);
-    }
-    private String[] getCustomFonts(String defaultValue, boolean useFullPath) {
-        List<AnkiFont> mFonts = Utils.getCustomFonts(this);
-        int count = mFonts.size();
-        Log.d(AnkiDroidApp.TAG, "There are " + count + " custom fonts");
-        String[] names = new String[count + 1];
-        names[0] = defaultValue;
-        if (useFullPath) {
-            for (int index = 1; index < count + 1; ++index) {
-                names[index] = mFonts.get(index-1).getPath();
-                Log.d(AnkiDroidApp.TAG, "Adding custom font: " + names[index]);
-            }
-        } else {
-            for (int index = 1; index < count + 1; ++index) {
-                names[index] = mFonts.get(index-1).getName();
-                Log.d(AnkiDroidApp.TAG, "Adding custom font: " + names[index]);
-            }
-        }
-        return names;
     }
 
 
