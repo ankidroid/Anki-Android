@@ -1,4 +1,5 @@
 .settings
+*.apk
 
 bin/
 gen/
