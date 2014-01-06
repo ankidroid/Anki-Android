@@ -215,7 +215,7 @@ public class Collection {
      * Flush state to DB, updating mod time.
      */
     public void flush(long mod) {
-        Log.i(AnkiDroidApp.TAG, "flush - Saving information to DB...");
+        // Log.i(AnkiDroidApp.TAG, "flush - Saving information to DB...");
         mMod = (mod == 0 ? Utils.intNow(1000) : mod);
         ContentValues values = new ContentValues();
         values.put("crt", mCrt);
@@ -314,7 +314,7 @@ public class Collection {
             AnkiDatabaseManager.closeDatabase(mPath);
             mDb = null;
             mMedia.close();
-            Log.i(AnkiDroidApp.TAG, "Collection closed");
+            // Log.i(AnkiDroidApp.TAG, "Collection closed");
         }
     }
 
@@ -1468,9 +1468,9 @@ public class Collection {
 
 
     public void optimize() {
-        Log.i(AnkiDroidApp.TAG, "executing VACUUM statement");
+        // Log.i(AnkiDroidApp.TAG, "executing VACUUM statement");
         mDb.execute("VACUUM");
-        Log.i(AnkiDroidApp.TAG, "executing ANALYZE statement");
+        // Log.i(AnkiDroidApp.TAG, "executing ANALYZE statement");
         mDb.execute("ANALYZE");
     }
 
