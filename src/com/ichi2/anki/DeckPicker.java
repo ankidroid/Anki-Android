@@ -1288,13 +1288,13 @@ public class DeckPicker extends FragmentActivity {
             // like to run on all collections. A missing version number is assumed to be a fresh
             // installation of AnkiDroid and we don't run the check.
             int current = AnkiDroidApp.getPkgVersionCode();
-            int previous;
+            int previousTemp; // a non-final variable, for intermediate calculations
             if (!preferences.contains("lastUpgradeVersion")) {
                 // Fresh install
-                previous = current;
+                previousTemp = current;
             } else {
                 try {
-                    previous = preferences.getInt("lastUpgradeVersion", current);
+                    previousTemp = preferences.getInt("lastUpgradeVersion", current);
                 } catch (ClassCastException e) {
                     // Previous versions stored this as a string.
                     String s = preferences.getString("lastUpgradeVersion", "");
@@ -1302,20 +1302,27 @@ public class DeckPicker extends FragmentActivity {
                     // We manually set the version here, but anything older will force a DB
                     // check.
                     if (s.equals("2.0.2")) {
-                        previous = 40;
+                        previousTemp = 40;
                     } else {
-                        previous = 0;
+                        previousTemp = 0;
                     }
                 }
             }
+            final int previous = previousTemp;
             preferences.edit().putInt("lastUpgradeVersion", current).commit();
-            if (previous < AnkiDroidApp.CHECK_DB_AT_VERSION) {
+            if (previous < AnkiDroidApp.CHECK_DB_AT_VERSION ||
+                    previous < AnkiDroidApp.CHECK_PREFERENCES_AT_VERSION) {
                 
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPEN_COLLECTION, new Listener() {
                     @Override
                     public void onPostExecute(DeckTask task, TaskData result) {
                         mOpenCollectionHandler.onPostExecute(result);
-                        integrityCheck();
+                        if (previous < AnkiDroidApp.CHECK_DB_AT_VERSION) {
+                            integrityCheck();
+                        }
+                        if (previous < AnkiDroidApp.CHECK_PREFERENCES_AT_VERSION) {
+                            upgradePreferences(previous);
+                        }
                     }
 
                     @Override
@@ -1332,7 +1339,16 @@ public class DeckPicker extends FragmentActivity {
         }
     }
 
-
+    
+    private void upgradePreferences(int previousVersionCode) {
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+        if (previousVersionCode < 20100108) {
+            preferences.edit().putString("overrideFont", preferences.getString("defaultFont", "")).commit();
+            preferences.edit().putString("defaultFont", "").commit();
+        }
+    }
+    
+    
     protected void sendKey(int keycode) {
         this.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, keycode));
         this.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, keycode));

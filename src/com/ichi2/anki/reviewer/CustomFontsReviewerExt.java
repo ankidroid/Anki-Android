@@ -26,17 +26,22 @@ import android.text.TextUtils;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.AnkiFont;
+import com.ichi2.anki.reviewer.ReviewerExt;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.Themes;
 
 public class CustomFontsReviewerExt implements ReviewerExt {
 
     private final String mCustomStyle;
+    private String mDefaultFontStyle;
+    private String mOverrideFontStyle;
+    private String mThemeFontStyle;
+    private String mDominantFontStyle;        
     private final boolean mSupportsQuickUpdate;
 
     public CustomFontsReviewerExt(Context context) {
         Map<String, AnkiFont> customFontsMap = getCustomFontsMap(context);
-        mCustomStyle = getCustomDefaultFontStyle(context, customFontsMap) + getCustomFontsStyle(customFontsMap);
+        mCustomStyle = getCustomFontsStyle(customFontsMap) + getDominantFontStyle(context, customFontsMap);
         mSupportsQuickUpdate = customFontsMap.size() == 0;
     }
 
@@ -68,27 +73,81 @@ public class CustomFontsReviewerExt implements ReviewerExt {
         return builder.toString();
     }
 
-
-    /** Returns the CSS used to set the default font. */
-    private static String getCustomDefaultFontStyle(Context context, Map<String, AnkiFont> customFontsMap) {
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
-        AnkiFont defaultFont = customFontsMap.get(preferences.getString("defaultFont", null));
-        if (defaultFont != null) {
-            return "BODY, .card { " + defaultFont.getCSS() + " }\n";
-        } else {
-            String defaultFontName = Themes.getReviewerFontName();
-            if (TextUtils.isEmpty(defaultFontName)) {
-                return "";
+    
+    /**
+     * Returns the CSS used to set the theme font.
+     * @return the font style, or the empty string if no font is set 
+     */
+    private String getThemeFontStyle() {
+        if (mThemeFontStyle == null) {
+            String themeFontName = Themes.getReviewerFontName();
+            if (TextUtils.isEmpty(themeFontName)) {
+                mThemeFontStyle = "";
             } else {
-                return String.format(
+                mThemeFontStyle = String.format(
                         "BODY {"
                         + "font-family: '%s';"
                         + "font-weight: normal;"
                         + "font-style: normal;"
                         + "font-stretch: normal;"
-                        + "}\n", defaultFontName);
+                        + "}\n", themeFontName);
             }
         }
+        return mThemeFontStyle;
+    }    
+
+    
+    /**
+     * Returns the CSS used to set the default font.
+     * @return the default font style, or the empty string if no default font is set 
+     */    
+    private String getDefaultFontStyle(Context context, Map<String, AnkiFont> customFontsMap) {
+        if (mDefaultFontStyle == null) {
+            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
+            AnkiFont defaultFont = customFontsMap.get(preferences.getString("defaultFont", null));
+            if (defaultFont != null) {
+                mDefaultFontStyle = "BODY { " + defaultFont.getCSS() + " }\n";
+            } else {
+                mDefaultFontStyle = "";
+            }
+        }
+        return mDefaultFontStyle;
+    }
+
+    
+    /**
+     * Returns the CSS used to set the override font.
+     * @return the override font style, or the empty string if no override font is set 
+     */
+    private String getOverrideFontStyle(Context context, Map<String, AnkiFont> customFontsMap) {
+        if (mOverrideFontStyle == null) {
+            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
+            AnkiFont overrideFont = customFontsMap.get(preferences.getString("overrideFont", null));
+            if (overrideFont != null) {
+                mOverrideFontStyle = "BODY, .card, * { " + overrideFont.getCSS() + " }\n";
+            } else {
+                mOverrideFontStyle = "";
+            }
+        }
+        return mOverrideFontStyle;
+    }    
+    
+    
+    /**
+     * Returns the CSS that determines font choice in a global fashion.
+     * @return the font style, or the empty string if none applies 
+     */
+    private String getDominantFontStyle(Context context, Map<String, AnkiFont> customFontsMap) {
+        if (mDominantFontStyle == null) {
+            mDominantFontStyle = getOverrideFontStyle(context, customFontsMap);
+            if (mDominantFontStyle.isEmpty()) {
+                mDominantFontStyle = getDefaultFontStyle(context, customFontsMap);
+                if (mDominantFontStyle.isEmpty()) {
+                    mDominantFontStyle = getThemeFontStyle();
+                }
+            }
+        }
+        return mDominantFontStyle;
     }
 
 
