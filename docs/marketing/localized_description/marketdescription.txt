@@ -30,7 +30,7 @@ Add material through the desktop application Anki or directly through Ankidroid.
 • custom font support
 • full backup system
 • navigation by swipe, tap, shake
-• fully customisable
+• customisable
 • dynamic deck handling
 • night mode
 • 27 localisations
