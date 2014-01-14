@@ -655,6 +655,14 @@ public class Reviewer extends AnkiActivity {
 
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
+        	if(mCurrentCard != values[0].getCard()){
+            	/*
+            	 * Before updating mCurrentCard, we check whether it is changing
+            	 * or not. If the current card changes, then we need to display it
+            	 * as a new card, without showing the answer.
+            	 */
+        		sDisplayAnswer = false;
+        	}
             mCurrentCard = values[0].getCard();
             if (mCurrentCard == null) {
                 // If the card is null means that there are no more cards scheduled for review.
