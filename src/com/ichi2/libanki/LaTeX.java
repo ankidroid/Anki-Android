@@ -42,10 +42,12 @@ public class LaTeX {
     /**
      * Patterns used to identify LaTeX tags
      */
-    public static Pattern sStandardPattern = Pattern.compile("\\[latex\\]((.|\r\n|\n)+?)\\[/latex\\]");
-    public static Pattern sExpressionPattern = Pattern.compile("\\[\\$\\]((.|\r\n|\n)+?)\\[/\\$\\]");
-    public static Pattern sMathPattern = Pattern.compile("\\[\\$\\$\\]((.|\r\n|\n)+?)\\[/\\$\\$\\]");
-    public static Pattern sEntityPattern = Pattern.compile("(&[a-z]+;)");
+    public static Pattern sStandardPattern = Pattern.compile("\\[latex\\]((.?)\\[/latex\\]",
+            Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
+    public static Pattern sExpressionPattern = Pattern.compile("\\[\\$\\]((.?)\\[/\\$\\]",
+            Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
+    public static Pattern sMathPattern = Pattern.compile("\\[\\$\\$\\](.+?)\\[/\\$\\$\\]",
+            Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
 
 
     /**
