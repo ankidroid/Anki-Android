@@ -42,9 +42,9 @@ public class LaTeX {
     /**
      * Patterns used to identify LaTeX tags
      */
-    public static Pattern sStandardPattern = Pattern.compile("\\[latex\\]((.?)\\[/latex\\]",
+    public static Pattern sStandardPattern = Pattern.compile("\\[latex\\](.+?)\\[/latex\\]",
             Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
-    public static Pattern sExpressionPattern = Pattern.compile("\\[\\$\\]((.?)\\[/\\$\\]",
+    public static Pattern sExpressionPattern = Pattern.compile("\\[\\$\\](.+?)\\[/\\$\\]",
             Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
     public static Pattern sMathPattern = Pattern.compile("\\[\\$\\$\\](.+?)\\[/\\$\\$\\]",
             Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
