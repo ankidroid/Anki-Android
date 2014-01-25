@@ -2387,6 +2387,25 @@ public class DeckPicker extends FragmentActivity {
         }
     };
 
+	/**
+	 * Comparator for sorting deck names. Grouping-deck is before its members.
+	 * Sorting takes into locale-specific order of unicode letters.
+	 */
+	private final Comparator<String[]> mDecksComparator = new Comparator<String[]>() {
+		final Collator collator = Collator.getInstance();
+		@Override
+		public int compare(String[] lhs, String[] rhs) {
+			for (int i = 0; i < lhs.length && i < rhs.length; i++) {
+				int cmp = collator.compare(lhs[i], rhs[i]);
+				if (cmp != 0) {
+					return cmp;
+				}
+				// else continue until !=0 or 'i' leaves range
+			}
+			return lhs.length - rhs.length;
+		}
+	};
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuItem item;
@@ -2934,26 +2953,12 @@ public class DeckPicker extends FragmentActivity {
 
     private void updateDecksList(TreeSet<Object[]> decks, int eta, int count) {
     	if (decks == null) {
-    		Log.e(AnkiDroidApp.TAG, "updateDecksList: empty decks list");
-    		return;
+            Log.e(AnkiDroidApp.TAG, "updateDecksList: empty decks list");
+            return;
 		}
 
-		// prepare map that sorts entries
-		final Collator collator = Collator.getInstance();
-		final Comparator<String[]> comparator = new Comparator<String[]>() {
-			@Override
-			public int compare(String[] lhs, String[] rhs) {
-				for (int i = 0; i < lhs.length && i < rhs.length; i++) {
-					int cmp = collator.compare(lhs[i], rhs[i]);
-					if (cmp != 0)
-						return cmp;
-					// else continue until !=0 or 'i' leaves range
-				}
-				return lhs.length - rhs.length;
-			}
-		};
 		SortedMap<String[], HashMap<String, String>> decksSorted =
-				new TreeMap<String[], HashMap<String, String>>(comparator);
+				new TreeMap<String[], HashMap<String, String>>(mDecksComparator);
 
         // prepare all entries and sort them on-the-fly
         int due = 0;
