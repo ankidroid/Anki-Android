@@ -20,19 +20,6 @@
 
 package com.ichi2.anki;
 
-import java.io.File;
-import java.text.Collator;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.SortedMap;
-import java.util.TreeMap;
-import java.util.TreeSet;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
@@ -92,6 +79,19 @@ import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.text.Collator;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.SortedMap;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 public class DeckPicker extends FragmentActivity {
 
