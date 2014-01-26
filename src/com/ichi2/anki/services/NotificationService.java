@@ -49,7 +49,7 @@ public class NotificationService extends Service {
 
     @Override
     public void onStart(Intent intent, int startId) {
-        // Log.i(AnkiDroidApp.TAG, "NotificationService: OnStart");
+        Log.i(AnkiDroidApp.TAG, "NotificationService: OnStart");
 
         Context context = AnkiDroidApp.getInstance().getBaseContext();
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);

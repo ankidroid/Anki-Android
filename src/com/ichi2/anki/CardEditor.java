@@ -288,7 +288,7 @@ public class CardEditor extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Log.i(AnkiDroidApp.TAG, "CardEditor: onCreate");
+        Log.i(AnkiDroidApp.TAG, "CardEditor: onCreate");
         Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
 
@@ -308,7 +308,7 @@ public class CardEditor extends Activity {
                 }
             }
         }
-        // Log.i(AnkiDroidApp.TAG, "CardEditor: caller: " + mCaller);
+        Log.i(AnkiDroidApp.TAG, "CardEditor: caller: " + mCaller);
         
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
 
@@ -353,7 +353,7 @@ public class CardEditor extends Activity {
 
         switch (mCaller) {
             case CALLER_NOCALLER:
-                // Log.i(AnkiDroidApp.TAG, "CardEditor: no caller could be identified, closing");
+                Log.i(AnkiDroidApp.TAG, "CardEditor: no caller could be identified, closing");
                 finish();
                 return;
 
@@ -694,7 +694,7 @@ public class CardEditor extends Activity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            // Log.i(AnkiDroidApp.TAG, "CardEditor - onBackPressed()");
+            Log.i(AnkiDroidApp.TAG, "CardEditor - onBackPressed()");
             closeCardEditor();
             return true;
         }
@@ -715,11 +715,11 @@ public class CardEditor extends Activity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         // TODO
-        // // Log.i(AnkiDroidApp.TAG, "onSaveInstanceState: " + path);
+        // Log.i(AnkiDroidApp.TAG, "onSaveInstanceState: " + path);
         // outState.putString("deckFilename", path);
         outState.putBoolean("addFact", mAddNote);
         outState.putInt("caller", mCaller);
-        // Log.i(AnkiDroidApp.TAG, "onSaveInstanceState - Ending");
+        Log.i(AnkiDroidApp.TAG, "onSaveInstanceState - Ending");
     }
 
 
@@ -1268,10 +1268,10 @@ public class CardEditor extends Activity {
             public void onClick(DialogInterface arg0, int which) {
                 String tag = allTags[which];
                 if (selectedTags.contains(tag)) {
-                    // Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
+                    Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
                     selectedTags.remove(tag);
                 } else {
-                    // Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
+                    Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
                     selectedTags.add(tag);
                 }
             }

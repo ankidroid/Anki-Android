@@ -913,7 +913,7 @@ public class Models {
 
             txt = _fields.get(tag);
 
-            // Log.d(AnkiDroidApp.TAG, "Processing field modifier " + mod + ": extra = " + extra + ", field " + tag + " = " + txt);
+            Log.d(AnkiDroidApp.TAG, "Processing field modifier " + mod + ": extra = " + extra + ", field " + tag + " = " + txt);
 
             // built-in modifiers
             if (mod.equals("text")) {

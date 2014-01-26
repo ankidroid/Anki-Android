@@ -114,12 +114,12 @@ public class SharedDeck extends HashMap<String, Object> {
     // }
 
     /*
-     * public void prettyLog() { // Log.i(AnkiDroidApp.TAG, "SHARED DECK:"); // Log.i(AnkiDroidApp.TAG, "        username = "
-     * + mUsername); // Log.i(AnkiDroidApp.TAG, "        title = " + mTitle); // Log.i(AnkiDroidApp.TAG,
-     * "        description = " + mDescription); // Log.i(AnkiDroidApp.TAG, "        tags = " + mTags);
-     * // Log.i(AnkiDroidApp.TAG, "        version = " + mVersion); // Log.i(AnkiDroidApp.TAG, "        facts = " + mFacts);
-     * // Log.i(AnkiDroidApp.TAG, "        size = " + mSize); // Log.i(AnkiDroidApp.TAG, "        count = " + mCount);
-     * // Log.i(AnkiDroidApp.TAG, "        modified = " + mModified); // Log.i(AnkiDroidApp.TAG, "        fileName = " +
+     * public void prettyLog() { Log.i(AnkiDroidApp.TAG, "SHARED DECK:"); Log.i(AnkiDroidApp.TAG, "        username = "
+     * + mUsername); Log.i(AnkiDroidApp.TAG, "        title = " + mTitle); Log.i(AnkiDroidApp.TAG,
+     * "        description = " + mDescription); Log.i(AnkiDroidApp.TAG, "        tags = " + mTags);
+     * Log.i(AnkiDroidApp.TAG, "        version = " + mVersion); Log.i(AnkiDroidApp.TAG, "        facts = " + mFacts);
+     * Log.i(AnkiDroidApp.TAG, "        size = " + mSize); Log.i(AnkiDroidApp.TAG, "        count = " + mCount);
+     * Log.i(AnkiDroidApp.TAG, "        modified = " + mModified); Log.i(AnkiDroidApp.TAG, "        fileName = " +
      * mFileName); }
      */
 

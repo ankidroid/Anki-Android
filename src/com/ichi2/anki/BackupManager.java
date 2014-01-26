@@ -176,7 +176,7 @@ public class BackupManager {
         File[] deckBackups = getBackups(collectionFile);
         int len = deckBackups.length;
         if (len > 0 && deckBackups[len - 1].lastModified() == collectionFile.lastModified()) {
-            // Log.i(AnkiDroidApp.TAG, "performBackup: No backup necessary due to no collection changes");
+            Log.i(AnkiDroidApp.TAG, "performBackup: No backup necessary due to no collection changes");
             return;
         }
 
@@ -195,7 +195,7 @@ public class BackupManager {
             }
         }
         if (lastBackupDate != null && lastBackupDate.getTime() + interval * 3600000 > Utils.intNow(1000) && !force) {
-            // Log.i(AnkiDroidApp.TAG, "performBackup: No backup created. Last backup younger than 5 hours");
+            Log.i(AnkiDroidApp.TAG, "performBackup: No backup created. Last backup younger than 5 hours");
             return;
         }
 
@@ -210,7 +210,7 @@ public class BackupManager {
 
         File backupFile = new File(getBackupDirectory().getPath(), backupFilename);
         if (backupFile.exists()) {
-            // Log.i(AnkiDroidApp.TAG, "performBackup: No new backup created. File already exists");
+            Log.i(AnkiDroidApp.TAG, "performBackup: No new backup created. File already exists");
             return;
         }
 
@@ -304,7 +304,7 @@ public class BackupManager {
 
         // repair file
         String execString = "sqlite3 " + deckPath + " .dump | sqlite3 " + deckPath + ".tmp";
-        // Log.i(AnkiDroidApp.TAG, "repairDeck - Execute: " + execString);
+        Log.i(AnkiDroidApp.TAG, "repairDeck - Execute: " + execString);
         try {
             String[] cmd = { "/system/bin/sh", "-c", execString };
             Process process = Runtime.getRuntime().exec(cmd);
@@ -317,7 +317,7 @@ public class BackupManager {
             if (!moveDatabaseToBrokenFolder(deckPath, false)) {
                 return false;
             }
-            // Log.i(AnkiDroidApp.TAG, "repairDeck - moved corrupt file to broken folder");
+            Log.i(AnkiDroidApp.TAG, "repairDeck - moved corrupt file to broken folder");
             File repairedFile = new File(deckPath + ".tmp");
             if (!repairedFile.renameTo(deckFile)) {
                 return false;

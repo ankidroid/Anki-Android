@@ -875,7 +875,7 @@ public class Decks {
     // String dir = null;
     // File mediaDir = null;
     // if (mDeckPath != null && !mDeckPath.equals("")) {
-    // // Log.i(AnkiDroidApp.TAG, "mediaDir - mediaPrefix = " + mMediaPrefix);
+    // Log.i(AnkiDroidApp.TAG, "mediaDir - mediaPrefix = " + mMediaPrefix);
     // if (mMediaPrefix != null) {
     // dir = mMediaPrefix + "/" + mDeckName + ".media";
     // } else {
@@ -907,7 +907,7 @@ public class Decks {
     // return null;
     // }
     // }
-    // // Log.i(AnkiDroidApp.TAG, "mediaDir - mediaDir = " + dir);
+    // Log.i(AnkiDroidApp.TAG, "mediaDir - mediaDir = " + dir);
     // return dir;
     // }
     //

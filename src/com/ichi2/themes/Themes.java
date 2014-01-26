@@ -118,23 +118,23 @@ public class Themes {
         switch (theme == -1 ? mCurrentTheme : theme) {
             case THEME_ANDROID_DARK:
                 context.setTheme(android.R.style.Theme_Black);
-                // Log.i(AnkiDroidApp.TAG, "Set theme: dark");
+                Log.i(AnkiDroidApp.TAG, "Set theme: dark");
                 break;
             case THEME_ANDROID_LIGHT:
                 context.setTheme(android.R.style.Theme_Light);
-                // Log.i(AnkiDroidApp.TAG, "Set theme: light");
+                Log.i(AnkiDroidApp.TAG, "Set theme: light");
                 break;
             case THEME_BLUE:
                 context.setTheme(R.style.Theme_Blue);
-                // Log.i(AnkiDroidApp.TAG, "Set theme: blue");
+                Log.i(AnkiDroidApp.TAG, "Set theme: blue");
                 break;
             case THEME_FLAT:
                 context.setTheme(R.style.Theme_Flat);
-                // Log.i(AnkiDroidApp.TAG, "Set theme: flat");
+                Log.i(AnkiDroidApp.TAG, "Set theme: flat");
                 break;
             case THEME_WHITE:
                 context.setTheme(R.style.Theme_White);
-                // Log.i(AnkiDroidApp.TAG, "Set theme: white");
+                Log.i(AnkiDroidApp.TAG, "Set theme: white");
                 break;
             case -1:
                 break;

@@ -38,7 +38,7 @@ public class SdCardReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals(Intent.ACTION_MEDIA_EJECT)) {
-        	// Log.i(AnkiDroidApp.TAG, "media eject detected - closing collection and sending broadcast");
+        	Log.i(AnkiDroidApp.TAG, "media eject detected - closing collection and sending broadcast");
         	Intent i = new Intent();
         	i.setAction(MEDIA_EJECT);
         	context.sendBroadcast(i);
@@ -47,7 +47,7 @@ public class SdCardReceiver extends BroadcastReceiver {
             	col.close();
             }
         } else if (intent.getAction().equals(Intent.ACTION_MEDIA_MOUNTED)) {
-        	// Log.i(AnkiDroidApp.TAG, "media mount detected - sending broadcast");
+        	Log.i(AnkiDroidApp.TAG, "media mount detected - sending broadcast");
         	Intent i = new Intent();
         	i.setAction(MEDIA_MOUNT);
         	context.sendBroadcast(i);

@@ -80,7 +80,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
         }
                 
         protected void cacheValues() {
-            // Log.i(AnkiDroidApp.TAG, "DeckOptions - CacheValues");
+            Log.i(AnkiDroidApp.TAG, "DeckOptions - CacheValues");
 
             try {
                 mOptions = mCol.getDecks().confForDid(mDeck.getLong("id"));
@@ -130,7 +130,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
 
             @Override
             public SharedPreferences.Editor clear() {
-                // Log.d(AnkiDroidApp.TAG, "clear()");
+                Log.d(AnkiDroidApp.TAG, "clear()");
                 mUpdate = new ContentValues();
                 return this;
             }
@@ -138,13 +138,13 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
 
             @Override
             public boolean commit() {
-                // Log.d(AnkiDroidApp.TAG, "DeckOptions - commit() changes back to database");
+                Log.d(AnkiDroidApp.TAG, "DeckOptions - commit() changes back to database");
 
                 try {
                     for (Entry<String, Object> entry : mUpdate.valueSet()) {
                         String key =  entry.getKey();
                         Object value = entry.getValue();
-                        // Log.i(AnkiDroidApp.TAG, "Change value for key '" + key + "': " + value);
+                        Log.i(AnkiDroidApp.TAG, "Change value for key '" + key + "': " + value);
                         
                         if (key.equals("maxAnswerTime")) {
                             mOptions.put("maxTaken", (Integer) value);
@@ -314,7 +314,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
 
             @Override
             public SharedPreferences.Editor remove(String key) {
-                // Log.d(this.getClass().toString(), String.format("Editor.remove(key=%s)", key));
+                Log.d(this.getClass().toString(), String.format("Editor.remove(key=%s)", key));
                 mUpdate.remove(key);
                 return this;
             }
@@ -400,7 +400,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
 
         @Override
         public String getString(String key, String defValue) {
-            // Log.d(this.getClass().toString(), String.format("getString(key=%s, defValue=%s)", key, defValue));
+            Log.d(this.getClass().toString(), String.format("getString(key=%s, defValue=%s)", key, defValue));
             if (!mValues.containsKey(key)) {
                 return defValue;
             }
@@ -435,7 +435,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
 
     @Override
     public SharedPreferences getSharedPreferences(String name, int mode) {
-        // Log.d(this.getClass().toString(), String.format("getSharedPreferences(name=%s)", name));
+        Log.d(this.getClass().toString(), String.format("getSharedPreferences(name=%s)", name));
         return mPref;
     }
 
@@ -458,7 +458,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
         registerExternalStorageListener();
 
         if (mCol == null) {
-            // Log.i(AnkiDroidApp.TAG, "DeckOptions - No Collection loaded");
+            Log.i(AnkiDroidApp.TAG, "DeckOptions - No Collection loaded");
             finish();
             return;
         } else {
@@ -482,7 +482,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            // Log.i(AnkiDroidApp.TAG, "DeckOptions - onBackPressed()");
+            Log.i(AnkiDroidApp.TAG, "DeckOptions - onBackPressed()");
             finish();
             if (AnkiDroidApp.SDK_VERSION > 4) {
                 ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
