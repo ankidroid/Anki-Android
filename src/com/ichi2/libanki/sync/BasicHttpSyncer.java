@@ -175,7 +175,7 @@ public class BasicHttpSyncer implements HttpSyncer {
             params.setParameter(ConnManagerPNames.MAX_TOTAL_CONNECTIONS, 30);
             params.setParameter(ConnManagerPNames.MAX_CONNECTIONS_PER_ROUTE, new ConnPerRouteBean(30));
             params.setParameter(CoreProtocolPNames.USE_EXPECT_CONTINUE, false);
-            params.setParameter(CoreProtocolPNames.USER_AGENT, "AnkiDroid-" + AnkiDroidApp.getPkgVersion());
+            params.setParameter(CoreProtocolPNames.USER_AGENT, "AnkiDroid-" + AnkiDroidApp.getPkgVersionName());
             HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
             HttpConnectionParams.setSoTimeout(params, Connection.CONN_TIMEOUT);
 

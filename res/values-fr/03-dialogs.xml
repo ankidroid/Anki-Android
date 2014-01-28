@@ -93,7 +93,7 @@
   <string name="importing_collection">Importation de la collection. \nVeuillez patienter…</string>
   <string name="import_media_count">Importation des fichiers médias %1$d%%\nVeuillez patienter…</string>
   <string name="import_update_counts">Mise à jour des compteurs des paquets.\nVeuillez patienter…</string>
-  <string name="import_add_progress">• Décompression de l\'archive %1$s\n• Importation des notes %2$d%%\n• Importation des cartes %3$d%%\n• Nettoyage %4$ s</string>
+  <string name="import_add_progress">• Décompression de l\'archive %1$s\n• Importation des notes %2$d%%\n• Importation des cartes %3$d%%\n• Nettoyage %4$s</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Cartes à mémoriser pour Android</h2>AnkiDroid est une application de gestion de cartes à mémoriser (ou encore fiches-mémoire) qui est entièrement compatible avec le logiciel de bureau <a href="%2$s">Anki</a>. Vous pouvez créer, télécharger et apprendre du contenu sur à la fois Ankidroid et Anki, et les synchroniser très facilement.]]></item>
     <item><![CDATA[Pour nous aider à améliorer AnkiDroid, veuillez nous signaler tout bogue <a href="%1$s">ici</a> ; les suggestions sont également les bienvenues ! Veuillez utiliser notre <a href="%2$s">wiki</a> et nous dire bonjour sur le <a href="%3$s">forum</a>.]]></item>

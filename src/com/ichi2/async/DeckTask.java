@@ -764,8 +764,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                 AnkiDroidApp.closeCollection(true);
                 BackupManager.performBackup(path);
             } catch (RuntimeException e) {
-                Log.i(AnkiDroidApp.TAG,
-                        "doInBackgroundCloseCollection: error occurred - collection not properly closed");
+                Log.i(AnkiDroidApp.TAG, "doInBackgroundCloseCollection: error occurred - collection not properly closed");
             }
         }
         return null;

@@ -127,9 +127,9 @@
     <item>%s secunde</item>
     <item>%s minute</item>
     <item>%s ore</item>
-    <item>% zile</item>
-    <item>% luni</item>
-    <item>% ani</item>
+    <item>%s zile</item>
+    <item>%s luni</item>
+    <item>%s ani</item>
   </string-array>
   <plurals name="deckpicker_title">
     <item quantity="one">1 de %2$d de facut (%3$s)</item>

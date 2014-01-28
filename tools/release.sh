@@ -35,9 +35,12 @@ sed -i -e s/versionCode=\"$PREVIOUS_CODE/versionCode=\"$GUESSED_CODE/g AndroidMa
 ant clean release
 
 # Upload APK to Google Project's downloads section
-mv bin/AnkiDroid-release.apk /tmp/AnkiDroid-$VERSION.apk
-GOOGLECODE_PASSWORD=`cat ~/src/googlecode-password.txt` # Can be found at https://code.google.com/hosting/settings
-python tools/lib/googlecode_upload.py --summary "AnkiDroid $VERSION" --project ankidroid --user nicolas.raoul --password $GOOGLECODE_PASSWORD /tmp/AnkiDroid-$VERSION.apk
+mv bin/AnkiDroid-release.apk AnkiDroid-$VERSION.apk
+#GOOGLECODE_PASSWORD=`cat ~/src/googlecode-password.txt` # Can be found at https://code.google.com/hosting/settings
+#python tools/lib/googlecode_upload.py --summary "AnkiDroid $VERSION" --project ankidroid --user nicolas.raoul --password $GOOGLECODE_PASSWORD /tmp/AnkiDroid-$VERSION.apk
+
+# Push to Github Releases.
+# TODO
 
 # Commit modified AndroidManifest.xml
 git add AndroidManifest.xml
@@ -47,4 +50,6 @@ git commit -m "Bumped version to $VERSION"
 git tag v$VERSION
 
 # Push both commits and tag
-git push --follow-tags
+#git push --follow-tags # Not working... wanted to do both in a single request, to make it faster
+git push
+git push --tags
