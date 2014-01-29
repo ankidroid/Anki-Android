@@ -62,7 +62,7 @@
   <string name="custom_study_tags">Entreu les etiquetes:</string>
   <string name="rebuild_custom_study_deck">S\'està reconstruïnt el paquet d\'estudi personalitzat. \nUn moment si us plau...</string>
   <string name="deck_upgrade_title">Actualitza el paquet</string>
-  <string name="deck_upgrade_rename_warning">Tingueu en compte que amb això s\'exportarà la col·lecció actual a un fitxer anomenat \"%1$ s\" i es crearà una nova amb els fitxers antics de l\'anki 1. x. Si voleu, podeu importar de forma manual l\'arxiu citat apkg després de completar l\'auxiliar. Segur que voleu continuar?</string>
+  <string name="deck_upgrade_rename_warning">Tingueu en compte que amb això s\'exportarà la col·lecció actual a un fitxer anomenat \"%1$s\" i es crearà una nova amb els fitxers antics de l\'anki 1. x. Si voleu, podeu importar de forma manual l\'arxiu citat apkg després de completar l\'auxiliar. Segur que voleu continuar?</string>
   <string name="deck_upgrade_already_upgraded">La Versió 2 d\'AnkiDroid utilitza un nou format de paquets. \nSi no heu actualitzat correctament els vostres paquets, podeu reiniciar ara l\'actualització per actualitzar els vostres paquets.</string>
   <string name="deck_upgrade_major_warning"><![CDATA[Això és una important actualització de l\'Ankidroid i el procés d\'actualització portarà com a mínim uns 10-20 minuts. <br><br>voleu continuar ara o més endavant? <br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en"> Més informació</a>]]></string>
   <string name="deck_upgrade_start_again_to_upgrade_toast">Si us plau, reinicieu l\'Ankidroid quan tingueu temps d\'actualitzar-ho!</string>
@@ -93,7 +93,7 @@
   <string name="importing_collection">S\'està important la col. lecció. \nUn moment si us plau ...</string>
   <string name="import_media_count">S\'estant importació els continguts multimèdia %1$d%%\nun moment si us plau...</string>
   <string name="import_update_counts">S\'està actualitzant el número de paquets. \nUn moment si us plau...</string>
-  <string name="import_add_progress">• S\'està desempaquetant l\'arxiu %1$s\n• importació de notes %2$d%%\n• importació de fitxes %3$d%%\n• Neteja %4$ s</string>
+  <string name="import_add_progress">• S\'està desempaquetant l\'arxiu %1$s\n• importació de notes %2$d%%\n• importació de fitxes %3$d%%\n• Neteja %4$s</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s: <br/> Fitxes per memoritzar per Android </h2> AnkiDroid és una aplicació de gestió de fitxes per memoritzar, totalment compatible amb el programari d\'escriptori <a href="%2$s">Anki</a>. Podeu generar, descarregar i aprendre els continguts als dos programaris, a l\'Escriptori i a AnkiDroid Anki, i sincronitzar-los amb molta facilitat.]]></item>
     <item><![CDATA[Per ajudar-nos a millorar AnkiDroid, podeu informar de qualsevol error <a href="%1$s">aquí</a>; les noves idees també són benvingudes ! Si us plau, utilitzeu el <a href="%2$s">wiki</a> i presenteu-vos al <a href="%3$s"> Fòrum</a>.]]></item>

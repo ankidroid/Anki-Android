@@ -21,8 +21,26 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ichi2.anki"
     android:installLocation="auto"
-    android:versionCode="39"
-    android:versionName="2.0.2beta8" >
+    android:versionCode="20100000"
+    android:versionName="2.1.0dev" >
+    <!--
+        The version number is of the form:
+          <major>.<minor>.<maintenance>[dev|alpha<build>|beta<build>|]
+        The <build> is only present for alpha and beta releases (e.g., 2.0.4alpha2 or 2.0.4beta4), developer builds do
+        not have a build number (e.g., 2.0.4dev) and official releases only have three components (e.g., 2.0.4).
+
+        The version code is deerived from the version name as follows:
+          AAbbCCtDD
+        where AA is 2-digit decimal number (with leading zeros omitted) representing the major version; bb is a 2-digit
+        decimal number representing the minor version; CC is a 2-digit decimal number representing the maintenance
+        version; t is a 1-digit decimal number representing the type of the build, where 0 represent an developer build,
+        1 an alpha release, 2 a beta release, and 3 a public release; and DD is a 2-digit decimal number representing
+        the build (which will be always zero for internal builds and public releases, and will correspond to the alpha
+        or beta build for alpha and beta releases).
+
+        This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
+        needed for upgraded to be offered correctly.
+      -->
 
     <instrumentation
         android:name="android.test.InstrumentationTestRunner"

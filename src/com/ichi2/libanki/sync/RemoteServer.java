@@ -70,7 +70,7 @@ public class RemoteServer extends BasicHttpSyncer {
         try {
             JSONObject jo = new JSONObject();
             jo.put("v", Collection.SYNC_VER);
-            jo.put("cv", String.format(Locale.US, "ankidroid,%s,%s", AnkiDroidApp.getPkgVersion(), Utils.platDesc()));
+            jo.put("cv", String.format(Locale.US, "ankidroid,%s,%s", AnkiDroidApp.getPkgVersionName(), Utils.platDesc()));
             return super.req("meta", super.getInputStream(Utils.jsonToString(jo)));
         } catch (JSONException e) {
             throw new RuntimeException(e);

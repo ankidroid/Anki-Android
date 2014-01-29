@@ -876,7 +876,7 @@ public class DeckPicker extends FragmentActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext())
-                                .edit().putString("lastUpgradeVersion", AnkiDroidApp.getPkgVersion()).commit();
+                                .edit().putInt("lastUpgradeVersion", AnkiDroidApp.getPkgVersionCode()).commit();
                     }
                 });
             }
@@ -885,7 +885,7 @@ public class DeckPicker extends FragmentActivity {
                 public void onClick(DialogInterface dialog, int which) {
                     showUpgradeScreen(true, Info.UPGRADE_SCREEN_BASIC1);
                     AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext())
-                            .edit().putString("lastUpgradeVersion", AnkiDroidApp.getPkgVersion()).commit();
+                            .edit().putInt("lastUpgradeVersion", AnkiDroidApp.getPkgVersionCode()).commit();
                 }
             });
             dialog = builder.create();
@@ -1222,7 +1222,7 @@ public class DeckPicker extends FragmentActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext())
-                        .edit().putString("lastUpgradeVersion", AnkiDroidApp.getPkgVersion()).commit();
+                        .edit().putInt("lastUpgradeVersion", AnkiDroidApp.getPkgVersionCode()).commit();
             }
         });
         builder.show();
@@ -1251,7 +1251,7 @@ public class DeckPicker extends FragmentActivity {
             if (skip != 0 && AnkiDroidApp.SDK_VERSION > 4) {
                 ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
             }
-        } else if (skip < 2 && !preferences.getString("lastVersion", "").equals(AnkiDroidApp.getPkgVersion())) {
+        } else if (skip < 2 && !preferences.getString("lastVersion", "").equals(AnkiDroidApp.getPkgVersionName())) {
             preferences.edit().putBoolean("showBroadcastMessageToday", true).commit();
             Intent infoIntent = new Intent(this, Info.class);
             infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION);
@@ -1260,8 +1260,10 @@ public class DeckPicker extends FragmentActivity {
                 ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
             }
         } else if (skip < 3 && upgradeNeeded()) {
+            // Note that the "upgrade needed" refers to upgrading Anki 1.x decks, not to newer
+            // versions of AnkiDroid.
             AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext())
-                    .edit().putString("lastUpgradeVersion", AnkiDroidApp.getPkgVersion()).commit();
+                    .edit().putInt("lastUpgradeVersion", AnkiDroidApp.getPkgVersionCode()).commit();
             showUpgradeScreen(skip != 0, Info.UPGRADE_SCREEN_BASIC1);
         } else if (skip < 4 && hasErrorFiles()) {
             Intent i = new Intent(this, Feedback.class);
@@ -1280,10 +1282,34 @@ public class DeckPicker extends FragmentActivity {
         } else if (mImportPath != null && AnkiDroidApp.colIsOpen()) {
             showDialog(DIALOG_IMPORT);
         } else {
-            // AnkiDroid is being updated and a collection already exists. Run a database check here since we could
-            // have added database fixes in between releases.
-            if (!preferences.getString("lastUpgradeVersion", "").equals(AnkiDroidApp.getPkgVersion())) {
-                preferences.edit().putString("lastUpgradeVersion", AnkiDroidApp.getPkgVersion()).commit();
+            // AnkiDroid is being updated and a collection already exists. We check if we are upgrading
+            // to a version that contains additions to the database integrity check routine that we would
+            // like to run on all collections. A missing version number is assumed to be a fresh
+            // installation of AnkiDroid and we don't run the check.
+            int current = AnkiDroidApp.getPkgVersionCode();
+            int previous;
+            if (!preferences.contains("lastUpgradeVersion")) {
+                // Fresh install
+                previous = current;
+            } else {
+                try {
+                    previous = preferences.getInt("lastUpgradeVersion", current);
+                } catch (ClassCastException e) {
+                    // Previous versions stored this as a string.
+                    String s = preferences.getString("lastUpgradeVersion", "");
+                    // The last version of AnkiDroid that stored this as a string was 2.0.2.
+                    // We manually set the version here, but anything older will force a DB
+                    // check.
+                    if (s.equals("2.0.2")) {
+                        previous = 40;
+                    } else {
+                        previous = 0;
+                    }
+                }
+            }
+            preferences.edit().putInt("lastUpgradeVersion", current).commit();
+            if (previous < AnkiDroidApp.CHECK_DB_AT_VERSION) {
+                
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPEN_COLLECTION, new Listener() {
                     @Override
                     public void onPostExecute(DeckTask task, TaskData result) {

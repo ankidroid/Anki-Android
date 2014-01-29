@@ -74,7 +74,7 @@ public class CustomFontsReviewerExt implements ReviewerExt {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
         AnkiFont defaultFont = customFontsMap.get(preferences.getString("defaultFont", null));
         if (defaultFont != null) {
-            return "BODY { " + defaultFont.getCSS() + " }\n";
+            return "BODY, .card { " + defaultFont.getCSS() + " }\n";
         } else {
             String defaultFontName = Themes.getReviewerFontName();
             if (TextUtils.isEmpty(defaultFontName)) {

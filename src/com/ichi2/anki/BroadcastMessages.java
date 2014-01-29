@@ -178,7 +178,7 @@ public class BroadcastMessages {
                 Document dom = db.parse(conn.getInputStream());
                 Element docEle = dom.getDocumentElement();
                 NodeList nl = docEle.getElementsByTagName("Message");
-                String currentVersion = AnkiDroidApp.getPkgVersion();
+                String currentVersion = AnkiDroidApp.getPkgVersionName();
                 if (nl != null && nl.getLength() > 0) {
                     for (int i = 0; i < nl.getLength(); i++) {
                         Element el = (Element) nl.item(i);
