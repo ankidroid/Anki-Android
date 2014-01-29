@@ -2051,7 +2051,7 @@ public class Reviewer extends AnkiActivity {
         mRelativeButtonSize = preferences.getInt("answerButtonSize", 100);
         mInputWorkaround = preferences.getBoolean("inputWorkaround", false);
         mPrefFixArabic = preferences.getBoolean("fixArabicText", false);
-        mPrefForceQuickUpdate = preferences.getBoolean("forceQuickUpdate", false);
+        mPrefForceQuickUpdate = preferences.getBoolean("forceQuickUpdate", true);
         mSpeakText = preferences.getBoolean("tts", false);
         mShowProgressBars = preferences.getBoolean("progressBars", true);
         mPrefFadeScrollbars = preferences.getBoolean("fadeScrollbars", false);

@@ -344,7 +344,7 @@
             <CheckBoxPreference
                 android:title="@string/pref_force_quick_update_title"
                 android:summary="@string/pref_force_quick_update_summary"
-                android:defaultValue="false"
+                android:defaultValue="true"
                 android:key="forceQuickUpdate" />
             </PreferenceCategory>
         <PreferenceCategory android:title="@string/pref_cat_whiteboard" >
