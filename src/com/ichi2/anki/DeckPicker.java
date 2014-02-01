@@ -84,9 +84,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.SortedMap;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 public class DeckPicker extends FragmentActivity {
@@ -2409,6 +2413,25 @@ public class DeckPicker extends FragmentActivity {
         }
     };
 
+	/**
+	 * Comparator for sorting deck names. Grouping-deck is before its members.
+	 * Sorting takes into locale-specific order of unicode letters.
+	 */
+	private final Comparator<String[]> mDecksComparator = new Comparator<String[]>() {
+		final Collator collator = Collator.getInstance();
+		@Override
+		public int compare(String[] lhs, String[] rhs) {
+			for (int i = 0; i < lhs.length && i < rhs.length; i++) {
+				int cmp = collator.compare(lhs[i], rhs[i]);
+				if (cmp != 0) {
+					return cmp;
+				}
+				// else continue until !=0 or 'i' leaves range
+			}
+			return lhs.length - rhs.length;
+		}
+	};
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuItem item;
@@ -2956,10 +2979,14 @@ public class DeckPicker extends FragmentActivity {
 
     private void updateDecksList(TreeSet<Object[]> decks, int eta, int count) {
     	if (decks == null) {
-    		Log.e(AnkiDroidApp.TAG, "updateDecksList: empty decks list");
-    		return;
-    	}
-        mDeckList.clear();
+            Log.e(AnkiDroidApp.TAG, "updateDecksList: empty decks list");
+            return;
+		}
+
+		SortedMap<String[], HashMap<String, String>> decksSorted =
+				new TreeMap<String[], HashMap<String, String>>(mDecksComparator);
+
+        // prepare all entries and sort them on-the-fly
         int due = 0;
         for (Object[] d : decks) {
             HashMap<String, String> m = new HashMap<String, String>();
@@ -2997,8 +3024,12 @@ public class DeckPicker extends FragmentActivity {
                     m.put("sep", "bot");
                 }
             }
-            mDeckList.add(m);
+            decksSorted.put(name, m);
         }
+
+        // use sorted entries
+        mDeckList.clear();
+        mDeckList.addAll(decksSorted.values());
         mDeckListAdapter.notifyDataSetChanged();
 
         // set title
