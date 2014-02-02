@@ -15,65 +15,84 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:layout_centerVertical="true"
-	android:layout_centerHorizontal="true">
-    	<RelativeLayout
-        android:layout_width="fill_parent"
-		android:layout_height="fill_parent"
-		android:layout_alignParentTop="true"
-		android:layout_marginBottom="4dip"
-		android:fadingEdge="vertical"
-		android:gravity="center"
-		android:layout_above="@+id/info_buttons">
-    	<FrameLayout
-        android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:fadingEdge="vertical">
-    	    	<WebView
-        android:id="@+id/info"
-        android:gravity="center_vertical"
-        android:layout_width="wrap_content"
-		android:layout_height="wrap_content"/>
-	<RelativeLayout
-        android:id="@+id/info_loading_layer"
-	    android:background="@color/white"
-	    android:visibility="invisible"
-        android:layout_width="fill_parent"
-		android:layout_height="fill_parent"
-		android:gravity="center">
-	    <TextView 
-	        android:layout_gravity="center"
-	        android:text="@string/loading_shared_decks"
-        android:layout_width="wrap_content"
-		android:layout_height="wrap_content"/>
-	</RelativeLayout>
+    android:layout_height="fill_parent"
+    android:layout_centerHorizontal="true"
+    android:layout_centerVertical="true"
+    android:orientation="vertical" >
 
-	</FrameLayout>
-		 </RelativeLayout>
-	<LinearLayout  android:id="@+id/info_buttons"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-		android:layout_alignParentBottom="true">
-   	<Button android:id="@+id/info_tutorial"
-		android:text="@string/studyoptions_load_tutorial_deck"
-        android:layout_width="0dip"
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dip"
         android:layout_weight="1"
-		android:layout_height="fill_parent"
-		android:visibility="gone"/>		
-   	<Button android:id="@+id/info_sync"
-		android:text="@string/button_sync"
-        android:layout_width="0dip"
-        android:layout_weight="1"
-		android:layout_height="fill_parent"
-		android:visibility="gone"/>		
-   		<Button android:id="@+id/info_continue"
-		android:text="@string/btn_continue"
-        android:layout_width="0dip"
-        android:layout_weight="1"
-		android:layout_height="fill_parent"/>		
-	</LinearLayout>
-</RelativeLayout>
+        android:fadingEdge="vertical"
+        android:gravity="center" >
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fadingEdge="vertical" >
+
+            <WebView
+                android:id="@+id/info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical" />
+
+            <RelativeLayout
+                android:id="@+id/info_loading_layer"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/white"
+                android:gravity="center"
+                android:visibility="invisible" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/loading_shared_decks" />
+            </RelativeLayout>
+        </FrameLayout>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/info_terms_and_conditions"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/terms_and_conditions"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/info_buttons"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/info_tutorial"
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:text="@string/studyoptions_load_tutorial_deck"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/info_sync"
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:text="@string/button_sync"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/info_continue"
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:text="@string/btn_continue" />
+    </LinearLayout>
+
+</LinearLayout>
