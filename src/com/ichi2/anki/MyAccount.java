@@ -183,6 +183,9 @@ public class MyAccount extends AnkiActivity {
             }
 
         });
+        
+        TextView terms_conditions = (TextView) mLoginToMyAccountView.findViewById(R.id.terms_conditions_link);
+        terms_conditions.setMovementMethod(LinkMovementMethod.getInstance());
 
         mLoggedIntoMyAccountView = getLayoutInflater().inflate(R.layout.my_account_logged_in, null);
         Themes.setWallpaper(mLoggedIntoMyAccountView);
