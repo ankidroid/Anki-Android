@@ -39,6 +39,7 @@
 <!-- SharedDeckPicker.java -->
 <string name="shared_decks">Shared Decks</string>
 <string name="loading_shared_decks">Loading available shared decks...</string>
+<string name="terms_and_conditions"><a href='https://ankiweb.net/account/terms'>Terms and Conditions</a></string>
 <string name="cancel_download">Cancel Download</string>
 <string name="resume_download">Resume Download</string>
 <string name="pause_download">Pause Download</string>

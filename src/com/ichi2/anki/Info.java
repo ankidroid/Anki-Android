@@ -30,6 +30,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -38,6 +39,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.async.BaseAsyncTask;
 import com.ichi2.async.Connection;
@@ -134,6 +137,8 @@ public class Info extends Activity {
         mWebView.setBackgroundColor(res.getColor(Themes.getBackgroundColor()));
         Themes.setWallpaper((View) mWebView.getParent().getParent().getParent());
 
+        TextView termsAndConditionsView = (TextView) findViewById(R.id.info_terms_and_conditions);
+        termsAndConditionsView.setMovementMethod(LinkMovementMethod.getInstance());
         Button continueButton = (Button) findViewById(R.id.info_continue);
         continueButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -245,6 +250,7 @@ public class Info extends Activity {
                 mWebView.setWebViewClient(new MobileAnkiWebview());
                 mWebView.loadUrl(res.getString(R.string.shared_decks_url));
                 mWebView.getSettings().setJavaScriptEnabled(true);
+                termsAndConditionsView.setVisibility(View.VISIBLE);
                 continueButton.setText(res.getString(R.string.download_button_return));
                 break;
 
