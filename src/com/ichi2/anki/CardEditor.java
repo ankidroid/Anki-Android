@@ -1421,8 +1421,12 @@ public class CardEditor extends Activity {
     private void setNote(Note note) {
         try {
             if (note == null) {
-                mCurrentDid = mCol.getDecks().current().getLong("id");
                 if (mCol.getDecks().isDyn(mCurrentDid)) {
+                    /*
+                     * If the deck in mCurrentDid is a filtered (dynamic) deck, then we can't create
+                     * cards in it, and we set mCurrentDid to the Default deck. Otherwise, we keep
+                     * the number that had been selected previously in the activity.
+                     */
                     mCurrentDid = 1;
                 }
 
