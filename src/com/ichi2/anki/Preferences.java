@@ -73,6 +73,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private static final int DIALOG_BACKUP = 2;
     private static final int DIALOG_HEBREW_FONT = 3;
     private static final int DIALOG_WRITE_ANSWERS = 4;
+    public static boolean COMING_FROM_ADD=false;
 
     // private boolean mVeecheckStatus;
     private Collection mCol;

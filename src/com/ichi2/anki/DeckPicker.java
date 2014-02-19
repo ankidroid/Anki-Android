@@ -2,7 +2,7 @@
  * Copyright (c) 2009 Andrew Dubya <andrewdubya@gmail.com>                              *
  * Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>                           *
  * Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
- * Copyright (c) 2009 Daniel Sv��rd <daniel.svard@gmail.com>                             * 
+ * Copyright (c) 2009 Daniel Sv�ｽ�ｽrd <daniel.svard@gmail.com>                             * 
  * Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>                         *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
@@ -1128,6 +1128,7 @@ public class DeckPicker extends FragmentActivity {
 
 
     private void addNote() {
+    	Preferences.COMING_FROM_ADD=true;
         Intent intent = new Intent(DeckPicker.this, CardEditor.class);
         intent.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_DECKPICKER);
         startActivityForResult(intent, ADD_NOTE);

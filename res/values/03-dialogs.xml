@@ -55,6 +55,7 @@
 <string name="notify_title">AnkiDroid Updated</string>
 <string name="notify_message">Download a new version</string>
 <string name="notification_title">Confirm AnkiDroid Update</string>
+<string name="preview_title">Preview</string>
 <string name="notification_message">A new version of AnkiDroid is available in Android Market.\n\nWould you like to install it?</string>
 <string name="notification_stop">Don\'t notify me of this update again</string>
 

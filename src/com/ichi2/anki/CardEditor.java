@@ -160,9 +160,10 @@ public class CardEditor extends Activity {
     private TextView mModelButton;
     private TextView mDeckButton;
     private Button mSwapButton;
+    private Button mPreviewButton;
 
     private Note mEditorNote;
-    private Card mCurrentEditedCard;
+    public static Card mCurrentEditedCard;
     private List<String> mCurrentTags;
     private long mCurrentDid;
 
@@ -339,6 +340,7 @@ public class CardEditor extends Activity {
         mSave = (Button) findViewById(R.id.CardEditorSaveButton);
         mCancel = (Button) findViewById(R.id.CardEditorCancelButton);
         mLater = (Button) findViewById(R.id.CardEditorLaterButton);
+        mPreviewButton=(Button)findViewById(R.id.CardEditorPreviewButton);
         mDeckButton = (TextView) findViewById(R.id.CardEditorDeckText);
         mModelButton = (TextView) findViewById(R.id.CardEditorModelText);
         mTagsButton = (TextView) findViewById(R.id.CardEditorTagText);
@@ -348,6 +350,16 @@ public class CardEditor extends Activity {
             	swapText(false);
             }
         });
+                
+        if(Preferences.COMING_FROM_ADD)
+        {
+	        mPreviewButton.setVisibility(View.GONE);
+	        
+        }else
+        {
+        	 mPreviewButton.setVisibility(View.VISIBLE);
+        }
+        Preferences.COMING_FROM_ADD=false;        
 
         mAedictIntent = false;
 
@@ -564,6 +576,15 @@ public class CardEditor extends Activity {
             }
 
         });
+        
+        mPreviewButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				openReviewer();				
+				
+			}
+		});        
     }
 
 
@@ -607,6 +628,12 @@ public class CardEditor extends Activity {
             mSourceText[1] = cleanMessages.second;
         }
     }
+    
+    private void openReviewer() {
+    	
+        Intent reviewer = new Intent(CardEditor.this, PreviewClass.class);
+        startActivity(reviewer);
+    }    
 
     private void reloadCollection(Bundle savedInstanceState) {
     	mSavedInstanceState = savedInstanceState;

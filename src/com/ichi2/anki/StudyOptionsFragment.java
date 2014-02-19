@@ -542,6 +542,7 @@ public class StudyOptionsFragment extends Fragment {
 
 
     private void addNote() {
+    	Preferences.COMING_FROM_ADD=true;
         Intent intent = new Intent(getActivity(), CardEditor.class);
         intent.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_STUDYOPTIONS);
         startActivityForResult(intent, ADD_NOTE);
