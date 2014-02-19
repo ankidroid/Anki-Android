@@ -176,6 +176,10 @@
         <activity
             android:name="com.ichi2.charts.ChartBuilder"
             android:configChanges="keyboardHidden|orientation|locale|screenSize" />
+        <activity
+            android:name="com.ichi2.anki.PreviewClass"
+            android:configChanges="locale"
+            android:label="@string/preview_title" />
 
         <service android:name="com.ichi2.anki.services.DownloadManagerService" />
         <service android:name="com.ichi2.anki.services.NotificationService" />

@@ -23,6 +23,7 @@
 <string name="CardEditorCancelButton">Cancel</string>
 <string name="CardEditorSaveButton">Save</string>
 <string name="CardEditorLaterButton">Later</string>
+<string name="CardEditorPreviewButton">Preview</string>
 <string name="CardEditorLaterMessage">Saved information for later</string>
 <string name="CardEditorCardDeck">Card deck: %s</string>
 <string name="CardEditorNoteDeck">Note deck: %s</string>
