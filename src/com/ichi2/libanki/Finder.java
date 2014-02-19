@@ -235,7 +235,7 @@ public class Finder {
         if (token.length() != 0) {
             tokens.add(token);
         }
-        return tokens.toArray(new String[] {});
+        return tokens.toArray(new String[tokens.size()]);
     }
 
     // Query building
@@ -312,7 +312,7 @@ public class Finder {
         if (s.bad) {
             return new Pair<String, String[]>(null, null);
         }
-        return new Pair<String, String[]>(s.q, args.toArray(new String[] {}));
+        return new Pair<String, String[]>(s.q, args.toArray(new String[args.size()]));
     }
 
 
@@ -676,7 +676,7 @@ public class Finder {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-        return Utils.join(" or ", lims.toArray(new String[] {}));
+        return Utils.join(" or ", lims.toArray(new String[lims.size()]));
     }
 
 
@@ -816,7 +816,7 @@ public class Finder {
         Pattern regex = Pattern.compile(src);
 
         ArrayList<Object[]> d = new ArrayList<Object[]>();
-        String sql = "select id, mid, flds from notes where id in " + Utils.ids2str(nids.toArray(new Long[] {}));
+        String sql = "select id, mid, flds from notes where id in " + Utils.ids2str(nids.toArray(new Long[nids.size()]));
         nids = new ArrayList<Long>();
 
         Cursor cur = null;
