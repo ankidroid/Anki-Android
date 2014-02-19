@@ -39,9 +39,6 @@ mv bin/AnkiDroid-release.apk AnkiDroid-$VERSION.apk
 #GOOGLECODE_PASSWORD=`cat ~/src/googlecode-password.txt` # Can be found at https://code.google.com/hosting/settings
 #python tools/lib/googlecode_upload.py --summary "AnkiDroid $VERSION" --project ankidroid --user nicolas.raoul --password $GOOGLECODE_PASSWORD /tmp/AnkiDroid-$VERSION.apk
 
-# Push to Github Releases.
-# TODO
-
 # Commit modified AndroidManifest.xml
 git add AndroidManifest.xml
 git commit -m "Bumped version to $VERSION"
@@ -53,3 +50,12 @@ git tag v$VERSION
 #git push --follow-tags # Not working... wanted to do both in a single request, to make it faster
 git push
 git push --tags
+
+# Push to Github Releases.
+GITHUB_TOKEN=`cat ~/src/my-github-personal-access-token`
+GITHUB_USER="ankidroid"
+GITHUB_REPO="Anki-Android"
+~/p/github-release release --tag v$VERSION --name "AnkiDroid $VERSION" --pre-release
+~/p/github-release upload --tag v$VERSION --name AnkiDroid-$VERSION.apk --file AnkiDroid-$VERSION.apk
+
+# TODO: Push to Google Play alpha or beta
