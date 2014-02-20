@@ -955,10 +955,7 @@ public class Collection {
                         d.put("q", "Please edit this note and add some cloze deletions.");
                     }
                 }
-                
-                // The line below is not needed. This is different from the original ankilib, because
-                // in Anki you press 'r' to replay sounds, but in AnkiDroid you need a visible button.
-                // fields.put("FrontSide", mMedia.stripAudio(d.get("q")));
+                fields.put("FrontSide", mMedia.stripAudio(d.get("q")));
     
                 // runFilter mungeFields for type "a"
                 fparser = new Models.fieldParser(fields);
