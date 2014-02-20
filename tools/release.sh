@@ -52,9 +52,9 @@ git push
 git push --tags
 
 # Push to Github Releases.
-GITHUB_TOKEN=`cat ~/src/my-github-personal-access-token`
-GITHUB_USER="ankidroid"
-GITHUB_REPO="Anki-Android"
+export GITHUB_TOKEN=`cat ~/src/my-github-personal-access-token`
+export GITHUB_USER="ankidroid"
+export GITHUB_REPO="Anki-Android"
 ~/p/github-release release --tag v$VERSION --name "AnkiDroid $VERSION" --pre-release
 ~/p/github-release upload --tag v$VERSION --name AnkiDroid-$VERSION.apk --file AnkiDroid-$VERSION.apk
 
