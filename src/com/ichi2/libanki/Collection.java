@@ -955,13 +955,7 @@ public class Collection {
                         d.put("q", "Please edit this note and add some cloze deletions.");
                     }
                 }
-                
-                // LIBANKI: Changed in AnkiDroid.
-                // In AnkiDroid you always need a visible audio button because there is not a shortcut as in Anki.
-                // Original:
-                //   fields.put("FrontSide", mMedia.stripAudio(d.get("q")));
-                fields.put("FrontSize", d.get("q"));
-                // LIBANKI
+                fields.put("FrontSide", mMedia.stripAudio(d.get("q")));
     
                 // runFilter mungeFields for type "a"
                 fparser = new Models.fieldParser(fields);
