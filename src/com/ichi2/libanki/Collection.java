@@ -960,7 +960,7 @@ public class Collection {
                 // In AnkiDroid you always need a visible audio button because there is not a shortcut as in Anki.
                 // Original:
                 //   fields.put("FrontSide", mMedia.stripAudio(d.get("q")));
-                fields.put("FrontSize", d.get("q"));
+                fields.put("FrontSide", d.get("q"));
                 // LIBANKI
     
                 // runFilter mungeFields for type "a"
