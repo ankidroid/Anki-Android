@@ -91,8 +91,8 @@
 <string name="contextmenu_deckpicker_reset_reset_message">Language reset</string>
 <string name="contextmenu_deckpicker_optimize_deck">Optimize database</string>
 <string name="contextmenu_deckpicker_rename_deck">Rename deck</string>
-<string name="contextmenu_deckpicker_collapse_deck">Collapse deck</string>
-<string name="contextmenu_deckpicker_inflate_deck">Inflate deck</string>
+<string name="contextmenu_deckpicker_collapse_deck">Hide Subdecks</string>
+<string name="contextmenu_deckpicker_inflate_deck">Show Subdecks</string>
 <string name="contextmenu_deckpicker_set_custom_dictionary">Set custom dictionary</string>
 
 <string name="menu_download_deck">Download deck</string>
