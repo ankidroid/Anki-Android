@@ -340,15 +340,30 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     /** Initializes the list of custom fonts shown in the preferences. */
     private void initializeCustomFontsDialog() {
-        ListPreference customFontsPreference = (ListPreference) getPreferenceScreen().findPreference("defaultFont");
-        customFontsPreference.setEntries(getCustomFonts("System default"));
-        customFontsPreference.setEntryValues(getCustomFonts(""));
+        ListPreference defaultFontPreference = (ListPreference) getPreferenceScreen().findPreference("defaultFont");
+        ListPreference overrideFontPreference = (ListPreference) getPreferenceScreen().findPreference("overrideFont");        
+        if (defaultFontPreference != null) {
+            defaultFontPreference.setEntries(getCustomFonts("System default"));
+            defaultFontPreference.setEntryValues(getCustomFonts(""));
+        }
+        if (overrideFontPreference != null) {
+            overrideFontPreference.setEntries(getCustomFonts("None"));
+            overrideFontPreference.setEntryValues(getCustomFonts(""));
+        }
+        onOverrideFontChange(overrideFontPreference, defaultFontPreference);
+
         ListPreference browserEditorCustomFontsPreference = (ListPreference) getPreferenceScreen().findPreference("browserEditorFont");
         browserEditorCustomFontsPreference.setEntries(getCustomFonts("System default"));
         browserEditorCustomFontsPreference.setEntryValues(getCustomFonts("", true));
     }
 
 
+    private void onOverrideFontChange(ListPreference overrideFontPreference, ListPreference defaultFontPreference) {
+        if (overrideFontPreference != null && defaultFontPreference != null) {
+            Boolean overrideIsSet = !overrideFontPreference.getValue().isEmpty();
+            defaultFontPreference.setEnabled(!overrideIsSet);
+        }
+    }
     @Override
     protected void onPause() {
         super.onPause();
@@ -471,6 +486,12 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 date.set(Calendar.HOUR_OF_DAY, hours);
                 mCol.setCrt(date.getTimeInMillis() / 1000);
                 mCol.setMod();
+            } else if (key.equals("overrideFont")) {
+                ListPreference overrideFontPreference = 
+                        (ListPreference) getPreferenceScreen().findPreference("overrideFont");
+                ListPreference defaultFontPreference =
+                        (ListPreference) getPreferenceScreen().findPreference("defaultFont"); 
+                onOverrideFontChange(overrideFontPreference, defaultFontPreference);
             }
             if (Arrays.asList(mShowValueInSummList).contains(key)) {
                 updateListPreference(key);

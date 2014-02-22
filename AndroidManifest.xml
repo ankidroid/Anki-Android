@@ -29,7 +29,7 @@
         The <build> is only present for alpha and beta releases (e.g., 2.0.4alpha2 or 2.0.4beta4), developer builds do
         not have a build number (e.g., 2.0.4dev) and official releases only have three components (e.g., 2.0.4).
 
-        The version code is deerived from the version name as follows:
+        The version code is derived from the version name as follows:
           AAbbCCtDD
         where AA is 2-digit decimal number (with leading zeros omitted) representing the major version; bb is a 2-digit
         decimal number representing the minor version; CC is a 2-digit decimal number representing the maintenance
