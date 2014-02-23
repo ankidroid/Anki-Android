@@ -2,7 +2,7 @@
 #
 # Shows the completion rate of the translation for each language.
 #
-#wget -O tmp-translations-page.html https://crowdin.net/project/ankidroid
+wget -O tmp-translations-page.html https://crowdin.net/project/ankidroid
 cat tmp-translations-page.html |
  tr "\n" " " |
  sed -e "s/project-language-name\">/\n/g" |
@@ -20,4 +20,4 @@ cat tmp-list.txt |  sort
 echo "\nBy rate:"
 cat tmp-list.txt | sed -e "s/\(.*\) \([0-9]*\)%/\2% \1/g" | sort -nr
 
-#rm -f tmp-translations-page.html tmp-list.txt
+rm -f tmp-translations-page.html tmp-list.txt
