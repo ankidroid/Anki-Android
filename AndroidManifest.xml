@@ -21,8 +21,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ichi2.anki"
     android:installLocation="auto"
-    android:versionCode="20100114"
-    android:versionName="2.1alpha14" >
+    android:versionCode="20100201"
+    android:versionName="2.1beta1" >
     <!--
         The version number is of the form:
           <major>.<minor>.<maintenance>[dev|alpha<build>|beta<build>|]
@@ -31,15 +31,20 @@
 
         The version code is derived from the version name as follows:
           AAbbCCtDD
-        where AA is 2-digit decimal number (with leading zeros omitted) representing the major version; bb is a 2-digit
-        decimal number representing the minor version; CC is a 2-digit decimal number representing the maintenance
-        version; t is a 1-digit decimal number representing the type of the build, where 0 represent an developer build,
-        1 an alpha release, 2 a beta release, and 3 a public release; and DD is a 2-digit decimal number representing
-        the build (which will be always zero for internal builds and public releases, and will correspond to the alpha
-        or beta build for alpha and beta releases).
+        AA: 2-digit decimal number (with leading zeros omitted) representing the major version
+        bb: 2-digit decimal number representing the minor version
+        CC: 2-digit decimal number representing the maintenance version
+        t: 1-digit decimal number representing the type of the build
+          0: developer build
+          1: alpha release
+          2: beta release
+          3: public release
+        DD: 2-digit decimal number representing the build
+          0 for internal builds and public releases
+          alpha/beta build number for alpha/beta releases
 
         This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
-        needed for upgraded to be offered correctly.
+        needed for upgrades to be offered correctly.
       -->
 
     <instrumentation
