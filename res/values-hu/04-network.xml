@@ -45,8 +45,8 @@
   <string name="connection_error_message">Hálózati hiba történt.</string>
   <string name="sync_log_db_error">Adatbázishiba történt.</string>
   <string name="no_user_password_error_message">Ehhez  művelethez szükséged van egy bejelentkezett AnkiOnline fiókra.</string>
-  <string name="username">Email address</string>
-  <string name="username_repeat">Repeat email address</string>
+  <string name="username">Email cím</string>
+  <string name="username_repeat">Ismételje meg az e-mail címet</string>
   <string name="password">Jelszó</string>
   <string name="password_repeat">Jelszó mégegyszer</string>
   <string name="log_in">Bejelentkezés</string>
@@ -55,7 +55,7 @@
   <string name="logged_as">Bejelentkezve mint</string>
   <string name="log_out">Kijelentkezés</string>
   <string name="alert_logging_message">Bejelentkezés, kérem várjon...</string>
-  <string name="invalid_username_password">Invalid email address or password.</string>
+  <string name="invalid_username_password">Érvénytelen e-mail cím vagy jelszót.</string>
   <string name="login_generic_error">Nem sikerült bejelentkezni.</string>
   <string name="download_finished">Letöltés kész</string>
   <string name="personaldeckpicker_title">Online pakli megnyitása</string>
@@ -94,7 +94,7 @@
   <string name="sync_write_access_error">A letöltött fájlt nem sikerült menteni a sd kártya. Az sd kártya vagy írásvédett, vagy nincs rajta elég hely.</string>
   <string name="sync_deletions_message">Törlések szinkronizálása...</string>
   <string name="sync_small_objects_message">Kis méretű objektumok szinkronizálása...</string>
-  <string name="sync_finish_message">Szinkronizálás befelyezése...</string>
+  <string name="sync_finish_message">Szinkronizálás befejezése...</string>
   <string name="sync_log_finish_error">Hiba történt a befejezés utasítás kiszolgáló felé küldése közben</string>
   <string name="sync_writing_db">Változások adatbázisba írása...</string>
   <string name="sync_download_chunk">Változások letöltése...</string>
@@ -116,8 +116,8 @@
   <string name="register_error">An error occurred. Please try again later.</string>
   <string name="register_title">Fiók regisztrálása</string>
   <string name="register_mismatch">The username/password repetition does not match or is empty. Please re-enter.</string>
-  <string name="registering_message">Fiók létrehozás.\nKérlek várj...</string>
-  <string name="upgrade_decks_zipping">Pakli tömörítése feltöltéshez.\nKérlek várj...</string>
+  <string name="registering_message">Fiók létrehozása.\nKérlek, várj...</string>
+  <string name="upgrade_decks_zipping">Paklik tömörítése feltöltéshez.\nKérlek, várj...</string>
   <string name="upgrade_decks_upload">Uploading zipped decks\nYou can cancel by pressing back.\nPlease wait...</string>
   <string name="upgrade_decks_waiting">Waiting, queue position: %s\nPlease wait...</string>
   <string name="upgrade_decks_upgrade_started">Upgrade started\nPlease wait...</string>
@@ -133,6 +133,6 @@
   <string name="upgrade_decks_failed">These decks could not be upgraded:\n%sPlease open them in Anki Desktop and do a database check. Afterwards you can import them via Anki Desktop.</string>
   <string name="upgrade_decks_media_failed">Copying the media files to the new media folder (%1$s) has failed for these decks:\n%2$sPlease move the media files manually.</string>
   <string name="download_deck">Downloading deck (%d kb).\nPlease wait...</string>
-  <string name="sync_sanity_local">Local</string>
-  <string name="sync_sanity_remote">Remote</string>
+  <string name="sync_sanity_local">Helyi</string>
+  <string name="sync_sanity_remote">Távoli</string>
 </resources>

@@ -89,9 +89,9 @@
   <string name="upgrade_deck_sync_from_ankiweb">Synchronizeren vanaf AnkiWeb</string>
   <string name="upgrade_deck_have_you_synced">Bent u er zeker van dat u de upgrade hebt gedaan van uw collectie met Anki Desktop 2 en gesynchronizeerd met AnkiWeb?</string>
   <string name="upgrade_deck_dont_upgrade">Niet upgraden</string>
-  <string name="import_unpacking">Archief aan het uitpakken.\nGelieve even te wachten…</string>
-  <string name="importing_collection">Collectie aan het importeren.\nGelieve even te wachten…</string>
-  <string name="import_media_count">Mediabestanden aan het importeren %1$d%%\nGelieve even te wachten…</string>
+  <string name="import_unpacking">Archief aan het uitpakken.\nGelieve even te wachten&#8230;</string>
+  <string name="importing_collection">Collectie aan het importeren.\nGelieve even te wachten&#8230;</string>
+  <string name="import_media_count">Mediabestanden aan het importeren %1$d%%\nGelieve even te wachten&#8230;</string>
   <string name="import_update_counts">Bezig met het aanpassen van uw setaantallen.\nEen ogenblik geduld...</string>
   <string name="import_add_progress">• Archief uitpakken %1$s\n• Notities importeren %2$d%%\n• Kaarten importeren %3$d%%\n• Opruimen %4$s</string>
   <string-array name="about_content">

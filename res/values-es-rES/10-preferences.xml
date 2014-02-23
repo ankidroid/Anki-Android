@@ -22,7 +22,7 @@
 <resources>
   <string name="pref_cat_decks">Mazos</string>
   <string name="pref_internal_memory">Utilizar la memoria interna</string>
-  <string name="pref_internal_memory_summ">Almacenar colección en memoria interna. Esto no es recomendable, ya que no puede acceder al archivo de la colección fácilmente</string>
+  <string name="pref_internal_memory_summ">Almacenar colección en memoria interna. No es recomendable, ya que dificulta el acceso a la colección</string>
   <string name="pref_cat_sync">Sincronización</string>
   <string name="pref_cat_qadisplay">Visualización de pregunta y respuesta</string>
   <string name="pref_cat_general">General</string>
@@ -52,7 +52,7 @@
   <string name="hide_due_count">Ocultar cuenta de programadas</string>
   <string name="hide_due_count_summ">Oculta la cuenta de programadas</string>
   <string name="overtime">Tiempo extra</string>
-  <string name="overtime_summ">Continuar repasando después de alcanzado el límite de tiempo</string>
+  <string name="overtime_summ">Continuar repasando tras alcanzar el límite de tiempo</string>
   <string name="show_progress_bars">Mostrar barras de progreso</string>
   <string name="show_progress_bars_summ">Muestra el progreso de hoy y la proporción de respuestas correctas de hoy mientras se repasa.</string>
   <string name="fade_scrollbars">Ocultar las barras de desplazamiento</string>

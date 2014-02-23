@@ -35,7 +35,7 @@
   <string name="download_overwrite">Überschreiben</string>
   <string name="download_cancel">Abbrechen</string>
   <string name="shared_decks">Öffentliche Stapel</string>
-  <string name="loading_shared_decks">Verfügbare öffentliche Stapel werden geladen…</string>
+  <string name="loading_shared_decks">Verfügbare öffentliche Stapel werden geladen...</string>
   <string name="cancel_download">Herunterladen abbrechen</string>
   <string name="resume_download">Herunterladen fortsetzen</string>
   <string name="pause_download">Herunterladen pausieren</string>

@@ -72,7 +72,7 @@
   <string name="menu_suspend_card">Dauerhaft aussetzen</string>
   <string name="menu_suspend_note">Notiz dauerhaft aussetzen</string>
   <string name="menu_delete_note">Notiz löschen</string>
-  <string name="delete_note_message">Diese Notiz und alle ihre Karten tatsächlich löschen?\n%s</string>
+  <string name="delete_note_message">Soll diese Notiz und alle ihre Karten tatsächlich gelöscht werden?\n%s</string>
   <string name="menu_edit_card">Karte bearbeiten</string>
   <string name="menu_select">Text auswählen</string>
   <string name="menu_search">In %1$s nachschlagen</string>

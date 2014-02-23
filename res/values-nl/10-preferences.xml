@@ -115,10 +115,10 @@
   <string name="swipe_summ_on">Veeg horizontaal om te schakelen tussen weergaven. Configureren andere acties hieronder</string>
   <string name="pref_cat_actions">Acties</string>
   <string name="gestures_shake">Schudden</string>
-  <string name="gestures_swipe_up">Vegen omhoog</string>
-  <string name="gestures_swipe_down">Vegen naar beneden</string>
-  <string name="gestures_swipe_left">Veeg naar links</string>
-  <string name="gestures_swipe_right">Veeg naar rechts</string>
+  <string name="gestures_swipe_up">Swipe omhoog</string>
+  <string name="gestures_swipe_down">Swipe naar beneden</string>
+  <string name="gestures_swipe_left">Swipe naar links</string>
+  <string name="gestures_swipe_right">Swipe naar rechts</string>
   <string name="gestures_double_tap">Dubbele tik</string>
   <string name="gestures_tap_top">Druk bovenaan</string>
   <string name="gestures_tap_bottom">Druk onderaan</string>

@@ -36,7 +36,7 @@
   <string name="ease1_successive">Znovu</string>
   <string name="ease2_successive">Těžké</string>
   <string name="ease3_successive">Dobré</string>
-  <string name="ease3_learning">Dobré</string>
+  <string name="ease3_learning">Snadné</string>
   <string name="studyoptions_congrats_undo">Zpět %s</string>
   <string name="studyoptions_congrats_custom_study">Vlastní učení</string>
   <string name="studyoptions_congrats_open_other_deck">Otevřít jiný balíček</string>
@@ -51,8 +51,8 @@
   <string name="undo_action_bury">přeskočit poznámku</string>
   <string name="undo_action_suspend_card">vyřadit kartu</string>
   <string name="undo_action_suspend_note">vyřadit poznámku</string>
-  <string name="undo_action_delete">Odstranit poznámku</string>
-  <string name="undo_action_mark">Označit poznámku</string>
+  <string name="undo_action_delete">odstranit poznámku</string>
+  <string name="undo_action_mark">označit poznámku</string>
   <string name="finish_operation">Dokončování předchozí operace (nejpravděpodobněji vytváření zálohy). \nProsím čekejte...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Stáhnout chybějící média</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Obnovit přiřazení jazyka</string>

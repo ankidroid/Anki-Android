@@ -12,7 +12,7 @@ Anki를 통해 컴퓨터로도, AnkiDroid를 통해 폰에서도 직접 카드�
 • 지원 플래시 카드: 텍스트, 이미지, 사운드, LaTex
 • SRS (Spaced Repetition System) : supermemo 2 알고리즘
 • TTS (읽어주기) 기능
-• 이미 완성된 6000개 이상의 덱들
+﻿• 이미 완성된 6000개 이상의 덱들
 • 학습 진도 위젯
 • 상세한 통계
 • AnkiWeb과 동기화

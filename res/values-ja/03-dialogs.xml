@@ -90,10 +90,10 @@
   <string name="upgrade_deck_sync_from_ankiweb">AnkiWebとの同期</string>
   <string name="upgrade_deck_have_you_synced">Anki Desktop 2を使ってあなたのコレクションをアップグレードし、AnkiWebと同期させてもよろしいですか？</string>
   <string name="upgrade_deck_dont_upgrade">アップグレードしない</string>
-  <string name="import_unpacking">アーカイブを解凍しています。\nお待ちください…</string>
-  <string name="importing_collection">コレクションをインポートしています。\nお待ちください…</string>
-  <string name="import_media_count">メディアファイルをインポートしています。 %1$d%%\nお待ちください…</string>
-  <string name="import_update_counts">単語帳の数を更新しています。\nお待ちください…</string>
+  <string name="import_unpacking">アーカイブを解凍しています。\nお待ちください&#8230;</string>
+  <string name="importing_collection">コレクションをインポートしています。\nお待ちください&#8230;</string>
+  <string name="import_media_count">メディアファイルをインポートしています。 %1$d%%\nお待ちください&#8230;</string>
+  <string name="import_update_counts">単語帳の数を更新しています。\nお待ちください&#8230;</string>
   <string name="import_add_progress">• 解凍中のアーカイブ %1$s\n• ノートのインポート %2$d%%\n• カードのインポート %3$d%%\n• クリーンアップ %4$s</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Android用のフラッシュカード</h2>AnkiDroidは、デスクトップソフトウェア <a href="%2$s">Anki</a>と完全互換のフラッシュカードアプリです。あなたは、AnkiDroid と Anki Desktopのどちらでも教材を作成、ダウンロード、学習し、また、簡単に双方の同期をとることができます。]]></item>

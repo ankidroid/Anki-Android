@@ -27,10 +27,10 @@
   <string name="no">No</string>
   <string name="ok">Aceptar</string>
   <string name="studyoptions_deck_name">Nombre del mazo</string>
-  <string name="studyoptions_due_today">Programadas hoy:</string>
+  <string name="studyoptions_due_today">Programadas para hoy:</string>
   <string name="studyoptions_new_total">Tarjetas nuevas totales:</string>
   <string name="studyoptions_total_cards">Tarjetas totales:</string>
-  <string name="studyoptions_eta">Tiempo estimado (min.):</string>
+  <string name="studyoptions_eta">Tiempo estimado (min):</string>
   <string name="studyoptions_start">Empezar a repasar</string>
   <string name="show_answer">Mostrar respuesta</string>
   <string name="ease1_successive">Otra vez</string>
@@ -41,7 +41,7 @@
   <string name="studyoptions_congrats_custom_study">Estudio Personalizado</string>
   <string name="studyoptions_congrats_open_other_deck">Abrir otro mazo</string>
   <string name="studyoptions_congrats_finish">Volver a la pantalla de Estudio</string>
-  <string name="card_unsuspended">Suspensión de la tarjeta deshecha</string>
+  <string name="card_unsuspended">Suspensión de la tarjeta anulada</string>
   <string name="card_suspended">Tarjeta resuspendida</string>
   <string name="menu_rotate">Rotar</string>
   <string name="menu_import">Importar tarjetas</string>
@@ -53,8 +53,8 @@
   <string name="undo_action_suspend_note">suspender nota</string>
   <string name="undo_action_delete">eliminar nota</string>
   <string name="undo_action_mark">marcar nota</string>
-  <string name="finish_operation">Terminando la operación anterior (seguramente la creación de una copia de seguridad).\nPor favor, espera...</string>
-  <string name="contextmenu_deckpicker_download_missing_media">Descargar archivos multimedia perdidos</string>
+  <string name="finish_operation">Finalizando la operación anterior (probablemente creación de copia de seguridad).\nPor favor, espera...</string>
+  <string name="contextmenu_deckpicker_download_missing_media">Descargar archivos multimedia que falten</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Restablecer las Asignaciones de Idioma</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Restablecer idioma</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optimizar la base de datos</string>
@@ -75,7 +75,7 @@
   <string name="delete_note_message">¿Realmente deseas eliminar esta nota y todas sus tarjetas?\n%s</string>
   <string name="menu_edit_card">Editar tarjeta</string>
   <string name="menu_select">Seleccionar texto</string>
-  <string name="menu_search">Buscar en %1$s</string>
+  <string name="menu_search">Búsqueda en %1$s</string>
   <string name="menu_mark_card">Marcar Tarjeta</string>
   <string name="menu_unmark_card">Desmarcar Tarjeta</string>
   <string name="new_deck">Nuevo mazo</string>
@@ -87,19 +87,19 @@
   <string name="visit">Visitar</string>
   <string name="later">Más tarde</string>
   <string name="download">Descargar</string>
-  <string name="open_collection">Abriendo colección.\nPor favor, espere...</string>
-  <string name="rebuild_cram_deck">Reconstruyendo mazo para empollar.\nPor favor, espera...</string>
+  <string name="open_collection">Abriendo colección.\nPor favor, espera...</string>
+  <string name="rebuild_cram_deck">Reconstruyendo mazo de estudio intensivo.\nPor favor, espera...</string>
   <string name="rebuild_cram_label">Reconstruir</string>
   <string name="empty_cram_label">Vaciar</string>
-  <string name="empty_cram_deck">Vaciando mazo de empollar.\nPor favor, espera...</string>
+  <string name="empty_cram_deck">Vaciando mazo de estudio intensivo.\nPor favor, espera...</string>
   <string name="studyoptions_new_filtercram">Filtrar/Empollar</string>
   <string name="custom_study_deck_name">Sesión de estudio personalizado</string>
-  <string name="custom_study_deck_exists">Primero tienes que renombrar el mazo de Estudio Personalizado.</string>
+  <string name="custom_study_deck_exists">Por favor, primero renombra el mazo de Estudio Personalizado.</string>
   <string name="studyoptions_congrats_finished">¡Felicidades! Has terminado por ahora.</string>
   <string name="studyoptions_congrats_more_rev">Se ha alcanzado el límite de repasos de hoy, pero todavía hay tarjetas a la espera de ser repasadas. Para una memorización óptima, considera la posibilidad de aumentar el límite diario en las opciones.</string>
   <string name="studyoptions_congrats_more_new">Hay más tarjetas nuevas disponibles, pero el límite diario ha sido alcanzado. Puedes aumentar el límite en las opciones, pero ten en cuenta que esto también aumentará tu carga de trabajo de repasos a corto plazo.</string>
   <string name="studyoptions_congrats_custom">Para estudiar fuera del horario normal, haz click en el botón Estudio Personalizado aquí abajo.</string>
-  <string name="sd_card_not_mounted">No hay tarjeta SD insertada.\n\nUsted puede almacenar su colección en la memoria interna, aunque no es recomendable ya que no puede acceder al archivo fácilmente. Esto se puede activar en las preferencias (abrir haciendo clic en este texto).</string>
+  <string name="sd_card_not_mounted">No hay tarjeta SD insertada.\n\nTambién puedes almacenar tu colección en la memoria interna, aunque no es recomendable ya que no se puede acceder al archivo tan fácilmente. Esto se puede activar en las preferencias (ábrelas haciendo click en este texto).</string>
   <string name="studyoptions_options">Opciones</string>
   <string name="empty_cloze_warning">Por favor, edita esta nota y añade algunos huecos en el texto. (%1$s)</string>
   <string name="help_cloze">Ayuda</string>
@@ -132,8 +132,8 @@
     <item>%s años</item>
   </string-array>
   <plurals name="deckpicker_title">
-    <item quantity="one">1 de %2$d programada (%3$s)</item>
-    <item quantity="other">%1$d de %2$d programadas (%3$s)</item>
+    <item quantity="one">1 de %2$d programada(s) (%3$s)</item>
+    <item quantity="other">%1$d de %2$d programada(s) (%3$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">1 min.</item>

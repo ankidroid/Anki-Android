@@ -89,10 +89,10 @@
   <string name="upgrade_deck_sync_from_ankiweb">Синхронизация из AnkiWeb</string>
   <string name="upgrade_deck_have_you_synced">Вы уверены, что обновили вашу коллекции используя Anki Desktop 2 и синхронизировав с AnkiWeb?</string>
   <string name="upgrade_deck_dont_upgrade">Не обновлять</string>
-  <string name="import_unpacking">Распаковка архива.\nПожалуйста подождите…</string>
-  <string name="importing_collection">Импортирование коллекции.\nПожалуйста подождите…</string>
-  <string name="import_media_count">Импорт медиа файлов %1$d%%\nПожалуйста подождите…</string>
-  <string name="import_update_counts">Вычисление результатов обновления.\nПожалуйста подождите…</string>
+  <string name="import_unpacking">Распаковка архива.\nПожалуйста подождите&#8230;</string>
+  <string name="importing_collection">Импортирование коллекции.\nПожалуйста подождите&#8230;</string>
+  <string name="import_media_count">Импорт медиа файлов %1$d%%\nПожалуйста подождите&#8230;</string>
+  <string name="import_update_counts">Вычисление результатов обновления.\nПожалуйста подождите&#8230;</string>
   <string name="import_add_progress">• Распакованный архив %1$s\n• Импортировано заметок %2$d%%\n• Импортировано карт %3$d%%\n• Очищено %4$s</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Flashcards для Android</h2>AnkiDroid - это приложение для изучения учебных карточек, полностью совместимо с настольной версией <a href="%2$s">Anki</a>. Вы можете создавать, скачивать и изучать информацию, и в AnkiDroid и Anki Desktop, синхронизируя их между собой.]]></item>

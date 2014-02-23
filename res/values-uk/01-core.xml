@@ -89,13 +89,13 @@
   <string name="download">Завантажити</string>
   <string name="open_collection">Відкриття колекції.\n Будь ласка, зачекайте...</string>
   <string name="rebuild_cram_deck">Перебудова колоди для Зубріння.\n Будь ласка, зачекайте...</string>
-  <string name="rebuild_cram_label">Перебудова</string>
+  <string name="rebuild_cram_label">Перебудувати</string>
   <string name="empty_cram_label">Порожньо</string>
-  <string name="empty_cram_deck">Спорожнення колоди для Зубріння.\n Будь ласка, зачекайте...</string>
+  <string name="empty_cram_deck">Очищення колоди для Зубріння.\n Будь ласка, зачекайте...</string>
   <string name="studyoptions_new_filtercram">Фільтр</string>
   <string name="custom_study_deck_name">Додатковий тренінг</string>
   <string name="custom_study_deck_exists">Спочатку перейменуйте існуючу колоду для тренінгу.</string>
-  <string name="studyoptions_congrats_finished">Вітаємо! На зараз усе.</string>
+  <string name="studyoptions_congrats_finished">Вітаємо! На разі це все.</string>
   <string name="studyoptions_congrats_more_rev">Ви вичерпали ліміт повторювання на сьогодні, але досі є картки, які чекають на перегляд. Для оптимального запам\'ятовування можна збільшити щоденнній лиміт у налаштуваннях.</string>
   <string name="studyoptions_congrats_more_new">Доступно більше нових карток але денний ліміт вичерпано. Ви можете збільшити ліміт в налаштуваннях, але, будь-ласка, зверніть увагу що це збільшить навантаження.</string>
   <string name="studyoptions_congrats_custom">Для навчання за межами нормального разкладу клацніть на \"Додатковий Трейнінг\" внизу.</string>

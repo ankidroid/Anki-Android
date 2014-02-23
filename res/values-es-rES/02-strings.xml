@@ -40,7 +40,7 @@
   <string name="suspend_leeches">Suspender Sanguijuelas</string>
   <string name="leech_suspend_notification">Tarjeta marcada como sanguijuela y suspendida</string>
   <string name="leech_notification">Tarjeta marcada como sanguijuela</string>
-  <string name="corrupt_font">Archivo de fuente corrupto %s</string>
+  <string name="corrupt_font">Archivo de fuentes corrupto %s</string>
   <string name="about_title">Acerca de</string>
   <string name="cardeditor_title_add_note">Añadir Nota</string>
   <string name="cardeditor_title_edit_card">Editar Nota</string>
@@ -80,9 +80,9 @@
   <string name="menu_cardbrowser">Explorador de tarjetas</string>
   <string name="show_hint">Mostrar Sugerencia</string>
   <string name="pref_lang_other">Preferencias de Idioma</string>
-  <string name="pref_font_UI">Fuente de interfaz personalizada</string>
+  <string name="pref_font_UI">Fuente de interfaz de usuario personalizada</string>
   <string name="info_rate">Puntúa AnkiDroid</string>
-  <string name="col_load_failed">Error al cargar la colección.\nPresiona el botón de retroceso para cerrar AnkiDroid.</string>
+  <string name="col_load_failed">Error al cargar la colección.\nPulsa el botón volver para cerrar AnkiDroid.</string>
   <string name="import_title">Importar Tarjetas</string>
   <string name="import_message">¿Deseas añadir el contenido del archivo %s a tu colección, o reemplazar la colección con él?</string>
   <string name="import_message_add">Añadir</string>
@@ -95,11 +95,11 @@
   <string name="import_hint">Para importar tarjetas, coloca el archivo apkg en el directorio %s y presiona ok</string>
   <string name="upgrade_import_no_file_found">No se encontró archivo importable %1$s</string>
   <string name="custom_study">Estudio personalizado</string>
-  <string name="dyn_deck_desc">Este es un mazo especial para estudiar fuera del programa normal. Las cartas serán devueltas automáticamente a sus mazos originales después de que las repases. Borrar este mazo de la lista de mazos devolverá todas las cartas restantes a su mazo original.</string>
+  <string name="dyn_deck_desc">Este es un mazo especial para estudiar fuera del programa normal. Las tarjetas serán devueltas automáticamente a sus mazos originales después de que las repases. Borrar este mazo de la lista de mazos devolverá todas las tarjetas restantes a su mazo original.</string>
   <string name="restart_upgrade_process">Reiniciar proceso de actualización</string>
   <string name="exit_wizard">Salir del Asistente</string>
   <string-array name="dynOrderLabels">
-    <item>Vistas más antiguamente primero</item>
+    <item>Vistas hace más tiempo primero</item>
     <item>Aleatorio</item>
     <item>Intervalos crecientes</item>
     <item>Intervalos decrecientes</item>
@@ -109,6 +109,6 @@
   </string-array>
   <plurals name="factadder_cards_added">
     <item quantity="one">Se ha añadido 1 tarjeta</item>
-    <item quantity="other">Se han añadido %d tarjetas</item>
+    <item quantity="other">Se han añadido %d tarjeta(s)</item>
   </plurals>
 </resources>

@@ -27,7 +27,7 @@
   <string name="no">Nem</string>
   <string name="ok">OK</string>
   <string name="studyoptions_deck_name">Pakli neve</string>
-  <string name="studyoptions_due_today">Esedékes ma:</string>
+  <string name="studyoptions_due_today">Ma esedékes:</string>
   <string name="studyoptions_new_total">Összes új kártya:</string>
   <string name="studyoptions_total_cards">Összes kártya:</string>
   <string name="studyoptions_eta">Becsült idő (perc):</string>
@@ -53,7 +53,7 @@
   <string name="undo_action_suspend_note">bejegyzés felfüggesztése</string>
   <string name="undo_action_delete">bejegyzés törlése</string>
   <string name="undo_action_mark">bejegyzés megjelölése</string>
-  <string name="finish_operation">Előző művelet befejezése (valószínűleg biztonsági másolat létrehozása). \nKérlek várj...</string>
+  <string name="finish_operation">Előző művelet befejezése (valószínűleg biztonsági másolat létrehozása). \nKérlek, várj...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Hiányzó média letöltése</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Nyelv-hozzárendelés visszaállítása</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Nyelv visszaállítása</string>
@@ -88,10 +88,10 @@
   <string name="later">Később</string>
   <string name="download">Letöltés</string>
   <string name="open_collection">Gyűjtemény megnyitása.\nKérlek, várj...</string>
-  <string name="rebuild_cram_deck">Magoló pakli újraépítése.\nKérlek várj...</string>
+  <string name="rebuild_cram_deck">Magoló pakli újraépítése.\nKérlek, várj...</string>
   <string name="rebuild_cram_label">Újraépít</string>
   <string name="empty_cram_label">Üres</string>
-  <string name="empty_cram_deck">Magoló pakli ürítés.\nKérlek várj...</string>
+  <string name="empty_cram_deck">Magoló pakli ürítése.\nKérlek, várj...</string>
   <string name="studyoptions_new_filtercram">Szűrés/Magolás</string>
   <string name="custom_study_deck_name">Egyéni tanulás pakli</string>
   <string name="custom_study_deck_exists">Kérlek, előbb nevezd át a meglevő, Egyéni tanulás paklit.</string>
@@ -99,7 +99,7 @@
   <string name="studyoptions_congrats_more_rev">A mai átnézési korlátot elérted, de még mindig maradt átnézendő kártya. Az optimális tanulás érdekében lehet, hogy meg kellene emelni a napi korlátot a Beállítások menüben.</string>
   <string name="studyoptions_congrats_more_new">További új kártyák állnak rendelkezésre, azonban a napi limitet elérted. A napi limitet az opciók menüben módosíthatod, de kérlek ne feledd, hogy ez rövidtávon megnöveli az ismétléseid számát.</string>
   <string name="studyoptions_congrats_custom">Ahhoz, hogy a szokásostól eltérő ütemben tanulhass, kattints lent, az \"Egyéni tanulás\" gombra.</string>
-  <string name="sd_card_not_mounted">SD card is not mounted.\n\nYou can store your collection in the internal memory too, though it\'s not recommended as you cannot access the file that easily. You can activate this in the preferences (open them by clicking this text).</string>
+  <string name="sd_card_not_mounted">Nincs SD kártya behelyezve.\n\nA gyűjteményt a belső memóriában is tárolhatod, bár ez nem ajánlott, mert így nem tudod olyan könnyen elérni a fájlt. Ezt a beállításoknál tudod bekapcsolni (Erre a szövegre kattintva nyithatod meg).</string>
   <string name="studyoptions_options">Beállítások</string>
   <string name="empty_cloze_warning">Szerkeszd ezt a megjegyzést és adj meg hozzá néhány közeli /törlést/. (%1$s)</string>
   <string name="help_cloze">segítség</string>

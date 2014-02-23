@@ -112,9 +112,9 @@
   <string name="ankiweb">AnkiWeb</string>
   <string name="usb">USB</string>
   <string name="_import">Εισαγωγή</string>
-  <string name="confirm">Confirm</string>
-  <string name="internet">Internet</string>
-  <string name="pc">PC</string>
+  <string name="confirm">Επιβεβαίωση</string>
+  <string name="internet">Διαδίκτυο</string>
+  <string name="pc">Υπολογιστής</string>
   <string-array name="next_review_s">
     <item>1 δευτερόλεπτο</item>
     <item>1 λεπτό</item>
