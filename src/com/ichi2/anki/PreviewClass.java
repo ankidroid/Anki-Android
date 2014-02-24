@@ -827,19 +827,22 @@ public class PreviewClass extends Activity {
 	                mCard.getSettings().setDefaultFontSize(calculateDynamicFontSize(content));
 	            }
 
-	            // don't play question sound again when displaying answer
 	            String question = "";
 	            String answer = "";
-
-	            Sound.resetSounds();
-
-	            int qa = MetaDB.LANGUAGES_QA_QUESTION;
+	            int qa = -1; // prevent uninitialized variable errors
+	            
 	            if (sDisplayAnswer) {
 	                qa = MetaDB.LANGUAGES_QA_ANSWER;
+	                answer = mCurrentCard.getPureAnswerForReading();
+	                Sound.addSounds(mBaseUrl, answer, qa);
+	            } else {
+	                Sound.resetSounds(); // reset sounds on first side of card
+	                qa = MetaDB.LANGUAGES_QA_QUESTION;
+	                question = mCurrentCard.getQuestion(mCurrentSimpleInterface);
+	                Sound.addSounds(mBaseUrl, question, qa);                
 	            }
-	            answer = Sound.parseSounds(mBaseUrl, content, mSpeakText, qa);
-
-	            content = question + answer;
+	            
+	            content = Sound.expandSounds(mBaseUrl, content, mSpeakText, qa);
 
 	            // In order to display the bold style correctly, we have to change
 	            // font-weight to 700
