@@ -93,7 +93,7 @@
   <string name="import_log_no_apkg">Això no és un fitxer apkg vàlid</string>
   <string name="import_importing">S\'estàn important les fitxes. \nEspereu...</string>
   <string name="import_hint">Per importar fitxes, poseu l\'arxiu apkg a la carpeta %s i premeu d\'acord</string>
-  <string name="upgrade_import_no_file_found">No s\'ha trobat cap fitxer %1$ que es pugui importar</string>
+  <string name="upgrade_import_no_file_found">No s\'ha trobat cap fitxer %1$s que es pugui importar</string>
   <string name="custom_study">Estudi a mida</string>
   <string name="dyn_deck_desc">Es tracta d\'un paquet especial per a l\'estudi fora de la planificació normal. Després de revisar-les, les fitxes es tornaran automàticament al seus paquets originals. Si suprimiu aquest paquet de la llista de paquets, totes les fitxes tornaran al seu paquet inicial.</string>
   <string name="restart_upgrade_process">Reinicia el procés d\'actualització</string>

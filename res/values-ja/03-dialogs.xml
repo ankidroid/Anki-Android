@@ -25,7 +25,7 @@
   <string name="check_db_result_message">チェックされ、最適化されたデータベース \n最適後%d kb。</string>
   <string name="contextmenu_deckpicker_delete_deck">単語帳を削除</string>
   <string name="delete_deck_title">単語帳を削除</string>
-  <string name="delete_deck_message">%S の中のすべてのカードを削除してもよろしいですか。</string>
+  <string name="delete_deck_message">%s の中のすべてのカードを削除してもよろしいですか。</string>
   <string name="delete_cram_deck_message">オリジナルの単語帳に %s のすべてのカードを送信してもよろしいですか？</string>
   <string name="delete_deck_confirm">削除</string>
   <string name="new_version_message">新機能:</string>
