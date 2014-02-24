@@ -2541,19 +2541,22 @@ public class Reviewer extends AnkiActivity {
                 mCard.getSettings().setDefaultFontSize(calculateDynamicFontSize(content));
             }
 
-            // don't play question sound again when displaying answer
             String question = "";
             String answer = "";
-
-            Sound.resetSounds();
-
-            int qa = MetaDB.LANGUAGES_QA_QUESTION;
+            int qa = -1; // prevent uninitialized variable errors
+            
             if (sDisplayAnswer) {
                 qa = MetaDB.LANGUAGES_QA_ANSWER;
+                answer = mCurrentCard.getPureAnswerForReading();
+                Sound.addSounds(mBaseUrl, answer, qa);
+            } else {
+                Sound.resetSounds(); // reset sounds on first side of card
+                qa = MetaDB.LANGUAGES_QA_QUESTION;
+                question = mCurrentCard.getQuestion(mCurrentSimpleInterface);
+                Sound.addSounds(mBaseUrl, question, qa);                
             }
-            answer = Sound.parseSounds(mBaseUrl, content, mSpeakText, qa);
-
-            content = question + answer;
+            
+            content = Sound.expandSounds(mBaseUrl, content, mSpeakText, qa);
 
             // In order to display the bold style correctly, we have to change
             // font-weight to 700
@@ -2633,6 +2636,10 @@ public class Reviewer extends AnkiActivity {
             if (getConfigForCurrentCard().getBoolean("autoplay")) {
                 // We need to play the sounds from the proper side of the card
                 if (!mSpeakText) {
+                    // when showing answer, repeat question audio if so configured
+                    if (sDisplayAnswer && getConfigForCurrentCard().getBoolean("replayq")) {
+                        Sound.playSounds(MetaDB.LANGUAGES_QA_QUESTION);
+                    }
                     Sound.playSounds(sDisplayAnswer ? MetaDB.LANGUAGES_QA_ANSWER : MetaDB.LANGUAGES_QA_QUESTION);
                 } else {
                     // If the question is displayed or if the question should be replayed, read the question

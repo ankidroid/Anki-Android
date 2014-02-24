@@ -64,13 +64,38 @@ public class Sound {
         sSoundPaths.clear();
     }
 
+    /**
+     * The function addSounds() parses content for sound files, and stores entries to the filepaths for them, categorized as
+     * belonging to the front (question) or back (answer) of cards. Note that all sounds embedded in the content will be given
+     * the same categorization.
+     * @param soundDir -- base path to the media files
+     * @param content -- parsed for sound entries
+     * @param qa -- the categorization of the sounds in the conent
+     */
+    public static void addSounds(String soundDir, String content, int qa) {
+        Matcher matcher = sSoundPattern.matcher(content);
+        // While there is matches of the pattern for sound markers
+        while (matcher.find()) {
+            // Create appropiate list if needed; list must not be empty so long as code does no check
+            if (!sSoundPaths.containsKey(qa)) {
+                sSoundPaths.put(qa, new ArrayList<String>());
+            }
+            
+            // Get the sound file name
+            String sound = matcher.group(1);
 
-    public static String parseSounds(String soundDir, String content, boolean ttsEnabled, int qa) {
+            // Construct the sound path and store it
+            String soundPath = soundDir + Uri.encode(sound);            
+            sSoundPaths.get(qa).add(soundPath);
+        }
+    }
+    
+    public static String expandSounds(String soundDir, String content, boolean ttsEnabled, int qa) {
         boolean soundAvailable = false;
         StringBuilder stringBuilder = new StringBuilder();
         String contentLeft = content;
 
-        Log.i(AnkiDroidApp.TAG, "parseSounds");
+        Log.i(AnkiDroidApp.TAG, "expandSounds");
 
         Matcher matcher = sSoundPattern.matcher(content);
         // While there is matches of the pattern for sound markers
@@ -79,15 +104,8 @@ public class Sound {
             // Get the sound file name
             String sound = matcher.group(1);
 
-            // Construct the sound path and store it
+            // Construct the sound path
             String soundPath = soundDir + Uri.encode(sound);
-
-            // Create appropiate list if needed
-            if (!sSoundPaths.containsKey(qa)) {
-                sSoundPaths.put(qa, new ArrayList<String>());
-            }
-
-            sSoundPaths.get(qa).add(soundPath);
 
             // Construct the new content, appending the substring from the beginning of the content left until the
             // beginning of the sound marker
