@@ -11,10 +11,12 @@ import android.util.Log;
 import android.widget.Toast;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Note;
+import com.ichi2.themes.StyledProgressDialog;
 
 import com.evernote.client.android.AsyncNoteStoreClient;
 import com.evernote.client.android.EvernoteSession;
@@ -31,57 +33,73 @@ import com.evernote.thrift.transport.TTransportException;
 
 public class EvernoteSync {
 
+	private static EvernoteSync singletonInstance;
 	private static final String CONSUMER_KEY = "matthiasv-3883" ;
 	private static final String CONSUMER_SECRET = "a944056d8952611c" ;
 	private static final EvernoteSession.EvernoteService EVERNOTE_SERVICE = EvernoteSession.EvernoteService.PRODUCTION;
 	protected static EvernoteSession mEvernoteSession;
-	private Activity activity;
+	private Context context;
 	private long LastSync;
 	private SharedPreferences prefs;
 	private Collection mCol;
-	private String searchString;
-	private long aNoteDid = 0;
+	private String eSearchString;
 	private int eTotalNotes = 0;
 	private AsyncNoteStoreClient eNoteStore;
-	private java.util.List<String> eNotes = new ArrayList<String>();
+	private ArrayList<String> eNotes = new ArrayList<String>();
 	static final private String ankiID_s = "anki";
+	private StyledProgressDialog progressDialog;
 
-	public EvernoteSync(Activity act){
-		this.activity = act;
-		prefs = act.getSharedPreferences(AnkiDroidApp.SHARED_PREFS_NAME, Context.MODE_PRIVATE);
-		LastSync = prefs.getLong("evernoteSync_LastSync", new Date().getTime());
-		searchString = prefs.getString("evernoteSync_SearchString","");
-		mCol = AnkiDroidApp.getCol();
-		mEvernoteSession = EvernoteSession.getInstance(this.activity , CONSUMER_KEY , CONSUMER_SECRET , EVERNOTE_SERVICE );
+	private EvernoteSync(Context ctx) throws Exception {
+		this.context = ctx;
+		if (!EvernoteAppInstalled("com.evernote")) {
+			throw new Exception("Evernote app is not installed");
+		} 
+		mEvernoteSession = EvernoteSession.getInstance(context , CONSUMER_KEY , CONSUMER_SECRET , EVERNOTE_SERVICE );
+	}
+	
+	public static EvernoteSync getInstance(Context ctx) {
+		if (null == singletonInstance) {
+			try {
+				singletonInstance = new EvernoteSync(ctx);
+			} catch (Exception e) {
+				//Log.e(AnkiDroidApp.TAG, e.getMessage());
+				e.printStackTrace();
+			}
+		}
+		return singletonInstance;
 	}
 
-	public static void login(Context ctx) {
-		//Toast.makeText(ctx ,"Evernote: Login..." , Toast.LENGTH_SHORT ).show();
-		mEvernoteSession = EvernoteSession.getInstance(ctx , CONSUMER_KEY , CONSUMER_SECRET , EVERNOTE_SERVICE );
-		mEvernoteSession.authenticate(ctx);
+	public void login() {
+		mEvernoteSession = EvernoteSession.getInstance(this.context , CONSUMER_KEY , CONSUMER_SECRET , EVERNOTE_SERVICE );
+		mEvernoteSession.authenticate(this.context);
 	}
 
-	public static void logout(Context ctx) {
+	public void logout() {
 		try {
-			mEvernoteSession = EvernoteSession.getInstance(ctx , CONSUMER_KEY , CONSUMER_SECRET , EVERNOTE_SERVICE );
-			mEvernoteSession.logOut(ctx);
-			//Toast.makeText(ctx ,"Evernote: Ausgeloggt" , Toast.LENGTH_SHORT ).show();
+			mEvernoteSession = EvernoteSession.getInstance(this.context, CONSUMER_KEY , CONSUMER_SECRET , EVERNOTE_SERVICE );
+			mEvernoteSession.logOut(this.context);
 		} catch (InvalidAuthenticationException e) {
 			Log.e(AnkiDroidApp.TAG, "Evernote: Tried to call logout with not logged in", e);
 		}
 	}
 
 	public void sync(){
+		
 		if (!mEvernoteSession.isLoggedIn()) {
-			login(this.activity);
+			login();
 			return;
 		};
-
+		
+		prefs = context.getSharedPreferences(AnkiDroidApp.SHARED_PREFS_NAME, Context.MODE_PRIVATE);
+		LastSync = prefs.getLong("evernoteSync_LastSync", new Date().getTime());
+		eSearchString = prefs.getString("evernoteSync_SearchString","");
+		mCol = AnkiDroidApp.getCol();
+		
 		checkRequirements();
 
 		NoteFilter filter = new NoteFilter();
 		filter.setAscending(true);
-		filter.setWords(searchString);
+		filter.setWords(eSearchString);
 		int maxNotes = 999;
 		int offset = 0;
 		try {
@@ -106,20 +124,33 @@ public class EvernoteSync {
 		}
 	}
 
-	private class syncAsyncTask extends AsyncTask<NoteList, Void, String> {
-
+	private class syncAsyncTask extends AsyncTask<NoteList, Integer, String> {
+		
+		@Override
+        public void onPreExecute() {
+           progressDialog = StyledProgressDialog.show(context, "Evernote Sync","Preparing Sync", true);
+        }
+		
+		@Override
+        public void onProgressUpdate(Integer... counter) {
+        	progressDialog.setMessage("Syncing Evernote note " + counter[0].toString() + " of " + eTotalNotes + "...");
+         }
+		
+		
 		@Override
 		protected String doInBackground(NoteList... data) {
 			eTotalNotes = data[0].getTotalNotes();
+			Integer counter = 0;
+			this.publishProgress(counter++);
 			Log.i(AnkiDroidApp.TAG, "Evernote: count of found notes is " + eTotalNotes);
-			for (com.evernote.edam.type.Note note : data[0].getNotes()) {
-				String guid = note.getGuid();
+			for (com.evernote.edam.type.Note eNote : data[0].getNotes()) {
+				String guid = eNote.getGuid();
 				eNotes.add(guid);
 				//delete_AppDataEntry(note);
-				if (!note.getAttributes().isSetApplicationData() || !note.getAttributes().getApplicationData().isSetKeysOnly()) {
-					create_aNote(note);
+				if (!eNote.getAttributes().isSetApplicationData() || !eNote.getAttributes().getApplicationData().isSetKeysOnly()) {
+					create_aNote(eNote);
 				} else {
-					Set<String> eAppData = note.getAttributes().getApplicationData().getKeysOnly();
+					Set<String> eAppData = eNote.getAttributes().getApplicationData().getKeysOnly();
 					if(eAppData.contains(ankiID_s)) {
 						String appDataEntry = "0";
 						String token = mEvernoteSession.getAuthToken();
@@ -144,18 +175,19 @@ public class EvernoteSync {
 
 						Note aNote = new Note(mCol ,ankiID);
 						if (aNote.getMid() == 0) {
-							create_aNote(note);
+							create_aNote(eNote);
+							continue;
 						}
 
-						if(LastSync < note.getUpdated()){
-							String title = note.getTitle();
+						if(LastSync < eNote.getUpdated()){
+							String title = eNote.getTitle();
 							aNote.setitem("title", title);
 							aNote.setitem("guid", guid);
 							aNote.flush();
 							Log.i(AnkiDroidApp.TAG, "Evernote: anki note of " + title + " got updated");
 						}
 					} else {
-						create_aNote(note);
+						create_aNote(eNote);
 					}
 				}
 			}
@@ -164,6 +196,7 @@ public class EvernoteSync {
 
 		@Override
 		protected void onPostExecute(String result) {
+			progressDialog.dismiss();
 			finish();
 		}
 
@@ -172,7 +205,7 @@ public class EvernoteSync {
 	private void finish() {
 			delete_aNotes();
 			set_last_sync_time();
-			Toast.makeText( this. activity , "Evernote: Sync finished", Toast. LENGTH_SHORT).show();
+			//Toast.makeText( this.context , "Evernote: Sync finished", Toast. LENGTH_SHORT).show();
 			Log.i(AnkiDroidApp.TAG, "Evernote: Sync finished");
 	}
 
@@ -211,6 +244,8 @@ public class EvernoteSync {
 	private void create_aNote(com.evernote.edam.type.Note note) {
 		JSONObject model = mCol.getModels().byName("Evernote");
 		Note aNote = new Note(mCol , model);
+		long aNoteDid = 0;
+		
 		aNote.setitem("title", note.getTitle());
 		aNote.setitem("guid" , note.getGuid());
 		try {
@@ -313,5 +348,21 @@ public class EvernoteSync {
 			e.printStackTrace();
 		}	
 	}
+	
+	private boolean EvernoteAppInstalled(String uri)
+    {
+        PackageManager pm = context.getPackageManager();
+        boolean app_installed = false;
+        try
+        {
+               pm.getPackageInfo(uri, PackageManager.GET_ACTIVITIES);
+               app_installed = true;
+        }
+        catch (PackageManager.NameNotFoundException e)
+        {
+               app_installed = false;
+        }
+        return app_installed ;
+}
 
 }

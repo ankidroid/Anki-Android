@@ -78,12 +78,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private static final int DIALOG_BACKUP = 2;
     private static final int DIALOG_HEBREW_FONT = 3;
     private static final int DIALOG_WRITE_ANSWERS = 4;
-	
-	/** Evernote App Integration*/
-	private static final String CONSUMER_KEY = "matthiasv-3883" ;
-	private static final String CONSUMER_SECRET = "a944056d8952611c" ;
-	private static final EvernoteSession.EvernoteService EVERNOTE_SERVICE = EvernoteSession.EvernoteService.PRODUCTION;
-    protected static EvernoteSession mEvernoteSession;
 
     // private boolean mVeecheckStatus;
     private Collection mCol;
@@ -228,8 +222,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             fadeScrollbars.setEnabled(false);
         }
 		
-		mEvernoteSession = EvernoteSession.getInstance(this, CONSUMER_KEY , CONSUMER_SECRET , EVERNOTE_SERVICE );
-        if (mEvernoteSession.isLoggedIn()) {
+        if (EvernoteSync.getInstance(this).mEvernoteSession.isLoggedIn()) {
         	SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
             String evernoteSync_Username = preferences.getString("evernoteSync_Username", "unknown");
 			evernoteSync.setSummary(getString(R.string.evernoteSync_logged_in, evernoteSync_Username));
@@ -240,10 +233,10 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 			@Override
 			public boolean onPreferenceClick(Preference preference) {
 				if(preference.getTitle().equals("Login")){
-					EvernoteSync.login(preference.getContext());
+					EvernoteSync.getInstance(preference.getContext()).login();
 				}
 				else {
-					EvernoteSync.logout(preference.getContext());
+					EvernoteSync.getInstance(preference.getContext()).logout();
 					evernoteSync.setSummary(getString(R.string.evernoteSync_logged_out));
 					evernoteSync.setTitle(getString(R.string.evernoteSync_login));
 				}

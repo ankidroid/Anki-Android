@@ -243,12 +243,6 @@ public class DeckPicker extends FragmentActivity {
     View.OnTouchListener gestureListener;
     private boolean mSwipeEnabled;
 	
-	/** Evernote App Integration*/
-	private static final String CONSUMER_KEY = "matthiasv-3883" ;
-	private static final String CONSUMER_SECRET = "a944056d8952611c" ;
-	private static final EvernoteSession.EvernoteService EVERNOTE_SERVICE = EvernoteSession.EvernoteService.PRODUCTION;
-    protected static EvernoteSession mEvernoteSession;
-
     // ----------------------------------------------------------------------------
     // LISTENERS
     // ----------------------------------------------------------------------------
@@ -2410,8 +2404,7 @@ public class DeckPicker extends FragmentActivity {
 
         item = menu.add(Menu.NONE, MENU_PREFERENCES, Menu.NONE, R.string.menu_preferences);
         item.setIcon(R.drawable.ic_menu_preferences);
-		mEvernoteSession = EvernoteSession.getInstance(this, CONSUMER_KEY , CONSUMER_SECRET , EVERNOTE_SERVICE );
-        if (mEvernoteSession.isLoggedIn()) {
+        if (EvernoteSync.getInstance(this).mEvernoteSession.isLoggedIn()) {
 	        item = menu.add(Menu.NONE, MENU_EVERNOTESYNC, Menu.NONE, R.string.menu_evernoteSync);
 	        item.setIcon(R.drawable.ic_menu_preferences);
         }
@@ -2570,7 +2563,7 @@ public class DeckPicker extends FragmentActivity {
                 return true;
 			
 			case MENU_EVERNOTESYNC:
-            	new EvernoteSync(this).sync();
+            	EvernoteSync.getInstance(this).sync();
             	return true;
 
             case MENU_FEEDBACK:
