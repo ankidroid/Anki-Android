@@ -16,7 +16,7 @@
 	<color name="wb_fg_color">#B00000FF</color>
 	<color name="wb_fg_color_inv">#0099FF</color>
 	<color name="next_time_usual_color">#000000</color>
-	<color name="next_time_failed_color">#FF0000</color>
+	<color name="next_time_failed_color">#990000</color>
 	<color name="next_time_recommended_color">#007700</color>
 	<color name="next_time_usual_color_inv">#FFFFFF</color>
 	<color name="next_time_recommended_color_inv">#4AA02C</color>
