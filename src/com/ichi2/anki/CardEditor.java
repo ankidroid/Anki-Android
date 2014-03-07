@@ -1190,6 +1190,8 @@ public class CardEditor extends Activity {
                 if (view.getId() == R.id.card_item) {
                     view.setBackgroundResource(mCardItemBackground);
                     return true;
+                } else if (view.getId() == R.id.card_tmpl) {
+                    view.setVisibility(View.VISIBLE);
                 }
                 return false;
             }
