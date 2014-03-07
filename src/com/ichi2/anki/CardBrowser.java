@@ -312,7 +312,7 @@ public class CardBrowser extends Activity {
                     }
                     view.setBackgroundResource(mBackground[which]);
                     return true;
-                } else if (view.getId() == R.id.card_deck && text.length() > 0) {
+                } else if (view.getId() == R.id.card_deck && mWholeCollection && text.length() > 0) {
                     view.setVisibility(View.VISIBLE);
                 }
                 return false;
