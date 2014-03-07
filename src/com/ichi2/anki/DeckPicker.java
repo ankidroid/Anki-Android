@@ -57,6 +57,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -1057,13 +1058,19 @@ public class DeckPicker extends FragmentActivity {
             }
         });
         mDeckListView.setOnItemClickListener(mDeckSelHandler);
+        mDeckListView.setOnItemLongClickListener(new OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+                mContextMenuPosition = position;
+                showDialog(DIALOG_CONTEXT_MENU);
+                return true;
+            }
+        });
         mDeckListView.setAdapter(mDeckListAdapter);
 
         if (mFragmented) {
             mDeckListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         }
-
-        registerForContextMenu(mDeckListView);
 
         showStartupScreensAndDialogs(preferences, 0);
 
@@ -2188,13 +2195,6 @@ public class DeckPicker extends FragmentActivity {
                 });
             	break;
         }
-    }
-
-
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-        mContextMenuPosition = ((AdapterView.AdapterContextMenuInfo) menuInfo).position;
-        showDialog(DIALOG_CONTEXT_MENU);
     }
 
 
