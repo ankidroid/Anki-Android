@@ -76,7 +76,7 @@ public class Sound {
         Matcher matcher = sSoundPattern.matcher(content);
         // While there is matches of the pattern for sound markers
         while (matcher.find()) {
-            // Create appropiate list if needed; list must not be empty so long as code does no check
+            // Create appropriate list if needed; list must not be empty so long as code does no check
             if (!sSoundPaths.containsKey(qa)) {
                 sSoundPaths.put(qa, new ArrayList<String>());
             }

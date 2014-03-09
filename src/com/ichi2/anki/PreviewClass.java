@@ -175,6 +175,7 @@ public class PreviewClass extends Activity {
     private boolean mInputWorkaround;
     private boolean mRefreshWebview = true;
     private boolean mPrefFullscreenReview=true;
+    private boolean mAnswerSoundsAdded = false;    
     private Button mFlipCard;
     private static final Pattern sSpanPattern = Pattern.compile("</?span[^>]*>");
     private static final Pattern sBrPattern = Pattern.compile("<br\\s?/?>");
@@ -834,9 +835,13 @@ public class PreviewClass extends Activity {
 	            if (sDisplayAnswer) {
 	                qa = MetaDB.LANGUAGES_QA_ANSWER;
 	                answer = mCurrentCard.getPureAnswerForReading();
-	                Sound.addSounds(mBaseUrl, answer, qa);
+	                if (!mAnswerSoundsAdded) {
+	                    Sound.addSounds(mBaseUrl, answer, qa);
+	                    mAnswerSoundsAdded = true;
+	                }
 	            } else {
 	                Sound.resetSounds(); // reset sounds on first side of card
+	                mAnswerSoundsAdded = false;	                
 	                qa = MetaDB.LANGUAGES_QA_QUESTION;
 	                question = mCurrentCard.getQuestion(mCurrentSimpleInterface);
 	                Sound.addSounds(mBaseUrl, question, qa);                
