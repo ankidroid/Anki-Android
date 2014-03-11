@@ -1268,7 +1268,8 @@ public class Reviewer extends AnkiActivity {
                 R.drawable.ic_menu_mark);
         UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_UNDO, Menu.NONE, R.string.undo,
                 R.drawable.ic_menu_revert_disabled);
-        UIUtils.addMenuItem(menu, Menu.NONE, MENU_EDIT, Menu.NONE, R.string.menu_edit_card, R.drawable.ic_menu_edit);
+        UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_EDIT, Menu.NONE, R.string.menu_edit_card,
+                R.drawable.ic_menu_edit);
         if (mPrefWhiteboard) {
             if (mShowWhiteboard) {
                 UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_WHITEBOARD, Menu.NONE, R.string.hide_whiteboard,
