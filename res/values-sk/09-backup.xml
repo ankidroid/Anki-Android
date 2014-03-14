@@ -39,31 +39,31 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="backup_collection">Vytváram zálohu. \nProsím o trpezlivosť...</string>
-  <string name="backup_deck_no_space_left">Last backup action could not be executed due to insufficient space on your sd card.\n\nFree some space or lower the backup depth.</string>
+  <string name="backup_collection">Vytváram zálohu.\nProsím počkajte...</string>
+  <string name="backup_deck_no_space_left">Posledné zálohovanie bolo neúspešné kvôli nedostatku miesta na vašej sd karte.\n\nUvoľnite nejaké miesto alebo zmenšite veľkosť zálohy.</string>
   <string name="sd_space_warning">Na SD karte je menej než %d MB miesta. \nUvoľnite prosím miesto, predídete tým prípadnej strate dát.</string>
   <string name="backup_deck_success">Záloha bola úspešne vytvorená</string>
   <string name="backup_manager_title">Manažér záloh</string>
-  <string name="backup_delete">Deleting backups.\nPlease wait...</string>
+  <string name="backup_delete">Odstraňujem zálohy.\nProsím počkajte...</string>
   <string name="contextmenu_deckpicker_remove_backups">Odstrániť zálohy</string>
   <string name="backup_restore">Obnoviť zo zálohy</string>
-  <string name="backup_new_collection">New collection</string>
-  <string name="backup_del_collection">Delete collection and create new one</string>
-  <string name="backup_del_collection_question">Do you really want to delete the collection and create a new one? This will drop all your learning progress and delete all cards!</string>
-  <string name="backup_full_sync_from_server">Synchronizujem sa zo serverom</string>
-  <string name="backup_full_sync_from_server_question">Do you really want to overwrite your collection with the one from AnkiWeb? This will drop all your learning progress and added information since your last sync!</string>
-  <string name="error_handling_title">Error handling</string>
+  <string name="backup_new_collection">Nová zbierka</string>
+  <string name="backup_del_collection">Odstrániť zbierku a vytvoriť novú</string>
+  <string name="backup_del_collection_question">Skutočne chcete odstrániť zbierku a vytvoriť novú? Týmto zrušíte celé učenie a vymažete všetky karty!</string>
+  <string name="backup_full_sync_from_server">Úplná synchronizácia so serverom</string>
+  <string name="backup_full_sync_from_server_question">Skutočne chcete prepísať vašu zbierku tou z AnkiWeb? Prídete tak o všetky zmeny a informácie pridané od poslednej synchronizácie!</string>
+  <string name="error_handling_title">Chyba pri spracovaní</string>
   <string name="error_handling_options">Možnosti</string>
-  <string name="backup_retry_opening">Retry opening</string>
-  <string name="backup_error_menu_repair">Oprav databázu</string>
-  <string name="backup_repair_deck">Oprav</string>
-  <string name="backup_repair_deck_progress">Repairing database.\nPlease wait...</string>
-  <string name="backup_restore_error">Collection could not be restored</string>
-  <string name="backup_restore_if_missing">Restoring collection if missing...</string>
-  <string name="backup_restore_deck">Restoring collection.\nPlease wait...</string>
-  <string name="backup_restore_select_title">Select backup to restore</string>
-  <string name="backup_restore_no_backups">No backups for this collection available on this device. If you have backups on your desktop computer, please copy them manually into your AnkiDroid folder</string>
-  <string name="open_collection_failed_title">Collection not opened</string>
-  <string name="open_collection_failed_message">Database could not be opened. It is either not a real anki database or has been corrupted.\n\nYou can try to repair the collection or restore it from a backup (in both cases, the copy of the corrupt deck will be moved to the subfolder \'%1$s\'). Click on \'options\' for that.\n\nMore information about repairing corrupted decks: %2$s.</string>
-  <string name="deck_repair_error">Collection could not be repaired</string>
+  <string name="backup_retry_opening">Znova skúsiť otvoriť</string>
+  <string name="backup_error_menu_repair">Opraviť databázu</string>
+  <string name="backup_repair_deck">Opraviť</string>
+  <string name="backup_repair_deck_progress">Opravujem databázu.\nProsím počkajte...</string>
+  <string name="backup_restore_error">Zbierku sa nepodarilo obnoviť</string>
+  <string name="backup_restore_if_missing">Obnovujem zbierku ak chýba...</string>
+  <string name="backup_restore_deck">Obnovujem zbierku.\nProsím počkajte...</string>
+  <string name="backup_restore_select_title">Výber zálohy na obnovenie</string>
+  <string name="backup_restore_no_backups">Na tomto zariadení nie sú dostupné žiadne zálohy pre túto zbierku. Ak máte zálohy vo vašom počítači, skopírujte ich prosím ručne do vášho AnkiDroid priečinka</string>
+  <string name="open_collection_failed_title">Zbierka nebola otvorená</string>
+  <string name="open_collection_failed_message">Databázu sa nepodarilo otvoriť. Buď to nie je skutočná anki databáza, alebo bola poškodená.\n\nMôžete sa pokúsiť zbierku opraviť, alebo ju obnoviť zo zálohy (v oboch prípadoch bude kópia poškodeného balíčka skopírovaná do podpriečinka \"%1$s\"). V tom prípade kliknite na \"možnosti\".\n\nViac informácií o oprave poškodených balíčkov: %2$s.</string>
+  <string name="deck_repair_error">Zbierku sa nepodarilo opraviť</string>
 </resources>
