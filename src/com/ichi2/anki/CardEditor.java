@@ -379,7 +379,6 @@ public class CardEditor extends Activity {
                 mAddNote = false;
                 break;
 
-            case CALLER_STUDYOPTIONS:
             case CALLER_DECKPICKER:
                 mAddNote = true;
                 break;
@@ -408,8 +407,11 @@ public class CardEditor extends Activity {
                 mAddNote = false;
                 break;
 
+            case CALLER_STUDYOPTIONS:
             case CALLER_CARDBROWSER_ADD:
                 mAddNote = true;
+                // Pre-select current deck
+                mCurrentDid = AnkiDroidApp.getCol().getDecks().selected();
                 break;
 
             case CALLER_CARDEDITOR:
