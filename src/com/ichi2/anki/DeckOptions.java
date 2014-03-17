@@ -141,8 +141,6 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
                 Log.d(AnkiDroidApp.TAG, "DeckOptions - commit() changes back to database");
 
                 try {
-                    mOptions.put("replayq", false); // set default to avoid no set value; true set in for loop
-                    
                     for (Entry<String, Object> entry : mUpdate.valueSet()) {
                         String key =  entry.getKey();
                         Object value = entry.getValue();
