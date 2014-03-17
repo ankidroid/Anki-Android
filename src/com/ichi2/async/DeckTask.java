@@ -817,8 +817,11 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         Log.i(AnkiDroidApp.TAG, "doInBackgroundDeleteDeck");
         Collection col = params[0].getCollection();
         long did = params[0].getLong();
+        Boolean isDyn = col.getDecks().isDyn(did);
         col.getDecks().rem(did, true);
-        col.getMedia().removeUnusedImages();
+        if (!isDyn) { // don't bother pruning media for cram/dynamic decks as all cards will still exist after delete
+            col.getMedia().removeUnusedImages();
+        }
         return doInBackgroundLoadDeckCounts(new TaskData(col));
     }
 
