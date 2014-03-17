@@ -183,7 +183,8 @@ public class AnkiDb {
 
     /**
      * Convenience method for querying the database for an entire column. The column will be returned as an ArrayList of
-     * the specified class. See Deck.initUndo() for a usage example.
+     * the specified class. See Deck.initUndo() for a usage example. This function has no ability to return null entries
+     * to the caller for null-sensitive processing.
      * 
      * @param type The class of the column's data type. Example: int.class, String.class.
      * @param query The SQL query statement.
@@ -198,8 +199,18 @@ public class AnkiDb {
             cursor = mDatabase.rawQuery(query, null);
             String methodName = getCursorMethodName(type.getSimpleName());
             while (cursor.moveToNext()) {
-                // The magical line. Almost as illegible as python code ;)
-                results.add(type.cast(Cursor.class.getMethod(methodName, int.class).invoke(cursor, column)));
+                try {
+                    // The magical line. Almost as illegible as python code ;)
+                    results.add(type.cast(Cursor.class.getMethod(methodName, int.class).invoke(cursor, column)));
+                } catch (InvocationTargetException e) {
+                    if (cursor.getType(column) == Cursor.FIELD_TYPE_NULL) { // null value encountered
+                        Log.d(AnkiDroidApp.TAG, "AnkiDb.queryColumn (column " + column + "): Located null during exception. Attempting to skip null result and continue. Query: " + query);
+                        // TODO: maybe implement reporting to notify devs of null issues, without burdening users                       
+                        continue; // attempt to skip this null record
+                    } else {
+                        throw new RuntimeException(e);
+                    }
+                }
             }
         } catch (NoSuchMethodException e) {
             // This is really coding error, so it should be revealed if it ever happens
@@ -209,8 +220,6 @@ public class AnkiDb {
             throw new RuntimeException(e);
         } catch (IllegalAccessException e) {
             // This is really coding error, so it should be revealed if it ever happens
-            throw new RuntimeException(e);
-        } catch (InvocationTargetException e) {
             throw new RuntimeException(e);
         } finally {
             if (cursor != null) {
