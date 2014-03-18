@@ -2151,6 +2151,10 @@ public class DeckPicker extends FragmentActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                     	mImportPath = mImportValues[which];
+                    	//If the apkg file is called "collection.apkg", we assume the collection will be replaced
+                    	if (mImportPath.split("/")[mImportPath.split("/").length-1].equals("collection.apkg")){
+                        		mImportMethod=IMPORT_METHOD_REPLACE;
+                        }                    	
                         switch (mImportMethod) {
                             case IMPORT_METHOD_ADD:
                                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_IMPORT, mImportAddListener,
