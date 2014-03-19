@@ -154,6 +154,7 @@ public class StudyOptionsFragment extends Fragment {
     private ImageButton mAddNote;
     private ImageButton mCardBrowser;
     private Button mDeckOptions;
+    private Button mCramOptions;
     private ImageButton mStatisticsButton;
     private EditText mDialogEditText = null;
     /**
@@ -271,15 +272,14 @@ public class StudyOptionsFragment extends Fragment {
                     DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler,
                             new DeckTask.TaskData(col, Stats.TYPE_MONTH, false));
                     return;
+                case R.id.studyoptions_options_cram:
+                    openCramDeckOptions();
+                    return;
                 case R.id.studyoptions_options:
-                    if (col.getDecks().isDyn(col.getDecks().selected())) {
-                        openCramDeckOptions();
-                    } else {
-                        Intent i = new Intent(getActivity(), DeckOptions.class);
-                        startActivityForResult(i, DECK_OPTIONS);
-                        if (AnkiDroidApp.SDK_VERSION > 4) {
-                            ActivityTransitionAnimation.slide(getActivity(), ActivityTransitionAnimation.FADE);
-                        }
+                    Intent i = new Intent(getActivity(), DeckOptions.class);
+                    startActivityForResult(i, DECK_OPTIONS);
+                    if (AnkiDroidApp.SDK_VERSION > 4) {
+                        ActivityTransitionAnimation.slide(getActivity(), ActivityTransitionAnimation.FADE);
                     }
                     return;
                 case R.id.studyoptions_rebuild_cram:
@@ -623,6 +623,7 @@ public class StudyOptionsFragment extends Fragment {
             Button emptyBut = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_empty_cram);
             emptyBut.setOnClickListener(mButtonClickListener);
             ((LinearLayout) mStudyOptionsView.findViewById(R.id.studyoptions_cram_buttons)).setVisibility(View.VISIBLE);
+            ((LinearLayout) mStudyOptionsView.findViewById(R.id.studyoptions_regular_buttons)).setVisibility(View.GONE);
         }
 
         if (mFragmented) {
@@ -650,10 +651,12 @@ public class StudyOptionsFragment extends Fragment {
             mCardBrowser = (ImageButton) mStudyOptionsView.findViewById(R.id.studyoptions_card_browser);
             mStatisticsButton = (ImageButton) mStudyOptionsView.findViewById(R.id.studyoptions_statistics);
             mDeckOptions = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_options);
+            mCramOptions = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_options_cram);
             mAddNote.setOnClickListener(mButtonClickListener);
             mCardBrowser.setOnClickListener(mButtonClickListener);
             mStatisticsButton.setOnClickListener(mButtonClickListener);
             mDeckOptions.setOnClickListener(mButtonClickListener);
+            mCramOptions.setOnClickListener(mButtonClickListener);
         }
 
         mGlobalBar = (View) mStudyOptionsView.findViewById(R.id.studyoptions_global_bar);

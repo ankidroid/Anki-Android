@@ -177,7 +177,7 @@
 					android:text="@string/studyoptions_start"
 					android:drawableLeft="@drawable/ic_start"/>
 
-				<LinearLayout
+				<LinearLayout android:id="@+id/studyoptions_regular_buttons"
 				    android:layout_width="match_parent"
 				    android:layout_height="wrap_content" >
 					<Button android:id="@+id/studyoptions_options"
@@ -238,21 +238,28 @@
 				</LinearLayout>-->
 			<LinearLayout android:id="@+id/studyoptions_cram_buttons"
    		 	     	android:layout_weight="1"
-				android:orientation="vertical"
-				android:layout_height="fill_parent"
-				android:layout_width="0dip"
+				android:orientation="horizontal"
+				android:layout_width="fill_parent"
+				android:layout_height="0dip"
 				android:visibility="gone">
    				<Button 
+					android:id="@+id/studyoptions_options_cram"
+   	    	  		android:layout_width="0dip"
+		         	android:layout_height="fill_parent"
+		         	android:textSize="14sp"
+   		 	     	android:layout_weight="1"
+					android:text="@string/study_options"/>						
+   				<Button 
 					android:id="@+id/studyoptions_rebuild_cram"
-   	    	  		android:layout_height="0dip"
-		         	android:layout_width="fill_parent"
+   	    	  		android:layout_width="0dip"
+		         	android:layout_height="fill_parent"
 		         	android:textSize="14sp"
    		 	     	android:layout_weight="1"
 					android:text="@string/rebuild_cram_label"/>	
    				<Button 
 					android:id="@+id/studyoptions_empty_cram"
-   	    	  		android:layout_height="0dip"
-		         	android:layout_width="fill_parent"
+   	    	  		android:layout_width="0dip"
+		         	android:layout_height="fill_parent"
 		         	android:textSize="14sp"
    		 	     	android:layout_weight="1"
 					android:text="@string/empty_cram_label"/>	
