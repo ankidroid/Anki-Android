@@ -155,7 +155,6 @@ public class DeckPicker extends FragmentActivity {
     private static final int MENU_STATISTICS = 12;
     private static final int MENU_CARDBROWSER = 13;
     private static final int MENU_IMPORT = 14;
-    private static final int MENU_REUPGRADE = 15;
 
     /**
      * Context Menus
@@ -1189,44 +1188,6 @@ public class DeckPicker extends FragmentActivity {
             return true;
         }
         return false;
-    }
-
-    private void restartUpgradeProcess() {
-        StyledDialog.Builder builder = new StyledDialog.Builder(DeckPicker.this);
-        builder.setTitle(R.string.deck_upgrade_title);
-        builder.setIcon(R.drawable.ic_dialog_alert);
-        builder.setMessage(getString(R.string.deck_upgrade_rename_warning, UPGRADE_OLD_COLLECTION_RENAME));
-        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                AnkiDroidApp.closeCollection(true);
-
-                String path = AnkiDroidApp.getCurrentAnkiDroidDirectory();
-                File apkgExport = new File(path, UPGRADE_OLD_COLLECTION_RENAME);
-                if (apkgExport.exists()) {
-                    // rename any existing oldcollection.apkg files oldcollection.apkgi, i = 1, 2, 3,...
-                    int i = 0;
-                    File altname;
-                    do {
-                        altname = new File(path, UPGRADE_OLD_COLLECTION_RENAME + i);
-                        ++i;
-                    } while (altname.exists());
-                    apkgExport.renameTo(altname);
-                }
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_EXPORT_APKG, mUpgradeExportListener,
-                        new DeckTask.TaskData(new Object[] {AnkiDroidApp.getCollectionPath(),
-                                apkgExport.getAbsolutePath(), false}));
-            }
-        });
-        builder.setCancelable(false);
-        builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext())
-                        .edit().putInt("lastUpgradeVersion", AnkiDroidApp.getPkgVersionCode()).commit();
-            }
-        });
-        builder.show();
     }
 
     private SharedPreferences restorePreferences() {
@@ -2477,7 +2438,6 @@ public class DeckPicker extends FragmentActivity {
         item.setIcon(R.drawable.ic_menu_send);
         item = menu.add(Menu.NONE, MENU_ABOUT, Menu.NONE, R.string.menu_about);
         item.setIcon(R.drawable.ic_menu_info_details);
-        item = menu.add(Menu.NONE, MENU_REUPGRADE, Menu.NONE, R.string.restart_upgrade_process);
         item.setIcon(R.drawable.ic_menu_preferences);
         
         return true;
@@ -2646,10 +2606,6 @@ public class DeckPicker extends FragmentActivity {
             		preferences.edit().putBoolean("invertedColors", true).commit();
             		item.setIcon(R.drawable.ic_menu_night_checked);
             	}
-                return true;
-
-            case MENU_REUPGRADE:
-                restartUpgradeProcess();
                 return true;
 
             default:
