@@ -2680,15 +2680,13 @@ public class Reviewer extends AnkiActivity {
                 // We need to play the sounds from the proper side of the card
                 if (!mSpeakText) {
                     // when showing answer, repeat question audio if so configured
-                    if (sDisplayAnswer && 
-                    		(!getConfigForCurrentCard().has("replayq") || getConfigForCurrentCard().getBoolean("replayq"))) {
+                	if (sDisplayAnswer && getConfigForCurrentCard().optBoolean("replayq",true)) {
                         Sound.playSounds(MetaDB.LANGUAGES_QA_QUESTION);
                     }
                     Sound.playSounds(sDisplayAnswer ? MetaDB.LANGUAGES_QA_ANSWER : MetaDB.LANGUAGES_QA_QUESTION);
                 } else {
                     // If the question is displayed or if the question should be replayed, read the question
-                    if (!sDisplayAnswer || !getConfigForCurrentCard().has("replayq")
-                    		|| getConfigForCurrentCard().getBoolean("replayq")) {
+                	if (!sDisplayAnswer || getConfigForCurrentCard().optBoolean("replayq",true)) {
                         readCardText(mCurrentCard, MetaDB.LANGUAGES_QA_QUESTION);
                     }
                     if (sDisplayAnswer) {
