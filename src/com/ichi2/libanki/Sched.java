@@ -1530,11 +1530,7 @@ public class Sched {
     /** Integer interval after interval factor and prev+1 constraints applied */
     private int _constrainedIvl(int ivl, JSONObject conf, double prev) {
     	double newIvl = ivl;
-        try {
-        	newIvl = ivl * conf.getDouble("ivlFct");
-        } catch (JSONException e) {
-        	// nothing;
-        }
+    	newIvl = ivl * conf.optDouble("ivlFct",1.0);
         return (int) Math.max(newIvl, prev + 1);
     }
 

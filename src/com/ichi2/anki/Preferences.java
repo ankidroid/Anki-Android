@@ -176,7 +176,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 showEstimates.setChecked(conf.getBoolean("estTimes"));
                 showProgress.setChecked(conf.getBoolean("dueCounts"));
                 newSpread.setValueIndex(conf.getInt("newSpread"));
-                useCurrent.setValueIndex(conf.getBoolean("addToCur") ? 0 : 1);
+                useCurrent.setValueIndex(conf.optBoolean("addToCur",true) ? 0 : 1);
             } catch (JSONException e) {
                 throw new RuntimeException();
             } catch (NumberFormatException e) {
