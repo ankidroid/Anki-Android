@@ -313,7 +313,8 @@ public class Info extends Activity {
                                 finishWithAnimation(false);
                             }
                         });
-                        syncButton.setText(getString(R.string.internet));
+                        syncButton.setEnabled(false);
+                        syncButton.setText("N/A");
                         syncButton.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View arg0) {
@@ -442,7 +443,8 @@ public class Info extends Activity {
                                 finishWithAnimation();
                             }
                         });
-                        continueButton.setText(R.string.ankiweb);
+                        continueButton.setEnabled(false);
+                        continueButton.setText("N/A");
                         continueButton.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View arg0) {
