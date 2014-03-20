@@ -57,6 +57,7 @@
   <string name="notify_title">Ankidroid 升级成功</string>
   <string name="notify_message">下载新版本</string>
   <string name="notification_title">确认更新Ankidroid</string>
+  <string name="preview_title">Preview</string>
   <string name="notification_message">Android市场中有新版本的Ankidroid。\n\n您要安装吗？</string>
   <string name="notification_stop">不再提示更新</string>
   <string name="reset_card_dialog_title">重置卡牌进度</string>
@@ -82,7 +83,6 @@
   <string name="rebuild_custom_study_deck">重建自定义学习牌组\n 请等待...</string>
   <string name="deck_upgrade_title">牌组升级</string>
   <string name="deck_upgrade_rename_warning">注意，此操作会将您当前卡牌集合导出到文件 \'%1$s\', 并从此老版本的anki 1.x 文件中创建新卡牌集合。如果需要，在完成此向导后，您可以手动重新导入上面的apkg文件。您想继续吗？</string>
-  <string name="deck_upgrade_already_upgraded">第二个版本的AnkiDroid使用一种新的词库格式。\n如果您没能成功升级您的词库，您可以在现在重新启动去升级词库</string>
   <string name="deck_upgrade_major_warning"><![CDATA[这是一个关于Ankidroid的重要更新，升级过程将持续至少10到20分钟。<br><br>您想要现在马上更新还是以后再更新？<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en">More info</a>]]></string>
   <string name="deck_upgrade_start_again_to_upgrade_toast">当您有时间更新的时候请重新启动Ankidroid！</string>
   <string name="deck_upgrade_recommended_method"><![CDATA[推荐的更新方法是与电脑进行同步并且在桌面版的Anki上进行升级。<br><br>另外一种方法是您可以通过网络进行更新，当您无法连接到自己的电脑上并且您的收藏并不是特别大的时候。]]></string>
@@ -119,5 +119,6 @@
     <item><![CDATA[AnkiDroid 是 <a href="%1$s">开源软件<a/>, 鼓励人人<a href="%2$s">成为</a><a href="%3$s">贡献者</a>:-)]]></item>
     <item><![CDATA[非开发人员也可以提供帮助，如<a href="%1$s">翻译</a> AnkiDroid,更新wiki和屏幕截图，<a href="%2$s">捐助</a> Anki的桌面客户端软件，或者在博客上写些关于AnkiDroid的内容！]]></item>
     <item><![CDATA[AnkiDroid 依据<a href="%1$s">GNU-GPL v3 许可</a>发布，源代码在<a href="%2$s">这里</a>提供。]]></item>
+    <item><![CDATA[This package uses the <a href="http://www.csse.monash.edu.au/~jwb/edict.html">EDICT</a> and <a href="http://www.csse.monash.edu.au/~jwb/kanjidic.html">KANJIDIC</a> dictionary files. These files are the property of the <a href="http://www.edrdg.org">Electronic Dictionary Research and Development Group</a>, and are used in conformance with the Group\'s <a href="http://www.edrdg.org/edrdg/licence.html">licence</a>.]]></item>
   </string-array>
 </resources>

@@ -55,6 +55,7 @@
   <string name="download_cancel">Peruuta lataus</string>
   <string name="shared_decks">Jaetut korttipakat</string>
   <string name="loading_shared_decks">Saatavilla olevia jaettuja korttipakkoja ladataan...</string>
+  <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Terms and Conditions</a></string>
   <string name="cancel_download">Peruuta lataus</string>
   <string name="resume_download">Jatka lataamista</string>
   <string name="pause_download">Keskeytä lataaminen</string>
@@ -71,6 +72,7 @@
   <string name="log_in">Kirjaudu sisään</string>
   <string name="sign_up_description">Don\'t have an AnkiWeb account? It\'s free!</string>
   <string name="sign_up">Rekisteröidy</string>
+  <string name="sign_up_terms">By tapping <i>Sign up</i>, you confirm that you have read and agree to our <a href="https://ankiweb.net/account/terms">terms of use</a>.</string>
   <string name="logged_as">Kirjautunut</string>
   <string name="log_out">Kirjaudu ulos</string>
   <string name="alert_logging_message">Kirjaudutaan sisälle, odota hetki...</string>

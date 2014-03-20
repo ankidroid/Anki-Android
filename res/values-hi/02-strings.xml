@@ -42,6 +42,7 @@
   <string name="CardEditorCancelButton">रद्द करें</string>
   <string name="CardEditorSaveButton">सहेजें</string>
   <string name="CardEditorLaterButton">बाद में</string>
+  <string name="CardEditorPreviewButton">पूर्वावलोकन</string>
   <string name="CardEditorLaterMessage">जानकारी के लिए बाद में बचा लिया</string>
   <string name="CardEditorCardDeck">कार्ड डेक: %s</string>
   <string name="CardEditorNoteDeck">नोट डेक: %s</string>
@@ -49,12 +50,11 @@
   <string name="CardEditorTags">टैग: %1$s</string>
   <string name="add_new_tag">नए टैग जोड़ें</string>
   <string name="note_type">नोट प्रकार</string>
+  <string name="card_type">कार्ड के प्रकार</string>
   <string name="sdcard_missing_message">एसडी कार्ड उपलब्ध नहीं है क्योंकि यह USB भंडारण के रूप में इस्तेमाल किया जा रहा है। आपके डेक तक पहुँचने के लिए USB डिस्कनेक्ट करें।</string>
   <string name="show_whiteboard">Whiteboard दिखाएँ</string>
   <string name="hide_whiteboard">Whiteboard छुपाएँ</string>
   <string name="clear_whiteboard">स्पष्ट Whiteboard</string>
-  <string name="session_question_limit_reached">सत्र के सवाल सीमा तक पहुँच गया</string>
-  <string name="session_time_limit_reached">सत्र समय सीमा तक पहुँच गया</string>
   <string name="cram_edit_warning">कार्ड संपादन करते हुए cramming की अनुमति नहीं है</string>
   <string name="suspend_leeches">लीच को निलंबित</string>
   <string name="leech_suspend_notification">जोंक के रूप में के रूप में चिह्नित और निलंबित कार्ड</string>
@@ -71,7 +71,7 @@
   <string name="close">बंद करें</string>
   <string name="select">का चयन करें</string>
   <string name="saving_changes">परिवर्तनों को सहेजे...</string>
-  <string name="timebox_reached">Timebox तक पहुँच गया!</string>
+  <string name="reordering_cards">कार्ड reordering...</string>
   <string name="studyoptions_welcome_title">AnkiDroid में आपका स्वागत है</string>
   <string name="studyoptions_no_external_storage_title">कोई बाहरी संग्रहण उपलब्ध</string>
   <string name="studyoptions_no_external_storage_message">कोई बाह्य भंडारण अभी उपलब्ध नहीं है। AnkiDroid एसडी कार्ड के आदेश को पढ़ने और अपने Anki डेक को लोड करने के लिए उपयोग किया है की जरूरत है। कि आपके एसडी कार्ड पर चढ़कर है की जाँच करें और पुन: प्रयास करें।</string>
@@ -88,6 +88,7 @@
   <string name="tutorial_loading_error">ट्यूटोरियल डेक बनाया नहीं जा सका</string>
   <string name="rename">का नाम बदलें</string>
   <string name="rename_error">डेक %s नाम नहीं बदला जा सकता है</string>
+  <string name="default_conf_delete_error">डिफ़ॉल्ट विकल्प समूह निकाला नहीं जा सकता</string>
   <string name="help_title">मदद</string>
   <string name="help_online">ऑनलाइन मदद</string>
   <string name="help_faq">अकसर किये गए सवाल</string>
@@ -113,10 +114,19 @@
   <string name="import_importing">आयात कार्ड। \nPlease रुको...</string>
   <string name="import_hint">कार्ड को आयात करने के लिए, apkg फ़ाइल %s निर्देशिका में रखें और ठीक दबाएँ</string>
   <string name="upgrade_import_no_file_found">कोई आयातयोग्य %1$s फ़ाइल मिली</string>
+  <string name="study_options">Options</string>
   <string name="custom_study">कस्टम अध्ययन</string>
   <string name="dyn_deck_desc">यह सामान्य समय के बाहर अध्ययन करने के लिए एक विशेष डेक है। तुम उन की समीक्षा करने के बाद कार्ड स्वचालित रूप से उनके मूल डेक को लौट जाएगा। इस डेक डेक सूची से हटाने के सभी शेष कार्ड उनके मूल डेक करने के लिए वापस आ जाएगी।</string>
-  <string name="restart_upgrade_process">नवीनीकरण प्रक्रिया को पुनरारंभ करें</string>
   <string name="exit_wizard">विज़ार्ड से बाहर निकलें</string>
+  <string name="steps_error">कदम नंबर 0 से अधिक होना चाहिए</string>
+  <string name="steps_min_error">कम से कम एक कदम की आवश्यकता है</string>
+  <string name="custom_study_invalid_number">अमान्य संख्या</string>
+  <string name="template_error">टेम्पलेट त्रुटि:</string>
+  <string name="template_error_detail">इस कार्ड के टेम्पलेट में कोई त्रुटि है।</string>
+  <string name="template_error_fix">कृपया कार्ड संपादक डेस्कटॉप क्लाइंट पर त्रुटि को ठीक करने के लिए उपयोग करें।</string>
+  <string name="sched_end">(अंत)</string>
+  <string name="sched_unbury_button">उन्हें अब देखने के लिए, Unbury बटन नल।</string>
+  <string name="sched_has_buried">कुछ संबंधित या दफन कार्ड एक बाद में सत्र तक देरी हो रहे थे।</string>
   <string-array name="dynOrderLabels">
     <item>सबसे पुराना देखा पहले</item>
     <item>यादृच्छिक</item>
@@ -126,6 +136,14 @@
     <item>आदेश में जोड़ा</item>
     <item>कारण आदेश</item>
   </string-array>
+  <plurals name="timebox_reached">
+    <item quantity="one">%2$s में 1 कार्ड का अध्ययन</item>
+    <item quantity="other">%1$d  कार्ड का अध्ययन में %2$s</item>
+  </plurals>
+  <plurals name="timebox_reached_minutes">
+    <item quantity="one">1 मिनट</item>
+    <item quantity="other">%1$d मिनट</item>
+  </plurals>
   <plurals name="factadder_cards_added">
     <item quantity="one">1 कार्ड में जोड़ा</item>
     <item quantity="other">%d कार्ड में जोड़ा</item>

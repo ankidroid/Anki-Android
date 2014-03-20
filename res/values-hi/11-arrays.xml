@@ -137,4 +137,18 @@
     <item>Preview new cards</item>
     <item>Limit to particular tags</item>
   </string-array>
+  <string-array name="add_to_cur_labels">
+    <item>Use current deck</item>
+    <item>Decide by note type</item>
+  </string-array>
+  <string-array name="new_spread_labels">
+    <item>Mix new cards and reviews</item>
+    <item>New cards after reviews</item>
+    <item>New cards before reviews</item>
+  </string-array>
+  <string-array name="cards_for_tag_filtered_deck_labels">
+    <item>All cards</item>
+    <item>New</item>
+    <item>Due</item>
+  </string-array>
 </resources>

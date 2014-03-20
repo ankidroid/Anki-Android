@@ -40,22 +40,17 @@
 -->
 <resources>
   <string-array name="new_version_features">
-    <item>修复大量导致程序崩溃的bug。</item>
-    <item>平板电脑用户界面修复。</item>
-    <item>修复新卡牌排序问题。</item>
-    <item>卡牌外观与桌面版Anki保持一致。<![CDATA[<b>卡牌居中显示默认关闭，但可以打开。</b>]]>
-</item>
-    <item>现在可以在AnkiDroid中更改选项组Option Groups.</item>
-    <item>使用已损坏模板时，清除错误消息。</item>
-    <item>修复时间通知。</item>
-    <item>正确缩放图片。</item>
-    <item>更好的处理自定义字体</item>
-    <item>更多设置选项(第二天从什么时间开始，时间值等等).</item>
-    <item>现在可以改变AnkiDroid界面的语言。</item>
-    <item>修复导入/共享牌组时的下载问题(\"不是有效的apkg文件\")</item>
-    <item>修复在摩托罗拉设备上文字不可见的问题。</item>
-    <item>翻开卡牌时，聚焦在答案的显示。</item>
-    <item>筛选牌组现在在牌组列表里显示为蓝色。</item>
-    <item>在备注编辑器中，取消未使用的圆按钮。</item>
+    <item>Lots of Bug Fixes</item>
+    <item>New custom study option with improved tag selection</item>
+    <item>New preview card feature in note editor (experimental)</item>
+    <item>New override font preference in addition to default font</item>
+    <item>New \"Kanji Info\" feature (enabled in preferences-&gt;reviewing-&gt;Kanji Info)</item>
+    <item>Improve Aedict integration</item>
+    <item>Support for Samsung Multi-Window</item>
+    <item>Fix Some TTS Issues</item>
+    <item>Updated Translations</item>
+    <item>Remove unused media check when deleting decks</item>
+    <item>Significantly increase speed for reducing filtered decks</item>
+    <item>Remove upgrade wizard</item>
   </string-array>
 </resources>
