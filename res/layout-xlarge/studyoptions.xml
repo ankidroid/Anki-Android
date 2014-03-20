@@ -165,6 +165,7 @@
 				android:id="@+id/studyoptions_mall_chart"
 				android:layout_weight="3"
 				android:layout_width="0dip" 
+				android:orientation="vertical"
 				android:layout_height="250dip" />
 			<LinearLayout
 				android:layout_weight="1"
@@ -179,8 +180,9 @@
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content">
 		<LinearLayout
+			android:orientation="horizontal"		    
 			android:layout_width="fill_parent"
-			android:layout_height="wrap_content">
+			android:layout_height="fill_parent">
 			<Button 
 				android:id="@+id/studyoptions_start"
 				android:layout_height="fill_parent"
@@ -188,58 +190,70 @@
 				android:layout_width="0dip"
 				android:textStyle="bold"
 				android:lines="2"
-				android:textSize="16sp"
-				android:layout_weight="3"
+				android:textSize="22sp"
+				android:layout_weight="1"
 				android:text="@string/studyoptions_start"
 				android:drawableLeft="@drawable/ic_start"/>	
-			<LinearLayout
-				android:layout_width="0dip"
-				android:layout_height="fill_parent"
-				android:layout_weight="1"
-				android:orientation="vertical">
-				<LinearLayout android:id="@+id/studyoptions_cram_buttons"
-					android:layout_weight="1"
-					android:orientation="horizontal"
-					android:layout_height="0dip"
-					android:layout_width="fill_parent"
-					android:visibility="gone">
-					<Button 
-						android:id="@+id/studyoptions_rebuild_cram"
-						android:layout_height="fill_parent"
-						android:layout_width="0dip"
-						android:textSize="14sp"
-						android:layout_weight="1"
-						android:text="@string/rebuild_cram_label"/>	
-					<Button 
-						android:id="@+id/studyoptions_empty_cram"
-						android:layout_height="fill_parent"
-						android:layout_width="0dip"
-						android:textSize="14sp"
-						android:layout_weight="1"
-						android:text="@string/empty_cram_label"/>	
-				</LinearLayout>
-
-				<LinearLayout
-					android:layout_height="0dip"
-					android:layout_width="fill_parent"
-					android:layout_weight="1"
-					android:orientation="vertical">
-					<Button 
-						android:id="@+id/studyoptions_new_filtercram"
-						android:layout_height="0dip"
-						android:layout_width="fill_parent"
-						android:textSize="14sp"
-						android:layout_weight="1"
-						android:text="@string/studyoptions_new_filtercram"/>
-					<Button 
-						android:id="@+id/studyoptions_options"
-						android:layout_height="0dip"
-						android:layout_width="fill_parent"
-						android:textSize="14sp"
-						android:layout_weight="1"
-						android:text="@string/studyoptions_options"/>
-				</LinearLayout>	
+			<!-- The below layout contains the components which are only shown when we DO NOT have a filtered deck -->		
+			<LinearLayout android:id="@+id/studyoptions_regular_buttons"
+			    android:layout_width="wrap_content"
+			    android:layout_height="fill_parent"
+			    android:orientation="vertical">
+				<Button android:id="@+id/studyoptions_options"
+   	    	  		android:layout_width="match_parent"
+					android:paddingLeft="16dip"	
+		         	android:layout_height="0dip"
+		         	android:layout_weight="1"
+		         	android:textStyle="bold"
+		         	android:lines="1"
+		         	android:textSize="16sp"
+					android:text="@string/study_options"/>
+				<Button
+				    android:id="@+id/studyoptions_custom"
+				    android:layout_width="match_parent"
+				    android:layout_height="0dip"
+				    android:layout_weight="1"
+				    android:lines="1"
+				    android:paddingLeft="16dip"
+				    android:text="@string/custom_study"
+				    android:textSize="16sp"
+				    android:textStyle="bold" />			    			
 			</LinearLayout>
+			
+		<!--  The below layout contains the components which are only shown when we have a filtered deck 
+				It's set to hidden by default, and made visible in StudyOptionsFragment if filtered -->
+		<LinearLayout android:id="@+id/studyoptions_cram_buttons"
+			android:orientation="horizontal"
+			android:layout_width="wrap_content"
+			android:layout_height="fill_parent"
+			android:visibility="gone">
+  				<Button 
+				android:id="@+id/studyoptions_options_cram"
+  	    	  		android:layout_width="wrap_content"
+	         	android:layout_height="fill_parent"
+	         	android:textSize="14sp"
+				android:text="@string/study_options"/>	
+			<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="fill_parent"
+			android:orientation="vertical">				
+   				<Button 
+					android:id="@+id/studyoptions_rebuild_cram"
+   	    	  		android:layout_width="fill_parent"
+		         	android:layout_height="wrap_content"
+		         	android:layout_weight="1"
+		         	android:textSize="14sp"
+					android:text="@string/rebuild_cram_label"/>	
+   				<Button 
+					android:id="@+id/studyoptions_empty_cram"
+   	    	  		android:layout_width="fill_parent"
+		         	android:layout_height="wrap_content"
+		         	android:layout_weight="1"
+		         	android:textSize="14sp"
+					android:text="@string/empty_cram_label"/>
+  				</LinearLayout>		
+		</LinearLayout>				
+							
 		</LinearLayout>
 	</LinearLayout>
 	<RelativeLayout
