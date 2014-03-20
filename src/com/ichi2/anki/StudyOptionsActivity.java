@@ -117,7 +117,7 @@ public class StudyOptionsActivity extends FragmentActivity {
                 android.R.drawable.ic_menu_always_landscape_portrait);
         if (AnkiDroidApp.colIsOpen() && !AnkiDroidApp.getCol().getDecks().isDyn(AnkiDroidApp.getCol().getDecks().selected())) {
             UIUtils.addMenuItem(menu, Menu.NONE, DeckPicker.MENU_CREATE_DYNAMIC_DECK, Menu.NONE,
-                    R.string.studyoptions_new_filtercram, R.drawable.ic_menu_add);
+                    R.string.new_dynamic_deck, R.drawable.ic_menu_add);
         }
         return true;
     }
