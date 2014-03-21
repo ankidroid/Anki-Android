@@ -226,7 +226,7 @@
 					android:layout_height="wrap_content"
 				    android:orientation="horizontal">
 					<Button android:id="@+id/studyoptions_options"
-	   	    	  		android:layout_width="wrap_content"
+	   	    	  		android:layout_width="0px"
 			         	android:layout_height="match_parent"
 			         	android:layout_weight="1"
 			         	android:textStyle="bold"
@@ -235,7 +235,7 @@
 						android:text="@string/study_options"/>
 					<Button
 					    android:id="@+id/studyoptions_custom"
-					    android:layout_width="wrap_content"
+					    android:layout_width="0px"
 					    android:layout_height="match_parent"
 					    android:layout_weight="1"
 					    android:lines="1"
@@ -257,21 +257,21 @@
 				android:orientation="horizontal">
 	   				<Button 
 						android:id="@+id/studyoptions_options_cram"
-	  	    	  		android:layout_width="wrap_content"
+	  	    	  		android:layout_width="0px"
 			         	android:layout_height="fill_parent"
 			         	android:textSize="12sp"
 			         	android:layout_weight="1"
 						android:text="@string/study_options"/>	
 	   				<Button 
 						android:id="@+id/studyoptions_rebuild_cram"
-	   	    	  		android:layout_width="wrap_content"
+	   	    	  		android:layout_width="0px"
 			         	android:layout_height="fill_parent"
 			         	android:layout_weight="1"
 			         	android:textSize="12sp"
 						android:text="@string/rebuild_cram_label"/>	
 	   				<Button 
 						android:id="@+id/studyoptions_empty_cram"
-	   	    	  		android:layout_width="wrap_content"
+	   	    	  		android:layout_width="0px"
 			         	android:layout_height="fill_parent"
 			         	android:layout_weight="1"
 			         	android:textSize="12sp"
