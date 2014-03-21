@@ -242,6 +242,16 @@
 					    android:text="@string/custom_study"
 					    android:textSize="12sp"
 					    android:textStyle="bold" />			    			
+					<Button
+					    android:id="@+id/studyoptions_unbury"
+					    android:layout_width="0px"
+					    android:layout_height="match_parent"
+					    android:layout_weight="1"
+					    android:lines="1"
+					    android:text="@string/unbury"
+					    android:textSize="12sp"
+					    android:textStyle="bold"
+					    android:visibility="gone"/>						    
 				</LinearLayout>
 				
 			<!--  The below layout contains the components which are only shown when we have a filtered deck 

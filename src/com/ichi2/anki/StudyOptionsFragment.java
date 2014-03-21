@@ -137,6 +137,7 @@ public class StudyOptionsFragment extends Fragment {
     private View mStudyOptionsView;
     private Button mButtonStart;
     private Button mButtonCustomStudy;
+    private Button mButtonUnbury;
 //    private Button mButtonUp;
 //    private Button mButtonDown;
 //    private ToggleButton mToggleLimitToggle;
@@ -215,7 +216,12 @@ public class StudyOptionsFragment extends Fragment {
                     return;
                 case R.id.studyoptions_custom:
                 	showDialog(DIALOG_CUSTOM_STUDY);
-                	return;                
+                	return;                	
+                case R.id.studyoptions_unbury:
+                    col.getSched().unburyCards();
+                    resetAndUpdateValuesFromDeck();
+                    mButtonUnbury.setVisibility(View.GONE);
+                    return;                	
 //                case R.id.studyoptions_limitup:
 //                    timeLimit = (mCol.getTimeLimit() / 60);
 //                    mCol.setTimeLimit((timeLimit + 1) * 60);
@@ -478,6 +484,7 @@ public class StudyOptionsFragment extends Fragment {
                 updateValuesFromDeck(true);
             }
         }
+        showOrHideUnburyButton();
     }
 
 
@@ -564,7 +571,16 @@ public class StudyOptionsFragment extends Fragment {
                         + AnkiDroidApp.COLLECTION_PATH));
     }
 
-
+    private void showOrHideUnburyButton(){
+    	if (mButtonUnbury != null){
+	        if (AnkiDroidApp.colIsOpen() && AnkiDroidApp.getCol().getSched().haveBuried()) {
+	            mButtonUnbury.setVisibility(View.VISIBLE);
+	        } else{
+	        	mButtonUnbury.setVisibility(View.GONE);
+	        }
+    	}
+    }
+    
     private void initAllContentViews(LayoutInflater inflater) {
         mStudyOptionsView = inflater.inflate(R.layout.studyoptions, null);
         Themes.setContentStyle(mStudyOptionsView, Themes.CALLER_STUDYOPTIONS);
@@ -591,7 +607,11 @@ public class StudyOptionsFragment extends Fragment {
             ((LinearLayout) mStudyOptionsView.findViewById(R.id.studyoptions_cram_buttons)).setVisibility(View.VISIBLE);
             ((LinearLayout) mStudyOptionsView.findViewById(R.id.studyoptions_regular_buttons)).setVisibility(View.GONE);
         }
-
+        // Show the unbury button if there are cards to unbury
+        mButtonUnbury = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_unbury);
+    	mButtonUnbury.setOnClickListener(mButtonClickListener);
+    	showOrHideUnburyButton();
+    	
         if (!mFragmented) {
         	// Standard non-fragmented view for non-tablets, using standard layout file (in ./res/layout/)
             mAddNote = (ImageButton) mStudyOptionsView.findViewById(R.id.studyoptions_add);
