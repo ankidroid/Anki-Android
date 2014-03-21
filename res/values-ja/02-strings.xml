@@ -137,8 +137,8 @@
     <item>期限順に</item>
   </string-array>
   <plurals name="timebox_reached">
-    <item quantity="one">1 カードを %2$ s で勉強</item>
-    <item quantity="other">%1$ d カードを %2$ s で勉強</item>
+    <item quantity="one">1 カードを %2$s で勉強</item>
+    <item quantity="other">%1$d カードを %2$s で勉強</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
     <item quantity="one">1分</item>
