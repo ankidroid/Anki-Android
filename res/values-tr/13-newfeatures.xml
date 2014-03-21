@@ -40,17 +40,17 @@
 -->
 <resources>
   <string-array name="new_version_features">
-    <item>Lots of Bug Fixes</item>
-    <item>New custom study option with improved tag selection</item>
-    <item>New preview card feature in note editor (experimental)</item>
-    <item>New override font preference in addition to default font</item>
-    <item>New \"Kanji Info\" feature (enabled in preferences-&gt;reviewing-&gt;Kanji Info)</item>
-    <item>Improve Aedict integration</item>
-    <item>Support for Samsung Multi-Window</item>
-    <item>Fix Some TTS Issues</item>
-    <item>Updated Translations</item>
-    <item>Remove unused media check when deleting decks</item>
-    <item>Significantly increase speed for reducing filtered decks</item>
-    <item>Remove upgrade wizard</item>
+    <item>Birsürü bug düzeltmesi</item>
+    <item>Geliştirilmiş etiket seçimiyle yeni kişisel çalışma seçeneği</item>
+    <item>Not düzenleyicide yeni kart önizle özelliği (deneysel)</item>
+    <item>Varsayılan fonta ek olarak yeni üzerine yazma fontu tercihi</item>
+    <item>Yeni \"Kanji Bilgisi\" özelliği (tercihler-&gt;çalışma-&gt;Kanji Bilgisi\'nden açılıyor)</item>
+    <item>Geliştirilmiş Aedict entegrasyonu</item>
+    <item>Samsung Multi-Window desteği</item>
+    <item>Bazı metin okuma düzeltmeleri</item>
+    <item>Güncellenmiş çeviriler</item>
+    <item>Deste silerken kullanılmayan medyayı kaldırma kontrolü</item>
+    <item>Filtreli desteleri eksiltmek için kayda değer hız artışı</item>
+    <item>Yükseltme sihirbazı kaldırıldı</item>
   </string-array>
 </resources>

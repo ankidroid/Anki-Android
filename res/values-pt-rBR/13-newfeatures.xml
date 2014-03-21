@@ -40,17 +40,17 @@
 -->
 <resources>
   <string-array name="new_version_features">
-    <item>Lots of Bug Fixes</item>
-    <item>New custom study option with improved tag selection</item>
-    <item>New preview card feature in note editor (experimental)</item>
-    <item>New override font preference in addition to default font</item>
-    <item>New \"Kanji Info\" feature (enabled in preferences-&gt;reviewing-&gt;Kanji Info)</item>
-    <item>Improve Aedict integration</item>
-    <item>Support for Samsung Multi-Window</item>
-    <item>Fix Some TTS Issues</item>
-    <item>Updated Translations</item>
-    <item>Remove unused media check when deleting decks</item>
-    <item>Significantly increase speed for reducing filtered decks</item>
-    <item>Remove upgrade wizard</item>
+    <item>Várias correções de erros</item>
+    <item>Novas opções de Estudo Personalizado com seleção melhorada de Tag</item>
+    <item>Novo recurso de pré visualização do cartão no editor de nota (experimental)</item>
+    <item>Nova preferência de susbtituir fonte, além da fonte padrão</item>
+    <item>Novo recurso \"Kanji Info\" (habilitado em Preferências-&gt;Revisando-&gt;Kanji Info)</item>
+    <item>Integração com Aedict melhorada</item>
+    <item>Suporte para Multi-telas da Samsung</item>
+    <item>Correções de alguns problemas de TTS</item>
+    <item>Traduções atualizadas</item>
+    <item>Remover verificação de mídia não utilizada quando deletar decks</item>
+    <item>Velocidade significativamente aumentada para reduzir decks filtrados</item>
+    <item>Remover assistente de atualização</item>
   </string-array>
 </resources>

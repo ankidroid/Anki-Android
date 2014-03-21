@@ -138,17 +138,17 @@
     <item>Обмежити конкретними мітками</item>
   </string-array>
   <string-array name="add_to_cur_labels">
-    <item>Use current deck</item>
-    <item>Decide by note type</item>
+    <item>Використовувати поточну колоду</item>
+    <item>Вирішити за типом примітки</item>
   </string-array>
   <string-array name="new_spread_labels">
-    <item>Mix new cards and reviews</item>
-    <item>New cards after reviews</item>
-    <item>New cards before reviews</item>
+    <item>Змішати нові карти і повторювані</item>
+    <item>Нові карти після повторюваних</item>
+    <item>Нові карт перед повторюваними</item>
   </string-array>
   <string-array name="cards_for_tag_filtered_deck_labels">
-    <item>All cards</item>
-    <item>New</item>
-    <item>Due</item>
+    <item>Усі карти</item>
+    <item>Нові</item>
+    <item>На черзі</item>
   </string-array>
 </resources>

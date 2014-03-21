@@ -53,7 +53,7 @@
   <string name="feedback_clear_all">Limpiar todos los errores</string>
   <string name="feedback_default_text">Ingrese por favor sus comentarios o información acerca de la naturaleza de los errores que está reportando.</string>
   <string name="feedback_error_reply_new">Asunto desconocido, nuevo error archivado</string>
-  <string name="feedback_error_reply_known">Issue previously detected. Details welcome on AnkiDroid issue tracker.</string>
+  <string name="feedback_error_reply_known">Problema previamente detectado. Los detalles serán bienvenidos en el gestor de problemas de AnkiDroid.</string>
   <string name="feedback_error_reply_issue_unknown">Asunto %1$d, estado desconocido</string>
   <string name="feedback_error_reply_issue_status">Asunto %1$d, estado: %2$s</string>
   <string name="feedback_error_reply_issue_fixed_dev">Asunto %1$d, arreglado pero aún no publicado</string>

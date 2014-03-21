@@ -40,17 +40,17 @@
 -->
 <resources>
   <string-array name="new_version_features">
-    <item>Lots of Bug Fixes</item>
-    <item>New custom study option with improved tag selection</item>
-    <item>New preview card feature in note editor (experimental)</item>
-    <item>New override font preference in addition to default font</item>
-    <item>New \"Kanji Info\" feature (enabled in preferences-&gt;reviewing-&gt;Kanji Info)</item>
-    <item>Improve Aedict integration</item>
-    <item>Support for Samsung Multi-Window</item>
-    <item>Fix Some TTS Issues</item>
-    <item>Updated Translations</item>
-    <item>Remove unused media check when deleting decks</item>
-    <item>Significantly increase speed for reducing filtered decks</item>
-    <item>Remove upgrade wizard</item>
+    <item>Veel foutcorrecties</item>
+    <item>Nieuw: mogelijkheid om studie aan te passen met verbeterde selectie op kenmerken</item>
+    <item>Nieuw: voorvertoning van kaarten in memobewerker (experimenteel)</item>
+    <item>Nieuw: Overschrijven van lettertypevoorkeur aanvullend op het standaard lettertype</item>
+    <item>Nieuw: \"Kanji Info\" functie (ingeschakeld in Voorkeuren&gt;Overhoren&gt;Kanji Info)</item>
+    <item>Verbeterde Aedict integratie</item>
+    <item>Ondersteuning voor Samsung meerdere vensters</item>
+    <item>Enkele problemen met TTS opgelost</item>
+    <item>Bijgewerkte vertalingen</item>
+    <item>Controle op het verwijderen van  ongebruikte media bij het verwijderen van sets</item>
+    <item>Aanzienlijk versnelling bij het verminderen van gefilterde sets</item>
+    <item>Verwijderd: upgrade-assistent</item>
   </string-array>
 </resources>

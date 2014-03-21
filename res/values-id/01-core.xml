@@ -49,9 +49,9 @@
   <string name="studyoptions_due_today">Jatuh tempo hari ini:</string>
   <string name="studyoptions_new_total">Total kartu baru:</string>
   <string name="studyoptions_total_cards">Total kartu:</string>
-  <string name="studyoptions_eta">Jangka tempoh (min):</string>
+  <string name="studyoptions_eta">Perkiraan waktu (menit):</string>
   <string name="studyoptions_start">Study Now</string>
-  <string name="show_answer">Tunjuk Jawapan</string>
+  <string name="show_answer">Tampilkan jawaban</string>
   <string name="ease1_successive">Ulang</string>
   <string name="ease2_successive">Susah</string>
   <string name="ease3_successive">Baik</string>
@@ -64,7 +64,7 @@
   <string name="card_suspended">Kad digantung</string>
   <string name="menu_rotate">Pusing</string>
   <string name="menu_import">Impor kartu</string>
-  <string name="undo">Buat asal</string>
+  <string name="undo">Membatalkan</string>
   <string name="undo_action_review">tinjau ulang</string>
   <string name="undo_action_edit">ubah catatan</string>
   <string name="undo_action_bury">sembunyikan catatan</string>

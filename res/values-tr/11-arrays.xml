@@ -138,17 +138,17 @@
     <item>Belirli etiketleri sınırla</item>
   </string-array>
   <string-array name="add_to_cur_labels">
-    <item>Use current deck</item>
-    <item>Decide by note type</item>
+    <item>Geçerli desteyi kullan</item>
+    <item>Not türüne göre karar ver</item>
   </string-array>
   <string-array name="new_spread_labels">
-    <item>Mix new cards and reviews</item>
-    <item>New cards after reviews</item>
-    <item>New cards before reviews</item>
+    <item>Yeni kartları ve çalışmaları karıştır</item>
+    <item>Yeni kartlar çalışmalardan sonra</item>
+    <item>Yeni kartlar çalışmalardan önce</item>
   </string-array>
   <string-array name="cards_for_tag_filtered_deck_labels">
-    <item>All cards</item>
-    <item>New</item>
-    <item>Due</item>
+    <item>Bütün kartlar</item>
+    <item>Yeni</item>
+    <item>Çıkacak</item>
   </string-array>
 </resources>

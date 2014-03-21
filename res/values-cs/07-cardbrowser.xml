@@ -53,7 +53,7 @@
   <string name="card_browser_field">Změnit pole prohlížeče</string>
   <string name="card_browser_field_title">Změnit pole prohlížeče</string>
   <string name="card_browser_show_suspended">Filtrovat vyřazené</string>
-  <string name="card_browser_search_by_tag">Filtrovat podle tagu</string>
+  <string name="card_browser_search_by_tag">Filtrovat podle štítků</string>
   <string name="card_browser_tags_shown">Štítky: %1$s</string>
   <string name="card_browser_change_display_order">Změnit řazení</string>
   <string name="card_browser_change_display_order_title">Zvolte řazení</string>
@@ -62,7 +62,7 @@
   <string name="card_browser_card_details">Detail karty</string>
   <string name="card_details_question">Otázka</string>
   <string name="card_details_answer">Odpověď</string>
-  <string name="card_details_due">K opakování</string>
+  <string name="card_details_due">Opakování</string>
   <string name="card_details_last_due">Poslední opakování</string>
   <string name="card_details_now">Nyní</string>
   <string name="card_details_interval">Interval</string>

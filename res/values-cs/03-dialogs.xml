@@ -57,7 +57,7 @@
   <string name="notify_title">AnkiDroid aktualizován</string>
   <string name="notify_message">Stáhnout novou verzi</string>
   <string name="notification_title">Potvrdit aktualizaci AnkiDroidu</string>
-  <string name="preview_title">Preview</string>
+  <string name="preview_title">Náhled</string>
   <string name="notification_message">Nová verze Ankidroidu je k dispozici v Android Marketu.\n\nChcete ji nainstalovat?</string>
   <string name="notification_stop">Již mě na tuto aktualizaci neupozorňujte</string>
   <string name="reset_card_dialog_title">Obnovit pokrok v učení</string>
@@ -119,6 +119,6 @@
     <item><![CDATA[AnkiDroid je <a href="%1$s">open source program<a/>, tak se každý může <a href="%2$s">připojit</a> k <a href="%3$s">přispěvovatelům</a>:-)]]></item>
     <item><![CDATA[Ne jen vývojáři mohou pomoci, např. můžete pomoci s <a href="%1$s">překladem</a> AnkiDroid, aktualizovat wiki dokumentaci a náhledy obrazovek, <a href="%2$s">finančně přispět</a> na program Anki, nebo psát do blogu o AnkiDroidu!]]></item>
     <item><![CDATA[AnkiDroid je publikován pod <a href="%1$s">GNU-GPL v3 licencí</a> a zdrojové kódy jsou dostupné <a href="%2$s">zde</a>.]]></item>
-    <item><![CDATA[This package uses the <a href="http://www.csse.monash.edu.au/~jwb/edict.html">EDICT</a> and <a href="http://www.csse.monash.edu.au/~jwb/kanjidic.html">KANJIDIC</a> dictionary files. These files are the property of the <a href="http://www.edrdg.org">Electronic Dictionary Research and Development Group</a>, and are used in conformance with the Group\'s <a href="http://www.edrdg.org/edrdg/licence.html">licence</a>.]]></item>
+    <item><![CDATA[Tento balíček používá soubory slovníku <a href="http://www.csse.monash.edu.au/~jwb/edict.html">EDICT</a> a <a href="http://www.csse.monash.edu.au/~jwb/kanjidic.html">KANJIDIC</a>. Tyto soubory jsou majetkem <a href="http://www.edrdg.org">Electronic Dictionary Research and Development Group</a>, a jsou používány v souladu s <a href="http://www.edrdg.org/edrdg/licence.html">licencí</a>.]]></item>
   </string-array>
 </resources>

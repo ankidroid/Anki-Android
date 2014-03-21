@@ -50,14 +50,14 @@
   <string name="studyoptions_new_total">Cartes inédites :</string>
   <string name="studyoptions_total_cards">Cartes :</string>
   <string name="studyoptions_eta">Temps estimé (min):</string>
-  <string name="studyoptions_start">Study Now</string>
+  <string name="studyoptions_start">Révisez maintenant</string>
   <string name="show_answer">Afficher la réponse</string>
   <string name="ease1_successive">Encore</string>
   <string name="ease2_successive">Difficile</string>
   <string name="ease3_successive">Bon</string>
   <string name="ease3_learning">Facile</string>
   <string name="studyoptions_congrats_undo">Annuler %s</string>
-  <string name="studyoptions_congrats_unbury">Unbury</string>
+  <string name="studyoptions_congrats_unbury">Déterrer</string>
   <string name="studyoptions_congrats_custom_study">Étude personnalisée</string>
   <string name="studyoptions_congrats_open_other_deck">Ouvrir un autre jeu de cartes</string>
   <string name="card_unsuspended">Suspension de la carte annulée</string>
@@ -72,15 +72,15 @@
   <string name="undo_action_suspend_note">suspendre la note</string>
   <string name="undo_action_delete">supprimer la note</string>
   <string name="undo_action_mark">marquer la note</string>
-  <string name="unbury">Unbury</string>
+  <string name="unbury">Déterrer</string>
   <string name="finish_operation">Opération précédente en cours d\'achèvement (probablement une sauvegarde). \nVeuillez patienter…</string>
   <string name="contextmenu_deckpicker_download_missing_media">Télécharger les médias manquants</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Réinitialiser les affectations de langue</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Réinitialiser la langue</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optimiser la base de données</string>
-  <string name="contextmenu_deckpicker_rename_deck">Renommer le jeu de cartes</string>
-  <string name="contextmenu_deckpicker_collapse_deck">Hide Subdecks</string>
-  <string name="contextmenu_deckpicker_inflate_deck">Show Subdecks</string>
+  <string name="contextmenu_deckpicker_rename_deck">Renommer le paquet</string>
+  <string name="contextmenu_deckpicker_collapse_deck">Cacher les sous-jeux de cartes</string>
+  <string name="contextmenu_deckpicker_inflate_deck">Afficher les sous-jeux de cartes</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Définir un dictionnaire personnalisé</string>
   <string name="menu_download_deck">Télécharger le jeu de cartes</string>
   <string name="menu_download_shared_deck">Jeu de cartes partagé</string>
@@ -88,7 +88,7 @@
   <string name="menu_preferences">Préférences</string>
   <string name="menu_about">À propos</string>
   <string name="menu_dismiss_note">Écarter la note…</string>
-  <string name="menu_bury_card">Bury Card</string>
+  <string name="menu_bury_card">Ecarter la carte</string>
   <string name="menu_bury_note">Enterrer la note</string>
   <string name="menu_suspend_card">Suspendre la carte</string>
   <string name="menu_suspend_note">Suspendre la note</string>
@@ -101,7 +101,7 @@
   <string name="menu_unmark_card">Retirer le marquage</string>
   <string name="new_deck">Nouveau paquet</string>
   <string name="create">Créer</string>
-  <string name="new_dynamic_deck">Nouveaux jeux de cartes classés</string>
+  <string name="new_dynamic_deck">Nouvelles cartes classées</string>
   <string name="studyoptions_feedback">Commentaires</string>
   <string name="studyoptions_load_tutorial_deck">Créer un tutoriel</string>
   <string name="night_mode">Mode nuit</string>
@@ -112,7 +112,7 @@
   <string name="rebuild_cram_deck">Reconstruction du paquet de bachotage.\nVeuillez patienter…</string>
   <string name="rebuild_cram_label">Réparer</string>
   <string name="empty_cram_label">Vider</string>
-  <string name="empty_cram_deck">Jeu de cartes de bachotage en cours de vidage.\n
+  <string name="empty_cram_deck">Paquet de bachotage en cours de vidage.\n
 Veuillez patienter...</string>
   <string name="custom_study_deck_name">Session d\'étude personnalisée</string>
   <string name="custom_study_deck_exists">Merci de renommer d\'abord le paquet d\'étude personnalisée.</string>

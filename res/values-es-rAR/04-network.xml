@@ -55,7 +55,7 @@
   <string name="download_cancel">Cancelar descarga</string>
   <string name="shared_decks">Mazos compartidos</string>
   <string name="loading_shared_decks">Cargando mazos compartidos disponibles...</string>
-  <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Terms and Conditions</a></string>
+  <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Términos y Condiciones</a></string>
   <string name="cancel_download">Cancelar la descarga</string>
   <string name="resume_download">Reanudar la descarga</string>
   <string name="pause_download">Pausar descarga</string>
@@ -72,7 +72,7 @@
   <string name="log_in">Ingresar a la cuenta</string>
   <string name="sign_up_description">¿No posee una cuenta en AnkiWeb? ¡Es gratuita!</string>
   <string name="sign_up">Inscribirse</string>
-  <string name="sign_up_terms">By tapping <i>Sign up</i>, you confirm that you have read and agree to our <a href="https://ankiweb.net/account/terms">terms of use</a>.</string>
+  <string name="sign_up_terms">Al pulsar <i>Regístrate</i> confirmas que has leído y aceptado nuestros <a href="https://ankiweb.net/account/terms">términos de uso</a>.</string>
   <string name="logged_as">Ingresado en la cuenta como</string>
   <string name="log_out">Saliendo de la cuenta</string>
   <string name="alert_logging_message">Ingresando a la cuenta, por favor aguarde...</string>

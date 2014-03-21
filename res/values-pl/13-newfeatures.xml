@@ -40,17 +40,17 @@
 -->
 <resources>
   <string-array name="new_version_features">
-    <item>Lots of Bug Fixes</item>
-    <item>New custom study option with improved tag selection</item>
-    <item>New preview card feature in note editor (experimental)</item>
-    <item>New override font preference in addition to default font</item>
-    <item>New \"Kanji Info\" feature (enabled in preferences-&gt;reviewing-&gt;Kanji Info)</item>
-    <item>Improve Aedict integration</item>
-    <item>Support for Samsung Multi-Window</item>
-    <item>Fix Some TTS Issues</item>
-    <item>Updated Translations</item>
-    <item>Remove unused media check when deleting decks</item>
-    <item>Significantly increase speed for reducing filtered decks</item>
-    <item>Remove upgrade wizard</item>
+    <item>Poprawki błędów</item>
+    <item>Nowa Nauka niestandardowa z usprawnionym wyborem tagów</item>
+    <item>Nowa funkcja podglądu karty w Edytorze Notatek (eksperymentalne)</item>
+    <item>Nowa opcja zastąp czcionkę dla czcionki domyślnej</item>
+    <item>Nowa opcja \"Kanji Info\" (włączana w Ustawienia-&gt;Przegląd-&gt;Kanji Info)</item>
+    <item>Poprawa integracji z Aedict</item>
+    <item>Wsparcie dla wielu ekranów na urządzeniach Samsung</item>
+    <item>Poprawki błędów TTS</item>
+    <item>Uaktualniono tłumaczenia</item>
+    <item>Usuwanie nieużywanych multimediów podczas usuwania talii</item>
+    <item>Zwiększenie prędkości działania zmniejszania talii filtrowanych</item>
+    <item>Kreator usuwania aktualizacji</item>
   </string-array>
 </resources>

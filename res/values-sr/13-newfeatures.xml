@@ -40,17 +40,17 @@
 -->
 <resources>
   <string-array name="new_version_features">
-    <item>Lots of Bug Fixes</item>
-    <item>New custom study option with improved tag selection</item>
-    <item>New preview card feature in note editor (experimental)</item>
-    <item>New override font preference in addition to default font</item>
-    <item>New \"Kanji Info\" feature (enabled in preferences-&gt;reviewing-&gt;Kanji Info)</item>
-    <item>Improve Aedict integration</item>
-    <item>Support for Samsung Multi-Window</item>
-    <item>Fix Some TTS Issues</item>
-    <item>Updated Translations</item>
-    <item>Remove unused media check when deleting decks</item>
-    <item>Significantly increase speed for reducing filtered decks</item>
-    <item>Remove upgrade wizard</item>
+    <item>Исправљено пуно грешака</item>
+    <item>Нова подешавања учења са избором карата по ознакама</item>
+    <item>Нова функција прегледа карата у уређивачу бележака (експериментално)</item>
+    <item>Нове поставке редефинисања фонта као додатак подразумеваном фонту</item>
+    <item>Нове \"Kanji Info\" функције (укључена подешавања-&gt;рецензије-&gt;Kanji информација)</item>
+    <item>Побољшање интеграције Aedict</item>
+    <item>Подршка за Samsung Multi-Window</item>
+    <item>Исправљене грешке гласовног репродуковања</item>
+    <item>Обновљени преводи</item>
+    <item>Уклоњена провера некоришћених медија датотека при уклањању шпилова</item>
+    <item>Значајно повећана брзина сажимања филтрираних шпилова</item>
+    <item>Уклоњен чаробњак ажурирања</item>
   </string-array>
 </resources>

@@ -40,17 +40,17 @@
 -->
 <resources>
   <string-array name="new_version_features">
-    <item>Lots of Bug Fixes</item>
-    <item>New custom study option with improved tag selection</item>
-    <item>New preview card feature in note editor (experimental)</item>
-    <item>New override font preference in addition to default font</item>
-    <item>New \"Kanji Info\" feature (enabled in preferences-&gt;reviewing-&gt;Kanji Info)</item>
-    <item>Improve Aedict integration</item>
-    <item>Support for Samsung Multi-Window</item>
-    <item>Fix Some TTS Issues</item>
-    <item>Updated Translations</item>
-    <item>Remove unused media check when deleting decks</item>
-    <item>Significantly increase speed for reducing filtered decks</item>
-    <item>Remove upgrade wizard</item>
+    <item>Исправлено множество ошибок</item>
+    <item>Новые настройки обучения с выбором карт по тэгам</item>
+    <item>Новая функция предварительного просмотра карт в редакторе заметок (экспериментальная)</item>
+    <item>Возможность переопределения шрифта в дополнении к шрифту по умолчанию</item>
+    <item>Добавлена функция \"Сведения об иероглифе\" (можно включить в меню настройки-&gt;обучение-&gt;Сведения об иероглифе)</item>
+    <item>Улучшена интеграция с Aedict</item>
+    <item>Добавлена поддержка режима многооконной мультизадачности Samsung</item>
+    <item>Исправлены ошибки голосового воспроизведения</item>
+    <item>Обновлены переводы</item>
+    <item>Убрана проверка неиспользуемых медиа файлов при удалении колод</item>
+    <item>Значительно увеличена скорость сжатия фильтрованных колод</item>
+    <item>Удалён мастер обновления</item>
   </string-array>
 </resources>

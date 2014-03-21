@@ -50,7 +50,7 @@
   <string name="studyoptions_new_total">Totale carte nuove:</string>
   <string name="studyoptions_total_cards">Totale carte:</string>
   <string name="studyoptions_eta">Tempo stimato (min):</string>
-  <string name="studyoptions_start">Study Now</string>
+  <string name="studyoptions_start">Studia ora</string>
   <string name="show_answer">Mostra la risposta</string>
   <string name="ease1_successive">Ripeti</string>
   <string name="ease2_successive">Difficile</string>
@@ -107,7 +107,7 @@
   <string name="night_mode">Modalità notturna</string>
   <string name="visit">Visita</string>
   <string name="later">Più tardi</string>
-  <string name="download">Scarica</string>
+  <string name="download">Download</string>
   <string name="open_collection">Apertura collezione.\nAttendi...</string>
   <string name="rebuild_cram_deck">Ricreo mazzo per lo studio focalizzato.\nAttendi...</string>
   <string name="rebuild_cram_label">Ricrea</string>

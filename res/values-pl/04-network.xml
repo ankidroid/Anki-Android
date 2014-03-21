@@ -55,7 +55,7 @@
   <string name="download_cancel">Anuluj pobieranie</string>
   <string name="shared_decks">Udostępnione talie</string>
   <string name="loading_shared_decks">Ładowanie dostępnych udostępnionych talii...</string>
-  <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Terms and Conditions</a></string>
+  <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Warunki użytkowania</a></string>
   <string name="cancel_download">Anuluj pobieranie</string>
   <string name="resume_download">Wznów pobieranie</string>
   <string name="pause_download">Wstrzymaj pobieranie</string>
@@ -72,7 +72,7 @@
   <string name="log_in">Zaloguj się</string>
   <string name="sign_up_description">Nie masz konta AnkiWeb? Jest darmowe!</string>
   <string name="sign_up">Zarejestruj się</string>
-  <string name="sign_up_terms">By tapping <i>Sign up</i>, you confirm that you have read and agree to our <a href="https://ankiweb.net/account/terms">terms of use</a>.</string>
+  <string name="sign_up_terms">Wybierając <i>Zarejestruj się</i>, potwierdzasz, że przeczytałeś i zgadzasz się na nasze <a href="https://ankiweb.net/account/terms">warunki użytkowania</a>.</string>
   <string name="logged_as">Zalogowany jako</string>
   <string name="log_out">Wyloguj się</string>
   <string name="alert_logging_message">Logowanie, proszę czekać...</string>

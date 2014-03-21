@@ -295,7 +295,7 @@
   <string name="pref_enable_tibetan">Enable Tibetan Support</string>
   <string name="pref_enable_tibetan_summ">Enables tibetan typeface for card browser and card editor. Typeface should be provided in /mnt/sdard/fonts/DDC_Uchen.ttf.</string>
   <string name="pref_browser_editor_font">Browser and Editor font</string>
-  <string name="pref_browser_editor_font_summ">Fonte a ser usada por defecto no explorador de cartóns e no editor de carttóns. Fontes personalizdas deberían ser instaladas na tarxeta SD nun cartafol chamado \'fonts\' no teu cartafol AnkiDroid.</string>
+  <string name="pref_browser_editor_font_summ">Fonte a ser usada por defecto no explorador de cartóns e no editor de cartóns. Fontes personalizdas deberían ser instaladas na tarxeta SD nun cartafol chamado \'fonts\' no teu cartafol AnkiDroid.</string>
   <string name="deck_conf_cram_filter">Filter</string>
   <string name="deck_conf_cram_options">Options</string>
   <string name="deck_conf_cram_preset">Preset</string>

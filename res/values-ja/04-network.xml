@@ -55,7 +55,7 @@
   <string name="download_cancel">ダウンロードの中止</string>
   <string name="shared_decks">共有単語帳</string>
   <string name="loading_shared_decks">利用可能な共有単語帳を読み込んでいます。</string>
-  <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Terms and Conditions</a></string>
+  <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms"> 利用規約</a></string>
   <string name="cancel_download">ダウンロード中止</string>
   <string name="resume_download">ダウンロードを再開</string>
   <string name="pause_download">ダウンロード一時停止</string>
@@ -72,7 +72,7 @@
   <string name="log_in">ログイン</string>
   <string name="sign_up_description">AnkiWedのアカウントを持っていますか？無料アカウントを作成できます</string>
   <string name="sign_up">サインアップ</string>
-  <string name="sign_up_terms">By tapping <i>Sign up</i>, you confirm that you have read and agree to our <a href="https://ankiweb.net/account/terms">terms of use</a>.</string>
+  <string name="sign_up_terms"><i>サインアップ</i> をタップして、当社の <a href="https://ankiweb.net/account/terms"> 利用規約</a> への同意を確認します。</string>
   <string name="logged_as">ログイン名</string>
   <string name="log_out">ログアウト</string>
   <string name="alert_logging_message">ログインしています。しばらくお待ちください…</string>

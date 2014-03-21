@@ -57,7 +57,7 @@
   <string name="notify_title">AnkiDroid оновлено</string>
   <string name="notify_message">Завантажити нову версію</string>
   <string name="notification_title">Підтвердити оновлення AnkiDroid</string>
-  <string name="preview_title">Preview</string>
+  <string name="preview_title">Перегляд</string>
   <string name="notification_message">Нова версія AnkiDroid доступна в Google Play.\n\n Бажаєте її встановити?</string>
   <string name="notification_stop">Не повідомляти знову про це оновлення</string>
   <string name="reset_card_dialog_title">Скинути поступ картки</string>
@@ -119,6 +119,6 @@
     <item><![CDATA[AnkiDroid - <a href="%1$s">відкрите програмне забезпечення<a/>, тому запрошуємо всіх <a href="%2$s">долучитися</a> до <a href="%3$s">участі</a>:-)]]></item>
     <item><![CDATA[Не-розробники також можуть допомогти, для прикладу <a href="%1$s">перекладом</a> AnkiDroid, оновленням wiki та знімків екрану, <a href="%2$s">пожертвою</a> для Anki Desktop, або статтею  про AnkiDroid у блозі!]]></item>
     <item><![CDATA[AnkiDroid випускається під <a href="%1$s">ліцензією GNU-GPL v3</a> і вихіний код доступний <a href="%2$s">тут</a>.]]></item>
-    <item><![CDATA[This package uses the <a href="http://www.csse.monash.edu.au/~jwb/edict.html">EDICT</a> and <a href="http://www.csse.monash.edu.au/~jwb/kanjidic.html">KANJIDIC</a> dictionary files. These files are the property of the <a href="http://www.edrdg.org">Electronic Dictionary Research and Development Group</a>, and are used in conformance with the Group\'s <a href="http://www.edrdg.org/edrdg/licence.html">licence</a>.]]></item>
+    <item><![CDATA[цей пакет використовує файли словників <a href="http://www.csse.monash.edu.au/~jwb/edict.html"> EDICT</a>, <a href="http://www.csse.monash.edu.au/~jwb/kanjidic.html"> KANJIDIC</a>. Ці файли є власністю <a href="http://www.edrdg.org"> Electronic Dictionary Research and Development Group</a> і використовуються згідно із <a href="http://www.edrdg.org/edrdg/licence.html"> ліцензією</a> організації.]]></item>
   </string-array>
 </resources>

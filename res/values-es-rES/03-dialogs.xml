@@ -57,7 +57,7 @@
   <string name="notify_title">Ankidroid actualizado</string>
   <string name="notify_message">Descargar una nueva versión</string>
   <string name="notification_title">Confirmar la actualización de Ankidroid</string>
-  <string name="preview_title">Preview</string>
+  <string name="preview_title">Vista Previa</string>
   <string name="notification_message">Una nueva versión de Ankidroid se encuentra disponible en el Android Market.\n\n¿Quieres instalarla?</string>
   <string name="notification_stop">No volver a notificarme acerca de esta actualización</string>
   <string name="reset_card_dialog_title">Resetear el progreso de la tarjeta</string>
@@ -119,6 +119,6 @@
     <item><![CDATA[AnkiDroid es un <a href="%1$s">software de código abierto<a/>, por lo que se anima a todo el mundo a <a href="%2$s">unirse</a> a los <a href="%3$s">colaboradores</a>:-)]]></item>
     <item><![CDATA[Los que no sean desarrolladores también pueden ayudar, por ejemplo, <a href="%1$s">traduciendo</a> AnkiDroid, actualizando la wiki y las capturas de pantalla, <a href="%2$s">haciendo una donación</a> a Anki Escritorio, ¡o blogueando sobre AnkiDroid!]]></item>
     <item><![CDATA[AnkiDroid es distribuido bajo la <a href="%1$s">licencia GNU-GPL v3</a> y el código fuente está disponible <a href="%2$s">aquí</a>.]]></item>
-    <item><![CDATA[This package uses the <a href="http://www.csse.monash.edu.au/~jwb/edict.html">EDICT</a> and <a href="http://www.csse.monash.edu.au/~jwb/kanjidic.html">KANJIDIC</a> dictionary files. These files are the property of the <a href="http://www.edrdg.org">Electronic Dictionary Research and Development Group</a>, and are used in conformance with the Group\'s <a href="http://www.edrdg.org/edrdg/licence.html">licence</a>.]]></item>
+    <item><![CDATA [Este paquete utiliza los archivos de diccionario <a href="http://www.csse.monash.edu.au/~jwb/edict.html">EDICT</a> y <a href="http://www.csse.monash.edu.au/~jwb/kanjidic.html"> KANJIDIC</a>. Estos archivos son propiedad del grupo <a href="http://www.edrdg.org">Electronic Dictionary Research and Development</a> y se utilizan de conformidad la <a href="http://www.edrdg.org/edrdg/licence.html">licencia</a> del grupo.]]></item>
   </string-array>
 </resources>

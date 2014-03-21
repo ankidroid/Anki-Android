@@ -56,7 +56,7 @@
   <string name="statistics_fullscreen">Volledig scherm</string>
   <string name="calculating_statistics">Statistieken berekenen.\nEven geduld...</string>
   <string name="deck_summary_cards">Aantal kaarten:</string>
-  <string name="deck_summary_notes">Aantal memes:</string>
+  <string name="deck_summary_notes">Aantal memos:</string>
   <string name="deck_summary_cards_mature">Rijpe kaarten:</string>
   <string name="deck_summary_cards_young">Jonge kaarten:</string>
   <string name="deck_summary_cards_unseen">Ongeziene kaarten </string>

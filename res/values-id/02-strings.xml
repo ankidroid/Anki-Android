@@ -88,7 +88,7 @@
   <string name="tutorial_loading_error">Dek tutorial tidak dapat dibuat</string>
   <string name="rename">Ubah nama</string>
   <string name="rename_error">Dek %s tidak dapat diganti namanya</string>
-  <string name="default_conf_delete_error">The default options group can\'t be removed</string>
+  <string name="default_conf_delete_error">Kelompok pilihan default tidak dapat dihapus</string>
   <string name="help_title">Bantuan</string>
   <string name="help_online">Bantuan online</string>
   <string name="help_faq">FAQ</string>
@@ -124,28 +124,28 @@
   <string name="template_error">Template error:</string>
   <string name="template_error_detail">There is an error in the template of this card.</string>
   <string name="template_error_fix">Please use the card editor on the desktop client to fix the error.</string>
-  <string name="sched_end">(end)</string>
+  <string name="sched_end">(akhir)</string>
   <string name="sched_unbury_button">To see them now, tap the Unbury button.</string>
   <string name="sched_has_buried">Some related or buried cards were delayed until a later session.</string>
   <string-array name="dynOrderLabels">
-    <item>Oldest seen first</item>
-    <item>Random</item>
+    <item>Tertua pertama dilihat</item>
+    <item>Acak</item>
     <item>Meningkatkan interval</item>
     <item>Mengurangi interval</item>
     <item>Most lapses</item>
-    <item>Order added</item>
-    <item>Order due</item>
+    <item>Urutan ditambahkan</item>
+    <item>Urut berdasarkan</item>
   </string-array>
   <plurals name="timebox_reached">
-    <item quantity="one">1 card studied in %2$s</item>
-    <item quantity="other">%1$d cards studied in %2$s</item>
+    <item quantity="one">1 kartu dipelajari dalam %2$s</item>
+    <item quantity="other">%1$d kartu dipelajari dalam %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
-    <item quantity="one">1 minute</item>
-    <item quantity="other">%1$d minutes</item>
+    <item quantity="one">1 menit</item>
+    <item quantity="other">%1$d menit</item>
   </plurals>
   <plurals name="factadder_cards_added">
-    <item quantity="one">1 card added</item>
+    <item quantity="one">1 kartu ditambahkan</item>
     <item quantity="other">%d kartu ditambahkan</item>
   </plurals>
 </resources>

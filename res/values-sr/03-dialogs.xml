@@ -39,28 +39,28 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="welcome_message">Са AnkiDroid,можете ефикасно да попуните свој речник или научите било коју другу информацију. AnkiDroid поново приказује карте по одређеном алгоритму, да их не бисте заборавили.\n\nЗа упознавање, препоручујемо да почнете од обучавајућег шпила, који ће вас упознати са радом. Једноставно кликните \"Започни преглед\" после отварања шпила.\n\nЖелите ли креирање обучавајућег шпила?</string>
+  <string name="welcome_message">Са AnkiDroid можете ефикасно да повећате фонд речи или да научите било које градиво. AnkiDroid понавља приказивање карата пре него што их заборавите.\n\nДа бисте упознали програм, препоручујемо да почнете од обучавајуће карте, која ће вас упознати како шта овде функционише. Једноставно кликните \"Почни преглед\" после отварања карте.\n\nКреирати обучавајућу карту сада?</string>
   <string name="check_db_title">Провери базу података</string>
   <string name="check_db_result_message">База је проверена и оптимизована.\nУмањење за %d kb</string>
-  <string name="contextmenu_deckpicker_delete_deck">Izbriši Špil</string>
-  <string name="delete_deck_title">Izbriši Špil</string>
+  <string name="contextmenu_deckpicker_delete_deck">Избриши шпил</string>
+  <string name="delete_deck_title">Избриши шпил</string>
   <string name="delete_deck_message">Да ли сте сигурни да желите да избришете све карте у %s?</string>
   <string name="delete_cram_deck_message">Да ли сте сигурни да желите да пошаљете све карте из %s у њихове оригиналне шпилове?</string>
-  <string name="delete_deck_confirm">Izbriši</string>
+  <string name="delete_deck_confirm">Избриши</string>
   <string name="new_version_message">Нове могућности:</string>
   <string name="no_tts_available_title">Претварање текста у говор</string>
   <string name="no_tts_available_message">Функција претварања текста у говор није доступна</string>
   <string name="tts_no_tts">Не изговарај</string>
   <string name="dont_show_again">Не приказуј поново</string>
-  <string name="sync_log_title">Log Sinhronizacije</string>
-  <string name="notify_ticker">Ažuriranje Programa</string>
-  <string name="notify_title">Ankidroid je Ažuriran</string>
-  <string name="notify_message">Skinite nove verziju</string>
-  <string name="notification_title">Potvrdi Ažuriranje Ankidroid-a</string>
-  <string name="preview_title">Preview</string>
-  <string name="notification_message">Nova verzija Ankidroid-a je dostupna u Android Market-u.\n\nDa li je želite instalirati?</string>
-  <string name="notification_stop">Ne obaveštuj me opet o ovom ažuriranju</string>
-  <string name="reset_card_dialog_title">Ресетовање учећег прогреса карте</string>
+  <string name="sync_log_title">Ток синхронизације</string>
+  <string name="notify_ticker">Ажурирање апликације</string>
+  <string name="notify_title">Ankidroid је ажуриран</string>
+  <string name="notify_message">Преузми нову верзију</string>
+  <string name="notification_title">Потврди ажурирање Ankidroid-a</string>
+  <string name="preview_title">Преглед</string>
+  <string name="notification_message">Нова верзија Ankidroid-a je доступна у Android Market-у.\n\nЖелите ли да је инсталирате?</string>
+  <string name="notification_stop">Не обавештавај ме поново о овом ажурирању</string>
+  <string name="reset_card_dialog_title">Ресетовање прогреса учења карте</string>
   <string name="reset_card_dialog_message">Уклањање прогреса учења за све карте за ову белешку (оне ће изгледати као нове).\nДа продужим?</string>
   <string name="reset_card_dialog_confirmation">Све карте ове белешке ће бити ресетоване</string>
   <string name="answering_error_title">Грешка базе података</string>
@@ -119,6 +119,6 @@
     <item><![CDATA[AnkiDroid је <a href="%1$s">софтвер отвореног кода<a/>, па свако може <a href="%2$s">постати</a>  <a href="%3$s">учесник</a>:-)]]></item>
     <item><![CDATA[Не-програмери могу помоћи <a href="%1$s">преводећи</a> AnkiDroid, обнављајући wiki и скриншоте, <a href="%2$s">донирајући</a> за Anki Desktop, или написавши у блогу о AnkiDroid!]]></item>
     <item><![CDATA[AnkiDroid је публикован са  <a href="%1$s">GNU-GPL v3 лиценцом</a> и изворни код је доступан <a href="%2$s">овде</a>.]]></item>
-    <item><![CDATA[This package uses the <a href="http://www.csse.monash.edu.au/~jwb/edict.html">EDICT</a> and <a href="http://www.csse.monash.edu.au/~jwb/kanjidic.html">KANJIDIC</a> dictionary files. These files are the property of the <a href="http://www.edrdg.org">Electronic Dictionary Research and Development Group</a>, and are used in conformance with the Group\'s <a href="http://www.edrdg.org/edrdg/licence.html">licence</a>.]]></item>
+    <item><![CDATA[овај пакет користи датотеке речника <a href="http://www.csse.monash.edu.au/~jwb/edict.html">EDICT</a> и <a href="http://www.csse.monash.edu.au/~jwb/kanjidic.html">KANJIDIC</a>. Датотеке су власништво <a href="http://www.edrdg.org">Electronic Dictionary Research and Development Group</a>, и користе се у складу са <a href="http://www.edrdg.org/edrdg/licence.html">лиценцом</a> организације.]]></item>
   </string-array>
 </resources>

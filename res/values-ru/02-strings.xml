@@ -69,7 +69,7 @@
   <string name="deck">Колода</string>
   <string name="add">Добавить</string>
   <string name="close">Закрыть</string>
-  <string name="select">Ок</string>
+  <string name="select">Выбрать</string>
   <string name="saving_changes">Сохранение изменений...</string>
   <string name="reordering_cards">Изменение очерёдности карт...</string>
   <string name="studyoptions_welcome_title">Добро пожаловать в AnkiDroid</string>
@@ -114,7 +114,7 @@
   <string name="import_importing">Импортирование карт.\nПожалуйста, подождите...</string>
   <string name="import_hint">Чтобы импортировать карты, поместите файл apkg в каталог %s и нажмите ОК</string>
   <string name="upgrade_import_no_file_found">Найден не импортируемый файл %1$s</string>
-  <string name="study_options">Options</string>
+  <string name="study_options">Параметры</string>
   <string name="custom_study">Дополнительное обучение</string>
   <string name="dyn_deck_desc">Это специальная колода для изучения вне нормального расписания. Карты будут автоматически возвращены в их изначальную колоду после их просмотра. Удаление этой колоды из списка колод возвратит все оставшиеся карты в их изначальную колоду.</string>
   <string name="exit_wizard">Выход из мастера</string>
@@ -123,9 +123,9 @@
   <string name="custom_study_invalid_number">Недопустимое число</string>
   <string name="template_error">Ошибка шаблона:</string>
   <string name="template_error_detail">В шаблоне этой карты присутствует ошибка.</string>
-  <string name="template_error_fix">Please use the card editor on the desktop client to fix the error.</string>
+  <string name="template_error_fix">Используйте редактор карт в настольной версии Anki, чтобы исправить эту ошибку.</string>
   <string name="sched_end">(конец)</string>
-  <string name="sched_unbury_button">To see them now, tap the Unbury button.</string>
+  <string name="sched_unbury_button">Чтобы увидеть их снова, нажмите кнопку Вернуть.</string>
   <string name="sched_has_buried">Некоторые связанные или скрытые карты были отложены до следующей сессии.</string>
   <string-array name="dynOrderLabels">
     <item>Старейшие появляться первыми</item>
