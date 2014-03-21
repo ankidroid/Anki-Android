@@ -29,7 +29,7 @@ localizedRegions = ['es', 'pt', 'zh']
 
 fileNames = ['01-core', '02-strings', '03-dialogs', '04-network', '05-feedback', '06-statistics', '07-cardbrowser', '08-widget', '09-backup', '10-preferences', '11-arrays', '12-tutorial', '13-newfeatures', '14-marketdescription', '15-markettitle']
 anyError = False
-titleFile = '../docs/marketing/localized_description/ankidroid-titles.txt'
+titleFile = 'docs/marketing/localized_description/ankidroid-titles.txt'
 titleString = 'AnkiDroid Flashcards'
 
 
@@ -118,10 +118,10 @@ def createIfNotExisting(directory):
 
 def update(valuesDirectory, f, source, fileExt, isCrowdin, language=''):
 	if f == '14-marketdescription':
-		newfile = '../docs/marketing/localized_description/marketdescription' + '-' + language + fileExt
+		newfile = 'docs/marketing/localized_description/marketdescription' + '-' + language + fileExt
 		file(newfile, 'w').write(source)
 		# translations must be compared to the old version of marketdescription (bug of crowdin)
-		oldContent = open('../docs/marketing/localized_description/oldVersionJustToCompareWith.txt').readlines()
+		oldContent = open('docs/marketing/localized_description/oldVersionJustToCompareWith.txt').readlines()
 		newContent = open(newfile).readlines()
 		for i in range(0, len(oldContent)):
 			if oldContent[i] != newContent[i]:
@@ -131,7 +131,7 @@ def update(valuesDirectory, f, source, fileExt, isCrowdin, language=''):
 		print 'file marketdescription is not translated into language ' + language
 		return True
 	elif f == '15-markettitle':
-#		newfile = '../docs/marketing/localized_description/marketdescription' + '-' + language + fileExt
+#		newfile = 'docs/marketing/localized_description/marketdescription' + '-' + language + fileExt
 #		file(newfile, 'w').write(source)
 		translatedTitle = source.replace("\n", "")
 		if titleString != translatedTitle:
@@ -168,7 +168,7 @@ for language in languages:
 		androidLanguage = language[:2] # Example: es-ES becomes es
 
 	print "\ncopying language files for: " + androidLanguage
-	valuesDirectory = "../res/values-" + androidLanguage + "/"
+	valuesDirectory = "res/values-" + androidLanguage + "/"
 	createIfNotExisting(valuesDirectory)
 
 	# Copy localization files, mask chars and append gnu/gpl licence
@@ -183,11 +183,11 @@ for language in languages:
 			anyError = False
 
 # Special case: English tutorial.
-valuesDirectory = "../res/values/"
+valuesDirectory = "res/values/"
 createIfNotExisting(valuesDirectory)
 f = '12-tutorial'
 fileExt = fileExtFor(f)
-source = open("../assets/" + 'tutorial' + fileExt)
+source = open("assets/" + 'tutorial' + fileExt)
 #Note: the original tutorial.csv has less columns, therefore we have special
 #support for its syntax.
 print
