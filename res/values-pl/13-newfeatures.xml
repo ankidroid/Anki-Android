@@ -49,8 +49,8 @@
     <item>Wsparcie dla wielu ekranów na urządzeniach Samsung</item>
     <item>Poprawki błędów TTS</item>
     <item>Uaktualniono tłumaczenia</item>
-    <item>Usuwanie nieużywanych multimediów podczas usuwania talii</item>
-    <item>Zwiększenie prędkości działania zmniejszania talii filtrowanych</item>
+    <item>Usunięcie nieużywanej kontroli mediów podczas usuwania talii</item>
+    <item>Zwiększenie prędkości redukcji talii filtrowanych</item>
     <item>Kreator usuwania aktualizacji</item>
   </string-array>
 </resources>

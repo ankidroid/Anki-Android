@@ -65,8 +65,8 @@
   <string name="connection_error_message">Ocorreu um erro de rede.</string>
   <string name="sync_log_db_error">Ocorreu um erro de banco de dados.</string>
   <string name="no_user_password_error_message">Para continuar com esta operação, você precisa ter uma conta AnkiWeb e estar logado.</string>
-  <string name="username">Email address</string>
-  <string name="username_repeat">Repeat email address</string>
+  <string name="username">Endereço de email</string>
+  <string name="username_repeat">Repita endereço de email</string>
   <string name="password">Senha</string>
   <string name="password_repeat">Digite novamente a senha</string>
   <string name="log_in">Logar</string>
@@ -76,7 +76,7 @@
   <string name="logged_as">Logado como</string>
   <string name="log_out">Sair</string>
   <string name="alert_logging_message">Fazendo login, por favor aguarde...</string>
-  <string name="invalid_username_password">Invalid email address or password.</string>
+  <string name="invalid_username_password">Endereço de email ou password inválidos.</string>
   <string name="login_generic_error">Falha ao efetuar login.</string>
   <string name="download_finished">Download concluído</string>
   <string name="personaldeckpicker_title">Abrir Deck Online</string>
@@ -155,5 +155,5 @@
   <string name="upgrade_decks_media_failed">Copying the media files to the new media folder (%1$s) has failed for these decks:\n%2$sPlease move the media files manually.</string>
   <string name="download_deck">Downloading deck (%d kb).\nPlease wait...</string>
   <string name="sync_sanity_local">Local</string>
-  <string name="sync_sanity_remote">Remote</string>
+  <string name="sync_sanity_remote">Remoto</string>
 </resources>

@@ -79,8 +79,8 @@
   <string name="contextmenu_deckpicker_reset_reset_message">Reset języka</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optymalizacja bazy danych</string>
   <string name="contextmenu_deckpicker_rename_deck">Zmień nazwę talii</string>
-  <string name="contextmenu_deckpicker_collapse_deck">Ukryj talie</string>
-  <string name="contextmenu_deckpicker_inflate_deck">Pokaż talie</string>
+  <string name="contextmenu_deckpicker_collapse_deck">Ukryj sub-talie</string>
+  <string name="contextmenu_deckpicker_inflate_deck">Pokaż sub-talie</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Ustaw własny słownik</string>
   <string name="menu_download_deck">Pobierz talię</string>
   <string name="menu_download_shared_deck">Udostępniona talia</string>

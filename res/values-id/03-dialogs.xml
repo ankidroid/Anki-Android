@@ -95,7 +95,7 @@
   <string name="deck_upgrade_via_web"><![CDATA[<b>This upgrade method is not recommended if you used media files, or have a big collection!</b><br><br>Your Anki1 decks will be zipped and uploaded to AnkiWeb, and the converted collection will then be downloaded.<br><br>Please note that a stable internet connection is required, and that there is a 50MB file limit.<br><br>Users of Anki Desktop are strongly encouraged to use the PC based upgrade method.<br><br>Do you still want to proceed?]]></string>
   <string name="deck_upgrade_via_anki_desktop"><![CDATA[If you currently have an up-to-date version of your AnkiDroid collection in the Anki desktop software, you can upgrade from there and then download your upgraded collection by syncing with AnkiWeb.<br><br>Alternatively, you can copy your AnkiDroid collection to your PC using USB, then upgrade the collection and copy back to AnkiDroid.]]></string>
   <string name="deck_upgrade_auto_upgrade"><![CDATA[Please install and start Anki Desktop version 2.0.4 or greater to upgrade your collection, then sync your upgraded collection with AnkiWeb and press the "Download" button.<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_2:_Using_AnkiWeb_sync">More detailed information on upgrading using AnkiWeb</a>]]></string>
-  <string name="deck_upgrade_manual"><![CDATA[Please copy all of your *.anki files (and any *.media folders) from your AnkiDroid folder to your Anki Desktop folder, and then install and start Anki Desktop version 2.0.4 or greater to upgrade your collection.<br><br>When the upgrade is completed, please export your collection from Anki2 and copy the collection.apkg file to your AnkiDroid folder and press the Import button below.<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_1:_Using_USB_(recommended)">More detailed information on upgrading using USB.</a>]]></string>
+  <string name="deck_upgrade_manual"><![CDATA[Silahkan gandakan semua file *.anki Anda (dan semua folder *.media) dari folder AnkiDroid Anda ke folder Anki Desktop Anda, kemudian install dan jalankan Anki Desktop versi 2.0.4 atau lebih untuk mengupgrade koleksi Anda.<br><br>Ketiga upgrade selesai, silahkan export kolesi anda dari Anki2 dan gandakan file collection.apkg ke dalam folder AnkiDroid dan tekan tombol Import di bawah.<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_1:_Using_USB_(recommended)">Informasi lebih detail tentang mengupgrade menggunakan USB.</a>]]></string>
   <string name="upgrade_deck_cancelled_title">Upgrade dibatalkan</string>
   <string name="upgrade_deck_cancelled_description">The upgrade attempt was cancelled, please try again one of the available upgrade methods.</string>
   <string name="upgrade_deck_web_upgrade_failed">The upgrade process was unsuccessful. Please try again, or choose a different upgrade method</string>
@@ -109,16 +109,16 @@
   <string name="upgrade_deck_have_you_synced">Are you sure you have upgraded your collection with Anki Desktop 2 and synced with AnkiWeb?</string>
   <string name="upgrade_deck_dont_upgrade">Jangan diperbaharui</string>
   <string name="import_unpacking">Unpacking archive.\nPlease wait&#8230;</string>
-  <string name="importing_collection">Importing collection.\nPlease wait&#8230;</string>
-  <string name="import_media_count">Importing media files %1$d%%\nPlease wait&#8230;</string>
-  <string name="import_update_counts">Updating deck counts.\nPlease wait&#8230;</string>
-  <string name="import_add_progress">• Unpacking archive %1$s\n• Import of notes %2$d%%\n• Import of cards %3$d%%\n• Cleanup %4$s</string>
+  <string name="importing_collection">Mengimpor koleksi.\nSilahkan tunggu&#8230;</string>
+  <string name="import_media_count">Mengimpor file-file media %1$d%%\nSilahkan tunggu&#8230;</string>
+  <string name="import_update_counts">Memperbarui hitungan dek. \nSilahkan tunggu&#8230;</string>
+  <string name="import_add_progress">• Membuka arsip %1$s\n• Import catatan-catatan %2$d%%\n• Import kartu %3$d%%\n• Pembersihan %4$s</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Kad imbas untuk Android</h2>AnkiDroid ialah kad imbas yang juga serasi dengan perisian destop <a href="%2$s">Anki</a>. Anda boleh reka, muat turun dan belajar di antara dua perisian ini.]]></item>
     <item><![CDATA[Bantu kami memperbaiki AnkiDroid dengan melapor bug di <a href="%1$s">sini</a>; Cadangan baru dijemput! Guna <a href="%2$s">wiki</a> dan bincang di dalam  <a href="%3$s">forum</a>.]]></item>
     <item><![CDATA[AnkiDroid  <a href="%1$s">software terbuka<a/>, jadi semua orang dijemput untuk <a href="%2$s">serta</a> dan <a href="%3$s">menyumbang</a>:-)]]></item>
     <item><![CDATA[Orang ramai boleh membantu, seperti <a href="%1$s">dengan alih bahasa</a> AnkiDroid, mengemas wiki dan gambar, <a href="%2$s">menderma</a> kepada Anki Desktop, atau blogging pasal AnkiDroid!]]></item>
     <item><![CDATA[AnkiDroid tertakluk kepada <a href="%1$s">Lesen GNU-GPL v3 </a> dan kod sumber disimpan di <a href="%2$s">sini</a>.]]></item>
-    <item><![CDATA[This package uses the <a href="http://www.csse.monash.edu.au/~jwb/edict.html">EDICT</a> and <a href="http://www.csse.monash.edu.au/~jwb/kanjidic.html">KANJIDIC</a> dictionary files. These files are the property of the <a href="http://www.edrdg.org">Electronic Dictionary Research and Development Group</a>, and are used in conformance with the Group\'s <a href="http://www.edrdg.org/edrdg/licence.html">licence</a>.]]></item>
+    <item><![CDATA[Paket ini menggunakan file kamus <a href="http://www.csse.monash.edu.au/~jwb/edict.html">EDICT</a> dan <a href="http://www.csse.monash.edu.au/~jwb/kanjidic.html">KANJIDIC</a>. File-file tersebut dimiliki oleh <a href="http://www.edrdg.org">Electronic Dictionary Research and Development Group</a>, dan digunakan sesuai dengan <a href="http://www.edrdg.org/edrdg/licence.html">lisensi</a> Group.]]></item>
   </string-array>
 </resources>

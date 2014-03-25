@@ -58,11 +58,11 @@
   <string name="notify_message">دانلود نسخه جدید</string>
   <string name="notification_title">تایید بروز رسانی آنکی دروید</string>
   <string name="preview_title">پیش نمایش</string>
-  <string name="notification_message">یک نسخه جدید از آنکی دروید در بازار موجود است.\n\nآیا می خواهید آن را نصب کنید?</string>
-  <string name="notification_stop">دوباره به من این بروز رسانی را اطلاع نده</string>
-  <string name="reset_card_dialog_title">تنظیم مجدد کارت پیشرفت</string>
-  <string name="reset_card_dialog_message">پیشرفت آموزش برای همه کارتهای این یادداشت بازنشانی می شود ( آن وقت بنظر می رسد که کارت جدید است).\nواقعا ادامه می دهید?</string>
-  <string name="reset_card_dialog_confirmation">همه کارتهای این یادداشت بازنشانی می شود</string>
+  <string name="notification_message">یک نسخه جدید از آنکی دروید در بازار اندروید موجود است.\n\nآیا می خواهید آن را نصب کنید?</string>
+  <string name="notification_stop">دوباره این به روز رسانی را به من اطلاع نده</string>
+  <string name="reset_card_dialog_title">تنظیم مجدد پیشرفت کارت</string>
+  <string name="reset_card_dialog_message">پیشرفت آموزش برای همه کارتهای این فلش کارت بازنشانی می شود ( آن وقت بنظر می رسد که کارتها جدید است).\nواقعا ادامه می دهید?</string>
+  <string name="reset_card_dialog_confirmation">همه کارتهای این فلش کارت بازنشانی می شود</string>
   <string name="answering_error_title">خطای پایگاه داده</string>
   <string name="answering_error_message">یک خطا هنگام نوشتن به مجموعه رخ داده است. This could be related to a corrupt database or to insufficient disc spaceاین می تواند مربوط به پایگاه داده آسیب دیده و یا فضای ناکافی هارد باشد.\n\nاگر در اغلب موارد این حالت اتفاق می افتد, لطفا پایگاه داده را بررسی کنید, تعمیر کنید مجموعه را یا بازگردانید آن را از فایل پشتیبان. کلیک کنید روی \'options\' برای آن.\n\nدر صورتی که درست نشد, احتمالا اشکال از برنامه آنکی دروید است; لطفا گزارش کنید خطایی را که ما می توانیم آن را بررسی کنیم.</string>
   <string name="answering_error_report">گزارش خطا</string>
@@ -120,6 +120,6 @@
     <item><![CDATA[آنکی دروید <a href="%1$s">یک نرم افزار متن باز است<a/>, همچنین هرکس می تواند در پیشبرد آن کمک به <a href="%2$s">مشارکت کند</a> the <a href="%3$s">اعانه دهنده</a>:-)]]></item>
     <item><![CDATA[غیر از برنامه نویسان نیز می توانند کمک کنند , بعنوان نمونه به وسیله <a href="%1$s">ترجمه</a> آنکی دروید, بروزرسانی دانشنامه و عکس های برنامه, <a href="%2$s">دونیت کردن یا اهداء کردن</a> برای نرم افزار کامپیوتر آنکی ، یا بلاگ درباره آنکی دروید!]]></item>
     <item><![CDATA[نرم افزار آنکی دروید تحت <a href="%1$s">GNU-GPL v3 license</a> و کدهای آن در دسترس است <a href="%2$s">اینجا</a>.]]></item>
-    <item><![CDATA[This package uses the <a href="http://www.csse.monash.edu.au/~jwb/edict.html">EDICT</a> and <a href="http://www.csse.monash.edu.au/~jwb/kanjidic.html">KANJIDIC</a> dictionary files. These files are the property of the <a href="http://www.edrdg.org">Electronic Dictionary Research and Development Group</a>, and are used in conformance with the Group\'s <a href="http://www.edrdg.org/edrdg/licence.html">licence</a>.]]></item>
+    <item><![CDATA[این بسته با استفاده از<a href="http://www.csse.monash.edu.au/~jwb/edict.html">EDICT</a> و <a href="http://www.csse.monash.edu.au/~jwb/kanjidic.html">KANJIDIC</a>فایل های واژه نامه. این فایل ها مالthe <a href="http://www.edrdg.org">پژوهش واژه نامه الکترونیکی و گروه توسعه</a>, و در پیروی با این گروه <a href="http://www.edrdg.org/edrdg/licence.html">مجوز</a>استفاده می شود]]></item>
   </string-array>
 </resources>

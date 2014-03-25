@@ -41,16 +41,16 @@
 <resources>
   <string-array name="new_version_features">
     <item>Viele Bug-Fixes</item>
-    <item>New custom study option with improved tag selection</item>
+    <item>Neue Option für benutzerdefiniertes Training mit verbesserter Schlagwortauswahl</item>
     <item>Neue Kartenvorschau-Funktion im Notizeditor (experimentell)</item>
-    <item>New override font preference in addition to default font</item>
-    <item>New \"Kanji Info\" feature (enabled in preferences-&gt;reviewing-&gt;Kanji Info)</item>
+    <item>Neue Option für Schriftartenwechsel zusätzlich zur Standardschriftart</item>
+    <item>Neues \"Kanji Info\"-Feature (aktivieren in Einstellungen-&gt;Lernen-&gt;Kanji Info)</item>
     <item>Aedict Integration verbessert</item>
     <item>Unterstützung für Samsung Multi-Window</item>
     <item>Einige TTS-Probleme behoben</item>
     <item>Übersetzungen aktualisiert</item>
-    <item>Remove unused media check when deleting decks</item>
-    <item>Significantly increase speed for reducing filtered decks</item>
+    <item>Keine Überprüfung auf unbenutzte Medienelemente mehr beim Löschen von Stapeln</item>
+    <item>Deutliche Geschwindigkeitsverbesserung um gefilterte Stapel zu reduzieren</item>
     <item>Upgrade Wizard entfernt</item>
   </string-array>
 </resources>

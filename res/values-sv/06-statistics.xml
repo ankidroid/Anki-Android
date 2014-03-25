@@ -56,7 +56,7 @@
   <string name="statistics_fullscreen">Växla fullskärm</string>
   <string name="calculating_statistics">Beräknar statistik.\nVar god vänta...</string>
   <string name="deck_summary_cards">Antal kort:</string>
-  <string name="deck_summary_notes">Antal anteckningar:</string>
+  <string name="deck_summary_notes">Antal noter:</string>
   <string name="deck_summary_cards_mature">Mogna kort:</string>
   <string name="deck_summary_cards_young">Unga kort:</string>
   <string name="deck_summary_cards_unseen">Osedda kort:</string>

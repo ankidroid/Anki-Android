@@ -125,7 +125,7 @@
   <string name="template_error_detail">Il y a une erreur dans le modèle de cette carte.</string>
   <string name="template_error_fix">Utilisez l\'éditeur de carte du client PC to corriger l\'erreur.</string>
   <string name="sched_end">(fin)</string>
-  <string name="sched_unbury_button">Pour les voir maintenant, appuyer sur le bouton Unburry.</string>
+  <string name="sched_unbury_button">Pour les voir maintenant, appuyer sur le bouton Déterrer.</string>
   <string name="sched_has_buried">Certaines cartes enterrées ou différées ont été reportées à une prochaine séance.</string>
   <string-array name="dynOrderLabels">
     <item>Des plus au moins anciennes</item>

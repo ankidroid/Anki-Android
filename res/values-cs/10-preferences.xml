@@ -105,7 +105,7 @@
   <string name="display_font_size">Relativní velikost písma</string>
   <string name="display_font_size_summ">Velikost písma zobrazení v poměru k definicím v balíčku. Nyní: XXX %</string>
   <string name="image_size">Relativní velikost obrázku</string>
-  <string name="image_size_summ">The size of images to use during review, relative to the size of the original media files. At the moment: XXX %</string>
+  <string name="image_size_summ">Velikost obrázku použitá během opakování vzhledem k velikosti původních souborů médií. V současné době: XXX %</string>
   <string name="card_browser_font_size">Velikost písma prohlížeče karet</string>
   <string name="card_browser_font_size_summ">Relativní velikost písma v prohlížeči karet. V současné době: XXX %</string>
   <string name="button_size">Relativní velikost tlačítek</string>
@@ -168,8 +168,8 @@
   <string name="fix_hebrew_download_font">Stáhnout Font</string>
   <string name="default_font">Výchozí písmo</string>
   <string name="default_font_summ">Písmo použité pro text, který nemá zadán žádné formátování písma. Vlastní písma by měla být nainstalována na paměťové SD kartě ve složce s názvem \"Fonts\" ve složce AnkiDroid.</string>
-  <string name="override_font">Přepsat písmo</string>
-  <string name="override_font_summ">A font that will be used instead of any fonts specified, including the default font. Custom fonts should be installed in a folder called \'fonts\' in your AnkiDroid folder.</string>
+  <string name="override_font">Přepsat font písma</string>
+  <string name="override_font_summ">Písmo, které bude použito namísto předdefinovaného písma, včetně výchozího. Vlastní písma by měla být nainstalována v adresáři s názvem \"fonts\" v adresáři AnkiDroid.</string>
   <string name="language">Jazyk</string>
   <string name="language_summ">Vyberte jazyk, který má AnkiDroid použít. Nyní: XXX</string>
   <string name="language_system">Jazyk systému</string>
@@ -240,8 +240,8 @@
   <string name="pref_simple_interface_summ">Urychluje zobrazení karet, ale nepodporuje všechny funkce html</string>
   <string name="pref_simple_interface_exclude_tags">Běžné rozhraní podle štítků</string>
   <string name="pref_simple_interface_exclude_tags_summ">Nepoužívat jednoduché rozhraní pro tyto štítky: XXX</string>
-  <string name="pref_force_quick_update_title">Force quick update of Webview</string>
-  <string name="pref_force_quick_update_summary">Enabling this reduces flickering when flipping cards, but might cause the application to crash on some devices.</string>
+  <string name="pref_force_quick_update_title">Vynutit rychlou aktualizaci z Webview</string>
+  <string name="pref_force_quick_update_summary">Snížení blikání při zobrazení další karty. Může způsobit chyby na některých zařízeních.</string>
   <string name="deck_conf_deck_name">Jméno balíčku</string>
   <string name="deck_conf_deck_description">Popis balíčku</string>
   <string name="deck_conf_pref_cat_options">Možnosti</string>
@@ -289,7 +289,7 @@
   <string name="deck_conf_remove_message">Odstranit možnosti aktuální skupiny?</string>
   <string name="deck_conf_set_subdecks">Nastavit pro všechny podřízené balíčky</string>
   <string name="deck_conf_set_subdecks_title">Nastavit pro všechny podřízené balíčky</string>
-  <string name="deck_conf_set_subdecks_message">Set current options group for all of this deck\'s subdecks?</string>
+  <string name="deck_conf_set_subdecks_message">Použít aktuální nastavení pro všechny podbalíčky tohoto balíčku?</string>
   <string name="pref_cat_tibetan">Podpora tibetštiny</string>
   <string name="pref_cat_languages_advanced">Pokročilá podpora pro písma</string>
   <string name="pref_enable_tibetan">Povolit podporu tibetštiny</string>
@@ -318,17 +318,17 @@
   <string name="use_current">Balíček pro nové karty</string>
   <string name="new_spread">Pozice nové karty</string>
   <string name="learn_cutoff">Limit učení se napřed</string>
-  <string name="learn_cutoff_summ">XXX min(s)</string>
-  <string name="time_limit">Timebox time limit</string>
-  <string name="time_limit_summ">XXX min(s)</string>
+  <string name="learn_cutoff_summ">XXX min</string>
+  <string name="time_limit">Časové omezení</string>
+  <string name="time_limit_summ">XXX min</string>
   <string name="day_offset">Začátek příštího dne</string>
   <string name="day_offset_summ">Hodin po půlnoci: XXX</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n1 deck uses this group</item>
-    <item quantity="other">%1$s\n%2$d decks use this group</item>
+    <item quantity="one">%1$s\n1 balíček používá tuto skupinu</item>
+    <item quantity="other">%1$s\n%2$d balíčků používá tuto skupinu</item>
   </plurals>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">1 subdeck will use this group</item>
-    <item quantity="other">%s subdecks will use this group</item>
+    <item quantity="one">1 podřízený balíček bude používat tuto skupinu</item>
+    <item quantity="other">%s podřízené(ých) balíčků bude používat tuto skupinu</item>
   </plurals>
 </resources>

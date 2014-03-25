@@ -45,7 +45,7 @@
   <string name="yes">بله</string>
   <string name="no">خیر</string>
   <string name="ok">باشه</string>
-  <string name="studyoptions_deck_name">نام دسته</string>
+  <string name="studyoptions_deck_name">نام دسته کارت</string>
   <string name="studyoptions_due_today">موعد مقرر امروز:</string>
   <string name="studyoptions_new_total">کل کارت های جدید:</string>
   <string name="studyoptions_total_cards">کل کارتها:</string>
@@ -59,12 +59,12 @@
   <string name="studyoptions_congrats_undo">باطل کردن %s</string>
   <string name="studyoptions_congrats_unbury">نمایش در نشست جاری</string>
   <string name="studyoptions_congrats_custom_study">مطالعه سفارشی</string>
-  <string name="studyoptions_congrats_open_other_deck">بازکردن دسته کارت دیگر</string>
+  <string name="studyoptions_congrats_open_other_deck">بازکردن دسته دیگر</string>
   <string name="card_unsuspended">تعلیق کارت ناتمام ماند</string>
   <string name="card_suspended">کارت مجددا تعلیق شد</string>
   <string name="menu_rotate">چرخش</string>
-  <string name="menu_import">وارد کردن کارت</string>
-  <string name="undo">باطل کردن</string>
+  <string name="menu_import">وارد کردن کارتها</string>
+  <string name="undo">برگشت</string>
   <string name="undo_action_review">مرور</string>
   <string name="undo_action_edit">ویرایش یادداشت</string>
   <string name="undo_action_bury">مخفی کردن یادداشت</string>
@@ -73,9 +73,9 @@
   <string name="undo_action_delete">حذف یادداشت</string>
   <string name="undo_action_mark">نشانه گذاری یادداشت </string>
   <string name="unbury">نمایش در نشست جاری</string>
-  <string name="finish_operation">اتمام عملیات قبلی (به احتمال زیاد ایجاد پشتیبان گرفته می شود). \nلطفا صبر کنید...</string>
+  <string name="finish_operation">اتمام عملیات قبلی (به احتمال زیاد پشتیبان گرفته می شود). \nلطفا صبر کنید...</string>
   <string name="contextmenu_deckpicker_download_missing_media">دانلود رسانه گم شده</string>
-  <string name="contextmenu_deckpicker_reset_language_assignments">زبان را بازنشانید</string>
+  <string name="contextmenu_deckpicker_reset_language_assignments">تنظیم مجدد زبان تخصیصی</string>
   <string name="contextmenu_deckpicker_reset_reset_message">تنظیم مجدد زبان</string>
   <string name="contextmenu_deckpicker_optimize_deck">بهینه سازی پایگاه اطلاعات</string>
   <string name="contextmenu_deckpicker_rename_deck">تغییر نام دسته</string>
@@ -83,7 +83,7 @@
   <string name="contextmenu_deckpicker_inflate_deck">نمایش زیردسته</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">تعیین واژه نامه سفارشی</string>
   <string name="menu_download_deck">دانلود دسته</string>
-  <string name="menu_download_shared_deck">اشتراک گذاشتن دسته</string>
+  <string name="menu_download_shared_deck">اشتراک گذاری دسته</string>
   <string name="menu_my_account">همگام سازی حساب</string>
   <string name="menu_preferences">تنظیمات</string>
   <string name="menu_about">درباره</string>
