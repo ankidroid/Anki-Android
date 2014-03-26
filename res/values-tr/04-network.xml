@@ -55,7 +55,7 @@
   <string name="download_cancel">İndirmeyi İptal Et</string>
   <string name="shared_decks">Paylaşılan Desteler</string>
   <string name="loading_shared_decks">Mevcut paylaşılan desteler yükleniyor...</string>
-  <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Terms and Conditions</a></string>
+  <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Kayıtlar ve Koşullar</a></string>
   <string name="cancel_download">İndirmeyi İptal Et</string>
   <string name="resume_download">İndirmeye Devam Et</string>
   <string name="pause_download">İndirmeyi Durdur</string>
@@ -72,7 +72,7 @@
   <string name="log_in">Giriş yap</string>
   <string name="sign_up_description">AnkiWeb hesabınız yok mu? Ücretsiz edinin!</string>
   <string name="sign_up">Kaydol</string>
-  <string name="sign_up_terms">By tapping <i>Sign up</i>, you confirm that you have read and agree to our <a href="https://ankiweb.net/account/terms">terms of use</a>.</string>
+  <string name="sign_up_terms"><i>Kaydol</i>a basarak, <a href="https://ankiweb.net/account/terms">kullanım koşulları</a>mızı okuyup kabul ettiğinizi onaylıyorsunuz.</string>
   <string name="logged_as">Şu adla giriş yapıldı:</string>
   <string name="log_out">Çıkış yap</string>
   <string name="alert_logging_message">Giriş yapılıyor, lütfen bekleyin...</string>

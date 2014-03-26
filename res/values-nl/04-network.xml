@@ -55,7 +55,7 @@
   <string name="download_cancel">Download Annuleren</string>
   <string name="shared_decks">Gedeelde leersets</string>
   <string name="loading_shared_decks">Bezig met laden beschikbare gedeelde leersets...</string>
-  <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Terms and Conditions</a></string>
+  <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Algemene voorwaarden</a></string>
   <string name="cancel_download">Download Annuleren</string>
   <string name="resume_download">Download Hervatten</string>
   <string name="pause_download">Download Onderbreken</string>
@@ -72,7 +72,7 @@
   <string name="log_in">Inloggen</string>
   <string name="sign_up_description">Heb je nog geen AnkiWeb account? Het is gratis!</string>
   <string name="sign_up">Meld je nu aan</string>
-  <string name="sign_up_terms">By tapping <i>Sign up</i>, you confirm that you have read and agree to our <a href="https://ankiweb.net/account/terms">terms of use</a>.</string>
+  <string name="sign_up_terms">Door op <i>Aanmelden</i> te klikken bevestigd u dat u de <a href="https://ankiweb.net/account/terms">Algemene voorwaarden</a> heeft gelezen en ermee akkoord gaat.</string>
   <string name="logged_as">Ingelogd als</string>
   <string name="log_out">Uitloggen</string>
   <string name="alert_logging_message">Inloggen, even geduld...</string>

@@ -57,12 +57,12 @@
   <string name="notify_title">AnkiDroid bijgewerkt</string>
   <string name="notify_message">Download een nieuwe versie</string>
   <string name="notification_title">Bevestig AnkiDroid Update</string>
-  <string name="preview_title">Preview</string>
+  <string name="preview_title">Voorbeeld</string>
   <string name="notification_message">Er is een nieuwe versie van AnkiDroid beschikbaar op de Android Market.\n\nWilt u deze installeren?</string>
   <string name="notification_stop">Toon me geen meldingen meer voor deze update</string>
   <string name="reset_card_dialog_title">Herstel leervoortgang</string>
-  <string name="reset_card_dialog_message">Hiermee maak je de leervoortgang ongedaan voor alle kaarten uit deze notitie (ze zullen zich gedragen als nieuwe kaarten).\nBent u zeker dat u wilt doorgaan?</string>
-  <string name="reset_card_dialog_confirmation">Alle kaarten van deze meme resetten</string>
+  <string name="reset_card_dialog_message">Hiermee maak je de leervoortgang ongedaan voor alle kaarten gemaakt met deze memo (ze zullen zich gedragen als nieuwe kaarten).\nBent u zeker dat u wilt doorgaan?</string>
+  <string name="reset_card_dialog_confirmation">Alle kaarten gemaakt van deze memo resetten</string>
   <string name="answering_error_title">Fout in database</string>
   <string name="answering_error_message">Er is een fout opgetreden tijdens het schrijven naar de collectie. Dit kan wijzen op een corrupte database of op onvoldoende opslagruimte.\n\nAls dit vaker gebeurt, probeer de database te controleren, de collectie te herstellen of terug te zetten vanaf een back-up. Klik hiervoor op \'instellingen\'.\n\nHet kan ook een fout in AnkiDroid zijn; Meld de fout zodat we dit kunnen controleren.</string>
   <string name="answering_error_report">Fout melden</string>
@@ -112,13 +112,13 @@
   <string name="importing_collection">Collectie aan het importeren.\nGelieve even te wachten&#8230;</string>
   <string name="import_media_count">Mediabestanden aan het importeren %1$d%%\nGelieve even te wachten&#8230;</string>
   <string name="import_update_counts">Bezig met het aanpassen van uw setaantallen.\nEen ogenblik geduld...</string>
-  <string name="import_add_progress">• Archief uitpakken %1$s\n• Notities importeren %2$d%%\n• Kaarten importeren %3$d%%\n• Opruimen %4$s</string>
+  <string name="import_add_progress">• Archief uitpakken %1$s\n• Memos importeren %2$d%%\n• Kaarten importeren %3$d%%\n• Opruimen %4$s</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Flitskaarten voor Android</h2>AnkiDroid is een flitskaartprogramma dat volledig samenwerkt met de desktop programma <a href="%2$s">Anki</a>. Je kan content downloaden en leren op zowel AnkiDroid als Anki Desktop, en eenvoudig synchroniseren tussen beide.]]></item>
     <item><![CDATA[Om Ankidroid te verbeteren, stuur je <a href="%1$s">hier</a>  het foutenverslag op; ook nieuwe ideeën zijn van harte welkom! Lees de <a href="%2$s">wiki</a> en zeg ons gedag op het <a href="%3$s">forum</a>.]]></item>
     <item><![CDATA[AnkiDroid is <a href="%1$s">opensource-software<a/>, dus iedereen mag <a href="%2$s">meedoen</a> met de <a href="%3$s">medewerkers</a>:-)]]></item>
     <item><![CDATA[Ook als niet-ontwikkelaar kan je ons helpen, bijvoorbeeld met <a href="%1$s">vertalen</a> van AnkiDroid, het up-to-date houden van de wiki en schermafbeeldingen, <a href="%2$s">doneren</a> aan Anki Desktop, of bloggen over AnkiDroid!]]></item>
     <item><![CDATA[AnkiDroid is uitgebracht onder de <a href="%1$s">GNU-GPL v3 licentie</a> en de broncode is <a href="%2$s">hier</a> beschikbaar.]]></item>
-    <item><![CDATA[This package uses the <a href="http://www.csse.monash.edu.au/~jwb/edict.html">EDICT</a> and <a href="http://www.csse.monash.edu.au/~jwb/kanjidic.html">KANJIDIC</a> dictionary files. These files are the property of the <a href="http://www.edrdg.org">Electronic Dictionary Research and Development Group</a>, and are used in conformance with the Group\'s <a href="http://www.edrdg.org/edrdg/licence.html">licence</a>.]]></item>
+    <item><![CDATA[This package uses the <a href="http://www.csse.monash.edu.au/~jwb/edict.html">EDICT</a> en <a href="http://www.csse.monash.edu.au/~jwb/kanjidic.html">KANJIDIC</a> woordenboek bestanden. Deze bestanden zijn eigendom van de <a href="http://www.edrdg.org">Electronic Dictionary Research and Development Group</a>, en worden gebruikt in overeenstemming met de <a href="http://www.edrdg.org/edrdg/licence.html">licentie</a> van deze groep.]]></item>
   </string-array>
 </resources>

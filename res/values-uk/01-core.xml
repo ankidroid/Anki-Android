@@ -50,14 +50,14 @@
   <string name="studyoptions_new_total">Всього нових карток:</string>
   <string name="studyoptions_total_cards">Всього карток:</string>
   <string name="studyoptions_eta">Оцінка часу (хв.):</string>
-  <string name="studyoptions_start">Study Now</string>
+  <string name="studyoptions_start">Почати вивчення</string>
   <string name="show_answer">Показати відповідь</string>
   <string name="ease1_successive">Знову</string>
   <string name="ease2_successive">Важко</string>
   <string name="ease3_successive">Добре</string>
   <string name="ease3_learning">Легко</string>
   <string name="studyoptions_congrats_undo">Відмінити %s</string>
-  <string name="studyoptions_congrats_unbury">Unbury</string>
+  <string name="studyoptions_congrats_unbury">Скасувати зрушення</string>
   <string name="studyoptions_congrats_custom_study">Додатковий трейнінг</string>
   <string name="studyoptions_congrats_open_other_deck">Відкрити іншу колоду</string>
   <string name="card_unsuspended">Відкладення картки скасовано</string>

@@ -40,17 +40,17 @@
 -->
 <resources>
   <string-array name="new_version_features">
-    <item>Lots of Bug Fixes</item>
-    <item>New custom study option with improved tag selection</item>
-    <item>New preview card feature in note editor (experimental)</item>
-    <item>New override font preference in addition to default font</item>
-    <item>New \"Kanji Info\" feature (enabled in preferences-&gt;reviewing-&gt;Kanji Info)</item>
-    <item>Improve Aedict integration</item>
-    <item>Support for Samsung Multi-Window</item>
-    <item>Fix Some TTS Issues</item>
-    <item>Updated Translations</item>
-    <item>Remove unused media check when deleting decks</item>
-    <item>Significantly increase speed for reducing filtered decks</item>
-    <item>Remove upgrade wizard</item>
+    <item>Molte correzioni di bug</item>
+    <item>Nuova opzione di studio personalizzato con selezione delle etichette migliorata</item>
+    <item>Nuova funzione di anteprima delle carte nell\'editor delle note (sperimentale)</item>
+    <item>Nuova preferenza per sovrascrivere il tipo di carattere, in aggiunta al carattere predefinito</item>
+    <item>Nuova funzione \"Info Kanji\" (abilitato in preferenze-&gt;ripetizioni-&gt;Info Kanji)</item>
+    <item>Integrazione Aedict migliorata</item>
+    <item>Supporto per multi-finestra Samsung</item>
+    <item>Risolve alcuni problemi TTS</item>
+    <item>Traduzioni aggiornate</item>
+    <item>Rimozione contenuto multimediale inutilizzato all\'eliminazione dei mazzi</item>
+    <item>Aumento significativo della velocità nel ridurre i mazzi filtrati</item>
+    <item>Rimozione dell\'aggiornamento guidato</item>
   </string-array>
 </resources>

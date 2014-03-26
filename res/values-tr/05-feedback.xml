@@ -53,7 +53,7 @@
   <string name="feedback_clear_all">Tüm hataları temizle</string>
   <string name="feedback_default_text">Lütfen geribildiriminizi veya bildirdiğiniz hatalarla ilgili sahip olduğunuz bilgiyi girin.</string>
   <string name="feedback_error_reply_new">Bilinmeyen sorun, yeni hata kaydı oluşturuldu</string>
-  <string name="feedback_error_reply_known">Issue previously detected. Details welcome on AnkiDroid issue tracker.</string>
+  <string name="feedback_error_reply_known">Sorun daha önce tespit edilmiş. Ayrıntıları AnkiDroid sorun takipçisine bekleriz.</string>
   <string name="feedback_error_reply_issue_unknown">%1$d sorunu, durumu bilinmiyor</string>
   <string name="feedback_error_reply_issue_status">%1$d sorunu, durum: %2$s</string>
   <string name="feedback_error_reply_issue_fixed_dev">%1$d sorunu, düzeltildi fakat henüz yayınlanmadı</string>

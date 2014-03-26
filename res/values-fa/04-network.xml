@@ -72,7 +72,7 @@
   <string name="log_in">ورود به حساب کاربری</string>
   <string name="sign_up_description">آيا حساب كاربري نداريد؟ حساب كاربري رايگان است!</string>
   <string name="sign_up">ثبت نام</string>
-  <string name="sign_up_terms">By tapping <i>Sign up</i>, you confirm that you have read and agree to our <a href="https://ankiweb.net/account/terms">terms of use</a>.</string>
+  <string name="sign_up_terms">با فشردن <i>Sign up</i>, شما تایید می کنید که شرایط استفاده از برنامه <a href="https://ankiweb.net/account/terms"> را خوانده و قبول دارید</a>.</string>
   <string name="logged_as">ورود به حساب کاربری به عنوان</string>
   <string name="log_out">خروج</string>
   <string name="alert_logging_message">ورود به حساب کاربری، لطفا صبر كنيد...</string>

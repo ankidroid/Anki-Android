@@ -50,7 +50,7 @@
   <string name="studyoptions_new_total">Total de tarjetas nuevas:</string>
   <string name="studyoptions_total_cards">Total de tarjetas:</string>
   <string name="studyoptions_eta">Tiempo estimado (min):</string>
-  <string name="studyoptions_start">Study Now</string>
+  <string name="studyoptions_start">Estudiar ahora</string>
   <string name="show_answer">Mostrar Respuesta</string>
   <string name="ease1_successive">Otra vez</string>
   <string name="ease2_successive">Difícil</string>
@@ -79,8 +79,8 @@
   <string name="contextmenu_deckpicker_reset_reset_message">Restablecer idioma</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optimizar base de datos</string>
   <string name="contextmenu_deckpicker_rename_deck">Renombrar mazo</string>
-  <string name="contextmenu_deckpicker_collapse_deck">Ocultar Sub-mazos</string>
-  <string name="contextmenu_deckpicker_inflate_deck">Mostrar Sub-mazos</string>
+  <string name="contextmenu_deckpicker_collapse_deck">Ocultar submazos</string>
+  <string name="contextmenu_deckpicker_inflate_deck">Mostrar submazos</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Definir diccionario predeterminado</string>
   <string name="menu_download_deck">Descargar mazo</string>
   <string name="menu_download_shared_deck">Mazo compartido</string>

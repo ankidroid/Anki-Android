@@ -40,17 +40,17 @@
 -->
 <resources>
   <string-array name="new_version_features">
-    <item>Lots of Bug Fixes</item>
+    <item>Viele Bug-Fixes</item>
     <item>New custom study option with improved tag selection</item>
-    <item>New preview card feature in note editor (experimental)</item>
+    <item>Neue Kartenvorschau-Funktion im Notizeditor (experimentell)</item>
     <item>New override font preference in addition to default font</item>
     <item>New \"Kanji Info\" feature (enabled in preferences-&gt;reviewing-&gt;Kanji Info)</item>
-    <item>Improve Aedict integration</item>
-    <item>Support for Samsung Multi-Window</item>
-    <item>Fix Some TTS Issues</item>
-    <item>Updated Translations</item>
+    <item>Aedict Integration verbessert</item>
+    <item>Unterstützung für Samsung Multi-Window</item>
+    <item>Einige TTS-Probleme behoben</item>
+    <item>Übersetzungen aktualisiert</item>
     <item>Remove unused media check when deleting decks</item>
     <item>Significantly increase speed for reducing filtered decks</item>
-    <item>Remove upgrade wizard</item>
+    <item>Upgrade Wizard entfernt</item>
   </string-array>
 </resources>

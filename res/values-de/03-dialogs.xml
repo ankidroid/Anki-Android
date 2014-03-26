@@ -57,7 +57,7 @@
   <string name="notify_title">AnkiDroid aktualisiert</string>
   <string name="notify_message">Eine neue Version herunterladen</string>
   <string name="notification_title">Aktualisierung von AnkiDroid bestätigen</string>
-  <string name="preview_title">Preview</string>
+  <string name="preview_title">Vorschau</string>
   <string name="notification_message">Eine neue Version von AnkiDroid ist bei Google Play verfügbar. \n\nMöchten Sie diese installieren?</string>
   <string name="notification_stop">Nicht erneut über Aktualisierung benachrichtigen</string>
   <string name="reset_card_dialog_title">Lernfortschritt zurücksetzen</string>
@@ -79,7 +79,7 @@
   <string name="custom_study_ahead">x Tage im Voraus lernen:</string>
   <string name="custom_study_random">x Karten zufällig aus dem Stapel wählen:</string>
   <string name="custom_study_preview">Vorschau auf neue Karten, die in den letzten x Tagen hinzugefügt wurden:</string>
-  <string name="custom_study_tags">Schlüsselwörter eingeben:</string>
+  <string name="custom_study_tags">Schlagworte eingeben:</string>
   <string name="rebuild_custom_study_deck">Erstelle neuen Stapel für eine benutzerdefinierte Sitzung.\nBitte warten...</string>
   <string name="deck_upgrade_title">Stapel aktualisieren</string>
   <string name="deck_upgrade_rename_warning">Beachten Sie, dass dies Ihre aktuelle Sammlung in eine Datei namens \'%1$s\' exportieren und eine neue Sammlung aus Ihren alten anki 1.x Dateien erstellen wird. Falls gewünscht, können Sie die gesicherte apkg Datei nach Abschluss des Assistenten manuell neu importieren. Möchten Sie wirklich fortfahren?</string>
@@ -119,6 +119,6 @@
     <item><![CDATA[AnkiDroid ist <a href="%1$s">Open-Source-Software<a/>; jeder kann also <a href="%2$s">beitragen</a> und selbst <a href="%3$s">Entwickler</a> werden :-)]]></item>
     <item><![CDATA[Auch Nicht-Entwickler können helfen; zum Beispiel, indem sie AnkiDroid <a href="%1$s">übersetzen</a>, das Wiki aktualisieren und Bildschirmfotos erstellen, für Anki Desktop <a href="%2$s">spenden</a> oder über AnkiDroid bloggen!]]></item>
     <item><![CDATA[AnkiDroid ist unter der <a href="%1$s">GNU-GPL-v3-Lizenz</a> veröffentlicht; der Quellcode ist <a href="%2$s">hier</a> verfügbar.]]></item>
-    <item><![CDATA[This package uses the <a href="http://www.csse.monash.edu.au/~jwb/edict.html">EDICT</a> and <a href="http://www.csse.monash.edu.au/~jwb/kanjidic.html">KANJIDIC</a> dictionary files. These files are the property of the <a href="http://www.edrdg.org">Electronic Dictionary Research and Development Group</a>, and are used in conformance with the Group\'s <a href="http://www.edrdg.org/edrdg/licence.html">licence</a>.]]></item>
+    <item><![CDATA[Dieses Paket verwendet die <a href="http://www.csse.monash.edu.au/~jwb/edict.html">EDICT</a> und <a href="http://www.csse.monash.edu.au/~jwb/kanjidic.html">KANJIDIC</a>Wörterbuchdateien. Diese Dateien sind Eigentum der <a href="http://www.edrdg.org">Electronic Dictionary Research and Development Group</a>, und werden in Übereinstimmung mit der <a href="http://www.edrdg.org/edrdg/licence.html">Lizenz</a> der Gruppe verwendet.]]></item>
   </string-array>
 </resources>

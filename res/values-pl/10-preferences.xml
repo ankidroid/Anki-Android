@@ -39,7 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="pref_cat_collection">Collection</string>
+  <string name="pref_cat_collection">Kolekcja</string>
   <string name="pref_internal_memory">Użyj pamięci wewnętrznej</string>
   <string name="pref_internal_memory_summ">Zapisz kolekcję w pamięci wewnętrznej. Nie jest to rekomendowane, ponieważ nie będziesz mieć tak łatwego dostępu do pliku kolekcji</string>
   <string name="pref_cat_sync">Synchronizacja</string>
@@ -104,8 +104,8 @@
   <string name="use_ruby_support_summ">W razie znalezienia znaków \'[\' i \']\', tekst zawarty między nimi będzie traktowany jako notacja ruby</string>
   <string name="display_font_size">Względny rozmiar czcionki</string>
   <string name="display_font_size_summ">Rozmiar czcionki względem zdefiniowanego w talii. W tej chwili: XXX %</string>
-  <string name="image_size">Relative image size</string>
-  <string name="image_size_summ">The size of images to use during review, relative to the size of the original media files. At the moment: XXX %</string>
+  <string name="image_size">Względny rozmiar obrazka</string>
+  <string name="image_size_summ">Wielkość obrazów do wykorzystania podczas przeglądu, w stosunku do rozmiaru oryginalnego plików multimedialnych. W tej chwili: XXX %</string>
   <string name="card_browser_font_size">Rozmiar czcionki przeglądarki kart</string>
   <string name="card_browser_font_size_summ">Rozmiar czcionki używany w przeglądarce kart. Aktualnie: XXX %</string>
   <string name="button_size">Względna wielkości przycisku</string>
@@ -159,8 +159,8 @@
   <string name="shake_intensity_summ">Próg pozwalający na uznanie potrząsania: XXX</string>
   <string name="sync_fetch_missing_media">Pobierz media przy synchronizacji</string>
   <string name="sync_fetch_missing_media_summ">Automatycznie pobierz brakujące media podczas synchronizacji.</string>
-  <string name="sync_account">AnkiWeb account</string>
-  <string name="sync_account_summ_logged_out">Not logged in</string>
+  <string name="sync_account">Konto AnkiWeb</string>
+  <string name="sync_account_summ_logged_out">Nie zalogowany</string>
   <string name="sync_account_summ_logged_in">%s</string>
   <string name="fix_hebrew_text">Poprawka dla samogłosek hebrajskich</string>
   <string name="fix_hebrew_text_summ">Obejście dla prawidłowego renderowania hebrajskich samogłosek.</string>
@@ -168,8 +168,8 @@
   <string name="fix_hebrew_download_font">Pobierz czcionkę</string>
   <string name="default_font">Domyślna czcionka</string>
   <string name="default_font_summ">Brak ustawionego formatowanie dla wybranej czcionki. Własne czcionki powinny być instalowane na karcie SD w folderze \'fonts\' w katalogu AnkiDroid.</string>
-  <string name="override_font">Override font</string>
-  <string name="override_font_summ">A font that will be used instead of any fonts specified, including the default font. Custom fonts should be installed in a folder called \'fonts\' in your AnkiDroid folder.</string>
+  <string name="override_font">Zastąpić czcionki</string>
+  <string name="override_font_summ">Czcionka, która będzie używana zamiast czcionki zdefiniowanej, łącznie z domyślną czcionkę. Niestandardowe czcionki powinny być instalowane w katalogu o nazwie \"fonts\" w katalogu AnkiDroid.</string>
   <string name="language">Język</string>
   <string name="language_summ">Wybierz język, którego AnkiDroid ma używać. W tej chwili: XXX</string>
   <string name="language_system">Język systemu</string>
@@ -185,8 +185,8 @@
   <string name="animation_speed_summ">Czas trwania animacji przejścia: XXX ms</string>
   <string name="eink_display">Optymalizacja wyświetlania dla E-Ink</string>
   <string name="eink_display_summ">Wyłącz wszystkie animacje i zoptymalizuj dla ekranów  E-Ink</string>
-  <string name="vertical_centering">Center card content vertically</string>
-  <string name="vertical_centering_summ">Center the content of the cards vertically instead of showing it at the top.</string>
+  <string name="vertical_centering">Centruj pionowo zawartości karty</string>
+  <string name="vertical_centering_summ">Centruj pionowo zawartość karty zamiast pokazywać na górze.</string>
   <string name="pref_cat_backup">Kopie bezpieczeństwa</string>
   <string name="pref_backup">Twórz kopie</string>
   <string name="pref_backup_summ">Przed otworzeniem talii twórz automatycznie jej kopię (raz na dzień)</string>
@@ -245,11 +245,11 @@
   <string name="deck_conf_deck_name">Nazwa talii</string>
   <string name="deck_conf_deck_description">Opis talii</string>
   <string name="deck_conf_pref_cat_options">Opcje</string>
-  <string name="deck_conf_group">Group</string>
+  <string name="deck_conf_group">Grupa</string>
   <string name="deck_conf_new_cards">Nowe karty</string>
   <string name="deck_conf_rev_cards">Powtórki</string>
   <string name="deck_conf_lps_cards">Pomyłki</string>
-  <string name="deck_conf_general">General</string>
+  <string name="deck_conf_general">Ogólne</string>
   <string name="deck_conf_steps">Kroki (w minutach)</string>
   <string name="deck_conf_order">Kolejność</string>
   <string name="deck_conf_new_cards_day">Nowe karty/dzień</string>
@@ -276,19 +276,19 @@
   <string name="deck_conf_autoplay">Automatycznie odtwarzaj audio</string>
   <string name="deck_conf_replayq">Powtórz pytanie</string>
   <string name="deck_conf_replayq_summ">Po pokazaniu odpowiedzi powtórz i audio pytania i odpowiedzi</string>
-  <string name="deck_conf_manage">Group management</string>
-  <string name="deck_conf_current_group">Current group</string>
-  <string name="deck_conf_rename">Rename</string>
-  <string name="deck_conf_reset">Restore defaults</string>
-  <string name="deck_conf_reset_title">Restore defaults</string>
+  <string name="deck_conf_manage">Zarządzanie grupą</string>
+  <string name="deck_conf_current_group">Bieżąca grupa</string>
+  <string name="deck_conf_rename">Zmień nazwę</string>
+  <string name="deck_conf_reset">Przywróć domyślne</string>
+  <string name="deck_conf_reset_title">Przywróć domyślne</string>
   <string name="deck_conf_reset_message">Restore current options group to default values?</string>
   <string name="deck_conf_add">Dodaj konfigurację</string>
   <string name="deck_conf_add_summ">Create a copy of the current options group</string>
-  <string name="deck_conf_remove">Remove</string>
-  <string name="deck_conf_remove_title">Remove</string>
+  <string name="deck_conf_remove">Usuń</string>
+  <string name="deck_conf_remove_title">Usuń</string>
   <string name="deck_conf_remove_message">Remove current options group?</string>
-  <string name="deck_conf_set_subdecks">Set for all subdecks</string>
-  <string name="deck_conf_set_subdecks_title">Set for all subdecks</string>
+  <string name="deck_conf_set_subdecks">Ustaw dla wszystkich sub-talii</string>
+  <string name="deck_conf_set_subdecks_title">Ustaw dla wszystkich sub-talii</string>
   <string name="deck_conf_set_subdecks_message">Set current options group for all of this deck\'s subdecks?</string>
   <string name="pref_cat_tibetan">Obsługa tybetańskiego</string>
   <string name="pref_cat_languages_advanced">Zaawansowana obsługa czcionek</string>
@@ -313,13 +313,13 @@
   <string name="pref_cat_intent_add">Dodawanie danych zewnętrznych</string>
   <string name="show_estimates">Show button time</string>
   <string name="show_estimates_summ">Show next review time above answer buttons</string>
-  <string name="show_progress">Show remaining</string>
-  <string name="show_progress_summ">Show remaining card count during review</string>
+  <string name="show_progress">Pokaż pozostałe</string>
+  <string name="show_progress_summ">Pokazuj licznik pozostałych kart podczas powtórki</string>
   <string name="use_current">Deck for new cards</string>
   <string name="new_spread">New card position</string>
   <string name="learn_cutoff">Learn ahead limit</string>
   <string name="learn_cutoff_summ">XXX min(s)</string>
-  <string name="time_limit">Timebox time limit</string>
+  <string name="time_limit">Ograniczenie czasu</string>
   <string name="time_limit_summ">XXX min(s)</string>
   <string name="day_offset">Start of next day</string>
   <string name="day_offset_summ">Hours past midnight: XXX</string>

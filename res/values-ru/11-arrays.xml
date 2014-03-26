@@ -138,8 +138,8 @@
     <item>Установить ограничение по тегам</item>
   </string-array>
   <string-array name="add_to_cur_labels">
-    <item>Use current deck</item>
-    <item>Decide by note type</item>
+    <item>Использовать текущую колоду</item>
+    <item>Выбор по типу заметки</item>
   </string-array>
   <string-array name="new_spread_labels">
     <item>Перемешать новые карты и повторяемые</item>
@@ -149,6 +149,6 @@
   <string-array name="cards_for_tag_filtered_deck_labels">
     <item>Все карты</item>
     <item>Новые</item>
-    <item>Due</item>
+    <item>Повтор</item>
   </string-array>
 </resources>

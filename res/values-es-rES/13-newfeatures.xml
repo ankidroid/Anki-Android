@@ -40,9 +40,9 @@
 -->
 <resources>
   <string-array name="new_version_features">
-    <item>Lots of Bug Fixes</item>
-    <item>New custom study option with improved tag selection</item>
-    <item>New preview card feature in note editor (experimental)</item>
+    <item>Muchas correcciones de errores</item>
+    <item>Nueva opción de estudio a medida con selección de etiquetas mejorada</item>
+    <item>Nueva función de vista previa tarjeta en el editor de notas (experimental)</item>
     <item>New override font preference in addition to default font</item>
     <item>New \"Kanji Info\" feature (enabled in preferences-&gt;reviewing-&gt;Kanji Info)</item>
     <item>Improve Aedict integration</item>

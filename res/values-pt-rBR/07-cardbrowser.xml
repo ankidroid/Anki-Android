@@ -53,7 +53,7 @@
   <string name="card_browser_field">Alterar campo de Pesquisador de Cartão</string>
   <string name="card_browser_field_title">Alterar campo de Pesquisador de Cartão</string>
   <string name="card_browser_show_suspended">Filtro suspenso</string>
-  <string name="card_browser_search_by_tag">Filtrar por marca</string>
+  <string name="card_browser_search_by_tag">Filtrar por Tag</string>
   <string name="card_browser_tags_shown">Tags: %1$s</string>
   <string name="card_browser_change_display_order">Alterar a ordem de exibição</string>
   <string name="card_browser_change_display_order_title">Escolha a ordem de exibição</string>

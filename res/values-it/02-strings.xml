@@ -78,7 +78,7 @@
   <string name="fact_adder_intent_title">Carta AnkiDroid</string>
   <string name="fact_adder_swap">Inverti</string>
   <string name="deckpicker_select_dictionary_title">Seleziona dizionario</string>
-  <string name="deckpicker_select_dictionary_default">Preimpostato</string>
+  <string name="deckpicker_select_dictionary_default">Predefinito</string>
   <string name="card_editor_add_card">Aggiungi nota</string>
   <string name="card_editor_reset">Reimposta</string>
   <string name="card_editor_copy_card">Copia carta</string>
@@ -114,7 +114,7 @@
   <string name="import_importing">Importazione carte.\nAttendi...</string>
   <string name="import_hint">Per importare carte, inserisci il file apkg nella cartella %s e premi ok</string>
   <string name="upgrade_import_no_file_found">Nessun file importabile %1$s trovato</string>
-  <string name="study_options">Options</string>
+  <string name="study_options">Opzioni</string>
   <string name="custom_study">Studio personalizzato</string>
   <string name="dyn_deck_desc">Questo è un mazzo speciale per studiare al di fuori della pianificazione normale. Le carte ritorneranno automaticamente nel mazzo originale dopo che le hai ripetute. L\'eliminazione di questo mazzo dall\'elenco dei mazzi riporterà tutte le carte rimanenti nel loro mazzo originale.</string>
   <string name="exit_wizard">Esci dalla procedura guidata</string>

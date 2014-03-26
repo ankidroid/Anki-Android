@@ -42,7 +42,7 @@
   <string name="CardEditorCancelButton">Cancelar</string>
   <string name="CardEditorSaveButton">Guardar</string>
   <string name="CardEditorLaterButton">Más tarde</string>
-  <string name="CardEditorPreviewButton">Vista Previa</string>
+  <string name="CardEditorPreviewButton">Vista previa</string>
   <string name="CardEditorLaterMessage">Información guardada para más tarde</string>
   <string name="CardEditorCardDeck">Mazo de tarjetas: %s</string>
   <string name="CardEditorNoteDeck">Mazo de notas: %s</string>
@@ -71,7 +71,7 @@
   <string name="close">Cerrar</string>
   <string name="select">Seleccionar</string>
   <string name="saving_changes">Guardando modificaciones...</string>
-  <string name="reordering_cards">Ordenando tarjetas...</string>
+  <string name="reordering_cards">Reordenando tarjetas...</string>
   <string name="studyoptions_welcome_title">Bienvenido a AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">No hay un dispositivo de almacenamiento externo disponible</string>
   <string name="studyoptions_no_external_storage_message">No hay un dispositivo de almacenamiento disponible. AnkiDroid requiere acceso a la tarjeta SD para leer y cargar sus mazos de Anki. Verifique que su tarjeta SD está montada e intente nuevamente.</string>
@@ -88,7 +88,7 @@
   <string name="tutorial_loading_error">El mazo tutorial no pudo ser creado</string>
   <string name="rename">Renombrar</string>
   <string name="rename_error">El mazo %s no pudo ser renombrado</string>
-  <string name="default_conf_delete_error">El grupo de opciones por defecto no se puede eliminar</string>
+  <string name="default_conf_delete_error">El grupo de opciones por defecto no puede ser eliminado</string>
   <string name="help_title">Ayuda</string>
   <string name="help_online">Ayuda en línea</string>
   <string name="help_faq">Preguntas frecuentes</string>
@@ -114,18 +114,18 @@
   <string name="import_importing">Importando tarjetas.\nAguarde, por favor...</string>
   <string name="import_hint">Para importar tarjetas coloque el archivo apkg en el directorio %s y presione OK</string>
   <string name="upgrade_import_no_file_found">No se ha hallado archivos %1$s para importar</string>
-  <string name="study_options">Options</string>
+  <string name="study_options">Opciones</string>
   <string name="custom_study">Estudio personalizado</string>
   <string name="dyn_deck_desc">Este es un mazo especial para estudiar por fuera del cronograma normal. Las tarjetas serán automáticamente devueltas a sus mazos originales luego de que las haya repasado. Borrar este mazo de la lista de mazos devolverá todas las tarjetas restantes a sus mazos originales.</string>
   <string name="exit_wizard">Salir del asistente</string>
-  <string name="steps_error">Pasos tiene que ser un número mayor que 0</string>
+  <string name="steps_error">Los pasos debe ser números mayores que 0</string>
   <string name="steps_min_error">Se requiere al menos un paso</string>
   <string name="custom_study_invalid_number">Número no válido</string>
   <string name="template_error">Error de plantilla:</string>
   <string name="template_error_detail">Hay un error en la plantilla de esta tarjeta.</string>
-  <string name="template_error_fix">Utilice el editor de tarjeta en el cliente de escritorio para corregir el error.</string>
+  <string name="template_error_fix">Por favor, utilice el editor de tarjetas de la versión de escritorio para solucionar este error.</string>
   <string name="sched_end">(fin)</string>
-  <string name="sched_unbury_button">Para verlos ahora, pulse el botón Desenterrar.</string>
+  <string name="sched_unbury_button">Para verlas ahora, pulse el botón Desenterrar.</string>
   <string name="sched_has_buried">Algunas tarjetas relacionadas o enterradas fueron postergadas para una sesión posterior.</string>
   <string-array name="dynOrderLabels">
     <item>La tarjeta más antigua fue vista por primera vez</item>

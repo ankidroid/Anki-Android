@@ -53,7 +53,7 @@
     <item>100</item>
     <item>150</item>
     <item>200</item>
-    <item>Never</item>
+    <item>Nunca</item>
   </string-array>
   <string-array name="cram_review_order_labels">
     <item>Show oldest modified first</item>
@@ -92,8 +92,8 @@
     <item>Answer button 4</item>
     <item>Answer recommended (green)</item>
     <item>Answer better than recommended</item>
-    <item>Undo</item>
-    <item>Edit card</item>
+    <item>Desfacer</item>
+    <item>Editar cartón</item>
     <item>Mark card</item>
     <item>Lookup expression</item>
     <item>Bury card</item>
@@ -106,7 +106,7 @@
   <string-array name="theme_labels">
     <item>Android Dark</item>
     <item>Android Light</item>
-    <item>Blue</item>
+    <item>Azul</item>
     <item>White</item>
   </string-array>
   <string-array name="leech_action_labels">

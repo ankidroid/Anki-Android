@@ -57,7 +57,7 @@
   <string name="notify_title">بروز رسانی آنکی دروید</string>
   <string name="notify_message">دانلود نسخه جدید</string>
   <string name="notification_title">تایید بروز رسانی آنکی دروید</string>
-  <string name="preview_title">Preview</string>
+  <string name="preview_title">پیش نمایش</string>
   <string name="notification_message">یک نسخه جدید از آنکی دروید در بازار موجود است.\n\nآیا می خواهید آن را نصب کنید?</string>
   <string name="notification_stop">دوباره به من این بروز رسانی را اطلاع نده</string>
   <string name="reset_card_dialog_title">تنظیم مجدد کارت پیشرفت</string>

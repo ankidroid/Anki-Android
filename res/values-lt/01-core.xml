@@ -50,14 +50,14 @@
   <string name="studyoptions_new_total">Viso naujų kortelių:</string>
   <string name="studyoptions_total_cards">Iš viso kortų:</string>
   <string name="studyoptions_eta">Apskaičiuotas laikas (min):</string>
-  <string name="studyoptions_start">Study Now</string>
+  <string name="studyoptions_start">Pradėti mokytis</string>
   <string name="show_answer">Parodyti atsakymą</string>
   <string name="ease1_successive">Dar kartą</string>
   <string name="ease2_successive">Sunku</string>
   <string name="ease3_successive">Gerai</string>
   <string name="ease3_learning">Lengvai</string>
   <string name="studyoptions_congrats_undo">Atšaukti %s</string>
-  <string name="studyoptions_congrats_unbury">Unbury</string>
+  <string name="studyoptions_congrats_unbury">Ištraukti</string>
   <string name="studyoptions_congrats_custom_study">Custom Study</string>
   <string name="studyoptions_congrats_open_other_deck">pastabos sustabdymą</string>
   <string name="card_unsuspended">Kortelės sustabdymas atšauktas</string>
@@ -72,8 +72,8 @@
   <string name="undo_action_suspend_note">pastabos sustabdymą</string>
   <string name="undo_action_delete">pastabos pašalinimą</string>
   <string name="undo_action_mark">pastabos pažimėjimą</string>
-  <string name="unbury">Unbury</string>
-  <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
+  <string name="unbury">Ištraukti</string>
+  <string name="finish_operation">Užbaigiamas ankstesnis veiksmas (tikriausiai kuriama atsarginė kopija).\n Prašau palaukti...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Atsiųsti trūkstamas medijas</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Atkurti kalbų priskyrimus</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Atkurti kalbą</string>
@@ -81,14 +81,14 @@
   <string name="contextmenu_deckpicker_rename_deck">Pervadinti malką</string>
   <string name="contextmenu_deckpicker_collapse_deck">Hide Subdecks</string>
   <string name="contextmenu_deckpicker_inflate_deck">Show Subdecks</string>
-  <string name="contextmenu_deckpicker_set_custom_dictionary">Set custom dictionary</string>
+  <string name="contextmenu_deckpicker_set_custom_dictionary">Nustatyti vartotojo žodyną</string>
   <string name="menu_download_deck">Atsiųsti malką</string>
   <string name="menu_download_shared_deck">Bendroji malka</string>
   <string name="menu_my_account">Sinchronizacijos paskyra</string>
   <string name="menu_preferences">Nustatymai</string>
   <string name="menu_about">Apie</string>
   <string name="menu_dismiss_note">Atleisti pastabą...</string>
-  <string name="menu_bury_card">Bury Card</string>
+  <string name="menu_bury_card">Nukišti kortelę</string>
   <string name="menu_bury_note">Paslėpti pastabą</string>
   <string name="menu_suspend_card">Sustabdyti kortelę</string>
   <string name="menu_suspend_note">Sustabdyti pastabą</string>
@@ -108,15 +108,15 @@
   <string name="visit">Lankyti</string>
   <string name="later">Vėliau</string>
   <string name="download">Atsiųsti</string>
-  <string name="open_collection">Opening collection.\nPlease wait...</string>
+  <string name="open_collection">Kolekcija atidaroma.\n Prašau palaukti...</string>
   <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait...</string>
   <string name="rebuild_cram_label">Atstatyti</string>
   <string name="empty_cram_label">Išvalyti</string>
   <string name="empty_cram_deck">Emptying cram deck.\nPlease wait...</string>
-  <string name="custom_study_deck_name">Custom Study Session</string>
-  <string name="custom_study_deck_exists">Please rename the existing Custom Study deck first.</string>
+  <string name="custom_study_deck_name">Individualizuota studijų sesija</string>
+  <string name="custom_study_deck_exists">Prašome pirma pervardyti esamą Individualizuotą studijų malką.</string>
   <string name="studyoptions_congrats_finished">Sveikinimai! Kol kas peržiūra pasibaigė.</string>
-  <string name="studyoptions_congrats_more_rev">Today\'s review limit has been reached, but there are still cards waiting to be reviewed. For optimum memory, consider increasing the daily limit in the options.</string>
+  <string name="studyoptions_congrats_more_rev">Šiandienos apžvalgų riba pasiekta, bet dar yra likusių neperžvelgtų kortelių. Atminties optimizavimui siūlome parinktyse padidinti dienos limitą.</string>
   <string name="studyoptions_congrats_more_new">There are more new cards available, but the daily limit has been reached. You can increase the limit in the options, but please bear in mind that this will increase your short-term review workload.</string>
   <string name="studyoptions_congrats_custom">To study outside of the normal schedule, click the Custom Study button below.</string>
   <string name="sd_card_not_mounted">SD card is not mounted.\n\nYou can store your collection in the internal memory too, though it\'s not recommended as you cannot access the file that easily. You can activate this in the preferences (open them by clicking this text).</string>
@@ -169,11 +169,11 @@
   </plurals>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Rytoj lauks 1 kortelė ir %2$s.\n Apskaičiuotas laikas: %3$s</item>
-    <item quantity="other">Tomorrow there will be: %1$d cards to review and %2$s.\n Estimated time: %3$s</item>
+    <item quantity="other">Rytoj lauks %1$d kortelė ir %2$s.\n Apskaičiuotas laikas: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
     <item quantity="one">1 nauja kortelė</item>
-    <item quantity="other">%1$d new cards</item>
+    <item quantity="other">%1$d nauja(os) korta(os)</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
     <item quantity="one">Apskaičiuotas laikas: 1 min.</item>

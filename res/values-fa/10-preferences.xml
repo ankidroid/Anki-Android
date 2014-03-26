@@ -39,7 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="pref_cat_collection">Collection</string>
+  <string name="pref_cat_collection">مجموعه</string>
   <string name="pref_internal_memory">استفاده از حافظه داخلی</string>
   <string name="pref_internal_memory_summ">مجموعه را در حافظه داحلی ذخیره کنید. البته این عمل توصیه نمی شود. زیرا به آسانی قادر به دستیابی  به فایل نخواهید بود</string>
   <string name="pref_cat_sync">همگامسازی</string>
@@ -105,7 +105,7 @@
   <string name="use_ruby_support_summ">اگر کارکتر \'[\' and \']\'پیدا شد, پس متن ضمیمه شده به عنوان حاشیته نویسی می باشد</string>
   <string name="display_font_size">اندازه نسبی قلم</string>
   <string name="display_font_size_summ">اندازه فونت برای استفاده در این صفحه نمایش متناسب با تعاریف در دسته. در لحظه: XXX %</string>
-  <string name="image_size">Relative image size</string>
+  <string name="image_size">اندازه تصویر نسبی</string>
   <string name="image_size_summ">The size of images to use during review, relative to the size of the original media files. At the moment: XXX %</string>
   <string name="card_browser_font_size">اندازه فونت جستجوگر کارت</string>
   <string name="card_browser_font_size_summ">اندازه نسبی قلم برای استفاده در مرورگر کارت. در هنگام: XXX %</string>

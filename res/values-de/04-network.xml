@@ -55,7 +55,7 @@
   <string name="download_cancel">Abbrechen</string>
   <string name="shared_decks">Öffentliche Stapel</string>
   <string name="loading_shared_decks">Verfügbare öffentliche Stapel werden geladen...</string>
-  <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Terms and Conditions</a></string>
+  <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Nutzungsbedingungen</a></string>
   <string name="cancel_download">Herunterladen abbrechen</string>
   <string name="resume_download">Herunterladen fortsetzen</string>
   <string name="pause_download">Herunterladen pausieren</string>
@@ -72,7 +72,7 @@
   <string name="log_in">Einloggen</string>
   <string name="sign_up_description">Sie haben keinen AnkiWeb-Konto? Es ist gratis!</string>
   <string name="sign_up">Registrieren</string>
-  <string name="sign_up_terms">By tapping <i>Sign up</i>, you confirm that you have read and agree to our <a href="https://ankiweb.net/account/terms">terms of use</a>.</string>
+  <string name="sign_up_terms">Indem Sie auf <i>Registrieren</i> tippen, bestätigen Sie, dass Sie unsere <a href="https://ankiweb.net/account/terms">Nutzungsbedingungen</a> gelesen haben und anerkennen.</string>
   <string name="logged_as">Eingeloggt als</string>
   <string name="log_out">Ausloggen</string>
   <string name="alert_logging_message">Einloggen, bitte warten…</string>

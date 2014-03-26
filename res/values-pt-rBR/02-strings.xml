@@ -42,7 +42,7 @@
   <string name="CardEditorCancelButton">Cancelar</string>
   <string name="CardEditorSaveButton">Salvar</string>
   <string name="CardEditorLaterButton">Depois</string>
-  <string name="CardEditorPreviewButton">Preview</string>
+  <string name="CardEditorPreviewButton">Pré visualiazação</string>
   <string name="CardEditorLaterMessage">Informação salva para mais tarde</string>
   <string name="CardEditorCardDeck">Deck de Cartões: %s</string>
   <string name="CardEditorNoteDeck">Deck de Notas: %s</string>
@@ -50,7 +50,7 @@
   <string name="CardEditorTags">Tags: %1$s</string>
   <string name="add_new_tag">Adicionar nova tag</string>
   <string name="note_type">Tipo de nota</string>
-  <string name="card_type">Card type</string>
+  <string name="card_type">Tipo do cartão</string>
   <string name="sdcard_missing_message">Cartão SD não está disponível porque ele está sendo usado em armazenamento USB. Desconecte o USB para acessar seus decks.</string>
   <string name="show_whiteboard">Mostrar Quadro</string>
   <string name="hide_whiteboard">Esconder Quadro</string>
@@ -71,7 +71,7 @@
   <string name="close">Fechar</string>
   <string name="select">Selecione</string>
   <string name="saving_changes">Salvando alterações...</string>
-  <string name="reordering_cards">Reordering cards...</string>
+  <string name="reordering_cards">Reordenando cartões...</string>
   <string name="studyoptions_welcome_title">Bem-vindo ao AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">Nenhum Armazenamento Externo Disponível</string>
   <string name="studyoptions_no_external_storage_message">Nenhum armazenamento externo está disponível no momento. AnkiDroid precisa ter acesso ao cartão SD para ler e carregar seus Decks. Verifique se o cartão SD está montado e tente novamente.</string>
@@ -88,7 +88,7 @@
   <string name="tutorial_loading_error">Deck tutorial não pôde ser criado</string>
   <string name="rename">Renomear</string>
   <string name="rename_error">Deck %s não pôde ser renomeado</string>
-  <string name="default_conf_delete_error">The default options group can\'t be removed</string>
+  <string name="default_conf_delete_error">O grupo de opções padrão não pode ser removido</string>
   <string name="help_title">Ajuda</string>
   <string name="help_online">Ajuda Online</string>
   <string name="help_faq">FAQ</string>
@@ -114,19 +114,19 @@
   <string name="import_importing">Importando cartões.\nPor favor aguardar...</string>
   <string name="import_hint">Para importar cartões, coloque o arquivo apkg no diretório %s e pressione ok</string>
   <string name="upgrade_import_no_file_found">Nenhum arquivo %1$s importável encontrado</string>
-  <string name="study_options">Options</string>
+  <string name="study_options">Opções</string>
   <string name="custom_study">Estudo personalizado</string>
   <string name="dyn_deck_desc">Esse é um deck especial para estudar fora do planejamento normal. Os cartões serão retornados automaticamente para os decks originais após revisá-los. Ao apagar esse deck da lista de decks os cartões restantes serão retornados para os decks originais.</string>
   <string name="exit_wizard">Sair do assistente</string>
-  <string name="steps_error">Steps must be numbers greater than 0</string>
-  <string name="steps_min_error">At least one step is required</string>
-  <string name="custom_study_invalid_number">Invalid number</string>
-  <string name="template_error">Template error:</string>
-  <string name="template_error_detail">There is an error in the template of this card.</string>
-  <string name="template_error_fix">Please use the card editor on the desktop client to fix the error.</string>
-  <string name="sched_end">(end)</string>
-  <string name="sched_unbury_button">To see them now, tap the Unbury button.</string>
-  <string name="sched_has_buried">Some related or buried cards were delayed until a later session.</string>
+  <string name="steps_error">Número de passos deve ser maior do que 0</string>
+  <string name="steps_min_error">Pelo menos um passo é necessário</string>
+  <string name="custom_study_invalid_number">Número inválido</string>
+  <string name="template_error">Erro de modelo:</string>
+  <string name="template_error_detail">Há um erro no modelo deste cartão.</string>
+  <string name="template_error_fix">Por favor, use o editor de cartões na versão desktop para corrigir o erro.</string>
+  <string name="sched_end">(fim)</string>
+  <string name="sched_unbury_button">Para vê-los agora, toque no botão de Desenterrar.</string>
+  <string name="sched_has_buried">Alguns cartões relacionados ou enterrados foram adiados para uma sessão posterior.</string>
   <string-array name="dynOrderLabels">
     <item>Mais antigos primeiro</item>
     <item>Aleatório</item>
@@ -137,12 +137,12 @@
     <item>Ordem de revisão</item>
   </string-array>
   <plurals name="timebox_reached">
-    <item quantity="one">1 card studied in %2$s</item>
-    <item quantity="other">%1$d cards studied in %2$s</item>
+    <item quantity="one">1 cartão estudado em %2$s</item>
+    <item quantity="other">%1$d cartões estudados em %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
-    <item quantity="one">1 minute</item>
-    <item quantity="other">%1$d minutes</item>
+    <item quantity="one">1 minuto</item>
+    <item quantity="other">%1$d minutos</item>
   </plurals>
   <plurals name="factadder_cards_added">
     <item quantity="one">1 cartão adicionado</item>
