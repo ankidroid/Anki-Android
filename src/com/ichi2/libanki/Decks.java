@@ -813,11 +813,7 @@ public class Decks {
 
 
     public String getActualDescription() {
-        try {
-            return current().getString("desc");
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+    	return current().optString("desc","");
     }
 
 
