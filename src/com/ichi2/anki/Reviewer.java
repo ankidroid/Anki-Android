@@ -18,6 +18,7 @@
 package com.ichi2.anki;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -36,6 +37,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.AudioManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -423,6 +425,8 @@ public class Reviewer extends AnkiActivity {
     private Method mSetTextIsSelectable = null;
 
     private Sched mSched;
+
+    private static ProgressDialog mTTSProgressDialog;
 
     // Stores kanji to display their meaning after answering cards
     private static HashMap<String, String> sKanjiInfo = new HashMap<String, String>();
@@ -999,6 +1003,39 @@ public class Reviewer extends AnkiActivity {
             // Initialize text-to-speech. This is an asynchronous operation.
             if (mSpeakText) {
                 ReadText.initializeTts(this);
+                mTTSProgressDialog = new ProgressDialog(this);
+
+                new AsyncTask<String, Void, Void>() {
+
+                    @Override
+                    protected void onPreExecute() {
+                        mTTSProgressDialog.setMessage("Init TTS");
+                        mTTSProgressDialog.show();
+                    }
+                    @Override
+                    protected Void doInBackground(String... params) {
+                        while (ReadText.mTTSInitDone == false) {
+                            try {
+                                Thread.sleep(500);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        return null;
+                    }
+
+                    @Override
+                    protected void onPostExecute(Void res) {
+                        mTTSProgressDialog.dismiss();
+
+                        // Load the first card and start reviewing. Uses the answer card
+                        // task to load a card, but since we send null
+                        // as the card to answer, no card will be answered.
+                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(mSched,
+                            null, 0));
+                    }
+                }.execute();
+
             }
 
             // Get last whiteboard state
