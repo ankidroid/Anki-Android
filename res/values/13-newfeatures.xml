@@ -21,9 +21,15 @@
 <resources>
 <!-- Be careful with a reordering. It will probably lead to a deletion of already translated strings on crowdin and should therefore only be done only immediately before release -->
 <string-array name="new_version_features">
-    <item>Default font now overrides card font</item>
-    <item>Fixed audio playback image being covered by text on Android 2.3</item>
-    <item>Fixed reviewer crash when language set to Romanian</item>
-    <item>Translation fixes</item>
+    <item>Lots of Bug Fixes</item>    
+    <item>Better support for tag based studying</item>
+    <item>Preview card feature in note editor (experimental)</item>
+    <item>Improve Aedict integration</item>
+    <item>New "Kanji Info" feature (enabled in preferences->reviewing->Kanji Info)</item>
+    <item>Support for Samsung Multi-Window</item>            
+    <item>Fix Some TTS Issues</item>     
+    <item>Updated Translations</item>     
+    <item>Remove unused media check when deleting decks</item>
+    <item>Remove upgrade wizard</item>
 </string-array>
 </resources>
