@@ -35,7 +35,7 @@
 <string name="studyoptions_new_total">Total new cards:</string>
 <string name="studyoptions_total_cards">Total cards:</string>
 <string name="studyoptions_eta">Estimated time (min):</string>
-<string name="studyoptions_start">Start Reviewing</string>
+<string name="studyoptions_start">Study Now</string>
 
 <!-- DeckPicker.java -->
 <plurals name="deckpicker_title">
@@ -154,7 +154,6 @@
 <string name="rebuild_cram_label">Rebuild</string>
 <string name="empty_cram_label">Empty</string>
 <string name="empty_cram_deck">Emptying cram deck.\nPlease wait...</string>
-<string name="studyoptions_new_filtercram">Filter/Cram</string>
 <string name="custom_study_deck_name">Custom Study Session</string>
 <string name="custom_study_deck_exists">Please rename the existing Custom Study deck first.</string>
 
