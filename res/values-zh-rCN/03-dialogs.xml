@@ -81,7 +81,7 @@
   <string name="upgrade_deck_cancelled_description">升级的尝试被取消，请再试一种升级方法。</string>
   <string name="upgrade_deck_web_upgrade_failed">升级过程不成功。请再试一次，或选择不同的升级方法</string>
   <string name="upgrade_deck_web_upgrade_exceeds">您Anki1牌组的总的压缩容量超过了服务器的限制（50mb）,请尝试用另外的方法更新。</string>
-  <string name="upgrade_deck_web_upgrade_sdcard">升级已完成，但打开某些牌组组合时有错误，请确保您有足够的磁盘容量 （需要 %1$ d mb) 然后再尝试，或尝试用另一种方法升级。</string>
+  <string name="upgrade_deck_web_upgrade_sdcard">升级已完成，但打开某些牌组组合时有错误，请确保您有足够的磁盘容量 （需要 %1$d mb) 然后再尝试，或尝试用另一种方法升级。</string>
   <string name="export_progress_title">牌组组合导出</string>
   <string name="export_progress_exporting">正在导出牌组组合，请稍等...</string>
   <string name="upgrade_deck_export_successful">您的旧牌组组合已经被成功导出，将继续进行升级活动。</string>

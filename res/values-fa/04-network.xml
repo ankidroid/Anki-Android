@@ -81,7 +81,7 @@
   <string name="sync_log_clocks_unsynchronized">ساعت دستگاهتان تا %1$d ثانیه%2$s صحیح نیست; برای همگامسازی و به منظور  جلوگیری از خطا لازم است که هر دو ساعت دستگاه و منطقه زمانی به طور صحیح تنظیم شوند. لطفا مطمئن شوید که تاریخ و زمان دستگاه شما بطور صحیح تنظیم گردیده, سپس دوباره همگامسازی کنید.</string>
   <string name="sync_log_clocks_unsynchronized_tz">منطقه زماني دستگاه احتمالا اشتباه است</string>
   <string name="sync_log_clocks_unsynchronized_date">تاريخ دستگاه احتمالا اشتباه است</string>
-  <string name="sync_log_old_version">پروتکل همگام سازی تغییر کرده است، لطفا به AnkiDroid آخرین ارتقاء داده شده. %S را ببینید</string>
+  <string name="sync_log_old_version">پروتکل همگام سازی تغییر کرده است، لطفا به AnkiDroid آخرین ارتقاء داده شده. %s را ببینید</string>
   <string name="sync_conflict_title">مشكل در همگام سازي</string>
   <string name="sync_no_changes_message">هيچ تغييري يافت نشد.</string>
   <string name="sync_database_success">مجموعه با موفقیت همگام سازی</string>

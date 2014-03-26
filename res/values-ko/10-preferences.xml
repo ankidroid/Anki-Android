@@ -168,8 +168,8 @@
   <string name="pref_backup_max_summ">최대 백업 갯수: XXX</string>
   <string name="pref_backup_warning">백업을 하지 않도록 설정하면 현재 백업된 파일들이 모두 삭제됩니다. 계속 진행할까요?</string>
   <string name="studyoptions_limit_select_tags">태그 선택</string>
-  <string name="studyoptions_limit_tags_active">반응시간:%1$초</string>
-  <string name="studyoptions_limit_tags_inactive">무반응:%1$초</string>
+  <string name="studyoptions_limit_tags_active">반응시간:%1$s초</string>
+  <string name="studyoptions_limit_tags_inactive">무반응:%1$s초</string>
   <string name="studyoptions_limit_button_text">제한</string>
   <string name="studyoptions_limit_dialog_title">학습 제한하기</string>
   <string name="studyoptions_session">1회 학습</string>

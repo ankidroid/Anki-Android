@@ -22,7 +22,7 @@
 <resources>
   <string name="backup_collection">Biztonsági másolat létrehozása.\nKérlek, várj...</string>
   <string name="backup_deck_no_space_left">A biztonsági mentés nem hajtható végre, mivel kevés a rendelkezésre álló hely az SD kártyán.\n\nSzabadíts fel helyet, vagy csökkentsd a biztonsági mentések mélységét.</string>
-  <string name="sd_space_warning">Kevesebb, mint% d MB hely maradt az SD kártyán.  Szabíts fel helyet az adatvesztés elkerülése érdekében!</string>
+  <string name="sd_space_warning">Kevesebb, mint %d MB hely maradt az SD kártyán.\n Szabíts fel helyet az adatvesztés elkerülése érdekében!</string>
   <string name="backup_deck_success">Biztonsági másolat sikeresen létrehozva</string>
   <string name="backup_manager_title">Biztonsági másolat kezelő</string>
   <string name="backup_delete">Biztonsági mentések törlése.\nKérlek, várj...</string>
