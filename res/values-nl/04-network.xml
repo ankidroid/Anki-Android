@@ -134,5 +134,5 @@
   <string name="upgrade_decks_media_failed">Het kopiëren van de mediabestanden naar de nieuwe mediamap (%1$s) heeft gefaald voor de volgende sets:\n%2$sGelieve de mediabestanden manueel te verplaatsen.</string>
   <string name="download_deck">Bezig de set te downloaden (%d kb).\nEven geduld...</string>
   <string name="sync_sanity_local">Lokaal</string>
-  <string name="sync_sanity_remote">Op afstand</string>
+  <string name="sync_sanity_remote">Server</string>
 </resources>

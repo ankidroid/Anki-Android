@@ -27,7 +27,7 @@
   <string name="no">Tidak</string>
   <string name="ok">OK</string>
   <string name="studyoptions_deck_name">Nama Dek</string>
-  <string name="studyoptions_due_today">Due today:</string>
+  <string name="studyoptions_due_today">Jatuh tempo hari ini:</string>
   <string name="studyoptions_new_total">Total kartu baru:</string>
   <string name="studyoptions_total_cards">Total kartu:</string>
   <string name="studyoptions_eta">Jangka tempoh (min):</string>
@@ -44,11 +44,11 @@
   <string name="card_unsuspended">Kad tergantung dibatal</string>
   <string name="card_suspended">Kad digantung</string>
   <string name="menu_rotate">Pusing</string>
-  <string name="menu_import">Import cards</string>
+  <string name="menu_import">Impor kartu</string>
   <string name="undo">Buat asal</string>
   <string name="undo_action_review">tinjau ulang</string>
   <string name="undo_action_edit">ubah catatan</string>
-  <string name="undo_action_bury">bury note</string>
+  <string name="undo_action_bury">sembunyikan catatan</string>
   <string name="undo_action_suspend_card">suspend card</string>
   <string name="undo_action_suspend_note">suspend note</string>
   <string name="undo_action_delete">Hapus Catatan</string>
@@ -95,7 +95,7 @@
   <string name="studyoptions_new_filtercram">Filter/Cram</string>
   <string name="custom_study_deck_name">Custom Study Session</string>
   <string name="custom_study_deck_exists">Please rename the existing Custom Study deck first.</string>
-  <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
+  <string name="studyoptions_congrats_finished">Selamat! Anda selesai sekarang.</string>
   <string name="studyoptions_congrats_more_rev">Today\'s review limit has been reached, but there are still cards waiting to be reviewed. For optimum memory, consider increasing the daily limit in the options.</string>
   <string name="studyoptions_congrats_more_new">There are more new cards available, but the daily limit has been reached. You can increase the limit in the options, but please bear in mind that this will increase your short-term review workload.</string>
   <string name="studyoptions_congrats_custom">To study outside of the normal schedule, click the Custom Study button below.</string>
@@ -103,9 +103,9 @@
   <string name="studyoptions_options">Pilihan</string>
   <string name="empty_cloze_warning">Please edit this note and add some cloze deletions. (%1$s)</string>
   <string name="help_cloze">Bantuan</string>
-  <string name="button_sync">Sync</string>
-  <string name="restart">Restart</string>
-  <string name="do_nothing">Do nothing</string>
+  <string name="button_sync">Sinkronisasi</string>
+  <string name="restart">Mulai kembali</string>
+  <string name="do_nothing">Jangan lakukan apapun</string>
   <string name="more_options">Pilihan lainnya</string>
   <string name="now">Sekarang</string>
   <string name="back">Kembali</string>
@@ -148,8 +148,8 @@
     <item quantity="other">Tersisa %d menit</item>
   </plurals>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Tomorrow there will be: 1 card to review and %2$s.\n Estimated time: %3$s</item>
-    <item quantity="other">Tomorrow there will be: %1$d cards to review and %2$s.\n Estimated time: %3$s</item>
+    <item quantity="one">Besok akan ada: 1 kartu untuk ditinjau dan %2$s.\n Perkiraan waktu: %3$s</item>
+    <item quantity="other">Besok akan ada: %1$d kartu untuk ditinjau dan %2$s.\n Perkiraan waktu: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
     <item quantity="one">1 kartu baru</item>

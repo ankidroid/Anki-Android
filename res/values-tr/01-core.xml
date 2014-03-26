@@ -38,7 +38,7 @@
   <string name="ease3_successive">İyi</string>
   <string name="ease3_learning">Kolay</string>
   <string name="studyoptions_congrats_undo">%s geri al</string>
-  <string name="studyoptions_congrats_custom_study">Özel Eğitim</string>
+  <string name="studyoptions_congrats_custom_study">Kişisel Çalışma</string>
   <string name="studyoptions_congrats_open_other_deck">Başka Deste Aç</string>
   <string name="studyoptions_congrats_finish">Çalışma Ekranına Dön</string>
   <string name="card_unsuspended">Askıya alma geri alındı</string>

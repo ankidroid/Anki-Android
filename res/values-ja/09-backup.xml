@@ -45,7 +45,6 @@
   <string name="backup_restore_select_title">復元するバックアップの選択</string>
   <string name="backup_restore_no_backups">このデバイス上では、このコレクションをバックアップできません。コンピュータ上のデスクトップにバックアップがある場合には、あなたのAnkiDroidフォルダに手動でコピーしてください</string>
   <string name="open_collection_failed_title">コレクションは開かれていません</string>
-  <string name="open_collection_failed_message">データベースを開けませんでした。ankiのデータベースでないか、またはデータベースが破損しています\n\nコレクションを修復するか、バックアップから修復してください（いずれの場合でも、破損したデッキのコピーはサブフォルダ移動されます\'%1$s\'）。 \"オプション\"をクリックしてください。\n\n壊れデッキ修復についての情報：%2$s
-</string>
+  <string name="open_collection_failed_message">データベースを開けませんでした。ankiのデータベースでないか、またはデータベースが破損しています\n\nコレクションを修復するか、バックアップから修復してください（いずれの場合でも、破損したデッキのコピーはサブフォルダ移動されます\'%1$s\'）。 \"オプション\"をクリックしてください。\n\n壊れデッキ修復についての情報：%2$s</string>
   <string name="deck_repair_error">コレクションは修復できませんでした</string>
 </resources>
