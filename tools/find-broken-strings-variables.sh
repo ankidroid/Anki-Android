@@ -6,6 +6,7 @@ cd ../res
 
 grep -R "%1$ s" values*
 grep -R "%1$ d" values*
+grep -R "%1" values* | grep -v "%1\\$"
 
 grep -RH '%' values* | 
  sed -e 's/%/\n%/g' | # Split lines that contain several expressions
