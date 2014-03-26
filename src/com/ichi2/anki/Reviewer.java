@@ -280,6 +280,7 @@ public class Reviewer extends AnkiActivity {
     private boolean mIsSelecting = false;
     private boolean mTouchStarted = false;
     private boolean mInAnswer = false;
+    private boolean mAnswerSoundsAdded = false;
 
     private String mCardTemplate;
 
@@ -2585,9 +2586,14 @@ public class Reviewer extends AnkiActivity {
             if (sDisplayAnswer) {
                 qa = MetaDB.LANGUAGES_QA_ANSWER;
                 answer = mCurrentCard.getPureAnswerForReading();
-                Sound.addSounds(mBaseUrl, answer, qa);
+                // don't add answer sounds multiple times, such as when reshowing card after exiting editor
+                if (!mAnswerSoundsAdded) {
+                    Sound.addSounds(mBaseUrl, answer, qa);
+                    mAnswerSoundsAdded = true;
+                }
             } else {
-                Sound.resetSounds(); // reset sounds on first side of card
+                Sound.resetSounds(); // reset sounds each time first side of card is displayed, even after leaving the editor
+                mAnswerSoundsAdded = false;
                 qa = MetaDB.LANGUAGES_QA_QUESTION;
                 question = mCurrentCard.getQuestion(mCurrentSimpleInterface);
                 Sound.addSounds(mBaseUrl, question, qa);                
