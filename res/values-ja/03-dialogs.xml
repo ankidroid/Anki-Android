@@ -120,6 +120,6 @@
     <item><![CDATA[AnkiDroid は、<a href="%1$s"> オープン ソース ソフトウェア <a/>で、誰でも <a href="%3$s"> 貢献者</a> として <a href="%2$s"> 参加</a> することを歓迎します:-)]]></item>
     <item><![CDATA[開発者でなくても、例えばAnkiDroidを<a href="%1$s"> 翻訳</a>したり、wikiやスクリーン ショットを更新したり、Anki Desktopに<a href="%2$s"> 寄付</a>をしたり、AnkiDroid についてのブログを書いたりして貢献できます！]]></item>
     <item><![CDATA[AnkiDroid は、<a href="%1$s"> GNU GPL v3 ライセンス</a> の下でリリースされており、ソースコードは <a href="%2$s">ここ</a>です。]]></item>
-    <item><![CDATA [このパッケージは、<a href="http://www.csse.monash.edu.au/~jwb/edict.html"> EDICT</a> と <a href="http://www.csse.monash.edu.au/~jwb/kanjidic.html"> KANJIDIC</a> 辞書ファイルを使用します。これらのファイルは <a href="http://www.edrdg.org"> 電子辞書の研究・開発グループ</a>の所有物であり、グループの <a href="http://www.edrdg.org/edrdg/licence.html"> ライセンス</a> に準拠し使用します。]></item>
+    <item><![CDATA[このパッケージは、<a href="http://www.csse.monash.edu.au/~jwb/edict.html">EDICT</a> と <a href="http://www.csse.monash.edu.au/~jwb/kanjidic.html">KANJIDIC</a> 辞書ファイルを使用します。これらのファイルは <a href="http://www.edrdg.org">電子辞書の研究・開発グループ</a>の所有物であり、グループの <a href="http://www.edrdg.org/edrdg/licence.html">ライセンス</a> に準拠し使用します。]]></item>
   </string-array>
 </resources>

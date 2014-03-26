@@ -119,6 +119,6 @@
     <item><![CDATA[AnkiDroid est un <a href="%1$s">logiciel libre<a/>, tout le monde est encouragé à <a href="%2$s">rejoindre</a> les <a href="%3$s">contributeurs</a>:-)]]></item>
     <item><![CDATA[Les non-développeurs peuvent également aider, par exemple en <a href="%1$s">traduisant</a> AnkiDroid, en mettant à jour le wiki et les copies d’écran, <a href="%2$s">en faisant un don</a>, ou en bloguant à propos d\'AnkiDroid !]]></item>
     <item><![CDATA[AnkiDroid est mis à disposition sous la licence <a href="%1$s">GNU-GPL v3</a> et son code source est disponible <a href="%2$s">ici</a>.]]></item>
-    <item><![CDATA [ce paquet utilise les fichiers de dictionnaire <a href="http://www.csse.monash.edu.au/~jwb/edict.html"> EDICT </a> et <a href="http://www.csse.monash.edu.au/~jwb/kanjidic.html"> KANJIDIC</a>. Ces fichiers sont la propriété du groupe<a href="http://www.edrdg.org"> Electronic Dictionary Research and Development </a>et sont utilisés en conformité avec la <a href="http://www.edrdg.org/edrdg/licence.html"> licence </a>de ce groupe.]]></item>
+    <item><![CDATA[Ce paquet utilise les fichiers de dictionnaire <a href="http://www.csse.monash.edu.au/~jwb/edict.html">EDICT</a> et <a href="http://www.csse.monash.edu.au/~jwb/kanjidic.html">KANJIDIC</a>. Ces fichiers sont la propriété du groupe<a href="http://www.edrdg.org">Electronic Dictionary Research and Development</a>et sont utilisés en conformité avec la <a href="http://www.edrdg.org/edrdg/licence.html">licence</a>de ce groupe.]]></item>
   </string-array>
 </resources>

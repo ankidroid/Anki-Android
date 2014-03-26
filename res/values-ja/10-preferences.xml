@@ -105,7 +105,7 @@
   <string name="display_font_size">フォント サイズ</string>
   <string name="display_font_size_summ">フォントサイズを調整します. 現在の相対サイズはXXX%です</string>
   <string name="image_size">画像のサイズ</string>
-  <string name="image_size_summ">元の画像サイズと表示サイズは、現時点で: XXX ％</string>
+  <string name="image_size_summ">元の画像サイズと表示サイズは、現時点で: XXX %</string>
   <string name="card_browser_font_size">カード閲覧用のフォントサイズ</string>
   <string name="card_browser_font_size_summ">カード閲覧時のフォントサイズ。現在は: XXX %</string>
   <string name="button_size">ボタンの大きさ</string>
