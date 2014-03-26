@@ -140,9 +140,9 @@ public class CustomFontsReviewerExt implements ReviewerExt {
     private String getDominantFontStyle(Context context, Map<String, AnkiFont> customFontsMap) {
         if (mDominantFontStyle == null) {
             mDominantFontStyle = getOverrideFontStyle(context, customFontsMap);
-            if (mDominantFontStyle.isEmpty()) {
+            if (TextUtils.isEmpty(mDominantFontStyle)) {
                 mDominantFontStyle = getDefaultFontStyle(context, customFontsMap);
-                if (mDominantFontStyle.isEmpty()) {
+                if (TextUtils.isEmpty(mDominantFontStyle)) {
                     mDominantFontStyle = getThemeFontStyle();
                 }
             }

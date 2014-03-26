@@ -360,7 +360,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     private void onOverrideFontChange(ListPreference overrideFontPreference, ListPreference defaultFontPreference) {
         if (overrideFontPreference != null && defaultFontPreference != null) {
-            Boolean overrideIsSet = !overrideFontPreference.getValue().isEmpty();
+            Boolean overrideIsSet = !TextUtils.isEmpty(overrideFontPreference.getValue());
             defaultFontPreference.setEnabled(!overrideIsSet);
         }
     }
