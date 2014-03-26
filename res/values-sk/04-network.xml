@@ -55,6 +55,7 @@
   <string name="download_cancel">Zrušiť preberanie</string>
   <string name="shared_decks">Zdieľané balíčky</string>
   <string name="loading_shared_decks">Načítavam dostupné zdieľané balíčky...</string>
+  <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Terms and Conditions</a></string>
   <string name="cancel_download">Zrušiť preberanie</string>
   <string name="resume_download">Obnoviť preberanie</string>
   <string name="pause_download">Pozastaviť preberanie</string>
@@ -71,6 +72,7 @@
   <string name="log_in">Prihlásiť sa</string>
   <string name="sign_up_description">Nemáte AnkiWeb účet? Je zadarmo!</string>
   <string name="sign_up">Zaregistrovať sa</string>
+  <string name="sign_up_terms">By tapping <i>Sign up</i>, you confirm that you have read and agree to our <a href="https://ankiweb.net/account/terms">terms of use</a>.</string>
   <string name="logged_as">Prihlásený ako</string>
   <string name="log_out">Odhlásiť</string>
   <string name="alert_logging_message">Prebieha prihlasovanie, počkajte prosím...</string>

@@ -40,21 +40,17 @@
 -->
 <resources>
   <string-array name="new_version_features">
-    <item>Opravené množstvo padaní</item>
-    <item>Opravy UI tabletu</item>
-    <item>Opravené problémy s radením nových kariet</item>
-    <item>Vzhľad kariet teraz zodpovedá tomu v pc verzii Anki. <![CDATA[<b>Centrovanie kariet je predvolene vypnuté, ale je možné ho znova zapnúť.</b>]]></item>
-    <item>Skupiny nastavení je teraz možné meniť aj v AnkiDroid</item>
-    <item>Jasné chybové hlásenie pri použití nesprávnej šablóny</item>
-    <item>Opravené oznámenia časových boxov</item>
-    <item>Správne prispôsobovanie veľkosti obrázkov</item>
-    <item>Lepšia manipulácia s vlastným písmom</item>
-    <item>Viac nastavení (ďalší deň začína o, hodnoty časových boxov, atď.)</item>
-    <item>Zmena jazyka rozhrania AnkiDroid už funguje.</item>
-    <item>Opravené problémy s importom/zdieľanými balíčkami (\"neplatný súbor typu apkg\")</item>
-    <item>Opravený neviditeľný text na zariadeniach Motorola</item>
-    <item>Zameranie na odpoveď po jej zobrazení</item>
-    <item>Filtrované balíčky sú odteraz modré v zozname balíčkov</item>
-    <item>Odstránené nepoužívané okrúhle tlačidlo v editore poznámok</item>
+    <item>Lots of Bug Fixes</item>
+    <item>New custom study option with improved tag selection</item>
+    <item>New preview card feature in note editor (experimental)</item>
+    <item>New override font preference in addition to default font</item>
+    <item>New \"Kanji Info\" feature (enabled in preferences-&gt;reviewing-&gt;Kanji Info)</item>
+    <item>Improve Aedict integration</item>
+    <item>Support for Samsung Multi-Window</item>
+    <item>Fix Some TTS Issues</item>
+    <item>Updated Translations</item>
+    <item>Remove unused media check when deleting decks</item>
+    <item>Significantly increase speed for reducing filtered decks</item>
+    <item>Remove upgrade wizard</item>
   </string-array>
 </resources>

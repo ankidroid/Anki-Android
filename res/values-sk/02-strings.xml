@@ -42,19 +42,19 @@
   <string name="CardEditorCancelButton">Zrušiť</string>
   <string name="CardEditorSaveButton">Uložiť</string>
   <string name="CardEditorLaterButton">Neskôr</string>
+  <string name="CardEditorPreviewButton">Náhľad</string>
   <string name="CardEditorLaterMessage">Informácie uložené na neskôr</string>
   <string name="CardEditorCardDeck">Balíček kariet: %s</string>
-  <string name="CardEditorNoteDeck">Note deck: %s</string>
+  <string name="CardEditorNoteDeck">Poznámka balíčka: %s</string>
   <string name="CardEditorModel">Typ poznámky: %s</string>
   <string name="CardEditorTags">Štítky: %1$s</string>
   <string name="add_new_tag">Pridať nový štítok</string>
   <string name="note_type">Typ poznámky</string>
+  <string name="card_type">Typ karty</string>
   <string name="sdcard_missing_message">SD karta je nedostupná, pretože sa používa ako USB úložisko. Pre prístup k vašim balíčkom odpojte USB.</string>
   <string name="show_whiteboard">Zobraziť tabuľu</string>
   <string name="hide_whiteboard">Schovať tabuľu</string>
   <string name="clear_whiteboard">Vyčistiť tabuľu</string>
-  <string name="session_question_limit_reached">Bol dosiahnutý limit počtu otázok</string>
-  <string name="session_time_limit_reached">Bol dosiahnutý časový limit</string>
   <string name="cram_edit_warning">Úprava kariet nie je počas drvenia sa povolená</string>
   <string name="suspend_leeches">Dať pijavice bokom</string>
   <string name="leech_suspend_notification">Karta označená ako pijavica a odložená bokom</string>
@@ -71,7 +71,7 @@
   <string name="close">Zavrieť</string>
   <string name="select">Vybrať</string>
   <string name="saving_changes">Ukladajú sa zmeny ...</string>
-  <string name="timebox_reached">Dosiahnutý limit pre časový box!</string>
+  <string name="reordering_cards">Zmena poradia kariet...</string>
   <string name="studyoptions_welcome_title">Vitajte v AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">Žiadne externé úložisko k dispozícii</string>
   <string name="studyoptions_no_external_storage_message">Žiadne externé úložisko momentálne nie je k dispozícii. AnkiDroid potrebuje mať prístup na SD kartu, aby mohol čítať a nahrať vaše Anki balíčky. Skontrolujte, že vaša SD karta je pripojená a skúste znova.</string>
@@ -89,6 +89,7 @@
   <string name="tutorial_loading_error">Úvodný balíček sa nepodarilo vytvoriť</string>
   <string name="rename">Premenovať</string>
   <string name="rename_error">Balíček %s nebolo možné premenovať</string>
+  <string name="default_conf_delete_error">Predvolené možnosti tejto skupiny nie je možné odstrániť</string>
   <string name="help_title">Pomocník</string>
   <string name="help_online">Pomocník online</string>
   <string name="help_faq">FAQ</string>
@@ -114,10 +115,19 @@
   <string name="import_importing">Importujem karty.\nProsím počkajte...</string>
   <string name="import_hint">Ak chcete importovať karty, umiestnite súbor apkg do adresára %s a stlačte ok</string>
   <string name="upgrade_import_no_file_found">Žiaden importovateľný %1$s súbor nebol nájdený</string>
+  <string name="study_options">Options</string>
   <string name="custom_study">Vlastné štúdium</string>
   <string name="dyn_deck_desc">Toto je špeciálny balíček na štúdium mimo bežného plánu. Karty sa automaticky vrátia do ich pôvodných balíčkov po tom čo si ich zopakujete. Po odstránení tohto balíčka zo zoznamu balíčkov sa všetky zostávajúce karty vrátia do ich pôvodných balíčkov.</string>
-  <string name="restart_upgrade_process">Reštartovať aktualizáciu</string>
   <string name="exit_wizard">Ukončiť sprievodcu</string>
+  <string name="steps_error">Číslo kroku musí byť väčšie ako 0</string>
+  <string name="steps_min_error">Musíš urobiť apoň jeden krok</string>
+  <string name="custom_study_invalid_number">Neplatné číslo</string>
+  <string name="template_error">Chyba šablóny:</string>
+  <string name="template_error_detail">V šablóne tejto karty je chyba.</string>
+  <string name="template_error_fix">Please use the card editor on the desktop client to fix the error.</string>
+  <string name="sched_end">(koniec)</string>
+  <string name="sched_unbury_button">To see them now, tap the Unbury button.</string>
+  <string name="sched_has_buried">Some related or buried cards were delayed until a later session.</string>
   <string-array name="dynOrderLabels">
     <item>Od najdávnejšie zobrazených</item>
     <item>Náhodne</item>
@@ -127,6 +137,14 @@
     <item>Zoradiť podľa pridania</item>
     <item>Zoradiť podľa času opakovania</item>
   </string-array>
+  <plurals name="timebox_reached">
+    <item quantity="one">1 card studied in %2$s</item>
+    <item quantity="other">%1$d cards studied in %2$s</item>
+  </plurals>
+  <plurals name="timebox_reached_minutes">
+    <item quantity="one">1 minúta</item>
+    <item quantity="other">%1$d minút</item>
+  </plurals>
   <plurals name="factadder_cards_added">
     <item quantity="one">1 karta pridaná</item>
     <item quantity="other">%d kariet pridaných</item>

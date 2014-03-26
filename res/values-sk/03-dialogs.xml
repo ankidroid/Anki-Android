@@ -57,6 +57,7 @@
   <string name="notify_title">AnkiDroid aktualizované</string>
   <string name="notify_message">Stiahnuť novú verziu</string>
   <string name="notification_title">Potvrdiť aktualizáciu AnkiDroid</string>
+  <string name="preview_title">Preview</string>
   <string name="notification_message">V Android Market-e je k dispozícii nová verzia AnkiDroid.\n\nChceli by ste ju nainštalovať?</string>
   <string name="notification_stop">Nabudúce na túto aktualizáciu neupozorňovať</string>
   <string name="reset_card_dialog_title">Vynulovať pokrok karty</string>
@@ -82,7 +83,6 @@
   <string name="rebuild_custom_study_deck">Obnovujem balíček vlastného štúdia.\nProsím počkajte...</string>
   <string name="deck_upgrade_title">Aktualizovať balíček</string>
   <string name="deck_upgrade_rename_warning">Buďte si vedomý toho, že týmto sa exportuje vaša aktuálna zbierka do súboru s názvom \"%1$s\" a vytvorí sa nová z vašich starých anki 1.x súborov. Podľa potreby môžete po skončení sprievodcu ručne znovu importovať vyššie uvedený apkg súbor. Skutočne chcete pokračovať?</string>
-  <string name="deck_upgrade_already_upgraded">AnkiDroid verzie 2 používa nový formát balíčkov.\nAk sa vám nepodarilo úspešne aktualizovať vaše balíčky, môžete teraz reštartovať proces aktualizácie pre aktualizáciu vašich balíčkov.</string>
   <string name="deck_upgrade_major_warning"><![CDATA[To je významná aktualizácia AnkiDroid a proces aktualizácie bude trvať aspoň 10-20 minút. <br><br>Chcete pokračovať teraz alebo neskôr?<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en"> Viac info (v aj)</a>]]></string>
   <string name="deck_upgrade_start_again_to_upgrade_toast">Prosím spustite AnkiDroid znova keď budete mať čas na aktualizáciu!</string>
   <string name="deck_upgrade_recommended_method"><![CDATA[Odporúčaná metóda aktualizácie je synchronizácia s PC a aktualizácia s počítačovou verziou Anki. <br><br>Existuje aj alternatívna metóda, pomocou ktorej môžete vykonať aktualizáciu cez internet ak nemáte prístup k počítaču a ak vaša zbierka nie je príliš veľká.]]></string>
@@ -119,5 +119,6 @@
     <item><![CDATA[AnkiDroid je <a href="%1$s"> open source softvér <a/>, takže každý je vítaný <a href="%2$s"> pripojiť</a>sa k <a href="%3$s"> prispievateľom</a> :-)]]></item>
     <item><![CDATA[Nevývojári môžu tiež pomôcť, napríklad s <a href="%1$s"> prekladom</a> AnkiDroid, aktualizáciou wiki a screenshotmi, <a href="%2$s"> darovaním</a> počítačovej verzii Anki alebo blogovaním o AnkiDroid!]]></item>
     <item><![CDATA[AnkiDroid je vydané pod <a href="%1$s"> licenciou GNU GPL v3</a> a zdrojový kód je k dispozícii <a href="%2$s"> tu</a>.]]></item>
+    <item><![CDATA[This package uses the <a href="http://www.csse.monash.edu.au/~jwb/edict.html">EDICT</a> and <a href="http://www.csse.monash.edu.au/~jwb/kanjidic.html">KANJIDIC</a> dictionary files. These files are the property of the <a href="http://www.edrdg.org">Electronic Dictionary Research and Development Group</a>, and are used in conformance with the Group\'s <a href="http://www.edrdg.org/edrdg/licence.html">licence</a>.]]></item>
   </string-array>
 </resources>
