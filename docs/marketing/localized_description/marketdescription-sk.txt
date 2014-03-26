@@ -1,37 +1,37 @@
-Úč sa hocičo s AnkiDroid!
+Zapamätaj si čokoľvek s AnkiDroid!
 
-AnkiDroid vás učí cez kartičky (flashcarts) veľmi efektívne a snaží sa ukázať kartičku so slovom tesne predtým ako by ste zabudli.  Software Anki plne kompatibilný (vrátane synchronizácie) s Androidom, Linuxom, MacOS a Windowsom.
+S AnkiDroid sa učíte kartičky (flashcards) veľmi efektívne, pretože vám ich zobrazí vždy tesne predtým, ako by ste ich zabudli. Je plne kompatibilný so softvérom Anki (vrátane synchronizácie), ktorý je dostupný pre Windows, Linux a MacOS.
 
-Študuj kdekoľvek a kedykoľvek chceš. Využi dobre akýkoľvek voľný čas, napr.: cestu v autobuse, státie v rade v supermarkete, alebo v akejkoľvek situácii kedy máš čas!
+Študuj všetko možné kdekoľvek a kedykoľvek chceš. Užitočne stráv nevyužitý čas, napr.: cestu v autobuse, v rade v supermarkete, alebo v akejkoľvek inej situácii kedy máš čas!
 
-Vytvor si vlastné flashcard balíčky alebo stiahni si zdarma zostavené podľa témy či jazyka (k dispozícii je ich viac než 6000).
+Vytvor si vlastné balíčky kariet alebo si zdarma stiahni balíčky zostavené podľa témy či jazyka (k dispozícii je ich viac než 6000).
 
-Text (obraz či zvuk) môžeš vkladať prostredníctvom aplikácie Anki cez desktop alebo, priamo v Ankidroide. Aplikácia podporuje aj pridanie textu automaticky zo slovníka!
+Materiál môžeš vkladať prostredníctvom počítačovej aplikácie Anki, alebo priamo v AnkiDroid. Aplikácia dokonca podporuje automatické pridanie textu zo slovníka!
 
 ★ Kľúčové vlastnosti:
-• flashcard podporouje: text, obrázky, zvuky, LaTeX
-• inteligentné opakovanie (supermemo 2 algoritmus)
-• Čítanie textu tzv. TTS (text-to-speech)
-• obsahuje viac ako 6000 balíčkov
-• widget úspešnosti
+• karty podporujú: text, obrázky, zvuky, LaTeX
+• odložené opakovanie (algoritmus supermemo 2)
+• čítanie textu, tzv. TTS (text-to-speech)
+• viac ako 6000 vytvorených balíčkov
+• widget postupu
 • podrobné štatistiky
 • synchronizácia s AnkiWeb
 • program je open source
 
 ★ Ďalšie funkcie:
-• odpovede môžeš napísať (voliteľné)
-• Tabuľa
-• pridanie/editovanie kariet
+• dopisovanie odpovedí (voliteľné)
+• tabuľa
+• pridávanie/úprava kariet
 • prehliadač kariet
 • podpora pre tablet
-• importovať existujúce balíčky (cez desktopovu aplokáciu Anki)
-• integrované slovníky (ColorDict, GoldenDict, Leo.org, Aedict...)
-• Pridavanie kariet podľa témy či kategórií.
-• podpora vlastného písma
+• import existujúcich súborov zbierok (cez počítačovú aplikáciu Anki)
+• integrované slovníky (ColorDict, GoldenDict, Leo.org, Aedict, rôzne webové slovníky)
+• Pridávanie kariet z iných aplikácii, napr. slovníkov
+• podpora vlastného štýlu písma
 • úplné zálohovanie
-• vyhľadávanie, náhodne miešanie
+• ovládanie posunom, dotykom, zatrasením
 • plne prispôsobiteľné
-• dynamicky prispôsobené balíčky
-• Nočný režim
+• dynamické prispôsobovanie balíčkov
+• nočný režim
 • 27 lokalizácií
-• Všetky predchádzajúce AnkiDroid verzie možno stiahnuť z internetovej stránky
+• Všetky predchádzajúce verzie AnkiDroid je možné stiahnuť z internetovej stránky

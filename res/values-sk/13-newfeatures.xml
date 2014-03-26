@@ -40,21 +40,21 @@
 -->
 <resources>
   <string-array name="new_version_features">
-    <item>Fixed lots of crashes</item>
-    <item>Tablet UI fixes</item>
-    <item>Fixed new card ordering issues</item>
-    <item>Card appearance now matches desktop Anki. <![CDATA[<b>Centering cards is off by default but can be re-enabled.</b>]]></item>
-    <item>Option groups can now be changed in AnkiDroid</item>
-    <item>Clear error message when using a bad template</item>
-    <item>Fixed timeboxing notifications</item>
-    <item>Properly scale images</item>
-    <item>Better custom font handling</item>
-    <item>More settings (next day starts at, timeboxing value, etc.)</item>
-    <item>Changing AnkiDroid interface language now works.</item>
-    <item>Fixed import/shared deck download issues (\"not a valid apkg file\")</item>
-    <item>Fixed invisible text on Motorola devices</item>
-    <item>Focus on answer when revealed</item>
-    <item>Filtered decks are now blue in deck list</item>
-    <item>Removed unused circle button in note editor</item>
+    <item>Opravené množstvo padaní</item>
+    <item>Opravy UI tabletu</item>
+    <item>Opravené problémy s radením nových kariet</item>
+    <item>Vzhľad kariet teraz zodpovedá tomu v pc verzii Anki. <![CDATA[<b>Centrovanie kariet je predvolene vypnuté, ale je možné ho znova zapnúť.</b>]]></item>
+    <item>Skupiny nastavení je teraz možné meniť aj v AnkiDroid</item>
+    <item>Jasné chybové hlásenie pri použití nesprávnej šablóny</item>
+    <item>Opravené oznámenia časových boxov</item>
+    <item>Správne prispôsobovanie veľkosti obrázkov</item>
+    <item>Lepšia manipulácia s vlastným písmom</item>
+    <item>Viac nastavení (ďalší deň začína o, hodnoty časových boxov, atď.)</item>
+    <item>Zmena jazyka rozhrania AnkiDroid už funguje.</item>
+    <item>Opravené problémy s importom/zdieľanými balíčkami (\"neplatný súbor typu apkg\")</item>
+    <item>Opravený neviditeľný text na zariadeniach Motorola</item>
+    <item>Zameranie na odpoveď po jej zobrazení</item>
+    <item>Filtrované balíčky sú odteraz modré v zozname balíčkov</item>
+    <item>Odstránené nepoužívané okrúhle tlačidlo v editore poznámok</item>
   </string-array>
 </resources>

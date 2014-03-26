@@ -39,31 +39,31 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="widget_pref">Panel nástrojov</string>
-  <string name="widget_minimum_cards_due">Widget notification threshold</string>
-  <string name="widget_minimum_cards_due_summary">The minimum number of cards due at which a notification is raised: XXX</string>
+  <string name="widget_pref">Widget</string>
+  <string name="widget_minimum_cards_due">Limit pre widget oznámenia</string>
+  <string name="widget_minimum_cards_due_summary">Minimálny počet kariet na skúšanie, pri ktorom sa objaví oznámenie : XXX</string>
   <string name="widget_minimum_cards_due_vibrate">Vibrovať</string>
-  <string name="widget_minimum_cards_due_blink">Blink light</string>
-  <string name="widget_minimum_cards_due_notification_ticker_title">Cards Due</string>
-  <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid cards due</string>
-  <string name="widget_no_cards_due">No cards due</string>
-  <string name="widget_loading">Widget loading...</string>
-  <string name="widget_medium">AnkiDroid Medium</string>
-  <string name="widget_small">AnkiDroid Small</string>
-  <string name="widget_big">AnkiDroid Big</string>
-  <string name="widget_big_restrictions_dialog">Due to some restrictions of Android\'s widget framework this widget can only show text but no images/sounds etc.</string>
-  <string name="open_in_reviewer">Otvor balíček v AnkiDroid</string>
-  <string name="widget_big_tomorrow_due">Tomorrow due:</string>
+  <string name="widget_minimum_cards_due_blink">Blikanie</string>
+  <string name="widget_minimum_cards_due_notification_ticker_title">Kariet na skúšanie</string>
+  <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid kariet na skúšanie</string>
+  <string name="widget_no_cards_due">Žiadne karty na skúšanie</string>
+  <string name="widget_loading">Načítava sa widget...</string>
+  <string name="widget_medium">AnkiDroid stredné</string>
+  <string name="widget_small">AnkiDroid malé</string>
+  <string name="widget_big">AnkiDroid veľké</string>
+  <string name="widget_big_restrictions_dialog">Z dôvodu niektorých obmedzení widgetov na Androide môže tento widget zobrazovať text, ale žiadne obrázky/zvuky atď.</string>
+  <string name="open_in_reviewer">Otvoriť balíček v AnkiDroid</string>
+  <string name="widget_big_tomorrow_due">Na skúšanie zajtra:</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">1 card due in %2$s</item>
-    <item quantity="other">%1$d cards due in %2$s</item>
+    <item quantity="one">1 karta na skúšanie za %2$s</item>
+    <item quantity="other">%1$d kariet na skúšanie za %2$s</item>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="one">1 deck</item>
-    <item quantity="other">%1$d decks</item>
+    <item quantity="one">1 balíček</item>
+    <item quantity="other">%1$d balíčkov</item>
   </plurals>
   <plurals name="widget_big_eta">
     <item quantity="one">Odhadovaný čas: 1 min.</item>
-    <item quantity="other">Odhadovaný čas: % min.</item>
+    <item quantity="other">Odhadovaný čas: %d min.</item>
   </plurals>
 </resources>

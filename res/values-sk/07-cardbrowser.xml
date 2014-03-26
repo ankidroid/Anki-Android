@@ -40,58 +40,58 @@
 -->
 <resources>
   <string name="card_browser_all_decks">Všetky balíčky</string>
-  <string name="card_browser_load">Nahrávam karty. \nProsím o trpezlivosť...</string>
-  <string name="card_browser_cardloading_error">Nastala chyba pri nahrávaní kariet. Môže to byť spôsobené obmedzeniami pamäte na vašom zariadení. Skúste to znova s menším balíčkom</string>
-  <string name="card_browser_delete_card">Odstraniť poznámku</string>
-  <string name="card_browser_suspend_card">Vvyhodiť kartu</string>
-  <string name="card_browser_unsuspend_card">Unsuspend card</string>
-  <string name="card_browser_mark_card">Mark note</string>
-  <string name="card_browser_unmark_card">Unmark note</string>
-  <string name="delete_card_title">Delete note</string>
-  <string name="delete_card_message">Really delete all cards of this note?\nSearch field: %s</string>
-  <string name="card_browser_show_marked">Filter marked</string>
-  <string name="card_browser_field">Change CardBrowser Field</string>
-  <string name="card_browser_field_title">Change CardBrowser Field</string>
-  <string name="card_browser_show_suspended">Filter suspended</string>
-  <string name="card_browser_search_by_tag">Filter by tag</string>
-  <string name="card_browser_tags_shown">Tags: %1$s</string>
-  <string name="card_browser_change_display_order">Change display order</string>
-  <string name="card_browser_change_display_order_title">Choose display order</string>
-  <string name="card_browser_change_display_order_reverse">Select a field twice to reverse.</string>
-  <string name="card_browser_order_reverse">(reverse)</string>
-  <string name="card_browser_card_details">Card details</string>
-  <string name="card_details_question">Question</string>
-  <string name="card_details_answer">Answer</string>
-  <string name="card_details_due">Due</string>
-  <string name="card_details_last_due">Last due</string>
-  <string name="card_details_now">Now</string>
+  <string name="card_browser_load">Nahrávam karty.\nProsím počkajte...</string>
+  <string name="card_browser_cardloading_error">Pri nahrávaní kariet sa vyskytla chyba. Pravdepodobne to bolo spôsobené obmedzeniami pamäte na vašom zariadení. Skúste to znova s menším balíčkom</string>
+  <string name="card_browser_delete_card">Odstrániť poznámku</string>
+  <string name="card_browser_suspend_card">Dať kartu bokom</string>
+  <string name="card_browser_unsuspend_card">Vrátiť kartu medzi ostatné</string>
+  <string name="card_browser_mark_card">Označiť poznámku</string>
+  <string name="card_browser_unmark_card">Zrušiť označenie poznámky</string>
+  <string name="delete_card_title">Vymazať poznámku</string>
+  <string name="delete_card_message">Skutočne chcete vymazať všetky karty tejto poznámky?\nPole vyhľadávania: %s</string>
+  <string name="card_browser_show_marked">Filtrovať označené</string>
+  <string name="card_browser_field">Zmeniť pole prehliadača kariet</string>
+  <string name="card_browser_field_title">Zmeniť pole prehliadača kariet</string>
+  <string name="card_browser_show_suspended">Filtrovať odložené bokom</string>
+  <string name="card_browser_search_by_tag">Filtrovať podľa štítku</string>
+  <string name="card_browser_tags_shown">Štítky: %1$s</string>
+  <string name="card_browser_change_display_order">Zmeniť poradie zobrazenia</string>
+  <string name="card_browser_change_display_order_title">Zvoliť poradie zobrazenia</string>
+  <string name="card_browser_change_display_order_reverse">Pre prevrátenie vyberte pole dvakrát.</string>
+  <string name="card_browser_order_reverse">(prevrátené)</string>
+  <string name="card_browser_card_details">Detaily karty</string>
+  <string name="card_details_question">Otázka</string>
+  <string name="card_details_answer">Odpoveď</string>
+  <string name="card_details_due">Na skúšanie</string>
+  <string name="card_details_last_due">Posledná na skúšanie</string>
+  <string name="card_details_now">Teraz</string>
   <string name="card_details_interval">Interval</string>
-  <string name="card_details_ease">Ease</string>
-  <string name="card_details_average_time">Average time</string>
+  <string name="card_details_ease">Jendoduchosť</string>
+  <string name="card_details_average_time">Priemerný čas</string>
   <string name="card_details_total_time">Celkový čas</string>
-  <string name="card_details_yes_count">Yes count</string>
-  <string name="card_details_no_count">No count</string>
-  <string name="card_details_added">Added</string>
-  <string name="card_details_changed">Changed</string>
-  <string name="card_details_tags">Tags</string>
-  <string name="card_details_model">Note type</string>
-  <string name="card_browser_sorting_cards">Sorting cards.\nPlease wait...</string>
-  <string name="card_browser_filtering_cards">Filtering cards.\nPlease wait...</string>
-  <string name="card_details_card_model">Card model</string>
+  <string name="card_details_yes_count">Počet áno</string>
+  <string name="card_details_no_count">Počet nie</string>
+  <string name="card_details_added">Pridané</string>
+  <string name="card_details_changed">Zmenené</string>
+  <string name="card_details_tags">Štítky</string>
+  <string name="card_details_model">Typ poznámky</string>
+  <string name="card_browser_sorting_cards">Zoraďujem karty.\nProsím počkajte...</string>
+  <string name="card_browser_filtering_cards">Filtrujem karty.\nProsím počkajte...</string>
+  <string name="card_details_card_model">Model karty</string>
   <string-array name="card_browser_order_labels">
-    <item>No sorting (faster)</item>
-    <item>By search field</item>
-    <item>By created time</item>
-    <item>By edited time</item>
-    <item>By changed time</item>
-    <item>By due time</item>
-    <item>By interval</item>
-    <item>By ease</item>
-    <item>By reviews</item>
-    <item>By lapses</item>
+    <item>Bez zoraďovania (rýchlejšie)</item>
+    <item>Podľa vyhľadávacieho poľa</item>
+    <item>Podľa času vytvorenia</item>
+    <item>Podľa času úpravy</item>
+    <item>Podľa času zmeny</item>
+    <item>Podľa času skúšania</item>
+    <item>Podľa intervalu</item>
+    <item>Podľa jednoduchosti</item>
+    <item>Podľa opakovaní</item>
+    <item>Podľa zabudnutí</item>
   </string-array>
   <plurals name="card_browser_subtitle">
-    <item quantity="one">1 of %2$d cards shown</item>
-    <item quantity="other">%1$d of %2$d cards shown</item>
+    <item quantity="one">Zobrazená 1 z %2$d kariet</item>
+    <item quantity="other">Zobrazených %1$d z %2$d kariet</item>
   </plurals>
 </resources>
