@@ -125,7 +125,7 @@
   <string name="template_error_detail">V šabloně této karty je chyba.</string>
   <string name="template_error_fix">Pro opravu chyby použijte editor karet v Anki pro stolní počítače.</string>
   <string name="sched_end">(konec)</string>
-  <string name="sched_unbury_button">To see them now, tap the Unbury button.</string>
+  <string name="sched_unbury_button">Pro jejich zobrazení klikněte na tlačítko \'Zruš odložení\'.</string>
   <string name="sched_has_buried">Některé související nebo pozastavené karty byly odloženy do pozdější relace.</string>
   <string-array name="dynOrderLabels">
     <item>Nejstarší první</item>

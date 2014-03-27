@@ -88,7 +88,7 @@
   <string name="tutorial_loading_error">Nie można utworzyć talii instruktażowej</string>
   <string name="rename">Zmień nazwę</string>
   <string name="rename_error">Nie można zmienić nazwy talii %s</string>
-  <string name="default_conf_delete_error">Nie można usunąć grupy opcji domyślnych</string>
+  <string name="default_conf_delete_error">Nie można usunąć domyślnej grupy ustawień</string>
   <string name="help_title">Pomoc</string>
   <string name="help_online">Pomoc online</string>
   <string name="help_faq">FAQ</string>

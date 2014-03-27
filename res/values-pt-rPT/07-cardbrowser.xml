@@ -81,13 +81,13 @@
   <string-array name="card_browser_order_labels">
     <item>Nenhuma distribuição(mais rápido)</item>
     <item>Por campo busca</item>
-    <item>By created time</item>
-    <item>By edited time</item>
-    <item>By changed time</item>
+    <item>Por data de criação</item>
+    <item>Por data de edição</item>
+    <item>Por data de modificação</item>
     <item>By due time</item>
     <item>By interval</item>
     <item>By ease</item>
-    <item>By reviews</item>
+    <item>Por comentários</item>
     <item>By lapses</item>
   </string-array>
   <plurals name="card_browser_subtitle">

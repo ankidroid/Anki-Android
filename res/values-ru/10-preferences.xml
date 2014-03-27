@@ -289,7 +289,7 @@
   <string name="deck_conf_remove_message">Удалить текущую группу опций?</string>
   <string name="deck_conf_set_subdecks">Установить для всех подколод</string>
   <string name="deck_conf_set_subdecks_title">Установить для всех подколод</string>
-  <string name="deck_conf_set_subdecks_message">Set current options group for all of this deck\'s subdecks?</string>
+  <string name="deck_conf_set_subdecks_message">Установить текущую группу параметров для всех подколод данной колоды?</string>
   <string name="pref_cat_tibetan">Поддержка тибетского</string>
   <string name="pref_cat_languages_advanced">Расширенная поддержка для шрифта</string>
   <string name="pref_enable_tibetan">Включить поддержку тибетского языка</string>
@@ -312,14 +312,14 @@
   <string name="pref_intent_add_instant_summ">Добавить новые карты из словаря без открытия AnkiDroid. Вы найдёте их позже в \'Сохранённые данные\' в редакторе карт.</string>
   <string name="pref_cat_intent_add">Добавление внешних данных</string>
   <string name="show_estimates">Показать кнопку времени</string>
-  <string name="show_estimates_summ">Show next review time above answer buttons</string>
+  <string name="show_estimates_summ">Отображать время следующего повторения над кнопками ответа</string>
   <string name="show_progress">Показать оставшиеся</string>
-  <string name="show_progress_summ">Show remaining card count during review</string>
+  <string name="show_progress_summ">Отображать число оставшихся карт в ходе повторения</string>
   <string name="use_current">Колода для новых карточек</string>
   <string name="new_spread">Новая позиция карты</string>
   <string name="learn_cutoff">Учить больше установленного лимита</string>
   <string name="learn_cutoff_summ">XXX мин</string>
-  <string name="time_limit">Timebox time limit</string>
+  <string name="time_limit">Временное ограничение таймбокса</string>
   <string name="time_limit_summ">XXX мин</string>
   <string name="day_offset">Начало следующего дня</string>
   <string name="day_offset_summ">Часов после полуночи: XXX</string>

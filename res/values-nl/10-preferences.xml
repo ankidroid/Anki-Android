@@ -169,7 +169,7 @@
   <string name="default_font">Standaardlettertype</string>
   <string name="default_font_summ">Het lettertype dat wordt gebruikt voor tekst zonder specifiek lettertypeopmaak. Aangepaste lettertypen moeten worden geïnstalleerd op de SD-kaart in een map met de naam \'fonts\' in de map AnkiDroid.</string>
   <string name="override_font">Lettertype vervangen</string>
-  <string name="override_font_summ">Een lettertype dat gebruikt wordt in plaats van een gespecificeerd lettertype, inclusief het standaard lettertype. Aangepaste lettertypen moeten geïnstalleerd zijn in een map \'fonts\' in je Ankidroid-map.</string>
+  <string name="override_font_summ">Een lettertype dat gebruikt wordt in plaats van een gespecificeerd lettertype, inclusief het standaard lettertype. Aangepaste lettertypen moeten geïnstalleerd zijn in een map \'fonts\' in je AnkiDroid-map.</string>
   <string name="language">Taal</string>
   <string name="language_summ">Selecteer de taal die Ankidroid moet gebruiken. Op dit moment: XXX</string>
   <string name="language_system">Systeemtaal</string>
@@ -311,7 +311,7 @@
   <string name="pref_intent_add_instant">Voeg direct toe</string>
   <string name="pref_intent_add_instant_summ">Voeg nieuwe kaarten van woordenboeken toe zonder AnkiDroid te openen. Deze kunt u later terugvinden in de map \'saved data\' in uw kaartmenu.</string>
   <string name="pref_cat_intent_add">Toevoegen van externe gegevens</string>
-  <string name="show_estimates">Tijdknop weergeven</string>
+  <string name="show_estimates">Herhaaltijd in antwoordknoppen weergeven</string>
   <string name="show_estimates_summ">Boven de antwoordknoppen weergeven wanneer de volgende overhoring is</string>
   <string name="show_progress">Resterende weergeven</string>
   <string name="show_progress_summ">Het aantal resterende kaarten weergeven gedurende de overhoring</string>

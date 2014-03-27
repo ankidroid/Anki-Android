@@ -96,7 +96,7 @@
     <item>Redigera kort</item>
     <item>Markera kort</item>
     <item>Sök på uttryck</item>
-    <item>Begrav kort tillfälligt</item>
+    <item>Dölj kort</item>
     <item>Åsidosätt kort</item>
     <item>Radera kort</item>
     <item>Rensa Whiteboard</item>
@@ -123,7 +123,7 @@
     <item>Slumpmässigt</item>
     <item>Ökande intervall</item>
     <item>Minskande intervall</item>
-    <item>Mest förfallna</item>
+    <item>Mest felbesvarade</item>
     <item>Ordningen de lades till</item>
     <item>Efter förfallotid</item>
     <item>Senast tillagda först</item>
@@ -134,21 +134,21 @@
     <item>Repetera glömda kort</item>
     <item>Repetera i förväg</item>
     <item>Studera slumpvalda kort</item>
-    <item>Granska nya kort</item>
+    <item>Förhandsgranska nya kort</item>
     <item>Begränsa till vissa taggar</item>
   </string-array>
   <string-array name="add_to_cur_labels">
-    <item>Use current deck</item>
-    <item>Decide by note type</item>
+    <item>Använd nuvarande kortlek</item>
+    <item>Bestäm från nottyp</item>
   </string-array>
   <string-array name="new_spread_labels">
-    <item>Mix new cards and reviews</item>
-    <item>New cards after reviews</item>
-    <item>New cards before reviews</item>
+    <item>Blanda nya kort och repetitionskort</item>
+    <item>Nya kort efter repetitionskort</item>
+    <item>Nya kort före repetitionskort</item>
   </string-array>
   <string-array name="cards_for_tag_filtered_deck_labels">
-    <item>All cards</item>
-    <item>New</item>
-    <item>Due</item>
+    <item>Alla kort</item>
+    <item>Ny</item>
+    <item>Aktuella</item>
   </string-array>
 </resources>
