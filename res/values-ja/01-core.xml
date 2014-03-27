@@ -65,7 +65,7 @@
   <string name="menu_rotate">表示画面の回転</string>
   <string name="menu_import">カードのインポート</string>
   <string name="undo">元に戻す</string>
-  <string name="undo_action_review">カードの学習と評価</string>
+  <string name="undo_action_review">カードの復習</string>
   <string name="undo_action_edit">ノートの編集</string>
   <string name="undo_action_bury">ノートの一時延期</string>
   <string name="undo_action_suspend_card">カードの非表示</string>
@@ -116,8 +116,8 @@
   <string name="custom_study_deck_name">カスタム学習セッション</string>
   <string name="custom_study_deck_exists">最初に、既存のカスタム学習の単語帳の名称変更を行ってください。</string>
   <string name="studyoptions_congrats_finished">おめでとうございます ！今日の目標を達成しました。</string>
-  <string name="studyoptions_congrats_more_rev">今日の学習目標を達成しました。まだ学習するカードは残っていますので、オプションの設定で制限を増やすことを検討してください。</string>
-  <string name="studyoptions_congrats_more_new">新しいカードの追加ができますが、毎日の制限に達しています。オプション設定で制限を増やすできますが、毎日の学習の負担が増加しますのでご注意ください。</string>
+  <string name="studyoptions_congrats_more_rev">今日の復習目標を達成しました。まだ学習するカードは残っていますので、オプションの設定で制限を増やすことを検討してください。</string>
+  <string name="studyoptions_congrats_more_new">新しいカードの追加ができますが、毎日の制限に達しています。オプション設定で制限を増やすできますが、毎日の復習の負担が増加しますのでご注意ください。</string>
   <string name="studyoptions_congrats_custom">通常のスケジュール以外で学習するには、下のカスタム学習ボタンをクリックします。</string>
   <string name="sd_card_not_mounted">外部SDカードが見つかりません\n\n内部メモリーにコレクションを格納できますが、簡単にアクセスできませんので、お勧めできません。内部メモリーは環境設定でアクティブにすることができます。(このテキストをクリックして環境設定を開きます)</string>
   <string name="studyoptions_options">オプション</string>
@@ -168,8 +168,8 @@
     <item quantity="other">%d 分残り</item>
   </plurals>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">明日は１枚のカードがあります。そして学習カードは %2$s.\n 必要な時間は%3$s</item>
-    <item quantity="other">明日は %1$d 枚のカードがあります。そして学習カードは %2$s.\n 必要な時間は%3$s</item>
+    <item quantity="one">明日は１枚のカードがあります。そして復習カードは %2$s.\n 必要な時間は%3$s</item>
+    <item quantity="other">明日は %1$d 枚のカードがあります。そして復習カードは %2$s.\n 必要な時間は%3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
     <item quantity="one">1枚の新しいカード</item>
