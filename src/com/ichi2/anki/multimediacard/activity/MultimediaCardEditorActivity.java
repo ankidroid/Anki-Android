@@ -503,6 +503,7 @@ public class MultimediaCardEditorActivity extends Activity {
                 if (mCurrentDid != newId) {
                     if (mAddNote) {
                         try {
+                            // TODO: remove from dynamic deck (see CardEditor.java in v2.1)
                             // TODO: mEditorNote.setDid(newId);
                             mEditorNote.model().put("did", newId);
                             mCol.getModels().setChanged();
