@@ -543,8 +543,14 @@ public class CardEditor extends Activity {
                         mEditorNote.setTags(mCurrentTags);
                         // set did for card
                         if (changedDid) {
+                        	// remove card from filtered deck first (if relevant)                        	 
+                        	AnkiDroidApp.getCol().getSched().remFromDyn(new long[] {mCurrentEditedCard.getId()});                       	
+                        	// refresh the card object to reflect the database changes in remFromDyn()
+                        	mCurrentEditedCard.load();
+                        	// then set the card ID to the new deck
                             mCurrentEditedCard.setDid(mCurrentDid);
                         }
+                        // set a flag so that changes to card object will be written to DB later via onActivityResult() in CardBrowser
                         mChanged = true;
                     }
                     closeCardEditor();
