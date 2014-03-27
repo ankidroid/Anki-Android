@@ -116,7 +116,7 @@
   <string name="upgrade_import_no_file_found">読み込み可能な %1$s のファイルが見つかりません</string>
   <string name="study_options">オプション</string>
   <string name="custom_study">カスタム学習</string>
-  <string name="dyn_deck_desc">指定された検索条件で抽出されたカードを集めたカスタム単語帳です。学習スケジュールは無視されます。学習後、又は、単語帳を削除すると、各カードは元の単語帳に戻されます。</string>
+  <string name="dyn_deck_desc">指定された検索条件で抽出されたカードを集めたカスタム単語帳です。復習スケジュールは無視されます。復習後、又は、単語帳を削除すると、各カードは元の単語帳に戻されます。</string>
   <string name="exit_wizard">ウィザードの終了</string>
   <string name="steps_error">学習ステップはゼロより大きな数字</string>
   <string name="steps_min_error">少なくとも 1 つの学習ステップが必要です。</string>

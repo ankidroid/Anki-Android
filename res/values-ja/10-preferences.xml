@@ -60,7 +60,7 @@
   <string name="pref_cat_experimental">編集中の設定（バグを含む）</string>
   <string name="pref_cat_themes">テーマ</string>
   <string name="pref_cat_reviewing">カードの学習と評価</string>
-  <string name="pref_cat_reviewer_behaviour">学習中のカードの評価機能</string>
+  <string name="pref_cat_reviewer_behaviour">復習中のカードの評価機能</string>
   <string name="pref_cat_flashcard">カードの表示</string>
   <string name="pref_cat_dictionary">辞書</string>
   <string name="pref_cat_messages">メッセージとフィードバック</string>
@@ -112,7 +112,7 @@
   <string name="button_size_summ">学習画面でのボタンの大きさを設定します. 現在の大きさ: XXX %</string>
   <string name="col_path">コレクションのパス</string>
   <string name="col_path_summ">データ保存先（単語帳、音声、画像、etc）</string>
-  <string name="fullscreen_review">フルスクリーンでの学習</string>
+  <string name="fullscreen_review">フルスクリーンでの復習</string>
   <string name="fullscreen_review_summ">カードの確認に全画面を使用するかどうか選択できます</string>
   <string name="zoom">ズームを有効にする</string>
   <string name="zoom_summ">学習中にズームコントロールを表示します</string>
@@ -206,7 +206,7 @@
   <string name="new_cards_order_summ">新しいカードを表示する順序。</string>
   <string name="show_new_cards_in">新しいカードの表示順序</string>
   <string name="new_card_spacing">新しいカードの間隔</string>
-  <string name="new_card_spacing_summ">ビューの時、どこで新しいカードを配布する。</string>
+  <string name="new_card_spacing_summ">復習の時、どこに新しいカードを配置するか</string>
   <string name="show_new_cards">新しいカードの表示</string>
   <string name="update_notification">更新のお知らせ</string>
   <string name="update_notification_summ">アンキドロイドの更新を通知する</string>
@@ -235,7 +235,7 @@
   <string name="pref_cardbrowser_skip_init_search">高速起動の設定</string>
   <string name="pref_cardbrowser_skip_init_search_summ">自動検索機能を使用せず、高速に起動します</string>
   <string name="pref_keep_screen_on">スクリーン常時オン</string>
-  <string name="pref_keep_screen_on_summ">レビュー中はスクリーンを常時オン</string>
+  <string name="pref_keep_screen_on_summ">復習中はスクリーンを常時オン</string>
   <string name="pref_simple_interface">﻿シンプルなインターフェイス</string>
   <string name="pref_simple_interface_summ">高速表示をするため、htmlフォーマットは反映されません</string>
   <string name="pref_simple_interface_exclude_tags">タグによる標準のインターフェース</string>
@@ -247,7 +247,7 @@
   <string name="deck_conf_pref_cat_options">オプション</string>
   <string name="deck_conf_group">グループ</string>
   <string name="deck_conf_new_cards">新しいカード</string>
-  <string name="deck_conf_rev_cards">学習</string>
+  <string name="deck_conf_rev_cards">カードの学習と評価：</string>
   <string name="deck_conf_lps_cards">未習得</string>
   <string name="deck_conf_general">一般</string>
   <string name="deck_conf_steps">学習間隔（分の設定）</string>
@@ -257,10 +257,10 @@
   <string name="deck_conf_days">XXX 日</string>
   <string name="deck_conf_easy_ivl">容易な間隔</string>
   <string name="deck_conf_start_ease">開始時の難易度</string>
-  <string name="deck_conf_max_rev">最大学習枚数／日</string>
+  <string name="deck_conf_max_rev">最大復習枚数／日</string>
   <string name="deck_conf_new_bury">新しいカードに関する延期</string>
   <string name="deck_conf_new_bury_summ">新規カードに関する翌日までの延期</string>
-  <string name="deck_conf_rev_bury">学習の延期</string>
+  <string name="deck_conf_rev_bury">復習の延期</string>
   <string name="deck_conf_rev_bury_summ">関連する学習は次の日まで延期されています</string>
   <string name="deck_conf_easy_bonus">「普通(Good)」から「簡単(Easy)」までの間隔</string>
   <string name="deck_conf_ivl_fct">間隔の変更</string>
@@ -312,9 +312,9 @@
   <string name="pref_intent_add_instant_summ">AnkiDroidを開かず、辞書から新しいカードを追加します。追加されたカードはカード追加画面で確認できます</string>
   <string name="pref_cat_intent_add">外部データの追加</string>
   <string name="show_estimates">ボタンの時間を表示</string>
-  <string name="show_estimates_summ">回答ボタンの上に、次の学習間隔を表示します</string>
+  <string name="show_estimates_summ">回答ボタンの上に、次の復習間隔を表示します</string>
   <string name="show_progress">残りのカードを表示</string>
-  <string name="show_progress_summ">学習中の残りのカード枚数を表示</string>
+  <string name="show_progress_summ">復習中の残りのカード枚数を表示</string>
   <string name="use_current">新しいカードの単語帳</string>
   <string name="new_spread">新しいカードの位置</string>
   <string name="learn_cutoff">先の制限分を学習する</string>

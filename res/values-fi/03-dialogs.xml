@@ -57,7 +57,7 @@
   <string name="notify_title">Ankidroid on päivitetty</string>
   <string name="notify_message">Lataa uusin versio</string>
   <string name="notification_title">Vahvista AnkiDroid-päivitys</string>
-  <string name="preview_title">Preview</string>
+  <string name="preview_title">Esikatselu</string>
   <string name="notification_message">Uusi versio Ankidroidista on saatavilla Android Marketista.\n\nHaluatko asentaa sen?</string>
   <string name="notification_stop">Älä ilmoita tästä päivityksestä uudelleen</string>
   <string name="reset_card_dialog_title">Nollaa kortin edistyminen</string>

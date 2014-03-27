@@ -42,15 +42,15 @@
   <string name="CardEditorCancelButton">Peruuta</string>
   <string name="CardEditorSaveButton">Tallenna</string>
   <string name="CardEditorLaterButton">Myöhemmin</string>
-  <string name="CardEditorPreviewButton">Preview</string>
-  <string name="CardEditorLaterMessage">Saved information for later</string>
+  <string name="CardEditorPreviewButton">Esikatselu</string>
+  <string name="CardEditorLaterMessage">Tiedot tallennettu myöhempää käyttöä varten</string>
   <string name="CardEditorCardDeck">Korttipakka: %s</string>
   <string name="CardEditorNoteDeck">Merkintäpaka: %s</string>
   <string name="CardEditorModel">Merkinnän tyyppi: %s</string>
   <string name="CardEditorTags">Tunnisteet: %1$s</string>
   <string name="add_new_tag">Lisää uusi tunniste</string>
   <string name="note_type">Merkinnän tyyppi</string>
-  <string name="card_type">Card type</string>
+  <string name="card_type">Korttityyppi</string>
   <string name="sdcard_missing_message">SD-kortti ei ole käytettävissä, koska se on kytketty USB-tilassa. Irrota USB käyttääksesi korttipakkojasi.</string>
   <string name="show_whiteboard">Näytä ajastin / valkotaulu</string>
   <string name="hide_whiteboard">Piilota valkotaulu</string>
@@ -114,10 +114,10 @@
   <string name="import_importing">Tuodaan kortteja.\nOdota...</string>
   <string name="import_hint">Tuodaksesi kortteja aseta apkg-tiedosto hakemistoon %s ja paina Ok-painiketta</string>
   <string name="upgrade_import_no_file_found">No importable %1$s file found</string>
-  <string name="study_options">Options</string>
+  <string name="study_options">Asetukset</string>
   <string name="custom_study">Mukautettu opiskelu</string>
   <string name="dyn_deck_desc">Tämä on erityispakka normaalin aikataulun ulkopuolella opiskeluun. Kortit palautetaan automaattisesti niiden alkuperäisiin pakkoihin läpikäynnin jälkeen. Tämän pakan poistaminen palauttaa kaikki sen sisältämät kortit alkuperäispakkoihin.</string>
-  <string name="exit_wizard">Exit Wizard</string>
+  <string name="exit_wizard">Lopeta ohjattu toiminto</string>
   <string name="steps_error">Steps must be numbers greater than 0</string>
   <string name="steps_min_error">At least one step is required</string>
   <string name="custom_study_invalid_number">Invalid number</string>
@@ -128,7 +128,7 @@
   <string name="sched_unbury_button">To see them now, tap the Unbury button.</string>
   <string name="sched_has_buried">Some related or buried cards were delayed until a later session.</string>
   <string-array name="dynOrderLabels">
-    <item>Oldest seen first</item>
+    <item>Vanhin ensin</item>
     <item>Satunnainen</item>
     <item>Increasing intervals</item>
     <item>Decreasing intervals</item>
@@ -141,8 +141,8 @@
     <item quantity="other">%1$d cards studied in %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
-    <item quantity="one">1 minute</item>
-    <item quantity="other">%1$d minutes</item>
+    <item quantity="one">1 minuutti</item>
+    <item quantity="other">%1$d minuuttia</item>
   </plurals>
   <plurals name="factadder_cards_added">
     <item quantity="one">Yksi kortti lisätty</item>
