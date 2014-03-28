@@ -40,7 +40,7 @@
           2: beta release
           3: public release
         DD: 2-digit decimal number representing the build
-          0 for internal builds and public releases
+          00 for internal builds and public releases
           alpha/beta build number for alpha/beta releases
 
         This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
@@ -53,7 +53,7 @@
     </instrumentation>
 
     <uses-sdk
-        android:minSdkVersion="4"
+        android:minSdkVersion="7"
         android:targetSdkVersion="18" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
