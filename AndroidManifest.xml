@@ -21,8 +21,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ichi2.anki"
     android:installLocation="auto"
-    android:versionCode="20100216"
-    android:versionName="2.1beta16" >
+    android:versionCode="20100300"
+    android:versionName="2.1" >
     <!--
         The version number is of the form:
           <major>.<minor>.<maintenance>[dev|alpha<build>|beta<build>|]
@@ -40,7 +40,7 @@
           2: beta release
           3: public release
         DD: 2-digit decimal number representing the build
-          0 for internal builds and public releases
+          00 for internal builds and public releases
           alpha/beta build number for alpha/beta releases
 
         This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
@@ -53,7 +53,7 @@
     </instrumentation>
 
     <uses-sdk
-        android:minSdkVersion="4"
+        android:minSdkVersion="7"
         android:targetSdkVersion="18" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
