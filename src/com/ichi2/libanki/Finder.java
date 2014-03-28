@@ -123,6 +123,9 @@ public class Finder {
                 String tags = cur.getString(4);
                 map.put("flags", Integer.toString((queue == -1 ? 1 : 0) + (tags.matches(".*[Mm]arked.*") ? 2 : 0)));
                 map.put("tags", tags);
+                // add placeholder for question and answer
+                map.put("q", "");
+                map.put("a", "");
                 res.add(map);
             }
         } catch (SQLException e) {

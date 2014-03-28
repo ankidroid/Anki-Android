@@ -294,7 +294,7 @@ public class CardBrowser extends Activity {
                 this,
                 mCards,
                 R.layout.card_item,
-                new String[] { "sfld", "deck", "flags" },
+                new String[] { "sfld", "a", "flags" },
                 new int[] { R.id.card_sfld, R.id.card_deck, R.id.card_item },
                 sflRelativeFontSize,
                 sflCustomFont);
@@ -392,6 +392,8 @@ public class CardBrowser extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        // cancel any background tasks which were started, like rendering the cards
+        DeckTask.cancelTask();
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver);
         }
@@ -765,8 +767,13 @@ public class CardBrowser extends Activity {
         String searchText = mRestrictOnDeck + mSearchTerms;
         if (mCol != null) {
             mCards.clear();
+            // Perform database query to get all card ids / sfld. Shows "filtering cards..." progress message
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SEARCH_CARDS, mSearchCardsHandler, new DeckTask.TaskData(
                     new Object[] { mCol, mDeckNames, searchText, ((mOrder == CARD_ORDER_NONE) ? "" : "true") }));
+            // After this initial query, start rendering the question and answer in the background
+            // TODO: Make the deck task cancel if the user clicks hardware back button or opens up note editor
+            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_RENDER_BROWSER_QA, mRenderQAHandler, new DeckTask.TaskData(
+                    new Object[] { mCol, mCards}));            
         }
     }
 
@@ -1113,6 +1120,22 @@ public class CardBrowser extends Activity {
             }
         }
     };
+    
+    private DeckTask.TaskListener mRenderQAHandler = new DeckTask.TaskListener() {
+        @Override
+        public void onProgressUpdate(TaskData... values) {
+            mCards  = values[0].getCards();
+            updateList();
+        }
+
+        @Override
+        public void onPreExecute() {
+        }
+        
+        @Override
+        public void onPostExecute(TaskData result) {        	
+        }
+    };    
 
     private DeckTask.TaskListener mReloadCardsHandler = new DeckTask.TaskListener() {
         @Override

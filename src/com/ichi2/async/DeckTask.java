@@ -106,6 +106,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     public static final int TASK_TYPE_CONF_RESET = 34;
     public static final int TASK_TYPE_CONF_REMOVE = 35;
     public static final int TASK_TYPE_CONF_SET_SUBDECKS = 36;
+    public static final int TASK_TYPE_RENDER_BROWSER_QA = 37;
 
     /**
      * The most recently started {@link DeckTask} instance.
@@ -310,6 +311,9 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
             case TASK_TYPE_CONF_SET_SUBDECKS:
                 return doInBackgroundConfSetSubdecks(params);
+                
+            case TASK_TYPE_RENDER_BROWSER_QA:
+            	return doInBackgroundRenderBrowserQA(params);
 
             default:
                 Log.e(AnkiDroidApp.TAG, "unknown task type: " + mType);
@@ -705,7 +709,48 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         }
         return new TaskData(col.cardCount(col.getDecks().allIds()));
     }
+    
+    private TaskData doInBackgroundRenderBrowserQA(TaskData...params) {
+        final int refreshInterval=50;
+        int numRendered=0;
+    	Log.i(AnkiDroidApp.TAG, "doInBackgroundRenderBrowserQA");
+        Collection col = (Collection) params[0].getObjArray()[0];
+        ArrayList<HashMap<String, String>> items = (ArrayList<HashMap<String, String>>) params[0].getObjArray()[1];        
+        // for each card in the browser list
+        for (HashMap<String, String> item: items) {
+        	// render question and answer
+        	HashMap<String, String> qa = col.getCard(Long.parseLong(item.get("id"), 10))._getQA(true, true);
+        	// update the original hash map to include rendered question & answer
+			item.put("q",formatQA(qa.get("q")));
+        	item.put("a",formatQA(qa.get("a")));        	
+    		// Send progress periodically so that QA list in browser updates
+            if (DeckTask.taskIsCancelled()) {
+                return null;
+            } else {
+            	numRendered++;
+            	if (numRendered%refreshInterval==0 || numRendered<3){
+                    TaskData result = new TaskData(items);
+            		publishProgress(result);
+            	}
+            }                	
+        }
+        TaskData result = new TaskData(items);
+        publishProgress(result);
+        return result;
+    }
 
+    private String formatQA(String txt){
+        /* Strips all formatting from the string txt for use in displaying question/answer in browser */
+        String s=txt.replace("<br>"," ");
+        s = s.replace("<br />", " ");
+        s = s.replace("<div>", " ");
+        s = s.replace("\n", " ");
+        s = s.replaceAll("\\[sound:[^]]+\\]", "");
+        s = s.replaceAll("\\[\\[type:[^]]+\\]\\]", "");
+        s = Utils.stripHTMLMedia(s);
+        s = s.trim();
+        return s;
+    }
 
     private TaskData doInBackgroundLoadStatistics(TaskData... params) {
         Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadStatistics");
@@ -1622,6 +1667,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         public TaskData(List<Long> idList) {
             mIdList = idList;
         }
+        
 
 
         public ArrayList<HashMap<String, String>> getCards() {

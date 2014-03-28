@@ -903,11 +903,11 @@ public class Collection {
      * Returns hash of id, question, answer.
      */
     public HashMap<String, String> _renderQA(Object[] data) {
-        return _renderQA(data, null);
+        return _renderQA(data, null, null);
     }
 
 
-    public HashMap<String, String> _renderQA(Object[] data, List<String> args) {
+    public HashMap<String, String> _renderQA(Object[] data, String qfmt, String afmt) {
         // data is [cid, nid, mid, did, ord, tags, flds]
         // unpack fields and create dict
         String[] flist = Utils.splitFields((String) data[6]);
@@ -935,8 +935,8 @@ public class Collection {
             HashMap<String, String> d = new HashMap<String, String>();
             try {
                 d.put("id", Long.toString((Long) data[0]));
-                String qfmt = template.getString("qfmt");
-                String afmt = template.getString("afmt");
+                if (qfmt==null || qfmt.equals("")){qfmt = template.getString("qfmt");}
+                if (afmt==null || afmt.equals("")){afmt = template.getString("afmt");}
                 String html;
                 String format;
     
