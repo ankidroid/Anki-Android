@@ -95,7 +95,7 @@ public class Sound {
         StringBuilder stringBuilder = new StringBuilder();
         String contentLeft = content;
 
-        Log.i(AnkiDroidApp.TAG, "expandSounds");
+        // Log.i(AnkiDroidApp.TAG, "expandSounds");
 
         Matcher matcher = sSoundPattern.matcher(content);
         // While there is matches of the pattern for sound markers
@@ -118,7 +118,7 @@ public class Sound {
                             + soundPath
                             + "\"><span style=\"padding:5px;\"><img src=\"file:///android_asset/media_playback_start2.png\" /></span></a>");
             contentLeft = contentLeft.substring(markerStart + soundMarker.length());
-            Log.i(AnkiDroidApp.TAG, "Content left = " + contentLeft);
+            // Log.i(AnkiDroidApp.TAG, "Content left = " + contentLeft);
         }
         // TODO: readd tts
 //        if (!soundAvailable && ttsEnabled && !ReadText.getLanguage(qa).equals(ReadText.NO_TTS)) {
@@ -152,7 +152,7 @@ public class Sound {
      * Plays the given sound, sets playAllListener if available on media player to start next sound
      */
     public static void playSound(String soundPath, OnCompletionListener playAllListener) {
-        Log.i(AnkiDroidApp.TAG, "Playing " + soundPath + " has listener? " + Boolean.toString(playAllListener != null));
+        // Log.i(AnkiDroidApp.TAG, "Playing " + soundPath + " has listener? " + Boolean.toString(playAllListener != null));
 
         if (soundPath.substring(0, 3).equals("tts")) {
         	// TODO: give information about did

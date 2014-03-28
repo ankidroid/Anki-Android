@@ -137,7 +137,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             // Do Nothing.
         } else if (requestCode == ACTIVITY_SELECT_IMAGE) {
             Uri selectedImage = data.getData();
-            // Log.d(TAG, selectedImage.toString());
+            // // Log.d(TAG, selectedImage.toString());
             String[] filePathColumn = { MediaStore.Images.Media.DATA };
 
             Cursor cursor = mActivity.getContentResolver().query(selectedImage, filePathColumn, null, null, null);

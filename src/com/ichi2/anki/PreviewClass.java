@@ -186,7 +186,7 @@ public class PreviewClass extends Activity {
     
 	 @Override
 	    protected void onCreate(Bundle savedInstanceState) {
-	        // Log.i(AnkiDroidApp.TAG, "CardEditor: onCreate");
+	        // // Log.i(AnkiDroidApp.TAG, "CardEditor: onCreate");
 	       
 	        super.onCreate(savedInstanceState);
 	        mCurrentCard =CardEditor.mCurrentEditedCard;
@@ -420,7 +420,7 @@ public class PreviewClass extends Activity {
 	
 	  private final Runnable longClickTestRunnable = new Runnable() {
 	        public void run() {
-	            // Log.i(AnkiDroidApp.TAG, "onEmulatedLongClick");
+	            // // Log.i(AnkiDroidApp.TAG, "onEmulatedLongClick");
 	            Vibrator vibratorManager = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 	            vibratorManager.vibrate(50);
 	            longClickHandler.postDelayed(startLongClickAction, 300);
@@ -499,7 +499,7 @@ public class PreviewClass extends Activity {
 	    private View.OnClickListener mFlipCardListener = new View.OnClickListener() {
 	        @Override
 	        public void onClick(View view) {
-	            // Log.i(AnkiDroidApp.TAG, "Flip card changed:");
+	            // // Log.i(AnkiDroidApp.TAG, "Flip card changed:");
 	            displayCardAnswer();
 	        }
 	    };
@@ -511,7 +511,7 @@ public class PreviewClass extends Activity {
 	    }
 	  
 	    private void displayCardAnswer() {
-	        // Log.i(AnkiDroidApp.TAG, "displayCardAnswer");
+	        // // Log.i(AnkiDroidApp.TAG, "displayCardAnswer");
 
 	        // prevent answering (by e.g. gestures) before card is loaded
 	        if (mCurrentCard == null) {
@@ -556,7 +556,7 @@ public class PreviewClass extends Activity {
 	                    correctAnswer = matcher.replaceAll("\n");
 	                    matcher = Sound.sSoundPattern.matcher(correctAnswer);
 	                    correctAnswer = matcher.replaceAll("");
-	                    // Log.i(AnkiDroidApp.TAG, "correct answer = " + correctAnswer);
+	                    // // Log.i(AnkiDroidApp.TAG, "correct answer = " + correctAnswer);
 
 	                    // Obtain the diff and send it to updateCard
 	                    DiffEngine diff = new DiffEngine();
@@ -629,7 +629,7 @@ public class PreviewClass extends Activity {
 		            try {
 		                mSetTextIsSelectable = TextView.class.getMethod("setTextIsSelectable", boolean.class);
 		            } catch (Throwable e) {
-		                // Log.i(AnkiDroidApp.TAG, "mSetTextIsSelectable could not be found due to a too low Android version (< 3.0)");
+		                // // Log.i(AnkiDroidApp.TAG, "mSetTextIsSelectable could not be found due to a too low Android version (< 3.0)");
 		                mSetTextIsSelectable = null;
 		            }
 		            if (mSetTextIsSelectable != null) {
@@ -709,7 +709,7 @@ public class PreviewClass extends Activity {
 	            question = ArabicUtilities.reshapeSentence(question, true);
 	        }
 
-	        // Log.i(AnkiDroidApp.TAG, "question: '" + question + "'");
+	        // // Log.i(AnkiDroidApp.TAG, "question: '" + question + "'");
 
 	        String displayString = "";
 
@@ -811,7 +811,7 @@ public class PreviewClass extends Activity {
 	    
 	    
 	    private void updateCard(String content) {
-	        // Log.i(AnkiDroidApp.TAG, "updateCard");
+	        // // Log.i(AnkiDroidApp.TAG, "updateCard");
 
 	      //  Lookup.initialize(this, mCurrentCard.getDid());
 
@@ -853,10 +853,10 @@ public class PreviewClass extends Activity {
 	            // font-weight to 700
 	            content = content.replace("font-weight:600;", "font-weight:700;");
 
-	            // Log.i(AnkiDroidApp.TAG, "content card = \n" + content);
+	            // // Log.i(AnkiDroidApp.TAG, "content card = \n" + content);
 	            StringBuilder style = new StringBuilder();
 	            style.append(mCustomFontStyle);
-	            // Log.i(AnkiDroidApp.TAG, "::style::" + style);
+	            // // Log.i(AnkiDroidApp.TAG, "::style::" + style);
 
 	            if (mNightMode) {
 	                content = HtmlColors.invertColors(content);
@@ -865,7 +865,7 @@ public class PreviewClass extends Activity {
 	            content = SmpToHtmlEntity(content);
 	            mCardContent = new SpannedString(mCardTemplate.replace("::content::", content).replace("::style::",
 	                    style.toString()));
-	            // Log.i(AnkiDroidApp.TAG, "base url = " + mBaseUrl);
+	            // // Log.i(AnkiDroidApp.TAG, "base url = " + mBaseUrl);
 
 	            fillFlashcard(mShowAnimations);
 	        }
@@ -912,7 +912,7 @@ public class PreviewClass extends Activity {
 	        	file_contents=file_contents.replace("newImg.height", height.toString());
 	        	file_contents=file_contents.replace("<head>","<head><meta name='viewport' content='width=device-width,initial-scale=1,minimum-scale=1,user-scalable=yes'/>");
 	        	 
-	            // Log.i(AnkiDroidApp.TAG, "base url = " + mBaseUrl);
+	            // // Log.i(AnkiDroidApp.TAG, "base url = " + mBaseUrl);
 	            if (mCurrentSimpleInterface && mSimpleCard != null) {
 	                mSimpleCard.setText(mCardContent);
 	            } else if (mRefreshWebview && mCard != null && mNextCard != null) {
@@ -977,7 +977,7 @@ public class PreviewClass extends Activity {
 	            webView.setFocusableInTouchMode(false);
 	        }
 	        AnkiDroidApp.getCompat().setScrollbarFadingEnabled(webView, mPrefFadeScrollbars);
-	        // Log.i(AnkiDroidApp.TAG, "Focusable = " + webView.isFocusable() + ", Focusable in touch mode = " + webView.isFocusableInTouchMode());
+	        // // Log.i(AnkiDroidApp.TAG, "Focusable = " + webView.isFocusable() + ", Focusable in touch mode = " + webView.isFocusableInTouchMode());
 
 	        return webView;
 	    }
@@ -1086,7 +1086,7 @@ public class PreviewClass extends Activity {
 	    public final class AnkiDroidWebChromeClient extends WebChromeClient {
 	        @Override
 	        public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
-	            // Log.i(AnkiDroidApp.TAG, message);
+	            // // Log.i(AnkiDroidApp.TAG, message);
 	            result.confirm();
 	            return true;
 	        }

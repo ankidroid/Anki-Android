@@ -121,7 +121,7 @@ public class ReadText {
     public static void initializeTts(Context context) {
         mReviewer = context;
         mTTSInitDone = false;
-        Log.i(AnkiDroidApp.TAG, "initializeTts");
+        // Log.i(AnkiDroidApp.TAG, "initializeTts");
         final TTSInitListener listener = new TTSInitListener();
         mTts = new TextToSpeech(context, listener);
     }
@@ -147,7 +147,7 @@ public class ReadText {
     private static class TTSInitListener implements OnInitListener {
 
         public void onInit(int status) {
-            Log.i(AnkiDroidApp.TAG, "TTS onInit");
+            // Log.i(AnkiDroidApp.TAG, "TTS onInit");
             mTTSInitDone = true;
         }
     }
