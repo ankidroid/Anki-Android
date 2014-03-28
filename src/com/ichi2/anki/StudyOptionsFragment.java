@@ -34,6 +34,7 @@ import android.text.Html;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -44,7 +45,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.text.TextUtils;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
@@ -73,6 +78,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
 
@@ -104,6 +110,7 @@ public class StudyOptionsFragment extends Fragment {
     private static final int DIALOG_STATISTIC_TYPE = 0;
     private static final int DIALOG_CUSTOM_STUDY = 1;
     private static final int DIALOG_CUSTOM_STUDY_DETAILS = 2;
+    private static final int DIALOG_CUSTOM_STUDY_TAGS = 3;
 
     private int mCustomDialogChoice;
     
@@ -129,7 +136,7 @@ public class StudyOptionsFragment extends Fragment {
      */
     private View mStudyOptionsView;
     private Button mButtonStart;
-    private Button mFragmentedCram;
+    private Button mButtonCustomStudy;
 //    private Button mButtonUp;
 //    private Button mButtonDown;
 //    private ToggleButton mToggleLimitToggle;
@@ -146,7 +153,8 @@ public class StudyOptionsFragment extends Fragment {
     private LinearLayout mDeckChart;
     private ImageButton mAddNote;
     private ImageButton mCardBrowser;
-    private ImageButton mDeckOptions;
+    private Button mDeckOptions;
+    private Button mCramOptions;
     private ImageButton mStatisticsButton;
     private EditText mDialogEditText = null;
     /**
@@ -165,6 +173,13 @@ public class StudyOptionsFragment extends Fragment {
     private TextView mCustomStudyTextView1;
     private TextView mCustomStudyTextView2;
     private EditText mCustomStudyEditText;
+    
+    private String[] allTags;
+    private HashSet<String> mSelectedTags;
+    private String mSearchTerms;
+    private EditText mSearchEditText;
+    private RadioGroup mSelectWhichCards;
+    private int mSelectedOption = -1;
 
     /**
      * Swipe Detection
@@ -198,6 +213,9 @@ public class StudyOptionsFragment extends Fragment {
                 case R.id.studyoptions_start:
                     openReviewer();
                     return;
+                case R.id.studyoptions_custom:
+                	showDialog(DIALOG_CUSTOM_STUDY);
+                	return;                
 //                case R.id.studyoptions_limitup:
 //                    timeLimit = (mCol.getTimeLimit() / 60);
 //                    mCol.setTimeLimit((timeLimit + 1) * 60);
@@ -254,15 +272,14 @@ public class StudyOptionsFragment extends Fragment {
                     DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler,
                             new DeckTask.TaskData(col, Stats.TYPE_MONTH, false));
                     return;
+                case R.id.studyoptions_options_cram:
+                    openCramDeckOptions();
+                    return;
                 case R.id.studyoptions_options:
-                    if (col.getDecks().isDyn(col.getDecks().selected())) {
-                        openCramDeckOptions();
-                    } else {
-                        Intent i = new Intent(getActivity(), DeckOptions.class);
-                        startActivityForResult(i, DECK_OPTIONS);
-                        if (AnkiDroidApp.SDK_VERSION > 4) {
-                            ActivityTransitionAnimation.slide(getActivity(), ActivityTransitionAnimation.FADE);
-                        }
+                    Intent i = new Intent(getActivity(), DeckOptions.class);
+                    startActivityForResult(i, DECK_OPTIONS);
+                    if (AnkiDroidApp.SDK_VERSION > 4) {
+                        ActivityTransitionAnimation.slide(getActivity(), ActivityTransitionAnimation.FADE);
                     }
                     return;
                 case R.id.studyoptions_rebuild_cram:
@@ -273,43 +290,6 @@ public class StudyOptionsFragment extends Fragment {
                             getResources().getString(R.string.empty_cram_deck), true);
                     DeckTask.launchDeckTask(DeckTask.TASK_TYPE_EMPTY_CRAM, mUpdateValuesFromDeckListener,
                             new DeckTask.TaskData(col, col.getDecks().selected(), mFragmented));
-                    return;
-                case R.id.studyoptions_new_filtercram:
-                    if (mFragmented) {
-                        Resources res = getResources();
-                        StyledDialog.Builder builder = new StyledDialog.Builder(getActivity());
-                        builder.setTitle(res.getString(R.string.new_deck));
-
-                        mDialogEditText = new EditText(getActivity());
-                        ArrayList<String> names = AnkiDroidApp.getCol().getDecks().allNames();
-                        int n = 1;
-                        String cramDeckName = "Cram 1";
-                        while (names.contains(cramDeckName)) {
-                            n++;
-                            cramDeckName = "Cram " + n;
-                        }
-                        mDialogEditText.setText(cramDeckName);
-                        // mDialogEditText.setFilters(new InputFilter[] { mDeckNameFilter });
-                        builder.setView(mDialogEditText, false, false);
-                        builder.setPositiveButton(res.getString(R.string.create), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Bundle initialConfig = new Bundle();
-                                long id;
-                                try {
-                                    initialConfig.putString("searchSuffix", "'deck:" +
-                                            AnkiDroidApp.getCol().getDecks().current().getString("name") + "'");
-                                    id = AnkiDroidApp.getCol().getDecks().newDyn(mDialogEditText.getText().toString());
-                                    AnkiDroidApp.getCol().getDecks().get(id);
-                                } catch (JSONException e) {
-                                    throw new RuntimeException(e);
-                                }
-                                ((DeckPicker) getActivity()).setStudyContentView(id, initialConfig);
-                            }
-                        });
-                        builder.setNegativeButton(res.getString(R.string.cancel), null);
-                        builder.create().show();
-                    }
                     return;
                 case R.id.studyoptions_add:
                     addNote();
@@ -375,6 +355,7 @@ public class StudyOptionsFragment extends Fragment {
         // 4, getActivity().getResources().getDisplayMetrics());
         // text.setPadding(padding, padding, padding, padding);
         // scroller.addView();
+        mSelectedTags = new HashSet<String>();
         return createView(inflater, savedInstanceState);
     }
 
@@ -528,6 +509,7 @@ public class StudyOptionsFragment extends Fragment {
 
 
     private void addNote() {
+    	Preferences.COMING_FROM_ADD=true;
         Intent intent = new Intent(getActivity(), CardEditor.class);
         intent.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_STUDYOPTIONS);
         startActivityForResult(intent, ADD_NOTE);
@@ -589,6 +571,9 @@ public class StudyOptionsFragment extends Fragment {
         mTextDeckName = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_deck_name);
         mTextDeckDescription = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_deck_description);
         mButtonStart = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_start);
+        mButtonCustomStudy = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_custom);
+        mDeckOptions = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_options);
+        mCramOptions = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_options_cram);       
 //        mButtonUp = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_limitup);
 //        mButtonDown = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_limitdown);
 //        mToggleLimitToggle = (ToggleButton) mStudyOptionsView.findViewById(R.id.studyoptions_limittoggle);
@@ -602,24 +587,13 @@ public class StudyOptionsFragment extends Fragment {
             rebBut.setOnClickListener(mButtonClickListener);
             Button emptyBut = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_empty_cram);
             emptyBut.setOnClickListener(mButtonClickListener);
+            // If dynamic deck then enable the cram buttons group, and disable the new filtered deck / ordinary study options buttons group
             ((LinearLayout) mStudyOptionsView.findViewById(R.id.studyoptions_cram_buttons)).setVisibility(View.VISIBLE);
+            ((LinearLayout) mStudyOptionsView.findViewById(R.id.studyoptions_regular_buttons)).setVisibility(View.GONE);
         }
 
-        if (mFragmented) {
-            Button but = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_options);
-            but.setOnClickListener(mButtonClickListener);
-            mFragmentedCram = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_new_filtercram);
-            if (AnkiDroidApp.colIsOpen() && AnkiDroidApp.getCol().getDecks().isDyn(AnkiDroidApp.getCol().getDecks().selected())) {
-                mFragmentedCram.setEnabled(false);
-                mFragmentedCram.setVisibility(View.GONE);
-            } else {
-                // If we are in fragmented mode, then the cram option in menu applies to all decks, so we need an extra
-                // button in StudyOptions side of screen to create dynamic deck filtered on this deck
-                mFragmentedCram.setEnabled(true);
-                mFragmentedCram.setVisibility(View.VISIBLE);
-            }
-            mFragmentedCram.setOnClickListener(mButtonClickListener);
-        } else {
+        if (!mFragmented) {
+        	// Standard non-fragmented view for non-tablets, using standard layout file (in ./res/layout/)
             mAddNote = (ImageButton) mStudyOptionsView.findViewById(R.id.studyoptions_add);
             if (AnkiDroidApp.colIsOpen()) {
                 Collection col = AnkiDroidApp.getCol();
@@ -629,13 +603,15 @@ public class StudyOptionsFragment extends Fragment {
             }
             mCardBrowser = (ImageButton) mStudyOptionsView.findViewById(R.id.studyoptions_card_browser);
             mStatisticsButton = (ImageButton) mStudyOptionsView.findViewById(R.id.studyoptions_statistics);
-            mDeckOptions = (ImageButton) mStudyOptionsView.findViewById(R.id.studyoptions_options);
             mAddNote.setOnClickListener(mButtonClickListener);
             mCardBrowser.setOnClickListener(mButtonClickListener);
-            mStatisticsButton.setOnClickListener(mButtonClickListener);
-            mDeckOptions.setOnClickListener(mButtonClickListener);
+            mStatisticsButton.setOnClickListener(mButtonClickListener);            
+        } else {
+        	// Fragmented view for 10" tablets, which is different from smaller devices due to larger layout file (in ./res/layout-xlarge/)
+        	// This tablet view shows the study options fragment simultaneously with the deck picker, and has different buttons from standard        	
         }
-
+        
+        // Code common to both fragmented and non-fragmented view      
         mGlobalBar = (View) mStudyOptionsView.findViewById(R.id.studyoptions_global_bar);
         mGlobalMatBar = (View) mStudyOptionsView.findViewById(R.id.studyoptions_global_mat_bar);
         mBarsMax = (View) mStudyOptionsView.findViewById(R.id.studyoptions_progressbar_content);
@@ -654,6 +630,9 @@ public class StudyOptionsFragment extends Fragment {
         mDeckChart = (LinearLayout) mStudyOptionsView.findViewById(R.id.studyoptions_chart);
 
         mButtonStart.setOnClickListener(mButtonClickListener);
+        mButtonCustomStudy.setOnClickListener(mButtonClickListener);
+        mDeckOptions.setOnClickListener(mButtonClickListener);
+        mCramOptions.setOnClickListener(mButtonClickListener);           
 //        mButtonUp.setOnClickListener(mButtonClickListener);
 //        mButtonDown.setOnClickListener(mButtonClickListener);
 //        mToggleLimitToggle.setOnClickListener(mButtonClickListener);
@@ -662,11 +641,18 @@ public class StudyOptionsFragment extends Fragment {
 
         // The view that shows the congratulations view.
         mCongratsView = inflater.inflate(R.layout.studyoptions_congrats, null);
+        
+        
         // The view that shows the learn more options
         mCustomStudyDetailsView = inflater.inflate(R.layout.styled_custom_study_details_dialog, null);
         mCustomStudyTextView1 = (TextView) mCustomStudyDetailsView.findViewById(R.id.custom_study_details_text1);
         mCustomStudyTextView2 = (TextView) mCustomStudyDetailsView.findViewById(R.id.custom_study_details_text2);
         mCustomStudyEditText = (EditText) mCustomStudyDetailsView.findViewById(R.id.custom_study_details_edittext2);
+        
+        /* When creating a new filtered deck after reviewing, there are several options.
+         * For selecting several tags, we need a new, different dialog, that allows to select
+         * a list of tags:
+         */
 
         Themes.setWallpaper(mCongratsView);
 
@@ -838,19 +824,6 @@ public class StudyOptionsFragment extends Fragment {
                     }
                 });
         		break;
-
-        	case CUSTOM_STUDY_TAGS:
-        		mCustomStudyTextView1.setText("");
-        		mCustomStudyTextView2.setText(res.getString(R.string.custom_study_tags));
-        		mCustomStudyEditText.setText(AnkiDroidApp.getSharedPrefs(getActivity()).getString("customTags", ""));
-        		styledDialog.setButtonOnClickListener(Dialog.BUTTON_POSITIVE, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    	String tags = ((EditText) mCustomStudyEditText).getText().toString();
-                    	createFilteredDeck(new JSONArray(), new Object[]{"(is:new or is:due) " + tags, 9999, Sched.DYN_RANDOM}, true);
-                    }
-                });
-        		break;
         	}
     	}
     }
@@ -879,6 +852,15 @@ public class StudyOptionsFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                     	mCustomDialogChoice = which;
+                    	if(which == CUSTOM_STUDY_TAGS-1){
+                    		/*
+                    		 * There is a special Dialog for CUSTOM STUDY, where instead of only collecting
+                    		 * a number, it is necessary to collect a list of tags. This case handles the
+                    		 * creation of that Dialog.
+                    		 */
+                    		showDialog(DIALOG_CUSTOM_STUDY_TAGS);
+                    		return;
+                    	}
                     	showDialog(DIALOG_CUSTOM_STUDY_DETAILS);
                     }
                 });
@@ -886,20 +868,173 @@ public class StudyOptionsFragment extends Fragment {
                 dialog = builder1.create();
                 break;
 
+            case DIALOG_CUSTOM_STUDY_TAGS:
+            	 /*
+            	  * This handles the case where we want to create a Custom Study Deck using tags.
+            	  * This dialog needs to be different from the normal Custom Study dialogs, because
+            	  * more information is required:
+            	  * --List of Tags to select.
+            	  * --Which cards to select 
+            	  * 	--(New cards, Due cards, or all cards, as in the desktop version)
+            	  */
+                if (!AnkiDroidApp.colIsOpen())
+                {
+                    //TODO how should this error be handled?
+                }
+
+                Context context = getActivity().getBaseContext();
+
+                /*
+                 * The following RadioButtons and RadioGroup are to select the category of cards
+                 * to select for the Custom Study Deck (New, Due or All cards).
+                 */
+                RadioGroup rg = formatRGCardType(context,res);
+                mSelectWhichCards = rg;
+
+                builder1.setView(rg, false, true);
+
+                //Here we add the list of tags for the whole collection.
+                Collection col;
+                col = AnkiDroidApp.getCol();
+                allTags = col.getTags().all();
+                builder1.setTitle(R.string.studyoptions_limit_select_tags);
+                builder1.setMultiChoiceItems(allTags, new boolean[allTags.length],
+                        new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String tag = allTags[which];
+                        if (mSelectedTags.contains(tag)) {
+                            // Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
+                            mSelectedTags.remove(tag);
+                        } else {
+                            // Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
+                            mSelectedTags.add(tag);
+                        }
+                    }
+                });
+
+                /*
+                 * Here's the method that gathers the final selection of tags, type of cards
+                 * and generates the search screen for the custom study deck.
+                 */
+                builder1.setPositiveButton(res.getString(R.string.select), new OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mCustomStudyEditText.setText("");
+                        String tags = mSelectedTags.toString();
+                        mCustomStudyEditText.setHint(getResources().getString(R.string.card_browser_tags_shown,
+                                tags.substring(1, tags.length() - 1)));
+                        StringBuilder sb = new StringBuilder();
+                        switch(mSelectedOption){
+                            case 1:
+                                sb.append("is:new ");
+                                break;
+                            case 2:
+                                sb.append("is:due ");
+                                break;
+                            default:
+                                // Logging here might be appropriate : )
+                                break;
+                        }
+                        int i = 0;
+                        for (String tag : mSelectedTags) {
+                            if(i != 0)
+                            {
+                                sb.append("or ");
+                            }
+                            else{
+                                sb.append("("); //Only if we really have selected tags
+                            }
+                            sb.append("tag:").append(tag).append(" ");
+                            i++;
+                        }
+                        if(i>0){
+                            sb.append(")");	//Only if we added anything to the tag list 
+                        }
+                        mSearchTerms = sb.toString();
+                        createFilteredDeck(new JSONArray(), new Object[]{mSearchTerms, 9999, Sched.DYN_RANDOM}, false);
+                    }
+                });
+                builder1.setNegativeButton(res.getString(R.string.cancel), new OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mSelectedTags.clear();
+                    }
+                });
+                builder1.setOnCancelListener(new OnCancelListener() {
+
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        mSelectedTags.clear();
+                    }
+                });
+
+                dialog = builder1.create();
+                break;
             case DIALOG_CUSTOM_STUDY_DETAILS:
-            	builder1.setContentView(mCustomStudyDetailsView);
-            	builder1.setCancelable(true);
-            	builder1.setNegativeButton(R.string.cancel, null);
-            	builder1.setPositiveButton(R.string.ok, null);
+                /*
+                 * This is the normal case for creating a custom study deck, where the dialog
+                 * requires only a numeric input.
+                 */
+                builder1.setContentView(mCustomStudyDetailsView);
+                builder1.setCancelable(true);
+                builder1.setNegativeButton(R.string.cancel, null);
+                builder1.setPositiveButton(R.string.ok, null);
                 dialog = builder1.create();
                 break;	
 
             default:
                 dialog = null;
+                break;
         }
 
         dialog.setOwnerActivity(getActivity());
         return dialog;
+    }
+    
+    /**
+     * formatRGCardType
+     * Returns: RadioGroup - A radio group that contains the options of All Cards, New, and Due cards,
+     * 			for the selection of cards when creating a CUSTOM_STUDY_DECKS based on TAGS.
+     * Takes: context, and resources of the App.
+     * 
+     * This method just creates the RadioGroup required for the dialog to select tags for a new 
+     * custom study deck.
+     */
+    private RadioGroup formatRGCardType(Context context, Resources res){
+        RadioGroup rg = new RadioGroup(context);
+        final RadioButton[] radioButtonCards = new RadioButton[3];
+        rg.setOrientation(RadioGroup.HORIZONTAL);
+        RadioGroup.LayoutParams lp = new RadioGroup.LayoutParams(0, LayoutParams.MATCH_PARENT, 1);
+        int height = context.getResources().getDrawable(R.drawable.white_btn_radio).getIntrinsicHeight();
+        
+        //This array contains "All Cards", "New", and "Due", in that order. 
+        String[] text = res.getStringArray(R.array.cards_for_tag_filtered_deck_labels);
+        for(int i=0; i < radioButtonCards.length; i++){
+        	radioButtonCards[i] = new RadioButton(context);
+        	radioButtonCards[i].setClickable(true);
+        	radioButtonCards[i].setText(text[i]);
+        	radioButtonCards[i].setHeight(height*2);
+        	radioButtonCards[i].setSingleLine();
+        	radioButtonCards[i].setGravity(Gravity.CENTER_VERTICAL);
+        	rg.addView(radioButtonCards[i], lp);
+        }
+        rg.check(0);
+        
+        rg.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup arg0, int arg1) {
+                int checked = arg0.getCheckedRadioButtonId();
+                for (int i = 0; i < 3; i++) {
+                    if (arg0.getChildAt(i).getId() == checked) {
+                        mSelectedOption = i;
+                        break;
+                    }
+                }
+            }
+        });
+        rg.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, height));
+    	return rg;
     }
 
     private void createFilteredDeck(JSONArray delays, Object[] terms, Boolean resched) {
@@ -1020,10 +1155,13 @@ public class StudyOptionsFragment extends Fragment {
         try {
 			if (deck.getInt("dyn") == 0) {
 			    desc = AnkiDroidApp.getCol().getDecks().getActualDescription();
+			    // Truncate the deck description... it can be seen in full from options
 			    mTextDeckDescription.setMaxLines(3);
+                mTextDeckDescription.setEllipsize(TextUtils.TruncateAt.END);
 			} else {
 				desc = getResources().getString(R.string.dyn_deck_desc);
-			    mTextDeckDescription.setMaxLines(5);
+			    // we should show the full text of the dynamic deck description. Don't truncate with ellipsize
+                mTextDeckDescription.setMaxLines(10);
 			}
 		} catch (JSONException e) {
 			throw new RuntimeException(e);

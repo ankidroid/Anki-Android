@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?> 
+ <!-- 
+ ~ Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com> 
+ ~ This program is free software; you can redistribute it and/or modify it under 
+ ~ the terms of the GNU General Public License as published by the Free Software 
+ ~ Foundation; either version 3 of the License, or (at your option) any later 
+ ~ version. 
+ ~ 
+ ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ ~ 
+ ~ You should have received a copy of the GNU General Public License along with 
+ ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ --> 
+ 
+ 
+<resources> 
+ <string-array name="tutorial_questions"> 
+    <item><![CDATA[Ďakujeme, že ste si nainštalovali AnkiDroid!<br />Toto je krátky úvod.<br />To, čo vidíte teraz, je <span style=\'font-weight:600;\'>otázka</span> - predná časť karty.<br />Kliknite prosím na to veľké tlačidlo nižšie...]]></item> 
+    <item><![CDATA[Teraz sa zobrazí ďalšia karta.<br />Myšlienka je jednoduchá: rovnako ako na &quot;skutočných&quot; papierových kartičkách, napíšete otázku na prednú stranu a odpoveď na zadnú stranu karty.<br />(pre zobrazenie zadnej strany kliknite na tlačidlo)]]></item> 
+    <item><![CDATA[&quot;Aké je hlavné mesto Burkina Faso?&quot;<br />Porozmýšľajte nad odpoveďou a potom kliknite na &quot;zobraziť odpoveď&quot;]]></item> 
+    <item><![CDATA[Nad každým tlačidlom odpovede nájdete informáciu o čase, po ktorom bude karta znova zobrazená ak odpoviete týmto tlačidlom.]]></item> 
+    <item><![CDATA[Zámerom je ukázať vám tú kartu tesne predtým ako by ste ju zabudli. Empirické štúdie ukázali, že týmto spôsobom je možné sa informácie naučiť najefektívnejšie.]]></item> 
+    <item><![CDATA[Niekoľko organizačných slov o AnkiDroid:<br /><br>Všetky informácie musia vytvoriť dvojice otázka a odpoveď. Ak sa chcete učiť aj v opačnom smere, mali by ste vytvoriť ďalšiu kartu s prehodenými informáciami.]]></item> 
+    <item><![CDATA[Karty sú umiestnené do balíčkov a dajú sa tam organizovať s pomocou rôznych štítkov.]]></item> 
+    <item><![CDATA[Existujú dva hlavné spôsoby, ako získať nové karty:<br />Buď môžete pridať balíčky vytvorené inými používateľmi (zvoľte &quot;zdieľané balíčky&quot; v prehľade balíčkov) alebo ich vytvorte sami.]]></item> 
+    <item><![CDATA[Ale na to, aby ste dokonale vyhoveli vašim potrebám je nevyhnutné vytvoriť si vlastné balíčky. To môžete spraviť priamo v AnkiDroid...]]></item> 
+    <item><![CDATA[Pozrime sa na hornú lištu:<br />V ľavom hornom rohu nájdete pár čísel. To modré hovorí, koľko nových kariet je naplánovaných na dnes. Červené číslo značí neúspešné karty (pri ktorých ste odpovedali &quot;znovu&quot;),]]></item> 
+    <item><![CDATA[V pravom rohu nájdete informácie o čase strávenom premýšľaním nad touto kartou a o vašom postupe.]]></item> 
+    <item><![CDATA[Hoci môžete používať AnkiDroid samostatne, je úplne prepojené s AnkiWeb, serverom pre synchronizáciu pc verzie Anki Desktop (dostupnú pre Linux, Windows, Mac).]]></item> 
+    <item><![CDATA[Toto boli hlavné body využitia AnkiDroid.<br /><br>Pre ďalšie informácie o kľúčovom koncepte Anki navštívte http://ankisrs.net/]]></item> 
+ </string-array>
+ <string-array name="tutorial_answers">
+    <item><![CDATA[...aby ste videli <span style=\'font-weight:600;\'>odpoveď</span> - zadnú časť karty (pod čiarou).<br />Kliknite na tlačidlo vpravo]]></item> 
+    <item><![CDATA[Predpokladajme, že sa chcete naučiť svetové hlavné mestá. Nech otázka je...<br />(pre zobrazenie nasledujúcej karty kliknite na jedno z tlačidiel)]]></item> 
+    <item><![CDATA[&quot;Ouagadougou&quot; je správna odpoveď. <br />Nevedeli ste to? Kliknite &quot;znovu&quot; aby sa vám karta zobrazila opäť o pár minút. V opačnom prípade kliknite na iné tlačidlo, podľa náročnosti otázky.]]></item> 
+    <item><![CDATA[Pre výpočet tejto doby sa používa čas, kedy ste naposledy na túto kartu odpovedali, aktuálna odpoveď a predchádzajúce odpovede tej karty.]]></item> 
+    <item><![CDATA[Ak sa chcete dozvedieť viac o odloženom opakovaní (spaced repetition), navštívte (v aj):<br>http://en.wikipedia.org/wiki/Spaced_repetition_system]]></item> 
+    <item><![CDATA[Žiadne obavy, dá sa to spraviť automaticky. Nie je potrebné vkladať rovnakú informáciu dvakrát.]]></item> 
+    <item><![CDATA[To sa naučíte rýchlo, keď začnete AnkiDroid používať.]]></item> 
+    <item><![CDATA[Môžete tam nájsť tisíce balíčkov na stiahnutie a medzi nimi pravdepodobne aj také, ktoré budú užitočné pre vás.]]></item> 
+    <item><![CDATA[... alebo (trochu pohodlnejšie) pomocou pc verzie Anki (ktorú si môžete stiahnuť zdarma cez http://ankisrs.net/).<br><br>Vaše balíčky si môžete synchronizovať s vašou počítačovou aplikáciou veľmi jednoducho, takže prenos dát nie je problém.]]></item> 
+    <item><![CDATA[zelené zobrazuje počet kariet, ktoré ste sa už učili a ktoré si máte dnes zopakovať.<br />Typ aktuálnej karty je vyznačený podčiarknutím.]]></item> 
+    <item><![CDATA[Horný obdĺžnik znázornuje váš pokrok, spodný znázorňuje percento kladných odpovedí.]]></item> 
+    <item><![CDATA[Takže môžete jednoducho synchronizovať vašu zbierku medzi AnkiDroid a Anki Desktop a používať Anki Desktop pre pohodlnejšie  pridávanie a upravovanie kariet.]]></item> 
+    <item><![CDATA[Vyskúšajte si to teraz a uvidíte, či bude pasovať vašim potrebám.<br><br>Môžete začať s prehľadom balíčkov (kliknite menu na hlavnej obrazovke a vyberte &quot;všetky balíčky&quot;), tam si môžete stiahnuť už vytvorené balíčky alebo vytvoriť svoje vlastné (iba s pomocou tohto menu).]]></item> 
+ </string-array>
+</resources>

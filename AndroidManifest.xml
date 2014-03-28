@@ -21,25 +21,30 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ichi2.anki"
     android:installLocation="auto"
-    android:versionCode="20004300"
-    android:versionName="2.0.4" >
+    android:versionCode="20101300"
+    android:versionName="2.1.1" >
     <!--
-        The version name is of the form:
+        The version number is of the form:
           <major>.<minor>.<maintenance>[dev|alpha<build>|beta<build>|]
         The <build> is only present for alpha and beta releases (e.g., 2.0.4alpha2 or 2.0.4beta4), developer builds do
         not have a build number (e.g., 2.0.4dev) and official releases only have three components (e.g., 2.0.4).
 
         The version code is derived from the version name as follows:
           AAbbCCtDD
-        where AA is 2-digit decimal number (with leading zeros omitted) representing the major version; bb is a 2-digit
-        decimal number representing the minor version; CC is a 2-digit decimal number representing the maintenance
-        version; t is a 1-digit decimal number representing the type of the build, where 0 represent an developer build,
-        1 an alpha release, 2 a beta release, and 3 a public release; and DD is a 2-digit decimal number representing
-        the build (which will be always zero for internal builds and public releases, and will correspond to the alpha
-        or beta build for alpha and beta releases).
+        AA: 2-digit decimal number (with leading zeros omitted) representing the major version
+        bb: 2-digit decimal number representing the minor version
+        CC: 2-digit decimal number representing the maintenance version
+        t: 1-digit decimal number representing the type of the build
+          0: developer build
+          1: alpha release
+          2: beta release
+          3: public release
+        DD: 2-digit decimal number representing the build
+          00 for internal builds and public releases
+          alpha/beta build number for alpha/beta releases
 
         This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
-        needed for upgraded to be offered correctly.
+        needed for upgrades to be offered correctly.
       -->
 
     <instrumentation
@@ -48,7 +53,7 @@
     </instrumentation>
 
     <uses-sdk
-        android:minSdkVersion="4"
+        android:minSdkVersion="7"
         android:targetSdkVersion="18" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -82,8 +87,8 @@
             android:theme="@style/Theme_Start" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -129,14 +134,6 @@
             android:name="com.ichi2.anki.CardBrowser"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="Card Browser" />
-        <activity
-            android:name="com.ichi2.anki.PersonalDeckPicker"
-            android:configChanges="keyboardHidden|orientation|locale"
-            android:label="@string/personaldeckpicker_title" />
-        <activity
-            android:name="com.ichi2.anki.SharedDeckPicker"
-            android:configChanges="keyboardHidden|orientation|locale"
-            android:label="@string/shareddeckpicker_title" />
         <activity
             android:name="com.ichi2.anki.Reviewer"
             android:configChanges="keyboardHidden|orientation|locale|screenSize" />
@@ -185,13 +182,9 @@
             android:name="com.ichi2.charts.ChartBuilder"
             android:configChanges="keyboardHidden|orientation|locale|screenSize" />
         <activity
-            android:name="com.ichi2.widget.WidgetDialog"
-            android:launchMode="singleInstance"
-            android:theme="@style/Theme_Translucent" />
-        <activity
-            android:name="com.ichi2.veecheck.Notification"
+            android:name="com.ichi2.anki.PreviewClass"
             android:configChanges="locale"
-            android:label="@string/notification_title" />
+            android:label="@string/preview_title" />
 
         <service android:name="com.ichi2.anki.services.DownloadManagerService" />
         <service android:name="com.ichi2.anki.services.NotificationService" />
@@ -242,8 +235,6 @@
 		<service android:name="com.ichi2.widget.AnkiDroidWidgetBig$UpdateService" />
         -->
 
-        <service android:name="com.ichi2.widget.WidgetContentService" />
-
         <receiver
             android:name="com.ichi2.anki.receiver.SdCardReceiver"
             android:enabled="true"
@@ -276,11 +267,6 @@
             android:label="@string/title_activity_translation" >
         </activity>
         <activity
-            android:name="com.ichi2.anki.AudioRecorderActivity"
-            android:configChanges="keyboardHidden|orientation|locale|screenSize"
-            android:label="@string/title_activity_audio_recorder" >
-        </activity>
-        <activity
             android:name="com.ichi2.anki.multimediacard.activity.LoadPronounciationActivity"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/title_activity_load_pronounciation" >
@@ -290,5 +276,19 @@
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/title_activity_search_image" >
         </activity>
+
+        <!-- stuff for Samsung Multi-Window -->
+        <uses-library
+            android:name="com.sec.android.app.multiwindow"
+            android:required="false" />
+        <meta-data
+            android:name="com.sec.android.support.multiwindow"
+            android:value="true" />
+        <meta-data
+            android:name="com.sec.minimode.icon.portrait.normal"
+            android:resource="@drawable/anki" />
+        <meta-data
+            android:name="com.sec.minimode.icon.landscape.normal"
+            android:resource="@drawable/anki" />
     </application>
 </manifest>

@@ -34,7 +34,6 @@ import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.AnkiFont;
 import com.ichi2.anki.R;
-import com.mindprod.common11.BigDate;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -976,27 +975,6 @@ public class Utils {
     		formattedTime = Integer.toString(minutes) + ":" + Integer.toString(seconds);
     	}
     	return formattedTime;
-    }
-
-
-    /**
-     * Returns the proleptic Gregorian ordinal of the date, where January 1 of year 1 has ordinal 1.
-     * @param date Date to convert to ordinal, since 01/01/01
-     * @return The ordinal representing the date
-     */
-    public static int dateToOrdinal(Date date) {
-        // BigDate.toOrdinal returns the ordinal since 1970, so we add up the days from 01/01/01 to 1970
-        return BigDate.toOrdinal(date.getYear() + 1900, date.getMonth() + 1, date.getDate()) + DAYS_BEFORE_1970;
-    }
-
-
-    /**
-     * Return the date corresponding to the proleptic Gregorian ordinal, where January 1 of year 1 has ordinal 1.
-     * @param ordinal representing the days since 01/01/01
-     * @return Date converted from the ordinal
-     */
-    public static Date ordinalToDate(int ordinal) {
-        return new Date((new BigDate(ordinal - DAYS_BEFORE_1970)).getLocalDate().getTime());
     }
 
 

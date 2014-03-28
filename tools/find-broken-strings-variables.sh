@@ -2,12 +2,10 @@
 # Spot malformed string replacement patterns in Android localization files.
 # Hopefully it will prevent this kind of bugs: https://code.google.com/p/ankidroid/issues/detail?id=359
 
-cd ../res
+grep -R "%1$ s" res/values*
+grep -R "%1$ d" res/values*
 
-grep -R "%1$ s" values*
-grep -R "%1$ d" values*
-
-grep -RH '%' values* | 
+grep -RH '%' res/values* | 
  sed -e 's/%/\n%/g' | # Split lines that contain several expressions
  grep '%'           | # Filter out lines that do not contain expressions
  grep -v ' % '      | # Lone % character, not a variable
@@ -19,9 +17,9 @@ grep -RH '%' values* |
  grep -v '%[0-9][0-9]\?$s' | # Multiple string variable
  grep -v '%[0-9][0-9]\?$d' |  # Multiple decimal variable
  grep -v '%1$.1f'   | # ?
- grep -v '%.1f'
+ grep -v '%.1f'     |
+ grep -v '%\\n'
 
-grep -R '％' values*
+grep -R '％' res/values*
 
-cd ..
 lint --check StringFormatInvalid ./res

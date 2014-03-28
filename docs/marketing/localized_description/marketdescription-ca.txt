@@ -4,12 +4,12 @@ AnkiDroid us permet aprendre conceptes de forma molt eficient, mostrant la fitxa
 
 Estudieu tot tipus de temes on i quan vulgueu. Aprofiteu els temps morts en el viatge d'autobús, a la cua del supermercats o en qualsevol altra situació d'espera!
 
-Prepareu els vostres paquets de fitxes o descarregueu gratuitament paquets preparats per a molts idiomes i temes (en trobareu més de 6000 disponibles).
+Prepareu els vostres paquets de fitxes o descarregueu gratuïtament paquets preparats per a molts idiomes i temes (en trobareu més de 6000 disponibles).
 
 Afegiu material a través de l'aplicació d'escriptori Anki o directament a través de l'Ankidroid. L'aplicació permet fins i tot afegir material de forma automàtica a partir d'un diccionari!
 
 ★ Característiques principals:
-• contingut permés a les fitxes: text, imatges, sons, LaTeX
+• contingut permès a les fitxes: text, imatges, sons, LaTeX
 • repetició espaiada (l'algorisme de SuperMemo 2)
 • integra síntesi de veu
 • més de 6000 paquets preparats
@@ -25,7 +25,7 @@ Afegiu material a través de l'aplicació d'escriptori Anki o directament a trav
 • navegador de fitxes
 • compatible amb tabletes
 • importació d'arxius de col·leccions existents (amb Anki Desktop)
-• intregrat amb el diccionari (ColorDict, GoldenDict, Leo.org, Aedict, diversos diccionaris web)
+• integrat amb el diccionari (ColorDict, GoldenDict, Leo.org, Aedict, diversos diccionaris web)
 • afegiu fitxes a partir d'altres aplicacions com ara diccionaris
 • permet personalitzar el tipus de lletra
 • complet sistema de còpia de seguretat

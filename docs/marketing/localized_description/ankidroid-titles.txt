@@ -10,13 +10,16 @@ es-ES: Tarjetas AnkiDroid
 fa: فلش کارتهای انکی دروید
 fi: AnkiDroid-muistikortit
 fr: AnkiDroid (Cartes mémoire)
-hu: AnkiDroid tanuló kártyák
+gl: Cartóns AnkiDroid
+hu: AnkiDroid szókártyák
 id: Kad imbas AnkiDroid
 ja: アンキドロイド単語帳
 ko: AnkiDroid 플래시 카드
 nl: AnkiDroid flitskaarten
 pl: AnkiDroid - Fiszki
 ru: AnkiDroid флэш-карты
+sk: AnkiDroid kartičky
+sl: AnkiDroid pomnilne kartice
 sr: AnkiDroid флеш-карте
 th: บัตรคำ AnkiDroid
 tr: AnkiDroid Bilgi Kartları

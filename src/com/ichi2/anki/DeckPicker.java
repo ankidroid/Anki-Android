@@ -2,7 +2,7 @@
  * Copyright (c) 2009 Andrew Dubya <andrewdubya@gmail.com>                              *
  * Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>                           *
  * Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
- * Copyright (c) 2009 Daniel Sv��rd <daniel.svard@gmail.com>                             * 
+ * Copyright (c) 2009 Daniel Sv�ｽ�ｽrd <daniel.svard@gmail.com>                             * 
  * Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>                         *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
@@ -155,7 +155,6 @@ public class DeckPicker extends FragmentActivity {
     private static final int MENU_STATISTICS = 12;
     private static final int MENU_CARDBROWSER = 13;
     private static final int MENU_IMPORT = 14;
-    private static final int MENU_REUPGRADE = 15;
 
     /**
      * Context Menus
@@ -1128,6 +1127,7 @@ public class DeckPicker extends FragmentActivity {
 
 
     private void addNote() {
+    	Preferences.COMING_FROM_ADD=true;
         Intent intent = new Intent(DeckPicker.this, CardEditor.class);
         intent.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_DECKPICKER);
         startActivityForResult(intent, ADD_NOTE);
@@ -1190,44 +1190,6 @@ public class DeckPicker extends FragmentActivity {
         return false;
     }
 
-    private void restartUpgradeProcess() {
-        StyledDialog.Builder builder = new StyledDialog.Builder(DeckPicker.this);
-        builder.setTitle(R.string.deck_upgrade_title);
-        builder.setIcon(R.drawable.ic_dialog_alert);
-        builder.setMessage(getString(R.string.deck_upgrade_rename_warning, UPGRADE_OLD_COLLECTION_RENAME));
-        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                AnkiDroidApp.closeCollection(true);
-
-                String path = AnkiDroidApp.getCurrentAnkiDroidDirectory();
-                File apkgExport = new File(path, UPGRADE_OLD_COLLECTION_RENAME);
-                if (apkgExport.exists()) {
-                    // rename any existing oldcollection.apkg files oldcollection.apkgi, i = 1, 2, 3,...
-                    int i = 0;
-                    File altname;
-                    do {
-                        altname = new File(path, UPGRADE_OLD_COLLECTION_RENAME + i);
-                        ++i;
-                    } while (altname.exists());
-                    apkgExport.renameTo(altname);
-                }
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_EXPORT_APKG, mUpgradeExportListener,
-                        new DeckTask.TaskData(new Object[] {AnkiDroidApp.getCollectionPath(),
-                                apkgExport.getAbsolutePath(), false}));
-            }
-        });
-        builder.setCancelable(false);
-        builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext())
-                        .edit().putInt("lastUpgradeVersion", AnkiDroidApp.getPkgVersionCode()).commit();
-            }
-        });
-        builder.show();
-    }
-
     private SharedPreferences restorePreferences() {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         mPrefDeckPath = AnkiDroidApp.getCurrentAnkiDroidDirectory();
@@ -1287,13 +1249,13 @@ public class DeckPicker extends FragmentActivity {
             // like to run on all collections. A missing version number is assumed to be a fresh
             // installation of AnkiDroid and we don't run the check.
             int current = AnkiDroidApp.getPkgVersionCode();
-            int previous;
+            int previousTemp; // a non-final variable, for intermediate calculations
             if (!preferences.contains("lastUpgradeVersion")) {
                 // Fresh install
-                previous = current;
+                previousTemp = current;
             } else {
                 try {
-                    previous = preferences.getInt("lastUpgradeVersion", current);
+                    previousTemp = preferences.getInt("lastUpgradeVersion", current);
                 } catch (ClassCastException e) {
                     // Previous versions stored this as a string.
                     String s = preferences.getString("lastUpgradeVersion", "");
@@ -1301,20 +1263,27 @@ public class DeckPicker extends FragmentActivity {
                     // We manually set the version here, but anything older will force a DB
                     // check.
                     if (s.equals("2.0.2")) {
-                        previous = 40;
+                        previousTemp = 40;
                     } else {
-                        previous = 0;
+                        previousTemp = 0;
                     }
                 }
             }
+            final int previous = previousTemp;
             preferences.edit().putInt("lastUpgradeVersion", current).commit();
-            if (previous < AnkiDroidApp.CHECK_DB_AT_VERSION) {
+            if (previous < AnkiDroidApp.CHECK_DB_AT_VERSION ||
+                    previous < AnkiDroidApp.CHECK_PREFERENCES_AT_VERSION) {
                 
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPEN_COLLECTION, new Listener() {
                     @Override
                     public void onPostExecute(DeckTask task, TaskData result) {
                         mOpenCollectionHandler.onPostExecute(result);
-                        integrityCheck();
+                        if (previous < AnkiDroidApp.CHECK_DB_AT_VERSION) {
+                            integrityCheck();
+                        }
+                        if (previous < AnkiDroidApp.CHECK_PREFERENCES_AT_VERSION) {
+                            upgradePreferences(previous);
+                        }
                     }
 
                     @Override
@@ -1331,7 +1300,16 @@ public class DeckPicker extends FragmentActivity {
         }
     }
 
-
+    
+    private void upgradePreferences(int previousVersionCode) {
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+        if (previousVersionCode < 20100108) {
+            preferences.edit().putString("overrideFont", preferences.getString("defaultFont", "")).commit();
+            preferences.edit().putString("defaultFont", "").commit();
+        }
+    }
+    
+    
     protected void sendKey(int keycode) {
         this.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, keycode));
         this.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, keycode));
@@ -1405,7 +1383,7 @@ public class DeckPicker extends FragmentActivity {
                                     if (Utils.isIntentAvailable(DeckPicker.this, "android.intent.action.VIEW")) {
                                         Intent intent = new Intent("android.intent.action.VIEW", Uri
                                                 .parse(getResources().getString(
-                                                        arg1 == 0 ? R.string.link_help : R.string.link_faq)));
+                                                        arg1 == 1 ? R.string.link_help : R.string.link_faq)));
                                         startActivity(intent);
                                     } else {
                                         startActivity(new Intent(DeckPicker.this, Info.class));
@@ -2151,6 +2129,10 @@ public class DeckPicker extends FragmentActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                     	mImportPath = mImportValues[which];
+                    	//If the apkg file is called "collection.apkg", we assume the collection will be replaced
+                    	if (mImportPath.split("/")[mImportPath.split("/").length-1].equals("collection.apkg")){
+                        		mImportMethod=IMPORT_METHOD_REPLACE;
+                        }                    	
                         switch (mImportMethod) {
                             case IMPORT_METHOD_ADD:
                                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_IMPORT, mImportAddListener,
@@ -2456,7 +2438,6 @@ public class DeckPicker extends FragmentActivity {
         item.setIcon(R.drawable.ic_menu_send);
         item = menu.add(Menu.NONE, MENU_ABOUT, Menu.NONE, R.string.menu_about);
         item.setIcon(R.drawable.ic_menu_info_details);
-        item = menu.add(Menu.NONE, MENU_REUPGRADE, Menu.NONE, R.string.restart_upgrade_process);
         item.setIcon(R.drawable.ic_menu_preferences);
         
         return true;
@@ -2625,10 +2606,6 @@ public class DeckPicker extends FragmentActivity {
             		preferences.edit().putBoolean("invertedColors", true).commit();
             		item.setIcon(R.drawable.ic_menu_night_checked);
             	}
-                return true;
-
-            case MENU_REUPGRADE:
-                restartUpgradeProcess();
                 return true;
 
             default:

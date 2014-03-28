@@ -23,6 +23,7 @@
 <string name="CardEditorCancelButton">Cancel</string>
 <string name="CardEditorSaveButton">Save</string>
 <string name="CardEditorLaterButton">Later</string>
+<string name="CardEditorPreviewButton">Preview</string>
 <string name="CardEditorLaterMessage">Saved information for later</string>
 <string name="CardEditorCardDeck">Card deck: %s</string>
 <string name="CardEditorNoteDeck">Note deck: %s</string>
@@ -143,9 +144,9 @@
 <string name="import_importing">Importing cards.\nPlease wait...</string>
 <string name="import_hint">To import cards, place the apkg file in directory %s and press ok</string>
 <string name="upgrade_import_no_file_found">No importable %1$s file found</string>
+<string name="study_options">Options</string>
 <string name="custom_study">Custom Study</string>
   <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
-    <string name="restart_upgrade_process">Restart upgrade process</string>
     <string name="exit_wizard">Exit Wizard</string>
 
 <string name="steps_error">Steps must be numbers greater than 0</string>

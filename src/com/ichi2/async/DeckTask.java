@@ -818,7 +818,6 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         Collection col = params[0].getCollection();
         long did = params[0].getLong();
         col.getDecks().rem(did, true);
-        col.getMedia().removeUnusedImages();
         return doInBackgroundLoadDeckCounts(new TaskData(col));
     }
 

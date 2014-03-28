@@ -683,11 +683,7 @@ public class Card implements Cloneable {
     }
 
     public boolean showTimer() {
-    	try {
-			return mCol.getDecks().confForDid(mODid == 0 ? mDid : mODid).getInt("timer") != 0;
-		} catch (JSONException e) {
-			throw new RuntimeException(e);
-		}
+    	return mCol.getDecks().confForDid(mODid == 0 ? mDid : mODid).optInt("timer",1) != 0;
     }
 
     public Card clone() {

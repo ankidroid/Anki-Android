@@ -21,6 +21,17 @@
 <resources>
 <!-- Be careful with a reordering. It will probably lead to a deletion of already translated strings on crowdin and should therefore only be done only immediately before release -->
 <string-array name="new_version_features">
-    <item>Fix issue with typing answers</item>
+    <item>Lots of Bug Fixes</item>    
+    <item>New custom study option with improved tag selection</item>
+    <item>New preview card feature in note editor (experimental)</item>
+    <item>New override font preference in addition to default font</item>
+    <item>New "Kanji Info" feature (enabled in preferences->reviewing->Kanji Info)</item>
+    <item>Improve Aedict integration</item>    
+    <item>Support for Samsung Multi-Window</item>            
+    <item>Fix Some TTS Issues</item>     
+    <item>Updated Translations</item>     
+    <item>Remove unused media check when deleting decks</item>
+    <item>Significantly increase speed for reducing filtered decks</item>
+    <item>Remove upgrade wizard</item>
 </string-array>
 </resources>

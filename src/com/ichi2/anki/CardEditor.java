@@ -160,9 +160,10 @@ public class CardEditor extends Activity {
     private TextView mModelButton;
     private TextView mDeckButton;
     private Button mSwapButton;
+    private Button mPreviewButton;
 
     private Note mEditorNote;
-    private Card mCurrentEditedCard;
+    public static Card mCurrentEditedCard;
     private List<String> mCurrentTags;
     private long mCurrentDid;
 
@@ -339,6 +340,7 @@ public class CardEditor extends Activity {
         mSave = (Button) findViewById(R.id.CardEditorSaveButton);
         mCancel = (Button) findViewById(R.id.CardEditorCancelButton);
         mLater = (Button) findViewById(R.id.CardEditorLaterButton);
+        mPreviewButton=(Button)findViewById(R.id.CardEditorPreviewButton);
         mDeckButton = (TextView) findViewById(R.id.CardEditorDeckText);
         mModelButton = (TextView) findViewById(R.id.CardEditorModelText);
         mTagsButton = (TextView) findViewById(R.id.CardEditorTagText);
@@ -348,6 +350,16 @@ public class CardEditor extends Activity {
             	swapText(false);
             }
         });
+                
+        if(Preferences.COMING_FROM_ADD)
+        {
+	        mPreviewButton.setVisibility(View.GONE);
+	        
+        }else
+        {
+        	 mPreviewButton.setVisibility(View.VISIBLE);
+        }
+        Preferences.COMING_FROM_ADD=false;        
 
         mAedictIntent = false;
 
@@ -430,7 +442,7 @@ public class CardEditor extends Activity {
             String contents = null;
             if (mSourceText != null) {
                 if (mAedictIntent && (mEditFields.size() == 3) && mSourceText[1].contains("[")) {
-                    contents = mSourceText[1].replaceFirst("\\[", "\u001f");
+                    contents = mSourceText[1].replaceFirst("\\[", "\u001f" + mSourceText[0] + "\u001f");
                     contents = contents.substring(0, contents.length() - 1);
                 } else {
                     mEditFields.get(0).setText(mSourceText[0]);
@@ -531,8 +543,14 @@ public class CardEditor extends Activity {
                         mEditorNote.setTags(mCurrentTags);
                         // set did for card
                         if (changedDid) {
+                        	// remove card from filtered deck first (if relevant)                        	 
+                        	AnkiDroidApp.getCol().getSched().remFromDyn(new long[] {mCurrentEditedCard.getId()});                       	
+                        	// refresh the card object to reflect the database changes in remFromDyn()
+                        	mCurrentEditedCard.load();
+                        	// then set the card ID to the new deck
                             mCurrentEditedCard.setDid(mCurrentDid);
                         }
+                        // set a flag so that changes to card object will be written to DB later via onActivityResult() in CardBrowser
                         mChanged = true;
                     }
                     closeCardEditor();
@@ -564,6 +582,15 @@ public class CardEditor extends Activity {
             }
 
         });
+        
+        mPreviewButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				openReviewer();				
+				
+			}
+		});        
     }
 
 
@@ -607,6 +634,12 @@ public class CardEditor extends Activity {
             mSourceText[1] = cleanMessages.second;
         }
     }
+    
+    private void openReviewer() {
+    	
+        Intent reviewer = new Intent(CardEditor.this, PreviewClass.class);
+        startActivity(reviewer);
+    }    
 
     private void reloadCollection(Bundle savedInstanceState) {
     	mSavedInstanceState = savedInstanceState;
@@ -1421,8 +1454,12 @@ public class CardEditor extends Activity {
     private void setNote(Note note) {
         try {
             if (note == null) {
-                mCurrentDid = mCol.getDecks().current().getLong("id");
                 if (mCol.getDecks().isDyn(mCurrentDid)) {
+                    /*
+                     * If the deck in mCurrentDid is a filtered (dynamic) deck, then we can't create
+                     * cards in it, and we set mCurrentDid to the Default deck. Otherwise, we keep
+                     * the number that had been selected previously in the activity.
+                     */
                     mCurrentDid = 1;
                 }
 

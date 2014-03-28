@@ -18,6 +18,7 @@
 package com.ichi2.anki;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -36,6 +37,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.AudioManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -88,6 +90,9 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.Animation3D;
 import com.ichi2.anim.ViewAnimation;
 import com.ichi2.anki.receiver.SdCardReceiver;
+import com.ichi2.anki.reviewer.CustomFontsReviewerExt;
+import com.ichi2.anki.reviewer.ReviewerExt;
+import com.ichi2.anki.reviewer.ReviewerExtRegistry;
 import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
@@ -109,9 +114,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.xml.sax.XMLReader;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -238,6 +246,7 @@ public class Reviewer extends AnkiActivity {
     private boolean mShakeActionStarted = false;
     private boolean mPrefFixArabic;
     private boolean mPrefForceQuickUpdate;
+    private boolean mDisplayKanjiInfo = false;
     // Android WebView
     private boolean mSpeakText;
     private boolean mInvertedColors = false;
@@ -271,6 +280,7 @@ public class Reviewer extends AnkiActivity {
     private boolean mIsSelecting = false;
     private boolean mTouchStarted = false;
     private boolean mInAnswer = false;
+    private boolean mAnswerSoundsAdded = false;
 
     private String mCardTemplate;
 
@@ -343,14 +353,6 @@ public class Reviewer extends AnkiActivity {
      * of a bug in some versions of Android.
      */
     private boolean mUseQuickUpdate = false;
-    /**
-     * Maps font names into {@link AnkiFont} objects corresponding to them.
-     *
-     * <p>Should not be accessed directly but via {@link #getCustomFontsMap()}, as it is lazily initialized.
-     */
-    private Map<String, AnkiFont> mCustomFontsMap;
-    private String mCustomDefaultFontCss;
-    private String mCustomFontStyle;
 
     /**
      * Shake Detection
@@ -424,6 +426,13 @@ public class Reviewer extends AnkiActivity {
     private Method mSetTextIsSelectable = null;
 
     private Sched mSched;
+
+    private static ProgressDialog mTTSProgressDialog;
+
+    // Stores kanji to display their meaning after answering cards
+    private static HashMap<String, String> sKanjiInfo = new HashMap<String, String>();
+
+    private ReviewerExtRegistry mExtensions;
 
     // private int zEase;
 
@@ -655,6 +664,14 @@ public class Reviewer extends AnkiActivity {
 
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
+        	if(mCurrentCard != values[0].getCard()){
+            	/*
+            	 * Before updating mCurrentCard, we check whether it is changing
+            	 * or not. If the current card changes, then we need to display it
+            	 * as a new card, without showing the answer.
+            	 */
+        		sDisplayAnswer = false;
+        	}
             mCurrentCard = values[0].getCard();
             if (mCurrentCard == null) {
                 // If the card is null means that there are no more cards scheduled for review.
@@ -918,6 +935,9 @@ public class Reviewer extends AnkiActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Create the extensions as early as possible, so that they can be offered events.
+        mExtensions = new ReviewerExtRegistry(getBaseContext());
+
         Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
         // Log.i(AnkiDroidApp.TAG, "Reviewer - onCreate");
@@ -984,6 +1004,39 @@ public class Reviewer extends AnkiActivity {
             // Initialize text-to-speech. This is an asynchronous operation.
             if (mSpeakText) {
                 ReadText.initializeTts(this);
+                mTTSProgressDialog = new ProgressDialog(this);
+
+                new AsyncTask<String, Void, Void>() {
+
+                    @Override
+                    protected void onPreExecute() {
+                        mTTSProgressDialog.setMessage("Init TTS");
+                        mTTSProgressDialog.show();
+                    }
+                    @Override
+                    protected Void doInBackground(String... params) {
+                        while (ReadText.mTTSInitDone == false) {
+                            try {
+                                Thread.sleep(500);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        return null;
+                    }
+
+                    @Override
+                    protected void onPostExecute(Void res) {
+                        mTTSProgressDialog.dismiss();
+
+                        // Load the first card and start reviewing. Uses the answer card
+                        // task to load a card, but since we send null
+                        // as the card to answer, no card will be answered.
+                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(mSched,
+                            null, 0));
+                    }
+                }.execute();
+
             }
 
             // Get last whiteboard state
@@ -2051,7 +2104,7 @@ public class Reviewer extends AnkiActivity {
         mRelativeButtonSize = preferences.getInt("answerButtonSize", 100);
         mInputWorkaround = preferences.getBoolean("inputWorkaround", false);
         mPrefFixArabic = preferences.getBoolean("fixArabicText", false);
-        mPrefForceQuickUpdate = preferences.getBoolean("forceQuickUpdate", true);
+        mPrefForceQuickUpdate = preferences.getBoolean("forceQuickUpdate", false);
         mSpeakText = preferences.getBoolean("tts", false);
         mShowProgressBars = preferences.getBoolean("progressBars", true);
         mPrefFadeScrollbars = preferences.getBoolean("fadeScrollbars", false);
@@ -2060,6 +2113,7 @@ public class Reviewer extends AnkiActivity {
         mWaitQuestionSecond = preferences.getInt("timeoutQuestionSeconds", 60);
         mScrollingButtons = preferences.getBoolean("scrolling_buttons", false);
         mDoubleScrolling = preferences.getBoolean("double_scrolling", false);
+        mDisplayKanjiInfo = preferences.getBoolean("displayKanjiInfo", false);
         mPrefCenterVertically =  preferences.getBoolean("centerVertically", false);
 
         mGesturesEnabled = AnkiDroidApp.initiateGestures(this, preferences);
@@ -2178,8 +2232,6 @@ public class Reviewer extends AnkiActivity {
 	                mNextCard.setVisibility(View.GONE);
 	                mCardFrame.addView(mNextCard, 0);
 		            mCard.setBackgroundColor(mCurrentBackgroundColor);
-
-	                mCustomFontStyle = getCustomFontsStyle() + getDefaultFontStyle();
 	            }
 			}
 			if (mCard.getVisibility() != View.VISIBLE || (mSimpleCard != null && mSimpleCard.getVisibility() == View .VISIBLE)) {
@@ -2370,6 +2422,59 @@ public class Reviewer extends AnkiActivity {
     }
 
 
+    private void loadKanjiInfo() {
+        if (!sKanjiInfo.isEmpty()) {
+            return;
+        }
+
+        File file;
+        InputStream is;
+
+        is = this.getResources().openRawResource(R.raw.kanji_info);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+
+        String line;
+
+        try {
+            while (reader.ready()) {
+                line = reader.readLine();
+                if (line.length() == 0 || line.startsWith("#")) {
+                    continue;
+                }
+
+                try {
+                    String[] kanjiInfoPair = line.split(" ", 2);
+                    sKanjiInfo.put(kanjiInfoPair[0], kanjiInfoPair[1]);
+                } catch (IndexOutOfBoundsException e) {
+                    // Log.i(AnkiDroidApp.TAG, "Malformed entry in kanji_info.txt: " + line);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private String addKanjiInfo(String answer) {
+        loadKanjiInfo();
+
+        String kanjiInfo;
+
+        kanjiInfo = "\n\n<br/><br/><table style=\"color: #000000; background-color: #FFFFFF\">\n";
+
+        for (int i = 0; i < answer.length(); i++) {
+            String chr = (answer.substring(i, i + 1));
+            if (sKanjiInfo.containsKey(chr)) {
+                kanjiInfo = kanjiInfo + "<tr><td>" + chr + "</td><td>" + sKanjiInfo.get(chr) + "</td></tr>\n";
+            }
+        }
+
+        kanjiInfo = kanjiInfo + "</table>\n";
+
+        return kanjiInfo;
+    }
+
+
     private void displayCardAnswer() {
         // Log.i(AnkiDroidApp.TAG, "displayCardAnswer");
 
@@ -2383,6 +2488,10 @@ public class Reviewer extends AnkiActivity {
 
         String answer = mCurrentCard.getAnswer(mCurrentSimpleInterface);
         answer = typeAnsAnswerFilter(answer);
+
+        if (mDisplayKanjiInfo) {
+            answer = answer + addKanjiInfo(mCurrentCard.getQuestion(mCurrentSimpleInterface));
+        }
 
         String displayString = "";
 
@@ -2470,19 +2579,27 @@ public class Reviewer extends AnkiActivity {
                 mCard.getSettings().setDefaultFontSize(calculateDynamicFontSize(content));
             }
 
-            // don't play question sound again when displaying answer
             String question = "";
             String answer = "";
-
-            Sound.resetSounds();
-
-            int qa = MetaDB.LANGUAGES_QA_QUESTION;
+            int qa = -1; // prevent uninitialized variable errors
+            
             if (sDisplayAnswer) {
                 qa = MetaDB.LANGUAGES_QA_ANSWER;
+                answer = mCurrentCard.getPureAnswerForReading();
+                // don't add answer sounds multiple times, such as when reshowing card after exiting editor
+                if (!mAnswerSoundsAdded) {
+                    Sound.addSounds(mBaseUrl, answer, qa);
+                    mAnswerSoundsAdded = true;
+                }
+            } else {
+                Sound.resetSounds(); // reset sounds each time first side of card is displayed, even after leaving the editor
+                mAnswerSoundsAdded = false;
+                qa = MetaDB.LANGUAGES_QA_QUESTION;
+                question = mCurrentCard.getQuestion(mCurrentSimpleInterface);
+                Sound.addSounds(mBaseUrl, question, qa);                
             }
-            answer = Sound.parseSounds(mBaseUrl, content, mSpeakText, qa);
-
-            content = question + answer;
+            
+            content = Sound.expandSounds(mBaseUrl, content, mSpeakText, qa);
 
             // In order to display the bold style correctly, we have to change
             // font-weight to 700
@@ -2497,7 +2614,7 @@ public class Reviewer extends AnkiActivity {
 
             // Log.i(AnkiDroidApp.TAG, "content card = \n" + content);
             StringBuilder style = new StringBuilder();
-            style.append(mCustomFontStyle);
+            mExtensions.updateCssStyle(style);
             
             // Scale images.
             if (mRelativeImageSize != 100) {
@@ -2562,10 +2679,14 @@ public class Reviewer extends AnkiActivity {
             if (getConfigForCurrentCard().getBoolean("autoplay")) {
                 // We need to play the sounds from the proper side of the card
                 if (!mSpeakText) {
+                    // when showing answer, repeat question audio if so configured
+                	if (sDisplayAnswer && getConfigForCurrentCard().optBoolean("replayq",true)) {
+                        Sound.playSounds(MetaDB.LANGUAGES_QA_QUESTION);
+                    }
                     Sound.playSounds(sDisplayAnswer ? MetaDB.LANGUAGES_QA_ANSWER : MetaDB.LANGUAGES_QA_QUESTION);
                 } else {
                     // If the question is displayed or if the question should be replayed, read the question
-                    if (!sDisplayAnswer || getConfigForCurrentCard().getBoolean("replayq")) {
+                	if (!sDisplayAnswer || getConfigForCurrentCard().optBoolean("replayq",true)) {
                         readCardText(mCurrentCard, MetaDB.LANGUAGES_QA_QUESTION);
                     }
                     if (sDisplayAnswer) {
@@ -2758,49 +2879,6 @@ public class Reviewer extends AnkiActivity {
 
     public void showFlashcard(boolean visible) {
         mCardContainer.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
-    }
-
-
-    /**
-     * Returns the CSS used to handle custom fonts.
-     * <p>
-     * Custom fonts live in fonts directory in the directory used to store decks.
-     * <p>
-     * Each font is mapped to the font family by the same name as the name of the font fint without the extension.
-     */
-    private String getCustomFontsStyle() {
-        StringBuilder builder = new StringBuilder();
-        for (AnkiFont font : getCustomFontsMap().values()) {
-            builder.append(font.getDeclaration());
-            builder.append('\n');
-        }
-        return builder.toString();
-    }
-
-
-    /** Returns the CSS used to set the default font. */
-    private String getDefaultFontStyle() {
-        if (mCustomDefaultFontCss == null) {
-            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-            AnkiFont defaultFont = getCustomFontsMap().get(preferences.getString("defaultFont", null));
-            if (defaultFont != null) {
-                mCustomDefaultFontCss = "BODY, .card { " + defaultFont.getCSS() + " }\n";
-            } else {
-                String defaultFontName = Themes.getReviewerFontName();
-                if (TextUtils.isEmpty(defaultFontName)) {
-                    mCustomDefaultFontCss = "";
-                } else {
-                    mCustomDefaultFontCss = String.format(
-                            "BODY {"
-                            + "font-family: '%s';"
-                            + "font-weight: normal;"
-                            + "font-style: normal;"
-                            + "font-stretch: normal;"
-                            + "}\n", defaultFontName);
-                }
-            }
-        }
-        return mCustomDefaultFontCss;
     }
 
 
@@ -3069,23 +3147,6 @@ public class Reviewer extends AnkiActivity {
 
 
     /**
-     * Returns a map from custom fonts names to the corresponding {@link AnkiFont} object.
-     *
-     * <p>The list of constructed lazily the first time is needed.
-     */
-    private Map<String, AnkiFont> getCustomFontsMap() {
-        if (mCustomFontsMap == null) {
-            List<AnkiFont> fonts = Utils.getCustomFonts(getBaseContext());
-            mCustomFontsMap = new HashMap<String, AnkiFont>();
-            for (AnkiFont f : fonts) {
-                mCustomFontsMap.put(f.getName(), f);
-            }
-        }
-        return mCustomFontsMap;
-    }
-
-
-    /**
      * Returns true if we should update the content of a single {@link WebView} (called quick update) instead of switch
      * between two instances.
      *
@@ -3102,7 +3163,7 @@ public class Reviewer extends AnkiActivity {
             return true;
         }
         // Otherwise, use quick update only if there are no custom fonts.
-        return getCustomFontsMap().size() == 0 && !isNookDevice();
+        return mExtensions.supportsQuickUpdate() && !isNookDevice();
     }
 
 

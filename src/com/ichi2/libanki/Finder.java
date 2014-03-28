@@ -235,7 +235,7 @@ public class Finder {
         if (token.length() != 0) {
             tokens.add(token);
         }
-        return tokens.toArray(new String[] {});
+        return tokens.toArray(new String[tokens.size()]);
     }
 
     // Query building
@@ -312,7 +312,7 @@ public class Finder {
         if (s.bad) {
             return new Pair<String, String[]>(null, null);
         }
-        return new Pair<String, String[]>(s.q, args.toArray(new String[] {}));
+        return new Pair<String, String[]>(s.q, args.toArray(new String[args.size()]));
     }
 
 
@@ -676,12 +676,32 @@ public class Finder {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-        return Utils.join(" or ", lims.toArray(new String[] {}));
+        return Utils.join(" or ", lims.toArray(new String[lims.size()]));
     }
 
 
     private String _findField(String field, String val) {
-        val = val.replace("*", "%");
+        /*
+         * We need two expressions to query the cards: One that will use JAVA REGEX syntax and another
+         * that should use SQLITE LIKE clause syntax.
+         */
+        String sqlVal = val
+                .replace("%","\\%") // For SQLITE, we escape all % signs
+                .replace("*","%"); // And then convert the * into non-escaped % signs
+
+        /*
+         * The following three lines make sure that only _ and * are valid wildcards. 
+         * Any other characters are enclosed inside the \Q \E markers, which force  
+         * all meta-characters in between them to lose their special meaning 
+         */
+        String javaVal = val
+                    .replace("_","\\E.\\Q") 
+                    .replace("*","\\E.*\\Q");
+        /*
+         * For the pattern, we use the javaVal expression that uses JAVA REGEX syntax
+         */
+        Pattern pattern = Pattern.compile("\\Q" + javaVal + "\\E", Pattern.CASE_INSENSITIVE);
+
         // find models that have that field
         Map<Long, Object[]> mods = new HashMap<Long, Object[]>();
         try {
@@ -703,21 +723,24 @@ public class Finder {
             // nothing has that field
             return "";
         }
-        // gather nids
-        // Pattern.quote escapes the meta characters with \Q \E
-        String regex = Pattern.quote(val).replace("\\Q_\\E", ".").replace("\\Q%\\E", ".*");
         LinkedList<Long> nids = new LinkedList<Long>();
         Cursor cur = null;
         try {
+            /*
+             * Here we use the sqlVal expression, that is required for LIKE syntax in sqllite.
+             * There is no problem with special characters, because only % and _ are special
+             * characters in this syntax.
+             */
             cur = mCol.getDb().getDatabase().rawQuery(
                     "select id, mid, flds from notes where mid in " +
-                    Utils.ids2str(new LinkedList<Long>(mods.keySet())) +
-                    " and flds like ? escape '\\'", new String[] { "%" + val + "%" });
+                            Utils.ids2str(new LinkedList<Long>(mods.keySet())) +
+                            " and flds like ? escape '\\'", new String[] { "%" + sqlVal + "%" });
+
             while (cur.moveToNext()) {
                 String[] flds = Utils.splitFields(cur.getString(2));
                 int ord = (Integer) mods.get(cur.getLong(1))[1];
                 String strg = flds[ord];
-                if (Pattern.compile(regex, Pattern.CASE_INSENSITIVE).matcher(strg).matches()) {
+                if (pattern.matcher(strg).matches()) {
                     nids.add(cur.getLong(0));
                 }
             }
@@ -793,7 +816,7 @@ public class Finder {
         Pattern regex = Pattern.compile(src);
 
         ArrayList<Object[]> d = new ArrayList<Object[]>();
-        String sql = "select id, mid, flds from notes where id in " + Utils.ids2str(nids.toArray(new Long[] {}));
+        String sql = "select id, mid, flds from notes where id in " + Utils.ids2str(nids.toArray(new Long[nids.size()]));
         nids = new ArrayList<Long>();
 
         Cursor cur = null;
