@@ -1,43 +1,59 @@
-#!/bin/sh
+#!/bin/bash
 # Perform an alpha or beta release of AnkiDroid
 # Nicolas Raoul
 # 2011/10/24
-# Usage from AnkiDroid's root directory: tools/release.sh 1.0beta21
-# If no option given, will guess the next version number.
+# Usage from AnkiDroid's root directory:
+# tools/release.sh # For an alpha or beta release
+# tools/release.sh public # For a public (non alpha/beta) release
 
 # Suffix configuration
 SUFFIX=""
 #SUFFIX="-EXPERIMENTAL"
 
+PUBLIC=$1
+
+if [ "$PUBLIC" = "public" ]; then
+  echo "About to perform a public release. Please first:"
+  echo "- Run tools/comment-logs.sh and commit."
+  echo "- Run tools/change-icons-to-blue.sh and commit."
+  echo "- Edit the version in AndroidManifest.xml manually but do not commit it."
+  echo "Press Enter to continue."
+  read
+else
+  echo "Performing testing release."
+fi
+
 set -x
 
-# Increment version name
-# Ex: 2.1beta7 to 2.1beta8
-PREVIOUS_VERSION=`grep android:versionName AndroidManifest.xml | sed -e 's/.*="//' | sed -e 's/".*//'`
-if [ -n "$SUFFIX" ]; then
- PREVIOUS_VERSION=`echo $PREVIOUS_VERSION | sed -e "s/$SUFFIX//g"`
+VERSION=`grep android:versionName AndroidManifest.xml | sed -e 's/.*="//' | sed -e 's/".*//'`
+
+if [ "$PUBLIC" != "public" ]; then
+  # Increment version name
+  # Ex: 2.1beta7 to 2.1beta8
+  PREVIOUS_VERSION=$VERSION
+  if [ -n "$SUFFIX" ]; then
+    PREVIOUS_VERSION=`echo $PREVIOUS_VERSION | sed -e "s/$SUFFIX//g"`
+  fi
+  GUESSED_VERSION=`echo $PREVIOUS_VERSION | gawk -f tools/lib/increase-version.awk`
+  VERSION=${1:-$GUESSED_VERSION$SUFFIX}
+
+  # Increment version code
+  # It is an integer in AndroidManifest that nobody actually sees.
+  # Ex: 72 to 73
+  PREVIOUS_CODE=`grep android:versionCode AndroidManifest.xml | sed -e 's/.*="//' | sed -e 's/".*//'`
+  GUESSED_CODE=`expr $PREVIOUS_CODE + 1`
+
+  # Edit AndroidManifest.xml to bump version string
+  echo "Bumping version from $PREVIOUS_VERSION$SUFFIX to $VERSION (and code from $PREVIOUS_CODE to $GUESSED_CODE)"
+  sed -i -e s/$PREVIOUS_VERSION$SUFFIX/$VERSION/g AndroidManifest.xml
+  sed -i -e s/versionCode=\"$PREVIOUS_CODE/versionCode=\"$GUESSED_CODE/g AndroidManifest.xml
 fi
-GUESSED_VERSION=`echo $PREVIOUS_VERSION | gawk -f tools/lib/increase-version.awk`
-VERSION=${1:-$GUESSED_VERSION$SUFFIX}
-
-# Increment version code
-# It is an integer in AndroidManifest that nobody actually sees.
-# Ex: 72 to 73
-PREVIOUS_CODE=`grep android:versionCode AndroidManifest.xml | sed -e 's/.*="//' | sed -e 's/".*//'`
-GUESSED_CODE=`expr $PREVIOUS_CODE + 1`
-
-# Edit AndroidManifest.xml to bump version string
-echo "Bumping version from $PREVIOUS_VERSION$SUFFIX to $VERSION (and code from $PREVIOUS_CODE to $GUESSED_CODE)"
-sed -i -e s/$PREVIOUS_VERSION$SUFFIX/$VERSION/g AndroidManifest.xml
-sed -i -e s/versionCode=\"$PREVIOUS_CODE/versionCode=\"$GUESSED_CODE/g AndroidManifest.xml
 
 # Generate signed APK
 ant clean release
 
 # Upload APK to Google Project's downloads section
 cp bin/AnkiDroid-release.apk AnkiDroid-$VERSION.apk
-#GOOGLECODE_PASSWORD=`cat ~/src/googlecode-password.txt` # Can be found at https://code.google.com/hosting/settings
-#python tools/lib/googlecode_upload.py --summary "AnkiDroid $VERSION" --project ankidroid --user nicolas.raoul --password $GOOGLECODE_PASSWORD /tmp/AnkiDroid-$VERSION.apk
 
 # Commit modified AndroidManifest.xml
 git add AndroidManifest.xml
@@ -55,7 +71,14 @@ git push --tags
 export GITHUB_TOKEN=`cat ~/src/my-github-personal-access-token`
 export GITHUB_USER="ankidroid"
 export GITHUB_REPO="Anki-Android"
-~/p/github-release release --tag v$VERSION --name "AnkiDroid $VERSION" --pre-release
+
+if [ "$PUBLIC" = "public" ]; then
+  PRE_RELEASE=""
+else
+  PRE_RELEASE="--pre-release"
+fi
+
+~/p/github-release release --tag v$VERSION --name "AnkiDroid $VERSION" $PRE_RELEASE
 ~/p/github-release upload --tag v$VERSION --name AnkiDroid-$VERSION.apk --file AnkiDroid-$VERSION.apk
 
-# TODO: Push to Google Play alpha or beta
+# TODO: Push to Google Play
