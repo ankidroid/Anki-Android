@@ -110,6 +110,7 @@ public class CardEditor extends Activity {
     private static final int DIALOG_TAGS_SELECT = 2;
     private static final int DIALOG_RESET_CARD = 3;
     private static final int DIALOG_INTENT_INFORMATION = 4;
+    private static final int DIALOG_CONFIRM_DUPLICATE = 5;
 
     private static final String ACTION_CREATE_FLASHCARD = "org.openintents.action.CREATE_FLASHCARD";
     private static final String ACTION_CREATE_FLASHCARD_SEND = "android.intent.action.SEND";
@@ -520,56 +521,9 @@ public class CardEditor extends Activity {
             @Override
             public void onClick(View v) {
                 if (duplicateCheck(true)) {
-                    return;
-                }
-                boolean modified = false;
-                for (FieldEditText f : mEditFields) {
-                    modified = modified | f.updateField();
-                }
-                if (mAddNote) {
-                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ADD_FACT, mSaveFactHandler, new DeckTask.TaskData(
-                            mEditorNote));
+                    showDialog(DIALOG_CONFIRM_DUPLICATE);
                 } else {
-                    // added tag?
-                    for (String t : mCurrentTags) {
-                        modified = modified || !mEditorNote.hasTag(t);
-                    }
-                    // removed tag?
-                    modified = modified || mEditorNote.getTags().size() > mCurrentTags.size();
-                    // changed did?
-                    boolean changedDid = mCurrentEditedCard.getDid() != mCurrentDid;
-                    modified = modified || changedDid;
-                    if (modified) {
-                        mEditorNote.setTags(mCurrentTags);
-                        // set did for card
-                        if (changedDid) {
-                        	// remove card from filtered deck first (if relevant)                        	 
-                        	AnkiDroidApp.getCol().getSched().remFromDyn(new long[] {mCurrentEditedCard.getId()});                       	
-                        	// refresh the card object to reflect the database changes in remFromDyn()
-                        	mCurrentEditedCard.load();
-                        	// then set the card ID to the new deck
-                            mCurrentEditedCard.setDid(mCurrentDid);
-                        }
-                        // set a flag so that changes to card object will be written to DB later via onActivityResult() in CardBrowser
-                        mChanged = true;
-                    }
-                    closeCardEditor();
-                    // if (mCaller == CALLER_BIGWIDGET_EDIT) {
-                    // // DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT,
-                    // // mSaveFactHandler, new
-                    // // DeckTask.TaskData(Reviewer.UPDATE_CARD_SHOW_QUESTION,
-                    // // mDeck, AnkiDroidWidgetBig.getCard()));
-                    // } else if (!mCardReset) {
-                    // // Only send result to save if something was actually
-                    // // changed
-                    // if (mModified) {
-                    // setResult(RESULT_OK);
-                    // } else {
-                    // setResult(RESULT_CANCELED);
-                    // }
-                    // closeCardEditor();
-                    // }
-
+                    saveNote();
                 }
             }
         });
@@ -721,6 +675,58 @@ public class CardEditor extends Activity {
     	for (int i = 0; i < Math.min(content.length, mEditFields.size()); i++) {
     		mEditFields.get(i).setText(content[i]);
     	}
+    }
+
+
+    private void saveNote() {
+        boolean modified = false;
+        for (FieldEditText f : mEditFields) {
+            modified = modified | f.updateField();
+        }
+        if (mAddNote) {
+            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ADD_FACT, mSaveFactHandler, new DeckTask.TaskData(
+                    mEditorNote));
+        } else {
+            // added tag?
+            for (String t : mCurrentTags) {
+                modified = modified || !mEditorNote.hasTag(t);
+            }
+            // removed tag?
+            modified = modified || mEditorNote.getTags().size() > mCurrentTags.size();
+            // changed did?
+            boolean changedDid = mCurrentEditedCard.getDid() != mCurrentDid;
+            modified = modified || changedDid;
+            if (modified) {
+                mEditorNote.setTags(mCurrentTags);
+                // set did for card
+                if (changedDid) {
+                    // remove card from filtered deck first (if relevant)                        	 
+                    AnkiDroidApp.getCol().getSched().remFromDyn(new long[] {mCurrentEditedCard.getId()});                       	
+                    // refresh the card object to reflect the database changes in remFromDyn()
+                    mCurrentEditedCard.load();
+                    // then set the card ID to the new deck
+                    mCurrentEditedCard.setDid(mCurrentDid);
+                }
+                // set a flag so that changes to card object will be written to DB later via onActivityResult() in CardBrowser
+                mChanged = true;
+            }
+            closeCardEditor();
+            // if (mCaller == CALLER_BIGWIDGET_EDIT) {
+            // // DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT,
+            // // mSaveFactHandler, new
+            // // DeckTask.TaskData(Reviewer.UPDATE_CARD_SHOW_QUESTION,
+            // // mDeck, AnkiDroidWidgetBig.getCard()));
+            // } else if (!mCardReset) {
+            // // Only send result to save if something was actually
+            // // changed
+            // if (mModified) {
+            // setResult(RESULT_OK);
+            // } else {
+            // setResult(RESULT_CANCELED);
+            // }
+            // closeCardEditor();
+            // }
+        }
     }
 
 
@@ -1155,6 +1161,20 @@ public class CardEditor extends Activity {
 
             case DIALOG_INTENT_INFORMATION:
                 dialog = createDialogIntentInformation(builder, res);
+
+            case DIALOG_CONFIRM_DUPLICATE:
+                builder.setTitle(res.getString(R.string.save_duplicate_dialog_title));
+                builder.setMessage(res.getString(R.string.save_duplicate_dialog_message));
+                builder.setPositiveButton(res.getString(R.string.yes), new OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        saveNote();
+                    }
+                });
+                builder.setNegativeButton(res.getString(R.string.no), null);
+                builder.setCancelable(true);
+                dialog = builder.create();
+                break;
         }
 
         return dialog;
@@ -1418,11 +1438,9 @@ public class CardEditor extends Activity {
         if (mEditorNote.dupeOrEmpty(field.getText().toString()) > (checkEmptyToo ? 0 : 1)) {
             // TODO: theme backgrounds
             field.setBackgroundResource(R.drawable.white_edit_text_dupe);
-            mSave.setEnabled(false);
             return true;
         } else {
             field.setBackgroundResource(R.drawable.white_edit_text);
-            mSave.setEnabled(true);
             return false;
         }
     }
