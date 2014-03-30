@@ -80,6 +80,8 @@ public class CardBrowser extends Activity {
     // private ArrayList<HashMap<String, String>> mAllCards;
     private HashMap<String, String> mDeckNames;
     private ListView mCardsListView;
+    private TextView mCardsColumn1Header;
+    private TextView mCardsColumn2Header;
     private SimpleAdapter mCardsAdapter;
     private EditText mSearchEditText;
     private String mSearchTerms;
@@ -289,19 +291,22 @@ public class CardBrowser extends Activity {
 
         mCards = new ArrayList<HashMap<String, String>>();
         mCardsListView = (ListView) findViewById(R.id.card_browser_list);
+        mCardsColumn1Header = (TextView) findViewById(R.id.browser_column1_header);
+        mCardsColumn2Header = (TextView) findViewById(R.id.browser_column2_header);
+        mCardsColumn2Header.setText(res.getString(R.string.browser_column2_answer));       
 
         mCardsAdapter = new SizeControlledListAdapter(
                 this,
                 mCards,
-                R.layout.card_item,
-                new String[] { "sfld", "a", "flags" },
-                new int[] { R.id.card_sfld, R.id.card_deck, R.id.card_item },
+                R.layout.card_item_browser,
+                new String[] { "sfld", "a"},
+                new int[] { R.id.card_sfld, R.id.card_column2},
                 sflRelativeFontSize,
                 sflCustomFont);
         mCardsAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
             @Override
             public boolean setViewValue(View view, Object arg1, String text) {
-                if (view.getId() == R.id.card_item) {
+                if (view.getId() == R.id.card_item_browser) {
                     int which = BACKGROUND_NORMAL;
                     if (text.equals("1")) {
                         which = BACKGROUND_SUSPENDED;
@@ -312,8 +317,6 @@ public class CardBrowser extends Activity {
                     }
                     view.setBackgroundResource(mBackground[which]);
                     return true;
-                } else if (view.getId() == R.id.card_deck && text.length() > 0) {
-                    view.setVisibility(View.VISIBLE);
                 }
                 return false;
             }
