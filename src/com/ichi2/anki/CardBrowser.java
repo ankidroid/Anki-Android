@@ -320,12 +320,15 @@ public class CardBrowser extends Activity {
         });
 
         mCardsListView.setAdapter(mCardsAdapter);
+        
         mCardsListView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // load up the card selected on the list
                 mPositionInCardsList = position;
                 long cardId = Long.parseLong(mCards.get(mPositionInCardsList).get("id"));
                 sCardBrowserCard = mCol.getCard(cardId);
+                // start note editor using the card we just loaded
                 Intent editCard = new Intent(CardBrowser.this, CardEditor.class);
                 editCard.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_CARDBROWSER_EDIT);
                 editCard.putExtra(CardEditor.EXTRA_CARD_ID, sCardBrowserCard.getId());
@@ -391,9 +394,9 @@ public class CardBrowser extends Activity {
 
     @Override
     protected void onDestroy() {
+        // cancel rendering the question and answer, which has shared access to mCards
+        DeckTask.cancelTask(DeckTask.TASK_TYPE_RENDER_BROWSER_QA);
         super.onDestroy();
-        // cancel any background tasks which were started, like rendering the cards
-        DeckTask.cancelTask();
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver);
         }
@@ -413,6 +416,7 @@ public class CardBrowser extends Activity {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             Log.i(AnkiDroidApp.TAG, "CardBrowser - onBackPressed()");
             if (mSearchEditText.getText().length() == 0) {
+                // close the browser
                 closeCardBrowser(Activity.RESULT_OK);
             } else {
                 mSearchEditText.setText("");
@@ -766,12 +770,12 @@ public class CardBrowser extends Activity {
     private void searchCards() {
         String searchText = mRestrictOnDeck + mSearchTerms;
         if (mCol != null) {
+            // clear the existing card list
             mCards.clear();
             // Perform database query to get all card ids / sfld. Shows "filtering cards..." progress message
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SEARCH_CARDS, mSearchCardsHandler, new DeckTask.TaskData(
                     new Object[] { mCol, mDeckNames, searchText, ((mOrder == CARD_ORDER_NONE) ? "" : "true") }));
             // After this initial query, start rendering the question and answer in the background
-            // TODO: Make the deck task cancel if the user clicks hardware back button or opens up note editor
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_RENDER_BROWSER_QA, mRenderQAHandler, new DeckTask.TaskData(
                     new Object[] { mCol, mCards}));            
         }
