@@ -1106,12 +1106,14 @@ public class CardBrowser extends Activity {
         @Override
         public void onPreExecute() {
             Resources res = getResources();
-            if (mProgressDialog != null && mProgressDialog.isShowing()) {
-                mProgressDialog.setMessage(res.getString(R.string.card_browser_filtering_cards));
-            } else if(mProgressDialog==null){
+            if(mProgressDialog==null){
                 mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "",
                         res.getString(R.string.card_browser_filtering_cards), true);
+            } else {
+                mProgressDialog.setMessage(res.getString(R.string.card_browser_filtering_cards));
+                mProgressDialog.show();
             }
+            
         }
 
 
