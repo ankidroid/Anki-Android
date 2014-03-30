@@ -46,20 +46,28 @@
 <string name="corrupt_font">Corrupt font file %s</string>
 <!--Browser-->
 <string name="browser_column1_header">Search Field</string>
-<string name="browser_column2_answer">Answer</string>
-<string name="browser_column2_card">Card</string>
-<string name="browser_column2_changed">Changed</string>
-<string name="browser_column2_created">Created</string>
-<string name="browser_column2_deck">Deck</string>
-<string name="browser_column2_due">Due</string>
-<string name="browser_column2_ease">Ease</string>
-<string name="browser_column2_edited">Edited</string>
-<string name="browser_column2_interval">Interval</string>
-<string name="browser_column2_lapses">Lapses</string>
-<string name="browser_column2_note">Note</string>
-<string name="browser_column2_question">Question</string>
-<string name="browser_column2_reviews">Reviews</string>
-<string name="browser_column2_tags">Tags</string>
+<!--<string-array name="browser_column2_headings">
+	<item>Answer</item>
+	<item>Card</item>
+	<item>Changed</item>
+	<item>Created</item>
+	<item>Deck</item>
+	<item>Due</item>
+	<item>Ease</item>
+	<item>Edited</item>
+	<item>Interval</item>
+	<item>Lapses</item>
+	<item>Note</item>
+	<item>Question</item>
+	<item>Reviews</item>
+	<item>Tags</item>
+</string-array>-->
+<string-array name="browser_column2_headings">
+	<item>Answer</item>
+	<item>Deck</item>
+	<item>Question</item>
+	<item>Tags</item>
+</string-array>
 
 <!--Card Editor-->
 <string name="about_title">About</string>

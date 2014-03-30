@@ -726,7 +726,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     }
     
     private TaskData doInBackgroundRenderBrowserQA(TaskData...params) {
-        final int initialInterval=10;   // initial number of cards we render one by one
+        final int initialInterval=15;   // initial number of cards we render one by one
         final int refreshInterval=250;  // number of cards to render at a time after initialInterval
         int numRendered=0;
     	Log.i(AnkiDroidApp.TAG, "doInBackgroundRenderBrowserQA");
@@ -743,8 +743,8 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 			if (a.startsWith(q)){
 			    a=a.replaceFirst(q, "");
 			}
-        	item.put("q",q);
-        	item.put("a",a);        	
+        	item.put("question",q);
+        	item.put("answer",a);        	
     		// Send progress periodically so that QA list in browser updates
             if (isCancelled()) {
                 return null;
