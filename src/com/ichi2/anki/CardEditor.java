@@ -1166,7 +1166,7 @@ public class CardEditor extends Activity {
         ListView listView = new ListView(this);
 
         mIntentInformationAdapter = new SimpleAdapter(this, mIntentInformation, R.layout.card_item, new String[] {
-                "source", "target", "id" }, new int[] { R.id.card_sfld, R.id.card_tmpl, R.id.card_item });
+                "source", "target", "id" }, new int[] { R.id.source_app, R.id.card_content, R.id.id });
         listView.setAdapter(mIntentInformationAdapter);
         listView.setOnItemClickListener(new OnItemClickListener() {
             @Override
