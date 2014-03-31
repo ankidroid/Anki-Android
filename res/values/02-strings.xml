@@ -45,7 +45,9 @@
 <string name="leech_notification">Card marked as leech</string>
 <string name="corrupt_font">Corrupt font file %s</string>
 <!--Browser-->
-<string name="browser_column1_header">Search Field</string>
+<string-array name="browser_column1_headings">
+    <item>Search Field</item>
+</string-array>   
 <!--<string-array name="browser_column2_headings">
 	<item>Answer</item>
 	<item>Card</item>

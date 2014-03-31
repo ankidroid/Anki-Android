@@ -30,12 +30,12 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:background="?android:attr/colorBackground">
-        <TextView android:id="@+id/browser_column1_header"
+        <Spinner android:id="@+id/browser_column1_spinner"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/browser_column1_header"/>
-        <TextView android:id="@+id/browser_column2_header"
+            android:background="?android:attr/colorBackground"/>
+        <Spinner android:id="@+id/browser_column2_spinner"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"/>

@@ -43,11 +43,14 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Spinner;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.multimediacard.activity.MultimediaCardEditorActivity;
@@ -80,8 +83,8 @@ public class CardBrowser extends Activity {
     // private ArrayList<HashMap<String, String>> mAllCards;
     private HashMap<String, String> mDeckNames;
     private ListView mCardsListView;
-    private TextView mCardsColumn1Header;
-    private TextView mCardsColumn2Header;
+    private Spinner mCardsColumn1Spinner;
+    private Spinner mCardsColumn2Spinner;
     private SimpleAdapter mCardsAdapter;
     private EditText mSearchEditText;
     private String mSearchTerms;
@@ -98,7 +101,7 @@ public class CardBrowser extends Activity {
 
     private int mOrder;
     private boolean mOrderAsc;
-    private int mField;
+    private int mColumn2Index;
     private int mTotalCount;
 
     private static final int CONTEXT_MENU_MARK = 0;
@@ -110,8 +113,6 @@ public class CardBrowser extends Activity {
     private static final int DIALOG_CONTEXT_MENU = 1;
     private static final int DIALOG_RELOAD_CARDS = 2;
     private static final int DIALOG_TAGS = 3;
-    private static final int DIALOG_SELECT_COLUMN2 = 4;
-
 
     private static final int BACKGROUND_NORMAL = 0;
     private static final int BACKGROUND_MARKED = 1;
@@ -153,7 +154,7 @@ public class CardBrowser extends Activity {
     private boolean mWholeCollection;
 
     private String[] allTags;
-    private String[] mFields;
+    private String[] mColumn2Indexs;
     private HashSet<String> mSelectedTags;
 
     /**
@@ -276,18 +277,42 @@ public class CardBrowser extends Activity {
 
         mCards = new ArrayList<HashMap<String, String>>();
         mCardsListView = (ListView) findViewById(R.id.card_browser_list);
-        mCardsColumn1Header = (TextView) findViewById(R.id.browser_column1_header);
-        mField = AnkiDroidApp.getSharedPrefs(getBaseContext()).getInt("cardBrowserColumn2", 0);
-        mCardsColumn2Header = (TextView) findViewById(R.id.browser_column2_header);
-        mCardsColumn2Header.setOnClickListener(new View.OnClickListener() {
+        // Create a spinner for column1, but without letting the user change column
+        // TODO: Maybe allow column1 to be changed as well, but always make default sfld
+        mCardsColumn1Spinner = (Spinner) findViewById(R.id.browser_column1_spinner);
+        ArrayAdapter<CharSequence> column1Adapter = ArrayAdapter.createFromResource(this,
+                R.array.browser_column1_headings, android.R.layout.simple_spinner_item);
+        column1Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mCardsColumn1Spinner.setAdapter(column1Adapter);                
+        mCardsColumn1Spinner.setClickable(false);   // We disable and set plain background since it only has 1 item
+        // Load default value for column2 selection
+        mColumn2Index = AnkiDroidApp.getSharedPrefs(getBaseContext()).getInt("cardBrowserColumn2", 0);
+        // Setup the column 2 heading as a spinner so that users can easily change the column type
+        mCardsColumn2Spinner = (Spinner) findViewById(R.id.browser_column2_spinner);
+        ArrayAdapter<CharSequence> column2Adapter = ArrayAdapter.createFromResource(this,
+                R.array.browser_column2_headings, android.R.layout.simple_spinner_item);
+        column2Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mCardsColumn2Spinner.setAdapter(column2Adapter);
+        // Create a new list adapter with updated column map any time the user changes the column
+        mCardsColumn2Spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
-            public void onClick(View v) {
-                showDialog(DIALOG_SELECT_COLUMN2);
-            }
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                // If a new column was selected then create a new list adapter with the mapping to new column    
+                if (pos != mColumn2Index) {
+                        mColumn2Index = pos;
+                        AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit()
+                            .putInt("cardBrowserColumn2", mColumn2Index).commit();
+                        setBrowserListAdapter(mColumn2Index);                    
+                }
+            }        
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Do Nothing
+            }       
         });
-        
         // Setup the list adapter for the cards
-        setBrowserListAdapter(mField);
+        setBrowserListAdapter(mColumn2Index);
+        mCardsColumn2Spinner.setSelection(mColumn2Index);
         
         
         mCardsListView.setOnItemClickListener(new OnItemClickListener() {
@@ -622,25 +647,6 @@ public class CardBrowser extends Activity {
                     @Override
                     public void onCancel(DialogInterface dialog) {
                         mSelectedTags.clear();
-                    }
-                });
-                dialog = builder.create();
-                break;
-
-            case DIALOG_SELECT_COLUMN2:
-                builder.setTitle(res
-                        .getString(R.string.card_browser_field_title));
-                builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
-                builder.setSingleChoiceItems(res.getStringArray(R.array.browser_column2_headings), 0, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface arg0, int which) {
-                        if (which != mField) {
-                            mField = which;
-                            AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit()
-                                .putInt("cardBrowserColumn2", mField).commit();
-                            setBrowserListAdapter(mField);
-                            
-                        }
                     }
                 });
                 dialog = builder.create();
@@ -1142,8 +1148,6 @@ public class CardBrowser extends Activity {
                 return false;
             }
         });
-        // set the column 2 header
-        mCardsColumn2Header.setText(res.getStringArray(R.array.browser_column2_headings)[column2]);
         // link the adapter we just made to the main mCardsListView
         mCardsListView.setAdapter(mCardsAdapter);
     }
