@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="Theme_Base_Light" parent="@android:style/Theme.Light" />
+    <style name="Theme_Base_Custom_Light" parent="@android:style/Theme.Light" />
     <style name="Theme_Base_Dark" parent="@android:style/Theme" />
     <style name="Theme_Base_Dialog" parent="@android:style/Theme.Dialog" />
 
     <!-- Blue Theme -->
-    <style name="Theme_Blue" parent="@style/Theme_Base_Light">
+    <style name="Theme_Blue" parent="@style/Theme_Base_Custom_Light">
         <item name="android:buttonStyle">@style/Blue.Button</item>
         <item name="android:buttonStyleSmall">@style/Blue.Button.Small</item>
         <item name="android:buttonStyleToggle">@style/Blue.Button.Toggle</item>
@@ -29,7 +29,7 @@
     </style>
 
     <!-- Flat Theme -->
-    <style name="Theme_Flat" parent="@style/Theme_Base_Light">
+    <style name="Theme_Flat" parent="@style/Theme_Base_Custom_Light">
         <item name="android:buttonStyle">@style/Blue.Button</item>
         <item name="android:buttonStyleSmall">@style/Blue.Button.Small</item>
         <item name="android:buttonStyleToggle">@style/Blue.Button.Toggle</item>
@@ -52,7 +52,7 @@
     </style>
 
     <!-- White Theme -->
-    <style name="Theme_White" parent="@style/Theme_Base_Light">
+    <style name="Theme_White" parent="@style/Theme_Base_Custom_Light">
         <item name="android:buttonStyle">@style/White.Button</item>
         <item name="android:buttonStyleSmall">@style/White.Button.Small</item>
         <item name="android:buttonStyleToggle">@style/White.Button.Toggle</item>
@@ -63,7 +63,7 @@
         <item name="android:radioButtonStyle">@style/White.CompoundButton.RadioButton</item>
 
         <!-- Dialog styles -->
-        <item name="android:actionBarStyle">@style/White.ActionBarStyle</item>
+        <item name="android:actionBarStyle" tools:targetApi="11">@style/White.ActionBarStyle</item>
 
         <!-- Dialog styles -->
         <item name="android:alertDialogStyle">@style/White.AlertDialog</item>
