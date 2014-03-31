@@ -141,6 +141,7 @@ public class CardEditor extends ActionBarActivity {
 
     public static final int REQUEST_ADD = 0;
     public static final int REQUEST_INTENT_ADD = 1;
+    public static final int REQUEST_MULTIMEDIA_EDIT = 2;
 
     private static final int WAIT_TIME_UNTIL_UPDATE = 1000;
 
@@ -1266,6 +1267,12 @@ public class CardEditor extends ActionBarActivity {
                     mChanged = true;
                 }
                 break;
+            case REQUEST_MULTIMEDIA_EDIT:
+                if (resultCode != RESULT_CANCELED) {
+                    mChanged = true;
+                    //TODO (ramblurr) Do something here to handle edited multimedia card
+                }
+                break;
         }
     }
 
@@ -1381,8 +1388,20 @@ public class CardEditor extends ActionBarActivity {
             mEditFields.add(newTextbox);
 
             ImageButton mediaButton = (ImageButton) editline_view.findViewById(R.id.id_media_button);
-            mediaButton.setOnClickListener(new View.OnClickListener() {
 
+            mediaButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent editCard = new Intent(CardEditor.this, MultimediaCardEditorActivity.class);
+                    if (!mAddNote) {
+                        editCard.putExtra(CardEditor.EXTRA_CARD_ID, mCurrentEditedCard.getId());
+                    } else {
+                        editCard.putExtra(CardEditor.EXTRA_CARD_ID, 0);
+                    }
+                    startActivityForResult(editCard, REQUEST_MULTIMEDIA_EDIT);
+                }
+                /* Popup menu - disabled for now
                 @Override
                 public void onClick(View v) {
                     PopupMenuWithIcons popup = new PopupMenuWithIcons(CardEditor.this, v, true);
@@ -1407,6 +1426,7 @@ public class CardEditor extends ActionBarActivity {
                     });
                     popup.show();
                 }
+                */
             });
 
             mFieldsLayoutContainer.addView(label);
