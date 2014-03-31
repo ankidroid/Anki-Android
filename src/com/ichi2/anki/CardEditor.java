@@ -1165,7 +1165,7 @@ public class CardEditor extends Activity {
         builder.setTitle(res.getString(R.string.intent_add_saved_information));
         ListView listView = new ListView(this);
 
-        mIntentInformationAdapter = new SimpleAdapter(this, mIntentInformation, R.layout.card_item, new String[] {
+        mIntentInformationAdapter = new SimpleAdapter(this, mIntentInformation, R.layout.add_intent_item, new String[] {
                 "source", "target", "id" }, new int[] { R.id.source_app, R.id.card_content, R.id.id });
         listView.setAdapter(mIntentInformationAdapter);
         listView.setOnItemClickListener(new OnItemClickListener() {
@@ -1187,7 +1187,7 @@ public class CardEditor extends Activity {
         mIntentInformationAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
             @Override
             public boolean setViewValue(View view, Object arg1, String text) {
-                if (view.getId() == R.id.card_item) {
+                if (view.getId() == R.id.add_intent_item) {
                     view.setBackgroundResource(mCardItemBackground);
                     return true;
                 }
