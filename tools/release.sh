@@ -57,7 +57,8 @@ cp bin/AnkiDroid-release.apk AnkiDroid-$VERSION.apk
 
 # Commit modified AndroidManifest.xml
 git add AndroidManifest.xml
-git commit -m "Bumped version to $VERSION"
+git commit -m "Bumped version to $VERSION
+@branch-specific"
 
 # Tag the release
 git tag v$VERSION
