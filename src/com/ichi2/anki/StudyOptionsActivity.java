@@ -27,7 +27,7 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -46,7 +46,7 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 
-public class StudyOptionsActivity extends FragmentActivity {
+public class StudyOptionsActivity extends ActionBarActivity {
 
     private boolean mInvalidateMenu;
 

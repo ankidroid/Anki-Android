@@ -35,6 +35,7 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Paint.Align;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Gravity;
@@ -61,7 +62,7 @@ import com.ichi2.libanki.Stats;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.Themes;
 
-public class ChartBuilder extends Activity {
+public class ChartBuilder extends ActionBarActivity {
     public static final String TYPE = "type";
 
     private XYMultipleSeriesDataset mDataset = new XYMultipleSeriesDataset();

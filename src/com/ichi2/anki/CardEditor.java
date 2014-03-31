@@ -33,6 +33,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.Spanned;
@@ -94,7 +95,7 @@ import java.util.TreeSet;
  *
  * @see http://ichi2.net/anki/wiki/KeyTermsAndConcepts#Cards
  */
-public class CardEditor extends Activity {
+public class CardEditor extends ActionBarActivity {
 
     public static final String SOURCE_LANGUAGE = "SOURCE_LANGUAGE";
     public static final String TARGET_LANGUAGE = "TARGET_LANGUAGE";

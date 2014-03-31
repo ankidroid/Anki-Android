@@ -193,9 +193,9 @@
         <item name="android:checkMark">@drawable/blue_btn_radio</item>
     </style>
 
-    <style name="White.ActionBarStyle" parent="@android:style/Widget.Holo.ActionBar">
+    <style name="White.ActionBarStyle" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
        <item name="android:background">@color/actionbar_background</item>
-       
+       <item name="background">@color/actionbar_background</item>
     </style>
 
     <!-- Widget Elements -->

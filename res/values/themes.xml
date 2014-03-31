@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="Theme_Base_Custom_Light" parent="@android:style/Theme.Light" />
-    <style name="Theme_Base_Dark" parent="@android:style/Theme" />
+    <style name="Theme_Base_Custom_Light" parent="@style/Theme.AppCompat.Light" />
+    <style name="Theme_Base_Dark" parent="@style/Theme.AppCompat" />
     <style name="Theme_Base_Dialog" parent="@android:style/Theme.Dialog" />
 
     <!-- Blue Theme -->
@@ -62,7 +62,8 @@
         <item name="android:editTextStyle">@style/White.Edittext</item>
         <item name="android:radioButtonStyle">@style/White.CompoundButton.RadioButton</item>
 
-        <!-- Dialog styles -->
+        <!--  Action bar styles -->
+        <item name="actionBarStyle">@style/White.ActionBarStyle</item>
         <item name="android:actionBarStyle" tools:targetApi="11">@style/White.ActionBarStyle</item>
 
         <!-- Dialog styles -->
@@ -73,8 +74,7 @@
         <item name="android:dropDownListViewStyle">@style/White.Widget.ListView.DropDown</item>
         <item name="android:listDivider">@drawable/white_listdivider</item>
         <item name="android:listPreferredItemHeight">56dip</item>
-<!--         <item name="android:spinnerStyle">@style/White.Widget.Spinner</item>
- -->        <item name="android:spinnerDropDownItemStyle">@style/White.Widget.DropDownItem.Spinner</item>
+        <item name="android:spinnerDropDownItemStyle">@style/White.Widget.DropDownItem.Spinner</item>
     </style>
 
     <!-- Basic theme for dialogs -->

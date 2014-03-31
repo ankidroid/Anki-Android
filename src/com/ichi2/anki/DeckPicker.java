@@ -40,8 +40,8 @@ import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -90,7 +90,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.TreeSet;
 
-public class DeckPicker extends FragmentActivity {
+public class DeckPicker extends ActionBarActivity {
 
     public static final int CRAM_DECK_FRAGMENT = -1;
     /**
@@ -923,15 +923,14 @@ public class DeckPicker extends FragmentActivity {
         }
 
         // need to start this here in order to avoid showing deckpicker before splashscreen
-        if (AnkiDroidApp.colIsOpen()) {
-            setTitle(getResources().getString(R.string.app_name));
-        } else {
-            setTitle("");
+        if (!AnkiDroidApp.colIsOpen()) {
             mOpenCollectionHandler.onPreExecute();
         }
 
         Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
+
+        setTitle(getResources().getString(R.string.app_name));
 
         // mStartedByBigWidget = intent.getIntExtra(EXTRA_START, EXTRA_START_NOTHING);
 
@@ -2961,7 +2960,6 @@ public class DeckPicker extends FragmentActivity {
             }
             AnkiDroidApp.getCompat().setSubtitle(this, res.getQuantityString(R.plurals.deckpicker_title, due, due, count, time));
         }
-        setTitle(res.getString(R.string.app_name));
 
         // update widget
         WidgetStatus.update(this, decks);

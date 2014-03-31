@@ -30,6 +30,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.ContextMenu;
@@ -78,7 +79,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
-public class CardBrowser extends Activity {
+public class CardBrowser extends ActionBarActivity {
     // private List<Long> mCardIds = new ArrayList<Long>();
     private ArrayList<HashMap<String, String>> mCards;
     // private ArrayList<HashMap<String, String>> mAllCards;
