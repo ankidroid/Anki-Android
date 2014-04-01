@@ -968,7 +968,13 @@ public class CardBrowser extends Activity {
         }
         
         @Override
-        public void onPostExecute(TaskData result) {        	
+        public void onPostExecute(TaskData result) {
+            if (result!=null){
+                Log.i(AnkiDroidApp.TAG, "Completed doInBackgroundRenderBrowserQA Successfuly");
+            } else {
+                // Might want to do something more proactive here like show a message box?
+                Log.e(AnkiDroidApp.TAG, "doInBackgroundRenderBrowserQA was not successful... continuing anyway");
+            }
         }
     };    
 
@@ -1113,7 +1119,7 @@ public class CardBrowser extends Activity {
         // list of available keys in mCards corresponding to the column names in R.array.browser_column2_headings
         //String[] keys = {"answer","card","changed","created","deck","due","ease","edited","interval","lapses","note","question","reviews","tags"};
         //TODO: Make all of the columns that are available on Desktop available, not just these 4
-        String[] keys = {"answer","deck","question","tags"};
+        String[] keys = {"answer","card","deck","lapses","note","question","reviews","tags"};
         // load the preferences & resources
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         Resources res = getResources();    
