@@ -1175,13 +1175,8 @@ public class StudyOptionsFragment extends Fragment {
         try {
 			if (deck.getInt("dyn") == 0) {
 			    desc = AnkiDroidApp.getCol().getDecks().getActualDescription();
-			    // Truncate the deck description... it can be seen in full from options
-			    mTextDeckDescription.setMaxLines(3);
-                mTextDeckDescription.setEllipsize(TextUtils.TruncateAt.END);
 			} else {
 				desc = getResources().getString(R.string.dyn_deck_desc);
-			    // we should show the full text of the dynamic deck description. Don't truncate with ellipsize
-                mTextDeckDescription.setMaxLines(10);
 			}
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
