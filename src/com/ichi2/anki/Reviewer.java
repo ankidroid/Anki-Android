@@ -465,7 +465,7 @@ public class Reviewer extends AnkiActivity {
         @Override
         public void handleMessage(Message msg) {
             Sound.stopSounds();
-            Sound.playSound((String) msg.obj, null);
+            Sound.playSound((String) msg.obj, null,null);
         }
     };
 
@@ -2644,9 +2644,9 @@ public class Reviewer extends AnkiActivity {
                 if (!mSpeakText) {
                     // when showing answer, repeat question audio if so configured
                 	if (sDisplayAnswer && getConfigForCurrentCard().optBoolean("replayq",true)) {
-                        Sound.playSounds(MetaDB.LANGUAGES_QA_QUESTION);
+                        Sound.playSounds(MetaDB.LANGUAGES_QA_QUESTION,this);
                     }
-                    Sound.playSounds(sDisplayAnswer ? MetaDB.LANGUAGES_QA_ANSWER : MetaDB.LANGUAGES_QA_QUESTION);
+                    Sound.playSounds(sDisplayAnswer ? MetaDB.LANGUAGES_QA_ANSWER : MetaDB.LANGUAGES_QA_QUESTION,this);
                 } else {
                     // If the question is displayed or if the question should be replayed, read the question
                 	if (!sDisplayAnswer || getConfigForCurrentCard().optBoolean("replayq",true)) {

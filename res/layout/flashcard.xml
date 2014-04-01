@@ -151,6 +151,11 @@
 		<FrameLayout android:id="@+id/whiteboard"
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent"/>
+		<SurfaceView android:id="@+id/mp4surfaceview"
+			android:visibility="invisible"
+			android:layout_gravity="center"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" />
 		<ImageView android:id="@+id/lookup_button"
 			android:padding="5dip"
 			android:layout_gravity="right"
