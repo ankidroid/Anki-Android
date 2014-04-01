@@ -775,11 +775,11 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         } catch (OutOfMemoryError e){
             // TODO: Check if this is actually effective at dealing with the error, maybe the ArrayList has grown too big to recover?
             Log.e(AnkiDroidApp.TAG, "OutOfMemoryError rendering the Q&A for browser... probably too many cards");
+            return null;
         }
         TaskData result = new TaskData(items);
         publishProgress(result);
-        //return result;
-        return null;
+        return result;
     }        
     
     private String formatQA(String txt){
