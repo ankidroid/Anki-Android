@@ -44,7 +44,32 @@
 <string name="leech_suspend_notification">Card marked as leech and suspended</string>
 <string name="leech_notification">Card marked as leech</string>
 <string name="corrupt_font">Corrupt font file %s</string>
-
+<!--Browser-->
+<string-array name="browser_column1_headings">
+    <item>Search Field</item>
+</string-array>   
+<!--<string-array name="browser_column2_headings">
+	<item>Answer</item>
+	<item>Card</item>
+	<item>Changed</item>
+	<item>Created</item>
+	<item>Deck</item>
+	<item>Due</item>
+	<item>Ease</item>
+	<item>Edited</item>
+	<item>Interval</item>
+	<item>Lapses</item>
+	<item>Note</item>
+	<item>Question</item>
+	<item>Reviews</item>
+	<item>Tags</item>
+</string-array>-->
+<string-array name="browser_column2_headings">
+	<item>Answer</item>
+	<item>Deck</item>
+	<item>Question</item>
+	<item>Tags</item>
+</string-array>
 
 <!--Card Editor-->
 <string name="about_title">About</string>

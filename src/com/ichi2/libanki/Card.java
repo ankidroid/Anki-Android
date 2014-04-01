@@ -273,16 +273,18 @@ public class Card implements Cloneable {
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
-            List<String> args = new ArrayList<String>();
+
             if (browser) {
                 try {
-                    args.add(t.getString("bqfmt"));
-                    args.add(t.getString("bafmt"));
+                    String bqfmt = t.getString("bqfmt");
+                    String bafmt = t.getString("bafmt");
+                    mQA = mCol._renderQA(data, bqfmt, bafmt);                    
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
+            } else {
+            	mQA = mCol._renderQA(data);
             }
-            mQA = mCol._renderQA(data, args);
         }
         return mQA;
     }

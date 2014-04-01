@@ -43,11 +43,14 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Spinner;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.multimediacard.activity.MultimediaCardEditorActivity;
@@ -80,6 +83,8 @@ public class CardBrowser extends Activity {
     // private ArrayList<HashMap<String, String>> mAllCards;
     private HashMap<String, String> mDeckNames;
     private ListView mCardsListView;
+    private Spinner mCardsColumn1Spinner;
+    private Spinner mCardsColumn2Spinner;
     private SimpleAdapter mCardsAdapter;
     private EditText mSearchEditText;
     private String mSearchTerms;
@@ -96,7 +101,7 @@ public class CardBrowser extends Activity {
 
     private int mOrder;
     private boolean mOrderAsc;
-    private int mField;
+    private int mColumn2Index;
     private int mTotalCount;
 
     private static final int CONTEXT_MENU_MARK = 0;
@@ -108,11 +113,6 @@ public class CardBrowser extends Activity {
     private static final int DIALOG_CONTEXT_MENU = 1;
     private static final int DIALOG_RELOAD_CARDS = 2;
     private static final int DIALOG_TAGS = 3;
-    // TODO(flerda@gmail.com): Fix card browser fields. See below.
-    // https://code.google.com/p/ankidroid/issues/detail?id=1310
-    /*
-    private static final int DIALOG_FIELD = 4;
-    */
 
     private static final int BACKGROUND_NORMAL = 0;
     private static final int BACKGROUND_MARKED = 1;
@@ -130,12 +130,6 @@ public class CardBrowser extends Activity {
     private static final int MENU_SELECT_SUSPENDED = 31;
     private static final int MENU_SELECT_TAG = 32;
     private static final int MENU_CHANGE_ORDER = 5;
-    // TODO(flerda@gmail.com): Fix card browser fields. See below.
-    // https://code.google.com/p/ankidroid/issues/detail?id=1310
-    /*
-    private static final int MENU_FIELD = 6;
-    */
-
     private static final int EDIT_CARD = 0;
     private static final int ADD_NOTE = 1;
     private static final int DEFAULT_FONT_SIZE_RATIO = 100;
@@ -160,10 +154,8 @@ public class CardBrowser extends Activity {
     private boolean mWholeCollection;
 
     private String[] allTags;
-    private String[] mFields;
+    private String[] mColumn2Indexs;
     private HashSet<String> mSelectedTags;
-
-    private boolean mPrefFixArabic;
 
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
@@ -260,11 +252,7 @@ public class CardBrowser extends Activity {
         mBackground = Themes.getCardBrowserBackground();
 
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-        int sflRelativeFontSize = preferences.getInt("relativeCardBrowserFontSize", DEFAULT_FONT_SIZE_RATIO);
-        String sflCustomFont = preferences.getString("browserEditorFont", "");
-        mPrefFixArabic = preferences.getBoolean("fixArabicText", false);
-
-        Resources res = getResources();
+        Resources res = getResources();        
         mOrderByFields = res.getStringArray(R.array.card_browser_order_labels);
         try {
             mOrder = CARD_ORDER_NONE;
@@ -289,43 +277,52 @@ public class CardBrowser extends Activity {
 
         mCards = new ArrayList<HashMap<String, String>>();
         mCardsListView = (ListView) findViewById(R.id.card_browser_list);
-
-        mCardsAdapter = new SizeControlledListAdapter(
-                this,
-                mCards,
-                R.layout.card_item,
-                new String[] { "sfld", "deck", "flags" },
-                new int[] { R.id.card_sfld, R.id.card_deck, R.id.card_item },
-                sflRelativeFontSize,
-                sflCustomFont);
-        mCardsAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
+        // Create a spinner for column1, but without letting the user change column
+        // TODO: Maybe allow column1 to be changed as well, but always make default sfld
+        mCardsColumn1Spinner = (Spinner) findViewById(R.id.browser_column1_spinner);
+        ArrayAdapter<CharSequence> column1Adapter = ArrayAdapter.createFromResource(this,
+                R.array.browser_column1_headings, android.R.layout.simple_spinner_item);
+        column1Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mCardsColumn1Spinner.setAdapter(column1Adapter);                
+        mCardsColumn1Spinner.setClickable(false);   // We disable and set plain background since it only has 1 item
+        // Load default value for column2 selection
+        mColumn2Index = AnkiDroidApp.getSharedPrefs(getBaseContext()).getInt("cardBrowserColumn2", 0);
+        // Setup the column 2 heading as a spinner so that users can easily change the column type
+        mCardsColumn2Spinner = (Spinner) findViewById(R.id.browser_column2_spinner);
+        ArrayAdapter<CharSequence> column2Adapter = ArrayAdapter.createFromResource(this,
+                R.array.browser_column2_headings, android.R.layout.simple_spinner_item);
+        column2Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mCardsColumn2Spinner.setAdapter(column2Adapter);
+        // Create a new list adapter with updated column map any time the user changes the column
+        mCardsColumn2Spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
-            public boolean setViewValue(View view, Object arg1, String text) {
-                if (view.getId() == R.id.card_item) {
-                    int which = BACKGROUND_NORMAL;
-                    if (text.equals("1")) {
-                        which = BACKGROUND_SUSPENDED;
-                    } else if (text.equals("2")) {
-                        which = BACKGROUND_MARKED;
-                    } else if (text.equals("3")) {
-                        which = BACKGROUND_MARKED_SUSPENDED;
-                    }
-                    view.setBackgroundResource(mBackground[which]);
-                    return true;
-                } else if (view.getId() == R.id.card_deck && text.length() > 0) {
-                    view.setVisibility(View.VISIBLE);
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                // If a new column was selected then create a new list adapter with the mapping to new column    
+                if (pos != mColumn2Index) {
+                        mColumn2Index = pos;
+                        AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit()
+                            .putInt("cardBrowserColumn2", mColumn2Index).commit();
+                        setBrowserListAdapter(mColumn2Index);                    
                 }
-                return false;
-            }
+            }        
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Do Nothing
+            }       
         });
-
-        mCardsListView.setAdapter(mCardsAdapter);
+        // Setup the list adapter for the cards
+        setBrowserListAdapter(mColumn2Index);
+        mCardsColumn2Spinner.setSelection(mColumn2Index);
+        
+        
         mCardsListView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // load up the card selected on the list
                 mPositionInCardsList = position;
                 long cardId = Long.parseLong(mCards.get(mPositionInCardsList).get("id"));
                 sCardBrowserCard = mCol.getCard(cardId);
+                // start note editor using the card we just loaded
                 Intent editCard = new Intent(CardBrowser.this, CardEditor.class);
                 editCard.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_CARDBROWSER_EDIT);
                 editCard.putExtra(CardEditor.EXTRA_CARD_ID, sCardBrowserCard.getId());
@@ -356,7 +353,7 @@ public class CardBrowser extends Activity {
                 onSearch();
             }
         });
-
+        
         mSearchTerms = "";
         if (mWholeCollection) {
             mRestrictOnDeck = "";
@@ -391,6 +388,8 @@ public class CardBrowser extends Activity {
 
     @Override
     protected void onDestroy() {
+        // cancel rendering the question and answer, which has shared access to mCards
+        DeckTask.cancelTask(DeckTask.TASK_TYPE_RENDER_BROWSER_QA);
         super.onDestroy();
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver);
@@ -411,6 +410,7 @@ public class CardBrowser extends Activity {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             Log.i(AnkiDroidApp.TAG, "CardBrowser - onBackPressed()");
             if (mSearchEditText.getText().length() == 0) {
+                // close the browser
                 closeCardBrowser(Activity.RESULT_OK);
             } else {
                 mSearchEditText.setText("");
@@ -435,16 +435,6 @@ public class CardBrowser extends Activity {
         */
         item = menu.add(Menu.NONE, MENU_ADD_NOTE, Menu.NONE, R.string.card_editor_add_card);
         item.setIcon(R.drawable.ic_menu_add);
-        // TODO(flerda@gmail.com): Fix card browser fields.
-        // https://code.google.com/p/ankidroid/issues/detail?id=1310
-        // Currently this is disabled because it is obvious what to do when cards with different models are present in
-        // the deck.
-        /*
-        if (mWholeCollection == false) {
-            item = menu.add(Menu.NONE, MENU_FIELD, Menu.NONE, R.string.card_browser_field);
-            item.setIcon(R.drawable.ic_menu_add);
-        }
-        */
         item = menu.add(Menu.NONE, MENU_CHANGE_ORDER, Menu.NONE, R.string.card_browser_change_display_order);
         item.setIcon(R.drawable.ic_menu_sort_by_size);
         item = menu.add(Menu.NONE, MENU_SHOW_MARKED, Menu.NONE, R.string.card_browser_show_marked);
@@ -514,13 +504,6 @@ public class CardBrowser extends Activity {
             case MENU_CHANGE_ORDER:
                 showDialog(DIALOG_ORDER);
                 return true;
-            // TODO(flerda@gmail.com): Fix card browser fields. See above.
-            // https://code.google.com/p/ankidroid/issues/detail?id=1310
-            /*
-            case MENU_FIELD:
-                showDialog(DIALOG_FIELD);
-                return true;
-            */
         }
 
         return false;
@@ -668,39 +651,6 @@ public class CardBrowser extends Activity {
                 });
                 dialog = builder.create();
                 break;
-            // TODO(flerda@gmail.com): Fix card browser fields. See above.
-            // https://code.google.com/p/ankidroid/issues/detail?id=1310
-            /*
-            case DIALOG_FIELD:
-                builder.setTitle(res
-                        .getString(R.string.card_browser_field_title));
-                builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
-
-                HashMap<String, String> card = mAllCards.get(0);
-
-                String[][] items = mCol.getCard(Long.parseLong( card.get("id") )).note().items();
-
-                mFields = new String[items.length+1];
-                mFields[0]="SFLD";
-
-                for (int i = 0; i < items.length; i++) {
-                    mFields[i+1] = items[i][0];
-                }
-
-                builder.setSingleChoiceItems(mFields, 0, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface arg0, int which) {
-                        if (which != mField) {
-                            mField = which;
-                            AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit()
-                                .putInt("cardBrowserField", mField).commit();
-                            getCards();
-                        }
-                    }
-                });
-                dialog = builder.create();
-                break;
-            */
         }
         return dialog;
     }
@@ -764,9 +714,14 @@ public class CardBrowser extends Activity {
     private void searchCards() {
         String searchText = mRestrictOnDeck + mSearchTerms;
         if (mCol != null) {
+            // clear the existing card list
             mCards.clear();
+            // Perform database query to get all card ids / sfld. Shows "filtering cards..." progress message
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SEARCH_CARDS, mSearchCardsHandler, new DeckTask.TaskData(
                     new Object[] { mCol, mDeckNames, searchText, ((mOrder == CARD_ORDER_NONE) ? "" : "true") }));
+            // After this initial query, start rendering the question and answer in the background
+            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_RENDER_BROWSER_QA, mRenderQAHandler, new DeckTask.TaskData(
+                    new Object[] { mCol, mCards}));            
         }
     }
 
@@ -886,121 +841,6 @@ public class CardBrowser extends Activity {
         updateList();
     }
 
-//    private DeckTask.TaskListener mLoadCardsHandler = new DeckTask.TaskListener() {
-//        boolean canceled = false;
-//
-//
-//        @Override
-//        public void onPreExecute() {
-//            if (!mUndoRedoDialogShowing) {
-//                if (mProgressDialog != null && mProgressDialog.isShowing()) {
-//                    mProgressDialog.setMessage(getResources().getString(R.string.card_browser_load));
-//                    mProgressDialog.setOnCancelListener(new OnCancelListener() {
-//
-//                        @Override
-//                        public void onCancel(DialogInterface arg0) {
-//                            canceled = true;
-//                            DeckTask.cancelTask();
-//                            closeCardBrowser();
-//                        }
-//                    });
-//                } else {
-//                    mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "",
-//                            getResources().getString(R.string.card_browser_load), true, true, new OnCancelListener() {
-//
-//                                @Override
-//                                public void onCancel(DialogInterface arg0) {
-//                                    canceled = true;
-//                                    DeckTask.cancelTask();
-//                                    closeCardBrowser();
-//                                }
-//                            });
-//                }
-//            } else {
-//                mProgressDialog.setMessage(getResources().getString(R.string.card_browser_load));
-//                mUndoRedoDialogShowing = false;
-//            }
-//        }
-//
-//
-//        @Override
-//        public void onPostExecute(DeckTask.TaskData result) {
-//            // This verification would not be necessary if
-//            // onConfigurationChanged it's executed correctly (which seems
-//            // that emulator does not do)
-//        }
-//
-//
-//        @Override
-//        public void onProgressUpdate(DeckTask.TaskData... values) {
-//            if (canceled) {
-//                return;
-//            }
-//            ArrayList<HashMap<String, String>> cards = values[0].getCards();
-//            if (cards == null) {
-//                Resources res = getResources();
-//                StyledDialog.Builder builder = new StyledDialog.Builder(CardBrowser.this);
-//                builder.setTitle(res.getString(R.string.error));
-//                builder.setIcon(R.drawable.ic_dialog_alert);
-//                builder.setMessage(res.getString(R.string.card_browser_cardloading_error));
-//                builder.setPositiveButton(res.getString(R.string.ok), new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        closeCardBrowser();
-//                    }
-//                });
-//                builder.setOnCancelListener(new OnCancelListener() {
-//                    @Override
-//                    public void onCancel(DialogInterface dialog) {
-//                        closeCardBrowser();
-//                    }
-//                });
-//                builder.create().show();
-//            } else {
-//                if (mPrefFixArabic) {
-//                    for (HashMap<String, String> entry : cards) {
-//                        entry.put("sfld", ArabicUtilities.reshapeSentence(entry.get("sfld")));
-//                    }
-//                }
-//                try {
-//
-//                    int field = AnkiDroidApp.getSharedPrefs(getBaseContext()).getInt("cardBrowserField", 0);
-//
-//					if (cards.size() > 0 && field > 0 && (mFields != null)) {
-//						Card tempCard = mCol.getCard(Long.parseLong(cards.get(0).get("id")));
-//						ArrayList<String> uniqueFields = new ArrayList<String>();
-//						for (HashMap<String, String> entry : cards) {
-//							tempCard = mCol.getCard(Long.parseLong(entry.get("id")));
-//							String item = tempCard.note().getitem(mFields[field]);
-//							entry.put("sfld", item);
-//
-//							if (!uniqueFields.contains(item)) {
-//								uniqueFields.add(item);
-//								mAllCards.add(entry);
-//								mCards.add(entry);
-//							}
-//						}
-//					} else {
-//						mAllCards.addAll(cards);
-//						mCards.addAll(cards);
-//					}
-//
-//                    if (mOrder == CARD_ORDER_NONE) {
-//                        updateCardsList();
-//                        mProgressDialog.dismiss();
-//                    } else {
-//                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_CARD_BROWSER_LIST, mSortCardsHandler,
-//                                new DeckTask.TaskData(mAllCards, new HashMapCompare()));
-//                    }
-//                } catch (OutOfMemoryError e) {
-//                    Log.e(AnkiDroidApp.TAG, "CardBrowser: mLoadCardsHandler: OutOfMemoryError: " + e);
-//                    Themes.showThemedToast(CardBrowser.this,
-//                            getResources().getString(R.string.error_insufficient_memory), false);
-//                    closeCardBrowser();
-//                }
-//            }
-//        }
-//    };
 
     private DeckTask.TaskListener mUpdateCardHandler = new DeckTask.TaskListener() {
         @Override
@@ -1095,12 +935,14 @@ public class CardBrowser extends Activity {
         @Override
         public void onPreExecute() {
             Resources res = getResources();
-            if (mProgressDialog != null && mProgressDialog.isShowing()) {
-                mProgressDialog.setMessage(res.getString(R.string.card_browser_filtering_cards));
-            } else if(mProgressDialog==null){
+            if(mProgressDialog==null){
                 mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "",
                         res.getString(R.string.card_browser_filtering_cards), true);
+            } else {
+                mProgressDialog.setMessage(res.getString(R.string.card_browser_filtering_cards));
+                mProgressDialog.show();
             }
+            
         }
 
 
@@ -1113,6 +955,22 @@ public class CardBrowser extends Activity {
             }
         }
     };
+    
+    private DeckTask.TaskListener mRenderQAHandler = new DeckTask.TaskListener() {
+        @Override
+        public void onProgressUpdate(TaskData... values) {
+            mCards  = values[0].getCards();
+            updateList();
+        }
+
+        @Override
+        public void onPreExecute() {
+        }
+        
+        @Override
+        public void onPostExecute(TaskData result) {        	
+        }
+    };    
 
     private DeckTask.TaskListener mReloadCardsHandler = new DeckTask.TaskListener() {
         @Override
@@ -1248,7 +1106,52 @@ public class CardBrowser extends Activity {
             ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
         }
     }
-
+    
+    
+    // Helper method to setup the list adapter for the main mCardsListView, taking the index for column2 as an argument
+    private void setBrowserListAdapter(int column2){
+        // list of available keys in mCards corresponding to the column names in R.array.browser_column2_headings
+        //String[] keys = {"answer","card","changed","created","deck","due","ease","edited","interval","lapses","note","question","reviews","tags"};
+        //TODO: Make all of the columns that are available on Desktop available, not just these 4
+        String[] keys = {"answer","deck","question","tags"};
+        // load the preferences & resources
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+        Resources res = getResources();    
+        // get the font and font size from the preferences
+        int sflRelativeFontSize = preferences.getInt("relativeCardBrowserFontSize", DEFAULT_FONT_SIZE_RATIO);
+        String sflCustomFont = preferences.getString("browserEditorFont", "");
+        // make a new list adapter mapping the data in mCards to column1 and column2 of R.layout.card_item_browser
+        mCardsAdapter = new SizeControlledListAdapter(
+                this,
+                mCards,
+                R.layout.card_item_browser,
+                new String[] { "sfld", keys[column2]},
+                new int[] { R.id.card_sfld, R.id.card_column2},
+                sflRelativeFontSize,
+                sflCustomFont);
+        // set the background color of each card based on the state of the card
+        mCardsAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
+            @Override
+            public boolean setViewValue(View view, Object arg1, String text) {
+                if (view.getId() == R.id.card_item_browser) {
+                    int which = BACKGROUND_NORMAL;
+                    if (text.equals("1")) {
+                        which = BACKGROUND_SUSPENDED;
+                    } else if (text.equals("2")) {
+                        which = BACKGROUND_MARKED;
+                    } else if (text.equals("3")) {
+                        which = BACKGROUND_MARKED_SUSPENDED;
+                    }
+                    view.setBackgroundResource(mBackground[which]);
+                    return true;
+                }
+                return false;
+            }
+        });
+        // link the adapter we just made to the main mCardsListView
+        mCardsListView.setAdapter(mCardsAdapter);
+    }
+    
     public class SizeControlledListAdapter extends SimpleAdapter {
 
         private int fontSizeScalePcent;

@@ -106,6 +106,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     public static final int TASK_TYPE_CONF_RESET = 34;
     public static final int TASK_TYPE_CONF_REMOVE = 35;
     public static final int TASK_TYPE_CONF_SET_SUBDECKS = 36;
+    public static final int TASK_TYPE_RENDER_BROWSER_QA = 37;
 
     /**
      * The most recently started {@link DeckTask} instance.
@@ -128,6 +129,15 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
      * @return the newly created task
      */
     public static DeckTask launchDeckTask(int type, Listener listener, TaskData... params) {
+        // Before starting a new task, cancel rendering of Q&A for browser
+        if (sLatestInstance!=null && sLatestInstance.mType==TASK_TYPE_RENDER_BROWSER_QA && !sLatestInstance.isCancelled()){
+            Log.i(AnkiDroidApp.TAG, "DeckTask: cancelling render browser QA...");
+            sLatestInstance.cancel(true);
+            waitToFinish();
+            Log.i(AnkiDroidApp.TAG, "DeckTask: cancelled render browser QA");
+            
+        }        
+        // Start new task
         sLatestInstance = new DeckTask(type, listener, sLatestInstance);
         sLatestInstance.execute(params);
         return sLatestInstance;
@@ -158,11 +168,17 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             return;
         }
     }
-
-
-    public static boolean taskIsCancelled() {
-        return sLatestInstance.isCancelled();
-    }
+    
+    public static void cancelTask(int taskType) {
+        try {
+            Boolean match = sLatestInstance.mType==taskType;
+            if ((sLatestInstance != null) && (sLatestInstance.getStatus() != AsyncTask.Status.FINISHED) && (match)) {
+                sLatestInstance.cancel(true);
+            }
+        } catch (Exception e) {
+            return;
+        }
+    }    
 
 
     public static boolean taskIsRunning() {
@@ -187,7 +203,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         mPreviousTask = previousTask;
     }
 
-
+    // This method and those that are called here are executed in a new thread
     @Override
     protected TaskData doInBackground(TaskData... params) {
         super.doInBackground(params);
@@ -310,6 +326,9 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
             case TASK_TYPE_CONF_SET_SUBDECKS:
                 return doInBackgroundConfSetSubdecks(params);
+                
+            case TASK_TYPE_RENDER_BROWSER_QA:
+            	return doInBackgroundRenderBrowserQA(params);
 
             default:
                 Log.e(AnkiDroidApp.TAG, "unknown task type: " + mType);
@@ -698,14 +717,62 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         String query = (String) params[0].getObjArray()[2];
         String order = (String) params[0].getObjArray()[3];
         TaskData result = new TaskData(col.findCardsForCardBrowser(query, order, deckNames));
-        if (DeckTask.taskIsCancelled()) {
+        if (isCancelled()) {
             return null;
         } else {
             publishProgress(result);
         }
         return new TaskData(col.cardCount(col.getDecks().allIds()));
     }
+    
+    private TaskData doInBackgroundRenderBrowserQA(TaskData...params) {
+        final int initialInterval=15;   // initial number of cards we render one by one
+        final int refreshInterval=250;  // number of cards to render at a time after initialInterval
+        int numRendered=0;
+    	Log.i(AnkiDroidApp.TAG, "doInBackgroundRenderBrowserQA");
+        Collection col = (Collection) params[0].getObjArray()[0];
+        ArrayList<HashMap<String, String>> items = (ArrayList<HashMap<String, String>>) params[0].getObjArray()[1];        
+        // for each card in the browser list
+        for (HashMap<String, String> item: items) {
+        	// render question and answer
+        	HashMap<String, String> qa = col.getCard(Long.parseLong(item.get("id"), 10))._getQA(true, true);
+        	// update the original hash map to include rendered question & answer
+			String q = formatQA(qa.get("q"));
+			String a = formatQA(qa.get("a"));
+			// remove the question from the start of the answer if it exists
+			if (a.startsWith(q)){
+			    a=a.replaceFirst(q, "");
+			}
+        	item.put("question",q);
+        	item.put("answer",a);        	
+    		// Send progress periodically so that QA list in browser updates
+            if (isCancelled()) {
+                return null;
+            } else {
+            	numRendered++;
+            	if (numRendered%refreshInterval==0 || numRendered<=initialInterval){
+                    TaskData result = new TaskData(items);
+            		publishProgress(result);
+            	}
+            }                	
+        }
+        TaskData result = new TaskData(items);
+        publishProgress(result);
+        return result;
+    }        
 
+    private String formatQA(String txt){
+        /* Strips all formatting from the string txt for use in displaying question/answer in browser */
+        String s=txt.replace("<br>"," ");
+        s = s.replace("<br />", " ");
+        s = s.replace("<div>", " ");
+        s = s.replace("\n", " ");
+        s = s.replaceAll("\\[sound:[^]]+\\]", "");
+        s = s.replaceAll("\\[\\[type:[^]]+\\]\\]", "");
+        s = Utils.stripHTMLMedia(s);
+        s = s.trim();
+        return s;
+    }
 
     private TaskData doInBackgroundLoadStatistics(TaskData... params) {
         Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadStatistics");
@@ -1622,6 +1689,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         public TaskData(List<Long> idList) {
             mIdList = idList;
         }
+        
 
 
         public ArrayList<HashMap<String, String>> getCards() {

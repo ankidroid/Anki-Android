@@ -1178,7 +1178,7 @@ public class Models {
                 tmp.set(i, "");
                 data[6] = Utils.joinFields(tmp.toArray(new String[tmp.size()]));
                 // if no field content appeared, field is required
-                if (!mCol._renderQA(data, new ArrayList<String>()).get("q").contains("ankiflag")) {
+                if (!mCol._renderQA(data).get("q").contains("ankiflag")) {
                     req.put(i);
                 }
             }
