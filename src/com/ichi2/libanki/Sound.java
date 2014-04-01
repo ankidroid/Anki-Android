@@ -20,7 +20,9 @@ import java.io.File;
 import java.net.URI;
 import java.util.HashMap;
 
+import android.content.Context;
 import android.media.AudioManager;
+import android.media.AudioManager.OnAudioFocusChangeListener;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.net.Uri;
@@ -48,10 +50,23 @@ public class Sound {
      */
     private static MediaPlayer sMediaPlayer;
 
+	/**
+	 * AudioManager to request/release audio focus
+	 */
+	private static AudioManager sAudioManager;
+
     /**
      * Stores sounds for the current card, key is for question/answer
      */
     private static HashMap<Integer, ArrayList<String>> sSoundPaths = new HashMap<Integer, ArrayList<String>>();
+
+	/**
+	 * Listener to handle audio focus. Currently blank because we're not respecting losing focus from other apps.
+	 */
+	private static OnAudioFocusChangeListener afChangeListener = new OnAudioFocusChangeListener() {
+			public void onAudioFocusChange(int focusChange) {
+			}
+		};
 
 
     /* Prevent class from being instantiated */
@@ -80,16 +95,16 @@ public class Sound {
             if (!sSoundPaths.containsKey(qa)) {
                 sSoundPaths.put(qa, new ArrayList<String>());
             }
-            
+
             // Get the sound file name
             String sound = matcher.group(1);
 
             // Construct the sound path and store it
-            String soundPath = soundDir + Uri.encode(sound);            
+            String soundPath = soundDir + Uri.encode(sound);
             sSoundPaths.get(qa).add(soundPath);
         }
     }
-    
+
     public static String expandSounds(String soundDir, String content, boolean ttsEnabled, int qa) {
         boolean soundAvailable = false;
         StringBuilder stringBuilder = new StringBuilder();
@@ -114,9 +129,9 @@ public class Sound {
             int markerStart = contentLeft.indexOf(soundMarker);
             stringBuilder.append(contentLeft.substring(0, markerStart));
             stringBuilder
-                    .append("<a onclick=\"window.ankidroid.playSound(this.title);\" title=\""
-                            + soundPath
-                            + "\"><span style=\"padding:5px;\"><img src=\"file:///android_asset/media_playback_start2.png\" /></span></a>");
+                .append("<a onclick=\"window.ankidroid.playSound(this.title);\" title=\""
+                        + soundPath
+                        + "\"><span style=\"padding:5px;\"><img src=\"file:///android_asset/media_playback_start2.png\" /></span></a>");
             contentLeft = contentLeft.substring(markerStart + soundMarker.length());
             Log.i(AnkiDroidApp.TAG, "Content left = " + contentLeft);
         }
@@ -155,7 +170,7 @@ public class Sound {
         Log.i(AnkiDroidApp.TAG, "Playing " + soundPath + " has listener? " + Boolean.toString(playAllListener != null));
 
         if (soundPath.substring(0, 3).equals("tts")) {
-        	// TODO: give information about did
+            // TODO: give information about did
 //            ReadText.textToSpeech(soundPath.substring(4, soundPath.length()),
 //                    Integer.parseInt(soundPath.substring(3, 4)));
         } else {
@@ -163,6 +178,9 @@ public class Sound {
                 sMediaPlayer = new MediaPlayer();
             else
                 sMediaPlayer.reset();
+
+			if (sAudioManager == null)
+				sAudioManager = (AudioManager) AnkiDroidApp.getInstance().getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
 
             try {
                 // soundPath is usually an URI, but Media player requires a path not url encoded
@@ -173,6 +191,8 @@ public class Sound {
                 sMediaPlayer.prepare();
                 if (playAllListener != null)
                     sMediaPlayer.setOnCompletionListener(playAllListener);
+
+                sAudioManager.requestAudioFocus(afChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK);
 
                 sMediaPlayer.start();
             } catch (Exception e) {
@@ -213,7 +233,6 @@ public class Sound {
         }
     }
 
-
     /**
      * Releases the sound.
      */
@@ -222,6 +241,10 @@ public class Sound {
             sMediaPlayer.release();
             sMediaPlayer = null;
         }
+		if (sAudioManager != null) {
+			sAudioManager.abandonAudioFocus(afChangeListener);
+			sAudioManager = null;
+		}
     }
 
 
