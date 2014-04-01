@@ -536,6 +536,9 @@ public class CardEditor extends Activity {
                             ja.put(t);
                         }
                         mCol.getModels().current().put("tags", ja);
+
+                        mEditorNote.model().put("did", mCurrentDid);
+
                         mCol.getModels().setChanged();
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
@@ -1070,15 +1073,6 @@ public class CardEditor extends Activity {
                     public void onClick(DialogInterface dialog, int item) {
                         long newId = dialogDeckIds.get(item);
                         if (mCurrentDid != newId) {
-                            if (mAddNote) {
-                                try {
-                                    // TODO: mEditorNote.setDid(newId);
-                                    mEditorNote.model().put("did", newId);
-                                    mCol.getModels().setChanged();
-                                } catch (JSONException e) {
-                                    throw new RuntimeException(e);
-                                }
-                            }
                             mCurrentDid = newId;
                             updateDeck();
                         }
@@ -1120,7 +1114,8 @@ public class CardEditor extends Activity {
                         }
                         long newId = dialogIds.get(item);
                         if (oldModelId != newId) {
-                            mCol.getModels().setCurrent(mCol.getModels().get(newId));
+                            JSONObject model = mCol.getModels().get(newId);
+                            mCol.getModels().setCurrent(model);
                             JSONObject cdeck = mCol.getDecks().current();
                             try {
                                 cdeck.put("mid", newId);
@@ -1128,6 +1123,16 @@ public class CardEditor extends Activity {
                                 throw new RuntimeException(e);
                             }
                             mCol.getDecks().save(cdeck);
+                            // Update deck
+                            if (!mCol.getConf().optBoolean("addToCur", true)) {
+                                try {
+                                    mCurrentDid = model.getLong("did");
+                                    updateDeck();
+                                } catch (JSONException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                            // Reset edit fields
                             int size = mEditFields.size();
                             String[] oldValues = new String[size];
                             for (int i = 0; i < size; i++) {
@@ -1479,16 +1484,21 @@ public class CardEditor extends Activity {
     private void setNote(Note note) {
         try {
             if (note == null) {
-                if (mCol.getDecks().isDyn(mCurrentDid)) {
-                    /*
-                     * If the deck in mCurrentDid is a filtered (dynamic) deck, then we can't create
-                     * cards in it, and we set mCurrentDid to the Default deck. Otherwise, we keep
-                     * the number that had been selected previously in the activity.
-                     */
-                    mCurrentDid = 1;
-                }
-
+                JSONObject conf = mCol.getConf();
                 JSONObject model = mCol.getModels().current();
+                if (conf.optBoolean("addToCur", true)) {
+                    mCurrentDid = conf.getLong("curDeck");
+                    if (mCol.getDecks().isDyn(mCurrentDid)) {
+                        /*
+                         * If the deck in mCurrentDid is a filtered (dynamic) deck, then we can't create
+                         * cards in it, and we set mCurrentDid to the Default deck. Otherwise, we keep
+                         * the number that had been selected previously in the activity.
+                         */
+                        mCurrentDid = 1;
+                    }
+                } else {
+                    mCurrentDid = model.getLong("did");
+                }
                 mEditorNote = new Note(mCol, model);
                 mEditorNote.model().put("did", mCurrentDid);
                 mModelButton.setText(getResources().getString(R.string.CardEditorModel,
