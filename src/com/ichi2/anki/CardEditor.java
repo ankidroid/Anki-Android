@@ -522,6 +522,26 @@ public class CardEditor extends Activity {
             public void onClick(View v) {
                 if (duplicateCheck(true)) {
                     showDialog(DIALOG_CONFIRM_DUPLICATE);
+                }
+                boolean modified = false;
+                for (FieldEditText f : mEditFields) {
+                    modified = modified | f.updateField();
+                }
+                if (mAddNote) {
+                    mEditorNote.setTags(mCurrentTags);
+                    // Save tags to model
+                    try {
+                        JSONArray ja = new JSONArray();
+                        for (String t : mCurrentTags) {
+                            ja.put(t);
+                        }
+                        mCol.getModels().current().put("tags", ja);
+                        mCol.getModels().setChanged();
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ADD_FACT, mSaveFactHandler, new DeckTask.TaskData(
+                            mEditorNote));
                 } else {
                     saveNote();
                 }
@@ -970,19 +990,6 @@ public class CardEditor extends Activity {
                 builder.setPositiveButton(res.getString(R.string.select), new OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if (mAddNote) {
-                            try {
-                                JSONArray ja = new JSONArray();
-                                for (String t : selectedTags) {
-                                    ja.put(t);
-                                }
-                                mCol.getModels().current().put("tags", ja);
-                                mCol.getModels().setChanged();
-                            } catch (JSONException e) {
-                                throw new RuntimeException(e);
-                            }
-                            mEditorNote.setTags(selectedTags);
-                        }
                         mCurrentTags = selectedTags;
                         updateTags();
                     }
@@ -1486,18 +1493,18 @@ public class CardEditor extends Activity {
                 mEditorNote.model().put("did", mCurrentDid);
                 mModelButton.setText(getResources().getString(R.string.CardEditorModel,
                         model.getString("name")));
-                JSONArray tags = model.getJSONArray("tags");
-                for (int i = 0; i < tags.length(); i++) {
-                    mEditorNote.addTag(tags.getString(i));
+                // Re-use tags when adding multiple notes
+                if (mCurrentTags == null) {
+                    mCurrentTags = new ArrayList<String>();
                 }
             } else {
                 mEditorNote = note;
                 mCurrentDid = mCurrentEditedCard.getDid();
+                mCurrentTags = mEditorNote.getTags();
             }
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-        mCurrentTags = mEditorNote.getTags();
         updateDeck();
         updateTags();
         populateEditFields();
