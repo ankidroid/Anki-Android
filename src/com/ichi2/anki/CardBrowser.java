@@ -43,6 +43,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -332,7 +333,14 @@ public class CardBrowser extends Activity {
                 }
             }
         });
-        registerForContextMenu(mCardsListView);
+        mCardsListView.setOnItemLongClickListener(new OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+                mPositionInCardsList = position;
+                showDialog(DIALOG_CONTEXT_MENU);
+                return true;
+            }
+        });
 
         mSearchEditText = (EditText) findViewById(R.id.card_browser_search);
         mSearchEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -395,13 +403,6 @@ public class CardBrowser extends Activity {
             unregisterReceiver(mUnmountReceiver);
         }
         Log.i(AnkiDroidApp.TAG, "CardBrowser - onDestroy()");
-    }
-
-
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-        mPositionInCardsList = ((AdapterView.AdapterContextMenuInfo) menuInfo).position;
-        showDialog(DIALOG_CONTEXT_MENU);
     }
 
 
