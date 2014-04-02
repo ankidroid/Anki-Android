@@ -69,6 +69,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
+import java.lang.OutOfMemoryError;
 
 /**
  * Loading in the background, so that AnkiDroid does not look like frozen.
@@ -733,34 +734,54 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         Collection col = (Collection) params[0].getObjArray()[0];
         ArrayList<HashMap<String, String>> items = (ArrayList<HashMap<String, String>>) params[0].getObjArray()[1];        
         // for each card in the browser list
-        for (HashMap<String, String> item: items) {
-        	// render question and answer
-        	HashMap<String, String> qa = col.getCard(Long.parseLong(item.get("id"), 10))._getQA(true, true);
-        	// update the original hash map to include rendered question & answer
-			String q = formatQA(qa.get("q"));
-			String a = formatQA(qa.get("a"));
-			// remove the question from the start of the answer if it exists
-			if (a.startsWith(q)){
-			    a=a.replaceFirst(q, "");
-			}
-        	item.put("question",q);
-        	item.put("answer",a);        	
-    		// Send progress periodically so that QA list in browser updates
-            if (isCancelled()) {
-                return null;
-            } else {
-            	numRendered++;
-            	if (numRendered%refreshInterval==0 || numRendered<=initialInterval){
-                    TaskData result = new TaskData(items);
-            		publishProgress(result);
-            	}
-            }                	
+        try{
+            for (HashMap<String, String> item: items) {
+                // Extract card item
+            	Card c = col.getCard(Long.parseLong(item.get("id"), 10));
+                // render question and answer
+    	        HashMap<String, String> qa=c._getQA(true, true);
+            	// update the original hash map to include rendered question & answer
+    			String q = formatQA(qa.get("q"));
+    			String a = formatQA(qa.get("a"));
+    			// remove the question from the start of the answer if it exists
+    			if (a.startsWith(q)){
+    			    a=a.replaceFirst(q, "");
+    			}     			
+    			// put all of the fields in except for those that have already been pulled out straight from the database
+            	item.put("answer",a);
+            	item.put("card", c.template().optString("name"));
+            	//item.put("changed",strftime("%Y-%m-%d", localtime(c.getMod())));
+            	//item.put("created",strftime("%Y-%m-%d", localtime(c.note().getId()/1000)));             
+            	//item.put("due",getDueString(c)); 
+            	//item.put("ease",""); 
+            	//item.put("edited",strftime("%Y-%m-%d", localtime(c.note().getMod())));
+            	//item.put("interval",""); 
+            	item.put("lapses",Integer.toString(c.getLapses()));
+            	item.put("note",c.model().optString("name"));
+                item.put("question",q);
+                item.put("reviews",Integer.toString(c.getReps()));
+        		// Send progress periodically so that QA list in browser updates
+                if (isCancelled()) {
+                    return null;
+                } else {
+                	numRendered++;
+                	if (numRendered%refreshInterval==0 || numRendered<=initialInterval){
+                        TaskData result = new TaskData(items);
+                		publishProgress(result);
+                	}
+                              	
+                }
+            }
+        } catch (OutOfMemoryError e){
+            // TODO: Check if this is actually effective at dealing with the error, maybe the ArrayList has grown too big to recover?
+            Log.e(AnkiDroidApp.TAG, "OutOfMemoryError rendering the Q&A for browser... probably too many cards");
+            return null;
         }
         TaskData result = new TaskData(items);
         publishProgress(result);
         return result;
     }        
-
+    
     private String formatQA(String txt){
         /* Strips all formatting from the string txt for use in displaying question/answer in browser */
         String s=txt.replace("<br>"," ");
