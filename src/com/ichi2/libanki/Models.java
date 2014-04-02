@@ -49,15 +49,33 @@ public class Models {
     private static final Pattern fClozePattern1 = Pattern.compile("(?:\\{\\{|<%)cloze:(.+?)(?:\\}\\}|%>)");
     private static final Pattern fClozePattern2 = Pattern.compile("\\{\\{c(\\d+)::.+?\\}\\}");
 
-    public static final String defaultModel = "{'sortf': 0, " + "'did': 1, " + "'latexPre': \""
-            + "\\\\documentclass[12pt]{article} " + "\\\\special{papersize=3in,5in} "
-            + "\\\\usepackage[utf8]{inputenc} " + "\\\\usepackage{amssymb,amsmath} " + "\\\\pagestyle{empty} "
-            + "\\\\setlength{\\\\parindent}{0in} " + "\\\\begin{document} " + "\", "
-            + "'latexPost': \"\\\\end{document}\", " + "'mod': 0, " + "'usn': 0, " 
+    public static final String defaultModel =
+              "{'sortf': 0, "
+            + "'did': 1, "
+            + "'latexPre': \""
+            + "\\\\documentclass[12pt]{article}\n"
+            + "\\\\special{papersize=3in,5in}\n"
+            + "\\\\usepackage[utf8]{inputenc}\n"
+            + "\\\\usepackage{amssymb,amsmath}\n"
+            + "\\\\pagestyle{empty}\n"
+            + "\\\\setlength{\\\\parindent}{0in}\n"
+            + "\\\\begin{document}\n"
+            + "\", "
+            + "'latexPost': \"\\\\end{document}\", "
+            + "'mod': 0, "
+            + "'usn': 0, "
             + "'vers': [], " // FIXME: remove when other clients have caught up 
             + "'type': "
-            + Sched.MODEL_STD + ", " + "'css': \" .card {" + "font-familiy: arial; " + "font-size: 20px; "
-            + "text-align: center; " + "color:black; " + "background-color: white; }\"" + "}";
+            + Sched.MODEL_STD
+            + ", "
+            + "'css': \".card {\n"
+            + " font-familiy: arial;\n"
+            + " font-size: 20px;\n"
+            + " text-align: center;\n"
+            + " color: black;\n"
+            + " background-color: white;\n"
+            + "}\""
+            + "}";
 
     private static final String defaultField = "{'name': \"\", " + "'ord': null, " + "'sticky': False, " +
     // the following alter editing, and are used as defaults for the template wizard
