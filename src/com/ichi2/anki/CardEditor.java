@@ -1149,6 +1149,7 @@ public class CardEditor extends Activity {
 
             case DIALOG_INTENT_INFORMATION:
                 dialog = createDialogIntentInformation(builder, res);
+                break;
 
             case DIALOG_CONFIRM_DUPLICATE:
                 builder.setTitle(res.getString(R.string.save_duplicate_dialog_title));
