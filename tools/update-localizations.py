@@ -96,10 +96,10 @@ def replacechars(filename, fileExt, isCrowdin):
 	os.rename(newfilename, filename)
 	if errorOccured:
 		#os.remove(filename)
-		print 'error in file ' + filename
+		print 'Error in file ' + filename
 		return False
 	else:
-		print 'file ' + filename + ' successfully copied'
+		print 'File ' + filename + ' successfully copied'
 		return True
 
 def fileExtFor(f):
@@ -125,10 +125,10 @@ def update(valuesDirectory, f, source, fileExt, isCrowdin, language=''):
 		newContent = open(newfile).readlines()
 		for i in range(0, len(oldContent)):
 			if oldContent[i] != newContent[i]:
-				print 'file ' + newfile + ' successfully copied'
+				print 'File ' + newfile + ' successfully copied'
 				return True			
 		os.remove(newfile)
-		print 'file marketdescription is not translated into language ' + language
+		print 'File marketdescription is not translated into language ' + language
 		return True
 	elif f == '15-markettitle':
 #		newfile = 'docs/marketing/localized_description/marketdescription' + '-' + language + fileExt
@@ -138,9 +138,9 @@ def update(valuesDirectory, f, source, fileExt, isCrowdin, language=''):
 			s = open(titleFile, 'a')
 			s.write("\n" + language + ': ' + translatedTitle)
 			s.close()
-			print 'added translated title'
+			print 'Added translated title'
 		else:
-			print 'title not translated'
+			print 'Title not translated'
 		return True
 	else:
 		newfile = valuesDirectory + f + '.xml'
@@ -149,7 +149,7 @@ def update(valuesDirectory, f, source, fileExt, isCrowdin, language=''):
 
 zipname = 'ankidroid.zip'
 
-print "downloading crowdin-file"
+print "Downloading Crowdin file"
 req = urllib.urlopen('http://crowdin.net/download/project/ankidroid.zip')
 file(zipname, 'w').write(req.read())
 req.close()
@@ -167,7 +167,7 @@ for language in languages:
 	else:
 		androidLanguage = language[:2] # Example: es-ES becomes es
 
-	print "\ncopying language files for: " + androidLanguage
+	print "\nCopying language files for: " + androidLanguage
 	valuesDirectory = "res/values-" + androidLanguage + "/"
 	createIfNotExisting(valuesDirectory)
 
@@ -177,10 +177,8 @@ for language in languages:
 		anyError = not(update(valuesDirectory, f, zip.read(language + "/" + f + fileExt), fileExt, True, language)) or anyError
 
 	if anyError:
-		if raw_input("At least one file of the last handled language contains an error. Please check\nContinue anyway? (y/n)") != 'y':
-			break
-		else:
-			anyError = False
+		print "At least one file of the last handled language contains an error."
+		anyError = False
 
 # Special case: English tutorial.
 valuesDirectory = "res/values/"
@@ -193,7 +191,7 @@ source = open("assets/" + 'tutorial' + fileExt)
 print
 update(valuesDirectory, f, source.read(), fileExt, False)
 
-print "\nremoving crowdin-file\n"
+print "\nRemoving Crowdin file\n"
 os.remove(zipname)	
 
 
