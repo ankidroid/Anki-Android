@@ -39,18 +39,5 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="new_version_features">
-    <item>Исправљено пуно грешака</item>
-    <item>Нова подешавања учења са избором карата по ознакама</item>
-    <item>Нова функција прегледа карата у уређивачу бележака (експериментално)</item>
-    <item>Нове поставке редефинисања фонта као додатак подразумеваном фонту</item>
-    <item>Нове \"Kanji Info\" функције (укључена подешавања-&gt;рецензије-&gt;Kanji информација)</item>
-    <item>Побољшање интеграције Aedict</item>
-    <item>Подршка за Samsung Multi-Window</item>
-    <item>Исправљене грешке гласовног репродуковања</item>
-    <item>Обновљени преводи</item>
-    <item>Уклоњена провера некоришћених медија датотека при уклањању шпилова</item>
-    <item>Значајно повећана брзина сажимања филтрираних шпилова</item>
-    <item>Уклоњен чаробњак ажурирања</item>
-  </string-array>
+  <string-array name="new_version_features"/>
 </resources>

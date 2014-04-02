@@ -39,18 +39,5 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="new_version_features">
-    <item>Viele Bug-Fixes</item>
-    <item>Neue Option für benutzerdefiniertes Training mit verbesserter Schlagwortauswahl</item>
-    <item>Neue Kartenvorschau-Funktion im Notizeditor (experimentell)</item>
-    <item>Neue Option für Schriftartenwechsel zusätzlich zur Standardschriftart</item>
-    <item>Neues \"Kanji Info\"-Feature (aktivieren in Einstellungen-&gt;Lernen-&gt;Kanji Info)</item>
-    <item>Aedict Integration verbessert</item>
-    <item>Unterstützung für Samsung Multi-Window</item>
-    <item>Einige TTS-Probleme behoben</item>
-    <item>Übersetzungen aktualisiert</item>
-    <item>Keine Überprüfung auf unbenutzte Medienelemente mehr beim Löschen von Stapeln</item>
-    <item>Deutliche Geschwindigkeitsverbesserung um gefilterte Stapel zu reduzieren</item>
-    <item>Upgrade Wizard entfernt</item>
-  </string-array>
+  <string-array name="new_version_features"/>
 </resources>

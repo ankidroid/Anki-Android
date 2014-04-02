@@ -63,6 +63,8 @@
   <string name="reset_card_dialog_title">Herstel leervoortgang</string>
   <string name="reset_card_dialog_message">Hiermee maak je de leervoortgang ongedaan voor alle kaarten gemaakt met deze memo (ze zullen zich gedragen als nieuwe kaarten).\nBent u zeker dat u wilt doorgaan?</string>
   <string name="reset_card_dialog_confirmation">Alle kaarten gemaakt van deze memo resetten</string>
+  <string name="save_duplicate_dialog_title">Duplicate note</string>
+  <string name="save_duplicate_dialog_message">This note shares its primary field with another note. Save anyway?</string>
   <string name="answering_error_title">Fout in database</string>
   <string name="answering_error_message">Er is een fout opgetreden tijdens het schrijven naar de collectie. Dit kan wijzen op een corrupte database of op onvoldoende opslagruimte.\n\nAls dit vaker gebeurt, probeer de database te controleren, de collectie te herstellen of terug te zetten vanaf een back-up. Klik hiervoor op \'instellingen\'.\n\nHet kan ook een fout in AnkiDroid zijn; Meld de fout zodat we dit kunnen controleren.</string>
   <string name="answering_error_report">Fout melden</string>

@@ -64,6 +64,8 @@
   <string name="reset_card_dialog_title">أعد تعيين مستوى تقدم التعلم</string>
   <string name="reset_card_dialog_message">هذا سيعيد تعيين كل التقدم التعليمي لكل البطاقات لهذه الملاحظة(ستبدو وكأنها بطاقات جديدة).\nهل تريد المتابعة؟</string>
   <string name="reset_card_dialog_confirmation">أعيد تعيين كل البطاقات لهذه الملاحظة</string>
+  <string name="save_duplicate_dialog_title">Duplicate note</string>
+  <string name="save_duplicate_dialog_message">This note shares its primary field with another note. Save anyway?</string>
   <string name="answering_error_title">خطأ قاعدة البيانات</string>
   <string name="answering_error_message">حدث خطأ أثناء الكتابة إلى المجموعة. يمكن أن هذا ذا علاقة بقاعدة بيانات معطوبة أو المساحة القرص غير الكافية.\n\nإذا حدث هذا بشكل متكرر، الرجاء حاول فحص قاعدة البيانات،أو إصلاح المجموعة أو استعادة النسخة الاحتياطية. انقر على \'خيارات\' لفعل ذلك.\n\nومع ذلك، يمكن أن تكون علة بأنكيدرويد؛ الرجاء إرسال تقرير الخطأ حتى يمكننا تحقق منها ذلك.</string>
   <string name="answering_error_report">خطأ التقرير</string>

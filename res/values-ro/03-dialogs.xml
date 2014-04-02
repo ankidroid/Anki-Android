@@ -63,6 +63,8 @@
   <string name="reset_card_dialog_title">Resetează progresul de carduri</string>
   <string name="reset_card_dialog_message">Aceasta resetează progresul de învăţare pentru toate cardurile cu această notă (ele vor arata ca noi carduri). \nChiar continuaţi?</string>
   <string name="reset_card_dialog_confirmation">Toate cardurile cu această notă se resetează</string>
+  <string name="save_duplicate_dialog_title">Duplicate note</string>
+  <string name="save_duplicate_dialog_message">This note shares its primary field with another note. Save anyway?</string>
   <string name="answering_error_title">Eroare a bazei de date</string>
   <string name="answering_error_message">Eroare la scrierea în colecție. Acest lucru ar putea fi legat de o bază de date coruptă sau de spațiu insuficient pe disc.\n\nDacă eroarea persistă, încercaţi sa verificați baza de date, reparați colecția sau să o restaurați dintr-o copie de rezervă. Faceţi clic pe \'opţiuni\' pentru aceasta.\n\nDeasemenea, ar putea fi un bug de la  AnkiDroid; Raportaţi eroarea să putem verifica acest lucru.</string>
   <string name="answering_error_report">Raportează eroare</string>

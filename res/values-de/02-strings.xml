@@ -127,6 +127,19 @@
   <string name="sched_end">(Ende)</string>
   <string name="sched_unbury_button">Um sie jetzt zu sehen, tippen Sie auf „Vorläufiges Aussetzen aufheben“.</string>
   <string name="sched_has_buried">Einige verwandte oder vorläufig ausgesetzte Karten wurden auf eine spätere Sitzung verschoben.</string>
+  <string-array name="browser_column1_headings">
+    <item>Search Field</item>
+  </string-array>
+  <string-array name="browser_column2_headings">
+    <item>Answer</item>
+    <item>Card</item>
+    <item>Deck</item>
+    <item>Lapses</item>
+    <item>Note</item>
+    <item>Question</item>
+    <item>Reviews</item>
+    <item>Tags</item>
+  </string-array>
   <string-array name="dynOrderLabels">
     <item>Am frühesten gesehene zuerst</item>
     <item>Zufällig</item>

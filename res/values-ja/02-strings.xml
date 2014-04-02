@@ -127,6 +127,19 @@
   <string name="sched_end">（終了）</string>
   <string name="sched_unbury_button">それらを表示すため、「延期解除」をタップしてください。</string>
   <string name="sched_has_buried">関連カード、延期カードは後のセッションまで遅延されます。</string>
+  <string-array name="browser_column1_headings">
+    <item>Search Field</item>
+  </string-array>
+  <string-array name="browser_column2_headings">
+    <item>Answer</item>
+    <item>Card</item>
+    <item>Deck</item>
+    <item>Lapses</item>
+    <item>Note</item>
+    <item>Question</item>
+    <item>Reviews</item>
+    <item>Tags</item>
+  </string-array>
   <string-array name="dynOrderLabels">
     <item>古いものを先頭に</item>
     <item>ランダム</item>

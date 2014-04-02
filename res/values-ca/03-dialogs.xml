@@ -63,6 +63,8 @@
   <string name="reset_card_dialog_title">Reinicia el progrés de les fitxes</string>
   <string name="reset_card_dialog_message">Això reinicia el progrès d\'aprenentatge per a totes les fitxes d\'aquest paquet (es mostraran com a fitxes noves).\nSegur que voleu continuar?</string>
   <string name="reset_card_dialog_confirmation">Reinicia totes les fitxes d\'aquesta nota</string>
+  <string name="save_duplicate_dialog_title">Duplicate note</string>
+  <string name="save_duplicate_dialog_message">This note shares its primary field with another note. Save anyway?</string>
   <string name="answering_error_title">Error de la base de dades</string>
   <string name="answering_error_message">S\'ha produït un error en escriure a la col·lecció. Això podria estar relacionat amb una base de dades defectuosa o amb espai insuficient al disc.\n\nSi passa molt sovint, si us plau, intenteu comprovar la base de dades, reparar la col·lecció o restaurar-ho des d\'una còpia de seguretat. Feu clic a \"opcions\" per a fer-ho.\n\nTot i així, també podria ser un error d\'AnkiDroid; si us plau envieu l\'error i podrem comprovar-ho.</string>
   <string name="answering_error_report">Informa dels errors</string>

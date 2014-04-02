@@ -63,6 +63,8 @@
   <string name="reset_card_dialog_title">Ресетовање прогреса учења карте</string>
   <string name="reset_card_dialog_message">Уклањање прогреса учења за све карте за ову белешку (оне ће изгледати као нове).\nДа продужим?</string>
   <string name="reset_card_dialog_confirmation">Све карте ове белешке ће бити ресетоване</string>
+  <string name="save_duplicate_dialog_title">Duplicate note</string>
+  <string name="save_duplicate_dialog_message">This note shares its primary field with another note. Save anyway?</string>
   <string name="answering_error_title">Грешка базе података</string>
   <string name="answering_error_message">Дошло је до грешке при запису у колекцију. Разлог може бити што је база раније оштећена или што је мало места на диску.\n\nАко се то често догађа, покушајте да проверите базу података, обновите колекцију или обновите из резервне копије. Кликните за то на \"Опције\".\n\nТакође, ствар може бити у грешци AnkiDroid. Молимо вас, известите нас о грешци, да бисмо могли то да проверимо.</string>
   <string name="answering_error_report">Извести о грешци</string>

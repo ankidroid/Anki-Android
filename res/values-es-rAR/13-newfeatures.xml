@@ -39,18 +39,5 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="new_version_features">
-    <item>Muchas correcciones de errores</item>
-    <item>Nueva opción de estudio personalizado con selección de etiquetas mejorada</item>
-    <item>Nueva opción de previsualización de las tarjetas en el editor de notas (experimental)</item>
-    <item>Nueva preferenecia para sobreescribir la fuente además de la fuente por defecto</item>
-    <item>Nueva característica \"Información de Kanji\" (habilitable en preferencias-&gt;repasos-&gt;Información de Kanji)</item>
-    <item>Integración Aedict mejorada</item>
-    <item>Soporte para Multi-Ventana de Samsung</item>
-    <item>Solución para algunos asuntos de TTS</item>
-    <item>Traducciones actualizadas</item>
-    <item>Eliminar la verificación de archivos de medios no utilizados al borrar mazos</item>
-    <item>Velocidad significativamente aumentada para reducir mazos filtrados</item>
-    <item>Remover el asistente de actualización</item>
-  </string-array>
+  <string-array name="new_version_features"/>
 </resources>

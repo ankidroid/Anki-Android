@@ -127,6 +127,19 @@
   <string name="sched_end">(fin)</string>
   <string name="sched_unbury_button">Pour les voir maintenant, appuyer sur le bouton Déterrer.</string>
   <string name="sched_has_buried">Certaines cartes enterrées ou différées ont été reportées à une prochaine séance.</string>
+  <string-array name="browser_column1_headings">
+    <item>Search Field</item>
+  </string-array>
+  <string-array name="browser_column2_headings">
+    <item>Answer</item>
+    <item>Card</item>
+    <item>Deck</item>
+    <item>Lapses</item>
+    <item>Note</item>
+    <item>Question</item>
+    <item>Reviews</item>
+    <item>Tags</item>
+  </string-array>
   <string-array name="dynOrderLabels">
     <item>Des plus au moins anciennes</item>
     <item>Aléatoirement</item>

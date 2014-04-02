@@ -63,6 +63,8 @@
   <string name="reset_card_dialog_title">카드 학습 진행 재설정</string>
   <string name="reset_card_dialog_message">이 노트에 대한 모든 카드의 학습 과정이 재설정됩니다.(재설정된 카드는 새카드처럼 보이게 됩니다.).\n 정말 계속할까요?</string>
   <string name="reset_card_dialog_confirmation">이 노트에 대한 모든 카드 재설정</string>
+  <string name="save_duplicate_dialog_title">Duplicate note</string>
+  <string name="save_duplicate_dialog_message">This note shares its primary field with another note. Save anyway?</string>
   <string name="answering_error_title">데이터베이스 오류</string>
   <string name="answering_error_message">컬렉션 파일을 작성 중 오류가 발생했습니다. 데이타베이스가 엉켰거나 디스크 공간이 부족할 가능성이 있습니다.\n\n 이러한 현상이 자주 발생한다면, 데이터베이스를 점검하여 컬렉션을 수정하고 백업에서 복원하시기 바랍니다. 이를 위해 \'옵션\'을 선택하세요. \n\n 동시에 이는 Ankidroid 버그이므로 오류 보고를 해주시면 점검해 보겠습니다.</string>
   <string name="answering_error_report">오류 보고서</string>

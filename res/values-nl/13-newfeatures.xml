@@ -39,18 +39,5 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="new_version_features">
-    <item>Veel foutcorrecties</item>
-    <item>Nieuw: mogelijkheid om studie aan te passen met verbeterde selectie op kenmerken</item>
-    <item>Nieuw: voorvertoning van kaarten in memobewerker (experimenteel)</item>
-    <item>Nieuw: Overschrijven van lettertypevoorkeur aanvullend op het standaard lettertype</item>
-    <item>Nieuw: \"Kanji Info\" functie (ingeschakeld in Voorkeuren&gt;Overhoren&gt;Kanji Info)</item>
-    <item>Verbeterde Aedict integratie</item>
-    <item>Ondersteuning voor Samsung meerdere vensters</item>
-    <item>Enkele problemen met TTS opgelost</item>
-    <item>Bijgewerkte vertalingen</item>
-    <item>Verwijderd: Controle op ongebruikte media tijdens het verwijderen van sets</item>
-    <item>Aanzienlijk versnelling bij het verminderen van gefilterde sets</item>
-    <item>Verwijderd: upgrade-assistent</item>
-  </string-array>
+  <string-array name="new_version_features"/>
 </resources>

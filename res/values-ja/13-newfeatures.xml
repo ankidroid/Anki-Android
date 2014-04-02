@@ -39,18 +39,5 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="new_version_features">
-    <item>多くのバグの修正</item>
-    <item>タグ検索を使った革新的なカスタム学習オプション</item>
-    <item>ノートエディターでの新しいカードプレビュー 機能（テスト段階）</item>
-    <item>既定のフォント以外のフォント設定をオーバーライドします</item>
-    <item>新しい「漢字情報」機能 (環境設定で有効になっている -&gt; -&gt; 漢字情報の見直し）</item>
-    <item>Aedict 統合の強化</item>
-    <item>Samsung Multi-Windowをサポート</item>
-    <item>TTS問題の解決</item>
-    <item>訳文の更新</item>
-    <item>単語帳の削除時の未使用メディアのチェック廃止</item>
-    <item>フィルター単語帳の作成時間の高速化</item>
-    <item>アップグレード ウィザードの削除。</item>
-  </string-array>
+  <string-array name="new_version_features"/>
 </resources>

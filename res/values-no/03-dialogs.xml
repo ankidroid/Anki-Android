@@ -63,6 +63,8 @@
   <string name="reset_card_dialog_title">Tilbakestille fremdrift for kort</string>
   <string name="reset_card_dialog_message">Dette tilbakestiller læringshistorikken for alle kortene i dette notatet (de kommer til å se ut som nye kort).\nVil du fortsette?</string>
   <string name="reset_card_dialog_confirmation">All cards of this note reset</string>
+  <string name="save_duplicate_dialog_title">Duplicate note</string>
+  <string name="save_duplicate_dialog_message">This note shares its primary field with another note. Save anyway?</string>
   <string name="answering_error_title">Databasefeil</string>
   <string name="answering_error_message">Det oppstod en feil under skriving til samlingen. Dette kan ha sammenheng med en ødelagt database eller manglende plass på disken.\n\nHvis det skjer igjen, vennligst prøv å kontrollere databasen, reparere samlingen, eller gjenopprette den fra en sikkerhetskopi. Klikk i så fall \'valg\'.\n\nUansett kan det hende at det er en feil i AnkiDroid; så vennligst rapporter feilen, sånn at vi kan undersøke tilfellet.</string>
   <string name="answering_error_report">Rapporter feil</string>

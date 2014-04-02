@@ -52,7 +52,7 @@
   <string name="note_type">Nottyp</string>
   <string name="card_type">Korttyp</string>
   <string name="sdcard_missing_message">SD-kortet är inte tillgängligt eftersom det används som USB-minne. Koppla ur USB:n för att komma åt din kortlek.</string>
-  <string name="show_whiteboard">Sätt på whiteboard</string>
+  <string name="show_whiteboard">Aktivera whiteboard</string>
   <string name="hide_whiteboard">Stäng av whiteboard</string>
   <string name="clear_whiteboard">Rensa whiteboard</string>
   <string name="cram_edit_warning">Kortredigering ej tillåten under råplugg</string>
@@ -127,6 +127,19 @@
   <string name="sched_end">(slut)</string>
   <string name="sched_unbury_button">För att se dem nu, klicka på knappen \'\'Visa dolda kort\'\'.</string>
   <string name="sched_has_buried">En del relaterade eller dolda kort undanhålls till en senare session.</string>
+  <string-array name="browser_column1_headings">
+    <item>Search Field</item>
+  </string-array>
+  <string-array name="browser_column2_headings">
+    <item>Answer</item>
+    <item>Card</item>
+    <item>Deck</item>
+    <item>Lapses</item>
+    <item>Note</item>
+    <item>Question</item>
+    <item>Reviews</item>
+    <item>Tags</item>
+  </string-array>
   <string-array name="dynOrderLabels">
     <item>Äldst först</item>
     <item>Slumpmässigt</item>

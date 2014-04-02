@@ -63,6 +63,8 @@
   <string name="reset_card_dialog_title">Сброс учебного прогресса карты</string>
   <string name="reset_card_dialog_message">Удаление прогресса обучения для всех карт к этой заметке (они будут выглядеть как новые).\nПродолжить?</string>
   <string name="reset_card_dialog_confirmation">Сброс всех карт этой записки</string>
+  <string name="save_duplicate_dialog_title">Duplicate note</string>
+  <string name="save_duplicate_dialog_message">This note shares its primary field with another note. Save anyway?</string>
   <string name="answering_error_title">Ошибка базы данных</string>
   <string name="answering_error_message">Произошла ошибка при записи в коллекцию. Это может быть связано с тем, что база данных была ранее повреждена или что недостаточно места на диске.\n\nЕсли это случается часто, попробуйте проверить базу данных, восстановить коллекцию или восстановить из резервной копии. Нажмите для этого на «Настройки».\n\nОднако, дело может быть в ошибке  AnkiDroid; Пожалуйста, сообщите об ошибке, чтобы мы могли проверить это.</string>
   <string name="answering_error_report">Сообщить об ошибке</string>

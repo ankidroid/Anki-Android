@@ -85,11 +85,11 @@
   <string name="preferences_title">Voorkeuren</string>
   <string name="deckpreferences_title">Deckvoorkeuren</string>
   <string name="sync_conflict_message">Je leersets hier en die op AnkiWeb verschillen zodanig, dat zij niet kunnen worden samengevoegd. Dus het is noodzakelijk om de leersets van een kant te overschrijven.\n\nWil je de lokale leersets uploaden, de leersets van AnkiWeb downloaden?</string>
-  <string name="sync_conflict_local">Uploaden</string>
-  <string name="sync_conflict_remote">Downloaden</string>
-  <string name="sync_conflict_remote_confirm">Weer u zeker dat u de collectie van de server wilt downloaden? Deze zal u lokale collectie overschrijven.</string>
+  <string name="sync_conflict_local">Upload</string>
+  <string name="sync_conflict_remote">Download</string>
+  <string name="sync_conflict_remote_confirm">Weet u zeker dat u de collectie van de server wilt downloaden? Deze actie zal uw lokale collectie overschrijven.</string>
   <string name="sync_conflict_local_confirm">Weet u zeker dat u de lokale collectie wilt uploaden? Deze zal uw collectie op de server overschrijven.</string>
-  <string name="sync_conflict_cancel">Annuleer Synchroniseren</string>
+  <string name="sync_conflict_cancel">Annuleren</string>
   <string name="sync_prepare_syncing">Synchronisatie wordt voorbereid...</string>
   <string name="sync_preparing_full_sync_message">Volledige synchronisatie wordt voorbereid...</string>
   <string name="sync_uploading_message">Uploaden...</string>

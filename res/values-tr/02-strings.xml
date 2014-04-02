@@ -127,6 +127,19 @@
   <string name="sched_end">(bitiş)</string>
   <string name="sched_unbury_button">Onları şu an görmek için, Görünür Yap düğmesine basın.</string>
   <string name="sched_has_buried">Bazı ilgili veya gizli kartlar sonraki bir seansa kadar geciktirildi.</string>
+  <string-array name="browser_column1_headings">
+    <item>Search Field</item>
+  </string-array>
+  <string-array name="browser_column2_headings">
+    <item>Answer</item>
+    <item>Card</item>
+    <item>Deck</item>
+    <item>Lapses</item>
+    <item>Note</item>
+    <item>Question</item>
+    <item>Reviews</item>
+    <item>Tags</item>
+  </string-array>
   <string-array name="dynOrderLabels">
     <item>En eskiler ilk önce</item>
     <item>Rastgele</item>

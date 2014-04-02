@@ -63,6 +63,8 @@
   <string name="reset_card_dialog_title">بازنشانی پیشرفت کارت</string>
   <string name="reset_card_dialog_message">پیشرفت آموزش برای همه کارتهای این یادداشت بازنشانی می شود ( آن وقت بنظر می رسد که کارتها جدید است).\nواقعا ادامه می دهید؟</string>
   <string name="reset_card_dialog_confirmation">همه کارتهای این یادداشت بازنشانی می شود</string>
+  <string name="save_duplicate_dialog_title">Duplicate note</string>
+  <string name="save_duplicate_dialog_message">This note shares its primary field with another note. Save anyway?</string>
   <string name="answering_error_title">خطای پایگاه داده</string>
   <string name="answering_error_message">یک خطا هنگام نوشتن مجموعه رخ داده است. که می تواند مربوط به پایگاه داده آسیب دیده و یا فضای ناکافی هارد باشد.\n\nاگر در اغلب موارد این حالت اتفاق می افتد, لطفا پایگاه داده را بررسی کنید, مجموعه را تعمیر کنید یا آن را از فایل پشتیبان بازگردانید.  به این منظور روی \'تنظیمات\' کلیک کنید .\n\nدر صورتی که درست نشد, احتمالا اشکال از برنامه آنکی دروید است; لطفا خطایی را که ما می توانیم آن را بررسی کنیم گزارش کنید.</string>
   <string name="answering_error_report">گزارش خطا</string>

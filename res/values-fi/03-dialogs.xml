@@ -63,6 +63,8 @@
   <string name="reset_card_dialog_title">Nollaa kortin edistyminen</string>
   <string name="reset_card_dialog_message">Tämä nollaa edistymistiedot kaikilta huomautuksen korteilta (jonka jälkeen ne näyttävät uusilta korteilta).\nHaluatko varmasti jatkaa?</string>
   <string name="reset_card_dialog_confirmation">Huomautuksen kaikki kortit nollattiin</string>
+  <string name="save_duplicate_dialog_title">Duplicate note</string>
+  <string name="save_duplicate_dialog_message">This note shares its primary field with another note. Save anyway?</string>
   <string name="answering_error_title">Tietokantavirhe</string>
   <string name="answering_error_message">Tapahtui virhe kirjoittaessa kokoelmaan. Tämä voi aiheutua korruptoituneesti tietokannasta tai liian vähäisestä levytilasta.\n\nJos tämä tapahtuu usein yritä tarkastaa tietokanta, korjata kokoelma tai palauttaa se varmuuskopioista. Käynnistä \"asetukset\" tehdäksesi tämän.\n\nKyseessä voi olla myös vika AnkiDroidissa, joten ilmoita tästä meille jotta voimme tarkastaa asian.</string>
   <string name="answering_error_report">Ilmoita viasta</string>

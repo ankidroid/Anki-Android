@@ -55,7 +55,7 @@
   <string name="download_cancel">Zrušiť preberanie</string>
   <string name="shared_decks">Zdieľané balíčky</string>
   <string name="loading_shared_decks">Načítavam dostupné zdieľané balíčky...</string>
-  <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Terms and Conditions</a></string>
+  <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms"> Obchodné podmienky</a></string>
   <string name="cancel_download">Zrušiť preberanie</string>
   <string name="resume_download">Obnoviť preberanie</string>
   <string name="pause_download">Pozastaviť preberanie</string>
@@ -72,7 +72,7 @@
   <string name="log_in">Prihlásiť sa</string>
   <string name="sign_up_description">Nemáte AnkiWeb účet? Je zadarmo!</string>
   <string name="sign_up">Zaregistrovať sa</string>
-  <string name="sign_up_terms">By tapping <i>Sign up</i>, you confirm that you have read and agree to our <a href="https://ankiweb.net/account/terms">terms of use</a>.</string>
+  <string name="sign_up_terms">Ťuknutím na <i>Zaregistrovať</i> potvrdzujete, že ste prečítali a súhlasíte s našimi <a href="https://ankiweb.net/account/terms"> podmienkami použitia</a>.</string>
   <string name="logged_as">Prihlásený ako</string>
   <string name="log_out">Odhlásiť</string>
   <string name="alert_logging_message">Prebieha prihlasovanie, počkajte prosím...</string>
@@ -88,7 +88,7 @@
   <string name="sync_conflict_local">Nahrať</string>
   <string name="sync_conflict_remote">Stiahnuť</string>
   <string name="sync_conflict_remote_confirm">Naozaj chcete stiahnuť zbierku zo serveru? Berte na vedomie, že táto prepíše vašu aktuálnu zbierku.</string>
-  <string name="sync_conflict_local_confirm">Naozaj chcete nahrať vašu aktuálnu zbierku? Berte na vedomie, že táto prepíše vašu zbierku uloženú na serveri.</string>
+  <string name="sync_conflict_local_confirm">Naozaj chcete na server nahrať vašu aktuálnu zbierku? Vezmite na vedomie, že takto sa prepíše zbierka momentálne uložená na serveri.</string>
   <string name="sync_conflict_cancel">Zrušiť synchronizáciu</string>
   <string name="sync_prepare_syncing">Pripravuje sa synchronizácia...</string>
   <string name="sync_preparing_full_sync_message">Pripravuje sa úplná synchronizácia...</string>
@@ -97,7 +97,7 @@
   <string name="sync_reload_message">Znovu nahrávam zbierku...</string>
   <string name="sync_title">Synchronizácia</string>
   <string name="sync_downloading_media">Sťahovanie médií %1$d/%2$d...</string>
-  <string name="sync_log_uploading_message">Úplná synchronizácia z miestnej</string>
+  <string name="sync_log_uploading_message">Úplná synchronizácia z miestnej zbierky</string>
   <string name="sync_log_downloading_message">Úplná synchronizácia zo servera</string>
   <string name="sync_log_clocks_unsynchronized">Čas vo vašom prístroji je nepresný o %1$d sekúnd%2$s; Synchronizácia vyžaduje, aby váš čas aj časové pásmo boli nastavené správne, aby sa predišlo chybám. Prosím uistite sa, že dátum, čas a časové pásmo na vašom zariadení sú nastavené správne, potom synchronizáciu zopakujte.</string>
   <string name="sync_log_clocks_unsynchronized_tz">, časové pásmo zariadenia pravdepodobne nie je správne</string>
@@ -120,7 +120,7 @@
   <string name="sync_writing_db">Zapisujem zmeny do databázy...</string>
   <string name="sync_download_chunk">Sťahujem zmeny...</string>
   <string name="sync_upload_chunk">Nahrávanie zmien...</string>
-  <string name="sync_up_down_size">Nahrávanie: %1$d kb Sťahovanie: %2$d kb</string>
+  <string name="sync_up_down_size">Nahrávanie: %1$d kb\nSťahovanie: %2$d kb</string>
   <string name="sync_generic_error">Vyskytla sa chyba. Skúste to znova neskôr.</string>
   <string name="sync_check_upload_file">Kontrola súboru pred nahrávaním...</string>
   <string name="sync_check_download_file">Kontrolujem stiahnutý súbor...</string>
@@ -131,7 +131,7 @@
   <string name="sync_media_sanity_check">Kontrolujem médiá...</string>
   <string name="sync_media_no_changes">Žiadne zmeny mediálnych súborov.</string>
   <string name="sync_media_success">Mediá boli úspešne synchronizované.</string>
-  <string name="sync_sanity_failed">Po synchronizácii bola zbierka bola v nekonzistentnom stave. Aby sa tento problém vyriešil, AnkiDroid vykoná úplnú synchronizáciu. Zvoľte si, prosím, ktorú stranu by ste chceli zachovať alebo zrušte, ak chcete synchronizovať neskôr.</string>
+  <string name="sync_sanity_failed">Po synchronizácii bola zbierka v nekonzistentnom stave. Pre vyriešenie tohto problému AnkiDroid vykoná úplnú synchronizáciu. Zvoľte prosím, ktorú stranu by ste chceli zachovať alebo postup zrušte, ak chcete synchronizovať neskôr.</string>
   <string name="sync_media_sanity_failed">Synchronizácia médií bola dokončená, ale počet médií nesúhlasí so serverom. Nasledujúca synchronizácia médií bude úplná, aby sa napravili akékoľvek chyby.</string>
   <string name="sync_media_error">Pri synchronizácií mediálnych súborov sa vyskytla chyba.</string>
   <string name="register_error">Vyskytla sa chyba. Skúste to znova neskôr.</string>
@@ -154,6 +154,6 @@
   <string name="upgrade_decks_failed">Tieto balíčky sa nepodarilo aktualizovať:\n%sProsím otvorte ich v pc verzii Anki Desktop a spustite kontrolu databázy. Potom ich môžete importovať cez pc verziu Anki Desktop.</string>
   <string name="upgrade_decks_media_failed">Kopírovanie mediálnych súborov do nového priečinka médií (%1$s) zlyhalo pre tieto balíčky:\n%2$sProsím presuňte tieto mediálne súbory ručne.</string>
   <string name="download_deck">Sťahujem balíček (%d kb).\nProsím počkajte...</string>
-  <string name="sync_sanity_local">Miestne</string>
-  <string name="sync_sanity_remote">Vzdialené</string>
+  <string name="sync_sanity_local">Miestnu</string>
+  <string name="sync_sanity_remote">Vzdialenú</string>
 </resources>

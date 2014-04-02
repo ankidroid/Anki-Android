@@ -39,18 +39,5 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="new_version_features">
-    <item>Poprawki błędów</item>
-    <item>Nowa Nauka niestandardowa z usprawnionym wyborem tagów</item>
-    <item>Nowa funkcja podglądu karty w Edytorze Notatek (eksperymentalne)</item>
-    <item>Nowa opcja zastąp czcionkę dla czcionki domyślnej</item>
-    <item>Nowa opcja \"Kanji Info\" (włączana w Ustawienia-&gt;Przegląd-&gt;Kanji Info)</item>
-    <item>Poprawa integracji z Aedict</item>
-    <item>Wsparcie dla wielu ekranów na urządzeniach Samsung</item>
-    <item>Poprawki błędów TTS</item>
-    <item>Uaktualniono tłumaczenia</item>
-    <item>Usunięcie nieużywanej kontroli mediów podczas usuwania talii</item>
-    <item>Zwiększenie prędkości redukcji talii filtrowanych</item>
-    <item>Kreator usuwania aktualizacji</item>
-  </string-array>
+  <string-array name="new_version_features"/>
 </resources>

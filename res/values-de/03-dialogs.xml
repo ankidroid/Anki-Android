@@ -63,6 +63,8 @@
   <string name="reset_card_dialog_title">Lernfortschritt zurücksetzen</string>
   <string name="reset_card_dialog_message">Dies setzt den Lernfortschritt für alle Karten dieser Notiz zurück (sie sehen danach aus wie neue Karten).\nWirklich fortfahren?</string>
   <string name="reset_card_dialog_confirmation">Alle Karten dieser Notiz zurückgesetzt</string>
+  <string name="save_duplicate_dialog_title">Duplicate note</string>
+  <string name="save_duplicate_dialog_message">This note shares its primary field with another note. Save anyway?</string>
   <string name="answering_error_title">Datenbankfehler</string>
   <string name="answering_error_message">Beim Zugriff auf die Datenbank ist ein Fehler aufgetreten. Dies kann entweder mit einer defekten Datenbank zusammenhängen oder an unzureichendem Speicherplatz liegen.\n\nWenn dies öfter vorkommt, versuchen Sie bitte, die Sammlung zu reparieren oder von einem Backup wiederherzustellen. Klicken Sie dafür auf \'Optionen\'.\n\nNichtsdestoweniger kann aber auch ein AnkiDroid-Fehler der Grund sein; bitte melden Sie den Fehler deshalb, damit wir das überprüfen können.</string>
   <string name="answering_error_report">Fehler melden</string>

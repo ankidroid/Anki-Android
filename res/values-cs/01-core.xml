@@ -50,7 +50,7 @@
   <string name="studyoptions_new_total">Celkem nových karet:</string>
   <string name="studyoptions_total_cards">Celkem karet:</string>
   <string name="studyoptions_eta">Odhadovaný čas (min):</string>
-  <string name="studyoptions_start">Studovat ihned</string>
+  <string name="studyoptions_start">Studovat</string>
   <string name="show_answer">Zobrazit odpověď</string>
   <string name="ease1_successive">Znovu</string>
   <string name="ease2_successive">Těžké</string>

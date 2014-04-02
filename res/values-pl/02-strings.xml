@@ -127,6 +127,19 @@
   <string name="sched_end">(koniec)</string>
   <string name="sched_unbury_button">Aby zobaczyć je teraz, naciśnij przycisk Odkop.</string>
   <string name="sched_has_buried">Niektóre związane lub zakopane karty zostały odroczone do następnej sesji.</string>
+  <string-array name="browser_column1_headings">
+    <item>Search Field</item>
+  </string-array>
+  <string-array name="browser_column2_headings">
+    <item>Answer</item>
+    <item>Card</item>
+    <item>Deck</item>
+    <item>Lapses</item>
+    <item>Note</item>
+    <item>Question</item>
+    <item>Reviews</item>
+    <item>Tags</item>
+  </string-array>
   <string-array name="dynOrderLabels">
     <item>Najstarszy jako pierwszy</item>
     <item>Losowo</item>

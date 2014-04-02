@@ -39,18 +39,5 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="new_version_features">
-    <item>Oprava chyb</item>
-    <item>Nová možnost vlastního studia s vylepšeným výběrem podle štítků</item>
-    <item>Nové funkce náhledu karty v editoru (experimentální)</item>
-    <item>Možnost nahradit výchozí písmo</item>
-    <item>Nové funkce \"Kanji Info\" (povoleno v nastavení -&gt;opakování-&gt;Kanji Info)</item>
-    <item>Zlepšena integrace Aedict slovníku</item>
-    <item>Podpora pro Samsung Multi-Window</item>
-    <item>Opraveny některé problémy s TTS</item>
-    <item>Aktualizované překlady</item>
-    <item>Odstranění kontroly nepoužívaných médií při odstraňování balíčku</item>
-    <item>Výrazné zvýšení rychlosti při filtrování balíčku</item>
-    <item>Odebrán průvodce upgradem</item>
-  </string-array>
+  <string-array name="new_version_features"/>
 </resources>

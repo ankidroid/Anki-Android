@@ -21,7 +21,7 @@
     <item><![CDATA[The next card is shown now.<br />The idea is straightforward: Just like in &quot;real world&quot; paper flashcards, you write a question on the front and the answer on the back side of your cards.<br />(click the button to show the back side)]]></item> 
     <item><![CDATA[&quot;What is the capital of Burkina Faso?&quot;<br />Think a bit about the answer and click then &quot;show answer&quot;]]></item> 
     <item><![CDATA[Above every answer buttons, you find information about the time, after which the card will be shown again when answered by this button.]]></item> 
-    <item><![CDATA[The intention is to show you the card again, immediately before you would forget it. Empirical studies have shown that by this means information can be learned most efficiently.]]></item> 
+    <item><![CDATA[Eesmärk on näidata teile kaarti uuesti, vahetult enne kui te unustate selle. Empiirilised uuringud on näidanud, et see tähendab, et niimoodi teavet saab õppida kõige tõhusamalt.]]></item> 
     <item><![CDATA[Some words about the organisation in AnkiDroid:<br /><br>All information has to be put into pairs of question and answer. If you want to learn in the other direction, you should create another card with swapped information.]]></item> 
     <item><![CDATA[Cards are put together in decks and can there be organised by help of all sorts of tags.]]></item> 
     <item><![CDATA[There are mainly two ways of getting new cards:<br />You either add premade decks of other users (choose &quot;shared decks&quot; in the decks summary) or create them by yourself.]]></item> 
@@ -36,7 +36,7 @@
     <item><![CDATA[Let\'s assume you want to learn the world\'s capitals. Let the question be...<br />(click on one of the buttons to show the next card)]]></item> 
     <item><![CDATA[&quot;Ouagadougou&quot; is the right answer. <br />You didn\'t know it? Click &quot;again&quot; to see the card again in a couple of minutes. Otherwise, click on the other buttons, depending on the easiness of the answer.]]></item> 
     <item><![CDATA[This time period is calculated of the last time you answered the card, the current ease choice and ease choices of previous answers of that card.]]></item> 
-    <item><![CDATA[If you want to learn more about spaced repetition, visit:<br>http://en.wikipedia.org/wiki/Spaced_repetition_system]]></item> 
+    <item><![CDATA[Kui soovite rohkem teada saada vahedega kordamine, külasta: <br>http://en.wikipedia.org/wiki/Spaced_repetition_system]]></item> 
     <item><![CDATA[Don\'t worry, this can be done automatically. There is no need of inserting the same information twice.]]></item> 
     <item><![CDATA[You will learn about that quickly when you start to use AnkiDroid.]]></item> 
     <item><![CDATA[You\'ll find thousands of premade decks to download and there are probably some which are useful for you.]]></item> 

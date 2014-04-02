@@ -39,18 +39,5 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="new_version_features">
-    <item>رفع بسیاری از اشکالات</item>
-    <item>تنظیمات مطالعه سفارشی جدید با اصلاح انتخاب برچسب</item>
-    <item>پیش نمایش ویژگیهای کارت جدید در ویرایشگر یادداشت (آزمایشی)</item>
-    <item>نادیده گرفتن الویت قلم جدید در افزودن به قلم پیش فرض</item>
-    <item>از ویژگی های جدید \"اطلاعت کانجی (زبان ژاپنی)\" (فعال شده در تنظیمات -&gt; مرور--&gt; اطلاعات کانجی)</item>
-    <item>بهبود یکپارچگی Aedict</item>
-    <item>پشتیبانی از Multi-Window (چند پنجره ای) برای سامسونگ</item>
-    <item>رفع برخی از مشکلات TTS</item>
-    <item>ترجمه به روز شده</item>
-    <item>حذف بررسی رسانه استفاده نشده زمانیکه دسته ها پاک می شوند</item>
-    <item>افزایش قابل توجه سرعت دسته های فیلتر شده</item>
-    <item>حذف برنامه ارتقاء</item>
-  </string-array>
+  <string-array name="new_version_features"/>
 </resources>

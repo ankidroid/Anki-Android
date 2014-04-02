@@ -127,6 +127,19 @@
   <string name="sched_end">(einde)</string>
   <string name="sched_unbury_button">Om ze nu te zien, raak de knop deblokkeren aan.</string>
   <string name="sched_has_buried">Sommige gerelateerde of geblokkeerde kaarten zijn vertraagd tot een latere sessie.</string>
+  <string-array name="browser_column1_headings">
+    <item>Search Field</item>
+  </string-array>
+  <string-array name="browser_column2_headings">
+    <item>Answer</item>
+    <item>Card</item>
+    <item>Deck</item>
+    <item>Lapses</item>
+    <item>Note</item>
+    <item>Question</item>
+    <item>Reviews</item>
+    <item>Tags</item>
+  </string-array>
   <string-array name="dynOrderLabels">
     <item>Langst niet gezien eerst</item>
     <item>Willekeurig</item>

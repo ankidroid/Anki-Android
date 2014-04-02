@@ -57,12 +57,14 @@
   <string name="notify_title">AnkiDroid atualizado</string>
   <string name="notify_message">Baixar uma nova versão</string>
   <string name="notification_title">Confirmar atualização do AnkiDroid</string>
-  <string name="preview_title">Preview</string>
+  <string name="preview_title">Pré visualizar</string>
   <string name="notification_message">Uma nova versão do AnkiDroid está disponível no Android Market.\n\nVocê gostaria de instalá-lo?</string>
   <string name="notification_stop">Não me notificar novamente dessa atualização</string>
   <string name="reset_card_dialog_title">Redefinir progresso do cartão</string>
   <string name="reset_card_dialog_message">Isso redefine o progresso de aprendizagem para todos os cartões desta nota (eles vão parecer como cartões novos). \n Realmente continuar?</string>
   <string name="reset_card_dialog_confirmation">Redefinir todos os cartões desta nota</string>
+  <string name="save_duplicate_dialog_title">Duplicate note</string>
+  <string name="save_duplicate_dialog_message">This note shares its primary field with another note. Save anyway?</string>
   <string name="answering_error_title">Erro de banco de dados</string>
   <string name="answering_error_message">Ocorreu um erro ao gravar à coleção. Isso poderia estar relacionado com um banco de dados corrompido ou espaço insuficiente no disco.\n\nSe isso acontece mais frequentemente, tente verificar o banco de dados, repare a coleção ou restaure-a de um backup. Clique em \'Opções\' para isso.\n\nEm todo caso, isso poderia ser um bug do AnkiDroid também; relate o erro para que possamos verificar isso.</string>
   <string name="answering_error_report">Reportar erro</string>
@@ -96,21 +98,21 @@
   <string name="deck_upgrade_via_anki_desktop"><![CDATA[If you currently have an up-to-date version of your AnkiDroid collection in the Anki desktop software, you can upgrade from there and then download your upgraded collection by syncing with AnkiWeb.<br><br>Alternatively, you can copy your AnkiDroid collection to your PC using USB, then upgrade the collection and copy back to AnkiDroid.]]></string>
   <string name="deck_upgrade_auto_upgrade"><![CDATA[Please install and start Anki Desktop version 2.0.4 or greater to upgrade your collection, then sync your upgraded collection with AnkiWeb and press the "Download" button.<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_2:_Using_AnkiWeb_sync">More detailed information on upgrading using AnkiWeb</a>]]></string>
   <string name="deck_upgrade_manual"><![CDATA[Please copy all of your *.anki files (and any *.media folders) from your AnkiDroid folder to your Anki Desktop folder, and then install and start Anki Desktop version 2.0.4 or greater to upgrade your collection.<br><br>When the upgrade is completed, please export your collection from Anki2 and copy the collection.apkg file to your AnkiDroid folder and press the Import button below.<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_1:_Using_USB_(recommended)">More detailed information on upgrading using USB.</a>]]></string>
-  <string name="upgrade_deck_cancelled_title">Upgrade Cancelled</string>
+  <string name="upgrade_deck_cancelled_title">Atualização cancelada</string>
   <string name="upgrade_deck_cancelled_description">The upgrade attempt was cancelled, please try again one of the available upgrade methods.</string>
   <string name="upgrade_deck_web_upgrade_failed">The upgrade process was unsuccessful. Please try again, or choose a different upgrade method</string>
   <string name="upgrade_deck_web_upgrade_exceeds">The total compressed size of your Anki1 decks exceeds the limit that the server can process (50 mb), please try upgrading with a different method.</string>
   <string name="upgrade_deck_web_upgrade_sdcard">The upgrade was completed, but there was an error while unpacking the resulting collection, please ensure that you have enough available disk (needed %1$d mb) and try again, or try upgrading with a different method.</string>
   <string name="export_progress_title">Collection Export</string>
-  <string name="export_progress_exporting">Exporting collection, please wait&#8230;</string>
+  <string name="export_progress_exporting">A exportar coleção, por favor aguarde...</string>
   <string name="upgrade_deck_export_successful">Your old collection has been successfully exported, proceeding with the upgrade process.</string>
   <string name="upgrade_deck_export_error">Error during the export of your old collection. Would you like to continue with the upgrade process anyway (your old collection will be lost)?</string>
   <string name="upgrade_deck_sync_from_ankiweb">Sync from AnkiWeb</string>
   <string name="upgrade_deck_have_you_synced">Are you sure you have upgraded your collection with Anki Desktop 2 and synced with AnkiWeb?</string>
-  <string name="upgrade_deck_dont_upgrade">Don\'t Upgrade</string>
-  <string name="import_unpacking">Unpacking archive.\nPlease wait&#8230;</string>
-  <string name="importing_collection">Importing collection.\nPlease wait&#8230;</string>
-  <string name="import_media_count">Importing media files %1$d%%\nPlease wait&#8230;</string>
+  <string name="upgrade_deck_dont_upgrade">Não atualizar</string>
+  <string name="import_unpacking">A descompactar o arquivo.\n Por favor aguarde...</string>
+  <string name="importing_collection">A importar coleção.\nAguarde, por favor...</string>
+  <string name="import_media_count">A importar os arquivos mídia %1$d%%\nPor favor aguarde...</string>
   <string name="import_update_counts">Updating deck counts.\nPlease wait&#8230;</string>
   <string name="import_add_progress">• Unpacking archive %1$s\n• Import of notes %2$d%%\n• Import of cards %3$d%%\n• Cleanup %4$s</string>
   <string-array name="about_content">

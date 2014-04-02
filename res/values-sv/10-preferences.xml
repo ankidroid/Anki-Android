@@ -75,7 +75,7 @@
   <string name="fade_scrollbars">Dölj rullister</string>
   <string name="fade_scrollbars_summ">Dölj automatiskt rullister för kort när du inte scrollar</string>
   <string name="show_whiteboard_summ">Låter dig skriva på skärmen</string>
-  <string name="whiteboard_stroke_width">Linjevidd för Whiteboard</string>
+  <string name="whiteboard_stroke_width">Linjebredd för whiteboard</string>
   <string name="whiteboard_stroke_width_summ">Linjebredd: XXX</string>
   <string name="whiteboard_black">Monokrom</string>
   <string name="whiteboard_black_summ">Använd svartvit istället för färgad penna (för enheter med lite minne, fungerar inte i nattläge)</string>
@@ -98,7 +98,7 @@
   <string name="reset_messages">Återställ meddelanden</string>
   <string name="reset_messages_question">Visa aktuella meddelanden igen?</string>
   <string name="reset_messages_summ">Visa aktuellt meddelande om AnkiDroid senare</string>
-  <string name="reset_all_question">Återställ alla språk, gränssnittskomponenter, whiteboardtavlor och ordlistor?</string>
+  <string name="reset_all_question">Vill du återställa alla språk, gränssnittskomponenter, whiteboardtavlor och ordlistor?</string>
   <string name="reset_confirmation">Alla tillstånd återsätllda</string>
   <string name="use_ruby_support">Stöd för ruby-kommentarer</string>
   <string name="use_ruby_support_summ">Om tecknet \'[\' och  \']\' hittas så hanteras inramad text som ruby-anteckning</string>
@@ -169,7 +169,7 @@
   <string name="default_font">Standardteckensnitt</string>
   <string name="default_font_summ">Teckensnitt som används för text som inte har något teckensnitt angivet. Anpassade teckensnitt ska ligga på SD-kortet i en mapp \'fonts\' i din AnkiDroid-mapp.</string>
   <string name="override_font">Överskrid font</string>
-  <string name="override_font_summ">A font that will be used instead of any fonts specified, including the default font. Custom fonts should be installed in a folder called \'fonts\' in your AnkiDroid folder.</string>
+  <string name="override_font_summ">Ett typsnitt som kommer användas istället för specificerade typsnitt, inklusive standardtypsnittet. Egna typsnitt bör placeras i en mapp som heter \'fonts\' i din AnkiDroid-mapp.</string>
   <string name="language">Språk</string>
   <string name="language_summ">Välj det språk AnkiDroid ska använda. Just nu: XXX</string>
   <string name="language_system">Systemspråk</string>
@@ -186,7 +186,7 @@
   <string name="eink_display">E-inkdisplay optimering</string>
   <string name="eink_display_summ">Inaktivera alla animationer och gör optimering för E-Ink-skärmar</string>
   <string name="vertical_centering">Centrera kortinnehåll vertikalt</string>
-  <string name="vertical_centering_summ">Center the content of the cards vertically instead of showing it at the top.</string>
+  <string name="vertical_centering_summ">Centrera innehållet i kort vertikalt istället för att visa allt längst upp.</string>
   <string name="pref_cat_backup">Säkerhetskopior</string>
   <string name="pref_backup">Använd säkerhetskopior</string>
   <string name="pref_backup_summ">Skapa automatiskt en säkerhetskopia innan en kortlek öppnas (en gång om dagen)</string>
@@ -214,9 +214,9 @@
   <string name="fix_arabic_text_summ">Partiell lösning för Android-plattformens begränsade stöd för arabiska. När detta är aktiverat kan kort ej ändras.</string>
   <string name="convert_fen_text">Stöd för schack-notation</string>
   <string name="filter_external_data">Filtrera externt data</string>
-  <string name="filter_external_data_summ">Transform messages from external applications to a natty view.</string>
+  <string name="filter_external_data_summ">Transformerar meddelanden från externa program till en elegantare form.</string>
   <string name="filter_google_translate">Från Google Translate</string>
-  <string name="filter_google_translate_summ">Just save source word and translation</string>
+  <string name="filter_google_translate_summ">Spara endast källord och översättning</string>
   <string name="convert_fen_text_summ">Rita schackbräde från Forsyth Edwards-notation. Notationen måste omslutas av taggen [fen][/fen].</string>
   <string name="sync_set_journal_mode">Ställer in korrekt journalläge...</string>
   <string name="async_mode">Asynkront läge</string>
@@ -240,8 +240,8 @@
   <string name="pref_simple_interface_summ">Snabbar upp kortvisning men stöder inte alla html-funktioner</string>
   <string name="pref_simple_interface_exclude_tags">Normalt gränssnitt för tagg</string>
   <string name="pref_simple_interface_exclude_tags_summ">Använd inte enkelt gränssnitt för dessa taggar: XXX</string>
-  <string name="pref_force_quick_update_title">Force quick update of Webview</string>
-  <string name="pref_force_quick_update_summary">Enabling this reduces flickering when flipping cards, but might cause the application to crash on some devices.</string>
+  <string name="pref_force_quick_update_title">Tvinga snabb uppdatering av Webview</string>
+  <string name="pref_force_quick_update_summary">Aktivering av detta minskar flimmer vid kortbyte, men kan få programmet att crasha på vissa enheter.</string>
   <string name="deck_conf_deck_name">Kortleksnamn</string>
   <string name="deck_conf_deck_description">Kortleksbeskrivning</string>
   <string name="deck_conf_pref_cat_options">Alternativ</string>
@@ -293,7 +293,7 @@
   <string name="pref_cat_tibetan">Stöd för tibetanska</string>
   <string name="pref_cat_languages_advanced">Avancerat teckensnittsstöd</string>
   <string name="pref_enable_tibetan">Aktivera stöd för tibetanska</string>
-  <string name="pref_enable_tibetan_summ">Enables tibetan typeface for card browser and card editor. Typeface should be provided in /mnt/sdard/fonts/DDC_Uchen.ttf.</string>
+  <string name="pref_enable_tibetan_summ">Aktiverar tibetanskt typsnitt för kortbläddraren och kortredigeraren. Typsnittet bör finnas tillgängligt som /mnt/sdard/fonts/DDC_Uchen.ttf.</string>
   <string name="pref_browser_editor_font">Teckensnitt för utforskare och redigerare</string>
   <string name="pref_browser_editor_font_summ">Standardteckensnitt att använda i kort-utforskaren och -redigeraren. Anpassade teckensnitt ska ligga på SD-kortet i en mapp \'fonts\' i din AnkiDroid-mapp.</string>
   <string name="deck_conf_cram_filter">Filter</string>

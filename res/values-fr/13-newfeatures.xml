@@ -39,18 +39,5 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="new_version_features">
-    <item>Beaucoup de bugs corrigés</item>
-    <item>Nouvelle option de révision personnalisée avec sélection des étiquettes améliorée</item>
-    <item>Nouvelle fonctionnalité d\'aperçu de la carte dans l\'éditeur (expérimental)</item>
-    <item>Nouvelle option de changement de fonte en complément de la fonte par défaut</item>
-    <item>Nouvelle fonctionnalité  «Kanji info» (activer dans préférence-&gt;révisions-&gt;Kanji info)</item>
-    <item>Integration de Aedict améliorée</item>
-    <item>Compatibilité avec le système multi-fenêtre Samsung</item>
-    <item>Correction de quelques problèmes TTS</item>
-    <item>Traductions mises à jour</item>
-    <item>Suppression des media inutiles en cas de suppression des paquets</item>
-    <item>Augmentation significative des performances lors de la réduction des paquets filtrés</item>
-    <item>Suppression de l\'assistant de mise à niveau</item>
-  </string-array>
+  <string-array name="new_version_features"/>
 </resources>

@@ -42,7 +42,7 @@
   <string name="CardEditorCancelButton">Cancelar</string>
   <string name="CardEditorSaveButton">Guardar</string>
   <string name="CardEditorLaterButton">Mais Tarde</string>
-  <string name="CardEditorPreviewButton">Preview</string>
+  <string name="CardEditorPreviewButton">Pré visualizar</string>
   <string name="CardEditorLaterMessage">Informação guardada para mais tarde</string>
   <string name="CardEditorCardDeck">Baralho de Cartões: %s</string>
   <string name="CardEditorNoteDeck">Baralho de Notas: %s</string>
@@ -50,7 +50,7 @@
   <string name="CardEditorTags">Etiquetas: %1$s</string>
   <string name="add_new_tag">Adicionar nova etiqueta</string>
   <string name="note_type">Tipo de nota</string>
-  <string name="card_type">Card type</string>
+  <string name="card_type">Tipo de cartão</string>
   <string name="sdcard_missing_message">Cartão SD não está disponível porque ele está sendo usado em armazenamento USB. Desconecte o USB para acessar seus decks.</string>
   <string name="show_whiteboard">Mostrar Quadro</string>
   <string name="hide_whiteboard">Esconder Quadro</string>
@@ -71,7 +71,7 @@
   <string name="close">Fechar</string>
   <string name="select">Selecionar</string>
   <string name="saving_changes">A guardar as  alterações...</string>
-  <string name="reordering_cards">Reordering cards...</string>
+  <string name="reordering_cards">Reordenação de cartões ...</string>
   <string name="studyoptions_welcome_title">Bem-vindo ao AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">Nenhum armazenamento externo disponível</string>
   <string name="studyoptions_no_external_storage_message">Nenhum armazenamento externo está disponível neste momento. AnkiDroid precisa de ter acesso ao cartão SD para ler e carregar os seus baralhos. Verifique se o cartão SD está montado e tente novamente.</string>
@@ -114,19 +114,32 @@
   <string name="import_importing">A Importar cartões. \nPor favor aguarde...</string>
   <string name="import_hint">Para importar cartões, coloque o ficheiro apkg na pasta %s e prima ok</string>
   <string name="upgrade_import_no_file_found">Não foi encontrado %1$s ficheiro para importar</string>
-  <string name="study_options">Options</string>
+  <string name="study_options">Opções</string>
   <string name="custom_study">Estudo personalizado</string>
   <string name="dyn_deck_desc">Este é um baralho especial para estudar fora do horário normal. Os cartões irão automaticamente voltar para os seus baralhos originais após a revisão. Eliminando este baralho da lista de baralhos irá enviar os cartões restantes para o seu baralho original.</string>
   <string name="exit_wizard">Saír do assistente</string>
   <string name="steps_error">Steps must be numbers greater than 0</string>
-  <string name="steps_min_error">At least one step is required</string>
-  <string name="custom_study_invalid_number">Invalid number</string>
+  <string name="steps_min_error">É necessário pelo menos um passo</string>
+  <string name="custom_study_invalid_number">Número inválido</string>
   <string name="template_error">Template error:</string>
   <string name="template_error_detail">There is an error in the template of this card.</string>
   <string name="template_error_fix">Please use the card editor on the desktop client to fix the error.</string>
-  <string name="sched_end">(end)</string>
+  <string name="sched_end">(fim)</string>
   <string name="sched_unbury_button">To see them now, tap the Unbury button.</string>
   <string name="sched_has_buried">Some related or buried cards were delayed until a later session.</string>
+  <string-array name="browser_column1_headings">
+    <item>Search Field</item>
+  </string-array>
+  <string-array name="browser_column2_headings">
+    <item>Answer</item>
+    <item>Card</item>
+    <item>Deck</item>
+    <item>Lapses</item>
+    <item>Note</item>
+    <item>Question</item>
+    <item>Reviews</item>
+    <item>Tags</item>
+  </string-array>
   <string-array name="dynOrderLabels">
     <item>Mais antigos primeiro</item>
     <item>Aleatório</item>
@@ -141,8 +154,8 @@
     <item quantity="other">%1$d cards studied in %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
-    <item quantity="one">1 minute</item>
-    <item quantity="other">%1$d minutes</item>
+    <item quantity="one">1 minuto</item>
+    <item quantity="other">%1$d minutos</item>
   </plurals>
   <plurals name="factadder_cards_added">
     <item quantity="one">1 cartão adicionado</item>

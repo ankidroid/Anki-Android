@@ -112,7 +112,7 @@
   <string-array name="leech_action_labels">
     <item>Dať kartu bokom</item>
     <item>Iba pridať štítok</item>
-    <item>Reset as new</item>
+    <item>Obnoviť ako nový</item>
   </string-array>
   <string-array name="new_order_labels">
     <item>Nové karty v náhodnom poradí</item>
@@ -138,17 +138,17 @@
     <item>Obmedziť na konkrétne štítky</item>
   </string-array>
   <string-array name="add_to_cur_labels">
-    <item>Use current deck</item>
-    <item>Decide by note type</item>
+    <item>Použiť aktuálny balíček</item>
+    <item>Rozhodnúť podľa typu poznámky</item>
   </string-array>
   <string-array name="new_spread_labels">
-    <item>Mix new cards and reviews</item>
-    <item>New cards after reviews</item>
-    <item>New cards before reviews</item>
+    <item>Zmiešať nové karty a opakovania</item>
+    <item>Nové karty po opakovaní</item>
+    <item>Nové karty pred opakovaním</item>
   </string-array>
   <string-array name="cards_for_tag_filtered_deck_labels">
-    <item>All cards</item>
-    <item>New</item>
-    <item>Due</item>
+    <item>Všetky karty</item>
+    <item>Nové</item>
+    <item>Na skúšanie</item>
   </string-array>
 </resources>

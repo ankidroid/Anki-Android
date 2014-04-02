@@ -57,12 +57,14 @@
   <string name="notify_title">AnkiDroid frissítve</string>
   <string name="notify_message">Új verzió letöltése</string>
   <string name="notification_title">Az AnkiDroid frissítésének ellenőrzése</string>
-  <string name="preview_title">Preview</string>
+  <string name="preview_title">Előnézet</string>
   <string name="notification_message">AnkiDroid új változata érhető el az Android Marketen.\n\nSzeretnéd telepíteni?</string>
   <string name="notification_stop">Nem kérek többször értesítést a frissítésről</string>
   <string name="reset_card_dialog_title">Kártya folyamatát alaphelyzetbe</string>
   <string name="reset_card_dialog_message">Ez visszaállítja alapállapotba az összes, ehhez a jegyzethez tartozó kártyát (olyanok lesznek, mintha új kártyák lennének).\nTényleg folytatod?</string>
   <string name="reset_card_dialog_confirmation">A jegyzet minden kártyájának visszaállítása</string>
+  <string name="save_duplicate_dialog_title">Duplicate note</string>
+  <string name="save_duplicate_dialog_message">This note shares its primary field with another note. Save anyway?</string>
   <string name="answering_error_title">Adatbázishiba</string>
   <string name="answering_error_message">Hiba történet a gyűjteménybe írás közben. Ennek okozója lehet a sérült adatbázis, vagy a kevés a háttértáron.\n\nHa gyakran megtörténik, ellenőrizd az adatbázist, javítsd a gyűjteményt, vagy állítsd vissza biztonsági mentésből. Ehhez kattints a \'Beállítások\'-ra.\n\nAz is lehet, hogy az AnkiDroid-ban van a hiba, kérjük jelentsd nekünk a hibát!</string>
   <string name="answering_error_report">Hibák jelentése</string>

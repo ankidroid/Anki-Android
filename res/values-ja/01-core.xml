@@ -57,7 +57,7 @@
   <string name="ease3_successive">普通</string>
   <string name="ease3_learning">簡単</string>
   <string name="studyoptions_congrats_undo">戻す %s</string>
-  <string name="studyoptions_congrats_unbury">延期</string>
+  <string name="studyoptions_congrats_unbury">延期解除</string>
   <string name="studyoptions_congrats_custom_study">カスタム学習</string>
   <string name="studyoptions_congrats_open_other_deck">他の単語帳を開く</string>
   <string name="card_unsuspended">カードの非表示を解除</string>
