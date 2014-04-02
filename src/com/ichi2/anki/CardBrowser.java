@@ -1132,11 +1132,12 @@ public class CardBrowser extends Activity {
                 this,
                 mCards,
                 R.layout.card_item_browser,
-                new String[] { "sfld", keys[column2]},
-                new int[] { R.id.card_sfld, R.id.card_column2},
+                new String[] {"flags", "sfld", keys[column2]},
+                new int[] {R.id.card_item_browser, R.id.card_sfld, R.id.card_column2},
                 sflRelativeFontSize,
                 sflCustomFont);
-        // set the background color of each card based on the state of the card
+        /* Set the background color of each row based on the state of the card
+        using the flags string associated with the card_item_browser layout in mCardsAdapter */
         mCardsAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
             @Override
             public boolean setViewValue(View view, Object arg1, String text) {
