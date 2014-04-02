@@ -98,7 +98,6 @@ public class DeckPicker extends FragmentActivity {
      */
     private static final int DIALOG_NO_SDCARD = 0;
     private static final int DIALOG_USER_NOT_LOGGED_IN_SYNC = 1;
-    private static final int DIALOG_USER_NOT_LOGGED_IN_ADD_SHARED_DECK = 2;
     private static final int DIALOG_NO_CONNECTION = 3;
     private static final int DIALOG_DELETE_DECK = 4;
     private static final int DIALOG_SELECT_STATISTICS_TYPE = 5;
@@ -1523,25 +1522,6 @@ public class DeckPicker extends FragmentActivity {
                 dialog = builder.create();
                 break;
 
-            case DIALOG_USER_NOT_LOGGED_IN_ADD_SHARED_DECK:
-                builder.setTitle(res.getString(R.string.connection_error_title));
-                builder.setIcon(R.drawable.ic_dialog_alert);
-                builder.setMessage(res.getString(R.string.no_user_password_error_message));
-                builder.setNegativeButton(res.getString(R.string.cancel), null);
-                builder.setPositiveButton(res.getString(R.string.log_in), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent myAccount = new Intent(DeckPicker.this, MyAccount.class);
-                        myAccount.putExtra("notLoggedIn", true);
-                        startActivityForResult(myAccount, LOG_IN_FOR_SHARED_DECK);
-                        if (AnkiDroidApp.SDK_VERSION > 4) {
-                            ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.FADE);
-                        }
-                    }
-                });
-                dialog = builder.create();
-                break;
-
             case DIALOG_USER_NOT_LOGGED_IN_SYNC:
                 builder.setTitle(res.getString(R.string.connection_error_title));
                 builder.setIcon(R.drawable.ic_dialog_alert);
@@ -2558,13 +2538,7 @@ public class DeckPicker extends FragmentActivity {
 
             case MENU_ADD_SHARED_DECK:
                 if (AnkiDroidApp.getCol() != null) {
-                    SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-                    String hkey = preferences.getString("hkey", "");
-                    if (hkey.length() == 0) {
-                        showDialog(DIALOG_USER_NOT_LOGGED_IN_ADD_SHARED_DECK);
-                    } else {
-                        addSharedDeck();
-                    }
+                    addSharedDeck();
                 }
                 return true;
 
