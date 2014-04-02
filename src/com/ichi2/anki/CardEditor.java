@@ -522,29 +522,6 @@ public class CardEditor extends Activity {
             public void onClick(View v) {
                 if (duplicateCheck(true)) {
                     showDialog(DIALOG_CONFIRM_DUPLICATE);
-                }
-                boolean modified = false;
-                for (FieldEditText f : mEditFields) {
-                    modified = modified | f.updateField();
-                }
-                if (mAddNote) {
-                    mEditorNote.setTags(mCurrentTags);
-                    // Save tags to model
-                    try {
-                        JSONArray ja = new JSONArray();
-                        for (String t : mCurrentTags) {
-                            ja.put(t);
-                        }
-                        mCol.getModels().current().put("tags", ja);
-
-                        mEditorNote.model().put("did", mCurrentDid);
-
-                        mCol.getModels().setChanged();
-                    } catch (JSONException e) {
-                        throw new RuntimeException(e);
-                    }
-                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ADD_FACT, mSaveFactHandler, new DeckTask.TaskData(
-                            mEditorNote));
                 } else {
                     saveNote();
                 }
@@ -707,6 +684,20 @@ public class CardEditor extends Activity {
             modified = modified | f.updateField();
         }
         if (mAddNote) {
+            try {
+                // Save deck to model
+                mEditorNote.model().put("did", mCurrentDid);
+                // Save tags to model
+                mEditorNote.setTags(mCurrentTags);
+                JSONArray ja = new JSONArray();
+                for (String t : mCurrentTags) {
+                    ja.put(t);
+                }
+                mCol.getModels().current().put("tags", ja);
+                mCol.getModels().setChanged();
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ADD_FACT, mSaveFactHandler, new DeckTask.TaskData(
                     mEditorNote));
         } else {
@@ -723,8 +714,8 @@ public class CardEditor extends Activity {
                 mEditorNote.setTags(mCurrentTags);
                 // set did for card
                 if (changedDid) {
-                    // remove card from filtered deck first (if relevant)                        	 
-                    AnkiDroidApp.getCol().getSched().remFromDyn(new long[] {mCurrentEditedCard.getId()});                       	
+                    // remove card from filtered deck first (if relevant)
+                    AnkiDroidApp.getCol().getSched().remFromDyn(new long[] {mCurrentEditedCard.getId()});
                     // refresh the card object to reflect the database changes in remFromDyn()
                     mCurrentEditedCard.load();
                     // then set the card ID to the new deck
@@ -734,21 +725,6 @@ public class CardEditor extends Activity {
                 mChanged = true;
             }
             closeCardEditor();
-            // if (mCaller == CALLER_BIGWIDGET_EDIT) {
-            // // DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT,
-            // // mSaveFactHandler, new
-            // // DeckTask.TaskData(Reviewer.UPDATE_CARD_SHOW_QUESTION,
-            // // mDeck, AnkiDroidWidgetBig.getCard()));
-            // } else if (!mCardReset) {
-            // // Only send result to save if something was actually
-            // // changed
-            // if (mModified) {
-            // setResult(RESULT_OK);
-            // } else {
-            // setResult(RESULT_CANCELED);
-            // }
-            // closeCardEditor();
-            // }
         }
     }
 
