@@ -582,7 +582,7 @@ public class StudyOptionsFragment extends Fragment {
     }
 
     private void initAllContentViews(LayoutInflater inflater) {
-        mStudyOptionsView = inflater.inflate(R.layout.studyoptions, null);
+        mStudyOptionsView = inflater.inflate(R.layout.studyoptions_fragment, null);
         Themes.setContentStyle(mStudyOptionsView, Themes.CALLER_STUDYOPTIONS);
         mTextDeckName = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_deck_name);
         mTextDeckDescription = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_deck_description);

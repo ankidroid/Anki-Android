@@ -65,17 +65,12 @@ public class StudyOptionsActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
-
-        // if (getResources().getConfiguration().orientation
-        // == Configuration.ORIENTATION_LANDSCAPE) {
-        // // If the screen is now in landscape mode, we can show the
-        // // dialog in-line so we don't need this activity.
-        // finish();
-        // return;
-        // }
-
+        // The empty frame layout is a workaround for fragments not showing when they are added
+        // to android.R.id.content when an action bar is used in Android 2.1 (and potentially
+        // higher) with the appcompat package.
+        setContentView(R.layout.studyoptions);
         if (savedInstanceState == null) {
-        	loadContent(getIntent().getBooleanExtra("onlyFnsMsg", false));
+            loadContent(getIntent().getBooleanExtra("onlyFnsMsg", false));
         }
         registerExternalStorageListener();
     }
@@ -93,7 +88,7 @@ public class StudyOptionsActivity extends ActionBarActivity {
             args.putBundle("cramInitialConfig", cramConfig);
         }
         mCurrentFragment.setArguments(args);
-        getSupportFragmentManager().beginTransaction().add(android.R.id.content, mCurrentFragment).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.studyoptions_frame, mCurrentFragment).commit();
     }
 
     // TODO: onpause, onresume, onstop
