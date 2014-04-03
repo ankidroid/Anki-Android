@@ -1117,13 +1117,10 @@ public class CardBrowser extends Activity {
     
     // Helper method to setup the list adapter for the main mCardsListView, taking the index for column2 as an argument
     private void setBrowserListAdapter(int column2){
-        // list of available keys in mCards corresponding to the column names in R.array.browser_column2_headings
-        //String[] keys = {"answer","card","changed","created","deck","due","ease","edited","interval","lapses","note","question","reviews","tags"};
-        //TODO: Make all of the columns that are available on Desktop available, not just these 4
-        String[] keys = {"answer","card","deck","lapses","note","question","reviews","tags"};
-        // load the preferences & resources
+        // list of available keys in mCards corresponding to the column names in R.array.browser_column2_headings. Note: the last 6 are currently hidden 
+        final String[] KEYS = {"answer","card","deck","note","question","tags","lapses","reviews","changed","created","due","ease","edited","interval"};        
+        // load the preferences
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-        Resources res = getResources();    
         // get the font and font size from the preferences
         int sflRelativeFontSize = preferences.getInt("relativeCardBrowserFontSize", DEFAULT_FONT_SIZE_RATIO);
         String sflCustomFont = preferences.getString("browserEditorFont", "");
@@ -1132,7 +1129,7 @@ public class CardBrowser extends Activity {
                 this,
                 mCards,
                 R.layout.card_item_browser,
-                new String[] {"flags", "sfld", keys[column2]},
+                new String[] {"flags", "sfld", KEYS[column2]},
                 new int[] {R.id.card_item_browser, R.id.card_sfld, R.id.card_column2},
                 sflRelativeFontSize,
                 sflCustomFont);
