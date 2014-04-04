@@ -2,7 +2,7 @@
  * Copyright (c) 2009 Andrew Dubya <andrewdubya@gmail.com>                              *
  * Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>                           *
  * Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
- * Copyright (c) 2009 Daniel Sv�ｽ�ｽrd <daniel.svard@gmail.com>                             *
+ * Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>                             *
  * Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>                         *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
@@ -3123,4 +3123,3 @@ public class DeckPicker extends FragmentActivity {
     }
 
 }
-
