@@ -25,6 +25,6 @@
   Keep it under 400 characters. The real limit is 500 characters, but some languages result in longer sentences.
 -->
 <string-array name="new_version_features">
-    <item>Fixed TTS</item>    
+    <item>Create new notes in correct deck</item>    
 </string-array>
 </resources>
