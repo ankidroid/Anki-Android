@@ -34,7 +34,7 @@ import java.util.List;
  * A card is a presentation of a note, and has two sides: a question and an answer. Any number of fields can appear on
  * each side. When you add a fact to Anki, cards which show that fact are generated. Some models generate one card,
  * others generate more than one.
- * 
+ *
  * @see http://ichi2.net/anki/wiki/KeyTermsAndConcepts#Cards Type: 0=new, 1=learning, 2=due Queue: same as above, and:
  *      -1=suspended, -2=user buried, -3=sched buried Due is used differently for different queues. - new queue: note id
  *      or random int - rev queue: integer day - lrn queue: integer timestamp
@@ -165,8 +165,8 @@ public class Card implements Cloneable {
     }
     public void flush(boolean changeModUsn) {
     	if (changeModUsn) {
-            mMod = Utils.intNow();    		
-            mUsn = mCol.usn();    		
+            mMod = Utils.intNow();
+            mUsn = mCol.usn();
     	}
         // bug check
         assert mQueue != 2 || mODue == 0 || mCol.getDecks().isDyn(mDid);
@@ -278,7 +278,7 @@ public class Card implements Cloneable {
                 try {
                     String bqfmt = t.getString("bqfmt");
                     String bafmt = t.getString("bafmt");
-                    mQA = mCol._renderQA(data, bqfmt, bafmt);                    
+                    mQA = mCol._renderQA(data, bqfmt, bafmt);
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
@@ -378,7 +378,7 @@ public class Card implements Cloneable {
      * answer should be compared to the value of field related to a cards fact. A field is found based on the factId in
      * the card and the fieldModelId. The fieldModel's id is found by searching with the typeAnswer name and cardModel's
      * modelId
-     * 
+     *
      * @return 2 dimensional array with answer value at index=0 and fieldModel's class at index=1 null if typeAnswer is
      *         empty (i.e. do not prompt for answer). Otherwise a string (which can be empty) from the actual field
      *         value. The fieldModel's id is correctly hexafied and formatted for class attribute of span for formatting

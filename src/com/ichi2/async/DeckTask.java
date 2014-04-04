@@ -136,8 +136,8 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             sLatestInstance.cancel(true);
             waitToFinish();
             Log.i(AnkiDroidApp.TAG, "DeckTask: cancelled render browser QA");
-            
-        }        
+
+        }
         // Start new task
         sLatestInstance = new DeckTask(type, listener, sLatestInstance);
         sLatestInstance.execute(params);
@@ -169,7 +169,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             return;
         }
     }
-    
+
     public static void cancelTask(int taskType) {
         try {
             Boolean match = sLatestInstance.mType==taskType;
@@ -179,7 +179,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         } catch (Exception e) {
             return;
         }
-    }    
+    }
 
 
     public static boolean taskIsRunning() {
@@ -327,7 +327,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
             case TASK_TYPE_CONF_SET_SUBDECKS:
                 return doInBackgroundConfSetSubdecks(params);
-                
+
             case TASK_TYPE_RENDER_BROWSER_QA:
             	return doInBackgroundRenderBrowserQA(params);
 
@@ -725,14 +725,14 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         }
         return new TaskData(col.cardCount(col.getDecks().allIds()));
     }
-    
+
     private TaskData doInBackgroundRenderBrowserQA(TaskData...params) {
         final int initialInterval=15;   // initial number of cards we render one by one
         final int refreshInterval=250;  // number of cards to render at a time after initialInterval
         int numRendered=0;
     	Log.i(AnkiDroidApp.TAG, "doInBackgroundRenderBrowserQA");
         Collection col = (Collection) params[0].getObjArray()[0];
-        ArrayList<HashMap<String, String>> items = (ArrayList<HashMap<String, String>>) params[0].getObjArray()[1];        
+        ArrayList<HashMap<String, String>> items = (ArrayList<HashMap<String, String>>) params[0].getObjArray()[1];
         // for each card in the browser list
         try{
             for (HashMap<String, String> item: items) {
@@ -746,16 +746,16 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     			// remove the question from the start of the answer if it exists
     			if (a.startsWith(q)){
     			    a=a.replaceFirst(q, "");
-    			}     			
+    			}
     			// put all of the fields in except for those that have already been pulled out straight from the database
             	item.put("answer",a);
             	item.put("card", c.template().optString("name"));
             	//item.put("changed",strftime("%Y-%m-%d", localtime(c.getMod())));
-            	//item.put("created",strftime("%Y-%m-%d", localtime(c.note().getId()/1000)));             
-            	//item.put("due",getDueString(c)); 
-            	//item.put("ease",""); 
+            	//item.put("created",strftime("%Y-%m-%d", localtime(c.note().getId()/1000)));
+            	//item.put("due",getDueString(c));
+            	//item.put("ease","");
             	//item.put("edited",strftime("%Y-%m-%d", localtime(c.note().getMod())));
-            	//item.put("interval",""); 
+            	//item.put("interval","");
             	item.put("lapses",Integer.toString(c.getLapses()));
             	item.put("note",c.model().optString("name"));
                 item.put("question",q);
@@ -769,7 +769,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                         TaskData result = new TaskData(items);
                 		publishProgress(result);
                 	}
-                              	
+
                 }
             }
         } catch (OutOfMemoryError e){
@@ -780,8 +780,8 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         TaskData result = new TaskData(items);
         publishProgress(result);
         return result;
-    }        
-    
+    }
+
     private String formatQA(String txt){
         /* Strips all formatting from the string txt for use in displaying question/answer in browser */
         String s=txt.replace("<br>"," ");
@@ -1710,7 +1710,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         public TaskData(List<Long> idList) {
             mIdList = idList;
         }
-        
+
 
 
         public ArrayList<HashMap<String, String>> getCards() {

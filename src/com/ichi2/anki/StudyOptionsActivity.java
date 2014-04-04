@@ -49,7 +49,7 @@ import java.util.ArrayList;
 public class StudyOptionsActivity extends FragmentActivity {
 
     private boolean mInvalidateMenu;
-    
+
     /** Menus */
     private static final int MENU_PREFERENCES = 201;
     public static final int MENU_ROTATE = 202;
@@ -107,7 +107,7 @@ public class StudyOptionsActivity extends FragmentActivity {
     	} else {
     		icon = R.drawable.ic_menu_night;
     	}
-    	
+
     	mInvalidateMenu = false;
         UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_NIGHT, Menu.NONE, R.string.night_mode,
                 icon);
@@ -122,7 +122,7 @@ public class StudyOptionsActivity extends FragmentActivity {
         return true;
     }
 
-    
+
     @Override
     public boolean onMenuOpened(int featureId, Menu menu) {
         if (menu != null && mInvalidateMenu) {
@@ -212,13 +212,13 @@ public class StudyOptionsActivity extends FragmentActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
         Log.i(AnkiDroidApp.TAG, "StudyOptionsActivity: onActivityResult");
-        
+
         String newLanguage = AnkiDroidApp.getSharedPrefs(this).getString("language", "");
         if (AnkiDroidApp.setLanguage(newLanguage)) {
             mInvalidateMenu = true;
         }
         if (mCurrentFragment != null) {
-            mCurrentFragment.restorePreferences();        	
+            mCurrentFragment.restorePreferences();
         }
     }
 
@@ -298,7 +298,7 @@ public class StudyOptionsActivity extends FragmentActivity {
                         });
                     } else if (intent.getAction().equals(SdCardReceiver.MEDIA_MOUNT)) {
                     	if (mNotMountedDialog != null && mNotMountedDialog.isShowing()) {
-                    		mNotMountedDialog.dismiss();                    		
+                    		mNotMountedDialog.dismiss();
                     	}
                     	mCurrentFragment.reloadCollection();
                     }

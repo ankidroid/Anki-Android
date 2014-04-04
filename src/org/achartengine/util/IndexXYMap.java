@@ -1,12 +1,12 @@
 /**
  * Copyright (C) 2009, 2010 SC 4ViewSoft SRL
- *  
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *  
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -24,7 +24,7 @@ import java.util.TreeMap;
  */
 public class IndexXYMap<K, V> extends TreeMap<K, V> {
   private final List<K> indexList = new ArrayList<K>();
-  
+
   private double maxXDifference = 0;
 
   public IndexXYMap() {
@@ -61,7 +61,7 @@ public class IndexXYMap<K, V> extends TreeMap<K, V> {
 
   /**
    * Returns X-value according to the given index
-   * 
+   *
    * @param index
    * @return
    */
@@ -71,7 +71,7 @@ public class IndexXYMap<K, V> extends TreeMap<K, V> {
 
   /**
    * Returns Y-value according to the given index
-   * 
+   *
    * @param index
    * @return
    */
@@ -82,7 +82,7 @@ public class IndexXYMap<K, V> extends TreeMap<K, V> {
 
   /**
    * Returns XY-entry according to the given index
-   * 
+   *
    * @param index
    * @return
    */
@@ -93,14 +93,14 @@ public class IndexXYMap<K, V> extends TreeMap<K, V> {
 
   /**
    * Removes entry from map by index
-   * 
+   *
    * @param index
    */
   public XYEntry<K, V> removeByIndex(int index) {
     K key = indexList.remove(index);
     return new XYEntry<K, V>(key, this.remove(key));
   }
-  
+
   public int getIndexForKey(K key) {
     return indexList.indexOf(key);
   }

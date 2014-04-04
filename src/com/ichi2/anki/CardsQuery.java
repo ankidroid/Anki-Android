@@ -56,7 +56,7 @@ public final class CardsQuery {
 
     /**
      * Returns the query for getting card details. It supports pagination.
-     * 
+     *
      * @param chunkSize the maximum number of values to return
      * @param startId the id for the last card returned by a previous query
      */

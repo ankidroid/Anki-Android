@@ -52,7 +52,7 @@ public class LaTeX {
 
     /**
      * Convert TEXT with embedded latex tags to image links.
-     * 
+     *
      * @param html The content to search for embedded latex tags.
      * @param col The related collection.
      * @return The content with the tags converted to links.
@@ -87,7 +87,7 @@ public class LaTeX {
 
     /**
      * Return an img link for LATEX, creating it if necessary.
-     * 
+     *
      * @param col The associated Collection object.
      * @param latex The LATEX expression to be replaced
      * @return A string with the link to the image that is the representation of the LATEX expression.
@@ -102,7 +102,7 @@ public class LaTeX {
 
     /**
      * Convert entities and fix newlines.
-     * 
+     *
      * @param col The associated Collection where the LATEX is found
      * @param latex The
      * @return

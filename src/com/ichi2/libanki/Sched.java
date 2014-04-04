@@ -56,7 +56,7 @@ import java.util.TreeSet;
 public class Sched {
 
     // These constants are from consts.py
-    
+
     // whether new cards should be mixed with reviews, or shown first or last
     public static final int NEW_CARDS_DISTRIBUTE = 0;
     public static final int NEW_CARDS_LAST = 1;
@@ -78,7 +78,7 @@ public class Sched {
     // media log
     public static final int MEDIA_ADD = 0;
     public static final int MEDIA_REM = 1;
-    
+
 
     // dynamic deck order
     public static final int DYN_OLDEST = 0;
@@ -103,7 +103,7 @@ public class Sched {
     private boolean mHaveCustomStudy = true;
     private boolean mSpreadRev = true;
     private boolean mBurySiblingsOnAnswer = true;
-    
+
     private Collection mCol;
     private int mQueueLimit;
     private int mReportLimit;
@@ -132,7 +132,7 @@ public class Sched {
 
     // Not in libanki
     private HashMap<Long, Pair<String[], long[]>> mCachedDeckCounts;
-    
+
     /**
      * queue types: 0=new/cram, 1=lrn, 2=rev, 3=day lrn, -1=suspended, -2=buried
      * revlog types: 0=lrn, 1=rev, 2=relrn, 3=cram
@@ -299,7 +299,7 @@ public class Sched {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-        
+
         mCol.getDb().execute("update cards set queue=type where queue = -2");
     }
 
@@ -363,7 +363,7 @@ public class Sched {
         }
     }
 
-    
+
     private int _walkingCount(Method limFn, Method cntFn) {
         int tot = 0;
         HashMap<Long, Integer> pcounts = new HashMap<Long, Integer>();
@@ -464,7 +464,7 @@ public class Sched {
             	data.add(new Object[]{deck.getString("name"), deck.getLong("id"), newC, lrn, rev});
             	// add deck as a parent
             	lims.put(deck.getString("name"), new Integer[]{nlim, rlim});
-            }        	
+            }
         } catch (JSONException e) {
         	throw new RuntimeException(e);
         }
@@ -985,7 +985,7 @@ public class Sched {
             }
             // TODO: check, if type for second due is correct
             card.setDue((int) (Utils.now() + delay));
-            
+
             // due today?
             if (card.getDue() < mDayCutoff) {
                 mLrnCount += card.getLeft() / 1000;
@@ -1642,7 +1642,7 @@ public class Sched {
 
     /**
      * Generates the required SQL for order by and limit clauses, for dynamic decks.
-     * 
+     *
      * @param o deck["order"]
      * @param l deck["limit"]
      * @return The generated SQL to be suffixed to "select ... from ... order by "
@@ -1880,13 +1880,13 @@ public class Sched {
         // calculate days since col created and store in mToday
         mToday = 0;
         Calendar crt = GregorianCalendar.getInstance();
-        crt.setTimeInMillis(mCol.getCrt()*1000); // creation time (from crt as stored in database)        
+        crt.setTimeInMillis(mCol.getCrt()*1000); // creation time (from crt as stored in database)
         Calendar fromNow = GregorianCalendar.getInstance(); // decremented towards crt
-        
+
         // code to avoid counting years worth of days
         int yearSpan = fromNow.get(Calendar.YEAR) - crt.get(Calendar.YEAR);
         if (yearSpan > 1) { // at least one full year has definitely lapsed since creation
-            int toJump = 365 * (yearSpan - 1); 
+            int toJump = 365 * (yearSpan - 1);
             fromNow.add(Calendar.YEAR, -toJump);
             if (fromNow.compareTo(crt) < 0) { // went too far, reset and do full count
                 fromNow = GregorianCalendar.getInstance();
@@ -1894,7 +1894,7 @@ public class Sched {
                 mToday += toJump;
             }
         }
-        
+
         // count days backwards
         while (fromNow.compareTo(crt) > 0) {
             fromNow.add(Calendar.DAY_OF_MONTH, -1);
@@ -1902,7 +1902,7 @@ public class Sched {
                 mToday++;
             }
         }
-            
+
         // set end of day cutoff
         crt.add(Calendar.DAY_OF_YEAR, mToday + 1);
         mDayCutoff = crt.getTimeInMillis() / 1000;
@@ -2130,16 +2130,16 @@ public class Sched {
                 "UPDATE cards SET queue = type, mod = " + Utils.intNow() + ", usn = " + mCol.usn()
                         + " WHERE queue = -1 AND id IN " + Utils.ids2str(ids));
     }
-    
-    
+
+
     public void buryCards(long[] cids) {
         remFromDyn(cids);
         removeLrn(cids);
         mCol.getDb().execute("update cards set queue=-2,mod=?,usn=? where id in " + Utils.ids2str(cids),
                 new Object[]{Utils.now(), mCol.usn()});
     }
-    
-    
+
+
     /**
      * Bury all cards for note until next session.
      * @param nid The id of the targetted note.
@@ -2211,7 +2211,7 @@ public class Sched {
 
     /**
      * Put cards in review queue with a new interval in days (min, max).
-     * 
+     *
      * @param ids The list of card ids to be affected
      * @param imin the minimum interval (inclusive)
      * @param imax The maximum interval (inclusive)
@@ -2340,7 +2340,7 @@ public class Sched {
     public void maybeRandomizeDeck() {
         maybeRandomizeDeck(null);
     }
-    
+
     public void maybeRandomizeDeck(Long did) {
         if (did == null) {
             did = mCol.getDecks().selected();
@@ -2395,11 +2395,11 @@ public class Sched {
     public int getReps(){
         return mReps;
     }
-    
+
     public void setReps(int reps){
         mReps = reps;
     }
-    
+
 
     // Needed for tests
     public LinkedList<Long> getNewQueue() {
@@ -2434,7 +2434,7 @@ public class Sched {
         }
     }
 
-    
+
 
     /**
      * Counts
@@ -2616,7 +2616,7 @@ public class Sched {
         eta += lrnAnswers * lrnTime;
         return (int) (eta / 60000);
     }
-    
+
 
     public void decrementCounts(Card card) {
         int type = card.getQueue();
@@ -2635,7 +2635,7 @@ public class Sched {
             break;
         }
     }
-    
+
 
     public Object[] deckCounts() {
         TreeSet<Object[]> decks = deckDueTree();
@@ -2687,7 +2687,7 @@ public class Sched {
             }
         }
     }
-    
+
     /**
      * Sorts a card into the lrn queue LIBANKI: not in libanki
      */
@@ -2703,7 +2703,7 @@ public class Sched {
         }
         mLrnQueue.add(idx, new long[] { due, id });
     }
-    
+
 
     public boolean leechActionSuspend(Card card) {
         JSONObject conf;

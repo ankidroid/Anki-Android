@@ -43,7 +43,7 @@ import java.io.OutputStream;
 public class NoteService {
     /**
      * Creates an empty Note from given Model
-     * 
+     *
      * @param model the model in JSOBObject format
      * @return a new note instance
      */
@@ -99,7 +99,7 @@ public class NoteService {
     /**
      * Updates the JsonNote field values from MultimediaEditableNote When both notes are using the same Model, it updaes
      * the destination field values with source values. If models are different it throws an Exception
-     * 
+     *
      * @param mNoteSrc
      * @param mEditorNoteDst
      */
@@ -123,7 +123,7 @@ public class NoteService {
      * the note it checks for the following condition a. The field content should have changed b. The field content does
      * not already point to a media inside anki media path If both condition satisfies then it copies the file inside
      * the media path and deletes the file referenced by the note
-     * 
+     *
      * @param note
      */
     public static void saveMedia(final MultimediaEditableNote noteNew) {
@@ -155,7 +155,7 @@ public class NoteService {
 
     /**
      * Considering the field is new, if it has media handle it
-     * 
+     *
      * @param field
      */
     private static void importMediaToDirectory(IField field) {

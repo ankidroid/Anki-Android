@@ -253,7 +253,7 @@ public class CardBrowser extends Activity {
         mBackground = Themes.getCardBrowserBackground();
 
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-        Resources res = getResources();        
+        Resources res = getResources();
         mOrderByFields = res.getStringArray(R.array.card_browser_order_labels);
         try {
             mOrder = CARD_ORDER_NONE;
@@ -284,7 +284,7 @@ public class CardBrowser extends Activity {
         ArrayAdapter<CharSequence> column1Adapter = ArrayAdapter.createFromResource(this,
                 R.array.browser_column1_headings, android.R.layout.simple_spinner_item);
         column1Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mCardsColumn1Spinner.setAdapter(column1Adapter);                
+        mCardsColumn1Spinner.setAdapter(column1Adapter);
         mCardsColumn1Spinner.setClickable(false);   // We disable and set plain background since it only has 1 item
         // Load default value for column2 selection
         mColumn2Index = AnkiDroidApp.getSharedPrefs(getBaseContext()).getInt("cardBrowserColumn2", 0);
@@ -298,24 +298,24 @@ public class CardBrowser extends Activity {
         mCardsColumn2Spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                // If a new column was selected then create a new list adapter with the mapping to new column    
+                // If a new column was selected then create a new list adapter with the mapping to new column
                 if (pos != mColumn2Index) {
                         mColumn2Index = pos;
                         AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit()
                             .putInt("cardBrowserColumn2", mColumn2Index).commit();
-                        setBrowserListAdapter(mColumn2Index);                    
+                        setBrowserListAdapter(mColumn2Index);
                 }
-            }        
+            }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 // Do Nothing
-            }       
+            }
         });
         // Setup the list adapter for the cards
         setBrowserListAdapter(mColumn2Index);
         mCardsColumn2Spinner.setSelection(mColumn2Index);
-        
-        
+
+
         mCardsListView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -361,7 +361,7 @@ public class CardBrowser extends Activity {
                 onSearch();
             }
         });
-        
+
         mSearchTerms = "";
         if (mWholeCollection) {
             mRestrictOnDeck = "";
@@ -722,7 +722,7 @@ public class CardBrowser extends Activity {
                     new Object[] { mCol, mDeckNames, searchText, ((mOrder == CARD_ORDER_NONE) ? "" : "true") }));
             // After this initial query, start rendering the question and answer in the background
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_RENDER_BROWSER_QA, mRenderQAHandler, new DeckTask.TaskData(
-                    new Object[] { mCol, mCards}));            
+                    new Object[] { mCol, mCards}));
         }
     }
 
@@ -748,8 +748,8 @@ public class CardBrowser extends Activity {
                             onCreate(savedInstanceState);
                         }
                     }
-        
-        
+
+
                     @Override
                     public void onPreExecute() {
                         mOpenCollectionDialog = StyledOpenCollectionDialog.show(
@@ -762,8 +762,8 @@ public class CardBrowser extends Activity {
                                     }
                                 });
                     }
-        
-        
+
+
                     @Override
                     public void onProgressUpdate(DeckTask.TaskData... values) {
                     }
@@ -943,7 +943,7 @@ public class CardBrowser extends Activity {
                 mProgressDialog.setMessage(res.getString(R.string.card_browser_filtering_cards));
                 mProgressDialog.show();
             }
-            
+
         }
 
 
@@ -956,7 +956,7 @@ public class CardBrowser extends Activity {
             }
         }
     };
-    
+
     private DeckTask.TaskListener mRenderQAHandler = new DeckTask.TaskListener() {
         @Override
         public void onProgressUpdate(TaskData... values) {
@@ -967,7 +967,7 @@ public class CardBrowser extends Activity {
         @Override
         public void onPreExecute() {
         }
-        
+
         @Override
         public void onPostExecute(TaskData result) {
             if (result!=null){
@@ -977,7 +977,7 @@ public class CardBrowser extends Activity {
                 Log.e(AnkiDroidApp.TAG, "doInBackgroundRenderBrowserQA was not successful... continuing anyway");
             }
         }
-    };    
+    };
 
     private DeckTask.TaskListener mReloadCardsHandler = new DeckTask.TaskListener() {
         @Override
@@ -1113,12 +1113,12 @@ public class CardBrowser extends Activity {
             ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
         }
     }
-    
-    
+
+
     // Helper method to setup the list adapter for the main mCardsListView, taking the index for column2 as an argument
     private void setBrowserListAdapter(int column2){
-        // list of available keys in mCards corresponding to the column names in R.array.browser_column2_headings. Note: the last 6 are currently hidden 
-        final String[] KEYS = {"answer","card","deck","note","question","tags","lapses","reviews","changed","created","due","ease","edited","interval"};        
+        // list of available keys in mCards corresponding to the column names in R.array.browser_column2_headings. Note: the last 6 are currently hidden
+        final String[] KEYS = {"answer","card","deck","note","question","tags","lapses","reviews","changed","created","due","ease","edited","interval"};
         // load the preferences
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         // get the font and font size from the preferences
@@ -1156,7 +1156,7 @@ public class CardBrowser extends Activity {
         // link the adapter we just made to the main mCardsListView
         mCardsListView.setAdapter(mCardsAdapter);
     }
-    
+
     public class SizeControlledListAdapter extends SimpleAdapter {
 
         private int fontSizeScalePcent;

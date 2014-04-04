@@ -26,7 +26,7 @@ package com.ichi2.libanki.hooks;
  * <li>Uses private members to store information between runs.
  * </ul>
  * Then you should also override methods equals and hashCode, so that they take into consideration any fields you have added.<p>
- * You can do so using the auto-generate feature from Eclipse: Source->Generate hashCode() and equals() 
+ * You can do so using the auto-generate feature from Eclipse: Source->Generate hashCode() and equals()
  */
 public class Hook {
     private final String fName = this.getClass().getCanonicalName();

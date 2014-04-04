@@ -127,7 +127,7 @@ public class Note implements Cloneable {
         _preFlush();
         mMod = mod != 0 ? mod : Utils.intNow();
         if (changeUsn) {
-            mUsn = mCol.usn();        	
+            mUsn = mCol.usn();
         }
         String sfld = Utils.stripHTMLMedia(mFields[mCol.getModels().sortIdx(mModel)]);
         String tags = stringTags();
@@ -205,7 +205,7 @@ public class Note implements Cloneable {
     public void setitem(String key, String value) {
         mFields[_fieldOrd(key)] = value;
     }
-    
+
     public boolean contains(String key) {
     	return mFMap.containsKey(key);
     }

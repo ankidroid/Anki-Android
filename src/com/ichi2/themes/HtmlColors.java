@@ -12,7 +12,7 @@ public class HtmlColors {
     private static final Pattern fShortHexColorPattern = Pattern.compile("^#([0-9a-f])([0-9a-f])([0-9a-f])$", Pattern.CASE_INSENSITIVE);
     private static final Pattern fLongHexColorPattern = Pattern.compile("^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$", Pattern.CASE_INSENSITIVE);
     private static final Pattern fRgbColorPattern = Pattern.compile("^rgb\\(([0-9]+)\\s*,\\s*([0-9]+)\\s*,\\s*([0-9]+)\\)$", Pattern.CASE_INSENSITIVE);
-    private static final Pattern fClozeStylePattern = Pattern.compile("(.cloze\\s*\\{[^}]*color:\\s*#)[0-9a-f]{6}(;[^}]*\\})", Pattern.CASE_INSENSITIVE); 
+    private static final Pattern fClozeStylePattern = Pattern.compile("(.cloze\\s*\\{[^}]*color:\\s*#)[0-9a-f]{6}(;[^}]*\\})", Pattern.CASE_INSENSITIVE);
     private static final Pattern fDiffStylePattern = Pattern.compile("");
 
     public static String nameToHex(String name) {
@@ -77,10 +77,10 @@ public class HtmlColors {
         // fix style for cloze to light blue instead of inverted blue which ends up as yellow
         Matcher mc = fClozeStylePattern.matcher(invertedText);
         invertedText = mc.replaceAll("$10088ff$2");
-        
+
         return invertedText;
     }
-    
+
     private static Map<String, String> sColorsMap = null;
     private static final String[] fColorsRawList= new String[]{
     "AliceBlue", "#F0F8FF",

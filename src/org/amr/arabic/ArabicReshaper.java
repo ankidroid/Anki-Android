@@ -6,17 +6,17 @@ package org.amr.arabic;
  * 	By		: Ahmed Essam Naiem
  *  E-Mail 	: ahmed-essam@live.com
  *  Web		: www.ahmed-essam.com
- *  
+ *
  *  Updated Date : 20 of March 2009
  *  The class has been updated to include the Lam Alef Reshaping techniques
- *  
+ *
  *  By		: Amr Ismail gawish
  *  Email   : amr.gawish@gmail.com
  *  Web		: www.amr-gawish.com
- *  
+ *
  *  Updated : 8th of June 2009
  *  Adding comments and Announcing Open Source
- *  
+ *
  * Updated: 6th of May 2010
  * Enahancing Functionality by Amine : bakhtout@gmail.com
  *
@@ -45,7 +45,7 @@ public class ArabicReshaper{
 	public static char DEFINED_CHARACTERS_ORGINAL_ALF_UPPER_HAMAZA = 0x0623;
 
 
-	public static char DEFINED_CHARACTERS_ORGINAL_ALF_LOWER_HAMAZA = 0x0625;	
+	public static char DEFINED_CHARACTERS_ORGINAL_ALF_LOWER_HAMAZA = 0x0625;
 
 
 	public static char DEFINED_CHARACTERS_ORGINAL_ALF = 0x0627;
@@ -63,20 +63,20 @@ public class ArabicReshaper{
 		{1573, 65274,65273}
 	};
 
-	public static char[] HARAKATE= {		
-		'\u0600','\u0601','\u0602','\u0603','\u0606','\u0607','\u0608','\u0609','\u060A','\u060B','\u060D','\u060E',	
+	public static char[] HARAKATE= {
+		'\u0600','\u0601','\u0602','\u0603','\u0606','\u0607','\u0608','\u0609','\u060A','\u060B','\u060D','\u060E',
 		'\u0610','\u0611','\u0612','\u0613','\u0614','\u0615','\u0616','\u0617','\u0618','\u0619','\u061A','\u061B','\u061E','\u061F',
-		'\u0621',		
-		'\u063B','\u063C','\u063D','\u063E','\u063F',		
-		'\u0640','\u064B', '\u064C', '\u064D','\u064E', '\u064F',		
-		'\u0650', '\u0651','\u0652', '\u0653', '\u0654', '\u0655', '\u0656','\u0657','\u0658','\u0659','\u065A','\u065B','\u065C','\u065D','\u065E',      
+		'\u0621',
+		'\u063B','\u063C','\u063D','\u063E','\u063F',
+		'\u0640','\u064B', '\u064C', '\u064D','\u064E', '\u064F',
+		'\u0650', '\u0651','\u0652', '\u0653', '\u0654', '\u0655', '\u0656','\u0657','\u0658','\u0659','\u065A','\u065B','\u065C','\u065D','\u065E',
 		'\u0660','\u066A','\u066B','\u066C','\u066F', '\u0670','\u0672',
 		'\u06D4','\u06D5','\u06D6','\u06D7','\u06D8','\u06D9','\u06DA','\u06DB','\u06DC','\u06DF',
 		'\u06E0','\u06E1','\u06E2','\u06E3','\u06E4','\u06E5','\u06E6','\u06E7','\u06E8','\u06E9','\u06EA','\u06EB','\u06EC','\u06ED','\u06EE','\u06EF',
 		'\u06D6','\u06D7','\u06D8','\u06D9','\u06DA','\u06DB','\u06DC','\u06DD','\u06DE','\u06DF',
 		'\u06F0','\u06FD',
 		'\uFE70','\uFE71','\uFE72','\uFE73','\uFE74','\uFE75','\uFE76','\uFE77','\uFE78','\uFE79','\uFE7A','\uFE7B','\uFE7C','\uFE7D','\uFE7E','\uFE7F',
-		'\uFC5E', '\uFC5F', '\uFC60','\uFC61','\uFC62','\uFC63'		
+		'\uFC5E', '\uFC5F', '\uFC60','\uFC61','\uFC62','\uFC63'
 	};
 
 
@@ -115,13 +115,13 @@ public class ArabicReshaper{
 		{ '\u0646','\uFEE5','\uFEE7','\uFEE8','\uFEE6',4 } ,
 		{ '\u0647','\uFEE9','\uFEEB','\uFEEC','\uFEEA',4 } ,
 		{ '\u0648','\uFEED','\uFEED','\uFEEE','\uFEEE',2 } ,
-		{ '\u0649','\uFEEF','\uFEEF','\uFEF0','\uFEF0',2 } ,			
+		{ '\u0649','\uFEEF','\uFEEF','\uFEF0','\uFEF0',2 } ,
 		{ '\u0671','\u0671','\u0671','\uFB51','\uFB51',2 },
 		{ '\u064A','\uFEF1','\uFEF3','\uFEF4','\uFEF2',4 },
-		{ '\u066E','\uFBE4','\uFBE8','\uFBE9','\uFBE5',4 },         
-		{ '\u0671','\u0671','\u0671','\uFB51','\uFB51',2 },       
-		{'\u06AA','\uFB8E','\uFB90','\uFB91','\uFB8F',4 },       
-		{ '\u06C1','\uFBA6','\uFBA8','\uFBA9','\uFBA7',4 },      
+		{ '\u066E','\uFBE4','\uFBE8','\uFBE9','\uFBE5',4 },
+		{ '\u0671','\u0671','\u0671','\uFB51','\uFB51',2 },
+		{'\u06AA','\uFB8E','\uFB90','\uFB91','\uFB8F',4 },
+		{ '\u06C1','\uFBA6','\uFBA8','\uFBA9','\uFBA7',4 },
 		{'\u06E4','\u06E4','\u06E4','\u06E4','\uFEEE',2 },
 		{'\u0686','\uFB7A','\uFB7C','\uFB7D','\uFB7B',4 },
 		{'\u067E','\uFB56','\uFB58','\uFB59','\uFB57',4 },
@@ -133,7 +133,7 @@ public class ArabicReshaper{
 
 
 	/**
-	 * Searching for the letter and Get the right shape for the character depends on the location specified 
+	 * Searching for the letter and Get the right shape for the character depends on the location specified
 	 * @param target The character that needs to get its form
 	 * @param location The location of the Form letter
 	 * @return The letter with its right shape
@@ -155,7 +155,7 @@ public class ArabicReshaper{
 
 	/**
 	 * Define which Character Type is This, that has 2,3 or 4 Forms variation?
-	 * @param target The character, that needed 
+	 * @param target The character, that needed
 	 * @return the integer number indicated the Number of forms the Character has, return 2 otherwise
 	 */
 	private int getGlphyType(char target){
@@ -169,7 +169,7 @@ public class ArabicReshaper{
 		}
 		//Return the number 2 Otherwise
 		return 2;
-	}	
+	}
 
 
 	/**
@@ -191,10 +191,10 @@ public class ArabicReshaper{
 
 	private String replaceLamAlef(String unshapedWord) {
 		int wordLength = unshapedWord.length();
-		char [] wordLetters = new char[wordLength];	
-		unshapedWord.getChars(0, wordLength, wordLetters,0 );		
+		char [] wordLetters = new char[wordLength];
+		unshapedWord.getChars(0, wordLength, wordLetters,0 );
 		char letterBefore = 0;
-		for (int index = 0; index < wordLetters.length - 1 ; index++) {			
+		for (int index = 0; index < wordLetters.length - 1 ; index++) {
 			if(!isHaraka(wordLetters[index]) && (int)DEFINED_CHARACTERS_ORGINAL_LAM !=(int)wordLetters[index]) {
 				letterBefore = wordLetters[index];
 			}
@@ -202,13 +202,13 @@ public class ArabicReshaper{
 				char candidateLam = wordLetters[index];
 				int lamPosition = index;
 				int harakaPosition = lamPosition + 1;
-				
+
 				while (harakaPosition < wordLetters.length && isHaraka(wordLetters[harakaPosition])) {
 					harakaPosition++;
 				}
 				if (harakaPosition < wordLetters.length) {
 					char lamAlef = 0;
-					if (lamPosition > 0 && getGlphyType(letterBefore) > 2) 
+					if (lamPosition > 0 && getGlphyType(letterBefore) > 2)
 						lamAlef = getLamAlef(wordLetters[harakaPosition], candidateLam, false);
 					else {
 						lamAlef = getLamAlef(wordLetters[harakaPosition], candidateLam, true);
@@ -231,7 +231,7 @@ public class ArabicReshaper{
 	 * Get LamAlef right Character Presentation of the character
 	 * @param candidateAlef The letter that is supposed to Alef
 	 * @param candidateLam The letter that is supposed to Lam
-	 * @param isEndOfWord Is those characters at the end of the Word, to get its right form 
+	 * @param isEndOfWord Is those characters at the end of the Word, to get its right form
 	 * @return Reshaped character of the LamAlef
 	 */
 	private  char getLamAlef(char candidateAlef,char candidateLam,boolean isEndOfWord){
@@ -263,7 +263,7 @@ public class ArabicReshaper{
 
 			if((int)candidateAlef ==(int)DEFINED_CHARACTERS_ORGINAL_ALF){
 				reshapedLamAlef = LAM_ALEF_GLPHIES[2][shiftRate];
-			}			
+			}
 
 		}
 		//return the ReshapedLamAlef
@@ -285,9 +285,9 @@ public class ArabicReshaper{
 
 	/**
 	 * Decompose the word into two parts:
-	 * 	- simple letters with their positions 
+	 * 	- simple letters with their positions
 	 * 	- Tashkil alone with their position
-	 * 
+	 *
 	 */
 	class DecomposedWord {
 		char[] stripedHarakates ;
@@ -342,10 +342,10 @@ public class ArabicReshaper{
 			for(int index = 0; index < harakatesPositions.length; index++) {
 				wordWithHarakates[harakatesPositions[index]] = stripedHarakates[index];
 			}
-			
+
 			// harakate on the final letter is always badly displayed, and sometimes mixes up all the display, so remove it
 			if(isHaraka(wordWithHarakates[wordWithHarakates.length - 1]))	{
-				
+
 				return new String(wordWithHarakates, 0, wordWithHarakates.length - 1);
 			}
 
@@ -363,7 +363,7 @@ public class ArabicReshaper{
 
 		//The reshaped Word to Return
 		StringBuffer reshapedWord=new StringBuffer("");
-		int wordLength = unshapedWord.length();		
+		int wordLength = unshapedWord.length();
 
 		//The Word Letters
 		char [] wordLetters = new char[wordLength];

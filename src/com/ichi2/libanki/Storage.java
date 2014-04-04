@@ -350,7 +350,7 @@ public class Storage {
     public static void addIndices(AnkiDb db) {
         _updateIndices(db);
     }
-    
+
     /*
      * Upgrading ************************************************************
      */

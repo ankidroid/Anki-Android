@@ -693,12 +693,12 @@ public class Finder {
                 .replace("*","%"); // And then convert the * into non-escaped % signs
 
         /*
-         * The following three lines make sure that only _ and * are valid wildcards. 
-         * Any other characters are enclosed inside the \Q \E markers, which force  
-         * all meta-characters in between them to lose their special meaning 
+         * The following three lines make sure that only _ and * are valid wildcards.
+         * Any other characters are enclosed inside the \Q \E markers, which force
+         * all meta-characters in between them to lose their special meaning
          */
         String javaVal = val
-                    .replace("_","\\E.\\Q") 
+                    .replace("_","\\E.\\Q")
                     .replace("*","\\E.*\\Q");
         /*
          * For the pattern, we use the javaVal expression that uses JAVA REGEX syntax
@@ -763,7 +763,7 @@ public class Finder {
     // /////////////////
     /**
      * Find and replace fields in a note
-     * 
+     *
      * @param col The collection to search into.
      * @param nids The cards to be searched for.
      * @param src The original text to find.

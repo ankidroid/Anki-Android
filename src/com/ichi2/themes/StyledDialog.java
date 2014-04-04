@@ -250,7 +250,7 @@ public class StyledDialog extends Dialog {
 
         /**
          * Set the Dialog message from String
-         * 
+         *
          * @param title
          * @return
          */
@@ -269,7 +269,7 @@ public class StyledDialog extends Dialog {
 
         /**
          * Set the Dialog message from resource
-         * 
+         *
          * @param title
          * @return
          */
@@ -287,7 +287,7 @@ public class StyledDialog extends Dialog {
 
         /**
          * Set the Dialog title from resource
-         * 
+         *
          * @param title
          * @return
          */
@@ -299,7 +299,7 @@ public class StyledDialog extends Dialog {
 
         /**
          * Set the Dialog title from String
-         * 
+         *
          * @param title
          * @return
          */
@@ -311,7 +311,7 @@ public class StyledDialog extends Dialog {
 
         /**
          * Set a custom content view for the Dialog. If a message is set, the contentView is not added to the Dialog...
-         * 
+         *
          * @param v
          * @return
          */
@@ -341,7 +341,7 @@ public class StyledDialog extends Dialog {
 
         /**
          * Set the positive button resource and it's listener
-         * 
+         *
          * @param positiveButtonText
          * @param listener
          * @return
@@ -355,7 +355,7 @@ public class StyledDialog extends Dialog {
 
         /**
          * Set the positive button text and it's listener
-         * 
+         *
          * @param positiveButtonText
          * @param listener
          * @return
@@ -369,7 +369,7 @@ public class StyledDialog extends Dialog {
 
         /**
          * Set the negative button resource and it's listener
-         * 
+         *
          * @param negativeButtonText
          * @param listener
          * @return
@@ -383,7 +383,7 @@ public class StyledDialog extends Dialog {
 
         /**
          * Set the negative button text and it's listener
-         * 
+         *
          * @param negativeButtonText
          * @param listener
          * @return
@@ -397,7 +397,7 @@ public class StyledDialog extends Dialog {
 
         /**
          * Set the neutral button resource and it's listener
-         * 
+         *
          * @param neutralButtonText
          * @param listener
          * @return
@@ -411,7 +411,7 @@ public class StyledDialog extends Dialog {
 
         /**
          * Set the neutral button text and it's listener
-         * 
+         *
          * @param neutralButtonText
          * @param listener
          * @return

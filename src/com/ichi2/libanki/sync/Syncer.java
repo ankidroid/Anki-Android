@@ -120,7 +120,7 @@ public class Syncer {
                 mMinUsn = lMeta.getInt("usn");
                 long lscm = lMeta.getLong("scm");
                 int lts = lMeta.getInt("ts");
-                
+
                 long diff = Math.abs(rts - lts);
                 if (diff > 300) {
                     return new Object[] { "clockOff", diff };
