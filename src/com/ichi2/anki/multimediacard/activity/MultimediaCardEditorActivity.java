@@ -218,7 +218,7 @@ public class MultimediaCardEditorActivity extends Activity {
 
     /**
      * Creates the UI for editor area inside EditorLayout
-     * 
+     *
      * @param note
      */
     private void createEditorUI(IMultimediaEditableNote note) {
@@ -524,7 +524,7 @@ public class MultimediaCardEditorActivity extends Activity {
     /**
      * Change current model for the Note. Changes both MultimediaNote and the mEditorNote (Note Object) and copies
      * existing values to both.
-     * 
+     *
      * @param newId
      */
     protected void changeCurrentModel(long newId) {

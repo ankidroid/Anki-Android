@@ -1424,13 +1424,13 @@ public class Reviewer extends AnkiActivity {
 
             case MENU_EDIT:
                 return editCard();
-                
+
             case MENU_REMOVE_BURY_CARD:
                 setNextCardAnimation(false);
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
                         mSched, mCurrentCard, 4));
                 return true;
-                
+
             case MENU_REMOVE_BURY_NOTE:
                 setNextCardAnimation(false);
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
@@ -2544,7 +2544,7 @@ public class Reviewer extends AnkiActivity {
             String question = "";
             String answer = "";
             int qa = -1; // prevent uninitialized variable errors
-            
+
             if (sDisplayAnswer) {
                 qa = MetaDB.LANGUAGES_QA_ANSWER;
                 answer = mCurrentCard.getPureAnswerForReading();
@@ -2553,9 +2553,9 @@ public class Reviewer extends AnkiActivity {
                 Sound.resetSounds(); // reset sounds on first side of card
                 qa = MetaDB.LANGUAGES_QA_QUESTION;
                 question = mCurrentCard.getQuestion(mCurrentSimpleInterface);
-                Sound.addSounds(mBaseUrl, question, qa);                
+                Sound.addSounds(mBaseUrl, question, qa);
             }
-            
+
             content = Sound.expandSounds(mBaseUrl, content, mSpeakText, qa);
 
             // In order to display the bold style correctly, we have to change
@@ -2572,7 +2572,7 @@ public class Reviewer extends AnkiActivity {
             Log.i(AnkiDroidApp.TAG, "content card = \n" + content);
             StringBuilder style = new StringBuilder();
             mExtensions.updateCssStyle(style);
-            
+
             // Scale images.
             if (mRelativeImageSize != 100) {
                 style.append(String.format("img { zoom: %s }\n", mRelativeImageSize / 100.0));

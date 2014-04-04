@@ -57,7 +57,7 @@ public class ReadText {
         	if (mTts.isSpeaking()) {
         		sTextQueue.add(new String[]{text, loc});
         	} else {
-                mTts.speak(mTextToSpeak, TextToSpeech.QUEUE_FLUSH, mTtsParams);        		
+                mTts.speak(mTextToSpeak, TextToSpeech.QUEUE_FLUSH, mTtsParams);
         	}
         }
     }

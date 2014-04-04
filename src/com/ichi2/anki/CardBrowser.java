@@ -792,8 +792,8 @@ public class CardBrowser extends Activity {
                             onCreate(savedInstanceState);
                         }
                     }
-        
-        
+
+
                     @Override
                     public void onPreExecute() {
                         mOpenCollectionDialog = StyledOpenCollectionDialog.show(
@@ -806,8 +806,8 @@ public class CardBrowser extends Activity {
                                     }
                                 });
                     }
-        
-        
+
+
                     @Override
                     public void onProgressUpdate(DeckTask.TaskData... values) {
                     }

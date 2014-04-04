@@ -1237,7 +1237,7 @@ public class Utils {
     public static String jsonToString(JSONArray json) {
         return json.toString().replaceAll("\\\\/", "/");
     }
-    
+
     /**
      * @return A description of the device, including the model and android version. No commas are present in the
      * returned string.

@@ -216,7 +216,7 @@ public final class WidgetStatus {
             	} else {
             		mSmallWidgetStatus = sSmallWidgetStatus;
             	}
-//                Collection col = Collection.currentCollection();              
+//                Collection col = Collection.currentCollection();
 //                Object[] di;
 //                float progress;
 //                if (col == null) {

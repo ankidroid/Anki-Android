@@ -1,8 +1,8 @@
-/* The following code was written by Matthew Wiggins 
- * and is released under the APACHE 2.0 license 
- * 
+/* The following code was written by Matthew Wiggins
+ * and is released under the APACHE 2.0 license
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * adjusted by Norbert Nagold 2011 <norbert.nagold@gmail.com>
  */
 
@@ -99,7 +99,7 @@ public class SeekBarPreference extends DialogPreference implements SeekBar.OnSee
         if (fromTouch) {
             mValue = (value * mInterval) + mMin;
             String t = String.valueOf(mValue);
-            mValueText.setText(mSuffix == null ? t : t.concat(mSuffix));            
+            mValueText.setText(mSuffix == null ? t : t.concat(mSuffix));
         }
     }
 
@@ -108,7 +108,7 @@ public class SeekBarPreference extends DialogPreference implements SeekBar.OnSee
         if (mValue == 0) {
             return getPersistedInt(mDefault);
         } else {
-            return mValue;            
+            return mValue;
         }
     }
 

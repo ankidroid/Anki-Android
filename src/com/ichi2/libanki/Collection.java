@@ -62,7 +62,7 @@ public class Collection {
     private static final String TEMPLATE_ERROR = "<div style='background-color:#f44; color:#fff;'>%s</div>%s"+
                                                  "<br><br><code style='font-size:80%%'>%s</code><br><br>"+
                                                  "%s: <b>%s</b><br>%s: <b>%s</b><br><br>%s";
-    
+
     private AnkiDb mDb;
     private boolean mServer;
     private double mLastSave;
@@ -112,7 +112,7 @@ public class Collection {
     public static final int UNDO_DELETE_NOTE = 5;
     public static final int UNDO_MARK_NOTE = 6;
     public static final int UNDO_BURY_CARD = 7;
-    
+
     private static final int[] fUndoNames = new int[]{
         R.string.undo_action_review,
         R.string.undo_action_edit,
@@ -930,7 +930,7 @@ public class Collection {
             }
             fields.put("Card", template.getString("name"));
             fields.put("c" + (((Integer) data[4]) + 1), "1");
-            
+
             // render q & a
             HashMap<String, String> d = new HashMap<String, String>();
             try {
@@ -939,7 +939,7 @@ public class Collection {
                 String afmt = template.getString("afmt");
                 String html;
                 String format;
-    
+
                 // runFilter mungeFields for type "q"
                 Models.fieldParser fparser = new Models.fieldParser(fields);
                 Matcher m = fClozePattern.matcher(qfmt);
@@ -955,9 +955,9 @@ public class Collection {
                         d.put("q", "Please edit this note and add some cloze deletions.");
                     }
                 }
-                
+
                 fields.put("FrontSide", d.get("q"));
-    
+
                 // runFilter mungeFields for type "a"
                 fparser = new Models.fieldParser(fields);
                 m = fClozePattern.matcher(afmt);
@@ -980,7 +980,7 @@ public class Collection {
                 }
             } catch (MustacheException e) {
                 Resources res = AnkiDroidApp.getAppResources();
-                
+
                 String templateError = String.format(TEMPLATE_ERROR, res.getString(R.string.template_error),
                         res.getString(R.string.template_error_detail), e.getMessage(),
                         res.getString(R.string.note_type), model.getString("name"),
@@ -1287,7 +1287,7 @@ public class Collection {
     		mUndo.removeFirst();
     	}
     }
-    
+
 
     public void markReview(Card card) {
         markUndo(UNDO_REVIEW, new Object[]{card});
@@ -1297,7 +1297,7 @@ public class Collection {
      * DB maintenance *********************************************************** ************************************
      */
 
-    
+
     /*
      * Basic integrity check for syncing. True if ok.
      */
@@ -1326,7 +1326,7 @@ public class Collection {
                 for (int t = 0; t < tmpls.length(); t++) {
                     ords[t] = tmpls.getJSONObject(t).getInt("ord");
                 }
-                
+
                 boolean badOrd = mDb.queryScalar(String.format(Locale.US,
                         "select 1 from cards where ord not in %s and nid in ( " +
                         "select id from notes where mid = %d) limit 1",
@@ -1340,7 +1340,7 @@ public class Collection {
         }
         return true;
     }
-    
+
 
     /** Fix possible problems and rebuild caches. */
     public long fixIntegrity() {

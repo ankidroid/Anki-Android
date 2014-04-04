@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class CardStats {
-    
+
     public static String report(Context context, Card c, Collection col) {
         Calendar cal = Calendar.getInstance();
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -26,7 +26,7 @@ public class CardStats {
         builder.append("</td><td>");
         builder.append(Utils.stripHTML(c._getQA(false).get("a")));
         builder.append("</td></tr><tr><td valign=\"top\">");
-        
+
         long next = 0;
         if (c.getType() == 1 || c.getType() == 2) {
             if (c.getODid() != 0 || c.getQueue() < 0) {
@@ -57,14 +57,14 @@ public class CardStats {
 ////        } else {
 ////            builder.append(Utils.getReadableInterval(context, mInterval));
 ////        }
-        
+
 
 //      builder.append("</td></tr><tr><td>");
 ////        builder.append(res.getString(R.string.card_details_ease));
 //      builder.append("</td><td>");
 //      double ease = Math.round(mFactor * 100);
 //      builder.append(ease / 100);
-        
+
 //      builder.append("</td></tr><tr><td>");
 ////        builder.append(res.getString(R.string.card_details_average_time));
 //      builder.append("</td><td>");
@@ -73,47 +73,47 @@ public class CardStats {
 ////        } else {
 ////            builder.append(Utils.doubleToTime(mAverageTime));
 ////        }
-        
+
 //      builder.append("</td></tr><tr><td>");
 ////        builder.append(res.getString(R.string.card_details_total_time));
 //      builder.append("</td><td>");
 ////        builder.append(Utils.doubleToTime(mReviewTime));
-        
+
 //      builder.append("</td></tr><tr><td>");
 ////        builder.append(res.getString(R.string.card_details_yes_count));
 //      builder.append("</td><td>");
 ////        builder.append(mYesCount);
-        
+
 //      builder.append("</td></tr><tr><td>");
 ////        builder.append(res.getString(R.string.card_details_no_count));
 //      builder.append("</td><td>");
 ////        builder.append(mNoCount);
-        
+
 //      builder.append("</td></tr><tr><td>");
 ////        builder.append(res.getString(R.string.card_details_added));
 //      builder.append("</td><td>");
 ////        builder.append(DateFormat.getDateFormat(context).format(
 ////                (long) (mCreated - mDeck.getUtcOffset()) * 1000l));
-        
+
 //      builder.append("</td></tr><tr><td>");
 ////        builder.append(res.getString(R.string.card_details_changed));
 //      builder.append("</td><td>");
 ////        builder.append(DateFormat.getDateFormat(context).format(
 ////                (long) (mModified - mDeck.getUtcOffset()) * 1000l));
-        
+
 //      builder.append("</td></tr><tr><td>");
 ////        builder.append(res.getString(R.string.card_details_tags));
 //      builder.append("</td><td>");
 ////        String tags = Arrays.toString(mDeck
 ////                .allUserTags("WHERE id = " + mFactId));
 ////        builder.append(tags.substring(1, tags.length() - 1));
-        
+
 //      builder.append("</td></tr><tr><td>");
 ////        builder.append(res.getString(R.string.card_details_model));
 //      builder.append("</td><td>");
 ////        Model model = Model.getModel(mDeck, mCardModelId, false);
 ////        builder.append(model.getName());
-        
+
 //      builder.append("</td></tr><tr><td>");
 ////        builder.append(res.getString(R.string.card_details_card_model));
 //      builder.append("</td><td>");

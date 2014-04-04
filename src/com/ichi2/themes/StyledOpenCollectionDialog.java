@@ -36,7 +36,7 @@ import com.ichi2.anki.R;
 public class StyledOpenCollectionDialog extends Dialog {
 
 	private View mMainLayout;
-	
+
     public StyledOpenCollectionDialog(Context context) {
         super(context, R.style.StyledDialog);
     }

@@ -80,7 +80,7 @@ public class AnkiDroidApp extends Application {
 
     /** Global hooks */
     private Hooks mHooks;
-    
+
     /** Compatibility interface, Used to perform operation in a platform specific way. */
     private Compat mCompat;
 
@@ -107,14 +107,14 @@ public class AnkiDroidApp extends Application {
      * have.
      */
     public static final int CHECK_DB_AT_VERSION = 40;
-    
+
     /**
      * The latest package version number that included changes to the preferences
      * that requires handling. All collections being upgraded to (or after) this version
      * must update preferences.
      */
-    public static final int CHECK_PREFERENCES_AT_VERSION = 20100108;      
-    
+    public static final int CHECK_PREFERENCES_AT_VERSION = 20100108;
+
     /**
      * On application creation.
      */
@@ -191,7 +191,7 @@ public class AnkiDroidApp extends Application {
     /**
      * Convenience method for accessing Shared preferences
      * @param context Context to get preferences for.
-     * @return A SharedPreferences object for this instance of the app. 
+     * @return A SharedPreferences object for this instance of the app.
      */
     public static SharedPreferences getSharedPrefs(Context context) {
         return context.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE);
@@ -204,7 +204,7 @@ public class AnkiDroidApp extends Application {
 
 
     private static String getStorageDirectory() {
-        return Environment.getExternalStorageDirectory().getAbsolutePath();    		
+        return Environment.getExternalStorageDirectory().getAbsolutePath();
     }
 
     private static String getInternalMemoryDirectory() {
@@ -289,7 +289,7 @@ public class AnkiDroidApp extends Application {
 
     /**
      * Get package name as defined in the manifest.
-     * 
+     *
      * @return the package name.
      */
     public static String getAppName() {
@@ -309,7 +309,7 @@ public class AnkiDroidApp extends Application {
 
     /**
      * Get the package versionName as defined in the manifest.
-     * 
+     *
      * @return the package version.
      */
     public static String getPkgVersionName() {
@@ -345,7 +345,7 @@ public class AnkiDroidApp extends Application {
 
     /**
      * Get the DropBox folder
-     * 
+     *
      * @return the absolute path to the DropBox public folder, or null if it is not found
      */
     public static String getDropboxDir() {
@@ -364,7 +364,7 @@ public class AnkiDroidApp extends Application {
 
     /**
      * Sets the user language.
-     * 
+     *
      * @param language The language to set
      * @return True if the language has changed, else false
      */
@@ -400,7 +400,7 @@ public class AnkiDroidApp extends Application {
                 sSwipeMinDistance = (int) (SWIPE_MIN_DISTANCE_DIP * gestureScale + 0.5f);
                 sSwipeThresholdVelocity = (int) (SWIPE_THRESHOLD_VELOCITY_DIP * gestureScale + 0.5f);
                 sSwipeMaxOffPath = (int) (SWIPE_MAX_OFF_PATH_DIP * gestureScale + 0.5f);
-            }    		
+            }
     	}
         return mGesturesEnabled;
     }
@@ -452,8 +452,8 @@ public class AnkiDroidApp extends Application {
         } finally {
     		mLock.unlock();
     	}
-    	
-    	
+
+
     }
 
     public static boolean colIsOpen() {

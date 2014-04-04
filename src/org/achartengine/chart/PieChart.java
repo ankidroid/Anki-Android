@@ -1,12 +1,12 @@
 /**
  * Copyright (C) 2009, 2010 SC 4ViewSoft SRL
- *  
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *  
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -38,7 +38,7 @@ public class PieChart extends RoundChart {
 
   /**
    * Builds a new pie chart instance.
-   * 
+   *
    * @param dataset the series dataset
    * @param renderer the series renderer
    */
@@ -49,7 +49,7 @@ public class PieChart extends RoundChart {
 
   /**
    * The graphical representation of the pie chart.
-   * 
+   *
    * @param canvas the canvas to paint to
    * @param x the top left x value of the view to draw to
    * @param y the top left y value of the view to draw to

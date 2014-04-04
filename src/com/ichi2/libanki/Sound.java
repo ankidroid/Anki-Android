@@ -80,16 +80,16 @@ public class Sound {
             if (!sSoundPaths.containsKey(qa)) {
                 sSoundPaths.put(qa, new ArrayList<String>());
             }
-            
+
             // Get the sound file name
             String sound = matcher.group(1);
 
             // Construct the sound path and store it
-            String soundPath = soundDir + Uri.encode(sound);            
+            String soundPath = soundDir + Uri.encode(sound);
             sSoundPaths.get(qa).add(soundPath);
         }
     }
-    
+
     public static String expandSounds(String soundDir, String content, boolean ttsEnabled, int qa) {
         boolean soundAvailable = false;
         StringBuilder stringBuilder = new StringBuilder();

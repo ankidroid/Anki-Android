@@ -1,6 +1,6 @@
 /***************************************************************************************
  *                                                                                      *
- * Copyright (c) 2011 Kostas Spyropoulos <inigo.aldana@gmail.com>   
+ * Copyright (c) 2011 Kostas Spyropoulos <inigo.aldana@gmail.com>
  * Copyright (c) 2013 Jolta Technologies					                            *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
@@ -109,7 +109,7 @@ import android.widget.TextView;
 import android.widget.FrameLayout.LayoutParams;
 
 public class PreviewClass extends Activity {
-	
+
 	private Card mCurrentCard;
 	private LinearLayout mFlipCardLayout;
 	private FrameLayout mCardFrame;
@@ -180,28 +180,28 @@ public class PreviewClass extends Activity {
     private static final Pattern sBrPattern = Pattern.compile("<br\\s?/?>");
     private String mTypeFont;
     private RelativeLayout top_bar;
-    
-    
-    
+
+
+
 	 @Override
 	    protected void onCreate(Bundle savedInstanceState) {
 	        // Log.i(AnkiDroidApp.TAG, "CardEditor: onCreate");
-	       
+
 	        super.onCreate(savedInstanceState);
 	        mCurrentCard =CardEditor.mCurrentEditedCard;
 	        mRefreshWebview = getRefreshWebviewAndInitializeWebviewVariables();
 	        initLayout(R.layout.flashcard);
-	        
+
 	        Collection col = AnkiDroidApp.getCol();
 	        if (col == null) {
 	            //reloadCollection(savedInstanceState);
 	            return;
-	        } 
+	        }
 	        mPrefFullscreenReview = AnkiDroidApp.getSharedPrefs(getBaseContext()).getBoolean("fullscreenReview", false);
 	        mGesturesEnabled = AnkiDroidApp.initiateGestures(this, AnkiDroidApp.getSharedPrefs(getBaseContext()));
 	        setFullScreen(true);
 	        mBaseUrl = Utils.getBaseUrl(col.getMedia().getDir());
-	       
+
 	        try {
                 mCardTemplate = Utils.convertStreamToString(getAssets().open("card_template.html"));
             } catch (IOException e) {
@@ -209,7 +209,7 @@ public class PreviewClass extends Activity {
             }
 	        PreviewClass.this.displayCardQuestion();
 	        PreviewClass.this.displayCardAnswer();
-	      
+
 	 }
 	    private void setFullScreen(boolean fullScreen) {
 	        WindowManager.LayoutParams attrs = getWindow().getAttributes();
@@ -220,8 +220,8 @@ public class PreviewClass extends Activity {
 	        }
 	        getWindow().setAttributes(attrs);
 	    }
-	    
-	    
+
+
 	    private boolean mGesturesEnabled;
 	    /**
 	     * Gesture Allocation
@@ -242,15 +242,15 @@ public class PreviewClass extends Activity {
 		private boolean mLongClickWorkaround;
 		private boolean mTouchStarted = false;
 		private int mGestureLongclick;
-		  
+
 		 private final Handler longClickHandler = new Handler();
-	   
-	    
+
+
 	    class MyGestureDetector extends SimpleOnGestureListener {
 
 	        @Override
 	        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-	        	  
+
 	            if (mGesturesEnabled) {
 	                try {
 	                    if (e2.getY() - e1.getY() > AnkiDroidApp.sSwipeMinDistance
@@ -329,7 +329,7 @@ public class PreviewClass extends Activity {
 	            return false;
 	        }
 	    }
-	 
+
 	  private void initLayout(Integer layout) {
 	        setContentView(layout);
 
@@ -339,13 +339,13 @@ public class PreviewClass extends Activity {
 	        mCardContainer = (FrameLayout) findViewById(R.id.flashcard_frame);
 	        //setInAnimation(false);
 
-	       
+
 
 	        mCardFrame = (FrameLayout) findViewById(R.id.flashcard);
 	        mTouchLayer = (FrameLayout) findViewById(R.id.touch_layer);
 	        mTouchLayer.setOnTouchListener(mGestureListener);
 	        gestureDetector = new GestureDetector(new MyGestureDetector());
-	      
+
 	        mCardFrame.removeAllViews();
 	        mCardFrame.setVisibility(View.GONE);
 	        mTouchLayer.setVisibility(View.GONE);
@@ -382,7 +382,7 @@ public class PreviewClass extends Activity {
 	         	mFlipCard = (Button) findViewById(R.id.flip_card);
 	    		mFlipCardLayout = (LinearLayout) findViewById(R.id.flashcard_layout_flip);
 	    		mFlipCardLayout.setOnClickListener(mFlipCardListener);
-	    		
+
 	    		mFlipCard.setVisibility(View.GONE);
 	    		mFlipCardLayout.setVisibility(View.GONE);
 
@@ -402,7 +402,7 @@ public class PreviewClass extends Activity {
 	        mNextTimeTextColor = getResources().getColor(R.color.next_time_usual_color);
 	        mNextTimeTextRecomColor = getResources().getColor(R.color.next_time_recommended_color);
 	        mForegroundColor = getResources().getColor(R.color.next_time_usual_color);
-	       
+
 	        try{
 	        	top_bar=(RelativeLayout)findViewById(R.id.top_bar);
 	        	top_bar.setVisibility(View.GONE);
@@ -412,11 +412,11 @@ public class PreviewClass extends Activity {
 	        	er.printStackTrace();
 	        }
 	        initControls();
-	        
-	       
+
+
 	    }
-	  
-	
+
+
 	  private final Runnable longClickTestRunnable = new Runnable() {
 	        public void run() {
 	            // Log.i(AnkiDroidApp.TAG, "onEmulatedLongClick");
@@ -431,15 +431,15 @@ public class PreviewClass extends Activity {
 	        }
 	    };
 
-	
+
 	 private void executeCommand(int which) {
 
 	    }
-	    
-	    
-	    
-	    
-	  
+
+
+
+
+
 	  private View.OnTouchListener mGestureListener = new View.OnTouchListener() {
 	        @Override
 	        public boolean onTouch(View v, MotionEvent event) {
@@ -493,7 +493,7 @@ public class PreviewClass extends Activity {
 	        }
 	    }
 
-	 
+
 	    // Handler for the "show answer" button
 	    private View.OnClickListener mFlipCardListener = new View.OnClickListener() {
 	        @Override
@@ -502,13 +502,13 @@ public class PreviewClass extends Activity {
 	            displayCardAnswer();
 	        }
 	    };
-	    
-	    
+
+
 	    private String typeAnsAnswerFilter(String buf) {
 	        Matcher m = sTypeAnsPat.matcher(buf);
 	        return m.replaceFirst("");
 	    }
-	  
+
 	    private void displayCardAnswer() {
 	        // Log.i(AnkiDroidApp.TAG, "displayCardAnswer");
 
@@ -578,7 +578,7 @@ public class PreviewClass extends Activity {
 	        }
 
 	        updateCard(displayString);
-	      
+
 	    }
 
 
@@ -592,7 +592,7 @@ public class PreviewClass extends Activity {
 	        }
 	        mAnswerField.setVisibility(typeAnswer() ? View.VISIBLE : View.GONE);
 	    }
-	    
+
 	    private String typeAnsQuestionFilter(String buf) {
 	        Matcher m = sTypeAnsPat.matcher(buf);
 	        if (mTypeWarning != null) {
@@ -600,11 +600,11 @@ public class PreviewClass extends Activity {
 	        }
 	        return m.replaceFirst("");
 	    }
-	    
+
 	    private boolean mSimpleInterface = false;
 	    private ArrayList<String> mSimpleInterfaceExcludeTags;
 	    private Method mSetTextIsSelectable = null;
-	    
+
 	    private void setInterface() {
 	    	if (mCurrentCard == null) {
 	    		return;
@@ -646,24 +646,24 @@ public class PreviewClass extends Activity {
 				}
 				if (mSimpleCard.getVisibility() != View.VISIBLE || (mCard != null && mCard.getVisibility() == View .VISIBLE)) {
 					mSimpleCard.setVisibility(View.VISIBLE);
-					mCard.setVisibility(View.GONE);				
+					mCard.setVisibility(View.GONE);
 				}
 			} else {
 				if (mCard == null) {
 		            mCard = createWebView();
-		            mCardFrame.addView(mCard);				
+		            mCardFrame.addView(mCard);
 		            if (mRefreshWebview) {
 		                mNextCard = createWebView();
 		                mNextCard.setVisibility(View.GONE);
 		                mCardFrame.addView(mNextCard, 0);
-			            mCard.setBackgroundColor(mCurrentBackgroundColor);        	
+			            mCard.setBackgroundColor(mCurrentBackgroundColor);
 
 		                mCustomFontStyle = getCustomFontsStyle() + getDefaultFontStyle();
 		            }
 				}
 				if (mCard.getVisibility() != View.VISIBLE || (mSimpleCard != null && mSimpleCard.getVisibility() == View .VISIBLE)) {
 					mSimpleCard.setVisibility(View.GONE);
-					mCard.setVisibility(View.VISIBLE);				
+					mCard.setVisibility(View.VISIBLE);
 				}
 			}
 	    }
@@ -694,12 +694,12 @@ public class PreviewClass extends Activity {
 	        return mCustomDefaultFontCss;
 	    }
 
-	    
+
 	    private void displayCardQuestion() {
 	    	// show timer, if activated in the deck's preferences
-	    	
+
 	        sDisplayAnswer = false;
-	      
+
 	        setInterface();
 	        String question = mCurrentCard.getQuestion(mCurrentSimpleInterface);
 	        question = typeAnsQuestionFilter(question);
@@ -739,12 +739,12 @@ public class PreviewClass extends Activity {
 	        }
 
 	        updateCard(displayString);
-	      
+
 
 
 	    }
 	    private boolean mShowAnimations = false;
-	    
+
 	    private String recalculateHardCodedFontSize(String content, int percentage) {
 	        if (percentage == 100 || null == content || 0 == content.trim().length()) {
 	            return content.trim();
@@ -795,7 +795,7 @@ public class PreviewClass extends Activity {
 	        String a = sb.toString();
 	        return a;
 	    }
-	    
+
 	    private static int calculateDynamicFontSize(String htmlContent) {
 	        // Replace each <br> with 15 spaces, each <hr> with 30 spaces, then
 	        // remove all html tags and spaces
@@ -807,8 +807,8 @@ public class PreviewClass extends Activity {
 	                - (int) (realContent.length() / DYNAMIC_FONT_FACTOR));
 	    }
 
-	    
-	    
+
+
 	    private void updateCard(String content) {
 	        // Log.i(AnkiDroidApp.TAG, "updateCard");
 
@@ -830,7 +830,7 @@ public class PreviewClass extends Activity {
 	            String question = "";
 	            String answer = "";
 	            int qa = -1; // prevent uninitialized variable errors
-	            
+
 	            if (sDisplayAnswer) {
 	                qa = MetaDB.LANGUAGES_QA_ANSWER;
 	                answer = mCurrentCard.getPureAnswerForReading();
@@ -839,9 +839,9 @@ public class PreviewClass extends Activity {
 	                Sound.resetSounds(); // reset sounds on first side of card
 	                qa = MetaDB.LANGUAGES_QA_QUESTION;
 	                question = mCurrentCard.getQuestion(mCurrentSimpleInterface);
-	                Sound.addSounds(mBaseUrl, question, qa);                
+	                Sound.addSounds(mBaseUrl, question, qa);
 	            }
-	            
+
 	            content = Sound.expandSounds(mBaseUrl, content, mSpeakText, qa);
 
 	            // In order to display the bold style correctly, we have to change
@@ -865,7 +865,7 @@ public class PreviewClass extends Activity {
 	            fillFlashcard(mShowAnimations);
 	        }
 
-	       
+
 		}
 	    private String SmpToHtmlEntity(String text) {
 	        StringBuffer sb = new StringBuffer();
@@ -894,10 +894,10 @@ public class PreviewClass extends Activity {
 	        }
 	        return false;
 	    }
-	  
-	    
+
+
 	    public void fillFlashcard(boolean flip) {
-	    	
+
 	        if (!flip) {
 	        	Display display = getWindowManager().getDefaultDisplay();
 	        	Integer width= display.getWidth();
@@ -906,14 +906,14 @@ public class PreviewClass extends Activity {
 	        	file_contents=file_contents.replace("newImg.width", width.toString());
 	        	file_contents=file_contents.replace("newImg.height", height.toString());
 	        	file_contents=file_contents.replace("<head>","<head><meta name='viewport' content='width=device-width,initial-scale=1,minimum-scale=1,user-scalable=yes'/>");
-	        	 
+
 	            // Log.i(AnkiDroidApp.TAG, "base url = " + mBaseUrl);
 	            if (mCurrentSimpleInterface && mSimpleCard != null) {
 	                mSimpleCard.setText(mCardContent);
 	            } else if (mRefreshWebview && mCard != null && mNextCard != null) {
 	                mNextCard.setBackgroundColor(mCurrentBackgroundColor);
 	                //newImg.width
-	                
+
 	                mNextCard.loadDataWithBaseURL(mBaseUrl, file_contents, "text/html", "utf-8", null);
 	                mNextCard.setVisibility(View.VISIBLE);
 	                mCardFrame.removeView(mCard);
@@ -931,27 +931,27 @@ public class PreviewClass extends Activity {
 	                mCard.setBackgroundColor(mCurrentBackgroundColor);
 	            }
 	            if (mChangeBorderStyle) {}
-	           
+
 	        } else {
 	            Animation3D rotation;
 	            boolean directionToLeft = true;
-	            
 
-	           
+
+
 	            mCardContainer.setDrawingCacheEnabled(true);
 	            mCardContainer.setDrawingCacheBackgroundColor(Themes.getBackgroundColor());
 	            mCardContainer.clearAnimation();
 	            //mCardContainer.startAnimation(rotation);
 	        }
 	    }
-	    
+
 	    private boolean mPrefFadeScrollbars;
-	    
+
 	    private int mAvailableInCardWidth;
-	    
+
 	    @SuppressLint("NewApi")
 		private WebView createWebView() {
-	    	
+
 	        WebView webView = new MyWebView(this);
 	        webView.setWillNotCacheDrawing(true);
 	        webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
@@ -1020,20 +1020,20 @@ public class PreviewClass extends Activity {
 	            if ((new File(path)).exists()) {
 	                Drawable d = Drawable.createFromPath(path);
 	                d.setBounds(0,0,d.getIntrinsicWidth(),d.getIntrinsicHeight());
-	                return d;            	
+	                return d;
 	            } else {
 	            	return null;
 	            }
 	        }
 	    };
-	    
+
 	    private TagHandler mSimpleInterfaceTagHandler = new TagHandler () {
 
 	        public void handleTag(boolean opening, String tag, Editable output,
 	                XMLReader xmlReader) {
 //	            if(tag.equalsIgnoreCase("div")) {
 //	            	output.append("\n");
-//	            } else 
+//	            } else
 	        	if(tag.equalsIgnoreCase("strike") || tag.equals("s")) {
 	                int len = output.length();
 	                if(opening) {
@@ -1077,7 +1077,7 @@ public class PreviewClass extends Activity {
 	        }
 	        return false;
 	    }
-	    
+
 	    public final class AnkiDroidWebChromeClient extends WebChromeClient {
 	        @Override
 	        public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
@@ -1086,7 +1086,7 @@ public class PreviewClass extends Activity {
 	            return true;
 	        }
 	    }
-	  
+
 	    class ScrollTextView extends TextView {
 
 			public ScrollTextView(Context context) {
@@ -1127,7 +1127,7 @@ class MyWebView extends WebView {
     public MyWebView(Context context) {
         super(context);
     }
-    
+
 
     @Override
     public boolean onCheckIsTextEditor() {

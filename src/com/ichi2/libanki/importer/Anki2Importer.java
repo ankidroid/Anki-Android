@@ -276,11 +276,11 @@ public class Anki2Importer {
         mDst.updateFieldCache(dis);
         mDst.getTags().registerNotes(dis);
 	}
-	
-	
+
+
 	// determine if note is a duplicate, and adjust mid and/or guid as required
 	// returns true if note should be added
-	
+
 	private boolean _uniquifyNote(Object[] note) {
 		String origGuid = (String) note[GUID];
 		long srcMid = (Long) note[MID];
@@ -320,7 +320,7 @@ public class Anki2Importer {
 	private void _prepareModels() {
 		mModelMap = new HashMap<Long, Long>();
 	}
-	
+
 	/* Return local id for remote MID */
 	private long _mid(long srcMid) {
 		try {
@@ -455,11 +455,11 @@ public class Anki2Importer {
             int ci = 0;
             while (cursor.moveToNext()) {
             	Object[] card = new Object[]{cursor.getString(0), cursor.getLong(1),
-            			cursor.getLong(2), cursor.getLong(3), cursor.getLong(4), 
-            			cursor.getInt(5), cursor.getLong(6), cursor.getInt(7), 
-            			cursor.getInt(8), cursor.getInt(9), cursor.getLong(10), 
-            			cursor.getLong(11), cursor.getLong(12), cursor.getInt(13), 
-            			cursor.getInt(14), cursor.getInt(15), cursor.getLong(16), 
+            			cursor.getLong(2), cursor.getLong(3), cursor.getLong(4),
+            			cursor.getInt(5), cursor.getLong(6), cursor.getInt(7),
+            			cursor.getInt(8), cursor.getInt(9), cursor.getLong(10),
+            			cursor.getLong(11), cursor.getLong(12), cursor.getInt(13),
+            			cursor.getInt(14), cursor.getInt(15), cursor.getLong(16),
             			cursor.getLong(17), cursor.getInt(18), cursor.getString(19) };
             	String guid = (String) card[0];
             	if (mChangedGuids.containsKey(guid)) {
@@ -684,7 +684,7 @@ public class Anki2Importer {
 		try {
 			// make sure new position is correct
 			mDst.getConf().put("nextPos", mDst.getDb().queryLongScalar("SELECT max(due) + 1 FROM cards WHERE type = 0", false));
-			mDst.save();		
+			mDst.save();
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}

@@ -53,8 +53,8 @@ public class Models {
             + "\\\\documentclass[12pt]{article} " + "\\\\special{papersize=3in,5in} "
             + "\\\\usepackage[utf8]{inputenc} " + "\\\\usepackage{amssymb,amsmath} " + "\\\\pagestyle{empty} "
             + "\\\\setlength{\\\\parindent}{0in} " + "\\\\begin{document} " + "\", "
-            + "'latexPost': \"\\\\end{document}\", " + "'mod': 0, " + "'usn': 0, " 
-            + "'vers': [], " // FIXME: remove when other clients have caught up 
+            + "'latexPost': \"\\\\end{document}\", " + "'mod': 0, " + "'usn': 0, "
+            + "'vers': [], " // FIXME: remove when other clients have caught up
             + "'type': "
             + Sched.MODEL_STD + ", " + "'css': \" .card {" + "font-familiy: arial; " + "font-size: 20px; "
             + "text-align: center; " + "color:black; " + "background-color: white; }\"" + "}";
@@ -738,7 +738,7 @@ public class Models {
 
     /**
      * Removing a template
-     * 
+     *
      * @return False if removing template would leave orphan notes.
      */
     public boolean remTemplate(JSONObject m, JSONObject template) {
@@ -860,7 +860,7 @@ public class Models {
 
     /**
      * Get a compiled template, create it if missing or if args != null
-     * 
+     *
      * @param modelId
      * @param ord
      * @param args Pass it as [qfmt, afmt] to use custom format, or [] to use the format from model
@@ -977,7 +977,7 @@ public class Models {
      * @param m The model to change.
      * @param nids The list of notes that the change applies to.
      * @param newModel For replacing the old model with another one. Should be self if the model is not changing
-     * @param fmap Field map for switching fields. This is ord->ord and there should not be duplicate targets 
+     * @param fmap Field map for switching fields. This is ord->ord and there should not be duplicate targets
      * @param cmap Field map for switching fields. This is ord->ord and there should not be duplicate targets
      */
     public void change(JSONObject m, long[] nids, JSONObject newModel, Map<Integer, Integer> fmap, Map<Integer, Integer> cmap) {
@@ -995,7 +995,7 @@ public class Models {
         }
         mCol.genCards(nids);
     }
-    
+
     private void _changeNotes(long[] nids, JSONObject newModel, Map<Integer, Integer> map) {
         List<Object[]> d = new ArrayList<Object[]>();
         int nfields;
@@ -1014,7 +1014,7 @@ public class Models {
                 long nid = cur.getLong(0);
                 String[] flds = Utils.splitFields(cur.getString(1));
                 Map<Integer, String> newflds = new HashMap<Integer, String>();
-                
+
                 for (Integer old : map.keySet()) {
                     newflds.put(map.get(old), flds[old]);
                 }
@@ -1037,7 +1037,7 @@ public class Models {
         mCol.getDb().executeMany("update notes set flds=?,mid=?,mod=?,usn=? where id = ?", d);
         mCol.updateFieldCache(nids);
     }
-    
+
     private void _changeCards(long[] nids, JSONObject oldModel, JSONObject newModel, Map<Integer, Integer> map) {
         List<Object[]> d = new ArrayList<Object[]>();
         List<Long> deleted = new ArrayList<Long>();
@@ -1059,7 +1059,7 @@ public class Models {
                 // if the src model is a cloze, we ignore the map, as the gui doesn't currently
                 // support mapping them
                 Integer newOrd;
-                long cid = cur.getLong(0); 
+                long cid = cur.getLong(0);
                 int ord = cur.getInt(1);
                 if (omType == Sched.MODEL_CLOZE) {
                     newOrd = cur.getInt(1);
@@ -1350,7 +1350,7 @@ public class Models {
     }
 
     /* Forward & Reverse */
-    
+
     public static JSONObject addForwardReverse(Collection col) {
     	String name = "Basic (and reversed card)";
         Models mm = col.getModels();
@@ -1367,9 +1367,9 @@ public class Models {
         return m;
     }
 
-    
+
     /* Forward & Optional Reverse */
-    
+
     public static JSONObject addForwardOptionalReverse(Collection col) {
     	String name = "Basic (optional reversed card)";
         Models mm = col.getModels();
@@ -1388,7 +1388,7 @@ public class Models {
         return m;
     }
 
-    
+
     public static JSONObject addClozeModel(Collection col) {
         Models mm = col.getModels();
         JSONObject m = mm.newModel("Cloze");
@@ -1467,7 +1467,7 @@ public class Models {
 	public boolean validateModel() {
 		Iterator<Entry<Long, JSONObject>> iterator = mModels.entrySet().iterator();
 		while (iterator.hasNext()) {
-			if (!validateBrackets(iterator.next().getValue())) {			
+			if (!validateBrackets(iterator.next().getValue())) {
 				return false;
 			}
 		}

@@ -70,7 +70,7 @@ public class NumberRangePreference extends EditTextPreference {
      * methods that are called are for a String type. The two methods below intercept the persistence
      * and retrieval methods for Strings and replaces them with their Integer equivalents.
      */
-    
+
     @Override
     protected String getPersistedString(String defaultReturnValue) {
         return String.valueOf(getPersistedInt(mMin));
@@ -147,7 +147,7 @@ public class NumberRangePreference extends EditTextPreference {
     private void updateSettings() {
         // Only allow integer input
         getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
-        
+
         // Set max number of digits
         int maxLength = String.valueOf(mMax).length();
         // Clone the existing filters so we don't override them, then append our one at the end.
@@ -157,7 +157,7 @@ public class NumberRangePreference extends EditTextPreference {
         newFilters[newFilters.length - 1] = new InputFilter.LengthFilter(maxLength);
         getEditText().setFilters(newFilters);
     }
-    
+
     /**
      * Get the persisted value held by this preference.
      * @return the persisted value.
@@ -166,7 +166,7 @@ public class NumberRangePreference extends EditTextPreference {
         return getPersistedInt(mMin);
     }
 
-    
+
     /**
      * Set this preference's value. The value is validated and persisted as an Integer.
      * @param value to set.

@@ -489,7 +489,7 @@ public class Decks {
 
     /**
      * Create a new configuration and return id. Uses defaultConf as template.
-     * 
+     *
      * @param name Name of the new configuration
      * @return The id of the new configuration
      */
@@ -500,7 +500,7 @@ public class Decks {
 
     /**
      * Create a new configuration and return id.
-     * 
+     *
      * @param name Name of the new configuration
      * @param cloneFrom Optional parameter to copy configuration from
      * @return The id of the new configuration
@@ -573,7 +573,7 @@ public class Decks {
             throw new RuntimeException(e);
         }
     }
-    
+
     public void restoreToDefault(JSONObject conf) {
         try {
             int oldOrder = conf.getJSONObject("new").getInt("order");

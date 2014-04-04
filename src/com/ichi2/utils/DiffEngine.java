@@ -33,7 +33,7 @@ import java.util.regex.Pattern;
 /**
  * Functions for diff, match and patch. Computes the difference between two texts to create a patch. Applies the patch
  * onto another text, allowing for errors.
- * 
+ *
  * @author fraser@google.com (Neil Fraser) Class containing the diff, match and patch methods. Also contains the
  *         behaviour settings. TODO if possible, remove the merging code, unneeded.
  */
@@ -97,7 +97,7 @@ public class DiffEngine {
     /**
      * Find the differences between two texts. Run a faster slightly less optimal diff This method allows the
      * 'checklines' of diff_main() to be optional. Most of the time checklines is wanted, so default to true.
-     * 
+     *
      * @param text1 Old string to be diffed.
      * @param text2 New string to be diffed.
      * @return Linked List of Diff objects.
@@ -110,7 +110,7 @@ public class DiffEngine {
     /**
      * Find the differences between two texts. Simplifies the problem by stripping any common prefix or suffix off the
      * texts before diffing.
-     * 
+     *
      * @param text1 Old string to be diffed.
      * @param text2 New string to be diffed.
      * @param checklines Speedup flag. If false, then don't run a line-level diff first to identify the changed areas.
@@ -156,7 +156,7 @@ public class DiffEngine {
 
     /**
      * Find the differences between two texts. Assumes that the texts do not have any common prefix or suffix.
-     * 
+     *
      * @param text1 Old string to be diffed.
      * @param text2 New string to be diffed.
      * @param checklines Speedup flag. If false, then don't run a line-level diff first to identify the changed areas.
@@ -286,7 +286,7 @@ public class DiffEngine {
     /**
      * Split two texts into a list of strings. Reduce the texts to a string of hashes where each Unicode character
      * represents one line.
-     * 
+     *
      * @param text1 First string.
      * @param text2 Second string.
      * @return An object containing the encoded text1, the encoded text2 and the List of unique strings. The zeroth
@@ -311,7 +311,7 @@ public class DiffEngine {
     /**
      * Split a text into a list of strings. Reduce the texts to a string of hashes where each Unicode character
      * represents one line.
-     * 
+     *
      * @param text String to encode.
      * @param lineArray List of unique strings.
      * @param lineHash Map of strings to indices.
@@ -347,7 +347,7 @@ public class DiffEngine {
 
     /**
      * Rehydrate the text in a diff from a string of line hashes to real lines of text.
-     * 
+     *
      * @param diffs LinkedList of Diff objects.
      * @param lineArray List of unique strings.
      */
@@ -365,7 +365,7 @@ public class DiffEngine {
 
     /**
      * Explore the intersection points between the two texts.
-     * 
+     *
      * @param text1 Old string to be diffed.
      * @param text2 New string to be diffed.
      * @return LinkedList of Diff objects or null if no diff available.
@@ -491,7 +491,7 @@ public class DiffEngine {
 
     /**
      * Work from the middle back to the start to determine the path.
-     * 
+     *
      * @param v_map List of path sets.
      * @param text1 Old string fragment to be diffed.
      * @param text2 New string fragment to be diffed.
@@ -541,7 +541,7 @@ public class DiffEngine {
 
     /**
      * Work from the middle back to the end to determine the path.
-     * 
+     *
      * @param v_map List of path sets.
      * @param text1 Old string fragment to be diffed.
      * @param text2 New string fragment to be diffed.
@@ -594,7 +594,7 @@ public class DiffEngine {
 
     /**
      * Compute a good hash of two integers.
-     * 
+     *
      * @param x First int.
      * @param y Second int.
      * @return A long made up of both ints.
@@ -612,7 +612,7 @@ public class DiffEngine {
 
     /**
      * Determine the common prefix of two strings
-     * 
+     *
      * @param text1 First string.
      * @param text2 Second string.
      * @return The number of characters common to the start of each string.
@@ -631,7 +631,7 @@ public class DiffEngine {
 
     /**
      * Determine the common suffix of two strings
-     * 
+     *
      * @param text1 First string.
      * @param text2 Second string.
      * @return The number of characters common to the end of each string.
@@ -652,7 +652,7 @@ public class DiffEngine {
 
     /**
      * Do the two texts share a substring which is at least half the length of the longer text?
-     * 
+     *
      * @param text1 First string.
      * @param text2 Second string.
      * @return Five element String array, containing the prefix of text1, the suffix of text1, the prefix of text2, the
@@ -694,7 +694,7 @@ public class DiffEngine {
     /**
      * Does a substring of shorttext exist within longtext such that the substring is at least half the length of
      * longtext?
-     * 
+     *
      * @param longtext Longer string.
      * @param shorttext Shorter string.
      * @param i Start index of quarter length substring within longtext.
@@ -729,7 +729,7 @@ public class DiffEngine {
 
     /**
      * Reduce the number of edits by eliminating semantically trivial equalities.
-     * 
+     *
      * @param diffs LinkedList of Diff objects.
      */
     public void diff_cleanupSemantic(LinkedList<DiffAction> diffs) {
@@ -806,7 +806,7 @@ public class DiffEngine {
     /**
      * Look for single edits surrounded on both sides by equalities which can be shifted sideways to align the edit to a
      * word boundary. e.g: The c<ins>at c</ins>ame. -> The <ins>cat </ins>came.
-     * 
+     *
      * @param diffs LinkedList of Diff objects.
      */
     public void diff_cleanupSemanticLossless(LinkedList<DiffAction> diffs) {
@@ -888,7 +888,7 @@ public class DiffEngine {
     /**
      * Given two strings, compute a score representing whether the internal boundary falls on logical boundaries. Scores
      * range from 5 (best) to 0 (worst).
-     * 
+     *
      * @param one First string.
      * @param two Second string.
      * @return The score.
@@ -932,7 +932,7 @@ public class DiffEngine {
     /**
      * Reorder and merge like edit sections. Merge equalities. Any edit section can move as long as it doesn't cross an
      * equality.
-     * 
+     *
      * @param diffs LinkedList of Diff objects.
      */
     public void diff_cleanupMerge(LinkedList<DiffAction> diffs) {
@@ -1075,7 +1075,7 @@ public class DiffEngine {
 
     /**
      * Convert a Diff list into a pretty HTML report.
-     * 
+     *
      * @param diffs LinkedList of Diff objects.
      * @return HTML representation.
      */
@@ -1126,7 +1126,7 @@ public class DiffEngine {
 
         /**
          * Constructor. Initializes the diff with the provided values.
-         * 
+         *
          * @param operation One of INSERT, DELETE or EQUAL.
          * @param text The text being applied.
          */
@@ -1139,7 +1139,7 @@ public class DiffEngine {
 
         /**
          * Display a human-readable version of this Diff.
-         * 
+         *
          * @return text version.
          */
         @Override
@@ -1151,7 +1151,7 @@ public class DiffEngine {
 
         /**
          * Is this Diff equivalent to another Diff?
-         * 
+         *
          * @param d Another Diff to compare against.
          * @return true or false.
          */

@@ -76,4 +76,4 @@ public class CustomDialogPreference extends DialogPreference implements DialogIn
         }
     }
 
-} 
+}
