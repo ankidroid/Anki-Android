@@ -20,6 +20,7 @@ import com.ichi2.anki.ReadText;
 
 import android.app.Activity;
 import android.database.sqlite.SQLiteDatabase;
+import android.media.AudioManager;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnUtteranceCompletedListener;
 import android.view.View;
@@ -36,28 +37,36 @@ public class CompatV4 implements Compat {
     public void setScrollbarFadingEnabled(WebView webview, boolean enable) { }
     public void setOverScrollModeNever(View v) { }
     public void invalidateOptionsMenu(Activity activity) { }
-	public void setActionBarBackground(Activity activity, int color) { }
-	public void setTitle(Activity activity, String title, boolean inverted) {
-		activity.setTitle(title);
-	}
-	public void setSubtitle(Activity activity, String title) { }
-	public void setSubtitle(Activity activity, String title, boolean inverted) { }
-	@Override
-    public void setTtsOnUtteranceProgressListener(TextToSpeech tts) {
-    	tts.setOnUtteranceCompletedListener(new OnUtteranceCompletedListener() {
-			@Override
-			public void onUtteranceCompleted(String utteranceId) {
-				if (ReadText.sTextQueue.size() > 0) {
-					String[] text = ReadText.sTextQueue.remove(0);
-					ReadText.speak(text[0], text[1]);
-				}
-			}
-        });
-
+    public void setActionBarBackground(Activity activity, int color) { }
+    public void setTitle(Activity activity, String title, boolean inverted) {
+        activity.setTitle(title);
     }
+    public void setSubtitle(Activity activity, String title) { }
+    public void setSubtitle(Activity activity, String title, boolean inverted) { }
 
+    @Override
+    public void setTtsOnUtteranceProgressListener(TextToSpeech tts) {
+        tts.setOnUtteranceCompletedListener(new OnUtteranceCompletedListener() {
+            @Override
+            public void onUtteranceCompleted(String utteranceId) {
+                if (ReadText.sTextQueue.size() > 0) {
+                    String[] text = ReadText.sTextQueue.remove(0);
+                    ReadText.speak(text[0], text[1]);
+                }
+            }
+        });
+    }
 
     @Override
     public void disableDatabaseWriteAheadLogging(SQLiteDatabase db) {
     }
+
+    @Override
+    public void requestAudioFocus(AudioManager audioManager) {
+    }
+
+    @Override
+    public void abandonAudioFocus(AudioManager audioManager) {
+    }
+
 }
