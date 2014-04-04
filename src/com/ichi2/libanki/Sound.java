@@ -22,7 +22,6 @@ import java.util.HashMap;
 
 import android.content.Context;
 import android.media.AudioManager;
-import android.media.AudioManager.OnAudioFocusChangeListener;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.net.Uri;
@@ -59,14 +58,6 @@ public class Sound {
      * Stores sounds for the current card, key is for question/answer
      */
     private static HashMap<Integer, ArrayList<String>> sSoundPaths = new HashMap<Integer, ArrayList<String>>();
-
-	/**
-	 * Listener to handle audio focus. Currently blank because we're not respecting losing focus from other apps.
-	 */
-	private static OnAudioFocusChangeListener afChangeListener = new OnAudioFocusChangeListener() {
-			public void onAudioFocusChange(int focusChange) {
-			}
-		};
 
 
     /* Prevent class from being instantiated */
@@ -192,7 +183,7 @@ public class Sound {
                 if (playAllListener != null)
                     sMediaPlayer.setOnCompletionListener(playAllListener);
 
-                sAudioManager.requestAudioFocus(afChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK);
+                AnkiDroidApp.getCompat().requestAudioFocus(sAudioManager);
 
                 sMediaPlayer.start();
             } catch (Exception e) {
@@ -241,10 +232,10 @@ public class Sound {
             sMediaPlayer.release();
             sMediaPlayer = null;
         }
-		if (sAudioManager != null) {
-			sAudioManager.abandonAudioFocus(afChangeListener);
-			sAudioManager = null;
-		}
+        if (sAudioManager != null) {
+            AnkiDroidApp.getCompat().abandonAudioFocus(sAudioManager);
+            sAudioManager = null;
+        }
     }
 
 

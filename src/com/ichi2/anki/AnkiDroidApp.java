@@ -39,6 +39,7 @@ import com.ichi2.compat.CompatV15NookHdPlus;
 import com.ichi2.compat.CompatV16;
 import com.ichi2.compat.CompatV4;
 import com.ichi2.compat.CompatV5;
+import com.ichi2.compat.CompatV8;
 import com.ichi2.compat.CompatV9;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Storage;
@@ -134,6 +135,8 @@ public class AnkiDroidApp extends Application {
             mCompat = new CompatV11();
         } else if (AnkiDroidApp.SDK_VERSION >= 9) {
             mCompat = new CompatV9();
+        } else if (AnkiDroidApp.SDK_VERSION >= 8) {
+            mCompat = new CompatV8();
         } else if (AnkiDroidApp.SDK_VERSION >= 5) {
             mCompat = new CompatV5();
         } else {

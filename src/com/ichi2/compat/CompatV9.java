@@ -7,7 +7,7 @@ import java.text.Normalizer;
 
 /** Implementation of {@link Compat} for SDK level 9 */
 @TargetApi(9)
-public class CompatV9 extends CompatV5 implements Compat {
+public class CompatV9 extends CompatV8 implements Compat {
     @Override
     public String normalizeUnicode(String txt) {
         if (!Normalizer.isNormalized(txt, Normalizer.Form.NFD)) {
