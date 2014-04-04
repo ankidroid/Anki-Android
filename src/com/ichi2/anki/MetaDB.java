@@ -215,7 +215,7 @@ public class MetaDB {
 
     /**
      * Associates a language to a deck, model, and card model for a given type.
-     * 
+     *
      * @param qa the part of the card for which to store the association, {@link #LANGUAGES_QA_QUESTION},
      *            {@link #LANGUAGES_QA_ANSWER}, or {@link #LANGUAGES_QA_UNDEFINED}
      * @param language the language to associate, as a two-characters, lowercase string
@@ -235,7 +235,7 @@ public class MetaDB {
 
     /**
      * Returns the language associated with the given deck, model and card model, for the given type.
-     * 
+     *
      * @param qa the part of the card for which to store the association, {@link #LANGUAGES_QA_QUESTION},
      *            {@link #LANGUAGES_QA_ANSWER}, or {@link #LANGUAGES_QA_UNDEFINED} return the language associate with
      *            the type, as a two-characters, lowercase string, or the empty string if no association is defined
@@ -265,7 +265,7 @@ public class MetaDB {
 
     /**
      * Resets all the language associates for a given deck.
-     * 
+     *
      * @return whether an error occurred while resetting the language for the deck
      */
     public static boolean resetDeckLanguages(Context context, long did) {
@@ -283,7 +283,7 @@ public class MetaDB {
 
     /**
      * Returns the state of the whiteboard for the given deck.
-     * 
+     *
      * @return 1 if the whiteboard should be shown, 0 otherwise
      */
     public static int getWhiteboardState(Context context, long did) {
@@ -309,7 +309,7 @@ public class MetaDB {
 
     /**
      * Stores the state of the whiteboard for a given deck.
-     * 
+     *
      * @param state 1 if the whiteboard should be shown, 0 otherwise
      */
     public static void storeWhiteboardState(Context context, long did, int state) {
@@ -338,7 +338,7 @@ public class MetaDB {
 
     /**
      * Returns a custom dictionary associated to a deck
-     * 
+     *
      * @return integer number of dictionary, -1 if not set (standard dictionary will be used)
      */
     public static int getLookupDictionary(Context context, long did) {
@@ -365,7 +365,7 @@ public class MetaDB {
 
     /**
      * Stores a custom dictionary for a given deck.
-     * 
+     *
      * @param dictionary integer number of dictionary, -1 if not set (standard dictionary will be used)
      */
     public static void storeLookupDictionary(Context context, long did, int dictionary) {
@@ -394,7 +394,7 @@ public class MetaDB {
 
     /**
      * Return the current status of the widget.
-     * 
+     *
      * @return an array of {@link DeckStatus} objects, each representing the status of one of the known decks
      */
     public static DeckStatus[] getWidgetStatus(Context context) {
@@ -430,7 +430,7 @@ public class MetaDB {
 
     /**
      * Return the current status of the widget.
-     * 
+     *
      * @return an int array, containing due, progress, eta
      */
     public static int[] getWidgetSmallStatus(Context context) {
@@ -502,7 +502,7 @@ public class MetaDB {
      * Stores the current state of the widget.
      * <p>
      * It replaces any stored state for the widget.
-     * 
+     *
      * @param decks an array of {@link DeckStatus} objects, one for each of the know decks.
      */
     public static void storeWidgetStatus(Context context, DeckStatus[] decks) {

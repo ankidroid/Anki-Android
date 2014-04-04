@@ -6,9 +6,9 @@ import com.ichi2.anki.multimediacard.fields.TextField;
 
 /**
  * @author Zaur
- * 
+ *
  *         Creates IMultimediaEditableNotes according to various parameters.
- * 
+ *
  */
 public class NoteFactory
 {

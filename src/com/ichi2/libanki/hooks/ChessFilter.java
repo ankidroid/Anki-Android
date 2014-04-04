@@ -79,7 +79,7 @@ public class ChessFilter extends Hook {
                     showBlack = true;
                 }
             }
-            
+
             try {
                 mf.appendReplacement(sb, "<script type=\"text/javascript\">document.write(" +
                         String.format(Locale.US, fRenderFen, mf.group(2), showBlack) + ");</script>");

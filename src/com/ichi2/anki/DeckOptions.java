@@ -78,7 +78,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
         public DeckPreferenceHack() {
             this.cacheValues();
         }
-                
+
         protected void cacheValues() {
             Log.i(AnkiDroidApp.TAG, "DeckOptions - CacheValues");
 
@@ -123,7 +123,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
             	finish();
             }
         }
-        
+
         public class Editor implements SharedPreferences.Editor {
 
             private ContentValues mUpdate = new ContentValues();
@@ -145,7 +145,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
                         String key =  entry.getKey();
                         Object value = entry.getValue();
                         Log.i(AnkiDroidApp.TAG, "Change value for key '" + key + "': " + value);
-                        
+
                         if (key.equals("maxAnswerTime")) {
                             mOptions.put("maxTaken", (Integer) value);
                         } else if (key.equals("newFactor")) {
@@ -330,7 +330,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
                 // TODO Auto-generated method stub
                 return null;
             }
-            
+
             private DeckTask.TaskListener mConfChangeHandler = new DeckTask.TaskListener() {
                 @Override
                 public void onPreExecute() {
@@ -344,7 +344,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
                 public void onProgressUpdate(DeckTask.TaskData... values) {
                 }
 
-                
+
                 @Override
                 public void onPostExecute(DeckTask.TaskData result) {
                     cacheValues();
@@ -512,7 +512,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
                         count, groupName, count));
                 continue;
             }
-                        
+
             String value = null;
             if (pref == null) {
                 continue;
@@ -597,7 +597,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
         }
         return count;
     }
-    
+
     /**
      * Get the name of the currently set options group
      */
@@ -630,7 +630,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
             throw new RuntimeException(e);
         }
     }
-    
+
     public class JSONNameComparator implements Comparator<JSONObject> {
         @Override
         public int compare(JSONObject lhs, JSONObject rhs) {
@@ -671,7 +671,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
     			JSONObject conf = mCol.getDecks().confForDid(o.getLong("id"));
     			if (!conf.has("replayq")) {
     				conf.put("replayq", true);
-					mCol.getDecks().save(conf);            				
+					mCol.getDecks().save(conf);
     			}
     		}
 		} catch (JSONException e1) {

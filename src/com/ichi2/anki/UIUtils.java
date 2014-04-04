@@ -97,7 +97,7 @@ public class UIUtils {
                 @Override
                 public void onProgressUpdate(TaskData... values) {
                 }
-            }, new DeckTask.TaskData(AnkiDroidApp.getCol()));    		
+            }, new DeckTask.TaskData(AnkiDroidApp.getCol()));
     	}
     }
 }

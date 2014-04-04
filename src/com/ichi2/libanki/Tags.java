@@ -169,7 +169,7 @@ public class Tags {
 
     /**
      * Add/remove tags in bulk
-     * 
+     *
      * @param ids The cards to tag.
      * @param tags List of tags to add/remove. They are space-separated.
      * @param add True/False to add/remove.

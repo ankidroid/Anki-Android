@@ -20,7 +20,7 @@ public class PieMapper implements Serializable {
 
   /**
    * Set PieChart location on screen.
-   * 
+   *
    * @param pieRadius
    * @param centerX
    * @param centerY
@@ -33,17 +33,17 @@ public class PieMapper implements Serializable {
 
   /**
    * If we have all PieChart Config then there is no point in reloading it
-   * 
+   *
    * @param datasetSize
    * @return true if cfg for each segment is present
    */
   public boolean areAllSegmentPresent(int datasetSize) {
     return mPieSegmentList.size() == datasetSize;
   }
-  
+
   /**
    * Add configuration for a PieChart Segment
-   * 
+   *
    * @param dataIndex
    * @param value
    * @param startAngle
@@ -52,7 +52,7 @@ public class PieMapper implements Serializable {
   public void addPieSegment(int dataIndex, float value, float startAngle, float angle) {
     mPieSegmentList.add(new PieSegment(dataIndex, value, startAngle, angle));
   }
-  
+
   /**
    * Clears the pie segments list.
    */
@@ -63,7 +63,7 @@ public class PieMapper implements Serializable {
   /**
    * Fetches angle relative to pie chart center point where 3 O'Clock is 0 and
    * 12 O'Clock is 270degrees
-   * 
+   *
    * @param screenPoint
    * @return angle in degress from 0-360.
    */
@@ -86,7 +86,7 @@ public class PieMapper implements Serializable {
 
   /**
    * Checks if Point falls within PieChart
-   * 
+   *
    * @param screenPoint
    * @return true if in PieChart
    */
@@ -104,7 +104,7 @@ public class PieMapper implements Serializable {
 
   /**
    * Fetches the SeriesSelection for the PieSegment selected.
-   * 
+   *
    * @param screenPoint - the user tap location
    * @return null if screen point is not in PieChart or its config if it is
    */

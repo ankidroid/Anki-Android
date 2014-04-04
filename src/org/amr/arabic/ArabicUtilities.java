@@ -7,10 +7,10 @@ package org.amr.arabic;
  * 	By		: Amr Ismail Gawish
  *  E-Mail 	: amr.gawish@gmail.com
  *  Web		: http://www.amr-gawish.com
- *  
+ *
  *  Updated : 8th of June 2009
  *  Adding comments and Announcing Open Source
- *  
+ *
  * Updated: 6th of May 2010
  * Enahancing Functionality by Amine : bakhtout@gmail.com
  *
@@ -46,12 +46,12 @@ public class ArabicUtilities {
     private static final Pattern patternBreakingWebView = Pattern.compile(
     	"[" +
 		"\\u0627" +
-    	"\\u0600\\u0601\\u0602\\u0603\\u0606\\u0607\\u0608\\u0609\\u060A\\u060B\\u060D\\u060E" +	
+    	"\\u0600\\u0601\\u0602\\u0603\\u0606\\u0607\\u0608\\u0609\\u060A\\u060B\\u060D\\u060E" +
 		"\\u0610\\u0611\\u0612\\u0613\\u0614\\u0615\\u0616\\u0617\\u0618\\u0619\\u061A\\u061B\\u061E\\u061F" +
-		"\\u0621" +		
-		"\\u063B\\u063C\\u063D\\u063E\\u063F" +		
-		"\\u0640\\u064B\\u064C\\u064D\\u064E\\u064F" +		
-		"\\u0650\\u0651\\u0652\\u0653\\u0654\\u0655\\u0656\\u0657\\u0658\\u0659\\u065A\\u065B\\u065C\\u065D\\u065E" +      
+		"\\u0621" +
+		"\\u063B\\u063C\\u063D\\u063E\\u063F" +
+		"\\u0640\\u064B\\u064C\\u064D\\u064E\\u064F" +
+		"\\u0650\\u0651\\u0652\\u0653\\u0654\\u0655\\u0656\\u0657\\u0658\\u0659\\u065A\\u065B\\u065C\\u065D\\u065E" +
 		"\\u0660\\u066A\\u066B\\u066C\\u066F\\u0670\\u0672'" +
 		"\\u06D4\\u06D5\\u06D6\\u06D7\\u06D8\\u06D9\\u06DA\\u06DB\\u06DC\\u06DF" +
 		"\\u06E0\\u06E1\\u06E2\\u06E3\\u06E4\\u06E5\\u06E6\\u06E7\\u06E8\\u06E9\\u06EA\\u06EB\\u06EC\\u06ED\\u06EE\\u06EF" +
@@ -179,9 +179,9 @@ public class ArabicUtilities {
 					//Not to add the tempWord, but to add the character to the rest of the characters
 					tempWord+=word.charAt(i);
 				}
-			} 
+			}
 		}
-		
+
 		//add the final Word
 		if(!"".equals(tempWord)){
 			finalWords.add(tempWord);
@@ -205,7 +205,7 @@ public class ArabicUtilities {
 		} else {
 			return null;
 		}
-		
+
 	}
 	/**
 	 * The Main Reshaping Function to be Used in Android Program
@@ -232,7 +232,7 @@ public class ArabicUtilities {
 
 					//Initiate the ArabicReshaper functionality
 					ArabicReshaper arabicReshaper = new ArabicReshaper(words[i]);
-					
+
 					//Append the Reshaped Arabic Word to arabic buffer
 					arabicText.append(arabicReshaper.getReshapedWord());
 				}else{ //The word has Arabic Letters, but its not an Arabic Word, its a mixed word
@@ -242,16 +242,16 @@ public class ArabicUtilities {
 
 					//iterate over mixed Words
 					for(int j=0;j<mixedWords.length;j++){
-						
+
 						if(isArabicWord(mixedWords[j])){
-							
+
 							//Initiate the ArabicReshaper functionality
 							ArabicReshaper arabicReshaper=new ArabicReshaper(mixedWords[j]);
 
 							//Append the Reshaped Arabic Word to the Arabic buffer
 							arabicText.append(arabicReshaper.getReshapedWord());
 						}else{
-							
+
 							// append the buffered arabic text
 							reshapedText.append(arabicText);
 							arabicText = new StringBuffer("");
@@ -259,7 +259,7 @@ public class ArabicUtilities {
 							reshapedText.append(mixedWords[j]);
 						}
 					}
-				}	
+				}
 			}else{//The word doesn't have any Arabic Letters
 
 				// append the buffered arabic text
@@ -268,29 +268,29 @@ public class ArabicUtilities {
 				// append the word to the whole reshaped Text
 				reshapedText.append(words[i]);
 			}
-			
+
 			//Append the space to separate between words
 			//to the arabic buffer if the previous word was arabic, to the reshaped text otherwise
 			if(arabicText.length() > 0){
 
 				arabicText.append(" ");
 			}else{
-				
+
 				reshapedText.append(" ");
 			}
 		}
-		
+
 		// append the final arabic sequence
 		reshapedText.append(arabicText);
 
 		//return the final reshaped whole text
 		return manualRTL(reshapedText, forWebView).toString();
 	}
-	
+
 	public static String reshapeSentence(String sentence) {
 		return reshapeSentence(sentence, false);
 	}
-	
+
 	public static StringBuffer manualRTL(StringBuffer text, boolean forWebView){
 
 		if(forWebView){
@@ -343,7 +343,7 @@ public class ArabicUtilities {
 		}
 		return text;
 	}
-	
+
 	public static boolean isStrongLeftToRight(char c)
 	{
 		byte dir = Character.getDirectionality(c);
@@ -351,7 +351,7 @@ public class ArabicUtilities {
 				(dir == Character.DIRECTIONALITY_LEFT_TO_RIGHT_EMBEDDING) ||
 				(dir == Character.DIRECTIONALITY_LEFT_TO_RIGHT_OVERRIDE);
 	}
-	
+
 
 	public static boolean isStrongRightToLeft(char c)
 	{

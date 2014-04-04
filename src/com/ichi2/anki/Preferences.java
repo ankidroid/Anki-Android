@@ -112,7 +112,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     // Used for calculating dayOffset
     private Calendar mStartDate;
-    
+
     // The ones below are persisted in the collection
     private CheckBoxPreference showEstimates;
     private CheckBoxPreference showProgress;
@@ -121,7 +121,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private ListPreference useCurrent;
     private ListPreference newSpread;
     private SeekBarPreference dayOffset;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Workaround for bug 4611: http://code.google.com/p/android/issues/detail?id=4611
@@ -159,10 +159,10 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 //        String theme = listpref.getValue();
 //        animationsCheckboxPreference.setEnabled(theme.equals("2") || theme.equals("3"));
         zoomCheckboxPreference.setEnabled(!swipeCheckboxPreference.isChecked());
-        
+
         initializeLanguageDialog();
         initializeCustomFontsDialog();
-        
+
         if (mCol != null) {
             // For collection preferences, we need to fetch the correct values from the collection
             mStartDate = GregorianCalendar.getInstance();
@@ -195,7 +195,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             useCurrent.setEnabled(false);
         }
 
-        
+
         for (String key : mShowValueInSummList) {
             updateListPreference(key);
         }
@@ -208,7 +208,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         for (String key : mShowValueInSummNumRange) {
             updateNumberRangePreference(key);
         }
-        
+
         if (AnkiDroidApp.SDK_VERSION <= 4) {
             fadeScrollbars.setChecked(false);
             fadeScrollbars.setEnabled(false);
@@ -341,7 +341,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     /** Initializes the list of custom fonts shown in the preferences. */
     private void initializeCustomFontsDialog() {
         ListPreference defaultFontPreference = (ListPreference) getPreferenceScreen().findPreference("defaultFont");
-        ListPreference overrideFontPreference = (ListPreference) getPreferenceScreen().findPreference("overrideFont");        
+        ListPreference overrideFontPreference = (ListPreference) getPreferenceScreen().findPreference("overrideFont");
         if (defaultFontPreference != null) {
             defaultFontPreference.setEntries(getCustomFonts("System default"));
             defaultFontPreference.setEntryValues(getCustomFonts(""));
@@ -374,7 +374,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     protected void onResume() {
         super.onResume();
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
-        
+
         // syncAccount's summary can change while preferences are still open (user logs
         // in from preferences screen), so we need to update it here.
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
@@ -386,7 +386,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         }
     }
 
-        
+
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         try {
             if (key.equals("swipe")) {
@@ -487,10 +487,10 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 mCol.setCrt(date.getTimeInMillis() / 1000);
                 mCol.setMod();
             } else if (key.equals("overrideFont")) {
-                ListPreference overrideFontPreference = 
+                ListPreference overrideFontPreference =
                         (ListPreference) getPreferenceScreen().findPreference("overrideFont");
                 ListPreference defaultFontPreference =
-                        (ListPreference) getPreferenceScreen().findPreference("defaultFont"); 
+                        (ListPreference) getPreferenceScreen().findPreference("defaultFont");
                 onOverrideFontChange(overrideFontPreference, defaultFontPreference);
             }
             if (Arrays.asList(mShowValueInSummList).contains(key)) {

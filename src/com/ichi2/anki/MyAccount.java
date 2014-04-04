@@ -204,11 +204,11 @@ public class MyAccount extends AnkiActivity {
         mPassword1 = (EditText) mRegisterView.findViewById(R.id.password1);
         mUsername2 = (EditText) mRegisterView.findViewById(R.id.username2);
         mPassword2 = (EditText) mRegisterView.findViewById(R.id.password2);
-        
+
         // Make the terms of use link clickable
         TextView terms = (TextView) mRegisterView.findViewById(R.id.terms_link);
         terms.setMovementMethod(LinkMovementMethod.getInstance());
-        
+
         Button registerButton = (Button) mRegisterView.findViewById(R.id.register_button);
         registerButton.setOnClickListener(new OnClickListener() {
 

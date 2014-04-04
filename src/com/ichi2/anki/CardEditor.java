@@ -91,7 +91,7 @@ import java.util.TreeSet;
  * Allows the user to edit a fact, for instance if there is a typo. A card is a presentation of a fact, and has two
  * sides: a question and an answer. Any number of fields can appear on each side. When you add a fact to Anki, cards
  * which show that fact are generated. Some models generate one card, others generate more than one.
- * 
+ *
  * @see http://ichi2.net/anki/wiki/KeyTermsAndConcepts#Cards
  */
 public class CardEditor extends Activity {
@@ -311,7 +311,7 @@ public class CardEditor extends Activity {
             }
         }
         Log.i(AnkiDroidApp.TAG, "CardEditor: caller: " + mCaller);
-        
+
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
 
         if (mCaller == CALLER_INDICLASH && preferences.getBoolean("intentAdditionInstantAdd", false)) {
@@ -351,16 +351,16 @@ public class CardEditor extends Activity {
             	swapText(false);
             }
         });
-                
+
         if(Preferences.COMING_FROM_ADD)
         {
 	        mPreviewButton.setVisibility(View.GONE);
-	        
+
         }else
         {
         	 mPreviewButton.setVisibility(View.VISIBLE);
         }
-        Preferences.COMING_FROM_ADD=false;        
+        Preferences.COMING_FROM_ADD=false;
 
         mAedictIntent = false;
 
@@ -536,15 +536,15 @@ public class CardEditor extends Activity {
             }
 
         });
-        
+
         mPreviewButton.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
-				openReviewer();				
-				
+				openReviewer();
+
 			}
-		});        
+		});
     }
 
 
@@ -579,7 +579,7 @@ public class CardEditor extends Activity {
         		second = "";
         	}
             Pair<String, String> messages = new Pair<String, String>(first, second);
-            
+
             /* Filter garbage information */
             Pair<String, String> cleanMessages = new FilterFacade(getBaseContext()).filter(messages);
 
@@ -588,12 +588,12 @@ public class CardEditor extends Activity {
             mSourceText[1] = cleanMessages.second;
         }
     }
-    
+
     private void openReviewer() {
-    	
+
         Intent reviewer = new Intent(CardEditor.this, PreviewClass.class);
         startActivity(reviewer);
-    }    
+    }
 
     private void reloadCollection(Bundle savedInstanceState) {
     	mSavedInstanceState = savedInstanceState;
@@ -1380,7 +1380,7 @@ public class CardEditor extends Activity {
         if (!customFont.equals("")) {
             mCustomTypeface = AnkiFont.getTypeface(this, customFont);
         }
-        
+
         for (int i = 0; i < fields.length; i++) {
             FieldEditText newTextbox = new FieldEditText(this, i, fields[i]);
 
@@ -1584,7 +1584,7 @@ public class CardEditor extends Activity {
             return false;
         }
 
-        
+
         public String cleanText(String text) {
             text = text.replaceAll("\\s*(" + NL_MARK + "\\s*)+", NEW_LINE);
             text = text.replaceAll("^[,;:\\s\\)\\]" + NEW_LINE + "]*", "");

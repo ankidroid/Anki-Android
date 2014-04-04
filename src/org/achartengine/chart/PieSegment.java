@@ -23,7 +23,7 @@ public class PieSegment implements Serializable {
 
   /**
    * Checks if angle falls in segment.
-   * 
+   *
    * @param angle
    * @return true if in segment, false otherwise.
    */

@@ -669,7 +669,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                         data.success = false;
                         data.result = ret;
                         if (!colCorruptFullSync) {
-                            AnkiDroidApp.openCollection(path);                        	
+                            AnkiDroidApp.openCollection(path);
                         }
                         return data;
                     }
@@ -690,7 +690,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             }
         }
 
-        // clear undo to avoid non syncing orphans (because undo resets usn too 
+        // clear undo to avoid non syncing orphans (because undo resets usn too
         if (!noChanges) {
         	col.clearUndo();
         }
@@ -743,7 +743,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         }
     }
 
-    
+
 
     public void publishProgress(int id) {
         super.publishProgress(id);
@@ -807,7 +807,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
 
     /**
      * Downloads any missing media files according to the mediaURL deckvar.
-     * 
+     *
      * @param data
      * @return The return type contains data.resultType and an array of Integer in data.data. data.data[0] is the number
      *         of total missing media, data.data[1] is the number of downloaded ones.
@@ -978,11 +978,11 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
 		} catch (MalformedURLException e) {
             Log.e(AnkiDroidApp.TAG, "doInBackgroundDownloadSharedDeck: ", e);
             data.success = false;
-            return data;			
+            return data;
 		} catch (IOException e) {
             Log.e(AnkiDroidApp.TAG, "doInBackgroundDownloadSharedDeck: ", e);
             data.success = false;
-            return data;			
+            return data;
 		} catch (NoSuchAlgorithmException e) {
             Log.e(AnkiDroidApp.TAG, "doInBackgroundDownloadSharedDeck: ", e);
             data.success = false;

@@ -126,7 +126,7 @@ public class Media {
 
     /**
      * Copy PATH to MEDIADIR and return new filename. If the same name exists, compare checksums.
-     * 
+     *
      * @param opath The path where the media file exists before adding it.
      * @return The filename of the resulting file.
      */
@@ -189,7 +189,7 @@ public class Media {
 
     /**
      * Checks if two files are identical
-     * 
+     *
      * @param filepath1 The path of the first file to be checked
      * @param filepath2 The path of the second file to be checked
      * @return True if both files have the same contents
@@ -209,7 +209,7 @@ public class Media {
 
     /**
      * Extract media filenames from an HTML string.
-     * 
+     *
      * @param string The string to scan for media filenames ([sound:...] or <img...>).
      * @param includeRemote If true will also include external http/https/ftp urls.
      * @return A list containing all the sound and image filenames found in the input string.
@@ -234,7 +234,7 @@ public class Media {
 
     /**
      * Strips a string from media references.
-     * 
+     *
      * @param txt The string to be cleared of media references.
      * @return The media-free string.
      */
@@ -256,7 +256,7 @@ public class Media {
 
     /**
      * Percent-escape UTF-8 characters in local image filenames.
-     * 
+     *
      * @param string The string to search for image references and escape the filenames.
      * @return The string with the filenames of any local images percent-escaped as UTF-8.
      */
@@ -285,7 +285,7 @@ public class Media {
 
     /**
      * Finds missing and unused media files
-     * 
+     *
      * @return A list containing two lists of filenames (missingList, unusedList)
      */
     public List<List<String>> check() {
@@ -328,7 +328,7 @@ public class Media {
 
     /**
      * Return a list of all referenced filenames.
-     * 
+     *
      * @return The list of all media references found in the media database.
      */
     private List<String> allMedia() {
@@ -366,7 +366,7 @@ public class Media {
 
     /**
      * Remove provided deletions and all locally-logged deletions, as server has acked them
-     * 
+     *
      * @param fnames The list of filenames to be deleted.
      */
     public void syncRemove(JSONArray fnames) {
@@ -399,7 +399,7 @@ public class Media {
 
     /**
      * Extract zip data.
-     * 
+     *
      * @param zipData An input stream that represents a zipped file.
      * @return True if finished.
      */
@@ -477,7 +477,7 @@ public class Media {
 
     /**
      * Check if the file name has illegal for the OS characters.
-     * 
+     *
      * @param f The filename to be checked.
      * @return Returns true if at least an illegal character is found.
      */
@@ -497,7 +497,7 @@ public class Media {
 
     /**
      * Add files to a zip until over SYNC_ZIP_SIZE. Return zip data.
-     * 
+     *
      * @return Returns a tuple with two objects. The first one is the zip file contents, the second a list with the
      *         filenames of the files inside the zip.
      */
@@ -558,7 +558,7 @@ public class Media {
 
     /**
      * Remove records from log table in media DB for a list or files.
-     * 
+     *
      * @param fnames A list containing the list of filenames to be removed from log table.
      */
     public void forgetAdded(List<String> fnames) {
@@ -577,7 +577,7 @@ public class Media {
 
     /**
      * Returns the number of seconds from epoch, since the last modification to the file in path.
-     * 
+     *
      * @param path The path to the file we are checking.
      * @return The number of seconds (rounded down).
      */
@@ -610,7 +610,7 @@ public class Media {
     /**
      * Return dir mtime if it has changed since the last findChanges() Doesn't track edits, but user can add or remove a
      * file to update
-     * 
+     *
      * @return The modification time of the media directory, if it has changed since the last call of findChanges(). If
      *         it hasn't, it returns 0.
      */

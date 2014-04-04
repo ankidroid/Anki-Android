@@ -108,7 +108,7 @@ public class StepsPreference extends EditTextPreference {
 
     /**
      * Convert steps format.
-     * 
+     *
      * @param a JSONArray representation of steps.
      * @return The steps as a space-separated string.
      */

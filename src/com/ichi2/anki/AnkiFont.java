@@ -32,9 +32,9 @@ public class AnkiFont {
         mPath = path;
         mIsDefault = false;
         mIsOverride = false;
-    } 
-    
-    
+    }
+
+
     /**
      * Factory for AnkiFont creation.
      * Creates a typeface wrapper from a font file representing.
@@ -85,12 +85,12 @@ public class AnkiFont {
             family = family.replaceFirst("(?i)-?Expanded", "");
             family = family.replaceFirst("(?i)-?Wide(r)?", "");
         }
-        
+
         AnkiFont createdFont = new AnkiFont(name, family, attributes, path);
-        
+
         // determine if override font or default font
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(ctx);
-        String overrideFont = preferences.getString("overrideFont", "");        
+        String overrideFont = preferences.getString("overrideFont", "");
         if (overrideFont.equalsIgnoreCase(name)) {
             createdFont.setAsOverride();
         } else {
@@ -101,13 +101,13 @@ public class AnkiFont {
         }
         return createdFont;
     }
-    
+
     public String getDeclaration() {
         StringBuilder sb = new StringBuilder("@font-face {");
         sb.append(getCSS()).append(" src: url(\"file://").append(mPath).append("\");}");
         return sb.toString();
     }
-    public String getCSS() {        
+    public String getCSS() {
         StringBuilder sb = new StringBuilder("font-family: \"").append(mFamily);
         if (mIsOverride) {
             sb.append("\" !important;");
@@ -161,5 +161,5 @@ public class AnkiFont {
     private void setAsOverride() {
         mIsOverride = true;
         mIsDefault = false;
-    }    
+    }
 }

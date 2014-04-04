@@ -104,7 +104,7 @@ public class AnkiDb {
 
     /**
      * Convenience method for querying the database for a single integer result.
-     * 
+     *
      * @param query The raw SQL query to use.
      * @return The integer result of the query.
      */
@@ -184,7 +184,7 @@ public class AnkiDb {
     /**
      * Convenience method for querying the database for an entire column. The column will be returned as an ArrayList of
      * the specified class. See Deck.initUndo() for a usage example.
-     * 
+     *
      * @param type The class of the column's data type. Example: int.class, String.class.
      * @param query The SQL query statement.
      * @param column The column id in the result set to return.
@@ -224,7 +224,7 @@ public class AnkiDb {
 
     /**
      * Mapping of Java type names to the corresponding Cursor.get method.
-     * 
+     *
      * @param typeName The simple name of the type's class. Example: String.class.getSimpleName().
      * @return The name of the Cursor method to be called.
      */
