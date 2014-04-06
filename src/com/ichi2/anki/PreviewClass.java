@@ -834,8 +834,8 @@ public class PreviewClass extends Activity {
 
 	            if (sDisplayAnswer) {
 	                qa = MetaDB.LANGUAGES_QA_ANSWER;
-	                answer = mCurrentCard.getPureAnswerForReading();
 	                if (!mAnswerSoundsAdded) {
+	                    answer = mCurrentCard.getAnswer(mCurrentSimpleInterface);
 	                    Sound.addSounds(mBaseUrl, answer, qa);
 	                    mAnswerSoundsAdded = true;
 	                }
