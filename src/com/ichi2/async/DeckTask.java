@@ -69,6 +69,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
+import java.util.regex.Pattern;
 import java.lang.OutOfMemoryError;
 
 /**
@@ -745,7 +746,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     			String a = qa.get("a");
     			// remove the question from the start of the answer if it exists
     			if (a.startsWith(q)){
-    			    a=a.replaceFirst(q, "");
+    			    a=a.replaceFirst(Pattern.quote(q), "");
     			}
     			// put all of the fields in except for those that have already been pulled out straight from the database
             	item.put("answer",formatQA(a));
