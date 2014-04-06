@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <style name="Theme_Base_Light" parent="@android:style/Theme.Holo.Light" />
-    <style name="Theme_Base_Dark" parent="@android:style/Theme.Holo" />
-    <style name="Theme_Base_Dialog" parent="@android:style/Theme.Holo.Dialog" />
-
-</resources>

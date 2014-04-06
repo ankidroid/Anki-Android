@@ -30,6 +30,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -50,6 +51,7 @@ import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
+
 import org.apache.commons.httpclient.contrib.ssl.EasySSLSocketFactory;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -70,6 +72,7 @@ import org.apache.http.util.EntityUtils;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLException;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -81,7 +84,7 @@ import java.util.regex.Pattern;
  * Shows an about box, which is a small HTML page.
  */
 
-public class Info extends Activity {
+public class Info extends ActionBarActivity {
 
     public static final String TYPE_EXTRA = "infoType";
     public static final String TYPE_UPGRADE_STAGE = "upgradeStage";

@@ -8,6 +8,7 @@ import java.text.Normalizer;
 /** Implementation of {@link Compat} for SDK level 9 */
 @TargetApi(9)
 public class CompatV9 extends CompatV8 implements Compat {
+
     @Override
     public String normalizeUnicode(String txt) {
         if (!Normalizer.isNormalized(txt, Normalizer.Form.NFD)) {
@@ -15,8 +16,10 @@ public class CompatV9 extends CompatV8 implements Compat {
         }
         return txt;
     }
+
     @Override
     public void setOverScrollModeNever(View v) {
         v.setOverScrollMode(View.OVER_SCROLL_NEVER);
     }
+
 }

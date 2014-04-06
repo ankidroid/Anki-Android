@@ -43,7 +43,6 @@ import com.ichi2.anki.Reviewer.JavaScriptInterface;
 import com.ichi2.anki.Reviewer.MyGestureDetector;
 import com.ichi2.anki.Reviewer.ScrollTextView;
 import com.ichi2.async.DeckTask;
-
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Note;
@@ -69,6 +68,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.provider.MediaStore;
+import android.support.v7.app.ActionBarActivity;
 import android.text.ClipboardManager;
 import android.text.Editable;
 import android.text.Html;
@@ -108,8 +108,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.FrameLayout.LayoutParams;
 
-public class PreviewClass extends Activity {
-
+public class PreviewClass extends ActionBarActivity {
+	
 	private Card mCurrentCard;
 	private LinearLayout mFlipCardLayout;
 	private FrameLayout mCardFrame;

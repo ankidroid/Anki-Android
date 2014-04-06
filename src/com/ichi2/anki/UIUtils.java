@@ -2,6 +2,7 @@
 package com.ichi2.anki;
 
 import android.content.Context;
+import android.support.v4.view.MenuItemCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -52,30 +53,8 @@ public class UIUtils {
     public static MenuItem addMenuItemInActionBar(Menu menu, int groupId, int itemId, int order, int titleRes,
             int iconRes) {
         MenuItem item = addMenuItem(menu, groupId, itemId, order, titleRes, iconRes);
-        setShowAsActionIfRoom(item);
+        MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
         return item;
-    }
-
-
-    /**
-     * Sets the menu item to appear in the action bar via reflection.
-     * <p>
-     * This method uses reflection so that it works on all platforms. It any error occurs, assume the action bar is not
-     * available and just proceed.
-     */
-    private static void setShowAsActionIfRoom(MenuItem item) {
-        try {
-            Field showAsActionIfRoom = item.getClass().getField("SHOW_AS_ACTION_IF_ROOM");
-            Method setShowAsAction = item.getClass().getMethod("setShowAsAction", int.class);
-            setShowAsAction.invoke(item, showAsActionIfRoom.get(null));
-        } catch (SecurityException e) {
-        } catch (NoSuchMethodException e) {
-        } catch (NoSuchFieldException e) {
-        } catch (IllegalArgumentException e) {
-        } catch (IllegalAccessException e) {
-        } catch (InvocationTargetException e) {
-        } catch (NullPointerException e) {
-        }
     }
 
 
