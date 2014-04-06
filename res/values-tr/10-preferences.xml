@@ -70,8 +70,6 @@
   <string name="show_study_options_on_deck_load_summ">Deste yüklenirken çalışma seçenekleri ekranını gösterir</string>
   <string name="hide_due_count">Çıkacak sayısını gizle</string>
   <string name="hide_due_count_summ">Çıkacak kart sayısını gizler</string>
-  <string name="show_progress_bars">İlerleme çubuklarını göster</string>
-  <string name="show_progress_bars_summ">Gözden geçirme sırasında bugünkü ilerlemenizi ve evet yanıtlarınızı gösterir</string>
   <string name="fade_scrollbars">Geçişli kaydırma çubukları</string>
   <string name="fade_scrollbars_summ">Kaydırma yapmıyorken bilgi kartı kaydırma çubuklarını gizle</string>
   <string name="show_whiteboard_summ">Ekrana yazı yazmanızı sağlar</string>

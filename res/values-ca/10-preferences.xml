@@ -70,8 +70,6 @@
   <string name="show_study_options_on_deck_load_summ">Mostra les opcions d\'aprenentatge en carregar un paquet</string>
   <string name="hide_due_count">Amaga el número de vençudes</string>
   <string name="hide_due_count_summ">Amaga el número de fitxes que han vençut</string>
-  <string name="show_progress_bars">Mostra la barra de progrés</string>
-  <string name="show_progress_bars_summ">Mostra el progrés d\'avui i la proporció de respostes afirmatives d\'avui en revisar</string>
   <string name="fade_scrollbars">Esvaix les barres de desplaçament</string>
   <string name="fade_scrollbars_summ">Atenua automàticament les barres de desplaçament de les fitxes quan no es desplacen</string>
   <string name="show_whiteboard_summ">Permet escriure a la pantalla</string>

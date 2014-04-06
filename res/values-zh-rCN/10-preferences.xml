@@ -70,8 +70,6 @@
   <string name="show_study_options_on_deck_load_summ">载入一个牌组后显示学习选项界面</string>
   <string name="hide_due_count">隐藏到期计数</string>
   <string name="hide_due_count_summ">隐藏到期计数</string>
-  <string name="show_progress_bars">显示进度条</string>
-  <string name="show_progress_bars_summ">在复习时显示今天的进展，并显示答案为“是”的比例。</string>
   <string name="fade_scrollbars">淡出滚动条</string>
   <string name="fade_scrollbars_summ">不滚动时自动淡出卡牌的滚动条</string>
   <string name="show_whiteboard_summ">允许你在屏幕上涂写</string>

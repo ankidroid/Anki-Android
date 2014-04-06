@@ -70,8 +70,6 @@
   <string name="show_study_options_on_deck_load_summ">يعرض شاشة خيارات الدراسة عند تحميل الرزمة</string>
   <string name="hide_due_count">أخف عدد المستحق</string>
   <string name="hide_due_count_summ">يخفي عدد المستحق</string>
-  <string name="show_progress_bars">عرض أشرطة التقدم</string>
-  <string name="show_progress_bars_summ">يبين التقدم المحرز في اليوم ونسبة اليوم بإجابات نعم أثناء المراجعة</string>
   <string name="fade_scrollbars">إخفاء أشرطة التمرير</string>
   <string name="fade_scrollbars_summ">تتلاشى أشرطة تمرير البطاقات التعليمية تلقائياً عند عدم التمرير</string>
   <string name="show_whiteboard_summ">يسمح لك بالكتابة على الشاشة</string>

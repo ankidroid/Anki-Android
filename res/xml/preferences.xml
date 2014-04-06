@@ -308,11 +308,6 @@
                 android:title="@string/show_progress"
                 android:summary="@string/show_progress_summ" />
             <CheckBoxPreference
-                android:defaultValue="true"
-                android:key="progressBars"
-                android:summary="@string/show_progress_bars_summ"
-                android:title="@string/show_progress_bars" />
-            <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="fadeScrollbars"
                 android:summary="@string/fade_scrollbars_summ"

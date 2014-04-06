@@ -70,8 +70,6 @@
   <string name="show_study_options_on_deck_load_summ">Показувати екран параметрів навчання при завантаженні колоди</string>
   <string name="hide_due_count">Приховати лічильник майбутніх переглядів</string>
   <string name="hide_due_count_summ">Приховує лічильник карток, що підлягають вивченню</string>
-  <string name="show_progress_bars">Показувати стрічки поступу</string>
-  <string name="show_progress_bars_summ">Показувати сьогоднішній поступ та відношення відповідей \'так\' за сьогодні під час перегляду</string>
   <string name="fade_scrollbars">Знебарвити смуги прокручування</string>
   <string name="fade_scrollbars_summ">Автоматично знебарвлювати бездіяльні смуги прокручування картки</string>
   <string name="show_whiteboard_summ">Дозволяє писати на екрані</string>

@@ -70,8 +70,6 @@
   <string name="show_study_options_on_deck_load_summ">گزینه های صفحه مطالعه را هنگام بارگذاری یک دسته نشان بده</string>
   <string name="hide_due_count">تعداد موعد مرور را پنهان کن</string>
   <string name="hide_due_count_summ">تعداد موعد مرور را پنهان کن</string>
-  <string name="show_progress_bars">نوار پیشرفت را نمایش بده</string>
-  <string name="show_progress_bars_summ">میزان پیشرفت و نسبت جوابهای بله امروز را هنگام مرور نشان بده</string>
   <string name="fade_scrollbars">محو نوار پیمایش</string>
   <string name="fade_scrollbars_summ">نوار پیمایش فلش کارت را در صورتیکه وجود ندارد بصورت خودکار به بیرون محوکن</string>
   <string name="show_whiteboard_summ">امکان نوشتن بر روی صفحه نمایش</string>

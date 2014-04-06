@@ -25,98 +25,51 @@
 	android:background="?android:attr/colorBackground">
 
 	<!-- Top bar -->
-<RelativeLayout android:id="@+id/top_bar"
+	<RelativeLayout android:id="@+id/top_bar"
 		android:layout_width="fill_parent"
 		android:layout_marginTop="4dp"
 		android:gravity="center_vertical"
 		android:layout_marginLeft="9dp"
 		android:layout_marginRight="10dp"
 		android:layout_height="wrap_content">
-	<TextView android:id="@+id/red_number"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text=""
-		android:textSize="14dip"
-		android:textColor="@color/blue" />
-	<TextView android:id="@+id/black_number"
-		android:layout_toRightOf="@+id/red_number"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:paddingLeft="8dp"
-		android:text=""
-		android:textSize="14dip"
-		android:textColor="@color/red" />
-	<TextView android:id="@+id/blue_number"
-		android:layout_toRightOf="@+id/black_number"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:paddingLeft="8dp"
-		android:text=""
-		android:textSize="14dip"
-		android:textColor="@color/green" />
-	<TextView android:id="@+id/choosen_answer"
-		android:layout_centerHorizontal="true"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:gravity="center"
-		android:text=""
-		android:textSize="14dip"/>
-	<LinearLayout
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_alignParentRight="true">
-		<LinearLayout android:id="@+id/progress_bars"
+		<TextView android:id="@+id/red_number"
 			android:layout_width="wrap_content"
-			android:layout_height="fill_parent"
-			android:layout_alignTop="@+id/card_time"
-			android:layout_toLeftOf="@+id/card_time"
-			android:orientation="vertical"
+			android:layout_height="wrap_content"
+			android:text=""
+			android:textSize="14dip"
+			android:textColor="@color/blue" />
+		<TextView android:id="@+id/black_number"
+			android:layout_toRightOf="@+id/red_number"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:paddingLeft="8dp"
+			android:text=""
+			android:textSize="14dip"
+			android:textColor="@color/red" />
+		<TextView android:id="@+id/blue_number"
+			android:layout_toRightOf="@+id/black_number"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:paddingLeft="8dp"
+			android:text=""
+			android:textSize="14dip"
+			android:textColor="@color/green" />
+		<TextView android:id="@+id/choosen_answer"
+			android:layout_centerHorizontal="true"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
 			android:gravity="center"
-			android:layout_marginTop="1dip"
-			android:visibility="invisible"
-			android:paddingRight="8dp">
-			<FrameLayout android:id="@+id/progress_bars_border1"
-				android:background="#808080"
-				android:layout_width="42dp"
-				android:layout_height="4dp"
-				android:padding="0.5dip"
-				android:layout_marginBottom="1dp">
-				<FrameLayout android:id="@+id/progress_bars_back1"
-					android:background="#ffffff"
-					android:layout_width="fill_parent"
-					android:layout_height="fill_parent">
-					<View android:id="@+id/session_progress"
-						android:layout_width="0dip"
-						android:layout_height="fill_parent"
-						android:background="#323232"/>
-				</FrameLayout>
-			</FrameLayout>
-			<FrameLayout android:id="@+id/progress_bars_border2"
-				android:background="#808080"
-				android:layout_width="42dp"
-				android:layout_height="4dp"
-				android:padding="0.5dip">
-				<FrameLayout android:id="@+id/progress_bars_back2"
-					android:background="#ffffff"
-					android:layout_width="fill_parent"
-					android:layout_height="fill_parent">
-					<View android:id="@+id/daily_bar"
-						android:layout_width="0dip"
-						android:layout_height="fill_parent"
-						android:background="#323232"/>
-									</FrameLayout>
-			</FrameLayout>
-		</LinearLayout>
+			android:text=""
+			android:textSize="14dip"/>
 		<Chronometer android:id="@+id/card_time"
 			android:layout_alignParentRight="true"
 			android:layout_width="wrap_content"
-			android:layout_height="fill_parent"
+			android:layout_height="wrap_content"
 			android:textSize="14dip"
 			android:visibility="visible"
 			android:gravity="center"
 			android:textColor="#000000" />
-	</LinearLayout>
-</RelativeLayout>
+	</RelativeLayout>
 	<!-- Card and whiteboard -->
 	<FrameLayout android:id="@+id/flashcard_frame"
 		android:layout_margin="0dip"
