@@ -2549,9 +2549,9 @@ public class Reviewer extends AnkiActivity {
 
             if (sDisplayAnswer) {
                 qa = MetaDB.LANGUAGES_QA_ANSWER;
-                answer = mCurrentCard.getPureAnswerForReading();
                 // don't add answer sounds multiple times, such as when reshowing card after exiting editor
                 if (!mAnswerSoundsAdded) {
+                    answer = mCurrentCard.getAnswer(mCurrentSimpleInterface);
                     Sound.addSounds(mBaseUrl, answer, qa);
                     mAnswerSoundsAdded = true;
                 }
