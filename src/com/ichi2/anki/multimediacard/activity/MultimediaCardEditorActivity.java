@@ -691,9 +691,7 @@ public class MultimediaCardEditorActivity extends Activity {
 
 
     private void animateRight() {
-        if (AnkiDroidApp.SDK_VERSION > 4) {
-            ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
-        }
+        ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
     }
 
 

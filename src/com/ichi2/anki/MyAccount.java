@@ -419,9 +419,7 @@ public class MyAccount extends AnkiActivity {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             Log.i(AnkiDroidApp.TAG, "MyAccount - onBackPressed()");
             finish();
-            if (AnkiDroidApp.SDK_VERSION > 4) {
-                ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
-            }
+            ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
             return true;
         }
         return super.onKeyDown(keyCode, event);

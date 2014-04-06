@@ -101,9 +101,7 @@ public class ChartBuilder extends ActionBarActivity {
 
     public void closeChartBuilder() {
         finish();
-        if (AnkiDroidApp.SDK_VERSION > 4) {
-            ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.UP);
-        }
+        ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.UP);
     }
 
 
@@ -136,9 +134,7 @@ public class ChartBuilder extends ActionBarActivity {
                 finish();
                 Intent intent = new Intent(this, com.ichi2.charts.ChartBuilder.class);
                 startActivity(intent);
-                if (AnkiDroidApp.SDK_VERSION > 4) {
-                    ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
-                }
+                ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
                 return true;
             case android.R.id.home:
                 setResult(AnkiDroidApp.RESULT_TO_HOME);

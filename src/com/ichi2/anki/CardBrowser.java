@@ -329,9 +329,7 @@ public class CardBrowser extends ActionBarActivity {
                 editCard.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_CARDBROWSER_EDIT);
                 editCard.putExtra(CardEditor.EXTRA_CARD_ID, sCardBrowserCard.getId());
                 startActivityForResult(editCard, EDIT_CARD);
-                if (AnkiDroidApp.SDK_VERSION > 4) {
-                    ActivityTransitionAnimation.slide(CardBrowser.this, ActivityTransitionAnimation.LEFT);
-                }
+                ActivityTransitionAnimation.slide(CardBrowser.this, ActivityTransitionAnimation.LEFT);
             }
         });
         mCardsListView.setOnItemLongClickListener(new OnItemLongClickListener() {
@@ -480,9 +478,7 @@ public class CardBrowser extends ActionBarActivity {
                 Intent intent = new Intent(CardBrowser.this, CardEditor.class);
                 intent.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_CARDBROWSER_ADD);
                 startActivityForResult(intent, ADD_NOTE);
-                if (AnkiDroidApp.SDK_VERSION > 4) {
-                    ActivityTransitionAnimation.slide(CardBrowser.this, ActivityTransitionAnimation.LEFT);
-                }
+                ActivityTransitionAnimation.slide(CardBrowser.this, ActivityTransitionAnimation.LEFT);
                 return true;
 
             case MENU_SHOW_MARKED:
@@ -1110,9 +1106,7 @@ public class CardBrowser extends ActionBarActivity {
     private void closeCardBrowser(int result) {
         setResult(result);
         finish();
-        if (AnkiDroidApp.SDK_VERSION > 4) {
-            ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
-        }
+        ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
     }
 
 

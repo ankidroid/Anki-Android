@@ -33,14 +33,13 @@ import android.view.WindowManager;
 
 import com.ichi2.async.Connection;
 import com.ichi2.compat.Compat;
-import com.ichi2.compat.CompatV15;
-import com.ichi2.compat.CompatV15NookHdPlus;
-import com.ichi2.compat.CompatV16;
-import com.ichi2.compat.CompatV4;
-import com.ichi2.compat.CompatV5;
 import com.ichi2.compat.CompatV7;
 import com.ichi2.compat.CompatV8;
 import com.ichi2.compat.CompatV9;
+import com.ichi2.compat.CompatV15;
+import com.ichi2.compat.CompatV15NookHdPlus;
+import com.ichi2.compat.CompatV16;
+
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.hooks.Hooks;
@@ -125,8 +124,6 @@ public class AnkiDroidApp extends Application {
 
         if (isNookHdPlus() && AnkiDroidApp.SDK_VERSION == 15) {
             mCompat = new CompatV15NookHdPlus();
-        } else if (isNook()) {
-            mCompat = new CompatV4();
         } else if (AnkiDroidApp.SDK_VERSION >= 16) {
             mCompat = new CompatV16();
         } else if (AnkiDroidApp.SDK_VERSION >= 15) {
@@ -135,12 +132,8 @@ public class AnkiDroidApp extends Application {
             mCompat = new CompatV9();
         } else if (AnkiDroidApp.SDK_VERSION >= 8) {
             mCompat = new CompatV8();
-        } else if (AnkiDroidApp.SDK_VERSION >= 7) {
-            mCompat = new CompatV7();
-        } else if (AnkiDroidApp.SDK_VERSION >= 5) {
-            mCompat = new CompatV5();
         } else {
-            mCompat = new CompatV4();
+            mCompat = new CompatV7();
         }
 
         sInstance = this;
@@ -176,12 +169,6 @@ public class AnkiDroidApp extends Application {
         super.onConfigurationChanged(newConfig);
         // Preserve the language from the settings, e.g. when the device is rotated
         setLanguage(getSharedPrefs(this).getString("language", ""));
-    }
-
-
-    private boolean isNook() {
-        return android.os.Build.MODEL.equalsIgnoreCase("nook")
-                || android.os.Build.DEVICE.equalsIgnoreCase("nook");
     }
 
 

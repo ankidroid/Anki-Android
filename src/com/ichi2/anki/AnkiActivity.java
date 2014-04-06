@@ -144,9 +144,7 @@ public class AnkiActivity extends ActionBarActivity {
 
 
     private void disableActivityAnimation() {
-        if (AnkiDroidApp.SDK_VERSION > 4) {
-            ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.NONE);
-        }
+        ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.NONE);
     }
 
 
@@ -163,9 +161,7 @@ public class AnkiActivity extends ActionBarActivity {
         if (animationDisabled()) {
             disableActivityAnimation();
         } else {
-            if (AnkiDroidApp.SDK_VERSION > 4) {
-                ActivityTransitionAnimation.slide(this, animation);
-            }
+            ActivityTransitionAnimation.slide(this, animation);
         }
     }
 

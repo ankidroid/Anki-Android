@@ -87,7 +87,7 @@ public class TouchHandler implements ITouchHandler {
       if (oldX >= 0 || oldY >= 0) {
         float newX = event.getX();
         float newY = event.getY();
-        if (AnkiDroidApp.SDK_VERSION > 4 && event.getPointerCount() > 1 && (oldX2 >= 0 || oldY2 >= 0) && mRenderer.isZoomEnabled()) {
+        if (event.getPointerCount() > 1 && (oldX2 >= 0 || oldY2 >= 0) && mRenderer.isZoomEnabled()) {
           float newX2 = event.getX(1);
           float newY2 = event.getY(1);
           float newDeltaX = Math.abs(newX - newX2);

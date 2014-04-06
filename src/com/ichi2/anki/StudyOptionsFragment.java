@@ -284,9 +284,7 @@ public class StudyOptionsFragment extends Fragment {
                 case R.id.studyoptions_options:
                     Intent i = new Intent(getActivity(), DeckOptions.class);
                     startActivityForResult(i, DECK_OPTIONS);
-                    if (AnkiDroidApp.SDK_VERSION > 4) {
-                        ActivityTransitionAnimation.slide(getActivity(), ActivityTransitionAnimation.FADE);
-                    }
+                    ActivityTransitionAnimation.slide(getActivity(), ActivityTransitionAnimation.FADE);
                     return;
                 case R.id.studyoptions_rebuild_cram:
                     rebuildCramDeck();
@@ -314,9 +312,7 @@ public class StudyOptionsFragment extends Fragment {
         Intent i = new Intent(getActivity(), CramDeckOptions.class);
         i.putExtra("cramInitialConfig", initialConfig);
         startActivityForResult(i, DECK_OPTIONS);
-        if (AnkiDroidApp.SDK_VERSION > 4) {
-            ActivityTransitionAnimation.slide(getActivity(), ActivityTransitionAnimation.FADE);
-        }
+        ActivityTransitionAnimation.slide(getActivity(), ActivityTransitionAnimation.FADE);
     }
 
 
@@ -499,9 +495,7 @@ public class StudyOptionsFragment extends Fragment {
         if (!mFragmented) {
             getActivity().setResult(result);
             getActivity().finish();
-            if (AnkiDroidApp.SDK_VERSION > 4) {
-                ActivityTransitionAnimation.slide(getActivity(), ActivityTransitionAnimation.RIGHT);
-            }
+            ActivityTransitionAnimation.slide(getActivity(), ActivityTransitionAnimation.RIGHT);
         }
     }
 
@@ -524,9 +518,7 @@ public class StudyOptionsFragment extends Fragment {
     }
 
     private void animateLeft() {
-        if (AnkiDroidApp.SDK_VERSION > 4) {
-            ActivityTransitionAnimation.slide(getActivity(), ActivityTransitionAnimation.LEFT);
-        }
+        ActivityTransitionAnimation.slide(getActivity(), ActivityTransitionAnimation.LEFT);
     }
 
 
@@ -1503,9 +1495,7 @@ public class StudyOptionsFragment extends Fragment {
                 // } else {
                 Intent intent = new Intent(getActivity(), com.ichi2.charts.ChartBuilder.class);
                 startActivityForResult(intent, STATISTICS);
-                if (AnkiDroidApp.SDK_VERSION > 4) {
-                    ActivityTransitionAnimation.slide(getActivity(), ActivityTransitionAnimation.DOWN);
-                }
+                ActivityTransitionAnimation.slide(getActivity(), ActivityTransitionAnimation.DOWN);
                 // }
             } else {
                 // TODO: db error handling

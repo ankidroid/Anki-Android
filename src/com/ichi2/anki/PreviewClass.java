@@ -354,7 +354,7 @@ public class PreviewClass extends ActionBarActivity {
 	            ((View) findViewById(R.id.flashcard_border)).setVisibility(View.VISIBLE);
 	        }
 	        // hunt for input issue 720, like android issue 3341
-	        if (AnkiDroidApp.SDK_VERSION <= 7 && (mCard != null)) {
+	        if (AnkiDroidApp.SDK_VERSION == 7 && (mCard != null)) {
 	            mCard.setFocusableInTouchMode(true);
 	        }
 
@@ -489,9 +489,7 @@ public class PreviewClass extends ActionBarActivity {
 	    }
 
 	    private void disableActivityAnimation() {
-	        if (AnkiDroidApp.SDK_VERSION > 4) {
-	            ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.NONE);
-	        }
+	        ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.NONE);
 	    }
 
 
@@ -928,7 +926,7 @@ public class PreviewClass extends ActionBarActivity {
 	                mNextCard.setVisibility(View.GONE);
 	                mCardFrame.addView(mNextCard, 0);
 	                // hunt for input issue 720, like android issue 3341
-	                if (AnkiDroidApp.SDK_VERSION <= 7) {
+	                if (AnkiDroidApp.SDK_VERSION == 7) {
 	                    mCard.setFocusableInTouchMode(true);
 	                }
 	            } else if (mCard != null) {

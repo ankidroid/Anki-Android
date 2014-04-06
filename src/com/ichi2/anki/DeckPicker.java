@@ -681,9 +681,7 @@ public class DeckPicker extends ActionBarActivity {
                 // } else {
                 Intent intent = new Intent(DeckPicker.this, com.ichi2.charts.ChartBuilder.class);
                 startActivity(intent);
-                if (AnkiDroidApp.SDK_VERSION > 4) {
-                    ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.DOWN);
-                }
+                ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.DOWN);
                 // }
             } else {
                 // TODO: db error handling
@@ -1136,9 +1134,7 @@ public class DeckPicker extends ActionBarActivity {
         Intent intent = new Intent(DeckPicker.this, CardEditor.class);
         intent.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_DECKPICKER);
         startActivityForResult(intent, ADD_NOTE);
-        if (AnkiDroidApp.SDK_VERSION > 4) {
-            ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.LEFT);
-        }
+        ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.LEFT);
     }
 
 
@@ -1146,9 +1142,7 @@ public class DeckPicker extends ActionBarActivity {
         Intent cardBrowser = new Intent(DeckPicker.this, CardBrowser.class);
         cardBrowser.putExtra("fromDeckpicker", true);
         startActivityForResult(cardBrowser, BROWSE_CARDS);
-        if (AnkiDroidApp.SDK_VERSION > 4) {
-            ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.LEFT);
-        }
+        ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.LEFT);
     }
 
 
@@ -1170,10 +1164,8 @@ public class DeckPicker extends ActionBarActivity {
         upgradeIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_UPGRADE_DECKS);
         upgradeIntent.putExtra(Info.TYPE_UPGRADE_STAGE, stage);
         startActivityForResult(upgradeIntent, SHOW_INFO_UPGRADE_DECKS);
-        if (animation && AnkiDroidApp.SDK_VERSION > 4) {
-            ActivityTransitionAnimation.slide(this,
-                    left ? ActivityTransitionAnimation.LEFT : ActivityTransitionAnimation.RIGHT);
-        }
+        ActivityTransitionAnimation.slide(this,
+                left ? ActivityTransitionAnimation.LEFT : ActivityTransitionAnimation.RIGHT);
     }
 
     private boolean upgradeNeeded() {
@@ -1215,7 +1207,7 @@ public class DeckPicker extends ActionBarActivity {
             Intent infoIntent = new Intent(this, Info.class);
             infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_WELCOME);
             startActivityForResult(infoIntent, SHOW_INFO_WELCOME);
-            if (skip != 0 && AnkiDroidApp.SDK_VERSION > 4) {
+            if (skip != 0) {
                 ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
             }
         } else if (skip < 2 && !preferences.getString("lastVersion", "").equals(AnkiDroidApp.getPkgVersionName())) {
@@ -1223,7 +1215,7 @@ public class DeckPicker extends ActionBarActivity {
             Intent infoIntent = new Intent(this, Info.class);
             infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION);
             startActivityForResult(infoIntent, SHOW_INFO_NEW_VERSION);
-            if (skip != 0 && AnkiDroidApp.SDK_VERSION > 4) {
+            if (skip != 0) {
                 ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
             }
         } else if (skip < 3 && upgradeNeeded()) {
@@ -1235,7 +1227,7 @@ public class DeckPicker extends ActionBarActivity {
         } else if (skip < 4 && hasErrorFiles()) {
             Intent i = new Intent(this, Feedback.class);
             startActivityForResult(i, REPORT_ERROR);
-            if (skip != 0 && AnkiDroidApp.SDK_VERSION > 4) {
+            if (skip != 0) {
                 ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
             }
         } else if (!AnkiDroidApp.isSdCardMounted()) {
@@ -1471,10 +1463,8 @@ public class DeckPicker extends ActionBarActivity {
                                 i.putExtra("request", RESULT_DB_ERROR);
                                 dialog.dismiss();
                                 startActivityForResult(i, REPORT_ERROR);
-                                if (AnkiDroidApp.SDK_VERSION > 4) {
-                                    ActivityTransitionAnimation.slide(DeckPicker.this,
-                                            ActivityTransitionAnimation.RIGHT);
-                                }
+                                ActivityTransitionAnimation.slide(DeckPicker.this,
+                                        ActivityTransitionAnimation.RIGHT);
                             }
                         });
                 builder.setNegativeButton(res.getString(R.string.close),
@@ -1532,9 +1522,7 @@ public class DeckPicker extends ActionBarActivity {
                         Intent myAccount = new Intent(DeckPicker.this, MyAccount.class);
                         myAccount.putExtra("notLoggedIn", true);
                         startActivityForResult(myAccount, LOG_IN_FOR_SYNC);
-                        if (AnkiDroidApp.SDK_VERSION > 4) {
-                            ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.FADE);
-                        }
+                        ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.FADE);
                     }
                 });
                 dialog = builder.create();
@@ -2158,9 +2146,7 @@ public class DeckPicker extends ActionBarActivity {
 
     private void finishWithAnimation() {
         finish();
-        if (AnkiDroidApp.SDK_VERSION > 4) {
-            ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.DIALOG_EXIT);
-        }
+        ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.DIALOG_EXIT);
     }
 
     // ----------------------------------------------------------------------------
@@ -2279,9 +2265,7 @@ public class DeckPicker extends ActionBarActivity {
         Intent intent = new Intent(DeckPicker.this, Info.class);
         intent.putExtra(Info.TYPE_EXTRA, Info.TYPE_SHARED_DECKS);
         startActivityForResult(intent, ADD_SHARED_DECKS);
-        if (AnkiDroidApp.SDK_VERSION > 4) {
-            ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.RIGHT);
-        }
+        ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.RIGHT);
     }
 
     private DialogInterface.OnClickListener mSyncSanityFailListener = new DialogInterface.OnClickListener() {
@@ -2530,9 +2514,7 @@ public class DeckPicker extends ActionBarActivity {
 
             case MENU_ABOUT:
                 startActivity(new Intent(DeckPicker.this, Info.class));
-                if (AnkiDroidApp.SDK_VERSION > 4) {
-                    ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.RIGHT);
-                }
+                ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.RIGHT);
                 return true;
 
             case MENU_ADD_SHARED_DECK:
@@ -2553,9 +2535,7 @@ public class DeckPicker extends ActionBarActivity {
                 Intent i = new Intent(DeckPicker.this, Feedback.class);
                 i.putExtra("request", REPORT_FEEDBACK);
                 startActivityForResult(i, REPORT_FEEDBACK);
-                if (AnkiDroidApp.SDK_VERSION > 4) {
-                    ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
-                }
+                ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
                 return true;
 
             case CHECK_DATABASE:
@@ -2690,9 +2670,7 @@ public class DeckPicker extends ActionBarActivity {
                     i.setClass(this, StudyOptionsActivity.class);
                     i.putExtra("onlyFnsMsg", true);
                     startActivityForResult(i, SHOW_STUDYOPTIONS);
-                    if (AnkiDroidApp.SDK_VERSION > 4) {
-                        ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
-                    }
+                    ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
                     break;
             }
 
@@ -2808,9 +2786,7 @@ public class DeckPicker extends ActionBarActivity {
             // ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.NONE);
             // }
             // } else {
-            if (AnkiDroidApp.SDK_VERSION > 4) {
-                ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
-            }
+            ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
             // }
         }
     }
@@ -3001,9 +2977,7 @@ public class DeckPicker extends ActionBarActivity {
                                     col.reset();
                                     Intent reviewer = new Intent(DeckPicker.this, Reviewer.class);
                                     startActivityForResult(reviewer, REQUEST_REVIEW);
-                                    if (AnkiDroidApp.SDK_VERSION > 4) {
-                                        ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.LEFT);
-                                    }
+                                    ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.LEFT);
                                     return true;
                                 }
                             }

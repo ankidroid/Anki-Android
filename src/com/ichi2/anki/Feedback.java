@@ -146,9 +146,7 @@ public class Feedback extends AnkiActivity {
             setResult(RESULT_OK);
         }
         finish();
-        if (AnkiDroidApp.SDK_VERSION > 4) {
-            ActivityTransitionAnimation.slide(Feedback.this, ActivityTransitionAnimation.LEFT);
-        }
+        ActivityTransitionAnimation.slide(Feedback.this, ActivityTransitionAnimation.LEFT);
     }
 
 
@@ -238,16 +236,12 @@ public class Feedback extends AnkiActivity {
                     Log.e(AnkiDroidApp.TAG, e.toString());
                 }
                 finish();
-                if (AnkiDroidApp.SDK_VERSION > 4) {
-                    ActivityTransitionAnimation.slide(Feedback.this, ActivityTransitionAnimation.NONE);
-                }
+                ActivityTransitionAnimation.slide(Feedback.this, ActivityTransitionAnimation.NONE);
                 return;
             } else if (mReportErrorMode.equals(REPORT_NEVER)) { // Never report
                 deleteFiles(false, false);
                 finish();
-                if (AnkiDroidApp.SDK_VERSION > 4) {
-                    ActivityTransitionAnimation.slide(Feedback.this, ActivityTransitionAnimation.NONE);
-                }
+                ActivityTransitionAnimation.slide(Feedback.this, ActivityTransitionAnimation.NONE);
                 return;
             }
         }
