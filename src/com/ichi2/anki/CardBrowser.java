@@ -721,9 +721,6 @@ public class CardBrowser extends ActionBarActivity {
             // Perform database query to get all card ids / sfld. Shows "filtering cards..." progress message
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SEARCH_CARDS, mSearchCardsHandler, new DeckTask.TaskData(
                     new Object[] { mCol, mDeckNames, searchText, ((mOrder == CARD_ORDER_NONE) ? "" : "true") }));
-            // After this initial query, start rendering the question and answer in the background
-            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_RENDER_BROWSER_QA, mRenderQAHandler, new DeckTask.TaskData(
-                    new Object[] { mCol, mCards}));
         }
     }
 
@@ -950,11 +947,15 @@ public class CardBrowser extends ActionBarActivity {
 
         @Override
         public void onPostExecute(TaskData result) {
+            Log.i(AnkiDroidApp.TAG, "Completed doInBackgroundSearchCards Successfuly");
             mTotalCount = result.getInt();
             updateList();
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
                 mProgressDialog.dismiss();
             }
+            // After the initial searchCards query, start rendering the question and answer in the background
+            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_RENDER_BROWSER_QA, mRenderQAHandler, new DeckTask.TaskData(
+                    new Object[] { mCol, mCards}));            
         }
     };
 
