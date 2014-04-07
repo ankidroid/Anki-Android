@@ -70,8 +70,6 @@
   <string name="show_study_options_on_deck_load_summ">Mostra tela de opções de estudo ao carregar um deck</string>
   <string name="hide_due_count">Ocultar contagem de devidos</string>
   <string name="hide_due_count_summ">Oculta a contagem de devidos</string>
-  <string name="show_progress_bars">Mostrar barras de progresso</string>
-  <string name="show_progress_bars_summ">Mostra o progresso e a proporção de respostas sim de hoje enquanto revisa</string>
   <string name="fade_scrollbars">Esconder barras de rolagens</string>
   <string name="fade_scrollbars_summ">Esconder automáticamente barras de rolagens quando não estiver rolando</string>
   <string name="show_whiteboard_summ">Permite escrever na tela</string>

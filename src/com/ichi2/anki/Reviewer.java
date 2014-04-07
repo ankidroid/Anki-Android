@@ -251,7 +251,6 @@ public class Reviewer extends AnkiActivity {
     private int mCurrentBackgroundColor;
     private boolean mBlackWhiteboard = true;
     private boolean mNightMode = false;
-    private boolean mShowProgressBars;
     private boolean mPrefFadeScrollbars;
     private boolean mPrefUseTimer;
     private boolean mPrefCenterVertically;
@@ -297,9 +296,6 @@ public class Reviewer extends AnkiActivity {
     private TextView mTextBarBlack;
     private TextView mTextBarBlue;
     private TextView mChosenAnswer;
-    private LinearLayout mProgressBars;
-    private View mSessionProgressTotalBar;
-    private View mSessionProgressBar;
     private TextView mNext1;
     private TextView mNext2;
     private TextView mNext3;
@@ -1383,9 +1379,6 @@ public class Reviewer extends AnkiActivity {
             if (mShowTimer) {
                 mCardTimer.setVisibility(View.VISIBLE);
             }
-            if (mShowProgressBars) {
-                mProgressBars.setVisibility(View.VISIBLE);
-            }
 
             // Restore fullscreen preference
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -1795,16 +1788,7 @@ public class Reviewer extends AnkiActivity {
             mTextBarBlue.setVisibility(View.GONE);
         }
 
-        if (mShowProgressBars) {
-            mSessionProgressTotalBar = (View) findViewById(R.id.daily_bar);
-            mSessionProgressBar = (View) findViewById(R.id.session_progress);
-            mProgressBars = (LinearLayout) findViewById(R.id.progress_bars);
-        }
-
         mCardTimer = (Chronometer) findViewById(R.id.card_time);
-        if (mShowProgressBars && mProgressBars.getVisibility() != View.VISIBLE) {
-            switchVisibility(mProgressBars, View.VISIBLE);
-        }
 
         mChosenAnswer = (TextView) findViewById(R.id.choosen_answer);
 
@@ -1899,12 +1883,6 @@ public class Reviewer extends AnkiActivity {
             mCard.setBackgroundColor(mCurrentBackgroundColor);
         }
 
-        int fgColor = R.color.studyoptions_progressbar_frame_light;
-        int bgColor = R.color.studyoptions_progressbar_background_nightmode;
-        findViewById(R.id.progress_bars_border1).setBackgroundResource(fgColor);
-        findViewById(R.id.progress_bars_border2).setBackgroundResource(fgColor);
-        findViewById(R.id.progress_bars_back1).setBackgroundResource(bgColor);
-        findViewById(R.id.progress_bars_back2).setBackgroundResource(bgColor);
         AnkiDroidApp.getCompat().setActionBarBackground(this, invert ? R.color.white_background_night : R.color.actionbar_background);
     }
 
@@ -2021,9 +1999,6 @@ public class Reviewer extends AnkiActivity {
         if (mShowTimer) {
             switchVisibility(mCardTimer, visible, true);
         }
-        if (mShowProgressBars) {
-            switchVisibility(mProgressBars, visible, true);
-        }
         if (mShowRemainingCardCount) {
             switchVisibility(mTextBarRed, visible, true);
             switchVisibility(mTextBarBlack, visible, true);
@@ -2070,7 +2045,6 @@ public class Reviewer extends AnkiActivity {
         mPrefFixArabic = preferences.getBoolean("fixArabicText", false);
         mPrefForceQuickUpdate = preferences.getBoolean("forceQuickUpdate", false);
         mSpeakText = preferences.getBoolean("tts", false);
-        mShowProgressBars = preferences.getBoolean("progressBars", true);
         mPrefFadeScrollbars = preferences.getBoolean("fadeScrollbars", false);
         mPrefUseTimer = preferences.getBoolean("timeoutAnswer", false);
         mWaitAnswerSecond = preferences.getInt("timeoutAnswerSeconds", 20);
@@ -2217,9 +2191,6 @@ public class Reviewer extends AnkiActivity {
 
     private void updateForNewCard() {
         updateScreenCounts();
-        if (mShowProgressBars) {
-            updateStatisticBars();
-        }
 
         // Clean answer field
         if (typeAnswer()) {
@@ -2271,20 +2242,6 @@ public class Reviewer extends AnkiActivity {
         mTextBarRed.setText(newCount);
         mTextBarBlack.setText(lrnCount);
         mTextBarBlue.setText(revCount);
-    }
-
-
-    private void updateStatisticBars() {
-        if (mStatisticBarsMax == 0) {
-            View view = findViewById(R.id.progress_bars_back1);
-            mStatisticBarsMax = view.getWidth();
-            mStatisticBarsHeight = view.getHeight();
-        }
-        float[] progress = mSched.progressToday(null, mCurrentCard, false);
-        Utils.updateProgressBars(mSessionProgressBar,
-                (int) (mStatisticBarsMax * progress[0]), mStatisticBarsHeight);
-        Utils.updateProgressBars(mSessionProgressTotalBar,
-                (int) (mStatisticBarsMax * progress[1]), mStatisticBarsHeight);
     }
 
     /*

@@ -70,8 +70,6 @@
   <string name="show_study_options_on_deck_load_summ">Prikazuje ekrazn za opcije za učenje tokom učitavanja špila</string>
   <string name="hide_due_count">Сакриј број понављања</string>
   <string name="hide_due_count_summ">Сакриј бројач понављаних карата</string>
-  <string name="show_progress_bars">Показивач напретка</string>
-  <string name="show_progress_bars_summ">Показује данашњи напредак и учешће јучерашњих одговоре \"да\"</string>
   <string name="fade_scrollbars">Сакриј клизаче</string>
   <string name="fade_scrollbars_summ">Аутоматски уклони клизаче, ако нема шта да се проклизава</string>
   <string name="show_whiteboard_summ">Omogućava vam da pišete po ekranu</string>

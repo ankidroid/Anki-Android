@@ -70,8 +70,6 @@
   <string name="show_study_options_on_deck_load_summ">암기묶음을 불러올 때 학습옵션 보이기</string>
   <string name="hide_due_count">기간 수 숨기기</string>
   <string name="hide_due_count_summ">기간 수 숨기기</string>
-  <string name="show_progress_bars">상태바 보이기</string>
-  <string name="show_progress_bars_summ">리뷰하는 동안 오늘의 진도와 정답비율 보여주기</string>
   <string name="fade_scrollbars">스크롤바 서서히 사라지기</string>
   <string name="fade_scrollbars_summ">스크롤하지 않을 때에 스크롤바가 자동으로 서서히 사라집니다</string>
   <string name="show_whiteboard_summ">학습화면에 쓰기기능 가능하게 함</string>

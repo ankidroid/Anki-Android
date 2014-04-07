@@ -70,8 +70,6 @@
   <string name="show_study_options_on_deck_load_summ">Hiển thị tùy chọn học khi tải một tập thẻ</string>
   <string name="hide_due_count">Hide due count</string>
   <string name="hide_due_count_summ">Hides the due count</string>
-  <string name="show_progress_bars">Show progress bars</string>
-  <string name="show_progress_bars_summ">Hiển thị tiến độ của ngày hôm nay và tỉ lệ các câu trả lời có trong khi học</string>
   <string name="fade_scrollbars">Fade scrollbars</string>
   <string name="fade_scrollbars_summ">Automatically fade out flashcard scrollbars when not scrolling</string>
   <string name="show_whiteboard_summ">Cho phép bạn viết lên màn hình</string>

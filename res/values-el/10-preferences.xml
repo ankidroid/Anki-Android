@@ -70,8 +70,6 @@
   <string name="show_study_options_on_deck_load_summ">Δείχνει την οθόνη των επιλογών μελέτης όταν φορτώνετε μια τράπουλα</string>
   <string name="hide_due_count">Απόκρυψη αριθμού αναμενώμενων</string>
   <string name="hide_due_count_summ">Αποκρύπτει τον αριθμό αναμενώμενων καρτών</string>
-  <string name="show_progress_bars">Εμφάνιση γραμμών προόδου</string>
-  <string name="show_progress_bars_summ">Δείχνει τη σημερινή πρόοδο και ποσοστό των σημερινών απαντήσεων ναι κατά την επανάληψη</string>
   <string name="fade_scrollbars">Αυτόματη απόκρυψη μπάρας κύλισης</string>
   <string name="fade_scrollbars_summ">Αυτόματη εξαφάνιση για τις μπάρες κύλισης στις κάρτες, όταν δεν χρησιμοποιούνται</string>
   <string name="show_whiteboard_summ">Σας επιτρέπει να γράψετε στην οθόνη</string>

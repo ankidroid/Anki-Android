@@ -45,29 +45,6 @@
 				android:gravity="center"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content">
-				<FrameLayout
-					android:id="@+id/studyoptions_progressbar_border"
-					android:background="@color/studyoptions_progressbar_frame_default"
-					android:layout_width="fill_parent"
-			    android:layout_marginTop="2dip"
-			    android:layout_marginBottom="7dip"
-					android:layout_height="4dp"
-					android:padding="0.3dip">
-					<LinearLayout 
-						android:id="@+id/studyoptions_progressbar_content"
-						android:background="#ffffff"
-						android:layout_width="fill_parent"
-						android:layout_height="fill_parent">
-						<View android:id="@+id/studyoptions_global_mat_bar"
-							android:layout_width="0dip"
-							android:layout_height="fill_parent"
-							android:background="@color/studyoptions_progressbar_young_default"/>
-						<View android:id="@+id/studyoptions_global_bar"
-							android:layout_width="0dip"
-							android:layout_height="fill_parent"
-							android:background="@color/studyoptions_progressbar_mature_default" />
-					</LinearLayout>
-				</FrameLayout>
 		    	    	    	
 			   	<TableLayout
 				    android:layout_marginBottom="5dip"

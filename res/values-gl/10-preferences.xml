@@ -70,8 +70,6 @@
   <string name="show_study_options_on_deck_load_summ">Shows study options screen when loading a deck</string>
   <string name="hide_due_count">Hide due count</string>
   <string name="hide_due_count_summ">Hides the due count</string>
-  <string name="show_progress_bars">Show progress bars</string>
-  <string name="show_progress_bars_summ">Shows today\'s progress and proportion of today\'s yes answers while reviewing</string>
   <string name="fade_scrollbars">Fade scrollbars</string>
   <string name="fade_scrollbars_summ">Automatically fade out flashcard scrollbars when not scrolling</string>
   <string name="show_whiteboard_summ">Lets you write on the screen</string>

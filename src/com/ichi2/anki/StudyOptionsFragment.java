@@ -188,16 +188,6 @@ public class StudyOptionsFragment extends Fragment {
     private GestureDetector gestureDetector;
     View.OnTouchListener gestureListener;
 
-    /**
-     * Statistics
-     */
-    public static int mStatisticType;
-    private View mBarsMax;
-    private View mGlobalBar;
-    private View mGlobalMatBar;
-    private double mProgressMature;
-    private double mProgressAll;
-
     public Bundle mCramInitialConfig = null;
 
     private boolean mFragmented;
@@ -451,7 +441,6 @@ public class StudyOptionsFragment extends Fragment {
 //        if (timelimit > 0) {
 //            mToggleLimitToggle.setText(String.valueOf(timelimit));
 //        }
-        updateStatisticBars();
     }
 
 
@@ -624,9 +613,6 @@ public class StudyOptionsFragment extends Fragment {
         }
 
         // Code common to both fragmented and non-fragmented view
-        mGlobalBar = (View) mStudyOptionsView.findViewById(R.id.studyoptions_global_bar);
-        mGlobalMatBar = (View) mStudyOptionsView.findViewById(R.id.studyoptions_global_mat_bar);
-        mBarsMax = (View) mStudyOptionsView.findViewById(R.id.studyoptions_progressbar_content);
         mTextTodayNew = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_new);
         mTextTodayLrn = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_lrn);
         mTextTodayRev = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_rev);
@@ -634,9 +620,6 @@ public class StudyOptionsFragment extends Fragment {
         mTextTotal = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_total);
         mTextETA = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_eta);
         mSmallChart = (LinearLayout) mStudyOptionsView.findViewById(R.id.studyoptions_mall_chart);
-
-        mGlobalMatBar.setVisibility(View.INVISIBLE);
-        mGlobalBar.setVisibility(View.INVISIBLE);
 
         mDeckCounts = (LinearLayout) mStudyOptionsView.findViewById(R.id.studyoptions_deckcounts);
         mDeckChart = (LinearLayout) mStudyOptionsView.findViewById(R.id.studyoptions_chart);
@@ -1185,27 +1168,6 @@ public class StudyOptionsFragment extends Fragment {
     }
 
 
-    private void updateStatisticBars() {
-        mBarsMax.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                mBarsMax.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                int maxWidth = mBarsMax.getWidth() + 1;
-                int height = mBarsMax.getHeight();
-                int mat = (int) (mProgressMature * maxWidth);
-                Utils.updateProgressBars(mGlobalMatBar, mat, height);
-                Utils.updateProgressBars(mGlobalBar, (int) (mProgressAll * maxWidth) - mat, height);
-                if (mGlobalMatBar.getVisibility() == View.INVISIBLE) {
-                    mGlobalMatBar.setVisibility(View.VISIBLE);
-                    mGlobalMatBar.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 100, 0));
-                    mGlobalBar.setVisibility(View.VISIBLE);
-                    mGlobalBar.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 100, 0));
-                }
-            }
-        });
-    }
-
-
     private void updateChart(double[][] serieslist) {
         if (mSmallChart != null) {
             Resources res = getResources();
@@ -1409,12 +1371,9 @@ public class StudyOptionsFragment extends Fragment {
                 int revCards = (Integer) obj[2];
                 int totalNew = (Integer) obj[3];
                 int totalCards = (Integer) obj[4];
-                mProgressMature = (Double) obj[5];
-                mProgressAll = (Double) obj[6];
                 int eta = (Integer) obj[7];
                 double[][] serieslist = (double[][]) obj[8];
 
-                updateStatisticBars();
                 updateChart(serieslist);
 
 //                JSONObject conf = mCol.getConf();

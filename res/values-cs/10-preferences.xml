@@ -70,8 +70,6 @@
   <string name="show_study_options_on_deck_load_summ">Během načítání balíčku zobrazí obrazovku se studijními možnostmi</string>
   <string name="hide_due_count">Schovat počet k opakování</string>
   <string name="hide_due_count_summ">Skryje počet k opakování</string>
-  <string name="show_progress_bars">Zobrazit ukazatele průběhu</string>
-  <string name="show_progress_bars_summ">Zobrazí dnešní pokrok a podíl dnešních Ano odpovědi při opakování</string>
   <string name="fade_scrollbars">Mizející posuvníky</string>
   <string name="fade_scrollbars_summ">Automaticky skrýt posuvníky kartiček, když nejsou nutné</string>
   <string name="show_whiteboard_summ">Umožňuje psát na obrazovku</string>

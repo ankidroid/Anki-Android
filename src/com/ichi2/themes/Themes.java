@@ -316,8 +316,6 @@ public class Themes {
                         // ((View)view.findViewById(R.id.nextTime4)).setBackgroundResource(R.drawable.white_next_time_separator);
                         break;
                 }
-                ((View) view.findViewById(R.id.session_progress)).setBackgroundResource(mReviewerProgressbar);
-                ((View) view.findViewById(R.id.daily_bar)).setBackgroundResource(mReviewerProgressbar);
                 break;
 
             case CALLER_FEEDBACK:
