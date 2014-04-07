@@ -69,6 +69,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
+import java.util.regex.Pattern;
 import java.lang.OutOfMemoryError;
 
 /**
@@ -741,14 +742,14 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                 // render question and answer
     	        HashMap<String, String> qa=c._getQA(true, true);
             	// update the original hash map to include rendered question & answer
-    			String q = formatQA(qa.get("q"));
-    			String a = formatQA(qa.get("a"));
+    			String q = qa.get("q");
+    			String a = qa.get("a");
     			// remove the question from the start of the answer if it exists
     			if (a.startsWith(q)){
-    			    a=a.replaceFirst(q, "");
+    			    a=a.replaceFirst(Pattern.quote(q), "");
     			}
     			// put all of the fields in except for those that have already been pulled out straight from the database
-            	item.put("answer",a);
+            	item.put("answer",formatQA(a));
             	item.put("card", c.template().optString("name"));
             	//item.put("changed",strftime("%Y-%m-%d", localtime(c.getMod())));
             	//item.put("created",strftime("%Y-%m-%d", localtime(c.note().getId()/1000)));
@@ -758,7 +759,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             	//item.put("interval","");
             	item.put("lapses",Integer.toString(c.getLapses()));
             	item.put("note",c.model().optString("name"));
-                item.put("question",q);
+                item.put("question",formatQA(q));
                 item.put("reviews",Integer.toString(c.getReps()));
         		// Send progress periodically so that QA list in browser updates
                 if (isCancelled()) {
