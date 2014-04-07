@@ -443,7 +443,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
     @Override
     protected void onCreate(Bundle icicle) {
         // Workaround for bug 4611: http://code.google.com/p/android/issues/detail?id=4611
-        if (AnkiDroidApp.SDK_VERSION >= 7 && AnkiDroidApp.SDK_VERSION <= 10) {
+        if (AnkiDroidApp.SDK_VERSION <= 10) {
             Themes.applyTheme(this, Themes.THEME_ANDROID_DARK);
         }
         super.onCreate(icicle);
@@ -484,9 +484,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             Log.i(AnkiDroidApp.TAG, "DeckOptions - onBackPressed()");
             finish();
-            if (AnkiDroidApp.SDK_VERSION > 4) {
-                ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
-            }
+            ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
             return true;
         }
         return super.onKeyDown(keyCode, event);

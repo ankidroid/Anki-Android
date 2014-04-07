@@ -115,11 +115,7 @@ public class GraphicalView extends View {
       mZoomOut = new Zoom(mChart, false, mRenderer.getZoomRate());
       mFitZoom = new FitZoom(mChart);
     }
-    if (AnkiDroidApp.SDK_VERSION < 7) {
-      mTouchHandler = new TouchHandlerOld(this, mChart);
-    } else {
-      mTouchHandler = new TouchHandler(this, mChart);
-    }
+    mTouchHandler = new TouchHandler(this, mChart);
   }
 
   /**

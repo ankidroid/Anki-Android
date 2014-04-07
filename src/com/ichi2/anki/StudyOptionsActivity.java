@@ -141,9 +141,7 @@ public class StudyOptionsActivity extends ActionBarActivity {
 
             case MENU_PREFERENCES:
                 startActivityForResult(new Intent(this, Preferences.class), StudyOptionsFragment.PREFERENCES_UPDATE);
-                if (AnkiDroidApp.SDK_VERSION > 4) {
-                    ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
-                }
+                ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
                 return true;
 
             case MENU_ROTATE:
@@ -228,9 +226,7 @@ public class StudyOptionsActivity extends ActionBarActivity {
         // mCompat.invalidateOptionsMenu(this);
         setResult(result);
         finish();
-        if (AnkiDroidApp.SDK_VERSION > 4) {
-            ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
-        }
+        ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
     }
 
 

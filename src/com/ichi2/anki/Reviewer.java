@@ -1726,7 +1726,7 @@ public class Reviewer extends AnkiActivity {
             ((View) findViewById(R.id.flashcard_border)).setVisibility(View.VISIBLE);
         }
         // hunt for input issue 720, like android issue 3341
-        if (AnkiDroidApp.SDK_VERSION <= 7 && (mCard != null)) {
+        if (AnkiDroidApp.SDK_VERSION == 7 && (mCard != null)) {
             mCard.setFocusableInTouchMode(true);
         }
 
@@ -2748,7 +2748,7 @@ public class Reviewer extends AnkiActivity {
                 mNextCard.setVisibility(View.GONE);
                 mCardFrame.addView(mNextCard, 0);
                 // hunt for input issue 720, like android issue 3341
-                if (AnkiDroidApp.SDK_VERSION <= 7) {
+                if (AnkiDroidApp.SDK_VERSION == 7) {
                     mCard.setFocusableInTouchMode(true);
                 }
             } else if (mCard != null) {
@@ -3290,9 +3290,7 @@ public class Reviewer extends AnkiActivity {
             UIUtils.saveCollectionInBackground();
         }
         finish();
-        if (AnkiDroidApp.SDK_VERSION > 4) {
-            ActivityTransitionAnimation.slide(Reviewer.this, ActivityTransitionAnimation.RIGHT);
-        }
+        ActivityTransitionAnimation.slide(Reviewer.this, ActivityTransitionAnimation.RIGHT);
     }
 
     private void refreshActionBar() {

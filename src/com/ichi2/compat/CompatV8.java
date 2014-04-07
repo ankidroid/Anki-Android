@@ -6,7 +6,7 @@ import android.media.AudioManager.OnAudioFocusChangeListener;
 
 /** Implementation of {@link Compat} for SDK level 8 */
 @TargetApi(8)
-public class CompatV8 extends CompatV5 implements Compat {
+public class CompatV8 extends CompatV7 implements Compat {
 
     /**
      * Listener to handle audio focus. Currently blank because we're not respecting losing focus from other apps.

@@ -580,9 +580,7 @@ public class Info extends ActionBarActivity {
                                 Intent myAccount = new Intent(Info.this, MyAccount.class);
                                 myAccount.putExtra("notLoggedIn", true);
                                 startActivityForResult(myAccount, LOG_IN_FOR_SYNC);
-                                if (AnkiDroidApp.SDK_VERSION > 4) {
-                                    ActivityTransitionAnimation.slide(Info.this, ActivityTransitionAnimation.FADE);
-                                }
+                                ActivityTransitionAnimation.slide(Info.this, ActivityTransitionAnimation.FADE);
                             }
                         });
                 dialog = builder.create();
@@ -880,9 +878,7 @@ public class Info extends ActionBarActivity {
                 if (failed.size() == 0 && failedMedia.size() == 0) {
                     setResult(RESULT_OK);
                     finish();
-                    if (AnkiDroidApp.SDK_VERSION > 4) {
-                        ActivityTransitionAnimation.slide(Info.this, ActivityTransitionAnimation.LEFT);
-                    }
+                    ActivityTransitionAnimation.slide(Info.this, ActivityTransitionAnimation.LEFT);
                 } else {
                     StyledDialog.Builder builder = new StyledDialog.Builder(Info.this);
                     builder.setTitle(res.getString(R.string.connection_error_title));
@@ -1013,9 +1009,7 @@ public class Info extends ActionBarActivity {
                 intent.putExtra("importPath", (String) data.result);
                 setResult(RESULT_OK, intent);
                 finish();
-                if (AnkiDroidApp.SDK_VERSION > 4) {
-                    ActivityTransitionAnimation.slide(Info.this, ActivityTransitionAnimation.LEFT);
-                }
+                ActivityTransitionAnimation.slide(Info.this, ActivityTransitionAnimation.LEFT);
             } else {
                 StyledDialog.Builder builder = new StyledDialog.Builder(Info.this);
                 builder.setTitle(res.getString(R.string.connection_error_title));
@@ -1155,10 +1149,8 @@ public class Info extends ActionBarActivity {
 
     private void finishWithAnimation(boolean left) {
         finish();
-        if (AnkiDroidApp.SDK_VERSION > 4) {
-            ActivityTransitionAnimation.slide(Info.this, left ?
-                    ActivityTransitionAnimation.LEFT : ActivityTransitionAnimation.RIGHT);
-        }
+        ActivityTransitionAnimation.slide(Info.this, left ?
+                ActivityTransitionAnimation.LEFT : ActivityTransitionAnimation.RIGHT);
     }
 
     private void lockScreenOrientation() {
