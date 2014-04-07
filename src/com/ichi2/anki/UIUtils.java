@@ -53,7 +53,7 @@ public class UIUtils {
     public static MenuItem addMenuItemInActionBar(Menu menu, int groupId, int itemId, int order, int titleRes,
             int iconRes) {
         MenuItem item = addMenuItem(menu, groupId, itemId, order, titleRes, iconRes);
-        MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
+        MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
         return item;
     }
 
