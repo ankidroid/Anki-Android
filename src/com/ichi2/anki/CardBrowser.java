@@ -17,6 +17,15 @@
 
 package com.ichi2.anki;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+
+import org.json.JSONException;
+
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
@@ -30,29 +39,26 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.multimediacard.activity.MultimediaCardEditorActivity;
@@ -70,32 +76,21 @@ import com.ichi2.themes.Themes;
 import com.ichi2.upgrade.Upgrade;
 import com.ichi2.widget.WidgetStatus;
 
-import org.json.JSONException;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-
 public class CardBrowser extends ActionBarActivity {
     // private List<Long> mCardIds = new ArrayList<Long>();
     private ArrayList<HashMap<String, String>> mCards;
     // private ArrayList<HashMap<String, String>> mAllCards;
     private HashMap<String, String> mDeckNames;
+    private SearchView mSearchView;
     private ListView mCardsListView;
     private Spinner mCardsColumn1Spinner;
     private Spinner mCardsColumn2Spinner;
     private SimpleAdapter mCardsAdapter;
-    private EditText mSearchEditText;
     private String mSearchTerms;
     private String mRestrictOnDeck;
-    private ImageButton mSearchButton;
 
     private StyledProgressDialog mProgressDialog;
     private StyledOpenCollectionDialog mOpenCollectionDialog;
-    private boolean mUndoRedoDialogShowing = false;
 
     public static Card sCardBrowserCard;
 
@@ -121,17 +116,6 @@ public class CardBrowser extends ActionBarActivity {
     private static final int BACKGROUND_SUSPENDED = 2;
     private static final int BACKGROUND_MARKED_SUSPENDED = 3;
 
-    // TODO(flerda@gmail.com): Fix card browser's undo.
-    // https://code.google.com/p/ankidroid/issues/detail?id=1561
-    /*
-    private static final int MENU_UNDO = 0;
-    */
-    private static final int MENU_ADD_NOTE = 1;
-    private static final int MENU_SHOW_MARKED = 2;
-    private static final int MENU_SELECT = 3;
-    private static final int MENU_SELECT_SUSPENDED = 31;
-    private static final int MENU_SELECT_TAG = 32;
-    private static final int MENU_CHANGE_ORDER = 5;
     private static final int EDIT_CARD = 0;
     private static final int ADD_NOTE = 1;
     private static final int DEFAULT_FONT_SIZE_RATIO = 100;
@@ -220,9 +204,9 @@ public class CardBrowser extends ActionBarActivity {
 
 
     private void onSearch() {
-        mSearchTerms = mSearchEditText.getText().toString().toLowerCase();
+        mSearchTerms = mSearchView.getQuery().toString().toLowerCase();
         if (mSearchTerms.length() == 0) {
-            mSearchEditText.setHint(R.string.downloaddeck_search);
+            mSearchView.setQueryHint(getResources().getString(R.string.downloaddeck_search));
         }
         searchCards();
     }
@@ -341,25 +325,7 @@ public class CardBrowser extends ActionBarActivity {
             }
         });
 
-        mSearchEditText = (EditText) findViewById(R.id.card_browser_search);
-        mSearchEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView view, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    onSearch();
-                    return true;
-                }
-                return false;
-            }
-        });
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        mSearchButton = (ImageButton) findViewById(R.id.card_browser_search_button);
-        mSearchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onSearch();
-            }
-        });
 
         mSearchTerms = "";
         if (mWholeCollection) {
@@ -409,12 +375,12 @@ public class CardBrowser extends ActionBarActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             Log.i(AnkiDroidApp.TAG, "CardBrowser - onBackPressed()");
-            if (mSearchEditText.getText().length() == 0) {
+            if (mSearchView.getQuery().toString().length() == 0) {
                 // close the browser
                 closeCardBrowser(Activity.RESULT_OK);
             } else {
-                mSearchEditText.setText("");
-                mSearchEditText.setHint(R.string.downloaddeck_search);
+                mSearchView.setQuery("", false);
+                mSearchView.setQueryHint(getResources().getString(R.string.downloaddeck_search));
                 mSelectedTags.clear();
             }
             return true;
@@ -426,24 +392,42 @@ public class CardBrowser extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuItem item;
-        // TODO(flerda@gmail.com): Fix card browser's undo.
-        // https://code.google.com/p/ankidroid/issues/detail?id=1561
-        /*
-        item = menu.add(Menu.NONE, MENU_UNDO, Menu.NONE, R.string.undo);
-        item.setIcon(R.drawable.ic_menu_revert);
-        */
-        item = menu.add(Menu.NONE, MENU_ADD_NOTE, Menu.NONE, R.string.card_editor_add_card);
-        item.setIcon(R.drawable.ic_menu_add);
-        item = menu.add(Menu.NONE, MENU_CHANGE_ORDER, Menu.NONE, R.string.card_browser_change_display_order);
-        item.setIcon(R.drawable.ic_menu_sort_by_size);
-        item = menu.add(Menu.NONE, MENU_SHOW_MARKED, Menu.NONE, R.string.card_browser_show_marked);
-        item.setIcon(R.drawable.ic_menu_star_on);
-        item = menu.add(Menu.NONE, MENU_SELECT_SUSPENDED, Menu.NONE, R.string.card_browser_show_suspended);
-        item.setIcon(R.drawable.ic_menu_close_clear_cancel);
-        item = menu.add(Menu.NONE, MENU_SELECT_TAG, Menu.NONE, R.string.card_browser_search_by_tag);
-        item.setIcon(R.drawable.ic_menu_search);
-        return true;
+        getMenuInflater().inflate(R.menu.card_browser, menu);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        MenuItemCompat.setOnActionExpandListener(searchItem, new MenuItemCompat.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                return true;
+            }
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                // SearchView doesn't support empty queries
+                if (mSearchView.getQuery().length() == 0) {
+                    onSearch();
+                }
+                return true;
+            }
+        });
+        mSearchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return true;
+            }
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                onSearch();
+                return true;
+            }
+        });
+        mSearchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Provide SearchView with the previous search terms
+                mSearchView.setQuery(mSearchTerms, false);
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
     }
 
 
@@ -452,56 +436,44 @@ public class CardBrowser extends ActionBarActivity {
         if (mCol == null) {
             return false;
         }
-        // TODO(flerda@gmail.com): Fix card browser's undo.
-        // https://code.google.com/p/ankidroid/issues/detail?id=1561
-        /*
-        menu.findItem(MENU_UNDO).setEnabled(mCol.undoAvailable());
-        */
         return true;
     }
 
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         switch (item.getItemId()) {
 
-            // TODO(flerda@gmail.com): Fix card browser's undo.
-            // https://code.google.com/p/ankidroid/issues/detail?id=1561
-            /*
-            case MENU_UNDO:
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mUndoRedoHandler,
-                        new DeckTask.TaskData(0, mDeck, 0, true));
-                return true;
-            */
-
-            case MENU_ADD_NOTE:
+            case R.id.action_add_card:
                 Intent intent = new Intent(CardBrowser.this, CardEditor.class);
                 intent.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_CARDBROWSER_ADD);
                 startActivityForResult(intent, ADD_NOTE);
                 ActivityTransitionAnimation.slide(CardBrowser.this, ActivityTransitionAnimation.LEFT);
                 return true;
 
-            case MENU_SHOW_MARKED:
+            case R.id.action_sort_by_size:
+                showDialog(DIALOG_ORDER);
+                return true;
+
+            case R.id.action_show_marked:
                 mSearchTerms = "tag:marked";
-                mSearchEditText.setText("");
-                mSearchEditText.setHint(R.string.card_browser_show_marked);
+                mSearchView.setQuery("", false);
+                mSearchView.setQueryHint(getResources().getString(R.string.card_browser_show_marked));
                 searchCards();
                 return true;
 
-            case MENU_SELECT_SUSPENDED:
+            case R.id.action_show_suspended:
                 mSearchTerms = "is:suspended";
-                mSearchEditText.setText("");
-                mSearchEditText.setHint(R.string.card_browser_show_suspended);
+                mSearchView.setQuery("", false);
+                mSearchView.setQueryHint(getResources().getString(R.string.card_browser_show_suspended));
                 searchCards();
                 return true;
 
-            case MENU_SELECT_TAG:
+            case R.id.action_search_by_tag:
                 showDialog(DIALOG_TAGS);
                 return true;
 
-            case MENU_CHANGE_ORDER:
-                showDialog(DIALOG_ORDER);
-                return true;
         }
 
         return false;
@@ -529,7 +501,7 @@ public class CardBrowser extends ActionBarActivity {
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler,
                     new DeckTask.TaskData(mCol.getSched(), sCardBrowserCard, false));
         } else if (requestCode == ADD_NOTE && resultCode == RESULT_OK) {
-            mSearchTerms = mSearchEditText.getText().toString().toLowerCase();
+            mSearchTerms = mSearchView.getQuery().toString().toLowerCase();
             searchCards();
         }
     }
@@ -622,9 +594,9 @@ public class CardBrowser extends ActionBarActivity {
                 builder.setPositiveButton(res.getString(R.string.select), new OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        mSearchEditText.setText("");
+                        mSearchView.setQuery("", false);
                         String tags = mSelectedTags.toString();
-                        mSearchEditText.setHint(getResources().getString(R.string.card_browser_tags_shown,
+                        mSearchView.setQueryHint(getResources().getString(R.string.card_browser_tags_shown,
                                 tags.substring(1, tags.length() - 1)));
                         StringBuilder sb = new StringBuilder();
                         for (String tag : mSelectedTags) {
@@ -1034,70 +1006,6 @@ public class CardBrowser extends ActionBarActivity {
         }
     };
 
-
-    // private DeckTask.TaskListener mUndoRedoHandler = new DeckTask.TaskListener() {
-    // @Override
-    // public void onPreExecute() {
-    // Resources res = getResources();
-    // mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "", res
-    // .getString(R.string.saving_changes), true);
-    // }
-    //
-    // @Override
-    // public void onProgressUpdate(DeckTask.TaskData... values) {
-    // }
-    //
-    // @Override
-    // public void onPostExecute(DeckTask.TaskData result) {
-    // mUndoRedoCardId = result.getLong();
-    // String undoType = result.getString();
-    // if (undoType.equals(Deck.UNDO_TYPE_DELETE_CARD)) {
-    // int position = getPosition(mDeletedCards, mUndoRedoCardId);
-    // if (position != -1) {
-    // HashMap<String, String> data = new HashMap<String, String>();
-    // data.put("id", mDeletedCards.get(position).get("id"));
-    // data.put("question", mDeletedCards.get(position).get(
-    // "question"));
-    // data.put("answer", mDeletedCards.get(position)
-    // .get("answer"));
-    // data.put("flags", mDeletedCards.get(position)
-    // .get("flags"));
-    // mAllCards.add(Integer.parseInt(mDeletedCards.get(position)
-    // .get("allCardPos")), data);
-    // mDeletedCards.remove(position);
-    // updateCardsList();
-    // } else {
-    // deleteCard(Long.toString(mUndoRedoCardId), getPosition(
-    // mCards, mUndoRedoCardId));
-    // }
-    // mProgressDialog.dismiss();
-    // } else {
-    // mUndoRedoCard = mDeck.cardFromId(mUndoRedoCardId);
-    // if (undoType.equals(Deck.UNDO_TYPE_EDIT_CARD)) {
-    // mUndoRedoCard.fromDB(mUndoRedoCardId);
-    // int pos = getPosition(mAllCards, mUndoRedoCardId);
-    // updateCard(mUndoRedoCard, mAllCards, pos);
-    // pos = getPosition(mCards, mUndoRedoCardId);
-    // if (pos != -1) {
-    // updateCard(mUndoRedoCard, mCards, pos);
-    // }
-    // updateList();
-    // mProgressDialog.dismiss();
-    // } else if (undoType.equals(Deck.UNDO_TYPE_MARK_CARD)) {
-    // markCards(mUndoRedoCard.getFactId(), mUndoRedoCard
-    // .isMarked());
-    // mProgressDialog.dismiss();
-    // } else if (undoType.equals(Deck.UNDO_TYPE_SUSPEND_CARD)) {
-    // suspendCard(mUndoRedoCard, getPosition(mCards,
-    // mUndoRedoCardId), mUndoRedoCard.getSuspendedState());
-    // mProgressDialog.dismiss();
-    // } else {
-    // mUndoRedoDialogShowing = true;
-    // getCards();
-    // }
-    // }
-    // }
-    // };
 
     private void closeCardBrowser() {
         closeCardBrowser(RESULT_CANCELED);
