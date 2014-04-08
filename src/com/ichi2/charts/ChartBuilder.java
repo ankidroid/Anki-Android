@@ -48,6 +48,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -69,15 +70,10 @@ public class ChartBuilder extends ActionBarActivity {
     private XYMultipleSeriesRenderer mRenderer = new XYMultipleSeriesRenderer();
 
     private GraphicalView mChartView;
-    private TextView mTitle;
     private double[] mPan;
-
-    private boolean mFullScreen;
 
     private double[][] mSeriesList;
     private Object[] mMeta;
-
-    private static final int MENU_FULLSCREEN = 0;
 
     /**
      * Swipe Detection
@@ -107,42 +103,8 @@ public class ChartBuilder extends ActionBarActivity {
 
     private SharedPreferences restorePreferences() {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-        mFullScreen = preferences.getBoolean("fullScreen", false);
         mSwipeEnabled = preferences.getBoolean("swipe", false);
         return preferences;
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuItem item;
-        item = menu.add(Menu.NONE, MENU_FULLSCREEN, Menu.NONE, R.string.statistics_fullscreen);
-        item.setIcon(R.drawable.ic_menu_manage);
-        return true;
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case MENU_FULLSCREEN:
-                SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-                Editor editor = preferences.edit();
-                editor.putBoolean("fullScreen", !mFullScreen);
-                // Statistics.sZoom = zoom;
-                editor.commit();
-                finish();
-                Intent intent = new Intent(this, com.ichi2.charts.ChartBuilder.class);
-                startActivity(intent);
-                ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
-                return true;
-            case android.R.id.home:
-                setResult(AnkiDroidApp.RESULT_TO_HOME);
-                closeChartBuilder();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 
 
@@ -213,24 +175,13 @@ public class ChartBuilder extends ActionBarActivity {
             finish();
             return;
         }
-        if (mFullScreen) {
-            getWindow()
-                    .setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-            requestWindowFeature(Window.FEATURE_NO_TITLE);
-        }
+
         View mainView = getLayoutInflater().inflate(R.layout.statistics, null);
         setContentView(mainView);
         mainView.setBackgroundColor(Color.WHITE);
-        mTitle = (TextView) findViewById(R.id.statistics_title);
         if (mChartView == null) {
-            if (mFullScreen) {
-                mTitle.setText(title);
-                mTitle.setTextColor(Color.BLACK);
-            } else {
-                setTitle(title);
-                AnkiDroidApp.getCompat().setSubtitle(this, subTitle);
-                mTitle.setVisibility(View.GONE);
-            }
+            setTitle(title);
+            AnkiDroidApp.getCompat().setSubtitle(this, subTitle);
             for (int i = 1; i < mSeriesList.length; i++) {
                 XYSeries series = new XYSeries(res.getString(valueLabels[i - 1]));
                 for (int j = 0; j < mSeriesList[i].length; j++) {
@@ -276,8 +227,8 @@ public class ChartBuilder extends ActionBarActivity {
             mRenderer.setPanEnabled(true, false);
             mRenderer.setPanLimits(mPan);
             mChartView = ChartFactory.getBarChartView(this, mDataset, mRenderer, BarChart.Type.STACKED);
-            LinearLayout layout = (LinearLayout) findViewById(R.id.chart);
-            layout.addView(mChartView, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+            FrameLayout layout = (FrameLayout) findViewById(R.id.chart);
+            layout.addView(mChartView);
         } else {
             mChartView.repaint();
         }
