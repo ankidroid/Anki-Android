@@ -132,6 +132,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
      */
     public static DeckTask launchDeckTask(int type, Listener listener, TaskData... params) {
         // Before starting a new task, cancel rendering of Q&A for browser
+        Log.i(AnkiDroidApp.TAG, "launchDeckTask("+type+")");
         if (sLatestInstance!=null && sLatestInstance.mType==TASK_TYPE_RENDER_BROWSER_QA && !sLatestInstance.isCancelled()){
             Log.i(AnkiDroidApp.TAG, "DeckTask: cancelling render browser QA...");
             sLatestInstance.cancel(true);
@@ -220,6 +221,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             }
             try {
                 mPreviousTask.get();
+                Log.i(AnkiDroidApp.TAG, "Finished waiting for " + mPreviousTask.mType + " to finish. Status= " + mPreviousTask.getStatus());
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 // We have been interrupted, return immediately.
