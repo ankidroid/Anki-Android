@@ -1,0 +1,30 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:ankidroid="http://schemas.android.com/apk/res-auto">
+
+	<item android:id="@+id/action_search"
+		android:title="@string/downloaddeck_search"
+		android:icon="@drawable/ic_action_search"
+		ankidroid:showAsAction="ifRoom|collapseActionView"
+		ankidroid:actionViewClass="android.support.v7.widget.SearchView" />
+
+	<item android:id="@+id/action_add_card"
+		android:icon="@drawable/ic_menu_add"
+		android:title="@string/card_editor_add_card" />
+
+	<item android:id="@+id/action_sort_by_size"
+		android:icon="@drawable/ic_menu_sort_by_size"
+		android:title="@string/card_browser_change_display_order" />
+
+	<item android:id="@+id/action_show_marked"
+		android:icon="@drawable/ic_menu_star_on"
+		android:title="@string/card_browser_show_marked" />
+
+	<item android:id="@+id/action_show_suspended"
+		android:icon="@drawable/ic_menu_close_clear_cancel"
+		android:title="@string/card_browser_show_suspended" />
+
+	<item android:id="@+id/action_search_by_tag"
+		android:icon="@drawable/ic_menu_search"
+		android:title="@string/card_browser_search_by_tag" />
+
+</menu>
