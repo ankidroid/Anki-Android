@@ -174,7 +174,6 @@ public class PreviewClass extends ActionBarActivity {
     private int mCurrentBackgroundColor;
     private boolean mInputWorkaround;
     private boolean mRefreshWebview = true;
-    private boolean mPrefFullscreenReview=true;
     private boolean mAnswerSoundsAdded = false;
     private Button mFlipCard;
     private static final Pattern sSpanPattern = Pattern.compile("</?span[^>]*>");
@@ -189,6 +188,7 @@ public class PreviewClass extends ActionBarActivity {
 	        // Log.i(AnkiDroidApp.TAG, "CardEditor: onCreate");
 
 	        super.onCreate(savedInstanceState);
+
 	        mCurrentCard =CardEditor.mCurrentEditedCard;
 	        mRefreshWebview = getRefreshWebviewAndInitializeWebviewVariables();
 	        initLayout(R.layout.flashcard);
@@ -198,9 +198,7 @@ public class PreviewClass extends ActionBarActivity {
 	            //reloadCollection(savedInstanceState);
 	            return;
 	        }
-	        mPrefFullscreenReview = AnkiDroidApp.getSharedPrefs(getBaseContext()).getBoolean("fullscreenReview", false);
 	        mGesturesEnabled = AnkiDroidApp.initiateGestures(this, AnkiDroidApp.getSharedPrefs(getBaseContext()));
-	        setFullScreen(true);
 	        mBaseUrl = Utils.getBaseUrl(col.getMedia().getDir());
 
 	        try {
@@ -212,15 +210,6 @@ public class PreviewClass extends ActionBarActivity {
 	        PreviewClass.this.displayCardAnswer();
 
 	 }
-	    private void setFullScreen(boolean fullScreen) {
-	        WindowManager.LayoutParams attrs = getWindow().getAttributes();
-	        if (fullScreen) {
-	            attrs.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
-	        } else {
-	            attrs.flags &= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);
-	        }
-	        getWindow().setAttributes(attrs);
-	    }
 
 
 	    private boolean mGesturesEnabled;

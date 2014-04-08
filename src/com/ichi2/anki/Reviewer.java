@@ -897,16 +897,6 @@ public class Reviewer extends AnkiActivity {
         return result;
     }
 
-    private void setFullScreen(boolean fullScreen) {
-        WindowManager.LayoutParams attrs = getWindow().getAttributes();
-        if (fullScreen) {
-            attrs.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
-        } else {
-            attrs.flags &= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        }
-        getWindow().setAttributes(attrs);
-    }
-
 
     private Handler mTimerHandler = new Handler();
 
@@ -934,16 +924,6 @@ public class Reviewer extends AnkiActivity {
         super.onCreate(savedInstanceState);
         Log.i(AnkiDroidApp.TAG, "Reviewer - onCreate");
 
-        // Remove the status bar and title bar
-        if (mPrefFullscreenReview) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
-            // Do not hide the title bar in Honeycomb, since it contains the action bar.
-            if (AnkiDroidApp.SDK_VERSION <= 11) {
-                requestWindowFeature(Window.FEATURE_NO_TITLE);
-            }
-        }
-
         mChangeBorderStyle = Themes.getTheme() == Themes.THEME_ANDROID_LIGHT
                 || Themes.getTheme() == Themes.THEME_ANDROID_DARK;
 
@@ -957,10 +937,13 @@ public class Reviewer extends AnkiActivity {
         } else {
             mSched = col.getSched();
             mCollectionFilename = col.getPath();
-
             mBaseUrl = Utils.getBaseUrl(col.getMedia().getDir());
+
             restorePreferences();
-            setFullScreen(mPrefFullscreenReview);
+
+            if (mPrefFullscreenReview) {
+                UIUtils.setFullScreen(this);
+            }
 
             registerExternalStorageListener();
 
@@ -1381,10 +1364,8 @@ public class Reviewer extends AnkiActivity {
             }
 
             // Restore fullscreen preference
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            UIUtils.setFullScreen(this);
         }
-        setFullScreen(mPrefFullscreenReview);
     }
 
 

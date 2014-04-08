@@ -1,11 +1,14 @@
 
 package com.ichi2.anki;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v4.view.MenuItemCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.ichi2.async.DeckTask;
 import com.ichi2.async.DeckTask.TaskData;
@@ -79,4 +82,10 @@ public class UIUtils {
             }, new DeckTask.TaskData(AnkiDroidApp.getCol()));
     	}
     }
+
+    public static void setFullScreen(Activity activity) {
+        activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
+
 }
