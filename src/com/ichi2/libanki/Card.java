@@ -243,16 +243,12 @@ public class Card implements Cloneable {
     }
 
     public String getPureAnswerForReading() {
-    	// old code:
-    	// return _getQA(false).get("a").replaceAll("(.|\n)*<hr id=answer>\n\n", "");
-    	
-    	// FIX Issue 2048: 	Huge lag when showing the answer of a card
-    	// the slow regex has been replaced with simple "indexOf" method
     	String s = _getQA(false).get("a");
     	String target = "<hr id=answer>\n\n";
     	int pos = s.indexOf(target);
+    	if(pos == -1)
+    		return s;
     	return s.substring(pos + target.length());
-    	
     }
 
     public String css() {
