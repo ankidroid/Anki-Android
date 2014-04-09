@@ -2582,6 +2582,11 @@ public class Sched {
                 }
                 revYesRate = cur.getDouble(0);
                 revTime = cur.getDouble(1);
+                
+                if (cur != null && !cur.isClosed()) {
+                    cur.close();
+                }
+                
                 cur = mCol
                         .getDb()
                         .getDatabase()
