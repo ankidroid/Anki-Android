@@ -122,6 +122,7 @@ public class CardEditor extends ActionBarActivity {
     private static final int MENU_ADD_CARD = 3;
     private static final int MENU_RESET_CARD_PROGRESS = 4;
     private static final int MENU_SAVED_INTENT = 5;
+    private static final int MENU_PREVIEW_CARD = 6;
 
     // calling activity
     public static final int CALLER_NOCALLER = 0;
@@ -162,7 +163,6 @@ public class CardEditor extends ActionBarActivity {
     private TextView mModelButton;
     private TextView mDeckButton;
     private Button mSwapButton;
-    private Button mPreviewButton;
 
     private Note mEditorNote;
     public static Card mCurrentEditedCard;
@@ -342,7 +342,6 @@ public class CardEditor extends ActionBarActivity {
         mSave = (Button) findViewById(R.id.CardEditorSaveButton);
         mCancel = (Button) findViewById(R.id.CardEditorCancelButton);
         mLater = (Button) findViewById(R.id.CardEditorLaterButton);
-        mPreviewButton=(Button)findViewById(R.id.CardEditorPreviewButton);
         mDeckButton = (TextView) findViewById(R.id.CardEditorDeckText);
         mModelButton = (TextView) findViewById(R.id.CardEditorModelText);
         mTagsButton = (TextView) findViewById(R.id.CardEditorTagText);
@@ -353,14 +352,6 @@ public class CardEditor extends ActionBarActivity {
             }
         });
 
-        if(Preferences.COMING_FROM_ADD)
-        {
-	        mPreviewButton.setVisibility(View.GONE);
-
-        }else
-        {
-        	 mPreviewButton.setVisibility(View.VISIBLE);
-        }
         Preferences.COMING_FROM_ADD=false;
 
         mAedictIntent = false;
@@ -537,15 +528,6 @@ public class CardEditor extends ActionBarActivity {
             }
 
         });
-
-        mPreviewButton.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				openReviewer();
-
-			}
-		});
     }
 
 
@@ -784,6 +766,10 @@ public class CardEditor extends ActionBarActivity {
             item = menu.add(Menu.NONE, MENU_RESET_CARD_PROGRESS, Menu.NONE,
                     res.getString(R.string.card_editor_reset_card));
             item.setIcon(R.drawable.ic_menu_delete);
+            
+            // Add preview option to action bar
+            UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_PREVIEW_CARD, Menu.NONE,
+                    R.string.card_editor_preview_card, android.R.drawable.ic_menu_view);
         }
         if (mCaller != CALLER_CARDEDITOR_INTENT_ADD) {
             mIntentInformation = MetaDB.getIntentInformation(this);
@@ -871,6 +857,11 @@ public class CardEditor extends ActionBarActivity {
 
             case MENU_SAVED_INTENT:
                 showDialog(DIALOG_INTENT_INFORMATION);
+                return true;
+                
+                
+            case MENU_PREVIEW_CARD:
+                openReviewer();
                 return true;
 
             case android.R.id.home:
