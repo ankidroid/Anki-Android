@@ -205,7 +205,6 @@ public class DeckPicker extends ActionBarActivity {
     private ImageButton mAddButton;
     private ImageButton mCardsButton;
     private ImageButton mStatsButton;
-    private ImageButton mSyncButton;
 
     private File[] mBackups;
 
@@ -979,14 +978,6 @@ public class DeckPicker extends ActionBarActivity {
                 @Override
                 public void onClick(View v) {
                     showDialog(DIALOG_SELECT_STATISTICS_TYPE);
-                }
-            });
-
-            mSyncButton = (ImageButton) findViewById(R.id.sync_all_button);
-            mSyncButton.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    sync();
                 }
             });
         }
@@ -2358,9 +2349,10 @@ public class DeckPicker extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuItem item;
 
+        UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_SYNC, Menu.NONE, R.string.sync_title,
+                R.drawable.ic_menu_refresh);
+
         if (mFragmented) {
-            UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_SYNC, Menu.NONE, R.string.sync_title,
-                    R.drawable.ic_menu_refresh);
 
             UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_ADD_NOTE, Menu.NONE, R.string.add,
                     R.drawable.ic_menu_add);
