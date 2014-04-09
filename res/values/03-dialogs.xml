@@ -60,8 +60,12 @@
 <string name="notification_stop">Don\'t notify me of this update again</string>
 
 <string name="reset_card_dialog_title">Reset card progress</string>
-<string name="reset_card_dialog_message">This resets the learning progress for all cards of this note (they will look like new cards).\nReally continue?</string>
-<string name="reset_card_dialog_confirmation">All cards of this note reset</string>
+<string name="reset_card_dialog_message">This resets the learning progress for this card (it will look like a new card).\nReally continue?</string>
+<string name="reset_card_dialog_confirmation">Progress of the card was reset</string>
+
+<string name="reschedule_card_dialog_title">Reschedule card</string>
+<string name="reschedule_card_dialog_message">Reschedule for review in x days:</string>
+<string name="reschedule_card_dialog_confirmation">Card rescheduled</string>
 
 <string name="save_duplicate_dialog_title">Duplicate note</string>
 <string name="save_duplicate_dialog_message">This note shares its primary field with another note. Save anyway?</string>
