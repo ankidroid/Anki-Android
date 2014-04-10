@@ -11,7 +11,7 @@
 		android:textColor="#000000"
 		android:layout_weight="1"
 		android:gravity="center_vertical"
-		android:layout_marginRight="0.5dip"/>
+		android:paddingRight="3dip"/>
   	<TextView 
   		android:id="@+id/card_column2"
 		android:layout_width="0dip"
@@ -19,5 +19,5 @@
 		android:layout_height="fill_parent"
 		android:layout_weight="1"
 		android:gravity="center_vertical"
-		android:layout_marginLeft="0.5dip"/>
+		android:paddingLeft="3dip"/>
 </LinearLayout>
