@@ -36,6 +36,7 @@ import android.util.TypedValue;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,10 +48,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Spinner;
 
@@ -87,7 +88,7 @@ public class CardBrowser extends ActionBarActivity {
     private ListView mCardsListView;
     private Spinner mCardsColumn1Spinner;
     private Spinner mCardsColumn2Spinner;
-    private SimpleAdapter mCardsAdapter;
+    private MultiColumnListAdapter mCardsAdapter;
     private EditText mSearchEditText;
     private String mSearchTerms;
     private String mRestrictOnDeck;
@@ -150,7 +151,21 @@ public class CardBrowser extends ActionBarActivity {
         "cardReps",
         "cardLapses"};
     String[] mOrderByFields;
-
+    // list of available keys in mCards corresponding to the column names in R.array.browser_column2_headings. Note: the last 6 are currently hidden
+    private static final String[] COLUMN_KEYS = {"answer",
+        "card",
+        "deck",
+        "note",
+        "question",
+        "tags",
+        "lapses",
+        "reviews",
+        "changed",
+        "created",
+        "due",
+        "ease",
+        "edited",
+        "interval"};
     private int[] mBackground;
 
     private boolean mWholeCollection;
@@ -299,12 +314,14 @@ public class CardBrowser extends ActionBarActivity {
         mCardsColumn2Spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                // If a new column was selected then create a new list adapter with the mapping to new column
+                // If a new column was selected then change the key used to map from mCards to the column TextView
                 if (pos != mColumn2Index) {
                         mColumn2Index = pos;
                         AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit()
                             .putInt("cardBrowserColumn2", mColumn2Index).commit();
-                        setBrowserListAdapter(mColumn2Index);
+                        String[] fromMap = mCardsAdapter.getFromMapping();
+                        fromMap[1] = COLUMN_KEYS[mColumn2Index];
+                        mCardsAdapter.setFromMapping(fromMap);
                 }
             }
             @Override
@@ -312,8 +329,22 @@ public class CardBrowser extends ActionBarActivity {
                 // Do Nothing
             }
         });
-        // Setup the list adapter for the cards
-        setBrowserListAdapter(mColumn2Index);
+        // get the font and font size from the preferences
+        int sflRelativeFontSize = preferences.getInt("relativeCardBrowserFontSize", DEFAULT_FONT_SIZE_RATIO);
+        String sflCustomFont = preferences.getString("browserEditorFont", ""); 
+        // make a new list adapter mapping the data in mCards to column1 and column2 of R.layout.card_item_browser
+        mCardsAdapter = new MultiColumnListAdapter(
+                this,
+                mCards,
+                R.layout.card_item_browser,
+                new String[] {"sfld", COLUMN_KEYS[mColumn2Index]},
+                new int[] {R.id.card_sfld, R.id.card_column2},
+                "flags",
+                sflRelativeFontSize,
+                sflCustomFont);
+        // link the adapter to the main mCardsListView
+        mCardsListView.setAdapter(mCardsAdapter);   
+        // set the spinner index
         mCardsColumn2Spinner.setSelection(mColumn2Index);
 
 
@@ -963,7 +994,7 @@ public class CardBrowser extends ActionBarActivity {
         @Override
         public void onProgressUpdate(TaskData... values) {
             mCards  = values[0].getCards();
-            updateList();
+            mCardsAdapter.notifyDataSetChanged();
         }
 
         @Override
@@ -1117,93 +1148,121 @@ public class CardBrowser extends ActionBarActivity {
     }
 
 
-    // Helper method to setup the list adapter for the main mCardsListView, taking the index for column2 as an argument
-    private void setBrowserListAdapter(int column2){
-        // list of available keys in mCards corresponding to the column names in R.array.browser_column2_headings. Note: the last 6 are currently hidden
-        final String[] KEYS = {"answer","card","deck","note","question","tags","lapses","reviews","changed","created","due","ease","edited","interval"};
-        // load the preferences
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-        // get the font and font size from the preferences
-        int sflRelativeFontSize = preferences.getInt("relativeCardBrowserFontSize", DEFAULT_FONT_SIZE_RATIO);
-        String sflCustomFont = preferences.getString("browserEditorFont", "");
-        // make a new list adapter mapping the data in mCards to column1 and column2 of R.layout.card_item_browser
-        mCardsAdapter = new SizeControlledListAdapter(
-                this,
-                mCards,
-                R.layout.card_item_browser,
-                new String[] {"flags", "sfld", KEYS[column2]},
-                new int[] {R.id.card_item_browser, R.id.card_sfld, R.id.card_column2},
-                sflRelativeFontSize,
-                sflCustomFont);
-        /* Set the background color of each row based on the state of the card
-        using the flags string associated with the card_item_browser layout in mCardsAdapter */
-        mCardsAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
-            @Override
-            public boolean setViewValue(View view, Object arg1, String text) {
-                if (view.getId() == R.id.card_item_browser) {
-                    int which = BACKGROUND_NORMAL;
-                    if (text.equals("1")) {
-                        which = BACKGROUND_SUSPENDED;
-                    } else if (text.equals("2")) {
-                        which = BACKGROUND_MARKED;
-                    } else if (text.equals("3")) {
-                        which = BACKGROUND_MARKED_SUSPENDED;
-                    }
-                    view.setBackgroundResource(mBackground[which]);
-                    return true;
-                }
-                return false;
-            }
-        });
-        // link the adapter we just made to the main mCardsListView
-        mCardsListView.setAdapter(mCardsAdapter);
-    }
 
-    public class SizeControlledListAdapter extends SimpleAdapter {
-
-        private int fontSizeScalePcent;
-        private float originalTextSize = -1.0f;
+    public class MultiColumnListAdapter extends BaseAdapter {
+        private List<? extends Map<String, ?>> mData;
+        private int mResource;
+        private String[] mFrom;
+        private int[] mTo;
+        private String mColorFlag;
+        private float mOriginalTextSize = -1.0f;
+        private int mFontSizeScalePcent;
         private Typeface mCustomTypeface = null;
+        private LayoutInflater mInflater;
 
 
-        public SizeControlledListAdapter(Context context, List<? extends Map<String, ?>> data, int resource,
-                String[] from, int[] to, int fontSizeScalePcent, String customFont) {
-            super(context, data, resource, from, to);
-            this.fontSizeScalePcent = fontSizeScalePcent;
+        public MultiColumnListAdapter(Context context, List<? extends Map<String, ?>> data, int resource,
+                String[] from, int[] to, String colorFlag, int fontSizeScalePcent, String customFont) {            
+            mData = data;
+            mResource = resource;
+            mFrom = from;
+            mTo = to;
+            mColorFlag = colorFlag;
+            mFontSizeScalePcent = fontSizeScalePcent;
             if (!customFont.equals("")) {
                 mCustomTypeface = AnkiFont.getTypeface(context, customFont);
             }
+            mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
 
 
         public View getView(int position, View convertView, ViewGroup parent) {
-            View view = super.getView(position, convertView, parent);
-
-            // Iterate on all first level children
-            if (view instanceof ViewGroup) {
-                ViewGroup group = ((ViewGroup) view);
-                View child;
-                for (int i = 0; i < group.getChildCount(); i++) {
-                    child = group.getChildAt(i);
-                    // and set text size and custom font on the sfld view only
-                    if (child instanceof TextView && child.getId() == R.id.card_sfld) {
-                        float currentSize = ((TextView) child).getTextSize();
-                        if (originalTextSize < 0) {
-                            originalTextSize = ((TextView) child).getTextSize();
-                        }
-                        // do nothing when pref is 100% and apply scaling only once
-                        if (fontSizeScalePcent != 100 && Math.abs(originalTextSize - currentSize) < 0.1) {
-                            ((TextView) child).setTextSize(TypedValue.COMPLEX_UNIT_SP, originalTextSize
-                                    * (fontSizeScalePcent / 100.0f));
-                        }
-
-                        if (mCustomTypeface != null) {
-                            ((TextView) child).setTypeface(mCustomTypeface);
-                        }
-                    }
+            // Get the main container view if it doesn't already exist, and call bindView
+            View v;            
+            if (convertView == null){
+                v = mInflater.inflate(mResource, parent, false);
+                final int count = mTo.length;
+                final View[] columns = new View[count];
+                for (int i = 0; i < count; i++) {
+                    columns[i]=v.findViewById(mTo[i]);
                 }
+                v.setTag(columns);                
+            } else {
+                v = convertView;
             }
-            return view;
+            bindView(position, v);
+            return v;
+        }
+        
+        private void bindView(int position, View v) {
+            // Draw the content in the columns
+            View[] columns = (View[]) v.getTag();
+            final Map dataSet = mData.get(position);
+            final int color = getColor((String) dataSet.get(mColorFlag));
+            for (int i = 0; i < mTo.length; i++) {
+                TextView col = (TextView) columns[i];
+                // set font for column
+                col = setFont(col);
+                // set background color for column
+                col.setBackgroundResource(mBackground[color]);
+                // set text for column
+                col.setText((String) dataSet.get(mFrom[i]));
+            }           
+        }
+
+        public TextView setFont(TextView v){
+            // Set the font and font size for a TextView v
+            float currentSize = v.getTextSize();
+            if (mOriginalTextSize < 0) {
+                mOriginalTextSize = v.getTextSize();
+            }
+            // do nothing when pref is 100% and apply scaling only once
+            if (mFontSizeScalePcent != 100 && Math.abs(mOriginalTextSize - currentSize) < 0.1) {
+                v.setTextSize(TypedValue.COMPLEX_UNIT_SP, mOriginalTextSize * (mFontSizeScalePcent / 100.0f));
+            }
+
+            if (mCustomTypeface != null) {
+                v.setTypeface(mCustomTypeface);
+            }
+            return v;
+        }
+        
+        public int getColor(String flag){
+            int which = BACKGROUND_NORMAL;
+            if (flag.equals("1")) {
+                which = BACKGROUND_SUSPENDED;
+            } else if (flag.equals("2")) {
+                which = BACKGROUND_MARKED;
+            } else if (flag.equals("3")) {
+                which = BACKGROUND_MARKED_SUSPENDED;
+            }            
+            return which;
+        }
+        
+        public void setFromMapping(String[] from){
+            mFrom = from;
+            notifyDataSetChanged();
+        }
+        
+        public String[] getFromMapping(){
+            return mFrom;
+        }        
+        
+        @Override
+        public int getCount() {
+            return mData.size();
+        }
+
+
+        @Override
+        public Object getItem(int position) {
+            return mData.get(position);
+        }
+
+
+        @Override
+        public long getItemId(int position) {
+            return position;
         }
     }
 
