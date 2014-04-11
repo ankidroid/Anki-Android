@@ -72,7 +72,7 @@
 <string name="card_unsuspended">Card suspension undone</string>
 <string name="card_suspended">Card resuspended</string>
 <string name="menu_rotate">Rotate</string>
-<string name="menu_import">Import cards</string>
+<string name="menu_import">Import file</string>
 
 <string name="undo">Undo</string>
 <string name="undo_action_review">review</string>
@@ -95,6 +95,8 @@
 <string name="contextmenu_deckpicker_inflate_deck">Show Subdecks</string>
 <string name="contextmenu_deckpicker_set_custom_dictionary">Set custom dictionary</string>
 
+<string name="menu_add">Add</string>
+<string name="menu_add_note">Add note</string>
 <string name="menu_download_deck">Download deck</string>
 <string name="menu_download_shared_deck">Shared deck</string>
 <!-- <string name="menu_synchronize">Synchronize</string> -->
@@ -117,9 +119,9 @@
 <string name="menu_mark_card">Mark Card</string>
 <string name="menu_unmark_card">Unmark Card</string>
 
-<string name="new_deck">New deck</string>
+<string name="new_deck">Create deck</string>
 <string name="create">Create</string>
-<string name="new_dynamic_deck">New filtered deck</string>
+<string name="new_dynamic_deck">Create filtered deck</string>
 
 <string name="studyoptions_feedback">Feedback</string>
 

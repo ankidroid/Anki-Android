@@ -88,70 +88,11 @@ public class StudyOptionsActivity extends ActionBarActivity {
 
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.study_options, menu);
-        if (AnkiDroidApp.colIsOpen() && !AnkiDroidApp.getCol().getDecks().isDyn(AnkiDroidApp.getCol().getDecks().selected())) {
-            menu.findItem(R.id.action_new_filtered_deck_from_study_options).setVisible(true);
-        }
-        return super.onCreateOptionsMenu(menu);
-    }
-
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Resources res = this.getResources();
         switch (item.getItemId()) {
 
             case android.R.id.home:
                 closeStudyOptions();
-                return true;
-
-            case R.id.action_preferences_from_study_options:
-                startActivityForResult(new Intent(this, Preferences.class), StudyOptionsFragment.PREFERENCES_UPDATE);
-                ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
-                return true;
-
-            case R.id.action_rotate_from_study_options:
-                if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-                    this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-                } else {
-                    this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                }
-                return true;
-
-            case R.id.action_new_filtered_deck_from_study_options:
-                StyledDialog.Builder builder = new StyledDialog.Builder(StudyOptionsActivity.this);
-                builder.setTitle(res.getString(R.string.new_deck));
-
-                mDialogEditText = new EditText(StudyOptionsActivity.this);
-                ArrayList<String> names = AnkiDroidApp.getCol().getDecks().allNames();
-                int n = 1;
-                String cramDeckName = "Cram 1";
-                while (names.contains(cramDeckName)) {
-                    n++;
-                    cramDeckName = "Cram " + n;
-                }
-                mDialogEditText.setText(cramDeckName);
-                // mDialogEditText.setFilters(new InputFilter[] { mDeckNameFilter });
-                builder.setView(mDialogEditText, false, false);
-                builder.setPositiveButton(res.getString(R.string.create), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        long id;
-                        Bundle initialConfig = new Bundle();
-                        try {
-                            initialConfig.putString("searchSuffix", "'deck:" +
-                                    AnkiDroidApp.getCol().getDecks().current().getString("name") + "'");
-                            id = AnkiDroidApp.getCol().getDecks().newDyn(mDialogEditText.getText().toString());
-                            AnkiDroidApp.getCol().getDecks().get(id);
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
-                        }
-                        loadContent(false, initialConfig);
-                    }
-                });
-                builder.setNegativeButton(res.getString(R.string.cancel), null);
-                builder.create().show();
                 return true;
 
             default:

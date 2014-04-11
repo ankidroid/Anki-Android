@@ -8,7 +8,9 @@
 		ankidroid:actionViewClass="android.support.v7.widget.SearchView" />
 
 	<item android:id="@+id/action_add_card_from_card_browser"
-		android:title="@string/card_editor_add_card" />
+		android:title="@string/card_editor_add_card"
+		android:icon="@drawable/ic_menu_add"
+		ankidroid:showAsAction="ifRoom" />
 
 	<item android:id="@+id/action_sort_by_size"
 		android:title="@string/card_browser_change_display_order" />

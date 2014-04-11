@@ -1289,14 +1289,15 @@ public class Reviewer extends AnkiActivity {
         if (mPrefWhiteboard) {
             if (mShowWhiteboard) {
                 menu.findItem(R.id.action_whiteboard).setVisible(true).setTitle(R.string.hide_whiteboard);
+                menu.findItem(R.id.action_clear_whiteboard).setVisible(true);
             } else {
                 menu.findItem(R.id.action_whiteboard).setVisible(true).setTitle(R.string.show_whiteboard);
+                menu.findItem(R.id.action_clear_whiteboard).setVisible(false);
             }
-            menu.findItem(R.id.action_clear_whiteboard).setVisible(true);
         }
         if (AnkiDroidApp.SDK_VERSION < 11 && mPrefTextSelection) {
-            menu.findItem(R.id.action_search_dictionary).setVisible(true).setTitle(clipboardHasText() ?
-                    Lookup.getSearchStringTitle() : res.getString(R.string.menu_select));
+            menu.findItem(R.id.action_search_dictionary).setVisible(true).setEnabled(!mShowWhiteboard).setTitle(
+                    clipboardHasText() ? Lookup.getSearchStringTitle() : res.getString(R.string.menu_select));
         }
         return super.onCreateOptionsMenu(menu);
     }
@@ -1317,37 +1318,21 @@ public class Reviewer extends AnkiActivity {
                 closeReviewer(AnkiDroidApp.RESULT_TO_HOME, true);
                 return true;
 
-            case R.id.action_mark_card:
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, mMarkCardHandler, new DeckTask.TaskData(mSched,
-                        mCurrentCard, 0));
-                return true;
-
             case R.id.action_undo:
                 undo();
-                return true;
-
-            case R.id.action_edit:
-                return editCard();
-
-            case R.id.action_whiteboard:
-                // Toggle mShowWhiteboard value
-                mShowWhiteboard = !mShowWhiteboard;
-                if (mShowWhiteboard) {
-                    // Show whiteboard
-                    mWhiteboard.setVisibility(View.VISIBLE);
-                    item.setTitle(R.string.hide_whiteboard);
-                    MetaDB.storeWhiteboardState(this, mCurrentCard.getDid(), 1);
-                } else {
-                    // Hide whiteboard
-                    mWhiteboard.setVisibility(View.GONE);
-                    item.setTitle(R.string.show_whiteboard);
-                    MetaDB.storeWhiteboardState(this, mCurrentCard.getDid(), 0);
-                }
                 return true;
 
             case R.id.action_clear_whiteboard:
                 mWhiteboard.clear();
                 return true;
+
+            case R.id.action_mark_card:
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, mMarkCardHandler, new DeckTask.TaskData(mSched,
+                        mCurrentCard, 0));
+                return true;
+
+            case R.id.action_edit:
+                return editCard();
 
             case R.id.action_bury_card:
                 setNextCardAnimation(false);
@@ -1375,6 +1360,23 @@ public class Reviewer extends AnkiActivity {
 
             case R.id.action_delete:
                 showDeleteNoteDialog();
+                return true;
+
+            case R.id.action_whiteboard:
+                // Toggle mShowWhiteboard value
+                mShowWhiteboard = !mShowWhiteboard;
+                if (mShowWhiteboard) {
+                    // Show whiteboard
+                    mWhiteboard.setVisibility(View.VISIBLE);
+                    item.setTitle(R.string.hide_whiteboard);
+                    MetaDB.storeWhiteboardState(this, mCurrentCard.getDid(), 1);
+                } else {
+                    // Hide whiteboard
+                    mWhiteboard.setVisibility(View.GONE);
+                    item.setTitle(R.string.show_whiteboard);
+                    MetaDB.storeWhiteboardState(this, mCurrentCard.getDid(), 0);
+                }
+                refreshActionBar();
                 return true;
 
             case R.id.action_search_dictionary:

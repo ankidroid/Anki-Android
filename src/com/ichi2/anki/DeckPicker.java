@@ -1339,32 +1339,6 @@ public class DeckPicker extends ActionBarActivity {
                 dialog = builder.create();
                 break;
 
-            case DIALOG_SELECT_HELP:
-                builder.setTitle(res.getString(R.string.help_title));
-                builder.setItems(
-                        new String[] { res.getString(R.string.help_tutorial), res.getString(R.string.help_online),
-                                res.getString(R.string.help_faq) }, new DialogInterface.OnClickListener() {
-
-                            @Override
-                            public void onClick(DialogInterface arg0, int arg1) {
-                                if (arg1 == 0) {
-                                    createTutorialDeck();
-                                } else {
-                                    if (Utils.isIntentAvailable(DeckPicker.this, "android.intent.action.VIEW")) {
-                                        Intent intent = new Intent("android.intent.action.VIEW", Uri
-                                                .parse(getResources().getString(
-                                                        arg1 == 1 ? R.string.link_help : R.string.link_faq)));
-                                        startActivity(intent);
-                                    } else {
-                                        startActivity(new Intent(DeckPicker.this, Info.class));
-                                    }
-                                }
-                            }
-
-                        });
-                dialog = builder.create();
-                break;
-
             case DIALOG_CONNECTION_ERROR:
                 builder.setTitle(res.getString(R.string.connection_error_title));
                 builder.setIcon(R.drawable.ic_dialog_alert);
@@ -2339,7 +2313,7 @@ public class DeckPicker extends ActionBarActivity {
             menu.findItem(R.id.action_card_browser).setVisible(true).setEnabled(sdCardAvailable);
         }
         menu.findItem(R.id.action_new_deck).setEnabled(sdCardAvailable);
-        menu.findItem(R.id.action_new_filtered_deck_from_deck_picker).setEnabled(sdCardAvailable);
+        menu.findItem(R.id.action_new_filtered_deck).setEnabled(sdCardAvailable);
         menu.findItem(R.id.action_check_database).setEnabled(sdCardAvailable);
         return super.onCreateOptionsMenu(menu);
     }
@@ -2363,22 +2337,6 @@ public class DeckPicker extends ActionBarActivity {
 
             case R.id.action_add_note_from_deck_picker:
                 addNote();
-                return true;
-
-            case R.id.action_statistics:
-                showDialog(DIALOG_SELECT_STATISTICS_TYPE);
-                return true;
-
-            case R.id.action_card_browser:
-                openCardBrowser();
-                return true;
-
-            case R.id.action_help:
-                showDialog(DIALOG_SELECT_HELP);
-                return true;
-
-            case R.id.action_preferences_from_deck_picker:
-                startActivityForResult(new Intent(DeckPicker.this, Preferences.class), PREFERENCES_UPDATE);
                 return true;
 
             case R.id.action_shared_decks:
@@ -2407,7 +2365,19 @@ public class DeckPicker extends ActionBarActivity {
                 builder2.create().show();
                 return true;
 
-            case R.id.action_new_filtered_deck_from_deck_picker:
+            case R.id.action_import:
+                showDialog(DIALOG_IMPORT_HINT);
+                return true;
+
+            case R.id.action_statistics:
+                showDialog(DIALOG_SELECT_STATISTICS_TYPE);
+                return true;
+
+            case R.id.action_card_browser:
+                openCardBrowser();
+                return true;
+
+            case R.id.action_new_filtered_deck:
                 StyledDialog.Builder builder3 = new StyledDialog.Builder(DeckPicker.this);
                 builder3.setTitle(res.getString(R.string.new_deck));
                 mDialogEditText = (EditText) new EditText(DeckPicker.this);
@@ -2432,19 +2402,27 @@ public class DeckPicker extends ActionBarActivity {
                 builder3.create().show();
                 return true;
 
-            case R.id.action_import:
-                showDialog(DIALOG_IMPORT_HINT);
-                return true;
-
             case R.id.action_check_database:
                 integrityCheck();
                 return true;
 
-            case R.id.action_rotate_from_deck_picker:
-                if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-                    this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            case R.id.action_preferences:
+                startActivityForResult(new Intent(DeckPicker.this, Preferences.class), PREFERENCES_UPDATE);
+                return true;
+
+            case R.id.action_tutorial:
+                createTutorialDeck();
+                return true;
+
+            case R.id.action_online:
+            case R.id.action_faq:
+                if (Utils.isIntentAvailable(DeckPicker.this, "android.intent.action.VIEW")) {
+                    Intent intent = new Intent("android.intent.action.VIEW", Uri
+                            .parse(getResources().getString(
+                                    item.getItemId() == R.id.action_online ? R.string.link_help : R.string.link_faq)));
+                    startActivity(intent);
                 } else {
-                    this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                    startActivity(new Intent(DeckPicker.this, Info.class));
                 }
                 return true;
 
