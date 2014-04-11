@@ -2481,15 +2481,13 @@ public class Reviewer extends AnkiActivity {
                 mCard.getSettings().setDefaultFontSize(calculateDynamicFontSize(content));
             }
 
-            String question = "";
-            String answer = "";
             int qa = -1; // prevent uninitialized variable errors
 
             if (sDisplayAnswer) {
                 qa = MetaDB.LANGUAGES_QA_ANSWER;
-                answer = mCurrentCard.getPureAnswerForReading();
                 // don't add answer sounds multiple times, such as when reshowing card after exiting editor
                 if (!mAnswerSoundsAdded) {
+                    String answer = mCurrentCard.getPureAnswerForReading();                    
                     Sound.addSounds(mBaseUrl, answer, qa);
                     mAnswerSoundsAdded = true;
                 }
@@ -2497,7 +2495,7 @@ public class Reviewer extends AnkiActivity {
                 Sound.resetSounds(); // reset sounds each time first side of card is displayed, even after leaving the editor
                 mAnswerSoundsAdded = false;
                 qa = MetaDB.LANGUAGES_QA_QUESTION;
-                question = mCurrentCard.getQuestion(mCurrentSimpleInterface);
+                String question = mCurrentCard.getQuestion(mCurrentSimpleInterface);
                 Sound.addSounds(mBaseUrl, question, qa);
             }
 
