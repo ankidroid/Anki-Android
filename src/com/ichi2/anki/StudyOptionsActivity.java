@@ -48,13 +48,6 @@ import java.util.ArrayList;
 
 public class StudyOptionsActivity extends ActionBarActivity {
 
-    private boolean mInvalidateMenu;
-
-    /** Menus */
-    private static final int MENU_PREFERENCES = 201;
-    public static final int MENU_ROTATE = 202;
-    public static final int MENU_NIGHT = 203;
-
     private StudyOptionsFragment mCurrentFragment;
 
     private BroadcastReceiver mUnmountReceiver = null;
@@ -93,58 +86,32 @@ public class StudyOptionsActivity extends ActionBarActivity {
 
     // TODO: onpause, onresume, onstop
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-    	int icon;
-    	SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
-    	if (preferences.getBoolean("invertedColors", false)) {
-    		icon = R.drawable.ic_menu_night_checked;
-    	} else {
-    		icon = R.drawable.ic_menu_night;
-    	}
-
-    	mInvalidateMenu = false;
-        UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_NIGHT, Menu.NONE, R.string.night_mode,
-                icon);
-        UIUtils.addMenuItem(menu, Menu.NONE, MENU_PREFERENCES, Menu.NONE, R.string.menu_preferences,
-                R.drawable.ic_menu_preferences);
-        UIUtils.addMenuItem(menu, Menu.NONE, MENU_ROTATE, Menu.NONE, R.string.menu_rotate,
-                android.R.drawable.ic_menu_always_landscape_portrait);
+        getMenuInflater().inflate(R.menu.study_options, menu);
         if (AnkiDroidApp.colIsOpen() && !AnkiDroidApp.getCol().getDecks().isDyn(AnkiDroidApp.getCol().getDecks().selected())) {
-            UIUtils.addMenuItem(menu, Menu.NONE, DeckPicker.MENU_CREATE_DYNAMIC_DECK, Menu.NONE,
-                    R.string.new_dynamic_deck, R.drawable.ic_menu_add);
+            menu.findItem(R.id.action_new_filtered_deck_from_study_options).setVisible(true);
         }
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
 
-    @Override
-    public boolean onMenuOpened(int featureId, Menu menu) {
-        if (menu != null && mInvalidateMenu) {
-            menu.clear();
-            onCreateOptionsMenu(menu);
-            mInvalidateMenu = false;
-        }
-
-        return super.onMenuOpened(featureId, menu);
-    }
-
-
-    /** Handles item selections */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Resources res = this.getResources();
         switch (item.getItemId()) {
+
             case android.R.id.home:
                 closeStudyOptions();
                 return true;
 
-            case MENU_PREFERENCES:
+            case R.id.action_preferences_from_study_options:
                 startActivityForResult(new Intent(this, Preferences.class), StudyOptionsFragment.PREFERENCES_UPDATE);
                 ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
                 return true;
 
-            case MENU_ROTATE:
+            case R.id.action_rotate_from_study_options:
                 if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
                     this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
                 } else {
@@ -152,17 +119,7 @@ public class StudyOptionsActivity extends ActionBarActivity {
                 }
                 return true;
 
-            case MENU_NIGHT:
-            	SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
-            	if (preferences.getBoolean("invertedColors", false)) {
-            		preferences.edit().putBoolean("invertedColors", false).commit();
-            		item.setIcon(R.drawable.ic_menu_night);
-            	} else {
-            		preferences.edit().putBoolean("invertedColors", true).commit();
-            		item.setIcon(R.drawable.ic_menu_night_checked);
-            	}
-                return true;
-            case DeckPicker.MENU_CREATE_DYNAMIC_DECK:
+            case R.id.action_new_filtered_deck_from_study_options:
                 StyledDialog.Builder builder = new StyledDialog.Builder(StudyOptionsActivity.this);
                 builder.setTitle(res.getString(R.string.new_deck));
 
@@ -196,10 +153,13 @@ public class StudyOptionsActivity extends ActionBarActivity {
                 builder.setNegativeButton(res.getString(R.string.cancel), null);
                 builder.create().show();
                 return true;
+
             default:
                 return super.onOptionsItemSelected(item);
+
         }
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -208,7 +168,7 @@ public class StudyOptionsActivity extends ActionBarActivity {
 
         String newLanguage = AnkiDroidApp.getSharedPrefs(this).getString("language", "");
         if (AnkiDroidApp.setLanguage(newLanguage)) {
-            mInvalidateMenu = true;
+            AnkiDroidApp.getCompat().invalidateOptionsMenu(this);
         }
         if (mCurrentFragment != null) {
             mCurrentFragment.restorePreferences();

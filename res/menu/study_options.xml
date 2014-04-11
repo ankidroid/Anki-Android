@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:ankidroid="http://schemas.android.com/apk/res-auto">
+
+	<item android:id="@+id/action_preferences_from_study_options"
+		android:title="@string/menu_preferences" />
+
+	<item android:id="@+id/action_rotate_from_study_options"
+		android:title="@string/menu_rotate" />
+
+	<item android:id="@+id/action_new_filtered_deck_from_study_options"
+		android:title="@string/new_dynamic_deck"
+		android:visible="false" />
+
+</menu>

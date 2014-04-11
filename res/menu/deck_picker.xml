@@ -1,0 +1,65 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:ankidroid="http://schemas.android.com/apk/res-auto">
+
+	<item android:id="@+id/action_sync"
+		android:icon="@drawable/ic_menu_refresh"
+		android:title="@string/sync_title"
+		android:enabled="false"
+		ankidroid:showAsAction="ifRoom" />
+
+	<item android:id="@+id/action_add_note_from_deck_picker"
+		android:icon="@drawable/ic_menu_add"
+		android:title="@string/add"
+		android:visible="false"
+		android:enabled="false"
+		ankidroid:showAsAction="ifRoom" />
+
+	<item android:id="@+id/action_statistics"
+		android:icon="@drawable/ic_menu_statistics"
+		android:title="@string/statistics_menu"
+		android:visible="false"
+		android:enabled="false"
+		ankidroid:showAsAction="ifRoom" />
+
+	<item android:id="@+id/action_card_browser"
+		android:icon="@drawable/ic_menu_cardbrowser"
+		android:title="@string/menu_cardbrowser"
+		android:visible="false"
+		android:enabled="false"
+		ankidroid:showAsAction="ifRoom" />
+
+	<item android:id="@+id/action_help"
+		android:icon="@drawable/ic_menu_help"
+		android:title="@string/help_title"
+		ankidroid:showAsAction="ifRoom" />
+
+	<item android:id="@+id/action_preferences_from_deck_picker"
+		android:title="@string/menu_preferences" />
+
+	<item android:id="@+id/action_shared_decks"
+		android:title="@string/menu_get_shared_decks" />
+
+	<item android:id="@+id/action_new_deck"
+		android:title="@string/new_deck" />
+
+	<item android:id="@+id/action_new_filtered_deck_from_deck_picker"
+		android:title="@string/new_dynamic_deck"
+		android:enabled="false" />
+
+	<item android:id="@+id/action_import"
+		android:title="@string/menu_import" />
+
+	<item android:id="@+id/action_check_database"
+		android:title="@string/check_db"
+		android:enabled="false" />
+
+	<item android:id="@+id/action_rotate_from_deck_picker"
+		android:title="@string/menu_rotate" />
+
+	<item android:id="@+id/action_feedback"
+		android:title="@string/studyoptions_feedback" />
+
+	<item android:id="@+id/action_about"
+		android:title="@string/menu_about" />
+
+</menu>

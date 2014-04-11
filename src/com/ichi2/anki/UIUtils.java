@@ -40,27 +40,6 @@ public class UIUtils {
     }
 
 
-    /**
-     * Adds a menu item to the given menu.
-     */
-    public static MenuItem addMenuItem(Menu menu, int groupId, int itemId, int order, int titleRes, int iconRes) {
-        MenuItem item = menu.add(groupId, itemId, order, titleRes);
-        item.setIcon(iconRes);
-        return item;
-    }
-
-
-    /**
-     * Adds a menu item to the given menu and marks it as a candidate to be in the action bar.
-     */
-    public static MenuItem addMenuItemInActionBar(Menu menu, int groupId, int itemId, int order, int titleRes,
-            int iconRes) {
-        MenuItem item = addMenuItem(menu, groupId, itemId, order, titleRes, iconRes);
-        MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
-        return item;
-    }
-
-
     public static void saveCollectionInBackground() {
     	if (AnkiDroidApp.colIsOpen()) {
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_COLLECTION, new DeckTask.TaskListener() {

@@ -1,0 +1,9 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:ankidroid="http://schemas.android.com/apk/res-auto">
+
+	<item android:id="@+id/action_night_mode"
+		android:icon="@drawable/ic_menu_night"
+		android:title="@string/night_mode"
+		ankidroid:showAsAction="ifRoom" />
+
+</menu>

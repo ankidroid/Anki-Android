@@ -165,22 +165,6 @@ public class Reviewer extends AnkiActivity {
     private static final int DYNAMIC_FONT_MIN_SIZE = 3;
     private static final int DYNAMIC_FONT_FACTOR = 5;
 
-    /**
-     * Menus
-     */
-    private static final int MENU_WHITEBOARD = 0;
-    private static final int MENU_CLEAR_WHITEBOARD = 1;
-    private static final int MENU_EDIT = 2;
-    private static final int MENU_REMOVE = 3;
-    private static final int MENU_REMOVE_BURY_CARD = 30;
-    private static final int MENU_REMOVE_BURY_NOTE = 31;
-    private static final int MENU_REMOVE_SUSPEND_CARD = 32;
-    private static final int MENU_REMOVE_SUSPEND_NOTE = 33;
-    private static final int MENU_REMOVE_DELETE = 34;
-    private static final int MENU_SEARCH = 4;
-    private static final int MENU_MARK = 5;
-    private static final int MENU_UNDO = 6;
-
     public static final int EASE_FAILED = 1;
     public static final int EASE_HARD = 2;
     public static final int EASE_MID = 3;
@@ -1202,69 +1186,6 @@ public class Reviewer extends AnkiActivity {
 //    }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        Resources res = getResources();
-
-        UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_MARK, Menu.NONE, R.string.menu_mark_card,
-                R.drawable.ic_menu_mark);
-        UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_UNDO, Menu.NONE, R.string.undo,
-                R.drawable.ic_menu_revert_disabled);
-        UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_EDIT, Menu.NONE, R.string.menu_edit_card,
-                R.drawable.ic_menu_edit);
-        if (mPrefWhiteboard) {
-            if (mShowWhiteboard) {
-                UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_WHITEBOARD, Menu.NONE, R.string.hide_whiteboard,
-                        R.drawable.ic_menu_compose);
-            } else {
-                UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_WHITEBOARD, Menu.NONE, R.string.show_whiteboard,
-                        R.drawable.ic_menu_compose);
-            }
-            UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_CLEAR_WHITEBOARD, Menu.NONE,
-                    R.string.clear_whiteboard, R.drawable.ic_menu_clear_playlist);
-        }
-
-        SubMenu removeDeckSubMenu = menu.addSubMenu(Menu.NONE, MENU_REMOVE, Menu.NONE, R.string.menu_dismiss_note);
-        removeDeckSubMenu.setIcon(R.drawable.ic_menu_stop);
-        removeDeckSubMenu.add(Menu.NONE, MENU_REMOVE_BURY_CARD, Menu.NONE, R.string.menu_bury_card);
-        removeDeckSubMenu.add(Menu.NONE, MENU_REMOVE_BURY_NOTE, Menu.NONE, R.string.menu_bury_note);
-        removeDeckSubMenu.add(Menu.NONE, MENU_REMOVE_SUSPEND_CARD, Menu.NONE, R.string.menu_suspend_card);
-        removeDeckSubMenu.add(Menu.NONE, MENU_REMOVE_SUSPEND_NOTE, Menu.NONE, R.string.menu_suspend_note);
-        removeDeckSubMenu.add(Menu.NONE, MENU_REMOVE_DELETE, Menu.NONE, R.string.menu_delete_note);
-        if (mPrefTextSelection) {
-            MenuItem item = menu.add(Menu.NONE, MENU_SEARCH, Menu.NONE, res.getString(R.string.menu_select));
-            item.setIcon(R.drawable.ic_menu_search);
-            item.setEnabled(Lookup.isAvailable());
-        }
-        return true;
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-    	Resources res = getResources();
-        MenuItem item = menu.findItem(MENU_MARK);
-        if (mCurrentCard != null && mCurrentCard.note().hasTag("marked")) {
-            item.setTitle(R.string.menu_unmark_card);
-            item.setIcon(R.drawable.ic_menu_marked);
-        } else {
-            item.setTitle(R.string.menu_mark_card);
-            item.setIcon(R.drawable.ic_menu_mark);
-        }
-        item = menu.findItem(MENU_UNDO);
-        if (AnkiDroidApp.colIsOpen() && AnkiDroidApp.getCol().undoAvailable()) {
-            item.setEnabled(true);
-            item.setIcon(R.drawable.ic_menu_revert);
-        } else {
-            item.setEnabled(false);
-            item.setIcon(R.drawable.ic_menu_revert_disabled);
-        }
-        item = menu.findItem(MENU_SEARCH);
-    	if (item != null) {
-    		item.setTitle(clipboardHasText() ? Lookup.getSearchStringTitle() : res.getString(R.string.menu_select));
-    	}
-	return true;
-    }
-
     private void updateBigWidget(boolean showProgressDialog) {
         // if (DeckManager.deckIsOpenedInBigWidget(DeckManager.getMainDeckPath())) {
         // Log.i(AnkiDroidApp.TAG, "Reviewer: updateBigWidget");
@@ -1352,24 +1273,42 @@ public class Reviewer extends AnkiActivity {
 
 
     @Override
-    public void onOptionsMenuClosed(Menu menu) {
-        if (mPrefFullscreenReview) {
-            // Restore top bar
-            mTextBarRed.setVisibility(View.VISIBLE);
-            mTextBarBlack.setVisibility(View.VISIBLE);
-            mTextBarBlue.setVisibility(View.VISIBLE);
-            mChosenAnswer.setVisibility(View.VISIBLE);
-            if (mShowTimer) {
-                mCardTimer.setVisibility(View.VISIBLE);
-            }
-
-            // Restore fullscreen preference
-            UIUtils.setFullScreen(this);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.reviewer, menu);
+        Resources res = getResources();
+        if (mCurrentCard != null && mCurrentCard.note().hasTag("marked")) {
+            menu.findItem(R.id.action_mark_card).setTitle(R.string.menu_unmark_card).setIcon(R.drawable.ic_menu_marked);
+        } else {
+            menu.findItem(R.id.action_mark_card).setTitle(R.string.menu_mark_card).setIcon(R.drawable.ic_menu_mark);
         }
+        if (AnkiDroidApp.colIsOpen() && AnkiDroidApp.getCol().undoAvailable()) {
+            menu.findItem(R.id.action_undo).setEnabled(true).setIcon(R.drawable.ic_menu_revert);
+        } else {
+            menu.findItem(R.id.action_undo).setEnabled(false).setIcon(R.drawable.ic_menu_revert_disabled);
+        }
+        if (mPrefWhiteboard) {
+            if (mShowWhiteboard) {
+                menu.findItem(R.id.action_whiteboard).setVisible(true).setTitle(R.string.hide_whiteboard);
+            } else {
+                menu.findItem(R.id.action_whiteboard).setVisible(true).setTitle(R.string.show_whiteboard);
+            }
+            menu.findItem(R.id.action_clear_whiteboard).setVisible(true);
+        }
+        if (AnkiDroidApp.SDK_VERSION < 11 && mPrefTextSelection) {
+            menu.findItem(R.id.action_search_dictionary).setVisible(true).setTitle(clipboardHasText() ?
+                    Lookup.getSearchStringTitle() : res.getString(R.string.menu_select));
+        }
+        return super.onCreateOptionsMenu(menu);
     }
 
 
-    /** Handles item selections. */
+    @Override
+    public boolean onMenuOpened(int feature, Menu menu) {
+        AnkiDroidApp.getCompat().invalidateOptionsMenu(this);
+        return super.onMenuOpened(feature, menu);
+    }
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -1378,7 +1317,19 @@ public class Reviewer extends AnkiActivity {
                 closeReviewer(AnkiDroidApp.RESULT_TO_HOME, true);
                 return true;
 
-            case MENU_WHITEBOARD:
+            case R.id.action_mark_card:
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, mMarkCardHandler, new DeckTask.TaskData(mSched,
+                        mCurrentCard, 0));
+                return true;
+
+            case R.id.action_undo:
+                undo();
+                return true;
+
+            case R.id.action_edit:
+                return editCard();
+
+            case R.id.action_whiteboard:
                 // Toggle mShowWhiteboard value
                 mShowWhiteboard = !mShowWhiteboard;
                 if (mShowWhiteboard) {
@@ -1394,56 +1345,45 @@ public class Reviewer extends AnkiActivity {
                 }
                 return true;
 
-            case MENU_CLEAR_WHITEBOARD:
+            case R.id.action_clear_whiteboard:
                 mWhiteboard.clear();
                 return true;
 
-            case MENU_EDIT:
-                return editCard();
-
-            case MENU_REMOVE_BURY_CARD:
+            case R.id.action_bury_card:
                 setNextCardAnimation(false);
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
                         mSched, mCurrentCard, 4));
                 return true;
 
-            case MENU_REMOVE_BURY_NOTE:
+            case R.id.action_bury_note:
                 setNextCardAnimation(false);
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
                         mSched, mCurrentCard, 0));
                 return true;
 
-            case MENU_REMOVE_SUSPEND_CARD:
+            case R.id.action_suspend_card:
                 setNextCardAnimation(false);
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
                         mSched, mCurrentCard, 1));
                 return true;
 
-            case MENU_REMOVE_SUSPEND_NOTE:
+            case R.id.action_suspend_note:
                 setNextCardAnimation(false);
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
                         mSched, mCurrentCard, 2));
                 return true;
 
-            case MENU_REMOVE_DELETE:
+            case R.id.action_delete:
                 showDeleteNoteDialog();
                 return true;
 
-            case MENU_SEARCH:
+            case R.id.action_search_dictionary:
                 lookUpOrSelectText();
-                return true;
-
-            case MENU_MARK:
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, mMarkCardHandler, new DeckTask.TaskData(mSched,
-                        mCurrentCard, 0));
-                return true;
-
-            case MENU_UNDO:
-                undo();
                 return true;
 
             default:
                 return super.onOptionsItemSelected(item);
+
         }
     }
 
