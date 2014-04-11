@@ -70,6 +70,8 @@
   <string name="show_study_options_on_deck_load_summ">Toont studeeropties als je een leerset laadt</string>
   <string name="hide_due_count">Te verwachten aantal verbergen</string>
   <string name="hide_due_count_summ">Verbergt het te verwachten aantal</string>
+  <string name="show_progress_bars">Toon voortgangsbalken</string>
+  <string name="show_progress_bars_summ">Laat de voortgang en het aantal Ja-antwoorden van vandaag zien tijdens de overhoring</string>
   <string name="fade_scrollbars">Schuifbalken vervagen</string>
   <string name="fade_scrollbars_summ">De schuifbalk vervagen wanneer u de flitskaart niet doorrolt</string>
   <string name="show_whiteboard_summ">Hiermee kan u op het scherm schrijven</string>

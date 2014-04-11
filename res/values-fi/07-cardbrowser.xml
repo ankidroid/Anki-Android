@@ -39,31 +39,31 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="card_browser_all_decks">All decks</string>
-  <string name="card_browser_load">Loading cards.\nPlease wait...</string>
+  <string name="card_browser_all_decks">Kaikki pakat</string>
+  <string name="card_browser_load">Ladataan kortteja.\nOdota...</string>
   <string name="card_browser_cardloading_error">Virhe ladattaessa kortteja. Ongelma luultavasti liittyy laitteesi muistin rajoitukseen. Yritä uudelleen pienemmällä korttipakalla</string>
-  <string name="card_browser_delete_card">Delete note</string>
+  <string name="card_browser_delete_card">Poista merkintä</string>
   <string name="card_browser_suspend_card">Keskeytä kortti</string>
   <string name="card_browser_unsuspend_card">Jatka korttia</string>
-  <string name="card_browser_mark_card">Mark note</string>
-  <string name="card_browser_unmark_card">Unmark note</string>
-  <string name="delete_card_title">Delete note</string>
-  <string name="delete_card_message">Really delete all cards of this note?\nSearch field: %s</string>
-  <string name="card_browser_show_marked">Filter marked</string>
-  <string name="card_browser_field">Change CardBrowser Field</string>
-  <string name="card_browser_field_title">Change CardBrowser Field</string>
-  <string name="card_browser_show_suspended">Filter suspended</string>
-  <string name="card_browser_search_by_tag">Filter by tag</string>
+  <string name="card_browser_mark_card">Merkitse</string>
+  <string name="card_browser_unmark_card">Poista merkintä</string>
+  <string name="delete_card_title">Poista merkintä</string>
+  <string name="delete_card_message">Poistetaanko tämän merkinnän kaikki kortit? \nhakukenttä: %s</string>
+  <string name="card_browser_show_marked">Suodata merkityt</string>
+  <string name="card_browser_field">Muuta CardBrowser kenttä</string>
+  <string name="card_browser_field_title">Muuta CardBrowser kenttä</string>
+  <string name="card_browser_show_suspended">Suodata jäädytetyt</string>
+  <string name="card_browser_search_by_tag">Suodata kentän mukaan</string>
   <string name="card_browser_tags_shown">Tunnisteet: %1$s</string>
   <string name="card_browser_change_display_order">Muuta näytön järjestys</string>
   <string name="card_browser_change_display_order_title">Valitse näytön järjestys</string>
-  <string name="card_browser_change_display_order_reverse">Select a field twice to reverse.</string>
-  <string name="card_browser_order_reverse">(reverse)</string>
+  <string name="card_browser_change_display_order_reverse">Valitse kenttä kahdesti kääntääksesi päinvastoin.</string>
+  <string name="card_browser_order_reverse">(käänteinen)</string>
   <string name="card_browser_card_details">Korttitiedot</string>
   <string name="card_details_question">Kysymys</string>
   <string name="card_details_answer">Vastaus</string>
   <string name="card_details_due">Määrä</string>
-  <string name="card_details_last_due">Last due</string>
+  <string name="card_details_last_due">Viimeinen eräpäivä</string>
   <string name="card_details_now">Nyt</string>
   <string name="card_details_interval">Aikaväli</string>
   <string name="card_details_ease">Helppous</string>
@@ -74,24 +74,24 @@
   <string name="card_details_added">Lisätty</string>
   <string name="card_details_changed">Muutettu</string>
   <string name="card_details_tags">Tunnisteet</string>
-  <string name="card_details_model">Note type</string>
-  <string name="card_browser_sorting_cards">Sorting cards.\nPlease wait...</string>
-  <string name="card_browser_filtering_cards">Filtering cards.\nPlease wait...</string>
+  <string name="card_details_model">Merkinnän tyyppi</string>
+  <string name="card_browser_sorting_cards">Lajitellaan kortteja.\nOdota...</string>
+  <string name="card_browser_filtering_cards">Suodatetaan kortteja.\nOdota...</string>
   <string name="card_details_card_model">Korttimalli</string>
   <string-array name="card_browser_order_labels">
-    <item>No sorting (faster)</item>
-    <item>By search field</item>
-    <item>By created time</item>
-    <item>By edited time</item>
-    <item>By changed time</item>
-    <item>By due time</item>
-    <item>By interval</item>
-    <item>By ease</item>
-    <item>By reviews</item>
-    <item>By lapses</item>
+    <item>Ei lajittelua (nopeampi)</item>
+    <item>Hakukentän mukaan</item>
+    <item>Luomisajan mukaan</item>
+    <item>Muokkausajan mukaan</item>
+    <item>Muutosajan mukaan</item>
+    <item>Eräpäivän mukaan</item>
+    <item>Aikaväleittäin</item>
+    <item>Helpotuksien mukaan</item>
+    <item>Kertauksien mukaan</item>
+    <item>Unohduksien mukaan</item>
   </string-array>
   <plurals name="card_browser_subtitle">
-    <item quantity="one">1 of %2$d cards shown</item>
-    <item quantity="other">%1$d of %2$d cards shown</item>
+    <item quantity="one">1/%2$d korttia näytetty</item>
+    <item quantity="other">%1$d/ %2$d korttia näytetty</item>
   </plurals>
 </resources>

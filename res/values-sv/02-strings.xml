@@ -128,17 +128,17 @@
   <string name="sched_unbury_button">För att se dem nu, klicka på knappen \'\'Visa dolda kort\'\'.</string>
   <string name="sched_has_buried">En del relaterade eller dolda kort undanhålls till en senare session.</string>
   <string-array name="browser_column1_headings">
-    <item>Search Field</item>
+    <item>Sökfält</item>
   </string-array>
   <string-array name="browser_column2_headings">
-    <item>Answer</item>
-    <item>Card</item>
-    <item>Deck</item>
-    <item>Lapses</item>
-    <item>Note</item>
-    <item>Question</item>
-    <item>Reviews</item>
-    <item>Tags</item>
+    <item>Svar</item>
+    <item>Kort</item>
+    <item>Kortlek</item>
+    <item>Felsvar</item>
+    <item>Not</item>
+    <item>Fråga</item>
+    <item>Granskningar</item>
+    <item>Taggar</item>
   </string-array>
   <string-array name="dynOrderLabels">
     <item>Äldst först</item>

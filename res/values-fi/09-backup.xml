@@ -51,20 +51,20 @@
   <string name="backup_del_collection">Poista kokoelma ja luo uusi</string>
   <string name="backup_del_collection_question">Haluatko varmasti poistaa kokoelman ja luoda uuden?
 Tämä nollaa edistymisesi ja poistaa kaikki kortit!</string>
-  <string name="backup_full_sync_from_server">Full sync from server</string>
-  <string name="backup_full_sync_from_server_question">Do you really want to overwrite your collection with the one from AnkiWeb? This will drop all your learning progress and added information since your last sync!</string>
-  <string name="error_handling_title">Error handling</string>
+  <string name="backup_full_sync_from_server">Täydellinen synkronointi palvelimelta</string>
+  <string name="backup_full_sync_from_server_question">Haluatko todella korvata kokoelmasi AnkiWebistä? Kaikki edellisen synkronoinnin jälkeen tapahtunyt opiskelu ja lisätyt tiedot unohdetaan!</string>
+  <string name="error_handling_title">Virheidenkäsittely</string>
   <string name="error_handling_options">Asetukset</string>
-  <string name="backup_retry_opening">Retry opening</string>
-  <string name="backup_error_menu_repair">Repair database</string>
-  <string name="backup_repair_deck">Repair</string>
+  <string name="backup_retry_opening">Yritä uudelleen avaamista</string>
+  <string name="backup_error_menu_repair">Korjaa tietokanta</string>
+  <string name="backup_repair_deck">Korjaus</string>
   <string name="backup_repair_deck_progress">Korjataan tietokantaa.\nOdota hetki...</string>
   <string name="backup_restore_error">Kokoelman palautus epäonnistui</string>
-  <string name="backup_restore_if_missing">Restoring collection if missing...</string>
+  <string name="backup_restore_if_missing">Palautetaan kokoelma, jos se puuttuu...</string>
   <string name="backup_restore_deck">Palautetaan kokoelmaa.\nOdota hetki...</string>
   <string name="backup_restore_select_title">Valitse varmuuskopio palauttaaksesi</string>
-  <string name="backup_restore_no_backups">No backups for this collection available on this device. If you have backups on your desktop computer, please copy them manually into your AnkiDroid folder</string>
+  <string name="backup_restore_no_backups">Ei varmuuskopioita käytettävissä tälle kokoelmalle tällä laitteella. Jos sinulla on varmuuskopioita pöytätietokoneella, kopioi ne manuaalisesti AnkiDroid-kansioon</string>
   <string name="open_collection_failed_title">Kokoelman avaus epäonnistui</string>
-  <string name="open_collection_failed_message">Database could not be opened. It is either not a real anki database or has been corrupted.\n\nYou can try to repair the collection or restore it from a backup (in both cases, the copy of the corrupt deck will be moved to the subfolder \'%1$s\'). Click on \'options\' for that.\n\nMore information about repairing corrupted decks: %2$s.</string>
-  <string name="deck_repair_error">Collection could not be repaired</string>
+  <string name="open_collection_failed_message">Tietokantaa ei voi avata. Joko se ei ole oikea anki-tietokanta tai se on vioittunut.\n\nVoit yrittää korjata kokoelman tai palauttaa sen varmuuskopiosta (molemmissa tapauksissa korruptoituneen pakan kopio siirretään %1$s-alikansioon). Klikkaa \"asetukset\" tehdäksesi niin.\n\nLisää tietoa vioittuneiden pakkojen korjaamisesta: %2$s.</string>
+  <string name="deck_repair_error">Kokoelman korjaus epäonnistui</string>
 </resources>

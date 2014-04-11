@@ -70,6 +70,8 @@
   <string name="show_study_options_on_deck_load_summ">Pokaż ustawienia nauki przy ładowaniu talii</string>
   <string name="hide_due_count">Ukryj licznik kart do przejrzenia</string>
   <string name="hide_due_count_summ">Ukrywa licznik kart do przejrzenia</string>
+  <string name="show_progress_bars">Pokaż paski postępu</string>
+  <string name="show_progress_bars_summ">Pokazuje dzisiejszy postęp oraz udział poprawnych odpowiedzi.</string>
   <string name="fade_scrollbars">Ukrywanie suwaków</string>
   <string name="fade_scrollbars_summ">Suwaki automatycznie zanikają, gdy nie przewijasz widoku</string>
   <string name="show_whiteboard_summ">Umożliwia pisanie na ekranie</string>

@@ -36,7 +36,7 @@
 -->
 <resources>
   <string-array name="newCardSchedulingLabels">
-    <item>Jaa tarkastelujen kesken</item>
+    <item>Jaa kertauksien kesken</item>
     <item>Tarkastelun jälkeen</item>
     <item>Ennen tarkastelua</item>
   </string-array>
@@ -85,14 +85,14 @@
   </string-array>
   <string-array name="gestures_labels">
     <item>Ei toimintoa</item>
-    <item>Show answer</item>
-    <item>Answer button 1</item>
-    <item>Answer button 2</item>
-    <item>Answer button 3</item>
-    <item>Answer button 4</item>
-    <item>Answer recommended (green)</item>
-    <item>Answer better than recommended</item>
-    <item>Undo</item>
+    <item>Näytä vastaus</item>
+    <item>Vastauspainike 1</item>
+    <item>Vastauspainike 2</item>
+    <item>Vastauspainike 3</item>
+    <item>Vastauspainike 4</item>
+    <item>Vastaa ehdotettu (vihreä)</item>
+    <item>Vastaa paremmin kuin ehdotettu</item>
+    <item>Kumoa</item>
     <item>Muokkaa korttia</item>
     <item>Merkitse kortti</item>
     <item>Hakutermi</item>
@@ -100,55 +100,55 @@
     <item>Keskeytä kortti</item>
     <item>Poista kortti</item>
     <item>Tyhjennä valkotaulu</item>
-    <item>Play media</item>
-    <item>Abort learning</item>
+    <item>Toista media</item>
+    <item>Keskeytä oppiminen</item>
   </string-array>
   <string-array name="theme_labels">
-    <item>Android Dark</item>
-    <item>Android Light</item>
-    <item>Blue</item>
-    <item>White</item>
+    <item>Android tumma</item>
+    <item>Android vaalea</item>
+    <item>Sininen</item>
+    <item>Valkoinen</item>
   </string-array>
   <string-array name="leech_action_labels">
-    <item>Suspend card</item>
-    <item>Tag only</item>
-    <item>Reset as new</item>
+    <item>Jäädytä kortti</item>
+    <item>Vain tunniste</item>
+    <item>Palauta uutena</item>
   </string-array>
   <string-array name="new_order_labels">
-    <item>New cards in random order</item>
-    <item>New cards in order added</item>
+    <item>Uusia kortteja satunnaisessa järjestyksessä</item>
+    <item>Uudet kortit lisäysjärjestyksessä</item>
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
-    <item>Oldest seen first</item>
-    <item>Random</item>
-    <item>Increasing intervals</item>
-    <item>Decreasing intervals</item>
-    <item>Most lapsed</item>
-    <item>Order added</item>
-    <item>Order due</item>
-    <item>Latest added first</item>
+    <item>Vanhimmat nähdyt ensin</item>
+    <item>Satunnainen</item>
+    <item>Kasvavin välein</item>
+    <item>Vähentyvin välein</item>
+    <item>Eniten unohdetut</item>
+    <item>Lisäysjärjestyksessä</item>
+    <item>Näyttöjärjestyksessä</item>
+    <item>Viimeisimmät lisätyt ensin</item>
   </string-array>
   <string-array name="custom_study_options_labels">
-    <item>Increase today\'s new card limit</item>
-    <item>Increase today\'s review card limit</item>
-    <item>Review forgotten cards</item>
-    <item>Review ahead</item>
-    <item>Study a random selection of cards</item>
-    <item>Preview new cards</item>
-    <item>Limit to particular tags</item>
+    <item>Lisää tämän päivän uusien korttien rajoitusta</item>
+    <item>Lisää tämän päivän kertauskorttien rajoitusta</item>
+    <item>Kertaa unohdettuja kortteja</item>
+    <item>Kertaa etukäteen</item>
+    <item>Opiskele satunnaisia kortteja</item>
+    <item>Esikatsele uusia kortteja</item>
+    <item>Rajoitu tiettyhin tunnisteisiin</item>
   </string-array>
   <string-array name="add_to_cur_labels">
-    <item>Use current deck</item>
-    <item>Decide by note type</item>
+    <item>Käytä tätä pakkaa</item>
+    <item>Valitse korttityyppi</item>
   </string-array>
   <string-array name="new_spread_labels">
-    <item>Mix new cards and reviews</item>
-    <item>New cards after reviews</item>
-    <item>New cards before reviews</item>
+    <item>Sekoita uusiakortteja ja kertauksia</item>
+    <item>Uudet kortit kertauksien jälkeen</item>
+    <item>Uudet kortit ennen kertauksia</item>
   </string-array>
   <string-array name="cards_for_tag_filtered_deck_labels">
-    <item>All cards</item>
-    <item>New</item>
-    <item>Due</item>
+    <item>Kaikki kortit</item>
+    <item>Uusi</item>
+    <item>Erääntynyt</item>
   </string-array>
 </resources>

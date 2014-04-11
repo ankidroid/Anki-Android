@@ -70,6 +70,8 @@
   <string name="show_study_options_on_deck_load_summ">Afișează ecranul cu opțiuni de studiu când se încarcă un pachet</string>
   <string name="hide_due_count">Hide due count</string>
   <string name="hide_due_count_summ">Hides the due count</string>
+  <string name="show_progress_bars">Afișează barele de progres</string>
+  <string name="show_progress_bars_summ">Shows today\'s progress and proportion of today\'s yes answers while reviewing</string>
   <string name="fade_scrollbars">Estomparea scrollbars-urilor</string>
   <string name="fade_scrollbars_summ">Estompează automat scrollbars-urile când nu se defilează</string>
   <string name="show_whiteboard_summ">Vă permite să scrieţi pe ecran</string>

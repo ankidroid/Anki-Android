@@ -128,17 +128,17 @@
   <string name="sched_unbury_button">برای دیدن آنها در حال حاضر، دکمه Unbury بزنید.</string>
   <string name="sched_has_buried">تعدادی از کارت های مرتبط یا مخفی شده تا نشست بعدی نمایش داده نخواهند شد.</string>
   <string-array name="browser_column1_headings">
-    <item>Search Field</item>
+    <item>کادر جستجو</item>
   </string-array>
   <string-array name="browser_column2_headings">
-    <item>Answer</item>
-    <item>Card</item>
-    <item>Deck</item>
-    <item>Lapses</item>
-    <item>Note</item>
-    <item>Question</item>
-    <item>Reviews</item>
-    <item>Tags</item>
+    <item>پاسخ</item>
+    <item>کارد</item>
+    <item>مجموعه</item>
+    <item>دور</item>
+    <item>یادداشت</item>
+    <item>پرسش</item>
+    <item>مرور ها </item>
+    <item>برچسب ها</item>
   </string-array>
   <string-array name="dynOrderLabels">
     <item>اول قدیمی ها دیده می شود</item>

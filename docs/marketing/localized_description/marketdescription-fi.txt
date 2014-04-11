@@ -1,6 +1,6 @@
 Muista mitä tahansa AnkiDroidilla!
 
-AnkiDroid mahdollistaa muistikorttien oppimisen erittäin tehokkaasti näyttäen ne juuri ennen kuin ehdit unohtaa ne. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and MacOS.
+AnkiDroid mahdollistaa muistikorttien oppimisen erittäin tehokkaasti näyttäen ne juuri ennen kuin ehdit unohtaa ne. Se on täysin yhteensopiva Anki-aikavälikertausohjelmiston kanssa (mukaanlukien synkronisointi), joka on saatavilla Windows, Linux ja MacOS -ympäristöihin.
 
 Opiskele kaikenlaisia asioita missä ja milloin haluat. Käytä hyväksesi toimettomuus bussimatkalla, ruokakaupan jonossa tai muussa odotustilanteessa!
 
@@ -10,10 +10,10 @@ Lisää materiaalia työpöytäsovelluksen (Anki) kautta tai suoraan AnkiDroidis
 
 ★ Pääominaisuudet:
 • tuetut sisältömuodot: teksti, kuvat, äänet, LaTeX-merkinnät
-• spaced repetition (supermemo 2 algorithm)
+• aikavälitoisto (supermemo 2 -algoritmi)
 • tekstistä puheeksi -tuki
 • yli 6000 valmista pakkaa
-• progress widget
+• widget edistymiseen
 • yksityiskohtaiset tilastot
 • synkronointi AnkiWebin kanssa
 • avoimen lähdekoodin sovellus
@@ -26,10 +26,10 @@ Lisää materiaalia työpöytäsovelluksen (Anki) kautta tai suoraan AnkiDroidis
 • tablet näkymä
 • olemassa olevien kokoelmien tuominen (Anki-työpöytäsovelluksesta)
 • sanakirjatuki (ColorDict, GoldenDict, Leo.org, Aedict, diverse)
-• add cards by intent from other applications like dictionaries
+• lisää kortteja (Intent) muista sovelluksissa kuten sanakirjoista
 • tuki omien kirjasinten käyttöön
 • tuki varmuuskopioille
-• navigation by swipe, tap, shake
+• navigointi pyyhkäisemällä, napauttamalla, hailauttamalla
 • täysin muokattavissa
 • tuki dynaamisille pakoille
 • yötila

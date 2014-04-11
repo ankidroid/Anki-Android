@@ -57,14 +57,14 @@
   <string name="notify_title">Ankidroid 升级成功</string>
   <string name="notify_message">下载新版本</string>
   <string name="notification_title">确认更新Ankidroid</string>
-  <string name="preview_title">Preview</string>
+  <string name="preview_title">预览</string>
   <string name="notification_message">Android市场中有新版本的Ankidroid。\n\n您要安装吗？</string>
   <string name="notification_stop">不再提示更新</string>
   <string name="reset_card_dialog_title">重置卡牌进度</string>
   <string name="reset_card_dialog_message">此操作将重置使用此卡牌记录的所有卡牌的学习进度(恢复新卡牌状态)。\n你确定要继续吗？</string>
   <string name="reset_card_dialog_confirmation">重置使用此卡牌记录的所有卡牌</string>
-  <string name="save_duplicate_dialog_title">Duplicate note</string>
-  <string name="save_duplicate_dialog_message">This note shares its primary field with another note. Save anyway?</string>
+  <string name="save_duplicate_dialog_title">重复注释</string>
+  <string name="save_duplicate_dialog_message">这条注释的主要内容与另一条注释相同。仍要保存吗？</string>
   <string name="answering_error_title">数据库错误</string>
   <string name="answering_error_message">写入集合时出错。可能是数据库损坏，或者磁盘空间不足。\n\n如果频繁发生此错误，请检查数据库，修复集合或从备份中恢复。点击\"选项\"按钮以执行上述操作。\n\n当然，也可能只是AnkiDroid的bug，请报告这个错误，我们会尽力解决。</string>
   <string name="answering_error_report">报告错误</string>
@@ -121,6 +121,6 @@
     <item><![CDATA[AnkiDroid 是 <a href="%1$s">开源软件<a/>, 鼓励人人<a href="%2$s">成为</a><a href="%3$s">贡献者</a>:-)]]></item>
     <item><![CDATA[非开发人员也可以提供帮助，如<a href="%1$s">翻译</a> AnkiDroid,更新wiki和屏幕截图，<a href="%2$s">捐助</a> Anki的桌面客户端软件，或者在博客上写些关于AnkiDroid的内容！]]></item>
     <item><![CDATA[AnkiDroid 依据<a href="%1$s">GNU-GPL v3 许可</a>发布，源代码在<a href="%2$s">这里</a>提供。]]></item>
-    <item><![CDATA[This package uses the <a href="http://www.csse.monash.edu.au/~jwb/edict.html">EDICT</a> and <a href="http://www.csse.monash.edu.au/~jwb/kanjidic.html">KANJIDIC</a> dictionary files. These files are the property of the <a href="http://www.edrdg.org">Electronic Dictionary Research and Development Group</a>, and are used in conformance with the Group\'s <a href="http://www.edrdg.org/edrdg/licence.html">licence</a>.]]></item>
+    <item><![CDATA[本软件使用<a href="http://www.csse.monash.edu.au/~jwb/edict.html">EDICT</a> 和<a href="http://www.csse.monash.edu.au/~jwb/kanjidic.html">KANJIDIC</a> 字典文件。这些文件的知识产权属于 <a href="http://www.edrdg.org">Electronic Dictionary Research and Development Group</a>, 按<a href="http://www.edrdg.org/edrdg/licence.html">授权书</a>条款合理使用。]]></item>
   </string-array>
 </resources>

@@ -70,6 +70,8 @@
   <string name="show_study_options_on_deck_load_summ">単語帳を読み込むときに学習のオプション画面を表示する</string>
   <string name="hide_due_count">期限切れカウントの非表示</string>
   <string name="hide_due_count_summ">期限切れカウントの非表示</string>
+  <string name="show_progress_bars">進行状況バーの表示</string>
+  <string name="show_progress_bars_summ">今日の進行状況と正解率を復習中に表示します</string>
   <string name="fade_scrollbars">スクロールバーの非表示</string>
   <string name="fade_scrollbars_summ">縦方向のスクロールバーを、自動的にフェードアウトします。</string>
   <string name="show_whiteboard_summ">復習中に画面に文字を書くことができます。画面の右上にホワイトボードアイコンを表示します。</string>

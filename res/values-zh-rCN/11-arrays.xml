@@ -138,17 +138,17 @@
     <item>仅限于特定标签</item>
   </string-array>
   <string-array name="add_to_cur_labels">
-    <item>Use current deck</item>
-    <item>Decide by note type</item>
+    <item>使用当前牌组</item>
+    <item>由注释类型决定</item>
   </string-array>
   <string-array name="new_spread_labels">
-    <item>Mix new cards and reviews</item>
-    <item>New cards after reviews</item>
-    <item>New cards before reviews</item>
+    <item>混合新卡牌和复习</item>
+    <item>学习新卡牌后再复习</item>
+    <item>复习后再学习新卡牌</item>
   </string-array>
   <string-array name="cards_for_tag_filtered_deck_labels">
-    <item>All cards</item>
-    <item>New</item>
-    <item>Due</item>
+    <item>所有卡牌</item>
+    <item>新卡牌</item>
+    <item>到期卡牌</item>
   </string-array>
 </resources>

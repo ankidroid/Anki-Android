@@ -55,7 +55,8 @@
   <string name="download_cancel">取消下载</string>
   <string name="shared_decks">共享牌组</string>
   <string name="loading_shared_decks">正在载入可用的共享牌组…</string>
-  <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Terms and Conditions</a></string>
+  <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">条款和条件</a>
+</string>
   <string name="cancel_download">取消下载</string>
   <string name="resume_download">继续下载</string>
   <string name="pause_download">暂停下载</string>
@@ -72,7 +73,7 @@
   <string name="log_in">登入</string>
   <string name="sign_up_description">没有AnkiWeb账户？它是免费的！</string>
   <string name="sign_up">注册</string>
-  <string name="sign_up_terms">By tapping <i>Sign up</i>, you confirm that you have read and agree to our <a href="https://ankiweb.net/account/terms">terms of use</a>.</string>
+  <string name="sign_up_terms">点击 <i>注册</i>按钮, 表示您确认已经阅读并同意我们的 <a href="https://ankiweb.net/account/terms">使用条款</a>。</string>
   <string name="logged_as">登录为</string>
   <string name="log_out">登出</string>
   <string name="alert_logging_message">登入中，请稍等…</string>

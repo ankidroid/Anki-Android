@@ -108,33 +108,33 @@
   <string name="visit">Besök</string>
   <string name="later">Senare</string>
   <string name="download">Hämta</string>
-  <string name="open_collection">Öppnar samling.\nVar vänlig vänta...</string>
-  <string name="rebuild_cram_deck">Återuppbygger kortlek för råplugg.\nVänligen vänta...</string>
-  <string name="rebuild_cram_label">Bygg om</string>
+  <string name="open_collection">Öppnar samling.\nVar god vänta...</string>
+  <string name="rebuild_cram_deck">Återuppbygger kortlek för råplugg.\nVar god vänta...</string>
+  <string name="rebuild_cram_label">Återuppbygg</string>
   <string name="empty_cram_label">Töm</string>
-  <string name="empty_cram_deck">Tömmer kortleken för råpluggning.\nVänligen Vänta...</string>
+  <string name="empty_cram_deck">Tömmer kortleken för råplugg.\nVar god Vänta...</string>
   <string name="custom_study_deck_name">Anpassad studiesession</string>
-  <string name="custom_study_deck_exists">Var god döp om den existerande anpassade studiekortleken först.</string>
-  <string name="studyoptions_congrats_finished">Grattis! Du är klar nu.</string>
+  <string name="custom_study_deck_exists">Var god döp om den existerande kortleken för  Anpassade Studier först.</string>
+  <string name="studyoptions_congrats_finished">Grattis! Du är klar för stunden.</string>
   <string name="studyoptions_congrats_more_rev">Dagens gräns för antal repetitioner har uppnåtts, men det finns fortfarande kort kvar att repetera. För att optimera inlärningsprocessen, överväg att öka den dagliga gränsen för antal repetitioner i inställningarna.</string>
   <string name="studyoptions_congrats_more_new">Det finns fler nya kort, men den dagliga gränsen har uppnåtts. Du kan höja gränsen i inställningarna, men kom ihåg att detta också ökar antalet repetitioner på kort sikt.</string>
   <string name="studyoptions_congrats_custom">Välj knappen Anpassade studier nedan för att studera utanför det normala schemat.</string>
-  <string name="sd_card_not_mounted">SD-kort ej monterat.\n\nDu kan lagra din samling i det interna minnet också, men det är inte rekommenderat eftersom du inte kan komma åt filen så enkelt. Du kan aktivera detta i inställningarna (klicka denna text för att öppna dem).</string>
+  <string name="sd_card_not_mounted">SD-kort ej monterat.\n\nDu kan lagra din samling på det interna minnet också, men det är inte rekommenderat eftersom du inte kan komma åt filen så enkelt. Du kan aktivera detta i inställningarna (klicka på denna text för att öppna dem).</string>
   <string name="studyoptions_options">Alternativ</string>
   <string name="empty_cloze_warning">Vänligen redigera denna not och lägg till cloze deletions. (%1$s)</string>
   <string name="help_cloze">hjälp</string>
   <string name="button_sync">Synkronisera</string>
-  <string name="restart">Nystartar</string>
+  <string name="restart">Starta om</string>
   <string name="do_nothing">Gör ingenting</string>
   <string name="more_options">Fler alternativ</string>
-  <string name="now">nu</string>
+  <string name="now">Nu</string>
   <string name="back">Tillbaka</string>
   <string name="ankiweb">AnkiWeb</string>
   <string name="usb">USB</string>
   <string name="_import">Importera</string>
   <string name="confirm">Bekräfta</string>
   <string name="internet">Internet</string>
-  <string name="pc">dator</string>
+  <string name="pc">PC</string>
   <string-array name="next_review_s">
     <item>1 sekund</item>
     <item>1 minut</item>
@@ -160,8 +160,8 @@
     <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item quantity="one">1 av %2$d aktuellt</item>
-    <item quantity="other">%1$d av %2$d aktuella</item>
+    <item quantity="one">1 av %2$d i kö</item>
+    <item quantity="other">%1$d av %2$d i kö</item>
   </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">1 minut kvar</item>

@@ -128,17 +128,17 @@
   <string name="sched_unbury_button">Pro jejich zobrazení klikněte na tlačítko \'Zruš odložení\'.</string>
   <string name="sched_has_buried">Některé související nebo pozastavené karty byly odloženy do pozdější relace.</string>
   <string-array name="browser_column1_headings">
-    <item>Search Field</item>
+    <item>Vyhledávací pole</item>
   </string-array>
   <string-array name="browser_column2_headings">
-    <item>Answer</item>
-    <item>Card</item>
-    <item>Deck</item>
-    <item>Lapses</item>
-    <item>Note</item>
-    <item>Question</item>
-    <item>Reviews</item>
-    <item>Tags</item>
+    <item>Odpověď</item>
+    <item>Karta</item>
+    <item>Balíček</item>
+    <item>Zapomínání</item>
+    <item>Poznámka</item>
+    <item>Otázka</item>
+    <item>Opakování</item>
+    <item>Štítky</item>
   </string-array>
   <string-array name="dynOrderLabels">
     <item>Nejstarší první</item>

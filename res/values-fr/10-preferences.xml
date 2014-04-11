@@ -70,6 +70,8 @@
   <string name="show_study_options_on_deck_load_summ">Montrer les options d\'études au chargement d\'un paquet</string>
   <string name="hide_due_count">Cacher le compteur de cartes planifiées</string>
   <string name="hide_due_count_summ">Cache le compteur de carte planifiées</string>
+  <string name="show_progress_bars">Afficher les barres de progression</string>
+  <string name="show_progress_bars_summ">Montre les progrès du jour et la proportion de bonnes réponses pendant la révision</string>
   <string name="fade_scrollbars">Cacher les barres de défilement</string>
   <string name="fade_scrollbars_summ">Estomper automatiquement les barres de défilement sur les cartes quand elles ne sont pas utilisées</string>
   <string name="show_whiteboard_summ">Vous permet d\'écrire sur l\'écran</string>

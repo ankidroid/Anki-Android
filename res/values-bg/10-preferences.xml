@@ -70,6 +70,8 @@
   <string name="show_study_options_on_deck_load_summ">Показва Опции за изследване при зареждане на колода</string>
   <string name="hide_due_count">Hide due count</string>
   <string name="hide_due_count_summ">Hides the due count</string>
+  <string name="show_progress_bars">Покажи ленти на развитието</string>
+  <string name="show_progress_bars_summ">Показва днешния напредък и част от днешните отговори, докато преглеждате</string>
   <string name="fade_scrollbars">Fade scrollbars</string>
   <string name="fade_scrollbars_summ">Automatically fade out flashcard scrollbars when not scrolling</string>
   <string name="show_whiteboard_summ">Позволява ви да пишете на екрана</string>

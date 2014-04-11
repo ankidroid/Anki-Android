@@ -70,6 +70,8 @@
   <string name="show_study_options_on_deck_load_summ">Показать параметры обучения при загрузке колоды</string>
   <string name="hide_due_count">Скрыть количество повторов</string>
   <string name="hide_due_count_summ">Скрывает счетчик повторяемых карт</string>
+  <string name="show_progress_bars">Индикаторы хода выполнения</string>
+  <string name="show_progress_bars_summ">Показывает сегодняшний прогресс и долю сегодняшних \"да\" ответов</string>
   <string name="fade_scrollbars">Скрывать полосы прокрутки</string>
   <string name="fade_scrollbars_summ">Автоматически убирать полосы прокрутки, если нечего прокручивать</string>
   <string name="show_whiteboard_summ">Позволяет писать на экране</string>

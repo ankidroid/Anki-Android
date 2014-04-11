@@ -70,6 +70,8 @@
   <string name="show_study_options_on_deck_load_summ">Vis læringsvalgskjermen når du laster inn en kortstokk</string>
   <string name="hide_due_count">Skjul hvor mange som står for tur</string>
   <string name="hide_due_count_summ">Skjuler hvor mange som står for tur</string>
+  <string name="show_progress_bars">Vis status-indikatorer</string>
+  <string name="show_progress_bars_summ">Viser dagens framgang og andelen ja-svar fra i dag mens du gjennomgår</string>
   <string name="fade_scrollbars">Grå ut rullefelt</string>
   <string name="fade_scrollbars_summ">Grå ut spørrekort-rullefeltene når du ikke ruller</string>
   <string name="show_whiteboard_summ">Lar deg skrive på skjermen</string>

@@ -70,6 +70,8 @@
   <string name="show_study_options_on_deck_load_summ">Mostrar opciones de estudio al cargar un mazo</string>
   <string name="hide_due_count">Ocultar cuenta de programadas</string>
   <string name="hide_due_count_summ">Oculta la cuenta de programadas</string>
+  <string name="show_progress_bars">Mostrar barras de progreso</string>
+  <string name="show_progress_bars_summ">Muestra el progreso de hoy y la proporción de respuestas correctas de hoy mientras se repasa.</string>
   <string name="fade_scrollbars">Ocultar las barras de desplazamiento</string>
   <string name="fade_scrollbars_summ">Ocultar automáticamente las barras de desplazamiento en las tarjetas cuando no hay desplazamiento</string>
   <string name="show_whiteboard_summ">Te permite escribir en la pantalla</string>

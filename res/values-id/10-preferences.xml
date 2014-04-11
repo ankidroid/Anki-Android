@@ -70,6 +70,8 @@
   <string name="show_study_options_on_deck_load_summ">Tunjukkan skrin opsyen studi bila muat dek</string>
   <string name="hide_due_count">Hide due count</string>
   <string name="hide_due_count_summ">Hides the due count</string>
+  <string name="show_progress_bars">Tunjuk bar progres</string>
+  <string name="show_progress_bars_summ">Tunjukkan progres hari ini dan jawapan ya semasa reviu</string>
   <string name="fade_scrollbars">Memudarkan scrollbar</string>
   <string name="fade_scrollbars_summ">Automatically fade out flashcard scrollbars when not scrolling</string>
   <string name="show_whiteboard_summ">Memungkinkan anda menulis di skrin</string>

@@ -70,6 +70,8 @@
   <string name="show_study_options_on_deck_load_summ">Mostra le opzioni di studio al caricamento del mazzo</string>
   <string name="hide_due_count">Nascondi conteggio carte scadute</string>
   <string name="hide_due_count_summ">Nasconde il conteggio delle carte scadute</string>
+  <string name="show_progress_bars">Mostra le barre di avanzamento</string>
+  <string name="show_progress_bars_summ">Mostra i progressi di oggi e la proporzione di sì odierni durante le ripetizioni</string>
   <string name="fade_scrollbars">Dissolvi barre di scorrimento</string>
   <string name="fade_scrollbars_summ">Dissolvi automaticamente le barre di scorrimento delle carte se non stai scorrendo</string>
   <string name="show_whiteboard_summ">Consente di scrivere sullo schermo</string>

@@ -70,6 +70,8 @@
   <string name="show_study_options_on_deck_load_summ">Lerneinstellungen beim Laden eines Stapels zeigen</string>
   <string name="hide_due_count">Fälligenzähler verbergen</string>
   <string name="hide_due_count_summ">Zeigt die Anzahl fälliger Karten nicht an</string>
+  <string name="show_progress_bars">Erfolgsbalken anzeigen</string>
+  <string name="show_progress_bars_summ">Zeigt beim Lernen den heutigen Lernfortschritt sowie den heutigen Anteil von Ja-Antworten.</string>
   <string name="fade_scrollbars">Rollbalken ausblenden</string>
   <string name="fade_scrollbars_summ">Rollbalken automatisch ausblenden, wenn nicht gescrollt wird</string>
   <string name="show_whiteboard_summ">Erlaubt es, auf den Bildschirm zu schreiben</string>
@@ -184,7 +186,7 @@
   <string name="eink_display">Optimierung für E-Ink-Displays</string>
   <string name="eink_display_summ">Deaktiviere alle Animationen und führe einige Optimierungen für E-Ink-Displays durch</string>
   <string name="vertical_centering">Karteninhalt vertikal zentrieren</string>
-  <string name="vertical_centering_summ">Zentriert den Karteninhalt vertikal, statt in am oberen Rand anzuzeigen.</string>
+  <string name="vertical_centering_summ">Zentriert den Karteninhalt vertikal, statt ihn am oberen Rand anzuzeigen.</string>
   <string name="pref_cat_backup">Sicherungssystem</string>
   <string name="pref_backup">Benutze Sicherungen</string>
   <string name="pref_backup_summ">Erstellt automatisch vor dem Öffnen Ihres Stapels eine Sicherungskopie (einmal pro Tag)</string>

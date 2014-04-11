@@ -70,6 +70,8 @@
   <string name="show_study_options_on_deck_load_summ">Visar studieinställningsskärmen när du laddar en kortlek</string>
   <string name="hide_due_count">Göm antal i kö</string>
   <string name="hide_due_count_summ">Gömmer antalet i kö</string>
+  <string name="show_progress_bars">Visa förloppsmätare</string>
+  <string name="show_progress_bars_summ">Visar dagens framsteg samt andelen korrekta repetitionssvar</string>
   <string name="fade_scrollbars">Dölj rullister</string>
   <string name="fade_scrollbars_summ">Dölj automatiskt rullister för kort när du inte scrollar</string>
   <string name="show_whiteboard_summ">Låter dig skriva på skärmen</string>
