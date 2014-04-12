@@ -956,7 +956,10 @@ public class Collection {
                     }
                 }
 
-                fields.put("FrontSide", d.get("q"));
+                // the following line differs from inherited libanki (original in comment)  
+                fields.put("FrontSide", d.get("q")); // fields.put("FrontSide", mMedia.stripAudio(d.get("q")));
+                
+                 
 
                 // runFilter mungeFields for type "a"
                 fparser = new Models.fieldParser(fields);

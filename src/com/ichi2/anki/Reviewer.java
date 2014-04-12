@@ -2463,6 +2463,27 @@ public class Reviewer extends AnkiActivity {
     }
 
 
+    /**
+    * getAnswerFormat returns the answer part of this card's template as entered by user,
+    * without any parsing
+    */
+    public String getAnswerFormat() {
+        try {                    
+            JSONObject model = mCurrentCard.model();
+            JSONObject template;
+            if (model.getInt("type") == Sched.MODEL_STD) {
+                template = model.getJSONArray("tmpls").getJSONObject((Integer)  mCurrentCard.getOrd());
+            } else {
+                template = model.getJSONArray("tmpls").getJSONObject(0);
+            }
+
+            return template.getString("afmt");
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }            
+    }
+    
+    
     private void updateCard(String content) {
         Log.i(AnkiDroidApp.TAG, "updateCard");
 
@@ -2481,24 +2502,26 @@ public class Reviewer extends AnkiActivity {
                 mCard.getSettings().setDefaultFontSize(calculateDynamicFontSize(content));
             }
 
-            String question = "";
-            String answer = "";
             int qa = -1; // prevent uninitialized variable errors
 
             if (sDisplayAnswer) {
                 qa = MetaDB.LANGUAGES_QA_ANSWER;
-                answer = mCurrentCard.getPureAnswerForReading();
                 // don't add answer sounds multiple times, such as when reshowing card after exiting editor
                 if (!mAnswerSoundsAdded) {
-                    Sound.addSounds(mBaseUrl, answer, qa);
+                    String afmt = getAnswerFormat();
+                    String answerSoundSource = content;
+                    if (afmt.indexOf("{{FrontSide}}") != -1) { // don't grab front side audio
+                        String fromFrontSide = mCurrentCard._getQA(false).get("q");
+                        answerSoundSource = content.replace(fromFrontSide, "");
+                    }
+                    Sound.addSounds(mBaseUrl, answerSoundSource, qa);
                     mAnswerSoundsAdded = true;
                 }
             } else {
                 Sound.resetSounds(); // reset sounds each time first side of card is displayed, even after leaving the editor
                 mAnswerSoundsAdded = false;
                 qa = MetaDB.LANGUAGES_QA_QUESTION;
-                question = mCurrentCard.getQuestion(mCurrentSimpleInterface);
-                Sound.addSounds(mBaseUrl, question, qa);
+                Sound.addSounds(mBaseUrl, content, qa);
             }
 
             content = Sound.expandSounds(mBaseUrl, content, mSpeakText, qa);
