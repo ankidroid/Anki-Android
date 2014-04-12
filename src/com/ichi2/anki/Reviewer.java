@@ -982,7 +982,8 @@ public class Reviewer extends AnkiActivity {
             }
 
             // Get last whiteboard state
-            if (mPrefWhiteboard && mCurrentCard != null && MetaDB.getWhiteboardState(this, mCurrentCard.getDid()) == 1) {
+            long deckID = mSched.getCol().getDecks().current().optLong("id",-1);
+            if (mPrefWhiteboard && deckID!=-1 && MetaDB.getWhiteboardState(this, deckID) == 1) {            
                 mShowWhiteboard = true;
                 mWhiteboard.setVisibility(View.VISIBLE);
             }
