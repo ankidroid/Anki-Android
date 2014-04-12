@@ -23,6 +23,7 @@
 <string name="CardEditorCancelButton">Cancel</string>
 <string name="CardEditorSaveButton">Save</string>
 <string name="CardEditorLaterButton">Later</string>
+<string name="CardEditorPreviewButton">Preview</string>
 <string name="CardEditorLaterMessage">Saved information for later</string>
 <string name="CardEditorCardDeck">Card deck: %s</string>
 <string name="CardEditorNoteDeck">Note deck: %s</string>
@@ -107,6 +108,7 @@
 <string name="card_editor_reset">Reset</string>
 <string name="card_editor_copy_card">Copy card</string>
 <string name="card_editor_reset_card">Reset progress</string>
+<string name="card_editor_reschedule_card">Reschedule card</string>
 <string name="card_editor_preview_card">Preview</string>
 
 <string name="error_insufficient_memory">Operation not possible due to insufficient memory on your device</string>

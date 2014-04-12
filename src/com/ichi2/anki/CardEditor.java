@@ -36,6 +36,7 @@ import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.InputFilter;
+import android.text.InputType;
 import android.text.Spanned;
 import android.text.TextWatcher;
 import android.text.method.KeyListener;
@@ -47,6 +48,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -110,8 +112,9 @@ public class CardEditor extends ActionBarActivity {
     private static final int DIALOG_MODEL_SELECT = 1;
     private static final int DIALOG_TAGS_SELECT = 2;
     private static final int DIALOG_RESET_CARD = 3;
-    private static final int DIALOG_INTENT_INFORMATION = 4;
-    private static final int DIALOG_CONFIRM_DUPLICATE = 5;
+    private static final int DIALOG_RESCHEDULE_CARD = 4;
+    private static final int DIALOG_INTENT_INFORMATION = 5;
+    private static final int DIALOG_CONFIRM_DUPLICATE = 6;
 
     private static final String ACTION_CREATE_FLASHCARD = "org.openintents.action.CREATE_FLASHCARD";
     private static final String ACTION_CREATE_FLASHCARD_SEND = "android.intent.action.SEND";
@@ -123,6 +126,7 @@ public class CardEditor extends ActionBarActivity {
     private static final int MENU_RESET_CARD_PROGRESS = 4;
     private static final int MENU_SAVED_INTENT = 5;
     private static final int MENU_PREVIEW_CARD = 6;
+    private static final int MENU_RESCHEDULE_CARD = 7;
 
     // calling activity
     public static final int CALLER_NOCALLER = 0;
@@ -192,6 +196,8 @@ public class CardEditor extends ActionBarActivity {
     private ArrayList<String> selectedTags;
     private EditText mNewTagEditText;
     private StyledDialog mTagsDialog;
+    
+    private EditText mRescheduleEditText;
 
     private StyledProgressDialog mProgressDialog;
     private StyledOpenCollectionDialog mOpenCollectionDialog;
@@ -770,6 +776,10 @@ public class CardEditor extends ActionBarActivity {
             // Add preview option to action bar
             UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_PREVIEW_CARD, Menu.NONE,
                     R.string.card_editor_preview_card, android.R.drawable.ic_menu_view);
+
+            item = menu.add(Menu.NONE, MENU_RESCHEDULE_CARD, Menu.NONE,
+                    res.getString(R.string.card_editor_reschedule_card));
+
         }
         if (mCaller != CALLER_CARDEDITOR_INTENT_ADD) {
             mIntentInformation = MetaDB.getIntentInformation(this);
@@ -853,6 +863,10 @@ public class CardEditor extends ActionBarActivity {
 
             case MENU_RESET_CARD_PROGRESS:
                 showDialog(DIALOG_RESET_CARD);
+                return true;
+                
+            case MENU_RESCHEDULE_CARD:
+                showDialog(DIALOG_RESCHEDULE_CARD);
                 return true;
 
             case MENU_SAVED_INTENT:
@@ -1114,21 +1128,45 @@ public class CardEditor extends ActionBarActivity {
                 builder.setPositiveButton(res.getString(R.string.yes), new OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // for (long cardId :
-                        // mDeck.getCardsFromFactId(mEditorNote.getId())) {
-                        // mDeck.cardFromId(cardId).resetCard();
-                        // }
-                        // mDeck.reset();
-                        // setResult(Reviewer.RESULT_EDIT_CARD_RESET);
-                        // mCardReset = true;
-                        // Themes.showThemedToast(CardEditor.this,
-                        // getResources().getString(
-                        // R.string.reset_card_dialog_confirmation), true);
+                        mCol.getSched().forgetCards(new long[] { mCurrentEditedCard.getId() });
+                        mCol.reset();
+                        mCurrentEditedCard.load();
+                        mChanged = true;
+                        Themes.showThemedToast(CardEditor.this, getResources().getString(R.string.reset_card_dialog_confirmation), true);
                     }
                 });
                 builder.setNegativeButton(res.getString(R.string.no), null);
                 builder.setCancelable(true);
                 dialog = builder.create();
+                break;
+                
+            case DIALOG_RESCHEDULE_CARD:
+                builder.setTitle(res.getString(R.string.reschedule_card_dialog_title));
+                builder.setMessage(res.getString(R.string.reschedule_card_dialog_message));
+                builder.setPositiveButton(res.getString(R.string.ok), new OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        int days = Integer.parseInt(((EditText) mRescheduleEditText).getText().toString());
+                        mCol.getSched().reschedCards(new long[] { mCurrentEditedCard.getId() }, days, days);
+                        mCol.reset();
+                        mCurrentEditedCard.load();
+                        mChanged = true;
+                        Themes.showThemedToast(CardEditor.this, getResources().getString(R.string.reschedule_card_dialog_confirmation), true);
+                    }
+                });
+                builder.setNegativeButton(res.getString(R.string.cancel), null);
+                builder.setCancelable(true);
+                
+                mRescheduleEditText = (EditText) new EditText(this);
+                mRescheduleEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
+                mRescheduleEditText.setText("0");
+                mRescheduleEditText.selectAll();
+                
+                frame = new FrameLayout(this);
+                frame.addView(mRescheduleEditText);
+                builder.setView(frame, false, true);
+                dialog = builder.create();
+                
                 break;
 
             case DIALOG_INTENT_INFORMATION:
