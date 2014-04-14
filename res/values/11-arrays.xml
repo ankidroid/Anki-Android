@@ -92,7 +92,6 @@
 	<string-array name="leech_action_labels">
 		<item>Suspend card</item>
 		<item>Tag only</item>
-		<item>Reset as new</item>
 	</string-array>
    	<string-array name="new_order_labels">
 		<item>New cards in random order</item>

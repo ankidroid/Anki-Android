@@ -440,7 +440,6 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         Card oldCard = params[0].getCard();
         int ease = params[0].getInt();
         Card newCard = null;
-        // TODO: proper leech handling
         int oldCardLeech = 0;
         // 0: normal; 1: leech; 2: leech & suspended
         try {
@@ -449,6 +448,13 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             try {
                 if (oldCard != null) {
                     sched.answerCard(oldCard, ease);
+                    if (oldCard.note().hasTag("leech")) {
+                        if (oldCard.getQueue() < 0) {
+                            oldCardLeech = 2;
+                        } else {
+                            oldCardLeech = 1;
+                        }
+                    }
                 }
                 if (newCard == null) {
                     newCard = getCard(sched);
