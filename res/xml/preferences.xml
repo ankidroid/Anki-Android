@@ -359,7 +359,7 @@
                 android:disableDependentsState="false"
                 android:key="whiteboard"
                 android:summary="@string/show_whiteboard_summ"
-                android:title="@string/show_whiteboard" />
+                android:title="@string/enable_whiteboard" />
             <com.hlidskialf.android.preference.SeekBarPreference
                 android:defaultValue="6"
                 android:dependency="whiteboard"
