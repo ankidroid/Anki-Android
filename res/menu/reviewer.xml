@@ -1,0 +1,58 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:ankidroid="http://schemas.android.com/apk/res-auto">
+
+	<item android:id="@+id/action_undo"
+		android:icon="@drawable/ic_menu_revert_disabled"
+		android:title="@string/undo"
+		android:enabled="false"
+		ankidroid:showAsAction="always" />
+
+	<item android:id="@+id/action_clear_whiteboard"
+		android:icon="@drawable/ic_menu_clear_playlist"
+		android:title="@string/clear_whiteboard"
+		android:visible="false"
+		ankidroid:showAsAction="always" />
+
+	<item android:id="@+id/action_mark_card"
+		android:icon="@drawable/ic_menu_mark"
+		android:title="@string/menu_mark_card"
+		ankidroid:showAsAction="ifRoom" />
+
+	<item android:id="@+id/action_edit"
+		android:icon="@drawable/ic_menu_edit"
+		android:title="@string/menu_edit_card"
+		ankidroid:showAsAction="ifRoom" />
+
+	<item android:id="@+id/action_dismiss"
+		android:title="@string/menu_dismiss_note">
+
+		<menu>
+
+			<item android:id="@+id/action_bury_card"
+				android:title="@string/menu_bury_card" />
+
+			<item android:id="@+id/action_bury_note"
+				android:title="@string/menu_bury_note" />
+
+			<item android:id="@+id/action_suspend_card"
+				android:title="@string/menu_suspend_card" />
+
+			<item android:id="@+id/action_suspend_note"
+				android:title="@string/menu_suspend_note" />
+
+			<item android:id="@+id/action_delete"
+				android:title="@string/menu_delete_note" />
+
+		</menu>
+
+	</item>
+
+	<item android:id="@+id/action_whiteboard"
+		android:title="@string/hide_whiteboard"
+		android:visible="false" />
+
+	<item android:id="@+id/action_search_dictionary"
+		android:title="@string/menu_select"
+		android:visible="false" />
+
+</menu>

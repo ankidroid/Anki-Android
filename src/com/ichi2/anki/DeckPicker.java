@@ -93,6 +93,7 @@ import java.util.TreeSet;
 public class DeckPicker extends ActionBarActivity {
 
     public static final int CRAM_DECK_FRAGMENT = -1;
+
     /**
      * Dialogs
      */
@@ -138,23 +139,6 @@ public class DeckPicker extends ActionBarActivity {
     private String mImportPath;
     private String[] mImportValues;
     private int mImportMethod = IMPORT_METHOD_ASK;
-
-    /**
-     * Menus
-     */
-    private static final int MENU_ABOUT = 0;
-    private static final int MENU_CREATE_DECK = 1;
-    private static final int MENU_ADD_SHARED_DECK = 2;
-    private static final int MENU_PREFERENCES = 3;
-    private static final int MENU_FEEDBACK = 5;
-    private static final int MENU_HELP = 6;
-    private static final int CHECK_DATABASE = 7;
-    private static final int MENU_SYNC = 8;
-    private static final int MENU_ADD_NOTE = 9;
-    public static final int MENU_CREATE_DYNAMIC_DECK = 10;
-    private static final int MENU_STATISTICS = 12;
-    private static final int MENU_CARDBROWSER = 13;
-    private static final int MENU_IMPORT = 14;
 
     /**
      * Context Menus
@@ -226,7 +210,6 @@ public class DeckPicker extends ActionBarActivity {
     int mStatisticType;
 
     public boolean mFragmented;
-    private boolean mInvalidateMenu;
 
     boolean mCompletionBarRestrictToActive = false; // set this to true in order to calculate completion bar only for
                                                     // active cards
@@ -982,7 +965,6 @@ public class DeckPicker extends ActionBarActivity {
             });
         }
 
-        mInvalidateMenu = false;
         mDeckList = new ArrayList<HashMap<String, String>>();
         mDeckListView = (ListView) findViewById(R.id.files);
         mDeckListAdapter = new SimpleAdapter(this, mDeckList, R.layout.deck_item, new String[] { "name", "new", "lrn",
@@ -1354,32 +1336,6 @@ public class DeckPicker extends ActionBarActivity {
             case DIALOG_NO_SDCARD:
                 builder.setMessage("The SD card could not be read. Please, turn off USB storage.");
                 builder.setPositiveButton(R.string.ok, null);
-                dialog = builder.create();
-                break;
-
-            case DIALOG_SELECT_HELP:
-                builder.setTitle(res.getString(R.string.help_title));
-                builder.setItems(
-                        new String[] { res.getString(R.string.help_tutorial), res.getString(R.string.help_online),
-                                res.getString(R.string.help_faq) }, new DialogInterface.OnClickListener() {
-
-                            @Override
-                            public void onClick(DialogInterface arg0, int arg1) {
-                                if (arg1 == 0) {
-                                    createTutorialDeck();
-                                } else {
-                                    if (Utils.isIntentAvailable(DeckPicker.this, "android.intent.action.VIEW")) {
-                                        Intent intent = new Intent("android.intent.action.VIEW", Uri
-                                                .parse(getResources().getString(
-                                                        arg1 == 1 ? R.string.link_help : R.string.link_faq)));
-                                        startActivity(intent);
-                                    } else {
-                                        startActivity(new Intent(DeckPicker.this, Info.class));
-                                    }
-                                }
-                            }
-
-                        });
                 dialog = builder.create();
                 break;
 
@@ -2345,125 +2301,57 @@ public class DeckPicker extends ActionBarActivity {
         }
     };
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuItem item;
-
-        UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_SYNC, Menu.NONE, R.string.sync_title,
-                R.drawable.ic_menu_refresh);
-
-        if (mFragmented) {
-
-            UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_ADD_NOTE, Menu.NONE, R.string.add,
-                    R.drawable.ic_menu_add);
-
-        	int icon;
-        	SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
-        	if (preferences.getBoolean("invertedColors", false)) {
-        		icon = R.drawable.ic_menu_night_checked;
-        	} else {
-        		icon = R.drawable.ic_menu_night;
-        	}
-            UIUtils.addMenuItemInActionBar(menu, Menu.NONE, StudyOptionsActivity.MENU_NIGHT, Menu.NONE, R.string.night_mode,
-                    icon);
-
-            UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_STATISTICS, Menu.NONE, R.string.statistics_menu,
-                    R.drawable.ic_menu_statistics);
-
-            UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_CARDBROWSER, Menu.NONE, R.string.menu_cardbrowser,
-                    R.drawable.ic_menu_cardbrowser);
-        }
-        UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_HELP, Menu.NONE, R.string.help_title,
-                R.drawable.ic_menu_help);
-
-        item = menu.add(Menu.NONE, MENU_PREFERENCES, Menu.NONE, R.string.menu_preferences);
-        item.setIcon(R.drawable.ic_menu_preferences);
-        item = menu.add(Menu.NONE, MENU_ADD_SHARED_DECK, Menu.NONE, R.string.menu_get_shared_decks);
-        item.setIcon(R.drawable.ic_menu_download);
-        item = menu.add(Menu.NONE, MENU_CREATE_DECK, Menu.NONE, R.string.new_deck);
-        item.setIcon(R.drawable.ic_menu_add);
-        item = menu.add(Menu.NONE, MENU_CREATE_DYNAMIC_DECK, Menu.NONE, R.string.new_dynamic_deck);
-        item.setIcon(R.drawable.ic_menu_add);
-        item = menu.add(Menu.NONE, MENU_IMPORT, Menu.NONE, R.string.menu_import);
-        item.setIcon(R.drawable.ic_menu_download);
-        UIUtils.addMenuItem(menu, Menu.NONE, CHECK_DATABASE, Menu.NONE, R.string.check_db, R.drawable.ic_menu_search);
-        item = menu.add(Menu.NONE, StudyOptionsActivity.MENU_ROTATE, Menu.NONE, R.string.menu_rotate);
-        item.setIcon(R.drawable.ic_menu_always_landscape_portrait);
-        item = menu.add(Menu.NONE, MENU_FEEDBACK, Menu.NONE, R.string.studyoptions_feedback);
-        item.setIcon(R.drawable.ic_menu_send);
-        item = menu.add(Menu.NONE, MENU_ABOUT, Menu.NONE, R.string.menu_about);
-        item.setIcon(R.drawable.ic_menu_info_details);
-        item.setIcon(R.drawable.ic_menu_preferences);
-
-        return true;
-    }
-
-
-    @Override
-    public boolean onMenuOpened(int featureId, Menu menu) {
-        if (mInvalidateMenu) {
-        	if (menu != null) {
-                menu.clear();
-                onCreateOptionsMenu(menu);
-        	}
-            mInvalidateMenu = false;
-        }
-
-        return super.onMenuOpened(featureId, menu);
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.deck_picker, menu);
         boolean sdCardAvailable = AnkiDroidApp.isSdCardMounted();
+        menu.findItem(R.id.action_sync).setEnabled(sdCardAvailable);
         if (mFragmented) {
-            menu.findItem(MENU_SYNC).setEnabled(sdCardAvailable);
-            menu.findItem(MENU_ADD_NOTE).setEnabled(sdCardAvailable);
-            menu.findItem(MENU_STATISTICS).setEnabled(sdCardAvailable);
-            menu.findItem(MENU_CARDBROWSER).setEnabled(sdCardAvailable);
+            menu.findItem(R.id.action_add_note_from_deck_picker).setVisible(true).setEnabled(sdCardAvailable);
+            menu.findItem(R.id.action_statistics).setVisible(true).setEnabled(sdCardAvailable);
+            menu.findItem(R.id.action_card_browser).setVisible(true).setEnabled(sdCardAvailable);
         }
-        menu.findItem(MENU_CREATE_DECK).setEnabled(sdCardAvailable);
-        menu.findItem(MENU_CREATE_DYNAMIC_DECK).setEnabled(sdCardAvailable);
-        menu.findItem(CHECK_DATABASE).setEnabled(sdCardAvailable);
-        return true;
+        menu.findItem(R.id.action_new_deck).setEnabled(sdCardAvailable);
+        menu.findItem(R.id.action_new_filtered_deck).setEnabled(sdCardAvailable);
+        menu.findItem(R.id.action_check_database).setEnabled(sdCardAvailable);
+        return super.onCreateOptionsMenu(menu);
     }
 
 
-    /** Handles item selections */
+    @Override
+    public boolean onMenuOpened(int feature, Menu menu) {
+        AnkiDroidApp.getCompat().invalidateOptionsMenu(this);
+        return super.onMenuOpened(feature, menu);
+    }
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Resources res = getResources();
-
         switch (item.getItemId()) {
 
-            case MENU_HELP:
-                showDialog(DIALOG_SELECT_HELP);
-                return true;
-
-            case MENU_SYNC:
+            case R.id.action_sync:
                 sync();
                 return true;
 
-            case MENU_ADD_NOTE:
+            case R.id.action_add_note_from_deck_picker:
                 addNote();
                 return true;
 
-            case MENU_STATISTICS:
-                showDialog(DIALOG_SELECT_STATISTICS_TYPE);
+            case R.id.action_shared_decks:
+                if (AnkiDroidApp.getCol() != null) {
+                    addSharedDeck();
+                }
                 return true;
 
-            case MENU_CARDBROWSER:
-                openCardBrowser();
-                return true;
-
-            case MENU_CREATE_DECK:
+            case R.id.action_new_deck:
                 StyledDialog.Builder builder2 = new StyledDialog.Builder(DeckPicker.this);
                 builder2.setTitle(res.getString(R.string.new_deck));
-
                 mDialogEditText = (EditText) new EditText(DeckPicker.this);
                 // mDialogEditText.setFilters(new InputFilter[] { mDeckNameFilter });
                 builder2.setView(mDialogEditText, false, false);
                 builder2.setPositiveButton(res.getString(R.string.create), new DialogInterface.OnClickListener() {
-
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String deckName = mDialogEditText.getText().toString()
@@ -2477,10 +2365,21 @@ public class DeckPicker extends ActionBarActivity {
                 builder2.create().show();
                 return true;
 
-            case MENU_CREATE_DYNAMIC_DECK:
+            case R.id.action_import:
+                showDialog(DIALOG_IMPORT_HINT);
+                return true;
+
+            case R.id.action_statistics:
+                showDialog(DIALOG_SELECT_STATISTICS_TYPE);
+                return true;
+
+            case R.id.action_card_browser:
+                openCardBrowser();
+                return true;
+
+            case R.id.action_new_filtered_deck:
                 StyledDialog.Builder builder3 = new StyledDialog.Builder(DeckPicker.this);
                 builder3.setTitle(res.getString(R.string.new_deck));
-
                 mDialogEditText = (EditText) new EditText(DeckPicker.this);
                 ArrayList<String> names = AnkiDroidApp.getCol().getDecks().allNames();
                 int n = 1;
@@ -2493,7 +2392,6 @@ public class DeckPicker extends ActionBarActivity {
                 // mDialogEditText.setFilters(new InputFilter[] { mDeckNameFilter });
                 builder3.setView(mDialogEditText, false, false);
                 builder3.setPositiveButton(res.getString(R.string.create), new DialogInterface.OnClickListener() {
-
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         long id = AnkiDroidApp.getCol().getDecks().newDyn(mDialogEditText.getText().toString());
@@ -2504,57 +2402,45 @@ public class DeckPicker extends ActionBarActivity {
                 builder3.create().show();
                 return true;
 
-            case MENU_ABOUT:
-                startActivity(new Intent(DeckPicker.this, Info.class));
-                ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.RIGHT);
+            case R.id.action_check_database:
+                integrityCheck();
                 return true;
 
-            case MENU_ADD_SHARED_DECK:
-                if (AnkiDroidApp.getCol() != null) {
-                    addSharedDeck();
-                }
-                return true;
-
-            case MENU_IMPORT:
-            	showDialog(DIALOG_IMPORT_HINT);
-           	return true;
-
-            case MENU_PREFERENCES:
+            case R.id.action_preferences:
                 startActivityForResult(new Intent(DeckPicker.this, Preferences.class), PREFERENCES_UPDATE);
                 return true;
 
-            case MENU_FEEDBACK:
+            case R.id.action_tutorial:
+                createTutorialDeck();
+                return true;
+
+            case R.id.action_online:
+            case R.id.action_faq:
+                if (Utils.isIntentAvailable(DeckPicker.this, "android.intent.action.VIEW")) {
+                    Intent intent = new Intent("android.intent.action.VIEW", Uri
+                            .parse(getResources().getString(
+                                    item.getItemId() == R.id.action_online ? R.string.link_help : R.string.link_faq)));
+                    startActivity(intent);
+                } else {
+                    startActivity(new Intent(DeckPicker.this, Info.class));
+                }
+                return true;
+
+            case R.id.action_feedback:
                 Intent i = new Intent(DeckPicker.this, Feedback.class);
                 i.putExtra("request", REPORT_FEEDBACK);
                 startActivityForResult(i, REPORT_FEEDBACK);
                 ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
                 return true;
 
-            case CHECK_DATABASE:
-                integrityCheck();
-                return true;
-
-            case StudyOptionsActivity.MENU_ROTATE:
-                if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-                    this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-                } else {
-                    this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                }
-                return true;
-
-            case StudyOptionsActivity.MENU_NIGHT:
-            	SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
-            	if (preferences.getBoolean("invertedColors", false)) {
-            		preferences.edit().putBoolean("invertedColors", false).commit();
-            		item.setIcon(R.drawable.ic_menu_night);
-            	} else {
-            		preferences.edit().putBoolean("invertedColors", true).commit();
-            		item.setIcon(R.drawable.ic_menu_night_checked);
-            	}
+            case R.id.action_about:
+                startActivity(new Intent(DeckPicker.this, Info.class));
+                ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.RIGHT);
                 return true;
 
             default:
                 return super.onOptionsItemSelected(item);
+
         }
     }
 
@@ -2617,7 +2503,7 @@ public class DeckPicker extends ActionBarActivity {
             SharedPreferences pref = restorePreferences();
             String newLanguage = pref.getString("language", "");
             if (AnkiDroidApp.setLanguage(newLanguage)) {
-                mInvalidateMenu = true;
+                AnkiDroidApp.getCompat().invalidateOptionsMenu(this);
             }
             if (mNotMountedDialog != null && mNotMountedDialog.isShowing() && pref.getBoolean("internalMemory", false)) {
                 showStartupScreensAndDialogs(pref, 0);

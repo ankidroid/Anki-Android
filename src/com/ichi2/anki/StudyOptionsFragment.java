@@ -36,6 +36,9 @@ import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -396,6 +399,8 @@ public class StudyOptionsFragment extends Fragment {
         mCramInitialConfig = getArguments().getBundle("cramInitialConfig");
 
         resetAndUpdateValuesFromDeck();
+
+        setHasOptionsMenu(true);
 
         return mStudyOptionsView;
     }
@@ -1270,6 +1275,41 @@ public class StudyOptionsFragment extends Fragment {
         Intent cardBrowser = new Intent(getActivity(), CardBrowser.class);
         startActivityForResult(cardBrowser, BROWSE_CARDS);
         animateLeft();
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        getActivity().getMenuInflater().inflate(R.menu.study_options_fragment, menu);
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getActivity());
+        if (preferences.getBoolean("invertedColors", false)) {
+            menu.findItem(R.id.action_night_mode).setIcon(R.drawable.ic_menu_night_checked);
+        } else {
+            menu.findItem(R.id.action_night_mode).setIcon(R.drawable.ic_menu_night);
+        }
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.action_night_mode:
+                SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getActivity());
+                if (preferences.getBoolean("invertedColors", false)) {
+                    preferences.edit().putBoolean("invertedColors", false).commit();
+                    item.setIcon(R.drawable.ic_menu_night);
+                } else {
+                    preferences.edit().putBoolean("invertedColors", true).commit();
+                    item.setIcon(R.drawable.ic_menu_night_checked);
+                }
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
     }
 
 

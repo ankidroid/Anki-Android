@@ -116,14 +116,6 @@ public class CardEditor extends ActionBarActivity {
     private static final String ACTION_CREATE_FLASHCARD = "org.openintents.action.CREATE_FLASHCARD";
     private static final String ACTION_CREATE_FLASHCARD_SEND = "android.intent.action.SEND";
 
-    private static final int MENU_LOOKUP = 0;
-    private static final int MENU_RESET = 1;
-    private static final int MENU_COPY_CARD = 2;
-    private static final int MENU_ADD_CARD = 3;
-    private static final int MENU_RESET_CARD_PROGRESS = 4;
-    private static final int MENU_SAVED_INTENT = 5;
-    private static final int MENU_PREVIEW_CARD = 6;
-
     // calling activity
     public static final int CALLER_NOCALLER = 0;
 
@@ -746,129 +738,73 @@ public class CardEditor extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuItem item;
-        Resources res = getResources();
-        // Lookup.initialize(this, mDeck.getDeckPath());
-        // item = menu.add(Menu.NONE, MENU_LOOKUP, Menu.NONE,
-        // Lookup.getSearchStringTitle());
-        // item.setIcon(R.drawable.ic_menu_search);
-        // item.setEnabled(Lookup.isAvailable());
-        // item = menu.add(Menu.NONE, MENU_RESET, Menu.NONE,
-        // res.getString(R.string.card_editor_reset));
-        // item.setIcon(R.drawable.ic_menu_revert);
+        getMenuInflater().inflate(R.menu.card_editor, menu);
         if (!mAddNote) {
-            item = menu.add(Menu.NONE, MENU_ADD_CARD, Menu.NONE, res.getString(R.string.card_editor_add_card));
-            item.setIcon(R.drawable.ic_menu_add);
+            menu.findItem(R.id.action_add_card_from_card_editor).setVisible(true);
+            menu.findItem(R.id.action_reset_card_progress).setVisible(true);
+            menu.findItem(R.id.action_preview).setVisible(true);
         }
-        item = menu.add(Menu.NONE, MENU_COPY_CARD, Menu.NONE, res.getString(R.string.card_editor_copy_card));
-        item.setIcon(R.drawable.ic_menu_upload);
-        if (!mAddNote) {
-            item = menu.add(Menu.NONE, MENU_RESET_CARD_PROGRESS, Menu.NONE,
-                    res.getString(R.string.card_editor_reset_card));
-            item.setIcon(R.drawable.ic_menu_delete);
-            
-            // Add preview option to action bar
-            UIUtils.addMenuItemInActionBar(menu, Menu.NONE, MENU_PREVIEW_CARD, Menu.NONE,
-                    R.string.card_editor_preview_card, android.R.drawable.ic_menu_view);
+        if (mEditFields != null) {
+            for (int i = 0; i < mEditFields.size(); i++) {
+                if (mEditFields.get(i).getText().length() > 0) {
+                    menu.findItem(R.id.action_copy_card).setEnabled(true);
+                    break;
+                } else if (i == mEditFields.size() - 1) {
+                    menu.findItem(R.id.action_copy_card).setEnabled(false);
+                }
+            }
         }
         if (mCaller != CALLER_CARDEDITOR_INTENT_ADD) {
             mIntentInformation = MetaDB.getIntentInformation(this);
-            item = menu.add(Menu.NONE, MENU_SAVED_INTENT, Menu.NONE,
-                    res.getString(R.string.intent_add_saved_information));
-            item.setIcon(R.drawable.ic_menu_archive);
+            menu.findItem(R.id.action_saved_notes).setEnabled(mIntentInformation.size() > 0);
         }
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
 
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        // View focus = this.getWindow().getCurrentFocus();
-        // menu.findItem(MENU_LOOKUP).setEnabled(
-        // focus instanceof FieldEditText
-        // && ((TextView) focus).getText().length() > 0
-        // && Lookup.isAvailable());
-
-        if (mEditFields == null) {
-            return false;
-        }
-        for (int i = 0; i < mEditFields.size(); i++) {
-            if (mEditFields.get(i).getText().length() > 0) {
-                menu.findItem(MENU_COPY_CARD).setEnabled(true);
-                break;
-            } else if (i == mEditFields.size() - 1) {
-                menu.findItem(MENU_COPY_CARD).setEnabled(false);
-            }
-        }
-
-        if (mCaller != CALLER_CARDEDITOR_INTENT_ADD) {
-            mIntentInformation = MetaDB.getIntentInformation(this);
-            menu.findItem(MENU_SAVED_INTENT).setEnabled(mIntentInformation.size() > 0);
-        }
-        return true;
+    public boolean onMenuOpened(int feature, Menu menu) {
+        AnkiDroidApp.getCompat().invalidateOptionsMenu(this);
+        return super.onMenuOpened(feature, menu);
     }
 
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case MENU_COPY_CARD:
-            case MENU_ADD_CARD:
+
+            case android.R.id.home:
+                closeCardEditor(AnkiDroidApp.RESULT_TO_HOME);
+                return true;
+
+            case R.id.action_preview:
+                openReviewer();
+                return true;
+
+            case R.id.action_add_card_from_card_editor:
+            case R.id.action_copy_card:
                 Intent intent = new Intent(CardEditor.this, CardEditor.class);
                 intent.putExtra(EXTRA_CALLER, CALLER_CARDEDITOR);
                 // intent.putExtra(EXTRA_DECKPATH, mDeckPath);
-                if (item.getItemId() == MENU_COPY_CARD) {
+                if (item.getItemId() == R.id.action_copy_card) {
                     intent.putExtra(EXTRA_CONTENTS, getFieldsText());
                 }
                 startActivityForResult(intent, REQUEST_ADD);
                 ActivityTransitionAnimation.slide(CardEditor.this, ActivityTransitionAnimation.LEFT);
                 return true;
 
-            case MENU_RESET:
-                if (mAddNote) {
-                    if (mCaller == CALLER_INDICLASH || mCaller == CALLER_CARDEDITOR_INTENT_ADD) {
-                    	resetEditFields(mSourceText);
-                    } else {
-                        setEditFieldTexts(getIntent().getStringExtra(EXTRA_CONTENTS));
-                        if (!mEditFields.isEmpty()) {
-                            mEditFields.getFirst().requestFocus();
-                        }
-                    }
-                } else {
-                    populateEditFields();
-                }
-                return true;
-
-            case MENU_LOOKUP:
-                View focus = this.getWindow().getCurrentFocus();
-                if (focus instanceof FieldEditText) {
-                    FieldEditText field = (FieldEditText) focus;
-                    if (!field.isSelected()) {
-                        field.selectAll();
-                    }
-                    Lookup.lookUp(
-                            field.getText().toString().substring(field.getSelectionStart(), field.getSelectionEnd()));
-                }
-                return true;
-
-            case MENU_RESET_CARD_PROGRESS:
+            case R.id.action_reset_card_progress:
                 showDialog(DIALOG_RESET_CARD);
                 return true;
 
-            case MENU_SAVED_INTENT:
+            case R.id.action_saved_notes:
                 showDialog(DIALOG_INTENT_INFORMATION);
                 return true;
-                
-                
-            case MENU_PREVIEW_CARD:
-                openReviewer();
-                return true;
 
-            case android.R.id.home:
-                closeCardEditor(AnkiDroidApp.RESULT_TO_HOME);
-                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+
         }
-        return false;
     }
 
 

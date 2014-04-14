@@ -464,20 +464,10 @@ public class CardBrowser extends ActionBarActivity {
 
 
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        if (mCol == null) {
-            return false;
-        }
-        return true;
-    }
-
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()) {
 
-            case R.id.action_add_card:
+            case R.id.action_add_card_from_card_browser:
                 Intent intent = new Intent(CardBrowser.this, CardEditor.class);
                 intent.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_CARDBROWSER_ADD);
                 startActivityForResult(intent, ADD_NOTE);
@@ -506,9 +496,10 @@ public class CardBrowser extends ActionBarActivity {
                 showDialog(DIALOG_TAGS);
                 return true;
 
-        }
+            default:
+                return super.onOptionsItemSelected(item);
 
-        return false;
+        }
     }
 
 
