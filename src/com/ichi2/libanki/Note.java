@@ -27,6 +27,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class Note implements Cloneable {
@@ -113,27 +114,29 @@ public class Note implements Cloneable {
     }
 
 
+    /*
+     * If fields or tags have changed, write changes to disk.
+     */
     public void flush() {
-        flush(0);
+    	flush(null);
     }
 
-
-    public void flush(long mod) {
-    	flush(mod, true);
-    }
-
-
-    public void flush(long mod, boolean changeUsn) {
+    
+    public void flush(Long mod) {
         _preFlush();
-        mMod = mod != 0 ? mod : Utils.intNow();
-        if (changeUsn) {
-            mUsn = mCol.usn();
-        }
         String sfld = Utils.stripHTMLMedia(mFields[mCol.getModels().sortIdx(mModel)]);
         String tags = stringTags();
+        String fields = joinedFields();
+        if (mod == null && mCol.getDb().queryScalar(String.format(Locale.US,
+                "select 1 from notes where id = ? and tags = ? and flds = ?",
+                mId, tags, fields), false) > 0) {
+            return;
+        }
         long csum = Utils.fieldChecksum(mFields[0]);
+        mMod = mod != null ? mod : Utils.intNow();
+        mUsn = mCol.usn();
         mCol.getDb().execute("INSERT OR REPLACE INTO notes VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                new Object[] { mId, mGuId, mMid, mMod, mUsn, tags, joinedFields(), sfld, csum, mFlags, mData });
+                new Object[] { mId, mGuId, mMid, mMod, mUsn, tags, fields, sfld, csum, mFlags, mData });
         mCol.getTags().register(mTags);
         _postFlush();
     }
