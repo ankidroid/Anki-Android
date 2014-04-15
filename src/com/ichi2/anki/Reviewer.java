@@ -2332,6 +2332,7 @@ public class Reviewer extends AnkiActivity {
         setFlipCardAnimation();
 
         String answer = mCurrentCard.getAnswer(mCurrentSimpleInterface);
+        answer = IncludeAnyFrontSideAudio(answer);
         answer = typeAnsAnswerFilter(answer);
 
         if (mDisplayKanjiInfo) {
@@ -2404,8 +2405,78 @@ public class Reviewer extends AnkiActivity {
             mTimeoutHandler.postDelayed(mShowQuestionTask, mWaitQuestionSecond * 1000);
         }
     }
-
-
+    
+    
+    /**
+     * getAnswerFormat returns the answer part of this card's template as entered by user,
+     * without any parsing
+     */
+    public String getAnswerFormat() {
+        try {                    
+            JSONObject model = mCurrentCard.model();
+            JSONObject template;
+            if (model.getInt("type") == Sched.MODEL_STD) {
+                template = model.getJSONArray("tmpls").getJSONObject((Integer) mCurrentCard.getOrd());
+            } else {
+                template = model.getJSONArray("tmpls").getJSONObject(0);
+            }
+            
+            return template.getString("afmt");
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }            
+    }    
+    
+    
+    /**
+     * IncludeAnyFrontSideAudio is intended to take answerContent, as generated through libanki,
+     * and replace any audio that is stripped out when {{FrontSide}} is expanded. The motivation for
+     * this function was to allow Collection._renderQA() to more closely the core libanki code,
+     * which strips audio that ankidroid functionally exposes.
+     * @param answerContent the answer as rendered by  
+     */
+    private String IncludeAnyFrontSideAudio(String answerContent) {
+     // we need to re-inflate FrontSide audio if it appears in answer
+        String FullAudioContent = answerContent;
+        JSONObject t = mCurrentCard.template();
+        String afmt;
+        try {
+            afmt = t.getString("afmt");
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        if (afmt.indexOf("{{FrontSide}}") != -1) {
+            // FrontSide is included on answer
+            String frontSideContentWithAudio = mCurrentCard._getQA(false).get("q");
+            String frontSideAudioless = AnkiDroidApp.getCol().getMedia().stripAudio(frontSideContentWithAudio);
+            if (!frontSideContentWithAudio.contentEquals(frontSideAudioless)) {
+                // FrontSide had audio that needs to be reinstated
+                afmt = afmt.replace("{{FrontSide}}", "[({FrontSide})]"); // put a placeholder
+                Note n = mCurrentCard.note(false);
+                JSONObject m = mCurrentCard.model();
+                Object[] data;
+                try {
+                    data = new Object[] { mCurrentCard.getId(), n.getId(), m.getLong("id"), mCurrentCard.getODid() != 0l ? mCurrentCard.getODid() : mCurrentCard.getDid(), mCurrentCard.getOrd(),
+                            n.stringTags(), n.joinedFields() };
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+                // renderQA with our placeholder format
+                HashMap<String, String> QA = AnkiDroidApp.getCol()._renderQA(data, null, afmt);
+                String answerContentWithPlaceholder = QA.get("a");
+                // expand placeholder to FrontSide with embedded audio
+                FullAudioContent = answerContentWithPlaceholder.replace("[({FrontSide})]", frontSideContentWithAudio);
+                if (mCurrentSimpleInterface) {
+                    FullAudioContent = FullAudioContent.replaceAll("<hr[^>]*>", "<br>\u2500\u2500\u2500\u2500\u2500<br>");
+                } else {
+                    FullAudioContent = mCurrentCard.css() + FullAudioContent;
+                }                
+            }
+        }
+        return FullAudioContent;
+    }
+    
+    
     private void updateCard(String content) {
         Log.i(AnkiDroidApp.TAG, "updateCard");
 
@@ -2424,24 +2495,20 @@ public class Reviewer extends AnkiActivity {
                 mCard.getSettings().setDefaultFontSize(calculateDynamicFontSize(content));
             }
 
-            String question = "";
-            String answer = "";
-            int qa = -1; // prevent uninitialized variable errors
-
-            if (sDisplayAnswer) {
-                qa = MetaDB.LANGUAGES_QA_ANSWER;
-                answer = mCurrentCard.getPureAnswerForReading();
-                // don't add answer sounds multiple times, such as when reshowing card after exiting editor
-                if (!mAnswerSoundsAdded) {
-                    Sound.addSounds(mBaseUrl, answer, qa);
-                    mAnswerSoundsAdded = true;
-                }
-            } else {
-                Sound.resetSounds(); // reset sounds each time first side of card is displayed, even after leaving the editor
+            int qa = sDisplayAnswer ? MetaDB.LANGUAGES_QA_ANSWER : MetaDB.LANGUAGES_QA_QUESTION;
+            if (!sDisplayAnswer) {
+                Sound.resetSounds(); // whenever showing question, start audio list over
                 mAnswerSoundsAdded = false;
-                qa = MetaDB.LANGUAGES_QA_QUESTION;
-                question = mCurrentCard.getQuestion(mCurrentSimpleInterface);
-                Sound.addSounds(mBaseUrl, question, qa);
+                Sound.addSounds(mBaseUrl, content, qa);
+            } else { // sDisplayAnswer == true
+                String afmt = getAnswerFormat(); // to check for embedded {{FrontSide}}
+                String answerSoundSource = content;
+                if (afmt.indexOf("{{FrontSide}}") != -1) { // don't grab front side audio
+                    String fromFrontSide = mCurrentCard._getQA(false).get("q");
+                    answerSoundSource = content.replace(fromFrontSide, "");
+                }
+                Sound.addSounds(mBaseUrl, answerSoundSource, qa); 
+                mAnswerSoundsAdded = true;
             }
 
             content = Sound.expandSounds(mBaseUrl, content, mSpeakText, qa);
