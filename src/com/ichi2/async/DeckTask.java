@@ -197,7 +197,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
     private final int mType;
     private final Listener mListener;
-    private final DeckTask mPreviousTask;
+    private DeckTask mPreviousTask;
 
 
     public DeckTask(int type, Listener listener, DeckTask previousTask) {
@@ -235,7 +235,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                 Log.e(AnkiDroidApp.TAG, "previously running task was cancelled: " + mPreviousTask.mType, e);
             }
         }
-
+        
         // Actually execute the task now that we are at the front of the queue.
         switch (mType) {
             case TASK_TYPE_OPEN_COLLECTION:
@@ -362,6 +362,8 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     protected void onPostExecute(TaskData result) {
         super.onPostExecute(result);
         mListener.onPostExecute(this, result);
+        Log.i(AnkiDroidApp.TAG, "enabling garbage collection of mPreviousTask...");
+        mPreviousTask = null;
     }
 
 
