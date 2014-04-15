@@ -63,8 +63,8 @@
   <string name="reset_card_dialog_title">Vynulovať pokrok karty</string>
   <string name="reset_card_dialog_message">Týmto vynulujete pokrok všetkých kariet pre túto poznámku (budú sa javiť ako nové karty).\nSkutočne chcete pokračovať?</string>
   <string name="reset_card_dialog_confirmation">Všetky karty tejto poznámky vynulované</string>
-  <string name="save_duplicate_dialog_title">Duplicate note</string>
-  <string name="save_duplicate_dialog_message">This note shares its primary field with another note. Save anyway?</string>
+  <string name="save_duplicate_dialog_title">Duplicitná poznámka</string>
+  <string name="save_duplicate_dialog_message">Táto poznámka zdieľa primárne pole s inou poznámku. Napriek tomu uložiť?</string>
   <string name="answering_error_title">Chyba databázy</string>
   <string name="answering_error_message">Chyba pri zápise do zbierky. Môže to súvisieť s poškodenou databázou alebo nedostatkom miesta na disku.\n\nAk sa to stáva častejšie, skúste skontrolovať databázu, opraviť zbierku alebo obnoviť zo zálohy kliknutím na \"možnosti\".\n\nJednako to môže byť aj chyba AnkiDroid; prosím oznámte chybu, aby sme to mohli skontrolovať.</string>
   <string name="answering_error_report">Nahlásiť chybu</string>

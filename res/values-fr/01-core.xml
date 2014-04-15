@@ -59,7 +59,7 @@
   <string name="studyoptions_congrats_undo">Annuler %s</string>
   <string name="studyoptions_congrats_unbury">Déterrer</string>
   <string name="studyoptions_congrats_custom_study">Étude personnalisée</string>
-  <string name="studyoptions_congrats_open_other_deck">Ouvrir un autre jeu de cartes</string>
+  <string name="studyoptions_congrats_open_other_deck">Ouvrir un autre paquet</string>
   <string name="card_unsuspended">Suspension de la carte annulée</string>
   <string name="card_suspended">Carte re-suspendue</string>
   <string name="menu_rotate">Changer d\'orientation</string>
@@ -82,8 +82,8 @@
   <string name="contextmenu_deckpicker_collapse_deck">Cacher les sous-jeux de cartes</string>
   <string name="contextmenu_deckpicker_inflate_deck">Afficher les sous-jeux de cartes</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Définir un dictionnaire personnalisé</string>
-  <string name="menu_download_deck">Télécharger le jeu de cartes</string>
-  <string name="menu_download_shared_deck">Jeu de cartes partagé</string>
+  <string name="menu_download_deck">Télécharger le paquet</string>
+  <string name="menu_download_shared_deck">Paquet partagé</string>
   <string name="menu_my_account">Compte de synchronisation</string>
   <string name="menu_preferences">Préférences</string>
   <string name="menu_about">À propos</string>
@@ -111,7 +111,7 @@
   <string name="open_collection">Chargement de la collection.\nVeuillez patienter…</string>
   <string name="rebuild_cram_deck">Reconstruction du paquet de bachotage.\nVeuillez patienter…</string>
   <string name="rebuild_cram_label">Réparer</string>
-  <string name="empty_cram_label">Vider</string>
+  <string name="empty_cram_label">Vide</string>
   <string name="empty_cram_deck">Paquet de bachotage en cours de vidage.\n
 Veuillez patienter...</string>
   <string name="custom_study_deck_name">Session d\'étude personnalisée</string>

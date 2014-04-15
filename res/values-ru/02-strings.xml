@@ -125,20 +125,20 @@
   <string name="template_error_detail">В шаблоне этой карты присутствует ошибка.</string>
   <string name="template_error_fix">Используйте редактор карт в настольной версии Anki, чтобы исправить эту ошибку.</string>
   <string name="sched_end">(конец)</string>
-  <string name="sched_unbury_button">Чтобы увидеть их снова, нажмите кнопку Вернуть.</string>
+  <string name="sched_unbury_button">Чтобы увидеть их снова, нажмите кнопку \"Отменить сдвиг\".</string>
   <string name="sched_has_buried">Некоторые связанные или скрытые карты были отложены до следующей сессии.</string>
   <string-array name="browser_column1_headings">
-    <item>Search Field</item>
+    <item>Поле поиска</item>
   </string-array>
   <string-array name="browser_column2_headings">
-    <item>Answer</item>
-    <item>Card</item>
-    <item>Deck</item>
-    <item>Lapses</item>
-    <item>Note</item>
-    <item>Question</item>
-    <item>Reviews</item>
-    <item>Tags</item>
+    <item>Ответ</item>
+    <item>Карта</item>
+    <item>Колода</item>
+    <item>Неудачи</item>
+    <item>Заметка</item>
+    <item>Вопрос</item>
+    <item>Отзывы</item>
+    <item>Теги</item>
   </string-array>
   <string-array name="dynOrderLabels">
     <item>Старейшие появляться первыми</item>

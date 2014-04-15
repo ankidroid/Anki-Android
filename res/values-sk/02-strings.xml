@@ -129,17 +129,17 @@
   <string name="sched_unbury_button">Ak ich chcete vidieť teraz, kliknite na tlačidlo Vyhrabať.</string>
   <string name="sched_has_buried">Niektoré súvisiace alebo zahrabané karty boli posunuté na neskôr.</string>
   <string-array name="browser_column1_headings">
-    <item>Search Field</item>
+    <item>Vyhľadávacie pole</item>
   </string-array>
   <string-array name="browser_column2_headings">
-    <item>Answer</item>
-    <item>Card</item>
-    <item>Deck</item>
-    <item>Lapses</item>
-    <item>Note</item>
-    <item>Question</item>
-    <item>Reviews</item>
-    <item>Tags</item>
+    <item>Odpoveď</item>
+    <item>Karta</item>
+    <item>Balíček</item>
+    <item>Zabudnutia</item>
+    <item>Poznámka</item>
+    <item>Otázka</item>
+    <item>Opakovania</item>
+    <item>Štítky</item>
   </string-array>
   <string-array name="dynOrderLabels">
     <item>Od najdávnejšie zobrazených</item>

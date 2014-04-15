@@ -104,8 +104,8 @@
     <item>Prerušiť učenie</item>
   </string-array>
   <string-array name="theme_labels">
-    <item>Android Dark</item>
-    <item>Android Light</item>
+    <item>Android Tmavý</item>
+    <item>Android Svetlý</item>
     <item>Modrá</item>
     <item>Biela</item>
   </string-array>
