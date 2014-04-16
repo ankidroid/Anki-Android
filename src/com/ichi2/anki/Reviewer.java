@@ -967,7 +967,7 @@ public class Reviewer extends AnkiActivity {
 
             // Get last whiteboard state
             long deckID = mSched.getCol().getDecks().current().optLong("id",-1);
-            if (mPrefWhiteboard && deckID!=-1 && MetaDB.getWhiteboardState(this, deckID) == 1) {            
+            if (mPrefWhiteboard && deckID!=-1 && MetaDB.getWhiteboardState(this, deckID) == 1) {
                 mShowWhiteboard = true;
                 mWhiteboard.setVisibility(View.VISIBLE);
             }
@@ -1330,6 +1330,10 @@ public class Reviewer extends AnkiActivity {
             case R.id.action_mark_card:
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, mMarkCardHandler, new DeckTask.TaskData(mSched,
                         mCurrentCard, 0));
+                return true;
+
+            case R.id.action_replay:
+                playSounds(true);
                 return true;
 
             case R.id.action_edit:
@@ -2517,7 +2521,7 @@ public class Reviewer extends AnkiActivity {
         }
 
         if (!mConfigurationChanged) {
-            playSounds();
+            playSounds(false);  // Play sounds, but only if autoplay is true.
     	}
 	}
 
@@ -2538,13 +2542,16 @@ public class Reviewer extends AnkiActivity {
         return sb.toString();
     }
 
+
     /**
-     * Plays sounds (or TTS, if configured) for current shown side of card
+     * Plays sounds (or TTS, if configured) for currently shown side of card.
+     * @param play_always Switch whether to ignore the autoplay setting.
      */
-    private void playSounds() {
+    private void playSounds(boolean play_always) {
         try {
-            // first check, if sound is activated for the current deck
-            if (getConfigForCurrentCard().getBoolean("autoplay")) {
+            // First check whether sound is activated for the current deck, but only if this is not called as
+            // “replay”, through the menu or a play media gesture.
+            if (play_always || getConfigForCurrentCard().getBoolean("autoplay")) {
                 // We need to play the sounds from the proper side of the card
                 if (!mSpeakText) {
                     // when showing answer, repeat question audio if so configured
@@ -3120,7 +3127,7 @@ public class Reviewer extends AnkiActivity {
                 }
                 break;
             case GESTURE_PLAY_MEDIA:
-                playSounds();
+                playSounds(true);
                 break;
         }
     }
