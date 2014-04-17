@@ -300,7 +300,6 @@ public class Reviewer extends AnkiActivity {
     private ClipboardManager mClipboard;
     private StyledProgressDialog mProgressDialog;
     private StyledOpenCollectionDialog mOpenCollectionDialog;
-    private Bundle mSavedInstanceState;
     private ProgressBar mProgressBar;
 
     private Card mCurrentCard;
@@ -913,74 +912,81 @@ public class Reviewer extends AnkiActivity {
 
         // The hardware buttons should control the music volume while reviewing.
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
-
+        // Try to load the collection 
         Collection col = AnkiDroidApp.getCol();
         if (col == null) {
-            reloadCollection(savedInstanceState);
+            // Reload the collection asynchronously, let onPostExecute method call initActivity()
+            reloadCollection();
             return;
         } else {
-            mSched = col.getSched();
-            mCollectionFilename = col.getPath();
-            mBaseUrl = Utils.getBaseUrl(col.getMedia().getDir());
-
-            restorePreferences();
-
-            if (mPrefFullscreenReview) {
-                UIUtils.setFullScreen(this);
-            }
-
-            registerExternalStorageListener();
-
-            if (mNightMode) {
-                mCurrentBackgroundColor = Themes.getNightModeCardBackground(this);
-            } else {
-                mCurrentBackgroundColor = Color.WHITE;
-            }
-
-            mUseQuickUpdate = shouldUseQuickUpdate();
-
-            initLayout(R.layout.flashcard);
-
-            try {
-                String[] title = mSched.getCol().getDecks().current().getString("name").split("::");
-                AnkiDroidApp.getCompat().setTitle(this, title[title.length - 1], mInvertedColors);
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-            AnkiDroidApp.getCompat().setSubtitle(this, "", mInvertedColors);
-
-            if (mPrefTextSelection) {
-                clipboardSetText("");
-            }
-
-            // Load the template for the card
-            try {
-                mCardTemplate = Utils.convertStreamToString(getAssets().open("card_template.html"));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            // Initialize text-to-speech. This is an asynchronous operation.
-            if (mSpeakText) {
-                ReadText.initializeTts(this);
-            }
-
-            // Get last whiteboard state
-            long deckID = mSched.getCol().getDecks().current().optLong("id",-1);
-            if (mPrefWhiteboard && deckID!=-1 && MetaDB.getWhiteboardState(this, deckID) == 1) {            
-                mShowWhiteboard = true;
-                mWhiteboard.setVisibility(View.VISIBLE);
-            }
-
-            // Load the first card and start reviewing. Uses the answer card
-            // task to load a card, but since we send null
-            // as the card to answer, no card will be answered.
-            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(mSched,
-                    null, 0));
-
-            // Since we aren't actually answering a card, decrement the rep count
-            mSched.setReps(mSched.getReps() - 1);
+            // If collection was not null then we can safely call initActivity() directly            
+            initActivity(col);
         }
+    }
+    
+    // Finish initializing the activity after the collection has been correctly loaded
+    private void initActivity(Collection col){
+        mSched = col.getSched();
+        mCollectionFilename = col.getPath();
+        mBaseUrl = Utils.getBaseUrl(col.getMedia().getDir());
+
+        restorePreferences();
+
+        if (mPrefFullscreenReview) {
+            UIUtils.setFullScreen(this);
+        }
+
+        registerExternalStorageListener();
+
+        if (mNightMode) {
+            mCurrentBackgroundColor = Themes.getNightModeCardBackground(this);
+        } else {
+            mCurrentBackgroundColor = Color.WHITE;
+        }
+
+        mUseQuickUpdate = shouldUseQuickUpdate();
+
+        initLayout(R.layout.flashcard);
+
+        try {
+            String[] title = mSched.getCol().getDecks().current().getString("name").split("::");
+            AnkiDroidApp.getCompat().setTitle(this, title[title.length - 1], mInvertedColors);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        AnkiDroidApp.getCompat().setSubtitle(this, "", mInvertedColors);
+
+        if (mPrefTextSelection) {
+            clipboardSetText("");
+        }
+
+        // Load the template for the card
+        try {
+            mCardTemplate = Utils.convertStreamToString(getAssets().open("card_template.html"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Initialize text-to-speech. This is an asynchronous operation.
+        if (mSpeakText) {
+            ReadText.initializeTts(this);
+        }
+
+        // Get last whiteboard state
+        long deckID = mSched.getCol().getDecks().current().optLong("id",-1);
+        if (mPrefWhiteboard && deckID!=-1 && MetaDB.getWhiteboardState(this, deckID) == 1) {            
+            mShowWhiteboard = true;
+            mWhiteboard.setVisibility(View.VISIBLE);
+        }
+
+        // Load the first card and start reviewing. Uses the answer card
+        // task to load a card, but since we send null
+        // as the card to answer, no card will be answered.
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(mSched,
+                null, 0));
+
+        // Since we aren't actually answering a card, decrement the rep count
+        mSched.setReps(mSched.getReps() - 1);        
     }
 
 
@@ -1196,8 +1202,7 @@ public class Reviewer extends AnkiActivity {
     }
 
 
-    private void reloadCollection(Bundle savedInstanceState) {
-    	mSavedInstanceState = savedInstanceState;
+    private void reloadCollection() {
         DeckTask.launchDeckTask(
                 DeckTask.TASK_TYPE_OPEN_COLLECTION,
                 new DeckTask.TaskListener() {
@@ -1212,7 +1217,7 @@ public class Reviewer extends AnkiActivity {
                             }
                         }
                         if (AnkiDroidApp.colIsOpen()) {
-                            onCreate(mSavedInstanceState);
+                            initActivity(AnkiDroidApp.getCol());
                         } else {
                             finish();
                         }
