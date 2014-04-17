@@ -1,5 +1,6 @@
 /****************************************************************************************
  * Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>                         *
+ * Copyright (c) 2014 Houssam Salem <houssam.salem.au@gmail.com>                        *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -26,7 +27,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class Note implements Cloneable {
@@ -37,31 +41,31 @@ public class Note implements Cloneable {
     private String mGuId;
     private JSONObject mModel;
     private long mMid;
-    private long mMod;
-    private int mUsn;
-    private boolean mNewlyAdded;
     private List<String> mTags;
     private String[] mFields;
-    private String mData = "";
     private int mFlags;
-
+    private String mData;
     private Map<String, Pair<Integer, JSONObject>> mFMap;
     private long mScm;
+    private int mUsn;
+    private long mMod;
+    private boolean mNewlyAdded;
 
-
-    public Note(Collection col, long id) {
+    
+    public Note(Collection col, Long id) {
         this(col, null, id);
     }
 
 
     public Note(Collection col, JSONObject model) {
-        this(col, model, 0);
+        this(col, model, null);
     }
 
 
-    public Note(Collection col, JSONObject model, long id) {
+    public Note(Collection col, JSONObject model, Long id) {
+        assert !(model != null && id != null);
         mCol = col;
-        if (id != 0) {
+        if (id != null) {
             mId = id;
             load();
         } else {
@@ -72,12 +76,11 @@ public class Note implements Cloneable {
                 mMid = model.getLong("id");
                 mTags = new ArrayList<String>();
                 mFields = new String[model.getJSONArray("flds").length()];
+                Arrays.fill(mFields, "");
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
-            for (int i = 0; i < mFields.length; i++) {
-                mFields[i] = "";
-            }
+            mFlags = 0;
             mData = "";
             mFMap = mCol.getModels().fieldMap(mModel);
             mScm = mCol.getScm();
@@ -98,42 +101,45 @@ public class Note implements Cloneable {
             mMid = cursor.getLong(1);
             mMod = cursor.getLong(2);
             mUsn = cursor.getInt(3);
-            mFields = Utils.splitFields(cursor.getString(5));
             mTags = mCol.getTags().split(cursor.getString(4));
+            mFields = Utils.splitFields(cursor.getString(5));
             mFlags = cursor.getInt(6);
             mData = cursor.getString(7);
+            mModel = mCol.getModels().get(mMid);
+            mFMap = mCol.getModels().fieldMap(mModel);
             mScm = mCol.getScm();
         } finally {
             if (cursor != null) {
                 cursor.close();
             }
         }
-        mModel = mCol.getModels().get(mMid);
-        mFMap = mCol.getModels().fieldMap(mModel);
     }
 
 
+    /*
+     * If fields or tags have changed, write changes to disk.
+     */
     public void flush() {
-        flush(0);
+    	flush(null);
     }
 
 
-    public void flush(long mod) {
-    	flush(mod, true);
-    }
-
-
-    public void flush(long mod, boolean changeUsn) {
+    public void flush(Long mod) {
+        assert mScm == mCol.getScm();
         _preFlush();
-        mMod = mod != 0 ? mod : Utils.intNow();
-        if (changeUsn) {
-            mUsn = mCol.usn();
-        }
         String sfld = Utils.stripHTMLMedia(mFields[mCol.getModels().sortIdx(mModel)]);
         String tags = stringTags();
+        String fields = joinedFields();
+        if (mod == null && mCol.getDb().queryScalar(String.format(Locale.US,
+                "select 1 from notes where id = ? and tags = ? and flds = ?",
+                mId, tags, fields), false) > 0) {
+            return;
+        }
         long csum = Utils.fieldChecksum(mFields[0]);
-        mCol.getDb().execute("INSERT OR REPLACE INTO notes VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                new Object[] { mId, mGuId, mMid, mMod, mUsn, tags, joinedFields(), sfld, csum, mFlags, mData });
+        mMod = mod != null ? mod : Utils.intNow();
+        mUsn = mCol.usn();
+        mCol.getDb().execute("insert or replace into notes values (?,?,?,?,?,?,?,?,?,?,?)",
+                new Object[] { mId, mGuId, mMid, mMod, mUsn, tags, fields, sfld, csum, mFlags, mData });
         mCol.getTags().register(mTags);
         _postFlush();
     }
@@ -168,11 +174,12 @@ public class Note implements Cloneable {
 
 
     /**
-     * Dict interface *********************************************************** ************************************
+     * Dict interface
+     * ***********************************************************
      */
 
     public String[] keys() {
-        return (String[]) mFMap.keySet().toArray();
+        return (String[])mFMap.keySet().toArray();
     }
 
 
@@ -182,6 +189,8 @@ public class Note implements Cloneable {
 
 
     public String[][] items() {
+        // TODO: Revisit this method. The field order returned differs from Anki.
+        // The items here are only used in the note editor, so it's a low priority.
         String[][] result = new String[mFMap.size()][2];
         for (String fname : mFMap.keySet()) {
             int i = mFMap.get(fname).first;
@@ -205,14 +214,15 @@ public class Note implements Cloneable {
     public void setitem(String key, String value) {
         mFields[_fieldOrd(key)] = value;
     }
-
+    
     public boolean contains(String key) {
     	return mFMap.containsKey(key);
     }
 
 
     /**
-     * Tags ********************************************************************* **************************
+     * Tags
+     * ***********************************************************
      */
 
     public boolean hasTag(String tag) {
@@ -230,49 +240,38 @@ public class Note implements Cloneable {
     }
 
 
-    public void setTags(List<String> tags) {
-        mTags = tags;
-    }
-
-
     public void delTag(String tag) {
-        for (int i = 0; i < mTags.size(); i++) {
-            if (mTags.get(i).equalsIgnoreCase(tag)) {
-                mTags.remove(i);
+        List<String> rem = new LinkedList<String>();
+        for (String t : mTags) {
+            if (t.toLowerCase(Locale.getDefault()) == tag.toLowerCase(Locale.getDefault())) {
+                rem.add(t);
             }
+        }
+        for (String r : rem) {
+            mTags.remove(r);
         }
     }
 
 
+    /*
+     *  duplicates will be stripped on save
+     */
     public void addTag(String tag) {
         mTags.add(tag);
     }
 
 
-    /** LIBANKI: not in libanki */
-    public List<String> getTags() {
-        return mTags;
-    }
-
-
-    /** LIBANKI: not in libanki */
-    public void clearTags() {
-        mTags.clear();
-    }
-
-
     /**
-     * Unique/duplicate checks **************************************************
-     * *********************************************
+     * Unique/duplicate check
+     * ***********************************************************
      */
 
-    /** 1 if first is empty; 2 if first is duplicate, 0 otherwise */
-    public int dupeOrEmpty() {
-        return dupeOrEmpty(mFields[0]);
-    }
-
-
-    public int dupeOrEmpty(String val) {
+    /**
+     * 
+     * @return 1 if first is empty; 2 if first is a duplicate, null otherwise.
+     */
+    public Integer dupeOrEmpty() {
+        String val = mFields[0];
         if (val.trim().length() == 0) {
             return 1;
         }
@@ -282,40 +281,45 @@ public class Note implements Cloneable {
                 String.class,
                 "SELECT flds FROM notes WHERE csum = " + csum + " AND id != " + (mId != 0 ? mId : 0) + " AND mid = "
                         + mMid, 0)) {
-            if (Utils.stripHTMLMedia(Utils.splitFields(flds)[0]).equals(Utils.stripHTMLMedia(val))) {
+            if (Utils.stripHTMLMedia(
+                    Utils.splitFields(flds)[0]).equals(Utils.stripHTMLMedia(mFields[0]))) {
                 return 2;
             }
         }
-        return 0;
+        return null;
     }
 
 
     /**
-     * Flushing cloze notes **************************************************
-     * *********************************************
+     * Flushing cloze notes
+     * ***********************************************************
      */
 
+    /*
+     * have we been added yet?
+     */
     private void _preFlush() {
-        // have we been added yet?
         mNewlyAdded = mCol.getDb().queryScalar("SELECT 1 FROM cards WHERE nid = " + mId, false) == 0;
     }
 
 
+    /*
+     * generate missing cards
+     */
     private void _postFlush() {
-        // generate missing cards
         if (!mNewlyAdded) {
-            mCol.genCards(new long[] { getId() });
+            mCol.genCards(new long[] { mId });
         }
     }
 
+    /*
+     * ***********************************************************
+     * The methods below are not in LibAnki.
+     * ***********************************************************
+     */
 
     public long getMid() {
         return mMid;
-    }
-
-
-    public void setId(long id) {
-        mId = id;
     }
 
 
@@ -323,6 +327,7 @@ public class Note implements Cloneable {
      * @return the mId
      */
     public long getId() {
+        // TODO: Conflicting method name and return value. Reconsider.
         return mId;
     }
 
@@ -341,16 +346,22 @@ public class Note implements Cloneable {
         return mFields;
     }
 
+
     public long getMod() {
         return mMod;
     }
 
+
     public Note clone() {
         try {
-            return (Note) super.clone();
+            return (Note)super.clone();
         } catch (CloneNotSupportedException e) {
             throw new RuntimeException(e);
         }
     }
 
+
+    public List<String> getTags() {
+        return mTags;
+    }
 }

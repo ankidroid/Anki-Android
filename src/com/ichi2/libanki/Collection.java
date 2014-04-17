@@ -1196,7 +1196,7 @@ public class Collection {
 
     	case UNDO_EDIT_NOTE:
     		Note note = (Note) data[1];
-    		note.flush(note.getMod(), false);
+    		note.flush(note.getMod());
     		long cid = (Long) data[2];
             Card card = null;
             if ((Boolean) data[3]) {
@@ -1238,7 +1238,7 @@ public class Collection {
     	case UNDO_DELETE_NOTE:
     		ArrayList<Long> ids = new ArrayList<Long>();
     		Note note2 = (Note)data[1];
-    		note2.flush(note2.getMod(), false);
+    		note2.flush(note2.getMod());
     		ids.add(note2.getId());
         		for (Card c4 : (ArrayList<Card>) data[2]) {
         			c4.flush(false);
@@ -1250,7 +1250,7 @@ public class Collection {
     	case UNDO_MARK_NOTE:
     		Note note3 = getNote((Long) data[1]);
     		note3.setTagsFromStr((String) data[2]);
-    		note3.flush(note3.getMod(), false);
+    		note3.flush(note3.getMod());
     		return (Long) data[3];
 
         default:

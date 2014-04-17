@@ -37,6 +37,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.KeyListener;
 import android.util.Log;
@@ -663,7 +664,7 @@ public class CardEditor extends ActionBarActivity {
                 // Save deck to model
                 mEditorNote.model().put("did", mCurrentDid);
                 // Save tags to model
-                mEditorNote.setTags(mCurrentTags);
+                mEditorNote.setTagsFromStr(tagsAsString(mCurrentTags));
                 JSONArray ja = new JSONArray();
                 for (String t : mCurrentTags) {
                     ja.put(t);
@@ -686,7 +687,7 @@ public class CardEditor extends ActionBarActivity {
             boolean changedDid = mCurrentEditedCard.getDid() != mCurrentDid;
             modified = modified || changedDid;
             if (modified) {
-                mEditorNote.setTags(mCurrentTags);
+                mEditorNote.setTagsFromStr(tagsAsString(mCurrentTags));
                 // set did for card
                 if (changedDid) {
                     // remove card from filtered deck first (if relevant)
@@ -1342,8 +1343,9 @@ public class CardEditor extends ActionBarActivity {
 
     private boolean duplicateCheck(boolean checkEmptyToo) {
         FieldEditText field = mEditFields.get(0);
-        if (mEditorNote.dupeOrEmpty(field.getText().toString()) > (checkEmptyToo ? 0 : 1)) {
-            // TODO: theme backgrounds
+        // 1 is empty, 2 is dupe, null is neither.
+        Integer dupeCode = mEditorNote.dupeOrEmpty();
+        if (dupeCode != null && ((dupeCode == 1 && checkEmptyToo) || dupeCode == 2)) {
             field.setBackgroundResource(R.drawable.white_edit_text_dupe);
             return true;
         } else {
@@ -1435,6 +1437,11 @@ public class CardEditor extends ActionBarActivity {
                 mCol.getTags().join(mCol.getTags().canonify(mCurrentTags)).trim().replace(" ", ", ")));
     }
 
+    
+    private String tagsAsString(List<String> tags) {
+        return TextUtils.join(" ", tags);
+    }
+    
     // ----------------------------------------------------------------------------
     // INNER CLASSES
     // ----------------------------------------------------------------------------
