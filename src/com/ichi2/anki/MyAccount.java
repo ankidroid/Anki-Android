@@ -20,6 +20,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -154,6 +155,12 @@ public class MyAccount extends AnkiActivity {
 
         setContentView(mLoginToMyAccountView);
     }
+    
+    private void resetPassword() {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(getResources().getString(R.string.resetpw_url)));
+        startActivity(intent);
+    }
 
 
     private void initAllContentViews() {
@@ -173,6 +180,15 @@ public class MyAccount extends AnkiActivity {
             }
 
         });
+
+        Button resetPWButton = (Button) mLoginToMyAccountView.findViewById(R.id.reset_password_button);
+        resetPWButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				resetPassword();		
+			}
+		});
 
         Button signUpButton = (Button) mLoginToMyAccountView.findViewById(R.id.sign_up_button);
         signUpButton.setOnClickListener(new OnClickListener() {
@@ -234,7 +250,6 @@ public class MyAccount extends AnkiActivity {
             }
 
         });
-
     }
 
 
