@@ -47,6 +47,10 @@
 
 	</item>
 
+    <item android:id="@+id/action_replay"
+        android:title="@string/replay_audio"
+        android:visible="false" />
+
 	<item android:id="@+id/action_whiteboard"
 		android:title="@string/hide_whiteboard"
 		android:visible="false" />
