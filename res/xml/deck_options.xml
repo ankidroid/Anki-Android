@@ -139,8 +139,7 @@
             <CheckBoxPreference
                 android:key="replayQuestion"
                 android:summary="@string/deck_conf_replayq_summ"
-                android:title="@string/deck_conf_replayq"
-                android:dependency="autoPlayAudio" />
+                android:title="@string/deck_conf_replayq" />
         </PreferenceScreen>
         <PreferenceScreen android:title="@string/deck_conf_manage" >
             <Preference
