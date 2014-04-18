@@ -67,6 +67,8 @@
 <string name="invalid_username_password">Invalid email address or password.</string>
 <string name="login_generic_error">Failed to log in.</string>
 
+<string name="reset_password">Reset password</string>
+
 <!-- DownloadManagerService.java -->
 <string name="download_finished">Download finished</string>
 

@@ -63,6 +63,15 @@
 				android:singleLine="true"
 				android:text="@string/log_in"/>
 			
+			<Button android:id="@+id/reset_password_button"
+				android:layout_width="fill_parent"
+				android:layout_height="0dip"
+				android:layout_gravity="center"
+				android:gravity="center"
+				android:layout_weight="1"
+				android:singleLine="true"
+				android:text="@string/reset_password"/>
+			
 			<Button android:id="@+id/sign_up_button"
 				android:layout_width="fill_parent"
 				android:layout_height="0dip"
