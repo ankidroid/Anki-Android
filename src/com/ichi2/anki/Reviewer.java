@@ -75,6 +75,7 @@ import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.EditText;
@@ -1773,6 +1774,15 @@ public class Reviewer extends AnkiActivity {
 
     private WebView createWebView() {
         WebView webView = new MyWebView(this);
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                Log.i(AnkiDroidApp.TAG, "WebView page " + url + " loaded.");
+                super.onPageFinished(view, url);
+                // FIXME: Oh, I don't like the next line, but it is working on all my devices.
+                view.loadUrl("javascript:(function() { parseChess(); })()");  // Create nice chess diagrams
+            }
+        });
         webView.setWillNotCacheDrawing(true);
         webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
         if (mZoomEnabled) {
