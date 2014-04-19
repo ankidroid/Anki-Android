@@ -40,6 +40,7 @@ import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
@@ -58,6 +59,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.BaseAdapter;
+import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -78,10 +80,12 @@ import com.ichi2.upgrade.Upgrade;
 import com.ichi2.widget.WidgetStatus;
 
 public class CardBrowser extends ActionBarActivity {
+
     // private List<Long> mCardIds = new ArrayList<Long>();
     private ArrayList<HashMap<String, String>> mCards;
     // private ArrayList<HashMap<String, String>> mAllCards;
     private HashMap<String, String> mDeckNames;
+    private ArrayList<String> mSpinnerDecks;
     private SearchView mSearchView;
     private ListView mCardsListView;
     private Spinner mCardsColumn1Spinner;
@@ -154,6 +158,9 @@ public class CardBrowser extends ActionBarActivity {
     private int[] mBackground;
 
     private boolean mWholeCollection;
+
+    private ActionBar mActionBar;
+    private ArrayAdapter<String> mSpinnerAdapter;
 
     private String[] allTags;
     private String[] mColumn2Indexs;
@@ -255,6 +262,37 @@ public class CardBrowser extends ActionBarActivity {
 
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         Resources res = getResources();
+
+        String currentDeckName;
+        try {
+            currentDeckName = mCol.getDecks().current().getString("name");
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+
+        // Spinner in action bar
+        mSpinnerDecks = new ArrayList<String>(mDeckNames.values());
+        mSpinnerDecks.add(0, res.getString(R.string.deck_summary_all_decks));
+        mSpinnerAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, mSpinnerDecks);
+        mActionBar = getSupportActionBar();
+        mActionBar.setDisplayShowTitleEnabled(false);
+        mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+        mActionBar.setListNavigationCallbacks(mSpinnerAdapter, new ActionBar.OnNavigationListener() {
+            @Override
+            public boolean onNavigationItemSelected(int position, long itemId) {
+                if (position == 0) {
+                    mRestrictOnDeck = "";
+                } else {
+                    mRestrictOnDeck = "deck:'" + mSpinnerDecks.get(position) + "' ";
+                }
+                searchCards();
+                return true;
+            }
+        });
+        if (!mWholeCollection) {
+            mActionBar.setSelectedNavigationItem(mSpinnerDecks.indexOf(currentDeckName));
+        }
+
         mOrderByFields = res.getStringArray(R.array.card_browser_order_labels);
         try {
             mOrder = CARD_ORDER_NONE;
@@ -362,15 +400,8 @@ public class CardBrowser extends ActionBarActivity {
         mSearchTerms = "";
         if (mWholeCollection) {
             mRestrictOnDeck = "";
-            setTitle(res.getString(R.string.card_browser_all_decks));
         } else {
-            try {
-                String deckName = mCol.getDecks().current().getString("name");
-                mRestrictOnDeck = "deck:'" + deckName + "' ";
-                setTitle(deckName);
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
+            mRestrictOnDeck = "deck:'" + currentDeckName + "' ";
         }
 
         mSelectedTags = new HashSet<String>();
@@ -763,10 +794,6 @@ public class CardBrowser extends ActionBarActivity {
 
     private void updateList() {
         mCardsAdapter.notifyDataSetChanged();
-        int count = mCards.size();
-        AnkiDroidApp.getCompat().setSubtitle(
-                this,
-                getResources().getQuantityString(R.plurals.card_browser_subtitle, count, count, mTotalCount));
     }
 
 
@@ -1039,7 +1066,6 @@ public class CardBrowser extends ActionBarActivity {
         finish();
         ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
     }
-
 
 
     private final class MultiColumnListAdapter extends BaseAdapter {
