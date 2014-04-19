@@ -1373,18 +1373,25 @@ public class Reviewer extends AnkiActivity {
                 return true;
 
             case R.id.action_whiteboard:
+                // Load parent deck ID -- we don't remember the whiteboard states for subdecks
+                long deckID;
+                try{
+                    deckID = mSched.getCol().getDecks().current().getLong("id");
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
                 // Toggle mShowWhiteboard value
                 mShowWhiteboard = !mShowWhiteboard;
                 if (mShowWhiteboard) {
-                    // Show whiteboard
+                    // Show whiteboard 
                     mWhiteboard.setVisibility(View.VISIBLE);
                     item.setTitle(R.string.hide_whiteboard);
-                    MetaDB.storeWhiteboardState(this, mCurrentCard.getDid(), 1);
+                    MetaDB.storeWhiteboardState(this, deckID, 1);
                 } else {
                     // Hide whiteboard
                     mWhiteboard.setVisibility(View.GONE);
                     item.setTitle(R.string.show_whiteboard);
-                    MetaDB.storeWhiteboardState(this, mCurrentCard.getDid(), 0);
+                    MetaDB.storeWhiteboardState(this, deckID, 0);
                 }
                 refreshActionBar();
                 return true;
