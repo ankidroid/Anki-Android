@@ -34,12 +34,12 @@ import android.view.WindowManager;
 import com.ichi2.async.Connection;
 import com.ichi2.compat.Compat;
 import com.ichi2.compat.CompatV7;
+import com.ichi2.compat.CompatV7Nook;
 import com.ichi2.compat.CompatV8;
 import com.ichi2.compat.CompatV9;
 import com.ichi2.compat.CompatV15;
 import com.ichi2.compat.CompatV15NookHdPlus;
 import com.ichi2.compat.CompatV16;
-
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.hooks.Hooks;
@@ -132,6 +132,8 @@ public class AnkiDroidApp extends Application {
             mCompat = new CompatV9();
         } else if (AnkiDroidApp.SDK_VERSION >= 8) {
             mCompat = new CompatV8();
+        } else if (isNook() && AnkiDroidApp.SDK_VERSION == 7) {
+            mCompat = new CompatV7Nook();
         } else {
             mCompat = new CompatV7();
         }
@@ -177,6 +179,13 @@ public class AnkiDroidApp extends Application {
                 && android.os.Build.PRODUCT.equals("HDplus")
                 && android.os.Build.DEVICE.equals("ovation");
     }
+
+
+    private boolean isNook() {
+        return android.os.Build.MODEL.equalsIgnoreCase("nook")
+                || android.os.Build.DEVICE.equalsIgnoreCase("nook");
+    }
+
 
     /**
      * Convenience method for accessing Shared preferences
