@@ -931,6 +931,11 @@ public class Collection {
             fields.put("Card", template.getString("name"));
             fields.put("c" + (((Integer) data[4]) + 1), "1");
 
+            Random r = new Random();
+            fields.put("Rand",  String.format("%.15f",r.nextDouble()));
+            fields.put("Rand2", String.format("%.15f",r.nextDouble()));
+            fields.put("Rand3", String.format("%.15f",r.nextDouble()));
+
             // render q & a
             HashMap<String, String> d = new HashMap<String, String>();
             try {
