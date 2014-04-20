@@ -7,7 +7,7 @@
 		android:layout_height="wrap_content"
 		android:orientation="vertical"
 		android:gravity="center"
-		android:layout_width="wrap_content">
+		android:layout_width="fill_parent">
 		<TextView
 			android:layout_height="wrap_content"
 			android:layout_width="fill_parent"
