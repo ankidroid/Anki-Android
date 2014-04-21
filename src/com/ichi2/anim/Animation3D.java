@@ -18,12 +18,12 @@
 
 package com.ichi2.anim;
 
-import com.ichi2.anki.Reviewer;
-
-import android.view.animation.Animation;
-import android.view.animation.Transformation;
 import android.graphics.Camera;
 import android.graphics.Matrix;
+import android.view.animation.Animation;
+import android.view.animation.Transformation;
+
+import com.ichi2.anki.AbstractFlashcardViewer;
 
 public class Animation3D extends Animation {
 
@@ -36,7 +36,7 @@ public class Animation3D extends Animation {
     private final float mValueY;
     private final float mDepthZ;
     private Camera mCamera;
-    private Reviewer mReviewer;
+    private AbstractFlashcardViewer mReviewer;
     boolean mDirection;
     boolean mFlipped = false;
     int mAction;
@@ -44,7 +44,7 @@ public class Animation3D extends Animation {
 
 
     public Animation3D(float valueX, float valueY, float depthZ, int action, boolean direction, boolean realturn,
-            Reviewer reviewer) {
+            AbstractFlashcardViewer reviewer) {
         mValueX = valueX;
         mValueY = valueY;
         mDepthZ = depthZ;

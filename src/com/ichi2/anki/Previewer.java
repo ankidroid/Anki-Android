@@ -1,5 +1,6 @@
-/****************************************************************************************
+/***************************************************************************************
  * Copyright (c) 2011 Kostas Spyropoulos <inigo.aldana@gmail.com>                       *
+ * Copyright (c) 2013 Jolta Technologies												*
  * Copyright (c) 2014 Bruno Romero de Azevedo <brunodea@inf.ufsm.br>                    *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
@@ -14,44 +15,74 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-// TODO: implement own menu? http://www.codeproject.com/Articles/173121/Android-Menus-My-Way
 
 package com.ichi2.anki;
 
-import com.ichi2.async.DeckTask;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.View;
+
 import com.ichi2.libanki.Collection;
 
-import org.json.JSONException;
+public class Previewer extends AbstractFlashcardViewer {
 
-public class Reviewer extends AbstractFlashcardViewer {
     @Override
-    protected void setTitle() {
-        try {
-            String[] title = mSched.getCol().getDecks().current().getString("name").split("::");
-            AnkiDroidApp.getCompat().setTitle(this, title[title.length - 1], mInvertedColors);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-        AnkiDroidApp.getCompat().setSubtitle(this, "", mInvertedColors);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.i(AnkiDroidApp.TAG, "PreviewClass - onCreate");
     }
+
 
     @Override
     protected void initActivity(Collection col) {
         super.initActivity(col);
-        // Load the first card and start reviewing. Uses the answer card
-        // task to load a card, but since we send null
-        // as the card to answer, no card will be answered.
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(mSched,
-                null, 0)); 
 
-        // Since we aren't actually answering a card, decrement the rep count
-        mSched.setReps(mSched.getReps() - 1);
+        mCurrentCard = CardEditor.mCurrentEditedCard;
+
+        Previewer.this.displayCardQuestion();
+        Previewer.this.displayCardAnswer();
+
+        hideEaseButtons();
     }
 
+
     @Override
-    public void displayCardQuestion() {
-        // show timer, if activated in the deck's preferences
-        initTimer();
-        super.displayCardQuestion();
+    protected void setTitle() {
+        AnkiDroidApp.getCompat().setTitle(this, getResources().getString(R.string.preview_title), mInvertedColors);
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return true;
+    }
+
+
+    @Override
+    protected void initLayout(Integer layout) {
+        super.initLayout(layout);
+
+        findViewById(R.id.answer_options_layout).setVisibility(View.GONE);
+        mTopBarLayout.setVisibility(View.GONE);
+        mFlipCardLayout.setVisibility(View.GONE);
+    }
+
+
+    @Override
+    protected void displayCardAnswer() {
+        super.displayCardAnswer();
+        hideEaseButtons();
+    }
+
+
+    // we don't want the Activity title to be changed.
+    @Override
+    protected void updateScreenCounts() {
+    }
+
+    //No Gestures!
+    @Override
+    protected void executeCommand(int which) {
     }
 }
