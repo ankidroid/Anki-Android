@@ -3,9 +3,13 @@
     <head>
         <title>AnkidDroid Flashcard</title>
         <meta charset="utf-8">
+
         <link rel="stylesheet" type="text/css" href="file:///android_asset/flashcard.css">
         <link rel="stylesheet" type="text/css" href="file:///android_asset/ruby.css">
         <link rel="stylesheet" type="text/css" href="file:///android_asset/chess.css">
+        
+        <script src="file:///android_asset/jquery-1.11.0.min.js" type="text/javascript">        
+        </script>
         <style>
         ::style::
         </style>
@@ -15,6 +19,30 @@
         ::content::
         </div>
         <script type="text/javascript">
+            $("img").one("load", function() {            
+                var maxWidth = $(window).width()*0.9;
+                var maxHeight = $(window).height()*0.9;
+                var ratio = 0;
+                var width = $(this).width();
+                var height = $(this).height();
+               
+                if(width > maxWidth){
+                    ratio = maxWidth / width;
+                    $(this).css("width", maxWidth);
+                    $(this).css("height", height * ratio);
+                    height = height * ratio;
+                    width = width * ratio;
+                }                
+                if(height > maxHeight){
+                    ratio = maxHeight / height;
+                    $(this).css("height", maxHeight);
+                    $(this).css("width", width * ratio);
+                    width = width * ratio;
+                    height = height * ratio;
+                }
+            }).each(function() {
+                if(this.complete) $(this).load();
+            });
             window.location.href = "#answer";
         </script>
     </body>

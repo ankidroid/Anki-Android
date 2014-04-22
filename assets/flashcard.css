@@ -12,11 +12,6 @@ body.night_mode {
   margin: 0.5em;
 }
 
-img {
-  max-width: 100%;
-  max-height: 100%;
-}
-
 .vertically_centered {
   position: absolute;
   width: 100%;
