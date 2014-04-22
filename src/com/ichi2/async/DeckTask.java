@@ -416,7 +416,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                         newCard = editCard;
                         newCard.load();
                         // reload qa-cache
-                        newCard.getQuestion(true);
+                        newCard.q(true);
                     } else {
                         newCard = getCard(sched);
                     }

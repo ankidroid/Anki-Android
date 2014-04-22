@@ -1180,7 +1180,7 @@ public class Collection {
     	case UNDO_REVIEW:
             Card c = (Card) data[1];
             // write old data
-            c.flush(false);
+            c.flush();
             // and delete revlog entry
             long last = mDb.queryLongScalar("SELECT id FROM revlog WHERE cid = " + c.getId() + " ORDER BY id DESC LIMIT 1");
             mDb.execute("DELETE FROM revlog WHERE id = " + last);
@@ -1207,7 +1207,7 @@ public class Collection {
                     // Reloads the QA-cache.
                     // Requests the simple interface version, since the only difference
                     // is whether the CSS is added and that's not cached.
-                    card.getQuestion(true, true);
+                    card.q(true, true);
                 }
             }
             if (card == null) {
@@ -1220,18 +1220,18 @@ public class Collection {
 
     	case UNDO_BURY_NOTE:
     		for (Card cc : (ArrayList<Card>)data[2]) {
-    			cc.flush(false);
+    			cc.flush();
     		}
     		return (Long) data[3];
 
     	case UNDO_SUSPEND_CARD:
     		Card suspendedCard = (Card)data[1];
-    		suspendedCard.flush(false);
+    		suspendedCard.flush();
     		return suspendedCard.getId();
 
     	case UNDO_SUSPEND_NOTE:
     		for (Card ccc : (ArrayList<Card>) data[1]) {
-    			ccc.flush(false);
+    			ccc.flush();
     		}
     		return (Long) data[2];
 
@@ -1241,7 +1241,7 @@ public class Collection {
     		note2.flush(note2.getMod());
     		ids.add(note2.getId());
         		for (Card c4 : (ArrayList<Card>) data[2]) {
-        			c4.flush(false);
+        			c4.flush();
     			ids.add(c4.getId());
         		}
     		mDb.execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(Utils.arrayList2array(ids)));
