@@ -18,6 +18,7 @@
 
 package com.ichi2.anki;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -1758,12 +1759,19 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         initControls();
     }
 
+    @SuppressLint("NewApi") // because of setDisplayZoomControls.
     private WebView createWebView() {
         WebView webView = new MyWebView(this);
         webView.setWillNotCacheDrawing(true);
         webView.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_OVERLAY);
         if (mZoomEnabled) {
-            webView.getSettings().setBuiltInZoomControls(true);
+            boolean zoom_ctrls = false;
+            if (AnkiDroidApp.SDK_VERSION > 11) {
+                zoom_ctrls = true;
+                webView.getSettings().setDisplayZoomControls(false);
+            }
+            webView.getSettings().setBuiltInZoomControls(zoom_ctrls);
+            webView.getSettings().setSupportZoom(true);
         }
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebChromeClient(new AnkiDroidWebChromeClient());
