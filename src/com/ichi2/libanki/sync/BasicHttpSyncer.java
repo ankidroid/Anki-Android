@@ -21,6 +21,7 @@ import android.util.Log;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Utils;
 import org.apache.commons.httpclient.contrib.ssl.EasySSLSocketFactory;
 import org.apache.http.HttpEntity;
@@ -154,7 +155,7 @@ public class BasicHttpSyncer implements HttpSyncer {
             bos.flush();
             bos.close();
             // connection headers
-            String url = Collection.SYNC_URL;
+            String url = Consts.SYNC_URL;
             if (method.equals("register")) {
                 url = url + "account/signup" + "?username=" + registerData.getString("u") + "&password="
                         + registerData.getString("p");

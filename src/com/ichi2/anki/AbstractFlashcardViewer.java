@@ -81,6 +81,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.Animation3D;
 import com.ichi2.anim.ViewAnimation;
@@ -89,6 +90,7 @@ import com.ichi2.anki.reviewer.ReviewerExtRegistry;
 import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Sched;
 import com.ichi2.libanki.Sound;
@@ -100,11 +102,13 @@ import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.DiffEngine;
 import com.ichi2.widget.WidgetStatus;
+
 import org.amr.arabic.ArabicUtilities;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.xml.sax.XMLReader;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -2420,7 +2424,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         try {
             JSONObject model = mCurrentCard.model();
             JSONObject template;
-            if (model.getInt("type") == Sched.MODEL_STD) {
+            if (model.getInt("type") == Consts.MODEL_STD) {
                 template = model.getJSONArray("tmpls").getJSONObject(mCurrentCard.getOrd());
             } else {
                 template = model.getJSONArray("tmpls").getJSONObject(0);

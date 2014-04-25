@@ -24,6 +24,7 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Sched;
 import com.ichi2.libanki.Utils;
 import com.ichi2.utils.ConvUtils;
@@ -594,13 +595,13 @@ public class Syncer {
             while (cur.moveToNext()) {
                 int type = cur.getInt(1);
                 switch (type) {
-                    case Sched.REM_CARD:
+                    case Consts.REM_CARD:
                         cards.put(cur.getLong(0));
                         break;
-                    case Sched.REM_NOTE:
+                    case Consts.REM_NOTE:
                         notes.put(cur.getLong(0));
                         break;
-                    case Sched.REM_DECK:
+                    case Consts.REM_DECK:
                         decks.put(cur.getLong(0));
                         break;
                 }

@@ -58,7 +58,6 @@ import java.util.zip.ZipOutputStream;
 public class Media {
     public static final int MEDIA_ADD = 0;
     public static final int MEDIA_REM = 1;
-    public static final long SYNC_ZIP_SIZE = 2560 * 1024;
 
     public static final Pattern fMediaRegexps[] = { Pattern.compile("(?i)(\\[sound:([^]]+)\\])"),
             Pattern.compile("(?i)(<img[^>]+src=[\"']?([^\"'>]+)[\"']?[^>]*>)") };
@@ -531,7 +530,7 @@ public class Media {
                 bis.close();
                 files.put(Integer.toString(cnt), fname);
                 sz += file.length();
-                if (sz > SYNC_ZIP_SIZE) {
+                if (sz > Consts.SYNC_ZIP_SIZE) {
                     finished = false;
                     break;
                 }

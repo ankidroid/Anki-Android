@@ -66,7 +66,7 @@ public class Decks {
               // not
               // currently
               // used
-            "'initialFactor': 2500, " + "'separate': True, " + "'order': " + Sched.NEW_CARDS_DUE + ", "
+            "'initialFactor': 2500, " + "'separate': True, " + "'order': " + Consts.NEW_CARDS_DUE + ", "
             + "'perDay': 20, 'bury': True }, " + "'lapse': {" + "'delays': [10], " + "'mult': 0, " + "'minInt': 1, "
             + "'leechFails': 8, "
             + "'leechAction': 0 }, "
@@ -234,7 +234,7 @@ public class Decks {
                 return;
             }
             // log the removal regardless of whether we have the deck or not
-            mCol._logRem(new long[] { did }, Sched.REM_DECK);
+            mCol._logRem(new long[] { did }, Consts.REM_DECK);
             // do nothing else if doesn't exist
             if (!mDecks.containsKey(did)) {
                 return;

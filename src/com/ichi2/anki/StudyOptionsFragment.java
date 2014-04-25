@@ -60,6 +60,7 @@ import com.ichi2.async.DeckTask;
 import com.ichi2.async.DeckTask.TaskData;
 import com.ichi2.charts.ChartBuilder;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Sched;
 import com.ichi2.libanki.Stats;
 import com.ichi2.libanki.Utils;
@@ -765,7 +766,7 @@ public class StudyOptionsFragment extends Fragment {
                         try {
                             int forgottenDays = Integer.parseInt(((EditText) mCustomStudyEditText).getText().toString());
                             ar.put(0, 1);
-                            createFilteredDeck(ar, new Object[]{String.format(Locale.US, "rated:%d:1", forgottenDays), 9999, Sched.DYN_RANDOM}, false);
+                            createFilteredDeck(ar, new Object[]{String.format(Locale.US, "rated:%d:1", forgottenDays), 9999, Consts.DYN_RANDOM}, false);
                         } catch (NumberFormatException e) {
                             // ignore non numerical values
                             Themes.showThemedToast(getActivity().getBaseContext(), getResources().getString(R.string.custom_study_invalid_number), false);
@@ -785,7 +786,7 @@ public class StudyOptionsFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         try {
                             int days = Integer.parseInt(((EditText) mCustomStudyEditText).getText().toString());
-                            createFilteredDeck(new JSONArray(), new Object[]{String.format(Locale.US, "prop:due<=%d", days), 9999, Sched.DYN_DUE}, true);
+                            createFilteredDeck(new JSONArray(), new Object[]{String.format(Locale.US, "prop:due<=%d", days), 9999, Consts.DYN_DUE}, true);    
                         } catch (NumberFormatException e) {
                             // ignore non numerical values
                             Themes.showThemedToast(getActivity().getBaseContext(), getResources().getString(R.string.custom_study_invalid_number), false);
@@ -803,7 +804,7 @@ public class StudyOptionsFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         try {
                             int randomCards = Integer.parseInt(((EditText) mCustomStudyEditText).getText().toString());
-                            createFilteredDeck(new JSONArray(), new Object[]{"", randomCards, Sched.DYN_RANDOM}, true);
+                            createFilteredDeck(new JSONArray(), new Object[]{"", randomCards, Consts.DYN_RANDOM}, true);
                         } catch (NumberFormatException e) {
                             // ignore non numerical values
                             Themes.showThemedToast(getActivity().getBaseContext(), getResources().getString(R.string.custom_study_invalid_number), false);
@@ -820,7 +821,7 @@ public class StudyOptionsFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                     	String previewDays = ((EditText) mCustomStudyEditText).getText().toString();
-                    	createFilteredDeck(new JSONArray(), new Object[]{"is:new added:" + previewDays, 9999, Sched.DYN_OLDEST}, false);
+                    	createFilteredDeck(new JSONArray(), new Object[]{"is:new added:" + previewDays, 9999, Consts.DYN_OLDEST}, false);
                     }
                 });
         		break;
@@ -952,7 +953,7 @@ public class StudyOptionsFragment extends Fragment {
                             sb.append(")");	//Only if we added anything to the tag list
                         }
                         mSearchTerms = sb.toString();
-                        createFilteredDeck(new JSONArray(), new Object[]{mSearchTerms, 9999, Sched.DYN_RANDOM}, false);
+                        createFilteredDeck(new JSONArray(), new Object[]{mSearchTerms, 9999, Consts.DYN_RANDOM}, false);
                     }
                 });
                 builder1.setNegativeButton(res.getString(R.string.cancel), new OnClickListener() {

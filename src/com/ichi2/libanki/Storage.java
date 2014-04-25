@@ -63,7 +63,7 @@ public class Storage {
 
         // add db to col and do any remaining upgrades
         Collection col = new Collection(db, path, server);
-        if (ver < Collection.SCHEMA_VERSION) {
+        if (ver < Consts.SCHEMA_VERSION) {
             _upgrade(col, ver);
         } else if (create) {
             // add in reverse order so basic is default
@@ -80,7 +80,7 @@ public class Storage {
 
     private static int _upgradeSchema(AnkiDb db) {
         int ver = db.queryScalar("SELECT ver FROM col");
-        if (ver == Collection.SCHEMA_VERSION) {
+        if (ver == Consts.SCHEMA_VERSION) {
             return ver;
         }
         // add odid to cards, edue->odue
@@ -120,7 +120,7 @@ public class Storage {
                 ArrayList<JSONObject> clozes = new ArrayList<JSONObject>();
                 for (JSONObject m : col.getModels().all()) {
                     if (!m.getJSONArray("tmpls").getJSONObject(0).getString("qfmt").contains("{{cloze:")) {
-                        m.put("type", Sched.MODEL_STD);
+                        m.put("type", Consts.MODEL_STD);
                     } else {
                         clozes.add(m);
                     }
@@ -224,7 +224,7 @@ public class Storage {
 
     private static void _upgradeClozeModel(Collection col, JSONObject m) {
         try {
-            m.put("type", Sched.MODEL_CLOZE);
+            m.put("type", Consts.MODEL_CLOZE);
             // convert first template
             JSONObject t = m.getJSONArray("tmpls").getJSONObject(0);
             for (String type : new String[] { "qfmt", "afmt" }) {
@@ -263,7 +263,7 @@ public class Storage {
         _addSchema(db);
         _updateIndices(db);
         db.execute("ANALYZE");
-        return Collection.SCHEMA_VERSION;
+        return Consts.SCHEMA_VERSION;
     }
 
 
@@ -304,7 +304,7 @@ public class Storage {
         db.execute("create table if not exists graves (" + "    usn             integer not null,"
                 + "    oid             integer not null," + "    type            integer not null" + ")");
         db.execute("INSERT OR IGNORE INTO col VALUES(1,0,0," +
-                Utils.intNow(1000) + "," + Collection.SCHEMA_VERSION +
+                Utils.intNow(1000) + "," + Consts.SCHEMA_VERSION +
                 ",0,0,0,'','{}','','','{}')");
         if (setColConf) {
             _setColVars(db);

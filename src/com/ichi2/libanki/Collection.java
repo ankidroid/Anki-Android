@@ -54,11 +54,6 @@ import java.util.regex.Pattern;
 
 public class Collection {
 
-    // collection schema & syncing vars
-    public static final int SCHEMA_VERSION = 11;
-    public static final String SYNC_URL = "https://ankiweb.net/";
-    public static final int SYNC_VER = 8;
-    public static final String HELP_SITE = "http://ankisrs.net/docs/manual.html";
     private static final String TEMPLATE_ERROR = "<div style='background-color:#f44; color:#fff;'>%s</div>%s"+
                                                  "<br><br><code style='font-size:80%%'>%s</code><br><br>"+
                                                  "%s: <b>%s</b><br>%s: <b>%s</b><br><br>%s";
@@ -97,7 +92,7 @@ public class Collection {
     public static final String defaultConf = "{"
             +
             // review options
-            "'activeDecks': [1], " + "'curDeck': 1, " + "'newSpread': " + Sched.NEW_CARDS_DISTRIBUTE + ", "
+            "'activeDecks': [1], " + "'curDeck': 1, " + "'newSpread': " + Consts.NEW_CARDS_DISTRIBUTE + ", "
             + "'collapseTime': 1200, " + "'timeLim': 0, " + "'estTimes': True, " + "'dueCounts': True, "
             +
             // other config
@@ -519,7 +514,7 @@ public class Collection {
         String strids = Utils.ids2str(ids);
         // we need to log these independently of cards, as one side may have
         // more card templates
-        _logRem(ids, Sched.REM_NOTE);
+        _logRem(ids, Consts.REM_NOTE);
         mDb.execute("DELETE FROM notes WHERE id IN " + strids);
     }
 
@@ -542,7 +537,7 @@ public class Collection {
         ArrayList<JSONObject> ok = new ArrayList<JSONObject>();
         JSONArray tmpls;
         try {
-            if (model.getInt("type") == Sched.MODEL_STD) {
+            if (model.getInt("type") == Consts.MODEL_STD) {
                 tmpls = model.getJSONArray("tmpls");
                 for (int i = 0; i < tmpls.length(); i++) {
                     JSONObject t = tmpls.getJSONObject(i);
@@ -757,7 +752,7 @@ public class Collection {
         JSONObject conf = mDecks.confForDid(did);
         // in order due?
         try {
-            if (conf.getJSONObject("new").getInt("order") == Sched.NEW_CARDS_DUE) {
+            if (conf.getJSONObject("new").getInt("order") == Consts.NEW_CARDS_DUE) {
                 return due;
             } else {
                 // random mode; seed with note ts so all cards of this note get
@@ -806,7 +801,7 @@ public class Collection {
         long[] nids = Utils
                 .arrayList2array(mDb.queryColumn(Long.class, "SELECT nid FROM cards WHERE id IN " + sids, 0));
         // remove cards
-        _logRem(ids, Sched.REM_CARD);
+        _logRem(ids, Consts.REM_CARD);
         mDb.execute("DELETE FROM cards WHERE id IN " + sids);
         // then notes
         if (!notes) {
@@ -923,7 +918,7 @@ public class Collection {
             fields.put("Type", (String) model.get("name"));
             fields.put("Deck", mDecks.name((Long) data[3]));
             JSONObject template;
-            if (model.getInt("type") == Sched.MODEL_STD) {
+            if (model.getInt("type") == Consts.MODEL_STD) {
                 template = model.getJSONArray("tmpls").getJSONObject((Integer) data[4]);
             } else {
                 template = model.getJSONArray("tmpls").getJSONObject(0);
@@ -950,7 +945,7 @@ public class Collection {
                 html = (String) AnkiDroidApp.getHooks().runFilter("mungeQA", html, "q", fields, model, data, this);
                 d.put("q", html);
                 // empty cloze?
-                if (model.getInt("type") == Sched.MODEL_CLOZE) {
+                if (model.getInt("type") == Consts.MODEL_CLOZE) {
                     if (getModels()._availClozeOrds(model, (String) data[6], false).size() == 0) {
                         d.put("q", "Please edit this note and add some cloze deletions.");
                     }
@@ -971,12 +966,12 @@ public class Collection {
                 html = (String) AnkiDroidApp.getHooks().runFilter("mungeQA", html, "a", fields, model, data, this);
                 d.put("a", html);
                 // empty cloze?
-                if (model.getInt("type") == Sched.MODEL_CLOZE) {
+                if (model.getInt("type") == Consts.MODEL_CLOZE) {
                     if (getModels()._availClozeOrds(model, (String) data[6], false).size() == 0) {
                         d.put("q",
                                 AnkiDroidApp.getAppResources().getString(
                                         com.ichi2.anki.R.string.empty_cloze_warning,
-                                        "<a href=" + HELP_SITE + "#cloze>" +
+                                        "<a href=" + Consts.HELP_SITE + "#cloze>" +
                                         AnkiDroidApp.getAppResources().getString(
                                                 com.ichi2.anki.R.string.help_cloze) + "</a>"));
                     }
@@ -1320,7 +1315,7 @@ public class Collection {
             // invalid ords
             for (JSONObject m : mModels.all()) {
                 // ignore clozes
-                if (m.getInt("type") != Sched.MODEL_STD) {
+                if (m.getInt("type") != Consts.MODEL_STD) {
                     continue;
                 }
                 // Make a list of valid ords for this model
@@ -1367,7 +1362,7 @@ public class Collection {
                 // for each model
                 for (JSONObject m : mModels.all()) {
                     // cards with invalid ordinal
-                    if (m.getInt("type") == Sched.MODEL_STD) {
+                    if (m.getInt("type") == Consts.MODEL_STD) {
                         ArrayList<Integer> ords = new ArrayList<Integer>();
                         JSONArray tmpls = m.getJSONArray("tmpls");
                         for (int t = 0; t < tmpls.length(); t++) {
