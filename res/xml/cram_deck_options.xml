@@ -26,7 +26,7 @@
             android:key="limit"
             android:numeric="integer"
             android:title="@string/deck_conf_cram_limit"
-            app:max="9999"
+            app:max="99999"
             app:min="1" />
         <ListPreference
             android:key="order"

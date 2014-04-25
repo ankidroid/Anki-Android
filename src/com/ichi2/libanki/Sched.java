@@ -1637,7 +1637,7 @@ public class Sched {
                 break;
             case Consts.DYN_DUEPRIORITY:
                 t = String.format(Locale.US,
-                        "(case when queue=2 and due <= %d then (ivl / cast(%d-due+0.001 as real)) else 10000+due end)",
+                        "(case when queue=2 and due <= %d then (ivl / cast(%d-due+0.001 as real)) else 100000+due end)",
                         mToday, mToday);
             default:
             	// if we don't understand the term, default to due order
@@ -2162,8 +2162,9 @@ public class Sched {
 
     /** Put cards at the end of the new queue. */
     public void forgetCards(long[] ids) {
-        mCol.getDb().execute("update cards set type=0,queue=0,ivl=0,due=0,factor=2500 where odid=0 "+
-                             "and queue >= 0 and id in " + Utils.ids2str(ids));
+        remFromDyn(ids);
+        mCol.getDb().execute("update cards set type=0,queue=0,ivl=0,due=0,odue=0,factor=2500"+
+                             " where id in " + Utils.ids2str(ids));
         int pmax = mCol.getDb().queryScalar("SELECT max(due) FROM cards WHERE type=0", false);
         // takes care of mod + usn
         sortCards(ids, pmax + 1);
@@ -2186,10 +2187,10 @@ public class Sched {
             int r = rnd.nextInt(imax - imin + 1) + imin;
             d.add(new Object[] { Math.max(1, r), r + t, mCol.usn(), mod, 2500, id });
         }
-        removeLrn(ids);
+        remFromDyn(ids);
         mCol.getDb().executeMany(
-                "update cards set type=2,queue=2,ivl=?,due=?, " +
-                "usn=?, mod=?, factor=? where id=? and odid=0 and queue >=0", d);
+                "update cards set type=2,queue=2,ivl=?,due=?,odue=0 " +
+                "usn=?,mod=?,factor=? where id=?", d);
     }
 
 
