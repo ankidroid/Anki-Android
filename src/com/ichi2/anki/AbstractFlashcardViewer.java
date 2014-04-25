@@ -793,7 +793,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
      */
     private void updateTypeAnswerInfo() {
         mTypeCorrect = null;
-        String q = mCurrentCard.getQuestion(false);
+        String q = mCurrentCard.q(false);
         Matcher m = sTypeAnsPat.matcher(q);
         int clozeIdx = 0;
         if (!m.find()) {
@@ -1537,7 +1537,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         builder.setTitle(res.getString(R.string.delete_card_title));
         builder.setIcon(R.drawable.ic_dialog_alert);
         builder.setMessage(String.format(res.getString(R.string.delete_note_message),
-                Utils.stripHTML(mCurrentCard.getQuestion(true))));
+                Utils.stripHTML(mCurrentCard.q(true))));
         builder.setPositiveButton(res.getString(R.string.yes), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -2217,8 +2217,13 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         }
 
         setInterface();
-
-        String question = mCurrentCard.getQuestion(mCurrentSimpleInterface);
+        
+        String question;
+        if (mCurrentSimpleInterface) {
+            question = mCurrentCard.qSimple();
+        } else {
+            question = mCurrentCard.q();
+        }
         question = typeAnsQuestionFilter(question);
 
         if (mPrefFixArabic) {
@@ -2329,11 +2334,15 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         sDisplayAnswer = true;
         setFlipCardAnimation();
 
-        String answer = mCurrentCard.getAnswer(mCurrentSimpleInterface);
-        answer = typeAnsAnswerFilter(answer);
+        String answer;
+        if (mCurrentSimpleInterface) {
+            answer = mCurrentCard.aSimple();
+        } else {
+            answer = mCurrentCard.a();
+        }
 
         if (mDisplayKanjiInfo) {
-            answer = answer + addKanjiInfo(mCurrentCard.getQuestion(mCurrentSimpleInterface));
+            answer = answer + addKanjiInfo(mCurrentCard.q(mCurrentSimpleInterface));
         }
 
         String displayString = "";
@@ -2578,7 +2587,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
      */
     private static void readCardText(final Card card, final int cardSide) {
         if (MetaDB.LANGUAGES_QA_QUESTION == cardSide) {
-            ReadText.textToSpeech(Utils.stripHTML(card.getQuestion(true)), getDeckIdForCard(card), card.getOrd(),
+            ReadText.textToSpeech(Utils.stripHTML(card.q(true)), getDeckIdForCard(card), card.getOrd(),
                     MetaDB.LANGUAGES_QA_QUESTION);
         } else if (MetaDB.LANGUAGES_QA_ANSWER == cardSide) {
             ReadText.textToSpeech(Utils.stripHTML(card.getPureAnswerForReading()), getDeckIdForCard(card),
