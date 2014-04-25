@@ -15,6 +15,40 @@
         ::content::
         </div>
         <script type="text/javascript">
+            /*
+            Handle image resizing if the image exceeds the window dimensions.
+            
+            If we are using the Chrome engine, add the "chrome" class to the body and defer
+            image resizing to pure CSS. The Chrome engine can handle image resizing on its own,
+            but for older versions of WebView, we do it here.
+            */
+            window.onload = function() {
+                if (navigator.userAgent.indexOf("Chrome") > -1) {
+                    document.body.className = document.body.className + " chrome";
+                } else {
+                    var maxWidth = window.innerWidth * 0.90;
+                    var maxHeight = window.innerHeight * 0.90;
+                    var ratio = 0;
+                    var images = document.getElementsByTagName('img');
+                    for (var i = 0; i < images.length; i++) {
+                        var img = images[i];
+                        var width = img.width;
+                        var height = img.height;
+                        if (width > maxWidth) {
+                            ratio = maxWidth / width;
+                            img.style.width = maxWidth + "px";
+                            img.style.height = (height * ratio) + "px";
+                        }
+                        width = img.width;
+                        height = img.height;
+                        if (height > maxHeight) {
+                            ratio = maxHeight / height;
+                            img.style.width = (width * ratio) + "px";
+                            img.style.height = maxHeight + "px";
+                        }
+                    }
+                }
+            };
             window.location.href = "#answer";
         </script>
     </body>
