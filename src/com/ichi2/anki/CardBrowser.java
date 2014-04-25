@@ -79,13 +79,13 @@ import com.ichi2.themes.Themes;
 import com.ichi2.upgrade.Upgrade;
 import com.ichi2.widget.WidgetStatus;
 
-public class CardBrowser extends ActionBarActivity {
+public class CardBrowser extends ActionBarActivity implements ActionBar.OnNavigationListener {
 
     // private List<Long> mCardIds = new ArrayList<Long>();
     private ArrayList<HashMap<String, String>> mCards;
     // private ArrayList<HashMap<String, String>> mAllCards;
     private HashMap<String, String> mDeckNames;
-    private ArrayList<String> mSpinnerDecks;
+    private ArrayList<String> mDropDownDecks;
     private SearchView mSearchView;
     private ListView mCardsListView;
     private Spinner mCardsColumn1Spinner;
@@ -160,11 +160,13 @@ public class CardBrowser extends ActionBarActivity {
     private boolean mWholeCollection;
 
     private ActionBar mActionBar;
-    private ArrayAdapter<String> mSpinnerAdapter;
+    private ArrayAdapter<String> mDropDownAdapter;
 
     private String[] allTags;
     private String[] mColumn2Indexs;
     private HashSet<String> mSelectedTags;
+
+    private boolean mInitializing = true;
 
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
@@ -268,29 +270,6 @@ public class CardBrowser extends ActionBarActivity {
             currentDeckName = mCol.getDecks().current().getString("name");
         } catch (JSONException e) {
             throw new RuntimeException(e);
-        }
-
-        // Spinner in action bar
-        mSpinnerDecks = new ArrayList<String>(mDeckNames.values());
-        mSpinnerDecks.add(0, res.getString(R.string.deck_summary_all_decks));
-        mSpinnerAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, mSpinnerDecks);
-        mActionBar = getSupportActionBar();
-        mActionBar.setDisplayShowTitleEnabled(false);
-        mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-        mActionBar.setListNavigationCallbacks(mSpinnerAdapter, new ActionBar.OnNavigationListener() {
-            @Override
-            public boolean onNavigationItemSelected(int position, long itemId) {
-                if (position == 0) {
-                    mRestrictOnDeck = "";
-                } else {
-                    mRestrictOnDeck = "deck:'" + mSpinnerDecks.get(position) + "' ";
-                }
-                searchCards();
-                return true;
-            }
-        });
-        if (!mWholeCollection) {
-            mActionBar.setSelectedNavigationItem(mSpinnerDecks.indexOf(currentDeckName));
         }
 
         mOrderByFields = res.getStringArray(R.array.card_browser_order_labels);
@@ -406,8 +385,17 @@ public class CardBrowser extends ActionBarActivity {
 
         mSelectedTags = new HashSet<String>();
 
-        if (!preferences.getBoolean("cardBrowserNoSearchOnOpen", false)) {
-            searchCards();
+        // Add drop-down menu to select deck to action bar.
+        // onNavigationItemSelected will be called automatically, replacing onSearch in onCreate.
+        mDropDownDecks = new ArrayList<String>(mDeckNames.values());
+        mDropDownDecks.add(0, res.getString(R.string.deck_summary_all_decks));
+        mDropDownAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, mDropDownDecks);
+        mActionBar = getSupportActionBar();
+        mActionBar.setDisplayShowTitleEnabled(false);
+        mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+        mActionBar.setListNavigationCallbacks(mDropDownAdapter, this);
+        if (!mWholeCollection) {
+            mActionBar.setSelectedNavigationItem(mDropDownDecks.indexOf(currentDeckName));
         }
     }
 
@@ -732,6 +720,28 @@ public class CardBrowser extends ActionBarActivity {
                 });
                 break;
         }
+    }
+
+
+    @Override
+    public boolean onNavigationItemSelected(int position, long itemId) {
+        if (position == 0) {
+            mRestrictOnDeck = "";
+        } else {
+            mRestrictOnDeck = "deck:'" + mDropDownDecks.get(position) + "' ";
+        }
+        // onNavigationItemSelected is called when the activity is launched.
+        // mInitializing captures this step to support the cardBrowserNoSearchOnOpen option.
+        if (mInitializing) {
+            mInitializing = false;
+            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+            if (!preferences.getBoolean("cardBrowserNoSearchOnOpen", false)) {
+                searchCards();
+            }
+        } else {
+            searchCards();
+        }
+        return true;
     }
 
 
