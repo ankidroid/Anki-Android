@@ -55,49 +55,10 @@ import java.util.TreeSet;
 
 public class Sched {
 
-    // These constants are from consts.py
 
-    // whether new cards should be mixed with reviews, or shown first or last
-    public static final int NEW_CARDS_DISTRIBUTE = 0;
-    public static final int NEW_CARDS_LAST = 1;
-    public static final int NEW_CARDS_FIRST = 2;
-
-    // new card insertion order
-    public static final int NEW_CARDS_RANDOM = 0;
-    public static final int NEW_CARDS_DUE = 1;
-
-    // removal types
-    public static final int REM_CARD = 0;
-    public static final int REM_NOTE = 1;
-    public static final int REM_DECK = 2;
-
-    // count display
-    public static final int COUNT_ANSWERED = 0;
-    public static final int COUNT_REMAINING = 1;
-
-    // media log
-    public static final int MEDIA_ADD = 0;
-    public static final int MEDIA_REM = 1;
-
-
-    // dynamic deck order
-    public static final int DYN_OLDEST = 0;
-    public static final int DYN_RANDOM = 1;
-    public static final int DYN_SMALLINT = 2;
-    public static final int DYN_BIGINT = 3;
-    public static final int DYN_LAPSES = 4;
-    public static final int DYN_ADDED = 5;
-    public static final int DYN_DUE = 6;
-    public static final int DYN_REVADDED = 7;
-    public static final int DYN_DUEPRIORITY = 8;
-
-    // model types
-    public static final int MODEL_STD = 0;
-    public static final int MODEL_CLOZE = 1;
 
     // Not in libanki
     private static final int[] FACTOR_ADDITION_VALUES = { -150, 0, 150 };
-
 
     private String mName = "std";
     private boolean mHaveCustomStudy = true;
@@ -683,7 +644,7 @@ public class Sched {
 
     private void _updateNewCardRatio() {
         try {
-            if (mCol.getConf().getInt("newSpread") == NEW_CARDS_DISTRIBUTE) {
+            if (mCol.getConf().getInt("newSpread") == Consts.NEW_CARDS_DISTRIBUTE) {
                 if (mNewCount != 0) {
                     mNewCardModulus = (mNewCount + mRevCount) / mNewCount;
                     // if there are cards to review, ensure modulo >= 2
@@ -713,9 +674,9 @@ public class Sched {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-        if (spread == NEW_CARDS_LAST) {
+        if (spread == Consts.NEW_CARDS_LAST) {
             return false;
-        } else if (spread == NEW_CARDS_FIRST) {
+        } else if (spread == Consts.NEW_CARDS_FIRST) {
             return true;
         } else if (mNewCardModulus != 0) {
             return (mReps != 0 && (mReps % mNewCardModulus == 0));
@@ -1650,31 +1611,31 @@ public class Sched {
     private String _dynOrder(int o, int l) {
         String t;
         switch (o) {
-            case DYN_OLDEST:
+            case Consts.DYN_OLDEST:
                 t = "c.mod";
                 break;
-            case DYN_RANDOM:
+            case Consts.DYN_RANDOM:
                 t = "random()";
                 break;
-            case DYN_SMALLINT:
+            case Consts.DYN_SMALLINT:
                 t = "ivl";
                 break;
-            case DYN_BIGINT:
+            case Consts.DYN_BIGINT:
                 t = "ivl desc";
                 break;
-            case DYN_LAPSES:
+            case Consts.DYN_LAPSES:
                 t = "lapses desc";
                 break;
-            case DYN_ADDED:
+            case Consts.DYN_ADDED:
                 t = "n.id";
                 break;
-            case DYN_REVADDED:
+            case Consts.DYN_REVADDED:
                 t = "n.id desc";
                 break;
-            case DYN_DUE:
+            case Consts.DYN_DUE:
                 t = "c.due";
                 break;
-            case DYN_DUEPRIORITY:
+            case Consts.DYN_DUEPRIORITY:
                 t = String.format(Locale.US,
                         "(case when queue=2 and due <= %d then (ivl / cast(%d-due+0.001 as real)) else 10000+due end)",
                         mToday, mToday);
@@ -1791,7 +1752,7 @@ public class Sched {
             // overrides
             dict.put("delays", delays);
             dict.put("separate", conf.getBoolean("separate"));
-            dict.put("order", NEW_CARDS_DUE);
+            dict.put("order", Consts.NEW_CARDS_DUE);
             dict.put("perDay", mReportLimit);
             return dict;
         } catch (JSONException e) {
@@ -2348,7 +2309,7 @@ public class Sched {
         JSONObject conf = mCol.getDecks().confForDid(did);
         // in order due?
         try {
-            if (conf.getJSONObject("new").getInt("order") == NEW_CARDS_RANDOM) {
+            if (conf.getJSONObject("new").getInt("order") == Consts.NEW_CARDS_RANDOM) {
                 randomizeCards(did);
             }
         } catch (JSONException e) {

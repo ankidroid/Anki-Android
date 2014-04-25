@@ -663,7 +663,7 @@ public class Finder {
                 for (int ti = 0; ti < tmpls.length(); ++ti) {
                     JSONObject t = tmpls.getJSONObject(ti);
                     if (t.getString("name").equalsIgnoreCase(val)) {
-                        if (m.getInt("type") == Sched.MODEL_CLOZE) {
+                        if (m.getInt("type") == Consts.MODEL_CLOZE) {
                             // if the user has asked for a cloze card, we want
                             // to give all ordinals, so we just limit to the
                             // model instead

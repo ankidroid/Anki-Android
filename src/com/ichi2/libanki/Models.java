@@ -66,7 +66,7 @@ public class Models {
             + "'usn': 0, "
             + "'vers': [], " // FIXME: remove when other clients have caught up
             + "'type': "
-            + Sched.MODEL_STD
+            + Consts.MODEL_STD
             + ", "
             + "'css': \".card {\\n"
             + " font-familiy: arial;\\n"
@@ -1079,9 +1079,9 @@ public class Models {
                 Integer newOrd;
                 long cid = cur.getLong(0);
                 int ord = cur.getInt(1);
-                if (omType == Sched.MODEL_CLOZE) {
+                if (omType == Consts.MODEL_CLOZE) {
                     newOrd = cur.getInt(1);
-                    if (nmType != Sched.MODEL_CLOZE) {
+                    if (nmType != Consts.MODEL_CLOZE) {
                         // if we're mapping to a regular note, we need to check if
                         // the destination ord is valid
                         if (nflds <= ord) {
@@ -1140,7 +1140,7 @@ public class Models {
 
     private void _updateRequired(JSONObject m) {
         try {
-            if (m.getInt("type") == Sched.MODEL_CLOZE) {
+            if (m.getInt("type") == Consts.MODEL_CLOZE) {
                 // nothing to do
                 return;
             }
@@ -1226,7 +1226,7 @@ public class Models {
     /** Given a joined field string, return available template ordinals */
     public ArrayList<Integer> availOrds(JSONObject m, String flds) {
         try {
-            if (m.getInt("type") == Sched.MODEL_CLOZE) {
+            if (m.getInt("type") == Consts.MODEL_CLOZE) {
                 return _availClozeOrds(m, flds);
             }
             String[] fields = Utils.splitFields(flds);
@@ -1411,7 +1411,7 @@ public class Models {
         Models mm = col.getModels();
         JSONObject m = mm.newModel("Cloze");
         try {
-            m.put("type", Sched.MODEL_CLOZE);
+            m.put("type", Consts.MODEL_CLOZE);
             String txt = "Text";
             JSONObject fm = mm.newField(txt);
             mm.addField(m, fm);

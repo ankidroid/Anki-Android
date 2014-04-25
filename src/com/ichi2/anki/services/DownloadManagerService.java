@@ -44,6 +44,7 @@ import com.ichi2.async.DeckTask;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.sync.BasicHttpSyncer;
@@ -594,7 +595,7 @@ public class DownloadManagerService extends Service {
             InflaterInputStream iis = null;
 
             try {
-                url = new URL(Collection.SYNC_URL + "fulldown");
+                url = new URL(Consts.SYNC_URL + "fulldown");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
                 connection.setDoInput(true);
