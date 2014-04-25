@@ -18,6 +18,7 @@
 
 package com.ichi2.anki;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -80,7 +81,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.Animation3D;
 import com.ichi2.anim.ViewAnimation;
@@ -100,13 +100,11 @@ import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.DiffEngine;
 import com.ichi2.widget.WidgetStatus;
-
 import org.amr.arabic.ArabicUtilities;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.xml.sax.XMLReader;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -207,7 +205,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
     private boolean mInputWorkaround;
     private boolean mLongClickWorkaround;
     private boolean mPrefFullscreenReview;
-    private boolean mZoomEnabled;
     private String mCollectionFilename;
     private int mRelativeImageSize;
     private int mRelativeButtonSize;
@@ -1758,13 +1755,18 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         initControls();
     }
 
+    @SuppressLint("NewApi") // because of setDisplayZoomControls.
     private WebView createWebView() {
         WebView webView = new MyWebView(this);
         webView.setWillNotCacheDrawing(true);
         webView.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_OVERLAY);
-        if (mZoomEnabled) {
-            webView.getSettings().setBuiltInZoomControls(true);
+        boolean zoom_ctrls = false;
+        if (AnkiDroidApp.SDK_VERSION > 11) {
+            zoom_ctrls = true;
+            webView.getSettings().setDisplayZoomControls(false);
         }
+        webView.getSettings().setBuiltInZoomControls(zoom_ctrls);
+        webView.getSettings().setSupportZoom(true);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebChromeClient(new AnkiDroidWebChromeClient());
         webView.addJavascriptInterface(new JavaScriptInterface(this), "ankidroid");
@@ -1959,7 +1961,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         mInvertedColors = mNightMode;
         mBlackWhiteboard = preferences.getBoolean("blackWhiteboard", true);
         mPrefFullscreenReview = preferences.getBoolean("fullscreenReview", false);
-        mZoomEnabled = preferences.getBoolean("zoom", false);
         mDisplayFontSize = preferences.getInt("relativeDisplayFontSize", 100);// Card.DEFAULT_FONT_SIZE_RATIO);
         mRelativeImageSize = preferences.getInt("relativeImageSize", 100);
         mRelativeButtonSize = preferences.getInt("answerButtonSize", 100);
