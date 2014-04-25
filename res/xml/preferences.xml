@@ -507,14 +507,6 @@
                 app:interval="1"
                 app:min="10" />
         </PreferenceCategory>
-        <PreferenceCategory android:title="@string/pref_cat_zoom" >
-            <CheckBoxPreference
-                android:id="@+id/zoom_checkbox"
-                android:defaultValue="false"
-                android:key="zoom"
-                android:summary="@string/zoom_summ"
-                android:title="@string/zoom" />
-        </PreferenceCategory>
         <PreferenceCategory android:title="@string/pref_cat_scrolling" >
             <CheckBoxPreference
                 android:id="@+id/scrolling_buttons_checkbox"

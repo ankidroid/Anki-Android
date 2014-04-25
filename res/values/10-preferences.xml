@@ -35,7 +35,6 @@
 <string name="pref_cat_navigation">Navigation</string>
 <string name="pref_cat_swipe">Swipe</string>
 <string name="pref_cat_navigation_sensitivity">Sensitivity</string>
-<string name="pref_cat_zoom">Zoom</string>
 <string name="pref_cat_zeemote">Zeemote</string>
 <string name="pref_cat_reset">Reset</string>
 <string name="pref_cat_other">Other</string>
@@ -100,8 +99,6 @@
 <string name="col_path_summ">Path to where your collection is stored</string>
 <string name="fullscreen_review">Review in fullscreen</string>
 <string name="fullscreen_review_summ">You can decide if you want to use all available screen space during card reviewing</string>
-<string name="zoom">Enable Zoom</string>
-<string name="zoom_summ">Show zoom controls when reviewing</string>
 <string name="zeemote">Zeemote JS1 support</string>
 <string name="zeemote_summ">Use Zeemote JS1 controller to navigate reviews.</string>
 <string name="zeemote_actions">Zeemote actions in Reviewer</string>

@@ -78,7 +78,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     // private boolean mVeecheckStatus;
     private Collection mCol;
     private PreferenceManager mPrefMan;
-    private CheckBoxPreference zoomCheckboxPreference;
     private CheckBoxPreference keepScreenOnCheckBoxPreference;
     private CheckBoxPreference showAnswerCheckBoxPreference;
     private CheckBoxPreference swipeCheckboxPreference;
@@ -137,7 +136,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         addPreferencesFromResource(R.xml.preferences);
 
         swipeCheckboxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("swipe");
-        zoomCheckboxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("zoom");
         keepScreenOnCheckBoxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("keepScreenOn");
         showAnswerCheckBoxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("timeoutAnswer");
         animationsCheckboxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("themeAnimations");
@@ -158,7 +156,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         dayOffset = (SeekBarPreference) getPreferenceScreen().findPreference("dayOffset");
 //        String theme = listpref.getValue();
 //        animationsCheckboxPreference.setEnabled(theme.equals("2") || theme.equals("3"));
-        zoomCheckboxPreference.setEnabled(!swipeCheckboxPreference.isChecked());
 
         initializeLanguageDialog();
         initializeCustomFontsDialog();
@@ -385,10 +382,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         try {
-            if (key.equals("swipe")) {
-                zoomCheckboxPreference.setChecked(false);
-                zoomCheckboxPreference.setEnabled(!swipeCheckboxPreference.isChecked());
-            } else if (key.equals("timeoutAnswer")) {
+            if (key.equals("timeoutAnswer")) {
                 keepScreenOnCheckBoxPreference.setChecked(showAnswerCheckBoxPreference.isChecked());
             } else if (key.equals("language")) {
                 closePreferences();
