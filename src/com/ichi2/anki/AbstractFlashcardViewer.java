@@ -65,9 +65,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
@@ -83,7 +80,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
-import com.ichi2.anim.Animation3D;
 import com.ichi2.anim.ViewAnimation;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.reviewer.ReviewerExtRegistry;
@@ -230,7 +226,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
     private boolean mPrefFadeScrollbars;
     protected boolean mPrefUseTimer;
     private boolean mPrefCenterVertically;
-    private boolean mShowAnimations = false;
     private boolean mSimpleInterface = false;
     private boolean mCurrentSimpleInterface = false;
     private ArrayList<String> mSimpleInterfaceExcludeTags;
@@ -378,19 +373,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
 
     private Spanned mCardContent;
     private String mBaseUrl;
-
-    private static final int ANIMATION_NO_ANIMATION = 0;
-    private static final int ANIMATION_TURN = 1;
-    private static final int ANIMATION_NEXT_CARD_FROM_RIGHT = 2;
-    private static final int ANIMATION_NEXT_CARD_FROM_LEFT = 3;
-    private static final int ANIMATION_SLIDE_OUT_TO_LEFT = 4;
-    private static final int ANIMATION_SLIDE_OUT_TO_RIGHT = 5;
-    private static final int ANIMATION_SLIDE_IN_FROM_RIGHT = 6;
-    private static final int ANIMATION_SLIDE_IN_FROM_LEFT = 7;
-
-    private int mNextAnimation = 0;
-    private int mAnimationDurationTurn = 500;
-    private int mAnimationDurationMove = 500;
 
     private int mFadeDuration = 300;
 
@@ -649,7 +631,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
                 mNoMoreCards = true;
                 mProgressDialog = StyledProgressDialog.show(AbstractFlashcardViewer.this, "",
                         getResources().getString(R.string.saving_changes), true);
-                setOutAnimation(false);
                 return;
             }
             if (mPrefWhiteboard) {
@@ -732,7 +713,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
                 mNoMoreCards = true;
                 mProgressDialog = StyledProgressDialog.show(AbstractFlashcardViewer.this, "",
                         getResources().getString(R.string.saving_changes), true);
-                setOutAnimation(false);
             } else {
                 // Start reviewing next card
                 if (mPrefWriteAnswers) {
@@ -1113,71 +1093,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-
-    // @Override
-    // public void onConfigurationChanged(Configuration newConfig) {
-    // super.onConfigurationChanged(newConfig);
-    // setLanguage(mLocale);
-    // Log.i(AnkiDroidApp.TAG, "onConfigurationChanged");
-    //
-    // mConfigurationChanged = true;
-    //
-    // long savedTimer = mCardTimer.getBase();
-    // CharSequence savedAnswerField = mAnswerField.getText();
-    // boolean cardVisible = mCardContainer.getVisibility() == View.VISIBLE;
-    // int lookupButtonVis = mLookUpIcon.getVisibility();
-    //
-    // // Reload layout
-    // initLayout(R.layout.flashcard);
-    //
-    // if (mRelativeButtonSize != 100) {
-    // mFlipCard.setHeight(mButtonHeight);
-    // mEase1.setHeight(mButtonHeight);
-    // mEase2.setHeight(mButtonHeight);
-    // mEase3.setHeight(mButtonHeight);
-    // mEase4.setHeight(mButtonHeight);
-    // }
-    //
-    // // Modify the card template to indicate the new available width and refresh card
-    // mCardTemplate = mCardTemplate.replaceFirst("var availableWidth = \\d*;", "var availableWidth = "
-    // + getAvailableWidthInCard() + ";");
-    //
-    // if (typeAnswer()) {
-    // mAnswerField.setText(savedAnswerField);
-    // }
-    // if (mPrefWhiteboard) {
-    // mWhiteboard.rotate();
-    // }
-    // if (mInvertedColors) {
-    // invertColors(true);
-    // }
-    //
-    // // If the card hasn't loaded yet, don't refresh it
-    // // Also skipping the counts (because we don't know which one to underline)
-    // // They will be updated when the card loads anyway
-    // if (mCurrentCard != null) {
-    // if (cardVisible) {
-    // fillFlashcard(false);
-    // if (mPrefTimer) {
-    // mCardTimer.setBase(savedTimer);
-    // mCardTimer.start();
-    // }
-    // if (sDisplayAnswer) {
-    // updateForNewCard();
-    // }
-    // } else {
-    // mCardContainer.setVisibility(View.INVISIBLE);
-    // switchVisibility(mProgressBars, View.INVISIBLE);
-    // switchVisibility(mCardTimer, View.INVISIBLE);
-    // }
-    // if (sDisplayAnswer) {
-    // showEaseButtons();
-    // }
-    // }
-    // mLookUpIcon.setVisibility(lookupButtonVis);
-    // mConfigurationChanged = false;
-    // }
-
     private void updateBigWidget(boolean showProgressDialog) {
         // if (DeckManager.deckIsOpenedInBigWidget(DeckManager.getMainDeckPath())) {
         // Log.i(AnkiDroidApp.TAG, "Reviewer: updateBigWidget");
@@ -1327,25 +1242,21 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
                 return editCard();
 
             case R.id.action_bury_card:
-                setNextCardAnimation(false);
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
                         mSched, mCurrentCard, 4));
                 return true;
 
             case R.id.action_bury_note:
-                setNextCardAnimation(false);
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
                         mSched, mCurrentCard, 0));
                 return true;
 
             case R.id.action_suspend_card:
-                setNextCardAnimation(false);
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
                         mSched, mCurrentCard, 1));
                 return true;
 
             case R.id.action_suspend_note:
-                setNextCardAnimation(false);
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
                         mSched, mCurrentCard, 2));
                 return true;
@@ -1403,13 +1314,12 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
             finishNoStorageAvailable();
         }
         if (requestCode == EDIT_CURRENT_CARD) {
-            setInAnimation(true);
             if (resultCode != RESULT_CANCELED) {
                 Log.i(AnkiDroidApp.TAG, "Saving card...");
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler, new DeckTask.TaskData(
                         mSched, mCurrentCard, true));
             } else {
-                fillFlashcard(mShowAnimations);
+                fillFlashcard();
             }
         }
         if (mPrefTextSelection) {
@@ -1464,7 +1374,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
 
     private void undo() {
         if (mSched.getCol().undoAvailable()) {
-            setNextCardAnimation(true);
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
                 mProgressDialog.setMessage(getResources().getString(R.string.saving_changes));
             } else {
@@ -1486,7 +1395,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         Intent editCard = new Intent(AbstractFlashcardViewer.this, CardEditor.class);
         editCard.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_REVIEWER);
         sEditorCard = mCurrentCard;
-        setOutAnimation(true);
         startActivityForResultWithAnimation(editCard, EDIT_CURRENT_CARD, ActivityTransitionAnimation.LEFT);
         return true;
     }
@@ -1542,7 +1450,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         builder.setPositiveButton(res.getString(R.string.yes), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                setNextCardAnimation(false);
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
                         mSched, mCurrentCard, 3));
             }
@@ -1608,7 +1515,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         Sound.stopSounds();
         mCurrentEase = ease;
 
-        setNextCardAnimation(false);
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(mSched,
                 mCurrentCard, mCurrentEase));
     }
@@ -1622,7 +1528,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         Themes.setContentStyle(mMainLayout, Themes.CALLER_REVIEWER);
 
         mCardContainer = (FrameLayout) findViewById(R.id.flashcard_frame);
-        setInAnimation(false);
 
         mTopBarLayout = (RelativeLayout) findViewById(R.id.top_bar);
         mTopBarLayout.setOnClickListener(mCardStatisticsListener);
@@ -1818,7 +1723,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         Resources res = getResources();
 
         // hide flipcard button
-        switchVisibility(mFlipCardLayout, View.GONE);
+        mFlipCardLayout.setVisibility(View.GONE);
 
         int buttonCount;
         try {
@@ -1834,8 +1739,8 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
             case 2:
                 mEase1.setText(res.getString(R.string.ease1_successive));
                 mEase2.setText(res.getString(R.string.ease3_successive));
-                switchVisibility(mEase1Layout, View.VISIBLE);
-                switchVisibility(mEase2Layout, View.VISIBLE);
+                mEase1Layout.setVisibility(View.VISIBLE);
+                mEase2Layout.setVisibility(View.VISIBLE);
                 mEase2Layout.requestFocus();
                 mNext2.setTextColor(mNextTimeTextRecomColor);
                 mEase2.setTextColor(mNextTimeTextRecomColor);
@@ -1846,9 +1751,9 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
                 mEase1.setText(res.getString(R.string.ease1_successive));
                 mEase2.setText(res.getString(R.string.ease3_successive));
                 mEase3.setText(res.getString(R.string.ease3_learning));
-                switchVisibility(mEase1Layout, View.VISIBLE);
-                switchVisibility(mEase2Layout, View.VISIBLE);
-                switchVisibility(mEase3Layout, View.VISIBLE);
+                mEase1Layout.setVisibility(View.VISIBLE);
+                mEase2Layout.setVisibility(View.VISIBLE);
+                mEase3Layout.setVisibility(View.VISIBLE);
                 mEase2Layout.requestFocus();
                 mNext2.setTextColor(mNextTimeTextRecomColor);
                 mEase2.setTextColor(mNextTimeTextRecomColor);
@@ -1860,10 +1765,10 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
                 mEase2.setText(res.getString(R.string.ease2_successive));
                 mEase3.setText(res.getString(R.string.ease3_successive));
                 mEase4.setText(res.getString(R.string.ease3_learning));
-                switchVisibility(mEase1Layout, View.VISIBLE);
-                switchVisibility(mEase2Layout, View.VISIBLE);
-                switchVisibility(mEase3Layout, View.VISIBLE);
-                switchVisibility(mEase4Layout, View.VISIBLE);
+                mEase1Layout.setVisibility(View.VISIBLE);
+                mEase2Layout.setVisibility(View.VISIBLE);
+                mEase3Layout.setVisibility(View.VISIBLE);
+                mEase4Layout.setVisibility(View.VISIBLE);
                 mEase3Layout.requestFocus();
                 mNext2.setTextColor(mNextTimeTextColor);
                 mEase2.setTextColor(mNextTimeTextColor);
@@ -1886,13 +1791,13 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
 
 
     protected void hideEaseButtons() {
-        switchVisibility(mEase1Layout, View.GONE);
-        switchVisibility(mEase2Layout, View.GONE);
-        switchVisibility(mEase3Layout, View.GONE);
-        switchVisibility(mEase4Layout, View.GONE);
+        mEase1Layout.setVisibility(View.GONE);
+        mEase2Layout.setVisibility(View.GONE);
+        mEase3Layout.setVisibility(View.GONE);
+        mEase4Layout.setVisibility(View.GONE);
 
         if (mFlipCardLayout.getVisibility() != View.VISIBLE) {
-            switchVisibility(mFlipCardLayout, View.VISIBLE);
+            mFlipCardLayout.setVisibility(View.VISIBLE);
             mFlipCardLayout.requestFocus();
         } else if (typeAnswer()) {
             mAnswerField.requestFocus();
@@ -1903,36 +1808,16 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         }
     }
 
-
-    private void switchVisibility(View view, int visible) {
-        switchVisibility(view, visible, mShowAnimations && !mConfigurationChanged);
-    }
-
-
-    private void switchVisibility(View view, int visible, boolean fade) {
-        view.setVisibility(visible);
-        if (fade) {
-            int duration = mShowAnimations ? mAnimationDurationTurn / 2 : mFadeDuration;
-            if (visible == View.VISIBLE) {
-                enableViewAnimation(view,
-                        ViewAnimation.fade(ViewAnimation.FADE_IN, duration, mShowAnimations ? duration : 0));
-            } else {
-                enableViewAnimation(view, ViewAnimation.fade(ViewAnimation.FADE_OUT, duration, 0));
-            }
-        }
-    }
-
-
     private void switchTopBarVisibility(int visible) {
         if (mShowTimer) {
-            switchVisibility(mCardTimer, visible, true);
+            mCardTimer.setVisibility(visible);
         }
         if (mShowRemainingCardCount) {
-            switchVisibility(mTextBarRed, visible, true);
-            switchVisibility(mTextBarBlack, visible, true);
-            switchVisibility(mTextBarBlue, visible, true);
+            mTextBarRed.setVisibility(visible);
+            mTextBarBlack.setVisibility(visible);
+            mTextBarBlue.setVisibility(visible);
         }
-        switchVisibility(mChosenAnswer, visible, true);
+        mChosenAnswer.setVisibility(visible);
     }
 
 
@@ -2002,12 +1887,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         }
         if (mPrefTextSelection && mLongClickWorkaround) {
             mGestureLongclick = GESTURE_LOOKUP;
-        }
-        mShowAnimations = preferences.getBoolean("themeAnimations", false);
-        if (mShowAnimations) {
-            int animationDuration = preferences.getInt("animationDuration", 500);
-            mAnimationDurationTurn = animationDuration;
-            mAnimationDurationMove = animationDuration;
         }
 
         // allow screen orientation in reviewer only when fix preference is not set
@@ -2128,7 +2007,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
             mAnswerField.setText("");
         }
 
-        if (mPrefWhiteboard && !mShowAnimations) {
+        if (mPrefWhiteboard) {
             mWhiteboard.clear();
         }
     }
@@ -2202,9 +2081,9 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
     protected void initTimer() {
         mShowTimer = mCurrentCard.showTimer();
         if (mShowTimer && mCardTimer.getVisibility() == View.INVISIBLE) {
-            switchVisibility(mCardTimer, View.VISIBLE);
+            mCardTimer.setVisibility(View.VISIBLE);
         } else if (!mShowTimer && mCardTimer.getVisibility() != View.INVISIBLE) {
-            switchVisibility(mCardTimer, View.INVISIBLE);
+            mCardTimer.setVisibility(View.INVISIBLE);
         }
         mCardTimer.setBase(SystemClock.elapsedRealtime());
         mCardTimer.start();
@@ -2337,7 +2216,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         }
 
         sDisplayAnswer = true;
-        setFlipCardAnimation();
 
         String answer;
         if (mCurrentSimpleInterface) {
@@ -2442,7 +2320,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         Lookup.initialize(this, mCurrentCard.getDid());
 
         if (mCurrentSimpleInterface) {
-            fillFlashcard(mShowAnimations);
+            fillFlashcard();
         } else {
 
             // Check whether there is a hard coded font-size in the content and apply the relative font size
@@ -2523,7 +2401,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
                     Log.d(AnkiDroidApp.TAG, "failed to save card", e);
                 }
             }
-            fillFlashcard(mShowAnimations);
+            fillFlashcard();
         }
 
         if (!mConfigurationChanged) {
@@ -2622,141 +2500,62 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         return card.getODid() == 0 ? card.getDid() : card.getODid();
     }
 
-
-    private void setFlipCardAnimation() {
-        mNextAnimation = ANIMATION_TURN;
-    }
-
-
-    private void setNextCardAnimation(boolean reverse) {
-        if (mCardContainer.getVisibility() == View.INVISIBLE) {
-            setInAnimation(reverse);
-        } else {
-            mNextAnimation = reverse ? ANIMATION_NEXT_CARD_FROM_LEFT : ANIMATION_NEXT_CARD_FROM_RIGHT;
+    public void fillFlashcard() {
+        Log.i(AnkiDroidApp.TAG, "base url = " + mBaseUrl);
+        if (mCurrentSimpleInterface && mSimpleCard != null) {
+            mSimpleCard.setText(mCardContent);
+        } else if (!mUseQuickUpdate && mCard != null && mNextCard != null) {
+            mNextCard.setBackgroundColor(mCurrentBackgroundColor);
+            mNextCard.loadDataWithBaseURL(mBaseUrl, mCardContent.toString(), "text/html", "utf-8", null);
+            mNextCard.setVisibility(View.VISIBLE);
+            mCardFrame.removeView(mCard);
+            mCard.destroy();
+            mCard = mNextCard;
+            mNextCard = createWebView();
+            mNextCard.setVisibility(View.GONE);
+            mCardFrame.addView(mNextCard, 0);
+            // hunt for input issue 720, like android issue 3341
+            if (AnkiDroidApp.SDK_VERSION == 7) {
+                mCard.setFocusableInTouchMode(true);
+            }
+        } else if (mCard != null) {
+            mCard.loadDataWithBaseURL(mBaseUrl, mCardContent.toString(), "text/html", "utf-8", null);
+            mCard.setBackgroundColor(mCurrentBackgroundColor);
         }
-    }
-
-
-    private void setInAnimation(boolean reverse) {
-        mNextAnimation = reverse ? ANIMATION_SLIDE_IN_FROM_LEFT : ANIMATION_SLIDE_IN_FROM_RIGHT;
-    }
-
-
-    private void setOutAnimation(boolean reverse) {
-        mNextAnimation = reverse ? ANIMATION_SLIDE_OUT_TO_RIGHT : ANIMATION_SLIDE_OUT_TO_LEFT;
-        if (mCardContainer.getVisibility() == View.VISIBLE && mShowAnimations) {
-            fillFlashcard(true);
-        }
-    }
-
-
-    public void fillFlashcard(boolean flip) {
-        if (!flip) {
-            Log.i(AnkiDroidApp.TAG, "base url = " + mBaseUrl);
-            if (mCurrentSimpleInterface && mSimpleCard != null) {
-                mSimpleCard.setText(mCardContent);
-            } else if (!mUseQuickUpdate && mCard != null && mNextCard != null) {
-                mNextCard.setBackgroundColor(mCurrentBackgroundColor);
-                mNextCard.loadDataWithBaseURL(mBaseUrl, mCardContent.toString(), "text/html", "utf-8", null);
-                mNextCard.setVisibility(View.VISIBLE);
-                mCardFrame.removeView(mCard);
-                mCard.destroy();
-                mCard = mNextCard;
-                mNextCard = createWebView();
-                mNextCard.setVisibility(View.GONE);
-                mCardFrame.addView(mNextCard, 0);
-                // hunt for input issue 720, like android issue 3341
-                if (AnkiDroidApp.SDK_VERSION == 7) {
-                    mCard.setFocusableInTouchMode(true);
-                }
-            } else if (mCard != null) {
-                mCard.loadDataWithBaseURL(mBaseUrl, mCardContent.toString(), "text/html", "utf-8", null);
-                mCard.setBackgroundColor(mCurrentBackgroundColor);
-            }
-            if (mChangeBorderStyle) {
-                switch (mCurrentBackgroundColor) {
-                    case Color.WHITE:
-                        if (mInvertedColors) {
-                            mInvertedColors = false;
-                            invertColors(false);
-                        }
-                        break;
-                    case Color.BLACK:
-                        if (!mInvertedColors) {
-                            mInvertedColors = true;
-                            invertColors(true);
-                        }
-                        break;
-                    default:
-                        if (Themes.getTheme() != Themes.THEME_BLUE) {
-                            mMainLayout.setBackgroundColor(mCurrentBackgroundColor);
-                        }
-                        if (mInvertedColors != mNightMode) {
-                            mInvertedColors = mNightMode;
-                            invertColors(mNightMode);
-                        }
-                }
-            }
-            if (!mShowAnimations && mShowTimer && mCardTimer.getVisibility() == View.INVISIBLE) {
-                switchTopBarVisibility(View.VISIBLE);
-            }
-            if (!sDisplayAnswer) {
-                updateForNewCard();
-                if (mShowWhiteboard) {
-                    mWhiteboard.clear();
-                }
-                setNextCardAnimation(false);
-            }
-        } else {
-            Animation3D rotation;
-            boolean directionToLeft = true;
-            switch (mNextAnimation) {
-                case ANIMATION_TURN:
-                    rotation = new Animation3D(mCardContainer.getWidth(), mCardContainer.getHeight(), 9,
-                            Animation3D.ANIMATION_TURN, true, true, this);
-                    rotation.setDuration(mAnimationDurationTurn);
-                    rotation.setInterpolator(new AccelerateDecelerateInterpolator());
+        if (mChangeBorderStyle) {
+            switch (mCurrentBackgroundColor) {
+                case Color.WHITE:
+                    if (mInvertedColors) {
+                        mInvertedColors = false;
+                        invertColors(false);
+                    }
                     break;
-                case ANIMATION_NEXT_CARD_FROM_LEFT:
-                    directionToLeft = false;
-                case ANIMATION_NEXT_CARD_FROM_RIGHT:
-                    rotation = new Animation3D(mCardContainer.getWidth(), mCardContainer.getHeight(), 0,
-                            Animation3D.ANIMATION_EXCHANGE_CARD, directionToLeft, true, this);
-                    rotation.setDuration(mAnimationDurationMove);
-                    rotation.setInterpolator(new AccelerateDecelerateInterpolator());
+                case Color.BLACK:
+                    if (!mInvertedColors) {
+                        mInvertedColors = true;
+                        invertColors(true);
+                    }
                     break;
-                case ANIMATION_SLIDE_OUT_TO_RIGHT:
-                    directionToLeft = false;
-                case ANIMATION_SLIDE_OUT_TO_LEFT:
-                    fillFlashcard(false);
-                    rotation = new Animation3D(mCardContainer.getWidth(), mCardContainer.getHeight(), 0,
-                            Animation3D.ANIMATION_SLIDE_OUT_CARD, directionToLeft, true, this);
-                    rotation.setDuration(mAnimationDurationMove);
-                    rotation.setInterpolator(new AccelerateInterpolator());
-                    switchTopBarVisibility(View.INVISIBLE);
-                    break;
-                case ANIMATION_SLIDE_IN_FROM_LEFT:
-                    directionToLeft = false;
-                case ANIMATION_SLIDE_IN_FROM_RIGHT:
-                    fillFlashcard(false);
-                    rotation = new Animation3D(mCardContainer.getWidth(), mCardContainer.getHeight(), 0,
-                            Animation3D.ANIMATION_SLIDE_IN_CARD, directionToLeft, true, this);
-                    rotation.setDuration(mAnimationDurationMove);
-                    rotation.setInterpolator(new DecelerateInterpolator());
-                    switchTopBarVisibility(View.VISIBLE);
-                    break;
-                case ANIMATION_NO_ANIMATION:
                 default:
-                    return;
+                    if (Themes.getTheme() != Themes.THEME_BLUE) {
+                        mMainLayout.setBackgroundColor(mCurrentBackgroundColor);
+                    }
+                    if (mInvertedColors != mNightMode) {
+                        mInvertedColors = mNightMode;
+                        invertColors(mNightMode);
+                    }
             }
-
-            rotation.reset();
-            mCardContainer.setDrawingCacheEnabled(true);
-            mCardContainer.setDrawingCacheBackgroundColor(Themes.getBackgroundColor());
-            mCardContainer.clearAnimation();
-            mCardContainer.startAnimation(rotation);
         }
-    }
+        if (mShowTimer && mCardTimer.getVisibility() == View.INVISIBLE) {
+            switchTopBarVisibility(View.VISIBLE);
+        }
+        if (!sDisplayAnswer) {
+            updateForNewCard();
+            if (mShowWhiteboard) {
+                mWhiteboard.clear();
+            }
+        }
+     }
 
 
     public void showFlashcard(boolean visible) {
@@ -3115,12 +2914,10 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
                 lookUpOrSelectText();
                 break;
             case GESTURE_BURY:
-                setNextCardAnimation(false);
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
                         mSched, mCurrentCard, 0));
                 break;
             case GESTURE_SUSPEND:
-                setNextCardAnimation(false);
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
                         mSched, mCurrentCard, 1));
                 break;
@@ -3198,8 +2995,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         longClickHandler.removeCallbacks(startLongClickAction);
 
         AbstractFlashcardViewer.this.setResult(result);
-
-        setOutAnimation(true);
 
         // updateBigWidget(!mCardFrame.isEnabled());
 
