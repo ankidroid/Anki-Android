@@ -897,7 +897,7 @@ public class StudyOptionsFragment extends Fragment {
                 //Here we add the list of tags for the whole collection.
                 Collection col;
                 col = AnkiDroidApp.getCol();
-                allTags = col.getTags().all();
+                allTags = col.getTags().all().toArray(new String[0]);
                 builder1.setTitle(R.string.studyoptions_limit_select_tags);
                 builder1.setMultiChoiceItems(allTags, new boolean[allTags.length],
                         new DialogInterface.OnClickListener() {

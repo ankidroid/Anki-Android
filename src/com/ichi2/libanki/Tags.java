@@ -1,6 +1,7 @@
 /****************************************************************************************
  * Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>                         *
  * Copyright (c) 2012 Kostas Spyropoulos <inigo.aldana@gmail.com>                       *
+ * Copyright (c) 2014 Houssam Salem <houssam.salem.au@gmail.com>                        *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -17,23 +18,39 @@
 
 package com.ichi2.libanki;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.TreeSet;
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.text.TextUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.content.ContentValues;
-import android.database.Cursor;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
+import java.util.regex.Pattern;
 
+
+/**
+Anki maintains a cache of used tags so it can quickly present a list of tags
+for autocomplete and in the browser. For efficiency, deletions are not
+tracked, so unused tags can only be removed from the list with a DB check.
+
+This module manages the tag cache and tags for notes.
+
+This class differs from the python version by keeping the in-memory tag cache as a TreeMap
+instead of a JSONObject. It is much more convenient to work with a TreeMap in Java, but there
+may be a performance penalty in doing so (on startup and shutdown).
+ */
 public class Tags {
+
+    private static final Pattern sCanonify = Pattern.compile("[\"']");
 
     private Collection mCol;
     private TreeMap<String, Integer> mTags = new TreeMap<String, Integer>();
@@ -42,7 +59,7 @@ public class Tags {
 
     /**
      * Registry save/load
-     * ***********************************************************************************************
+     * ***********************************************************
      */
 
     public Tags(Collection col) {
@@ -53,7 +70,7 @@ public class Tags {
     public void load(String json) {
         try {
             JSONObject tags = new JSONObject(json);
-            Iterator i = tags.keys();
+            Iterator<?> i = tags.keys();
             while (i.hasNext()) {
                 String t = (String) i.next();
                 mTags.put(t, tags.getInt(t));
@@ -77,6 +94,7 @@ public class Tags {
             }
             ContentValues val = new ContentValues();
             val.put("tags", Utils.jsonToString(tags));
+            // TODO: the database update call here sets mod = true. Verify if this is intended.
             mCol.getDb().update("col", val);
             mChanged = false;
         }
@@ -85,34 +103,35 @@ public class Tags {
 
     /**
      * Registering and fetching tags
-     * ***********************************************************************************************
+     * ***********************************************************
      */
 
     /** Given a list of tags, add any missing ones to tag registry. */
-    public void register(List<String> tags) {
-        register(tags, -99);
+    public void register(Iterable<String> tags) {
+        register(tags, null);
     }
 
 
-    public void register(List<String> tags, int usn) {
+    public void register(Iterable<String> tags, Integer usn) {
         // case is stored as received, so user can create different case
         // versions of the same tag if they ignore the qt autocomplete.
+        //boolean found = false;
         for (String t : tags) {
             if (!mTags.containsKey(t)) {
-                mTags.put(t, usn == -99 ? mCol.usn() : usn);
+                mTags.put(t, usn == null ? mCol.usn() : usn);
                 mChanged = true;
             }
         }
+        //if (found) {
+        //    runHook("newTag"); // TODO
+        //}
     }
 
 
-    public String[] all() {
-        String[] tags = new String[mTags.size()];
-        int i = 0;
-        for (String t : mTags.keySet()) {
-            tags[i++] = t;
-        }
-        return tags;
+    public List<String> all() {
+        List<String> list = new ArrayList<String>();
+        list.addAll(mTags.keySet());
+        return list;
     }
 
 
@@ -123,7 +142,7 @@ public class Tags {
 
     /** Add any missing tags from notes to the tags list. */
     public void registerNotes(long[] nids) {
-        // when called without an argument, the old list is cleared first.
+        // when called with a null argument, the old list is cleared first.
         String lim;
         if (nids != null) {
             lim = " WHERE id IN " + Utils.ids2str(nids);
@@ -132,28 +151,28 @@ public class Tags {
             mTags.clear();
             mChanged = true;
         }
-        ArrayList<String> tags = new ArrayList<String>();
+        List<String> tags = new ArrayList<String>();
         Cursor cursor = null;
         try {
-            cursor = mCol.getDb().getDatabase().rawQuery("SELECT DISTINCT tags FROM notes", null);
+            cursor = mCol.getDb().getDatabase().rawQuery("SELECT DISTINCT tags FROM notes"+lim, null);
             while (cursor.moveToNext()) {
-                for (String t : cursor.getString(0).split("\\s")) {
-                    if (t.length() > 0) {
-                        tags.add(t);
-                    }
-                }
+                tags.add(cursor.getString(0));
             }
         } finally {
             if (cursor != null) {
                 cursor.close();
             }
         }
-        register(tags);
+        HashSet<String> tagSet = new HashSet<String>();
+        for (String s : split(TextUtils.join(" ", tags))) {
+            tagSet.add(s);
+        }
+        register(tagSet);
     }
 
 
-    public TreeMap<String, Integer> allItems() {
-        return mTags;
+    public Set<Map.Entry<String, Integer>> allItems() {
+        return mTags.entrySet();
     }
 
 
@@ -164,11 +183,12 @@ public class Tags {
 
     /**
      * Bulk addition/removal from notes
-     * ***********************************************************************************************
+     * ***********************************************************
      */
 
     /**
-     * Add/remove tags in bulk
+     * FIXME: This method must be fixed before it is used. See note below.
+     * Add/remove tags in bulk. TAGS is space-separated.
      *
      * @param ids The cards to tag.
      * @param tags List of tags to add/remove. They are space-separated.
@@ -179,6 +199,10 @@ public class Tags {
     }
 
 
+    /**
+     * FIXME: This method must be fixed before it is used. Its behaviour is currently incorrect.
+     * This method is currently unused in AnkiDroid so it will not cause any errors in its current state.
+     */
     public void bulkAdd(List<Long> ids, String tags, boolean add) {
         List<String> newTags = split(tags);
         if (newTags == null || newTags.isEmpty()) {
@@ -238,17 +262,15 @@ public class Tags {
 
     /**
      * String-based utilities
-     * ***********************************************************************************************
+     * ***********************************************************
      */
 
     /** Parse a string and return a list of tags. */
     public List<String> split(String tags) {
         ArrayList<String> list = new ArrayList<String>();
-        if (tags != null && tags.length() != 0) {
-            for (String s : tags.split("\\s")) {
-                if (s.length() > 0) {
-                    list.add(s);
-                }
+        for (String s : tags.split("\\s")) {
+            if (s.length() > 0) {
+                list.add(s);
             }
         }
         return list;
@@ -260,33 +282,37 @@ public class Tags {
         if (tags == null || tags.size() == 0) {
             return "";
         } else {
-            StringBuilder result = new StringBuilder(128);
-            result.append(" ");
-            for (String tag : tags) {
-                result.append(tag).append(" ");
-            }
-            return result.toString();
+            String joined = TextUtils.join(" ", tags);
+            return String.format(Locale.US, " %s ", joined);
         }
     }
 
 
     /** Add tags if they don't exist, and canonify */
     public String addToStr(String addtags, String tags) {
-        Set<String> currentTags = new HashSet<String>(split(tags));
-        currentTags.addAll(split(addtags));
-        List<String> curTags = new ArrayList<String>(currentTags);
-        Collections.sort(curTags);
-        return join(curTags);
+        List<String> currentTags = split(tags);
+        for (String tag : split(addtags)) {
+            if (!inList(tag, currentTags)) {
+                currentTags.add(tag);
+            }
+        }
+        return join(canonify(currentTags));
     }
 
 
-    /** "Delete tags if they don't exists." */
+    /** Delete tags if they don't exist. */
     public String remFromStr(String deltags, String tags) {
         List<String> currentTags = split(tags);
         for (String tag : split(deltags)) {
-            // find tags, ignoring case
-            if (currentTags.contains(tag)) {
-                currentTags.remove(tag);
+            List<String> remove = new ArrayList<String>();
+            for (String tx: currentTags) {
+                if (tag.equalsIgnoreCase(tx)) {
+                    remove.add(tx);
+                }
+            }
+            // remove them
+            for (String r : remove) {
+                currentTags.remove(r);
             }
         }
         return join(currentTags);
@@ -295,19 +321,23 @@ public class Tags {
 
     /**
      * List-based utilities
-     * ***********************************************************************************************
+     * ***********************************************************
      */
 
     /** Strip duplicates and sort. */
     public TreeSet<String> canonify(List<String> tagList) {
-        TreeSet<String> tree = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
-        tree.addAll(tagList);
-        return tree;
+        // NOTE: The python version creates a list of tags, puts them into a set, then sorts them. The TreeSet
+        // used here already guarantees uniqueness and sort order, so we return it as-is without those steps.
+        TreeSet<String> strippedTags = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
+        for (String x : tagList) {
+            strippedTags.add(sCanonify.matcher(x).replaceAll(""));
+        }
+        return strippedTags;
     }
 
 
     /** True if TAG is in TAGS. Ignore case. */
-    public boolean inList(String tag, List<String> tags) {
+    public boolean inList(String tag, Iterable<String> tags) {
         for (String t : tags) {
             if (t.equalsIgnoreCase(tag)) {
                 return true;
@@ -317,45 +347,9 @@ public class Tags {
     }
 
 
-    /** True if TAG is in TAGS. Ignore case. */
-    public boolean inList(String tag, String[] tags) {
-        for (String t : tags) {
-            if (t.equalsIgnoreCase(tag)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-
-    // /**
-    // * Add tags if they don't exist.
-    // * Both parameters are in string format, the tags being separated by space or comma, as in parseTags
-    // *
-    // * @param tagStr The new tag(s) that are to be added
-    // * @param tags The set of tags where the new ones will be added
-    // * @return A string containing the union of tags of the input parameters
-    // */
-    // public static String addTags(String addtags, String tags) {
-    // ArrayList<String> currentTags = new ArrayList<String>(Arrays.asList(parseTags(tags)));
-    // for (String tag : parseTags(addtags)) {
-    // if (!hasTag(tag, currentTags)) {
-    // currentTags.add(tag);
-    // }
-    // }
-    // return canonifyTags((String[]) currentTags.toArray());
-    // }
-
     /**
-     * Tag-based selective study
-     * ***********************************************************************************************
-     */
-
-    // seltagnids
-    // setdeckfortags
-
-    /**
-     * Sync handling ***********************************************************************************************
+     * Sync handling
+     * ***********************************************************
      */
 
     public void beforeUpload() {
@@ -365,4 +359,15 @@ public class Tags {
         save();
     }
 
+    /*
+     * ***********************************************************
+     * The methods below are not in LibAnki.
+     * ***********************************************************
+     */
+
+
+    /** Add a tag to the collection. We use this method instead of exposing mTags publicly.*/
+    public void add(String key, Integer value) {
+        mTags.put(key, value);
+    }
 }

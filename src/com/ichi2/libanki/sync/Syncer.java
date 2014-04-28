@@ -354,8 +354,8 @@ public class Syncer {
                     return result;
                 }
             }
-            for (Integer usn : mCol.getTags().allItems().values()) {
-                if (usn == -1) {
+            for (Map.Entry<String, Integer> tag : mCol.getTags().allItems()) {
+                if (tag.getValue() == -1) {
                     Log.e(AnkiDroidApp.TAG, "Sync - SanityCheck: there are unsynced tags");
                     result.put("client", "tag had usn = -1");
                     return result;
@@ -784,16 +784,16 @@ public class Syncer {
     private JSONArray getTags() {
         JSONArray result = new JSONArray();
         if (mCol.getServer()) {
-            for (Map.Entry<String, Integer> t : mCol.getTags().allItems().entrySet()) {
+            for (Map.Entry<String, Integer> t : mCol.getTags().allItems()) {
                 if (t.getValue() >= mMinUsn) {
                     result.put(t.getKey());
                 }
             }
         } else {
-            for (Map.Entry<String, Integer> t : mCol.getTags().allItems().entrySet()) {
+            for (Map.Entry<String, Integer> t : mCol.getTags().allItems()) {
                 if (t.getValue() == -1) {
                     String tag = t.getKey();
-                    mCol.getTags().allItems().put(tag, mMaxUsn);
+                    mCol.getTags().add(t.getKey(), mMaxUsn);
                     result.put(tag);
                 }
             }
