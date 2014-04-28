@@ -166,8 +166,6 @@ public class CardBrowser extends ActionBarActivity implements ActionBar.OnNaviga
     private String[] mColumn2Indexs;
     private HashSet<String> mSelectedTags;
 
-    private boolean mInitializing = true;
-
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
      */
@@ -725,19 +723,15 @@ public class CardBrowser extends ActionBarActivity implements ActionBar.OnNaviga
 
     @Override
     public boolean onNavigationItemSelected(int position, long itemId) {
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         if (position == 0) {
             mRestrictOnDeck = "";
         } else {
             mRestrictOnDeck = "deck:'" + mDropDownDecks.get(position) + "' ";
         }
-        // onNavigationItemSelected is called when the activity is launched.
-        // mInitializing captures this step to support the cardBrowserNoSearchOnOpen option.
-        if (mInitializing) {
-            mInitializing = false;
-            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-            if (!preferences.getBoolean("cardBrowserNoSearchOnOpen", false)) {
-                searchCards();
-            }
+        if (preferences.getBoolean("cardBrowserNoSearchOnOpen", false)) {
+            mCards.clear();
+            updateList();
         } else {
             searchCards();
         }
