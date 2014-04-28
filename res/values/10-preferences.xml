@@ -164,10 +164,6 @@
 <!-- <string name="timeout_question_seconds_summ">Select the amount of time before next question is automatically shown</string> -->
 <string name="select_locale_title">Select Language</string>
 <string name="select_theme">Theme</string>
-<string name="theme_animations">Animations</string>
-<string name="theme_animations_summ">Show animations when flipping cards</string>
-<string name="animation_speed">Animation Duration</string>
-<string name="animation_speed_summ">Duration of transition animations: XXX ms</string>
 <string name="eink_display">E-Ink Display Optimization</string>
 <string name="eink_display_summ">Disable all animations and do some optimization for E-Ink Display</string>
 <string name="vertical_centering">Center card content vertically</string>

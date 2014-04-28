@@ -81,7 +81,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private CheckBoxPreference keepScreenOnCheckBoxPreference;
     private CheckBoxPreference showAnswerCheckBoxPreference;
     private CheckBoxPreference swipeCheckboxPreference;
-    private CheckBoxPreference animationsCheckboxPreference;
     private CheckBoxPreference useBackupPreference;
     private CheckBoxPreference asyncModePreference;
     private CheckBoxPreference eInkDisplayPreference;
@@ -101,7 +100,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             "gestureLongclick", "gestureTapLeft", "newSpread", "useCurrent"};//, "theme" };
     private static String[] mShowValueInSummSeek = { "relativeDisplayFontSize", "relativeCardBrowserFontSize",
             "relativeImageSize", "answerButtonSize", "whiteBoardStrokeWidth", "minShakeIntensity", "swipeSensibility",
-            "timeoutAnswerSeconds", "timeoutQuestionSeconds", "animationDuration", "backupMax", "dayOffset" };
+            "timeoutAnswerSeconds", "timeoutQuestionSeconds", "backupMax", "dayOffset" };
     private static String[] mShowValueInSummEditText = { "simpleInterfaceExcludeTags" };
     private static String[] mShowValueInSummNumRange = { "timeLimit", "learnCutoff" };
     private TreeMap<String, String> mListsToUpdate = new TreeMap<String, String>();
@@ -138,7 +137,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         swipeCheckboxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("swipe");
         keepScreenOnCheckBoxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("keepScreenOn");
         showAnswerCheckBoxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("timeoutAnswer");
-        animationsCheckboxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("themeAnimations");
         useBackupPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("useBackup");
         asyncModePreference = (CheckBoxPreference) getPreferenceScreen().findPreference("asyncMode");
         eInkDisplayPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("eInkDisplay");
@@ -156,6 +154,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         dayOffset = (SeekBarPreference) getPreferenceScreen().findPreference("dayOffset");
 //        String theme = listpref.getValue();
 //        animationsCheckboxPreference.setEnabled(theme.equals("2") || theme.equals("3"));
+
 
         initializeLanguageDialog();
         initializeCustomFontsDialog();
@@ -386,31 +385,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 keepScreenOnCheckBoxPreference.setChecked(showAnswerCheckBoxPreference.isChecked());
             } else if (key.equals("language")) {
                 closePreferences();
-            } else if (key.equals("theme")) {
-                String theme = sharedPreferences.getString("theme", "3");
-                if (theme.equals("2") || theme.equals("3")) {
-                    animationsCheckboxPreference.setChecked(false);
-                    animationsCheckboxPreference.setEnabled(false);
-                } else {
-                    animationsCheckboxPreference.setEnabled(true);
-                }
-                Themes.loadTheme();
-                switch (Integer.parseInt(sharedPreferences.getString("theme", "3"))) {
-                    case Themes.THEME_ANDROID_DARK:
-                    case Themes.THEME_ANDROID_LIGHT:
-                    case Themes.THEME_BLUE:
-                        sharedPreferences.edit().putString("defaultFont", "").commit();
-                        break;
-                    case Themes.THEME_FLAT:
-                        sharedPreferences.edit().putString("defaultFont", "OpenSans").commit();
-                        break;
-                    case Themes.THEME_WHITE:
-                        sharedPreferences.edit().putString("defaultFont", "OpenSans").commit();
-                        break;
-                }
-                Intent intent = this.getIntent();
-                setResult(DeckPicker.RESULT_RESTART, intent);
-                closePreferences();
             } else if (key.equals("writeAnswers") && sharedPreferences.getBoolean("writeAnswers", true)) {
                 showDialog(DIALOG_WRITE_ANSWERS);
             } else if (key.equals("useBackup")) {
@@ -435,8 +409,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                     AnkiDroidApp.createNoMediaFileIfMissing(decksDirectory);
                 }
             } else if (key.equals("eInkDisplay")) {
-                animationsCheckboxPreference.setChecked(false);
-                animationsCheckboxPreference.setEnabled(!eInkDisplayPreference.isChecked());
                 fadeScrollbars.setChecked(false);
                 fadeScrollbars.setEnabled(!eInkDisplayPreference.isChecked());
             } else if (key.equals("convertFenText")) {

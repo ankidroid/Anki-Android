@@ -167,24 +167,6 @@
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:disableDependentsState="false"
-                android:key="themeAnimations"
-                android:summary="@string/theme_animations_summ"
-                android:title="@string/theme_animations" />
-
-            <com.hlidskialf.android.preference.SeekBarPreference
-                android:defaultValue="500"
-                android:dependency="themeAnimations"
-                android:key="animationDuration"
-                android:max="2000"
-                android:summary="@string/animation_speed_summ"
-                android:text=" ms"
-                android:title="@string/animation_speed"
-                app:interval="50"
-                app:min="100" />
-
-            <CheckBoxPreference
-                android:defaultValue="false"
-                android:disableDependentsState="false"
                 android:key="eInkDisplay"
                 android:summary="@string/eink_display_summ"
                 android:title="@string/eink_display" />
