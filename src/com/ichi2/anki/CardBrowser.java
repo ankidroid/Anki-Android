@@ -615,7 +615,7 @@ public class CardBrowser extends ActionBarActivity implements ActionBar.OnNaviga
                 break;
 
             case DIALOG_TAGS:
-                allTags = mCol.getTags().all();
+                allTags = mCol.getTags().all().toArray(new String[0]);
                 builder.setTitle(R.string.studyoptions_limit_select_tags);
                 builder.setMultiChoiceItems(allTags, new boolean[allTags.length],
                         new DialogInterface.OnClickListener() {
