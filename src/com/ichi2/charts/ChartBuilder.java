@@ -306,7 +306,7 @@ public class ChartBuilder extends ActionBarActivity {
         for (int i = 0; i < statisticRadioButtons.length; i++) {
             statisticRadioButtons[i] = new RadioButton(context);
             statisticRadioButtons[i].setClickable(true);
-            statisticRadioButtons[i].setText("         " + text[i]);
+            statisticRadioButtons[i].setText(text[i]);
             statisticRadioButtons[i].setHeight(height * 2);
             statisticRadioButtons[i].setSingleLine();
             statisticRadioButtons[i].setBackgroundDrawable(null);
