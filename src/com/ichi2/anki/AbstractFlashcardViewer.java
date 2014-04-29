@@ -832,7 +832,8 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         if (mTypeWarning != null) {
             return m.replaceFirst(mTypeWarning);
         }
-        return m.replaceFirst("");
+        
+        return m.replaceFirst("<span style=\"color:magenta;\">........</span>");
     }
 
     /**
@@ -841,9 +842,16 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
      * @param buf The answer text
      * @return The formatted answer text
      */
-    private String typeAnsAnswerFilter(String buf) {
+    private String typeAnsAnswerFilter(String buf, String userAnswer, String correctAnswer) {
         Matcher m = sTypeAnsPat.matcher(buf);
-        return m.replaceFirst("");
+        
+        // Obtain the diff and send it to updateCard
+        DiffEngine diff = new DiffEngine();
+        String diffUserAnswer = diff.diff_prettyHtml(diff.diff_main(userAnswer, correctAnswer), mNightMode);
+        if(userAnswer.equals(correctAnswer))
+        	return m.replaceFirst(diffUserAnswer + "\u2714");
+        else
+        	return m.replaceFirst(diffUserAnswer + "\u21a6" + diff.diff_prettyHtml(diff.diff_main(correctAnswer, correctAnswer), mNightMode));
     }
 
     private String contentForCloze(String txt, int idx) {
@@ -1805,8 +1813,8 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
             mAnswerField.requestFocus();
 
             // Show soft keyboard
-            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            inputMethodManager.showSoftInput(mAnswerField, InputMethodManager.SHOW_FORCED);
+            //InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            //inputMethodManager.showSoftInput(mAnswerField, InputMethodManager.SHOW_FORCED);
         }
     }
 
@@ -2134,8 +2142,8 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
                 mAnswerField.setVisibility(View.VISIBLE);
 
                 // Show soft keyboard
-                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputMethodManager.showSoftInput(mAnswerField, InputMethodManager.SHOW_FORCED);
+                //InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                //inputMethodManager.showSoftInput(mAnswerField, InputMethodManager.SHOW_FORCED);
             }
 
             displayString = enrichWithQADiv(question, false);
@@ -2208,6 +2216,19 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         return kanjiInfo;
     }
 
+    protected String getAnswerText(String answer)
+    {
+    	if(answer == null || answer.equals(""))
+    		return "";
+    	
+    	 Matcher matcher = sSpanPattern.matcher(Utils.stripHTMLMedia(answer));
+         String answerText = matcher.replaceAll("");
+         matcher = sBrPattern.matcher(answerText);
+         answerText = matcher.replaceAll("\n");
+         matcher = Sound.sSoundPattern.matcher(answerText);
+         answerText = matcher.replaceAll("");
+         return answerText;
+    }
 
     protected void displayCardAnswer() {
         Log.i(AnkiDroidApp.TAG, "displayCardAnswer");
@@ -2258,23 +2279,16 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
                         mTypeCorrect = ArabicUtilities.reshapeSentence(mTypeCorrect, true);
                     }
                     // Obtain the user answer and the correct answer
-                    String userAnswer = mAnswerField.getText().toString();
-                    Matcher matcher = sSpanPattern.matcher(Utils.stripHTMLMedia(mTypeCorrect));
-                    String correctAnswer = matcher.replaceAll("");
-                    matcher = sBrPattern.matcher(correctAnswer);
-                    correctAnswer = matcher.replaceAll("\n");
-                    matcher = Sound.sSoundPattern.matcher(correctAnswer);
-                    correctAnswer = matcher.replaceAll("");
+                    String userAnswer = getAnswerText(mAnswerField.getText().toString());
+                    String correctAnswer = getAnswerText(mTypeCorrect);
                     Log.i(AnkiDroidApp.TAG, "correct answer = " + correctAnswer);
-
-                    // Obtain the diff and send it to updateCard
-                    DiffEngine diff = new DiffEngine();
 
                     StringBuffer span = new StringBuffer();
                     span.append("<span style=\"font-family: '").append(mTypeFont).append("'; font-size: ")
                             .append(mTypeSize).append("px\">");
-                    span.append(diff.diff_prettyHtml(diff.diff_main(userAnswer, correctAnswer), mNightMode));
+                    
                     span.append("</span>");
+                    answer = typeAnsAnswerFilter(answer, userAnswer, correctAnswer);
                     span.append("<br/>").append(answer);
                     displayString = enrichWithQADiv(span.toString(), true);
                 }
