@@ -105,6 +105,6 @@
 
     <color name="dyn_deck">#2222bb</color>
     <color name="non_dyn_deck">#000000</color>
-
+    <color name="zero_count">#e0e0e0</color>
 
 </resources>

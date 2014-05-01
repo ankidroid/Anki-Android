@@ -997,6 +997,9 @@ public class DeckPicker extends ActionBarActivity {
                         ((TextView) view).setTextColor(getResources().getColor(R.color.dyn_deck));
                         return true;
                     }
+                } else if ((view.getId() == R.id.deckpicker_new || view.getId() == R.id.deckpicker_lrn ||
+                            view.getId() == R.id.deckpicker_rev) && text.equals("0")) {
+                     ((TextView) view).setTextColor(getResources().getColor(R.color.zero_count));
                 }
                     // } else if (view.getId() == R.id.deckpicker_bar_mat || view.getId() == R.id.deckpicker_bar_all) {
                     // if (text.length() > 0 && !text.equals("-1.0")) {
