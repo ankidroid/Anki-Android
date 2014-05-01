@@ -56,16 +56,6 @@ public class DiffEngine {
     public short Diff_DualThreshold = 32;
 
     /**
-     * Colors for right and wrong answer
-     */
-    private static final String RIGHT_COLOR = "#c0ffc0";
-    private static final String WRONG_COLOR = "#ffc0c0";
-    // Colours for night mode, they are going to be inverted, so we're just aiming for darker versions (#508040 and #905050)
-    // of the normal colours eventually, since the mapping green = right, red = wrong is quite universal.
-    private static final String RIGHT_COLOR_NIGHT = "#af7fbf";
-    private static final String WRONG_COLOR_NIGHT = "#6fafaf";
-
-    /**
      * Internal class for returning results from diff_linesToChars(). Other less paranoid languages just use a
      * three-element array.
      */
@@ -1081,12 +1071,6 @@ public class DiffEngine {
      */
     public String diff_prettyHtml(LinkedList<DiffAction> diffs, boolean mNightMode) {
         StringBuilder html = new StringBuilder();
-        String rightColor = RIGHT_COLOR;
-        String wrongColor = WRONG_COLOR;
-        if (mNightMode) {
-            rightColor = RIGHT_COLOR_NIGHT;
-            wrongColor = WRONG_COLOR_NIGHT;
-        }
         for (DiffAction aDiff : diffs) {
             String text = aDiff.text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
                     .replace("\n", "<br>");
@@ -1097,13 +1081,13 @@ public class DiffEngine {
                     for (int j = 0; j < l; j++) {
                         spaces += "&nbsp;";
                     }
-                    html.append("<span class=\"\" style=\"background:" + wrongColor + ";\">").append(spaces).append("</span>");
+                    html.append("<span class=typeBad>").append(spaces).append("</span>");
                     break;
                 case DELETE:
-                    html.append("<span style=\"background:" + wrongColor + ";\">").append(text).append("</span>");
+                    html.append("<span class=typeBad>").append(text).append("</span>");
                     break;
                 case EQUAL:
-                    html.append("<span style=\"background:" + rightColor + ";\">").append(text).append("</span>");
+                    html.append("<span class=typeGood>").append(text).append("</span>");
                     break;
             }
         }

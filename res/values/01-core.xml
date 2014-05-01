@@ -24,7 +24,7 @@
 <string name="app_name">AnkiDroid</string>
 
 <string name="attention">Attention</string>
-    
+
 <string name="yes">Yes</string>
 <string name="no">No</string>
 <string name="ok">OK</string>
@@ -56,6 +56,7 @@
 </plurals>
 
 <!-- flashcard_portrait.xml -->
+<string name="type_answer_hint">Type answer</string>
 <string name="show_answer">Show Answer</string>
 <!--<string name="show_question">Re-display Question</string>
 <string name="card_hint">Flashcard</string>-->
@@ -112,7 +113,7 @@
 <string name="menu_suspend_note">Suspend Note</string>
 <string name="menu_delete_note">Delete Note</string>
 <string name="delete_note_message">Really delete this note and all its cards?\n%s</string>
-    
+
 <string name="menu_edit_card">Edit Card</string>
 <string name="menu_select">Select text</string>
 <string name="menu_search">Lookup in %1$s</string>
@@ -129,22 +130,22 @@
 <!--<string name="studyoptions_load_sample_deck">Load Sample Deck</string>-->
 <string name="night_mode">Night mode</string>
 
-	<string-array name="next_review_s">
-		<item>1 second</item>
-		<item>1 minute</item>
-		<item>1 hour</item>
-		<item>1 day</item>
-		<item>1 month</item>
-		<item>1 year</item>
-	</string-array>
-	<string-array name="next_review_p">
-		<item>%s seconds</item>
-		<item>%s minutes</item>
-		<item>%s hours</item>
-		<item>%s days</item>
-		<item>%s months</item>
-		<item>%s years</item>
-	</string-array>
+    <string-array name="next_review_s">
+        <item>1 second</item>
+        <item>1 minute</item>
+        <item>1 hour</item>
+        <item>1 day</item>
+        <item>1 month</item>
+        <item>1 year</item>
+    </string-array>
+    <string-array name="next_review_p">
+        <item>%s seconds</item>
+        <item>%s minutes</item>
+        <item>%s hours</item>
+        <item>%s days</item>
+        <item>%s months</item>
+        <item>%s years</item>
+    </string-array>
 
 <string name="visit">Visit</string>
 <string name="later">Later</string>
