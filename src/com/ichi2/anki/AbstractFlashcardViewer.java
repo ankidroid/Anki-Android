@@ -2223,6 +2223,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         } else {
             answer = mCurrentCard.a();
         }
+        answer = typeAnsAnswerFilter(answer);
 
         if (mDisplayKanjiInfo) {
             answer = answer + addKanjiInfo(mCurrentCard.q(mCurrentSimpleInterface));
