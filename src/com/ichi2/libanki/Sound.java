@@ -58,6 +58,13 @@ public class Sound {
      * Stores sounds for the current card, key is for question/answer
      */
     private static HashMap<Integer, ArrayList<String>> sSoundPaths = new HashMap<Integer, ArrayList<String>>();
+    
+    /**
+     * Flags that indicate the subset of sounds to involve
+     */
+    public static final int  SOUNDS_QUESTION = 0;
+    public static final int  SOUNDS_ANSWER = 1;
+    public static final int  SOUNDS_QUESTION_AND_ANSWER = 2;
 
 
     /* Prevent class from being instantiated */
@@ -71,12 +78,13 @@ public class Sound {
     }
 
     /**
-     * The function addSounds() parses content for sound files, and stores entries to the filepaths for them, categorized as
-     * belonging to the front (question) or back (answer) of cards. Note that all sounds embedded in the content will be given
-     * the same categorization.
+     * The function addSounds() parses content for sound files, and stores entries to the filepaths for them,
+     * categorized as belonging to the front (question) or back (answer) of cards. Note that all sounds embedded in
+     * the content will be given the same base categorization of question or answer. Additionally, the result is to be
+     * sorted by the order of appearance on the card. 
      * @param soundDir -- base path to the media files
-     * @param content -- parsed for sound entries
-     * @param qa -- the categorization of the sounds in the conent
+     * @param content -- parsed for sound entries, the entries expected in display order
+     * @param qa -- the base categorization of the sounds in the content, Sound.SOUNDS_QUESTION or Sound.SOUNDS_ANSWER
      */
     public static void addSounds(String soundDir, String content, int qa) {
         Matcher matcher = sSoundPattern.matcher(content);
@@ -95,9 +103,39 @@ public class Sound {
             sSoundPaths.get(qa).add(soundPath);
         }
     }
+    
+    /**
+     * makeQuestionAnswerSoundList creates a single list of both the question and answer audio only if it does not
+     * already exist. It's intended for lazy evaluation, only in the rare cases when both sides are fully played
+     * together, which even when configured as supported may not be instigated
+     */
+    public static void makeQuestionAnswerList() {
+        // create or clear joint list
+        if (!sSoundPaths.containsKey(Sound.SOUNDS_QUESTION_AND_ANSWER)) {
+            sSoundPaths.put(Sound.SOUNDS_QUESTION_AND_ANSWER, new ArrayList<String>());
+        } else {
+            return; // combined list already exists
+        }
+        
+        ArrayList<String> combinedSounds = sSoundPaths.get(Sound.SOUNDS_QUESTION_AND_ANSWER);
+        
+        if (sSoundPaths.containsKey(Sound.SOUNDS_QUESTION)) {
+            combinedSounds.addAll(sSoundPaths.get(Sound.SOUNDS_QUESTION));
+        }
+        if (sSoundPaths.containsKey(Sound.SOUNDS_ANSWER)) {
+            combinedSounds.addAll(sSoundPaths.get(Sound.SOUNDS_ANSWER));
+        }        
+    }
 
-    public static String expandSounds(String soundDir, String content, boolean ttsEnabled, int qa) {
-        boolean soundAvailable = false;
+    /**
+     * expandSounds takes content with embedded sound file placeholders and expands them to reference the actual media
+     * file
+     * 
+     * @param soundDir -- the base path of the media files
+     * @param content -- card content to be rendered that may contain embedded audio
+     * @return -- the same content but in a format that will render working play buttons when audio was embedded
+     */
+    public static String expandSounds(String soundDir, String content) {
         StringBuilder stringBuilder = new StringBuilder();
         String contentLeft = content;
 
@@ -106,7 +144,6 @@ public class Sound {
         Matcher matcher = sSoundPattern.matcher(content);
         // While there is matches of the pattern for sound markers
         while (matcher.find()) {
-            soundAvailable = true;
             // Get the sound file name
             String sound = matcher.group(1);
 
@@ -126,16 +163,9 @@ public class Sound {
             contentLeft = contentLeft.substring(markerStart + soundMarker.length());
             Log.i(AnkiDroidApp.TAG, "Content left = " + contentLeft);
         }
-        // TODO: readd tts
-//        if (!soundAvailable && ttsEnabled && !ReadText.getLanguage(qa).equals(ReadText.NO_TTS)) {
-//            stringBuilder.append(content.substring(0, content.length() - 9));
-//            stringBuilder
-//                    .append("<a onclick=\"window.ankidroid.playSound(this.title);\" title=\"tts"
-//                            + Integer.toString(qa)
-//                            + Utils.stripHTML(content)
-//                            + "\"><span style=\"padding:5px;display:inline-block;vertical-align:middle\"><img src=\"file:///android_asset/media_playback_start2.png\" /></span></a>");
-//            contentLeft = "</p>";
-//        }
+        
+        // unused code related to tts support taken out after v2.2alpha55
+        // if/when tts support is considered complete, these comment lines serve no purpose
 
         stringBuilder.append(contentLeft);
 
@@ -144,11 +174,15 @@ public class Sound {
 
 
     /**
-     * Plays the sounds for the given card side
+     * Plays the sounds for the indicated sides
+     * @param qa -- One of Sound.SOUNDS_QUESTION, Sound.SOUNDS_ANSWER, or Sound.SOUNDS_QUESTION_AND_ANSWER
      */
     public static void playSounds(int qa) {
         // If there are sounds to play for the current card, start with the first one
         if (sSoundPaths != null && sSoundPaths.containsKey(qa)) {
+            playSound(sSoundPaths.get(qa).get(0), new PlayAllCompletionListener(qa));
+        } else if (sSoundPaths != null && qa == Sound.SOUNDS_QUESTION_AND_ANSWER) {
+            Sound.makeQuestionAnswerList();
             playSound(sSoundPaths.get(qa).get(0), new PlayAllCompletionListener(qa));
         }
     }

@@ -2333,11 +2333,9 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
                 mCard.getSettings().setDefaultFontSize(calculateDynamicFontSize(content));
             }
 
-            int qa = -1; // prevent uninitialized variable errors
-
             if (sDisplayAnswer) {
-                qa = MetaDB.LANGUAGES_QA_ANSWER;
                 // don't add answer sounds multiple times, such as when reshowing card after exiting editor
+                // additionally, this condition reduces computation time
                 if (!mAnswerSoundsAdded) {
                     String afmt = getAnswerFormat();
                     String answerSoundSource = content;
@@ -2345,18 +2343,18 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
                         String fromFrontSide = mCurrentCard._getQA(false).get("q");
                         answerSoundSource = content.replace(fromFrontSide, "");
                     }
-                    Sound.addSounds(mBaseUrl, answerSoundSource, qa);
+                    Sound.addSounds(mBaseUrl, answerSoundSource, Sound.SOUNDS_ANSWER);
                     mAnswerSoundsAdded = true;
                 }
             } else {
-                Sound.resetSounds(); // reset sounds each time first side of card is displayed, even after leaving the
-                                     // editor
-               mAnswerSoundsAdded = false;
-                qa = MetaDB.LANGUAGES_QA_QUESTION;
-                Sound.addSounds(mBaseUrl, content, qa);
+                // reset sounds each time first side of card is displayed, which may happen repeatedly without ever
+                // leaving the card (such as when edited)
+                Sound.resetSounds();                 
+                mAnswerSoundsAdded = false;
+                Sound.addSounds(mBaseUrl, content, Sound.SOUNDS_QUESTION);
             }
 
-            content = Sound.expandSounds(mBaseUrl, content, mSpeakText, qa);
+            content = Sound.expandSounds(mBaseUrl, content);
 
             // In order to display the bold style correctly, we have to change
             // font-weight to 700
@@ -2406,7 +2404,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         }
 
         if (!mConfigurationChanged) {
-            playSounds(false); // Play sounds, but only if autoplay is true.
+            playSounds(false); // Play sounds if appropriate
         }
     }
 
@@ -2433,9 +2431,10 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
     /**
      * Plays sounds (or TTS, if configured) for currently shown side of card.
      * 
-     * @param play_always Switch whether to ignore the autoplay setting.
+     * @param doAudioReplay indicates an anki desktop-like replay call is desired, whose behavior is identical to
+     *      pressing the keyboard shortcut R on the desktop
      */
-    protected void playSounds(boolean fromMenuButton) {
+    protected void playSounds(boolean doAudioReplay) {
         boolean replayQuestion = getConfigForCurrentCard().optBoolean("replayq", true);
         boolean autoPlayEnabled;
         try {
@@ -2443,21 +2442,24 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-        if (fromMenuButton || autoPlayEnabled) {
+        if (autoPlayEnabled || doAudioReplay) {
             // We need to play the sounds from the proper side of the card
-            if (!mSpeakText) {
-                // when showing answer, repeat question audio if so configured
-                if (sDisplayAnswer && fromMenuButton && replayQuestion) {
-                    Sound.playSounds(MetaDB.LANGUAGES_QA_QUESTION);
+            if (!mSpeakText) { // Text to speech not in effect here
+                if (doAudioReplay && replayQuestion && sDisplayAnswer) {
+                    // only when all of the above are true will question be played with answer, to match desktop
+                    Sound.playSounds(Sound.SOUNDS_QUESTION_AND_ANSWER);
+                } else if (sDisplayAnswer) {
+                    Sound.playSounds(Sound.SOUNDS_ANSWER);
+                } else { // question is displayed
+                    Sound.playSounds(Sound.SOUNDS_QUESTION);
                 }
-                Sound.playSounds(sDisplayAnswer ? MetaDB.LANGUAGES_QA_ANSWER : MetaDB.LANGUAGES_QA_QUESTION);
-            } else {
+            } else { // Text to speech is in affect here
                 // If the question is displayed or if the question should be replayed, read the question
-                if (!sDisplayAnswer || fromMenuButton && replayQuestion) {
-                    readCardText(mCurrentCard, MetaDB.LANGUAGES_QA_QUESTION);
+                if (!sDisplayAnswer || doAudioReplay && replayQuestion) {
+                    readCardText(mCurrentCard, Sound.SOUNDS_QUESTION);
                 }
                 if (sDisplayAnswer) {
-                    readCardText(mCurrentCard, MetaDB.LANGUAGES_QA_ANSWER);
+                    readCardText(mCurrentCard, Sound.SOUNDS_ANSWER);
                 }
             }
         }
@@ -2470,12 +2472,12 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
      * @param cardSide The side of the current card to play TTS for
      */
     private static void readCardText(final Card card, final int cardSide) {
-        if (MetaDB.LANGUAGES_QA_QUESTION == cardSide) {
+        if (Sound.SOUNDS_QUESTION == cardSide) {
             ReadText.textToSpeech(Utils.stripHTML(card.q(true)), getDeckIdForCard(card), card.getOrd(),
-                    MetaDB.LANGUAGES_QA_QUESTION);
-        } else if (MetaDB.LANGUAGES_QA_ANSWER == cardSide) {
+                    Sound.SOUNDS_QUESTION);
+        } else if (Sound.SOUNDS_ANSWER == cardSide) {
             ReadText.textToSpeech(Utils.stripHTML(card.getPureAnswerForReading()), getDeckIdForCard(card),
-                    card.getOrd(), MetaDB.LANGUAGES_QA_ANSWER);
+                    card.getOrd(), Sound.SOUNDS_ANSWER);
         }
     }
 
