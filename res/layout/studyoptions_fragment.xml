@@ -69,19 +69,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingRight="5dip"
-                        android:textColor="#000099" />
+                        android:textColor="@color/new_count" />
                     <TextView
                         android:id="@+id/studyoptions_lrn"
                         android:layout_gravity="center"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
                         android:paddingRight="5dip"
-                        android:textColor="#990000" />
+                        android:textColor="@color/learn_count" />
                     <TextView
                         android:id="@+id/studyoptions_rev"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="#007700" />
+                        android:textColor="@color/review_count" />
 				</LinearLayout>
 	   			</TableRow>
 				<TableRow>

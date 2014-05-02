@@ -264,9 +264,9 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
     private WebView mNextCard;
     private FrameLayout mCardFrame;
     private FrameLayout mTouchLayer;
-    private TextView mTextBarRed;
-    private TextView mTextBarBlack;
-    private TextView mTextBarBlue;
+    private TextView mTextBarNew;
+    private TextView mTextBarLearn;
+    private TextView mTextBarReview;
     private TextView mChosenAnswer;
     private TextView mNext1;
     private TextView mNext2;
@@ -1605,14 +1605,14 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         mFlipCardLayout = (LinearLayout) findViewById(R.id.flashcard_layout_flip);
         mFlipCardLayout.setOnClickListener(mFlipCardListener);
 
-        mTextBarRed = (TextView) findViewById(R.id.red_number);
-        mTextBarBlack = (TextView) findViewById(R.id.black_number);
-        mTextBarBlue = (TextView) findViewById(R.id.blue_number);
+        mTextBarNew = (TextView) findViewById(R.id.new_number);
+        mTextBarLearn = (TextView) findViewById(R.id.learn_number);
+        mTextBarReview = (TextView) findViewById(R.id.review_number);
 
         if (!mShowRemainingCardCount) {
-            mTextBarRed.setVisibility(View.GONE);
-            mTextBarBlack.setVisibility(View.GONE);
-            mTextBarBlue.setVisibility(View.GONE);
+            mTextBarNew.setVisibility(View.GONE);
+            mTextBarLearn.setVisibility(View.GONE);
+            mTextBarReview.setVisibility(View.GONE);
         }
 
         mCardTimer = (Chronometer) findViewById(R.id.card_time);
@@ -1703,9 +1703,11 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         mNext4.setTextColor(mNextTimeTextColor);
         mEase4.setTextColor(mNextTimeTextColor);
         mCardTimer.setTextColor(mForegroundColor);
-        mTextBarRed.setTextColor(invert ? res.getColor(R.color.night_blue) : res.getColor(R.color.blue));
-        mTextBarBlack.setTextColor(invert ? res.getColor(R.color.night_red) : res.getColor(R.color.red));
-        mTextBarBlue.setTextColor(invert ? res.getColor(R.color.night_green) : res.getColor(R.color.green));
+        mTextBarNew.setTextColor(invert ? res.getColor(R.color.new_count_night) : res.getColor(R.color.new_count));
+        mTextBarLearn.setTextColor(
+                invert ? res.getColor(R.color.learn_count_night) : res.getColor(R.color.learn_count));
+        mTextBarReview.setTextColor(
+                invert ? res.getColor(R.color.review_count_night) : res.getColor(R.color.review_count));
         mAnswerField.setTextColor(mForegroundColor);
 
         if (mSimpleCard != null) {
@@ -1813,9 +1815,9 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
             mCardTimer.setVisibility(visible);
         }
         if (mShowRemainingCardCount) {
-            mTextBarRed.setVisibility(visible);
-            mTextBarBlack.setVisibility(visible);
-            mTextBarBlue.setVisibility(visible);
+            mTextBarNew.setVisibility(visible);
+            mTextBarLearn.setVisibility(visible);
+            mTextBarReview.setVisibility(visible);
         }
         mChosenAnswer.setVisibility(visible);
     }
@@ -1824,9 +1826,9 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
     private void initControls() {
         mCardFrame.setVisibility(View.VISIBLE);
         if (mShowRemainingCardCount) {
-            mTextBarRed.setVisibility(View.VISIBLE);
-            mTextBarBlack.setVisibility(View.VISIBLE);
-            mTextBarBlue.setVisibility(View.VISIBLE);
+            mTextBarNew.setVisibility(View.VISIBLE);
+            mTextBarLearn.setVisibility(View.VISIBLE);
+            mTextBarReview.setVisibility(View.VISIBLE);
         }
         mChosenAnswer.setVisibility(View.VISIBLE);
         mFlipCardLayout.setVisibility(View.VISIBLE);
@@ -2049,9 +2051,9 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
                 break;
         }
 
-        mTextBarRed.setText(newCount);
-        mTextBarBlack.setText(lrnCount);
-        mTextBarBlue.setText(revCount);
+        mTextBarNew.setText(newCount);
+        mTextBarLearn.setText(lrnCount);
+        mTextBarReview.setText(revCount);
     }
 
     /*

@@ -93,13 +93,15 @@
 	<color name="white_background_night">#3d3d3d</color>
 	<color name="white_buttontext">#10171d</color>
 
-    <!-- top bar colors in reviewer -->
-    <color name="blue">#000099</color>
-    <color name="red">#990000</color>
-    <color name="green">#007700</color>
-    <color name="night_blue">#b1b1ff</color>
-    <color name="night_red">#f50000</color>
-    <color name="night_green">#00cf00</color>
+    <!-- Colors for the card counts, in the top bar, deck picker etc. -->
+    <color name="new_count">#000099</color>
+    <color name="learn_count">#990000</color>
+    <color name="review_count">#007700</color>
+    <color name="zero_count">#e0e0e0</color>
+    <color name="new_count_night">#b1b1ff</color>
+    <color name="learn_count_night">#f50000</color>
+    <color name="review_count_night">#00cf00</color>
+    <color name="zero_count_night">#202020</color>
 
     <color name="actionbar_background">#f5f5f5</color>
 
