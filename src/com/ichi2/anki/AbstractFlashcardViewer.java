@@ -823,7 +823,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
     /**
      * Format question field when it contains typeAnswer or clozes. If there was an error during type text extraction, a
      * warning is displayed
-     * 
+     *
      * @param buf The question text
      * @return The formatted question text
      */
@@ -837,7 +837,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
 
     /**
      * Format answer field when it contains typeAnswer or clozes
-     * 
+     *
      * @param buf The answer text
      * @return The formatted answer text
      */
@@ -1166,7 +1166,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
     /**
      * Returns the text stored in the clipboard or the empty string if the clipboard is empty or contains something that
      * cannot be convered to text.
-     * 
+     *
      * @return the text in clipboard or the empty string.
      */
     private CharSequence clipboardGetText() {
@@ -1718,7 +1718,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         AnkiDroidApp.getCompat().setActionBarBackground(this,
                 invert ? R.color.white_background_night : R.color.actionbar_background);
     }
-    
+
     protected void showEaseButtons() {
         Resources res = getResources();
 
@@ -2101,7 +2101,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         }
 
         setInterface();
-        
+
         String question;
         if (mCurrentSimpleInterface) {
             question = mCurrentCard.qSimple();
@@ -2349,7 +2349,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
             } else {
                 // reset sounds each time first side of card is displayed, which may happen repeatedly without ever
                 // leaving the card (such as when edited)
-                Sound.resetSounds();                 
+                Sound.resetSounds();
                 mAnswerSoundsAdded = false;
                 Sound.addSounds(mBaseUrl, content, Sound.SOUNDS_QUESTION);
             }
@@ -2412,7 +2412,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
     /**
      * Converts characters in Unicode Supplementary Multilingual Plane (SMP) to their equivalent Html Entities. This is
      * done because webview has difficulty displaying these characters.
-     * 
+     *
      * @param text
      * @return
      */
@@ -2430,7 +2430,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
 
     /**
      * Plays sounds (or TTS, if configured) for currently shown side of card.
-     * 
+     *
      * @param doAudioReplay indicates an anki desktop-like replay call is desired, whose behavior is identical to
      *      pressing the keyboard shortcut R on the desktop
      */
@@ -2493,7 +2493,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
 
     /**
      * Returns the deck ID of the given {@link Card}.
-     * 
+     *
      * @param card The {@link Card} to get the deck ID
      * @return The deck ID of the {@link Card}
      */
@@ -2573,7 +2573,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
 
     /**
      * Adds a div html tag around the contents to have an indication, where answer/question is displayed
-     * 
+     *
      * @param content
      * @param isAnswer if true then the class attribute is set to "answer", "question" otherwise.
      * @return
@@ -2602,7 +2602,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
      * this logic, eg nested span/divs with CSS classes having font-size declarations with relative units (40% dif
      * inside 120% div inside 60% div). Broken HTML also breaks this. Feel free to improve, but please keep it short and
      * fast.
-     * 
+     *
      * @param content The HTML content that will be font-size-adjusted.
      * @param percentage The relative font size percentage defined in preferences
      * @return
@@ -2673,7 +2673,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
     /**
      * Calculates a dynamic font size depending on the length of the contents taking into account that the input string
      * contains html-tags, which will not be displayed and therefore should not be taken into account.
-     * 
+     *
      * @param htmlContents
      * @return font size respecting MIN_DYNAMIC_FONT_SIZE and MAX_DYNAMIC_FONT_SIZE
      */
@@ -2836,7 +2836,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
      * WebView.
      * <p>
      * It is also needed to solve a refresh issue on Nook devices.
-     * 
+     *
      * @return true if we should use a single WebView
      */
     private boolean shouldUseQuickUpdate() {

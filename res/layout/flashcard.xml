@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
-~ Copyright (c) 2009 Jordi Chacon <jordi.chacon@gmail.com> 
+<!--
+~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
+~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+~ Copyright (c) 2009 Jordi Chacon <jordi.chacon@gmail.com>
 ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
 ~
 ~ This program is free software; you can redistribute it and/or modify it under
@@ -19,7 +19,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/main_layout" 
+	android:id="@+id/main_layout"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
 	android:background="?android:attr/colorBackground">
@@ -32,28 +32,28 @@
 		android:layout_marginLeft="9dp"
 		android:layout_marginRight="10dp"
 		android:layout_height="wrap_content">
-		<TextView android:id="@+id/red_number"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text=""
-			android:textSize="14dip"
-			android:textColor="@color/blue" />
-		<TextView android:id="@+id/black_number"
-			android:layout_toRightOf="@+id/red_number"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:paddingLeft="8dp"
-			android:text=""
-			android:textSize="14dip"
-			android:textColor="@color/red" />
-		<TextView android:id="@+id/blue_number"
-			android:layout_toRightOf="@+id/black_number"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:paddingLeft="8dp"
-			android:text=""
-			android:textSize="14dip"
-			android:textColor="@color/green" />
+        <TextView android:id="@+id/red_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="14dip"
+            android:textColor="@color/blue" />
+        <TextView android:id="@+id/black_number"
+            android:layout_toRightOf="@+id/red_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="8dp"
+            android:text=""
+            android:textSize="14dip"
+            android:textColor="@color/red" />
+        <TextView android:id="@+id/blue_number"
+            android:layout_toRightOf="@+id/black_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="8dp"
+            android:text=""
+            android:textSize="14dip"
+            android:textColor="@color/green" />
 		<TextView android:id="@+id/choosen_answer"
 			android:layout_centerHorizontal="true"
 			android:layout_width="wrap_content"
@@ -83,7 +83,7 @@
 			android:layout_height="fill_parent"/>
 		<RelativeLayout
 			android:layout_width="fill_parent"
-			android:layout_height="fill_parent">			
+			android:layout_height="fill_parent">
 			<FrameLayout android:id="@+id/touch_layer"
 				android:layout_marginTop="20dip"
 				android:layout_marginBottom="20dip"
@@ -122,7 +122,7 @@
 		android:layout_height="wrap_content"
 		android:orientation="vertical"
 		android:layout_alignParentBottom="true" >
-		
+
 			<!-- Answer bar -->
 		<EditText android:id="@+id/answer_field"
 			android:layout_above="@+id/flip_card"
@@ -134,7 +134,7 @@
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent"
 			android:layout_alignParentBottom="true" >
-	
+
    			<LinearLayout android:id="@+id/flashcard_layout_flip"
 		    	android:layout_height="fill_parent"
 		    	android:layout_width="fill_parent"
@@ -170,7 +170,7 @@
 		    	android:orientation="vertical"
 		    	android:visibility="gone"
 		    	style="?android:attr/buttonStyleSmall">
-				<include 
+				<include
 				    android:id="@+id/nextTime1"
 				    layout="@layout/next_time_textview"/>
 				<include android:id="@+id/ease1" layout="@layout/bottom_button" />
@@ -182,7 +182,7 @@
 		    	android:visibility="gone"
 		    	android:orientation="vertical"
 		    	style="?android:attr/buttonStyleSmall">
-				<include 
+				<include
 				    android:id="@+id/nextTime2"
 				    layout="@layout/next_time_textview"
 				    android:textColor="@color/next_time_usual_color" />
@@ -195,7 +195,7 @@
 		    	android:layout_weight="1"
 		    	android:orientation="vertical"
 		    	style="?android:attr/buttonStyleSmall">
-				<include 
+				<include
 				    android:id="@+id/nextTime3"
 				    layout="@layout/next_time_textview"/>
 				<include android:id="@+id/ease3" layout="@layout/bottom_button" />
@@ -207,7 +207,7 @@
 		    	android:layout_weight="1"
 		    	android:orientation="vertical"
 		    	style="?android:attr/buttonStyleSmall">
-				<include 
+				<include
 				    android:id="@+id/nextTime4"
 				    layout="@layout/next_time_textview" />
 				<include android:id="@+id/ease4" layout="@layout/bottom_button" />

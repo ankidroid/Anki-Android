@@ -15,13 +15,13 @@
 		android:layout_height="wrap_content">
 		<TextView
 			android:id="@+id/studyoptions_deck_name"
-			android:textSize="28sp" 
+			android:textSize="28sp"
 			android:textStyle="bold"
 			android:ellipsize="end"
 			android:textColor="#000000"
 			android:maxLines="3"
-			android:gravity="center" 
-			android:layout_width="fill_parent" 
+			android:gravity="center"
+			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:layout_margin="5dp"
 			android:text=""/>
@@ -48,39 +48,39 @@
 						android:paddingRight="5dip"
 						android:textColor="#000000"
 						android:text="@string/studyoptions_due_today" />
-					<LinearLayout	
+					<LinearLayout
 						android:orientation="horizontal"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:gravity="right">
-						<TextView
-							android:id="@+id/studyoptions_new"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:paddingRight="5dip"
-							android:textColor="#000099" />
-						<TextView 
-							android:id="@+id/studyoptions_lrn" 
-							android:layout_gravity="center"
-							android:layout_height="wrap_content"
-							android:layout_width="wrap_content"
-							android:paddingRight="5dip"
-							android:textColor="#990000" />
-						<TextView 
-							android:id="@+id/studyoptions_rev" 
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:textColor="#007700" />
+                        <TextView
+                            android:id="@+id/studyoptions_new"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingRight="5dip"
+                            android:textColor="#000099" />
+                        <TextView
+                            android:id="@+id/studyoptions_lrn"
+                            android:layout_gravity="center"
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:paddingRight="5dip"
+                            android:textColor="#990000" />
+                        <TextView
+                            android:id="@+id/studyoptions_rev"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#007700" />
 					</LinearLayout>
 				</TableRow>
 				<TableRow>
-					<TextView 
+					<TextView
 						android:layout_height="wrap_content"
 						android:textColor="#000000"
 						android:layout_width="wrap_content"
 						android:text="@string/studyoptions_new_total"
 						android:paddingRight="5dip"/>
-					<TextView 
+					<TextView
 						android:id="@+id/studyoptions_total_new"
 						android:layout_height="wrap_content"
 						android:textColor="#000000"
@@ -88,13 +88,13 @@
 						android:gravity="right"/>
 				</TableRow>
 				<TableRow>
-					<TextView 
+					<TextView
 						android:layout_height="wrap_content"
 						android:textColor="#000000"
 						android:layout_width="wrap_content"
 						android:text="@string/studyoptions_total_cards"
 						android:paddingRight="5dip"/>
-					<TextView 
+					<TextView
 						android:id="@+id/studyoptions_total"
 						android:layout_height="wrap_content"
 						android:textColor="#000000"
@@ -102,14 +102,14 @@
 						android:gravity="right"/>
 				</TableRow>
 				<TableRow>
-					<TextView 
+					<TextView
 						android:layout_height="wrap_content"
 						android:layout_width="wrap_content"
 						android:textColor="#000000"
 						android:text="@string/studyoptions_eta"
 						android:paddingRight="5dip"/>
-					<TextView 
-						android:id="@+id/studyoptions_eta" 
+					<TextView
+						android:id="@+id/studyoptions_eta"
 						android:layout_height="wrap_content"
 						android:textColor="#000000"
 						android:layout_width="wrap_content"
@@ -117,57 +117,57 @@
 				</TableRow>
 			</TableLayout>
 		</LinearLayout>
-		<LinearLayout android:id="@+id/studyoptions_chart" 
+		<LinearLayout android:id="@+id/studyoptions_chart"
 			android:orientation="horizontal"
-			android:layout_width="fill_parent" 
+			android:layout_width="fill_parent"
 			android:visibility="invisible"
 			android:layout_height="wrap_content" >
 			<LinearLayout
 				android:layout_weight="1"
-				android:layout_width="0dip" 
+				android:layout_width="0dip"
 				android:layout_height="wrap_content" />
 			<LinearLayout
 				android:id="@+id/studyoptions_mall_chart"
 				android:layout_weight="3"
-				android:layout_width="0dip" 
+				android:layout_width="0dip"
 				android:orientation="vertical"
 				android:layout_height="250dip" />
 			<LinearLayout
 				android:layout_weight="1"
-				android:layout_width="0dip" 
+				android:layout_width="0dip"
 				android:layout_height="wrap_content" />
 		</LinearLayout>
-		<ScrollView 
+		<ScrollView
 		    android:fillViewport="true"
 		    android:layout_width="fill_parent"
 		    android:layout_weight="1"
 		    android:layout_height="0dp"
-		    android:fadeScrollbars="false">		
+		    android:fadeScrollbars="false">
 			<LinearLayout
 				android:orientation="vertical"
-				android:layout_width="fill_parent" 
-				android:layout_height="wrap_content"> 		
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content">
 				<TextView
 					android:id="@+id/studyoptions_deck_description"
-					android:gravity="center" 
+					android:gravity="center"
 					android:textColor="#000000"
-					android:layout_width="fill_parent" 
-					android:layout_height="wrap_content" 
-					android:layout_marginBottom="5dp" 
-					android:layout_marginLeft="5dp" 
-					android:layout_marginRight="5dp" 
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginBottom="5dp"
+					android:layout_marginLeft="5dp"
+					android:layout_marginRight="5dp"
 					android:text=""/>
-			</LinearLayout>		
+			</LinearLayout>
 		</ScrollView>
 	</LinearLayout>
-	<LinearLayout android:id="@+id/studyoptions_bottom_buttons" 
+	<LinearLayout android:id="@+id/studyoptions_bottom_buttons"
 		android:layout_alignParentBottom="true"
 		android:orientation="vertical"
 		android:gravity="center"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content">
 		<LinearLayout
-			android:orientation="vertical"		    
+			android:orientation="vertical"
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent">
 			<LinearLayout
@@ -184,9 +184,9 @@
 				    android:text="@string/studyoptions_start"
 				    android:textSize="20sp"
 				    android:textStyle="bold"
-				    android:layout_weight="1" />			
-			</LinearLayout>	
-				<!-- The below layout contains the components which are only shown when we DO NOT have a filtered deck -->		
+				    android:layout_weight="1" />
+			</LinearLayout>
+				<!-- The below layout contains the components which are only shown when we DO NOT have a filtered deck -->
 				<LinearLayout android:id="@+id/studyoptions_regular_buttons"
 					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"
@@ -207,7 +207,7 @@
 					    android:lines="1"
 					    android:text="@string/custom_study"
 					    android:textSize="12sp"
-					    android:textStyle="bold" />			    			
+					    android:textStyle="bold" />
 					<Button
 					    android:id="@+id/studyoptions_unbury"
 					    android:layout_width="0px"
@@ -217,43 +217,43 @@
 					    android:text="@string/unbury"
 					    android:textSize="12sp"
 					    android:textStyle="bold"
-					    android:visibility="gone"/>						    
+					    android:visibility="gone"/>
 				</LinearLayout>
-			
-		<!--  The below layout contains the components which are only shown when we have a filtered deck 
+
+		<!--  The below layout contains the components which are only shown when we have a filtered deck
 				It's set to hidden by default, and made visible in StudyOptionsFragment if filtered -->
 		<LinearLayout android:id="@+id/studyoptions_cram_buttons"
 			android:orientation="horizontal"
 			android:layout_width="wrap_content"
 			android:layout_height="fill_parent"
 			android:visibility="gone">
-  				<Button 
+  				<Button
 				android:id="@+id/studyoptions_options_cram"
   	    	  		android:layout_width="wrap_content"
 	         	android:layout_height="fill_parent"
 	         	android:textSize="14sp"
-				android:text="@string/study_options"/>	
+				android:text="@string/study_options"/>
 			<LinearLayout
 			android:layout_width="wrap_content"
 			android:layout_height="fill_parent"
-			android:orientation="vertical">				
-   				<Button 
+			android:orientation="vertical">
+   				<Button
 					android:id="@+id/studyoptions_rebuild_cram"
    	    	  		android:layout_width="fill_parent"
 		         	android:layout_height="wrap_content"
 		         	android:layout_weight="1"
 		         	android:textSize="14sp"
-					android:text="@string/rebuild_cram_label"/>	
-   				<Button 
+					android:text="@string/rebuild_cram_label"/>
+   				<Button
 					android:id="@+id/studyoptions_empty_cram"
    	    	  		android:layout_width="fill_parent"
 		         	android:layout_height="wrap_content"
 		         	android:layout_weight="1"
 		         	android:textSize="14sp"
 					android:text="@string/empty_cram_label"/>
-  				</LinearLayout>		
-		</LinearLayout>				
-							
+  				</LinearLayout>
+		</LinearLayout>
+
 		</LinearLayout>
 	</LinearLayout>
 	<RelativeLayout
