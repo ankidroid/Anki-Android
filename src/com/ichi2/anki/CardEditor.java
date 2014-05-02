@@ -653,11 +653,12 @@ public class CardEditor extends ActionBarActivity {
 
 
     private void saveNote() {
-        boolean modified = false;
-        for (FieldEditText f : mEditFields) {
-            modified = modified | f.updateField();
-        }
+        // treat add new note and edit existing note independently 
         if (mAddNote) {
+            // load all of the fields into the note
+            for (FieldEditText f : mEditFields) {
+                f.updateField();
+            }            
             try {
                 // Save deck to model
                 mEditorNote.model().put("did", mCurrentDid);
@@ -674,28 +675,32 @@ public class CardEditor extends ActionBarActivity {
             }
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ADD_FACT, mSaveFactHandler, new DeckTask.TaskData(mEditorNote));
         } else {
+            boolean modified = false;
+            // changed did? this has to be done first as remFromDyn() involves a direct write to the database
+            if (mCurrentEditedCard.getDid() != mCurrentDid){
+                // remove card from filtered deck first (if relevant)
+                AnkiDroidApp.getCol().getSched().remFromDyn(new long[] { mCurrentEditedCard.getId() });
+                // refresh the card object to reflect the database changes in remFromDyn()
+                mCurrentEditedCard.load();
+                // also reload the note object
+                mEditorNote = mCurrentEditedCard.note();
+                // then set the card ID to the new deck
+                mCurrentEditedCard.setDid(mCurrentDid);
+                modified = true;
+            }
+            // now load any changes to the fields from the form
+            for (FieldEditText f : mEditFields) {
+                modified = modified | f.updateField();
+            }            
             // added tag?
             for (String t : mCurrentTags) {
                 modified = modified || !mEditorNote.hasTag(t);
             }
             // removed tag?
             modified = modified || mEditorNote.getTags().size() > mCurrentTags.size();
-            // changed did?
-            boolean changedDid = mCurrentEditedCard.getDid() != mCurrentDid;
-            modified = modified || changedDid;
             if (modified) {
                 mEditorNote.setTagsFromStr(tagsAsString(mCurrentTags));
-                // set did for card
-                if (changedDid) {
-                    // remove card from filtered deck first (if relevant)
-                    AnkiDroidApp.getCol().getSched().remFromDyn(new long[] { mCurrentEditedCard.getId() });
-                    // refresh the card object to reflect the database changes in remFromDyn()
-                    mCurrentEditedCard.load();
-                    // then set the card ID to the new deck
-                    mCurrentEditedCard.setDid(mCurrentDid);
-                }
-                // set a flag so that changes to card object will be written to DB later via onActivityResult() in
-                // CardBrowser
+                // set a flag so that changes to card object will be written to DB later via onActivityResult() in CardBrowser
                 mChanged = true;
             }
             closeCardEditor();
