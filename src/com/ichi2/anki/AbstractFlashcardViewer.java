@@ -638,6 +638,9 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
             }
 
             if (sDisplayAnswer) {
+                Sound.resetSounds(); // load sounds from scratch, to expose any edit changes
+                mAnswerSoundsAdded = false; // causes answer sounds to be reloaded            
+                generateQuestionSoundList(); // questions must be intentionally regenerated
                 displayCardAnswer();
             } else {
                 displayCardQuestion();
@@ -1397,6 +1400,11 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         sEditorCard = mCurrentCard;
         startActivityForResultWithAnimation(editCard, EDIT_CURRENT_CARD, ActivityTransitionAnimation.LEFT);
         return true;
+    }
+
+
+    protected void generateQuestionSoundList() {
+        Sound.addSounds(mBaseUrl, mCurrentCard.qSimple(), Sound.SOUNDS_QUESTION);        
     }
 
 
