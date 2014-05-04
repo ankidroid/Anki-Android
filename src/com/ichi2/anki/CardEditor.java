@@ -282,7 +282,7 @@ public class CardEditor extends ActionBarActivity {
         Log.i(AnkiDroidApp.TAG, "CardEditor: onCreate");
         Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
-        
+
         Intent intent = getIntent();
         if (savedInstanceState != null) {
             mCaller = savedInstanceState.getInt("caller");
@@ -308,7 +308,7 @@ public class CardEditor extends ActionBarActivity {
             initActivity(mCol);
         }
     }
-    
+
     // Finish initializing the activity after the collection has been correctly loaded    
     private void initActivity(Collection col){
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -327,7 +327,7 @@ public class CardEditor extends ActionBarActivity {
             finish();
             return;
         }        
-        
+
         registerExternalStorageListener();
 
         View mainView = getLayoutInflater().inflate(R.layout.card_editor, null);
@@ -606,11 +606,11 @@ public class CardEditor extends ActionBarActivity {
             public void onPreExecute() {
                 mOpenCollectionDialog = StyledOpenCollectionDialog.show(CardEditor.this,
                         getResources().getString(R.string.open_collection), new OnCancelListener() {
-                            @Override
-                            public void onCancel(DialogInterface arg0) {
-                                finish();
-                            }
-                        });
+                    @Override
+                    public void onCancel(DialogInterface arg0) {
+                        finish();
+                    }
+                });
             }
 
 
@@ -1436,7 +1436,7 @@ public class CardEditor extends ActionBarActivity {
         try {
             mDeckButton.setText(getResources().getString(
                     mAddNote ? R.string.CardEditorNoteDeck : R.string.CardEditorCardDeck,
-                    mCol.getDecks().get(mCurrentDid).getString("name")));
+                            mCol.getDecks().get(mCurrentDid).getString("name")));
         } catch (NotFoundException e) {
             throw new RuntimeException(e);
         } catch (JSONException e) {
