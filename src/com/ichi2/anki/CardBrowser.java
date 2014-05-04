@@ -243,12 +243,21 @@ public class CardBrowser extends ActionBarActivity implements ActionBar.OnNaviga
         View mainView = getLayoutInflater().inflate(R.layout.card_browser, null);
         setContentView(mainView);
         Themes.setContentStyle(mainView, Themes.CALLER_CARDBROWSER);
-
+        // Try to load the collection 
         mCol = AnkiDroidApp.getCol();
         if (mCol == null) {
-            reloadCollection(savedInstanceState);
+            // Reload the collection asynchronously, let onPostExecute method call initActivity()
+            reloadCollection();
             return;
-        }
+        } else {
+            // If collection was not null then we can safely call initActivity() directly
+            initActivity(mCol);    
+        }        
+    }
+    
+    // Finish initializing the activity after the collection has been correctly loaded
+    private void initActivity(Collection col){
+        
         mDeckNames = new HashMap<String, String>();
         for (long did : mCol.getDecks().allIds()) {
             mDeckNames.put(String.valueOf(did), mCol.getDecks().name(did));
@@ -395,6 +404,7 @@ public class CardBrowser extends ActionBarActivity implements ActionBar.OnNaviga
         if (!mWholeCollection) {
             mActionBar.setSelectedNavigationItem(mDropDownDecks.indexOf(currentDeckName));
         }
+        
     }
 
 
@@ -751,7 +761,7 @@ public class CardBrowser extends ActionBarActivity implements ActionBar.OnNaviga
     }
 
 
-    private void reloadCollection(final Bundle savedInstanceState) {
+    private void reloadCollection() {
         DeckTask.launchDeckTask(
                 DeckTask.TASK_TYPE_OPEN_COLLECTION,
                 new DeckTask.TaskListener() {
@@ -769,7 +779,7 @@ public class CardBrowser extends ActionBarActivity implements ActionBar.OnNaviga
                         if (mCol == null) {
                             finish();
                         } else {
-                            onCreate(savedInstanceState);
+                            initActivity(AnkiDroidApp.getCol());
                         }
                     }
 
