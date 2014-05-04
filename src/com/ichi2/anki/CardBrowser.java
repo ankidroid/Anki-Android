@@ -49,6 +49,9 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -95,6 +98,7 @@ public class CardBrowser extends ActionBarActivity implements ActionBar.OnNaviga
 
     private StyledProgressDialog mProgressDialog;
     private StyledOpenCollectionDialog mOpenCollectionDialog;
+    private StyledDialog mTagsDialog;
 
     public static Card sCardBrowserCard;
 
@@ -632,18 +636,24 @@ public class CardBrowser extends ActionBarActivity implements ActionBar.OnNaviga
                 builder.setTitle(R.string.studyoptions_limit_select_tags);
                 builder.setMultiChoiceItems(allTags, new boolean[allTags.length],
                         new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String tag = allTags[which];
-                        if (mSelectedTags.contains(tag)) {
-                            Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
-                            mSelectedTags.remove(tag);
-                        } else {
-                            Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
-                            mSelectedTags.add(tag);
-                        }
-                    }
-                });
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String tag = allTags[which];
+                                if (mSelectedTags.contains(tag)) {
+                                    Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
+                                    mSelectedTags.remove(tag);
+                                } else {
+                                    Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
+                                    mSelectedTags.add(tag);
+                                }
+                            }
+                        }, new OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                mTagsDialog.setItemListChecked(isChecked);
+                                mSelectedTags = new HashSet<String>(mTagsDialog.getCheckedItems());
+                            }
+                        });
                 builder.setPositiveButton(res.getString(R.string.select), new OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -672,7 +682,8 @@ public class CardBrowser extends ActionBarActivity implements ActionBar.OnNaviga
                         mSelectedTags.clear();
                     }
                 });
-                dialog = builder.create();
+                mTagsDialog = builder.create();
+                dialog = mTagsDialog;
                 break;
         }
         return dialog;
@@ -727,6 +738,12 @@ public class CardBrowser extends ActionBarActivity implements ActionBar.OnNaviga
                             Log.d(AnkiDroidApp.TAG, "checked tag: " + tag);
                             mSelectedTags.add(tag);
                         }
+                    }
+                }, new OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        mTagsDialog.setItemListChecked(isChecked);
+                        mSelectedTags = new HashSet<String>(mTagsDialog.getCheckedItems());
                     }
                 });
                 break;

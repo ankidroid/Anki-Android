@@ -21,6 +21,8 @@ package com.ichi2.themes;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +32,10 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.EditText;
+import android.widget.Filter.FilterListener;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -51,7 +57,6 @@ public class StyledDialog extends Dialog {
     private OnClickListener mListener;
     private ListView mListView;
     private boolean mDoNotShow = false;
-
 
     public StyledDialog(Context context) {
         super(context, R.style.StyledDialog);
@@ -119,6 +124,7 @@ public class StyledDialog extends Dialog {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     mListener.onClick(StyledDialog.this, position);
+                    adjustSelectAllCheckBox();
                 }
             });
         } else {
@@ -187,12 +193,20 @@ public class StyledDialog extends Dialog {
     }
 
 
-    public void setMultiChoiceItems(String[] values, boolean[] checked, DialogInterface.OnClickListener listener) {
+    public void setMultiChoiceItems(String[] values, boolean[] checked, DialogInterface.OnClickListener listener,
+            OnCheckedChangeListener selectAllListener) {
         View main = super.getWindow().getDecorView();
         mCheckedItems = checked;
         ((View) main.findViewById(R.id.listViewPanel)).setVisibility(View.VISIBLE);
         setItems(3, (ListView) super.getWindow().getDecorView().findViewById(R.id.listview), values, 0, mCheckedItems,
                 listener);
+
+        if (selectAllListener != null) {
+            CheckBox selectAll = (CheckBox) main.findViewById(R.id.SelectAllCheckbox);
+            selectAll.setVisibility(View.VISIBLE);
+            selectAll.setTag(selectAllListener);
+            adjustSelectAllCheckBox();
+        }
     }
 
 
@@ -215,6 +229,76 @@ public class StyledDialog extends Dialog {
         mItemList.add(position, text);
         mListAdapter.notifyDataSetChanged();
     }
+    
+    public void setItemListChecked(boolean checked) {
+        for (int i = 0; i < mListView.getCount(); i++) {
+            mListView.setItemChecked(i, checked);
+        }
+    }
+
+    public ArrayList<String> getCheckedItems() {
+        updateCheckedItems();
+        ArrayList<String> selecteds = new ArrayList<String>();
+        for (int i = 0; i < mItemList.size(); i++) {
+            if (mCheckedItems[i])
+                selecteds.add(mItemList.get(i));
+        }
+        
+        return selecteds;
+    }
+
+    public void updateCheckedItems() {
+        if (mCheckedItems == null) {
+            mCheckedItems = new boolean[mItemList.size()];
+        }
+        for (int i = 0; i < mItemList.size(); i++) {
+            String item = mItemList.get(i);
+            boolean is_checked = false;
+            boolean is_showing = false;
+            for (int j = 0; j < mListView.getCount(); j++) {
+                String item_in_view = (String) mListView.getItemAtPosition(j);
+                if (item.equals(item_in_view)) {
+                    is_showing = true;
+                    is_checked = mListView.isItemChecked(j);
+                    break;
+                }
+            }
+            if (is_showing) {
+                mCheckedItems[i] = is_checked;
+            }
+        }
+    }
+
+    public void filterList(String str) {
+        filterList(str, null);
+    }
+    public void filterList(String str, final FilterListener listener) {
+        updateCheckedItems();
+        mListAdapter.getFilter().filter(str, new FilterListener() {
+            @Override
+            public void onFilterComplete(int count) {
+                for (int i = 0; i < mListView.getCount(); i++) {
+                    String item = (String) mListView.getItemAtPosition(i);
+                    mListView.setItemChecked(i, mCheckedItems[mItemList.indexOf(item)]);
+                }
+                adjustSelectAllCheckBox();
+            }
+        });
+    }
+    
+    private void adjustSelectAllCheckBox() {
+        boolean check = true;
+        for (int i = 0; i < mListView.getCount(); i++) {
+            if (!mListView.isItemChecked(i)) {
+                check = false;
+                break;
+            }
+        }
+        CheckBox selectAll = (CheckBox) findViewById(R.id.SelectAllCheckbox);
+        selectAll.setOnCheckedChangeListener(null);
+        selectAll.setChecked(check);
+        selectAll.setOnCheckedChangeListener((OnCheckedChangeListener) selectAll.getTag());
+    }
 
     public static class Builder {
 
@@ -235,6 +319,7 @@ public class StyledDialog extends Dialog {
         private DialogInterface.OnClickListener neutralButtonClickListener;
         private DialogInterface.OnCancelListener cancelListener;
         private DialogInterface.OnDismissListener dismissListener;
+        private OnCheckedChangeListener selectAllListener;
         private boolean cancelable = true;
 
         private String[] itemTitels;
@@ -242,6 +327,7 @@ public class StyledDialog extends Dialog {
         private boolean[] multipleCheckedItems;
         private int listStyle = 0;
         private DialogInterface.OnClickListener itemClickListener;
+        private boolean mShowFilterEditText = false;
 
 
         public Builder(Context context) {
@@ -434,6 +520,11 @@ public class StyledDialog extends Dialog {
             this.dismissListener = listener;
             return this;
         }
+        
+        public Builder setSelectAllListener(OnCheckedChangeListener listener) {
+            this.selectAllListener = listener;
+            return this;
+        }
 
 
         public Builder setCancelable(boolean cancelable) {
@@ -459,15 +550,21 @@ public class StyledDialog extends Dialog {
         }
 
 
-        public Builder setMultiChoiceItems(String[] values, boolean[] checked, DialogInterface.OnClickListener listener) {
+        public Builder setMultiChoiceItems(String[] values, boolean[] checked, DialogInterface.OnClickListener listener,
+                OnCheckedChangeListener selectAllListener) {
             this.itemTitels = values;
             this.multipleCheckedItems = checked;
             this.itemClickListener = listener;
             this.listStyle = 3;
+            this.selectAllListener = selectAllListener;
             return this;
         }
 
-
+        public Builder setShowFilterTags(boolean show) {
+            mShowFilterEditText = show;
+            return this;
+        }
+        
         /**
          * Create the styled dialog
          */
@@ -569,6 +666,34 @@ public class StyledDialog extends Dialog {
                 Themes.showThemedToast(context, context.getResources().getString(R.string.error_insufficient_memory),
                         false);
                 return null;
+            }
+            if (this.listStyle == 3 && selectAllListener != null) {
+                CheckBox selectAll = (CheckBox) layout.findViewById(R.id.SelectAllCheckbox);
+                selectAll.setVisibility(View.VISIBLE);
+                selectAll.setTag(selectAllListener);
+                dialog.adjustSelectAllCheckBox();
+            }
+
+            if (mShowFilterEditText) {
+                EditText filterTags = (EditText) layout.findViewById(R.id.filterTags);
+                filterTags.setVisibility(View.VISIBLE);
+                filterTags.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        dialog.filterList(s.toString(), new FilterListener() {
+                            @Override
+                            public void onFilterComplete(int count) {
+                                dialog.adjustSelectAllCheckBox();
+                            }
+                        });
+                    }
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    }
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                    }
+                });
             }
 
             dialog.setContentView(layout);
