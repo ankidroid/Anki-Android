@@ -209,7 +209,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
     private boolean mGesturesEnabled;
     private boolean mPrefFixArabic;
     private boolean mPrefForceQuickUpdate;
-    private boolean mDisplayKanjiInfo = false;
     // Android WebView
     private boolean mSpeakText;
     protected boolean mInvertedColors = false;
@@ -364,9 +363,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
     private Method mSetTextIsSelectable = null;
 
     protected Sched mSched;
-
-    // Stores kanji to display their meaning after answering cards
-    private static HashMap<String, String> sKanjiInfo = new HashMap<String, String>();
 
     private ReviewerExtRegistry mExtensions;
 
@@ -1800,7 +1796,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         mWaitQuestionSecond = preferences.getInt("timeoutQuestionSeconds", 60);
         mScrollingButtons = preferences.getBoolean("scrolling_buttons", false);
         mDoubleScrolling = preferences.getBoolean("double_scrolling", false);
-        mDisplayKanjiInfo = preferences.getBoolean("displayKanjiInfo", false);
         mPrefCenterVertically = preferences.getBoolean("centerVertically", false);
 
         mGesturesEnabled = AnkiDroidApp.initiateGestures(this, preferences);
@@ -2085,59 +2080,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         }
     }
 
-    private void loadKanjiInfo() {
-        if (!sKanjiInfo.isEmpty()) {
-            return;
-        }
-
-        File file;
-        InputStream is;
-
-        is = this.getResources().openRawResource(R.raw.kanji_info);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-
-        String line;
-
-        try {
-            while (reader.ready()) {
-                line = reader.readLine();
-                if (line.length() == 0 || line.startsWith("#")) {
-                    continue;
-                }
-
-                try {
-                    String[] kanjiInfoPair = line.split(" ", 2);
-                    sKanjiInfo.put(kanjiInfoPair[0], kanjiInfoPair[1]);
-                } catch (IndexOutOfBoundsException e) {
-                    Log.i(AnkiDroidApp.TAG, "Malformed entry in kanji_info.txt: " + line);
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    private String addKanjiInfo(String answer) {
-        loadKanjiInfo();
-
-        String kanjiInfo;
-
-        kanjiInfo = "\n\n<br/><br/><table style=\"color: #000000; background-color: #FFFFFF\">\n";
-
-        for (int i = 0; i < answer.length(); i++) {
-            String chr = (answer.substring(i, i + 1));
-            if (sKanjiInfo.containsKey(chr)) {
-                kanjiInfo = kanjiInfo + "<tr><td>" + chr + "</td><td>" + sKanjiInfo.get(chr) + "</td></tr>\n";
-            }
-        }
-
-        kanjiInfo = kanjiInfo + "</table>\n";
-
-        return kanjiInfo;
-    }
-
-
     protected void displayCardAnswer() {
         Log.i(AnkiDroidApp.TAG, "displayCardAnswer");
 
@@ -2155,10 +2097,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
             answer = mCurrentCard.a();
         }
         answer = typeAnsAnswerFilter(answer);
-
-        if (mDisplayKanjiInfo) {
-            answer = answer + addKanjiInfo(mCurrentCard.q(mCurrentSimpleInterface));
-        }
 
         String displayString = "";
 
