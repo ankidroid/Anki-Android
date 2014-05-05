@@ -63,23 +63,16 @@
                 app:min="1" />
         </PreferenceCategory>
         <PreferenceCategory android:title="@string/pref_cat_messages" >
-	        <CheckBoxPreference
-	            android:defaultValue="true"
-	            android:disableDependentsState="false"
-	            android:key="showBroadcastMessages"
-	            android:summary="@string/show_broadcast_messages_summ"
-	            android:title="@string/show_broadcast_messages" />
-	        <ListPreference
-	            android:defaultValue="2"
-	            android:entries="@array/error_reporting_choice_labels"
-	            android:entryValues="@array/error_reporting_choice_values"
-	            android:key="reportErrorMode"
-	            android:summary="@string/error_reporting_choice_summary"
-	            android:title="@string/error_reporting_choice" />
-		</PreferenceCategory>
+            <ListPreference
+                android:defaultValue="2"
+                android:entries="@array/error_reporting_choice_labels"
+                android:entryValues="@array/error_reporting_choice_values"
+                android:key="reportErrorMode"
+                android:summary="@string/error_reporting_choice_summary"
+                android:title="@string/error_reporting_choice" />
+        </PreferenceCategory>
         <PreferenceCategory android:title="@string/pref_cat_reset" >
             <com.ichi2.preferences.CustomDialogPreference
-                android:dependency="showBroadcastMessages"
                 android:dialogIcon="@android:drawable/ic_dialog_alert"
                 android:dialogMessage="@string/reset_messages_question"
                 android:dialogTitle="@string/reset_messages"
@@ -128,7 +121,7 @@
                 android:key="splashScreen"
                 android:summary="@string/pref_show_splashscreen_summ"
                 android:title="@string/pref_show_splashscreen" />
-	</PreferenceCategory>
+    </PreferenceCategory>
         <PreferenceCategory android:title="@string/pref_cat_sync" >
           <Preference
                 android:key="syncAccount"
@@ -144,7 +137,7 @@
                 android:key="syncFetchesMedia"
                 android:summary="@string/sync_fetch_missing_media_summ"
                 android:title="@string/sync_fetch_missing_media" />
-	</PreferenceCategory>
+    </PreferenceCategory>
       </PreferenceScreen>
     <PreferenceScreen android:title="@string/pref_cat_qadisplay" >
         <PreferenceCategory android:title="@string/pref_cat_themes" >
@@ -222,11 +215,11 @@
                 android:summary="@string/time_limit_summ"
                 app:min="0"
                 app:max="9999" />
-	        <CheckBoxPreference
-	            android:defaultValue="true"
-	            android:key="writeAnswers"
-	            android:summary="@string/write_answers_summ"
-	            android:title="@string/write_answers" />
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:key="writeAnswers"
+                android:summary="@string/write_answers_summ"
+                android:title="@string/write_answers" />
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="fixOrientation"

@@ -218,9 +218,6 @@
 <string name="studyoptions_new_cards_per_day">New cards per day</string>
 <string name="studyoptions_max_fail_card">Max fail cards</string>
 
-<string name="show_broadcast_messages">Show Current Messages</string>
-<string name="show_broadcast_messages_summ">Show AnkiDroid notifications like new version updates or important other news</string>
-
 <string name="input_workaround">Input Workaround</string>
 <string name="input_workaround_summ">Workaround for focusing problems on HTML input boxes. Causes problems on several devices.</string>
 
