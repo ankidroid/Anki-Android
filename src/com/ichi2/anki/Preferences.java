@@ -95,11 +95,11 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             "it", "ja", "ko", "lt", "nl", "no", "pl", "pt_PT", "pt_BR", "ro", "ru", "sk", "sl", "sr", "sv", "th", "tr", "uk", "vi",
             "zh_CN", "zh_TW", "en" };
     private static String[] mShowValueInSummList = { "language", "dictionary", "reportErrorMode",
-            "minimumCardsDueForNotification", "gestureShake", "gestureSwipeUp", "gestureSwipeDown", "gestureSwipeLeft",
+            "minimumCardsDueForNotification", "gestureSwipeUp", "gestureSwipeDown", "gestureSwipeLeft",
             "gestureSwipeRight", "gestureDoubleTap", "gestureTapTop", "gestureTapBottom", "gestureTapRight",
             "gestureLongclick", "gestureTapLeft", "newSpread", "useCurrent"};//, "theme" };
     private static String[] mShowValueInSummSeek = { "relativeDisplayFontSize", "relativeCardBrowserFontSize",
-            "relativeImageSize", "answerButtonSize", "whiteBoardStrokeWidth", "minShakeIntensity", "swipeSensibility",
+            "relativeImageSize", "answerButtonSize", "whiteBoardStrokeWidth", "swipeSensibility",
             "timeoutAnswerSeconds", "timeoutQuestionSeconds", "backupMax", "dayOffset" };
     private static String[] mShowValueInSummEditText = { "simpleInterfaceExcludeTags" };
     private static String[] mShowValueInSummNumRange = { "timeLimit", "learnCutoff" };

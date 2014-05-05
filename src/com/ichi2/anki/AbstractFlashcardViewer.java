@@ -33,10 +33,6 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -211,9 +207,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
     private boolean mDoubleScrolling;
     private boolean mScrollingButtons;
     private boolean mGesturesEnabled;
-    private boolean mShakeEnabled = false;
-    private int mShakeIntensity;
-    private boolean mShakeActionStarted = false;
     private boolean mPrefFixArabic;
     private boolean mPrefForceQuickUpdate;
     private boolean mDisplayKanjiInfo = false;
@@ -320,13 +313,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
      */
     private boolean mUseQuickUpdate = false;
 
-    /**
-     * Shake Detection
-     */
-    private SensorManager mSensorManager;
-    private float mAccel; // acceleration apart from gravity
-    private float mAccelCurrent; // current acceleration including gravity
-    private float mAccelLast; // last acceleration including gravity
 
     /**
      * Swipe Detection
@@ -343,8 +329,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
     private int mGestureSwipeUp;
     private int mGestureSwipeDown;
     private int mGestureSwipeLeft;
-    private int mGestureSwipeRight;
-    private int mGestureShake;
+    private int mGestureSwipeRight;    
     private int mGestureDoubleTap;
     private int mGestureTapLeft;
     private int mGestureTapRight;
@@ -390,31 +375,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
     // ----------------------------------------------------------------------------
     // LISTENERS
     // ----------------------------------------------------------------------------
-
-    /**
-     * From http://stackoverflow.com/questions/2317428/android-i-want-to-shake-it Thilo Koehler
-     */
-    private final SensorEventListener mSensorListener = new SensorEventListener() {
-        @Override
-        public void onSensorChanged(SensorEvent se) {
-
-            float x = se.values[0];
-            float y = se.values[1];
-            float z = se.values[2] / 2;
-            mAccelLast = mAccelCurrent;
-            mAccelCurrent = (float) Math.sqrt(x * x + y * y + z * z);
-            float delta = mAccelCurrent - mAccelLast;
-            mAccel = mAccel * 0.9f + delta; // perform low-cut filter
-            if (!mShakeActionStarted && mAccel >= (mShakeIntensity / 10)) {
-                mShakeActionStarted = true;
-                executeCommand(mGestureShake);
-            }
-        }
-
-        @Override
-        public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        }
-    };
 
     private Handler mHandler = new Handler() {
 
@@ -664,7 +624,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
             if (mNoMoreCards) {
                 closeReviewer(RESULT_NO_MORE_CARDS, true);
             }
-            mShakeActionStarted = false;
         }
     };
 
@@ -970,11 +929,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         longClickHandler.removeCallbacks(startLongClickAction);
 
         stopTimer();
-
-        if (mShakeEnabled) {
-            mSensorManager.unregisterListener(mSensorListener);
-        }
-
         Sound.stopSounds();
     }
 
@@ -1000,19 +954,12 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         restartTimer();
         // }
         //
-        if (mShakeEnabled) {
-            mSensorManager.registerListener(mSensorListener,
-                    mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
-        }
     }
 
 
     @Override
     protected void onStop() {
         mInBackground = true;
-        if (mShakeEnabled) {
-            mSensorManager.unregisterListener(mSensorListener);
-        }
         super.onStop();
         // Decks deck = DeckManager.getMainDeck();
         // if (!isFinishing()) {
@@ -1555,16 +1502,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
 
         mProgressBar = (ProgressBar) findViewById(R.id.flashcard_progressbar);
 
-        // initialise shake detection
-        if (mShakeEnabled) {
-            mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-            mSensorManager.registerListener(mSensorListener,
-                    mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
-            mAccel = 0.00f;
-            mAccelCurrent = SensorManager.GRAVITY_EARTH;
-            mAccelLast = SensorManager.GRAVITY_EARTH;
-        }
-
         Resources res = getResources();
 
         mEase1 = (Button) findViewById(R.id.ease1);
@@ -1868,12 +1805,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
 
         mGesturesEnabled = AnkiDroidApp.initiateGestures(this, preferences);
         if (mGesturesEnabled) {
-            mGestureShake = Integer.parseInt(preferences.getString("gestureShake", "0"));
-            if (mGestureShake != 0) {
-                mShakeEnabled = true;
-            }
-            mShakeIntensity = preferences.getInt("minShakeIntensity", 70);
-
             mGestureSwipeUp = Integer.parseInt(preferences.getString("gestureSwipeUp", "9"));
             mGestureSwipeDown = Integer.parseInt(preferences.getString("gestureSwipeDown", "0"));
             mGestureSwipeLeft = Integer.parseInt(preferences.getString("gestureSwipeLeft", "8"));

@@ -456,38 +456,6 @@
                 android:key="gestureLongclick"
                 android:summary=""
                 android:title="@string/gestures_longclick" />
-            <ListPreference
-                android:defaultValue="0"
-                android:dependency="swipe"
-                android:entries="@array/gestures_labels"
-                android:entryValues="@array/gestures_values"
-                android:key="gestureShake"
-                android:summary=""
-                android:title="@string/gestures_shake" />
-        </PreferenceCategory>
-        <PreferenceCategory android:title="@string/pref_cat_navigation_sensitivity" >
-            <com.hlidskialf.android.preference.SeekBarPreference
-                android:defaultValue="100"
-                android:dependency="swipe"
-                android:dialogMessage="@string/shake_intensity_summ"
-                android:key="swipeSensibility"
-                android:max="180"
-                android:summary="@string/swipe_sensibility_summ"
-                android:text=""
-                android:title="@string/swipe_sensibility"
-                app:interval="1"
-                app:min="20" />
-            <com.hlidskialf.android.preference.SeekBarPreference
-                android:defaultValue="70"
-                android:dependency="swipe"
-                android:dialogMessage="@string/shake_intensity_summ"
-                android:key="minShakeIntensity"
-                android:max="140"
-                android:summary="@string/shake_intensity_summ"
-                android:text=""
-                android:title="@string/shake_intensity"
-                app:interval="1"
-                app:min="10" />
         </PreferenceCategory>
         <PreferenceCategory android:title="@string/pref_cat_scrolling" >
             <CheckBoxPreference

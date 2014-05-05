@@ -116,7 +116,6 @@
 <string name="swipe_summ_off">Use gestures to switch between screens and answer cards. This option is not compatible with zoom controls</string>
 <string name="swipe_summ_on">Swipe horizontally to switch between screens. Configure other actions below</string>
 <string name="pref_cat_actions">Actions</string>
-<string name="gestures_shake">Shake</string>
 <string name="gestures_swipe_up">Swipe up</string>
 <string name="gestures_swipe_down">Swipe down</string>
 <string name="gestures_swipe_left">Swipe left</string>
@@ -138,8 +137,6 @@
 <string name="tts_summ">Reads out question and answer if no sound file is included</string>
 <string name="play_sounds_at_start">Play Sounds Instantly</string>
 <string name="play_sounds_at_start_summ">Plays sounds instantly after showing a question/answer</string>
-<string name="shake_intensity">Shake threshold</string>
-<string name="shake_intensity_summ">Threshold for shake recognition: XXX</string>
 <string name="sync_fetch_missing_media">Fetch media on sync</string>
 <string name="sync_fetch_missing_media_summ">Automatically fetch missing media when syncing.</string>
 <string name="sync_account">AnkiWeb account</string>
