@@ -206,10 +206,6 @@ public class AnkiDroidApp extends Application {
         return Environment.getExternalStorageDirectory().getAbsolutePath();
     }
 
-    private static String getInternalMemoryDirectory() {
-        return sInstance.getFilesDir().getAbsolutePath();
-    }
-
     public static String getCacheStorageDirectory() {
         return sInstance.getCacheDir().getAbsolutePath();
     }
@@ -225,12 +221,8 @@ public class AnkiDroidApp extends Application {
 
 
     public static String getCurrentAnkiDroidDirectory() {
-    	SharedPreferences prefs = getSharedPrefs(sInstance.getApplicationContext());
-    	if (prefs.getBoolean("internalMemory", false)) {
-    		return getInternalMemoryDirectory();
-    	} else {
-    		return prefs.getString("deckPath", AnkiDroidApp.getDefaultAnkiDroidDirectory());
-    	}
+        SharedPreferences prefs = getSharedPrefs(sInstance.getApplicationContext());
+        return prefs.getString("deckPath", AnkiDroidApp.getDefaultAnkiDroidDirectory());
     }
 
     public static String getCurrentAnkiDroidMediaDir() {
@@ -268,7 +260,7 @@ public class AnkiDroidApp extends Application {
 
 
     public static boolean isSdCardMounted() {
-        return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()) || getSharedPrefs(sInstance.getApplicationContext()).getBoolean("internalMemory", false);
+        return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
     }
 
 

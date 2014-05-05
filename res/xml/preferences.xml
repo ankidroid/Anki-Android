@@ -26,7 +26,6 @@
             <EditTextPreference
                 android:defaultValue="/sdcard/AnkiDroid"
                 android:key="deckPath"
-                android:dependency="internalMemory"
                 android:summary="@string/col_path_summ"
                 android:title="@string/col_path" />
             <com.hlidskialf.android.preference.SeekBarPreference
@@ -43,12 +42,6 @@
                 android:summary=""
                 android:entries="@array/add_to_cur_labels"
                 android:entryValues="@array/add_to_cur_values" />
-            <CheckBoxPreference
-                android:defaultValue="false"
-                android:disableDependentsState="true"
-                android:key="internalMemory"
-                android:summary="@string/pref_internal_memory_summ"
-                android:title="@string/pref_internal_memory" />
         </PreferenceCategory>
         <PreferenceCategory android:title="@string/pref_cat_backup" >
             <CheckBoxPreference

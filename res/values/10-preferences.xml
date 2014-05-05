@@ -22,8 +22,6 @@
 
 <!-- preferences.xml -->
 <string name="pref_cat_collection">Collection</string>
-<string name="pref_internal_memory">Use internal memory</string>
-<string name="pref_internal_memory_summ">Store collection in internal memory. This is not recommended, as you cannot access the collection file that easily</string>
 <string name="pref_cat_sync">Synchronization</string>
 <string name="pref_cat_qadisplay">Display</string>
 <string name="pref_cat_general">General</string>
