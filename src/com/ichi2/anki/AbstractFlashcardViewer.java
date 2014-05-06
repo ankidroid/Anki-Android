@@ -197,7 +197,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
     private boolean mShowTimer;
     protected boolean mPrefWhiteboard;
     private boolean mPrefWriteAnswers;
-    private boolean mPrefTextSelection;
     private boolean mInputWorkaround;
     private boolean mLongClickWorkaround;
     private boolean mPrefFullscreenReview;
@@ -211,6 +210,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
     private boolean mPrefForceQuickUpdate;
     // Android WebView
     private boolean mSpeakText;
+    private boolean mDisableClipboard = false;
     protected boolean mInvertedColors = false;
     private int mCurrentBackgroundColor;
     private boolean mBlackWhiteboard = true;
@@ -458,7 +458,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
             if (gestureDetector.onTouchEvent(event)) {
                 return true;
             }
-            if (mPrefTextSelection && !mLongClickWorkaround) {
+            if (!mDisableClipboard && !mLongClickWorkaround) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         mTouchStarted = true;
@@ -888,7 +888,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
 
         setTitle();
 
-        if (mPrefTextSelection) {
+        if (!mDisableClipboard) {
             clipboardSetText("");
         }
 
@@ -1100,7 +1100,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
                 // Some devices or external applications make the clipboard throw exceptions. If this happens, we
                 // must disable it or AnkiDroid will crash if it tries to use it.
                 Log.e(AnkiDroidApp.TAG, "Clipboard error. Disabling text selection setting.");
-                AnkiDroidApp.getSharedPrefs(getBaseContext()).edit().putBoolean("textSelection", false).commit();
+                mDisableClipboard = true;
             }
         }
     }
@@ -1141,7 +1141,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
                 menu.findItem(R.id.action_clear_whiteboard).setVisible(false);
             }
         }
-        if (AnkiDroidApp.SDK_VERSION < 11 && mPrefTextSelection) {
+        if (AnkiDroidApp.SDK_VERSION < 11 && !mDisableClipboard) {
             menu.findItem(R.id.action_search_dictionary).setVisible(true).setEnabled(!mShowWhiteboard).setTitle(
                     clipboardHasText() ? Lookup.getSearchStringTitle() : res.getString(R.string.menu_select));
         }
@@ -1265,7 +1265,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
                 fillFlashcard();
             }
         }
-        if (mPrefTextSelection) {
+        if (!mDisableClipboard) {
             clipboardSetText("");
         }
     }
@@ -1363,7 +1363,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
     }
 
     private void showLookupButtonIfNeeded() {
-        if (mPrefTextSelection && mClipboard != null) {
+        if (!mDisableClipboard && mClipboard != null) {
             if (clipboardGetText().length() != 0 && Lookup.isAvailable() && mLookUpIcon.getVisibility() != View.VISIBLE) {
                 mLookUpIcon.setVisibility(View.VISIBLE);
                 enableViewAnimation(mLookUpIcon, ViewAnimation.fade(ViewAnimation.FADE_IN, mFadeDuration, 0));
@@ -1375,7 +1375,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
     }
 
     private void hideLookupButton() {
-        if (mPrefTextSelection && mLookUpIcon.getVisibility() != View.GONE) {
+        if (!mDisableClipboard && mLookUpIcon.getVisibility() != View.GONE) {
             mLookUpIcon.setVisibility(View.GONE);
             enableViewAnimation(mLookUpIcon, ViewAnimation.fade(ViewAnimation.FADE_OUT, mFadeDuration, 0));
             clipboardSetText("");
@@ -1427,9 +1427,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
             return;
         }
         mIsSelecting = false;
-        if (mPrefTextSelection) {
-            hideLookupButton();
-        }
+        hideLookupButton();
         switch (ease) {
             case EASE_FAILED:
                 mChosenAnswer.setText("\u2022");
@@ -1478,10 +1476,10 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         mCardFrame = (FrameLayout) findViewById(R.id.flashcard);
         mTouchLayer = (FrameLayout) findViewById(R.id.touch_layer);
         mTouchLayer.setOnTouchListener(mGestureListener);
-        if (mPrefTextSelection && mLongClickWorkaround) {
+        if (!mDisableClipboard && mLongClickWorkaround) {
             mTouchLayer.setOnLongClickListener(mLongClickListener);
         }
-        if (mPrefTextSelection) {
+        if (!mDisableClipboard) {
             mClipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         }
         mCardFrame.removeAllViews();
@@ -1778,7 +1776,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         mPrefHideDueCount = preferences.getBoolean("hideDueCount", false);
         mPrefWhiteboard = preferences.getBoolean("whiteboard", false);
         mPrefWriteAnswers = preferences.getBoolean("writeAnswers", true);
-        mPrefTextSelection = preferences.getBoolean("textSelection", true);
         mLongClickWorkaround = preferences.getBoolean("textSelectionLongclickWorkaround", false);
         // mDeckFilename = preferences.getString("deckFilename", "");
         mNightMode = preferences.getBoolean("invertedColors", false);
@@ -1813,7 +1810,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
             mGestureTapBottom = Integer.parseInt(preferences.getString("gestureTapBottom", "2"));
             mGestureLongclick = Integer.parseInt(preferences.getString("gestureLongclick", "11"));
         }
-        if (mPrefTextSelection && mLongClickWorkaround) {
+        if (mLongClickWorkaround) {
             mGestureLongclick = GESTURE_LOOKUP;
         }
 
