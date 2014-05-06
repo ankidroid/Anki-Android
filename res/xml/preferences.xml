@@ -111,11 +111,6 @@
                 android:key="cardBrowserNoSearchOnOpen"
                 android:summary="@string/pref_cardbrowser_skip_init_search_summ"
                 android:title="@string/pref_cardbrowser_skip_init_search" />
-            <CheckBoxPreference
-                android:defaultValue="false"
-                android:key="splashScreen"
-                android:summary="@string/pref_show_splashscreen_summ"
-                android:title="@string/pref_show_splashscreen" />
     </PreferenceCategory>
         <PreferenceCategory android:title="@string/pref_cat_sync" >
           <Preference

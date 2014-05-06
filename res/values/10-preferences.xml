@@ -308,8 +308,6 @@
 <string name="deck_conf_cram_reschedule_summ">Reschedule cards based on my answers in this deck</string>
 <string name="deck_conf_cram_steps">Custom steps</string>
 <string name="deck_conf_cram_steps_summ">Define custom steps</string>
-<string name="pref_show_splashscreen">Splash screen</string>
-<string name="pref_show_splashscreen_summ">Show splash screen</string>
 <string name="pref_intent_add_instant">Instant add</string>
 <string name="pref_intent_add_instant_summ">Add new cards from dictionaries without opening AnkiDroid. You find them later under \'saved data\' in card adder.</string>
 <string name="pref_cat_intent_add">External data addition</string>
