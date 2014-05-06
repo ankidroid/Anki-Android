@@ -215,7 +215,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
     private int mCurrentBackgroundColor;
     private boolean mBlackWhiteboard = true;
     private boolean mNightMode = false;
-    private boolean mPrefFadeScrollbars;
+    private boolean mPrefEInkDisplay;
     protected boolean mPrefUseTimer;
     private boolean mPrefCenterVertically;
     private boolean mSimpleInterface = false;
@@ -1615,7 +1615,9 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         if (AnkiDroidApp.SDK_VERSION > 7) {
             webView.setFocusableInTouchMode(false);
         }
-        AnkiDroidApp.getCompat().setScrollbarFadingEnabled(webView, mPrefFadeScrollbars);
+        if (mPrefEInkDisplay){
+            AnkiDroidApp.getCompat().setScrollbarFadingEnabled(webView, false);
+        }
         Log.i(AnkiDroidApp.TAG,
                 "Focusable = " + webView.isFocusable() + ", Focusable in touch mode = "
                         + webView.isFocusableInTouchMode());
@@ -1790,7 +1792,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         mPrefFixArabic = preferences.getBoolean("fixArabicText", false);
         mPrefForceQuickUpdate = preferences.getBoolean("forceQuickUpdate", false);
         mSpeakText = preferences.getBoolean("tts", false);
-        mPrefFadeScrollbars = preferences.getBoolean("fadeScrollbars", false);
+        mPrefEInkDisplay = preferences.getBoolean("eInkDisplay", false);
         mPrefUseTimer = preferences.getBoolean("timeoutAnswer", false);
         mWaitAnswerSecond = preferences.getInt("timeoutAnswerSeconds", 20);
         mWaitQuestionSecond = preferences.getInt("timeoutQuestionSeconds", 60);

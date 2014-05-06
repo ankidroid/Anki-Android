@@ -260,11 +260,6 @@
                 android:key="showProgress"
                 android:title="@string/show_progress"
                 android:summary="@string/show_progress_summ" />
-            <CheckBoxPreference
-                android:defaultValue="false"
-                android:key="fadeScrollbars"
-                android:summary="@string/fade_scrollbars_summ"
-                android:title="@string/fade_scrollbars" />
             <com.hlidskialf.android.preference.SeekBarPreference
                 android:defaultValue="100"
                 android:key="relativeImageSize"

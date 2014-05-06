@@ -49,8 +49,6 @@
 <string name="show_study_options_on_deck_load_summ">Shows study options screen when loading a deck</string>
 <string name="hide_due_count">Hide due count</string>
 <string name="hide_due_count_summ">Hides the due count</string>
-<string name="fade_scrollbars">Fade scrollbars</string>
-<string name="fade_scrollbars_summ">Automatically fade out flashcard scrollbars when not scrolling</string>
 <!-- show_whiteboard -> Reviewer.java -->
 <string name="enable_whiteboard">Enable Whiteboard</string>
 <string name="show_whiteboard_summ">Lets you write on the screen</string>
