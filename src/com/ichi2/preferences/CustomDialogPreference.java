@@ -39,34 +39,23 @@ public class CustomDialogPreference extends DialogPreference implements DialogIn
 
     public void onClick(DialogInterface dialog, int which) {
         if (which == DialogInterface.BUTTON_POSITIVE) {
-            if (this.getTitle().equals(mContext.getResources().getString(R.string.reset_dialogs))) {
-                Editor editor = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit();
-                editor.putBoolean("dontShowLowMemory", false);
-                editor.commit();
-            } else if (this.getTitle().equals(mContext.getResources().getString(R.string.reset_messages))) {
-                Editor editor = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit();
-                editor.putInt("lastMessageNum", 0);
-                editor.putBoolean("showBroadcastMessageToday", true);
-                editor.commit();
-            } else if (this.getTitle().equals(mContext.getResources().getString(R.string.reset_all))) {
-                if (MetaDB.resetDB(mContext)) {
-                    Toast successReport = Toast.makeText(this.getContext(),
-                            AnkiDroidApp.getAppResources().getString(R.string.reset_confirmation), Toast.LENGTH_SHORT);
-                    successReport.show();
-                }
-            } else if (this.getTitle().equals(mContext.getResources().getString(R.string.deck_conf_reset))) {
+            if (this.getTitle().equals(mContext.getResources().getString(R.string.deck_conf_reset))) {
+                // Deck Options :: Restore Defaults for Options Group
                 Editor editor = AnkiDroidApp.getSharedPrefs(mContext).edit();
                 editor.putBoolean("confReset", true);
-                editor.commit();
+                editor.commit();            
             } else if (this.getTitle().equals(mContext.getResources().getString(R.string.deck_conf_remove))) {
+                // Deck Options :: Remove Options Group
                 Editor editor = AnkiDroidApp.getSharedPrefs(mContext).edit();
                 editor.putBoolean("confRemove", true);
                 editor.commit();
             } else if (this.getTitle().equals(mContext.getResources().getString(R.string.deck_conf_set_subdecks))) {
+                // Deck Options :: Set Options Group for all Sub-decks
                 Editor editor = AnkiDroidApp.getSharedPrefs(mContext).edit();
                 editor.putBoolean("confSetSubdecks", true);
                 editor.commit();
             } else {
+                // Main Preferences :: Reset Languages
                 if (MetaDB.resetLanguages(mContext)) {
                     Toast successReport = Toast.makeText(this.getContext(),
                             AnkiDroidApp.getAppResources().getString(R.string.reset_confirmation), Toast.LENGTH_SHORT);

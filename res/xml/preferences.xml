@@ -74,36 +74,12 @@
         <PreferenceCategory android:title="@string/pref_cat_reset" >
             <com.ichi2.preferences.CustomDialogPreference
                 android:dialogIcon="@android:drawable/ic_dialog_alert"
-                android:dialogMessage="@string/reset_messages_question"
-                android:dialogTitle="@string/reset_messages"
-                android:negativeButtonText="@string/no"
-                android:positiveButtonText="@string/yes"
-                android:summary="@string/reset_messages_summ"
-                android:title="@string/reset_messages" />
-            <com.ichi2.preferences.CustomDialogPreference
-                android:dialogIcon="@android:drawable/ic_dialog_alert"
                 android:dialogMessage="@string/reset_languages_question"
                 android:dialogTitle="@string/reset_languages"
                 android:negativeButtonText="@string/no"
                 android:positiveButtonText="@string/yes"
                 android:summary="@string/reset_languages_summ"
                 android:title="@string/reset_languages" />
-            <com.ichi2.preferences.CustomDialogPreference
-                android:dialogIcon="@android:drawable/ic_dialog_alert"
-                android:dialogMessage="@string/reset_dialogs_question"
-                android:dialogTitle="@string/reset_dialogs"
-                android:negativeButtonText="@string/no"
-                android:positiveButtonText="@string/yes"
-                android:summary="@string/reset_dialogs_summ"
-                android:title="@string/reset_dialogs" />
-            <com.ichi2.preferences.CustomDialogPreference
-                android:dialogIcon="@android:drawable/ic_dialog_alert"
-                android:dialogMessage="@string/reset_all_question"
-                android:dialogTitle="@string/reset_all"
-                android:negativeButtonText="@string/no"
-                android:positiveButtonText="@string/yes"
-                android:summary="@string/reset_all_summ"
-                android:title="@string/reset_all" />
         </PreferenceCategory>
         <PreferenceCategory android:title="@string/pref_cat_performance" >
             <CheckBoxPreference
