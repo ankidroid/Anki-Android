@@ -1815,15 +1815,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
             mGestureLongclick = GESTURE_LOOKUP;
         }
 
-        // allow screen orientation in reviewer only when fix preference is not set
-        if (preferences.getBoolean("fixOrientation", false)) {
-            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-            } else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-            }
-        }
-
         if (preferences.getBoolean("keepScreenOn", false)) {
             this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }

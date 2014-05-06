@@ -207,9 +207,6 @@
 <string name="convert_fen_text_summ">Draw chessboard from Forsyth Edwards Notation. The notation must be enclosed in [fen][/fen] tag.</string>
 <string name="sync_set_journal_mode">Setting correct journal mode...</string>
 
-<string name="fix_orientation">Fix orientation</string>
-<string name="fix_orientation_summ">Do not allow orientation change when reviewing</string>
-
 <string name="per_day">Per Day</string>
 
 <string name="studyoptions_new_cards_per_day">New cards per day</string>
