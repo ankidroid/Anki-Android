@@ -108,11 +108,6 @@
         <PreferenceCategory android:title="@string/pref_cat_performance" >
             <CheckBoxPreference
                 android:defaultValue="false"
-                android:key="asyncMode"
-                android:summary="@string/async_mode_summ"
-                android:title="@string/async_mode" />
-            <CheckBoxPreference
-                android:defaultValue="false"
                 android:key="cardBrowserNoSearchOnOpen"
                 android:summary="@string/pref_cardbrowser_skip_init_search_summ"
                 android:title="@string/pref_cardbrowser_skip_init_search" />
