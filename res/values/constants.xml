@@ -20,6 +20,7 @@
     -->
     <!-- Used in deck preferences -->
     <string-array name="dictionary_labels">
+        <item>None</item>
         <item>Aedict</item>
         <item>Eijiro (Web)</item>
         <item>Leo.org (Web)</item>

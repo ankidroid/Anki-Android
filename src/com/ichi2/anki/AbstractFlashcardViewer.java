@@ -910,6 +910,9 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
             mShowWhiteboard = true;
             mWhiteboard.setVisibility(View.VISIBLE);
         }
+        
+        // Initialize dictionary lookup feature
+        Lookup.initialize(this);
     }
 
 
@@ -2176,8 +2179,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
 
     private void updateCard(String content) {
         Log.i(AnkiDroidApp.TAG, "updateCard");
-
-        Lookup.initialize(this, mCurrentCard.getDid());
 
         if (mCurrentSimpleInterface) {
             fillFlashcard();
