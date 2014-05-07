@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>   
-<LinearLayout    xmlns:android="http://schemas.android.com/apk/res/android" 
-    android:id="@+id/studyoptions_main" 	
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/studyoptions_main"
    	android:paddingTop="12dp"
 	android:layout_width="fill_parent"
 	android:layout_height="wrap_content"
@@ -12,7 +12,7 @@
 		android:gravity="center"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content">
-		<ScrollView 
+		<ScrollView
 		    android:fillViewport="true"
 		    android:layout_width="fill_parent"
 		    android:layout_weight="1"
@@ -25,17 +25,17 @@
 				android:layout_height="wrap_content">
 		    	<TextView
 					android:id="@+id/studyoptions_deck_name"
-					android:textSize="28sp" 
+					android:textSize="28sp"
 					android:textStyle="bold"
 					android:ellipsize="end"
 					android:textColor="#000000"
 					android:maxLines="3"
-					android:gravity="center" 
-					android:layout_width="fill_parent" 
+					android:gravity="center"
+					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"
 					android:layout_margin="5dp"
 					android:text=""/>
-			    	
+
 		    	<LinearLayout android:id="@+id/studyoptions_deckcounts"
 		    	    android:visibility="invisible"
 			    android:layout_marginLeft="5dip"
@@ -45,7 +45,7 @@
 				android:gravity="center"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content">
-		    	    	    	
+
 			   	<TableLayout
 				    android:layout_marginBottom="5dip"
 					android:layout_width="fill_parent"
@@ -59,39 +59,39 @@
 					    android:paddingRight="5dip"
 						android:textColor="#000000"
 					    android:text="@string/studyoptions_due_today" />
-					    	    	<LinearLayout	
+					    	    	<LinearLayout
 		    	    android:orientation="horizontal"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:gravity="right">
-	    			<TextView
-				    	android:id="@+id/studyoptions_new"
-					    android:layout_width="wrap_content"
-				    	android:layout_height="wrap_content"
-					    android:paddingRight="5dip"
-				    	android:textColor="#000099" />
-					<TextView 
-						android:id="@+id/studyoptions_lrn" 
-						android:layout_gravity="center"
-						android:layout_height="wrap_content"
-						android:layout_width="wrap_content"
-						android:paddingRight="5dip"
-						android:textColor="#990000" />
-					<TextView 
-						android:id="@+id/studyoptions_rev" 
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:textColor="#007700" />
+                    <TextView
+                        android:id="@+id/studyoptions_new"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="5dip"
+                        android:textColor="@color/new_count" />
+                    <TextView
+                        android:id="@+id/studyoptions_lrn"
+                        android:layout_gravity="center"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:paddingRight="5dip"
+                        android:textColor="@color/learn_count" />
+                    <TextView
+                        android:id="@+id/studyoptions_rev"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/review_count" />
 				</LinearLayout>
 	   			</TableRow>
 				<TableRow>
-					<TextView 
+					<TextView
 						android:layout_height="wrap_content"
 						android:textColor="#000000"
 						android:layout_width="wrap_content"
 						android:text="@string/studyoptions_new_total"
 					    android:paddingRight="5dip"/>
-					<TextView 
+					<TextView
 						android:id="@+id/studyoptions_total_new"
 						android:layout_height="wrap_content"
 						android:textColor="#000000"
@@ -99,13 +99,13 @@
 						android:gravity="right"/>
 				</TableRow>
 				<TableRow>
-					<TextView 
+					<TextView
 						android:layout_height="wrap_content"
 						android:textColor="#000000"
 						android:layout_width="wrap_content"
 						android:text="@string/studyoptions_total_cards"
 					    android:paddingRight="5dip"/>
-					<TextView 
+					<TextView
 						android:id="@+id/studyoptions_total"
 						android:layout_height="wrap_content"
 						android:textColor="#000000"
@@ -113,14 +113,14 @@
 						android:gravity="right"/>
 				</TableRow>
 				    			<TableRow>
-					<TextView 
+					<TextView
 						android:layout_height="wrap_content"
 						android:layout_width="wrap_content"
 						android:textColor="#000000"
 						android:text="@string/studyoptions_eta"
 					    android:paddingRight="5dip"/>
-					<TextView 
-						android:id="@+id/studyoptions_eta" 
+					<TextView
+						android:id="@+id/studyoptions_eta"
 						android:layout_height="wrap_content"
 						android:textColor="#000000"
 						android:layout_width="wrap_content"
@@ -130,19 +130,19 @@
 				</LinearLayout>
 				<LinearLayout
 					android:orientation="vertical"
-					android:layout_width="fill_parent" 
-					android:layout_height="wrap_content"> 					
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content">
 			    	<TextView
 						android:id="@+id/studyoptions_deck_description"
-						android:gravity="center" 
+						android:gravity="center"
 						android:textColor="#000000"
-						android:layout_width="fill_parent" 
-						android:layout_height="wrap_content" 
-						android:layout_marginBottom="5dp" 
-						android:layout_marginLeft="5dp" 
-						android:layout_marginRight="5dp" 
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginBottom="5dp"
+						android:layout_marginLeft="5dp"
+						android:layout_marginRight="5dp"
 						android:text=""/>
-		    	</LinearLayout>			
+		    	</LinearLayout>
 			</LinearLayout>
 		</ScrollView>
 		<LinearLayout
@@ -164,16 +164,16 @@
 				    android:text="@string/studyoptions_start"
 				    android:textSize="20sp"
 				    android:textStyle="bold"
-				    android:layout_weight="1" />			
-			</LinearLayout>				
+				    android:layout_weight="1" />
+			</LinearLayout>
 			<!-- 	<LinearLayout
 				    android:layout_width="0dip"
 				    android:layout_height="wrap_content"
 				    android:layout_weight="1"
 				    android:orientation="vertical" >
 				    <ToggleButton
-						android:id="@+id/studyoptions_limittoggle" 
-						android:singleLine="true"	
+						android:id="@+id/studyoptions_limittoggle"
+						android:singleLine="true"
 						android:layout_height="0dip"
        		  			android:layout_width="fill_parent"
     			     	android:layout_weight="1"
@@ -202,8 +202,8 @@
 				        android:singleLine="true"
 				        />
 				</LinearLayout>-->
-				
-				<!-- The below layout contains the components which are only shown when we DO NOT have a filtered deck -->		
+
+				<!-- The below layout contains the components which are only shown when we DO NOT have a filtered deck -->
 				<LinearLayout android:id="@+id/studyoptions_regular_buttons"
 					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"
@@ -224,7 +224,7 @@
 					    android:lines="1"
 					    android:text="@string/custom_study"
 					    android:textSize="12sp"
-					    android:textStyle="bold" />			    			
+					    android:textStyle="bold" />
 					<Button
 					    android:id="@+id/studyoptions_unbury"
 					    android:layout_width="0px"
@@ -234,10 +234,10 @@
 					    android:text="@string/unbury"
 					    android:textSize="12sp"
 					    android:textStyle="bold"
-					    android:visibility="gone"/>						    
+					    android:visibility="gone"/>
 				</LinearLayout>
-				
-			<!--  The below layout contains the components which are only shown when we have a filtered deck 
+
+			<!--  The below layout contains the components which are only shown when we have a filtered deck
 					It's set to hidden by default, and made visible in StudyOptionsFragment if filtered -->
 			<LinearLayout android:id="@+id/studyoptions_cram_buttons"
 				android:orientation="horizontal"
@@ -248,28 +248,28 @@
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
 				android:orientation="horizontal">
-	   				<Button 
+	   				<Button
 						android:id="@+id/studyoptions_options_cram"
 	  	    	  		android:layout_width="0px"
 			         	android:layout_height="fill_parent"
 			         	android:textSize="12sp"
 			         	android:layout_weight="1"
-						android:text="@string/study_options"/>	
-	   				<Button 
+						android:text="@string/study_options"/>
+	   				<Button
 						android:id="@+id/studyoptions_rebuild_cram"
 	   	    	  		android:layout_width="0px"
 			         	android:layout_height="fill_parent"
 			         	android:layout_weight="1"
 			         	android:textSize="12sp"
-						android:text="@string/rebuild_cram_label"/>	
-	   				<Button 
+						android:text="@string/rebuild_cram_label"/>
+	   				<Button
 						android:id="@+id/studyoptions_empty_cram"
 	   	    	  		android:layout_width="0px"
 			         	android:layout_height="fill_parent"
 			         	android:layout_weight="1"
 			         	android:textSize="12sp"
 						android:text="@string/empty_cram_label"/>
-   				</LinearLayout>		
+   				</LinearLayout>
 			</LinearLayout>
 			<LinearLayout
 				android:layout_width="fill_parent"
@@ -277,14 +277,14 @@
 				<ImageButton
 					android:src="@drawable/studyoptions_add"
 					android:id="@+id/studyoptions_add"
-					android:layout_width="0dip" 
+					android:layout_width="0dip"
 					style="?android:attr/buttonStyleSmall"
 					android:layout_height="fill_parent"
 					android:layout_weight="1"/>
 				<ImageButton
 					android:src="@drawable/studyoptions_cards"
 					android:id="@+id/studyoptions_card_browser"
-					android:layout_width="0dip" 
+					android:layout_width="0dip"
 					style="?android:attr/buttonStyleSmall"
 					android:layout_height="fill_parent"
 					android:layout_weight="1"/>
