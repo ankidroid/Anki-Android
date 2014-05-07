@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -72,6 +73,7 @@ import com.ichi2.libanki.Card;
 import com.ichi2.libanki.CardStats;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Note;
+import com.ichi2.libanki.Sched;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.StyledProgressDialog;
@@ -85,7 +87,7 @@ public class CardBrowser extends ActionBarActivity implements ActionBar.OnNaviga
     private ArrayList<HashMap<String, String>> mCards;
     // private ArrayList<HashMap<String, String>> mAllCards;
     private HashMap<String, String> mDeckNames;
-    private ArrayList<String> mDropDownDecks;
+    private ArrayList<JSONObject> mDropDownDecks;
     private SearchView mSearchView;
     private ListView mCardsListView;
     private Spinner mCardsColumn1Spinner;
@@ -160,7 +162,7 @@ public class CardBrowser extends ActionBarActivity implements ActionBar.OnNaviga
     private boolean mWholeCollection;
 
     private ActionBar mActionBar;
-    private ArrayAdapter<String> mDropDownAdapter;
+    private DeckDropDownAdapter mDropDownAdapter;
 
     private String[] allTags;
     private String[] mColumn2Indexs;
@@ -272,12 +274,13 @@ public class CardBrowser extends ActionBarActivity implements ActionBar.OnNaviga
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         Resources res = getResources();
 
-        String currentDeckName;
-        try {
-            currentDeckName = mCol.getDecks().current().getString("name");
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+        // Add drop-down menu to select deck to action bar.
+        mDropDownDecks = mCol.getDecks().allSorted();
+        mDropDownAdapter = new DeckDropDownAdapter(this, mDropDownDecks);
+        mActionBar = getSupportActionBar();
+        mActionBar.setDisplayShowTitleEnabled(false);
+        mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+        mActionBar.setListNavigationCallbacks(mDropDownAdapter, this);
 
         mOrderByFields = res.getStringArray(R.array.card_browser_order_labels);
         try {
@@ -383,26 +386,29 @@ public class CardBrowser extends ActionBarActivity implements ActionBar.OnNaviga
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-        mSearchTerms = "";
-        if (mWholeCollection) {
-            mRestrictOnDeck = "";
-        } else {
-            mRestrictOnDeck = "deck:'" + currentDeckName + "' ";
-        }
-
         mSelectedTags = new HashSet<String>();
 
-        // Add drop-down menu to select deck to action bar.
         // onNavigationItemSelected will be called automatically, replacing onSearch in onCreate.
-        mDropDownDecks = new ArrayList<String>(mDeckNames.values());
-        mDropDownDecks.add(0, res.getString(R.string.deck_summary_all_decks));
-        mDropDownAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, mDropDownDecks);
-        mActionBar = getSupportActionBar();
-        mActionBar.setDisplayShowTitleEnabled(false);
-        mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-        mActionBar.setListNavigationCallbacks(mDropDownAdapter, this);
         if (!mWholeCollection) {
-            mActionBar.setSelectedNavigationItem(mDropDownDecks.indexOf(currentDeckName));
+            String currentDeckName;
+            try {
+                currentDeckName = mCol.getDecks().current().getString("name");
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+            for (int dropDownDeckIdx = 0; dropDownDeckIdx < mDropDownDecks.size(); dropDownDeckIdx++) {
+                JSONObject deck = mDropDownDecks.get(dropDownDeckIdx);
+                String deckName;
+                try {
+                    deckName = deck.getString("name");
+                } catch (JSONException e) {
+                    throw new RuntimeException();
+                }
+                if (deckName.equals(currentDeckName)) {
+                    mActionBar.setSelectedNavigationItem(dropDownDeckIdx + 1);
+                    break;
+                }
+            }
         }
 
     }
@@ -737,7 +743,12 @@ public class CardBrowser extends ActionBarActivity implements ActionBar.OnNaviga
         if (position == 0) {
             mRestrictOnDeck = "";
         } else {
-            mRestrictOnDeck = "deck:'" + mDropDownDecks.get(position) + "' ";
+            JSONObject deck = mDropDownDecks.get(position - 1);
+            try {
+                mRestrictOnDeck = "deck:'" + deck.getString("name") + "' ";
+            } catch (JSONException e) {
+                throw new RuntimeException();
+            }
         }
         if (preferences.getBoolean("cardBrowserNoSearchOnOpen", false)) {
             mCards.clear();
@@ -1196,6 +1207,62 @@ public class CardBrowser extends ActionBarActivity implements ActionBar.OnNaviga
         public long getItemId(int position) {
             return position;
         }
+    }
+
+
+    private final class DeckDropDownAdapter extends BaseAdapter {
+
+        private Context context;
+        private ArrayList<JSONObject> decks;
+
+        public DeckDropDownAdapter(Context context, ArrayList<JSONObject> decks) {
+            this.context = context;
+            this.decks = decks;
+        }
+
+        @Override
+        public int getCount() {
+            return decks.size() + 1;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            if (position == 0) {
+                return null;
+            } else {
+                return decks.get(position + 1);
+            }
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            TextView deckNameView;
+            if (convertView == null) {
+                convertView = LayoutInflater.from(context).inflate(R.layout.dropdown_deck_item, parent, false);
+                deckNameView = (TextView) convertView.findViewById(R.id.dropdown_deck_name);
+                convertView.setTag(deckNameView);
+            } else {
+                deckNameView = (TextView) convertView.getTag();
+            }
+            if (position == 0) {
+                deckNameView.setText(context.getResources().getString(R.string.deck_summary_all_decks));
+            } else {
+                JSONObject deck = decks.get(position - 1);
+                try {
+                    String deckName = deck.getString("name");
+                    deckNameView.setText(deckName);
+                } catch (JSONException ex) {
+                    new RuntimeException();
+                }
+            }
+            return convertView;
+        }
+
     }
 
 

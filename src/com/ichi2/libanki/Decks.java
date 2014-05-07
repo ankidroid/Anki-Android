@@ -26,6 +26,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -74,6 +76,16 @@ public class Decks {
             + "'rev': { " + "'perDay': 100, " + "'ease4': 1.3, " + "'fuzz': 0.05, " + "'minSpace': 1, "
             + "'ivlFct': 1, " + "'maxIvl': 36500 }, " + "'maxTaken': 60, " + "'timer': 0, " + "'autoplay': True, 'replayq': True, "
             + "'mod': 0, " + "'usn': 0 }";
+
+    public static final class DeckListComparator implements Comparator<JSONObject> {
+        public int compare(JSONObject o1, JSONObject o2) {
+            try {
+                return o1.getString("name").compareTo(o2.getString("name"));
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
 
     private Collection mCol;
     private HashMap<Long, JSONObject> mDecks;
@@ -313,6 +325,14 @@ public class Decks {
         while (it.hasNext()) {
             decks.add(it.next());
         }
+        return decks;
+    }
+
+
+    // LIBANKI: not in libanki
+    public ArrayList<JSONObject> allSorted() {
+        ArrayList<JSONObject> decks = all();
+        Collections.sort(decks, new DeckListComparator());
         return decks;
     }
 
