@@ -21,6 +21,12 @@
             If we are using the Chrome engine, add the "chrome" class to the body and defer
             image resizing to pure CSS. The Chrome engine can handle image resizing on its own,
             but for older versions of WebView, we do it here.
+            
+            If we are resizing with JavasSript, we also account for the CSS zoom level applied to
+            the image. If an image is scaled with CSS zoom, the dimensions given to us by the
+            browser will not be scaled accordingly, giving us only the original dimensions. We
+            have to fetch the zoom value and scale the dimensions with it before checking if the
+            image exceeds the window bounds.
             */
             window.onload = function() {
                 if (navigator.userAgent.indexOf("Chrome") > -1) {
@@ -32,19 +38,24 @@
                     var images = document.getElementsByTagName('img');
                     for (var i = 0; i < images.length; i++) {
                         var img = images[i];
-                        var width = img.width;
-                        var height = img.height;
-                        if (width > maxWidth) {
-                            ratio = maxWidth / width;
-                            img.style.width = maxWidth + "px";
-                            img.style.height = (height * ratio) + "px";
+                        var scale = 1;
+                        var zoom = window.getComputedStyle(img).getPropertyValue("zoom");
+                        if (!isNaN(zoom)) {
+                            scale = zoom;
                         }
-                        width = img.width;
-                        height = img.height;
+                        var width = img.width * scale;
+                        var height = img.height * scale;
+                        if (width > maxWidth) {
+                            img.width = maxWidth;
+                            img.height = height * (maxWidth / width);
+                            width = img.width;
+                            height = img.height;
+                            img.style.zoom = 1;
+                        }
                         if (height > maxHeight) {
-                            ratio = maxHeight / height;
-                            img.style.width = (width * ratio) + "px";
-                            img.style.height = maxHeight + "px";
+                            img.width = width * (maxHeight / height);
+                            img.height = maxHeight;
+                            img.style.zoom = 1;
                         }
                     }
                 }
