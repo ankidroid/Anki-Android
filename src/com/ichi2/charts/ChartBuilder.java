@@ -303,10 +303,18 @@ public class ChartBuilder extends ActionBarActivity {
         Resources res = context.getResources();
         String[] text = res.getStringArray(R.array.stats_period);
         int height = context.getResources().getDrawable(R.drawable.white_btn_radio).getIntrinsicHeight();
+        
+        //workaround for text overlapping radiobutton. 
+        //It appears that when API Level is <= 16, the text would overlap the radio button, hence the
+        //addition of spaces.
+        String spaces = "";
+        if (android.os.Build.VERSION.SDK_INT <= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+            spaces = "         ";
+        }
         for (int i = 0; i < statisticRadioButtons.length; i++) {
             statisticRadioButtons[i] = new RadioButton(context);
             statisticRadioButtons[i].setClickable(true);
-            statisticRadioButtons[i].setText(text[i]);
+            statisticRadioButtons[i].setText(spaces + text[i]);
             statisticRadioButtons[i].setHeight(height * 2);
             statisticRadioButtons[i].setSingleLine();
             statisticRadioButtons[i].setBackgroundDrawable(null);
