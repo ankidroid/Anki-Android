@@ -997,6 +997,24 @@ public class DeckPicker extends ActionBarActivity {
                         ((TextView) view).setTextColor(getResources().getColor(R.color.dyn_deck));
                         return true;
                     }
+                } else if (view.getId() == R.id.deckpicker_new) {
+                    // Set the right color, light gray or blue.
+                    ((TextView) view).setTextColor(
+                            (text.equals("0")) ? getResources().getColor(R.color.zero_count) :
+                            getResources().getColor(R.color.new_count));
+                    return false;  // Let SimpleAdapter take care of binding the number to the TextView.
+                } else if (view.getId() == R.id.deckpicker_lrn) {
+                    // ... or red.
+                    ((TextView) view).setTextColor(
+                            (text.equals("0")) ? getResources().getColor(R.color.zero_count) :
+                            getResources().getColor(R.color.learn_count));
+                    return false;
+                } else if (view.getId() == R.id.deckpicker_rev) {
+                    // ... or green.
+                    ((TextView) view).setTextColor(
+                            (text.equals("0")) ? getResources().getColor(R.color.zero_count) :
+                            getResources().getColor(R.color.review_count));
+                    return false;
                 }
                     // } else if (view.getId() == R.id.deckpicker_bar_mat || view.getId() == R.id.deckpicker_bar_all) {
                     // if (text.length() > 0 && !text.equals("-1.0")) {

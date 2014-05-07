@@ -25,26 +25,26 @@
 	<color name="card_browser_marked">#5E5A80</color>
 	<color name="card_browser_suspended">#646D7E</color>
 
-	    
+
    	<color name="statistics_due_young_cards">#7c7</color>
 	<color name="statistics_due_mature_cards">#070</color>
-	    
 
-	    
+
+
 	<color name="stats_young">#7c7</color>
 	<color name="stats_mature">#070</color>
 	<color name="stats_learn">#00F</color>
 	<color name="stats_relearn">#c00</color>
 	<color name="stats_cram">#ff0</color>
-	
-	<color name="progressbar_2">#ff9100</color>	
-	<color name="progressbar_3">#ffbe00</color>	
-	<color name="progressbar_4">#4aa02c</color>	
+
+	<color name="progressbar_2">#ff9100</color>
+	<color name="progressbar_3">#ffbe00</color>
+	<color name="progressbar_4">#4aa02c</color>
 	<color name="progressbar_border_inverted">#989898</color>
 	<color name="progressbar_background_inverted">#484848</color>
 
 
-	<color name="studyoptions_foreground">#FFFF</color>	
+	<color name="studyoptions_foreground">#FFFF</color>
 	<color name="studyoptions_foreground_deactivated">#484848</color>
 	<color name="background">#FFFF</color>
 
@@ -60,14 +60,14 @@
 
 	<color name="deckpicker_progressbar_young_light">#999999</color>
 	<color name="deckpicker_progressbar_young_dark">#B0B0B0</color>
-	
+
 	<color name="reviewer_background">#c6cfd6</color>
-	<color name="reviewer_background_night">#19242e</color>	
-	<color name="reviewer_night_card_background">#0c1217</color>	
+	<color name="reviewer_background_night">#19242e</color>
+	<color name="reviewer_night_card_background">#0c1217</color>
 	<color name="transparent">#00000000</color>
 	<color name="white">#ffffff</color>
 	<color name="black">#000000</color>
-	
+
 	<color name="widget_progressbar_empty">#000000</color>
 	<color name="widget_big_font_color">#343634</color>
 	<color name="widget_big_font_color_red">#cd5554</color>
@@ -93,18 +93,20 @@
 	<color name="white_background_night">#3d3d3d</color>
 	<color name="white_buttontext">#10171d</color>
 
-	<!-- top bar colors in reviewer -->
-	<color name="blue">#000099</color>
-	<color name="red">#990000</color>
-	<color name="green">#007700</color>
-	<color name="night_blue">#b1b1ff</color>
-	<color name="night_red">#f50000</color>
-	<color name="night_green">#00cf00</color>
-	
-	<color name="actionbar_background">#f5f5f5</color>
+    <!-- Colors for the card counts, in the top bar, deck picker etc. -->
+    <color name="new_count">#000099</color>
+    <color name="learn_count">#990000</color>
+    <color name="review_count">#007700</color>
+    <color name="zero_count">#e0e0e0</color>
+    <color name="new_count_night">#b1b1ff</color>
+    <color name="learn_count_night">#f50000</color>
+    <color name="review_count_night">#00cf00</color>
+    <color name="zero_count_night">#202020</color>
 
-	<color name="dyn_deck">#2222bb</color>
-	<color name="non_dyn_deck">#000000</color>
-		
-					
+    <color name="actionbar_background">#f5f5f5</color>
+
+    <color name="dyn_deck">#2222bb</color>
+    <color name="non_dyn_deck">#000000</color>
+
+
 </resources>

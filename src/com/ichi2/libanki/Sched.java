@@ -381,8 +381,8 @@ public class Sched {
     public ArrayList<Object[]> deckDueList() {
         _checkDay();
         mCol.getDecks().recoverOrphans();
-        ArrayList<JSONObject> decks = mCol.getDecks().all();
-        Collections.sort(decks, new DeckDueListComparator());
+        // LIBANKI: uses all() instead of sorted() and then sorts the decks
+        ArrayList<JSONObject> decks = mCol.getDecks().allSorted();
         HashMap<String, Integer[]> lims = new HashMap<String, Integer[]>();
         ArrayList<Object[]> data = new ArrayList<Object[]>();
         try {
@@ -1564,7 +1564,7 @@ public class Sched {
             int limit = terms.getInt(1);
             int order = terms.getInt(2);
             String orderlimit = _dynOrder(order, limit);
-            search += " -is:suspended -is:buried -deck:filtered";
+            search = String.format(Locale.US, "(%s) -is:suspended -is:buried -deck:filtered", search);
             ids = mCol.findCards(search, orderlimit);
             if (ids.isEmpty()) {
                 return ids;
@@ -2643,16 +2643,6 @@ public class Sched {
 
     public void setSpreadRev(boolean mSpreadRev) {
         this.mSpreadRev = mSpreadRev;
-    }
-
-    public class DeckDueListComparator implements Comparator<JSONObject> {
-        public int compare(JSONObject o1, JSONObject o2) {
-            try {
-                return o1.getString("name").compareTo(o2.getString("name"));
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-        }
     }
 
     /**

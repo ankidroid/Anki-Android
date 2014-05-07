@@ -53,18 +53,18 @@ public class Sound {
 	 * AudioManager to request/release audio focus
 	 */
 	private static AudioManager sAudioManager;
-
+	
     /**
-     * Stores sounds for the current card, key is for question/answer
-     */
-    private static HashMap<Integer, ArrayList<String>> sSoundPaths = new HashMap<Integer, ArrayList<String>>();
-    
-    /**
-     * Flags that indicate the subset of sounds to involve
+     * Subset Flags: Flags that indicate the subset of sounds to involve
      */
     public static final int  SOUNDS_QUESTION = 0;
     public static final int  SOUNDS_ANSWER = 1;
-    public static final int  SOUNDS_QUESTION_AND_ANSWER = 2;
+    public static final int  SOUNDS_QUESTION_AND_ANSWER = 2;	
+
+    /**
+     * sSoundPaths: Stores sounds for the current card, key is one of the subset flags. It is intended that it not contain empty lists, and code assumes this will be true. 
+     */
+    private static HashMap<Integer, ArrayList<String>> sSoundPaths = new HashMap<Integer, ArrayList<String>>();
 
 
     /* Prevent class from being instantiated */
@@ -76,6 +76,15 @@ public class Sound {
     public static void resetSounds() {
         sSoundPaths.clear();
     }
+    
+    /**
+     * resetSounds removes lists of sounds
+     * @param which -- One of the subset flags, such as Sound.SOUNDS_QUESTION
+     */
+    public static void resetSounds(int which) {
+        sSoundPaths.remove(which);
+    }
+    
 
     /**
      * The function addSounds() parses content for sound files, and stores entries to the filepaths for them,
@@ -108,13 +117,20 @@ public class Sound {
      * makeQuestionAnswerSoundList creates a single list of both the question and answer audio only if it does not
      * already exist. It's intended for lazy evaluation, only in the rare cases when both sides are fully played
      * together, which even when configured as supported may not be instigated
+     * @return True if a non-null list was created, or false otherwise
      */
-    public static void makeQuestionAnswerList() {
-        // create or clear joint list
-        if (!sSoundPaths.containsKey(Sound.SOUNDS_QUESTION_AND_ANSWER)) {
+    public static Boolean makeQuestionAnswerList() {
+        // if combined list already exists, don't recreate
+        if (sSoundPaths.containsKey(Sound.SOUNDS_QUESTION_AND_ANSWER)) {
+            return false; // combined list already exists
+        }
+        
+        // make combined list only if necessary to avoid an empty combined list
+        if (sSoundPaths.containsKey(Sound.SOUNDS_QUESTION) || sSoundPaths.containsKey(Sound.SOUNDS_ANSWER)) {
+            // some list exists to place into combined list
             sSoundPaths.put(Sound.SOUNDS_QUESTION_AND_ANSWER, new ArrayList<String>());
-        } else {
-            return; // combined list already exists
+        } else { // no need to make list
+            return false;
         }
         
         ArrayList<String> combinedSounds = sSoundPaths.get(Sound.SOUNDS_QUESTION_AND_ANSWER);
@@ -124,7 +140,9 @@ public class Sound {
         }
         if (sSoundPaths.containsKey(Sound.SOUNDS_ANSWER)) {
             combinedSounds.addAll(sSoundPaths.get(Sound.SOUNDS_ANSWER));
-        }        
+        }
+        
+        return true;
     }
 
     /**
@@ -182,8 +200,9 @@ public class Sound {
         if (sSoundPaths != null && sSoundPaths.containsKey(qa)) {
             playSound(sSoundPaths.get(qa).get(0), new PlayAllCompletionListener(qa));
         } else if (sSoundPaths != null && qa == Sound.SOUNDS_QUESTION_AND_ANSWER) {
-            Sound.makeQuestionAnswerList();
-            playSound(sSoundPaths.get(qa).get(0), new PlayAllCompletionListener(qa));
+            if (Sound.makeQuestionAnswerList()) {
+                playSound(sSoundPaths.get(qa).get(0), new PlayAllCompletionListener(qa));
+            }
         }
     }
 

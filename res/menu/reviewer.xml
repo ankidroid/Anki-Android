@@ -6,7 +6,7 @@
         android:title="@string/clear_whiteboard"
         android:visible="false"
         ankidroid:showAsAction="always" />
-    
+
     <item android:id="@+id/action_undo"
         android:icon="@drawable/ic_menu_revert_disabled"
         android:title="@string/undo"

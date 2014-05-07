@@ -243,7 +243,7 @@ public class Note implements Cloneable {
     public void delTag(String tag) {
         List<String> rem = new LinkedList<String>();
         for (String t : mTags) {
-            if (t.toLowerCase(Locale.getDefault()) == tag.toLowerCase(Locale.getDefault())) {
+            if (t.equalsIgnoreCase(tag)) {
                 rem.add(t);
             }
         }

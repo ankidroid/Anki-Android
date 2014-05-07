@@ -13,6 +13,40 @@ body.night_mode {
 }
 
 /*
+  For the typed/correct answer comparison. The typePrompt class is
+  AnkiDroid specific. It is for a placeholder where Anki desktop shows
+  the input box.
+*/
+.typeGood {
+  background-color: #0f0;
+}
+
+.typeBad {
+  background-color: #f00;
+}
+
+.typeMissed {
+  background-color: #ccc;
+}
+
+#typeans {
+  width: 100%;
+}
+
+.typePrompt {
+  color: magenta;
+}
+
+.night_mode .typeGood {
+  background-color: #508040;
+}
+
+.night_mode .typeBad {
+  background-color: #905050;
+}
+
+
+/*
 Use hard-coded max dimensions if using Chrome back-end. Chrome is able to
 zoom into images correctly even with max dimensions specified, so this way is
 preferred over using JavaScript.
