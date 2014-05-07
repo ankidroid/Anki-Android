@@ -1,6 +1,7 @@
 /****************************************************************************************
  * Copyright (c) 2011 Kostas Spyropoulos <inigo.aldana@gmail.com>                       *
  * Copyright (c) 2014 Bruno Romero de Azevedo <brunodea@inf.ufsm.br>                    *
+ * Copyright (c) 2014 Roland Sieker <ospalh@gmail.com>                                  *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -65,7 +66,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
+import android.view.inputmethod.EditorInfo;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
@@ -715,12 +716,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
                         getResources().getString(R.string.saving_changes), true);
             } else {
                 // Start reviewing next card
-                if (mPrefWriteAnswers) {
-                    // only bother query deck if needed
-                    updateTypeAnswerInfo();
-                } else {
-                    mTypeCorrect = null;
-                }
+                updateTypeAnswerInfo();
                 mProgressBar.setVisibility(View.INVISIBLE);
                 AbstractFlashcardViewer.this.unblockControls();
                 AbstractFlashcardViewer.this.displayCardQuestion();
@@ -832,8 +828,9 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         if (mTypeWarning != null) {
             return m.replaceFirst(mTypeWarning);
         }
-        return m.replaceFirst("");
+        return m.replaceFirst("<span id=typeans class=typePrompt>........</span>");
     }
+
 
     /**
      * Format answer field when it contains typeAnswer or clozes
@@ -841,10 +838,20 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
      * @param buf The answer text
      * @return The formatted answer text
      */
-    private String typeAnsAnswerFilter(String buf) {
+    private String typeAnsAnswerFilter(String buf, String userAnswer, String correctAnswer) {
         Matcher m = sTypeAnsPat.matcher(buf);
-        return m.replaceFirst("");
+
+        // Obtain the diff and send it to updateCard
+        DiffEngine diff = new DiffEngine();
+        String diffUserAnswer = diff.diff_prettyHtml(diff.diff_main(userAnswer, correctAnswer), mNightMode);
+        if (userAnswer.equals(correctAnswer)) {
+            return m.replaceFirst("<div><code id=typeans>" + diffUserAnswer + "\u2714</code></div>");
+        } else {
+            return m.replaceFirst("<div><code id=typeans>" + diffUserAnswer + "<br>&darr;<br>" +
+                    diff.diff_prettyHtml(diff.diff_main(correctAnswer, correctAnswer), mNightMode) + "</code></div>");
     }
+    }
+
 
     private String contentForCloze(String txt, int idx) {
         Pattern re = Pattern.compile("\\{\\{c" + idx + "::(.+?)\\}\\}");
@@ -1803,10 +1810,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
             mFlipCardLayout.requestFocus();
         } else if (typeAnswer()) {
             mAnswerField.requestFocus();
-
-            // Show soft keyboard
-            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            inputMethodManager.showSoftInput(mAnswerField, InputMethodManager.SHOW_FORCED);
         }
     }
 
@@ -1837,6 +1840,15 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
             mWhiteboard.setVisibility(mShowWhiteboard ? View.VISIBLE : View.GONE);
         }
         mAnswerField.setVisibility(typeAnswer() ? View.VISIBLE : View.GONE);
+        mAnswerField.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+                @Override
+                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                    if (actionId == EditorInfo.IME_ACTION_DONE) {
+                        mFlipCardLayout.performClick();
+                    }
+                    return false;  // We don’t “handle” this. Let Android hide the input method.
+                }
+            });
     }
 
 
@@ -2132,10 +2144,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
             // If the user wants to write the answer
             if (typeAnswer()) {
                 mAnswerField.setVisibility(View.VISIBLE);
-
-                // Show soft keyboard
-                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputMethodManager.showSoftInput(mAnswerField, InputMethodManager.SHOW_FORCED);
             }
 
             displayString = enrichWithQADiv(question, false);
@@ -2208,6 +2216,20 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         return kanjiInfo;
     }
 
+    protected String getAnswerText(String answer)
+    {
+        if (answer == null || answer.equals("")) {
+            return "";
+        }
+
+         Matcher matcher = sSpanPattern.matcher(Utils.stripHTMLMedia(answer));
+         String answerText = matcher.replaceAll("");
+         matcher = sBrPattern.matcher(answerText);
+         answerText = matcher.replaceAll("\n");
+         matcher = Sound.sSoundPattern.matcher(answerText);
+         answerText = matcher.replaceAll("");
+         return answerText;
+    }
 
     protected void displayCardAnswer() {
         Log.i(AnkiDroidApp.TAG, "displayCardAnswer");
@@ -2225,7 +2247,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         } else {
             answer = mCurrentCard.a();
         }
-        answer = typeAnsAnswerFilter(answer);
 
         if (mDisplayKanjiInfo) {
             answer = answer + addKanjiInfo(mCurrentCard.q(mCurrentSimpleInterface));
@@ -2249,8 +2270,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
                 answer = ArabicUtilities.reshapeSentence(answer, true);
             }
 
-            // If the user wrote an answer
-            if (typeAnswer()) {
                 mAnswerField.setVisibility(View.GONE);
                 if (mCurrentCard != null) {
                     if (mPrefFixArabic) {
@@ -2258,31 +2277,11 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
                         mTypeCorrect = ArabicUtilities.reshapeSentence(mTypeCorrect, true);
                     }
                     // Obtain the user answer and the correct answer
-                    String userAnswer = mAnswerField.getText().toString();
-                    Matcher matcher = sSpanPattern.matcher(Utils.stripHTMLMedia(mTypeCorrect));
-                    String correctAnswer = matcher.replaceAll("");
-                    matcher = sBrPattern.matcher(correctAnswer);
-                    correctAnswer = matcher.replaceAll("\n");
-                    matcher = Sound.sSoundPattern.matcher(correctAnswer);
-                    correctAnswer = matcher.replaceAll("");
+                    String userAnswer = getAnswerText(mAnswerField.getText().toString());
+                    String correctAnswer = getAnswerText(mTypeCorrect);
                     Log.i(AnkiDroidApp.TAG, "correct answer = " + correctAnswer);
 
-                    // Obtain the diff and send it to updateCard
-                    DiffEngine diff = new DiffEngine();
-
-                    StringBuffer span = new StringBuffer();
-                    span.append("<span style=\"font-family: '").append(mTypeFont).append("'; font-size: ")
-                            .append(mTypeSize).append("px\">");
-                    span.append(diff.diff_prettyHtml(diff.diff_main(userAnswer, correctAnswer), mNightMode));
-                    span.append("</span>");
-                    span.append("<br/>").append(answer);
-                    displayString = enrichWithQADiv(span.toString(), true);
-                }
-
-                // Hide soft keyboard
-                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputMethodManager.hideSoftInputFromWindow(mAnswerField.getWindowToken(), 0);
-            } else {
+                    answer = typeAnsAnswerFilter(answer, userAnswer, correctAnswer);
                 displayString = enrichWithQADiv(answer, true);
             }
         }
@@ -3193,7 +3192,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
 
         @Override
         public void handleTag(boolean opening, String tag, Editable output, XMLReader xmlReader) {
-            // if(tag.equalsIgnoreCase("div")) {
+            // if (tag.equalsIgnoreCase("div")) {
             // output.append("\n");
             // } else
             if (tag.equalsIgnoreCase("strike") || tag.equals("s")) {
