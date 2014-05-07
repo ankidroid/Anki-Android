@@ -135,7 +135,7 @@ public class CardEditor extends ActionBarActivity {
 
     private static final int WAIT_TIME_UNTIL_UPDATE = 1000;
 
-    private static boolean mChanged = false;
+    private boolean mChanged = false;
 
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
