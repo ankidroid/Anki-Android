@@ -75,9 +75,11 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
         private Map<String, String> mSummaries = new HashMap<String, String>();
         private StyledProgressDialog mProgressDialog;
 
+
         public DeckPreferenceHack() {
             this.cacheValues();
         }
+
 
         protected void cacheValues() {
             Log.i(AnkiDroidApp.TAG, "DeckOptions - CacheValues");
@@ -119,14 +121,15 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
                 // options group management
                 mValues.put("currentConf", mCol.getDecks().getConf(mDeck.getLong("conf")).getString("name"));
             } catch (JSONException e) {
-            	addMissingValues();
-            	finish();
+                addMissingValues();
+                finish();
             }
         }
 
         public class Editor implements SharedPreferences.Editor {
 
             private ContentValues mUpdate = new ContentValues();
+
 
             @Override
             public SharedPreferences.Editor clear() {
@@ -142,7 +145,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
 
                 try {
                     for (Entry<String, Object> entry : mUpdate.valueSet()) {
-                        String key =  entry.getKey();
+                        String key = entry.getKey();
                         Object value = entry.getValue();
                         Log.i(AnkiDroidApp.TAG, "Change value for key '" + key + "': " + value);
 
@@ -157,18 +160,18 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
                             if (oldValue != newValue) {
                                 mOptions.getJSONObject("new").put("order", newValue);
                                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REORDER, mConfChangeHandler,
-                                        new DeckTask.TaskData(new Object[]{mCol, mOptions}));
+                                        new DeckTask.TaskData(new Object[] { mCol, mOptions }));
                             }
                             mOptions.getJSONObject("new").put("order", Integer.parseInt((String) value));
                         } else if (key.equals("newPerDay")) {
                             mOptions.getJSONObject("new").put("perDay", (Integer) value);
                         } else if (key.equals("newGradIvl")) {
-                            JSONArray ja = new JSONArray(); //[graduating, easy]
+                            JSONArray ja = new JSONArray(); // [graduating, easy]
                             ja.put((Integer) value);
                             ja.put(mOptions.getJSONObject("new").getJSONArray("ints").get(1));
                             mOptions.getJSONObject("new").put("ints", ja);
                         } else if (key.equals("newEasy")) {
-                            JSONArray ja = new JSONArray(); //[graduating, easy]
+                            JSONArray ja = new JSONArray(); // [graduating, easy]
                             ja.put(mOptions.getJSONObject("new").getJSONArray("ints").get(0));
                             ja.put((Integer) value);
                             mOptions.getJSONObject("new").put("ints", ja);
@@ -209,12 +212,13 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
                         } else if (key.equals("newSteps")) {
                             mOptions.getJSONObject("new").put("delays", StepsPreference.convertToJSON((String) value));
                         } else if (key.equals("lapSteps")) {
-                            mOptions.getJSONObject("lapse").put("delays", StepsPreference.convertToJSON((String) value));
+                            mOptions.getJSONObject("lapse")
+                                    .put("delays", StepsPreference.convertToJSON((String) value));
                         } else if (key.equals("deckConf")) {
                             long newConfId = Long.parseLong((String) value);
                             mOptions = mCol.getDecks().getConf(newConfId);
                             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CONF_CHANGE, mConfChangeHandler,
-                                    new DeckTask.TaskData(new Object[]{mCol, mDeck, mOptions}));
+                                    new DeckTask.TaskData(new Object[] { mCol, mDeck, mOptions }));
                         } else if (key.equals("confRename")) {
                             String newName = (String) value;
                             if (!TextUtils.isEmpty(newName)) {
@@ -223,7 +227,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
                         } else if (key.equals("confReset")) {
                             if ((Boolean) value) {
                                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CONF_RESET, mConfChangeHandler,
-                                        new DeckTask.TaskData(new Object[]{mCol, mOptions}));
+                                        new DeckTask.TaskData(new Object[] { mCol, mOptions }));
                             }
                         } else if (key.equals("confAdd")) {
                             String newName = (String) value;
@@ -239,13 +243,13 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
                                         getResources().getString(R.string.default_conf_delete_error), false);
                             } else {
                                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CONF_REMOVE, mConfChangeHandler,
-                                        new DeckTask.TaskData(new Object[]{mCol, mOptions}));
+                                        new DeckTask.TaskData(new Object[] { mCol, mOptions }));
                                 mDeck.put("conf", 1);
                             }
                         } else if (key.equals("confSetSubdecks")) {
                             if ((Boolean) value) {
                                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CONF_SET_SUBDECKS, mConfChangeHandler,
-                                        new DeckTask.TaskData(new Object[]{mCol, mDeck, mOptions}));
+                                        new DeckTask.TaskData(new Object[] { mCol, mDeck, mOptions }));
                             }
                         }
                     }
@@ -490,6 +494,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
         return super.onKeyDown(keyCode, event);
     }
 
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -497,6 +502,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
             unregisterReceiver(mUnmountReceiver);
         }
     }
+
 
     protected void updateSummaries() {
         Resources res = getResources();
@@ -506,8 +512,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
             if (key.equals("deckConf")) {
                 String groupName = getOptionsGroupName();
                 int count = getOptionsGroupCount();
-                pref.setSummary(res.getQuantityString(R.plurals.deck_conf_group_summ,
-                        count, groupName, count));
+                pref.setSummary(res.getQuantityString(R.plurals.deck_conf_group_summ, count, groupName, count));
                 continue;
             }
 
@@ -536,8 +541,8 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
         }
         // Update summaries of preference items that don't have values (aren't in mValues)
         int subDeckCount = getSubdeckCount();
-        this.findPreference("confSetSubdecks").setSummary(res.getQuantityString(
-                R.plurals.deck_conf_set_subdecks_summ, subDeckCount, subDeckCount));
+        this.findPreference("confSetSubdecks").setSummary(
+                res.getQuantityString(R.plurals.deck_conf_set_subdecks_summ, subDeckCount, subDeckCount));
     }
 
 
@@ -572,9 +577,6 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
     }
 
 
-
-
-
     /**
      * Returns the number of decks using the options group of the current deck.
      */
@@ -596,6 +598,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
         return count;
     }
 
+
     /**
      * Get the name of the currently set options group
      */
@@ -607,6 +610,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
             throw new RuntimeException(e);
         }
     }
+
 
     /**
      * Get the number of (non-dynamic) subdecks for the current deck
@@ -644,6 +648,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
         }
     }
 
+
     /**
      * finish when sd card is ejected
      */
@@ -663,18 +668,19 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
         }
     }
 
+
     private void addMissingValues() {
-    	try {
-    		for (JSONObject o : mCol.getDecks().all()) {
-    			JSONObject conf = mCol.getDecks().confForDid(o.getLong("id"));
-    			if (!conf.has("replayq")) {
-    				conf.put("replayq", true);
-					mCol.getDecks().save(conf);
-    			}
-    		}
-		} catch (JSONException e1) {
-			// nothing
-		}
+        try {
+            for (JSONObject o : mCol.getDecks().all()) {
+                JSONObject conf = mCol.getDecks().confForDid(o.getLong("id"));
+                if (!conf.has("replayq")) {
+                    conf.put("replayq", true);
+                    mCol.getDecks().save(conf);
+                }
+            }
+        } catch (JSONException e1) {
+            // nothing
+        }
     }
 
 }

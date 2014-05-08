@@ -125,6 +125,7 @@ public class Info extends ActionBarActivity {
     private StyledProgressDialog mProgressDialog;
     private StyledDialog mNoConnectionAlert;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.i(AnkiDroidApp.TAG, "Info - onCreate()");
@@ -150,7 +151,8 @@ public class Info extends ActionBarActivity {
             @Override
             public void onClick(View arg0) {
                 if (mType == TYPE_ABOUT) {
-                    Info.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.ichi2.anki")));
+                    Info.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri
+                            .parse("market://details?id=com.ichi2.anki")));
                     return;
                 }
                 setResult(RESULT_OK);
@@ -279,7 +281,8 @@ public class Info extends ActionBarActivity {
                         but.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View arg0) {
-                                Themes.showThemedToast(Info.this, getString(R.string.deck_upgrade_start_again_to_upgrade_toast), false);
+                                Themes.showThemedToast(Info.this,
+                                        getString(R.string.deck_upgrade_start_again_to_upgrade_toast), false);
                                 setResult(RESULT_CANCELED);
                                 finish();
                             }
@@ -420,8 +423,8 @@ public class Info extends ActionBarActivity {
                             @Override
                             public void onClick(View arg0) {
                                 lockScreenOrientation();
-                                Connection.upgradeDecks(mWebUpgradeListener,
-                                        new Connection.Payload(new Object[]{AnkiDroidApp.getCurrentAnkiDroidDirectory()}));
+                                Connection.upgradeDecks(mWebUpgradeListener, new Connection.Payload(
+                                        new Object[] { AnkiDroidApp.getCurrentAnkiDroidDirectory() }));
                             }
                         });
                         break;
@@ -483,7 +486,8 @@ public class Info extends ActionBarActivity {
                                         DeckPicker.IMPORT_REPLACE_COLLECTION_NAME);
                                 List<File> importables = Utils.getImportableDecks();
                                 if (importables == null || !importables.contains(apkgFile)) {
-                                    Themes.showThemedToast(Info.this,
+                                    Themes.showThemedToast(
+                                            Info.this,
                                             getResources().getString(R.string.upgrade_import_no_file_found,
                                                     DeckPicker.IMPORT_REPLACE_COLLECTION_NAME), false);
                                 } else {
@@ -532,23 +536,24 @@ public class Info extends ActionBarActivity {
                         break;
                 }
 
-//                File[] fileList = (new File(AnkiDroidApp.getCurrentAnkiDroidDirectory())).listFiles(new OldAnkiDeckFilter());
-//                StringBuilder fsb = new StringBuilder();
-//                fsb.append("<ul>");
-//                for (File f : fileList) {
-//                	fsb.append("<li>").append(f.getName().replace(".anki", "")).append("</li>");
-//                }
-//            	fsb.append("</ul>");
-//                sb.append(res.getString(R.string.upgrade_decks_message, fsb.toString()));
-//                sb.append("<ul><li>");
-//                sb.append(res.getString(R.string.upgrade_decks_message_pos1,
-//                		AnkiDroidApp.getCurrentAnkiDroidDirectory()));
-//                sb.append("</li><li>");
-//                sb.append(res.getString(R.string.upgrade_decks_message_pos2, res.getString(R.string.link_anki)));
-//                sb.append("</li><li>");
-//                sb.append(res.getString(R.string.upgrade_decks_message_pos3));
-//                sb.append("</li></ul>");
-//                sb.append(res.getString(R.string.upgrade_decks_message_finish));
+                // File[] fileList = (new File(AnkiDroidApp.getCurrentAnkiDroidDirectory())).listFiles(new
+                // OldAnkiDeckFilter());
+                // StringBuilder fsb = new StringBuilder();
+                // fsb.append("<ul>");
+                // for (File f : fileList) {
+                // fsb.append("<li>").append(f.getName().replace(".anki", "")).append("</li>");
+                // }
+                // fsb.append("</ul>");
+                // sb.append(res.getString(R.string.upgrade_decks_message, fsb.toString()));
+                // sb.append("<ul><li>");
+                // sb.append(res.getString(R.string.upgrade_decks_message_pos1,
+                // AnkiDroidApp.getCurrentAnkiDroidDirectory()));
+                // sb.append("</li><li>");
+                // sb.append(res.getString(R.string.upgrade_decks_message_pos2, res.getString(R.string.link_anki)));
+                // sb.append("</li><li>");
+                // sb.append(res.getString(R.string.upgrade_decks_message_pos3));
+                // sb.append("</li></ul>");
+                // sb.append(res.getString(R.string.upgrade_decks_message_finish));
                 sb.append("</body></html>");
                 mWebView.loadDataWithBaseURL("", sb.toString(), "text/html", "utf-8", null);
 
@@ -566,6 +571,7 @@ public class Info extends ActionBarActivity {
         }
     }
 
+
     @Override
     protected Dialog onCreateDialog(int id) {
         StyledDialog dialog = null;
@@ -578,14 +584,14 @@ public class Info extends ActionBarActivity {
                 builder.setMessage(R.string.no_user_password_error_message);
                 builder.setNegativeButton(R.string.cancel, null);
                 builder.setPositiveButton(R.string.log_in, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent myAccount = new Intent(Info.this, MyAccount.class);
-                                myAccount.putExtra("notLoggedIn", true);
-                                startActivityForResult(myAccount, LOG_IN_FOR_SYNC);
-                                ActivityTransitionAnimation.slide(Info.this, ActivityTransitionAnimation.FADE);
-                            }
-                        });
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent myAccount = new Intent(Info.this, MyAccount.class);
+                        myAccount.putExtra("notLoggedIn", true);
+                        startActivityForResult(myAccount, LOG_IN_FOR_SYNC);
+                        ActivityTransitionAnimation.slide(Info.this, ActivityTransitionAnimation.FADE);
+                    }
+                });
                 dialog = builder.create();
                 break;
 
@@ -610,11 +616,11 @@ public class Info extends ActionBarActivity {
             case DIALOG_SYNC_UPGRADE_REQUIRED:
                 builder.setMessage(res.getString(R.string.upgrade_required, res.getString(R.string.link_anki)));
                 builder.setPositiveButton(R.string.retry, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                downloadCollection();
-                            }
-                        });
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        downloadCollection();
+                    }
+                });
                 builder.setNegativeButton(R.string.cancel, null);
                 builder.setTitle(R.string.sync_log_title);
                 dialog = builder.create();
@@ -622,6 +628,7 @@ public class Info extends ActionBarActivity {
         }
         return dialog;
     }
+
 
     @Override
     protected void onPrepareDialog(int id, Dialog dialog) {
@@ -635,16 +642,19 @@ public class Info extends ActionBarActivity {
         }
     }
 
+
     private void downloadCollection() {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         String hkey = preferences.getString("hkey", "");
         if (hkey.length() == 0) {
             showDialog(DIALOG_USER_NOT_LOGGED_IN_SYNC);
         } else {
-            Connection.sync(mSyncListener, new Connection.Payload(new Object[]{
-                    hkey, preferences.getBoolean("syncFetchesMedia", true), "download", 0}));
+            Connection.sync(mSyncListener,
+                    new Connection.Payload(new Object[] { hkey, preferences.getBoolean("syncFetchesMedia", true),
+                            "download", 0 }));
         }
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -653,6 +663,7 @@ public class Info extends ActionBarActivity {
             downloadCollection();
         }
     }
+
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -699,6 +710,7 @@ public class Info extends ActionBarActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+
     private String getTitleString() {
         StringBuilder appName = new StringBuilder();
         appName.append(AnkiDroidApp.getAppName());
@@ -711,6 +723,7 @@ public class Info extends ActionBarActivity {
         WebView mWebView;
         String mUrl;
 
+
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             Log.i(AnkiDroidApp.TAG, "LoadSharedDecks: loading: " + url);
@@ -718,13 +731,13 @@ public class Info extends ActionBarActivity {
             return true;
         }
 
+
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             if (mUrl != null && mUrl.equals(url)) {
                 super.onPageStarted(view, url, favicon);
             } else if (url.matches(".*/shared/download/[0-9]*")) {
-                Connection.downloadSharedDeck(mDownloadDeckListener,
-                        new Connection.Payload(new Object[]{url}));
+                Connection.downloadSharedDeck(mDownloadDeckListener, new Connection.Payload(new Object[] { url }));
             } else {
                 mLoadingLayer.setVisibility(View.VISIBLE);
                 mWebView = view;
@@ -809,10 +822,11 @@ public class Info extends ActionBarActivity {
                 if (start == -1 || end <= 0) {
                     return "error";
                 } else {
-                    return mShareDecksTemplate.replace("::content::",
-                            pageHTML.substring(start, end)).replaceAll(">\nDownload(.|\n)*", ">Import</a></div>");
+                    return mShareDecksTemplate.replace("::content::", pageHTML.substring(start, end)).replaceAll(
+                            ">\nDownload(.|\n)*", ">Import</a></div>");
                 }
             }
+
 
             @Override
             protected void onPostExecute(String html) {
@@ -847,6 +861,7 @@ public class Info extends ActionBarActivity {
             }
         }
 
+
         @Override
         public void onPreExecute() {
             Log.i(AnkiDroidApp.TAG, "Info: UpgradeDecks - onPreExcecute");
@@ -854,13 +869,14 @@ public class Info extends ActionBarActivity {
                 mProgressDialog = StyledProgressDialog.show(Info.this, "",
                         getResources().getString(R.string.upgrade_decks_zipping), true, false,
                         new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialogInterface) {
-                        Connection.cancelTask();
-                    }
-                });
+                            @Override
+                            public void onCancel(DialogInterface dialogInterface) {
+                                Connection.cancelTask();
+                            }
+                        });
             }
         }
+
 
         @Override
         public void onPostExecute(Payload data) {
@@ -906,12 +922,12 @@ public class Info extends ActionBarActivity {
                     }
                     builder.setMessage(failures);
                     builder.setPositiveButton(res.getString(R.string.ok), new Dialog.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    setResult(RESULT_OK);
-                                    finishWithAnimation();
-                                }
-                            });
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            setResult(RESULT_OK);
+                            finishWithAnimation();
+                        }
+                    });
                     builder.setCancelable(false);
                     builder.show();
                 }
@@ -933,12 +949,14 @@ public class Info extends ActionBarActivity {
             }
         }
 
+
         @Override
         public void onDisconnected() {
             if (mNoConnectionAlert != null) {
                 mNoConnectionAlert.show();
             }
         }
+
 
         @Override
         public void onCancelled() {
@@ -960,14 +978,17 @@ public class Info extends ActionBarActivity {
                 finishWithAnimation();
             }
         }
+
+
         @Override
         public void onPreExecute() {
             if (mProgressDialog == null || !mProgressDialog.isShowing()) {
-                mProgressDialog = StyledProgressDialog
-                        .show(Info.this, getResources().getString(R.string.import_title),
-                                getResources().getString(R.string.import_importing), true, false);
+                mProgressDialog = StyledProgressDialog.show(Info.this, getResources().getString(R.string.import_title),
+                        getResources().getString(R.string.import_importing), true, false);
             }
         }
+
+
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
             mProgressDialog.setMessage(values[0].getString());
@@ -976,6 +997,7 @@ public class Info extends ActionBarActivity {
 
     Connection.TaskListener mDownloadDeckListener = new Connection.TaskListener() {
         int countDown = 0;
+
 
         @Override
         public void onProgressUpdate(Object... values) {
@@ -986,6 +1008,7 @@ public class Info extends ActionBarActivity {
             }
         }
 
+
         @Override
         public void onPreExecute() {
             Log.i(AnkiDroidApp.TAG, "Info: mDownloadDeckListener - onPreExcecute");
@@ -994,6 +1017,7 @@ public class Info extends ActionBarActivity {
                         getResources().getString(R.string.download_deck, countDown / 1024), true);
             }
         }
+
 
         @Override
         public void onPostExecute(Payload data) {
@@ -1023,6 +1047,7 @@ public class Info extends ActionBarActivity {
             }
         }
 
+
         @Override
         public void onDisconnected() {
             if (mNoConnectionAlert != null) {
@@ -1037,12 +1062,14 @@ public class Info extends ActionBarActivity {
         long countUp;
         long countDown;
 
+
         @Override
         public void onDisconnected() {
             if (mNoConnectionAlert != null) {
                 mNoConnectionAlert.show();
             }
         }
+
 
         @Override
         public void onPreExecute() {
@@ -1056,6 +1083,7 @@ public class Info extends ActionBarActivity {
                                 true, false);
             }
         }
+
 
         @Override
         public void onProgressUpdate(Object... values) {
@@ -1082,6 +1110,7 @@ public class Info extends ActionBarActivity {
                         + res.getString(R.string.sync_up_down_size, countUp / 1024, countDown / 1024));
             }
         }
+
 
         @Override
         public void onPostExecute(Payload data) {
@@ -1146,15 +1175,18 @@ public class Info extends ActionBarActivity {
         }
     };
 
+
     private void finishWithAnimation() {
         finishWithAnimation(true);
     }
 
+
     private void finishWithAnimation(boolean left) {
         finish();
-        ActivityTransitionAnimation.slide(Info.this, left ?
-                ActivityTransitionAnimation.LEFT : ActivityTransitionAnimation.RIGHT);
+        ActivityTransitionAnimation.slide(Info.this, left ? ActivityTransitionAnimation.LEFT
+                : ActivityTransitionAnimation.RIGHT);
     }
+
 
     private void lockScreenOrientation() {
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -1163,6 +1195,7 @@ public class Info extends ActionBarActivity {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
     }
+
 
     public void upgradeCancelled() {
         StyledDialog.Builder builder = new StyledDialog.Builder(Info.this);
@@ -1180,6 +1213,5 @@ public class Info extends ActionBarActivity {
         });
         builder.show();
     }
-
 
 }

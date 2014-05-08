@@ -17,8 +17,8 @@ public class Lookup {
     /**
      * Searches
      */
-    private static final int DICTIONARY_NONE = 0;      // use no dictionary
-    private static final int DICTIONARY_AEDICT = 1;     // Japanese dictionary
+    private static final int DICTIONARY_NONE = 0;    // use no dictionary
+    private static final int DICTIONARY_AEDICT = 1;  // Japanese dictionary
     private static final int DICTIONARY_EIJIRO_WEB = 2; // japanese web dictionary
     private static final int DICTIONARY_LEO_WEB = 3; // German web dictionary for English, French, Spanish, Italian,
                                                      // Chinese, Russian
@@ -76,9 +76,9 @@ public class Lookup {
 
 
     public static boolean lookUp(String text) {
-    	if (!mIsDictionaryAvailable) {
-    		return false;
-    	}
+        if (!mIsDictionaryAvailable) {
+            return false;
+        }
         // clear text from leading and closing dots, commas, brackets etc.
         text = text.trim().replaceAll("[,;:\\s\\(\\[\\)\\]\\.]*$", "").replaceAll("^[,;:\\s\\(\\[\\)\\]\\.]*", "");
         switch (mDictionary) {

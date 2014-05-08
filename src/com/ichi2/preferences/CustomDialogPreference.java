@@ -43,7 +43,7 @@ public class CustomDialogPreference extends DialogPreference implements DialogIn
                 // Deck Options :: Restore Defaults for Options Group
                 Editor editor = AnkiDroidApp.getSharedPrefs(mContext).edit();
                 editor.putBoolean("confReset", true);
-                editor.commit();            
+                editor.commit();
             } else if (this.getTitle().equals(mContext.getResources().getString(R.string.deck_conf_remove))) {
                 // Deck Options :: Remove Options Group
                 Editor editor = AnkiDroidApp.getSharedPrefs(mContext).edit();

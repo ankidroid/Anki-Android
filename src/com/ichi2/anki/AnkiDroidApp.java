@@ -77,13 +77,11 @@ public class AnkiDroidApp extends Application {
     private int mAccessThreadCount = 0;
     private static final Lock mLock = new ReentrantLock();
 
-
     /** Global hooks */
     private Hooks mHooks;
 
     /** Compatibility interface, Used to perform operation in a platform specific way. */
     private Compat mCompat;
-
 
     /**
      * The name of the shared preferences for this class, as supplied to
@@ -101,19 +99,18 @@ public class AnkiDroidApp extends Application {
     private static final int SWIPE_THRESHOLD_VELOCITY_DIP = 120;
 
     /**
-     * The latest package version number that included important changes to the database
-     * integrity check routine. All collections being upgraded to (or after) this version
-     * must run an integrity check as it will contain fixes that all collections should
-     * have.
+     * The latest package version number that included important changes to the database integrity check routine. All
+     * collections being upgraded to (or after) this version must run an integrity check as it will contain fixes that
+     * all collections should have.
      */
     public static final int CHECK_DB_AT_VERSION = 40;
 
     /**
-     * The latest package version number that included changes to the preferences
-     * that requires handling. All collections being upgraded to (or after) this version
-     * must update preferences.
+     * The latest package version number that included changes to the preferences that requires handling. All
+     * collections being upgraded to (or after) this version must update preferences.
      */
     public static final int CHECK_PREFERENCES_AT_VERSION = 20100108;
+
 
     /**
      * On application creation.
@@ -175,20 +172,19 @@ public class AnkiDroidApp extends Application {
 
 
     private boolean isNookHdPlus() {
-        return android.os.Build.BRAND.equals("NOOK")
-                && android.os.Build.PRODUCT.equals("HDplus")
+        return android.os.Build.BRAND.equals("NOOK") && android.os.Build.PRODUCT.equals("HDplus")
                 && android.os.Build.DEVICE.equals("ovation");
     }
 
 
     private boolean isNook() {
-        return android.os.Build.MODEL.equalsIgnoreCase("nook")
-                || android.os.Build.DEVICE.equalsIgnoreCase("nook");
+        return android.os.Build.MODEL.equalsIgnoreCase("nook") || android.os.Build.DEVICE.equalsIgnoreCase("nook");
     }
 
 
     /**
      * Convenience method for accessing Shared preferences
+     * 
      * @param context Context to get preferences for.
      * @return A SharedPreferences object for this instance of the app.
      */
@@ -206,12 +202,14 @@ public class AnkiDroidApp extends Application {
         return Environment.getExternalStorageDirectory().getAbsolutePath();
     }
 
+
     public static String getCacheStorageDirectory() {
         return sInstance.getCacheDir().getAbsolutePath();
     }
 
+
     public static String getCollectionPath() {
-    	return getCurrentAnkiDroidDirectory() + AnkiDroidApp.COLLECTION_PATH;
+        return getCurrentAnkiDroidDirectory() + AnkiDroidApp.COLLECTION_PATH;
     }
 
 
@@ -225,9 +223,11 @@ public class AnkiDroidApp extends Application {
         return prefs.getString("deckPath", AnkiDroidApp.getDefaultAnkiDroidDirectory());
     }
 
+
     public static String getCurrentAnkiDroidMediaDir() {
         return getCurrentAnkiDroidDirectory() + File.separator + "collection.media";
     }
+
 
     public static void createDirectoryIfMissing(File decksDirectory) {
         if (!decksDirectory.isDirectory()) {
@@ -280,7 +280,7 @@ public class AnkiDroidApp extends Application {
 
     /**
      * Get package name as defined in the manifest.
-     *
+     * 
      * @return the package name.
      */
     public static String getAppName() {
@@ -300,7 +300,7 @@ public class AnkiDroidApp extends Application {
 
     /**
      * Get the package versionName as defined in the manifest.
-     *
+     * 
      * @return the package version.
      */
     public static String getPkgVersionName() {
@@ -320,6 +320,7 @@ public class AnkiDroidApp extends Application {
 
     /**
      * Get the package versionCode as defined in the manifest.
+     * 
      * @return
      */
     public static int getPkgVersionCode() {
@@ -336,7 +337,7 @@ public class AnkiDroidApp extends Application {
 
     /**
      * Get the DropBox folder
-     *
+     * 
      * @return the absolute path to the DropBox public folder, or null if it is not found
      */
     public static String getDropboxDir() {
@@ -355,7 +356,7 @@ public class AnkiDroidApp extends Application {
 
     /**
      * Sets the user language.
-     *
+     * 
      * @param language The language to set
      * @return True if the language has changed, else false
      */
@@ -376,9 +377,10 @@ public class AnkiDroidApp extends Application {
         return sInstance.mHooks;
     }
 
+
     public static boolean initiateGestures(Context context, SharedPreferences preferences) {
-    	mGesturesEnabled = preferences.getBoolean("swipe", false);
-    	if (mGesturesEnabled && sSwipeMinDistance == -1) {
+        mGesturesEnabled = preferences.getBoolean("swipe", false);
+        if (mGesturesEnabled && sSwipeMinDistance == -1) {
             // Convert dip to pixel, code in parts from http://code.google.com/p/k9mail/
             final float gestureScale = context.getResources().getDisplayMetrics().density;
             int sensibility = preferences.getInt("swipeSensibility", 100);
@@ -392,68 +394,77 @@ public class AnkiDroidApp extends Application {
                 sSwipeThresholdVelocity = (int) (SWIPE_THRESHOLD_VELOCITY_DIP * gestureScale + 0.5f);
                 sSwipeMaxOffPath = (int) (SWIPE_MAX_OFF_PATH_DIP * gestureScale + 0.5f);
             }
-    	}
+        }
         return mGesturesEnabled;
     }
+
 
     public static Compat getCompat() {
         return sInstance.mCompat;
     }
 
+
     public static synchronized Collection openCollection(String path) {
-    	mLock.lock();
-    	Log.i(AnkiDroidApp.TAG, "openCollection: " + path);
+        mLock.lock();
+        Log.i(AnkiDroidApp.TAG, "openCollection: " + path);
         try {
-        	if (!colIsOpen() || !sInstance.mCurrentCollection.getPath().equals(path)) {
-        		if (colIsOpen()) {
-        			// close old collection prior to opening new one
-        			sInstance.mCurrentCollection.close();
-        			sInstance.mAccessThreadCount = 0;
-        		}
-        		sInstance.mCurrentCollection = Storage.Collection(path);
-        		sInstance.mAccessThreadCount++;
-        		Log.i(AnkiDroidApp.TAG, "Access to collection is requested: collection has been opened");
-        	} else {
-        		sInstance.mAccessThreadCount++;
-        		Log.i(AnkiDroidApp.TAG, "Access to collection is requested: collection has not been reopened (count: " + sInstance.mAccessThreadCount + ")");
-        	}
+            if (!colIsOpen() || !sInstance.mCurrentCollection.getPath().equals(path)) {
+                if (colIsOpen()) {
+                    // close old collection prior to opening new one
+                    sInstance.mCurrentCollection.close();
+                    sInstance.mAccessThreadCount = 0;
+                }
+                sInstance.mCurrentCollection = Storage.Collection(path);
+                sInstance.mAccessThreadCount++;
+                Log.i(AnkiDroidApp.TAG, "Access to collection is requested: collection has been opened");
+            } else {
+                sInstance.mAccessThreadCount++;
+                Log.i(AnkiDroidApp.TAG, "Access to collection is requested: collection has not been reopened (count: "
+                        + sInstance.mAccessThreadCount + ")");
+            }
             return sInstance.mCurrentCollection;
-		} finally {
-			mLock.unlock();
+        } finally {
+            mLock.unlock();
         }
     }
 
+
     public static Collection getCol() {
-    	return sInstance.mCurrentCollection;
+        return sInstance.mCurrentCollection;
     }
 
+
     public static void closeCollection(boolean save) {
-    	mLock.lock();
-    	Log.i(AnkiDroidApp.TAG, "closeCollection");
+        mLock.lock();
+        Log.i(AnkiDroidApp.TAG, "closeCollection");
         try {
             if (sInstance.mAccessThreadCount > 0) {
                 sInstance.mAccessThreadCount--;
             }
-            Log.i(AnkiDroidApp.TAG, "Access to collection jas been closed: (count: " + sInstance.mAccessThreadCount + ")");
+            Log.i(AnkiDroidApp.TAG, "Access to collection jas been closed: (count: " + sInstance.mAccessThreadCount
+                    + ")");
             if (sInstance.mAccessThreadCount == 0 && sInstance.mCurrentCollection != null) {
                 Collection col = sInstance.mCurrentCollection;
                 sInstance.mCurrentCollection = null;
                 col.close(save);
             }
         } finally {
-    		mLock.unlock();
-    	}
-
+            mLock.unlock();
+        }
 
     }
+
 
     public static boolean colIsOpen() {
-    	return sInstance.mCurrentCollection != null && sInstance.mCurrentCollection.getDb() != null && sInstance.mCurrentCollection.getDb().getDatabase() != null && sInstance.mCurrentCollection.getDb().getDatabase().isOpen();
+        return sInstance.mCurrentCollection != null && sInstance.mCurrentCollection.getDb() != null
+                && sInstance.mCurrentCollection.getDb().getDatabase() != null
+                && sInstance.mCurrentCollection.getDb().getDatabase().isOpen();
     }
 
+
     public static void resetAccessThreadCount() {
-    	sInstance.mAccessThreadCount = 0;
-    	sInstance.mCurrentCollection = null;
-		Log.i(AnkiDroidApp.TAG, "Access has been reset to 0");
+        sInstance.mAccessThreadCount = 0;
+        sInstance.mCurrentCollection = null;
+        Log.i(AnkiDroidApp.TAG, "Access has been reset to 0");
     }
 }

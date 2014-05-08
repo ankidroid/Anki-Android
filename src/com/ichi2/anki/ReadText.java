@@ -40,6 +40,7 @@ public class ReadText {
     public static ArrayList<String[]> sTextQueue = new ArrayList<String[]>();
     public static HashMap<String, String> mTtsParams;
 
+
     // private boolean mTtsReady = false;
 
     public static void speak(String text, String loc) {
@@ -47,11 +48,11 @@ public class ReadText {
         if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
             Log.e(AnkiDroidApp.TAG, "Error loading locale " + loc.toString());
         } else {
-        	if (mTts.isSpeaking()) {
-        		sTextQueue.add(new String[]{text, loc});
-        	} else {
+            if (mTts.isSpeaking()) {
+                sTextQueue.add(new String[] { text, loc });
+            } else {
                 mTts.speak(mTextToSpeak, TextToSpeech.QUEUE_FLUSH, mTtsParams);
-        	}
+            }
         }
     }
 
@@ -112,8 +113,7 @@ public class ReadText {
             builder.setItems(items, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    MetaDB.storeLanguage(mReviewer, mDid, mOrd, mQuestionAnswer,
-                            dialogIds.get(which));
+                    MetaDB.storeLanguage(mReviewer, mDid, mOrd, mQuestionAnswer, dialogIds.get(which));
                     speak(mTextToSpeak, dialogIds.get(which));
                 }
             });
@@ -141,7 +141,7 @@ public class ReadText {
             }
         });
         mTtsParams = new HashMap<String, String>();
-        mTtsParams.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID,"stringId");
+        mTtsParams.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "stringId");
     }
 
 
@@ -155,9 +155,9 @@ public class ReadText {
 
     public static void stopTts() {
         if (mTts != null) {
-        	if (sTextQueue != null) {
-        		sTextQueue.clear();
-        	}
+            if (sTextQueue != null) {
+                sTextQueue.clear();
+            }
             mTts.stop();
         }
     }

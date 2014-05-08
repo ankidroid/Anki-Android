@@ -35,18 +35,20 @@ public class Reviewer extends AbstractFlashcardViewer {
         AnkiDroidApp.getCompat().setSubtitle(this, "", mInvertedColors);
     }
 
+
     @Override
     protected void initActivity(Collection col) {
         super.initActivity(col);
         // Load the first card and start reviewing. Uses the answer card
         // task to load a card, but since we send null
         // as the card to answer, no card will be answered.
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(mSched,
-                null, 0)); 
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(mSched, null,
+                0));
 
         // Since we aren't actually answering a card, decrement the rep count
         mSched.setReps(mSched.getReps() - 1);
     }
+
 
     @Override
     public void displayCardQuestion() {

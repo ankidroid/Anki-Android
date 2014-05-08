@@ -1,3 +1,4 @@
+
 package com.ichi2.compat;
 
 import android.annotation.TargetApi;
@@ -16,10 +17,13 @@ public class CompatV8 extends CompatV7 implements Compat {
         }
     };
 
+
     @Override
     public void requestAudioFocus(AudioManager audioManager) {
-        audioManager.requestAudioFocus(afChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK);
+        audioManager.requestAudioFocus(afChangeListener, AudioManager.STREAM_MUSIC,
+                AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK);
     }
+
 
     @Override
     public void abandonAudioFocus(AudioManager audioManager) {

@@ -117,12 +117,14 @@ public class BasicHttpSyncer implements HttpSyncer {
         return req(method, fobj, comp, hkey, null);
     }
 
+
     public HttpResponse req(String method, InputStream fobj, int comp, boolean hkey, JSONObject registerData) {
         return req(method, fobj, comp, hkey, registerData, null);
     }
 
+
     public HttpResponse req(String method, InputStream fobj, int comp, boolean hkey, JSONObject registerData,
-                            Connection.CancelCallback cancelCallback) {
+            Connection.CancelCallback cancelCallback) {
         File tmpFileBuffer = null;
         try {
             String bdry = "--" + BOUNDARY;
@@ -136,8 +138,8 @@ public class BasicHttpSyncer implements HttpSyncer {
             }
             for (String key : vars.keySet()) {
                 buf.write(bdry + "\r\n");
-                buf.write(String.format(Locale.US, "Content-Disposition: form-data; name=\"%s\"\r\n\r\n%s\r\n",
-                        key, vars.get(key)));
+                buf.write(String.format(Locale.US, "Content-Disposition: form-data; name=\"%s\"\r\n\r\n%s\r\n", key,
+                        vars.get(key)));
             }
             tmpFileBuffer = File.createTempFile("syncer", ".tmp", new File(AnkiDroidApp.getCacheStorageDirectory()));
             FileOutputStream fos = new FileOutputStream(tmpFileBuffer);
@@ -259,12 +261,15 @@ public class BasicHttpSyncer implements HttpSyncer {
 
 
     public String stream2String(InputStream stream) {
-    	return stream2String(stream, -1);
+        return stream2String(stream, -1);
     }
+
+
     public String stream2String(InputStream stream, int maxSize) {
         BufferedReader rd;
         try {
-            rd = new BufferedReader(new InputStreamReader(stream, "UTF-8"), maxSize == -1 ? 4096 : Math.min(4096, maxSize));
+            rd = new BufferedReader(new InputStreamReader(stream, "UTF-8"), maxSize == -1 ? 4096 : Math.min(4096,
+                    maxSize));
             String line;
             StringBuilder sb = new StringBuilder();
             while ((line = rd.readLine()) != null && (maxSize == -1 || sb.length() < maxSize)) {
@@ -341,6 +346,7 @@ public class BasicHttpSyncer implements HttpSyncer {
     public JSONObject sanityCheck2(JSONObject client) {
         return null;
     }
+
 
     public void applyChunk(JSONObject sech) {
     }

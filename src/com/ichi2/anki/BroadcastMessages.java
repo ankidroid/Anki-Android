@@ -70,7 +70,7 @@ public class BroadcastMessages {
             try {
                 com = Integer.valueOf(version1[i]).compareTo(Integer.valueOf(version2[i]));
             } catch (NumberFormatException e) {
-            	// 1.0alpha4EXPERIMENTAL --> 1.0.alpha.EXPERIMENTAL
+                // 1.0alpha4EXPERIMENTAL --> 1.0.alpha.EXPERIMENTAL
                 String[] subVersion1 = version1[i].replaceAll("([:alpha:])[\\s|\\.|-]*([:digit:])", "$1.$2")
                         .replaceAll("([:digit:])[\\s|\\.|-]*([:alpha:])", "$1.$2").split("\\.");
                 String[] subVersion2 = version2[i].replaceAll("([:alpha:])[\\s|\\.|-]*([:digit:])", "$1.$2")
@@ -86,23 +86,23 @@ public class BroadcastMessages {
                     }
                 }
                 if (subVersion1.length > subVersion2.length) {
-                	try {
-                		int test = Integer.valueOf(subVersion1[subVersion2.length]);
-                		// subversion of --> later
-                		return 1;
+                    try {
+                        int test = Integer.valueOf(subVersion1[subVersion2.length]);
+                        // subversion of --> later
+                        return 1;
                     } catch (NumberFormatException f) {
-                    	// not a number --> e.g. "EXPERIMENTAL" --> drop it
-                    	return -1;
-                	}
+                        // not a number --> e.g. "EXPERIMENTAL" --> drop it
+                        return -1;
+                    }
                 } else if (subVersion1.length < subVersion2.length) {
-                	try {
-                		int test = Integer.valueOf(subVersion2[subVersion1.length]);
-                		// subversion of --> later
-                		return -1;
+                    try {
+                        int test = Integer.valueOf(subVersion2[subVersion1.length]);
+                        // subversion of --> later
+                        return -1;
                     } catch (NumberFormatException f) {
-                    	// not a number --> e.g. "EXPERIMENTAL" --> drop it
-                    	return 1;
-                	}
+                        // not a number --> e.g. "EXPERIMENTAL" --> drop it
+                        return 1;
+                    }
                 }
             }
             if (com != 0) {
@@ -188,13 +188,15 @@ public class BroadcastMessages {
                         mMinVersion = getXmlValue(el, MIN_VERSION);
                         if (mMinVersion != null && mMinVersion.length() > 0
                                 && compareVersions(mMinVersion, currentVersion) > 0) {
-                            Log.i(AnkiDroidApp.TAG, "BroadcastMessage - too low AnkiDroid version (" + currentVersion + "), message " + mNum + " only for >= " + mMinVersion);
+                            Log.i(AnkiDroidApp.TAG, "BroadcastMessage - too low AnkiDroid version (" + currentVersion
+                                    + "), message " + mNum + " only for >= " + mMinVersion);
                             continue;
                         }
                         mMaxVersion = getXmlValue(el, MAX_VERSION);
                         if (mMaxVersion != null && mMaxVersion.length() > 0
                                 && compareVersions(mMaxVersion, currentVersion) < 0) {
-                            Log.i(AnkiDroidApp.TAG, "BroadcastMessage - too high AnkiDroid version (" + currentVersion + "), message " + mNum + " only for <= " + mMaxVersion);
+                            Log.i(AnkiDroidApp.TAG, "BroadcastMessage - too high AnkiDroid version (" + currentVersion
+                                    + "), message " + mNum + " only for <= " + mMaxVersion);
                             continue;
                         }
 
@@ -306,4 +308,3 @@ public class BroadcastMessages {
         return text;
     }
 }
-

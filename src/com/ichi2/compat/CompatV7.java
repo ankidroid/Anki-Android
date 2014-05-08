@@ -1,3 +1,4 @@
+
 package com.ichi2.compat;
 
 import android.annotation.TargetApi;
@@ -27,20 +28,24 @@ public class CompatV7 implements Compat {
         return txt;
     }
 
+
     @Override
     public void setScrollbarFadingEnabled(WebView webview, boolean enable) {
         webview.setScrollbarFadingEnabled(enable);
     }
 
+
     @Override
     public void setOverScrollModeNever(View v) {
     }
+
 
     @Override
     public void invalidateOptionsMenu(Activity activity) {
         ActionBarActivity actionBarActivity = (ActionBarActivity) activity;
         actionBarActivity.supportInvalidateOptionsMenu();
     }
+
 
     @Override
     public void setActionBarBackground(Activity activity, int color) {
@@ -51,22 +56,26 @@ public class CompatV7 implements Compat {
         }
     }
 
+
     @Override
     public void setTitle(Activity activity, String title, boolean inverted) {
         ActionBarActivity actionBarActivity = (ActionBarActivity) activity;
         ActionBar actionBar = actionBarActivity.getSupportActionBar();
         if (actionBar != null) {
-            CharacterStyle span = new ForegroundColorSpan(activity.getResources().getColor(inverted ? R.color.white : R.color.black));
+            CharacterStyle span = new ForegroundColorSpan(activity.getResources().getColor(
+                    inverted ? R.color.white : R.color.black));
             SpannableStringBuilder ssb = new SpannableStringBuilder(title);
             ssb.setSpan(span, 0, ssb.length(), 0);
             actionBar.setTitle(ssb);
         }
     }
 
+
     @Override
     public void setSubtitle(Activity activity, String title) {
         setSubtitle(activity, title, false);
     }
+
 
     @Override
     public void setSubtitle(Activity activity, String title, boolean inverted) {
@@ -74,7 +83,8 @@ public class CompatV7 implements Compat {
         ActionBar actionBar = actionBarActivity.getSupportActionBar();
         if (actionBar != null) {
             if (inverted) {
-                CharacterStyle span = new ForegroundColorSpan(activity.getResources().getColor(inverted ? R.color.white : R.color.black));
+                CharacterStyle span = new ForegroundColorSpan(activity.getResources().getColor(
+                        inverted ? R.color.white : R.color.black));
                 SpannableStringBuilder ssb = new SpannableStringBuilder(title);
                 ssb.setSpan(span, 0, ssb.length(), 0);
                 actionBar.setSubtitle(ssb);
@@ -83,6 +93,7 @@ public class CompatV7 implements Compat {
             }
         }
     }
+
 
     @Override
     public void setTtsOnUtteranceProgressListener(TextToSpeech tts) {
@@ -97,13 +108,16 @@ public class CompatV7 implements Compat {
         });
     }
 
+
     @Override
     public void disableDatabaseWriteAheadLogging(SQLiteDatabase db) {
     }
 
+
     @Override
     public void requestAudioFocus(AudioManager audioManager) {
     }
+
 
     @Override
     public void abandonAudioFocus(AudioManager audioManager) {

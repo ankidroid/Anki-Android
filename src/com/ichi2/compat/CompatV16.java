@@ -1,3 +1,4 @@
+
 package com.ichi2.compat;
 
 import android.annotation.TargetApi;

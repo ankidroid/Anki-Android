@@ -14,9 +14,11 @@ public class Pair<FIRST, SECOND> {
         this.second = second;
     }
 
+
     public static <FIRST, SECOND> Pair<FIRST, SECOND> create(FIRST first, SECOND second) {
         return new Pair<FIRST, SECOND>(first, second);
     }
+
 
     @Override
     public int hashCode() {

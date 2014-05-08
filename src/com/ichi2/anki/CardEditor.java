@@ -299,21 +299,22 @@ public class CardEditor extends ActionBarActivity {
                     mCaller = CALLER_INDICLASH;
                 }
             }
-        }        
+        }
         // Try to load the collection
         mCol = AnkiDroidApp.getCol();
         if (mCol == null) {
-            // Reload the collection asynchronously, let onPostExecute method call initActivity()            
+            // Reload the collection asynchronously, let onPostExecute method call initActivity()
             reloadCollection();
             return;
         } else {
-            // If collection was not null then we can safely call initActivity() directly            
+            // If collection was not null then we can safely call initActivity() directly
             initActivity(mCol);
         }
     }
 
-    // Finish initializing the activity after the collection has been correctly loaded    
-    private void initActivity(Collection col){
+
+    // Finish initializing the activity after the collection has been correctly loaded
+    private void initActivity(Collection col) {
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         Intent intent = getIntent();
@@ -329,7 +330,7 @@ public class CardEditor extends ActionBarActivity {
                     + getResources().getString(R.string.CardEditorLaterMessage), false);
             finish();
             return;
-        }        
+        }
 
         registerExternalStorageListener();
 
@@ -532,7 +533,7 @@ public class CardEditor extends ActionBarActivity {
                 closeCardEditor();
             }
 
-        });        
+        });
     }
 
 
@@ -578,6 +579,7 @@ public class CardEditor extends ActionBarActivity {
         }
     }
 
+
     private void openReviewer() {
         Intent reviewer = new Intent(CardEditor.this, Previewer.class);
         startActivity(reviewer);
@@ -609,11 +611,11 @@ public class CardEditor extends ActionBarActivity {
             public void onPreExecute() {
                 mOpenCollectionDialog = StyledOpenCollectionDialog.show(CardEditor.this,
                         getResources().getString(R.string.open_collection), new OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface arg0) {
-                        finish();
-                    }
-                });
+                            @Override
+                            public void onCancel(DialogInterface arg0) {
+                                finish();
+                            }
+                        });
             }
 
 
@@ -664,12 +666,12 @@ public class CardEditor extends ActionBarActivity {
 
 
     private void saveNote() {
-        // treat add new note and edit existing note independently 
+        // treat add new note and edit existing note independently
         if (mAddNote) {
             // load all of the fields into the note
             for (FieldEditText f : mEditFields) {
                 f.updateField();
-            }            
+            }
             try {
                 // Save deck to model
                 mEditorNote.model().put("did", mCurrentDid);
@@ -688,7 +690,7 @@ public class CardEditor extends ActionBarActivity {
         } else {
             boolean modified = false;
             // changed did? this has to be done first as remFromDyn() involves a direct write to the database
-            if (mCurrentEditedCard.getDid() != mCurrentDid){
+            if (mCurrentEditedCard.getDid() != mCurrentDid) {
                 // remove card from filtered deck first (if relevant)
                 AnkiDroidApp.getCol().getSched().remFromDyn(new long[] { mCurrentEditedCard.getId() });
                 // refresh the card object to reflect the database changes in remFromDyn()
@@ -702,7 +704,7 @@ public class CardEditor extends ActionBarActivity {
             // now load any changes to the fields from the form
             for (FieldEditText f : mEditFields) {
                 modified = modified | f.updateField();
-            }            
+            }
             // added tag?
             for (String t : mCurrentTags) {
                 modified = modified || !mEditorNote.hasTag(t);
@@ -711,7 +713,8 @@ public class CardEditor extends ActionBarActivity {
             modified = modified || mEditorNote.getTags().size() > mCurrentTags.size();
             if (modified) {
                 mEditorNote.setTagsFromStr(tagsAsString(mCurrentTags));
-                // set a flag so that changes to card object will be written to DB later via onActivityResult() in CardBrowser
+                // set a flag so that changes to card object will be written to DB later via onActivityResult() in
+                // CardBrowser
                 mChanged = true;
             }
             closeCardEditor();
@@ -920,18 +923,22 @@ public class CardEditor extends ActionBarActivity {
                         mNewTagEditText.setText("");
                     }
                 });
-                
+
                 mNewTagEditText = new EditText(this);
                 mNewTagEditText.setHint(R.string.add_new_filter_tags);
-                
+
                 mNewTagEditText.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
                         mTagsDialog.filterList(s.toString());
                     }
+
+
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                     }
+
+
                     @Override
                     public void afterTextChanged(Editable s) {
                     }
@@ -985,7 +992,7 @@ public class CardEditor extends ActionBarActivity {
                         mCurrentTags = mTagsDialog.getCheckedItems();
                     }
                 });
-                
+
                 dialog = builder.create();
                 mTagsDialog = dialog;
                 break;
@@ -1204,7 +1211,7 @@ public class CardEditor extends ActionBarActivity {
                 if (mSelectedTags == null) {
                     mSelectedTags = new ArrayList<String>();
                 }
-                mCurrentTags = new ArrayList<String>(mSelectedTags);                
+                mCurrentTags = new ArrayList<String>(mSelectedTags);
                 actualizeTagDialog(ad);
                 break;
 
@@ -1259,13 +1266,13 @@ public class CardEditor extends ActionBarActivity {
 
 
     private void actualizeTagDialog(StyledDialog ad) {
-        //without this the dialog goes up the screen in a way that the user isn't able to see the full item list.
+        // without this the dialog goes up the screen in a way that the user isn't able to see the full item list.
         ad.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         TreeSet<String> tags = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
         for (String tag : mCol.getTags().all()) {
             tags.add(tag);
         }
-        
+
         tags.addAll(mCurrentTags);
         int len = tags.size();
         allTags = new String[len];
@@ -1341,7 +1348,8 @@ public class CardEditor extends ActionBarActivity {
         if (targetText != null) {
             mEditFields.get(mTargetPosition).setText(targetText);
         }
-    }   
+    }
+
 
     private void populateEditFields() {
         mFieldsLayoutContainer.removeAllViews();
@@ -1479,7 +1487,7 @@ public class CardEditor extends ActionBarActivity {
         try {
             mDeckButton.setText(getResources().getString(
                     mAddNote ? R.string.CardEditorNoteDeck : R.string.CardEditorCardDeck,
-                            mCol.getDecks().get(mCurrentDid).getString("name")));
+                    mCol.getDecks().get(mCurrentDid).getString("name")));
         } catch (NotFoundException e) {
             throw new RuntimeException(e);
         } catch (JSONException e) {

@@ -1,3 +1,4 @@
+
 package com.ichi2.compat;
 
 import android.annotation.TargetApi;
@@ -16,6 +17,7 @@ public class CompatV9 extends CompatV8 implements Compat {
         }
         return txt;
     }
+
 
     @Override
     public void setOverScrollModeNever(View v) {

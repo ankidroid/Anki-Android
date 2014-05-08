@@ -65,10 +65,10 @@ public class NumberRangePreference extends EditTextPreference {
 
 
     /*
-     * Since this preference deals with integers only, it makes sense to only store and retrieve
-     * integers. However, since it is extending EditTextPreference, the persistence and retrieval
-     * methods that are called are for a String type. The two methods below intercept the persistence
-     * and retrieval methods for Strings and replaces them with their Integer equivalents.
+     * Since this preference deals with integers only, it makes sense to only store and retrieve integers. However,
+     * since it is extending EditTextPreference, the persistence and retrieval methods that are called are for a String
+     * type. The two methods below intercept the persistence and retrieval methods for Strings and replaces them with
+     * their Integer equivalents.
      */
 
     @Override
@@ -84,8 +84,9 @@ public class NumberRangePreference extends EditTextPreference {
 
 
     /**
-     * Return the string as an int with the number rounded to the nearest bound if it is outside
-     * of the acceptable range.
+     * Return the string as an int with the number rounded to the nearest bound if it is outside of the acceptable
+     * range.
+     * 
      * @param input User input in text editor.
      * @return The input value within acceptable range.
      */
@@ -103,8 +104,8 @@ public class NumberRangePreference extends EditTextPreference {
 
 
     /**
-     * Return the integer rounded to the nearest bound if it is outside of the acceptable
-     * range.
+     * Return the integer rounded to the nearest bound if it is outside of the acceptable range.
+     * 
      * @param input Integer to validate.
      * @return The input value within acceptable range.
      */
@@ -116,6 +117,7 @@ public class NumberRangePreference extends EditTextPreference {
         }
         return input;
     }
+
 
     /**
      * Returns the value of the min attribute, or its default value if not specified
@@ -133,14 +135,14 @@ public class NumberRangePreference extends EditTextPreference {
      * This method should only be called once from the constructor.
      */
     private int getMaxFromAttributes(AttributeSet attrs) {
-        return attrs == null ? Integer.MAX_VALUE
-                : attrs.getAttributeIntValue(AnkiDroidApp.APP_NAMESPACE, "max", Integer.MAX_VALUE);
+        return attrs == null ? Integer.MAX_VALUE : attrs.getAttributeIntValue(AnkiDroidApp.APP_NAMESPACE, "max",
+                Integer.MAX_VALUE);
     }
 
 
     /**
-     * Update settings to only allow integer input and set the maximum number of digits allowed in the text
-     * field based on the current value of the {@link #mMax} field.
+     * Update settings to only allow integer input and set the maximum number of digits allowed in the text field based
+     * on the current value of the {@link #mMax} field.
      * <p>
      * This method should only be called once from the constructor.
      */
@@ -158,8 +160,10 @@ public class NumberRangePreference extends EditTextPreference {
         getEditText().setFilters(newFilters);
     }
 
+
     /**
      * Get the persisted value held by this preference.
+     * 
      * @return the persisted value.
      */
     public int getValue() {
@@ -169,6 +173,7 @@ public class NumberRangePreference extends EditTextPreference {
 
     /**
      * Set this preference's value. The value is validated and persisted as an Integer.
+     * 
      * @param value to set.
      */
     public void setValue(int value) {

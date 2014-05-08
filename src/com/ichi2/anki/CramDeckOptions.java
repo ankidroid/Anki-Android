@@ -110,6 +110,7 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
 
             private ContentValues mUpdate = new ContentValues();
 
+
             @Override
             public SharedPreferences.Editor clear() {
                 Log.d(AnkiDroidApp.TAG, "clear()");
@@ -414,6 +415,7 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
         return super.onKeyDown(keyCode, event);
     }
 
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -421,6 +423,7 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
             unregisterReceiver(mUnmountReceiver);
         }
     }
+
 
     protected void updateSummaries() {
         mAllowCommit = false;
@@ -470,7 +473,6 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
         }
     }
 
-
     public class JSONNameComparator implements Comparator<JSONObject> {
         @Override
         public int compare(JSONObject lhs, JSONObject rhs) {
@@ -485,6 +487,7 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
             return o1.compareToIgnoreCase(o2);
         }
     }
+
 
     /**
      * finish when sd card is ejected

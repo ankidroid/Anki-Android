@@ -369,7 +369,7 @@ public class Feedback extends AnkiActivity {
 
     /**
      * Delete the crash log files.
-     *
+     * 
      * @param onlyProcessed only delete the log files that have been sent.
      * @param keepLatest keep the latest log file. If the file has not been sent yet, it is not deleted even if this
      *            value is set to false.
@@ -561,7 +561,7 @@ public class Feedback extends AnkiActivity {
 
     /**
      * Posting feedback or error info to the server. This is called from the AsyncTask.
-     *
+     * 
      * @param url The url to post the feedback to.
      * @param type The type of the info, eg Feedback.TYPE_CRASH_STACKTRACE.
      * @param feedback For feedback types this is the message. For error/crash types this is the path to the error file.
@@ -627,4 +627,3 @@ public class Feedback extends AnkiActivity {
     }
 
 }
-

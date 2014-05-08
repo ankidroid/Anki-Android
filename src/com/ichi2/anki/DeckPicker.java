@@ -482,8 +482,7 @@ public class DeckPicker extends ActionBarActivity {
                                     break;
                             }
                         } else if (result[0] instanceof String) {
-                            mDialogMessage = res.getString(R.string.sync_log_error_specific,
-                                    -1, (String) result[0]);
+                            mDialogMessage = res.getString(R.string.sync_log_error_specific, -1, (String) result[0]);
                         } else {
                             mDialogMessage = res.getString(R.string.sync_generic_error);
                         }
@@ -494,7 +493,8 @@ public class DeckPicker extends ActionBarActivity {
                 updateDecksList((TreeSet<Object[]>) data.result, (Integer) data.data[2], (Integer) data.data[3]);
                 if (data.data[4] != null) {
                     mDialogMessage = (String) data.data[4];
-                } else if (data.data.length > 0 && data.data[0] instanceof String && ((String) data.data[0]).length() > 0) {
+                } else if (data.data.length > 0 && data.data[0] instanceof String
+                        && ((String) data.data[0]).length() > 0) {
                     String dataString = (String) data.data[0];
                     if (dataString.equals("upload")) {
                         mDialogMessage = res.getString(R.string.sync_log_uploading_message);
@@ -527,7 +527,6 @@ public class DeckPicker extends ActionBarActivity {
             }
         }
     };
-
 
     DeckTask.TaskListener mOpenCollectionHandler = new DeckTask.TaskListener() {
 
@@ -562,15 +561,16 @@ public class DeckPicker extends ActionBarActivity {
         @Override
         public void onPreExecute() {
             if (mOpenCollectionDialog == null || !mOpenCollectionDialog.isShowing()) {
-                mOpenCollectionDialog = StyledOpenCollectionDialog.show(DeckPicker.this, getResources().getString(R.string.open_collection), new OnCancelListener() {
+                mOpenCollectionDialog = StyledOpenCollectionDialog.show(DeckPicker.this,
+                        getResources().getString(R.string.open_collection), new OnCancelListener() {
 
-                    @Override
-                    public void onCancel(DialogInterface arg0) {
-                        // TODO: close dbs?
-                        DeckTask.cancelTask();
-                        finishWithAnimation();
-                    }
-                });
+                            @Override
+                            public void onCancel(DialogInterface arg0) {
+                                // TODO: close dbs?
+                                DeckTask.cancelTask();
+                                finishWithAnimation();
+                            }
+                        });
             }
             if (mNotMountedDialog != null && mNotMountedDialog.isShowing()) {
                 try {
@@ -610,7 +610,7 @@ public class DeckPicker extends ActionBarActivity {
                     setSelectedDeck(AnkiDroidApp.getCol().getDecks().current().getLong("id"));
                 }
             } catch (JSONException e) {
-                throw  new RuntimeException();
+                throw new RuntimeException();
             }
         }
 
@@ -709,43 +709,45 @@ public class DeckPicker extends ActionBarActivity {
 
     };
 
+    DeckTask.TaskListener mRestoreDeckHandler = new DeckTask.TaskListener() {
 
-     DeckTask.TaskListener mRestoreDeckHandler = new DeckTask.TaskListener() {
+        @Override
+        public void onPreExecute() {
+            mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "",
+                    getResources().getString(R.string.backup_restore_deck), true);
+        }
 
-     @Override
-     public void onPreExecute() {
-         mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "", getResources().getString(R.string.backup_restore_deck), true);
-     }
+
+        @Override
+        public void onPostExecute(DeckTask.TaskData result) {
+            switch (result.getInt()) {
+                case BackupManager.RETURN_DECK_RESTORED:
+                    loadCollection();
+                    Collection col = AnkiDroidApp.getCol();
+                    if (col != null) {
+                        col.modSchema(false);
+                    }
+                    break;
+                case BackupManager.RETURN_ERROR:
+                    Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.backup_restore_error),
+                            true);
+                    showDialog(DIALOG_ERROR_HANDLING);
+                    break;
+                case BackupManager.RETURN_NOT_ENOUGH_SPACE:
+                    showDialog(DIALOG_NO_SPACE_LEFT);
+                    break;
+            }
+            if (mProgressDialog != null && mProgressDialog.isShowing()) {
+                mProgressDialog.dismiss();
+            }
+        }
 
 
-     @Override
-     public void onPostExecute(DeckTask.TaskData result) {
-         switch (result.getInt()) {
-         case BackupManager.RETURN_DECK_RESTORED:
-             loadCollection();
-             Collection col = AnkiDroidApp.getCol();
-             if (col != null) {
-                 col.modSchema(false);
-             }
-             break;
-         case BackupManager.RETURN_ERROR:
-             Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.backup_restore_error), true);
-             showDialog(DIALOG_ERROR_HANDLING);
-             break;
-         case BackupManager.RETURN_NOT_ENOUGH_SPACE:
-             showDialog(DIALOG_NO_SPACE_LEFT);
-             break;
-         }
-         if (mProgressDialog != null && mProgressDialog.isShowing()) {
-             mProgressDialog.dismiss();
-         }
-     }
+        @Override
+        public void onProgressUpdate(TaskData... values) {
+        }
 
-     @Override
-     public void onProgressUpdate(TaskData... values) {
-     }
-
-     };
+    };
 
     DeckTask.TaskListener mImportAddListener = new DeckTask.TaskListener() {
         @Override
@@ -773,14 +775,18 @@ public class DeckPicker extends ActionBarActivity {
                 handleDbError();
             }
         }
+
+
         @Override
         public void onPreExecute() {
             if (mProgressDialog == null || !mProgressDialog.isShowing()) {
-                mProgressDialog = StyledProgressDialog
-                        .show(DeckPicker.this, getResources().getString(R.string.import_title),
-                                getResources().getString(R.string.import_importing), true, false);
+                mProgressDialog = StyledProgressDialog.show(DeckPicker.this,
+                        getResources().getString(R.string.import_title),
+                        getResources().getString(R.string.import_importing), true, false);
             }
         }
+
+
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
             mProgressDialog.setMessage(values[0].getString());
@@ -809,14 +815,18 @@ public class DeckPicker extends ActionBarActivity {
                 showDialog(DIALOG_IMPORT_LOG);
             }
         }
+
+
         @Override
         public void onPreExecute() {
             if (mProgressDialog == null || !mProgressDialog.isShowing()) {
-                mProgressDialog = StyledProgressDialog
-                        .show(DeckPicker.this, getResources().getString(R.string.import_title),
-                                getResources().getString(R.string.import_importing), true, false);
+                mProgressDialog = StyledProgressDialog.show(DeckPicker.this,
+                        getResources().getString(R.string.import_title),
+                        getResources().getString(R.string.import_importing), true, false);
             }
         }
+
+
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
             mProgressDialog.setMessage(values[0].getString());
@@ -827,11 +837,12 @@ public class DeckPicker extends ActionBarActivity {
         @Override
         public void onPreExecute() {
             if (mProgressDialog == null || !mProgressDialog.isShowing()) {
-                mProgressDialog = StyledProgressDialog
-                        .show(DeckPicker.this, getString(R.string.export_progress_title),
-                                getString(R.string.export_progress_exporting), true, false);
+                mProgressDialog = StyledProgressDialog.show(DeckPicker.this, getString(R.string.export_progress_title),
+                        getString(R.string.export_progress_exporting), true, false);
             }
         }
+
+
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
@@ -850,8 +861,8 @@ public class DeckPicker extends ActionBarActivity {
                 builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext())
-                                .edit().putInt("lastUpgradeVersion", AnkiDroidApp.getPkgVersionCode()).commit();
+                        AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit()
+                                .putInt("lastUpgradeVersion", AnkiDroidApp.getPkgVersionCode()).commit();
                     }
                 });
             }
@@ -859,16 +870,20 @@ public class DeckPicker extends ActionBarActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     showUpgradeScreen(true, Info.UPGRADE_SCREEN_BASIC1);
-                    AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext())
-                            .edit().putInt("lastUpgradeVersion", AnkiDroidApp.getPkgVersionCode()).commit();
+                    AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit()
+                            .putInt("lastUpgradeVersion", AnkiDroidApp.getPkgVersionCode()).commit();
                 }
             });
             dialog = builder.create();
             dialog.show();
         }
+
+
         @Override
-        public void onProgressUpdate(TaskData... values) { }
+        public void onProgressUpdate(TaskData... values) {
+        }
     };
+
 
     // ----------------------------------------------------------------------------
     // ANDROID METHODS
@@ -880,7 +895,8 @@ public class DeckPicker extends ActionBarActivity {
         Log.i(AnkiDroidApp.TAG, "DeckPicker - onCreate");
         Intent intent = getIntent();
         if (!isTaskRoot()) {
-            Log.i(AnkiDroidApp.TAG, "DeckPicker - onCreate: Detected multiple instance of this activity, closing it and return to root activity");
+            Log.i(AnkiDroidApp.TAG,
+                    "DeckPicker - onCreate: Detected multiple instance of this activity, closing it and return to root activity");
             Intent reloadIntent = new Intent(DeckPicker.this, DeckPicker.class);
             reloadIntent.setAction(Intent.ACTION_MAIN);
             if (intent != null && intent.getExtras() != null) {
@@ -931,7 +947,8 @@ public class DeckPicker extends ActionBarActivity {
         View studyoptionsFrame = findViewById(R.id.studyoptions_fragment);
         mFragmented = studyoptionsFrame != null && studyoptionsFrame.getVisibility() == View.VISIBLE;
 
-        Themes.setContentStyle(mFragmented ? mainView : mainView.findViewById(R.id.deckpicker_view), Themes.CALLER_DECKPICKER);
+        Themes.setContentStyle(mFragmented ? mainView : mainView.findViewById(R.id.deckpicker_view),
+                Themes.CALLER_DECKPICKER);
 
         registerExternalStorageListener();
 
@@ -995,47 +1012,44 @@ public class DeckPicker extends ActionBarActivity {
                     }
                 } else if (view.getId() == R.id.deckpicker_new) {
                     // Set the right color, light gray or blue.
-                    ((TextView) view).setTextColor(
-                            (text.equals("0")) ? getResources().getColor(R.color.zero_count) :
-                            getResources().getColor(R.color.new_count));
-                    return false;  // Let SimpleAdapter take care of binding the number to the TextView.
+                    ((TextView) view).setTextColor((text.equals("0")) ? getResources().getColor(R.color.zero_count)
+                            : getResources().getColor(R.color.new_count));
+                    return false; // Let SimpleAdapter take care of binding the number to the TextView.
                 } else if (view.getId() == R.id.deckpicker_lrn) {
                     // ... or red.
-                    ((TextView) view).setTextColor(
-                            (text.equals("0")) ? getResources().getColor(R.color.zero_count) :
-                            getResources().getColor(R.color.learn_count));
+                    ((TextView) view).setTextColor((text.equals("0")) ? getResources().getColor(R.color.zero_count)
+                            : getResources().getColor(R.color.learn_count));
                     return false;
                 } else if (view.getId() == R.id.deckpicker_rev) {
                     // ... or green.
-                    ((TextView) view).setTextColor(
-                            (text.equals("0")) ? getResources().getColor(R.color.zero_count) :
-                            getResources().getColor(R.color.review_count));
+                    ((TextView) view).setTextColor((text.equals("0")) ? getResources().getColor(R.color.zero_count)
+                            : getResources().getColor(R.color.review_count));
                     return false;
                 }
-                    // } else if (view.getId() == R.id.deckpicker_bar_mat || view.getId() == R.id.deckpicker_bar_all) {
-                    // if (text.length() > 0 && !text.equals("-1.0")) {
-                    // View parent = (View)view.getParent().getParent();
-                    // if (text.equals("-2")) {
-                    // parent.setVisibility(View.GONE);
-                    // } else {
-                    // Utils.updateProgressBars(view, (int) UIUtils.getDensityAdjustedValue(DeckPicker.this, 3.4f),
-                    // (int) (Double.parseDouble(text) * ((View)view.getParent().getParent().getParent()).getHeight()));
-                    // if (parent.getVisibility() == View.INVISIBLE) {
-                    // parent.setVisibility(View.VISIBLE);
-                    // parent.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
-                    // }
-                    // }
-                    // }
-                    // return true;
-                    // } else if (view.getVisibility() == View.INVISIBLE) {
-                    // if (!text.equals("-1")) {
-                    // view.setVisibility(View.VISIBLE);
-                    // view.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
-                    // return false;
-                    // }
-                    // } else if (text.equals("-1")){
-                    // view.setVisibility(View.INVISIBLE);
-                    // return false;
+                // } else if (view.getId() == R.id.deckpicker_bar_mat || view.getId() == R.id.deckpicker_bar_all) {
+                // if (text.length() > 0 && !text.equals("-1.0")) {
+                // View parent = (View)view.getParent().getParent();
+                // if (text.equals("-2")) {
+                // parent.setVisibility(View.GONE);
+                // } else {
+                // Utils.updateProgressBars(view, (int) UIUtils.getDensityAdjustedValue(DeckPicker.this, 3.4f),
+                // (int) (Double.parseDouble(text) * ((View)view.getParent().getParent().getParent()).getHeight()));
+                // if (parent.getVisibility() == View.INVISIBLE) {
+                // parent.setVisibility(View.VISIBLE);
+                // parent.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
+                // }
+                // }
+                // }
+                // return true;
+                // } else if (view.getVisibility() == View.INVISIBLE) {
+                // if (!text.equals("-1")) {
+                // view.setVisibility(View.VISIBLE);
+                // view.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
+                // return false;
+                // }
+                // } else if (text.equals("-1")){
+                // view.setVisibility(View.INVISIBLE);
+                // return false;
                 return false;
             }
         });
@@ -1083,16 +1097,19 @@ public class DeckPicker extends ActionBarActivity {
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
-      super.onSaveInstanceState(savedInstanceState);
-      savedInstanceState.putLong("mCurrentDid", mCurrentDid);
-//      savedInstanceState.putSerializable("mDeckList", mDeckList);
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putLong("mCurrentDid", mCurrentDid);
+        // savedInstanceState.putSerializable("mDeckList", mDeckList);
     }
+
+
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
-      super.onRestoreInstanceState(savedInstanceState);
-      mCurrentDid = savedInstanceState.getLong("mCurrentDid");
-//      mDeckList = (ArrayList<HashMap<String, String>>) savedInstanceState.getSerializable("mDeckList");
+        super.onRestoreInstanceState(savedInstanceState);
+        mCurrentDid = savedInstanceState.getLong("mCurrentDid");
+        // mDeckList = (ArrayList<HashMap<String, String>>) savedInstanceState.getSerializable("mDeckList");
     }
+
 
     private void loadCollection() {
         if (!AnkiDroidApp.isSdCardMounted()) {
@@ -1102,7 +1119,8 @@ public class DeckPicker extends ActionBarActivity {
         String path = AnkiDroidApp.getCollectionPath();
         Collection col = AnkiDroidApp.getCol();
         if (col == null || !col.getPath().equals(path) || mDeckListView == null || mDeckListView.getChildCount() == 0) {
-            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPEN_COLLECTION, mOpenCollectionHandler, new DeckTask.TaskData(path));
+            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPEN_COLLECTION, mOpenCollectionHandler, new DeckTask.TaskData(
+                    path));
         } else {
             loadCounts();
         }
@@ -1111,13 +1129,14 @@ public class DeckPicker extends ActionBarActivity {
 
     public void loadCounts() {
         if (AnkiDroidApp.colIsOpen()) {
-            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK_COUNTS, mLoadCountsHandler, new TaskData(AnkiDroidApp.getCol()));
+            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK_COUNTS, mLoadCountsHandler,
+                    new TaskData(AnkiDroidApp.getCol()));
         }
     }
 
 
     private void addNote() {
-        Preferences.COMING_FROM_ADD=true;
+        Preferences.COMING_FROM_ADD = true;
         Intent intent = new Intent(DeckPicker.this, CardEditor.class);
         intent.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_DECKPICKER);
         startActivityForResult(intent, ADD_NOTE);
@@ -1142,18 +1161,21 @@ public class DeckPicker extends ActionBarActivity {
         return false;
     }
 
+
     private void showUpgradeScreen(boolean animation, int stage) {
         showUpgradeScreen(animation, stage, true);
     }
+
 
     private void showUpgradeScreen(boolean animation, int stage, boolean left) {
         Intent upgradeIntent = new Intent(this, Info.class);
         upgradeIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_UPGRADE_DECKS);
         upgradeIntent.putExtra(Info.TYPE_UPGRADE_STAGE, stage);
         startActivityForResult(upgradeIntent, SHOW_INFO_UPGRADE_DECKS);
-        ActivityTransitionAnimation.slide(this,
-                left ? ActivityTransitionAnimation.LEFT : ActivityTransitionAnimation.RIGHT);
+        ActivityTransitionAnimation.slide(this, left ? ActivityTransitionAnimation.LEFT
+                : ActivityTransitionAnimation.RIGHT);
     }
+
 
     private boolean upgradeNeeded() {
         if (!AnkiDroidApp.isSdCardMounted()) {
@@ -1173,6 +1195,7 @@ public class DeckPicker extends ActionBarActivity {
         }
         return false;
     }
+
 
     private SharedPreferences restorePreferences() {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
@@ -1208,8 +1231,8 @@ public class DeckPicker extends ActionBarActivity {
         } else if (skip < 3 && upgradeNeeded()) {
             // Note that the "upgrade needed" refers to upgrading Anki 1.x decks, not to newer
             // versions of AnkiDroid.
-            AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext())
-                    .edit().putInt("lastUpgradeVersion", AnkiDroidApp.getPkgVersionCode()).commit();
+            AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit()
+                    .putInt("lastUpgradeVersion", AnkiDroidApp.getPkgVersionCode()).commit();
             showUpgradeScreen(skip != 0, Info.UPGRADE_SCREEN_BASIC1);
         } else if (skip < 4 && hasErrorFiles()) {
             Intent i = new Intent(this, Feedback.class);
@@ -1255,8 +1278,7 @@ public class DeckPicker extends ActionBarActivity {
             }
             final int previous = previousTemp;
             preferences.edit().putInt("lastUpgradeVersion", current).commit();
-            if (previous < AnkiDroidApp.CHECK_DB_AT_VERSION ||
-                    previous < AnkiDroidApp.CHECK_PREFERENCES_AT_VERSION) {
+            if (previous < AnkiDroidApp.CHECK_DB_AT_VERSION || previous < AnkiDroidApp.CHECK_PREFERENCES_AT_VERSION) {
 
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPEN_COLLECTION, new Listener() {
                     @Override
@@ -1270,9 +1292,11 @@ public class DeckPicker extends ActionBarActivity {
                         }
                     }
 
+
                     @Override
                     public void onPreExecute(DeckTask task) {
                     }
+
 
                     @Override
                     public void onProgressUpdate(DeckTask task, TaskData... values) {
@@ -1314,7 +1338,8 @@ public class DeckPicker extends ActionBarActivity {
         super.onStop();
         if (!mDontSaveOnStop) {
             if (isFinishing()) {
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CLOSE_DECK, mCloseCollectionHandler, new TaskData(AnkiDroidApp.getCol()));
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CLOSE_DECK, mCloseCollectionHandler, new TaskData(
+                        AnkiDroidApp.getCol()));
             } else {
                 StudyOptionsFragment frag = getFragment();
                 if (!(frag != null && !frag.dbSaveNecessary())) {
@@ -1424,12 +1449,10 @@ public class DeckPicker extends ActionBarActivity {
                                 i.putExtra("request", RESULT_DB_ERROR);
                                 dialog.dismiss();
                                 startActivityForResult(i, REPORT_ERROR);
-                                ActivityTransitionAnimation.slide(DeckPicker.this,
-                                        ActivityTransitionAnimation.RIGHT);
+                                ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.RIGHT);
                             }
                         });
-                builder.setNegativeButton(res.getString(R.string.close),
-                        new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(res.getString(R.string.close), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (!AnkiDroidApp.colIsOpen()) {
@@ -1526,46 +1549,45 @@ public class DeckPicker extends ActionBarActivity {
                 // Message is set in onPrepareDialog
                 builder.setTitle(res.getString(R.string.delete_deck_title));
                 builder.setIcon(R.drawable.ic_dialog_alert);
-                builder.setPositiveButton(res.getString(R.string.yes),
-                        new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(res.getString(R.string.yes), new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DELETE_DECK, new DeckTask.TaskListener() {
+                            @Override
+                            public void onPreExecute() {
+                                mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "", getResources()
+                                        .getString(R.string.delete_deck), true);
+                            }
+
 
                             @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DELETE_DECK, new DeckTask.TaskListener() {
-                                    @Override
-                                    public void onPreExecute() {
-                                        mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "", getResources()
-                                                .getString(R.string.delete_deck), true);
+                            public void onPostExecute(TaskData result) {
+                                if (result == null) {
+                                    return;
+                                }
+                                Object[] res = result.getObjArray();
+                                updateDecksList((TreeSet<Object[]>) res[0], (Integer) res[1], (Integer) res[2]);
+                                if (mFragmented) {
+                                    selectDeck(AnkiDroidApp.getCol().getDecks().selected());
+                                }
+                                if (mProgressDialog.isShowing()) {
+                                    try {
+                                        mProgressDialog.dismiss();
+                                    } catch (Exception e) {
+                                        Log.e(AnkiDroidApp.TAG,
+                                                "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
                                     }
-
-
-                                    @Override
-                                    public void onPostExecute(TaskData result) {
-                                        if (result == null) {
-                                            return;
-                                        }
-                                        Object[] res = result.getObjArray();
-                                        updateDecksList((TreeSet<Object[]>) res[0], (Integer) res[1], (Integer) res[2]);
-                                        if (mFragmented) {
-                                            selectDeck(AnkiDroidApp.getCol().getDecks().selected());
-                                        }
-                                        if (mProgressDialog.isShowing()) {
-                                            try {
-                                                mProgressDialog.dismiss();
-                                            } catch (Exception e) {
-                                                Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = "
-                                                        + e.getMessage());
-                                            }
-                                        }
-                                    }
-
-
-                                    @Override
-                                    public void onProgressUpdate(TaskData... values) {
-                                    }
-                                }, new TaskData(AnkiDroidApp.getCol(), mCurrentDid));
+                                }
                             }
-                        });
+
+
+                            @Override
+                            public void onProgressUpdate(TaskData... values) {
+                            }
+                        }, new TaskData(AnkiDroidApp.getCol(), mCurrentDid));
+                    }
+                });
                 builder.setNegativeButton(res.getString(R.string.cancel), null);
                 dialog = builder.create();
                 break;
@@ -1579,9 +1601,9 @@ public class DeckPicker extends ActionBarActivity {
                         DeckTask.launchDeckTask(
                                 DeckTask.TASK_TYPE_LOAD_STATISTICS,
                                 mLoadStatisticsHandler,
-                                new DeckTask.TaskData(AnkiDroidApp.getCol(), which, mFragmented ? AnkiDroidApp.getSharedPrefs(
-                                        AnkiDroidApp.getInstance().getBaseContext()).getBoolean("statsRange", true)
-                                        : true));
+                                new DeckTask.TaskData(AnkiDroidApp.getCol(), which, mFragmented ? AnkiDroidApp
+                                        .getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getBoolean(
+                                                "statsRange", true) : true));
                     }
                 }, mFragmented);
                 break;
@@ -1709,19 +1731,21 @@ public class DeckPicker extends ActionBarActivity {
 
             case DIALOG_SD_CARD_NOT_MOUNTED:
                 if (mNotMountedDialog == null || !mNotMountedDialog.isShowing()) {
-                    mNotMountedDialog = StyledOpenCollectionDialog.show(DeckPicker.this, getResources().getString(R.string.sd_card_not_mounted), new OnCancelListener() {
+                    mNotMountedDialog = StyledOpenCollectionDialog.show(DeckPicker.this,
+                            getResources().getString(R.string.sd_card_not_mounted), new OnCancelListener() {
 
-                        @Override
-                        public void onCancel(DialogInterface arg0) {
-                            finishWithAnimation();
-                        }
-                    }, new View.OnClickListener() {
+                                @Override
+                                public void onCancel(DialogInterface arg0) {
+                                    finishWithAnimation();
+                                }
+                            }, new View.OnClickListener() {
 
-                        @Override
-                        public void onClick(View v) {
-                            startActivityForResult(new Intent(DeckPicker.this, Preferences.class), PREFERENCES_UPDATE);
-                        }
-                    });
+                                @Override
+                                public void onClick(View v) {
+                                    startActivityForResult(new Intent(DeckPicker.this, Preferences.class),
+                                            PREFERENCES_UPDATE);
+                                }
+                            });
                 }
                 dialog = null;
                 break;
@@ -1729,36 +1753,39 @@ public class DeckPicker extends ActionBarActivity {
             case DIALOG_IMPORT:
                 builder.setTitle(res.getString(R.string.import_title));
                 builder.setMessage(res.getString(R.string.import_message, mImportPath));
-                builder.setPositiveButton(res.getString(R.string.import_message_add), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_IMPORT, mImportAddListener,
-                                new TaskData(AnkiDroidApp.getCol(), mImportPath, false));
-                        mImportPath = null;
-                    }
-                });
-                builder.setNeutralButton(res.getString(R.string.import_message_replace), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Resources res = getResources();
-                        StyledDialog.Builder builder = new StyledDialog.Builder(DeckPicker.this);
-                        builder.setTitle(res.getString(R.string.import_title));
-                        builder.setMessage(res.getString(R.string.import_message_replace_confirm, mImportPath));
-                        builder.setPositiveButton(res.getString(R.string.yes), new DialogInterface.OnClickListener() {
-
+                builder.setPositiveButton(res.getString(R.string.import_message_add),
+                        new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialog,
-                                    int which) {
-                                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_IMPORT_REPLACE, mImportReplaceListener,
-                                        new TaskData(AnkiDroidApp.getCol(), mImportPath));
+                            public void onClick(DialogInterface dialog, int which) {
+                                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_IMPORT, mImportAddListener, new TaskData(
+                                        AnkiDroidApp.getCol(), mImportPath, false));
                                 mImportPath = null;
                             }
-
                         });
-                        builder.setNegativeButton(res.getString(R.string.no), null);
-                        builder.show();
-                    }
-                });
+                builder.setNeutralButton(res.getString(R.string.import_message_replace),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Resources res = getResources();
+                                StyledDialog.Builder builder = new StyledDialog.Builder(DeckPicker.this);
+                                builder.setTitle(res.getString(R.string.import_title));
+                                builder.setMessage(res.getString(R.string.import_message_replace_confirm, mImportPath));
+                                builder.setPositiveButton(res.getString(R.string.yes),
+                                        new DialogInterface.OnClickListener() {
+
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_IMPORT_REPLACE,
+                                                        mImportReplaceListener, new TaskData(AnkiDroidApp.getCol(),
+                                                                mImportPath));
+                                                mImportPath = null;
+                                            }
+
+                                        });
+                                builder.setNegativeButton(res.getString(R.string.no), null);
+                                builder.show();
+                            }
+                        });
                 builder.setNegativeButton(res.getString(R.string.cancel), null);
                 builder.setCancelable(true);
                 dialog = builder.create();
@@ -1772,13 +1799,13 @@ public class DeckPicker extends ActionBarActivity {
             case DIALOG_IMPORT_HINT:
                 builder.setTitle(res.getString(R.string.import_title));
                 builder.setMessage(res.getString(R.string.import_hint, AnkiDroidApp.getCurrentAnkiDroidDirectory()));
-                builder.setPositiveButton(res.getString(R.string.ok),  new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(res.getString(R.string.ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         showDialog(DIALOG_IMPORT_SELECT);
                     }
                 });
-                builder.setNegativeButton(res.getString(R.string.cancel),  null);
+                builder.setNegativeButton(res.getString(R.string.cancel), null);
                 dialog = builder.create();
                 break;
 
@@ -1815,110 +1842,112 @@ public class DeckPicker extends ActionBarActivity {
                 dialog = builder.create();
                 break;
 
-             case DIALOG_RESTORE_BACKUP:
-                 File[] files = BackupManager.getBackups(new File(AnkiDroidApp.getCollectionPath()));
-                 mBackups = new File[files.length];
-                 for (int i = 0; i < files.length; i++) {
-                     mBackups[i] = files[files.length - 1 - i];
-                 }
-                 if (mBackups.length == 0) {
-                     builder.setTitle(getResources().getString(R.string.backup_restore));
-                     builder.setMessage(res.getString(R.string.backup_restore_no_backups));
-                     builder.setPositiveButton(res.getString(R.string.ok), new
-                             Dialog.OnClickListener() {
-                         @Override
-                         public void onClick(DialogInterface dialog, int which) {
-                             showDialog(DIALOG_ERROR_HANDLING);
-                         }
-                     });
-                     builder.setCancelable(true).setOnCancelListener(new OnCancelListener() {
-                         @Override
-                         public void onCancel(DialogInterface arg0) {
-                             showDialog(DIALOG_ERROR_HANDLING);
-                         }
-                     });
-                 } else {
-                     String[] dates = new String[mBackups.length];
-                     for (int i = 0; i < mBackups.length; i++) {
-                         dates[i] = mBackups[i].getName().replaceAll(".*-(\\d{4}-\\d{2}-\\d{2})-(\\d{2})-(\\d{2}).anki2", "$1 ($2:$3 h)");
-                     }
-                     builder.setTitle(res.getString(R.string.backup_restore_select_title));
-                     builder.setIcon(android.R.drawable.ic_input_get);
-                     builder.setSingleChoiceItems(dates, dates.length, new DialogInterface.OnClickListener(){
+            case DIALOG_RESTORE_BACKUP:
+                File[] files = BackupManager.getBackups(new File(AnkiDroidApp.getCollectionPath()));
+                mBackups = new File[files.length];
+                for (int i = 0; i < files.length; i++) {
+                    mBackups[i] = files[files.length - 1 - i];
+                }
+                if (mBackups.length == 0) {
+                    builder.setTitle(getResources().getString(R.string.backup_restore));
+                    builder.setMessage(res.getString(R.string.backup_restore_no_backups));
+                    builder.setPositiveButton(res.getString(R.string.ok), new Dialog.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            showDialog(DIALOG_ERROR_HANDLING);
+                        }
+                    });
+                    builder.setCancelable(true).setOnCancelListener(new OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface arg0) {
+                            showDialog(DIALOG_ERROR_HANDLING);
+                        }
+                    });
+                } else {
+                    String[] dates = new String[mBackups.length];
+                    for (int i = 0; i < mBackups.length; i++) {
+                        dates[i] = mBackups[i].getName().replaceAll(
+                                ".*-(\\d{4}-\\d{2}-\\d{2})-(\\d{2})-(\\d{2}).anki2", "$1 ($2:$3 h)");
+                    }
+                    builder.setTitle(res.getString(R.string.backup_restore_select_title));
+                    builder.setIcon(android.R.drawable.ic_input_get);
+                    builder.setSingleChoiceItems(dates, dates.length, new DialogInterface.OnClickListener() {
 
-                         @Override
-                         public void onClick(DialogInterface dialog, int which) {
-                              DeckTask.launchDeckTask(DeckTask.TASK_TYPE_RESTORE_DECK, mRestoreDeckHandler, new DeckTask.TaskData(new Object[]{AnkiDroidApp.getCol(), AnkiDroidApp.getCollectionPath(), mBackups[which].getPath()}));
-                         }
-                        });
-                     builder.setCancelable(true).setOnCancelListener(new OnCancelListener() {
-                         @Override
-                         public void onCancel(DialogInterface arg0) {
-                             showDialog(DIALOG_ERROR_HANDLING);
-                         }
-                     });
-                 }
-                 dialog = builder.create();
-                 break;
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            DeckTask.launchDeckTask(
+                                    DeckTask.TASK_TYPE_RESTORE_DECK,
+                                    mRestoreDeckHandler,
+                                    new DeckTask.TaskData(new Object[] { AnkiDroidApp.getCol(),
+                                            AnkiDroidApp.getCollectionPath(), mBackups[which].getPath() }));
+                        }
+                    });
+                    builder.setCancelable(true).setOnCancelListener(new OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface arg0) {
+                            showDialog(DIALOG_ERROR_HANDLING);
+                        }
+                    });
+                }
+                dialog = builder.create();
+                break;
 
-             case DIALOG_NEW_COLLECTION:
-                 builder.setTitle(res.getString(R.string.backup_new_collection));
-                 builder.setMessage(res.getString(R.string.backup_del_collection_question));
-                 builder.setPositiveButton(res.getString(R.string.ok), new DialogInterface.OnClickListener() {
-                     @Override
-                     public void onClick(DialogInterface dialog, int which) {
-                         AnkiDroidApp.closeCollection(false);
-                         String path = AnkiDroidApp.getCollectionPath();
-                         AnkiDatabaseManager.closeDatabase(path);
-                         if (BackupManager.moveDatabaseToBrokenFolder(path, false)) {
-                             loadCollection();
+            case DIALOG_NEW_COLLECTION:
+                builder.setTitle(res.getString(R.string.backup_new_collection));
+                builder.setMessage(res.getString(R.string.backup_del_collection_question));
+                builder.setPositiveButton(res.getString(R.string.ok), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        AnkiDroidApp.closeCollection(false);
+                        String path = AnkiDroidApp.getCollectionPath();
+                        AnkiDatabaseManager.closeDatabase(path);
+                        if (BackupManager.moveDatabaseToBrokenFolder(path, false)) {
+                            loadCollection();
                         } else {
                             showDialog(DIALOG_ERROR_HANDLING);
                         }
-                     }
-                 });
-                 builder.setNegativeButton(res.getString(R.string.no), new
-                         DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface arg0, int arg1) {
-                            showDialog(DIALOG_ERROR_HANDLING);
-                         }
-                  });
-                 builder.setCancelable(true);
-                 builder.setOnCancelListener(new OnCancelListener() {
-                     @Override
-                     public void onCancel(DialogInterface arg0) {
-                         showDialog(DIALOG_ERROR_HANDLING);
-                     }
-                 });
-                 dialog = builder.create();
-                 break;
+                    }
+                });
+                builder.setNegativeButton(res.getString(R.string.no), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        showDialog(DIALOG_ERROR_HANDLING);
+                    }
+                });
+                builder.setCancelable(true);
+                builder.setOnCancelListener(new OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface arg0) {
+                        showDialog(DIALOG_ERROR_HANDLING);
+                    }
+                });
+                dialog = builder.create();
+                break;
 
-             case DIALOG_FULL_SYNC_FROM_SERVER:
-                 builder.setTitle(res.getString(R.string.backup_full_sync_from_server));
-                 builder.setMessage(res.getString(R.string.backup_full_sync_from_server_question));
-                 builder.setPositiveButton(res.getString(R.string.ok), new DialogInterface.OnClickListener() {
-                     @Override
-                     public void onClick(DialogInterface dialog, int which) {
-                         sync("download", mSyncMediaUsn);
-                     }
-                 });
-                 builder.setNegativeButton(res.getString(R.string.no), new
-                         DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface arg0, int arg1) {
-                            showDialog(DIALOG_ERROR_HANDLING);
-                         }
-                  });
-                 builder.setCancelable(true);
-                 builder.setOnCancelListener(new OnCancelListener() {
-                     @Override
-                     public void onCancel(DialogInterface arg0) {
-                         showDialog(DIALOG_ERROR_HANDLING);
-                     }
-                 });
-                 dialog = builder.create();
-                 break;
+            case DIALOG_FULL_SYNC_FROM_SERVER:
+                builder.setTitle(res.getString(R.string.backup_full_sync_from_server));
+                builder.setMessage(res.getString(R.string.backup_full_sync_from_server_question));
+                builder.setPositiveButton(res.getString(R.string.ok), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        sync("download", mSyncMediaUsn);
+                    }
+                });
+                builder.setNegativeButton(res.getString(R.string.no), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        showDialog(DIALOG_ERROR_HANDLING);
+                    }
+                });
+                builder.setCancelable(true);
+                builder.setOnCancelListener(new OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface arg0) {
+                        showDialog(DIALOG_ERROR_HANDLING);
+                    }
+                });
+                dialog = builder.create();
+                break;
 
             default:
                 dialog = null;
@@ -1955,7 +1984,12 @@ public class DeckPicker extends ActionBarActivity {
                 }
                 mCurrentDid = Long.parseLong(mDeckList.get(mContextMenuPosition).get("did"));
                 try {
-                    ad.changeListItem(CONTEXT_MENU_COLLAPSE_DECK, getResources().getString(AnkiDroidApp.getCol().getDecks().get(mCurrentDid).getBoolean("collapsed") ? R.string.contextmenu_deckpicker_inflate_deck : R.string.contextmenu_deckpicker_collapse_deck));
+                    ad.changeListItem(
+                            CONTEXT_MENU_COLLAPSE_DECK,
+                            getResources()
+                                    .getString(
+                                            AnkiDroidApp.getCol().getDecks().get(mCurrentDid).getBoolean("collapsed") ? R.string.contextmenu_deckpicker_inflate_deck
+                                                    : R.string.contextmenu_deckpicker_collapse_deck));
                 } catch (NotFoundException e) {
                     // do nothing
                 } catch (JSONException e) {
@@ -1968,7 +2002,7 @@ public class DeckPicker extends ActionBarActivity {
             case DIALOG_SYNC_LOG:
             case DIALOG_SYNC_SANITY_ERROR:
                 // If both have text, separate them by a new line.
-                if (!TextUtils.isEmpty(mDialogMessage) &&  !TextUtils.isEmpty(mSyncMessage)) {
+                if (!TextUtils.isEmpty(mDialogMessage) && !TextUtils.isEmpty(mSyncMessage)) {
                     ad.setMessage(mDialogMessage + "\n\n" + mSyncMessage);
                 } else if (!TextUtils.isEmpty(mDialogMessage)) {
                     ad.setMessage(mDialogMessage);
@@ -2050,8 +2084,8 @@ public class DeckPicker extends ActionBarActivity {
             case DIALOG_IMPORT_SELECT:
                 List<File> fileList = Utils.getImportableDecks();
                 if (fileList.size() == 0) {
-                    Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.upgrade_import_no_file_found),
-                            false);
+                    Themes.showThemedToast(DeckPicker.this,
+                            getResources().getString(R.string.upgrade_import_no_file_found), false);
                 }
                 ad.setEnabled(fileList.size() != 0);
                 String[] tts = new String[fileList.size()];
@@ -2064,14 +2098,14 @@ public class DeckPicker extends ActionBarActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         mImportPath = mImportValues[which];
-                        //If the apkg file is called "collection.apkg", we assume the collection will be replaced
-                        if (mImportPath.split("/")[mImportPath.split("/").length-1].equals("collection.apkg")){
-                                mImportMethod=IMPORT_METHOD_REPLACE;
+                        // If the apkg file is called "collection.apkg", we assume the collection will be replaced
+                        if (mImportPath.split("/")[mImportPath.split("/").length - 1].equals("collection.apkg")) {
+                            mImportMethod = IMPORT_METHOD_REPLACE;
                         }
                         switch (mImportMethod) {
                             case IMPORT_METHOD_ADD:
-                                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_IMPORT, mImportAddListener,
-                                        new TaskData(AnkiDroidApp.getCol(), mImportPath, false));
+                                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_IMPORT, mImportAddListener, new TaskData(
+                                        AnkiDroidApp.getCol(), mImportPath, false));
                                 mImportPath = null;
                                 break;
                             case IMPORT_METHOD_REPLACE:
@@ -2105,10 +2139,12 @@ public class DeckPicker extends ActionBarActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+
     private void finishWithAnimation() {
         finish();
         ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.DIALOG_EXIT);
     }
+
 
     // ----------------------------------------------------------------------------
     // CUSTOM METHODS
@@ -2117,11 +2153,12 @@ public class DeckPicker extends ActionBarActivity {
     public void setStudyContentView(long deckId, Bundle cramConfig) {
         StudyOptionsFragment details = StudyOptionsFragment.newInstance(deckId, false, cramConfig);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-//      ft.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
+        // ft.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
         ft.replace(R.id.studyoptions_fragment, details);
         ft.commit();
     }
+
 
     public StudyOptionsFragment getFragment() {
         Fragment frag = (Fragment) getSupportFragmentManager().findFragmentById(R.id.studyoptions_fragment);
@@ -2130,6 +2167,7 @@ public class DeckPicker extends ActionBarActivity {
         }
         return null;
     }
+
 
     /**
      * Show/dismiss dialog when sd card is ejected/remounted (collection is saved by SdCardReceiver)
@@ -2201,7 +2239,7 @@ public class DeckPicker extends ActionBarActivity {
      * The mother of all syncing attempts. This might be called from sync() as first attempt to sync a collection OR
      * from the mSyncConflictResolutionListener if the first attempt determines that a full-sync is required. In the
      * second case, we have passed the mediaUsn that was obtained during the first attempt.
-     *
+     * 
      * @param syncConflictResolution Either "upload" or "download", depending on the user's choice.
      * @param syncMediaUsn The media Usn, as determined during the prior sync() attempt that determined that full
      *            syncing was required.
@@ -2212,9 +2250,9 @@ public class DeckPicker extends ActionBarActivity {
         if (hkey.length() == 0) {
             showDialog(DIALOG_USER_NOT_LOGGED_IN_SYNC);
         } else {
-            Connection.sync(mSyncListener, new Connection.Payload(new Object[] { hkey,
-                    preferences.getBoolean("syncFetchesMedia", true),
-                    syncConflictResolution, syncMediaUsn }));
+            Connection.sync(mSyncListener,
+                    new Connection.Payload(new Object[] { hkey, preferences.getBoolean("syncFetchesMedia", true),
+                            syncConflictResolution, syncMediaUsn }));
         }
     }
 
@@ -2428,9 +2466,8 @@ public class DeckPicker extends ActionBarActivity {
             case R.id.action_online:
             case R.id.action_faq:
                 if (Utils.isIntentAvailable(DeckPicker.this, "android.intent.action.VIEW")) {
-                    Intent intent = new Intent("android.intent.action.VIEW", Uri
-                            .parse(getResources().getString(
-                                    item.getItemId() == R.id.action_online ? R.string.link_help : R.string.link_faq)));
+                    Intent intent = new Intent("android.intent.action.VIEW", Uri.parse(getResources().getString(
+                            item.getItemId() == R.id.action_online ? R.string.link_help : R.string.link_faq)));
                     startActivity(intent);
                 } else {
                     startActivity(new Intent(DeckPicker.this, Info.class));
@@ -2472,8 +2509,8 @@ public class DeckPicker extends ActionBarActivity {
             loadCounts();
         } else if (requestCode == ADD_NOTE && resultCode != RESULT_CANCELED) {
             loadCounts();
-        } else if (requestCode == BROWSE_CARDS &&
-                (resultCode == Activity.RESULT_OK || resultCode == Activity.RESULT_CANCELED)) {
+        } else if (requestCode == BROWSE_CARDS
+                && (resultCode == Activity.RESULT_OK || resultCode == Activity.RESULT_CANCELED)) {
             loadCounts();
         } else if (requestCode == ADD_CRAM_DECK) {
             // TODO: check, if ok has been clicked
@@ -2656,7 +2693,9 @@ public class DeckPicker extends ActionBarActivity {
     private void openStudyOptions(long deckId) {
         openStudyOptions(deckId, null);
     }
-        private void openStudyOptions(long deckId, Bundle cramInitialConfig) {
+
+
+    private void openStudyOptions(long deckId, Bundle cramInitialConfig) {
         if (mFragmented) {
             setStudyContentView(deckId, cramInitialConfig);
         } else {
@@ -2682,6 +2721,7 @@ public class DeckPicker extends ActionBarActivity {
 
     /**
      * Programmatically click on a deck in the deck list.
+     * 
      * @param did The deck ID of the deck to select.
      */
     private void selectDeck(long did) {
@@ -2701,11 +2741,13 @@ public class DeckPicker extends ActionBarActivity {
         }
     }
 
+
     /**
      * Set which deck is selected (highlighted) in the deck list.
      * <p>
-     * Note that this method does not change the currently selected deck in the collection, only the highlighted
-     * deck in the deck list. To select a deck, see {@link #selectDeck(long)}.
+     * Note that this method does not change the currently selected deck in the collection, only the highlighted deck in
+     * the deck list. To select a deck, see {@link #selectDeck(long)}.
+     * 
      * @param did The deck ID of the deck to select.
      */
     public void setSelectedDeck(long did) {
@@ -2716,6 +2758,7 @@ public class DeckPicker extends ActionBarActivity {
             }
         }
     }
+
 
     private void handleDeckSelection(int id) {
         if (!AnkiDroidApp.colIsOpen()) {
@@ -2822,7 +2865,8 @@ public class DeckPicker extends ActionBarActivity {
             if (eta != -1) {
                 time = res.getQuantityString(R.plurals.deckpicker_title_minutes, eta, eta);
             }
-            AnkiDroidApp.getCompat().setSubtitle(this, res.getQuantityString(R.plurals.deckpicker_title, due, due, count, time));
+            AnkiDroidApp.getCompat().setSubtitle(this,
+                    res.getQuantityString(R.plurals.deckpicker_title, due, due, count, time));
         }
 
         // update widget
@@ -2843,13 +2887,13 @@ public class DeckPicker extends ActionBarActivity {
     // INNER CLASSES
     // ----------------------------------------------------------------------------
 
-
     class MyGestureDetector extends SimpleOnGestureListener {
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             if (mSwipeEnabled && !mFragmented) {
                 try {
-                    if (e1.getX() - e2.getX() > AnkiDroidApp.sSwipeMinDistance && Math.abs(velocityX) > AnkiDroidApp.sSwipeThresholdVelocity
+                    if (e1.getX() - e2.getX() > AnkiDroidApp.sSwipeMinDistance
+                            && Math.abs(velocityX) > AnkiDroidApp.sSwipeThresholdVelocity
                             && Math.abs(e1.getY() - e2.getY()) < AnkiDroidApp.sSwipeMaxOffPath) {
                         mDontSaveOnStop = true;
                         float pos = e1.getY();
@@ -2858,14 +2902,16 @@ public class DeckPicker extends ActionBarActivity {
                             Rect rect = new Rect();
                             v.getHitRect(rect);
                             if (rect.top < pos && rect.bottom > pos) {
-                                HashMap<String, String> data = (HashMap<String, String>) mDeckListAdapter.getItem(mDeckListView.getPositionForView(v));
+                                HashMap<String, String> data = (HashMap<String, String>) mDeckListAdapter
+                                        .getItem(mDeckListView.getPositionForView(v));
                                 Collection col = AnkiDroidApp.getCol();
                                 if (col != null) {
                                     col.getDecks().select(Long.parseLong(data.get("did")));
                                     col.reset();
                                     Intent reviewer = new Intent(DeckPicker.this, Reviewer.class);
                                     startActivityForResult(reviewer, REQUEST_REVIEW);
-                                    ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.LEFT);
+                                    ActivityTransitionAnimation
+                                            .slide(DeckPicker.this, ActivityTransitionAnimation.LEFT);
                                     return true;
                                 }
                             }
@@ -2906,6 +2952,7 @@ public class DeckPicker extends ActionBarActivity {
         }
         return sb.toString();
     }
+
 
     @Override
     public void onAttachedToWindow() {
