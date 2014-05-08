@@ -142,6 +142,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         }
     }
 
+
     /*
      * Runs on GUI thread
      */
@@ -182,6 +183,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         return sInstance.isCancelled();
     }
 
+
     public static void cancelTask() {
         try {
             if (sInstance != null && sInstance.getStatus() != AsyncTask.Status.FINISHED) {
@@ -191,6 +193,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             return;
         }
     }
+
 
     public static Connection login(TaskListener listener, Payload data) {
         data.taskType = TASK_TYPE_LOGIN;
@@ -285,7 +288,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 return doInBackgroundUpgradeDecks(data);
 
             case TASK_TYPE_DOWNLOAD_SHARED_DECK:
-            	return doInBackgroundDownloadSharedDeck(data);
+                return doInBackgroundDownloadSharedDeck(data);
 
             default:
                 return null;
@@ -302,7 +305,8 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         boolean valid = false;
         if (ret != null) {
             data.returnType = ret.getStatusLine().getStatusCode();
-            Log.i(AnkiDroidApp.TAG, "doInBackgroundLogin - response from server: " + data.returnType + " (" + ret.getStatusLine().getReasonPhrase() + ")");
+            Log.i(AnkiDroidApp.TAG, "doInBackgroundLogin - response from server: " + data.returnType + " ("
+                    + ret.getStatusLine().getReasonPhrase() + ")");
             if (data.returnType == 200) {
                 try {
                     JSONObject jo = (new JSONObject(server.stream2String(ret.getEntity().getContent())));
@@ -470,8 +474,8 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             InputStream cont = resp.getEntity().getContent();
             if (!h.writeToFile(cont, colFilename)) {
                 data.success = false;
-                data.data = new Object[] { sContext.getString(R.string.upgrade_deck_web_upgrade_sdcard,
-                        new File(colFilename).length() / 1048576 + 1) };
+                data.data = new Object[] { sContext.getString(R.string.upgrade_deck_web_upgrade_sdcard, new File(
+                        colFilename).length() / 1048576 + 1) };
                 (new File(colFilename)).delete();
                 return data;
             }
@@ -506,7 +510,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             publishProgress(new Object[] { R.string.upgrade_decks_media });
             ArrayList<String> failedMedia = new ArrayList<String>();
             File curMediaDir = null;
-            for ( File mediaDir : mediaDirs) {
+            for (File mediaDir : mediaDirs) {
                 curMediaDir = mediaDir;
                 // Check if media directory exists and is local
                 if (!curMediaDir.exists() || !curMediaDir.isDirectory()) {
@@ -528,7 +532,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 }
             }
 
-            data.data = new Object[] { failed, failedMedia, newMediaDir.getAbsolutePath()};
+            data.data = new Object[] { failed, failedMedia, newMediaDir.getAbsolutePath() };
             data.success = true;
             return data;
         } catch (FileNotFoundException e) {
@@ -576,7 +580,8 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             data.data = new String[] { username, hostkey };
         } else {
             data.success = false;
-            data.data = new String[] { status != null ? status : AnkiDroidApp.getAppResources().getString(R.string.connection_error_message)};
+            data.data = new String[] { status != null ? status : AnkiDroidApp.getAppResources().getString(
+                    R.string.connection_error_message) };
         }
         return data;
     }
@@ -594,13 +599,13 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         boolean colCorruptFullSync = false;
         Collection col = AnkiDroidApp.getCol();
         if (!AnkiDroidApp.colIsOpen()) {
-        	if (conflictResolution != null && conflictResolution.equals("download")) {
-        		colCorruptFullSync = true;
-        	} else {
+            if (conflictResolution != null && conflictResolution.equals("download")) {
+                colCorruptFullSync = true;
+            } else {
                 data.success = false;
                 data.result = new Object[] { "genericError" };
                 return data;
-        	}
+            }
         }
         String path = AnkiDroidApp.getCollectionPath();
 
@@ -675,15 +680,15 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 }
                 col = AnkiDroidApp.openCollection(path);
             } catch (OutOfMemoryError e) {
-            	AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync-fullSync");
+                AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync-fullSync");
                 data.success = false;
-                data.result = new Object[]{"OutOfMemoryError"};
+                data.result = new Object[] { "OutOfMemoryError" };
                 data.data = new Object[] { mediaUsn };
                 return data;
             } catch (RuntimeException e) {
-            	AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync-fullSync");
+                AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync-fullSync");
                 data.success = false;
-                data.result = new Object[]{"IOException"};
+                data.result = new Object[] { "IOException" };
                 data.data = new Object[] { mediaUsn };
                 return data;
             }
@@ -691,7 +696,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
 
         // clear undo to avoid non syncing orphans (because undo resets usn too
         if (!noChanges) {
-        	col.clearUndo();
+            col.clearUndo();
         }
 
         // then move on to media sync
@@ -709,15 +714,16 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     if (ret.equals("noChanges")) {
                         publishProgress(R.string.sync_media_no_changes);
                         noMediaChanges = true;
-                    } if (ret.equals("sanityFailed")) {
+                    }
+                    if (ret.equals("sanityFailed")) {
                         mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_sanity_failed);
                     } else {
                         publishProgress(R.string.sync_media_success);
                     }
                 }
             } catch (RuntimeException e) {
-               AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync-mediaSync");
-               mediaError = e.getLocalizedMessage();
+                AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync-mediaSync");
+                mediaError = e.getLocalizedMessage();
             }
         }
         if (noChanges && noMediaChanges) {
@@ -741,7 +747,6 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             return data;
         }
     }
-
 
 
     public void publishProgress(int id) {
@@ -806,7 +811,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
 
     /**
      * Downloads any missing media files according to the mediaURL deckvar.
-     *
+     * 
      * @param data
      * @return The return type contains data.resultType and an array of Integer in data.data. data.data[0] is the number
      *         of total missing media, data.data[1] is the number of downloaded ones.
@@ -960,29 +965,29 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         URL fileUrl;
         URLConnection conn;
         InputStream cont = null;
-		try {
-		    fileUrl = new URL(url);
-		    if (url.startsWith("https")) {
-	            SSLContext context = SSLContext.getInstance("TLS");
-	            context.init(null, new TrustManager[] { new EasyX509TrustManager(null) }, null);
-	            HttpsURLConnection httpsConn = (HttpsURLConnection)fileUrl.openConnection();
-	            httpsConn.setSSLSocketFactory(context.getSocketFactory());
-	            conn = httpsConn;
-		    } else {
-		        conn = (HttpURLConnection)fileUrl.openConnection();
-		    }
-	        conn.setConnectTimeout(10000);
-	        conn.setReadTimeout(10000);
-	        cont = conn.getInputStream();
-		} catch (MalformedURLException e) {
+        try {
+            fileUrl = new URL(url);
+            if (url.startsWith("https")) {
+                SSLContext context = SSLContext.getInstance("TLS");
+                context.init(null, new TrustManager[] { new EasyX509TrustManager(null) }, null);
+                HttpsURLConnection httpsConn = (HttpsURLConnection) fileUrl.openConnection();
+                httpsConn.setSSLSocketFactory(context.getSocketFactory());
+                conn = httpsConn;
+            } else {
+                conn = (HttpURLConnection) fileUrl.openConnection();
+            }
+            conn.setConnectTimeout(10000);
+            conn.setReadTimeout(10000);
+            cont = conn.getInputStream();
+        } catch (MalformedURLException e) {
             Log.e(AnkiDroidApp.TAG, "doInBackgroundDownloadSharedDeck: ", e);
             data.success = false;
             return data;
-		} catch (IOException e) {
+        } catch (IOException e) {
             Log.e(AnkiDroidApp.TAG, "doInBackgroundDownloadSharedDeck: ", e);
             data.success = false;
             return data;
-		} catch (NoSuchAlgorithmException e) {
+        } catch (NoSuchAlgorithmException e) {
             Log.e(AnkiDroidApp.TAG, "doInBackgroundDownloadSharedDeck: ", e);
             data.success = false;
             return data;
@@ -1161,9 +1166,11 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     public class CancelCallback {
         private WeakReference<ThreadSafeClientConnManager> mConnectionManager = null;
 
+
         public void setConnectionManager(ThreadSafeClientConnManager connectionManager) {
             mConnectionManager = new WeakReference<ThreadSafeClientConnManager>(connectionManager);
         }
+
 
         public void cancelAllConnections() {
             if (mConnectionManager != null) {

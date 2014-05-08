@@ -23,14 +23,15 @@ import android.text.Html;
  */
 public class HtmlUtil {
 
-    private HtmlUtil() {}
+    private HtmlUtil() {
+    }
 
 
     /**
      * Unescapes all sequences within the given string of text, interpreting them as HTML escaped characters.
      * <p/>
      * Not that this code strips any HTML tags untouched, so if the text contains any HTML tags, they will be ignored.
-     *
+     * 
      * @param htmlText the text to convert
      * @return the unescaped text
      */

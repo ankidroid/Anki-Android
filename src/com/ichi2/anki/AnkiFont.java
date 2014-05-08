@@ -1,3 +1,4 @@
+
 package com.ichi2.anki;
 
 import android.content.Context;
@@ -25,6 +26,7 @@ public class AnkiFont {
     private static final String fAssetPathPrefix = "/android_asset/fonts/";
     private static Set<String> corruptFonts = new HashSet<String>();
 
+
     private AnkiFont(String name, String family, List<String> attributes, String path) {
         mName = name;
         mFamily = family;
@@ -36,8 +38,8 @@ public class AnkiFont {
 
 
     /**
-     * Factory for AnkiFont creation.
-     * Creates a typeface wrapper from a font file representing.
+     * Factory for AnkiFont creation. Creates a typeface wrapper from a font file representing.
+     * 
      * @param ctx Activity context, needed to access assets
      * @param path Path to typeface file, needed when this is a custom font.
      * @param fromAssets True if the font is to be found in assets of application
@@ -102,11 +104,14 @@ public class AnkiFont {
         return createdFont;
     }
 
+
     public String getDeclaration() {
         StringBuilder sb = new StringBuilder("@font-face {");
         sb.append(getCSS()).append(" src: url(\"file://").append(mPath).append("\");}");
         return sb.toString();
     }
+
+
     public String getCSS() {
         StringBuilder sb = new StringBuilder("font-family: \"").append(mFamily);
         if (mIsOverride) {
@@ -121,18 +126,25 @@ public class AnkiFont {
                     sb.deleteCharAt(sb.length() - 1);
                     sb.append(" !important;");
                 } else {
-                    Log.d(AnkiDroidApp.TAG, "AnkiFont.getCSS() - unable to set a font attribute important while override is set.");
+                    Log.d(AnkiDroidApp.TAG,
+                            "AnkiFont.getCSS() - unable to set a font attribute important while override is set.");
                 }
             }
         }
         return sb.toString();
     }
+
+
     public String getName() {
         return mName;
     }
+
+
     public String getPath() {
         return mPath;
     }
+
+
     public static Typeface getTypeface(Context ctx, String path) {
         try {
             if (path.startsWith(fAssetPathPrefix)) {
@@ -154,10 +166,14 @@ public class AnkiFont {
             return null;
         }
     }
+
+
     private void setAsDefault() {
         mIsDefault = true;
         mIsOverride = false;
     }
+
+
     private void setAsOverride() {
         mIsOverride = true;
         mIsDefault = false;

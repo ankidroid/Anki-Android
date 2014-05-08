@@ -72,7 +72,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private static final int DIALOG_BACKUP = 2;
     private static final int DIALOG_HEBREW_FONT = 3;
     private static final int DIALOG_WRITE_ANSWERS = 4;
-    public static boolean COMING_FROM_ADD=false;
+    public static boolean COMING_FROM_ADD = false;
 
     // private boolean mVeecheckStatus;
     private Collection mCol;
@@ -88,13 +88,13 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private ListPreference mLanguageSelection;
     private CharSequence[] mLanguageDialogLabels;
     private CharSequence[] mLanguageDialogValues;
-    private static String[] mAppLanguages = { "ar", "bg", "ca", "cs", "de", "el", "es-AR", "es-ES", "et", "fa", "fi", "fr", "gl", "hi", "hu", "id",
-            "it", "ja", "ko", "lt", "nl", "no", "pl", "pt_PT", "pt_BR", "ro", "ru", "sk", "sl", "sr", "sv", "th", "tr", "uk", "vi",
-            "zh_CN", "zh_TW", "en" };
+    private static String[] mAppLanguages = { "ar", "bg", "ca", "cs", "de", "el", "es-AR", "es-ES", "et", "fa", "fi",
+            "fr", "gl", "hi", "hu", "id", "it", "ja", "ko", "lt", "nl", "no", "pl", "pt_PT", "pt_BR", "ro", "ru", "sk",
+            "sl", "sr", "sv", "th", "tr", "uk", "vi", "zh_CN", "zh_TW", "en" };
     private static String[] mShowValueInSummList = { "language", "dictionary", "reportErrorMode",
             "minimumCardsDueForNotification", "gestureSwipeUp", "gestureSwipeDown", "gestureSwipeLeft",
             "gestureSwipeRight", "gestureDoubleTap", "gestureTapTop", "gestureTapBottom", "gestureTapRight",
-            "gestureLongclick", "gestureTapLeft", "newSpread", "useCurrent"};//, "theme" };
+            "gestureLongclick", "gestureTapLeft", "newSpread", "useCurrent" };// , "theme" };
     private static String[] mShowValueInSummSeek = { "relativeDisplayFontSize", "relativeCardBrowserFontSize",
             "relativeImageSize", "answerButtonSize", "whiteBoardStrokeWidth", "swipeSensibility",
             "timeoutAnswerSeconds", "timeoutQuestionSeconds", "backupMax", "dayOffset" };
@@ -117,6 +117,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private ListPreference newSpread;
     private SeekBarPreference dayOffset;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Workaround for bug 4611: http://code.google.com/p/android/issues/detail?id=4611
@@ -136,7 +137,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         showAnswerCheckBoxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("timeoutAnswer");
         useBackupPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("useBackup");
         eInkDisplayPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("eInkDisplay");
-//        ListPreference listpref = (ListPreference) getPreferenceScreen().findPreference("theme");
+        // ListPreference listpref = (ListPreference) getPreferenceScreen().findPreference("theme");
         convertFenText = (CheckBoxPreference) getPreferenceScreen().findPreference("convertFenText");
         fixHebrewText = (CheckBoxPreference) getPreferenceScreen().findPreference("fixHebrewText");
         syncAccount = (Preference) getPreferenceScreen().findPreference("syncAccount");
@@ -147,9 +148,8 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         useCurrent = (ListPreference) getPreferenceScreen().findPreference("useCurrent");
         newSpread = (ListPreference) getPreferenceScreen().findPreference("newSpread");
         dayOffset = (SeekBarPreference) getPreferenceScreen().findPreference("dayOffset");
-//        String theme = listpref.getValue();
-//        animationsCheckboxPreference.setEnabled(theme.equals("2") || theme.equals("3"));
-
+        // String theme = listpref.getValue();
+        // animationsCheckboxPreference.setEnabled(theme.equals("2") || theme.equals("3"));
 
         initializeLanguageDialog();
         initializeCustomFontsDialog();
@@ -157,7 +157,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         if (mCol != null) {
             // For collection preferences, we need to fetch the correct values from the collection
             mStartDate = GregorianCalendar.getInstance();
-            Timestamp timestamp = new Timestamp(mCol.getCrt()*1000);
+            Timestamp timestamp = new Timestamp(mCol.getCrt() * 1000);
             mStartDate.setTimeInMillis(timestamp.getTime());
             dayOffset.setValue(mStartDate.get(Calendar.HOUR_OF_DAY));
             try {
@@ -167,7 +167,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 showEstimates.setChecked(conf.getBoolean("estTimes"));
                 showProgress.setChecked(conf.getBoolean("dueCounts"));
                 newSpread.setValueIndex(conf.getInt("newSpread"));
-                useCurrent.setValueIndex(conf.optBoolean("addToCur",true) ? 0 : 1);
+                useCurrent.setValueIndex(conf.optBoolean("addToCur", true) ? 0 : 1);
             } catch (JSONException e) {
                 throw new RuntimeException();
             } catch (NumberFormatException e) {
@@ -185,7 +185,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             newSpread.setEnabled(false);
             useCurrent.setEnabled(false);
         }
-
 
         for (String key : mShowValueInSummList) {
             updateListPreference(key);
@@ -236,14 +235,14 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             entry = "?";
         }
         if (mListsToUpdate.containsKey(key)) {
-        	pref.setSummary(replaceString(mListsToUpdate.get(key), entry));
+            pref.setSummary(replaceString(mListsToUpdate.get(key), entry));
         } else {
             String oldsum = (String) pref.getSummary();
             if (oldsum.contains("XXX")) {
                 mListsToUpdate.put(key, oldsum);
                 pref.setSummary(replaceString(oldsum, entry));
             } else {
-            	pref.setSummary(entry);
+                pref.setSummary(entry);
             }
         }
     }
@@ -275,19 +274,20 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             String value = Integer.toString(numPref.getValue());
             if (mListsToUpdate.containsKey(key)) {
                 numPref.setSummary(replaceString(mListsToUpdate.get(key), value));
-             } else {
-                 String oldSum = (String) numPref.getSummary();
-                 if (oldSum.contains("XXX")) {
-                     mListsToUpdate.put(key,  oldSum);
-                     numPref.setSummary(replaceString(oldSum, value));
-                 } else {
-                     numPref.setSummary(value);
-                 }
-             }
+            } else {
+                String oldSum = (String) numPref.getSummary();
+                if (oldSum.contains("XXX")) {
+                    mListsToUpdate.put(key, oldSum);
+                    numPref.setSummary(replaceString(oldSum, value));
+                } else {
+                    numPref.setSummary(value);
+                }
+            }
         } catch (NullPointerException e) {
             Log.e(AnkiDroidApp.TAG, "Exception when updating NumberRangePreference: " + e);
         }
     }
+
 
     private String replaceString(String str, String value) {
         if (str.contains("XXX")) {
@@ -339,7 +339,8 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         }
         onOverrideFontChange(overrideFontPreference, defaultFontPreference);
 
-        ListPreference browserEditorCustomFontsPreference = (ListPreference) getPreferenceScreen().findPreference("browserEditorFont");
+        ListPreference browserEditorCustomFontsPreference = (ListPreference) getPreferenceScreen().findPreference(
+                "browserEditorFont");
         browserEditorCustomFontsPreference.setEntries(getCustomFonts("System default"));
         browserEditorCustomFontsPreference.setEntryValues(getCustomFonts("", true));
     }
@@ -351,11 +352,14 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             defaultFontPreference.setEnabled(!overrideIsSet);
         }
     }
+
+
     @Override
     protected void onPause() {
         super.onPause();
         getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
     }
+
 
     @Override
     protected void onResume() {
@@ -428,15 +432,15 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 mCol.setMod();
             } else if (key.equals("dayOffset")) {
                 int hours = dayOffset.getValue();
-                Calendar date = (Calendar)mStartDate.clone();
+                Calendar date = (Calendar) mStartDate.clone();
                 date.set(Calendar.HOUR_OF_DAY, hours);
                 mCol.setCrt(date.getTimeInMillis() / 1000);
                 mCol.setMod();
             } else if (key.equals("overrideFont")) {
-                ListPreference overrideFontPreference =
-                        (ListPreference) getPreferenceScreen().findPreference("overrideFont");
-                ListPreference defaultFontPreference =
-                        (ListPreference) getPreferenceScreen().findPreference("defaultFont");
+                ListPreference overrideFontPreference = (ListPreference) getPreferenceScreen().findPreference(
+                        "overrideFont");
+                ListPreference defaultFontPreference = (ListPreference) getPreferenceScreen().findPreference(
+                        "defaultFont");
                 onOverrideFontChange(overrideFontPreference, defaultFontPreference);
             }
             if (Arrays.asList(mShowValueInSummList).contains(key)) {
@@ -462,6 +466,8 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private String[] getCustomFonts(String defaultValue) {
         return getCustomFonts(defaultValue, false);
     }
+
+
     private String[] getCustomFonts(String defaultValue, boolean useFullPath) {
         List<AnkiFont> mFonts = Utils.getCustomFonts(this);
         int count = mFonts.size();
@@ -470,12 +476,12 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         names[0] = defaultValue;
         if (useFullPath) {
             for (int index = 1; index < count + 1; ++index) {
-                names[index] = mFonts.get(index-1).getPath();
+                names[index] = mFonts.get(index - 1).getPath();
                 Log.d(AnkiDroidApp.TAG, "Adding custom font: " + names[index]);
             }
         } else {
             for (int index = 1; index < count + 1; ++index) {
-                names[index] = mFonts.get(index-1).getName();
+                names[index] = mFonts.get(index - 1).getName();
                 Log.d(AnkiDroidApp.TAG, "Adding custom font: " + names[index]);
             }
         }
@@ -535,17 +541,16 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 builder.setTitle(res.getString(R.string.fix_hebrew_text));
                 builder.setCancelable(false);
                 builder.setMessage(res.getString(R.string.fix_hebrew_instructions,
-                		AnkiDroidApp.getCurrentAnkiDroidDirectory()));
+                        AnkiDroidApp.getCurrentAnkiDroidDirectory()));
                 builder.setNegativeButton(R.string.cancel, null);
-                builder.setPositiveButton(
-                        res.getString(R.string.fix_hebrew_download_font), new OnClickListener(){
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent("android.intent.action.VIEW",
-                                        Uri.parse(getResources().getString(R.string.link_hebrew_font)));
-                                startActivity(intent);
-                            }
-                        });
+                builder.setPositiveButton(res.getString(R.string.fix_hebrew_download_font), new OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent("android.intent.action.VIEW", Uri.parse(getResources().getString(
+                                R.string.link_hebrew_font)));
+                        startActivity(intent);
+                    }
+                });
                 break;
         }
         return builder.create();

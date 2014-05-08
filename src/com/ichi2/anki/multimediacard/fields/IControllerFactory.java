@@ -20,7 +20,6 @@ shrestha@gmail.com>                          *
 
 package com.ichi2.anki.multimediacard.fields;
 
-
 public interface IControllerFactory {
 
     IFieldController createControllerForField(IField field);

@@ -81,7 +81,8 @@ public class Previewer extends AbstractFlashcardViewer {
     protected void updateScreenCounts() {
     }
 
-    //No Gestures!
+
+    // No Gestures!
     @Override
     protected void executeCommand(int which) {
     }

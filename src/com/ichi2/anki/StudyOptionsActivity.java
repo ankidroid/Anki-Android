@@ -44,6 +44,7 @@ public class StudyOptionsActivity extends ActionBarActivity {
     private StyledOpenCollectionDialog mNotMountedDialog;
     private EditText mDialogEditText = null;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Themes.applyTheme(this);
@@ -58,9 +59,12 @@ public class StudyOptionsActivity extends ActionBarActivity {
         registerExternalStorageListener();
     }
 
+
     public void loadContent(boolean onlyFnsMsg) {
         loadContent(onlyFnsMsg, null);
     }
+
+
     public void loadContent(boolean onlyFnsMsg, Bundle cramConfig) {
         mCurrentFragment = StudyOptionsFragment.newInstance(0, false, null);
         Bundle args = getIntent().getExtras();
@@ -74,8 +78,8 @@ public class StudyOptionsActivity extends ActionBarActivity {
         getSupportFragmentManager().beginTransaction().add(R.id.studyoptions_frame, mCurrentFragment).commit();
     }
 
-    // TODO: onpause, onresume, onstop
 
+    // TODO: onpause, onresume, onstop
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -105,7 +109,6 @@ public class StudyOptionsActivity extends ActionBarActivity {
             mCurrentFragment.restorePreferences();
         }
     }
-
 
 
     private void closeStudyOptions() {
@@ -145,6 +148,7 @@ public class StudyOptionsActivity extends ActionBarActivity {
         }
     }
 
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -153,14 +157,16 @@ public class StudyOptionsActivity extends ActionBarActivity {
         }
     }
 
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-    	if (mCurrentFragment != null) {
-    		return mCurrentFragment.onTouchEvent(event);
-    	} else {
-    		return false;
-    	}
+        if (mCurrentFragment != null) {
+            return mCurrentFragment.onTouchEvent(event);
+        } else {
+            return false;
+        }
     }
+
 
     /**
      * Show/dismiss dialog when sd card is ejected/remounted (collection is saved by SdCardReceiver)
@@ -171,7 +177,8 @@ public class StudyOptionsActivity extends ActionBarActivity {
                 @Override
                 public void onReceive(Context context, Intent intent) {
                     if (intent.getAction().equals(SdCardReceiver.MEDIA_EJECT)) {
-                		mNotMountedDialog = StyledOpenCollectionDialog.show(StudyOptionsActivity.this, getResources().getString(R.string.sd_card_not_mounted), new OnCancelListener() {
+                        mNotMountedDialog = StyledOpenCollectionDialog.show(StudyOptionsActivity.this, getResources()
+                                .getString(R.string.sd_card_not_mounted), new OnCancelListener() {
 
                             @Override
                             public void onCancel(DialogInterface arg0) {
@@ -179,10 +186,10 @@ public class StudyOptionsActivity extends ActionBarActivity {
                             }
                         });
                     } else if (intent.getAction().equals(SdCardReceiver.MEDIA_MOUNT)) {
-                    	if (mNotMountedDialog != null && mNotMountedDialog.isShowing()) {
-                    		mNotMountedDialog.dismiss();
-                    	}
-                    	mCurrentFragment.reloadCollection();
+                        if (mNotMountedDialog != null && mNotMountedDialog.isShowing()) {
+                            mNotMountedDialog.dismiss();
+                        }
+                        mCurrentFragment.reloadCollection();
                     }
                 }
             };

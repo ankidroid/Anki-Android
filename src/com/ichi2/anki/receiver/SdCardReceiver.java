@@ -25,33 +25,34 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.libanki.Collection;
 
 /**
- * This Broadcast-Receiver listens to media ejects and closes the collection prior to unmount. It then sends a broadcast intent
- * to all activities which might be open in order to show an appropriate screen
- * After media has been remounted, another broadcast intent will be sent to let the activites know about it
+ * This Broadcast-Receiver listens to media ejects and closes the collection prior to unmount. It then sends a broadcast
+ * intent to all activities which might be open in order to show an appropriate screen After media has been remounted,
+ * another broadcast intent will be sent to let the activites know about it
  */
 
 public class SdCardReceiver extends BroadcastReceiver {
 
-	public static final String MEDIA_EJECT = "com.ichi2.anki.action.MEDIA_EJECT";
-	public static final String MEDIA_MOUNT = "com.ichi2.anki.action.MEDIA_MOUNT";
+    public static final String MEDIA_EJECT = "com.ichi2.anki.action.MEDIA_EJECT";
+    public static final String MEDIA_MOUNT = "com.ichi2.anki.action.MEDIA_MOUNT";
 
-	@Override
-	public void onReceive(Context context, Intent intent) {
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals(Intent.ACTION_MEDIA_EJECT)) {
-        	Log.i(AnkiDroidApp.TAG, "media eject detected - closing collection and sending broadcast");
-        	Intent i = new Intent();
-        	i.setAction(MEDIA_EJECT);
-        	context.sendBroadcast(i);
-        	Collection col = AnkiDroidApp.getCol();
+            Log.i(AnkiDroidApp.TAG, "media eject detected - closing collection and sending broadcast");
+            Intent i = new Intent();
+            i.setAction(MEDIA_EJECT);
+            context.sendBroadcast(i);
+            Collection col = AnkiDroidApp.getCol();
             if (col != null) {
-            	col.close();
+                col.close();
             }
         } else if (intent.getAction().equals(Intent.ACTION_MEDIA_MOUNTED)) {
-        	Log.i(AnkiDroidApp.TAG, "media mount detected - sending broadcast");
-        	Intent i = new Intent();
-        	i.setAction(MEDIA_MOUNT);
-        	context.sendBroadcast(i);
+            Log.i(AnkiDroidApp.TAG, "media mount detected - sending broadcast");
+            Intent i = new Intent();
+            i.setAction(MEDIA_MOUNT);
+            context.sendBroadcast(i);
         }
-	}
+    }
 
 }

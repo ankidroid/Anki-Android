@@ -19,8 +19,6 @@ import android.annotation.TargetApi;
 import android.graphics.RectF;
 import android.view.MotionEvent;
 
-import com.ichi2.anki.AnkiDroidApp;
-
 import org.achartengine.chart.AbstractChart;
 import org.achartengine.chart.RoundChart;
 import org.achartengine.chart.XYChart;

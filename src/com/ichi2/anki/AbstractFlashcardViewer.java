@@ -307,7 +307,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
      */
     private boolean mUseQuickUpdate = false;
 
-
     /**
      * Swipe Detection
      */
@@ -323,7 +322,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
     private int mGestureSwipeUp;
     private int mGestureSwipeDown;
     private int mGestureSwipeLeft;
-    private int mGestureSwipeRight;    
+    private int mGestureSwipeRight;
     private int mGestureDoubleTap;
     private int mGestureTapLeft;
     private int mGestureTapRight;
@@ -590,7 +589,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
 
             if (sDisplayAnswer) {
                 Sound.resetSounds(); // load sounds from scratch, to expose any edit changes
-                mAnswerSoundsAdded = false; // causes answer sounds to be reloaded            
+                mAnswerSoundsAdded = false; // causes answer sounds to be reloaded
                 generateQuestionSoundList(); // questions must be intentionally regenerated
                 displayCardAnswer();
             } else {
@@ -771,7 +770,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
     /**
      * Format question field when it contains typeAnswer or clozes. If there was an error during type text extraction, a
      * warning is displayed
-     *
+     * 
      * @param buf The question text
      * @return The formatted question text
      */
@@ -786,7 +785,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
 
     /**
      * Format answer field when it contains typeAnswer or clozes
-     *
+     * 
      * @param buf The answer text
      * @return The formatted answer text
      */
@@ -799,9 +798,9 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         if (userAnswer.equals(correctAnswer)) {
             return m.replaceFirst("<div><code id=typeans>" + diffUserAnswer + "\u2714</code></div>");
         } else {
-            return m.replaceFirst("<div><code id=typeans>" + diffUserAnswer + "<br>&darr;<br>" +
-                    diff.diff_prettyHtml(diff.diff_main(correctAnswer, correctAnswer), mNightMode) + "</code></div>");
-    }
+            return m.replaceFirst("<div><code id=typeans>" + diffUserAnswer + "<br>&darr;<br>"
+                    + diff.diff_prettyHtml(diff.diff_main(correctAnswer, correctAnswer), mNightMode) + "</code></div>");
+        }
     }
 
 
@@ -914,7 +913,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
             mShowWhiteboard = true;
             mWhiteboard.setVisibility(View.VISIBLE);
         }
-        
+
         // Initialize dictionary lookup feature
         Lookup.initialize(this);
     }
@@ -934,6 +933,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         stopTimer();
         Sound.stopSounds();
     }
+
 
     @Override
     protected void onResume() {
@@ -1043,6 +1043,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+
     private void updateBigWidget(boolean showProgressDialog) {
         // if (DeckManager.deckIsOpenedInBigWidget(DeckManager.getMainDeckPath())) {
         // Log.i(AnkiDroidApp.TAG, "Reviewer: updateBigWidget");
@@ -1116,7 +1117,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
     /**
      * Returns the text stored in the clipboard or the empty string if the clipboard is empty or contains something that
      * cannot be convered to text.
-     *
+     * 
      * @return the text in clipboard or the empty string.
      */
     private CharSequence clipboardGetText() {
@@ -1149,8 +1150,8 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
             }
         }
         if (AnkiDroidApp.SDK_VERSION < 11 && !mDisableClipboard) {
-            menu.findItem(R.id.action_search_dictionary).setVisible(true).setEnabled(!mShowWhiteboard).setTitle(
-                    clipboardHasText() ? Lookup.getSearchStringTitle() : res.getString(R.string.menu_select));
+            menu.findItem(R.id.action_search_dictionary).setVisible(true).setEnabled(!mShowWhiteboard)
+                    .setTitle(clipboardHasText() ? Lookup.getSearchStringTitle() : res.getString(R.string.menu_select));
         }
         return super.onCreateOptionsMenu(menu);
     }
@@ -1322,6 +1323,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         }
     }
 
+
     private void undo() {
         if (mSched.getCol().undoAvailable()) {
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
@@ -1351,7 +1353,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
 
 
     protected void generateQuestionSoundList() {
-        Sound.addSounds(mBaseUrl, mCurrentCard.qSimple(), Sound.SOUNDS_QUESTION);        
+        Sound.addSounds(mBaseUrl, mCurrentCard.qSimple(), Sound.SOUNDS_QUESTION);
     }
 
 
@@ -1374,6 +1376,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         return true;
     }
 
+
     private void showLookupButtonIfNeeded() {
         if (!mDisableClipboard && mClipboard != null) {
             if (clipboardGetText().length() != 0 && Lookup.isAvailable() && mLookUpIcon.getVisibility() != View.VISIBLE) {
@@ -1386,6 +1389,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         }
     }
 
+
     private void hideLookupButton() {
         if (!mDisableClipboard && mLookUpIcon.getVisibility() != View.GONE) {
             mLookUpIcon.setVisibility(View.GONE);
@@ -1393,6 +1397,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
             clipboardSetText("");
         }
     }
+
 
     protected void showDeleteNoteDialog() {
         Dialog dialog;
@@ -1433,6 +1438,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
             return 0;
         }
     }
+
 
     private void answerCard(int ease) {
         if (mInAnswer) {
@@ -1607,6 +1613,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         initControls();
     }
 
+
     @SuppressLint("NewApi") // because of setDisplayZoomControls.
     private WebView createWebView() {
         WebView webView = new MyWebView(this);
@@ -1625,7 +1632,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         if (AnkiDroidApp.SDK_VERSION > 7) {
             webView.setFocusableInTouchMode(false);
         }
-        if (mPrefEInkDisplay){
+        if (mPrefEInkDisplay) {
             AnkiDroidApp.getCompat().setScrollbarFadingEnabled(webView, false);
         }
         Log.i(AnkiDroidApp.TAG,
@@ -1649,10 +1656,10 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         mEase4.setTextColor(mNextTimeTextColor);
         mCardTimer.setTextColor(mForegroundColor);
         mTextBarNew.setTextColor(invert ? res.getColor(R.color.new_count_night) : res.getColor(R.color.new_count));
-        mTextBarLearn.setTextColor(
-                invert ? res.getColor(R.color.learn_count_night) : res.getColor(R.color.learn_count));
-        mTextBarReview.setTextColor(
-                invert ? res.getColor(R.color.review_count_night) : res.getColor(R.color.review_count));
+        mTextBarLearn
+                .setTextColor(invert ? res.getColor(R.color.learn_count_night) : res.getColor(R.color.learn_count));
+        mTextBarReview.setTextColor(invert ? res.getColor(R.color.review_count_night) : res
+                .getColor(R.color.review_count));
         mAnswerField.setTextColor(mForegroundColor);
 
         if (mSimpleCard != null) {
@@ -1665,6 +1672,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         AnkiDroidApp.getCompat().setActionBarBackground(this,
                 invert ? R.color.white_background_night : R.color.actionbar_background);
     }
+
 
     protected void showEaseButtons() {
         Resources res = getResources();
@@ -1751,6 +1759,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         }
     }
 
+
     private void switchTopBarVisibility(int visible) {
         if (mShowTimer) {
             mCardTimer.setVisibility(visible);
@@ -1779,14 +1788,14 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         }
         mAnswerField.setVisibility(typeAnswer() ? View.VISIBLE : View.GONE);
         mAnswerField.setOnEditorActionListener(new EditText.OnEditorActionListener() {
-                @Override
-                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                    if (actionId == EditorInfo.IME_ACTION_DONE) {
-                        mFlipCardLayout.performClick();
-                    }
-                    return false;  // We don’t “handle” this. Let Android hide the input method.
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    mFlipCardLayout.performClick();
                 }
-            });
+                return false; // We don’t “handle” this. Let Android hide the input method.
+            }
+        });
     }
 
 
@@ -1859,6 +1868,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         return preferences;
     }
 
+
     private void setInterface() {
         if (mCurrentCard == null) {
             return;
@@ -1924,6 +1934,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         }
     }
 
+
     private void setDueMessage() {
         // Decks deck = DeckManager.getMainDeck();
         // if (mCurrentCard != null && deck != null && deck.getScheduler().equals("reviewEarly") &&
@@ -1946,6 +1957,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
             mWhiteboard.clear();
         }
     }
+
 
     protected void updateScreenCounts() {
         if (mCurrentCard == null) {
@@ -2013,6 +2025,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         }
     };
 
+
     protected void initTimer() {
         mShowTimer = mCurrentCard.showTimer();
         if (mShowTimer && mCardTimer.getVisibility() == View.INVISIBLE) {
@@ -2023,6 +2036,8 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         mCardTimer.setBase(SystemClock.elapsedRealtime());
         mCardTimer.start();
     }
+
+
     protected void displayCardQuestion() {
         sDisplayAnswer = false;
 
@@ -2085,20 +2100,21 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         }
     }
 
-    protected String getAnswerText(String answer)
-    {
+
+    protected String getAnswerText(String answer) {
         if (answer == null || answer.equals("")) {
             return "";
         }
 
-         Matcher matcher = sSpanPattern.matcher(Utils.stripHTMLMedia(answer));
-         String answerText = matcher.replaceAll("");
-         matcher = sBrPattern.matcher(answerText);
-         answerText = matcher.replaceAll("\n");
-         matcher = Sound.sSoundPattern.matcher(answerText);
-         answerText = matcher.replaceAll("");
-         return answerText;
+        Matcher matcher = sSpanPattern.matcher(Utils.stripHTMLMedia(answer));
+        String answerText = matcher.replaceAll("");
+        matcher = sBrPattern.matcher(answerText);
+        answerText = matcher.replaceAll("\n");
+        matcher = Sound.sSoundPattern.matcher(answerText);
+        answerText = matcher.replaceAll("");
+        return answerText;
     }
+
 
     protected void displayCardAnswer() {
         Log.i(AnkiDroidApp.TAG, "displayCardAnswer");
@@ -2135,18 +2151,18 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
                 answer = ArabicUtilities.reshapeSentence(answer, true);
             }
 
-                mAnswerField.setVisibility(View.GONE);
-                if (mCurrentCard != null) {
-                    if (mPrefFixArabic) {
-                        // reshape
-                        mTypeCorrect = ArabicUtilities.reshapeSentence(mTypeCorrect, true);
-                    }
-                    // Obtain the user answer and the correct answer
-                    String userAnswer = getAnswerText(mAnswerField.getText().toString());
-                    String correctAnswer = getAnswerText(mTypeCorrect);
-                    Log.i(AnkiDroidApp.TAG, "correct answer = " + correctAnswer);
+            mAnswerField.setVisibility(View.GONE);
+            if (mCurrentCard != null) {
+                if (mPrefFixArabic) {
+                    // reshape
+                    mTypeCorrect = ArabicUtilities.reshapeSentence(mTypeCorrect, true);
+                }
+                // Obtain the user answer and the correct answer
+                String userAnswer = getAnswerText(mAnswerField.getText().toString());
+                String correctAnswer = getAnswerText(mTypeCorrect);
+                Log.i(AnkiDroidApp.TAG, "correct answer = " + correctAnswer);
 
-                    answer = typeAnsAnswerFilter(answer, userAnswer, correctAnswer);
+                answer = typeAnsAnswerFilter(answer, userAnswer, correctAnswer);
                 displayString = enrichWithQADiv(answer, true);
             }
         }
@@ -2180,6 +2196,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
             throw new RuntimeException(e);
         }
     }
+
 
     private void updateCard(String content) {
         Log.i(AnkiDroidApp.TAG, "updateCard");
@@ -2276,7 +2293,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
     /**
      * Converts characters in Unicode Supplementary Multilingual Plane (SMP) to their equivalent Html Entities. This is
      * done because webview has difficulty displaying these characters.
-     *
+     * 
      * @param text
      * @return
      */
@@ -2294,9 +2311,9 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
 
     /**
      * Plays sounds (or TTS, if configured) for currently shown side of card.
-     *
+     * 
      * @param doAudioReplay indicates an anki desktop-like replay call is desired, whose behavior is identical to
-     *      pressing the keyboard shortcut R on the desktop
+     *            pressing the keyboard shortcut R on the desktop
      */
     protected void playSounds(boolean doAudioReplay) {
         boolean replayQuestion = getConfigForCurrentCard().optBoolean("replayq", true);
@@ -2332,6 +2349,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
 
     /**
      * Reads the text (using TTS) for the given side of a card.
+     * 
      * @param card The card to play TTS for
      * @param cardSide The side of the current card to play TTS for
      */
@@ -2348,6 +2366,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
 
     /**
      * Returns the configuration for the current {@link Card}.
+     * 
      * @return The configuration for the current {@link Card}
      */
     private JSONObject getConfigForCurrentCard() {
@@ -2357,7 +2376,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
 
     /**
      * Returns the deck ID of the given {@link Card}.
-     *
+     * 
      * @param card The {@link Card} to get the deck ID
      * @return The deck ID of the {@link Card}
      */
@@ -2366,6 +2385,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         // else use the direct deck ID (in case of a 'normal' deck.
         return card.getODid() == 0 ? card.getDid() : card.getODid();
     }
+
 
     public void fillFlashcard() {
         Log.i(AnkiDroidApp.TAG, "base url = " + mBaseUrl);
@@ -2422,7 +2442,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
                 mWhiteboard.clear();
             }
         }
-     }
+    }
 
 
     public void showFlashcard(boolean visible) {
@@ -2437,7 +2457,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
 
     /**
      * Adds a div html tag around the contents to have an indication, where answer/question is displayed
-     *
+     * 
      * @param content
      * @param isAnswer if true then the class attribute is set to "answer", "question" otherwise.
      * @return
@@ -2466,7 +2486,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
      * this logic, eg nested span/divs with CSS classes having font-size declarations with relative units (40% dif
      * inside 120% div inside 60% div). Broken HTML also breaks this. Feel free to improve, but please keep it short and
      * fast.
-     *
+     * 
      * @param content The HTML content that will be font-size-adjusted.
      * @param percentage The relative font size percentage defined in preferences
      * @return
@@ -2534,10 +2554,11 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         return false;
     }
 
+
     /**
      * Calculates a dynamic font size depending on the length of the contents taking into account that the input string
      * contains html-tags, which will not be displayed and therefore should not be taken into account.
-     *
+     * 
      * @param htmlContents
      * @return font size respecting MIN_DYNAMIC_FONT_SIZE and MAX_DYNAMIC_FONT_SIZE
      */
@@ -2700,7 +2721,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
      * WebView.
      * <p>
      * It is also needed to solve a refresh issue on Nook devices.
-     *
+     * 
      * @return true if we should use a single WebView
      */
     private boolean shouldUseQuickUpdate() {
@@ -2821,9 +2842,11 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
     public final class JavaScriptInterface {
         private AbstractFlashcardViewer mCtx;
 
+
         JavaScriptInterface(AbstractFlashcardViewer ctx) {
             mCtx = ctx;
         }
+
 
         /**
          * This is not called on the UI thread. Send a message that will be handled on the UI thread.
@@ -2834,6 +2857,8 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
             msg.obj = soundPath;
             mHandler.sendMessage(msg);
         }
+
+
         @JavascriptInterface
         public int getAvailableWidth() {
             if (mCtx.mAvailableInCardWidth == 0) {
@@ -2842,6 +2867,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
             return mCtx.mAvailableInCardWidth;
         }
     }
+
 
     /** Calculate the width that is available to the webview for content */
     public int calcAvailableInCardWidth() {
@@ -2854,6 +2880,8 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         }
         return 0;
     }
+
+
     protected void closeReviewer(int result, boolean saveDeck) {
         mTimeoutHandler.removeCallbacks(mShowAnswerTask);
         mTimeoutHandler.removeCallbacks(mShowQuestionTask);
@@ -2872,6 +2900,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         ActivityTransitionAnimation.slide(AbstractFlashcardViewer.this, ActivityTransitionAnimation.RIGHT);
     }
 
+
     private void refreshActionBar() {
         AnkiDroidApp.getCompat().invalidateOptionsMenu(AbstractFlashcardViewer.this);
     }
@@ -2883,6 +2912,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
             super(context);
         }
 
+
         @Override
         public boolean onCheckIsTextEditor() {
             if (mInputWorkaround) {
@@ -2891,6 +2921,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
                 return super.onCheckIsTextEditor();
             }
         }
+
 
         @Override
         protected void onScrollChanged(int horiz, int vert, int oldHoriz, int oldVert) {
@@ -3021,6 +3052,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
             super(context);
         }
 
+
         @Override
         protected void onScrollChanged(int horiz, int vert, int oldHoriz, int oldVert) {
             super.onScrollChanged(horiz, vert, oldHoriz, oldVert);
@@ -3075,6 +3107,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
             }
         }
 
+
         private Object getLast(Editable text, Class kind) {
             Object[] objs = text.getSpans(0, text.length(), kind);
 
@@ -3105,6 +3138,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
             }
         }
     };
+
 
     private Spanned convertToSimple(String text) {
         return Html.fromHtml(text, mSimpleInterfaceImagegetter, mSimpleInterfaceTagHandler);

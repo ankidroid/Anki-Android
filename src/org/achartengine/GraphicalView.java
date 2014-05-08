@@ -35,12 +35,10 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.os.Build;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.ichi2.anki.AnkiDroidApp;
 
 /**
  * The view that encapsulates the graphical chart.

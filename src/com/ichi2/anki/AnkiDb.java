@@ -67,7 +67,8 @@ public class AnkiDb {
             // set journal mode again to delete in order to make the db accessible for anki desktop and for full upload
             setDeleteJournalMode();
             mDatabase.close();
-            Log.i(AnkiDroidApp.TAG, "AnkiDb - closeDatabase, database " + mDatabase.getPath() + " closed = " + !mDatabase.isOpen());
+            Log.i(AnkiDroidApp.TAG, "AnkiDb - closeDatabase, database " + mDatabase.getPath() + " closed = "
+                    + !mDatabase.isOpen());
             mDatabase = null;
         }
     }
@@ -100,7 +101,7 @@ public class AnkiDb {
 
     /**
      * Convenience method for querying the database for a single integer result.
-     *
+     * 
      * @param query The raw SQL query to use.
      * @return The integer result of the query.
      */
@@ -180,7 +181,7 @@ public class AnkiDb {
     /**
      * Convenience method for querying the database for an entire column. The column will be returned as an ArrayList of
      * the specified class. See Deck.initUndo() for a usage example.
-     *
+     * 
      * @param type The class of the column's data type. Example: int.class, String.class.
      * @param query The SQL query statement.
      * @param column The column id in the result set to return.
@@ -220,7 +221,7 @@ public class AnkiDb {
 
     /**
      * Mapping of Java type names to the corresponding Cursor.get method.
-     *
+     * 
      * @param typeName The simple name of the type's class. Example: String.class.getSimpleName().
      * @return The name of the Cursor method to be called.
      */
@@ -317,10 +318,11 @@ public class AnkiDb {
         }
     }
 
+
     /**
      * Attempts to disable write ahead logging using a method on the {@link SQLiteDatabase} object.
-     *
-     * <p>The method might not exist (it is only included in API level 16) but we attempt anyway since it is part of
+     * <p>
+     * The method might not exist (it is only included in API level 16) but we attempt anyway since it is part of
      * present in a number of implementations.
      */
     private void disableWriteAheadLogging() {

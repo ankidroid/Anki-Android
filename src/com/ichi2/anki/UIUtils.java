@@ -33,7 +33,7 @@ public class UIUtils {
 
 
     public static void saveCollectionInBackground() {
-    	if (AnkiDroidApp.colIsOpen()) {
+        if (AnkiDroidApp.colIsOpen()) {
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_COLLECTION, new DeckTask.TaskListener() {
                 @Override
                 public void onPreExecute() {
@@ -51,8 +51,9 @@ public class UIUtils {
                 public void onProgressUpdate(TaskData... values) {
                 }
             }, new DeckTask.TaskData(AnkiDroidApp.getCol()));
-    	}
+        }
     }
+
 
     public static void setFullScreen(Activity activity) {
         activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,

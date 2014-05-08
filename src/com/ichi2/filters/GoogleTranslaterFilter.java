@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 /**
  * Remove unnecessary information from Google Translate.
- *
+ * 
  * @author evgenij.kozhevnikov@gmail.com
  */
 public class GoogleTranslaterFilter extends AbstractCardFilter {
@@ -36,7 +36,7 @@ public class GoogleTranslaterFilter extends AbstractCardFilter {
 
     /**
      * Check conditions to running current filter.
-     *
+     * 
      * @param messages original messages.
      * @param preferences program settings.
      * @return true, if filter could be run, otherwise false.
@@ -48,7 +48,7 @@ public class GoogleTranslaterFilter extends AbstractCardFilter {
 
     /**
      * Forming full text message for search.
-     *
+     * 
      * @param messages original messages.
      * @return full text message for search.
      */

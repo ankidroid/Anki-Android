@@ -103,15 +103,16 @@ public class MediaSyncer {
         long sMediaSanity = mServer.mediaSanity();
         Pair<Long, Long> cMediaSanity = mediaSanity();
         if (cMediaSanity.first != 0 || sMediaSanity != cMediaSanity.second) {
-            Log.e(AnkiDroidApp.TAG,
-                    "Media sanity check failed. Diffs [local, server] - Logs: [" + cMediaSanity.first +
-                            ", 0], Counts: [" + cMediaSanity.second + ", " + sMediaSanity + "]");
+            Log.e(AnkiDroidApp.TAG, "Media sanity check failed. Diffs [local, server] - Logs: [" + cMediaSanity.first
+                    + ", 0], Counts: [" + cMediaSanity.second + ", " + sMediaSanity + "]");
             if (cMediaSanity.first != 0) {
-                AnkiDroidApp.saveExceptionReportFile(new RuntimeException(
-                        "Media sanity check failed. Logs not empty."), "doInBackgroundSync-mediaSync");
+                AnkiDroidApp.saveExceptionReportFile(
+                        new RuntimeException("Media sanity check failed. Logs not empty."),
+                        "doInBackgroundSync-mediaSync");
             } else {
-                AnkiDroidApp.saveExceptionReportFile(new RuntimeException(
-                        "Media sanity check failed. Counts are off."), "doInBackgroundSync-mediaSync");
+                AnkiDroidApp.saveExceptionReportFile(
+                        new RuntimeException("Media sanity check failed. Counts are off."),
+                        "doInBackgroundSync-mediaSync");
             }
             mCol.getMedia().resetMediaDb();
             return "sanityFailed";
@@ -137,7 +138,7 @@ public class MediaSyncer {
 
     /**
      * Adds any media sent from the server.
-     *
+     * 
      * @param zip A temporary zip file that contains the media files.
      * @return True if zip is the last in set. Server returns new usn instead.
      */

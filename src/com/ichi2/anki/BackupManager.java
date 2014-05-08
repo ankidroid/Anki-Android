@@ -74,7 +74,8 @@ public class BackupManager {
 
     private static File getBackupDirectory() {
         SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
-        File directory = new File(prefs.getString("deckPath", AnkiDroidApp.getCurrentAnkiDroidDirectory()) + BACKUP_SUFFIX);
+        File directory = new File(prefs.getString("deckPath", AnkiDroidApp.getCurrentAnkiDroidDirectory())
+                + BACKUP_SUFFIX);
         if (!directory.isDirectory()) {
             directory.mkdirs();
         }
@@ -84,7 +85,8 @@ public class BackupManager {
 
     private static File getBrokenDirectory() {
         SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
-        File directory = new File(prefs.getString("deckPath", AnkiDroidApp.getCurrentAnkiDroidDirectory()) + BROKEN_DECKS_SUFFIX);
+        File directory = new File(prefs.getString("deckPath", AnkiDroidApp.getCurrentAnkiDroidDirectory())
+                + BROKEN_DECKS_SUFFIX);
         if (!directory.isDirectory()) {
             directory.mkdirs();
         }
@@ -317,7 +319,7 @@ public class BackupManager {
             process.waitFor();
 
             if (!new File(deckPath + ".tmp").exists()) {
-            	return false;
+                return false;
             }
 
             if (!moveDatabaseToBrokenFolder(deckPath, false)) {
@@ -377,7 +379,7 @@ public class BackupManager {
     public static File[] getBackups(File colFile) {
         File[] files = getBackupDirectory().listFiles();
         if (files == null) {
-        	files = new File[0];
+            files = new File[0];
         }
         ArrayList<File> deckBackups = new ArrayList<File>();
         for (File aktFile : files) {

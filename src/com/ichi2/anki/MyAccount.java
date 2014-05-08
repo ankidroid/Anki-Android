@@ -155,7 +155,8 @@ public class MyAccount extends AnkiActivity {
 
         setContentView(mLoginToMyAccountView);
     }
-    
+
+
     private void resetPassword() {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(getResources().getString(R.string.resetpw_url)));
@@ -184,11 +185,11 @@ public class MyAccount extends AnkiActivity {
         Button resetPWButton = (Button) mLoginToMyAccountView.findViewById(R.id.reset_password_button);
         resetPWButton.setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				resetPassword();		
-			}
-		});
+            @Override
+            public void onClick(View v) {
+                resetPassword();
+            }
+        });
 
         Button signUpButton = (Button) mLoginToMyAccountView.findViewById(R.id.sign_up_button);
         signUpButton.setOnClickListener(new OnClickListener() {

@@ -29,7 +29,7 @@ public class AnkiDatabaseManager {
 
     /**
      * Get a reference over an Anki database, creating the connection if needed.
-     *
+     * 
      * @param pathDB the path to the database.
      * @return the Anki database.
      */
@@ -52,7 +52,7 @@ public class AnkiDatabaseManager {
 
     /**
      * Close connection to a given database.
-     *
+     * 
      * @param pathDB the path to the database to close.
      */
     public static void closeDatabase(String pathDB) {
@@ -76,7 +76,7 @@ public class AnkiDatabaseManager {
 
     /**
      * Check if there is a valid connection to the given database.
-     *
+     * 
      * @param pathDB the path to the database we want to check.
      * @return True if the database is already opened, false otherwise.
      */

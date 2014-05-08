@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * Filter-facade execute all filtering operations.
- *
+ * 
  * @author evgenij.kozhevnikov@gmail.com
  */
 public class FilterFacade {
@@ -34,7 +34,7 @@ public class FilterFacade {
 
     /**
      * Run all filters processes. Messages in params will be updated.
-     *
+     * 
      * @param messages data, received from external application, where first attribute is the SUBJECT information and
      *            second attribute is the TEXT information.
      */

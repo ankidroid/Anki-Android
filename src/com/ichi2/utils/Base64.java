@@ -319,7 +319,7 @@ public class Base64 extends Object {
      * notation. The actual number of significant bytes in your array is given by <var>numSigBytes</var>. The array
      * <var>threeBytes</var> needs only be as big as <var>numSigBytes</var>. Code can reuse a byte array by passing a
      * four-byte array as <var>b4</var>.
-     *
+     * 
      * @param b4 A reusable byte array to reduce array instantiation
      * @param threeBytes the array to convert
      * @param numSigBytes the number of significant bytes in your array
@@ -344,7 +344,7 @@ public class Base64 extends Object {
      * <p>
      * This is the lowest level of the encoding methods with all possible parameters.
      * </p>
-     *
+     * 
      * @param source the array to convert
      * @param srcOffset the index where conversion begins
      * @param numSigBytes the number of significant bytes in your array
@@ -406,7 +406,7 @@ public class Base64 extends Object {
      * Performs Base64 encoding on the <code>raw</code> ByteBuffer, writing it to the <code>encoded</code> ByteBuffer.
      * This is an experimental feature. Currently it does not pass along any options (such as {@link #DO_BREAK_LINES} or
      * {@link #GZIP}.
-     *
+     * 
      * @param raw input buffer
      * @param encoded output buffer
      * @since 2.3
@@ -428,7 +428,7 @@ public class Base64 extends Object {
      * Performs Base64 encoding on the <code>raw</code> ByteBuffer, writing it to the <code>encoded</code> CharBuffer.
      * This is an experimental feature. Currently it does not pass along any options (such as {@link #DO_BREAK_LINES} or
      * {@link #GZIP}.
-     *
+     * 
      * @param raw input buffer
      * @param encoded output buffer
      * @since 2.3
@@ -456,7 +456,7 @@ public class Base64 extends Object {
      * retrospect that's a pretty poor way to handle it.
      * </p>
      * The object is not GZip-compressed before being encoded.
-     *
+     * 
      * @param serializableObject The object to encode
      * @return The Base64-encoded object
      * @throws java.io.IOException if there is an error
@@ -478,7 +478,7 @@ public class Base64 extends Object {
      * The object is not GZip-compressed before being encoded.
      * <p>
      * Example options:
-     *
+     * 
      * <pre>
      *   GZIP: gzip-compresses object before encoding it.
      *   DO_BREAK_LINES: break lines at 76 characters
@@ -487,7 +487,7 @@ public class Base64 extends Object {
      * Example: <code>encodeObject( myObj, Base64.GZIP )</code> or
      * <p>
      * Example: <code>encodeObject( myObj, Base64.GZIP | Base64.DO_BREAK_LINES )</code>
-     *
+     * 
      * @param serializableObject The object to encode
      * @param options Specified options
      * @return The Base64-encoded object
@@ -560,7 +560,7 @@ public class Base64 extends Object {
 
     /**
      * Encodes a byte array into Base64 notation. Does not GZip-compress data.
-     *
+     * 
      * @param source The data to convert
      * @return The data in Base64-encoded form
      * @throws NullPointerException if source array is null
@@ -585,7 +585,7 @@ public class Base64 extends Object {
      * Encodes a byte array into Base64 notation.
      * <p>
      * Example options:
-     *
+     * 
      * <pre>
      *   GZIP: gzip-compresses object before encoding it.
      *   DO_BREAK_LINES: break lines at 76 characters
@@ -600,7 +600,7 @@ public class Base64 extends Object {
      * new to v2.3!</b> In earlier versions, it just returned a null value, but in retrospect that's a pretty poor way
      * to handle it.
      * </p>
-     *
+     * 
      * @param source The data to convert
      * @param options Specified options
      * @return The Base64-encoded data as a String
@@ -621,7 +621,7 @@ public class Base64 extends Object {
      * As of v 2.3, if there is an error, the method will throw an java.io.IOException. <b>This is new to v2.3!</b> In
      * earlier versions, it just returned a null value, but in retrospect that's a pretty poor way to handle it.
      * </p>
-     *
+     * 
      * @param source The data to convert
      * @param off Offset in array where conversion should begin
      * @param len Length of data to convert
@@ -649,7 +649,7 @@ public class Base64 extends Object {
      * Encodes a byte array into Base64 notation.
      * <p>
      * Example options:
-     *
+     * 
      * <pre>
      *   GZIP: gzip-compresses object before encoding it.
      *   DO_BREAK_LINES: break lines at 76 characters
@@ -664,7 +664,7 @@ public class Base64 extends Object {
      * new to v2.3!</b> In earlier versions, it just returned a null value, but in retrospect that's a pretty poor way
      * to handle it.
      * </p>
-     *
+     * 
      * @param source The data to convert
      * @param off Offset in array where conversion should begin
      * @param len Length of data to convert
@@ -694,7 +694,7 @@ public class Base64 extends Object {
     /**
      * Similar to {@link #encodeBytes(byte[])} but returns a byte array instead of instantiating a String. This is more
      * efficient if you're working with I/O streams and have large data sets to encode.
-     *
+     * 
      * @param source The data to convert
      * @return The Base64-encoded data as a byte[] (of ASCII characters)
      * @throws NullPointerException if source array is null
@@ -714,7 +714,7 @@ public class Base64 extends Object {
     /**
      * Similar to {@link #encodeBytes(byte[], int, int, int)} but returns a byte array instead of instantiating a
      * String. This is more efficient if you're working with I/O streams and have large data sets to encode.
-     *
+     * 
      * @param source The data to convert
      * @param off Offset in array where conversion should begin
      * @param len Length of data to convert
@@ -853,7 +853,7 @@ public class Base64 extends Object {
      * <p>
      * This is the lowest level of the decoding methods with all possible parameters.
      * </p>
-     *
+     * 
      * @param source the array to convert
      * @param srcOffset the index where conversion begins
      * @param destination the array to hold the conversion
@@ -941,7 +941,7 @@ public class Base64 extends Object {
      * set.</strong> This is not generally a recommended method, although it is used internally as part of the decoding
      * process. Special case: if len = 0, an empty array is returned. Still, if you need more speed and reduced memory
      * footprint (and aren't gzipping), consider this method.
-     *
+     * 
      * @param source The Base64 encoded data
      * @return decoded data
      * @since 2.3.1
@@ -962,7 +962,7 @@ public class Base64 extends Object {
      * set.</strong> This is not generally a recommended method, although it is used internally as part of the decoding
      * process. Special case: if len = 0, an empty array is returned. Still, if you need more speed and reduced memory
      * footprint (and aren't gzipping), consider this method.
-     *
+     * 
      * @param source The Base64 encoded data
      * @param off The offset of where to begin decoding
      * @param len The length of characters to decode
@@ -1040,7 +1040,7 @@ public class Base64 extends Object {
 
     /**
      * Decodes data from Base64 notation, automatically detecting gzip-compressed data and decompressing it.
-     *
+     * 
      * @param s the string to decode
      * @return the decoded data
      * @throws java.io.IOException If there is a problem
@@ -1053,7 +1053,7 @@ public class Base64 extends Object {
 
     /**
      * Decodes data from Base64 notation, automatically detecting gzip-compressed data and decompressing it.
-     *
+     * 
      * @param s the string to decode
      * @param options encode options such as URL_SAFE
      * @return the decoded data
@@ -1133,7 +1133,7 @@ public class Base64 extends Object {
 
     /**
      * Attempts to decode Base64 data and deserialize a Java Object within. Returns <tt>null</tt> if there was an error.
-     *
+     * 
      * @param encodedObject The Base64 data to decode
      * @return The decoded and deserialized object
      * @throws NullPointerException if encodedObject is null
@@ -1150,7 +1150,7 @@ public class Base64 extends Object {
     /**
      * Attempts to decode Base64 data and deserialize a Java Object within. Returns <tt>null</tt> if there was an error.
      * If <tt>loader</tt> is not null, it will be the class loader used when deserializing.
-     *
+     * 
      * @param encodedObject The Base64 data to decode
      * @param options Various parameters related to decoding
      * @param loader Optional class loader to use in deserializing classes.
@@ -1224,7 +1224,7 @@ public class Base64 extends Object {
      * As of v 2.3, if there is a error, the method will throw an java.io.IOException. <b>This is new to v2.3!</b> In
      * earlier versions, it just returned false, but in retrospect that's a pretty poor way to handle it.
      * </p>
-     *
+     * 
      * @param dataToEncode byte array of data to encode in base64 form
      * @param filename Filename for saving encoded data
      * @throws java.io.IOException if there is an error
@@ -1261,7 +1261,7 @@ public class Base64 extends Object {
      * As of v 2.3, if there is a error, the method will throw an java.io.IOException. <b>This is new to v2.3!</b> In
      * earlier versions, it just returned false, but in retrospect that's a pretty poor way to handle it.
      * </p>
-     *
+     * 
      * @param dataToDecode Base64-encoded data as a string
      * @param filename Filename for saving decoded data
      * @throws java.io.IOException if there is an error
@@ -1293,7 +1293,7 @@ public class Base64 extends Object {
      * As of v 2.3, if there is a error, the method will throw an java.io.IOException. <b>This is new to v2.3!</b> In
      * earlier versions, it just returned false, but in retrospect that's a pretty poor way to handle it.
      * </p>
-     *
+     * 
      * @param filename Filename for reading encoded data
      * @return decoded byte array
      * @throws java.io.IOException if there is an error
@@ -1351,7 +1351,7 @@ public class Base64 extends Object {
      * As of v 2.3, if there is a error, the method will throw an java.io.IOException. <b>This is new to v2.3!</b> In
      * earlier versions, it just returned false, but in retrospect that's a pretty poor way to handle it.
      * </p>
-     *
+     * 
      * @param filename Filename for reading binary data
      * @return base64-encoded string
      * @throws java.io.IOException if there is an error
@@ -1404,7 +1404,7 @@ public class Base64 extends Object {
 
     /**
      * Reads <tt>infile</tt> and encodes it to <tt>outfile</tt>.
-     *
+     * 
      * @param infile Input file
      * @param outfile Output file
      * @throws java.io.IOException if there is an error
@@ -1432,7 +1432,7 @@ public class Base64 extends Object {
 
     /**
      * Reads <tt>infile</tt> and decodes it to <tt>outfile</tt>.
-     *
+     * 
      * @param infile Input file
      * @param outfile Output file
      * @throws java.io.IOException if there is an error
@@ -1462,7 +1462,7 @@ public class Base64 extends Object {
     /**
      * A {@link Base64.InputStream} will read data from another <tt>java.io.InputStream</tt>, given in the constructor,
      * and encode/decode to/from Base64 notation on the fly.
-     *
+     * 
      * @see Base64
      * @since 1.3
      */
@@ -1489,7 +1489,7 @@ public class Base64 extends Object {
 
         /**
          * Constructs a {@link Base64.InputStream} in DECODE mode.
-         *
+         * 
          * @param in the <tt>java.io.InputStream</tt> from which to read data.
          * @since 1.3
          */
@@ -1502,7 +1502,7 @@ public class Base64 extends Object {
          * Constructs a {@link Base64.InputStream} in either ENCODE or DECODE mode.
          * <p>
          * Valid options:
-         *
+         * 
          * <pre>
          *   ENCODE or DECODE: Encode or Decode as data is read.
          *   DO_BREAK_LINES: break lines at 76 characters
@@ -1510,7 +1510,7 @@ public class Base64 extends Object {
          * </pre>
          * <p>
          * Example: <code>new Base64.InputStream( in, Base64.DECODE )</code>
-         *
+         * 
          * @param in the <tt>java.io.InputStream</tt> from which to read data.
          * @param options Specified options
          * @see Base64#ENCODE
@@ -1534,7 +1534,7 @@ public class Base64 extends Object {
 
         /**
          * Reads enough of the input stream to convert to/from Base64 and returns the next byte.
-         *
+         * 
          * @return next byte
          * @since 1.3
          */
@@ -1639,7 +1639,7 @@ public class Base64 extends Object {
         /**
          * Calls {@link #read()} repeatedly until the end of stream is reached or <var>len</var> bytes are read. Returns
          * number of bytes read into array or -1 if end of stream is encountered.
-         *
+         * 
          * @param dest array to hold values
          * @param off offset for array
          * @param len max number of bytes to read into array
@@ -1671,7 +1671,7 @@ public class Base64 extends Object {
     /**
      * A {@link Base64.OutputStream} will write data to another <tt>java.io.OutputStream</tt>, given in the constructor,
      * and encode/decode to/from Base64 notation on the fly.
-     *
+     * 
      * @see Base64
      * @since 1.3
      */
@@ -1700,7 +1700,7 @@ public class Base64 extends Object {
 
         /**
          * Constructs a {@link Base64.OutputStream} in ENCODE mode.
-         *
+         * 
          * @param out the <tt>java.io.OutputStream</tt> to which data will be written.
          * @since 1.3
          */
@@ -1713,7 +1713,7 @@ public class Base64 extends Object {
          * Constructs a {@link Base64.OutputStream} in either ENCODE or DECODE mode.
          * <p>
          * Valid options:
-         *
+         * 
          * <pre>
          *   ENCODE or DECODE: Encode or Decode as data is read.
          *   DO_BREAK_LINES: don't break lines at 76 characters
@@ -1721,7 +1721,7 @@ public class Base64 extends Object {
          * </pre>
          * <p>
          * Example: <code>new Base64.OutputStream( out, Base64.ENCODE )</code>
-         *
+         * 
          * @param out the <tt>java.io.OutputStream</tt> to which data will be written.
          * @param options Specified options.
          * @see Base64#ENCODE
@@ -1748,7 +1748,7 @@ public class Base64 extends Object {
          * Writes the byte to the output stream after converting to/from Base64 notation. When encoding, bytes are
          * buffered three at a time before the output stream actually gets a write() call. When decoding, bytes are
          * buffered four at a time.
-         *
+         * 
          * @param theByte the byte to write
          * @since 1.3
          */
@@ -1798,7 +1798,7 @@ public class Base64 extends Object {
 
         /**
          * Calls {@link #write(int)} repeatedly until <var>len</var> bytes are written.
-         *
+         * 
          * @param theBytes array from which to read bytes
          * @param off offset for array
          * @param len max number of bytes to read into array
@@ -1821,7 +1821,7 @@ public class Base64 extends Object {
 
         /**
          * Method added by PHIL. [Thanks, PHIL. -Rob] This pads the buffer without closing the stream.
-         *
+         * 
          * @throws java.io.IOException if there's an error.
          */
         public void flushBase64() throws java.io.IOException {
@@ -1840,7 +1840,7 @@ public class Base64 extends Object {
 
         /**
          * Flushes and closes (I think, in the superclass) the stream.
-         *
+         * 
          * @since 1.3
          */
         @Override
@@ -1860,7 +1860,7 @@ public class Base64 extends Object {
         /**
          * Suspends encoding of the stream. May be helpful if you need to embed a piece of base64-encoded data in a
          * stream.
-         *
+         * 
          * @throws java.io.IOException if there's an error flushing
          * @since 1.5.1
          */
@@ -1873,7 +1873,7 @@ public class Base64 extends Object {
         /**
          * Resumes encoding of the stream. May be helpful if you need to embed a piece of base64-encoded data in a
          * stream.
-         *
+         * 
          * @since 1.5.1
          */
         public void resumeEncoding() {

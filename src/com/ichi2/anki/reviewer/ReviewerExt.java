@@ -20,16 +20,16 @@ import android.webkit.WebView;
 
 /**
  * An extension to the reviewer class.
- *
- * <p>This allows splitting parts of the code that offer a specific feature outside the activity itself.
+ * <p>
+ * This allows splitting parts of the code that offer a specific feature outside the activity itself.
  */
 public interface ReviewerExt {
 
     /**
      * Hook for updating the CSS style used by a card.
-     *
-     * <p>It should modify the content of the {@link StringBuilder} to reflect the new style.
-     *
+     * <p>
+     * It should modify the content of the {@link StringBuilder} to reflect the new style.
+     * 
      * @param cssStyle containing current style
      */
     void updateCssStyle(StringBuilder cssStyle);

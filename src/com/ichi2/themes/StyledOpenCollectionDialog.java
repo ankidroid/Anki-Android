@@ -35,7 +35,8 @@ import com.ichi2.anki.R;
 
 public class StyledOpenCollectionDialog extends Dialog {
 
-	private View mMainLayout;
+    private View mMainLayout;
+
 
     public StyledOpenCollectionDialog(Context context) {
         super(context, R.style.StyledDialog);
@@ -63,10 +64,14 @@ public class StyledOpenCollectionDialog extends Dialog {
     }
 
 
-    public static StyledOpenCollectionDialog show(Context context, CharSequence message, DialogInterface.OnCancelListener cancelListener) {
-    	return show(context, message, cancelListener, null);
+    public static StyledOpenCollectionDialog show(Context context, CharSequence message,
+            DialogInterface.OnCancelListener cancelListener) {
+        return show(context, message, cancelListener, null);
     }
-    public static StyledOpenCollectionDialog show(Context context, CharSequence message, DialogInterface.OnCancelListener cancelListener, View.OnClickListener textClickListener) {
+
+
+    public static StyledOpenCollectionDialog show(Context context, CharSequence message,
+            DialogInterface.OnCancelListener cancelListener, View.OnClickListener textClickListener) {
         final StyledOpenCollectionDialog dialog = new StyledOpenCollectionDialog(context);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -77,7 +82,7 @@ public class StyledOpenCollectionDialog extends Dialog {
             TextView tv = (TextView) dialog.mMainLayout.findViewById(R.id.deckpicker_loading_layer_statusline);
             tv.setText(message);
             if (textClickListener != null) {
-            	tv.setOnClickListener(textClickListener);
+                tv.setOnClickListener(textClickListener);
             }
         }
 
@@ -97,6 +102,7 @@ public class StyledOpenCollectionDialog extends Dialog {
 
     }
 
+
     private static boolean animationEnabled(Context context) {
         if (context instanceof AnkiActivity) {
             return ((AnkiActivity) context).animationEnabled();
@@ -104,6 +110,7 @@ public class StyledOpenCollectionDialog extends Dialog {
             return true;
         }
     }
+
 
     public void setMessage(CharSequence message) {
         View main = super.getWindow().getDecorView();

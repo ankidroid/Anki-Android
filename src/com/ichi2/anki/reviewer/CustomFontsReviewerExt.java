@@ -38,6 +38,7 @@ public class CustomFontsReviewerExt implements ReviewerExt {
     private String mDominantFontStyle;
     private final boolean mSupportsQuickUpdate;
 
+
     public CustomFontsReviewerExt(Context context) {
         Map<String, AnkiFont> customFontsMap = getCustomFontsMap(context);
         mCustomStyle = getCustomFontsStyle(customFontsMap) + getDominantFontStyle(context, customFontsMap);
@@ -49,6 +50,7 @@ public class CustomFontsReviewerExt implements ReviewerExt {
     public void updateCssStyle(StringBuilder cssStyle) {
         cssStyle.append(mCustomStyle);
     }
+
 
     @Override
     public boolean supportsQuickUpdate() {
@@ -75,6 +77,7 @@ public class CustomFontsReviewerExt implements ReviewerExt {
 
     /**
      * Returns the CSS used to set the theme font.
+     * 
      * @return the font style, or the empty string if no font is set
      */
     private String getThemeFontStyle() {
@@ -98,6 +101,7 @@ public class CustomFontsReviewerExt implements ReviewerExt {
 
     /**
      * Returns the CSS used to set the default font.
+     * 
      * @return the default font style, or the empty string if no default font is set
      */
     private String getDefaultFontStyle(Context context, Map<String, AnkiFont> customFontsMap) {
@@ -116,6 +120,7 @@ public class CustomFontsReviewerExt implements ReviewerExt {
 
     /**
      * Returns the CSS used to set the override font.
+     * 
      * @return the override font style, or the empty string if no override font is set
      */
     private String getOverrideFontStyle(Context context, Map<String, AnkiFont> customFontsMap) {
@@ -134,6 +139,7 @@ public class CustomFontsReviewerExt implements ReviewerExt {
 
     /**
      * Returns the CSS that determines font choice in a global fashion.
+     * 
      * @return the font style, or the empty string if none applies
      */
     private String getDominantFontStyle(Context context, Map<String, AnkiFont> customFontsMap) {
@@ -152,8 +158,8 @@ public class CustomFontsReviewerExt implements ReviewerExt {
 
     /**
      * Returns a map from custom fonts names to the corresponding {@link AnkiFont} object.
-     *
-     * <p>The list of constructed lazily the first time is needed.
+     * <p>
+     * The list of constructed lazily the first time is needed.
      */
     private static Map<String, AnkiFont> getCustomFontsMap(Context context) {
         List<AnkiFont> fonts = Utils.getCustomFonts(context);
@@ -163,6 +169,5 @@ public class CustomFontsReviewerExt implements ReviewerExt {
         }
         return customFontsMap;
     }
-
 
 }

@@ -1,7 +1,6 @@
 
 package com.ichi2.widget;
 
-
 /**
  * Simple class to hold the current status of a deck.
  */

@@ -31,13 +31,11 @@ public class ReviewerExtRegistry implements ReviewerExt {
 
     /**
      * Creates the list of extensions.
-     *
-     * <p>Must be called at the beginning of onCreate().
+     * <p>
+     * Must be called at the beginning of onCreate().
      */
     public ReviewerExtRegistry(Context context) {
-        mReviewerExts = new ReviewerExt[]{
-            new CustomFontsReviewerExt(context),
-        };
+        mReviewerExts = new ReviewerExt[] { new CustomFontsReviewerExt(context), };
     }
 
 

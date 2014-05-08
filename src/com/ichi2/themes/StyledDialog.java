@@ -58,6 +58,7 @@ public class StyledDialog extends Dialog {
     private ListView mListView;
     private boolean mDoNotShow = false;
 
+
     public StyledDialog(Context context) {
         super(context, R.style.StyledDialog);
         mContext = context;
@@ -173,8 +174,9 @@ public class StyledDialog extends Dialog {
         }
     }
 
+
     public void setButtonOnClickListener(int which, OnClickListener listener) {
-    	getButton(which).setOnClickListener(new OnClickForwarder(StyledDialog.this, which, listener));
+        getButton(which).setOnClickListener(new OnClickForwarder(StyledDialog.this, which, listener));
     }
 
 
@@ -229,12 +231,14 @@ public class StyledDialog extends Dialog {
         mItemList.add(position, text);
         mListAdapter.notifyDataSetChanged();
     }
-    
+
+
     public void setItemListChecked(boolean checked) {
         for (int i = 0; i < mListView.getCount(); i++) {
             mListView.setItemChecked(i, checked);
         }
     }
+
 
     public ArrayList<String> getCheckedItems() {
         updateCheckedItems();
@@ -243,9 +247,10 @@ public class StyledDialog extends Dialog {
             if (mCheckedItems[i])
                 selecteds.add(mItemList.get(i));
         }
-        
+
         return selecteds;
     }
+
 
     public void updateCheckedItems() {
         if (mCheckedItems == null) {
@@ -269,9 +274,12 @@ public class StyledDialog extends Dialog {
         }
     }
 
+
     public void filterList(String str) {
         filterList(str, null);
     }
+
+
     public void filterList(String str, final FilterListener listener) {
         updateCheckedItems();
         mListAdapter.getFilter().filter(str, new FilterListener() {
@@ -285,6 +293,7 @@ public class StyledDialog extends Dialog {
             }
         });
     }
+
 
     private void adjustSelectAllCheckBox() {
         boolean check = true;
@@ -337,7 +346,7 @@ public class StyledDialog extends Dialog {
 
         /**
          * Set the Dialog message from String
-         *
+         * 
          * @param title
          * @return
          */
@@ -356,7 +365,7 @@ public class StyledDialog extends Dialog {
 
         /**
          * Set the Dialog message from resource
-         *
+         * 
          * @param title
          * @return
          */
@@ -374,7 +383,7 @@ public class StyledDialog extends Dialog {
 
         /**
          * Set the Dialog title from resource
-         *
+         * 
          * @param title
          * @return
          */
@@ -386,7 +395,7 @@ public class StyledDialog extends Dialog {
 
         /**
          * Set the Dialog title from String
-         *
+         * 
          * @param title
          * @return
          */
@@ -398,7 +407,7 @@ public class StyledDialog extends Dialog {
 
         /**
          * Set a custom content view for the Dialog. If a message is set, the contentView is not added to the Dialog...
-         *
+         * 
          * @param v
          * @return
          */
@@ -428,7 +437,7 @@ public class StyledDialog extends Dialog {
 
         /**
          * Set the positive button resource and it's listener
-         *
+         * 
          * @param positiveButtonText
          * @param listener
          * @return
@@ -442,7 +451,7 @@ public class StyledDialog extends Dialog {
 
         /**
          * Set the positive button text and it's listener
-         *
+         * 
          * @param positiveButtonText
          * @param listener
          * @return
@@ -456,7 +465,7 @@ public class StyledDialog extends Dialog {
 
         /**
          * Set the negative button resource and it's listener
-         *
+         * 
          * @param negativeButtonText
          * @param listener
          * @return
@@ -470,7 +479,7 @@ public class StyledDialog extends Dialog {
 
         /**
          * Set the negative button text and it's listener
-         *
+         * 
          * @param negativeButtonText
          * @param listener
          * @return
@@ -484,7 +493,7 @@ public class StyledDialog extends Dialog {
 
         /**
          * Set the neutral button resource and it's listener
-         *
+         * 
          * @param neutralButtonText
          * @param listener
          * @return
@@ -498,7 +507,7 @@ public class StyledDialog extends Dialog {
 
         /**
          * Set the neutral button text and it's listener
-         *
+         * 
          * @param neutralButtonText
          * @param listener
          * @return
@@ -520,7 +529,8 @@ public class StyledDialog extends Dialog {
             this.dismissListener = listener;
             return this;
         }
-        
+
+
         public Builder setSelectAllListener(OnCheckedChangeListener listener) {
             this.selectAllListener = listener;
             return this;
@@ -550,8 +560,8 @@ public class StyledDialog extends Dialog {
         }
 
 
-        public Builder setMultiChoiceItems(String[] values, boolean[] checked, DialogInterface.OnClickListener listener,
-                OnCheckedChangeListener selectAllListener) {
+        public Builder setMultiChoiceItems(String[] values, boolean[] checked,
+                DialogInterface.OnClickListener listener, OnCheckedChangeListener selectAllListener) {
             this.itemTitels = values;
             this.multipleCheckedItems = checked;
             this.itemClickListener = listener;
@@ -560,11 +570,13 @@ public class StyledDialog extends Dialog {
             return this;
         }
 
+
         public Builder setShowFilterTags(boolean show) {
             mShowFilterEditText = show;
             return this;
         }
-        
+
+
         /**
          * Create the styled dialog
          */
@@ -687,9 +699,13 @@ public class StyledDialog extends Dialog {
                             }
                         });
                     }
+
+
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                     }
+
+
                     @Override
                     public void afterTextChanged(Editable s) {
                     }

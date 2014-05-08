@@ -19,7 +19,6 @@
 
 package com.ichi2.anki.multimediacard.fields;
 
-
 public class BasicControllerFactory implements IControllerFactory {
 
     private BasicControllerFactory() {

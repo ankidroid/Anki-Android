@@ -234,11 +234,11 @@ public class Syncer {
         } catch (IllegalStateException e) {
             throw new RuntimeException(e);
         } catch (OutOfMemoryError e) {
-			AnkiDroidApp.saveExceptionReportFile(e, "Syncer-sync");
-        	return new Object[] { "OutOfMemoryError" };
+            AnkiDroidApp.saveExceptionReportFile(e, "Syncer-sync");
+            return new Object[] { "OutOfMemoryError" };
         } catch (IOException e) {
-			AnkiDroidApp.saveExceptionReportFile(e, "Syncer-sync");
-        	return new Object[] { "IOException" };
+            AnkiDroidApp.saveExceptionReportFile(e, "Syncer-sync");
+            return new Object[] { "IOException" };
         }
         return new Object[] { "success" };
     }
@@ -319,8 +319,8 @@ public class Syncer {
                 result.put("client", "missing notes");
                 return result;
             }
-            if (mCol.getDb().queryScalar(
-                    "SELECT count() FROM notes WHERE id NOT IN (SELECT DISTINCT nid FROM cards)", false) != 0) {
+            if (mCol.getDb().queryScalar("SELECT count() FROM notes WHERE id NOT IN (SELECT DISTINCT nid FROM cards)",
+                    false) != 0) {
                 Log.e(AnkiDroidApp.TAG, "Sync - SanityCheck: there are notes without cards");
                 result.put("client", "missing cards");
                 return result;
@@ -397,24 +397,25 @@ public class Syncer {
             ja.put(mCol.getDecks().allConf().size());
             result.put("client", ja);
             return result;
-        } catch(JSONException e) {
+        } catch (JSONException e) {
             Log.e(AnkiDroidApp.TAG, "Syncer.sanityCheck(): ", e);
             throw new RuntimeException(e);
         }
     }
 
-//    private Map<String, Object> sanityCheck2(JSONArray client) {
-//        Object server = sanityCheck();
-//        Map<String, Object> result = new HashMap<String, Object>();
-//        if (client.equals(server)) {
-//            result.put("status", "ok");
-//        } else {
-//            result.put("status", "bad");
-//            result.put("c", client);
-//            result.put("s", server);
-//        }
-//        return result;
-//    }
+
+    // private Map<String, Object> sanityCheck2(JSONArray client) {
+    // Object server = sanityCheck();
+    // Map<String, Object> result = new HashMap<String, Object>();
+    // if (client.equals(server)) {
+    // result.put("status", "ok");
+    // } else {
+    // result.put("status", "bad");
+    // result.put("c", client);
+    // result.put("s", server);
+    // }
+    // return result;
+    // }
 
     private String usnLim() {
         if (mCol.getServer()) {
@@ -472,7 +473,8 @@ public class Syncer {
                     .getDb()
                     .getDatabase()
                     .rawQuery(
-                            String.format(Locale.US,
+                            String.format(
+                                    Locale.US,
                                     "SELECT id, nid, did, ord, mod, %d, type, queue, due, ivl, factor, reps, lapses, left, odue, odid, flags, data FROM cards WHERE %s",
                                     mMaxUsn, lim), null);
         } else {
@@ -480,7 +482,8 @@ public class Syncer {
                     .getDb()
                     .getDatabase()
                     .rawQuery(
-                            String.format(Locale.US,
+                            String.format(
+                                    Locale.US,
                                     "SELECT id, guid, mid, mod, %d, tags, flds, '', '', flags, data FROM notes WHERE %s",
                                     mMaxUsn, lim), null);
         }
@@ -888,6 +891,7 @@ public class Syncer {
     public String getSyncMsg() {
         return mSyncMsg;
     }
+
 
     /**
      * Col config ********************************************************************
