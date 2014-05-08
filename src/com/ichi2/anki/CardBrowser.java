@@ -766,11 +766,16 @@ public class CardBrowser extends ActionBarActivity implements ActionBar.OnNaviga
             mRestrictOnDeck = "";
         } else {
             JSONObject deck = mDropDownDecks.get(position - 1);
+            String deckName;
+            Long deckId;
             try {
-                mRestrictOnDeck = "deck:'" + deck.getString("name") + "' ";
+                deckName = deck.getString("name");
+                deckId = deck.getLong("id");
             } catch (JSONException e) {
                 throw new RuntimeException();
             }
+            mRestrictOnDeck = "deck:'" + deckName + "' ";
+            AnkiDroidApp.getCol().getDecks().select(deckId);
         }
         if (preferences.getBoolean("cardBrowserNoSearchOnOpen", false)) {
             mCards.clear();
