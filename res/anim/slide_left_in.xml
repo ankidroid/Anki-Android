@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2008 The Android Open Source Project
+<!--
+     Copyright (C) 2008 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -14,6 +15,11 @@
      limitations under the License.
 -->
 
-<set xmlns:android="http://schemas.android.com/apk/res/android">
-    <translate android:fromXDelta="100%p" android:toXDelta="0" android:duration="200"/>
+<set xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <translate
+        android:duration="200"
+        android:fromXDelta="100%p"
+        android:toXDelta="0" />
+
 </set>

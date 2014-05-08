@@ -16,8 +16,8 @@
 -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <item android:drawable="@drawable/spinner_white_inner"/> 
-     <item>
+    <item android:drawable="@drawable/spinner_white_inner"/>
+    <item>
         <rotate
             android:fromDegrees="0"
             android:interpolator="@anim/linear_interpolator"

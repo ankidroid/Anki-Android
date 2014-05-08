@@ -1,26 +1,27 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:ankidroid="http://schemas.android.com/apk/res-auto">
+    xmlns:ankidroid="http://schemas.android.com/apk/res-auto" >
 
-	<item android:id="@+id/action_preview"
-		android:icon="@drawable/ic_menu_view"
-		android:title="@string/card_editor_preview_card"
-		android:visible="false"
-		ankidroid:showAsAction="ifRoom" />
-
-	<item android:id="@+id/action_add_card_from_card_editor"
-		android:title="@string/card_editor_add_card"
-		android:visible="false" />
-
-	<item android:id="@+id/action_copy_card"
-		android:title="@string/card_editor_copy_card"
-		android:enabled="false" />
-
-	<item android:id="@+id/action_reset_card_progress"
-		android:title="@string/card_editor_reset_card"
-		android:visible="false" />
-
-	<item android:id="@+id/action_saved_notes"
-		android:title="@string/intent_add_saved_information"
-		android:enabled="false" />
+    <item
+        android:id="@+id/action_preview"
+        android:icon="@drawable/ic_menu_view"
+        android:title="@string/card_editor_preview_card"
+        android:visible="false"
+        ankidroid:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/action_add_card_from_card_editor"
+        android:title="@string/card_editor_add_card"
+        android:visible="false"/>
+    <item
+        android:id="@+id/action_copy_card"
+        android:enabled="false"
+        android:title="@string/card_editor_copy_card"/>
+    <item
+        android:id="@+id/action_reset_card_progress"
+        android:title="@string/card_editor_reset_card"
+        android:visible="false"/>
+    <item
+        android:id="@+id/action_saved_notes"
+        android:enabled="false"
+        android:title="@string/intent_add_saved_information"/>
 
 </menu>

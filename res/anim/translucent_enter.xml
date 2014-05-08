@@ -18,9 +18,16 @@
 -->
 
 <set xmlns:android="http://schemas.android.com/apk/res/android"
-        android:interpolator="@interpolator/decelerate_quad">
-	<translate android:fromXDelta="75%" android:toXDelta="0"
-        android:duration="0"/>
-    <alpha android:fromAlpha="0.0" android:toAlpha="1.0"
-            android:duration="0"/>
+    android:interpolator="@interpolator/decelerate_quad" >
+
+    <translate
+        android:duration="0"
+        android:fromXDelta="75%"
+        android:toXDelta="0" />
+
+    <alpha
+        android:duration="0"
+        android:fromAlpha="0.0"
+        android:toAlpha="1.0" />
+
 </set>

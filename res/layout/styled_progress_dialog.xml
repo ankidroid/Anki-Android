@@ -22,83 +22,100 @@
     android:id="@+id/parentPanel"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    android:minWidth="280dip"
     android:orientation="vertical"
-    android:paddingTop="9dip"
     android:paddingBottom="3dip"
     android:paddingLeft="3dip"
-       android:minWidth="280dip"
-    android:paddingRight="1dip"><!--
+    android:paddingRight="1dip"
+    android:paddingTop="9dip" >
+    <!--
     android:majorWeight="0.65"
-    android:minorWeight="0.9"-->
+    android:minorWeight="0.9"
+    -->
 
-    <LinearLayout android:id="@+id/topPanel"
+    <LinearLayout
+        android:id="@+id/topPanel"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:minHeight="54dip"
-        android:orientation="vertical">
-        <LinearLayout android:id="@+id/title_template"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/title_template"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginTop="6dip"
             android:layout_marginBottom="6dip"
             android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip">
-            <ImageView android:id="@+id/icon"
+            android:layout_marginRight="10dip"
+            android:layout_marginTop="6dip"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:id="@+id/icon"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_gravity="center"
-                android:paddingTop="3dip"
                 android:paddingBottom="3dip"
                 android:paddingRight="10dip"
+                android:paddingTop="3dip"
                 android:src="@drawable/ic_dialog_info" />
-            <TextView android:id="@+id/alertTitle"
+
+            <TextView
+                android:id="@+id/alertTitle"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:ellipsize="end"
+                android:paddingBottom="3dip"
+                android:paddingTop="3dip"
+                android:singleLine="true"
                 android:textColor="#ffff"
                 android:textSize="20sp"
-       			android:textStyle="bold"
-                android:paddingTop="3dip"
-                android:paddingBottom="3dip"
-                android:singleLine="true"
-                android:ellipsize="end"
-                android:layout_gravity="center"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent" />
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
-    <ImageView android:id="@+id/titleDivider"
-            android:layout_width="fill_parent"
-            android:layout_height="1dip"
-            android:scaleType="fitXY"
-            android:gravity="fill_horizontal"/> 
 
-    <LinearLayout android:id="@+id/contentPanel"
-        android:orientation="horizontal"
+    <ImageView
+        android:id="@+id/titleDivider"
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:gravity="fill_horizontal"
+        android:scaleType="fitXY" />
+
+    <LinearLayout
+        android:id="@+id/contentPanel"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:baselineAligned="false">
-    	<LinearLayout android:id="@+id/innerContentPanel"
-        	android:orientation="horizontal"
-	        android:layout_width="match_parent"
-   	    	android:layout_height="match_parent"
-   		    android:baselineAligned="false">
-        
-        <ProgressBar android:id="@android:id/progress"
-            style="@style/White.Spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:max="10000"
-            android:background="@color/transparent"
-            android:layout_marginTop="10dip"
-            android:layout_marginBottom="10dip"
-            android:layout_marginLeft="8dip"
-            android:layout_marginRight="12dip" />
+        android:baselineAligned="false"
+        android:orientation="horizontal" >
 
-        <TextView android:id="@+id/message"
-            android:paddingRight="20dip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical" />
+        <LinearLayout
+            android:id="@+id/innerContentPanel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+            android:orientation="horizontal" >
+
+            <ProgressBar
+                android:id="@android:id/progress"
+                style="@style/White.Spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dip"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="12dip"
+                android:layout_marginTop="10dip"
+                android:background="@color/transparent"
+                android:max="10000" />
+
+            <TextView
+                android:id="@+id/message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:paddingRight="20dip" />
+        </LinearLayout>
     </LinearLayout>
-    </LinearLayout>
+
 </LinearLayout>

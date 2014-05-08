@@ -16,11 +16,13 @@
 -->
 
 <resources>
+
     <attr name="min" format="integer" />
     <attr name="max" format="integer" />
     <attr name="allowEmpty" format="boolean" />
-    
+
     <declare-styleable name="SeekBarPreference">
         <attr name="interval" format="integer" />
     </declare-styleable>
+
 </resources>

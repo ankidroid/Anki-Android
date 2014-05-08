@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/card_item_browser"
-	android:layout_width="fill_parent"
-	android:layout_height="wrap_content">
-	<TextView
-		android:id="@+id/card_sfld"
-		android:layout_width="0dip"
-		android:layout_height="fill_parent"
-		android:layout_weight="1"
-		android:textColor="#000000"
-		android:paddingRight="3dip"/>
-	<TextView
-		android:id="@+id/card_column2"
-		android:layout_width="0dip"
-		android:layout_height="fill_parent"
-		android:layout_weight="1"
-		android:textColor="#000000"
-		android:paddingLeft="3dip"/>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_item_browser"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
+
+    <TextView
+        android:id="@+id/card_sfld"
+        android:layout_width="0dip"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:paddingRight="3dip"
+        android:textColor="#000000" />
+
+    <TextView
+        android:id="@+id/card_column2"
+        android:layout_width="0dip"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:paddingLeft="3dip"
+        android:textColor="#000000" />
+
 </LinearLayout>

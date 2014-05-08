@@ -1,86 +1,81 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:ankidroid="http://schemas.android.com/apk/res-auto">
+    xmlns:ankidroid="http://schemas.android.com/apk/res-auto" >
 
-	<item android:id="@+id/action_add_decks"
-		android:icon="@drawable/ic_menu_add"
-		android:title="@string/menu_add"
-		ankidroid:showAsAction="ifRoom">
-
-		<menu>
-
-			<item android:id="@+id/action_add_note_from_deck_picker"
-				android:title="@string/menu_add_note" />
-
-			<item android:id="@+id/action_shared_decks"
-				android:title="@string/menu_get_shared_decks" />
-
-			<item android:id="@+id/action_new_deck"
-				android:title="@string/new_deck" />
-
-			<item android:id="@+id/action_import"
-				android:title="@string/menu_import" />
-
-		</menu>
-
-	</item>
-
-	<item android:id="@+id/action_sync"
-		android:icon="@drawable/ic_menu_refresh"
-		android:title="@string/sync_title"
-		android:enabled="false"
-		ankidroid:showAsAction="always" />
-
-	<item android:id="@+id/action_statistics"
-		android:icon="@drawable/ic_menu_statistics"
-		android:title="@string/statistics_menu"
-		android:visible="false"
-		android:enabled="false"
-		ankidroid:showAsAction="ifRoom" />
-
-	<item android:id="@+id/action_card_browser"
-		android:icon="@drawable/ic_menu_cardbrowser"
-		android:title="@string/menu_cardbrowser"
-		android:visible="false"
-		android:enabled="false"
-		ankidroid:showAsAction="ifRoom" />
-
-	<item android:id="@+id/action_new_filtered_deck"
-		android:title="@string/new_dynamic_deck"
-		android:enabled="false"
-		android:menuCategory="secondary" />
-
-	<item android:id="@+id/action_check_database"
-		android:title="@string/check_db"
-		android:enabled="false"
-		android:menuCategory="secondary" />
-
-	<item android:id="@+id/action_preferences"
-		android:title="@string/menu_preferences"
-		android:menuCategory="secondary" />
-
-	<item android:id="@+id/action_help"
-		android:title="@string/help_title"
-		android:menuCategory="secondary">
-
-		<menu>
-
-			<item android:id="@+id/action_tutorial"
-				android:title="@string/help_tutorial" />
-
-			<item android:id="@+id/action_online"
-				android:title="@string/help_online" />
-
-			<item android:id="@+id/action_faq"
-				android:title="@string/help_faq" />
-
-			<item android:id="@+id/action_feedback"
-				android:title="@string/studyoptions_feedback" />
-
-			<item android:id="@+id/action_about"
-				android:title="@string/menu_about" />
-
-		</menu>
-
-	</item>
+    <item
+        android:id="@+id/action_add_decks"
+        android:icon="@drawable/ic_menu_add"
+        android:title="@string/menu_add"
+        ankidroid:showAsAction="ifRoom">
+        <menu>
+            <item
+                android:id="@+id/action_add_note_from_deck_picker"
+                android:title="@string/menu_add_note"/>
+            <item
+                android:id="@+id/action_shared_decks"
+                android:title="@string/menu_get_shared_decks"/>
+            <item
+                android:id="@+id/action_new_deck"
+                android:title="@string/new_deck"/>
+            <item
+                android:id="@+id/action_import"
+                android:title="@string/menu_import"/>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/action_sync"
+        android:enabled="false"
+        android:icon="@drawable/ic_menu_refresh"
+        android:title="@string/sync_title"
+        ankidroid:showAsAction="always"/>
+    <item
+        android:id="@+id/action_statistics"
+        android:enabled="false"
+        android:icon="@drawable/ic_menu_statistics"
+        android:title="@string/statistics_menu"
+        android:visible="false"
+        ankidroid:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/action_card_browser"
+        android:enabled="false"
+        android:icon="@drawable/ic_menu_cardbrowser"
+        android:title="@string/menu_cardbrowser"
+        android:visible="false"
+        ankidroid:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/action_new_filtered_deck"
+        android:enabled="false"
+        android:menuCategory="secondary"
+        android:title="@string/new_dynamic_deck"/>
+    <item
+        android:id="@+id/action_check_database"
+        android:enabled="false"
+        android:menuCategory="secondary"
+        android:title="@string/check_db"/>
+    <item
+        android:id="@+id/action_preferences"
+        android:menuCategory="secondary"
+        android:title="@string/menu_preferences"/>
+    <item
+        android:id="@+id/action_help"
+        android:menuCategory="secondary"
+        android:title="@string/help_title">
+        <menu>
+            <item
+                android:id="@+id/action_tutorial"
+                android:title="@string/help_tutorial"/>
+            <item
+                android:id="@+id/action_online"
+                android:title="@string/help_online"/>
+            <item
+                android:id="@+id/action_faq"
+                android:title="@string/help_faq"/>
+            <item
+                android:id="@+id/action_feedback"
+                android:title="@string/studyoptions_feedback"/>
+            <item
+                android:id="@+id/action_about"
+                android:title="@string/menu_about"/>
+        </menu>
+    </item>
 
 </menu>

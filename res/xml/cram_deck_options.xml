@@ -22,12 +22,14 @@
         <EditTextPreference
             android:key="search"
             android:title="@string/deck_conf_cram_search" />
+
         <com.ichi2.preferences.NumberRangePreference
             android:key="limit"
             android:numeric="integer"
             android:title="@string/deck_conf_cram_limit"
             app:max="99999"
             app:min="1" />
+
         <ListPreference
             android:key="order"
             android:title="@string/deck_conf_cram_order" />
@@ -44,10 +46,12 @@
             android:key="stepsOn"
             android:summary="@string/deck_conf_cram_steps_summ"
             android:title="@string/deck_conf_cram_steps" />
+
         <com.ichi2.preferences.StepsPreference
             android:dependency="stepsOn"
             android:key="steps"
             android:title="@string/deck_conf_cram_steps"
             app:allowEmpty="false" />
     </PreferenceCategory>
+
 </PreferenceScreen>

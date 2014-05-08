@@ -15,67 +15,70 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<LinearLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_height="wrap_content"
-	android:layout_width="fill_parent"
-	android:orientation="vertical"
-	android:id="@+id/deckpicker_deck">
-	<RelativeLayout
-		android:id="@+id/DeckPickerHoriz"
-		android:layout_height="wrap_content"
-		android:orientation="horizontal"
-		android:layout_marginTop="5dip"
-		android:layout_marginBottom="7dip"
-		android:layout_marginLeft="10dip"
-		android:layout_marginRight="5dip"
-		android:gravity="center_vertical"
-		android:layout_width="fill_parent">
-		<TextView
-			android:id="@+id/DeckPickerName"
-			android:layout_height="wrap_content"
-			android:layout_width="wrap_content"
-			android:gravity="left"
-			android:layout_centerVertical="true"
-			android:textColor="#000000"
-			android:maxLines="2"
-			android:layout_alignParentLeft="true"
-			android:layout_toLeftOf="@+id/deckpicker_new"
-			android:textStyle="bold"
-			android:textSize="20sp"/>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/deckpicker_deck"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/DeckPickerHoriz"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="7dip"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="5dip"
+        android:layout_marginTop="5dip"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/DeckPickerName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/deckpicker_new"
+            android:gravity="left"
+            android:maxLines="2"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/deckpicker_new"
             android:layout_width="wrap_content"
-            android:gravity="center"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/deckpicker_lrn"
+            android:gravity="center"
             android:paddingRight="5dip"
-            android:textSize="14sp"/>
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/deckpicker_lrn"
-            android:layout_gravity="center"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:gravity="center"
-            android:layout_toLeftOf="@+id/deckpicker_rev"
-            android:paddingRight="5dip"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:textSize="14sp"/>
+            android:layout_gravity="center"
+            android:layout_toLeftOf="@+id/deckpicker_rev"
+            android:gravity="center"
+            android:paddingRight="5dip"
+            android:textSize="14sp" />
+
         <TextView
             android:id="@+id/deckpicker_rev"
-            android:layout_gravity="center"
-            android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_width="wrap_content"
-            android:layout_marginRight="6dip"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:textSize="14sp"/>
+            android:layout_gravity="center"
+            android:layout_marginRight="6dip"
+            android:gravity="center"
+            android:textSize="14sp" />
 
-<!-- 	<FrameLayout android:id="@+id/deckpicker_progressbar_1"
+        <!--
+     	<FrameLayout android:id="@+id/deckpicker_progressbar_1"
 				android:background="@color/studyoptions_progressbar_frame_default"
 				android:layout_width="4dip"
 		   		android:layout_alignParentRight="true"
@@ -100,5 +103,7 @@
 						android:background="@color/studyoptions_progressbar_young_default"/>
 				</LinearLayout>
 			</FrameLayout>
- -->		</RelativeLayout>
+        -->
+    </RelativeLayout>
+
 </LinearLayout>

@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 ~ Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>
 ~
 ~ This program is free software; you can redistribute it and/or modify it under
@@ -14,6 +15,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+
     <!--
         WARNING: These values here match static values defined in Deck.java DO
         NOT edit them, unless you change their corresponding values
@@ -80,6 +82,7 @@
         <item>3</item>
         <item>4</item>
     </string-array>
+
     <string name="link_anki">https://ankiweb.net</string>
     <string name="link_ankidroid">http://code.google.com/p/ankidroid</string>
     <string name="link_forum">http://groups.google.com/group/anki-android</string>
@@ -102,6 +105,7 @@
     <string name="shared_decks_url">https://ankiweb.net/shared/decks/</string>
     <string name="repair_deck">http://ankisrs.net/docs/DeckErrors.html</string>
     <string name="resetpw_url">http://ankiweb.net/account/resetpw</string>
+
     <string-array name="tutorial_capitals_questions">
         <item>Cambodia</item>
         <item>Chile</item>
@@ -137,6 +141,7 @@
     </string-array>
 
     <string name="deck_conf_percent">XXX \%%</string>
+
     <string-array name="zeemote_action_values">
         <item>0</item>
         <item>1</item>
@@ -164,7 +169,6 @@
         <item>6</item>
         <item>7</item>
     </string-array>
-
     <string-array name="custom_study_options_values">
         <item>1</item>
         <item>2</item>
@@ -174,7 +178,6 @@
         <item>6</item>
         <item>7</item>
     </string-array>
-
     <string-array name="add_to_cur_values">
         <item>0</item>
         <item>1</item>

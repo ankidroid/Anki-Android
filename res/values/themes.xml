@@ -2,7 +2,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="Theme_Base_Custom_Light" parent="@style/Theme.AppCompat.Light" />
+
     <style name="Theme_Base_Dark" parent="@style/Theme.AppCompat" />
+
     <style name="Theme_Base_Dialog" parent="@android:style/Theme.Dialog" />
 
     <!-- Blue Theme -->
@@ -62,7 +64,7 @@
         <item name="android:editTextStyle">@style/White.Edittext</item>
         <item name="android:radioButtonStyle">@style/White.CompoundButton.RadioButton</item>
 
-        <!--  Action bar styles -->
+        <!-- Action bar styles -->
         <item name="actionBarStyle">@style/White.ActionBarStyle</item>
         <item name="android:actionBarStyle" tools:targetApi="11">@style/White.ActionBarStyle</item>
 
@@ -98,5 +100,5 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
     </style>
-    
+
 </resources>

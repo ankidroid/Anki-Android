@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2010 The Android Open Source Project
+<!--
+     Copyright (C) 2010 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -14,14 +15,15 @@
      limitations under the License.
 -->
 
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <item android:id="@android:id/background"
-          android:drawable="@color/transparent" />
-
+    <item
+        android:id="@android:id/background"
+        android:drawable="@color/transparent"/>
     <item android:id="@android:id/progress">
-        <scale android:scaleWidth="100%"
-               android:drawable="@drawable/progress_bigwidget_primary" />
+        <scale
+            android:drawable="@drawable/progress_bigwidget_primary"
+            android:scaleWidth="100%" />
     </item>
 
 </layer-list>
