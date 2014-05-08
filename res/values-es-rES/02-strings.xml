@@ -128,17 +128,17 @@
   <string name="sched_unbury_button">Para verlos ahora, pulse el botón Desenterrar.</string>
   <string name="sched_has_buried">Algunas tarjetas relacionadas o enterradas fueron postergadas para una sesión posterior.</string>
   <string-array name="browser_column1_headings">
-    <item>Search Field</item>
+    <item>Campo de búsqueda</item>
   </string-array>
   <string-array name="browser_column2_headings">
-    <item>Answer</item>
-    <item>Card</item>
-    <item>Deck</item>
+    <item>Respuesta</item>
+    <item>Carta</item>
+    <item>Mazo</item>
     <item>Lapses</item>
-    <item>Note</item>
-    <item>Question</item>
+    <item>Nota</item>
+    <item>Pregunta</item>
     <item>Reviews</item>
-    <item>Tags</item>
+    <item>Etiquetas</item>
   </string-array>
   <string-array name="dynOrderLabels">
     <item>Vistas hace más tiempo primero</item>

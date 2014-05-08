@@ -63,8 +63,8 @@
   <string name="reset_card_dialog_title">Redefinir progresso do cartão</string>
   <string name="reset_card_dialog_message">Isso redefine o progresso de aprendizagem para todos os cartões desta nota (eles vão se parecer com cartões novos). \n Realmente continuar?</string>
   <string name="reset_card_dialog_confirmation">Redefinir todos os cartões desta nota</string>
-  <string name="save_duplicate_dialog_title">Duplicate note</string>
-  <string name="save_duplicate_dialog_message">This note shares its primary field with another note. Save anyway?</string>
+  <string name="save_duplicate_dialog_title">Duplicar nota</string>
+  <string name="save_duplicate_dialog_message">Esta nota compartilha seu campo primário com outra nota. Salvar mesmo assim?</string>
   <string name="answering_error_title">Erro de banco de dados</string>
   <string name="answering_error_message">Ocorreu um erro ao gravar à coleção. Isso poderia estar relacionado com um banco de dados corrompido ou espaço insuficiente no disco.\n\nSe isso acontecer mais frequentemente, tente verificar o banco de dados, reparar a coleção ou restaurá-la de um backup. Clique em \'Opções\' para isso.\n\nEm todo caso, isso poderia ser um bug do AnkiDroid também; relate o erro para que possamos verificar isso.</string>
   <string name="answering_error_report">Reportar erro</string>

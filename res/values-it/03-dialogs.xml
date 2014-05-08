@@ -63,8 +63,8 @@
   <string name="reset_card_dialog_title">Reimposta progresso carta</string>
   <string name="reset_card_dialog_message">Questo reimposta il progresso di apprendimento di tutte le carte di questa nota (appariranno come carte nuove).\nVuoi veramente proseguire?</string>
   <string name="reset_card_dialog_confirmation">Tutte le carte di questa nota reimpostate</string>
-  <string name="save_duplicate_dialog_title">Duplicate note</string>
-  <string name="save_duplicate_dialog_message">This note shares its primary field with another note. Save anyway?</string>
+  <string name="save_duplicate_dialog_title">Nota duplicata</string>
+  <string name="save_duplicate_dialog_message">Questa nota condivide il campo primario con un\'altra nota. Salvare comunque?</string>
   <string name="answering_error_title">Errore database</string>
   <string name="answering_error_message">Si è verificato un errore durante la scrittura della collezione. Potrebbe essere stato causato da un database danneggiato o da spazio su disco insufficiente.\n\nSe accade spesso, prova a controllare il database, riparare la collezione o ripristinare da un backup. Per fare questo clicca su \'opzioni\'.\n\nTuttavia, potrebbe anche trattarsi di un bug di AnkiDroid;per favore segnala l\'errore affinché possiamo verificare.</string>
   <string name="answering_error_report">Segnala errori</string>

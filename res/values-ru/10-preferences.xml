@@ -269,7 +269,7 @@
   <string name="deck_conf_min_ivl">Минимальный интервал</string>
   <string name="deck_conf_leech_thres">Порог когда карта считается \"приставучей\"</string>
   <string name="deck_conf_fails">XXX неудач</string>
-  <string name="deck_conf_leech_action">"Приставущая"</string>
+  <string name="deck_conf_leech_action">"Приставучая"</string>
   <string name="deck_conf_max_time">Максимальное время ответа</string>
   <string name="deck_conf_seconds">XXX секунд</string>
   <string name="deck_conf_timer">Показать таймер для ответа</string>

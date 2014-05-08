@@ -39,7 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="welcome_message">Са AnkiDroid можете ефикасно да повећате фонд речи или да научите било које градиво. AnkiDroid понавља приказивање карата пре него што их заборавите.\n\nДа бисте упознали програм, препоручујемо да почнете од обучавајуће карте, која ће вас упознати како шта овде функционише. Једноставно кликните \"Почни преглед\" после отварања карте.\n\nКреирати обучавајућу карту сада?</string>
+  <string name="welcome_message">Са AnkiDroid можете ефикасно да повећате фонд речи или да научите било које градиво. AnkiDroid понавља приказивање карата пре него што их заборавите.\n\nДа бисте упознали програм, препоручујемо да почнете од шпила за обуку, која ће вас упознати са основама, и испробајте сами. Једноставно кликните \"Почни преглед\" после отварања карте.\n\nКреирати шпил за обуку сада?</string>
   <string name="check_db_title">Провери базу података</string>
   <string name="check_db_result_message">База је проверена и оптимизована.\nУмањење за %d kb</string>
   <string name="contextmenu_deckpicker_delete_deck">Избриши шпил</string>
@@ -63,8 +63,8 @@
   <string name="reset_card_dialog_title">Ресетовање прогреса учења карте</string>
   <string name="reset_card_dialog_message">Уклањање прогреса учења за све карте за ову белешку (оне ће изгледати као нове).\nДа продужим?</string>
   <string name="reset_card_dialog_confirmation">Све карте ове белешке ће бити ресетоване</string>
-  <string name="save_duplicate_dialog_title">Duplicate note</string>
-  <string name="save_duplicate_dialog_message">This note shares its primary field with another note. Save anyway?</string>
+  <string name="save_duplicate_dialog_title">Дуплирана белешка</string>
+  <string name="save_duplicate_dialog_message">Ова белешка дели основно поље са још једном белешком. Сачувати свакако?</string>
   <string name="answering_error_title">Грешка базе података</string>
   <string name="answering_error_message">Дошло је до грешке при запису у колекцију. Разлог може бити што је база раније оштећена или што је мало места на диску.\n\nАко се то често догађа, покушајте да проверите базу података, обновите колекцију или обновите из резервне копије. Кликните за то на \"Опције\".\n\nТакође, ствар може бити у грешци AnkiDroid. Молимо вас, известите нас о грешци, да бисмо могли то да проверимо.</string>
   <string name="answering_error_report">Извести о грешци</string>

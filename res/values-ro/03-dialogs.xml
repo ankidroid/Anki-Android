@@ -57,7 +57,7 @@
   <string name="notify_title">Ankidroid a fost actualizat</string>
   <string name="notify_message">Descărcaţi o noua versiune</string>
   <string name="notification_title">Confirmaţi actualizare Ankidroid</string>
-  <string name="preview_title">Preview</string>
+  <string name="preview_title">Previzualizare</string>
   <string name="notification_message">O nouă versiune a Ankidroid este disponibilă în Android Market.\n\nDoriţi să o instalaţi?</string>
   <string name="notification_stop">Nu mă mai anunţa de această actualizare</string>
   <string name="reset_card_dialog_title">Resetează progresul de carduri</string>

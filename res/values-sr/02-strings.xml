@@ -84,26 +84,26 @@
   <string name="card_editor_copy_card">Копирај карту</string>
   <string name="card_editor_reset_card">Ресетуј прогрес</string>
   <string name="error_insufficient_memory">Операција је немогућа због недостатка меморије на вашем уређају</string>
-  <string name="tutorial_load">Креирање обучавајућег шпила.\nМолим сачекајте...</string>
-  <string name="tutorial_loading_error">Обучавајући шпил не може бити креиран</string>
+  <string name="tutorial_load">Креирање шпила за обуку.\nМолим сачекајте...</string>
+  <string name="tutorial_loading_error">Шпил за обуку не може бити креиран</string>
   <string name="rename">Преименуј</string>
   <string name="rename_error">Шпил %s не може бити преименован</string>
   <string name="default_conf_delete_error">Подразумеване опције се не могу уклонити</string>
   <string name="help_title">Помоћ</string>
   <string name="help_online">Онлајн помоћ</string>
   <string name="help_faq">Питања и одговори</string>
-  <string name="help_tutorial">Обучавајући шпил</string>
+  <string name="help_tutorial">Шпил за обуку</string>
   <string name="check_db">Провера базе података</string>
   <string name="check_db_message">Провера базе података.\nМолим сачекајте...</string>
   <string name="simple_interface_hint">Празан %s. Имајте у виду да просто сучеље не може да приказује фотографије/звуке итд.</string>
   <string name="delete_deck">Брисање шпила...\nМолим сачекајте.</string>
   <string name="menu_cardbrowser">Прегледач карата</string>
-  <string name="show_hint">Приказуј савете</string>
-  <string name="pref_lang_other">Језичке поставке</string>
+  <string name="show_hint">Прикажи савет</string>
+  <string name="pref_lang_other">Поставке језика</string>
   <string name="pref_font_UI">Фонт корисничког сучеља</string>
-  <string name="info_rate">Оцена AnkiDroid</string>
+  <string name="info_rate">Оцени AnkiDroid</string>
   <string name="col_load_failed">Прекид учитавања колекције.\nПритисните дугме назад, да бисте затворили AnkiDroid.</string>
-  <string name="import_title">Увоз карата</string>
+  <string name="import_title">Увези карте</string>
   <string name="import_message">Желите ли да додате податке датотеке %s у вашу колекцију или да замените вашу колекцију тим подацима?</string>
   <string name="import_message_add">Додај</string>
   <string name="import_message_replace">Замени</string>
@@ -128,17 +128,17 @@
   <string name="sched_unbury_button">Да бисте их видели, притисните дугме Одустани.</string>
   <string name="sched_has_buried">Неке повезане или скривене карте су одложене до следеће сесије.</string>
   <string-array name="browser_column1_headings">
-    <item>Search Field</item>
+    <item>Претражи поље</item>
   </string-array>
   <string-array name="browser_column2_headings">
-    <item>Answer</item>
-    <item>Card</item>
-    <item>Deck</item>
-    <item>Lapses</item>
-    <item>Note</item>
-    <item>Question</item>
-    <item>Reviews</item>
-    <item>Tags</item>
+    <item>Одговор</item>
+    <item>Картица</item>
+    <item>Шпил</item>
+    <item>Промашаји</item>
+    <item>Белешка</item>
+    <item>Питање</item>
+    <item>Прегледи</item>
+    <item>Ознаке</item>
   </string-array>
   <string-array name="dynOrderLabels">
     <item>Најстарије се приказују прве</item>

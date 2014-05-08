@@ -46,10 +46,10 @@
   <string name="no">Не</string>
   <string name="ok">У реду</string>
   <string name="studyoptions_deck_name">Назив шпила</string>
-  <string name="studyoptions_due_today">До данас:</string>
+  <string name="studyoptions_due_today">За данас:</string>
   <string name="studyoptions_new_total">Укупно нових картица:</string>
   <string name="studyoptions_total_cards">Укупно картица:</string>
-  <string name="studyoptions_eta">Процењено време (мин):</string>
+  <string name="studyoptions_eta">Очекивано време (мин):</string>
   <string name="studyoptions_start">Започни учење</string>
   <string name="show_answer">Прикажи одговор</string>
   <string name="ease1_successive">Поново</string>
@@ -58,16 +58,16 @@
   <string name="ease3_learning">Лако</string>
   <string name="studyoptions_congrats_undo">Опозови %s</string>
   <string name="studyoptions_congrats_unbury">Одустани</string>
-  <string name="studyoptions_congrats_custom_study">Додатно учење</string>
+  <string name="studyoptions_congrats_custom_study">Прилагођено учење</string>
   <string name="studyoptions_congrats_open_other_deck">Отвори други шпил</string>
   <string name="card_unsuspended">Карта неће бити отказана</string>
   <string name="card_suspended">Карта је поново блокирана</string>
-  <string name="menu_rotate">Преврни</string>
+  <string name="menu_rotate">Окрени</string>
   <string name="menu_import">Увези карте</string>
-  <string name="undo">Poništi</string>
+  <string name="undo">Поништи</string>
   <string name="undo_action_review">Преглед</string>
   <string name="undo_action_edit">Уреди белешку</string>
-  <string name="undo_action_bury">Сакриј белешку</string>
+  <string name="undo_action_bury">Сакриј запис</string>
   <string name="undo_action_suspend_card">Одложи карту</string>
   <string name="undo_action_suspend_note">одложи белешку</string>
   <string name="undo_action_delete">Избриши белешку</string>
@@ -83,7 +83,7 @@
   <string name="contextmenu_deckpicker_inflate_deck">Прикажи уметнуте шпилове</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Инсталирај кориснички речник</string>
   <string name="menu_download_deck">Преузми шпил</string>
-  <string name="menu_download_shared_deck">Јавни шпил</string>
+  <string name="menu_download_shared_deck">Заједнички шпил</string>
   <string name="menu_my_account">Синхронизовање налога</string>
   <string name="menu_preferences">Поставке</string>
   <string name="menu_about">О програму</string>
@@ -126,18 +126,18 @@
   <string name="button_sync">Синхронизација</string>
   <string name="restart">Рестарт</string>
   <string name="do_nothing">Не ради ништа</string>
-  <string name="more_options">Детаљније</string>
-  <string name="now">Сад</string>
+  <string name="more_options">Више опција</string>
+  <string name="now">Сада</string>
   <string name="back">Назад</string>
   <string name="ankiweb">AnkiWeb</string>
   <string name="usb">USB</string>
   <string name="_import">Увоз</string>
   <string name="confirm">Потврда</string>
   <string name="internet">Интернет</string>
-  <string name="pc">PC</string>
+  <string name="pc">ПР</string>
   <string-array name="next_review_s">
-    <item>1 секунд</item>
-    <item>1 minute</item>
+    <item>1 секунда</item>
+    <item>1 минут</item>
     <item>1 час</item>
     <item>1 дан</item>
     <item>1 месец</item>
@@ -176,7 +176,7 @@
     <item quantity="other">%1$d нових карата</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">Предвиђено време: 1 мин.</item>
-    <item quantity="other">Предвиђено време: %1$d мин.</item>
+    <item quantity="one">Очекивано време: 1 мин.</item>
+    <item quantity="other">Очекиваноено време: %1$d мин.</item>
   </plurals>
 </resources>
