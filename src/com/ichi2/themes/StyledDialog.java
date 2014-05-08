@@ -285,7 +285,7 @@ public class StyledDialog extends Dialog {
             }
         });
     }
-    
+
     private void adjustSelectAllCheckBox() {
         boolean check = true;
         for (int i = 0; i < mListView.getCount(); i++) {
@@ -675,7 +675,7 @@ public class StyledDialog extends Dialog {
             }
 
             if (mShowFilterEditText) {
-                EditText filterTags = (EditText) layout.findViewById(R.id.filterTags);
+                final EditText filterTags = (EditText) layout.findViewById(R.id.filterTags);
                 filterTags.setVisibility(View.VISIBLE);
                 filterTags.addTextChangedListener(new TextWatcher() {
                     @Override
@@ -692,6 +692,15 @@ public class StyledDialog extends Dialog {
                     }
                     @Override
                     public void afterTextChanged(Editable s) {
+                    }
+                });
+                dialog.setOnDismissListener(new OnDismissListener() {                    
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        filterTags.setText("");
+                        if (dismissListener != null) {
+                            dismissListener.onDismiss(dialog);
+                        }
                     }
                 });
             }
