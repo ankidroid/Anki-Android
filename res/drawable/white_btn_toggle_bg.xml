@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2008 The Android Open Source Project
+<!--
+     Copyright (C) 2008 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -14,7 +15,13 @@
      limitations under the License.
 -->
 
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+android:id/background" android:drawable="@drawable/white_btn_small" />
-    <item android:id="@+android:id/toggle" android:drawable="@drawable/white_btn_toggle" />
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+android:id/background"
+        android:drawable="@drawable/white_btn_small"/>
+    <item
+        android:id="@+android:id/toggle"
+        android:drawable="@drawable/white_btn_toggle"/>
+
 </layer-list>

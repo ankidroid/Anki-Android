@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:orientation="horizontal"
-	android:background="#000000"
-	android:id="@+id/deckpicker_view">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/deckpicker_view"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#000000"
+    android:orientation="horizontal" >
 
-   	<RelativeLayout
-		android:layout_width="0dip"
-		android:layout_weight="2"
-		android:layout_height="fill_parent"
-		android:orientation="vertical">
-    	    
-    
-	<ListView android:id="@+id/files"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:background="?android:attr/colorBackground"
-		android:fastScrollEnabled="true" 
-		android:drawSelectorOnTop="true"
-		android:layout_alignParentTop="true"
-		android:focusable="true"/>
+    <RelativeLayout
+        android:layout_width="0dip"
+        android:layout_height="fill_parent"
+        android:layout_weight="2"
+        android:orientation="vertical" >
 
-<!-- 	<LinearLayout
+        <ListView
+            android:id="@+id/files"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:background="?android:attr/colorBackground"
+            android:drawSelectorOnTop="true"
+            android:fastScrollEnabled="true"
+            android:focusable="true" />
+
+        <!--
+     	<LinearLayout
 		android:id="@+id/deckpicker_buttons"
 		android:layout_width="fill_parent"
 		android:layout_alignParentBottom="true"
@@ -62,13 +62,16 @@
 			style="?android:attr/buttonStyleSmall"
 			android:layout_width="0dip"
 			android:layout_weight="1"/>
-			</LinearLayout> -->
-	</RelativeLayout>
-    	<FrameLayout
-		android:name="com.ichi2.anki.StudyOptionsFragment"
-		android:layout_width="0dip"
-		android:layout_weight="3"
-		android:layout_height="fill_parent"
-    	android:id="@+id/studyoptions_fragment">
-	</FrameLayout>
+			</LinearLayout>
+        -->
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/studyoptions_fragment"
+        android:name="com.ichi2.anki.StudyOptionsFragment"
+        android:layout_width="0dip"
+        android:layout_height="fill_parent"
+        android:layout_weight="3" >
+    </FrameLayout>
+
 </LinearLayout>

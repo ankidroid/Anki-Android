@@ -23,6 +23,7 @@
     android:installLocation="auto"
     android:versionCode="20200163"
     android:versionName="2.2alpha63" >
+
     <!--
         The version number is of the form:
           <major>.<minor>.<maintenance>[dev|alpha<build>|beta<build>|]
@@ -45,7 +46,7 @@
 
         This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
         needed for upgrades to be offered correctly.
-      -->
+    -->
 
     <instrumentation
         android:name="android.test.InstrumentationTestRunner"
@@ -65,7 +66,7 @@
         <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
         <uses-feature android:name="android.hardware.bluetooth" android:required="false" />
     -->
-    
+
     <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
@@ -87,6 +88,7 @@
             android:theme="@style/Theme_Start" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER" />
             </intent-filter>
@@ -201,7 +203,7 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_provider_small" />
         </receiver>
-        
+
         <!-- Service to perform web API queries -->
         <service android:name="com.ichi2.widget.AnkiDroidWidgetSmall$UpdateService" />
 
@@ -281,6 +283,7 @@
         <uses-library
             android:name="com.sec.android.app.multiwindow"
             android:required="false" />
+
         <meta-data
             android:name="com.sec.android.support.multiwindow"
             android:value="true" />
@@ -291,4 +294,5 @@
             android:name="com.sec.minimode.icon.landscape.normal"
             android:resource="@drawable/anki" />
     </application>
+
 </manifest>

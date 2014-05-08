@@ -9,17 +9,16 @@
     <WebView
         android:id="@+id/ImageSearchWebView"
         android:layout_width="match_parent"
-        android:layout_weight="0.8" 
         android:layout_height="0dip"
-        />
+        android:layout_weight="0.8" />
 
-     <Button
-            android:id="@+id/ImageSearchPick"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/multimedia_editor_imgs_pick" />
-    
+    <Button
+        android:id="@+id/ImageSearchPick"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/multimedia_editor_imgs_pick" />
+
     <LinearLayout
         android:id="@+id/ImageSearchButtonsLayout"
         android:layout_width="fill_parent"

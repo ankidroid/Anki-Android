@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-﻿    <item android:state_pressed="false" android:drawable="@drawable/blue_bg_cardbrowser_marked_suspended_normal" />
-    <item android:state_pressed="true" android:drawable="@drawable/blue_bg_cardbrowser_marked_pressed" />
+﻿        <item android:drawable="@drawable/blue_bg_cardbrowser_marked_suspended_normal" android:state_pressed="false"/>
+    <item android:drawable="@drawable/blue_bg_cardbrowser_marked_pressed" android:state_pressed="true"/>
+
 </selector>

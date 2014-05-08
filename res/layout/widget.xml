@@ -2,99 +2,104 @@
     android:id="@+id/ankidroid_widget_layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@drawable/widget_bg_normal"
     android:focusable="false"
-    android:orientation="horizontal"
-    android:background="@drawable/widget_bg_normal">
+    android:orientation="horizontal" >
 
-    <TextView android:id="@+id/anki_droid_logo"
-        android:layout_height="fill_parent"
+    <TextView
+        android:id="@+id/anki_droid_logo"
         android:layout_width="80dip"
-		android:layout_alignParentLeft="true"
-        android:focusable="true"
-        android:background="@drawable/widget_bg_medium"/>
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/widget_bg_medium"
+        android:focusable="true" />
+
     <LinearLayout
-    	android:layout_toRightOf="@+id/anki_droid_logo"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:layout_toRightOf="@+id/anki_droid_logo"
         android:focusable="false"
-        android:paddingRight="11dip"
-        android:paddingLeft="0dip"
-        android:paddingTop="10dip"
+        android:gravity="center"
+        android:orientation="vertical"
         android:paddingBottom="10dip"
-        android:orientation="vertical"
-        android:gravity="center">
-        
+        android:paddingLeft="0dip"
+        android:paddingRight="11dip"
+        android:paddingTop="10dip" >
+
         <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        
-        <TextView android:id="@+id/anki_droid_title"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="0dip"
-            android:layout_marginBottom="2dip"
-            android:includeFontPadding="false"
-            android:textSize="18dip"
-            android:singleLine="true"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:textColor="#000000"
-            android:text="@string/widget_loading"
-            />
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:focusable="false"
-            android:orientation="horizontal"
-            android:layout_marginLeft="0dip"
-            android:layout_marginRight="2dip"
-            >
-            <ImageView
-                android:id="@+id/anki_droid_prev"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_weight="0"
-                />
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:focusable="false"
-                android:orientation="vertical"
-                android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/anki_droid_title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dip"
+                android:layout_marginLeft="0dip"
                 android:gravity="center"
-                >
-                <TextView android:id="@+id/anki_droid_name"
+                android:includeFontPadding="false"
+                android:singleLine="true"
+                android:text="@string/widget_loading"
+                android:textColor="#000000"
+                android:textSize="18dip"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="0dip"
+                android:layout_marginRight="2dip"
+                android:focusable="false"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:id="@+id/anki_droid_prev"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="1dip"
-                    android:layout_marginBottom="1dip"
-                    android:includeFontPadding="false"
-                    android:singleLine="true"
-                    android:ellipsize="middle"
-                    android:textColor="#000000"
-                    android:textSize="18dip"
-                    android:text=""
-                    />
-                <TextView android:id="@+id/anki_droid_status"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="0" />
+
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="1dip"
-                    android:layout_marginBottom="1dip"
-                    android:includeFontPadding="false"
-                    android:singleLine="true"
-                    android:textColor="#777777"
-                    android:textSize="14dip"
-                    android:text=""
-                    />
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:focusable="false"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/anki_droid_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="1dip"
+                        android:layout_marginTop="1dip"
+                        android:ellipsize="middle"
+                        android:includeFontPadding="false"
+                        android:singleLine="true"
+                        android:text=""
+                        android:textColor="#000000"
+                        android:textSize="18dip" />
+
+                    <TextView
+                        android:id="@+id/anki_droid_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="1dip"
+                        android:layout_marginTop="1dip"
+                        android:includeFontPadding="false"
+                        android:singleLine="true"
+                        android:text=""
+                        android:textColor="#777777"
+                        android:textSize="14dip" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/anki_droid_next"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="0" />
             </LinearLayout>
-            <ImageView
-                android:id="@+id/anki_droid_next"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_weight="0"
-                />
         </LinearLayout>
     </LinearLayout>
-    </LinearLayout>
+
 </RelativeLayout>

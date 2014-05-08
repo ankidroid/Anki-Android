@@ -22,191 +22,235 @@
     android:id="@+id/parentPanel"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    android:minWidth="280dip"
     android:orientation="vertical"
-    android:paddingTop="9dip"
     android:paddingBottom="3dip"
     android:paddingLeft="3dip"
-       android:minWidth="280dip"
-    android:paddingRight="1dip"><!--
+    android:paddingRight="1dip"
+    android:paddingTop="9dip" >
+    <!--
     android:majorWeight="0.65"
-    android:minorWeight="0.9"-->
+    android:minorWeight="0.9"
+    -->
 
-    <LinearLayout android:id="@+id/topPanel"
+    <LinearLayout
+        android:id="@+id/topPanel"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:minHeight="54dip"
-        android:orientation="vertical">
-        <LinearLayout android:id="@+id/title_template"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/title_template"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginTop="6dip"
             android:layout_marginBottom="6dip"
             android:layout_marginLeft="10dip"
-            android:layout_marginRight="7dip">
-            <ImageView android:id="@+id/icon"
+            android:layout_marginRight="7dip"
+            android:layout_marginTop="6dip"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:id="@+id/icon"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_gravity="center"
-                android:paddingTop="3dip"
                 android:paddingBottom="3dip"
                 android:paddingRight="10dip"
-                android:src="@drawable/ic_dialog_info" />
-            <TextView android:id="@+id/alertTitle"
-                android:textColor="#ffff"
-                android:textSize="20sp"
-                android:textStyle="bold"
                 android:paddingTop="3dip"
-                android:paddingBottom="3dip"
-                android:singleLine="true"
-                android:ellipsize="end"
-                android:layout_gravity="center"
+                android:src="@drawable/ic_dialog_info" />
+
+            <TextView
+                android:id="@+id/alertTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:layout_weight="1" />
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:paddingBottom="3dip"
+                android:paddingTop="3dip"
+                android:singleLine="true"
+                android:textColor="#ffff"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
             <CheckBox
                 android:id="@+id/SelectAllCheckbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
                 android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                 android:ellipsize="marquee"
                 android:gravity="right"
-                android:layout_marginLeft="10dip"
-                android:visibility="gone"/>
+                android:visibility="gone" />
         </LinearLayout>
     </LinearLayout>
-    <ImageView android:id="@+id/titleDivider"
-            android:layout_width="fill_parent"
-            android:layout_height="1dip"
-            android:scaleType="fitXY"
-            android:gravity="fill_horizontal"/> 
-    <LinearLayout android:id="@+id/contentPanel"
+
+    <ImageView
+        android:id="@+id/titleDivider"
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:gravity="fill_horizontal"
+        android:scaleType="fitXY" />
+
+    <LinearLayout
+        android:id="@+id/contentPanel"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:orientation="vertical">
-        <ScrollView android:id="@+id/scrollView"
+        android:orientation="vertical" >
+
+        <ScrollView
+            android:id="@+id/scrollView"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="8dip"
             android:paddingBottom="10dip"
             android:paddingLeft="8dip"
-            android:paddingRight="8dip">
-            <TextView android:id="@+id/message"
-                android:textColor="#ffff"
-                android:textSize="16sp"
-                android:autoLink="web"
+            android:paddingRight="8dip"
+            android:paddingTop="8dip" >
+
+            <TextView
+                android:id="@+id/message"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dip" />
+                android:autoLink="web"
+                android:padding="5dip"
+                android:textColor="#ffff"
+                android:textSize="16sp" />
         </ScrollView>
     </LinearLayout>
 
-    <FrameLayout android:id="@+id/listViewPanel"
+    <FrameLayout
+        android:id="@+id/listViewPanel"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="100">
-        <ListView android:id="@+id/listview"
+        android:layout_weight="100" >
+
+        <ListView
+            android:id="@+id/listview"
             android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
             android:background="#ffffff"
             android:cacheColorHint="#ffffff"
-            android:focusableInTouchMode="true"
-            android:drawSelectorOnTop="true"
-            android:listSelector="@drawable/white_list_selector_background"
             android:divider="#dfdfdf"
-            android:layout_height="wrap_content"
             android:dividerHeight="1dip"
-            android:paddingTop="0dip"
-            android:paddingBottom="0dip" />
+            android:drawSelectorOnTop="true"
+            android:focusableInTouchMode="true"
+            android:listSelector="@drawable/white_list_selector_background"
+            android:paddingBottom="0dip"
+            android:paddingTop="0dip" />
     </FrameLayout>
-	<ImageView android:id="@+id/bottomDivider"
-	    android:layout_width="fill_parent"
-	    android:layout_height="1dip"
-	    android:scaleType="fitXY"
-	    android:visibility="gone"
-	    android:gravity="fill_horizontal"/> 
-    
-    <LinearLayout android:id="@+id/customPanel"
+
+    <ImageView
+        android:id="@+id/bottomDivider"
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:gravity="fill_horizontal"
+        android:scaleType="fitXY"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/customPanel"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="5dip"
+        android:orientation="vertical"
         android:paddingBottom="0dip"
         android:paddingLeft="2dip"
         android:paddingRight="2dip"
-        android:orientation="vertical">
-        <EditText android:id="@+id/filterTags"
+        android:paddingTop="5dip" >
+
+        <EditText
+            android:id="@+id/filterTags"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:hint="@string/filter_tags"
-            android:visibility="gone"/>
-    	<FrameLayout
-    	    android:layout_width="fill_parent"
-    	    android:layout_height="wrap_content"
-    	    android:layout_weight="1">
-    	    <FrameLayout android:id="@+id/custom"
-    	        android:layout_width="fill_parent"
-    	        android:layout_height="wrap_content"
-                android:layout_gravity="bottom"/>
-    	</FrameLayout>
+            android:visibility="gone" />
+
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+
+            <FrameLayout
+                android:id="@+id/custom"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom" />
+        </FrameLayout>
     </LinearLayout>
-    <ImageView android:id="@+id/bottomButtonDivider"
+
+    <ImageView
+        android:id="@+id/bottomButtonDivider"
         android:layout_width="fill_parent"
         android:layout_height="1dip"
+        android:gravity="fill_horizontal"
         android:scaleType="fitXY"
-        android:visibility="gone"
-        android:gravity="fill_horizontal"/> 
-        
-        
-    <LinearLayout android:id="@+id/buttonPanel"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/buttonPanel"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:minHeight="46dip"
         android:gravity="center"
+        android:minHeight="46dip"
         android:orientation="vertical" >
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="horizontal"
-            android:paddingTop="2dip"
             android:paddingLeft="2dip"
-            android:paddingRight="2dip">
-            <!-- android:useLargestChild="true"-->
-            <LinearLayout android:id="@+id/leftSpacer"
-                android:layout_weight="0.25"
+            android:paddingRight="2dip"
+            android:paddingTop="2dip" >
+
+            <!-- android:useLargestChild="true" -->
+
+            <LinearLayout
+                android:id="@+id/leftSpacer"
                 android:layout_width="0dip"
                 android:layout_height="fill_parent"
-                android:orientation="horizontal"/>
-            <Button android:id="@+id/button1"
+                android:layout_weight="0.25"
+                android:orientation="horizontal" />
+
+            <Button
+                android:id="@+id/button1"
+                style="?android:attr/buttonStyleSmall"
                 android:layout_width="0dip"
+                android:layout_height="fill_parent"
                 android:layout_gravity="left"
                 android:layout_weight="1"
-                android:singleLine="true"
                 android:ellipsize="none"
+                android:singleLine="true" />
+
+            <Button
+                android:id="@+id/button3"
                 style="?android:attr/buttonStyleSmall"
-                android:layout_height="fill_parent" />
-            <Button android:id="@+id/button3"
                 android:layout_width="0dip"
+                android:layout_height="fill_parent"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
-                android:singleLine="true"
                 android:ellipsize="none"
+                android:singleLine="true" />
+
+            <Button
+                android:id="@+id/button2"
                 style="?android:attr/buttonStyleSmall"
-                android:layout_height="fill_parent" />
-            <Button android:id="@+id/button2"
                 android:layout_width="0dip"
+                android:layout_height="fill_parent"
                 android:layout_gravity="right"
                 android:layout_weight="1"
-                android:singleLine="true"
                 android:ellipsize="none"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_height="fill_parent" />
-            <LinearLayout android:id="@+id/rightSpacer"
+                android:singleLine="true" />
+
+            <LinearLayout
+                android:id="@+id/rightSpacer"
                 android:layout_width="0dip"
-                android:layout_weight="0.25"
                 android:layout_height="fill_parent"
-                android:orientation="horizontal"/>
+                android:layout_weight="0.25"
+                android:orientation="horizontal" />
         </LinearLayout>
-     </LinearLayout>
+    </LinearLayout>
+
 </LinearLayout>

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_pressed="true" android:drawable="@drawable/white_deckpicker_bottom_pressed" />
-﻿﻿    <item android:state_activated="true" android:state_pressed="false" android:drawable="@drawable/white_deckpicker_bottom_activated" />
-    <item android:state_activated="false" android:state_pressed="false" android:drawable="@drawable/white_deckpicker_bottom_normal" />
+
+    <item android:drawable="@drawable/white_deckpicker_bottom_pressed" android:state_pressed="true"/>
+﻿﻿        <item android:drawable="@drawable/white_deckpicker_bottom_activated" android:state_activated="true" android:state_pressed="false"/>
+    <item android:drawable="@drawable/white_deckpicker_bottom_normal" android:state_activated="false" android:state_pressed="false"/>
 
 </selector>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-﻿    <item android:state_pressed="false" android:drawable="@drawable/blue_bg_deckpicker_normal" />
-    <item android:state_pressed="true" android:drawable="@drawable/blue_bg_deckpicker_pressed" />
-    <item android:state_focused="true" android:drawable="@drawable/blue_bg_deckpicker_focused" />
+﻿        <item android:drawable="@drawable/blue_bg_deckpicker_normal" android:state_pressed="false"/>
+    <item android:drawable="@drawable/blue_bg_deckpicker_pressed" android:state_pressed="true"/>
+    <item android:drawable="@drawable/blue_bg_deckpicker_focused" android:state_focused="true"/>
+
 </selector>
