@@ -19,6 +19,7 @@ package com.ichi2.libanki.importer;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.util.Log;
+
 import com.google.gson.stream.JsonReader;
 import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.AnkiDroidApp;
@@ -29,11 +30,22 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Media;
 import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.Utils;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.ZipFile;

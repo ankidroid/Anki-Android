@@ -16,13 +16,13 @@
 
 package com.ichi2.anki.receiver;
 
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.libanki.Collection;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+
+import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.libanki.Collection;
 
 /**
  * This Broadcast-Receiver listens to media ejects and closes the collection prior to unmount. It then sends a broadcast intent

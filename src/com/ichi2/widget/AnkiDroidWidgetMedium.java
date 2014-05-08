@@ -14,11 +14,6 @@
 
 package com.ichi2.widget;
 
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.DeckPicker;
-import com.ichi2.anki.R;
-import com.ichi2.anki.StudyOptionsFragment;
-
 import android.app.PendingIntent;
 import android.app.Service;
 import android.appwidget.AppWidgetManager;
@@ -31,7 +26,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.IBinder;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -40,6 +34,10 @@ import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
+
+import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.DeckPicker;
+import com.ichi2.anki.R;
 
 import java.util.ArrayList;
 import java.util.List;

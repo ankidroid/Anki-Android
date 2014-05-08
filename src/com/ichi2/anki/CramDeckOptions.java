@@ -34,6 +34,16 @@ import android.preference.PreferenceActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 
+import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.receiver.SdCardReceiver;
+import com.ichi2.libanki.Collection;
+import com.ichi2.preferences.StepsPreference;
+import com.ichi2.themes.Themes;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -41,17 +51,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.ichi2.anim.ActivityTransitionAnimation;
-import com.ichi2.anki.R;
-import com.ichi2.anki.receiver.SdCardReceiver;
-import com.ichi2.libanki.Collection;
-import com.ichi2.preferences.StepsPreference;
-import com.ichi2.themes.Themes;
 
 /**
  * Preferences for the current deck.

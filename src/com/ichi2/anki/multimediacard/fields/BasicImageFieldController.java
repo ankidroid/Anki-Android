@@ -33,7 +33,6 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 
 import com.ichi2.anki.R;
-import com.ichi2.anki.R.string;
 import com.ichi2.utils.BitmapUtil;
 import com.ichi2.utils.ExifUtil;
 

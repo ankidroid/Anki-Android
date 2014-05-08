@@ -14,10 +14,6 @@
 
 package com.ichi2.widget;
 
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.DeckPicker;
-import com.ichi2.anki.R;
-
 import android.app.PendingIntent;
 import android.app.Service;
 import android.appwidget.AppWidgetManager;
@@ -32,6 +28,10 @@ import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
+
+import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.DeckPicker;
+import com.ichi2.anki.R;
 
 public class AnkiDroidWidgetSmall extends AppWidgetProvider {
 

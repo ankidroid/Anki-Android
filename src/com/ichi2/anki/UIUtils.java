@@ -3,20 +3,12 @@ package com.ichi2.anki;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.v4.view.MenuItemCompat;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.Window;
 import android.view.WindowManager;
 
 import com.ichi2.async.DeckTask;
 import com.ichi2.async.DeckTask.TaskData;
-import com.ichi2.libanki.Collection;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 

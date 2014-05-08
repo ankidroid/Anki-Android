@@ -18,11 +18,12 @@
 package com.ichi2.libanki.sync;
 
 import android.util.Log;
+
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.async.Connection;
-import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Utils;
+
 import org.apache.commons.httpclient.contrib.ssl.EasySSLSocketFactory;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -37,16 +38,34 @@ import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.entity.AbstractHttpEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
-import org.apache.http.params.*;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.CoreProtocolPNames;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
+import org.apache.http.params.HttpProtocolParams;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import javax.net.ssl.SSLException;
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Random;
 import java.util.zip.GZIPOutputStream;
+
+import javax.net.ssl.SSLException;
 
 public class BasicHttpSyncer implements HttpSyncer {
 

@@ -16,16 +16,6 @@
 
 package com.ichi2.libanki.sync;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
-import org.apache.http.HttpResponse;
-
 import android.database.sqlite.SQLiteDatabaseCorruptException;
 import android.util.Log;
 
@@ -35,6 +25,14 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Collection;
+
+import org.apache.http.HttpResponse;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class FullSyncer extends BasicHttpSyncer {
 

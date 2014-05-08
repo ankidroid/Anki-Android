@@ -16,15 +16,15 @@
 
 package com.ichi2.libanki;
 
-import java.util.ArrayList;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import android.database.Cursor;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 
-import android.database.Cursor;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * Deck statistics.

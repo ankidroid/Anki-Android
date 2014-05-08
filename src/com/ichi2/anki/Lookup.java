@@ -1,12 +1,6 @@
 
 package com.ichi2.anki;
 
-import com.ichi2.anki.R;
-
-import com.ichi2.libanki.Card;
-import com.ichi2.libanki.Utils;
-import com.ichi2.themes.StyledDialog;
-
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -14,6 +8,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.util.Log;
+
+import com.ichi2.libanki.Utils;
+import com.ichi2.themes.StyledDialog;
 
 public class Lookup {
 

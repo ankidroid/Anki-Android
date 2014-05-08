@@ -34,7 +34,6 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.Toast;
 
 import com.ichi2.anki.R;
-import com.ichi2.anki.R.string;
 import com.ichi2.anki.multimediacard.activity.LoadPronounciationActivity;
 import com.ichi2.anki.multimediacard.activity.PickStringDialogFragment;
 import com.ichi2.anki.multimediacard.activity.SearchImageActivity;

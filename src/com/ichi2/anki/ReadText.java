@@ -16,24 +16,17 @@
 
 package com.ichi2.anki;
 
-import com.ichi2.anki.R;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.res.Resources;
+import android.speech.tts.TextToSpeech;
+import android.util.Log;
+
+import com.ichi2.themes.StyledDialog;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
-
-import org.json.JSONObject;
-
-import com.ichi2.libanki.Sched;
-import com.ichi2.themes.StyledDialog;
-
-import android.speech.tts.TextToSpeech;
-import android.speech.tts.TextToSpeech.OnUtteranceCompletedListener;
-import android.speech.tts.UtteranceProgressListener;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.res.Resources;
-import android.util.Log;
 
 public class ReadText {
     private static TextToSpeech mTts;

@@ -1,8 +1,9 @@
 
 package com.ichi2.utils;
 
-import java.io.IOException;
-import java.util.List;
+import android.util.Log;
+
+import com.ichi2.anki.AnkiDroidApp;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -12,9 +13,8 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-import android.util.Log;
-
-import com.ichi2.anki.AnkiDroidApp;
+import java.io.IOException;
+import java.util.List;
 
 public class HttpUtility {
     public static Boolean postReport(String url, List<NameValuePair> values) {

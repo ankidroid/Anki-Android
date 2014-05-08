@@ -20,9 +20,9 @@ import android.util.Log;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.async.Connection;
+import com.ichi2.libanki.Utils;
 
 import org.apache.http.HttpEntity;
-import com.ichi2.libanki.Utils;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
 import org.json.JSONArray;

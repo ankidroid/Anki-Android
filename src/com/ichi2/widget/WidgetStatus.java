@@ -14,16 +14,6 @@
 
 package com.ichi2.widget;
 
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.BackupManager;
-import com.ichi2.anki.DeckPicker;
-import com.ichi2.anki.MetaDB;
-import com.ichi2.anki.services.NotificationService;
-import com.ichi2.async.BaseAsyncTask;
-import com.ichi2.async.DeckTask.TaskData;
-import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Decks;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -31,11 +21,13 @@ import android.database.SQLException;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import java.io.File;
-import java.io.FileFilter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
+import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.MetaDB;
+import com.ichi2.anki.services.NotificationService;
+import com.ichi2.async.BaseAsyncTask;
+import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Decks;
+
 import java.util.TreeSet;
 
 /**

@@ -20,8 +20,6 @@ import android.content.res.Resources;
 
 import com.ichi2.anki.R;
 
-import java.util.Locale;
-
 public class HintFilter {
     public void install(Hooks h) {
         h.addHook("fmod_hint", new Hint());
