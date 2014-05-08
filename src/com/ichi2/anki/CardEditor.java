@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
+import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -902,11 +903,23 @@ public class CardEditor extends ActionBarActivity {
                 builder.setPositiveButton(res.getString(R.string.select), new OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        String tag = mNewTagEditText.getText().toString();
                         mCurrentTags = mTagsDialog.getCheckedItems();
+                        if (tag.length() != 0) {
+                            if (!mEditorNote.hasTag(tag)) {
+                                mCurrentTags.add(tag);
+                            }
+                        }
                         updateTags();
                     }
                 });
                 builder.setNegativeButton(res.getString(R.string.cancel), null);
+                builder.setOnDismissListener(new OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        mNewTagEditText.setText("");
+                    }
+                });
                 
                 mNewTagEditText = new EditText(this);
                 mNewTagEditText.setHint(R.string.add_new_filter_tags);
