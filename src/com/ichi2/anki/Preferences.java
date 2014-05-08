@@ -69,7 +69,6 @@ import java.util.TreeMap;
  */
 public class Preferences extends PreferenceActivity implements OnSharedPreferenceChangeListener {
 
-    private static final int DIALOG_ASYNC = 1;
     private static final int DIALOG_BACKUP = 2;
     private static final int DIALOG_HEBREW_FONT = 3;
     private static final int DIALOG_WRITE_ANSWERS = 4;
@@ -82,9 +81,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private CheckBoxPreference showAnswerCheckBoxPreference;
     private CheckBoxPreference swipeCheckboxPreference;
     private CheckBoxPreference useBackupPreference;
-    private CheckBoxPreference asyncModePreference;
     private CheckBoxPreference eInkDisplayPreference;
-    private CheckBoxPreference fadeScrollbars;
     private CheckBoxPreference convertFenText;
     private CheckBoxPreference fixHebrewText;
     private Preference syncAccount;
@@ -95,11 +92,11 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             "it", "ja", "ko", "lt", "nl", "no", "pl", "pt_PT", "pt_BR", "ro", "ru", "sk", "sl", "sr", "sv", "th", "tr", "uk", "vi",
             "zh_CN", "zh_TW", "en" };
     private static String[] mShowValueInSummList = { "language", "dictionary", "reportErrorMode",
-            "minimumCardsDueForNotification", "gestureShake", "gestureSwipeUp", "gestureSwipeDown", "gestureSwipeLeft",
+            "minimumCardsDueForNotification", "gestureSwipeUp", "gestureSwipeDown", "gestureSwipeLeft",
             "gestureSwipeRight", "gestureDoubleTap", "gestureTapTop", "gestureTapBottom", "gestureTapRight",
             "gestureLongclick", "gestureTapLeft", "newSpread", "useCurrent"};//, "theme" };
     private static String[] mShowValueInSummSeek = { "relativeDisplayFontSize", "relativeCardBrowserFontSize",
-            "relativeImageSize", "answerButtonSize", "whiteBoardStrokeWidth", "minShakeIntensity", "swipeSensibility",
+            "relativeImageSize", "answerButtonSize", "whiteBoardStrokeWidth", "swipeSensibility",
             "timeoutAnswerSeconds", "timeoutQuestionSeconds", "backupMax", "dayOffset" };
     private static String[] mShowValueInSummEditText = { "simpleInterfaceExcludeTags" };
     private static String[] mShowValueInSummNumRange = { "timeLimit", "learnCutoff" };
@@ -138,9 +135,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         keepScreenOnCheckBoxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("keepScreenOn");
         showAnswerCheckBoxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("timeoutAnswer");
         useBackupPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("useBackup");
-        asyncModePreference = (CheckBoxPreference) getPreferenceScreen().findPreference("asyncMode");
         eInkDisplayPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("eInkDisplay");
-        fadeScrollbars = (CheckBoxPreference) getPreferenceScreen().findPreference("fadeScrollbars");
 //        ListPreference listpref = (ListPreference) getPreferenceScreen().findPreference("theme");
         convertFenText = (CheckBoxPreference) getPreferenceScreen().findPreference("convertFenText");
         fixHebrewText = (CheckBoxPreference) getPreferenceScreen().findPreference("fixHebrewText");
@@ -395,22 +390,11 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                     useBackupPreference.setChecked(true);
                     showDialog(DIALOG_BACKUP);
                 }
-            } else if (key.equals("asyncMode")) {
-                if (lockCheckAction) {
-                    lockCheckAction = false;
-                } else if (asyncModePreference.isChecked()) {
-                    lockCheckAction = true;
-                    asyncModePreference.setChecked(false);
-                    showDialog(DIALOG_ASYNC);
-                }
             } else if (key.equals("deckPath")) {
                 File decksDirectory = new File(AnkiDroidApp.getCurrentAnkiDroidDirectory());
                 if (decksDirectory.exists()) {
                     AnkiDroidApp.createNoMediaFileIfMissing(decksDirectory);
                 }
-            } else if (key.equals("eInkDisplay")) {
-                fadeScrollbars.setChecked(false);
-                fadeScrollbars.setEnabled(!eInkDisplayPreference.isChecked());
             } else if (key.equals("convertFenText")) {
                 if (convertFenText.isChecked()) {
                     ChessFilter.install(AnkiDroidApp.getHooks());
@@ -537,20 +521,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                         dialogMessage = getResources().getString(R.string.backup_delete);
                         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DELETE_BACKUPS, mDeckOperationHandler,
                                 (DeckTask.TaskData[]) null);
-                    }
-                });
-                builder.setNegativeButton(res.getString(R.string.no), null);
-                break;
-            case DIALOG_ASYNC:
-                builder.setTitle(res.getString(R.string.async_mode));
-                builder.setCancelable(false);
-                builder.setMessage(res.getString(R.string.async_mode_message));
-                builder.setPositiveButton(res.getString(R.string.yes), new OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface arg0, int arg1) {
-                        lockCheckAction = true;
-                        asyncModePreference.setChecked(true);
                     }
                 });
                 builder.setNegativeButton(res.getString(R.string.no), null);

@@ -537,15 +537,6 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         if (result != null) {
             counts = result.getObjArray();
         }
-        if (prefs.getBoolean("splashScreen", false)) {
-            long millies = Utils.intNow(1000) - time;
-            if (millies < 1000) {
-                try {
-                    Thread.sleep(1200 - millies);
-                } catch (InterruptedException e) {
-                }
-            }
-        }
         return new TaskData(col, counts);
     }
 

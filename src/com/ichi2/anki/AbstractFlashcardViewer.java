@@ -34,10 +34,6 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -202,7 +198,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
     private boolean mShowTimer;
     protected boolean mPrefWhiteboard;
     private boolean mPrefWriteAnswers;
-    private boolean mPrefTextSelection;
     private boolean mInputWorkaround;
     private boolean mLongClickWorkaround;
     private boolean mPrefFullscreenReview;
@@ -212,19 +207,16 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
     private boolean mDoubleScrolling;
     private boolean mScrollingButtons;
     private boolean mGesturesEnabled;
-    private boolean mShakeEnabled = false;
-    private int mShakeIntensity;
-    private boolean mShakeActionStarted = false;
     private boolean mPrefFixArabic;
     private boolean mPrefForceQuickUpdate;
-    private boolean mDisplayKanjiInfo = false;
     // Android WebView
     private boolean mSpeakText;
+    private boolean mDisableClipboard = false;
     protected boolean mInvertedColors = false;
     private int mCurrentBackgroundColor;
     private boolean mBlackWhiteboard = true;
     private boolean mNightMode = false;
-    private boolean mPrefFadeScrollbars;
+    private boolean mPrefEInkDisplay;
     protected boolean mPrefUseTimer;
     private boolean mPrefCenterVertically;
     private boolean mSimpleInterface = false;
@@ -321,13 +313,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
      */
     private boolean mUseQuickUpdate = false;
 
-    /**
-     * Shake Detection
-     */
-    private SensorManager mSensorManager;
-    private float mAccel; // acceleration apart from gravity
-    private float mAccelCurrent; // current acceleration including gravity
-    private float mAccelLast; // last acceleration including gravity
 
     /**
      * Swipe Detection
@@ -344,8 +329,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
     private int mGestureSwipeUp;
     private int mGestureSwipeDown;
     private int mGestureSwipeLeft;
-    private int mGestureSwipeRight;
-    private int mGestureShake;
+    private int mGestureSwipeRight;    
     private int mGestureDoubleTap;
     private int mGestureTapLeft;
     private int mGestureTapRight;
@@ -381,9 +365,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
 
     protected Sched mSched;
 
-    // Stores kanji to display their meaning after answering cards
-    private static HashMap<String, String> sKanjiInfo = new HashMap<String, String>();
-
     private ReviewerExtRegistry mExtensions;
 
     // private int zEase;
@@ -391,31 +372,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
     // ----------------------------------------------------------------------------
     // LISTENERS
     // ----------------------------------------------------------------------------
-
-    /**
-     * From http://stackoverflow.com/questions/2317428/android-i-want-to-shake-it Thilo Koehler
-     */
-    private final SensorEventListener mSensorListener = new SensorEventListener() {
-        @Override
-        public void onSensorChanged(SensorEvent se) {
-
-            float x = se.values[0];
-            float y = se.values[1];
-            float z = se.values[2] / 2;
-            mAccelLast = mAccelCurrent;
-            mAccelCurrent = (float) Math.sqrt(x * x + y * y + z * z);
-            float delta = mAccelCurrent - mAccelLast;
-            mAccel = mAccel * 0.9f + delta; // perform low-cut filter
-            if (!mShakeActionStarted && mAccel >= (mShakeIntensity / 10)) {
-                mShakeActionStarted = true;
-                executeCommand(mGestureShake);
-            }
-        }
-
-        @Override
-        public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        }
-    };
 
     private Handler mHandler = new Handler() {
 
@@ -503,7 +459,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
             if (gestureDetector.onTouchEvent(event)) {
                 return true;
             }
-            if (mPrefTextSelection && !mLongClickWorkaround) {
+            if (!mDisableClipboard && !mLongClickWorkaround) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         mTouchStarted = true;
@@ -668,7 +624,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
             if (mNoMoreCards) {
                 closeReviewer(RESULT_NO_MORE_CARDS, true);
             }
-            mShakeActionStarted = false;
         }
     };
 
@@ -943,7 +898,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
 
         setTitle();
 
-        if (mPrefTextSelection) {
+        if (!mDisableClipboard) {
             clipboardSetText("");
         }
 
@@ -965,6 +920,9 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
             mShowWhiteboard = true;
             mWhiteboard.setVisibility(View.VISIBLE);
         }
+        
+        // Initialize dictionary lookup feature
+        Lookup.initialize(this);
     }
 
 
@@ -980,11 +938,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         longClickHandler.removeCallbacks(startLongClickAction);
 
         stopTimer();
-
-        if (mShakeEnabled) {
-            mSensorManager.unregisterListener(mSensorListener);
-        }
-
         Sound.stopSounds();
     }
 
@@ -1010,19 +963,12 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         restartTimer();
         // }
         //
-        if (mShakeEnabled) {
-            mSensorManager.registerListener(mSensorListener,
-                    mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
-        }
     }
 
 
     @Override
     protected void onStop() {
         mInBackground = true;
-        if (mShakeEnabled) {
-            mSensorManager.unregisterListener(mSensorListener);
-        }
         super.onStop();
         // Decks deck = DeckManager.getMainDeck();
         // if (!isFinishing()) {
@@ -1167,7 +1113,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
                 // Some devices or external applications make the clipboard throw exceptions. If this happens, we
                 // must disable it or AnkiDroid will crash if it tries to use it.
                 Log.e(AnkiDroidApp.TAG, "Clipboard error. Disabling text selection setting.");
-                AnkiDroidApp.getSharedPrefs(getBaseContext()).edit().putBoolean("textSelection", false).commit();
+                mDisableClipboard = true;
             }
         }
     }
@@ -1208,7 +1154,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
                 menu.findItem(R.id.action_clear_whiteboard).setVisible(false);
             }
         }
-        if (AnkiDroidApp.SDK_VERSION < 11 && mPrefTextSelection) {
+        if (AnkiDroidApp.SDK_VERSION < 11 && !mDisableClipboard) {
             menu.findItem(R.id.action_search_dictionary).setVisible(true).setEnabled(!mShowWhiteboard).setTitle(
                     clipboardHasText() ? Lookup.getSearchStringTitle() : res.getString(R.string.menu_select));
         }
@@ -1332,7 +1278,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
                 fillFlashcard();
             }
         }
-        if (mPrefTextSelection) {
+        if (!mDisableClipboard) {
             clipboardSetText("");
         }
     }
@@ -1435,7 +1381,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
     }
 
     private void showLookupButtonIfNeeded() {
-        if (mPrefTextSelection && mClipboard != null) {
+        if (!mDisableClipboard && mClipboard != null) {
             if (clipboardGetText().length() != 0 && Lookup.isAvailable() && mLookUpIcon.getVisibility() != View.VISIBLE) {
                 mLookUpIcon.setVisibility(View.VISIBLE);
                 enableViewAnimation(mLookUpIcon, ViewAnimation.fade(ViewAnimation.FADE_IN, mFadeDuration, 0));
@@ -1447,7 +1393,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
     }
 
     private void hideLookupButton() {
-        if (mPrefTextSelection && mLookUpIcon.getVisibility() != View.GONE) {
+        if (!mDisableClipboard && mLookUpIcon.getVisibility() != View.GONE) {
             mLookUpIcon.setVisibility(View.GONE);
             enableViewAnimation(mLookUpIcon, ViewAnimation.fade(ViewAnimation.FADE_OUT, mFadeDuration, 0));
             clipboardSetText("");
@@ -1499,9 +1445,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
             return;
         }
         mIsSelecting = false;
-        if (mPrefTextSelection) {
-            hideLookupButton();
-        }
+        hideLookupButton();
         switch (ease) {
             case EASE_FAILED:
                 mChosenAnswer.setText("\u2022");
@@ -1550,10 +1494,10 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         mCardFrame = (FrameLayout) findViewById(R.id.flashcard);
         mTouchLayer = (FrameLayout) findViewById(R.id.touch_layer);
         mTouchLayer.setOnTouchListener(mGestureListener);
-        if (mPrefTextSelection && mLongClickWorkaround) {
+        if (!mDisableClipboard && mLongClickWorkaround) {
             mTouchLayer.setOnLongClickListener(mLongClickListener);
         }
-        if (mPrefTextSelection) {
+        if (!mDisableClipboard) {
             mClipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         }
         mCardFrame.removeAllViews();
@@ -1569,16 +1513,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         gestureDetector = new GestureDetector(new MyGestureDetector());
 
         mProgressBar = (ProgressBar) findViewById(R.id.flashcard_progressbar);
-
-        // initialise shake detection
-        if (mShakeEnabled) {
-            mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-            mSensorManager.registerListener(mSensorListener,
-                    mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
-            mAccel = 0.00f;
-            mAccelCurrent = SensorManager.GRAVITY_EARTH;
-            mAccelLast = SensorManager.GRAVITY_EARTH;
-        }
 
         Resources res = getResources();
 
@@ -1697,7 +1631,9 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         if (AnkiDroidApp.SDK_VERSION > 7) {
             webView.setFocusableInTouchMode(false);
         }
-        AnkiDroidApp.getCompat().setScrollbarFadingEnabled(webView, mPrefFadeScrollbars);
+        if (mPrefEInkDisplay){
+            AnkiDroidApp.getCompat().setScrollbarFadingEnabled(webView, false);
+        }
         Log.i(AnkiDroidApp.TAG,
                 "Focusable = " + webView.isFocusable() + ", Focusable in touch mode = "
                         + webView.isFocusableInTouchMode());
@@ -1865,7 +1801,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         mPrefHideDueCount = preferences.getBoolean("hideDueCount", false);
         mPrefWhiteboard = preferences.getBoolean("whiteboard", false);
         mPrefWriteAnswers = preferences.getBoolean("writeAnswers", true);
-        mPrefTextSelection = preferences.getBoolean("textSelection", true);
         mLongClickWorkaround = preferences.getBoolean("textSelectionLongclickWorkaround", false);
         // mDeckFilename = preferences.getString("deckFilename", "");
         mNightMode = preferences.getBoolean("invertedColors", false);
@@ -1879,23 +1814,16 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         mPrefFixArabic = preferences.getBoolean("fixArabicText", false);
         mPrefForceQuickUpdate = preferences.getBoolean("forceQuickUpdate", false);
         mSpeakText = preferences.getBoolean("tts", false);
-        mPrefFadeScrollbars = preferences.getBoolean("fadeScrollbars", false);
+        mPrefEInkDisplay = preferences.getBoolean("eInkDisplay", false);
         mPrefUseTimer = preferences.getBoolean("timeoutAnswer", false);
         mWaitAnswerSecond = preferences.getInt("timeoutAnswerSeconds", 20);
         mWaitQuestionSecond = preferences.getInt("timeoutQuestionSeconds", 60);
         mScrollingButtons = preferences.getBoolean("scrolling_buttons", false);
         mDoubleScrolling = preferences.getBoolean("double_scrolling", false);
-        mDisplayKanjiInfo = preferences.getBoolean("displayKanjiInfo", false);
         mPrefCenterVertically = preferences.getBoolean("centerVertically", false);
 
         mGesturesEnabled = AnkiDroidApp.initiateGestures(this, preferences);
         if (mGesturesEnabled) {
-            mGestureShake = Integer.parseInt(preferences.getString("gestureShake", "0"));
-            if (mGestureShake != 0) {
-                mShakeEnabled = true;
-            }
-            mShakeIntensity = preferences.getInt("minShakeIntensity", 70);
-
             mGestureSwipeUp = Integer.parseInt(preferences.getString("gestureSwipeUp", "9"));
             mGestureSwipeDown = Integer.parseInt(preferences.getString("gestureSwipeDown", "0"));
             mGestureSwipeLeft = Integer.parseInt(preferences.getString("gestureSwipeLeft", "8"));
@@ -1907,17 +1835,8 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
             mGestureTapBottom = Integer.parseInt(preferences.getString("gestureTapBottom", "2"));
             mGestureLongclick = Integer.parseInt(preferences.getString("gestureLongclick", "11"));
         }
-        if (mPrefTextSelection && mLongClickWorkaround) {
+        if (mLongClickWorkaround) {
             mGestureLongclick = GESTURE_LOOKUP;
-        }
-
-        // allow screen orientation in reviewer only when fix preference is not set
-        if (preferences.getBoolean("fixOrientation", false)) {
-            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-            } else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-            }
         }
 
         if (preferences.getBoolean("keepScreenOn", false)) {
@@ -2172,58 +2091,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         }
     }
 
-    private void loadKanjiInfo() {
-        if (!sKanjiInfo.isEmpty()) {
-            return;
-        }
-
-        File file;
-        InputStream is;
-
-        is = this.getResources().openRawResource(R.raw.kanji_info);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-
-        String line;
-
-        try {
-            while (reader.ready()) {
-                line = reader.readLine();
-                if (line.length() == 0 || line.startsWith("#")) {
-                    continue;
-                }
-
-                try {
-                    String[] kanjiInfoPair = line.split(" ", 2);
-                    sKanjiInfo.put(kanjiInfoPair[0], kanjiInfoPair[1]);
-                } catch (IndexOutOfBoundsException e) {
-                    Log.i(AnkiDroidApp.TAG, "Malformed entry in kanji_info.txt: " + line);
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    private String addKanjiInfo(String answer) {
-        loadKanjiInfo();
-
-        String kanjiInfo;
-
-        kanjiInfo = "\n\n<br/><br/><table style=\"color: #000000; background-color: #FFFFFF\">\n";
-
-        for (int i = 0; i < answer.length(); i++) {
-            String chr = (answer.substring(i, i + 1));
-            if (sKanjiInfo.containsKey(chr)) {
-                kanjiInfo = kanjiInfo + "<tr><td>" + chr + "</td><td>" + sKanjiInfo.get(chr) + "</td></tr>\n";
-            }
-        }
-
-        kanjiInfo = kanjiInfo + "</table>\n";
-
-        return kanjiInfo;
-    }
-
     protected String getAnswerText(String answer)
     {
         if (answer == null || answer.equals("")) {
@@ -2254,10 +2121,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
             answer = mCurrentCard.aSimple();
         } else {
             answer = mCurrentCard.a();
-        }
-
-        if (mDisplayKanjiInfo) {
-            answer = answer + addKanjiInfo(mCurrentCard.q(mCurrentSimpleInterface));
         }
 
         String displayString = "";
@@ -2326,8 +2189,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
 
     private void updateCard(String content) {
         Log.i(AnkiDroidApp.TAG, "updateCard");
-
-        Lookup.initialize(this, mCurrentCard.getDid());
 
         if (mCurrentSimpleInterface) {
             fillFlashcard();

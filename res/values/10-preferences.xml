@@ -22,8 +22,6 @@
 
 <!-- preferences.xml -->
 <string name="pref_cat_collection">Collection</string>
-<string name="pref_internal_memory">Use internal memory</string>
-<string name="pref_internal_memory_summ">Store collection in internal memory. This is not recommended, as you cannot access the collection file that easily</string>
 <string name="pref_cat_sync">Synchronization</string>
 <string name="pref_cat_qadisplay">Display</string>
 <string name="pref_cat_general">General</string>
@@ -51,8 +49,6 @@
 <string name="show_study_options_on_deck_load_summ">Shows study options screen when loading a deck</string>
 <string name="hide_due_count">Hide due count</string>
 <string name="hide_due_count_summ">Hides the due count</string>
-<string name="fade_scrollbars">Fade scrollbars</string>
-<string name="fade_scrollbars_summ">Automatically fade out flashcard scrollbars when not scrolling</string>
 <!-- show_whiteboard -> Reviewer.java -->
 <string name="enable_whiteboard">Enable Whiteboard</string>
 <string name="show_whiteboard_summ">Lets you write on the screen</string>
@@ -66,24 +62,13 @@
 <string name="corporal_punishments_summ">Vibrate on error, that will teach you</string>-->
 <string name="write_answers">Write answers</string>
 <string name="write_answers_summ">Lets you write the answer and compare it with the correct one</string>
-<string name="text_selection">Allow text selection</string>
-<string name="text_selection_summ">Lets you select and copy text from cards (by menu or long click) in order to perform lookups in an external dictionary</string>
 <string name="text_selection_click">Longclick Workaround</string>
 <string name="text_selection_click_summ">Enable this if you are not able to start text selection via long click</string>
 <string name="dictionary">Dictionary</string>
 <string name="dictionary_summ">Dictionary in which lookups should be performed: XXX</string>
 <string name="reset_languages">Reset Languages</string>
 <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks. Reset specific deck assignments on deck picker</string>
-<string name="reset_all">Reset All</string>
-<string name="reset_all_summ">Reset language, widget, whiteboard and dictionary states</string>
-<string name="reset_dialogs">Reset Dialogs</string>
-<string name="reset_dialogs_question">Reset all dialogs?</string>
-<string name="reset_dialogs_summ">Reset all dialogs which are set to be not shown again</string>
 <string name="reset_languages_question">Reset all language assignments?</string>
-<string name="reset_messages">Reset Messages</string>
-<string name="reset_messages_question">Show current messages again?</string>
-<string name="reset_messages_summ">Show current AnkiDroid messages another time</string>
-<string name="reset_all_question">Reset all language, widget, whiteboard and dictionary states?</string>
 <string name="reset_confirmation">All states reset</string>
 <string name="use_ruby_support">Provide ruby annotation support</string>
 <string name="use_ruby_support_summ">If the characters \'[\' and \']\' are found, then the enclosed text is handled as a ruby annotation</string>
@@ -116,7 +101,6 @@
 <string name="swipe_summ_off">Use gestures to switch between screens and answer cards. This option is not compatible with zoom controls</string>
 <string name="swipe_summ_on">Swipe horizontally to switch between screens. Configure other actions below</string>
 <string name="pref_cat_actions">Actions</string>
-<string name="gestures_shake">Shake</string>
 <string name="gestures_swipe_up">Swipe up</string>
 <string name="gestures_swipe_down">Swipe down</string>
 <string name="gestures_swipe_left">Swipe left</string>
@@ -138,8 +122,6 @@
 <string name="tts_summ">Reads out question and answer if no sound file is included</string>
 <string name="play_sounds_at_start">Play Sounds Instantly</string>
 <string name="play_sounds_at_start_summ">Plays sounds instantly after showing a question/answer</string>
-<string name="shake_intensity">Shake threshold</string>
-<string name="shake_intensity_summ">Threshold for shake recognition: XXX</string>
 <string name="sync_fetch_missing_media">Fetch media on sync</string>
 <string name="sync_fetch_missing_media_summ">Automatically fetch missing media when syncing.</string>
 <string name="sync_account">AnkiWeb account</string>
@@ -211,20 +193,11 @@
 
 <string name="convert_fen_text_summ">Draw chessboard from Forsyth Edwards Notation. The notation must be enclosed in [fen][/fen] tag.</string>
 <string name="sync_set_journal_mode">Setting correct journal mode...</string>
-<string name="async_mode">Synchronous off</string>
-<string name="async_mode_summ">This speeds AnkiDroid up but can corrupt databases when the whole Android system crashes. So use backups</string>
-<string name="async_mode_message">Be aware that this option is less safe and can cause deck corruptions when Android crashes (e.g. due to power shortage).\nIt is HIGHLY recommended to use the backup system if this option is set.\nEnable it anyway?</string>
-
-<string name="fix_orientation">Fix orientation</string>
-<string name="fix_orientation_summ">Do not allow orientation change when reviewing</string>
 
 <string name="per_day">Per Day</string>
 
 <string name="studyoptions_new_cards_per_day">New cards per day</string>
 <string name="studyoptions_max_fail_card">Max fail cards</string>
-
-<string name="show_broadcast_messages">Show Current Messages</string>
-<string name="show_broadcast_messages_summ">Show AnkiDroid notifications like new version updates or important other news</string>
 
 <string name="input_workaround">Input Workaround</string>
 <string name="input_workaround_summ">Workaround for focusing problems on HTML input boxes. Causes problems on several devices.</string>
@@ -319,8 +292,6 @@
 <string name="deck_conf_cram_reschedule_summ">Reschedule cards based on my answers in this deck</string>
 <string name="deck_conf_cram_steps">Custom steps</string>
 <string name="deck_conf_cram_steps_summ">Define custom steps</string>
-<string name="pref_show_splashscreen">Splash screen</string>
-<string name="pref_show_splashscreen_summ">Show splash screen</string>
 <string name="pref_intent_add_instant">Instant add</string>
 <string name="pref_intent_add_instant_summ">Add new cards from dictionaries without opening AnkiDroid. You find them later under \'saved data\' in card adder.</string>
 <string name="pref_cat_intent_add">External data addition</string>

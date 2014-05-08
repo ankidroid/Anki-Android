@@ -20,38 +20,32 @@ public class Lookup {
     /**
      * Searches
      */
-    private static final int DICTIONARY_AEDICT = 0;
-    private static final int DICTIONARY_EIJIRO_WEB = 1; // japanese web dictionary
-    private static final int DICTIONARY_LEO_WEB = 2; // German web dictionary for English, French, Spanish, Italian,
+    private static final int DICTIONARY_NONE = 0;      // use no dictionary
+    private static final int DICTIONARY_AEDICT = 1;     // Japanese dictionary
+    private static final int DICTIONARY_EIJIRO_WEB = 2; // japanese web dictionary
+    private static final int DICTIONARY_LEO_WEB = 3; // German web dictionary for English, French, Spanish, Italian,
                                                      // Chinese, Russian
-    private static final int DICTIONARY_LEO_APP = 3; // German web dictionary for English, French, Spanish, Italian,
+    private static final int DICTIONARY_LEO_APP = 4; // German web dictionary for English, French, Spanish, Italian,
                                                      // Chinese, Russian
-    private static final int DICTIONARY_COLORDICT = 4;
-    private static final int DICTIONARY_FORA = 5;
-    private static final int DICTIONARY_NCIKU_WEB = 6; // chinese web dictionary
+    private static final int DICTIONARY_COLORDICT = 5;
+    private static final int DICTIONARY_FORA = 6;
+    private static final int DICTIONARY_NCIKU_WEB = 7; // chinese web dictionary
 
     private static Context mContext;
-    private static long mDid;
     private static boolean mIsDictionaryAvailable;
     private static String mDictionaryAction;
     private static int mDictionary;
     private static String mLookupText;
 
 
-    public static boolean initialize(Context context, long did) {
+    public static boolean initialize(Context context) {
         mContext = context;
-        if (mDid == did) {
-        	return mIsDictionaryAvailable;
-        }
-        mDid = did;
-        int customDictionary = MetaDB.getLookupDictionary(context, did);
-        if (customDictionary != -1) {
-            mDictionary = customDictionary;
-        } else {
-            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
-            mDictionary = Integer.parseInt(preferences.getString("dictionary", Integer.toString(DICTIONARY_COLORDICT)));
-        }
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
+        mDictionary = Integer.parseInt(preferences.getString("dictionary", Integer.toString(DICTIONARY_NONE)));
         switch (mDictionary) {
+            case DICTIONARY_NONE:
+                mIsDictionaryAvailable = false;
+                break;
             case DICTIONARY_AEDICT:
                 mDictionaryAction = "sk.baka.aedict.action.ACTION_SEARCH_EDICT";
                 mIsDictionaryAvailable = Utils.isIntentAvailable(mContext, mDictionaryAction);
@@ -91,6 +85,8 @@ public class Lookup {
         // clear text from leading and closing dots, commas, brackets etc.
         text = text.trim().replaceAll("[,;:\\s\\(\\[\\)\\]\\.]*$", "").replaceAll("^[,;:\\s\\(\\[\\)\\]\\.]*", "");
         switch (mDictionary) {
+            case DICTIONARY_NONE:
+                return false;
             case DICTIONARY_AEDICT:
                 Intent aedictSearchIntent = new Intent(mDictionaryAction);
                 aedictSearchIntent.putExtra("kanjis", text);

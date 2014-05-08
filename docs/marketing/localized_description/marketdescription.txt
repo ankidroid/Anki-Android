@@ -29,7 +29,7 @@ Add material through the desktop application Anki or directly through Ankidroid.
 • add cards by intent from other applications like dictionaries
 • custom font support
 • full backup system
-• navigation by swipe, tap, shake
+• navigation by swipe, tap
 • customisable
 • dynamic deck handling
 • night mode

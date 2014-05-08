@@ -52,10 +52,6 @@ public class BroadcastMessages {
 
     public static void checkForNewMessages(Activity activity) {
         SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(activity);
-        // don't retrieve messages, if option in preferences is not set
-        if (!prefs.getBoolean("showBroadcastMessages", true)) {
-            return;
-        }
         Log.i(AnkiDroidApp.TAG, "BroadcastMessages: checkForNewMessages");
         // don't proceed if messages were already shown today
         if (!prefs.getBoolean("showBroadcastMessageToday", true)) {
