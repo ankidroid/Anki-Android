@@ -40,8 +40,10 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -127,6 +129,7 @@ public class StudyOptionsFragment extends Fragment {
     /** Alerts to inform the user about different situations */
     private StyledProgressDialog mProgressDialog;
     private StyledOpenCollectionDialog mOpenCollectionDialog;
+    private StyledDialog mTagsDialog;
 
     /**
      * UI elements for "Study Options" view
@@ -877,7 +880,6 @@ public class StudyOptionsFragment extends Fragment {
                 }
 
                 Context context = getActivity().getBaseContext();
-
                 /*
                  * The following RadioButtons and RadioGroup are to select the category of cards
                  * to select for the Custom Study Deck (New, Due or All cards).
@@ -904,6 +906,12 @@ public class StudyOptionsFragment extends Fragment {
                             Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
                             mSelectedTags.add(tag);
                         }
+                    }
+                }, new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        mTagsDialog.setItemListChecked(isChecked);
+                        mSelectedTags = new HashSet<String>(mTagsDialog.getCheckedItems());
                     }
                 });
 
@@ -952,6 +960,7 @@ public class StudyOptionsFragment extends Fragment {
                 builder1.setNegativeButton(res.getString(R.string.cancel), new OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        mTagsDialog.setItemListChecked(false);
                         mSelectedTags.clear();
                     }
                 });
@@ -959,11 +968,16 @@ public class StudyOptionsFragment extends Fragment {
 
                     @Override
                     public void onCancel(DialogInterface dialog) {
+                        mTagsDialog.setItemListChecked(false);
                         mSelectedTags.clear();
                     }
                 });
+                builder1.setShowFilterTags(true);
 
-                dialog = builder1.create();
+                mTagsDialog = builder1.create();
+                dialog = mTagsDialog;
+                //without this the dialog goes up the screen in a way that the user isn't able to see the full item list.
+                mTagsDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
                 break;
             case DIALOG_CUSTOM_STUDY_DETAILS:
                 /*
@@ -1013,7 +1027,7 @@ public class StudyOptionsFragment extends Fragment {
         	radioButtonCards[i].setGravity(Gravity.CENTER_VERTICAL);
         	rg.addView(radioButtonCards[i], lp);
         }
-        rg.check(0);
+        radioButtonCards[0].setChecked(true);
 
         rg.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override

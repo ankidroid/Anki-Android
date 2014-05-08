@@ -44,7 +44,7 @@
             android:layout_marginTop="6dip"
             android:layout_marginBottom="6dip"
             android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip">
+            android:layout_marginRight="7dip">
             <ImageView android:id="@+id/icon"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
@@ -56,14 +56,24 @@
             <TextView android:id="@+id/alertTitle"
                 android:textColor="#ffff"
                 android:textSize="20sp"
-       			android:textStyle="bold"
+                android:textStyle="bold"
                 android:paddingTop="3dip"
                 android:paddingBottom="3dip"
                 android:singleLine="true"
                 android:ellipsize="end"
                 android:layout_gravity="center"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent" />
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="1" />
+            <CheckBox
+                android:id="@+id/SelectAllCheckbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                android:ellipsize="marquee"
+                android:gravity="right"
+                android:layout_marginLeft="10dip"
+                android:visibility="gone"/>
         </LinearLayout>
     </LinearLayout>
     <ImageView android:id="@+id/titleDivider"
@@ -93,7 +103,7 @@
         </ScrollView>
     </LinearLayout>
 
-        <FrameLayout android:id="@+id/listViewPanel"
+    <FrameLayout android:id="@+id/listViewPanel"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="100">
@@ -110,31 +120,42 @@
             android:paddingTop="0dip"
             android:paddingBottom="0dip" />
     </FrameLayout>
-        <ImageView android:id="@+id/bottomDivider"
-            android:layout_width="fill_parent"
-            android:layout_height="1dip"
-            android:scaleType="fitXY"
-            android:visibility="gone"
-            android:gravity="fill_horizontal"/> 
-        
-    <FrameLayout android:id="@+id/customPanel"
+	<ImageView android:id="@+id/bottomDivider"
+	    android:layout_width="fill_parent"
+	    android:layout_height="1dip"
+	    android:scaleType="fitXY"
+	    android:visibility="gone"
+	    android:gravity="fill_horizontal"/> 
+    
+    <LinearLayout android:id="@+id/customPanel"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
-        <FrameLayout android:id="@+id/custom"
+        android:paddingTop="5dip"
+        android:paddingBottom="0dip"
+        android:paddingLeft="2dip"
+        android:paddingRight="2dip"
+        android:orientation="vertical">
+        <EditText android:id="@+id/filterTags"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="5dip"
-            android:paddingBottom="0dip"
-            android:paddingLeft="2dip"
-            android:paddingRight="2dip"/>
-    </FrameLayout>
-        <ImageView android:id="@+id/bottomButtonDivider"
-            android:layout_width="fill_parent"
-            android:layout_height="1dip"
-            android:scaleType="fitXY"
-            android:visibility="gone"
-            android:gravity="fill_horizontal"/> 
+            android:hint="@string/filter_tags"
+            android:visibility="gone"/>
+    	<FrameLayout
+    	    android:layout_width="fill_parent"
+    	    android:layout_height="wrap_content"
+    	    android:layout_weight="1">
+    	    <FrameLayout android:id="@+id/custom"
+    	        android:layout_width="fill_parent"
+    	        android:layout_height="wrap_content"
+                android:layout_gravity="bottom"/>
+    	</FrameLayout>
+    </LinearLayout>
+    <ImageView android:id="@+id/bottomButtonDivider"
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:scaleType="fitXY"
+        android:visibility="gone"
+        android:gravity="fill_horizontal"/> 
         
         
     <LinearLayout android:id="@+id/buttonPanel"
@@ -146,7 +167,7 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-        	android:layout_gravity="center"
+            android:layout_gravity="center"
             android:orientation="horizontal"
             android:paddingTop="2dip"
             android:paddingLeft="2dip"
@@ -161,24 +182,24 @@
                 android:layout_width="0dip"
                 android:layout_gravity="left"
                 android:layout_weight="1"
-				android:singleLine="true"
-				android:ellipsize="none"
+                android:singleLine="true"
+                android:ellipsize="none"
                 style="?android:attr/buttonStyleSmall"
                 android:layout_height="fill_parent" />
             <Button android:id="@+id/button3"
                 android:layout_width="0dip"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
-				android:singleLine="true"
-				android:ellipsize="none"
+                android:singleLine="true"
+                android:ellipsize="none"
                 style="?android:attr/buttonStyleSmall"
                 android:layout_height="fill_parent" />
             <Button android:id="@+id/button2"
                 android:layout_width="0dip"
                 android:layout_gravity="right"
                 android:layout_weight="1"
-				android:singleLine="true"
-				android:ellipsize="none"
+                android:singleLine="true"
+                android:ellipsize="none"
                 style="?android:attr/buttonStyleSmall"
                 android:layout_height="fill_parent" />
             <LinearLayout android:id="@+id/rightSpacer"

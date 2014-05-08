@@ -49,6 +49,8 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -156,6 +158,7 @@ public class CardEditor extends ActionBarActivity {
     private Note mEditorNote;
     public static Card mCurrentEditedCard;
     private List<String> mCurrentTags;
+    private List<String> mSelectedTags;
     private long mCurrentDid;
 
     /* indicates if a new fact is added or a card is edited */
@@ -178,7 +181,6 @@ public class CardEditor extends ActionBarActivity {
     private StyledDialog mDeckSelectDialog;
 
     private String[] allTags;
-    private ArrayList<String> selectedTags;
     private EditText mNewTagEditText;
     private StyledDialog mTagsDialog;
 
@@ -900,14 +902,27 @@ public class CardEditor extends ActionBarActivity {
                 builder.setPositiveButton(res.getString(R.string.select), new OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        mCurrentTags = selectedTags;
+                        mCurrentTags = mTagsDialog.getCheckedItems();
                         updateTags();
                     }
                 });
                 builder.setNegativeButton(res.getString(R.string.cancel), null);
-
+                
                 mNewTagEditText = new EditText(this);
-                mNewTagEditText.setHint(R.string.add_new_tag);
+                mNewTagEditText.setHint(R.string.add_new_filter_tags);
+                
+                mNewTagEditText.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        mTagsDialog.filterList(s.toString());
+                    }
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    }
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                    }
+                });
 
                 InputFilter filter = new InputFilter() {
                     @Override
@@ -934,7 +949,7 @@ public class CardEditor extends ActionBarActivity {
                                 mNewTagEditText.setText("");
                                 return;
                             }
-                            selectedTags.add(tag);
+                            mCurrentTags.add(tag);
                             actualizeTagDialog(mTagsDialog);
                             mNewTagEditText.setText("");
                         }
@@ -950,6 +965,14 @@ public class CardEditor extends ActionBarActivity {
                 frame.addView(mAddTextButton);
 
                 builder.setView(frame, false, true);
+                builder.setSelectAllListener(new OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        mTagsDialog.setItemListChecked(isChecked);
+                        mCurrentTags = mTagsDialog.getCheckedItems();
+                    }
+                });
+                
                 dialog = builder.create();
                 mTagsDialog = dialog;
                 break;
@@ -1164,10 +1187,11 @@ public class CardEditor extends ActionBarActivity {
                     dialog = null;
                     return;
                 }
-                selectedTags = new ArrayList<String>();
-                for (String s : mEditorNote.getTags()) {
-                    selectedTags.add(s);
+
+                if (mSelectedTags == null) {
+                    mSelectedTags = new ArrayList<String>();
                 }
+                mCurrentTags = new ArrayList<String>(mSelectedTags);                
                 actualizeTagDialog(ad);
                 break;
 
@@ -1222,32 +1246,39 @@ public class CardEditor extends ActionBarActivity {
 
 
     private void actualizeTagDialog(StyledDialog ad) {
+        //without this the dialog goes up the screen in a way that the user isn't able to see the full item list.
+        ad.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         TreeSet<String> tags = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
         for (String tag : mCol.getTags().all()) {
             tags.add(tag);
         }
-        tags.addAll(selectedTags);
+        
+        tags.addAll(mCurrentTags);
         int len = tags.size();
         allTags = new String[len];
         boolean[] checked = new boolean[len];
         int i = 0;
         for (String t : tags) {
             allTags[i++] = t;
-            if (selectedTags.contains(t)) {
-                checked[i - 1] = true;
-            }
+            checked[i - 1] = mCurrentTags.contains(t);
         }
         ad.setMultiChoiceItems(allTags, checked, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface arg0, int which) {
                 String tag = allTags[which];
-                if (selectedTags.contains(tag)) {
+                if (mCurrentTags.contains(tag)) {
                     Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
-                    selectedTags.remove(tag);
+                    mCurrentTags.remove(tag);
                 } else {
                     Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
-                    selectedTags.add(tag);
+                    mCurrentTags.add(tag);
                 }
+            }
+        }, new OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mTagsDialog.setItemListChecked(isChecked);
+                mCurrentTags = mTagsDialog.getCheckedItems();
             }
         });
     }
@@ -1297,8 +1328,7 @@ public class CardEditor extends ActionBarActivity {
         if (targetText != null) {
             mEditFields.get(mTargetPosition).setText(targetText);
         }
-    }
-
+    }   
 
     private void populateEditFields() {
         mFieldsLayoutContainer.removeAllViews();
@@ -1446,6 +1476,7 @@ public class CardEditor extends ActionBarActivity {
 
 
     private void updateTags() {
+        mSelectedTags = new ArrayList<String>(mCurrentTags);
         mTagsButton.setText(getResources().getString(R.string.CardEditorTags,
                 mCol.getTags().join(mCol.getTags().canonify(mCurrentTags)).trim().replace(" ", ", ")));
     }
