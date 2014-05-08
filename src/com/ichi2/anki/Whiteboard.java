@@ -18,8 +18,6 @@
 
 package com.ichi2.anki;
 
-import com.ichi2.anki.R;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;

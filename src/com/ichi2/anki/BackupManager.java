@@ -19,6 +19,7 @@ package com.ichi2.anki;
 import android.content.SharedPreferences;
 import android.os.StatFs;
 import android.util.Log;
+
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
 
@@ -28,7 +29,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.UnknownFormatConversionException;
 
 public class BackupManager {
 

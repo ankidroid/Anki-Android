@@ -14,12 +14,6 @@
 
 package com.ichi2.anki.services;
 
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.DeckPicker;
-import com.ichi2.anki.R;
-import com.ichi2.anki.StudyOptionsFragment;
-import com.ichi2.widget.WidgetStatus;
-
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -28,8 +22,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.IBinder;
-
 import android.util.Log;
+
+import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.DeckPicker;
+import com.ichi2.anki.R;
+import com.ichi2.widget.WidgetStatus;
 
 public class NotificationService extends Service {
 

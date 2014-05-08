@@ -36,10 +36,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.ichi2.anki.R;
-import com.ichi2.anki.R.id;
-import com.ichi2.anki.R.layout;
-import com.ichi2.anki.R.menu;
-import com.ichi2.anki.R.string;
 import com.ichi2.anki.multimediacard.beolingus.parsing.BeolingusParser;
 import com.ichi2.anki.multimediacard.language.LanguageListerBeolingus;
 import com.ichi2.anki.runtimetools.TaskOperations;

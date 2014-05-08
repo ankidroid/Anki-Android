@@ -1,10 +1,10 @@
 package com.ichi2.compat;
 
-import com.ichi2.anki.ReadText;
-
 import android.annotation.TargetApi;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
+
+import com.ichi2.anki.ReadText;
 
 /** Implementation of {@link Compat} for SDK level 15 */
 @TargetApi(15)

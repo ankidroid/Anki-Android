@@ -34,10 +34,9 @@ import com.ichi2.anki.Feedback;
 import com.ichi2.anki.R;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
-import com.ichi2.libanki.Sched;
 import com.ichi2.libanki.Utils;
-import com.ichi2.libanki.sync.FullSyncer;
 import com.ichi2.libanki.sync.BasicHttpSyncer;
+import com.ichi2.libanki.sync.FullSyncer;
 import com.ichi2.libanki.sync.MediaSyncer;
 import com.ichi2.libanki.sync.RemoteMediaServer;
 import com.ichi2.libanki.sync.RemoteServer;
@@ -49,9 +48,6 @@ import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
@@ -63,7 +59,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.lang.OutOfMemoryError;
 import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -80,6 +75,10 @@ import java.util.List;
 import java.util.TreeSet;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
+
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
 
 public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connection.Payload> {
 

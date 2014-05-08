@@ -1,26 +1,6 @@
 
 package com.ichi2.anki;
 
-import com.ichi2.anki.R;
-import com.ichi2.async.BaseAsyncTask;
-
-import java.io.IOException;
-import java.net.URL;
-import java.net.URLConnection;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-
-import com.ichi2.libanki.Utils;
-import com.ichi2.themes.StyledDialog;
-import com.ichi2.themes.Themes;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -33,6 +13,24 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.view.WindowManager.BadTokenException;
 import android.webkit.WebView;
+
+import com.ichi2.async.BaseAsyncTask;
+import com.ichi2.libanki.Utils;
+import com.ichi2.themes.StyledDialog;
+import com.ichi2.themes.Themes;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+import java.io.IOException;
+import java.net.URL;
+import java.net.URLConnection;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 public class BroadcastMessages {
 

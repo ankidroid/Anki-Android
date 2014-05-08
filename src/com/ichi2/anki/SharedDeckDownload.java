@@ -14,8 +14,6 @@
 
 package com.ichi2.anki;
 
-import com.ichi2.anki.R;
-
 import android.os.Parcel;
 import android.os.Parcelable;
 

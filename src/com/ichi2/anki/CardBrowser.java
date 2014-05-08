@@ -17,16 +17,6 @@
 
 package com.ichi2.anki;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
@@ -58,9 +48,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.BaseAdapter;
-import android.widget.SimpleAdapter;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -73,13 +62,21 @@ import com.ichi2.libanki.Card;
 import com.ichi2.libanki.CardStats;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Note;
-import com.ichi2.libanki.Sched;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.upgrade.Upgrade;
 import com.ichi2.widget.WidgetStatus;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 
 public class CardBrowser extends ActionBarActivity implements ActionBar.OnNavigationListener {
 

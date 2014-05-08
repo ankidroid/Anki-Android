@@ -66,11 +66,10 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
+import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
-import java.util.regex.Pattern;
-import java.lang.OutOfMemoryError;
 
 /**
  * Loading in the background, so that AnkiDroid does not look like frozen.

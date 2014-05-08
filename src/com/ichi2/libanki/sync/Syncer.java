@@ -25,7 +25,6 @@ import com.ichi2.anki.R;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
-import com.ichi2.libanki.Sched;
 import com.ichi2.libanki.Utils;
 import com.ichi2.utils.ConvUtils;
 
@@ -35,7 +34,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.lang.OutOfMemoryError;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;

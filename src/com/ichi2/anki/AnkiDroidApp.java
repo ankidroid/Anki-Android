@@ -33,13 +33,13 @@ import android.view.WindowManager;
 
 import com.ichi2.async.Connection;
 import com.ichi2.compat.Compat;
+import com.ichi2.compat.CompatV15;
+import com.ichi2.compat.CompatV15NookHdPlus;
+import com.ichi2.compat.CompatV16;
 import com.ichi2.compat.CompatV7;
 import com.ichi2.compat.CompatV7Nook;
 import com.ichi2.compat.CompatV8;
 import com.ichi2.compat.CompatV9;
-import com.ichi2.compat.CompatV15;
-import com.ichi2.compat.CompatV15NookHdPlus;
-import com.ichi2.compat.CompatV16;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.hooks.Hooks;

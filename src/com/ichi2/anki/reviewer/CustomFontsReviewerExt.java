@@ -16,19 +16,18 @@
 
 package com.ichi2.anki.reviewer;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.AnkiFont;
-import com.ichi2.anki.reviewer.ReviewerExt;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.Themes;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class CustomFontsReviewerExt implements ReviewerExt {
 

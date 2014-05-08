@@ -16,10 +16,6 @@
 
 package com.ichi2.libanki;
 
-import java.io.File;
-import java.net.URI;
-import java.util.HashMap;
-
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -27,12 +23,15 @@ import android.media.MediaPlayer.OnCompletionListener;
 import android.net.Uri;
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.ReadText;
+
+import java.io.File;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Class used to parse, load and play sound files on AnkiDroid.

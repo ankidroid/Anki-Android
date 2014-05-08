@@ -1,14 +1,14 @@
 
 package com.ichi2.anki;
 
-import com.ichi2.libanki.Utils;
-import com.ichi2.widget.DeckStatus;
-
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.util.Log;
+
+import com.ichi2.libanki.Utils;
+import com.ichi2.widget.DeckStatus;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,10 +1,10 @@
 
 package com.ichi2.anim;
 
-import com.ichi2.anki.R;
-
 import android.annotation.TargetApi;
 import android.app.Activity;
+
+import com.ichi2.anki.R;
 
 public class ActivityTransitionAnimation {
     public static int LEFT = 0;

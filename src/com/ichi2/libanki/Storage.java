@@ -16,20 +16,20 @@
 
 package com.ichi2.libanki;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.ContentValues;
 import android.database.SQLException;
 
 import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Storage {
     String mPath;

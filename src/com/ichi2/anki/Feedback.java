@@ -16,8 +16,6 @@
 
 package com.ichi2.anki;
 
-import com.ichi2.anki.R;
-
 import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;

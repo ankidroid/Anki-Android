@@ -22,29 +22,19 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.widget.EditText;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.receiver.SdCardReceiver;
-import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
-
-import org.json.JSONException;
-
-import java.util.ArrayList;
 
 public class StudyOptionsActivity extends ActionBarActivity {
 

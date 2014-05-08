@@ -14,8 +14,6 @@
 
 package com.ichi2.anki;
 
-import com.ichi2.anki.R;
-
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
