@@ -121,6 +121,5 @@
     <item><![CDATA[AnkiDroid  <a href="%1$s">software terbuka<a/>, jadi semua orang dijemput untuk <a href="%2$s">serta</a> dan <a href="%3$s">menyumbang</a>:-)]]></item>
     <item><![CDATA[Orang ramai boleh membantu, seperti <a href="%1$s">dengan alih bahasa</a> AnkiDroid, mengemas wiki dan gambar, <a href="%2$s">menderma</a> kepada Anki Desktop, atau blogging pasal AnkiDroid!]]></item>
     <item><![CDATA[AnkiDroid tertakluk kepada <a href="%1$s">Lesen GNU-GPL v3 </a> dan kod sumber disimpan di <a href="%2$s">sini</a>.]]></item>
-    <item><![CDATA[Paket ini menggunakan file kamus <a href="http://www.csse.monash.edu.au/~jwb/edict.html">EDICT</a> dan <a href="http://www.csse.monash.edu.au/~jwb/kanjidic.html">KANJIDIC</a>. File-file tersebut dimiliki oleh <a href="http://www.edrdg.org">Electronic Dictionary Research and Development Group</a>, dan digunakan sesuai dengan <a href="http://www.edrdg.org/edrdg/licence.html">lisensi</a> Group.]]></item>
   </string-array>
 </resources>

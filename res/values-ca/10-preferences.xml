@@ -40,8 +40,6 @@
 -->
 <resources>
   <string name="pref_cat_collection">Collection</string>
-  <string name="pref_internal_memory">Utilitza la memòria interna</string>
-  <string name="pref_internal_memory_summ">Emmagatzema la col·lecció a la memòria interna. Això no és recomanable, ja que no podreu accedir tan fàcilment al fitxer de la col·lecció</string>
   <string name="pref_cat_sync">Sincronització</string>
   <string name="pref_cat_qadisplay">Pantalla</string>
   <string name="pref_cat_general">General</string>
@@ -53,7 +51,6 @@
   <string name="pref_cat_navigation">Navega</string>
   <string name="pref_cat_swipe">Dóna un cop</string>
   <string name="pref_cat_navigation_sensitivity">Sensibilitat</string>
-  <string name="pref_cat_zoom">Ampliació</string>
   <string name="pref_cat_zeemote">Zeemote</string>
   <string name="pref_cat_reset">Reinicia</string>
   <string name="pref_cat_other">Altres</string>
@@ -70,10 +67,7 @@
   <string name="show_study_options_on_deck_load_summ">Mostra les opcions d\'aprenentatge en carregar un paquet</string>
   <string name="hide_due_count">Amaga el número de vençudes</string>
   <string name="hide_due_count_summ">Amaga el número de fitxes que han vençut</string>
-  <string name="show_progress_bars">Mostra la barra de progrés</string>
-  <string name="show_progress_bars_summ">Mostra el progrés d\'avui i la proporció de respostes afirmatives d\'avui en revisar</string>
-  <string name="fade_scrollbars">Esvaix les barres de desplaçament</string>
-  <string name="fade_scrollbars_summ">Atenua automàticament les barres de desplaçament de les fitxes quan no es desplacen</string>
+  <string name="enable_whiteboard">Enable Whiteboard</string>
   <string name="show_whiteboard_summ">Permet escriure a la pantalla</string>
   <string name="whiteboard_stroke_width">Amplada del traç a la pissarra</string>
   <string name="whiteboard_stroke_width_summ">Amplada del traç: XXX</string>
@@ -81,24 +75,13 @@
   <string name="whiteboard_black_summ">Utilitza blanc i negre en lloc d\'accident barres de colors (per a dispositius amb poca memòria, no funciona en mode nocturn)</string>
   <string name="write_answers">Escriu les respostes</string>
   <string name="write_answers_summ">Permet escriure la resposta i comparar-la amb la solució correcta</string>
-  <string name="text_selection">Permet triar el text</string>
-  <string name="text_selection_summ">Permet seleccionar i copiar el text de la fitxes (mitjançant el menú o fent un clic prolongat) per tal de realitzar recerques en un diccionari extern</string>
   <string name="text_selection_click">Solució alternativa del clic perllongat</string>
   <string name="text_selection_click_summ">Activeu aquesta opció si no podeu seleccionar text amb un clic perllongat</string>
   <string name="dictionary">Diccionari</string>
   <string name="dictionary_summ">Diccionari on realitzar les cerques: XXX</string>
   <string name="reset_languages">Reinicia tots el idiomes</string>
   <string name="reset_languages_summ">Reinicia les assignacions d\'idioma (per text a la síntesi de veu i els diccionaris) per a tots els paquets. Reinicia les assignacions específiques dels paquets al selector de paquets</string>
-  <string name="reset_all">Reinitza-ho tot</string>
-  <string name="reset_all_summ">Reinicialització dels estats de l\'idioma, giny i pissarra</string>
-  <string name="reset_dialogs">Reinicialitza els quadres de diàleg</string>
-  <string name="reset_dialogs_question">Voleu restablir tots els diàlegs?</string>
-  <string name="reset_dialogs_summ">Restableix tots els diàlegs que estiguin establerts per tal que no es tornèssin a mostrar</string>
   <string name="reset_languages_question">Voleu reiniciar les assignacions de tots el idiomes?</string>
-  <string name="reset_messages">Reinicia el missatges</string>
-  <string name="reset_messages_question">Torna a mostrar els avisos sobre l\'estat?</string>
-  <string name="reset_messages_summ">Mostra els missatges actuals de l\'AnkiDroid una altra vegada</string>
-  <string name="reset_all_question">Voleu reiniciar els estats de l\'idioma, giny i pissarra?</string>
   <string name="reset_confirmation">Restableix tots els estats</string>
   <string name="use_ruby_support">Permet anotacions de ruby</string>
   <string name="use_ruby_support_summ">El text inclòs entre corxets  \'[\' i \']\' es tractaràn con una anotació de ruby</string>
@@ -114,8 +97,6 @@
   <string name="col_path_summ">Camí cap a on s\'emmagatzema la vostra col. lecció</string>
   <string name="fullscreen_review">Revisa a pantalla completa</string>
   <string name="fullscreen_review_summ">Podeu fer servit tota la pantalla al revisar les fitxes</string>
-  <string name="zoom">Activa l\'ampliació</string>
-  <string name="zoom_summ">Mostra els botons d\'ampliació a les fitxes</string>
   <string name="zeemote">Controlador Zeemote JS1</string>
   <string name="zeemote_summ">Utilitza el controlador Zeemote JS1 per navegar pel comentaris.</string>
   <string name="zeemote_actions">Accions de Zeemote al revisar</string>
@@ -133,7 +114,6 @@
   <string name="swipe_summ_off">Feu servir gestos per canviar entre les pantalles i fitxes de resposta. Aquesta opció no és compatible amb els controls de zoom</string>
   <string name="swipe_summ_on">Passeu el dit horitzontalment per canviar entre les pantalles. Ajusteu diverses accions a sota</string>
   <string name="pref_cat_actions">Accions</string>
-  <string name="gestures_shake">Sacseja</string>
   <string name="gestures_swipe_up">Passeu el dit cap amunt</string>
   <string name="gestures_swipe_down">Passeu el dit cap a sota</string>
   <string name="gestures_swipe_left">Passseu el dit cap a l\'esquerra</string>
@@ -155,8 +135,6 @@
   <string name="tts_summ">Llegeix en veu alta les preguntes i respostes si no s\'inclou arxiu de so</string>
   <string name="play_sounds_at_start">Reprodueix els sons de seguida</string>
   <string name="play_sounds_at_start_summ">Reprodueix sons immediatament després de mostrar una pregunta / resposta</string>
-  <string name="shake_intensity">Llindar per sacsejar</string>
-  <string name="shake_intensity_summ">Llindar de reconeixement per sacsejar: XXX</string>
   <string name="sync_fetch_missing_media">Recupera els media en sincronitzar</string>
   <string name="sync_fetch_missing_media_summ">Recupera automàticament els mitjans que falten en sincronitzar.</string>
   <string name="sync_account">AnkiWeb account</string>
@@ -179,10 +157,6 @@
   <string name="timeout_question_seconds">Activeu aquesta opció si no podeu seleccionar text amb un clic llarg</string>
   <string name="select_locale_title">Seleccioneu l\'idioma</string>
   <string name="select_theme">Tema</string>
-  <string name="theme_animations">Animacions</string>
-  <string name="theme_animations_summ">Mostra les animacions en girar les fitxes</string>
-  <string name="animation_speed">Durada de l\'animació</string>
-  <string name="animation_speed_summ">Durada de les animacions de transició: XXX ms</string>
   <string name="eink_display">Optimització de pantalles E-Ink</string>
   <string name="eink_display_summ">Desactiva totes les animacions i fes alguna optimització per a pantalles E-Ink</string>
   <string name="vertical_centering">Center card content vertically</string>
@@ -219,21 +193,14 @@
   <string name="filter_google_translate_summ">Desa només la paraula original i la seva traducció</string>
   <string name="convert_fen_text_summ">Mostra la notació d\'escacs de Forsyth Edwardsnotació. La notació s\'ha d\'incloure a l\'etiqueta [fen][/fen].</string>
   <string name="sync_set_journal_mode">S\'està ajustant el mode diari de la forma correcta ...</string>
-  <string name="async_mode">No ho sincronitzis</string>
-  <string name="async_mode_summ">Això accelera l\'AnkiDroid però pot malmetre les bases de dades si el sistema Android falla. Així que utilitzeu les còpies de seguretat</string>
-  <string name="async_mode_message">Tingueu en compte que aquesta opció és menys segura i pot causar la corrupció del paquet si es bloqueja l\'Android (per exemple, a causa d\'un tall d\'energia).\nÉs MOLT recomanable utilitzar el sistema de còpies de seguretat si activeu aquesta opció.\nVoleu activar-la de totes maneres?</string>
-  <string name="fix_orientation">Fixa l\'orientació</string>
-  <string name="fix_orientation_summ">No permetis que es canviï l\'orientació en la revisió</string>
   <string name="per_day">Cada dia</string>
   <string name="studyoptions_new_cards_per_day">Noves fitxes per dia</string>
   <string name="studyoptions_max_fail_card">Màxim de fitxes fallades</string>
-  <string name="show_broadcast_messages">Mostra els missatges actuals</string>
-  <string name="show_broadcast_messages_summ">Mostra les notificacions d\'AnkiDroid com les actualitzacions de la versió nova o altres notícies importants</string>
   <string name="input_workaround">Solució alternativa d\'entrada</string>
   <string name="input_workaround_summ">Solució alternativa enfocada als problemes de les caixes d\'entrada HTML. Causa problemes en alguns dispositius.</string>
   <string name="write_answers_message">Heu de definir per a cada paquet un camp per comparar-ho amb la resposta per escrit. Ho podeu fer a través de l\'Anki a l\'escriptori (propietats del paquet -&gt; edita el model -&gt; Disseny de la fitxa).\n\nSi no hi cap camp per comparar, la resposta escrita sempre es compara amb la resposta sencera de la fitxa.</string>
   <string name="pref_cardbrowser_skip_init_search">Obre el navegador ràpid de fitxes</string>
-  <string name="pref_cardbrowser_skip_init_search_summ">Salta la cerca automàtica inicial quan s\'obre al navegador de fitxes.</string>
+  <string name="pref_cardbrowser_skip_init_search_summ">Skips initial automatic search when the card browser opens or the deck is changed.</string>
   <string name="pref_keep_screen_on">Manté la pantalla engegada</string>
   <string name="pref_keep_screen_on_summ">Evita que la pantalla s\'apagui durant la revisió</string>
   <string name="pref_simple_interface">Interfície simple</string>
@@ -306,8 +273,6 @@
   <string name="deck_conf_cram_reschedule_summ">Torna a planificar les fitxes en base a les meves respostes en aquest paquet</string>
   <string name="deck_conf_cram_steps">Passos personalitzats</string>
   <string name="deck_conf_cram_steps_summ">Defines els passos personalitzats</string>
-  <string name="pref_show_splashscreen">Pantalla de presentació</string>
-  <string name="pref_show_splashscreen_summ">Mostra la pantalla de presentació</string>
   <string name="pref_intent_add_instant">Afegeix instantàniament</string>
   <string name="pref_intent_add_instant_summ">Afegeix fitxes noves dels diccionaris sense obrir AnkiDroid. Les trobareu a sota de \'dades desades\' al afegidor de fitxes.</string>
   <string name="pref_cat_intent_add">Afegeix dades externes</string>

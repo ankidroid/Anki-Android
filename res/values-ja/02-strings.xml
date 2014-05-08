@@ -42,19 +42,20 @@
   <string name="CardEditorCancelButton">キャンセル</string>
   <string name="CardEditorSaveButton">保存する</string>
   <string name="CardEditorLaterButton">後で</string>
-  <string name="CardEditorPreviewButton">プレビュー</string>
   <string name="CardEditorLaterMessage">後日のために情報を保存</string>
   <string name="CardEditorCardDeck">カード単語帳: %s</string>
   <string name="CardEditorNoteDeck">ノート単語帳: %s</string>
   <string name="CardEditorModel">ノートタイプ: %s</string>
   <string name="CardEditorTags">タグ: %1$s</string>
-  <string name="add_new_tag">新しいタグを追加する</string>
+  <string name="add_new_filter_tags">Add/Filter tags</string>
   <string name="note_type">ノートタイプ</string>
   <string name="card_type">カードタイプ</string>
+  <string name="filter_tags">Filter tags</string>
   <string name="sdcard_missing_message">USBストレージとして使用されているので、SDカードは使用できません。単語帳にアクセスするには、USBを切断してください。</string>
   <string name="show_whiteboard">ホワイトボード有効化</string>
   <string name="hide_whiteboard">ホワイトボード無効化</string>
   <string name="clear_whiteboard">ホワイトボードをクリア</string>
+  <string name="replay_audio">Replay audio</string>
   <string name="cram_edit_warning">総復習中はカードの編集はできません</string>
   <string name="suspend_leeches">学習困難カードの非表示</string>
   <string name="leech_suspend_notification">このカードは学習困難カードとして登録されました</string>
@@ -83,6 +84,7 @@
   <string name="card_editor_reset">リセット</string>
   <string name="card_editor_copy_card">カードをコピーする</string>
   <string name="card_editor_reset_card">初めから</string>
+  <string name="card_editor_preview_card">Preview</string>
   <string name="error_insufficient_memory">メモリ不足のため操作できませんでした。</string>
   <string name="tutorial_load">練習用単語帳を作成中です\nしばらくお待ちください</string>
   <string name="tutorial_loading_error">チュートリアルの単語帳を作成できませんでした。</string>
@@ -134,11 +136,11 @@
     <item>回答</item>
     <item>カード</item>
     <item>単語帳</item>
-    <item>未習得</item>
-    <item>ノート</item>
-    <item>問題</item>
-    <item>復習</item>
-    <item>タグ</item>
+    <item>Note</item>
+    <item>Question</item>
+    <item>Tags</item>
+    <item>Lapses</item>
+    <item>Reviews</item>
   </string-array>
   <string-array name="dynOrderLabels">
     <item>古いものを先頭に</item>

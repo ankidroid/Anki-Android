@@ -112,7 +112,6 @@
   <string-array name="leech_action_labels">
     <item>Odložit kartu</item>
     <item>Pouze štítky</item>
-    <item>Obnovit jako nové</item>
   </string-array>
   <string-array name="new_order_labels">
     <item>Nové karty v náhodném pořadí</item>

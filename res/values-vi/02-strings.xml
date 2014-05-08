@@ -42,19 +42,20 @@
   <string name="CardEditorCancelButton">Hủy bỏ</string>
   <string name="CardEditorSaveButton">Lưu lại</string>
   <string name="CardEditorLaterButton">Sửa sau</string>
-  <string name="CardEditorPreviewButton">Preview</string>
   <string name="CardEditorLaterMessage">Lưu thông tin cho sau này</string>
   <string name="CardEditorCardDeck">Card deck: %s</string>
   <string name="CardEditorNoteDeck">Note deck: %s</string>
   <string name="CardEditorModel">Note type: %s</string>
   <string name="CardEditorTags">Từ khóa: %1$s</string>
-  <string name="add_new_tag">Thêm từ khóa mới</string>
+  <string name="add_new_filter_tags">Add/Filter tags</string>
   <string name="note_type">Note type</string>
   <string name="card_type">Card type</string>
+  <string name="filter_tags">Filter tags</string>
   <string name="sdcard_missing_message">Thẻ SD hiện đang được sử dụng như một ổ lưu trữ USB. Hãy ngắt kết nối USB để có thể truy cập được vào các tập thẻ của bạn.</string>
   <string name="show_whiteboard">Hiện Bảng viết</string>
   <string name="hide_whiteboard">Ẩn bảng viết</string>
   <string name="clear_whiteboard">Xóa bảng viết</string>
+  <string name="replay_audio">Replay audio</string>
   <string name="cram_edit_warning">Không được phép sửa thẻ khi đang ôn thi</string>
   <string name="suspend_leeches">Suspend Leeches</string>
   <string name="leech_suspend_notification">Card marked as leech and suspended</string>
@@ -83,6 +84,7 @@
   <string name="card_editor_reset">Thiết lập lại</string>
   <string name="card_editor_copy_card">Sao chép thẻ</string>
   <string name="card_editor_reset_card">Thiết lập lại quá trình học</string>
+  <string name="card_editor_preview_card">Preview</string>
   <string name="error_insufficient_memory">Không thể thao tác vì không đủ bộ nhớ trên thiết bị của bạn</string>
   <string name="tutorial_load">Creating tutorial deck.\nPlease wait...</string>
   <string name="tutorial_loading_error">Không thể tạo được tập thẻ hướng dẫn</string>
@@ -134,11 +136,11 @@
     <item>Answer</item>
     <item>Card</item>
     <item>Deck</item>
-    <item>Lapses</item>
     <item>Note</item>
     <item>Question</item>
-    <item>Reviews</item>
     <item>Tags</item>
+    <item>Lapses</item>
+    <item>Reviews</item>
   </string-array>
   <string-array name="dynOrderLabels">
     <item>Oldest seen first</item>

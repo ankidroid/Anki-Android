@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">Totaal aantal kaarten:</string>
   <string name="studyoptions_eta">Geschatte tijd (min):</string>
   <string name="studyoptions_start">Studeer nu</string>
+  <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">Toon antwoord</string>
   <string name="ease1_successive">Opnieuw</string>
   <string name="ease2_successive">Moeilijk</string>
@@ -63,7 +64,7 @@
   <string name="card_unsuspended">Uitstellen kaart ongedaan gemaakt</string>
   <string name="card_suspended">Kaart opnieuw uitstellen</string>
   <string name="menu_rotate">Omkeren</string>
-  <string name="menu_import">Kaarten importeren</string>
+  <string name="menu_import">Import file</string>
   <string name="undo">Ongedaan maken</string>
   <string name="undo_action_review">overhoren</string>
   <string name="undo_action_edit">bewerk memo</string>
@@ -82,6 +83,8 @@
   <string name="contextmenu_deckpicker_collapse_deck">Subsets verbergen</string>
   <string name="contextmenu_deckpicker_inflate_deck">Subsets tonen</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Instellen van de aangepaste woordenlijst</string>
+  <string name="menu_add">Add</string>
+  <string name="menu_add_note">Add note</string>
   <string name="menu_download_deck">Set downloaden</string>
   <string name="menu_download_shared_deck">Gedeelde set</string>
   <string name="menu_my_account">Account synchroniseren</string>
@@ -99,9 +102,9 @@
   <string name="menu_search">Opzoeken in %1$s</string>
   <string name="menu_mark_card">Markeer kaart</string>
   <string name="menu_unmark_card">Kaart demarkeren</string>
-  <string name="new_deck">Nieuwe leerset</string>
+  <string name="new_deck">Create deck</string>
   <string name="create">Maak</string>
-  <string name="new_dynamic_deck">Nieuwe gefilterde set</string>
+  <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">Feedback</string>
   <string name="studyoptions_load_tutorial_deck">Maak handleiding</string>
   <string name="night_mode">Nachtmodus</string>

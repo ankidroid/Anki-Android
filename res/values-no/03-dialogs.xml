@@ -121,6 +121,5 @@
     <item><![CDATA[AnkiDroid er <a href="%1$s">åpen kilde-programvare<a/>, slik at alle oppfordres til å <a href="%2$s">delta som</a> <a href="%3$s"> bidragsytere</a>:-)]]></item>
     <item><![CDATA[De som ikke er programmerere kan også hjelpe, for eksempel ved <a href="%1$s">å oversette</a> AnkiDroid, oppdatere wiki\'en og skjermbilder, <a href="%2$s">donere</a> til Anki Desktop eller ved å blogge om AnkiDroid!]]></item>
     <item><![CDATA[AnkiDroid er utgitt under <a href="%1$s"> GNU GPL v3-lisensen</a> og kildekoden er tilgjengelig <a href="%2$s"> her</a>.]]></item>
-    <item><![CDATA[This package uses the <a href="http://www.csse.monash.edu.au/~jwb/edict.html">EDICT</a> and <a href="http://www.csse.monash.edu.au/~jwb/kanjidic.html">KANJIDIC</a> dictionary files. These files are the property of the <a href="http://www.edrdg.org">Electronic Dictionary Research and Development Group</a>, and are used in conformance with the Group\'s <a href="http://www.edrdg.org/edrdg/licence.html">licence</a>.]]></item>
   </string-array>
 </resources>

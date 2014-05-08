@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">סה\"כ הכרטיסים:</string>
   <string name="studyoptions_eta">זמן משוער (דקות):</string>
   <string name="studyoptions_start">ללמוד עכשיו</string>
+  <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">הצג תשובה</string>
   <string name="ease1_successive">שוב</string>
   <string name="ease2_successive">קשה</string>
@@ -63,7 +64,7 @@
   <string name="card_unsuspended">השהית הכרטיס בוטלה</string>
   <string name="card_suspended">קלף הוחזר</string>
   <string name="menu_rotate">סבב</string>
-  <string name="menu_import">יבא כרטיסים</string>
+  <string name="menu_import">Import file</string>
   <string name="undo">בטל</string>
   <string name="undo_action_review">סקור</string>
   <string name="undo_action_edit">ערוך הערה</string>
@@ -82,6 +83,8 @@
   <string name="contextmenu_deckpicker_collapse_deck">הסתר תת-חפיסות</string>
   <string name="contextmenu_deckpicker_inflate_deck">הראה תת-חפיסות</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">הגדר מילון אישי</string>
+  <string name="menu_add">Add</string>
+  <string name="menu_add_note">Add note</string>
   <string name="menu_download_deck">להוריד חפיסת רשומות</string>
   <string name="menu_download_shared_deck">חפיסת רשומות משותפת</string>
   <string name="menu_my_account">סינכרון חשבון</string>
@@ -99,9 +102,9 @@
   <string name="menu_search">Lookup in %1$s</string>
   <string name="menu_mark_card">מארק כרטיס</string>
   <string name="menu_unmark_card">בטל סימון כרטיס</string>
-  <string name="new_deck">חפיסה חדשה</string>
+  <string name="new_deck">Create deck</string>
   <string name="create">צור</string>
-  <string name="new_dynamic_deck">חפיסה מסוננת חדשה</string>
+  <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">משוב</string>
   <string name="studyoptions_load_tutorial_deck">יצירת ערכת לימוד</string>
   <string name="night_mode">מצב לילה</string>

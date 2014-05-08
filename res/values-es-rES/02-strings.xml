@@ -42,19 +42,20 @@
   <string name="CardEditorCancelButton">Cancelar</string>
   <string name="CardEditorSaveButton">Guardar</string>
   <string name="CardEditorLaterButton">Más tarde</string>
-  <string name="CardEditorPreviewButton">Vista Previa</string>
   <string name="CardEditorLaterMessage">Información guardada para más tarde</string>
   <string name="CardEditorCardDeck">Mazo de la Tarjeta: %s</string>
   <string name="CardEditorNoteDeck">Mazo de la Nota: %s</string>
   <string name="CardEditorModel">Tipo de Nota: %s</string>
   <string name="CardEditorTags">Etiquetas: %1$s</string>
-  <string name="add_new_tag">Añadir nueva etiqueta</string>
+  <string name="add_new_filter_tags">Add/Filter tags</string>
   <string name="note_type">Tipo de Nota</string>
   <string name="card_type">Tipo de tarjeta</string>
+  <string name="filter_tags">Filter tags</string>
   <string name="sdcard_missing_message">La tarjeta SD no se encuentra disponible porque está siendo usada como almacenamiento via USB. Desconecta el USB para acceder a tus mazos.</string>
   <string name="show_whiteboard">Mostrar pizarra</string>
   <string name="hide_whiteboard">Ocultar Pizarra</string>
   <string name="clear_whiteboard">Limpiar Pizarra</string>
+  <string name="replay_audio">Replay audio</string>
   <string name="cram_edit_warning">No se permite editar tarjetas mientras empollas</string>
   <string name="suspend_leeches">Suspender Sanguijuelas</string>
   <string name="leech_suspend_notification">Tarjeta marcada como sanguijuela y suspendida</string>
@@ -83,6 +84,7 @@
   <string name="card_editor_reset">Restablecer</string>
   <string name="card_editor_copy_card">Copiar tarjeta</string>
   <string name="card_editor_reset_card">Reiniciar cuenta de progreso</string>
+  <string name="card_editor_preview_card">Preview</string>
   <string name="error_insufficient_memory">La operación no es posible debido a insuficiencia de memoria en tu dispositivo</string>
   <string name="tutorial_load">Creando mazo tutorial.\nPor favor, espera...</string>
   <string name="tutorial_loading_error">No se pudo crear el mazo tutorial</string>
@@ -134,11 +136,11 @@
     <item>Respuesta</item>
     <item>Carta</item>
     <item>Mazo</item>
+    <item>Note</item>
+    <item>Question</item>
+    <item>Tags</item>
     <item>Lapses</item>
-    <item>Nota</item>
-    <item>Pregunta</item>
     <item>Reviews</item>
-    <item>Etiquetas</item>
   </string-array>
   <string-array name="dynOrderLabels">
     <item>Vistas hace más tiempo primero</item>

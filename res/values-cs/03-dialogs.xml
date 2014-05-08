@@ -121,6 +121,5 @@
     <item><![CDATA[AnkiDroid je <a href="%1$s">open source program<a/>, tak se každý může <a href="%2$s">připojit</a> k <a href="%3$s">přispěvovatelům</a>:-)]]></item>
     <item><![CDATA[Ne jen vývojáři mohou pomoci, např. můžete pomoci s <a href="%1$s">překladem</a> AnkiDroid, aktualizovat wiki dokumentaci a náhledy obrazovek, <a href="%2$s">finančně přispět</a> na program Anki, nebo psát do blogu o AnkiDroidu!]]></item>
     <item><![CDATA[AnkiDroid je publikován pod <a href="%1$s">GNU-GPL v3 licencí</a> a zdrojové kódy jsou dostupné <a href="%2$s">zde</a>.]]></item>
-    <item><![CDATA[Tento balíček používá soubory slovníku <a href="http://www.csse.monash.edu.au/~jwb/edict.html">EDICT</a> a <a href="http://www.csse.monash.edu.au/~jwb/kanjidic.html">KANJIDIC</a>. Tyto soubory jsou majetkem <a href="http://www.edrdg.org">Electronic Dictionary Research and Development Group</a>, a jsou používány v souladu s <a href="http://www.edrdg.org/edrdg/licence.html">licencí</a>.]]></item>
   </string-array>
 </resources>

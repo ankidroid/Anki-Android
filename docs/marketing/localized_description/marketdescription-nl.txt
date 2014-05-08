@@ -29,8 +29,8 @@ Voeg materiaal toe via de desktopapplicatie Anki of rechtstreeks via Ankidroid. 
 • kaarten via het intent-protocol toevoegen vanuit andere toepassingen zoals woordenboeken
 • ondersteuning voor aangepaste lettertypes
 • volledig backupsysteem
-• navigeren door te vegen, tikken en schudden
-• volledig aanpasbaar
+• navigation by swipe, tap
+• customisable
 • dynamisch sorteren van sets
 • nachtmodus
 • 27 talen

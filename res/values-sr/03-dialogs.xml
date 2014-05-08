@@ -121,6 +121,5 @@
     <item><![CDATA[AnkiDroid је <a href="%1$s">софтвер отвореног кода<a/>, па свако може <a href="%2$s">постати</a>  <a href="%3$s">учесник</a>:-)]]></item>
     <item><![CDATA[Не-програмери могу помоћи <a href="%1$s">преводећи</a> AnkiDroid, обнављајући wiki и скриншоте, <a href="%2$s">донирајући</a> за Anki Desktop, или написавши у блогу о AnkiDroid!]]></item>
     <item><![CDATA[AnkiDroid је публикован са  <a href="%1$s">GNU-GPL v3 лиценцом</a> и изворни код је доступан <a href="%2$s">овде</a>.]]></item>
-    <item><![CDATA[овај пакет користи датотеке речника <a href="http://www.csse.monash.edu.au/~jwb/edict.html">EDICT</a> и <a href="http://www.csse.monash.edu.au/~jwb/kanjidic.html">KANJIDIC</a>. Датотеке су власништво <a href="http://www.edrdg.org">Electronic Dictionary Research and Development Group</a>, и користе се у складу са <a href="http://www.edrdg.org/edrdg/licence.html">лиценцом</a> организације.]]></item>
   </string-array>
 </resources>

@@ -29,8 +29,8 @@ Pelayar kad
 • menambahkan kad dengan 'intent&gt; dari aplikasi lain seperti kamus
 • dukungan kustom font
 • sistem sokongan penuh
-• navigasi dengan gesek, tekan, goyang
-• sepenuhnya disesuaikan
+• navigation by swipe, tap
+• customisable
 • penanganan tumpukan kartu dinamis
 • modus malam
 • 27 pelokalan

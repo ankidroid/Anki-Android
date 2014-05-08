@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">Всього карток:</string>
   <string name="studyoptions_eta">Оцінка часу (хв.):</string>
   <string name="studyoptions_start">Почати вивчення</string>
+  <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">Показати відповідь</string>
   <string name="ease1_successive">Знову</string>
   <string name="ease2_successive">Важко</string>
@@ -63,7 +64,7 @@
   <string name="card_unsuspended">Відкладення картки скасовано</string>
   <string name="card_suspended">Картка знову відкладена</string>
   <string name="menu_rotate">Повернути</string>
-  <string name="menu_import">Імпортувати карти</string>
+  <string name="menu_import">Import file</string>
   <string name="undo">Відмінити</string>
   <string name="undo_action_review">Повторення</string>
   <string name="undo_action_edit">Редагувати примітку</string>
@@ -82,6 +83,8 @@
   <string name="contextmenu_deckpicker_collapse_deck">Приховати вкладені колоди</string>
   <string name="contextmenu_deckpicker_inflate_deck">Показати вкладені колоди</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Встановити словник користувача</string>
+  <string name="menu_add">Add</string>
+  <string name="menu_add_note">Add note</string>
   <string name="menu_download_deck">Завантажити колоду</string>
   <string name="menu_download_shared_deck">Спільна колода</string>
   <string name="menu_my_account">Змінити обліковий запис</string>
@@ -99,9 +102,9 @@
   <string name="menu_search">Пошук у %1$s</string>
   <string name="menu_mark_card">Помітити картку</string>
   <string name="menu_unmark_card">Зняти позначку з картки</string>
-  <string name="new_deck">Нова колода</string>
+  <string name="new_deck">Create deck</string>
   <string name="create">Створити</string>
-  <string name="new_dynamic_deck">Нова відфільтрована колода</string>
+  <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">Відгук</string>
   <string name="studyoptions_load_tutorial_deck">Створити підручник</string>
   <string name="night_mode">Нічний режим</string>

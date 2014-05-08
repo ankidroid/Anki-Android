@@ -42,19 +42,20 @@
   <string name="CardEditorCancelButton">Zrušiť</string>
   <string name="CardEditorSaveButton">Uložiť</string>
   <string name="CardEditorLaterButton">Neskôr</string>
-  <string name="CardEditorPreviewButton">Náhľad</string>
   <string name="CardEditorLaterMessage">Informácie uložené na neskôr</string>
   <string name="CardEditorCardDeck">Balíček kariet: %s</string>
   <string name="CardEditorNoteDeck">Poznámka balíčka: %s</string>
   <string name="CardEditorModel">Typ poznámky: %s</string>
   <string name="CardEditorTags">Štítky: %1$s</string>
-  <string name="add_new_tag">Pridať nový štítok</string>
+  <string name="add_new_filter_tags">Add/Filter tags</string>
   <string name="note_type">Typ poznámky</string>
   <string name="card_type">Typ karty</string>
+  <string name="filter_tags">Filter tags</string>
   <string name="sdcard_missing_message">SD karta je nedostupná, pretože sa používa ako USB úložisko. Pre prístup k vašim balíčkom odpojte USB.</string>
   <string name="show_whiteboard">Zobraziť tabuľu</string>
   <string name="hide_whiteboard">Schovať tabuľu</string>
   <string name="clear_whiteboard">Vyčistiť tabuľu</string>
+  <string name="replay_audio">Replay audio</string>
   <string name="cram_edit_warning">Úprava kariet nie je počas drvenia sa povolená</string>
   <string name="suspend_leeches">Dať pijavice bokom</string>
   <string name="leech_suspend_notification">Karta označená ako pijavica a odložená bokom</string>
@@ -84,6 +85,7 @@
   <string name="card_editor_reset">Obnoviť</string>
   <string name="card_editor_copy_card">Kopírovať kartu</string>
   <string name="card_editor_reset_card">Vynulovať pokrok</string>
+  <string name="card_editor_preview_card">Preview</string>
   <string name="error_insufficient_memory">Operáciu nie je možné vykonať pre nedostatok pamäte vo vašom prístroji</string>
   <string name="tutorial_load">Vytváram úvodný balíček.\nProsím počkajte...</string>
   <string name="tutorial_loading_error">Úvodný balíček sa nepodarilo vytvoriť</string>
@@ -135,11 +137,11 @@
     <item>Odpoveď</item>
     <item>Karta</item>
     <item>Balíček</item>
-    <item>Zabudnutia</item>
-    <item>Poznámka</item>
-    <item>Otázka</item>
-    <item>Opakovania</item>
-    <item>Štítky</item>
+    <item>Note</item>
+    <item>Question</item>
+    <item>Tags</item>
+    <item>Lapses</item>
+    <item>Reviews</item>
   </string-array>
   <string-array name="dynOrderLabels">
     <item>Od najdávnejšie zobrazených</item>

@@ -42,19 +42,20 @@
   <string name="CardEditorCancelButton">إلغاء</string>
   <string name="CardEditorSaveButton">حفظ</string>
   <string name="CardEditorLaterButton">لاحقا</string>
-  <string name="CardEditorPreviewButton">Preview</string>
   <string name="CardEditorLaterMessage">حفظ المعلومات لوقت لاحق</string>
   <string name="CardEditorCardDeck">بطاقة الرزمة: %s</string>
   <string name="CardEditorNoteDeck">ملاحظة الرزمة: %s</string>
   <string name="CardEditorModel">نوع الملاحظة: %s</string>
   <string name="CardEditorTags">الوسوم: %1$s</string>
-  <string name="add_new_tag">أضف وسما جديدا</string>
+  <string name="add_new_filter_tags">Add/Filter tags</string>
   <string name="note_type">نوع الملاحظة</string>
   <string name="card_type">Card type</string>
+  <string name="filter_tags">Filter tags</string>
   <string name="sdcard_missing_message">بطاقة التخزين المؤمنة غير متوفرة بسبب أنها مستخدمة كوحدة تخزين USB . افصل USB للوصول إلى رزمك.</string>
   <string name="show_whiteboard">إظهار  لوح السبورة</string>
   <string name="hide_whiteboard">إخفاء لوح السبورة</string>
   <string name="clear_whiteboard">مسح لوح السبورة</string>
+  <string name="replay_audio">Replay audio</string>
   <string name="cram_edit_warning">تحرير البطاقة لا يسمح به أثناء المراجعة المركزة</string>
   <string name="suspend_leeches">علق البطاقات السئولة</string>
   <string name="leech_suspend_notification">البطاقة علمت كسَئُولة و معلقة</string>
@@ -83,6 +84,7 @@
   <string name="card_editor_reset">أعد تعيين</string>
   <string name="card_editor_copy_card">انسخ البطاقة</string>
   <string name="card_editor_reset_card">أعد تعيين التقدم</string>
+  <string name="card_editor_preview_card">Preview</string>
   <string name="error_insufficient_memory">العملية غير ممكنة نظرا للذاكرة غير الكافية في جهازك</string>
   <string name="tutorial_load">إنشاء الرزمة التعليمية.\n الرجاء الانتظار...</string>
   <string name="tutorial_loading_error">الرزمة التعليمية لا يمكن إنشاءها</string>
@@ -134,11 +136,11 @@
     <item>Answer</item>
     <item>Card</item>
     <item>Deck</item>
-    <item>Lapses</item>
     <item>Note</item>
     <item>Question</item>
-    <item>Reviews</item>
     <item>Tags</item>
+    <item>Lapses</item>
+    <item>Reviews</item>
   </string-array>
   <string-array name="dynOrderLabels">
     <item>الأقدم تشاهد أولا</item>

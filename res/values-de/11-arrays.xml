@@ -112,7 +112,6 @@
   <string-array name="leech_action_labels">
     <item>Karte dauerhaft aussetzen</item>
     <item>Nur Schlagwort</item>
-    <item>Als neu zurücksetzen</item>
   </string-array>
   <string-array name="new_order_labels">
     <item>Neue Karten in zufälliger Reihenfolge</item>

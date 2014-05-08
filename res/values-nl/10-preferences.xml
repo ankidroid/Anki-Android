@@ -40,8 +40,6 @@
 -->
 <resources>
   <string name="pref_cat_collection">Collectie</string>
-  <string name="pref_internal_memory">Gebruik intern geheugen</string>
-  <string name="pref_internal_memory_summ">Collectie opslaan in het interne geheugen. Dit wordt niet aangeraden. Toegang tot de collectie wordt dan moeilijker</string>
   <string name="pref_cat_sync">Synchronisatie</string>
   <string name="pref_cat_qadisplay">Weergave</string>
   <string name="pref_cat_general">Algemeen</string>
@@ -53,7 +51,6 @@
   <string name="pref_cat_navigation">Navigatie</string>
   <string name="pref_cat_swipe">Vegen</string>
   <string name="pref_cat_navigation_sensitivity">Gevoeligheid</string>
-  <string name="pref_cat_zoom">Zoomen</string>
   <string name="pref_cat_zeemote">Zeemote</string>
   <string name="pref_cat_reset">Terugzetten</string>
   <string name="pref_cat_other">Overige</string>
@@ -70,10 +67,7 @@
   <string name="show_study_options_on_deck_load_summ">Toont studeeropties als je een leerset laadt</string>
   <string name="hide_due_count">Te verwachten aantal verbergen</string>
   <string name="hide_due_count_summ">Verbergt het te verwachten aantal</string>
-  <string name="show_progress_bars">Toon voortgangsbalken</string>
-  <string name="show_progress_bars_summ">Laat de voortgang en het aantal Ja-antwoorden van vandaag zien tijdens de overhoring</string>
-  <string name="fade_scrollbars">Schuifbalken vervagen</string>
-  <string name="fade_scrollbars_summ">De schuifbalk vervagen wanneer u de flitskaart niet doorrolt</string>
+  <string name="enable_whiteboard">Enable Whiteboard</string>
   <string name="show_whiteboard_summ">Hiermee kan u op het scherm schrijven</string>
   <string name="whiteboard_stroke_width">Whiteboard lijndikte</string>
   <string name="whiteboard_stroke_width_summ">Lijndikte: XXX</string>
@@ -81,24 +75,13 @@
   <string name="whiteboard_black_summ">Gebruik zwart-wit in plaats van kleuren (voor apparaten met minder geheugen, werkt niet in nachtstand)</string>
   <string name="write_answers">Antwoorden schrijven</string>
   <string name="write_answers_summ">Laat u het antwoord invullen en vergelijken met het juiste antwoord</string>
-  <string name="text_selection">Tekstselectie toestaan</string>
-  <string name="text_selection_summ">Mogelijkheid om kaarttekst te selecteren en kopiëren (via het menu of met een lange klik) om op te zoeken in een extern woordenboek</string>
   <string name="text_selection_click">Oplossing voor lange klik</string>
   <string name="text_selection_click_summ">Zet dit aan als tekstselectie via met een lange klik niet werkt</string>
   <string name="dictionary">Woordenboek</string>
   <string name="dictionary_summ">Woordenboek waarin u wilt zoeken: XXX</string>
   <string name="reset_languages">Reset talen</string>
   <string name="reset_languages_summ">Reset taalopdrachten (voor tekst-naar-spraak en woordenboeken) voor alle leersets. Reset specifieke leerset-opdrachten op het leerset uitkiezer</string>
-  <string name="reset_all">Alles naar beginwaarden</string>
-  <string name="reset_all_summ">Reset alle taal-, widget-, schrijfbord- en woordenboekinstellingen</string>
-  <string name="reset_dialogs">Reset dialogen</string>
-  <string name="reset_dialogs_question">Reset alle dialogen?</string>
-  <string name="reset_dialogs_summ">Alle dialogen die zijn ingesteld om niet opnieuw weer te gegeven, resetten.</string>
   <string name="reset_languages_question">Alle taalopdrachten terugzetten?</string>
-  <string name="reset_messages">Reset berichten</string>
-  <string name="reset_messages_question">Huidige berichten opnieuw weergeven?</string>
-  <string name="reset_messages_summ">Toon huidige AnkiDroid berichten nog een keer</string>
-  <string name="reset_all_question">Alle taal-, widget-, schrijfbord- en woordenboekinstellingen terugzetten?</string>
   <string name="reset_confirmation">Alle statussen gereset</string>
   <string name="use_ruby_support">ondersteun ruby-annotaties</string>
   <string name="use_ruby_support_summ">Als de tekens \'[\' en \']\' worden aangetroffen, dan wordt de ingesloten tekst verwerkt als een ruby-annotatie</string>
@@ -114,8 +97,6 @@
   <string name="col_path_summ">Het pad naar de map waar je collecties in bewaard worden</string>
   <string name="fullscreen_review">Bekijken in fullscreen</string>
   <string name="fullscreen_review_summ">U kunt kiezen of u alle schermruimte wilt gebruiken tijdens de overhoring</string>
-  <string name="zoom">Zoom inschakelen</string>
-  <string name="zoom_summ">Toon zoomknoppen tijdens overhoringen</string>
   <string name="zeemote">Zeemote JS1</string>
   <string name="zeemote_summ">Zeemote JS1 besturing gebruiken tijdens overhoringen</string>
   <string name="zeemote_actions">Zeemote-acties tijdens overhoring</string>
@@ -133,7 +114,6 @@
   <string name="swipe_summ_off">Bewegingen gebruiken om te bewegen tussen schermen of kaarten. Inzoomen is echter niet beschikbaar</string>
   <string name="swipe_summ_on">Veeg horizontaal om te schakelen tussen weergaven. Stel andere acties hieronder in</string>
   <string name="pref_cat_actions">Acties</string>
-  <string name="gestures_shake">Schudden</string>
   <string name="gestures_swipe_up">Omhoog vegen</string>
   <string name="gestures_swipe_down">Omlaag vegen</string>
   <string name="gestures_swipe_left">Naar links vegen</string>
@@ -155,8 +135,6 @@
   <string name="tts_summ">Vraag en antwoord oplezen als geen geluidsbestand is opgenomen</string>
   <string name="play_sounds_at_start">Geluiden direct afspelen</string>
   <string name="play_sounds_at_start_summ">Speelt geluiden direct na weergeven vraag/antwoord</string>
-  <string name="shake_intensity">Schuddrempel</string>
-  <string name="shake_intensity_summ">Gevoeligheid voor schudden: XXX</string>
   <string name="sync_fetch_missing_media">Media downloaden</string>
   <string name="sync_fetch_missing_media_summ">Haal automatisch ontbrekende media op tijdens synchronisatie.</string>
   <string name="sync_account">AnkiWeb account</string>
@@ -179,10 +157,6 @@
   <string name="timeout_question_seconds">Seconden tot volgende vraag</string>
   <string name="select_locale_title">Taal selecteren</string>
   <string name="select_theme">Thema</string>
-  <string name="theme_animations">Animaties</string>
-  <string name="theme_animations_summ">Animaties tonen bij het omdraaien van kaarten</string>
-  <string name="animation_speed">Duur van animatie</string>
-  <string name="animation_speed_summ">Duur van de animatieovergang: XXX ms</string>
   <string name="eink_display">E-Ink weergave-optimalisatie</string>
   <string name="eink_display_summ">Alle animaties uitschakelen en optimaliseren voor E-Ink Display</string>
   <string name="vertical_centering">Kaartinhoud verticaal centreren</string>
@@ -219,21 +193,14 @@
   <string name="filter_google_translate_summ">Gewoon woord en vertaling opslaan</string>
   <string name="convert_fen_text_summ">Teken schaakborden met de Forsyth-Edwards. De notatie moet worden ingesloten tussen [fen][/fen] tags.</string>
   <string name="sync_set_journal_mode">Type verslaggeving instellen...</string>
-  <string name="async_mode">Gelijktijdigheid uitzetten</string>
-  <string name="async_mode_summ">Dit versnelt AnkiDroid, maar kan het database beschadigen wanneer je Android-systeem crasht. Dus gebruik back-ups</string>
-  <string name="async_mode_message">Wees ervan bewust dat deze optie minder veilig is en de leerset kan beschadigingen wanneer Android crasht (bijv. wanneer de accu leeg is).\nHet wordt ten zeerste aangeraden het back-up systeem te gebruiken  als je deze optie instelt.\nToch aanzetten?</string>
-  <string name="fix_orientation">Oriëntatie vastzetten</string>
-  <string name="fix_orientation_summ">Sta het draaien van de schermstand niet toe tijdens de overhoring</string>
   <string name="per_day">Per Dag</string>
   <string name="studyoptions_new_cards_per_day">Nieuwe kaarten per dag</string>
   <string name="studyoptions_max_fail_card">Max mislukte kaarten</string>
-  <string name="show_broadcast_messages">Huidige berichten weergeven</string>
-  <string name="show_broadcast_messages_summ">Toon AnkiDroid meldingen als er updates zijn of ander belangrijk nieuws</string>
   <string name="input_workaround">Workaround voor invoer</string>
   <string name="input_workaround_summ">Oplossing voor  problemen met het scherpstellen op HTML-invoervelden. Dit veroorzaakt problemen op meerdere apparaten.</string>
   <string name="write_answers_message">Definieer voor ieder leerset een veld om te vergelijken met het geschreven antwoord. U kunt dit doen met Anki Desktop (eigenschappen van de leerset -&gt; bewerken model -&gt; Kaart Layout).\n\nAls geen vergelijk veld is ingesteld, zal het schriftelijke antwoord altijd worden vergeleken met het antwoord van de gehele kaart.</string>
   <string name="pref_cardbrowser_skip_init_search">Kaartenbrowser versnellen</string>
-  <string name="pref_cardbrowser_skip_init_search_summ">Niet direct zoeken wanneer de kaartenbrowser geopend wordt.</string>
+  <string name="pref_cardbrowser_skip_init_search_summ">Skips initial automatic search when the card browser opens or the deck is changed.</string>
   <string name="pref_keep_screen_on">Zorg dat scherm aan blijft</string>
   <string name="pref_keep_screen_on_summ">Voorkom dat het scherm uitgeschakeld wordt tijdens de overhoring</string>
   <string name="pref_simple_interface">Sobere weergave</string>
@@ -306,8 +273,6 @@
   <string name="deck_conf_cram_reschedule_summ">Karaten opnieuw inplannen op basis van mijn antwoorden in deze set</string>
   <string name="deck_conf_cram_steps">Aangepaste stapgroottes</string>
   <string name="deck_conf_cram_steps_summ">Aangepaste stapgroottes definiëren</string>
-  <string name="pref_show_splashscreen">Startscherm</string>
-  <string name="pref_show_splashscreen_summ">Startscherm tonen</string>
   <string name="pref_intent_add_instant">Voeg direct toe</string>
   <string name="pref_intent_add_instant_summ">Kaarten toevoegen uit woordenboeken zonder AnkiDroid te openen. Zie de menu-optie \'opgeslagen data\' bij toevoegen kaarten.</string>
   <string name="pref_cat_intent_add">Toevoegen van externe gegevens</string>

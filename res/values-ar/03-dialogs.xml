@@ -122,6 +122,5 @@
     <item><![CDATA[آنكيدرويد  <a href="%1$s">برنامج مفتوح المصدر<a/>لذا كل شخص مدعوا لـ <a href="%2$s">للانضمام</a>  <a href="%3$s">للمساهمين</a>:-)]]></item>
     <item><![CDATA[غير المطورين يمكنهم المساعدة أيضا، على سبيل المثال عن طريق  <a href="%1$s">ترجمة</a>ولقطات الشاشة أو  آنكيدرويد، أو تحديث الويكي  <a href="%2$s">التبرع </a> إلى برنامج أنكي لسطح المكتب أو  الكتابة عن آنكيدرويد AnkiDroid!]]></item>
     <item><![CDATA[يصدر آنكيدرويد تحت  <a href="%1$s"> رخصة GNU-GPL v3 </a>  والشفرة المصدرية متوفرة <a href="%2$s">هنا</a>.]]></item>
-    <item><![CDATA[This package uses the <a href="http://www.csse.monash.edu.au/~jwb/edict.html">EDICT</a> and <a href="http://www.csse.monash.edu.au/~jwb/kanjidic.html">KANJIDIC</a> dictionary files. These files are the property of the <a href="http://www.edrdg.org">Electronic Dictionary Research and Development Group</a>, and are used in conformance with the Group\'s <a href="http://www.edrdg.org/edrdg/licence.html">licence</a>.]]></item>
   </string-array>
 </resources>

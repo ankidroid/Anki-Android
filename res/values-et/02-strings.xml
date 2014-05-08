@@ -42,19 +42,20 @@
   <string name="CardEditorCancelButton">Loobu</string>
   <string name="CardEditorSaveButton">Salvesta</string>
   <string name="CardEditorLaterButton">Later</string>
-  <string name="CardEditorPreviewButton">Preview</string>
   <string name="CardEditorLaterMessage">Saved information for later</string>
   <string name="CardEditorCardDeck">Card deck: %s</string>
   <string name="CardEditorNoteDeck">Note deck: %s</string>
   <string name="CardEditorModel">Note type: %s</string>
   <string name="CardEditorTags">Sildid: %1$s</string>
-  <string name="add_new_tag">Lisa uus silt</string>
+  <string name="add_new_filter_tags">Add/Filter tags</string>
   <string name="note_type">Note type</string>
   <string name="card_type">Card type</string>
+  <string name="filter_tags">Filter tags</string>
   <string name="sdcard_missing_message">SD kaart pole saadaval kuna see on kasutuses kui USB mäluseade. Katkesta USB ühendus kaardipakkidele juurdepääsuks.</string>
   <string name="show_whiteboard">Kuva valgetahvel</string>
   <string name="hide_whiteboard">Peida valgetahvel</string>
   <string name="clear_whiteboard">Puhasta valgetahvel</string>
+  <string name="replay_audio">Replay audio</string>
   <string name="cram_edit_warning">Card editing not allowed while cramming</string>
   <string name="suspend_leeches">Suspend Leeches</string>
   <string name="leech_suspend_notification">Card marked as leech and suspended</string>
@@ -83,6 +84,7 @@
   <string name="card_editor_reset">Lähtesta</string>
   <string name="card_editor_copy_card">Kopeeri kaart</string>
   <string name="card_editor_reset_card">Lähtestamise progress</string>
+  <string name="card_editor_preview_card">Preview</string>
   <string name="error_insufficient_memory">Tegevus pole võimalik seoses sinu seadme ebapiisava mäluga</string>
   <string name="tutorial_load">Creating tutorial deck.\nPlease wait...</string>
   <string name="tutorial_loading_error">Juhendkaardipakki ei saa luua</string>
@@ -134,11 +136,11 @@
     <item>Answer</item>
     <item>Card</item>
     <item>Deck</item>
-    <item>Lapses</item>
     <item>Note</item>
     <item>Question</item>
-    <item>Reviews</item>
     <item>Tags</item>
+    <item>Lapses</item>
+    <item>Reviews</item>
   </string-array>
   <string-array name="dynOrderLabels">
     <item>Oldest seen first</item>

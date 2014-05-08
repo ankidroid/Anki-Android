@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">전체 카드:</string>
   <string name="studyoptions_eta">예상 소요 시간 (분):</string>
   <string name="studyoptions_start">Study Now</string>
+  <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">정답 보기</string>
   <string name="ease1_successive">다시</string>
   <string name="ease2_successive">어려움</string>
@@ -63,7 +64,7 @@
   <string name="card_unsuspended">카드가 다시 활성화 됨</string>
   <string name="card_suspended">카드가 다시 비활성화됨</string>
   <string name="menu_rotate">화면 회전</string>
-  <string name="menu_import">카드 가져오기</string>
+  <string name="menu_import">Import file</string>
   <string name="undo">실행 취소</string>
   <string name="undo_action_review">복습</string>
   <string name="undo_action_edit">노트 편집</string>
@@ -82,6 +83,8 @@
   <string name="contextmenu_deckpicker_collapse_deck">Hide Subdecks</string>
   <string name="contextmenu_deckpicker_inflate_deck">Show Subdecks</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">사용자 정의 사전 설정</string>
+  <string name="menu_add">Add</string>
+  <string name="menu_add_note">Add note</string>
   <string name="menu_download_deck">덱 다운로드</string>
   <string name="menu_download_shared_deck">공유된 덱</string>
   <string name="menu_my_account">계정 동기화</string>
@@ -99,9 +102,9 @@
   <string name="menu_search">%1$s에서 찾아보기</string>
   <string name="menu_mark_card">카드 표시해두기</string>
   <string name="menu_unmark_card">카드 마크 해제</string>
-  <string name="new_deck">새로운 덱</string>
+  <string name="new_deck">Create deck</string>
   <string name="create">만들기</string>
-  <string name="new_dynamic_deck">새로운 골라내기 덱</string>
+  <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">피드백</string>
   <string name="studyoptions_load_tutorial_deck">도움말 만들기</string>
   <string name="night_mode">야간 모드</string>

@@ -40,8 +40,6 @@
 -->
 <resources>
   <string name="pref_cat_collection">Колекција</string>
-  <string name="pref_internal_memory">Користи унутрашњу меморију</string>
-  <string name="pref_internal_memory_summ">Чување колекцију у унутрашњој меморији. То се не препоручује, јер ће вам тако бити тежи приступ до датотеке колекције</string>
   <string name="pref_cat_sync">Sinhronizacija</string>
   <string name="pref_cat_qadisplay">Prikaz za pitanja i odgovore</string>
   <string name="pref_cat_general">Опште</string>
@@ -53,7 +51,6 @@
   <string name="pref_cat_navigation">Управљање</string>
   <string name="pref_cat_swipe">Гестови</string>
   <string name="pref_cat_navigation_sensitivity">Осетљивост</string>
-  <string name="pref_cat_zoom">Увећање</string>
   <string name="pref_cat_zeemote">Zeemote</string>
   <string name="pref_cat_reset">Ресетуј</string>
   <string name="pref_cat_other">Остало</string>
@@ -70,10 +67,7 @@
   <string name="show_study_options_on_deck_load_summ">Prikazuje ekrazn za opcije za učenje tokom učitavanja špila</string>
   <string name="hide_due_count">Сакриј број понављања</string>
   <string name="hide_due_count_summ">Сакриј бројач понављаних карата</string>
-  <string name="show_progress_bars">Показивач напретка</string>
-  <string name="show_progress_bars_summ">Показује данашњи напредак и учешће јучерашњих одговоре \"да\"</string>
-  <string name="fade_scrollbars">Сакриј клизаче</string>
-  <string name="fade_scrollbars_summ">Аутоматски уклони клизаче, ако нема шта да се проклизава</string>
+  <string name="enable_whiteboard">Enable Whiteboard</string>
   <string name="show_whiteboard_summ">Omogućava vam da pišete po ekranu</string>
   <string name="whiteboard_stroke_width">Širina crte na tabli za pisanje</string>
   <string name="whiteboard_stroke_width_summ">Ширина линије: XXX</string>
@@ -81,24 +75,13 @@
   <string name="whiteboard_black_summ">Користити монохромни режим уместо у боји (за уређаје са малом меморијом где нема ноћног режима)</string>
   <string name="write_answers">Napiši odgovore</string>
   <string name="write_answers_summ">Omogućava vam da napišete odgovor i da ga uporedite sa tačnim</string>
-  <string name="text_selection">Dozvoli izbor teksta</string>
-  <string name="text_selection_summ">Омогућује означавање и копирање текста из карата (помоћу менија или дугим притиском), да би се извршила претрага по спољашњем речнику</string>
   <string name="text_selection_click">Трик са дугим притиском</string>
   <string name="text_selection_click_summ">Укључите, ако не успевате да почнете означавање текста преко дугог притиска</string>
   <string name="dictionary">Директоријум</string>
   <string name="dictionary_summ">Речници, у којима ће бити извршена претрага: XXX</string>
   <string name="reset_languages">Ресетуј језике</string>
   <string name="reset_languages_summ">Ресетуј језике (за претварање текста у звук и речнике) за све шпилове. Ресетуј за конкретне шпилове - у садржају шпилова</string>
-  <string name="reset_all">Ресетуј све</string>
-  <string name="reset_all_summ">Ресетовање поставки језика, виџета, табле и речника</string>
-  <string name="reset_dialogs">Ресетуј дијалоге</string>
-  <string name="reset_dialogs_question">Да приказујем све дијалоге?</string>
-  <string name="reset_dialogs_summ">Поново прикажи дијалоге који су били скривени</string>
   <string name="reset_languages_question">Да ресетујем све језичке поставке?</string>
-  <string name="reset_messages">Ресетовање порука</string>
-  <string name="reset_messages_question">Да прикажем текуће поруке поново?</string>
-  <string name="reset_messages_summ">Прикажи текућу поруку AnkiDroid поново</string>
-  <string name="reset_all_question">Да рестартујем све поставке језика, виџета, табле и речника?</string>
   <string name="reset_confirmation">Све ресетовано</string>
   <string name="use_ruby_support">Подржи ruby-анотације</string>
   <string name="use_ruby_support_summ">Ако су пронађени знаци \'[\' i \']\', онда се текст који уоквирују разматра као ruby анотација</string>
@@ -114,8 +97,6 @@
   <string name="col_path_summ">фасцикла у којој се чувају ваши шпилови</string>
   <string name="fullscreen_review">Преглед на целом екрану</string>
   <string name="fullscreen_review_summ">Можете да одлучите да користите пун екрански приказ у време прегледа карата</string>
-  <string name="zoom">Омогући увећање</string>
-  <string name="zoom_summ">Прикажи контроле за увећање током прегледа</string>
   <string name="zeemote">Подршка Zeemote JS1</string>
   <string name="zeemote_summ">Коришћење џојстика Zeemote JS1 за навигацију прегледа карата.</string>
   <string name="zeemote_actions">Zeemote дејства у прегледачу</string>
@@ -133,7 +114,6 @@
   <string name="swipe_summ_off">Користите гестове да се пребаците са екрана на екран и одговорите на карте. Ова опција није компатибилна са контролама за увећање</string>
   <string name="swipe_summ_on">Хоризонтално кретање за пребацивање међу екранима. Подешавање осталих дејстава испод</string>
   <string name="pref_cat_actions">Дејство</string>
-  <string name="gestures_shake">Трести</string>
   <string name="gestures_swipe_up">Пребацити горе</string>
   <string name="gestures_swipe_down">Пребацити доле</string>
   <string name="gestures_swipe_left">Пребацити лево</string>
@@ -155,8 +135,6 @@
   <string name="tts_summ">Читај питање/одговор, ако нема прикључене звучне датотеке</string>
   <string name="play_sounds_at_start">Репродуковање звука одмах</string>
   <string name="play_sounds_at_start_summ">Репродуковање звука одмах после  приказа питања/одговора</string>
-  <string name="shake_intensity">Јачина трешења</string>
-  <string name="shake_intensity_summ">Праг за признавање трешења: XXX</string>
   <string name="sync_fetch_missing_media">Додај медије</string>
   <string name="sync_fetch_missing_media_summ">Аутоматски додај недостајуће медија датотеке при синхронизацији.</string>
   <string name="sync_account">AnkiWeb налог</string>
@@ -179,10 +157,6 @@
   <string name="timeout_question_seconds">Секунд до приказа следећег питања</string>
   <string name="select_locale_title">Изаберите језик</string>
   <string name="select_theme">Тема</string>
-  <string name="theme_animations">Анимација</string>
-  <string name="theme_animations_summ">Прикажи анимацију при превртању карата</string>
-  <string name="animation_speed">Трајање анимације</string>
-  <string name="animation_speed_summ">Текуће трајање анимације: XXX милисекунди</string>
   <string name="eink_display">Оптимизација приказа E-Ink дисплеја</string>
   <string name="eink_display_summ">Искључење свих анимација и делимична оптимизација за E-Ink дисплеј</string>
   <string name="vertical_centering">Центрирај садржај карте по вертикали</string>
@@ -219,21 +193,14 @@
   <string name="filter_google_translate_summ">Једноставно чување изворне речи и превода</string>
   <string name="convert_fen_text_summ">Користи шаховску белешку Едвардса Форсајта. Белешка треба да буде у тагу [fen][/fen].</string>
   <string name="sync_set_journal_mode">Подешавање коректног режима журнала...</string>
-  <string name="async_mode">Искључи синхронизацију</string>
-  <string name="async_mode_summ">Убрзава AnkiDroid, али може да доведе до оштећења шпилова, ако дође до пада. Правите резервне копије</string>
-  <string name="async_mode_message">Имајте у види да без синхронизације могу бити оштећени шпилови у случају пада система Android (нпр. услед нестанка струје).\nСТРОГО се препоручује да се при искључењу синхронизације редовно врши резервно копирање шпилова или да се користи аутоматско резервно копирање.\nСвеједно, да искључим синхронизацију?</string>
-  <string name="fix_orientation">Фиксирај оријентацију</string>
-  <string name="fix_orientation_summ">Не дозволи промену оријентације дисплеја у време приказа</string>
   <string name="per_day">Po Danu</string>
   <string name="studyoptions_new_cards_per_day">Novih kartica po danu</string>
   <string name="studyoptions_max_fail_card">Максимум тешких карата</string>
-  <string name="show_broadcast_messages">Прикажи текућу поруку</string>
-  <string name="show_broadcast_messages_summ">Показуј AnkiDroid обавештења као што је обавештење о новој верзији или друге важне новости</string>
   <string name="input_workaround">Трик са пољима уноса</string>
   <string name="input_workaround_summ">Решење проблема са HTML пољима уноса. Решење је за више уређаја.</string>
   <string name="write_answers_message">За сваки шпил треба да одредите поље са којим ће се упоређивати написани одговор. Можете то да урадите у Anki Desktop (опције шпила -&gt; уреди модел -&gt; шаблон карте).\n\nАко поље за поређење није задато, ваш написани одговор ће се упоређивати са целим одговором карте.</string>
   <string name="pref_cardbrowser_skip_init_search">Брзо отвори прегледач карата</string>
-  <string name="pref_cardbrowser_skip_init_search_summ">Пропусти аутоматску почетну претрагу при отварању прегледача карата.</string>
+  <string name="pref_cardbrowser_skip_init_search_summ">Skips initial automatic search when the card browser opens or the deck is changed.</string>
   <string name="pref_keep_screen_on">Држи екран укљученим</string>
   <string name="pref_keep_screen_on_summ">Забрани искључење екрана при прегледу карата</string>
   <string name="pref_simple_interface">Једноставно сучеље</string>
@@ -306,8 +273,6 @@
   <string name="deck_conf_cram_reschedule_summ">Препланирање карата, засновано на мојим одговорима у том шпилу</string>
   <string name="deck_conf_cram_steps">Допунски кораци</string>
   <string name="deck_conf_cram_steps_summ">Одредити допунске кораке</string>
-  <string name="pref_show_splashscreen">Уводни екран</string>
-  <string name="pref_show_splashscreen_summ">Прикажи уводни екран</string>
   <string name="pref_intent_add_instant">Вишеструко додавање</string>
   <string name="pref_intent_add_instant_summ">Додај нове карте из речника без отварања AnkiDroid. Наћи ћете их касније у \'Сачувани подаци\' у уређивачу карата.</string>
   <string name="pref_cat_intent_add">Додавање спољашњих података</string>

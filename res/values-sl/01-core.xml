@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">Skupaj kartic:</string>
   <string name="studyoptions_eta">Predviden čas (min):</string>
   <string name="studyoptions_start">Study Now</string>
+  <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">Prikaži odgovor</string>
   <string name="ease1_successive">Ponovno</string>
   <string name="ease2_successive">Težko</string>
@@ -63,7 +64,7 @@
   <string name="card_unsuspended">Preklicano pridržanje kartice</string>
   <string name="card_suspended">Kartica ponovno pridržana</string>
   <string name="menu_rotate">Obrni</string>
-  <string name="menu_import">Uvozi kartice</string>
+  <string name="menu_import">Import file</string>
   <string name="undo">Razveljavi</string>
   <string name="undo_action_review">pregled</string>
   <string name="undo_action_edit">uredi zapisek</string>
@@ -82,6 +83,8 @@
   <string name="contextmenu_deckpicker_collapse_deck">Hide Subdecks</string>
   <string name="contextmenu_deckpicker_inflate_deck">Show Subdecks</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Nastavi slovar po meri</string>
+  <string name="menu_add">Add</string>
+  <string name="menu_add_note">Add note</string>
   <string name="menu_download_deck">Prenesi komplet</string>
   <string name="menu_download_shared_deck">Skupni komplet</string>
   <string name="menu_my_account">Sinhroniziraj račun</string>
@@ -99,9 +102,9 @@
   <string name="menu_search">Poišči v %1$s</string>
   <string name="menu_mark_card">Označi kartico</string>
   <string name="menu_unmark_card">Odznači kartico</string>
-  <string name="new_deck">Nov komplet</string>
+  <string name="new_deck">Create deck</string>
   <string name="create">Ustvari</string>
-  <string name="new_dynamic_deck">Nov filtriran komplet</string>
+  <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">Povratna informacija</string>
   <string name="studyoptions_load_tutorial_deck">Ustvari učno vajo</string>
   <string name="night_mode">Nočni način</string>

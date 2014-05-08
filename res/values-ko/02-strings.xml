@@ -42,19 +42,20 @@
   <string name="CardEditorCancelButton">취소</string>
   <string name="CardEditorSaveButton">저장</string>
   <string name="CardEditorLaterButton">나중에</string>
-  <string name="CardEditorPreviewButton">Preview</string>
   <string name="CardEditorLaterMessage">나중을 위해 저장된 정보</string>
   <string name="CardEditorCardDeck">카드 덱: %s</string>
   <string name="CardEditorNoteDeck">노트 덱: %s</string>
   <string name="CardEditorModel">노트 유형: %s</string>
   <string name="CardEditorTags">태그: %1$s</string>
-  <string name="add_new_tag">새 태그 추가</string>
+  <string name="add_new_filter_tags">Add/Filter tags</string>
   <string name="note_type">노트 타입</string>
   <string name="card_type">Card type</string>
+  <string name="filter_tags">Filter tags</string>
   <string name="sdcard_missing_message">현재 SD카드가 USB 저장소로 사용되고 있어 사용이 불가능합니다. 덱에 접근하려면 USB 연결을 해제하세요.</string>
   <string name="show_whiteboard">화이트 보드 보이기</string>
   <string name="hide_whiteboard">화이트 보드 숨기기</string>
   <string name="clear_whiteboard">화이트 보드 지우기</string>
+  <string name="replay_audio">Replay audio</string>
   <string name="cram_edit_warning">벼락치기 학습 중에는 카드를 편집할 수 없습니다.</string>
   <string name="suspend_leeches">거머리 카드 비활성화하기</string>
   <string name="leech_suspend_notification">카드가 거머리로 표시 및 비활성화됨</string>
@@ -83,6 +84,7 @@
   <string name="card_editor_reset">재설정</string>
   <string name="card_editor_copy_card">카드 복사</string>
   <string name="card_editor_reset_card">학습 진도 재설정</string>
+  <string name="card_editor_preview_card">Preview</string>
   <string name="error_insufficient_memory">장치 메모리가 부족하여 작업을 더 이상 진행할 수 없습니다</string>
   <string name="tutorial_load">도움말 묶음 생성 중. \n 잠시 기다려주세요...</string>
   <string name="tutorial_loading_error">도움말 카드 묶음을 만들 수 없습니다</string>
@@ -134,11 +136,11 @@
     <item>Answer</item>
     <item>Card</item>
     <item>Deck</item>
-    <item>Lapses</item>
     <item>Note</item>
     <item>Question</item>
-    <item>Reviews</item>
     <item>Tags</item>
+    <item>Lapses</item>
+    <item>Reviews</item>
   </string-array>
   <string-array name="dynOrderLabels">
     <item>오래된 카드 먼저 학습하기</item>

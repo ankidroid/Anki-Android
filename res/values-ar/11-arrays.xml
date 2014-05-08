@@ -112,7 +112,6 @@
   <string-array name="leech_action_labels">
     <item>علق البطاقة</item>
     <item>الوسم فقط</item>
-    <item>أعد تعيينه كالجديدة</item>
   </string-array>
   <string-array name="new_order_labels">
     <item>البطاقات الجديدة في ترتيب عشوائي</item>

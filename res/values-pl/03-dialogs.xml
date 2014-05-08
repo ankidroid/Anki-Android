@@ -121,6 +121,5 @@
     <item><![CDATA[AnkiDroid jest <a href="%1$s">programem open source<a/>, każdy może więc <a href="%2$s">przyłączyć się</a> do grona jego<a href="%3$s">współautorów</a>:-)]]></item>
     <item><![CDATA[Nie-programiści też mogą pomóc, na przykład <a href="%1$s">tłumacząc</a> AnkiDroida, aktualizując wiki oraz zrzuty ekranu, poprzez <a href="%2$s">datki</a> dla desktopowej wersji Anki lub blogując o AnkiDroidzie!]]></item>
     <item><![CDATA[AnkiDroid udostępniany jest na <a href="%1$s">licencji GNU-GPL v3</a> a kod źródłowy znaleźć można <a href="%2$s">tutaj</a>.]]></item>
-    <item><![CDATA[Pakiet ten wykorzystuje pliki słownika <a href="http://www.csse.monash.edu.au/~jwb/edict.html">EDICT</a> i <a href="http://www.csse.monash.edu.au/~jwb/kanjidic.html">KANJIDIC</a>. Pliki te są własnością <a href="http://www.edrdg.org">Electronic Dictionary Research and Development Group</a> i są stosowane zgodnie zasadami <a href="http://www.edrdg.org/edrdg/licence.html">licencji</a>.]]></item>
   </string-array>
 </resources>

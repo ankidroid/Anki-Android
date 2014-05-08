@@ -29,8 +29,8 @@ AnkiDroid让您高效学习快闪卡(flashcard)，在您即将忘记时重复复
 • 从其他应用程序（如字典）通过Intent添加卡牌
 · 自定义字体支持
 • 完备的备份系统
-• 通过滑动、触击或摇晃来导航。
-• 完全可定制
+• navigation by swipe, tap
+• customisable
 · 可处理动态牌组
 • 夜间模式
 •支持27种不同的语言

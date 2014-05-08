@@ -42,19 +42,20 @@
   <string name="CardEditorCancelButton">Откажи</string>
   <string name="CardEditorSaveButton">Сачувај</string>
   <string name="CardEditorLaterButton">Касније</string>
-  <string name="CardEditorPreviewButton">Преглед</string>
   <string name="CardEditorLaterMessage">Сачувана информација</string>
   <string name="CardEditorCardDeck">Карта шпила: %s</string>
   <string name="CardEditorNoteDeck">Белешка шпила: %s</string>
   <string name="CardEditorModel">Тип белешке: %s</string>
   <string name="CardEditorTags">Ознаке: %1$s</string>
-  <string name="add_new_tag">Додај нову ознаку</string>
+  <string name="add_new_filter_tags">Add/Filter tags</string>
   <string name="note_type">Тип белешке</string>
   <string name="card_type">Тип карте</string>
+  <string name="filter_tags">Filter tags</string>
   <string name="sdcard_missing_message">SD картица је недоступна јер се употребљава као USB. Искључите USB да бисте добили приступ шпиловима.</string>
   <string name="show_whiteboard">Прикажи таблу</string>
   <string name="hide_whiteboard">Сакриј таблу</string>
   <string name="clear_whiteboard">Избриши таблу</string>
+  <string name="replay_audio">Replay audio</string>
   <string name="cram_edit_warning">Ажурирање карата није дозвољено током бубања</string>
   <string name="suspend_leeches">Уклони \"заразу\"</string>
   <string name="leech_suspend_notification">Карта је означена као \"заразна\" и уклоњена</string>
@@ -83,6 +84,7 @@
   <string name="card_editor_reset">Ресетуј</string>
   <string name="card_editor_copy_card">Копирај карту</string>
   <string name="card_editor_reset_card">Ресетуј прогрес</string>
+  <string name="card_editor_preview_card">Preview</string>
   <string name="error_insufficient_memory">Операција је немогућа због недостатка меморије на вашем уређају</string>
   <string name="tutorial_load">Креирање шпила за обуку.\nМолим сачекајте...</string>
   <string name="tutorial_loading_error">Шпил за обуку не може бити креиран</string>
@@ -134,11 +136,11 @@
     <item>Одговор</item>
     <item>Картица</item>
     <item>Шпил</item>
-    <item>Промашаји</item>
-    <item>Белешка</item>
-    <item>Питање</item>
-    <item>Прегледи</item>
-    <item>Ознаке</item>
+    <item>Note</item>
+    <item>Question</item>
+    <item>Tags</item>
+    <item>Lapses</item>
+    <item>Reviews</item>
   </string-array>
   <string-array name="dynOrderLabels">
     <item>Најстарије се приказују прве</item>

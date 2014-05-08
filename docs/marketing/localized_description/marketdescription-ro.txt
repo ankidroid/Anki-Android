@@ -29,8 +29,8 @@ Adaugă informațiile dorite cu ajutorul aplicației pentru desktop Anki, sau di
 • adaugă carduri din alte aplicații precum dicționare
 • suport pentru font personalizat
 • sistem full backup
-• navighează prin deplasare cu degetul, apăsare, înclinare
-• complet personalizabil
+• navigation by swipe, tap
+• customisable
 • control dinamic al pachetelor
 • mod de noapte
 • 27 de localizări

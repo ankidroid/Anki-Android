@@ -112,7 +112,6 @@
   <string-array name="leech_action_labels">
     <item>Kártya felfüggesztése</item>
     <item>Csak címke</item>
-    <item>Új állapotra állítás</item>
   </string-array>
   <string-array name="new_order_labels">
     <item>Új kártyák véletlenszerűen</item>

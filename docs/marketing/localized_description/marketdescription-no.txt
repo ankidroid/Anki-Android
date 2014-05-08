@@ -29,8 +29,8 @@ Legg til materiale med skrivebordsapplikasjonen Anki, eller rett i AnkiDroid. Ap
 • Legg til kort fra andre programmer, for eksempel ordbøker
 • støtte for egne skrifttyper
 • fullt system for sikkerhetskopiering
-• navigasjon med sveiping, klikking, risting
-• mange tilpasningsmuligheter
+• navigation by swipe, tap
+• customisable
 • dynamisk kortstokkhåndtering
 • nattmodus
 • 27 localisations

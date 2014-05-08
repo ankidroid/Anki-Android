@@ -40,8 +40,6 @@
 -->
 <resources>
   <string name="pref_cat_collection">Zbierka</string>
-  <string name="pref_internal_memory">Použiť internú pamäť</string>
-  <string name="pref_internal_memory_summ">Uložiť zbierku do internej pamäte. To sa neodporúča, pretože potom nemáte taký jednoduchý prístup k súboru zbierky</string>
   <string name="pref_cat_sync">Synchronizácia</string>
   <string name="pref_cat_qadisplay">Zobrazenie</string>
   <string name="pref_cat_general">Všeobecné</string>
@@ -53,7 +51,6 @@
   <string name="pref_cat_navigation">Navigácia</string>
   <string name="pref_cat_swipe">Potiahnutie</string>
   <string name="pref_cat_navigation_sensitivity">Citlivosť</string>
-  <string name="pref_cat_zoom">Lupa</string>
   <string name="pref_cat_zeemote">Zeemote</string>
   <string name="pref_cat_reset">Vynulovať</string>
   <string name="pref_cat_other">Ďalšie</string>
@@ -70,10 +67,7 @@
   <string name="show_study_options_on_deck_load_summ">Zobrazí obrazovku možností štúdia pri načítavaní balíčka</string>
   <string name="hide_due_count">Skryť počet kariet na opakovanie</string>
   <string name="hide_due_count_summ">Skryje počet kariet na opakovanei</string>
-  <string name="show_progress_bars">Zobraziť indikátory postupu</string>
-  <string name="show_progress_bars_summ">Zobrazí dnešný postup a podiel dnešných odpovedí áno počas opakovania</string>
-  <string name="fade_scrollbars">Miznúce posuvníky</string>
-  <string name="fade_scrollbars_summ">Automaticky skryť posuvníky kariet, okrem posúvania</string>
+  <string name="enable_whiteboard">Enable Whiteboard</string>
   <string name="show_whiteboard_summ">Umožňuje písať na obrazovku</string>
   <string name="whiteboard_stroke_width">Hrúbka ťahu na tabuli</string>
   <string name="whiteboard_stroke_width_summ">Hrúbka ťahu: XXX</string>
@@ -81,24 +75,13 @@
   <string name="whiteboard_black_summ">Použiť jednofarebný ťah miesto farebného (pre zariadenia s menšou pamäťou, nefunguje pri nočnom režime)</string>
   <string name="write_answers">Napísať odpovede</string>
   <string name="write_answers_summ">Umožňuje napísať odpoveď a porovnať ju so správnou</string>
-  <string name="text_selection">Povoliť výber textu</string>
-  <string name="text_selection_summ">Umožňuje vybrať a kopírovať text z kariet (cez menu alebo dlhé kliknutie) pre vyhľadávanie v externých slovníkoch</string>
   <string name="text_selection_click">Riešenie pre dlhý klik</string>
   <string name="text_selection_click_summ">Zapnite, ak nemôžete začať s voľbou textu cez dlhé kliknutie</string>
   <string name="dictionary">Slovník</string>
   <string name="dictionary_summ">Slovník, v ktorom by sa malo vyhľadávať: XXX</string>
   <string name="reset_languages">Obnoviť jazyky</string>
   <string name="reset_languages_summ">Obnoviť pôvodné nastavenie jazyka  (použitý pri prevode textu na reč a slovníkoch) vo všetkých balíčkoch. Obnovenie je možné aj priamo na kontréntom balíčku</string>
-  <string name="reset_all">Obnoviť všetko</string>
-  <string name="reset_all_summ">Obnoviť jazyk, widget, tabuľu a slovníky</string>
-  <string name="reset_dialogs">Vynulovať dialógové okná</string>
-  <string name="reset_dialogs_question">Vynulovať všetky dialógové okná?</string>
-  <string name="reset_dialogs_summ">Obnoviť všetky okná, ktoré sú nastavené aby sa znova nezobrazovali</string>
   <string name="reset_languages_question">Obnoviť všetky priradenia jazykov?</string>
-  <string name="reset_messages">Vynulovať správy</string>
-  <string name="reset_messages_question">Zobraziť aktuálne správy znova?</string>
-  <string name="reset_messages_summ">Zobraziť aktuálne AnkiDroid správy neskôr</string>
-  <string name="reset_all_question">Obnoviť všetky jazyky, widgety, tabule a slovníky?</string>
   <string name="reset_confirmation">Vynulovať všetky nastavenia na základné</string>
   <string name="use_ruby_support">Podporovať Ruby anotácie</string>
   <string name="use_ruby_support_summ">Text medzi znakmi \ \' [\ \' a \ \'] \ \' spracovať ako Ruby anotáciu</string>
@@ -114,8 +97,6 @@
   <string name="col_path_summ">Umiestnenie, kde je uložená vaša zbierka</string>
   <string name="fullscreen_review">Opakovanie na celú obrazovku</string>
   <string name="fullscreen_review_summ">Môžete sa rozhodnúť, či chcete používať celú dostupnú plochu počas opakovania</string>
-  <string name="zoom">Povoliť zoom</string>
-  <string name="zoom_summ">Zobraziť ovládanie zoomu počas opakovania</string>
   <string name="zeemote">Podpora Zeemote JS1</string>
   <string name="zeemote_summ">Použiť Zeemote JS1 ovládanie pri opakovaní.</string>
   <string name="zeemote_actions">Zeemote akcie pri opakovaní</string>
@@ -133,7 +114,6 @@
   <string name="swipe_summ_off">Používať gestá na prepínanie medzi obrazovkami a kartami odpovedí. Táto možnosť nie je kompatibilná s ovládaním zoomu</string>
   <string name="swipe_summ_on">Prepni medzi obrazovkami pomocou šmyknutia prstom vo vodorovnom smere. Nastav ďalšie akcie nižšie</string>
   <string name="pref_cat_actions">Akcie</string>
-  <string name="gestures_shake">Zatrasenie</string>
   <string name="gestures_swipe_up">Posun hore</string>
   <string name="gestures_swipe_down">Posun dole</string>
   <string name="gestures_swipe_left">Posun doľava</string>
@@ -155,8 +135,6 @@
   <string name="tts_summ">Prečíta otázku a odpoveď, ak nie je priložený žiaden zvukový súbor</string>
   <string name="play_sounds_at_start">Okamžite prehrávať zvuky</string>
   <string name="play_sounds_at_start_summ">Prehrá zvuky okamžite po zobrazení otázky/odpovede</string>
-  <string name="shake_intensity">Citlivosť trasenia</string>
-  <string name="shake_intensity_summ">Prah rozoznávania trasenia: XXX</string>
   <string name="sync_fetch_missing_media">Prevziať médiá počas synchronizácie</string>
   <string name="sync_fetch_missing_media_summ">Automaticky prevziať chýbajúce médiá počas synchronizácie.</string>
   <string name="sync_account">AnkiWeb účet</string>
@@ -179,10 +157,6 @@
   <string name="timeout_question_seconds">Sekúnd pred zobrazením ďalšej otázky</string>
   <string name="select_locale_title">Výber jazyka</string>
   <string name="select_theme">Téma</string>
-  <string name="theme_animations">Animácie</string>
-  <string name="theme_animations_summ">Zobraziť animácie pri otáčaní kariet</string>
-  <string name="animation_speed">Dĺžka animácie</string>
-  <string name="animation_speed_summ">Doba trvania prechodnej animácie: XXX ms</string>
   <string name="eink_display">Optimalizovať pre E-Ink displej</string>
   <string name="eink_display_summ">Zrušiť všetky animácie a optimalizovať pre E-Ink displej</string>
   <string name="vertical_centering">Centrovať obsah karty vertikálne</string>
@@ -219,21 +193,14 @@
   <string name="filter_google_translate_summ">Uložiť iba kľúčové slovo a preklad</string>
   <string name="convert_fen_text_summ">Vykreslenie šachovnice z Forsyth Edwards zápisu. Zápis musí byť vložený mezi značky [fen][/fen].</string>
   <string name="sync_set_journal_mode">Nastavenie správneho módu denníka zmien...</string>
-  <string name="async_mode">Synchronizácia vypnutá</string>
-  <string name="async_mode_summ">Týmto zrýchlite AnkiDroid, ale pri spadnutí celého Android systému môžu byť poškodené databázy. Použite preto zálohy</string>
-  <string name="async_mode_message">Uvedomte si, že táto možnosť je menej bezpečná a môže spôsobiť poškodenie balíčkov pri spadnutí Androidu (napr. v prípade slabej batérie).\nPri nastavení tejto možnosti sa VEĽMI odporúča použiť systém zálohovania.\nChcete napriek tomu povoliť?</string>
-  <string name="fix_orientation">Zablokovať otáčanie obrazovky</string>
-  <string name="fix_orientation_summ">Nemeniť orientáciu počas opakovania</string>
   <string name="per_day">Za deň</string>
   <string name="studyoptions_new_cards_per_day">Nové karty za deň</string>
   <string name="studyoptions_max_fail_card">Maximum neúspešných kariet</string>
-  <string name="show_broadcast_messages">Zobraziť aktuálne správy</string>
-  <string name="show_broadcast_messages_summ">Zobraziť upozornenia AnkiDroid ako aktualizácie na novú verziu alebo iné dôležité správy</string>
   <string name="input_workaround">Riešenie pre písanie odpovedí</string>
   <string name="input_workaround_summ">Riešenie problémov so zaostrením sa na HTML vstupné polia. Spôsobuje problémy na viacerých zariadeniach.</string>
   <string name="write_answers_message">Mali by ste pre každý balíček určiť pole, ktoré sa porovná z odpoveďou. Môžete to urobiť v Anki Desktop aplikácii(Vlastnosti balíku -&gt; Upraviť model -&gt; Rozloženie karty).\n\nVaša odpoveď bude porovnaná z celým obsahom karty, ak porovnávané pole nie je určené.</string>
   <string name="pref_cardbrowser_skip_init_search">Rýchle otvorenie prehliadača kariet</string>
-  <string name="pref_cardbrowser_skip_init_search_summ">Preskočí automatické vyhľadávanie pri otvorení prehliadača kariet.</string>
+  <string name="pref_cardbrowser_skip_init_search_summ">Skips initial automatic search when the card browser opens or the deck is changed.</string>
   <string name="pref_keep_screen_on">Nechať obrazovku zapnutú</string>
   <string name="pref_keep_screen_on_summ">Zabráni vypnutiu obrazovky počas opakovania</string>
   <string name="pref_simple_interface">Jednoduché rozhranie</string>
@@ -306,8 +273,6 @@
   <string name="deck_conf_cram_reschedule_summ">Preplánovať karty podľa mojich odpovedí v tomto balíčku</string>
   <string name="deck_conf_cram_steps">Vlastné kroky</string>
   <string name="deck_conf_cram_steps_summ">Definovať vlastné kroky</string>
-  <string name="pref_show_splashscreen">Úvodná obrazovka</string>
-  <string name="pref_show_splashscreen_summ">Zobraziť úvodnú obrazovku</string>
   <string name="pref_intent_add_instant">Okamžité pridanie</string>
   <string name="pref_intent_add_instant_summ">Pridať nové karty zo slovníkov bez otvorenia AnkiDroid. Nájdete ich neskôr pod \"uložené dáta\" v okne pridávania kariet.</string>
   <string name="pref_cat_intent_add">Pridávanie externých dát</string>

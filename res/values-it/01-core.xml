@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">Totale carte:</string>
   <string name="studyoptions_eta">Tempo stimato (min):</string>
   <string name="studyoptions_start">Studia ora</string>
+  <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">Mostra la risposta</string>
   <string name="ease1_successive">Ripeti</string>
   <string name="ease2_successive">Difficile</string>
@@ -63,7 +64,7 @@
   <string name="card_unsuspended">Annulla la sospensione della carta</string>
   <string name="card_suspended">Carta risospesa</string>
   <string name="menu_rotate">Ruota</string>
-  <string name="menu_import">Importa carte</string>
+  <string name="menu_import">Import file</string>
   <string name="undo">Annulla</string>
   <string name="undo_action_review">ripeti</string>
   <string name="undo_action_edit">modifica nota</string>
@@ -82,6 +83,8 @@
   <string name="contextmenu_deckpicker_collapse_deck">Nascondi sottomazzi</string>
   <string name="contextmenu_deckpicker_inflate_deck">Mostra sottomazzi</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Imposta dizionario personalizzato</string>
+  <string name="menu_add">Add</string>
+  <string name="menu_add_note">Add note</string>
   <string name="menu_download_deck">Scarica il mazzo</string>
   <string name="menu_download_shared_deck">Mazzo condiviso</string>
   <string name="menu_my_account">Sincronizza account</string>
@@ -99,9 +102,9 @@
   <string name="menu_search">Ricerca in %1$s</string>
   <string name="menu_mark_card">Etichetta la carta</string>
   <string name="menu_unmark_card">Deseleziona carta</string>
-  <string name="new_deck">Nuovo mazzo</string>
+  <string name="new_deck">Create deck</string>
   <string name="create">Crea</string>
-  <string name="new_dynamic_deck">Nuovo mazzo filtrato</string>
+  <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">Commenti e suggerimenti</string>
   <string name="studyoptions_load_tutorial_deck">Crea mazzo d\'esercizio</string>
   <string name="night_mode">Modalità notturna</string>

@@ -121,6 +121,5 @@
     <item><![CDATA[AnkiDroid es <a href="%1$s">software de código abierto<a/>, por lo cual todos están invitados a <a href="%2$s">unirse</a> a los <a href="%3$s">auxiliares</a>:-)]]></item>
     <item><![CDATA[No desarrolladores también puede ayudar, por ejemplo <a href="%1$s">traduciendo</a> AnkiDroid, actualizando la wiki y las capturas de pantalla, <a href="%2$s">donando</a> a Anki Desktop, o bloggeando acerca de AnkiDroid!]]></item>
     <item><![CDATA[AnkiDroid es lanzado bajo la <a href="%1$s">licencia GNU-GPL v3</a> y el código fuente está disponible <a href="%2$s">aquí</a>.]]></item>
-    <item>Archivos de diccionario <![CDATA[This package uses the <a href="http://www.csse.monash.edu.au/~jwb/edict.html">EDICT</a> y <a href="http://www.csse.monash.edu.au/~jwb/kanjidic.html">KANJIDIC</a>. Estos archivos son propiedad de <a href="http://www.edrdg.org">Electronic Dictionary Research and Development Group</a>, y se utilizan con el acuerdo de la <a href="http://www.edrdg.org/edrdg/licence.html">licencia</a> del Grupo.]]></item>
   </string-array>
 </resources>

@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">कुल कार्ड:</string>
   <string name="studyoptions_eta">अनुमानित समय (मिनट):</string>
   <string name="studyoptions_start">Study Now</string>
+  <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">जवाब दिखाना</string>
   <string name="ease1_successive">फिर से</string>
   <string name="ease2_successive">कठिन</string>
@@ -63,7 +64,7 @@
   <string name="card_unsuspended">कार्ड निलंबन नष्ट कर दिया</string>
   <string name="card_suspended">Resuspended कार्ड</string>
   <string name="menu_rotate">रोटेट करें</string>
-  <string name="menu_import">कार्ड आयात करें</string>
+  <string name="menu_import">Import file</string>
   <string name="undo">पूर्ववत् करें</string>
   <string name="undo_action_review">समीक्षा</string>
   <string name="undo_action_edit">नोट संपादित करें</string>
@@ -82,6 +83,8 @@
   <string name="contextmenu_deckpicker_collapse_deck">Subdecks छुपाएँ</string>
   <string name="contextmenu_deckpicker_inflate_deck">Subdecks दिखाना</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">निर्धारित कस्टम शब्दकोश</string>
+  <string name="menu_add">Add</string>
+  <string name="menu_add_note">Add note</string>
   <string name="menu_download_deck">डेक डाउनलोड करें</string>
   <string name="menu_download_shared_deck">साझा डेक</string>
   <string name="menu_my_account">सिंक्रनाइज़ेशन खाता</string>
@@ -99,9 +102,9 @@
   <string name="menu_search">लुकअप में %1$s</string>
   <string name="menu_mark_card">मार्क कार्ड</string>
   <string name="menu_unmark_card">कार्ड अचिह्नित करें</string>
-  <string name="new_deck">नई डेक</string>
+  <string name="new_deck">Create deck</string>
   <string name="create">बनाएँ</string>
-  <string name="new_dynamic_deck">नया फ़िल्टर किए गए डेक</string>
+  <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">आपके सुझाव</string>
   <string name="studyoptions_load_tutorial_deck">ट्यूटोरियल बनाना</string>
   <string name="night_mode">रात मोड</string>

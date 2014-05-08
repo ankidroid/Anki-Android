@@ -40,8 +40,6 @@
 -->
 <resources>
   <string name="pref_cat_collection">Koleksiyon</string>
-  <string name="pref_internal_memory">Dâhilî belleği kullan</string>
-  <string name="pref_internal_memory_summ">Koleksiyonu dâhilî bellekte tut. Bu koleksiyon dosyasına erişimi zorlaştırdığı için önerilmez.</string>
   <string name="pref_cat_sync">Eşitleme</string>
   <string name="pref_cat_qadisplay">Görüntü</string>
   <string name="pref_cat_general">Genel</string>
@@ -53,7 +51,6 @@
   <string name="pref_cat_navigation">Gezinti</string>
   <string name="pref_cat_swipe">Özel Hareketler</string>
   <string name="pref_cat_navigation_sensitivity">Duyarlılık</string>
-  <string name="pref_cat_zoom">Yakınlaştırma</string>
   <string name="pref_cat_zeemote">Zeemote</string>
   <string name="pref_cat_reset">Sıfırla</string>
   <string name="pref_cat_other">Diğer</string>
@@ -70,10 +67,7 @@
   <string name="show_study_options_on_deck_load_summ">Deste yüklenirken çalışma seçenekleri ekranını gösterir</string>
   <string name="hide_due_count">Çıkacak sayısını gizle</string>
   <string name="hide_due_count_summ">Çıkacak kart sayısını gizler</string>
-  <string name="show_progress_bars">İlerleme çubuklarını göster</string>
-  <string name="show_progress_bars_summ">Gözden geçirme sırasında bugünkü ilerlemenizi ve evet yanıtlarınızı gösterir</string>
-  <string name="fade_scrollbars">Geçişli kaydırma çubukları</string>
-  <string name="fade_scrollbars_summ">Kaydırma yapmıyorken bilgi kartı kaydırma çubuklarını gizle</string>
+  <string name="enable_whiteboard">Enable Whiteboard</string>
   <string name="show_whiteboard_summ">Ekrana yazı yazmanızı sağlar</string>
   <string name="whiteboard_stroke_width">Yazı tahtası kontur kalınlığı</string>
   <string name="whiteboard_stroke_width_summ">Kontur kalınlığı: XXX</string>
@@ -81,24 +75,13 @@
   <string name="whiteboard_black_summ">Renkli yerleri siyah-beyaz gösterir (düşük bellekli cihazlar için, gece modunda çalışmaz)</string>
   <string name="write_answers">Yanıtları yaz</string>
   <string name="write_answers_summ">Yanıtları yazıp doğrusuyla karşılaştırmanızı sağlar</string>
-  <string name="text_selection">Metin seçimine izin ver</string>
-  <string name="text_selection_summ">Harici bir sözlükten bakabilmeniz için kartlardan metin seçmenize ve kopyalamanıza izin verir (menü veya basılı tutmayla)</string>
   <string name="text_selection_click">Basılı Tutma</string>
   <string name="text_selection_click_summ">Metin seçimini basılı tutarak başlatamıyorsanız bunu etkinleştirin</string>
   <string name="dictionary">Sözlük</string>
   <string name="dictionary_summ">Aramaların gerçekleştirileceği sözlük: XXX</string>
   <string name="reset_languages">Dilleri Sıfırla</string>
   <string name="reset_languages_summ">Tüm destelerdeki dil atamalarını sıfırla (metin okuma ve sözlükler için). Belirli deste atamalarını sıfırlamak için deste seçiciyi kullanın.</string>
-  <string name="reset_all">Hepsini Sıfırla</string>
-  <string name="reset_all_summ">Dil, bileşen, yazı tahtası ve sözlük durumlarını sıfırla</string>
-  <string name="reset_dialogs">İletişim Kutularını Sıfırla</string>
-  <string name="reset_dialogs_question">Tüm iletişim kutuları sıfırlansın mı?</string>
-  <string name="reset_dialogs_summ">Yeniden gösterilmemeye ayarlanmış tüm iletişim kutularını sıfırla</string>
   <string name="reset_languages_question">Tüm dil atamaları sıfırlansın mı?</string>
-  <string name="reset_messages">İletileri Sıfırla</string>
-  <string name="reset_messages_question">Geçerli iletiler yeniden gösterilsin mi?</string>
-  <string name="reset_messages_summ">Geçerli AnkiDroid iletilerini başka bir zaman göster</string>
-  <string name="reset_all_question">Tüm dil, bileşen, yazı tahtası ve sözlük durumları sıfırlansın mı?</string>
   <string name="reset_confirmation">Tüm durumların sıfırlanması</string>
   <string name="use_ruby_support">Ruby dipnot desteği sağla</string>
   <string name="use_ruby_support_summ">\"[\" ve \"]\" karakterleri bulunuyorsa, aralarındaki metin ruby dipnotu olarak işlenir</string>
@@ -114,8 +97,6 @@
   <string name="col_path_summ">Koleksiyonunuz depolandığı yolu neresi</string>
   <string name="fullscreen_review">Tam ekranda gözden geçir</string>
   <string name="fullscreen_review_summ">Kart gözden geçirme sırasında ekranın tamamını kullanmak isteyip istemediğinize karar verebilirsiniz</string>
-  <string name="zoom">Yakınlaştırmayı etkinleştir</string>
-  <string name="zoom_summ">Gözden geçirme sırasında yakınlaştırma denetimlerini göster</string>
   <string name="zeemote">Zeemote JS1 desteği</string>
   <string name="zeemote_summ">Gözden geçirmelerde gezinmek için Zeemote JS1 denetimcisini kullan</string>
   <string name="zeemote_actions">Çalıştırıcıda Zeemote eylemleri</string>
@@ -133,7 +114,6 @@
   <string name="swipe_summ_off">Ekranlar arasında geçiş yapmak ve kartları yanıtlamak için özel hareketleri kullan. Bu seçenek yakınlaştırma denetimleriyle uyumlu değildir.</string>
   <string name="swipe_summ_on">Ekranlar arasında geçiş yapmak için yatay olarak sürükle. Diğer eylemleri aşağıda yapılandırın.</string>
   <string name="pref_cat_actions">Eylemler</string>
-  <string name="gestures_shake">Sallama</string>
   <string name="gestures_swipe_up">Yukarı sürükleme</string>
   <string name="gestures_swipe_down">Aşağı sürükleme</string>
   <string name="gestures_swipe_left">Sola sürükleme</string>
@@ -155,8 +135,6 @@
   <string name="tts_summ">Ses dosyası bulunmuyorsa soruyu ve yanıtı sesli okur</string>
   <string name="play_sounds_at_start">Sesleri Anında Çal</string>
   <string name="play_sounds_at_start_summ">Sesleri bir soruyu/yanıtı gösterdikten sonra anında çalar</string>
-  <string name="shake_intensity">Sallama eşiği</string>
-  <string name="shake_intensity_summ">Sallama algılaması için eşik: XXX</string>
   <string name="sync_fetch_missing_media">Eşitlemede medyayı aktar</string>
   <string name="sync_fetch_missing_media_summ">Eşitlerken eksik medyayı otomatik olarak aktar</string>
   <string name="sync_account">AnkiWeb hesabı</string>
@@ -179,10 +157,6 @@
   <string name="timeout_question_seconds">Sonraki soru gösterilmeden önceki saniye sayısı</string>
   <string name="select_locale_title">Dil Seç</string>
   <string name="select_theme">Tema</string>
-  <string name="theme_animations">Animasyonlar</string>
-  <string name="theme_animations_summ">Kartları çevirirken animasyonları göster</string>
-  <string name="animation_speed">Animasyon Süresi</string>
-  <string name="animation_speed_summ">Geçiş animasyonlarının süresi: XXX ms</string>
   <string name="eink_display">E-Ink Ekran Optimizasyonu</string>
   <string name="eink_display_summ">Bütün animasyonları devredışı bırakıp E-Ink ekran için optimizasyon yap</string>
   <string name="vertical_centering">Kart içeriğini dikey ortala</string>
@@ -219,21 +193,14 @@
   <string name="filter_google_translate_summ">Yalnızca kaynak sözcük ve çeviriyi kaydet</string>
   <string name="convert_fen_text_summ">Forsyth Edwards Gösterimi\'nden satranç tahtası çiz. Gösterim [fen][/fen] etiketi içinde olmalıdır.</string>
   <string name="sync_set_journal_mode">Doğru günlük modu ayarlanıyor...</string>
-  <string name="async_mode">Eşzamanlı kapanma</string>
-  <string name="async_mode_summ">Bu AnkiDroid\'i hızlandırır fakat tüm Android sistemi çöktüğünde veritabanlarına hasar verebilir. Bu yüzden yedekleri kullanın.</string>
-  <string name="async_mode_message">Bu seçenek güvenli değildir ve Android çöktüğünde deste hasarlarına yol açabilir (örn. pil bittiğinde).\nBu seçenek etkinse yedekleme sistemini kullanmanız önerilir.\nYine de etkinleştirilsin mi?</string>
-  <string name="fix_orientation">Yönü sabitle</string>
-  <string name="fix_orientation_summ">Gözden geçirme sırasında ekran yönünün değişmesini engelle</string>
   <string name="per_day">Gün Başına</string>
   <string name="studyoptions_new_cards_per_day">Gün başına yeni kart sayısı</string>
   <string name="studyoptions_max_fail_card">En fazla başarısız kart sayısı</string>
-  <string name="show_broadcast_messages">Geçerli İletileri Göster</string>
-  <string name="show_broadcast_messages_summ">Yeni sürüm güncellemeleri ve önemli diğer haberler gibi AnkiDroid bildirimlerini göster</string>
   <string name="input_workaround">Giriş Çözümü</string>
   <string name="input_workaround_summ">HTML giriş kutularındaki odaklama sorunları için çözüm. Bazı cihazlarda sorun yaratabilir.</string>
   <string name="write_answers_message">Her deste için yazılı yanıtların karşılaştırılacağı bir alan belirlemelisiniz. Bunu Anki Masaüstü yoluyla yapabilirsiniz (deste özellikleri -&gt; modeli düzenle -&gt; kart düzeni).\n\nKarşılaştırma alanı ayarlanmamışsa, yazılı yanıtınız her zaman kart yanıtının tümüyle karşılaştırılacak.</string>
   <string name="pref_cardbrowser_skip_init_search">Hızlı Kart Tarayıcı Açık</string>
-  <string name="pref_cardbrowser_skip_init_search_summ">Kart tarayıcı açılırken başlangıçta otomatik aramayı atla.</string>
+  <string name="pref_cardbrowser_skip_init_search_summ">Skips initial automatic search when the card browser opens or the deck is changed.</string>
   <string name="pref_keep_screen_on">Ekranı Açık Tut</string>
   <string name="pref_keep_screen_on_summ">Gözden geçirme sırasında ekranın kapanmasını engelle</string>
   <string name="pref_simple_interface">Basit Arayüz</string>
@@ -306,8 +273,6 @@
   <string name="deck_conf_cram_reschedule_summ">Bu destedeki yanıtlarıma göre kartları yeniden zamanla</string>
   <string name="deck_conf_cram_steps">Kişisel adımlar</string>
   <string name="deck_conf_cram_steps_summ">Kendi adımlarınızı tanımlayın</string>
-  <string name="pref_show_splashscreen">Karşılama ekranı</string>
-  <string name="pref_show_splashscreen_summ">Karşılama ekranını göster</string>
   <string name="pref_intent_add_instant">Hızlı ekle</string>
   <string name="pref_intent_add_instant_summ">AnkiDroid açık değilken sözlükten yeni kartlar ekle. Daha sonra kart ekleyicide \'kayıtlı veriler\'de bulabilirsin.</string>
   <string name="pref_cat_intent_add">Harici veri ekleme</string>

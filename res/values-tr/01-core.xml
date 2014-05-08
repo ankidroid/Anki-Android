@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">Toplam kart:</string>
   <string name="studyoptions_eta">Tahminî süre (dk):</string>
   <string name="studyoptions_start">Çalışmaya Başla</string>
+  <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">Yanıtı Göster</string>
   <string name="ease1_successive">Yeniden</string>
   <string name="ease2_successive">Zor</string>
@@ -63,7 +64,7 @@
   <string name="card_unsuspended">Askıya alma geri alındı</string>
   <string name="card_suspended">Kart yeniden askıya alındı</string>
   <string name="menu_rotate">Çevir</string>
-  <string name="menu_import">İçeri kart aktar</string>
+  <string name="menu_import">Import file</string>
   <string name="undo">Geri Al</string>
   <string name="undo_action_review">Çalışmayı</string>
   <string name="undo_action_edit">Not düzenlemeyi</string>
@@ -82,6 +83,8 @@
   <string name="contextmenu_deckpicker_collapse_deck">Altdesteleri Gizle</string>
   <string name="contextmenu_deckpicker_inflate_deck">Altdesteleri Göster</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Harici sözlük ayarla</string>
+  <string name="menu_add">Add</string>
+  <string name="menu_add_note">Add note</string>
   <string name="menu_download_deck">Deste indir</string>
   <string name="menu_download_shared_deck">Paylaşılan deste</string>
   <string name="menu_my_account">Hesabı eşitle</string>
@@ -99,9 +102,9 @@
   <string name="menu_search">%1$s\'de Ara</string>
   <string name="menu_mark_card">Kartı İşaretle</string>
   <string name="menu_unmark_card">İşaretini Kaldır</string>
-  <string name="new_deck">Yeni deste</string>
+  <string name="new_deck">Create deck</string>
   <string name="create">Oluştur</string>
-  <string name="new_dynamic_deck">Yeni süzülü deste</string>
+  <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">Geribildirim</string>
   <string name="studyoptions_load_tutorial_deck">Eğitime başla</string>
   <string name="night_mode">Gece modu</string>

@@ -42,19 +42,20 @@
   <string name="CardEditorCancelButton">Cancelar</string>
   <string name="CardEditorSaveButton">Guardar</string>
   <string name="CardEditorLaterButton">Mais Tarde</string>
-  <string name="CardEditorPreviewButton">Pré visualizar</string>
   <string name="CardEditorLaterMessage">Informação guardada para mais tarde</string>
   <string name="CardEditorCardDeck">Baralho de Cartões: %s</string>
   <string name="CardEditorNoteDeck">Baralho de Notas: %s</string>
   <string name="CardEditorModel">Tipo de Nota: %s</string>
   <string name="CardEditorTags">Etiquetas: %1$s</string>
-  <string name="add_new_tag">Adicionar nova etiqueta</string>
+  <string name="add_new_filter_tags">Add/Filter tags</string>
   <string name="note_type">Tipo de nota</string>
   <string name="card_type">Tipo de cartão</string>
+  <string name="filter_tags">Filter tags</string>
   <string name="sdcard_missing_message">Cartão SD não está disponível porque ele está sendo usado em armazenamento USB. Desconecte o USB para acessar seus decks.</string>
   <string name="show_whiteboard">Mostrar Quadro</string>
   <string name="hide_whiteboard">Esconder Quadro</string>
   <string name="clear_whiteboard">Limpar Quadro</string>
+  <string name="replay_audio">Replay audio</string>
   <string name="cram_edit_warning">Edição de cartões não permitida enquanto estiver cursando</string>
   <string name="suspend_leeches">Suspender sanguessugas</string>
   <string name="leech_suspend_notification">Cartão marcado como Sanguessuga e suspenso</string>
@@ -83,6 +84,7 @@
   <string name="card_editor_reset">Redefinir</string>
   <string name="card_editor_copy_card">Copiar cartão</string>
   <string name="card_editor_reset_card">Redefinir progresso</string>
+  <string name="card_editor_preview_card">Preview</string>
   <string name="error_insufficient_memory">Operação impossível devido a memória insuficiente no dispositivo</string>
   <string name="tutorial_load">Criando baralho tutorial. \nPor favor aguarde...</string>
   <string name="tutorial_loading_error">Baralho tutorial não pôde ser criado</string>
@@ -134,11 +136,11 @@
     <item>Answer</item>
     <item>Card</item>
     <item>Deck</item>
-    <item>Lapses</item>
     <item>Note</item>
     <item>Question</item>
-    <item>Reviews</item>
     <item>Tags</item>
+    <item>Lapses</item>
+    <item>Reviews</item>
   </string-array>
   <string-array name="dynOrderLabels">
     <item>Mais antigos primeiro</item>

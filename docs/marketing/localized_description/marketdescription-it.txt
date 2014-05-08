@@ -29,8 +29,8 @@ Aggiungi materiale con l'applicazione per desktop Anki o direttamente con AnkiDr
 • aggiunta di carte da altre applicazioni come dizionari
 • supporto di tipi di carattere personalizzati
 • sistema completo di backup
-• navigazione con scorrimento, tocco, scuotimento
-• completamente personalizzabile
+• navigation by swipe, tap
+• customisable
 • gestione dinamica dei mazzi
 • modalità notturna
 • 27 localizzazioni

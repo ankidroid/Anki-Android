@@ -112,7 +112,6 @@
   <string-array name="leech_action_labels">
     <item>Suspèn la fitxa</item>
     <item>Només l\'etiqueta</item>
-    <item>Reinicia de nou</item>
   </string-array>
   <string-array name="new_order_labels">
     <item>Mostra les fitxes noves desendreçades</item>

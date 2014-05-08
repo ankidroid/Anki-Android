@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">Kortteja yhteensä:</string>
   <string name="studyoptions_eta">Arvioitu aika (min):</string>
   <string name="studyoptions_start">Opiskele nyt</string>
+  <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">Näytä vastaus</string>
   <string name="ease1_successive">Uudestaan</string>
   <string name="ease2_successive">Vaikea</string>
@@ -63,7 +64,7 @@
   <string name="card_unsuspended">Kortin jäädytys poistettu</string>
   <string name="card_suspended">Kortti uudelleenjäädytetty</string>
   <string name="menu_rotate">Käännä</string>
-  <string name="menu_import">Tuo kortteja</string>
+  <string name="menu_import">Import file</string>
   <string name="undo">Kumoa</string>
   <string name="undo_action_review">läpikäynti</string>
   <string name="undo_action_edit">huomautuksen muokkaus</string>
@@ -82,6 +83,8 @@
   <string name="contextmenu_deckpicker_collapse_deck">Piilota alipakat</string>
   <string name="contextmenu_deckpicker_inflate_deck">Näytä alipakat</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Määritä käyttäjän sanasto</string>
+  <string name="menu_add">Add</string>
+  <string name="menu_add_note">Add note</string>
   <string name="menu_download_deck">Lataa pakka</string>
   <string name="menu_download_shared_deck">Jaettu pakka</string>
   <string name="menu_my_account">Synkronointiasetukset</string>
@@ -99,9 +102,9 @@
   <string name="menu_search">Haku %1$s</string>
   <string name="menu_mark_card">Merkitse kortti</string>
   <string name="menu_unmark_card">Poista kortin merkintä</string>
-  <string name="new_deck">Uusi pakka</string>
+  <string name="new_deck">Create deck</string>
   <string name="create">Luo</string>
-  <string name="new_dynamic_deck">Uusi suodatettu pakka</string>
+  <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">Palaute</string>
   <string name="studyoptions_load_tutorial_deck">Luo opetusohjelma</string>
   <string name="night_mode">Yötila</string>

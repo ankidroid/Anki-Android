@@ -40,8 +40,6 @@
 -->
 <resources>
   <string name="pref_cat_collection">Collection</string>
-  <string name="pref_internal_memory">Gunakan memori internal</string>
-  <string name="pref_internal_memory_summ">Menyimpan koleksi dalam memori internal. Ini tidak dianjurkan, karena Anda tidak dapat mengakses file koleksi dengan mudah</string>
   <string name="pref_cat_sync">Sinkronisasi</string>
   <string name="pref_cat_qadisplay">Paparan</string>
   <string name="pref_cat_general">Umum</string>
@@ -53,7 +51,6 @@
   <string name="pref_cat_navigation">Navigasi</string>
   <string name="pref_cat_swipe">Sapu</string>
   <string name="pref_cat_navigation_sensitivity">Sensitiviti</string>
-  <string name="pref_cat_zoom">Zum</string>
   <string name="pref_cat_zeemote">Zeemote</string>
   <string name="pref_cat_reset">Set semula</string>
   <string name="pref_cat_other">Lain</string>
@@ -70,10 +67,7 @@
   <string name="show_study_options_on_deck_load_summ">Tunjukkan skrin opsyen studi bila muat dek</string>
   <string name="hide_due_count">Hide due count</string>
   <string name="hide_due_count_summ">Hides the due count</string>
-  <string name="show_progress_bars">Tunjuk bar progres</string>
-  <string name="show_progress_bars_summ">Tunjukkan progres hari ini dan jawapan ya semasa reviu</string>
-  <string name="fade_scrollbars">Memudarkan scrollbar</string>
-  <string name="fade_scrollbars_summ">Automatically fade out flashcard scrollbars when not scrolling</string>
+  <string name="enable_whiteboard">Enable Whiteboard</string>
   <string name="show_whiteboard_summ">Memungkinkan anda menulis di skrin</string>
   <string name="whiteboard_stroke_width">Lebar strok papan tulis</string>
   <string name="whiteboard_stroke_width_summ">Lebar strok: XXX</string>
@@ -81,24 +75,13 @@
   <string name="whiteboard_black_summ">Guna tulisan monokrom bukan warna (untuk peranti rendah memori, bukan dalam mod malam)</string>
   <string name="write_answers">Tulis jawapan</string>
   <string name="write_answers_summ">Tulis jawapan dan banding dengan yang betul</string>
-  <string name="text_selection">Izin pilih perkataan</string>
-  <string name="text_selection_summ">Boleh pilih dan salin teks dari kad (lalu menu atau klik panjang) untuk diguna pada kamus lain</string>
   <string name="text_selection_click">Tatacara klikpanjang</string>
   <string name="text_selection_click_summ">Aktifkan ini jika anda tidak dapat memilih teks dengan klik panjang</string>
   <string name="dictionary">Kamus</string>
   <string name="dictionary_summ">Kamus di mana pencarian harus dilakukan: XXX</string>
   <string name="reset_languages">Reset bahasa</string>
   <string name="reset_languages_summ">Reset tugas bahasa (untuk teks ke bahasa dan kamus) untuk semua dek. Reset tugas spesifik pada pemilih dek</string>
-  <string name="reset_all">Set semula semua</string>
-  <string name="reset_all_summ">Reset semua bahasa, wijet, papan tulis dan kamus negara</string>
-  <string name="reset_dialogs">Dialog Reset</string>
-  <string name="reset_dialogs_question">Reset semua dialog?</string>
-  <string name="reset_dialogs_summ">Reset semua dialog yang diatur akan tidak ditampilkan lagi</string>
   <string name="reset_languages_question">Reset semua tugas bahasa?</string>
-  <string name="reset_messages">Mesej di set semula</string>
-  <string name="reset_messages_question">Tunjuk mesej terkini lagi?</string>
-  <string name="reset_messages_summ">Tunjuk mesej AnkiDroid di lain waktu</string>
-  <string name="reset_all_question">Reset semua bahasa, wijet, papan tulis dan kamus negara?</string>
   <string name="reset_confirmation">Semua diset semula</string>
   <string name="use_ruby_support">Memberikan dukungan ayat ruby</string>
   <string name="use_ruby_support_summ">Jika karakter \' [\' dan \']\' ditemukan, maka teks dipilih ditangani sebagai ayat ruby</string>
@@ -114,8 +97,6 @@
   <string name="col_path_summ">Path to where your collection is stored</string>
   <string name="fullscreen_review">Reviu dengan skrin penuh</string>
   <string name="fullscreen_review_summ">Anda boleh pilih untuk menggunakan skrin penuh semasa reviu kad</string>
-  <string name="zoom">Aktifkan Zum</string>
-  <string name="zoom_summ">Tampilkan kawalan zum ketika mereviu</string>
   <string name="zeemote">Sokongan Zeemote JS1 </string>
   <string name="zeemote_summ">Guna kawalan Zeemote JS1 untuk mengawal kad reviu.</string>
   <string name="zeemote_actions">Zeemote actions in Reviewer</string>
@@ -133,7 +114,6 @@
   <string name="swipe_summ_off">Gunakan gerakan untuk beralih antara layar dan kad jawapan. Pilihan ini tidak serasi dengan kawalan zum</string>
   <string name="swipe_summ_on">Sapu mendatar untuk tukar skrin. Set aktiviti lain di bawah</string>
   <string name="pref_cat_actions">Tindakan</string>
-  <string name="gestures_shake">Goyang</string>
   <string name="gestures_swipe_up">Sapu atas</string>
   <string name="gestures_swipe_down">Sapu bawah</string>
   <string name="gestures_swipe_left">Sapu kiri</string>
@@ -155,8 +135,6 @@
   <string name="tts_summ">Baca soalan dan jawapan jika fail bunyi tiada</string>
   <string name="play_sounds_at_start">Bunyi Masa Mula</string>
   <string name="play_sounds_at_start_summ">Bunyi selepas paparan soal/jawab</string>
-  <string name="shake_intensity">Batas goyang</string>
-  <string name="shake_intensity_summ">Batas untuk kenal goyang:XXX</string>
   <string name="sync_fetch_missing_media">Ambil media semasa sinkronisasi</string>
   <string name="sync_fetch_missing_media_summ">Ambil media yang kurang semasa sinkronisasi secara automatik</string>
   <string name="sync_account">AnkiWeb account</string>
@@ -179,10 +157,6 @@
   <string name="timeout_question_seconds">Beberapa saat sebelum soalan berikutnya</string>
   <string name="select_locale_title">Pilih Bahasa</string>
   <string name="select_theme">Tema</string>
-  <string name="theme_animations">Animasi</string>
-  <string name="theme_animations_summ">Tunjuk animasi ketika membalik kad</string>
-  <string name="animation_speed">Tempoh Animasi</string>
-  <string name="animation_speed_summ">Tempoh transisi animasi: XXX ms</string>
   <string name="eink_display">E-Ink Display Optimization</string>
   <string name="eink_display_summ">Disable all animations and do some optimization for E-Ink Display</string>
   <string name="vertical_centering">Center card content vertically</string>
@@ -219,21 +193,14 @@
   <string name="filter_google_translate_summ">Just save source word and translation</string>
   <string name="convert_fen_text_summ">Draw chessboard from Forsyth Edwards Notation. The notation must be enclosed in [fen][/fen] tag.</string>
   <string name="sync_set_journal_mode">Set mod jurnal yang betul...</string>
-  <string name="async_mode">Sinkronisasi off</string>
-  <string name="async_mode_summ">Ini membuat AnkiDroid lebih laju tetapi ada risiko kerosakan data bila sistem Android rosak. Sediakan salinan </string>
-  <string name="async_mode_message">Perhatian bahawa opsyen in tidak selamat dan boleh merosak dek bila Android terganggu (cth. bila tiada bateri).\nPastikan ada salinan jika opsyen in dipilih.\nPilih opsyn ini?</string>
-  <string name="fix_orientation">Orientasi tetap</string>
-  <string name="fix_orientation_summ">Jangan ubah orientasi semasa reviu</string>
   <string name="per_day">Sehari</string>
   <string name="studyoptions_new_cards_per_day">Kad baru sehari</string>
   <string name="studyoptions_max_fail_card">Kad gagal maksima</string>
-  <string name="show_broadcast_messages">Tunjuk Mesej Terkini</string>
-  <string name="show_broadcast_messages_summ">Tunjukkan maklumat AnkiDroid seperti versi dan berita lain</string>
   <string name="input_workaround">Jalan sementara Input</string>
   <string name="input_workaround_summ">Jalan sementara untuk masalah petak HTML. Berlaku pada beberapa peranti.</string>
   <string name="write_answers_message">Anda patut menyediakan jawapan dalam petak. Gunakan Anki Desktop untuk ini (deck properties -&gt; edit model -&gt; card layout).\n\nJika petak jawapan tidak diisi, jawapan ditulis akan dirujuk kepada jawapan semua kad.</string>
   <string name="pref_cardbrowser_skip_init_search">Fast Card Browser Open</string>
-  <string name="pref_cardbrowser_skip_init_search_summ">Skips initial automatic search when the card browser opens.</string>
+  <string name="pref_cardbrowser_skip_init_search_summ">Skips initial automatic search when the card browser opens or the deck is changed.</string>
   <string name="pref_keep_screen_on">Sentiasa Hidup Skrin</string>
   <string name="pref_keep_screen_on_summ">Menghalan skrin ditutup semasa reviu</string>
   <string name="pref_simple_interface">Simple Interface</string>
@@ -306,8 +273,6 @@
   <string name="deck_conf_cram_reschedule_summ">Reschedule cards based on my answers in this deck</string>
   <string name="deck_conf_cram_steps">Custom steps</string>
   <string name="deck_conf_cram_steps_summ">Define custom steps</string>
-  <string name="pref_show_splashscreen">Splash screen</string>
-  <string name="pref_show_splashscreen_summ">Show splash screen</string>
   <string name="pref_intent_add_instant">Instant add</string>
   <string name="pref_intent_add_instant_summ">Add new cards from dictionaries without opening AnkiDroid. You find them later under \'saved data\' in card adder.</string>
   <string name="pref_cat_intent_add">External data addition</string>

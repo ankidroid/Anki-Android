@@ -29,8 +29,8 @@ Materiál môžeš vkladať prostredníctvom počítačovej aplikácie Anki, ale
 • Pridávanie kariet z iných aplikácii, napr. slovníkov
 • podpora vlastného štýlu písma
 • úplné zálohovanie
-• ovládanie posunom, dotykom, zatrasením
-• plne prispôsobiteľné
+• navigation by swipe, tap
+• customisable
 • dynamické prispôsobovanie balíčkov
 • nočný režim
 • 27 lokalizácií

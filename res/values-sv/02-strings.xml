@@ -42,19 +42,20 @@
   <string name="CardEditorCancelButton">Avbryt</string>
   <string name="CardEditorSaveButton">Spara</string>
   <string name="CardEditorLaterButton">Senare</string>
-  <string name="CardEditorPreviewButton">Förhandsvisa</string>
   <string name="CardEditorLaterMessage">Sparad information för senare</string>
   <string name="CardEditorCardDeck">Kortlek: %s</string>
   <string name="CardEditorNoteDeck">Notkortlek: %s</string>
   <string name="CardEditorModel">Nottyp: %s</string>
   <string name="CardEditorTags">Etiketter: %1$s</string>
-  <string name="add_new_tag">Lägg till ny etikett</string>
+  <string name="add_new_filter_tags">Add/Filter tags</string>
   <string name="note_type">Nottyp</string>
   <string name="card_type">Korttyp</string>
+  <string name="filter_tags">Filter tags</string>
   <string name="sdcard_missing_message">SD-kortet är inte tillgängligt eftersom det används som USB-minne. Koppla ur USB:n för att komma åt din kortlek.</string>
   <string name="show_whiteboard">Aktivera whiteboard</string>
   <string name="hide_whiteboard">Stäng av whiteboard</string>
   <string name="clear_whiteboard">Rensa whiteboard</string>
+  <string name="replay_audio">Replay audio</string>
   <string name="cram_edit_warning">Kortredigering ej tillåten under råplugg</string>
   <string name="suspend_leeches">Åsidosätt utsugarkort</string>
   <string name="leech_suspend_notification">Markerat som utsugarkort och åsidosatt</string>
@@ -83,6 +84,7 @@
   <string name="card_editor_reset">Återställ</string>
   <string name="card_editor_copy_card">Kopiera kort</string>
   <string name="card_editor_reset_card">Nollställ kort</string>
+  <string name="card_editor_preview_card">Preview</string>
   <string name="error_insufficient_memory">Åtgärden är inte möjlig på grund av otillräckligt med minne på enheten.</string>
   <string name="tutorial_load">Skapar övningskortlek.\nVänligen vänta...</string>
   <string name="tutorial_loading_error">Övningskortlek kunde inte skapas</string>
@@ -134,11 +136,11 @@
     <item>Svar</item>
     <item>Kort</item>
     <item>Kortlek</item>
-    <item>Felsvar</item>
-    <item>Not</item>
-    <item>Fråga</item>
-    <item>Granskningar</item>
-    <item>Taggar</item>
+    <item>Note</item>
+    <item>Question</item>
+    <item>Tags</item>
+    <item>Lapses</item>
+    <item>Reviews</item>
   </string-array>
   <string-array name="dynOrderLabels">
     <item>Äldst först</item>

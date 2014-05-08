@@ -40,8 +40,6 @@
 -->
 <resources>
   <string name="pref_cat_collection">مجموعه</string>
-  <string name="pref_internal_memory">از حافظه داخلی استفاده کن</string>
-  <string name="pref_internal_memory_summ">مجموعه را در حافظه داحلی ذخیره کنید. البته این عمل توصیه نمی شود. زیرا به آسانی قادر به دستیابی  به فایل نخواهید بود</string>
   <string name="pref_cat_sync">همگامسازی</string>
   <string name="pref_cat_qadisplay">نمایش</string>
   <string name="pref_cat_general">عمومی</string>
@@ -53,7 +51,6 @@
   <string name="pref_cat_navigation">هدایت</string>
   <string name="pref_cat_swipe">حرکت جاروبی</string>
   <string name="pref_cat_navigation_sensitivity">حساسیت</string>
-  <string name="pref_cat_zoom">بزرگنمایی</string>
   <string name="pref_cat_zeemote">کنترل گوشی</string>
   <string name="pref_cat_reset">تنظیم مجدد</string>
   <string name="pref_cat_other">دیگر</string>
@@ -70,10 +67,7 @@
   <string name="show_study_options_on_deck_load_summ">گزینه های صفحه مطالعه را هنگام بارگذاری یک دسته نشان بده</string>
   <string name="hide_due_count">تعداد موعد مرور را پنهان کن</string>
   <string name="hide_due_count_summ">تعداد موعد مرور را پنهان کن</string>
-  <string name="show_progress_bars">نوار پیشرفت را نمایش بده</string>
-  <string name="show_progress_bars_summ">میزان پیشرفت و نسبت جوابهای بله امروز را هنگام مرور نشان بده</string>
-  <string name="fade_scrollbars">محو نوار پیمایش</string>
-  <string name="fade_scrollbars_summ">نوار پیمایش فلش کارت را در صورتیکه وجود ندارد بصورت خودکار به بیرون محوکن</string>
+  <string name="enable_whiteboard">Enable Whiteboard</string>
   <string name="show_whiteboard_summ">امکان نوشتن بر روی صفحه نمایش</string>
   <string name="whiteboard_stroke_width">روی عرض تخته سفید دست بکشید</string>
   <string name="whiteboard_stroke_width_summ">عرض محل دست کشیدن: XXX</string>
@@ -81,24 +75,13 @@
   <string name="whiteboard_black_summ">از متن سیاه و سفید به جای رنگی استفاده کنید (دستگاههایی که حافظه کمی داشته باشند در حالت شب کار نخواهند کرد) </string>
   <string name="write_answers">نوشتن پاسخ ها</string>
   <string name="write_answers_summ">به شما امکان نوشتن پاسخ و مقایسه آن با یک صحیح را می دهد</string>
-  <string name="text_selection">امکان انتخاب متن</string>
-  <string name="text_selection_summ">به منظور انجام جستجو در یک لغت نامه خارجی امکان انتخاب و کپی آن به حافظه موقت را می دهد(از طریق منو یا کلیک طولانی) </string>
   <string name="text_selection_click">برای حل مشکل کلیک طولانی کنید</string>
   <string name="text_selection_click_summ">اگر از طریق کلیک طولانی نمی توانید متن را انتخاب کنید این را انجام دهید</string>
   <string name="dictionary">لغت نامه</string>
   <string name="dictionary_summ">لغت نامه ای که جستجو باید از آن انجام شود: XXX</string>
   <string name="reset_languages">بازیابی زبانها</string>
   <string name="reset_languages_summ">بازیابی زبان فعلی(برای تبدیل متن به گفتار و همه لغت نامه ها) برای همه دسته ها. بازیابی مخصوص دسته ویژه فعلی روی جمع کننده دسته</string>
-  <string name="reset_all">تنظیم مجدد همه</string>
-  <string name="reset_all_summ">تنظیم مجدد  زبان، ویجت، تخته سفید و حالات لغت نامه </string>
-  <string name="reset_dialogs">تنظیم مجدد گفتگوها</string>
-  <string name="reset_dialogs_question">همه گفتگوها را دوباره تنظیم می کنید؟</string>
-  <string name="reset_dialogs_summ">تنظیم مجدد همه گفتگوهایی که قرار نیست دوباره نشان داده شوند</string>
   <string name="reset_languages_question">کل زبان فعلی را دوباره تنظیم می کنید؟</string>
-  <string name="reset_messages">تنظیم مجدد پیام ها</string>
-  <string name="reset_messages_question">پیام جاری دوباره نشان داده شود؟</string>
-  <string name="reset_messages_summ">یکبار دیگر پیامهای جاری آنکی دروید نشان داده شود</string>
-  <string name="reset_all_question">کل زبان، ویجت، تخنه سفید و توضیحات لغت نامه دوباره تنظیم شود؟</string>
   <string name="reset_confirmation">تنظیم مجدد تمام توضیحات</string>
   <string name="use_ruby_support">ارائه پشتیبانی های حاشیه ای سرخ</string>
   <string name="use_ruby_support_summ">اگر حرف \'[\' و \']\'پیدا شد, پس متن ضمیمه شده به عنوان حاشیته نویسی می باشد</string>
@@ -114,8 +97,6 @@
   <string name="col_path_summ">مسیر که در آن مجموعه شما ذخیره شده است</string>
   <string name="fullscreen_review">مرور در حالت تمام صفحه</string>
   <string name="fullscreen_review_summ">شما می توانید در هنگام مرور کارت تصمیم بگیرید که از همه فضای صفحه نمایش در دسترس استفاده کنید</string>
-  <string name="zoom">فعال کردن بزرگنمایی</string>
-  <string name="zoom_summ">نمایش ابزار بزرگنمایی هنگام مرور</string>
   <string name="zeemote">پشتیبانی از ابزار کنترل از راه دور برای گوشی های همراه</string>
   <string name="zeemote_summ">استفاده از ابزار کنترل از راه دور گوشیها برای هدایت مرورها.</string>
   <string name="zeemote_actions">عملکرد ابزار کنترل از راه دور گوشیهای همراه در مرورگر</string>
@@ -133,7 +114,6 @@
   <string name="swipe_summ_off">حرکات را برای سوئیچ بین صفحه نمایش و جواب کارت استفاده کنید. این گزینه با کنترل های زوم سازگار نیست</string>
   <string name="swipe_summ_on">برای جابجایی بین صفحات بطور افقی ضربه بزنید. دیگر اقدامات زیر را پیکربندی کنید</string>
   <string name="pref_cat_actions">اقدامات</string>
-  <string name="gestures_shake">لرزش</string>
   <string name="gestures_swipe_up">ضربه به سمت بالا</string>
   <string name="gestures_swipe_down">ضربه به سمت پایین</string>
   <string name="gestures_swipe_left">ضربه سمت چپ</string>
@@ -155,8 +135,6 @@
   <string name="tts_summ">اگر هیچ فایل صدایی نبود پرسش و پاسخ را بخوان</string>
   <string name="play_sounds_at_start">فورا صداها را پخش کن</string>
   <string name="play_sounds_at_start_summ">بعداز نمایش یک پرسش/پاسخ فورا صداها را پخش کن</string>
-  <string name="shake_intensity">آستانه لرزش</string>
-  <string name="shake_intensity_summ">شناسایی آستانه لرزش: XXX</string>
   <string name="sync_fetch_missing_media">آوردن رسانه ها در همگام سازی</string>
   <string name="sync_fetch_missing_media_summ">هنگام همگام سازی، بطور خودکار رسانه گم شده را بیاور.</string>
   <string name="sync_account">حساب کاربری آنکی وب</string>
@@ -179,10 +157,6 @@
   <string name="timeout_question_seconds">چند ثانیه قبل پرسش بعدی نشان داده شده است</string>
   <string name="select_locale_title">زبان را انتخاب کنید</string>
   <string name="select_theme">پوسته</string>
-  <string name="theme_animations">جلوه های حرکتی</string>
-  <string name="theme_animations_summ">هنگام چرخش کارتها جلوه های حرکتی را نشان بده</string>
-  <string name="animation_speed">مدت جلوه های حرکتی</string>
-  <string name="animation_speed_summ">مدت تغییر جلوه های حرکتی: XXX ms</string>
   <string name="eink_display">بهینه سازی نمایش رنگ قلم</string>
   <string name="eink_display_summ">تمام جلوه های حرکتی را غیر فعال کن و برخی از آنها را برای نمایش رنگ قلم بهینه سازی کن</string>
   <string name="vertical_centering">مرکز محتوای کارت عمودی</string>
@@ -219,21 +193,14 @@
   <string name="filter_google_translate_summ">اکنون کلمه اصلی و ترجمه را ذخیره کنید</string>
   <string name="convert_fen_text_summ">برای ثبت حرکات شطرنج صفحه شطرنج را بکشید. ثبت حرکات شطرنج باید برچسب گذاری شوند با [fen][/fen].</string>
   <string name="sync_set_journal_mode">تنظیم حالت صحیح مجله...</string>
-  <string name="async_mode">همگامسازی خاموش</string>
-  <string name="async_mode_summ">این سرعت برای آنکی دروید بالا است و می تواند هنگام خطای سیستم اندروید موجب خرابی پایگاه داده اطلاعات شود.از نسخه های پشتیبان استفاده نمایید</string>
-  <string name="async_mode_message">آگاه باشید که این گزینه از ایمنی کمتری برخوردار است و می تواند هنگام خطای اندروید موجب خرابی دسته شود (به عنوان مثال به موعد مرور به علت کمبود نیرو مراجعه شود).\nIt is بیشترین توصیه این است که اگراین گزینه تنظیم شده است از نسخه های پشتیبان استفاده کنید. \n آیا به هر صورت آن را فعال می کنید؟</string>
-  <string name="fix_orientation">تعمیر جهت یابی</string>
-  <string name="fix_orientation_summ">در هنگام مرور تغییر جهت مجاز نیست</string>
   <string name="per_day">در هر روز</string>
   <string name="studyoptions_new_cards_per_day">کارت های جدید در هر روز</string>
   <string name="studyoptions_max_fail_card">حداکثر کارتهای خراب</string>
-  <string name="show_broadcast_messages">نمایش پیام های فعلی</string>
-  <string name="show_broadcast_messages_summ">نمایش اطلاع رسانی آنکی دروید مانند به روز رسانی نسخه جدید یا اخبار مهم دیگر</string>
   <string name="input_workaround">راهحل ورودی</string>
   <string name="input_workaround_summ">راه حلی برای مشکلات کانونی در جعبه های وروی اچ تی ام ال.علتهای مشکلات در چندین دستگاه.</string>
   <string name="write_answers_message">شما باید برای هر دسته یک فیلد جهت مقایسه پاسخ نوشتاری تعریف کنید. برای انجام این کار می توایند از نرم افزار رایانه استفاده نمایید (خواص دسته -&gt; ویرایش الگو -&gt; لایه کارت).\n\nاگر نتوانستید فیلد مقایسه را تنظیم کنید, پاسخ نوشتاری شما همیشه با مرورگر کارت مقایسه خواهد شد.</string>
   <string name="pref_cardbrowser_skip_init_search">مرورگر کارت سریع باز شود</string>
-  <string name="pref_cardbrowser_skip_init_search_summ">وقتی مرورگر کارت باز است جستجوی خودکار اولیه را نادیده بگیر.</string>
+  <string name="pref_cardbrowser_skip_init_search_summ">Skips initial automatic search when the card browser opens or the deck is changed.</string>
   <string name="pref_keep_screen_on">روشن نگه داشتن صفحه نمایش</string>
   <string name="pref_keep_screen_on_summ">جلوگیری از خاموش شدن صفحه نمایش هنگام بازبینی</string>
   <string name="pref_simple_interface">رابط کاربری ساده</string>
@@ -306,8 +273,6 @@
   <string name="deck_conf_cram_reschedule_summ">برنامه ریزی مجدد کارتها براساس جوابهای من در این دسته</string>
   <string name="deck_conf_cram_steps">مراحل سفارشی</string>
   <string name="deck_conf_cram_steps_summ">تعریف مراحل سفارشی</string>
-  <string name="pref_show_splashscreen">صفحه نمایش اعوجاج</string>
-  <string name="pref_show_splashscreen_summ">نمایش صفحه نمایش اعوجاج</string>
   <string name="pref_intent_add_instant">اضافه کردن فوری</string>
   <string name="pref_intent_add_instant_summ">بدون اینکه آنکی دروید را بازکنید کارتهای جدید را از واژه نامه اضافه نمایید. آنها را بعدا بیابید در زیر \'داده ذخیره شده\' در افزایشگر کارت.</string>
   <string name="pref_cat_intent_add">اضافه کردن داده های خارجی</string>

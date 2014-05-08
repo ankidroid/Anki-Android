@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">Total de Cartões:</string>
   <string name="studyoptions_eta">Tempo estimado (min):</string>
   <string name="studyoptions_start">Study Now</string>
+  <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">Mostrar Resposta</string>
   <string name="ease1_successive">Novamente</string>
   <string name="ease2_successive">Difícil</string>
@@ -63,7 +64,7 @@
   <string name="card_unsuspended">Suspensão de cartão anulada</string>
   <string name="card_suspended">Cartão novamente suspendido</string>
   <string name="menu_rotate">Rodar</string>
-  <string name="menu_import">Importar cartões</string>
+  <string name="menu_import">Import file</string>
   <string name="undo">Anular</string>
   <string name="undo_action_review">rever</string>
   <string name="undo_action_edit">Editar nota</string>
@@ -82,6 +83,8 @@
   <string name="contextmenu_deckpicker_collapse_deck">Hide Subdecks</string>
   <string name="contextmenu_deckpicker_inflate_deck">Show Subdecks</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Definir dicionário personalizado</string>
+  <string name="menu_add">Add</string>
+  <string name="menu_add_note">Add note</string>
   <string name="menu_download_deck">Baixar baralho</string>
   <string name="menu_download_shared_deck">Deck compartilhado</string>
   <string name="menu_my_account">Sincronização de conta</string>
@@ -99,9 +102,9 @@
   <string name="menu_search">Pesquisar em %1$s</string>
   <string name="menu_mark_card">Marcar Cartão</string>
   <string name="menu_unmark_card">Desmarcar Cartão</string>
-  <string name="new_deck">Novo baralho</string>
+  <string name="new_deck">Create deck</string>
   <string name="create">Criar</string>
-  <string name="new_dynamic_deck">Novo baralho filtrado</string>
+  <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">Comentários</string>
   <string name="studyoptions_load_tutorial_deck">Criar tutorial</string>
   <string name="night_mode">Modo noturno</string>

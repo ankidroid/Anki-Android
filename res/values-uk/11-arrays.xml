@@ -112,7 +112,6 @@
   <string-array name="leech_action_labels">
     <item>Відкласти картку</item>
     <item>Тільки мітки</item>
-    <item>Скинути до нової</item>
   </string-array>
   <string-array name="new_order_labels">
     <item>Нові картки у випадковому порядку</item>

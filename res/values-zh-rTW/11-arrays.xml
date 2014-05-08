@@ -112,7 +112,6 @@
   <string-array name="leech_action_labels">
     <item>長久擱置卡片</item>
     <item>僅標記</item>
-    <item>重設為新卡片</item>
   </string-array>
   <string-array name="new_order_labels">
     <item>按隨機順序學習新卡片</item>

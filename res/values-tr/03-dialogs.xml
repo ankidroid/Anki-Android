@@ -121,6 +121,5 @@
     <item><![CDATA[AnkiDroid <a href="%1$s">açık kaynaklı bir yazılımdır<a/>, bu yüzden herkesin <a href="%3$s">katkı yapanlar listesine</a> <a href="%2$s">katılmasını</a> dileriz. :-)]]></item>
     <item><![CDATA[Programcı olmayanlar da örneğin AnkiDroid\'i <a href="%1$s">çevirerek</a>, vikiyi ve ekran görüntülerini güncelleyerek, Anki Masaüstüne <a href="%2$s">bağış yaparak</a>, veya AnkiDroid hakkında bloglayarak yardımcı olabilir!]]></item>
     <item><![CDATA[AnkiDroid <a href="%1$s">GNU-GPL 3 lisansı</a> altında yayınlanır ve kaynak kodu <a href="%2$s">burada</a> mevcuttur.]]></item>
-    <item><![CDATA[Bu paket <a href="http://www.csse.monash.edu.au/~jwb/edict.html">EDICT</a> ve <a href="http://www.csse.monash.edu.au/~jwb/kanjidic.html">KANJIDIC</a> sözlük dosyalarını kullanıyor. Bu dosyalar <a href="http://www.edrdg.org">Elektronik Sözlük Araştırma ve Geliştirme Grubu</a>\'nun malıdır, ve grubun <a href="http://www.edrdg.org/edrdg/licence.html">lisans</a>ına uygun şekilde kullanılmaktadır.]]></item>
   </string-array>
 </resources>

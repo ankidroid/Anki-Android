@@ -42,19 +42,20 @@
   <string name="CardEditorCancelButton">取消</string>
   <string name="CardEditorSaveButton">保存</string>
   <string name="CardEditorLaterButton">稍后</string>
-  <string name="CardEditorPreviewButton">预览</string>
   <string name="CardEditorLaterMessage">保存的信息</string>
   <string name="CardEditorCardDeck">卡牌所属牌组：%s</string>
   <string name="CardEditorNoteDeck">卡牌记录所属牌组：%s</string>
   <string name="CardEditorModel">卡牌记录类型:%s</string>
   <string name="CardEditorTags">标签: %1$s</string>
-  <string name="add_new_tag">添加新标签</string>
+  <string name="add_new_filter_tags">Add/Filter tags</string>
   <string name="note_type">卡牌记录类型</string>
   <string name="card_type">卡牌类型</string>
+  <string name="filter_tags">Filter tags</string>
   <string name="sdcard_missing_message">SD卡暂时不可用，因为当前正作为USB存储设备。拔掉USB之后即可访问你的牌组。</string>
   <string name="show_whiteboard">显示计时器/白板</string>
   <string name="hide_whiteboard">隐藏白板</string>
   <string name="clear_whiteboard">清除白板</string>
+  <string name="replay_audio">Replay audio</string>
   <string name="cram_edit_warning">强记模式不允许编辑卡牌</string>
   <string name="suspend_leeches">不要复习记忆难点</string>
   <string name="leech_suspend_notification">卡牌被标记为记忆难点并暂停复习</string>
@@ -83,6 +84,7 @@
   <string name="card_editor_reset">复原</string>
   <string name="card_editor_copy_card">复制卡牌</string>
   <string name="card_editor_reset_card">清空学习记录</string>
+  <string name="card_editor_preview_card">Preview</string>
   <string name="error_insufficient_memory">由于设备内存不足导致操作无法完成。</string>
   <string name="tutorial_load">创建教学牌组。\n请等待...</string>
   <string name="tutorial_loading_error">无法创建教程词库。</string>
@@ -134,11 +136,11 @@
     <item>答案</item>
     <item>卡牌</item>
     <item>牌组</item>
-    <item>失误</item>
-    <item>注释</item>
-    <item>问题</item>
-    <item>复习</item>
-    <item>标签</item>
+    <item>Note</item>
+    <item>Question</item>
+    <item>Tags</item>
+    <item>Lapses</item>
+    <item>Reviews</item>
   </string-array>
   <string-array name="dynOrderLabels">
     <item>优先显示老卡牌</item>

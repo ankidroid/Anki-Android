@@ -42,19 +42,20 @@
   <string name="CardEditorCancelButton">Prekliči</string>
   <string name="CardEditorSaveButton">Shrani</string>
   <string name="CardEditorLaterButton">Pozneje</string>
-  <string name="CardEditorPreviewButton">Preview</string>
   <string name="CardEditorLaterMessage">Informacija shranjena za pozneje</string>
   <string name="CardEditorCardDeck">Komplet kartic: %s</string>
   <string name="CardEditorNoteDeck">Komplet zapiskov: %s</string>
   <string name="CardEditorModel">Vrsta zapiska: %s</string>
   <string name="CardEditorTags">Oznake: %1$s</string>
-  <string name="add_new_tag">Dodaj novo oznako</string>
+  <string name="add_new_filter_tags">Add/Filter tags</string>
   <string name="note_type">Vrsta zapiska</string>
   <string name="card_type">Card type</string>
+  <string name="filter_tags">Filter tags</string>
   <string name="sdcard_missing_message">Spominska SD kartica ni dostopna, ker se trenutno uporablja kot disk USB. Odstranite povezavo USB za dostop do vaših kompletov.</string>
   <string name="show_whiteboard">Prikaži tablo</string>
   <string name="hide_whiteboard">Skrij tablo</string>
   <string name="clear_whiteboard">Počisti tablo</string>
+  <string name="replay_audio">Replay audio</string>
   <string name="cram_edit_warning">Card editing not allowed while cramming</string>
   <string name="suspend_leeches">Suspend Leeches</string>
   <string name="leech_suspend_notification">Card marked as leech and suspended</string>
@@ -83,6 +84,7 @@
   <string name="card_editor_reset">Ponastavi</string>
   <string name="card_editor_copy_card">Kopiraj kartico</string>
   <string name="card_editor_reset_card">Ponastavi napredek</string>
+  <string name="card_editor_preview_card">Preview</string>
   <string name="error_insufficient_memory">Opravila ni mogoče izvesti, ker je na napravi na voljo premalo pomnilnika</string>
   <string name="tutorial_load">Creating tutorial deck.\nPlease wait...</string>
   <string name="tutorial_loading_error">Tutorial deck could not be created</string>
@@ -134,11 +136,11 @@
     <item>Answer</item>
     <item>Card</item>
     <item>Deck</item>
-    <item>Lapses</item>
     <item>Note</item>
     <item>Question</item>
-    <item>Reviews</item>
     <item>Tags</item>
+    <item>Lapses</item>
+    <item>Reviews</item>
   </string-array>
   <string-array name="dynOrderLabels">
     <item>Oldest seen first</item>

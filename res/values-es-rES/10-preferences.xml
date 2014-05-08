@@ -40,8 +40,6 @@
 -->
 <resources>
   <string name="pref_cat_collection">Collection</string>
-  <string name="pref_internal_memory">Utilizar la memoria interna</string>
-  <string name="pref_internal_memory_summ">Almacenar colección en memoria interna. No es recomendable, ya que dificulta el acceso a la colección</string>
   <string name="pref_cat_sync">Sincronización</string>
   <string name="pref_cat_qadisplay">Visualización de pregunta y respuesta</string>
   <string name="pref_cat_general">General</string>
@@ -53,7 +51,6 @@
   <string name="pref_cat_navigation">Navegación</string>
   <string name="pref_cat_swipe">Gestos</string>
   <string name="pref_cat_navigation_sensitivity">Sensibilidad</string>
-  <string name="pref_cat_zoom">Zoom</string>
   <string name="pref_cat_zeemote">Zeemote</string>
   <string name="pref_cat_reset">Restablecimiento</string>
   <string name="pref_cat_other">Otras opciones</string>
@@ -70,10 +67,7 @@
   <string name="show_study_options_on_deck_load_summ">Mostrar opciones de estudio al cargar un mazo</string>
   <string name="hide_due_count">Ocultar cuenta de programadas</string>
   <string name="hide_due_count_summ">Oculta la cuenta de programadas</string>
-  <string name="show_progress_bars">Mostrar barras de progreso</string>
-  <string name="show_progress_bars_summ">Muestra el progreso de hoy y la proporción de respuestas correctas de hoy mientras se repasa.</string>
-  <string name="fade_scrollbars">Ocultar las barras de desplazamiento</string>
-  <string name="fade_scrollbars_summ">Ocultar automáticamente las barras de desplazamiento en las tarjetas cuando no hay desplazamiento</string>
+  <string name="enable_whiteboard">Enable Whiteboard</string>
   <string name="show_whiteboard_summ">Te permite escribir en la pantalla</string>
   <string name="whiteboard_stroke_width">Ancho del trazo en la pizarra</string>
   <string name="whiteboard_stroke_width_summ">Ancho del trazo: XXX</string>
@@ -81,24 +75,13 @@
   <string name="whiteboard_black_summ">Utilizar monocromo en lugar de un trazo coloreado (para dispositivos con menor memoria, no funciona en el modo noche)</string>
   <string name="write_answers">Escribir respuestas</string>
   <string name="write_answers_summ">Te permite escribir la respuesta y compararla con la solución correcta</string>
-  <string name="text_selection">Permitir la selección de texto</string>
-  <string name="text_selection_summ">Te permite seleccionar y copiar el texto de las tarjetas (mediante el menú o un clic largo) para realizar búsquedas en un diccionario externo</string>
   <string name="text_selection_click">Solución para el click largo</string>
   <string name="text_selection_click_summ">Activa esta opción si no eres capaz de iniciar la selección de texto mediante un clic largo</string>
   <string name="dictionary">Diccionario</string>
   <string name="dictionary_summ">Diccionario en el que realizar las consultas: XXX</string>
   <string name="reset_languages">Restablecer Idiomas</string>
   <string name="reset_languages_summ">Restablece las asignaciones de idioma (para texto a voz y diccionarios) para todos los mazos. Para restablecer asignaciones individualmente, hazlo desde el selector de mazos</string>
-  <string name="reset_all">Restablecer todo</string>
-  <string name="reset_all_summ">Restablecer los estados de idiomas, widget, pizarra y diccionarios</string>
-  <string name="reset_dialogs">Restablecer cuadros de diálogo</string>
-  <string name="reset_dialogs_question">¿Restablecer todos los cuadros de diálogo?</string>
-  <string name="reset_dialogs_summ">Restablecer todos los cuadros de diálogo establecidos para no mostrar de nuevo</string>
   <string name="reset_languages_question">¿Restablecer todas las asignaciones de idiomas?</string>
-  <string name="reset_messages">Restablecer Mensajes</string>
-  <string name="reset_messages_question">¿Mostrar mensajes actuales de nuevo?</string>
-  <string name="reset_messages_summ">Mostrar los mensajes actuales de AnkiDroid otra vez</string>
-  <string name="reset_all_question">¿Restablecer todos los estados de idiomas, widget, pizarra y diccionarios?</string>
   <string name="reset_confirmation">Restablecer todos los estados</string>
   <string name="use_ruby_support">Soporte para anotacion ruby</string>
   <string name="use_ruby_support_summ">En caso de encontrarse los caracteres \'[\' y \']\', el texto es tratado como una anotación Ruby</string>
@@ -114,8 +97,6 @@
   <string name="col_path_summ">Ruta de acceso donde se almacena tu colección</string>
   <string name="fullscreen_review">Pantalla completa</string>
   <string name="fullscreen_review_summ">Usa todo el espacio disponible de la pantalla durante el repaso</string>
-  <string name="zoom">Habilitar Zoom</string>
-  <string name="zoom_summ">Mostrar controles de zoom durante el repaso</string>
   <string name="zeemote">Soporte para Zeemote JS1</string>
   <string name="zeemote_summ">Utiliza el controlador Zeemote JS1 para navegar por los repasos.</string>
   <string name="zeemote_actions">Acciones de Zeemote en la pantalla de repaso</string>
@@ -133,7 +114,6 @@
   <string name="swipe_summ_off">Usa gestos para moverte entre las pantallas y responder tarjetas. Esta opción es incompatible con los controles de zoom</string>
   <string name="swipe_summ_on">Desliza el dedo horizontalmente para alternar entre pantallas. Debajo puedes configurar otras acciones</string>
   <string name="pref_cat_actions">Acciones</string>
-  <string name="gestures_shake">Agitar</string>
   <string name="gestures_swipe_up">Deslizar hacia arriba</string>
   <string name="gestures_swipe_down">Deslizar hacia abajo</string>
   <string name="gestures_swipe_left">Deslizar hacia la izquierda</string>
@@ -155,8 +135,6 @@
   <string name="tts_summ">Lee en voz alta las preguntas y las respuestas si no hay ningún archivo de sonido incluido</string>
   <string name="play_sounds_at_start">Reproducir Sonidos Inmediatamente</string>
   <string name="play_sounds_at_start_summ">Reproduce los sonidos inmediatamente al mostrar una pregunta/respuesta</string>
-  <string name="shake_intensity">Umbral para el Agitado</string>
-  <string name="shake_intensity_summ">Umbral de reconocimiento para el agitado: XXX</string>
   <string name="sync_fetch_missing_media">Buscar archivos multimedia al sincronizar</string>
   <string name="sync_fetch_missing_media_summ">Buscar automáticamente archivos multimedia faltantes al sincronizar.</string>
   <string name="sync_account">AnkiWeb account</string>
@@ -179,10 +157,6 @@
   <string name="timeout_question_seconds">Segundos antes de que se muestre la siguiente pregunta</string>
   <string name="select_locale_title">Seleccione Idioma</string>
   <string name="select_theme">Tema</string>
-  <string name="theme_animations">Animaciones</string>
-  <string name="theme_animations_summ">Mostrar animaciones al voltear tarjetas</string>
-  <string name="animation_speed">Duración de la Animación</string>
-  <string name="animation_speed_summ">Duración de las animaciones de transición: XXX ms</string>
   <string name="eink_display">Optimización para Pantalla E-Ink</string>
   <string name="eink_display_summ">Deshabilitar todas las animaciones y hacer algo de optimización para Pantallas E-Ink</string>
   <string name="vertical_centering">Center card content vertically</string>
@@ -219,21 +193,14 @@
   <string name="filter_google_translate_summ">Guardar solamente la traducción y la palabra de origen</string>
   <string name="convert_fen_text_summ">Tablero de dibujo de la Notación Forsyth Edwards. La notación debe escribirse entre las etiquetas [fen][/fen].</string>
   <string name="sync_set_journal_mode">Implementando el modo \'journal\' correcto...</string>
-  <string name="async_mode">Síncrono desactivado</string>
-  <string name="async_mode_summ">Esto acelera el rendimiento de AnkiDroid pero puede dañar las bases de datos si el sistema Android sufre un bloqueo general. Por lo tanto, asegúrate de utilizar copias de seguridad</string>
-  <string name="async_mode_message">Ten en cuenta que esta opción es menos segura y puede causar la corrupción de los mazos en caso de bloquearse Android (por ejemplo, debido a la escasez de energía).\nEs MUY recomendable utilizar el sistema de copia de seguridad si esta opción está activada.\n¿Activar de todos modos?</string>
-  <string name="fix_orientation">Fijar la orientación</string>
-  <string name="fix_orientation_summ">No permitir el cambio de orientación al repasar</string>
   <string name="per_day">Por Día</string>
   <string name="studyoptions_new_cards_per_day">Tarjetas nuevas por día</string>
   <string name="studyoptions_max_fail_card">Max tarjetas falladas</string>
-  <string name="show_broadcast_messages">Mostrar Mensajes Actuales</string>
-  <string name="show_broadcast_messages_summ">Mostrar notificaciones de AnkiDroid, como nuevas versiones u otras noticias importantes</string>
   <string name="input_workaround">Solución para Entrada</string>
   <string name="input_workaround_summ">Solución para atajar los problemas en cajas de texto HTML. Causa problemas en varios dispositivos.</string>
   <string name="write_answers_message">Debes definir un campo en cada mazo para comparar con la respuesta escrita. Puedes hacerlo a través de Anki versión escritorio (Propiedades del mazo - &gt; Editar modelo - &gt; Formato de tarjeta).\n\nSi no se establece ningún campo de comparación, siempre se comparará tu respuesta por escrito con la respuesta de la tarjeta al completo.</string>
   <string name="pref_cardbrowser_skip_init_search">Apertura Rápida del Explorador</string>
-  <string name="pref_cardbrowser_skip_init_search_summ">Se salta la búsqueda automática inicial cuando el explorador es abierto.</string>
+  <string name="pref_cardbrowser_skip_init_search_summ">Skips initial automatic search when the card browser opens or the deck is changed.</string>
   <string name="pref_keep_screen_on">Mantener encendida la pantalla</string>
   <string name="pref_keep_screen_on_summ">Impedir que la pantalla se apague mientras estás repasando</string>
   <string name="pref_simple_interface">Interfaz sencilla</string>
@@ -306,8 +273,6 @@
   <string name="deck_conf_cram_reschedule_summ">Reprogramar tarjetas en base a mis respuestas en este mazo</string>
   <string name="deck_conf_cram_steps">Pasos personalizados</string>
   <string name="deck_conf_cram_steps_summ">Definir pasos personalizados</string>
-  <string name="pref_show_splashscreen">Pantalla de bienvenida</string>
-  <string name="pref_show_splashscreen_summ">Mostrar pantalla de bienvenida</string>
   <string name="pref_intent_add_instant">Adición instantánea</string>
   <string name="pref_intent_add_instant_summ">Añadir nuevas tarjetas desde diccionarios sin abrir AnkiDroid. Las encontrarás más tarde en \'datos guardados\', en la pantalla Añadir Tarjetas.</string>
   <string name="pref_cat_intent_add">Adición de datos externos</string>

@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">Karten gesamt:</string>
   <string name="studyoptions_eta">Geschätzte Zeit (Min.):</string>
   <string name="studyoptions_start">Jetzt lernen</string>
+  <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">Antwort anzeigen</string>
   <string name="ease1_successive">Nochmal</string>
   <string name="ease2_successive">Schwer</string>
@@ -63,7 +64,7 @@
   <string name="card_unsuspended">Aussetzen rückgängig gemacht</string>
   <string name="card_suspended">Karte wieder ausgesetzt</string>
   <string name="menu_rotate">Drehen</string>
-  <string name="menu_import">Karten importieren</string>
+  <string name="menu_import">Import file</string>
   <string name="undo">Rückgängig machen</string>
   <string name="undo_action_review">Lernen</string>
   <string name="undo_action_edit">Notiz bearbeiten</string>
@@ -82,6 +83,8 @@
   <string name="contextmenu_deckpicker_collapse_deck">Unterstapel verstecken</string>
   <string name="contextmenu_deckpicker_inflate_deck">Unterstapel anzeigen</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Eigenes Wörterbuch festlegen</string>
+  <string name="menu_add">Add</string>
+  <string name="menu_add_note">Add note</string>
   <string name="menu_download_deck">Stapel herunterladen</string>
   <string name="menu_download_shared_deck">Öffentlicher Stapel</string>
   <string name="menu_my_account">Synchronisierungskonto</string>
@@ -99,9 +102,9 @@
   <string name="menu_search">In %1$s nachschlagen</string>
   <string name="menu_mark_card">Karte markieren</string>
   <string name="menu_unmark_card">Markierung entfernen</string>
-  <string name="new_deck">Neuer Stapel</string>
+  <string name="new_deck">Create deck</string>
   <string name="create">Erstellen</string>
-  <string name="new_dynamic_deck">Neuer gefilterter Stapel</string>
+  <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">Feedback</string>
   <string name="studyoptions_load_tutorial_deck">Einführungsstapel erstellen</string>
   <string name="night_mode">Nachtmodus</string>

@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">Total kartu:</string>
   <string name="studyoptions_eta">Perkiraan waktu (menit):</string>
   <string name="studyoptions_start">Study Now</string>
+  <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">Tampilkan jawaban</string>
   <string name="ease1_successive">Ulang</string>
   <string name="ease2_successive">Susah</string>
@@ -63,7 +64,7 @@
   <string name="card_unsuspended">Kad tergantung dibatal</string>
   <string name="card_suspended">Kad digantung</string>
   <string name="menu_rotate">Pusing</string>
-  <string name="menu_import">Impor kartu</string>
+  <string name="menu_import">Import file</string>
   <string name="undo">Membatalkan</string>
   <string name="undo_action_review">tinjau ulang</string>
   <string name="undo_action_edit">ubah catatan</string>
@@ -82,6 +83,8 @@
   <string name="contextmenu_deckpicker_collapse_deck">Hide Subdecks</string>
   <string name="contextmenu_deckpicker_inflate_deck">Show Subdecks</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Tetapkan kamus sendiri</string>
+  <string name="menu_add">Add</string>
+  <string name="menu_add_note">Add note</string>
   <string name="menu_download_deck">Muat turun dek</string>
   <string name="menu_download_shared_deck">Dek kongsi</string>
   <string name="menu_my_account">Sync account</string>
@@ -99,9 +102,9 @@
   <string name="menu_search">Pencarian di %1$s</string>
   <string name="menu_mark_card">Tanda Kad</string>
   <string name="menu_unmark_card">Unmark Card</string>
-  <string name="new_deck">Deck baru</string>
+  <string name="new_deck">Create deck</string>
   <string name="create">Membuat</string>
-  <string name="new_dynamic_deck">New filtered deck</string>
+  <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">Maklum balas</string>
   <string name="studyoptions_load_tutorial_deck">Membuat tutorial</string>
   <string name="night_mode">Mode malam</string>

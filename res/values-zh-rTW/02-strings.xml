@@ -42,19 +42,20 @@
   <string name="CardEditorCancelButton">取消</string>
   <string name="CardEditorSaveButton">儲存</string>
   <string name="CardEditorLaterButton">稍後</string>
-  <string name="CardEditorPreviewButton">預覽</string>
   <string name="CardEditorLaterMessage">封存的資訊</string>
   <string name="CardEditorCardDeck">卡片牌組： %s</string>
   <string name="CardEditorNoteDeck">筆記牌組： %s</string>
   <string name="CardEditorModel">筆記類型： %s</string>
   <string name="CardEditorTags">標籤: %1$s</string>
-  <string name="add_new_tag">新增標籤</string>
+  <string name="add_new_filter_tags">Add/Filter tags</string>
   <string name="note_type">筆記類型</string>
   <string name="card_type">卡片種類</string>
+  <string name="filter_tags">Filter tags</string>
   <string name="sdcard_missing_message">SD記憶卡目前正在當隨身碟存取中，因此無法使用。拔除USB之後即可使用。</string>
   <string name="show_whiteboard">顯示白板</string>
   <string name="hide_whiteboard">隱藏白板</string>
   <string name="clear_whiteboard">清除白板</string>
+  <string name="replay_audio">Replay audio</string>
   <string name="cram_edit_warning">惡補時無法編輯卡片</string>
   <string name="suspend_leeches">長久擱置榨時卡</string>
   <string name="leech_suspend_notification">卡片已擱置，同時標為榨時卡</string>
@@ -83,6 +84,7 @@
   <string name="card_editor_reset">重設</string>
   <string name="card_editor_copy_card">複製卡片</string>
   <string name="card_editor_reset_card">重設卡片進度</string>
+  <string name="card_editor_preview_card">Preview</string>
   <string name="error_insufficient_memory">因為裝置上沒有足夠的記憶體所以不能執行您要求的操作</string>
   <string name="tutorial_load">建立教學用的牌組中\n請稍後...</string>
   <string name="tutorial_loading_error">無法建立教學用的牌組</string>
@@ -134,11 +136,11 @@
     <item>Answer</item>
     <item>Card</item>
     <item>Deck</item>
-    <item>Lapses</item>
     <item>Note</item>
     <item>Question</item>
-    <item>Reviews</item>
     <item>Tags</item>
+    <item>Lapses</item>
+    <item>Reviews</item>
   </string-array>
   <string-array name="dynOrderLabels">
     <item>舊卡先出現</item>

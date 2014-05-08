@@ -112,7 +112,6 @@
   <string-array name="leech_action_labels">
     <item>暂停卡牌</item>
     <item>仅标签</item>
-    <item>重置为新</item>
   </string-array>
   <string-array name="new_order_labels">
     <item>按随机顺序学习新卡牌</item>

@@ -29,8 +29,8 @@ Dodawanie materiału za pomocą desktopowego programu Anki lub bezpośrednio w A
 • dodawanie kart za pomocą intentów z innych aplikacji, np. słowników
 • obsługa czcionek użytkownika
 • system kopii zapasowych
-• nawigacja poprzez gesty, kliknięcia oraz potrząsanie
-• w pełni konfigurowalny
+• navigation by swipe, tap
+• customisable
 • dynamiczna obsługa talii
 • tryb nocny
 • 27 wersji językowych

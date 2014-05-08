@@ -42,19 +42,20 @@
   <string name="CardEditorCancelButton">Annuleren</string>
   <string name="CardEditorSaveButton">Opslaan</string>
   <string name="CardEditorLaterButton">Later</string>
-  <string name="CardEditorPreviewButton">Voorvertoning</string>
   <string name="CardEditorLaterMessage">Informatie opgeslagen voor later</string>
   <string name="CardEditorCardDeck">Kaart leerset: %s</string>
   <string name="CardEditorNoteDeck">Kaart leerset: %s</string>
   <string name="CardEditorModel">Kaarttype: %s</string>
   <string name="CardEditorTags">Kenmerken: %1$s</string>
-  <string name="add_new_tag">Nieuw kenmerk toevoegen</string>
+  <string name="add_new_filter_tags">Add/Filter tags</string>
   <string name="note_type">Kaarttype</string>
   <string name="card_type">Kaarttype</string>
+  <string name="filter_tags">Filter tags</string>
   <string name="sdcard_missing_message">De SD-kaart is niet beschikbaar omdat ze in gebruik is voor USB-opslag. Ontkoppel de USB om toegang te krijgen tot uw sets.</string>
   <string name="show_whiteboard">Toon het schrijfbord</string>
   <string name="hide_whiteboard">Verberg het schrijfbord</string>
   <string name="clear_whiteboard">Schrijfbord schoonvegen</string>
+  <string name="replay_audio">Replay audio</string>
   <string name="cram_edit_warning">Het bewerken van kaarten is niet toegestaan tijdens stampen</string>
   <string name="suspend_leeches">Moeilijke kaarten blokkeren</string>
   <string name="leech_suspend_notification">Kaart gemarkeerd als moeilijk en uitgesteld</string>
@@ -83,6 +84,7 @@
   <string name="card_editor_reset">Resetten</string>
   <string name="card_editor_copy_card">Kopieer kaart</string>
   <string name="card_editor_reset_card">Vooruitgang resetten</string>
+  <string name="card_editor_preview_card">Preview</string>
   <string name="error_insufficient_memory">Werking verhinderd vanwege onvoldoende beschikbaar geheugen op uw toestel</string>
   <string name="tutorial_load">Een set wordt gecreëerd als handleiding.\nEven Even geduld alstublieft...</string>
   <string name="tutorial_loading_error">Voorbeeldset kon niet worden aangemaakt</string>
@@ -134,11 +136,11 @@
     <item>Answer</item>
     <item>Card</item>
     <item>Deck</item>
-    <item>Lapses</item>
     <item>Note</item>
     <item>Question</item>
-    <item>Reviews</item>
     <item>Tags</item>
+    <item>Lapses</item>
+    <item>Reviews</item>
   </string-array>
   <string-array name="dynOrderLabels">
     <item>Langst niet gezien eerst</item>

@@ -112,7 +112,6 @@
   <string-array name="leech_action_labels">
     <item>Tangguhkan kartu</item>
     <item>Hanya tag</item>
-    <item>Reset seperti baru</item>
   </string-array>
   <string-array name="new_order_labels">
     <item>Kartu-kartu yang baru secara acak</item>

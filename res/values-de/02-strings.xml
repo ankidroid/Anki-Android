@@ -42,19 +42,20 @@
   <string name="CardEditorCancelButton">Abbrechen</string>
   <string name="CardEditorSaveButton">Speichern</string>
   <string name="CardEditorLaterButton">Später</string>
-  <string name="CardEditorPreviewButton">Vorschau</string>
   <string name="CardEditorLaterMessage">Information für später gespeichert</string>
   <string name="CardEditorCardDeck">Karten-Stapel: %s</string>
   <string name="CardEditorNoteDeck">Notiz-Stapel: %s</string>
   <string name="CardEditorModel">Notiztyp: %s</string>
   <string name="CardEditorTags">Schlagworte: %1$s</string>
-  <string name="add_new_tag">Neues Schlagwort hinzufügen</string>
+  <string name="add_new_filter_tags">Add/Filter tags</string>
   <string name="note_type">Notiztyp</string>
   <string name="card_type">Kartentyp</string>
+  <string name="filter_tags">Filter tags</string>
   <string name="sdcard_missing_message">Die SD-Karte ist nicht verfügbar, da sie als USB-Speicher verwendet wird. Trennen Sie die Verbindung, um auf Ihre Stapel zuzugreifen.</string>
   <string name="show_whiteboard">Whiteboard an</string>
   <string name="hide_whiteboard">Whiteboard aus</string>
   <string name="clear_whiteboard">Whiteboard säubern</string>
+  <string name="replay_audio">Replay audio</string>
   <string name="cram_edit_warning">Kartenbearbeitung während des Paukens nicht erlaubt</string>
   <string name="suspend_leeches">Lernbremsen aussetzen</string>
   <string name="leech_suspend_notification">Karte als Lernbremse markiert und ausgesetzt</string>
@@ -83,6 +84,7 @@
   <string name="card_editor_reset">Zurücksetzen</string>
   <string name="card_editor_copy_card">Karte kopieren</string>
   <string name="card_editor_reset_card">Fortschritt zurücksetzen</string>
+  <string name="card_editor_preview_card">Preview</string>
   <string name="error_insufficient_memory">Vorgang wegen unzureichenden Gerätespeichers nicht möglich</string>
   <string name="tutorial_load">Erstelle Einführungsstapel.\n Bitte warten…</string>
   <string name="tutorial_loading_error">Einführungsstapel konnte nicht erstellt werden</string>
@@ -134,11 +136,11 @@
     <item>Antwort</item>
     <item>Karte</item>
     <item>Stapel</item>
-    <item>Lapsus</item>
-    <item>Notiz</item>
-    <item>Frage</item>
-    <item>Bewertungen</item>
+    <item>Note</item>
+    <item>Question</item>
     <item>Tags</item>
+    <item>Lapses</item>
+    <item>Reviews</item>
   </string-array>
   <string-array name="dynOrderLabels">
     <item>Am frühesten gesehene zuerst</item>

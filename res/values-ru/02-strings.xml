@@ -42,19 +42,20 @@
   <string name="CardEditorCancelButton">Отмена</string>
   <string name="CardEditorSaveButton">Сохранить</string>
   <string name="CardEditorLaterButton">Позже</string>
-  <string name="CardEditorPreviewButton">Предпросмотр</string>
   <string name="CardEditorLaterMessage">Сохранённая информация</string>
   <string name="CardEditorCardDeck">Карта колоды: %s</string>
   <string name="CardEditorNoteDeck">Заметка колоды: %s</string>
   <string name="CardEditorModel">Тип заметки: %s</string>
   <string name="CardEditorTags">Теги: %1$s</string>
-  <string name="add_new_tag">Добавить новый тег</string>
+  <string name="add_new_filter_tags">Add/Filter tags</string>
   <string name="note_type">Тип заметки</string>
   <string name="card_type">Тип карты</string>
+  <string name="filter_tags">Filter tags</string>
   <string name="sdcard_missing_message">SD-карта недоступна, т.к. она (и ваш аппарат) используется как USB-хранилище. Отключите режим USB-хранилище вашего аппарата для доступа к колоде.</string>
   <string name="show_whiteboard">Показать доску</string>
   <string name="hide_whiteboard">Скрыть доску</string>
   <string name="clear_whiteboard">Очистка доски</string>
+  <string name="replay_audio">Replay audio</string>
   <string name="cram_edit_warning">Редактирование карты заблокировано во время \`Зубрёжки\`</string>
   <string name="suspend_leeches">Откладывать \"приставучие\"</string>
   <string name="leech_suspend_notification">Карта помечена как \"приставучая\" и отложена</string>
@@ -83,6 +84,7 @@
   <string name="card_editor_reset">Сброс</string>
   <string name="card_editor_copy_card">Копировать карту</string>
   <string name="card_editor_reset_card">Сброс прогресса</string>
+  <string name="card_editor_preview_card">Preview</string>
   <string name="error_insufficient_memory">Операция не возможна из-за недостатка памяти на Вашем устройстве</string>
   <string name="tutorial_load">Создание учебной колоды. \nПожалуйста подождите...</string>
   <string name="tutorial_loading_error">Учебная колода не может быть создана</string>
@@ -134,11 +136,11 @@
     <item>Ответ</item>
     <item>Карта</item>
     <item>Колода</item>
-    <item>Неудачи</item>
-    <item>Заметка</item>
-    <item>Вопрос</item>
-    <item>Отзывы</item>
-    <item>Теги</item>
+    <item>Note</item>
+    <item>Question</item>
+    <item>Tags</item>
+    <item>Lapses</item>
+    <item>Reviews</item>
   </string-array>
   <string-array name="dynOrderLabels">
     <item>Старейшие появляться первыми</item>

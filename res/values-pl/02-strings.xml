@@ -42,19 +42,20 @@
   <string name="CardEditorCancelButton">Anuluj</string>
   <string name="CardEditorSaveButton">Zapisz</string>
   <string name="CardEditorLaterButton">Później</string>
-  <string name="CardEditorPreviewButton">Podgląd</string>
   <string name="CardEditorLaterMessage">Zapisz informacje na później</string>
   <string name="CardEditorCardDeck">Talia karty: %s</string>
   <string name="CardEditorNoteDeck">Talia notatki: %s</string>
   <string name="CardEditorModel">Rodzaj notatki: %s</string>
   <string name="CardEditorTags">Etykiety: %1$s</string>
-  <string name="add_new_tag">Dodaj nową etykietę</string>
+  <string name="add_new_filter_tags">Add/Filter tags</string>
   <string name="note_type">Typ notatki</string>
   <string name="card_type">Typ karty</string>
+  <string name="filter_tags">Filter tags</string>
   <string name="sdcard_missing_message">Karta SD jest niedostępna, ponieważ jest ona używana jako pamięć masowa USB. Odłącz USB, aby uzyskać dostęp do Twoich talii.</string>
   <string name="show_whiteboard">Pokaż zegar / tablicę</string>
   <string name="hide_whiteboard">Ukryj tablicę</string>
   <string name="clear_whiteboard">Wyczyść tablicę</string>
+  <string name="replay_audio">Replay audio</string>
   <string name="cram_edit_warning">Edycja kart nie jest dozwolona podczas wkuwania</string>
   <string name="suspend_leeches">Zawieś pijawki</string>
   <string name="leech_suspend_notification">Karta oznaczona jako pijawka i zawieszona</string>
@@ -83,6 +84,7 @@
   <string name="card_editor_reset">Reset</string>
   <string name="card_editor_copy_card">Kopiuj kartę</string>
   <string name="card_editor_reset_card">Resetuj postępy</string>
+  <string name="card_editor_preview_card">Preview</string>
   <string name="error_insufficient_memory">Operacja nie może być wykonana z powodu niewystarczającej pamięci na urządzeniu</string>
   <string name="tutorial_load">Tworzenie talii szkoleniowej.\nProszę czekać...</string>
   <string name="tutorial_loading_error">Nie można utworzyć talii instruktażowej</string>
@@ -134,11 +136,11 @@
     <item>Answer</item>
     <item>Card</item>
     <item>Deck</item>
-    <item>Lapses</item>
     <item>Note</item>
     <item>Question</item>
-    <item>Reviews</item>
     <item>Tags</item>
+    <item>Lapses</item>
+    <item>Reviews</item>
   </string-array>
   <string-array name="dynOrderLabels">
     <item>Najstarszy jako pierwszy</item>

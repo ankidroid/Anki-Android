@@ -29,8 +29,8 @@ Adicione material por meio do aplicativo de desktop do Anki ou diretamente por m
 • Adicionar cartões pela interação de outros aplicativos como dicionários
 • suporte a fonte personalizada
 • sistema de backup completo
-• navegação por deslize, toque, balanço
-• totalmente personalizável
+• navigation by swipe, tap
+• customisable
 • dynamic deck handling
 • modo noturno
 • 27 traduções

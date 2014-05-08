@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">Celkem karet:</string>
   <string name="studyoptions_eta">Odhadovaný čas (min):</string>
   <string name="studyoptions_start">Studovat</string>
+  <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">Zobrazit odpověď</string>
   <string name="ease1_successive">Znovu</string>
   <string name="ease2_successive">Těžké</string>
@@ -63,7 +64,7 @@
   <string name="card_unsuspended">Zrušeno vyřazení karty</string>
   <string name="card_suspended">Zrušeno pozastavení karty</string>
   <string name="menu_rotate">Otočit</string>
-  <string name="menu_import">Import karet</string>
+  <string name="menu_import">Import file</string>
   <string name="undo">Vrátit zpět</string>
   <string name="undo_action_review">opakovat</string>
   <string name="undo_action_edit">upravit poznámku</string>
@@ -82,6 +83,8 @@
   <string name="contextmenu_deckpicker_collapse_deck">Sbalit balíček</string>
   <string name="contextmenu_deckpicker_inflate_deck">Rozbalit balíček</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Nastavit vlastní slovník</string>
+  <string name="menu_add">Add</string>
+  <string name="menu_add_note">Add note</string>
   <string name="menu_download_deck">Stáhnout balíček</string>
   <string name="menu_download_shared_deck">Sdílený balíček</string>
   <string name="menu_my_account">Synchronizovat účet</string>
@@ -99,9 +102,9 @@
   <string name="menu_search">Vyhledat v %1$s</string>
   <string name="menu_mark_card">Označit kartu</string>
   <string name="menu_unmark_card">Zrušit označení karty</string>
-  <string name="new_deck">Nový balíček</string>
+  <string name="new_deck">Create deck</string>
   <string name="create">Vytvořit</string>
-  <string name="new_dynamic_deck">Nový filtrovaný balíček</string>
+  <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">Feedback</string>
   <string name="studyoptions_load_tutorial_deck">Vytvořit kurz</string>
   <string name="night_mode">Noční režim</string>

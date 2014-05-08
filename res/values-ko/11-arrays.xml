@@ -112,7 +112,6 @@
   <string-array name="leech_action_labels">
     <item>카드 미루기</item>
     <item>태그 적용</item>
-    <item>새카드로 설정</item>
   </string-array>
   <string-array name="new_order_labels">
     <item>무작위 순서로 새카드 학습</item>

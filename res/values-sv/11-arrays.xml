@@ -112,7 +112,6 @@
   <string-array name="leech_action_labels">
     <item>Åsidosätt kort</item>
     <item>Endast etikett</item>
-    <item>Återställ som nytt</item>
   </string-array>
   <string-array name="new_order_labels">
     <item>Nya kort i slumpmässig ordning</item>

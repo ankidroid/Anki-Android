@@ -40,8 +40,6 @@
 -->
 <resources>
   <string name="pref_cat_collection">Collection</string>
-  <string name="pref_internal_memory">使用內部記憶體</string>
-  <string name="pref_internal_memory_summ">將收藏存放在內部記憶體。不建議這樣做，因為這樣你無法輕易存取您的收藏檔案</string>
   <string name="pref_cat_sync">同步化</string>
   <string name="pref_cat_qadisplay">問答顯示</string>
   <string name="pref_cat_general">一般</string>
@@ -53,7 +51,6 @@
   <string name="pref_cat_navigation">瀏覽</string>
   <string name="pref_cat_swipe">滑過螢幕</string>
   <string name="pref_cat_navigation_sensitivity">靈敏度</string>
-  <string name="pref_cat_zoom">縮放</string>
   <string name="pref_cat_zeemote">Zeemote</string>
   <string name="pref_cat_reset">重設</string>
   <string name="pref_cat_other">其他</string>
@@ -70,10 +67,7 @@
   <string name="show_study_options_on_deck_load_summ">載入牌組時顯示學習選項</string>
   <string name="hide_due_count">隱藏到期計數</string>
   <string name="hide_due_count_summ">隱藏到期計數</string>
-  <string name="show_progress_bars">顯示進度條</string>
-  <string name="show_progress_bars_summ">複習的時候顯示今天的進度和今天答對的比例</string>
-  <string name="fade_scrollbars">淡化捲軸</string>
-  <string name="fade_scrollbars_summ">不捲動時自動淡化單字卡的捲軸</string>
+  <string name="enable_whiteboard">Enable Whiteboard</string>
   <string name="show_whiteboard_summ">讓你可以在螢幕上畫畫</string>
   <string name="whiteboard_stroke_width">白板筆劃寬度</string>
   <string name="whiteboard_stroke_width_summ">筆劃寬度：XXX</string>
@@ -81,24 +75,13 @@
   <string name="whiteboard_black_summ">使用單色而非彩色字體 (用於記憶體較少的裝置，不適用於夜間模式)</string>
   <string name="write_answers">填寫答案</string>
   <string name="write_answers_summ">讓你可以填寫答案，和正確答案比對</string>
-  <string name="text_selection">允許選擇文字</string>
-  <string name="text_selection_summ">允許您（使用功能表或長按）選取和複製卡片上的文字，以傳送到外部字典中查詢</string>
   <string name="text_selection_click">長按的解決方法</string>
   <string name="text_selection_click_summ">如果你無法藉由長按來選擇文字，請啟用此功能</string>
   <string name="dictionary">字典</string>
   <string name="dictionary_summ">選擇要查閱的詞典：XXX</string>
   <string name="reset_languages">重設語言</string>
   <string name="reset_languages_summ">重設所有牌組的語言(用於發音和字典)。您也可以從牌組選擇畫面重設特定牌組的語言</string>
-  <string name="reset_all">全部重設</string>
-  <string name="reset_all_summ">重設語言、桌面小工具、白板和字典狀態</string>
-  <string name="reset_dialogs">重設對話框</string>
-  <string name="reset_dialogs_question">重設所有對話框?</string>
-  <string name="reset_dialogs_summ">將所有對話框重設為不要再顯示</string>
   <string name="reset_languages_question">確定要重設所有的語言？</string>
-  <string name="reset_messages">重設訊息</string>
-  <string name="reset_messages_question">要再顯示目前訊息嗎?</string>
-  <string name="reset_messages_summ">下次再顯示AnkiDroid訊息</string>
-  <string name="reset_all_question">重設所有的語言、桌面小工具、白板和字典狀態嗎？</string>
   <string name="reset_confirmation">重設所有狀態</string>
   <string name="use_ruby_support">支援Ruby標註文字</string>
   <string name="use_ruby_support_summ">如果文字被括在\'[\'和\']\'裡面，就當作Ruby標籤語言來處理</string>
@@ -114,8 +97,6 @@
   <string name="col_path_summ">儲存您牌組收藏的路徑</string>
   <string name="fullscreen_review">全螢幕複習</string>
   <string name="fullscreen_review_summ">複習時要不要用全螢幕</string>
-  <string name="zoom">啟用縮放</string>
-  <string name="zoom_summ">複習時顯示縮放控制</string>
   <string name="zeemote">支援藍芽搖桿 Zeemote JS1</string>
   <string name="zeemote_summ">使用藍芽搖桿 Zeemote JS1 來進行複習</string>
   <string name="zeemote_actions">藍芽搖桿在複習時的動作</string>
@@ -133,7 +114,6 @@
   <string name="swipe_summ_off">使用手勢來切換畫面和答案卡。此選項無法與縮放控制併用。</string>
   <string name="swipe_summ_on">水平撥動可切換畫面，請設定下面其他動作</string>
   <string name="pref_cat_actions">動作</string>
-  <string name="gestures_shake">搖動</string>
   <string name="gestures_swipe_up">向上撥動</string>
   <string name="gestures_swipe_down">向下撥動</string>
   <string name="gestures_swipe_left">向左撥動</string>
@@ -155,8 +135,6 @@
   <string name="tts_summ">如果沒有內含音效檔，則大聲讀出問題和答案</string>
   <string name="play_sounds_at_start">馬上播放聲音</string>
   <string name="play_sounds_at_start_summ">呈現問題/答案後立即播放聲音</string>
-  <string name="shake_intensity">搖晃閾值</string>
-  <string name="shake_intensity_summ">識別搖晃的閾值：XXX</string>
   <string name="sync_fetch_missing_media">同步時讀取媒體檔案</string>
   <string name="sync_fetch_missing_media_summ">同步時自動取得缺少的媒體檔案</string>
   <string name="sync_account">AnkiWeb 帳號</string>
@@ -179,10 +157,6 @@
   <string name="timeout_question_seconds">顯示下一個問題前等待幾秒</string>
   <string name="select_locale_title">選擇語言</string>
   <string name="select_theme">主題</string>
-  <string name="theme_animations">動畫</string>
-  <string name="theme_animations_summ">翻轉卡片時顯示動畫</string>
-  <string name="animation_speed">動畫的持續時間</string>
-  <string name="animation_speed_summ">轉場動畫持續時間: XXX ms</string>
   <string name="eink_display">電子紙顯示優化</string>
   <string name="eink_display_summ">停用所有動畫效果並優化電子紙的畫面顯示</string>
   <string name="vertical_centering">Center card content vertically</string>
@@ -219,21 +193,14 @@
   <string name="filter_google_translate_summ">僅保存原文和譯文</string>
   <string name="convert_fen_text_summ">依照福斯夫－愛德華茲記號法(FEN)繪製棋盤。此記號法必須括在 [fen][/fen]的標記內。</string>
   <string name="sync_set_journal_mode">正在設定正確的日誌模式...</string>
-  <string name="async_mode">關閉同步</string>
-  <string name="async_mode_summ">這會讓 AnkiDroid 速度變快，不過在 Android 系統當機時可能會讓 AnkiDroid 資料庫毀損。所以要記得備份。</string>
-  <string name="async_mode_message">注意，此選項比較不保險，當 Android 系統當機（比如電池沒電) 時，會導致牌組損壞。\n如果啟用此選項，推薦開啟備份系統。\n還確定要啟用此選項嗎？</string>
-  <string name="fix_orientation">固定方向</string>
-  <string name="fix_orientation_summ">進行複習時，不允許改變畫面方向</string>
   <string name="per_day">每天</string>
   <string name="studyoptions_new_cards_per_day">每天新卡片上限：</string>
   <string name="studyoptions_max_fail_card">失敗卡上限</string>
-  <string name="show_broadcast_messages">顯示現在的消息</string>
-  <string name="show_broadcast_messages_summ">顯示 AnkiDroid 新版本的更新通知或其他的訊息</string>
   <string name="input_workaround">解決輸入問題</string>
   <string name="input_workaround_summ">解決 HTML 輸入框的對焦問題。這會導致一些裝置出問題。</string>
   <string name="write_answers_message">你應該在電腦版 Anki 上為每個牌組定義一個欄位，方便與輸入的答案文字做比較。\n\n假如沒有設定要比較的欄位，那麼你輸入的答案就會與整個卡片上的答案做比較。</string>
   <string name="pref_cardbrowser_skip_init_search">快速打開卡片瀏覽器</string>
-  <string name="pref_cardbrowser_skip_init_search_summ">打開卡片瀏覽器時，略過初始的自動搜尋</string>
+  <string name="pref_cardbrowser_skip_init_search_summ">Skips initial automatic search when the card browser opens or the deck is changed.</string>
   <string name="pref_keep_screen_on">保持螢幕開啟</string>
   <string name="pref_keep_screen_on_summ">複習時避免螢幕關閉</string>
   <string name="pref_simple_interface">簡單的介面</string>
@@ -306,8 +273,6 @@
   <string name="deck_conf_cram_reschedule_summ">依據我在本牌組的回答狀況來重新排程卡片</string>
   <string name="deck_conf_cram_steps">自訂步數</string>
   <string name="deck_conf_cram_steps_summ">設定自訂步數</string>
-  <string name="pref_show_splashscreen">啟動畫面</string>
-  <string name="pref_show_splashscreen_summ">顯示啟動畫面</string>
   <string name="pref_intent_add_instant">立即新增</string>
   <string name="pref_intent_add_instant_summ">直接從字典新增卡片而不需打開 AnkiDroid ，你稍後可在卡片新增器的 \'saved data\' 中找到這些卡片。</string>
   <string name="pref_cat_intent_add">增加外部資料</string>

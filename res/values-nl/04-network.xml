@@ -78,6 +78,7 @@
   <string name="alert_logging_message">Inloggen, even geduld...</string>
   <string name="invalid_username_password">Ongeldig e-mailadres of wachtwoord.</string>
   <string name="login_generic_error">Inloggen niet gelukt.</string>
+  <string name="reset_password">Reset password</string>
   <string name="download_finished">Download voltooid</string>
   <string name="personaldeckpicker_title">Open Online Set</string>
   <string name="shareddeckpicker_title">Selecteer het deck dat u wil downloaden</string>

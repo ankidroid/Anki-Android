@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">Total cards:</string>
   <string name="studyoptions_eta">Очаквано време (мин.):</string>
   <string name="studyoptions_start">Study Now</string>
+  <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">Покажи отговора</string>
   <string name="ease1_successive">Отново</string>
   <string name="ease2_successive">Твърд</string>
@@ -63,7 +64,7 @@
   <string name="card_unsuspended">Скриване на картата отменено</string>
   <string name="card_suspended">Открий картата</string>
   <string name="menu_rotate">Завъртане</string>
-  <string name="menu_import">Import cards</string>
+  <string name="menu_import">Import file</string>
   <string name="undo">Отмени</string>
   <string name="undo_action_review">review</string>
   <string name="undo_action_edit">edit note</string>
@@ -82,6 +83,8 @@
   <string name="contextmenu_deckpicker_collapse_deck">Hide Subdecks</string>
   <string name="contextmenu_deckpicker_inflate_deck">Show Subdecks</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Задаване на потребителски речник</string>
+  <string name="menu_add">Add</string>
+  <string name="menu_add_note">Add note</string>
   <string name="menu_download_deck">Изтегляне на колода</string>
   <string name="menu_download_shared_deck">Споделена колода</string>
   <string name="menu_my_account">Sync account</string>
@@ -99,9 +102,9 @@
   <string name="menu_search">Търсене в %1$s</string>
   <string name="menu_mark_card">Маркиране на карта</string>
   <string name="menu_unmark_card">Unmark Card</string>
-  <string name="new_deck">New deck</string>
+  <string name="new_deck">Create deck</string>
   <string name="create">Create</string>
-  <string name="new_dynamic_deck">New filtered deck</string>
+  <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">Обратна връзка</string>
   <string name="studyoptions_load_tutorial_deck">Create tutorial</string>
   <string name="night_mode">Night mode</string>

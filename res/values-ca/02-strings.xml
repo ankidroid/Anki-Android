@@ -42,19 +42,20 @@
   <string name="CardEditorCancelButton">Anul·la</string>
   <string name="CardEditorSaveButton">Desa</string>
   <string name="CardEditorLaterButton">Més tard</string>
-  <string name="CardEditorPreviewButton">Preview</string>
   <string name="CardEditorLaterMessage">S\'ha desat la informació per més tard</string>
   <string name="CardEditorCardDeck">Paquet de fitxes: %s</string>
   <string name="CardEditorNoteDeck">Nota del paquet: %s</string>
   <string name="CardEditorModel">Tipus de nota: %s</string>
   <string name="CardEditorTags">Etiquetes: %1$s</string>
-  <string name="add_new_tag">Nova etiqueta</string>
+  <string name="add_new_filter_tags">Add/Filter tags</string>
   <string name="note_type">Tipus de nota</string>
   <string name="card_type">Card type</string>
+  <string name="filter_tags">Filter tags</string>
   <string name="sdcard_missing_message">La targeta SD no es troba disponible perquè està sent utilitzada com a emmagatzematge via USB. Desconnecteu l\'USB per accedir a les teves baralles.</string>
   <string name="show_whiteboard">Mostra la pissarra</string>
   <string name="hide_whiteboard">Amaga la pissarra</string>
   <string name="clear_whiteboard">Esborra la pissarra</string>
+  <string name="replay_audio">Replay audio</string>
   <string name="cram_edit_warning">No es pot editar les fitxes en mode repàs</string>
   <string name="suspend_leeches">Suspèn les lapes</string>
   <string name="leech_suspend_notification">Fitxa marcada com a lapa i suspesa</string>
@@ -83,6 +84,7 @@
   <string name="card_editor_reset">Reinicia</string>
   <string name="card_editor_copy_card">Còpia la fitxa</string>
   <string name="card_editor_reset_card">Reinicia</string>
+  <string name="card_editor_preview_card">Preview</string>
   <string name="error_insufficient_memory">No hi ha suficient memòria al dispositiu per a aquesta operació</string>
   <string name="tutorial_load">S\'està generant el tutorial.\nUn moment si us plau...</string>
   <string name="tutorial_loading_error">No ha estat possible generar el paquet de mostra</string>
@@ -134,11 +136,11 @@
     <item>Answer</item>
     <item>Card</item>
     <item>Deck</item>
-    <item>Lapses</item>
     <item>Note</item>
     <item>Question</item>
-    <item>Reviews</item>
     <item>Tags</item>
+    <item>Lapses</item>
+    <item>Reviews</item>
   </string-array>
   <string-array name="dynOrderLabels">
     <item>Primer les que fa més temps que no heu vist</item>

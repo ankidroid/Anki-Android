@@ -42,19 +42,20 @@
   <string name="CardEditorCancelButton">Ακύρωση</string>
   <string name="CardEditorSaveButton">Αποθήκευση</string>
   <string name="CardEditorLaterButton">Αργότερα</string>
-  <string name="CardEditorPreviewButton">Preview</string>
   <string name="CardEditorLaterMessage">Αποθήκευση πληροφοριών για αργότερα</string>
   <string name="CardEditorCardDeck">Τράπουλα κάρτας: %s</string>
   <string name="CardEditorNoteDeck">Τράπουλα σημείωσης: %s</string>
   <string name="CardEditorModel">Τύπος σημείωσης: %s</string>
   <string name="CardEditorTags">Ετικέτες:%1$s</string>
-  <string name="add_new_tag">Προσθήκη νέας ετικέτας</string>
+  <string name="add_new_filter_tags">Add/Filter tags</string>
   <string name="note_type">Τύπος σημείωσης</string>
   <string name="card_type">Card type</string>
+  <string name="filter_tags">Filter tags</string>
   <string name="sdcard_missing_message">Η SD κάρτα δεν είναι διαθέσιμη επειδή χρησιμοποιείται για αποθήκευση μέσω USB. Αποσυνδέστε την USB για να αποκτήσετε πρόσβαση στις τράπουλές σας.</string>
   <string name="show_whiteboard">Εμφάνιση πίνακα</string>
   <string name="hide_whiteboard">Απόκρυψη πίνακα</string>
   <string name="clear_whiteboard">Καθαρίσμός πίνακα</string>
+  <string name="replay_audio">Replay audio</string>
   <string name="cram_edit_warning">Η επεξεργασία καρτών δεν επιτρέπεται κατά την εντατική μελέτη</string>
   <string name="suspend_leeches">Αναστείλετε κάρτες βδέλλες</string>
   <string name="leech_suspend_notification">Η κάρτα χαρακτηρίστηκε βδέλλα και αναστάλθηκε</string>
@@ -83,6 +84,7 @@
   <string name="card_editor_reset">Επαναφορά</string>
   <string name="card_editor_copy_card">Αντιγραφή κάρτας</string>
   <string name="card_editor_reset_card">Διαγραφή προόδου</string>
+  <string name="card_editor_preview_card">Preview</string>
   <string name="error_insufficient_memory">Η λειτουργία δεν είναι δυνατή λόγω ανεπαρκούς μνήμης στη συσκευή σας</string>
   <string name="tutorial_load">Δημιουργία διδακτικής τράπουλας.\nΠαρακαλούμε περιμένετε...</string>
   <string name="tutorial_loading_error">Η τράπουλα Δείγμα δε μπόρεσε να δημιουργηθεί</string>
@@ -134,11 +136,11 @@
     <item>Answer</item>
     <item>Card</item>
     <item>Deck</item>
-    <item>Lapses</item>
     <item>Note</item>
     <item>Question</item>
-    <item>Reviews</item>
     <item>Tags</item>
+    <item>Lapses</item>
+    <item>Reviews</item>
   </string-array>
   <string-array name="dynOrderLabels">
     <item>Πρώτα οι παλαιότερα ειδωμένες</item>

@@ -112,7 +112,6 @@
   <string-array name="leech_action_labels">
     <item>Jäädytä kortti</item>
     <item>Vain tunniste</item>
-    <item>Palauta uutena</item>
   </string-array>
   <string-array name="new_order_labels">
     <item>Uusia kortteja satunnaisessa järjestyksessä</item>

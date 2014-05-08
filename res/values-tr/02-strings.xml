@@ -42,19 +42,20 @@
   <string name="CardEditorCancelButton">İptal</string>
   <string name="CardEditorSaveButton">Kaydet</string>
   <string name="CardEditorLaterButton">Daha sonra</string>
-  <string name="CardEditorPreviewButton">Önizle</string>
   <string name="CardEditorLaterMessage">Bilgi daha sonrası için kaydedildi</string>
   <string name="CardEditorCardDeck">Kart destesi: %s</string>
   <string name="CardEditorNoteDeck">Not destesi: %s</string>
   <string name="CardEditorModel">Not türü: %s</string>
   <string name="CardEditorTags">Etiketler: %1$s</string>
-  <string name="add_new_tag">Yeni etiket ekle</string>
+  <string name="add_new_filter_tags">Add/Filter tags</string>
   <string name="note_type">Not türü</string>
   <string name="card_type">Kart türü</string>
+  <string name="filter_tags">Filter tags</string>
   <string name="sdcard_missing_message">SD kart USB depolama olarak kullanıldığı için kullanılamıyor. Destelerinize erişmek için USB bağlantısını kesin.</string>
   <string name="show_whiteboard">Yazı Tahtasını Göster</string>
   <string name="hide_whiteboard">Yazı Tahtasını Gizle</string>
   <string name="clear_whiteboard">Yazı Tahtasını Temizle</string>
+  <string name="replay_audio">Replay audio</string>
   <string name="cram_edit_warning">İneklerken kart düzenlenemez</string>
   <string name="suspend_leeches">Asalakları Askıya Al</string>
   <string name="leech_suspend_notification">Kart asalak olarak işaretlenip askıya alınmış</string>
@@ -83,6 +84,7 @@
   <string name="card_editor_reset">Sıfırla</string>
   <string name="card_editor_copy_card">Kartı kopyala</string>
   <string name="card_editor_reset_card">İlerlemeyi sıfırla</string>
+  <string name="card_editor_preview_card">Preview</string>
   <string name="error_insufficient_memory">Cihazda yetersiz bellek olması nedeniyle işlem gerçekleştirilemiyor</string>
   <string name="tutorial_load">Eğitim destesi oluşturuluyor.\nLütfen bekleyin...</string>
   <string name="tutorial_loading_error">Eğitim destesi oluşturulamadı</string>
@@ -134,11 +136,11 @@
     <item>Answer</item>
     <item>Card</item>
     <item>Deck</item>
-    <item>Lapses</item>
     <item>Note</item>
     <item>Question</item>
-    <item>Reviews</item>
     <item>Tags</item>
+    <item>Lapses</item>
+    <item>Reviews</item>
   </string-array>
   <string-array name="dynOrderLabels">
     <item>En eskiler ilk önce</item>

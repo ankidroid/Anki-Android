@@ -42,19 +42,20 @@
   <string name="CardEditorCancelButton">Avbryt</string>
   <string name="CardEditorSaveButton">Lagre</string>
   <string name="CardEditorLaterButton">Senere</string>
-  <string name="CardEditorPreviewButton">Preview</string>
   <string name="CardEditorLaterMessage">Lagret informasjonen til senere</string>
   <string name="CardEditorCardDeck">Kortstokk: %s</string>
   <string name="CardEditorNoteDeck">Notatkortstokk:%s</string>
   <string name="CardEditorModel">Notattype:%s</string>
   <string name="CardEditorTags">Etiketter: %1$s</string>
-  <string name="add_new_tag">Legg til ny etikett</string>
+  <string name="add_new_filter_tags">Add/Filter tags</string>
   <string name="note_type">Notattype</string>
   <string name="card_type">Card type</string>
+  <string name="filter_tags">Filter tags</string>
   <string name="sdcard_missing_message">SD-kortet er utilgjengelig fordi den brukes som USB-lagring. Frakoble USB for å å få tilgang til dine kortstokker.</string>
   <string name="show_whiteboard">Vis tavle</string>
   <string name="hide_whiteboard">Skjul tavle</string>
   <string name="clear_whiteboard">Rens tavle</string>
+  <string name="replay_audio">Replay audio</string>
   <string name="cram_edit_warning">Kortredigering ikke tillatt under pugging</string>
   <string name="suspend_leeches">Deaktiver igler</string>
   <string name="leech_suspend_notification">Kort merket som igle og deaktivert</string>
@@ -83,6 +84,7 @@
   <string name="card_editor_reset">Tilbakestill</string>
   <string name="card_editor_copy_card">Kopier kort</string>
   <string name="card_editor_reset_card">Tilbakestill fremdrift</string>
+  <string name="card_editor_preview_card">Preview</string>
   <string name="error_insufficient_memory">Operasjonen ikke mulig på grunn av for lite minne på enheten</string>
   <string name="tutorial_load">Oppretter læringskortstokk.\nVennligst vent...</string>
   <string name="tutorial_loading_error">Opplæringskortstokk kunne ikke opprettes</string>
@@ -134,11 +136,11 @@
     <item>Answer</item>
     <item>Card</item>
     <item>Deck</item>
-    <item>Lapses</item>
     <item>Note</item>
     <item>Question</item>
-    <item>Reviews</item>
     <item>Tags</item>
+    <item>Lapses</item>
+    <item>Reviews</item>
   </string-array>
   <string-array name="dynOrderLabels">
     <item>Eldste først</item>

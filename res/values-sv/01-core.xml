@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">Totalt antal kort:</string>
   <string name="studyoptions_eta">Beräknad tid (min):</string>
   <string name="studyoptions_start">Plugga nu</string>
+  <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">Visa svar</string>
   <string name="ease1_successive">Igen</string>
   <string name="ease2_successive">Svår</string>
@@ -63,7 +64,7 @@
   <string name="card_unsuspended">Kort upplåst</string>
   <string name="card_suspended">Kort åter låst</string>
   <string name="menu_rotate">Rotera</string>
-  <string name="menu_import">Importera kort</string>
+  <string name="menu_import">Import file</string>
   <string name="undo">Ångra</string>
   <string name="undo_action_review">repetition</string>
   <string name="undo_action_edit">redigera not</string>
@@ -82,6 +83,8 @@
   <string name="contextmenu_deckpicker_collapse_deck">Dölj underkortlekar</string>
   <string name="contextmenu_deckpicker_inflate_deck">Visa underkortlekar</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Ange egen ordbok</string>
+  <string name="menu_add">Add</string>
+  <string name="menu_add_note">Add note</string>
   <string name="menu_download_deck">Hämta kortlek</string>
   <string name="menu_download_shared_deck">Delad kortlek</string>
   <string name="menu_my_account">Synkronisera konto</string>
@@ -99,9 +102,9 @@
   <string name="menu_search">Kolla upp i %1$s</string>
   <string name="menu_mark_card">Markera kort</string>
   <string name="menu_unmark_card">Avmarkera kort</string>
-  <string name="new_deck">Ny kortlek</string>
+  <string name="new_deck">Create deck</string>
   <string name="create">Skapa</string>
-  <string name="new_dynamic_deck">Ny filtrerad kortlek</string>
+  <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">Feedback</string>
   <string name="studyoptions_load_tutorial_deck">Skapa övningskortlek</string>
   <string name="night_mode">Nattläge</string>

@@ -112,7 +112,6 @@
   <string-array name="leech_action_labels">
     <item>Suspendre la carte</item>
     <item>Taguer uniquement</item>
-    <item>Réinitialiser comme nouvelle</item>
   </string-array>
   <string-array name="new_order_labels">
     <item>Nouvelles cartes dans un ordre aléatoire</item>

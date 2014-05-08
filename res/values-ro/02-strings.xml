@@ -42,19 +42,20 @@
   <string name="CardEditorCancelButton">Anuleaza</string>
   <string name="CardEditorSaveButton">Salvează</string>
   <string name="CardEditorLaterButton">Mai târziu</string>
-  <string name="CardEditorPreviewButton">Previzualizare</string>
   <string name="CardEditorLaterMessage">Informaţie salvata pentru mai târziu</string>
   <string name="CardEditorCardDeck">Pachet de carduri: %s</string>
   <string name="CardEditorNoteDeck">Notaţi pachetul: %s</string>
   <string name="CardEditorModel">Notati tipul: %s</string>
   <string name="CardEditorTags">Tag-uri: %1$s</string>
-  <string name="add_new_tag">Adăugaţi tag-ul</string>
+  <string name="add_new_filter_tags">Add/Filter tags</string>
   <string name="note_type">Noteaza tipul</string>
   <string name="card_type">Tipul de card</string>
+  <string name="filter_tags">Filter tags</string>
   <string name="sdcard_missing_message">Cardul SD este indisponibil, deoarece acesta este utilizat ca unitate de stocare USB. Deconectaţi portul USB pentru a accesa pachetele Anki.</string>
   <string name="show_whiteboard">Arată cronometru / whiteboard</string>
   <string name="hide_whiteboard">Ascunde tabla</string>
   <string name="clear_whiteboard">Sterge tabla</string>
+  <string name="replay_audio">Replay audio</string>
   <string name="cram_edit_warning">Editarea cardurilor nu este permisa în timp ce tocesti</string>
   <string name="suspend_leeches">Suspenda Lipitorile</string>
   <string name="leech_suspend_notification">Card marcat ca Lipitoare şi suspendat</string>
@@ -83,6 +84,7 @@
   <string name="card_editor_reset">Resetare</string>
   <string name="card_editor_copy_card">Copie card</string>
   <string name="card_editor_reset_card">Resetare progres</string>
+  <string name="card_editor_preview_card">Preview</string>
   <string name="error_insufficient_memory">Operațiunea nu este posibila datorita memoriei insuficiente pe aparatul Dvs.</string>
   <string name="tutorial_load">Crearea pachetului tutorial. \nVa rugam aşteptaţi...</string>
   <string name="tutorial_loading_error">Imposibil de creat pachet tutorial</string>
@@ -134,11 +136,11 @@
     <item>Răspuns</item>
     <item>Card</item>
     <item>Pachet</item>
-    <item>întreruperi</item>
-    <item>Notă</item>
-    <item>Întrebare</item>
-    <item>Recapitulări</item>
-    <item>Etichete</item>
+    <item>Note</item>
+    <item>Question</item>
+    <item>Tags</item>
+    <item>Lapses</item>
+    <item>Reviews</item>
   </string-array>
   <string-array name="dynOrderLabels">
     <item>Cel mai vechi văzut primul</item>

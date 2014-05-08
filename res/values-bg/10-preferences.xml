@@ -40,8 +40,6 @@
 -->
 <resources>
   <string name="pref_cat_collection">Collection</string>
-  <string name="pref_internal_memory">Use internal memory</string>
-  <string name="pref_internal_memory_summ">Store collection in internal memory. This is not recommended, as you cannot access the collection file that easily</string>
   <string name="pref_cat_sync">синхронизиране</string>
   <string name="pref_cat_qadisplay">Показване</string>
   <string name="pref_cat_general">Общи</string>
@@ -53,7 +51,6 @@
   <string name="pref_cat_navigation">Навигация</string>
   <string name="pref_cat_swipe">Натискане</string>
   <string name="pref_cat_navigation_sensitivity">Чувствителност</string>
-  <string name="pref_cat_zoom">Мащабиране</string>
   <string name="pref_cat_zeemote">Контролер*</string>
   <string name="pref_cat_reset">Начално състояние</string>
   <string name="pref_cat_other">Други</string>
@@ -70,10 +67,7 @@
   <string name="show_study_options_on_deck_load_summ">Показва Опции за изследване при зареждане на колода</string>
   <string name="hide_due_count">Hide due count</string>
   <string name="hide_due_count_summ">Hides the due count</string>
-  <string name="show_progress_bars">Покажи ленти на развитието</string>
-  <string name="show_progress_bars_summ">Показва днешния напредък и част от днешните отговори, докато преглеждате</string>
-  <string name="fade_scrollbars">Fade scrollbars</string>
-  <string name="fade_scrollbars_summ">Automatically fade out flashcard scrollbars when not scrolling</string>
+  <string name="enable_whiteboard">Enable Whiteboard</string>
   <string name="show_whiteboard_summ">Позволява ви да пишете на екрана</string>
   <string name="whiteboard_stroke_width">Бяла дъска ширина</string>
   <string name="whiteboard_stroke_width_summ">Ширина на символа: XXX</string>
@@ -81,24 +75,13 @@
   <string name="whiteboard_black_summ">Използвайте монохромна вместо цветни черта (за устройства с по-малко памет, не работи в нощен режим)</string>
   <string name="write_answers">Напиши отговори</string>
   <string name="write_answers_summ">Позволява ви да напишете отговора и го сравнява с верния</string>
-  <string name="text_selection">Разреши селекция на текст</string>
-  <string name="text_selection_summ">Позволява да изберете и копирате текст от карти (от меню или дълго натискане), за да се изпълни търсене във външен речник</string>
   <string name="text_selection_click">дълго кликане проблем</string>
   <string name="text_selection_click_summ">Активирайте това, ако не сте в състояние да започне избора на текст чрез дълго кликане</string>
   <string name="dictionary">Речник</string>
   <string name="dictionary_summ">Речникът, в който трябва да се извърши: XXX</string>
   <string name="reset_languages">Начално състояние на езика</string>
   <string name="reset_languages_summ">Начално състояние на назначения език (за текст в реч и речници) за всички колоди. Начално състояние на колодата за специфични задачи на колодата за избор</string>
-  <string name="reset_all">Начално състояние на всичко</string>
-  <string name="reset_all_summ">Начално състояние на всичко: език, притурка, бяла дъска, речник, държави</string>
-  <string name="reset_dialogs">Начално състояние на диалогови прозорци</string>
-  <string name="reset_dialogs_question">Начално състояние на всички диалогови прозорци?</string>
-  <string name="reset_dialogs_summ">Начално състояние на всички диалогови прозорци, които са настроени да не се показват отново</string>
   <string name="reset_languages_question">Начално състояние на всички езикови задачи?</string>
-  <string name="reset_messages">Начално състояние на съобщения</string>
-  <string name="reset_messages_question">Покажи отново текущите съобщения?</string>
-  <string name="reset_messages_summ">Покажи текущи съобщения в AnkiDroid друг път</string>
-  <string name="reset_all_question">Начално състояние на всички: език, притурка, бяла дъска, речник, държави?</string>
   <string name="reset_confirmation">Начално състояние</string>
   <string name="use_ruby_support">Подпомага рубинена анотация</string>
   <string name="use_ruby_support_summ">Ако знаците \' [\' и \']\' са намерени, тогава приложения текст се третира като рубинена анотация</string>
@@ -114,8 +97,6 @@
   <string name="col_path_summ">Path to where your collection is stored</string>
   <string name="fullscreen_review">Преглед на цял екран</string>
   <string name="fullscreen_review_summ">Можете да решите дали искате да използвате цялото екранното пространство по време на разглеждането на картите</string>
-  <string name="zoom">Разреши мащабиране</string>
-  <string name="zoom_summ">Покажи контролите за мащабиране, когато се преразглежда</string>
   <string name="zeemote">Поддръжка на Zeemote JS1</string>
   <string name="zeemote_summ">Използвайте Zeemote JS1 контролер, за  прегледи.</string>
   <string name="zeemote_actions">Zeemote actions in Reviewer</string>
@@ -133,7 +114,6 @@
   <string name="swipe_summ_off">Използвайте движения, за да превключвате между екрани и отговор карти. Тази опция не е съвместим с контролите за мащабиране</string>
   <string name="swipe_summ_on">Натискане хоризонтално, за превключване между екрани. Конфигуриране на други действия, по-долу</string>
   <string name="pref_cat_actions">Действия</string>
-  <string name="gestures_shake">Разклаща се</string>
   <string name="gestures_swipe_up">Натискане нагоре</string>
   <string name="gestures_swipe_down">Натискане надолу</string>
   <string name="gestures_swipe_left">Натискане наляво</string>
@@ -155,8 +135,6 @@
   <string name="tts_summ">Въпрос и отговор се четат, ако няма звуков файл е включен</string>
   <string name="play_sounds_at_start">Изпълнявай звуци незабавно</string>
   <string name="play_sounds_at_start_summ">Възпроизвеdi звуци веднага след показваne на въпрос/отговор</string>
-  <string name="shake_intensity">Разклаща се праг</string>
-  <string name="shake_intensity_summ">Праг за признаване на разклащането: XXX</string>
   <string name="sync_fetch_missing_media">Привличам медия за синхронизиране</string>
   <string name="sync_fetch_missing_media_summ">Автоматично сваляне на липсващите медии, при синхронизиране.</string>
   <string name="sync_account">AnkiWeb account</string>
@@ -179,10 +157,6 @@
   <string name="timeout_question_seconds">Секунди, преди да е показан следващият въпрос</string>
   <string name="select_locale_title">Изберете език</string>
   <string name="select_theme">Тема</string>
-  <string name="theme_animations">Анимации</string>
-  <string name="theme_animations_summ">Показвай анимации, при обръщане на карти</string>
-  <string name="animation_speed">Продължителност на анимацията</string>
-  <string name="animation_speed_summ">Продължителност на анимации за преход: XXX ms</string>
   <string name="eink_display">E-Ink Display Optimization</string>
   <string name="eink_display_summ">Disable all animations and do some optimization for E-Ink Display</string>
   <string name="vertical_centering">Center card content vertically</string>
@@ -219,21 +193,14 @@
   <string name="filter_google_translate_summ">Just save source word and translation</string>
   <string name="convert_fen_text_summ">Draw chessboard from Forsyth Edwards Notation. The notation must be enclosed in [fen][/fen] tag.</string>
   <string name="sync_set_journal_mode">Настройка на правилния журнал режим...</string>
-  <string name="async_mode">Синхронно изключване</string>
-  <string name="async_mode_summ">Това ускорява AnkiDroid, но може да повреди базата данни, при срив на андроид. Тогава използвайте архиви</string>
-  <string name="async_mode_message">Имайте предвид, че тази опция е по-малко безопаснa и може да причини  някои незначителни повреди, когато Андроид забие (например вследствие на недостиг на памет). \nIt СИЛНО се препоръчва да се използва система за архивиране, ако тази опция е вызможна. \n Включване все пак?</string>
-  <string name="fix_orientation">Фиксира ориентация</string>
-  <string name="fix_orientation_summ">Не позволява промяна на ориентацията, когато се преразглежда</string>
   <string name="per_day">За ден</string>
   <string name="studyoptions_new_cards_per_day">Нови карти за ден</string>
   <string name="studyoptions_max_fail_card">Сбъркани карти</string>
-  <string name="show_broadcast_messages">Покажи текущите съобщения</string>
-  <string name="show_broadcast_messages_summ">Показвай съобщения на AnkiDroid актуализации или важни други новини</string>
   <string name="input_workaround">Въвеждане за заобикаляне</string>
   <string name="input_workaround_summ">За заобикаляне на проблема с HTML входните полета. Причинява проблеми на някой устройства.</string>
   <string name="write_answers_message">Можете да дефинирате за всяка колода поле, за да сравните с писмен отговор. Можете да направите това чрез Anki десктоп (дек свойства - &gt; редактиране на модел - &gt; положение на карта).\n\n Ако е зададено никакво поле за сравняване, вашият писмен отговор винаги ще се сравни с картата за целия отговор.</string>
   <string name="pref_cardbrowser_skip_init_search">Fast Card Browser Open</string>
-  <string name="pref_cardbrowser_skip_init_search_summ">Skips initial automatic search when the card browser opens.</string>
+  <string name="pref_cardbrowser_skip_init_search_summ">Skips initial automatic search when the card browser opens or the deck is changed.</string>
   <string name="pref_keep_screen_on">Запази екрана вкл</string>
   <string name="pref_keep_screen_on_summ">Попречите на екрана да бъде изключен докато преглеждате</string>
   <string name="pref_simple_interface">Прост интерфейс</string>
@@ -306,8 +273,6 @@
   <string name="deck_conf_cram_reschedule_summ">Reschedule cards based on my answers in this deck</string>
   <string name="deck_conf_cram_steps">Custom steps</string>
   <string name="deck_conf_cram_steps_summ">Define custom steps</string>
-  <string name="pref_show_splashscreen">Splash screen</string>
-  <string name="pref_show_splashscreen_summ">Show splash screen</string>
   <string name="pref_intent_add_instant">Instant add</string>
   <string name="pref_intent_add_instant_summ">Add new cards from dictionaries without opening AnkiDroid. You find them later under \'saved data\' in card adder.</string>
   <string name="pref_cat_intent_add">External data addition</string>

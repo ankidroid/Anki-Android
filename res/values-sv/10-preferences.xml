@@ -40,8 +40,6 @@
 -->
 <resources>
   <string name="pref_cat_collection">Samling</string>
-  <string name="pref_internal_memory">Använd internt minne</string>
-  <string name="pref_internal_memory_summ">Lagra samling i internt minne. Detta är inte rekommenderat, eftersom du inte kan komma åt samlingsfilen så lätt</string>
   <string name="pref_cat_sync">Synkronisering</string>
   <string name="pref_cat_qadisplay">Visning av frågor och svar</string>
   <string name="pref_cat_general">Allmänt</string>
@@ -53,7 +51,6 @@
   <string name="pref_cat_navigation">Navigering</string>
   <string name="pref_cat_swipe">Drag</string>
   <string name="pref_cat_navigation_sensitivity">Känslighet</string>
-  <string name="pref_cat_zoom">Zoom</string>
   <string name="pref_cat_zeemote">Zeemote</string>
   <string name="pref_cat_reset">Återställ</string>
   <string name="pref_cat_other">Övrigt</string>
@@ -70,10 +67,7 @@
   <string name="show_study_options_on_deck_load_summ">Visar studieinställningsskärmen när du laddar en kortlek</string>
   <string name="hide_due_count">Göm antal i kö</string>
   <string name="hide_due_count_summ">Gömmer antalet i kö</string>
-  <string name="show_progress_bars">Visa förloppsmätare</string>
-  <string name="show_progress_bars_summ">Visar dagens framsteg samt andelen korrekta repetitionssvar</string>
-  <string name="fade_scrollbars">Dölj rullister</string>
-  <string name="fade_scrollbars_summ">Dölj automatiskt rullister för kort när du inte scrollar</string>
+  <string name="enable_whiteboard">Enable Whiteboard</string>
   <string name="show_whiteboard_summ">Låter dig skriva på skärmen</string>
   <string name="whiteboard_stroke_width">Linjebredd för whiteboard</string>
   <string name="whiteboard_stroke_width_summ">Linjebredd: XXX</string>
@@ -81,24 +75,13 @@
   <string name="whiteboard_black_summ">Använd svartvit istället för färgad penna (för enheter med lite minne, fungerar inte i nattläge)</string>
   <string name="write_answers">Skriv svar</string>
   <string name="write_answers_summ">Låter dig skriva svaret och jämföra med det korrekta svaret</string>
-  <string name="text_selection">Tillåt textmarkering</string>
-  <string name="text_selection_summ">Låter dig markera och kopiera text från kort (via meny eller långt klick) för att söka i extern ordlista</string>
   <string name="text_selection_click">Långt klick-workaround</string>
   <string name="text_selection_click_summ">Aktivera detta om du inte kan påbörja textmarkering via långt klick</string>
   <string name="dictionary">Ordbok</string>
   <string name="dictionary_summ">Ordbok där sökningar ska göras: XXX</string>
   <string name="reset_languages">Återställ språk</string>
   <string name="reset_languages_summ">Återställ språktilldelningar (för text till tal och ordböcker) för alla kortlekar. Återställ specifika kortlekstilldelningar i kortleksväljaren</string>
-  <string name="reset_all">Återställ alla</string>
-  <string name="reset_all_summ">Återställ språk, gränssnittskomponenter och ordlistor</string>
-  <string name="reset_dialogs">Återställ Dialogrutor</string>
-  <string name="reset_dialogs_question">Återställ alla dialogrutor?</string>
-  <string name="reset_dialogs_summ">Återställ alla dialogrutor som är inställda på att inte visas igen</string>
   <string name="reset_languages_question">Återställ alla språktilldelningar?</string>
-  <string name="reset_messages">Återställ meddelanden</string>
-  <string name="reset_messages_question">Visa aktuella meddelanden igen?</string>
-  <string name="reset_messages_summ">Visa aktuellt meddelande om AnkiDroid senare</string>
-  <string name="reset_all_question">Vill du återställa alla språk, gränssnittskomponenter, whiteboardtavlor och ordlistor?</string>
   <string name="reset_confirmation">Alla tillstånd återsätllda</string>
   <string name="use_ruby_support">Stöd för ruby-kommentarer</string>
   <string name="use_ruby_support_summ">Om tecknet \'[\' och  \']\' hittas så hanteras inramad text som ruby-anteckning</string>
@@ -114,8 +97,6 @@
   <string name="col_path_summ">Sökvägen till platsen där din samling finns</string>
   <string name="fullscreen_review">Repetera i fullskärm</string>
   <string name="fullscreen_review_summ">Du kan välja om all tillgänglig skärmyta ska användas vid repetition av kort</string>
-  <string name="zoom">Aktivera Zoom</string>
-  <string name="zoom_summ">Visa zoom-kontrollerna vid repetition</string>
   <string name="zeemote">Stöd för Zeemote JS1</string>
   <string name="zeemote_summ">Använd Zeemote JS1 handkontroll för att navigera vid granskning</string>
   <string name="zeemote_actions">Zeemote-handlingar i repetitionsvisaren</string>
@@ -133,7 +114,6 @@
   <string name="swipe_summ_off">Använd gester för att växla mellan skärmar och svarskort. Detta alternativ är ej kompatibelt med zoomkontrollerna</string>
   <string name="swipe_summ_on">Dra horisontellt för att byta mellan skärmar. Ställ in andra handlingar nedan</string>
   <string name="pref_cat_actions">Handlingar</string>
-  <string name="gestures_shake">Skakning</string>
   <string name="gestures_swipe_up">Dra uppåt</string>
   <string name="gestures_swipe_down">Dra neråt</string>
   <string name="gestures_swipe_left">Dra vänster</string>
@@ -155,8 +135,6 @@
   <string name="tts_summ">Läser upp fråga och svar om ingen ljudfil ingår</string>
   <string name="play_sounds_at_start">Spela upp ljud direkt</string>
   <string name="play_sounds_at_start_summ">Spelar ljud direkt efter att ha visat fråga/svar</string>
-  <string name="shake_intensity">Gränsvärde för skakning</string>
-  <string name="shake_intensity_summ">Gränsvärde för igenkännande av skakning: XXX</string>
   <string name="sync_fetch_missing_media">Hämta media vid synk</string>
   <string name="sync_fetch_missing_media_summ">Hämta automatiskt saknade media vid synkning.</string>
   <string name="sync_account">AnkiWeb-konto</string>
@@ -179,10 +157,6 @@
   <string name="timeout_question_seconds">Sekunder innan nästa kort visas</string>
   <string name="select_locale_title">Välj språk</string>
   <string name="select_theme">Tema</string>
-  <string name="theme_animations">Animationer</string>
-  <string name="theme_animations_summ">Visa animeringar när kort vänds</string>
-  <string name="animation_speed">Animationslängd</string>
-  <string name="animation_speed_summ">Varaktighet av övergångsanimationer: XXX ms</string>
   <string name="eink_display">E-inkdisplay optimering</string>
   <string name="eink_display_summ">Inaktivera alla animationer och gör optimering för E-Ink-skärmar</string>
   <string name="vertical_centering">Centrera kortinnehåll vertikalt</string>
@@ -219,21 +193,14 @@
   <string name="filter_google_translate_summ">Spara endast källord och översättning</string>
   <string name="convert_fen_text_summ">Rita schackbräde från Forsyth Edwards-notation. Notationen måste omslutas av taggen [fen][/fen].</string>
   <string name="sync_set_journal_mode">Ställer in korrekt journalläge...</string>
-  <string name="async_mode">Asynkront läge</string>
-  <string name="async_mode_summ">Detta snabbar upp AnkiDroid men kan korrumpera databaser när hela Android-systemet kraschar, så använd säkerhetskopior</string>
-  <string name="async_mode_message">Detta alternativt är osäkert och kan göra dina kortlekar oanvändbara om AnkiDroid kraschar (t.ex. på grund av slut på batteriet).\nDet är rekommenderas STARKT att säkerhetskopieringssytemet används om detta alternativ är aktiverat.\nAktivera ändå?</string>
-  <string name="fix_orientation">Fast orientering</string>
-  <string name="fix_orientation_summ">Tillåt inte att orienteringen ändras vid repetition av kort</string>
   <string name="per_day">Per dag</string>
   <string name="studyoptions_new_cards_per_day">Nya kort per dag</string>
   <string name="studyoptions_max_fail_card">Max misslyckade kort</string>
-  <string name="show_broadcast_messages">Visa aktuella meddelanden</string>
-  <string name="show_broadcast_messages_summ">Visa meddelanden om nya versioner av AnkiDroid eller andra viktiga meddelanden</string>
   <string name="input_workaround">Inmatnings-workaround</string>
   <string name="input_workaround_summ">Tillfällig lösning för fokusproblem på inmatningsfält för HTML. Orsakar problem på flera enheter.</string>
   <string name="write_answers_message">För varje kortlek bör du definiera ett fält att jämföra det skrivna svaret med. Du kan kan göra detta via Anki Desktop (korleksegenskaper -&gt; redigera modell -&gt; kortlekslayout).\n\nOm inget fält anges kommer ditt skrivna svar att jämföras med hela svaret hos kortet.</string>
   <string name="pref_cardbrowser_skip_init_search">Snabböppning av kortutforskaren</string>
-  <string name="pref_cardbrowser_skip_init_search_summ">Skippar inledande automatisk sökning då kortutforskaren öppnas.</string>
+  <string name="pref_cardbrowser_skip_init_search_summ">Skips initial automatic search when the card browser opens or the deck is changed.</string>
   <string name="pref_keep_screen_on">Håll skärmen på</string>
   <string name="pref_keep_screen_on_summ">Förhindra att skärmen stängs av vid repetition av kort</string>
   <string name="pref_simple_interface">Enkelt gränssnitt</string>
@@ -306,8 +273,6 @@
   <string name="deck_conf_cram_reschedule_summ">Omplanera kort baserad på mina svar i denna kortlek</string>
   <string name="deck_conf_cram_steps">Anpassade steg</string>
   <string name="deck_conf_cram_steps_summ">Definiera anpassade steg</string>
-  <string name="pref_show_splashscreen">Välkomstskärm</string>
-  <string name="pref_show_splashscreen_summ">Visa välkomstskärm</string>
   <string name="pref_intent_add_instant">Lägg till omedelbart</string>
   <string name="pref_intent_add_instant_summ">Lägg till nya kort från ordböcker utan att ens öppna AnkiDroid. Du hittar dem senare under \'sparad data\' i korttilläggaren.</string>
   <string name="pref_cat_intent_add">Tillägg av extern data</string>

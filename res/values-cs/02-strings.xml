@@ -42,19 +42,20 @@
   <string name="CardEditorCancelButton">Zrušit</string>
   <string name="CardEditorSaveButton">Uložit</string>
   <string name="CardEditorLaterButton">Později</string>
-  <string name="CardEditorPreviewButton">Náhled</string>
   <string name="CardEditorLaterMessage">Uložené informace na později</string>
   <string name="CardEditorCardDeck">Karta balíčku: %s</string>
   <string name="CardEditorNoteDeck">Poznámka balíčku: %s</string>
   <string name="CardEditorModel">Typ poznámky:%s</string>
   <string name="CardEditorTags">Štítky: %1$s</string>
-  <string name="add_new_tag">Přidat nový štítek</string>
+  <string name="add_new_filter_tags">Add/Filter tags</string>
   <string name="note_type">Typ poznámky</string>
   <string name="card_type">Typ karty</string>
+  <string name="filter_tags">Filter tags</string>
   <string name="sdcard_missing_message">SD karta je nedostupná, protože se používá jako úložiště USB. Odpojte USB pro přístup ke svým balíkům.</string>
   <string name="show_whiteboard">Zobrazit tabuli</string>
   <string name="hide_whiteboard">Skrýt tabuli</string>
   <string name="clear_whiteboard">Smazat tabuli</string>
+  <string name="replay_audio">Replay audio</string>
   <string name="cram_edit_warning">Úprava karet není během šprtání povolena</string>
   <string name="suspend_leeches">Vyřadit pijavice</string>
   <string name="leech_suspend_notification">Karta označena jako pijavice a vyřazena</string>
@@ -83,6 +84,7 @@
   <string name="card_editor_reset">Obnovit</string>
   <string name="card_editor_copy_card">Kopírovat kartu</string>
   <string name="card_editor_reset_card">Obnovit proces učení</string>
+  <string name="card_editor_preview_card">Preview</string>
   <string name="error_insufficient_memory">Operace není možná z důvodu nedostatku paměti na zařízení</string>
   <string name="tutorial_load">Vytváření výukového balíčku. \nProsím čekejte...</string>
   <string name="tutorial_loading_error">Nebylo možné vytvořit výukový balíček</string>
@@ -134,11 +136,11 @@
     <item>Odpověď</item>
     <item>Karta</item>
     <item>Balíček</item>
-    <item>Zapomínání</item>
-    <item>Poznámka</item>
-    <item>Otázka</item>
-    <item>Opakování</item>
-    <item>Štítky</item>
+    <item>Note</item>
+    <item>Question</item>
+    <item>Tags</item>
+    <item>Lapses</item>
+    <item>Reviews</item>
   </string-array>
   <string-array name="dynOrderLabels">
     <item>Nejstarší první</item>

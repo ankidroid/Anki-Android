@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">Σύνολο καρτών:</string>
   <string name="studyoptions_eta">Εκτιμώμενη διάρκεια (λεπτά):</string>
   <string name="studyoptions_start">Study Now</string>
+  <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">Εμφάνιση Απάντησης</string>
   <string name="ease1_successive">Ξανά</string>
   <string name="ease2_successive">Δύσκολη</string>
@@ -63,7 +64,7 @@
   <string name="card_unsuspended">Αναστολή κάρτας αναιρέθηκε</string>
   <string name="card_suspended">Κάρτα επαναστάλει</string>
   <string name="menu_rotate">Περιστροφή</string>
-  <string name="menu_import">Εισαγωγή καρτών</string>
+  <string name="menu_import">Import file</string>
   <string name="undo">Αναίρεση</string>
   <string name="undo_action_review">επανάληψης</string>
   <string name="undo_action_edit">επεξεργασίας σημείωσης</string>
@@ -82,6 +83,8 @@
   <string name="contextmenu_deckpicker_collapse_deck">Hide Subdecks</string>
   <string name="contextmenu_deckpicker_inflate_deck">Show Subdecks</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Ορισμός προσαρμοσμένου λεξικού</string>
+  <string name="menu_add">Add</string>
+  <string name="menu_add_note">Add note</string>
   <string name="menu_download_deck">Λήψη τράπουλας</string>
   <string name="menu_download_shared_deck">Κοινόχρηστη τράπουλα</string>
   <string name="menu_my_account">Συγχρονισμός λογαριασμού</string>
@@ -99,9 +102,9 @@
   <string name="menu_search">Αναζήτηση στο %1$s</string>
   <string name="menu_mark_card">Σημάδεμα κάρτας</string>
   <string name="menu_unmark_card">Ξεμαρκάρισμα Κάρτας</string>
-  <string name="new_deck">Νέα τράπουλα</string>
+  <string name="new_deck">Create deck</string>
   <string name="create">Δημιουργία</string>
-  <string name="new_dynamic_deck">Νέα φιλτραρισμένη τράπουλα</string>
+  <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">Σχόλια</string>
   <string name="studyoptions_load_tutorial_deck">Δημιουργία φροντιστηρίου</string>
   <string name="night_mode">Νυκτερινή λειτουργία</string>

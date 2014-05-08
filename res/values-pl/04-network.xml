@@ -78,6 +78,7 @@
   <string name="alert_logging_message">Logowanie, proszę czekać...</string>
   <string name="invalid_username_password">Nieprawidłowy adres e-mail lub hasło.</string>
   <string name="login_generic_error">Nie można się zalogować.</string>
+  <string name="reset_password">Reset password</string>
   <string name="download_finished">Pobieranie zakończone</string>
   <string name="personaldeckpicker_title">Otwórz talię online</string>
   <string name="shareddeckpicker_title">Wybierz talię do pobrania</string>

@@ -112,7 +112,6 @@
   <string-array name="leech_action_labels">
     <item>Suspender tarjeta</item>
     <item>Solamente etiqueta</item>
-    <item>Resetear como nueva</item>
   </string-array>
   <string-array name="new_order_labels">
     <item>Tarjetas nuevas al azar</item>

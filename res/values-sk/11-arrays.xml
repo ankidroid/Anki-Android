@@ -112,7 +112,6 @@
   <string-array name="leech_action_labels">
     <item>Dať kartu bokom</item>
     <item>Iba pridať štítok</item>
-    <item>Obnoviť ako nový</item>
   </string-array>
   <string-array name="new_order_labels">
     <item>Nové karty v náhodnom poradí</item>

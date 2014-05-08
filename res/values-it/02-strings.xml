@@ -42,19 +42,20 @@
   <string name="CardEditorCancelButton">Annulla</string>
   <string name="CardEditorSaveButton">Salva</string>
   <string name="CardEditorLaterButton">In seguito</string>
-  <string name="CardEditorPreviewButton">Anteprima</string>
   <string name="CardEditorLaterMessage">Informazione salvata per più tardi</string>
   <string name="CardEditorCardDeck">Mazzo carte: %s</string>
   <string name="CardEditorNoteDeck">Mazzo nota: %s</string>
   <string name="CardEditorModel">Tipo nota: %s</string>
   <string name="CardEditorTags">Etichette: %1$s</string>
-  <string name="add_new_tag">Aggiungi nuova etichetta</string>
+  <string name="add_new_filter_tags">Add/Filter tags</string>
   <string name="note_type">Tipo di nota</string>
   <string name="card_type">Tipo di carta</string>
+  <string name="filter_tags">Filter tags</string>
   <string name="sdcard_missing_message">La scheda SD non è disponibile, perché è usata come unità USB. Scollegare l\'USB per accedere ai mazzi.</string>
   <string name="show_whiteboard">Mostra lavagna</string>
   <string name="hide_whiteboard">Nascondi lavagna</string>
   <string name="clear_whiteboard">Pulisci lavagna</string>
+  <string name="replay_audio">Replay audio</string>
   <string name="cram_edit_warning">Non è permesso modificare una carta durante lo studio focalizzato</string>
   <string name="suspend_leeches">Sospendi le sanguisughe</string>
   <string name="leech_suspend_notification">Carta contrassegnata come sanguisuga e sospesa</string>
@@ -83,6 +84,7 @@
   <string name="card_editor_reset">Reimposta</string>
   <string name="card_editor_copy_card">Copia carta</string>
   <string name="card_editor_reset_card">Reimposta progresso</string>
+  <string name="card_editor_preview_card">Preview</string>
   <string name="error_insufficient_memory">Operazione non possibile a causa di memoria insufficiente sul tuo dispositivo</string>
   <string name="tutorial_load">Creazione del mazzo d\'esercizio.\nAttendi...</string>
   <string name="tutorial_loading_error">Il mazzo d\'esercizio non può essere creato</string>
@@ -134,11 +136,11 @@
     <item>Risposta</item>
     <item>Carta</item>
     <item>Mazzo</item>
-    <item>Errori</item>
-    <item>Nota</item>
-    <item>Domanda</item>
-    <item>Ripetizioni</item>
-    <item>Etichette</item>
+    <item>Note</item>
+    <item>Question</item>
+    <item>Tags</item>
+    <item>Lapses</item>
+    <item>Reviews</item>
   </string-array>
   <string-array name="dynOrderLabels">
     <item>Più vecchie visualizzate per prime</item>

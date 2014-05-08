@@ -121,6 +121,5 @@
     <item><![CDATA[AnkiDroid 是 <a href="%1$s"> 開放原始碼軟體 <a/>，鼓勵大家一起 <a href="%2$s"> 加入 </a> ，成為 <a href="%3$s">貢獻者</a>:-)]]></item>
     <item><![CDATA[如果您不是開發人員也同樣可以幫忙，像是 <a href="%1$s"> 翻譯</a> AnkiDroid 介面、或是更新 wiki 和螢幕擷圖、 <a href="%2$s">捐款</a>給電腦版的 Anki，或是在部落格上撰寫關於 AnkiDroid 的文章!]]></item>
     <item><![CDATA[AnkiDroid 是在 <a href="%1$s"> GNU GPL v3 許可證</a> 下發布，程式原始碼可到 <a href="%2$s"> 這裡</a>取得。]]></item>
-    <item><![CDATA[This package uses the <a href="http://www.csse.monash.edu.au/~jwb/edict.html">EDICT</a> and <a href="http://www.csse.monash.edu.au/~jwb/kanjidic.html">KANJIDIC</a> dictionary files. These files are the property of the <a href="http://www.edrdg.org">Electronic Dictionary Research and Development Group</a>, and are used in conformance with the Group\'s <a href="http://www.edrdg.org/edrdg/licence.html">licence</a>.]]></item>
   </string-array>
 </resources>

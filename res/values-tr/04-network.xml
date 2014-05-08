@@ -78,6 +78,7 @@
   <string name="alert_logging_message">Giriş yapılıyor, lütfen bekleyin...</string>
   <string name="invalid_username_password">Geçersiz eposta adresi veya şifre</string>
   <string name="login_generic_error">Giriş başarısız.</string>
+  <string name="reset_password">Reset password</string>
   <string name="download_finished">İndirme bitti</string>
   <string name="personaldeckpicker_title">Çevrimiçi Deste Aç</string>
   <string name="shareddeckpicker_title">İndirmek istediğiniz desteyi seçin</string>

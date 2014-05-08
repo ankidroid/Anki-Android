@@ -112,7 +112,6 @@
   <string-array name="leech_action_labels">
     <item>Отложить карту</item>
     <item>Только тег добавить</item>
-    <item>Установить как новую</item>
   </string-array>
   <string-array name="new_order_labels">
     <item>Новые в случайном порядке</item>

@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">Totalt antall kort:</string>
   <string name="studyoptions_eta">Tidsestimat (min.):</string>
   <string name="studyoptions_start">Study Now</string>
+  <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">Vis svaret</string>
   <string name="ease1_successive">Igjen</string>
   <string name="ease2_successive">Vanskelig</string>
@@ -63,7 +64,7 @@
   <string name="card_unsuspended">Gjorde om suspendering av kort</string>
   <string name="card_suspended">Kort suspendert på nytt</string>
   <string name="menu_rotate">Roter</string>
-  <string name="menu_import">Importer kort</string>
+  <string name="menu_import">Import file</string>
   <string name="undo">Angre</string>
   <string name="undo_action_review">gjennomgang</string>
   <string name="undo_action_edit">rediger notat</string>
@@ -82,6 +83,8 @@
   <string name="contextmenu_deckpicker_collapse_deck">Hide Subdecks</string>
   <string name="contextmenu_deckpicker_inflate_deck">Show Subdecks</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Sett egendefinert ordliste</string>
+  <string name="menu_add">Add</string>
+  <string name="menu_add_note">Add note</string>
   <string name="menu_download_deck">Last ned kortstokk</string>
   <string name="menu_download_shared_deck">Delt kortstokk</string>
   <string name="menu_my_account">Synkroniser konto</string>
@@ -99,9 +102,9 @@
   <string name="menu_search">Oppslag i %1$s</string>
   <string name="menu_mark_card">Merk kort</string>
   <string name="menu_unmark_card">Fjern merking på kort</string>
-  <string name="new_deck">Ny kortstokk</string>
+  <string name="new_deck">Create deck</string>
   <string name="create">Opprett</string>
-  <string name="new_dynamic_deck">New filtered deck</string>
+  <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">Tilbakemelding</string>
   <string name="studyoptions_load_tutorial_deck">Lag veileder</string>
   <string name="night_mode">Nattmodus</string>

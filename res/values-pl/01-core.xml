@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">Łącznie kart:</string>
   <string name="studyoptions_eta">Szacowany czas (min):</string>
   <string name="studyoptions_start">Ucz się teraz</string>
+  <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">Pokaż odpowiedź</string>
   <string name="ease1_successive">Powtórz</string>
   <string name="ease2_successive">Trudno</string>
@@ -63,7 +64,7 @@
   <string name="card_unsuspended">Karta reaktywowana</string>
   <string name="card_suspended">Karta zawieszona</string>
   <string name="menu_rotate">Obrót</string>
-  <string name="menu_import">Import kart</string>
+  <string name="menu_import">Import file</string>
   <string name="undo">Cofnij</string>
   <string name="undo_action_review">powtórkę</string>
   <string name="undo_action_edit">edycję notatki</string>
@@ -82,6 +83,8 @@
   <string name="contextmenu_deckpicker_collapse_deck">Ukryj sub-talie</string>
   <string name="contextmenu_deckpicker_inflate_deck">Pokaż sub-talie</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Ustaw własny słownik</string>
+  <string name="menu_add">Add</string>
+  <string name="menu_add_note">Add note</string>
   <string name="menu_download_deck">Pobierz talię</string>
   <string name="menu_download_shared_deck">Udostępniona talia</string>
   <string name="menu_my_account">Synchronizacja konta</string>
@@ -99,9 +102,9 @@
   <string name="menu_search">Wyszukiwanie w %1$s</string>
   <string name="menu_mark_card">Wyróżnij kartę</string>
   <string name="menu_unmark_card">Usuń wyróżnienie karty</string>
-  <string name="new_deck">Nowa talia</string>
+  <string name="new_deck">Create deck</string>
   <string name="create">Utwórz</string>
-  <string name="new_dynamic_deck">Nowa talia filtrowana</string>
+  <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">Informacje zwrotne</string>
   <string name="studyoptions_load_tutorial_deck">Utwórz samouczek</string>
   <string name="night_mode">Tryb nocny</string>

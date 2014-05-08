@@ -42,19 +42,20 @@
   <string name="CardEditorCancelButton">Cancelar</string>
   <string name="CardEditorSaveButton">Gardar</string>
   <string name="CardEditorLaterButton">Máis tarde</string>
-  <string name="CardEditorPreviewButton">Preview</string>
   <string name="CardEditorLaterMessage">Información gardada para máis tarde</string>
   <string name="CardEditorCardDeck">Baralla do cartón: %s</string>
   <string name="CardEditorNoteDeck">Baralla da notación: %s</string>
   <string name="CardEditorModel">Tipo da notación: %s</string>
   <string name="CardEditorTags">Etiquetas: %1$s</string>
-  <string name="add_new_tag">Engadir nova etiqueta</string>
+  <string name="add_new_filter_tags">Add/Filter tags</string>
   <string name="note_type">Tipo de notación</string>
   <string name="card_type">Tipo de cartón</string>
+  <string name="filter_tags">Filter tags</string>
   <string name="sdcard_missing_message">A tarxeta SD non está dispoñible porque está a ser utilizada como almacenamento USB. Desconecta o cable USB para acceder ás túas barallas.</string>
   <string name="show_whiteboard">Amosar encerado</string>
   <string name="hide_whiteboard">Agochar encerado</string>
   <string name="clear_whiteboard">Limpar encerado</string>
+  <string name="replay_audio">Replay audio</string>
   <string name="cram_edit_warning">Non está permitida a edición de cartas mentres se chapa</string>
   <string name="suspend_leeches">Suspender sambesugas</string>
   <string name="leech_suspend_notification">Cartón marcado como sambesuga e suspendido</string>
@@ -83,6 +84,7 @@
   <string name="card_editor_reset">Restablecer</string>
   <string name="card_editor_copy_card">Copiar cartón</string>
   <string name="card_editor_reset_card">Reiniciar progreso</string>
+  <string name="card_editor_preview_card">Preview</string>
   <string name="error_insufficient_memory">Operación non dispoñible debido a memoria insuficiente no teu dispositivo</string>
   <string name="tutorial_load">Creando baralla de iniciación.\nAgarda por favor...</string>
   <string name="tutorial_loading_error">A baralla de iniciación non puido ser creada</string>
@@ -134,11 +136,11 @@
     <item>Answer</item>
     <item>Card</item>
     <item>Deck</item>
-    <item>Lapses</item>
     <item>Note</item>
     <item>Question</item>
-    <item>Reviews</item>
     <item>Tags</item>
+    <item>Lapses</item>
+    <item>Reviews</item>
   </string-array>
   <string-array name="dynOrderLabels">
     <item>Oldest seen first</item>

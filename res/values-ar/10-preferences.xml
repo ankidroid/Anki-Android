@@ -40,8 +40,6 @@
 -->
 <resources>
   <string name="pref_cat_collection">Collection</string>
-  <string name="pref_internal_memory">Use internal memory</string>
-  <string name="pref_internal_memory_summ">Store collection in internal memory. This is not recommended, as you cannot access the collection file that easily</string>
   <string name="pref_cat_sync">المزامنة</string>
   <string name="pref_cat_qadisplay">عرض</string>
   <string name="pref_cat_general">عام</string>
@@ -53,7 +51,6 @@
   <string name="pref_cat_navigation">التنقل</string>
   <string name="pref_cat_swipe">السحب</string>
   <string name="pref_cat_navigation_sensitivity">الحساسية</string>
-  <string name="pref_cat_zoom">تحجيم</string>
   <string name="pref_cat_zeemote">Zeemote</string>
   <string name="pref_cat_reset">إعادة تعيين</string>
   <string name="pref_cat_other">أخرى</string>
@@ -70,10 +67,7 @@
   <string name="show_study_options_on_deck_load_summ">يعرض شاشة خيارات الدراسة عند تحميل الرزمة</string>
   <string name="hide_due_count">أخف عدد المستحق</string>
   <string name="hide_due_count_summ">يخفي عدد المستحق</string>
-  <string name="show_progress_bars">عرض أشرطة التقدم</string>
-  <string name="show_progress_bars_summ">يبين التقدم المحرز في اليوم ونسبة اليوم بإجابات نعم أثناء المراجعة</string>
-  <string name="fade_scrollbars">إخفاء أشرطة التمرير</string>
-  <string name="fade_scrollbars_summ">تتلاشى أشرطة تمرير البطاقات التعليمية تلقائياً عند عدم التمرير</string>
+  <string name="enable_whiteboard">Enable Whiteboard</string>
   <string name="show_whiteboard_summ">يسمح لك بالكتابة على الشاشة</string>
   <string name="whiteboard_stroke_width">سمك خط السبورة</string>
   <string name="whiteboard_stroke_width_summ">عرض الحد: XXX</string>
@@ -81,24 +75,13 @@
   <string name="whiteboard_black_summ">استخدم أحادية اللون بدلاً من الحدود الملونة (للأجهزة ذات الذاكرة قليلة، لا يعمل في نمط الليلي)</string>
   <string name="write_answers">كتابة الإجابات</string>
   <string name="write_answers_summ">يسمح لك بكتابة الإجابة ومقارنتها مع الصحيحة</string>
-  <string name="text_selection">السماح بتحديد النص</string>
-  <string name="text_selection_summ">يتيح لك تحديد ونسخ النص من البطاقات (بواسطة القائمة أو النقر الطويل) للقيام بعمليات البحث في قاموس الخارجي</string>
   <string name="text_selection_click">حل المؤقت لنقرة الطويلة</string>
   <string name="text_selection_click_summ">مكّن هذا إذا لم تكن قادرا على بدء تحديد النص عن طريق النقرة الطويلة</string>
   <string name="dictionary">قاموس</string>
   <string name="dictionary_summ">القاموس الذي ينبغي إجراء عمليات البحث عليه: XXX</string>
   <string name="reset_languages">إعادة تعيين اللغات</string>
   <string name="reset_languages_summ">إعادة تعيين تعيينات اللغة (النص إلى كلام والقواميس) لجميع الرزم. إعادة تعيين تعيينات الرزم محددة على منتقي الرزم</string>
-  <string name="reset_all">إعادة تعيين الكل</string>
-  <string name="reset_all_summ">إعادة تعيين جميع حالات اللغة و الودجة و السبورة والقاموس</string>
-  <string name="reset_dialogs">إعادة تعيين الحوارات</string>
-  <string name="reset_dialogs_question">إعادة تعيين كل الحوارات؟</string>
-  <string name="reset_dialogs_summ">إعادة تعيين كل الحوارات التي عينت غير ظاهرة مجددا</string>
   <string name="reset_languages_question">إعادة تعيين كافة تعيينات اللغة؟</string>
-  <string name="reset_messages">إعادة تعيين الرسائل</string>
-  <string name="reset_messages_question">إظهار الرسائل الحالية مرة أخرى؟</string>
-  <string name="reset_messages_summ">أظهر رسائل أنكيدرويد الحالية في وقت آخر</string>
-  <string name="reset_all_question">هل تريد إعادة تعيين جميع حالات اللغة و الودجة و السبورة والقاموس؟</string>
   <string name="reset_confirmation">إعادة تعيين كل الحالات</string>
   <string name="use_ruby_support">توفير دعم روبي للتعليق</string>
   <string name="use_ruby_support_summ">إذا وجدت الحروف  \'[\' and \']\' ، فإن النص المغلف سيعامل كتعليق بلغة روبي</string>
@@ -114,8 +97,6 @@
   <string name="col_path_summ">المسار إلى حيث يتم تخزين مجموعتك</string>
   <string name="fullscreen_review">المراجعة في ملء الشاشة</string>
   <string name="fullscreen_review_summ">يمكنك أن تقرر إذا كنت ترغب في استخدام كافة مساحة الشاشة المتوفرة أثناء مراجعة البطاقة</string>
-  <string name="zoom">تمكين التحجيم</string>
-  <string name="zoom_summ">أظهر عناصر التحكم التحجيم عند المراجعة</string>
   <string name="zeemote">دعم Zeemote JS1</string>
   <string name="zeemote_summ">استخدم متحكم Zeemote JS1 للتنقل بين المراجعات.</string>
   <string name="zeemote_actions">الإجراءات Zeemote في المراجع</string>
@@ -133,7 +114,6 @@
   <string name="swipe_summ_off">استخدم الحركات لتبديل بين الشاشات و بطاقات الإجابة. هذا الخيار لا يتوافق مع متحكمات التكبير</string>
   <string name="swipe_summ_on">اسحب أفقيا للتبديل بين الشاشات. قم بإعداد الإجراءات الأخرى أدناه</string>
   <string name="pref_cat_actions">الإجراءات</string>
-  <string name="gestures_shake">الهز</string>
   <string name="gestures_swipe_up">السحب للأعلى</string>
   <string name="gestures_swipe_down">السحب للإسفل</string>
   <string name="gestures_swipe_left">السحب لليسار</string>
@@ -155,8 +135,6 @@
   <string name="tts_summ">اقرأ السؤال والإجابة إذا لم يضمن ملف صوتي</string>
   <string name="play_sounds_at_start">سماع الأصوات على الفور</string>
   <string name="play_sounds_at_start_summ">سماع الأصوات على الفور بعد إظهار إجابة السؤال</string>
-  <string name="shake_intensity">عتبة الاهتزاز</string>
-  <string name="shake_intensity_summ">الحد الأدنى للتعرف على الهز: XXX</string>
   <string name="sync_fetch_missing_media">اجلب الوسائط أثناء المزامنة</string>
   <string name="sync_fetch_missing_media_summ">جلب الوسائط المفقودة تلقائياً عند المزامنة.</string>
   <string name="sync_account">AnkiWeb account</string>
@@ -179,10 +157,6 @@
   <string name="timeout_question_seconds">الثواني قبل ظهور السؤال التالي</string>
   <string name="select_locale_title">حدد اللغة</string>
   <string name="select_theme">السمة</string>
-  <string name="theme_animations">التحريك</string>
-  <string name="theme_animations_summ">أظهر الحركات عند تقليب البطاقات</string>
-  <string name="animation_speed">مدة التحريك</string>
-  <string name="animation_speed_summ">مدة الحركات الانتقالية: XXX ms</string>
   <string name="eink_display">تحسين عرض الحبر الإلكتروني</string>
   <string name="eink_display_summ">تعطيل كافة الحركات والقيام ببعض التحسين لعرض الحبر الإلكتروني</string>
   <string name="vertical_centering">Center card content vertically</string>
@@ -219,21 +193,14 @@
   <string name="filter_google_translate_summ">احفظ كلمة مصدر والترجمة فقط</string>
   <string name="convert_fen_text_summ">رسم لوحة الشطرنج من \"علامات إدواردز فورسيث\". يجب إحاطتها العلامة بوسم[fen][/fen].</string>
   <string name="sync_set_journal_mode">وضع نمط السجل الصحيح...</string>
-  <string name="async_mode">إيقاف المزامنة</string>
-  <string name="async_mode_summ">هذا يسرع أنكيدرويد ولكن يمكن أن يعطب قواعد البيانات عند تعطل نظام أندرويد برمته. لذا استخدم النسخ الاحتياطية</string>
-  <string name="async_mode_message">كن على علم بأن هذا الخيار أقل أمنا ويمكن أن يسبب بتخريب الرزمة عندما يتعطل أندرويد (مثلا عند نقص الطاقة).\nينصح بشدة باستخدام نظام النسخ الاحتياطي إذا كان هذا الخيار مفعلا.\nفعّل على كل حال؟</string>
-  <string name="fix_orientation">ثبت الاتجاه</string>
-  <string name="fix_orientation_summ">لا تسمح بتغيير الاتجاه عند المراجعة</string>
   <string name="per_day">في اليوم</string>
   <string name="studyoptions_new_cards_per_day">بطاقات جديدة يوميا</string>
   <string name="studyoptions_max_fail_card">أكبر عدد للبطاقات الفاشلة</string>
-  <string name="show_broadcast_messages">إظهار الرسائل الحالية</string>
-  <string name="show_broadcast_messages_summ">إظهار إعلامات أنكيدرويد مثل تحديثات الإصدار الجديد أو الأخبار المهمة الأخرى</string>
   <string name="input_workaround">إدخال الحل المؤقت</string>
   <string name="input_workaround_summ">حل مؤقت لمشاكل التركيز في حقول الإدخال لـ HTML. يسبب المشاكل في العديد من الأجهزة.</string>
   <string name="write_answers_message">يجب عليك تحديد لكل رزمة حقلا لمقارنة الإجابة المكتوبة به. يمكنك فعل ذلك بواسطة برنامج أنكي سطح المكتب (خيارات الرزمة -&gt; تحرير النموذج -&gt; مخطط البطاقة).\n\nإذا لم يكن هناك حقل للمقارنة، فإن إجابتك المكتوبة ستقارن دائما بإجابة البطاقة الكاملة.</string>
   <string name="pref_cardbrowser_skip_init_search">Fast Card Browser Open</string>
-  <string name="pref_cardbrowser_skip_init_search_summ">Skips initial automatic search when the card browser opens.</string>
+  <string name="pref_cardbrowser_skip_init_search_summ">Skips initial automatic search when the card browser opens or the deck is changed.</string>
   <string name="pref_keep_screen_on">أبق الشاشة تعمل</string>
   <string name="pref_keep_screen_on_summ">امنع الشاشة من الإطفاء أثناء المراجعة</string>
   <string name="pref_simple_interface">واجهة مبسطة</string>
@@ -306,8 +273,6 @@
   <string name="deck_conf_cram_reschedule_summ">إعادة جدولة بطاقات استناداً إلى إجاباتي في هذه الرزمة</string>
   <string name="deck_conf_cram_steps">الخطوات مخصصة</string>
   <string name="deck_conf_cram_steps_summ">تحديد الخطوات مخصصة</string>
-  <string name="pref_show_splashscreen">شاشة البداية</string>
-  <string name="pref_show_splashscreen_summ">إظهار شاشة البداية</string>
   <string name="pref_intent_add_instant">إضافة الفورية</string>
   <string name="pref_intent_add_instant_summ">إضافة بطاقات جديدة من القواميس دون فتح أنكيدرويد. يمكنك العثور عليها فيما بعد تحت \"بيانات محفوظة\" في مضيف البطاقات.</string>
   <string name="pref_cat_intent_add">إضافة بيانات خارجية</string>

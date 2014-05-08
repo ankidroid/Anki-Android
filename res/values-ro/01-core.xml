@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">Total carduri:</string>
   <string name="studyoptions_eta">Timp estimat (min):</string>
   <string name="studyoptions_start">Studiază Acum</string>
+  <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">Arată răspuns</string>
   <string name="ease1_successive">Din nou</string>
   <string name="ease2_successive">Greu</string>
@@ -63,7 +64,7 @@
   <string name="card_unsuspended">Suspendarea cardului anulată</string>
   <string name="card_suspended">Card resuspendat</string>
   <string name="menu_rotate">Rotește</string>
-  <string name="menu_import">Importă carduri</string>
+  <string name="menu_import">Import file</string>
   <string name="undo">Anulare</string>
   <string name="undo_action_review">Recapitulează</string>
   <string name="undo_action_edit">Editare notă</string>
@@ -82,6 +83,8 @@
   <string name="contextmenu_deckpicker_collapse_deck">Ascunde Subdecks</string>
   <string name="contextmenu_deckpicker_inflate_deck">Arată Subdecks</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Stabileste dictionar personalizat</string>
+  <string name="menu_add">Add</string>
+  <string name="menu_add_note">Add note</string>
   <string name="menu_download_deck">Descarca pachet</string>
   <string name="menu_download_shared_deck">Pachet partajat</string>
   <string name="menu_my_account">Sincronizare cont</string>
@@ -99,9 +102,9 @@
   <string name="menu_search">Căutare în %1$s</string>
   <string name="menu_mark_card">Marcare card</string>
   <string name="menu_unmark_card">Demarcare Card</string>
-  <string name="new_deck">Pachet nou</string>
+  <string name="new_deck">Create deck</string>
   <string name="create">Creare</string>
-  <string name="new_dynamic_deck">Pachet nou filtrat</string>
+  <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">Feedback</string>
   <string name="studyoptions_load_tutorial_deck">Creare tutorial</string>
   <string name="night_mode">Mod de noapte</string>

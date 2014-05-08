@@ -121,6 +121,5 @@
     <item><![CDATA[AnkiDroid és <a href="%1$s">programari de codi obert<a/>, així que us animem a <a href="%2$s">unir-vos</a> als <a href="%3$s">col·laboradors</a>:-)]]></item>
     <item><![CDATA[Els no desenvolupadors també podeu ajudar, per exemple <a href="%1$s">amb la traducció</a> d\'AnkiDroid, l\'actualització de la wiki i de les captures de pantalla, <a href="%2$s">col·labora amb</a> l\'Anki taula d\'Escriptori, o critant l\'AnkiDroid al vostre blog!]]></item>
     <item><![CDATA[AnkiDroid és publica sota la <a href="%1$s">llicència GNU GPL v3</a> i el codi font està disponible <a href="%2$s">aquí</a>.]]></item>
-    <item><![CDATA[This package uses the <a href="http://www.csse.monash.edu.au/~jwb/edict.html">EDICT</a> and <a href="http://www.csse.monash.edu.au/~jwb/kanjidic.html">KANJIDIC</a> dictionary files. These files are the property of the <a href="http://www.edrdg.org">Electronic Dictionary Research and Development Group</a>, and are used in conformance with the Group\'s <a href="http://www.edrdg.org/edrdg/licence.html">licence</a>.]]></item>
   </string-array>
 </resources>

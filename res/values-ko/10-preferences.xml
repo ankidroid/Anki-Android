@@ -40,8 +40,6 @@
 -->
 <resources>
   <string name="pref_cat_collection">Collection</string>
-  <string name="pref_internal_memory">내장 메모리 사용</string>
-  <string name="pref_internal_memory_summ">내장 메모리에 컬렉션을 저장합니다. 파일에 쉽게 접근할 수 없으므로 권장되지 않습니다.</string>
   <string name="pref_cat_sync">동기화</string>
   <string name="pref_cat_qadisplay">디스플레이</string>
   <string name="pref_cat_general">일반</string>
@@ -53,7 +51,6 @@
   <string name="pref_cat_navigation">탐색</string>
   <string name="pref_cat_swipe">스와이프</string>
   <string name="pref_cat_navigation_sensitivity">감도</string>
-  <string name="pref_cat_zoom">확대/축소</string>
   <string name="pref_cat_zeemote">Zeemote</string>
   <string name="pref_cat_reset">재설정</string>
   <string name="pref_cat_other">기타</string>
@@ -70,10 +67,7 @@
   <string name="show_study_options_on_deck_load_summ">암기묶음을 불러올 때 학습옵션 보이기</string>
   <string name="hide_due_count">기간 수 숨기기</string>
   <string name="hide_due_count_summ">기간 수 숨기기</string>
-  <string name="show_progress_bars">상태바 보이기</string>
-  <string name="show_progress_bars_summ">리뷰하는 동안 오늘의 진도와 정답비율 보여주기</string>
-  <string name="fade_scrollbars">스크롤바 서서히 사라지기</string>
-  <string name="fade_scrollbars_summ">스크롤하지 않을 때에 스크롤바가 자동으로 서서히 사라집니다</string>
+  <string name="enable_whiteboard">Enable Whiteboard</string>
   <string name="show_whiteboard_summ">학습화면에 쓰기기능 가능하게 함</string>
   <string name="whiteboard_stroke_width">화이트보드 선 폭</string>
   <string name="whiteboard_stroke_width_summ">선굵기: XXX</string>
@@ -81,24 +75,13 @@
   <string name="whiteboard_black_summ">칠판기능시 단색 사용(저사양 메모리 장비를 위한 기능이지만 야간모드에서는 작동하지 않음)</string>
   <string name="write_answers">답변 쓰기</string>
   <string name="write_answers_summ">답을 작성하고 올바른 답과 비교하기</string>
-  <string name="text_selection">텍스트 선택 허용</string>
-  <string name="text_selection_summ">(메뉴 또는 긴 터치 활용)외부 사전 검색을 위해 단어나 문장을 선택하고 복사 가능하게 설정</string>
   <string name="text_selection_click">긴 클릭 해결 방법</string>
   <string name="text_selection_click_summ">긴 클릭을 통해서 텍스트를 선택할 수 없는 경우 이 항목을 활성화</string>
   <string name="dictionary">사전</string>
   <string name="dictionary_summ">학습 중 사용할 사전 지정: XXX</string>
   <string name="reset_languages">언어 재설정</string>
   <string name="reset_languages_summ">모든 암기묶음에 대해 언어기능(문장 읽어주기와 사전기능) 재설정하기. 암기묶음 선택창에서 특정 암기묶음 재설정.</string>
-  <string name="reset_all">초기 설정 복원</string>
-  <string name="reset_all_summ">언어설정, 위젯, 칠판기능 및 외부사전 설정을 모두 재설정하기</string>
-  <string name="reset_dialogs">대화상자 재설정</string>
-  <string name="reset_dialogs_question">모든 대화상자를 재설정할까요?</string>
-  <string name="reset_dialogs_summ">모든 대화상자 보이지 않게 재설정하기</string>
   <string name="reset_languages_question">모든 언어 설정을 재설정할까요?</string>
-  <string name="reset_messages">메시지 재설정</string>
-  <string name="reset_messages_question">현재 메시지를 다시 표시할까요?</string>
-  <string name="reset_messages_summ">현재 표시된 AnkiDroid 메시지를 나중에 보기</string>
-  <string name="reset_all_question">언어설정, 위젯, 칠판기능 및 외부사전 설정을 모두 재설정하시겠습니까?</string>
   <string name="reset_confirmation">모두 재설정</string>
   <string name="use_ruby_support">ruby annotaion [...] 루비 주석 지원 제공</string>
   <string name="use_ruby_support_summ">대괄호 \' [\' 와 \']\' 가 사용될 경우 대괄호 안 글자는 [...] 형태의 ruby annotation 루비주석으로 처리</string>
@@ -114,8 +97,6 @@
   <string name="col_path_summ">컬렉션이 저장된 경로입니다.</string>
   <string name="fullscreen_review">전체화면에서 복습</string>
   <string name="fullscreen_review_summ">카드를 복습하는 동안 학습화면 공간을 모두 사용할지 결정할 수 있습니다.</string>
-  <string name="zoom">확대/축소 사용</string>
-  <string name="zoom_summ">복습할 때 확대/축소 컨트롤 표시</string>
   <string name="zeemote">지모트 JS1 지원</string>
   <string name="zeemote_summ">지모트 JS1 컨트롤러를 사용하여 리뷰를 탐색하기.</string>
   <string name="zeemote_actions">리뷰 작성자기의 Zeemote동작</string>
@@ -133,7 +114,6 @@
   <string name="swipe_summ_off">질문 카드와 정답 카드를 화면전환하기 위해 멀티터치 사용하기. 이 옵션은 화면 축소/확대 컨트롤과 호환되지 않음</string>
   <string name="swipe_summ_on">화면 전환을 위해 수평으로 밀기. 아래쪽 다른 행동 구성하기</string>
   <string name="pref_cat_actions">동작</string>
-  <string name="gestures_shake">흔들기</string>
   <string name="gestures_swipe_up">위쪽 밀기</string>
   <string name="gestures_swipe_down">아래로 밀기</string>
   <string name="gestures_swipe_left">왼쪽 밀기</string>
@@ -155,8 +135,6 @@
   <string name="tts_summ">질문과 정답에 사운드 파일이 없을 경우 자동으로 읽어주기</string>
   <string name="play_sounds_at_start">즉시 사운드 재생</string>
   <string name="play_sounds_at_start_summ">질문/정답 보이기 전 자동으로 사운드 바로 재생</string>
-  <string name="shake_intensity">임계값 조정</string>
-  <string name="shake_intensity_summ">흔들기 인식에 대한 임계값: XXX</string>
   <string name="sync_fetch_missing_media">동기화할 때 미디어파일 가져오기</string>
   <string name="sync_fetch_missing_media_summ">동기화 할때 누락된 미디어를 자동으로 검색하여 가져오기합니다.</string>
   <string name="sync_account">AnkiWeb account</string>
@@ -179,10 +157,6 @@
   <string name="timeout_question_seconds">다음 카드를 학습하기 전 시간 나타내기</string>
   <string name="select_locale_title">언어 선택</string>
   <string name="select_theme">테마</string>
-  <string name="theme_animations">애니메이션</string>
-  <string name="theme_animations_summ">카드 뒤집기시 애니메이션 실행</string>
-  <string name="animation_speed">애니메이션 시간</string>
-  <string name="animation_speed_summ">전환 애니메이션 기간 : XXX MS</string>
   <string name="eink_display">E-잉크 디스플레이 최적화</string>
   <string name="eink_display_summ">애니메이션을 비활성화 및 전자 잉크 디스플레이 최적화</string>
   <string name="vertical_centering">Center card content vertically</string>
@@ -219,21 +193,14 @@
   <string name="filter_google_translate_summ">원본 단어와 번역을 그대로 저장</string>
   <string name="convert_fen_text_summ">Forsyth 에드워즈 진법에서 체스판을 그립니다. 표기법은 [다이어트] [/ 다이어트] 태그로 묶어야합니다.</string>
   <string name="sync_set_journal_mode">올바른 저널 모드를 설정 ...</string>
-  <string name="async_mode">동기화 끄기</string>
-  <string name="async_mode_summ">Ankidroid 속도를 향상시킬 수 있지만 안드로이드 시스템이 멈출경우 데이터베이스가 손상됩니다. 그러므로 백업 사용을 권장합니다</string>
-  <string name="async_mode_message">이 옵션은 안드로이드(예: 전원 부족)운영체제가 다운될 경우 암기묶음이 손상될 수 있으므로 다소 안전하지 않습니다. \n 백업 시스템을 사용할 것을 강력히 추천합니다. \n 어쨌든 가능하게 할까요?</string>
-  <string name="fix_orientation">화면방향 고정</string>
-  <string name="fix_orientation_summ">복습중 화면 회전 금지</string>
   <string name="per_day">1일당</string>
   <string name="studyoptions_new_cards_per_day">하루 새 카드</string>
   <string name="studyoptions_max_fail_card">최대 카드 실패수</string>
-  <string name="show_broadcast_messages">현재 메시지 표시</string>
-  <string name="show_broadcast_messages_summ">새 버전 업데이트 또는 중요한 다른 소식같은 AnkiDroid 알림 표시</string>
   <string name="input_workaround">입력창 설정</string>
   <string name="input_workaround_summ">HTML 입력상자 선택문제 회피방법.몇몇 장치에서 문제가 발생함.</string>
   <string name="write_answers_message">쓰기형 정답 사용시 반드시 비교할 필드을 정의해야 합니다. 이는  Anki 데스크탑 버전에서 할 수도 있습니다. (암기꾸러미 속성 -&gt; 모델 편집 -&gt; 카드 레이아웃).\n\n 만약 비교할 필드를 지정하지 않으면, 정답을 썼을 때 전체 카드 정답과 비교하게 됩니다.</string>
   <string name="pref_cardbrowser_skip_init_search">빠른 카드 탐색기 열기</string>
-  <string name="pref_cardbrowser_skip_init_search_summ">카드 탐색기가 열릴 때 처음의 자동 검색을 하지 않습니다.</string>
+  <string name="pref_cardbrowser_skip_init_search_summ">Skips initial automatic search when the card browser opens or the deck is changed.</string>
   <string name="pref_keep_screen_on">화면을 켜진 채로 유지</string>
   <string name="pref_keep_screen_on_summ">리뷰하는 동안 화면꺼짐 방지</string>
   <string name="pref_simple_interface">간단한 인터페이스</string>
@@ -306,8 +273,6 @@
   <string name="deck_conf_cram_reschedule_summ">이 카드묶음에서 내 대답에 근거에 재조정된 카드들</string>
   <string name="deck_conf_cram_steps">사용자 정의 단계</string>
   <string name="deck_conf_cram_steps_summ">사용자 정의 단계를 정의</string>
-  <string name="pref_show_splashscreen">스플래시 스크린</string>
-  <string name="pref_show_splashscreen_summ">스플래시 스크린 보이기</string>
   <string name="pref_intent_add_instant">빠른 추가</string>
   <string name="pref_intent_add_instant_summ">AnkiDroid를 실행할 필요 없이 사전으로부터 새로운 카드를 바로 추가합니다. 나중에 카드 추가 화면에서 \'저장된 데이터\'로부터 확인하실 수 있습니다.</string>
   <string name="pref_cat_intent_add">외부 데이터 추가</string>

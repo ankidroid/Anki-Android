@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">卡片總數:</string>
   <string name="studyoptions_eta">估計時間(分鐘):</string>
   <string name="studyoptions_start">Study Now</string>
+  <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">看答案</string>
   <string name="ease1_successive">再一次</string>
   <string name="ease2_successive">難</string>
@@ -63,7 +64,7 @@
   <string name="card_unsuspended">復原擱置卡片</string>
   <string name="card_suspended">重新擱置卡片</string>
   <string name="menu_rotate">旋轉</string>
-  <string name="menu_import">匯入卡片</string>
+  <string name="menu_import">Import file</string>
   <string name="undo">復原</string>
   <string name="undo_action_review">複習</string>
   <string name="undo_action_edit">編輯筆記</string>
@@ -82,6 +83,8 @@
   <string name="contextmenu_deckpicker_collapse_deck">Hide Subdecks</string>
   <string name="contextmenu_deckpicker_inflate_deck">Show Subdecks</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">自訂字典</string>
+  <string name="menu_add">Add</string>
+  <string name="menu_add_note">Add note</string>
   <string name="menu_download_deck">下載牌組</string>
   <string name="menu_download_shared_deck">共享牌組</string>
   <string name="menu_my_account">同步帳號</string>
@@ -99,9 +102,9 @@
   <string name="menu_search">在%1$s中查詢</string>
   <string name="menu_mark_card">標記卡片</string>
   <string name="menu_unmark_card">取消卡片標記</string>
-  <string name="new_deck">新增牌組</string>
+  <string name="new_deck">Create deck</string>
   <string name="create">建立</string>
-  <string name="new_dynamic_deck">篩選過的新牌組</string>
+  <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">回饋意見</string>
   <string name="studyoptions_load_tutorial_deck">建立教學牌組</string>
   <string name="night_mode">夜間模式</string>

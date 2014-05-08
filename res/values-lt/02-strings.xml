@@ -42,19 +42,20 @@
   <string name="CardEditorCancelButton">Atsisakyti</string>
   <string name="CardEditorSaveButton">Įrašyti</string>
   <string name="CardEditorLaterButton">Vėliau</string>
-  <string name="CardEditorPreviewButton">Preview</string>
   <string name="CardEditorLaterMessage">Saved information for later</string>
   <string name="CardEditorCardDeck">Kortelės malka: %s</string>
   <string name="CardEditorNoteDeck">Pastabos malka: %s</string>
   <string name="CardEditorModel">Pastabos tipas: %s</string>
   <string name="CardEditorTags">Žymos: %1$s</string>
-  <string name="add_new_tag">Pridėti naują žymą</string>
+  <string name="add_new_filter_tags">Add/Filter tags</string>
   <string name="note_type">Pastabos tipas</string>
   <string name="card_type">Card type</string>
+  <string name="filter_tags">Filter tags</string>
   <string name="sdcard_missing_message">SD kortelė yra nepasiekiama, nes jis yra naudojama kaip USB laikmena. Atjunkite USB, jei norite naudoti savo rinkinius.</string>
   <string name="show_whiteboard">Rodyti baltą lentą</string>
   <string name="hide_whiteboard">Paslėpti baltą lentą</string>
   <string name="clear_whiteboard">Išvalyti lentą</string>
+  <string name="replay_audio">Replay audio</string>
   <string name="cram_edit_warning">Card editing not allowed while cramming</string>
   <string name="suspend_leeches">Suspend Leeches</string>
   <string name="leech_suspend_notification">Card marked as leech and suspended</string>
@@ -83,6 +84,7 @@
   <string name="card_editor_reset">Atstatyti</string>
   <string name="card_editor_copy_card">Kopijuoti kortelę</string>
   <string name="card_editor_reset_card">Atkurti pažangą</string>
+  <string name="card_editor_preview_card">Preview</string>
   <string name="error_insufficient_memory">Operation not possible due to insufficient memory on your device</string>
   <string name="tutorial_load">Creating tutorial deck.\nPlease wait...</string>
   <string name="tutorial_loading_error">Nepavyko sukurti vadovėlio malką</string>
@@ -134,11 +136,11 @@
     <item>Answer</item>
     <item>Card</item>
     <item>Deck</item>
-    <item>Lapses</item>
     <item>Note</item>
     <item>Question</item>
-    <item>Reviews</item>
     <item>Tags</item>
+    <item>Lapses</item>
+    <item>Reviews</item>
   </string-array>
   <string-array name="dynOrderLabels">
     <item>Pirmiau senesnės</item>

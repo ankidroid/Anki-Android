@@ -40,8 +40,6 @@
 -->
 <resources>
   <string name="pref_cat_collection">Gyűjtemény</string>
-  <string name="pref_internal_memory">Belső memória használata</string>
-  <string name="pref_internal_memory_summ">Store collection in internal memory. This is not recommended, as you cannot access the collection file that easily</string>
   <string name="pref_cat_sync">Szinkronizáció</string>
   <string name="pref_cat_qadisplay">Megjelenítés</string>
   <string name="pref_cat_general">Általános</string>
@@ -53,7 +51,6 @@
   <string name="pref_cat_navigation">Navigáció</string>
   <string name="pref_cat_swipe">Lapozó</string>
   <string name="pref_cat_navigation_sensitivity">Érzékenység</string>
-  <string name="pref_cat_zoom">Nagyítás</string>
   <string name="pref_cat_zeemote">Zeemote</string>
   <string name="pref_cat_reset">Alaphelyzetbe állítás</string>
   <string name="pref_cat_other">Egyéb</string>
@@ -70,10 +67,7 @@
   <string name="show_study_options_on_deck_load_summ">Mutassa a tanulási beállításokat, amikor betölt egy paklit</string>
   <string name="hide_due_count">Hide due count</string>
   <string name="hide_due_count_summ">Hides the due count</string>
-  <string name="show_progress_bars">Folyamatjelzők megjelenítése</string>
-  <string name="show_progress_bars_summ">Shows today\'s progress and proportion of today\'s yes answers while reviewing</string>
-  <string name="fade_scrollbars">Fade scrollbars</string>
-  <string name="fade_scrollbars_summ">Automatically fade out flashcard scrollbars when not scrolling</string>
+  <string name="enable_whiteboard">Enable Whiteboard</string>
   <string name="show_whiteboard_summ">Írhatsz a képernyőre</string>
   <string name="whiteboard_stroke_width">Whiteboard stroke width</string>
   <string name="whiteboard_stroke_width_summ">Width of the stroke: XXX</string>
@@ -81,24 +75,13 @@
   <string name="whiteboard_black_summ">Use monochrome instead of colored stroke (for devices with lower memory, does not work in night mode)</string>
   <string name="write_answers">Válaszok írása</string>
   <string name="write_answers_summ">Lehetővé teszi, hogy leírd a válaszod, és aztán összehasonlítsd a helyessel</string>
-  <string name="text_selection">Szöveg kijelölésének engedélyezése</string>
-  <string name="text_selection_summ">Lehetővé teszi szövegek kiválasztását és másolását a kártyán (menüből, vagy hosszú kattintás), hogy keresni lehessen külső szótárakban</string>
   <string name="text_selection_click">Hosszú érintés javítás</string>
   <string name="text_selection_click_summ">Engedélyezd ezt, ha nem tudod kijelölni a szöveget hosszú érintéssel</string>
   <string name="dictionary">Szótár</string>
   <string name="dictionary_summ">Melyik szótárban keresse: XXX</string>
   <string name="reset_languages">Nyelvek alaphelyzetbe állítása</string>
   <string name="reset_languages_summ">Nyelvi hozzárendelések visszaállítása az összes szótárnál(a szöveg-beszéd átalakításoknál és szótáraknál). Az egyes paklik hozzárendeléseit a Pakliválasztónál lehet módosítani</string>
-  <string name="reset_all">Minden visszaállítása</string>
-  <string name="reset_all_summ">A nyelv, a widget, a tábla és a szótár állapotának visszaállítása</string>
-  <string name="reset_dialogs">Párbeszédpanelek alaphelyzetbe állítása</string>
-  <string name="reset_dialogs_question">Visszaállítod az összes dialógust?</string>
-  <string name="reset_dialogs_summ">Összes dialógus visszaállítása, amelyekre be vannak állítva, hogy \"Ne mutasd többé\"</string>
   <string name="reset_languages_question">Állítsa vissza az összes nyelvi beállítást?</string>
-  <string name="reset_messages">Üzenetek visszaállítása</string>
-  <string name="reset_messages_question">Aktuális üzenetek jelnjenek meg újra?</string>
-  <string name="reset_messages_summ">Aktuális AnkiDroid üzenetek nejelenítése máskor</string>
-  <string name="reset_all_question">Visszaállítod a nyelv, a widget, a tábla és a szótár állapotát?</string>
   <string name="reset_confirmation">Minden állapot alaphelyzetbe állítása</string>
   <string name="use_ruby_support">Ruby jegyzet támogatása</string>
   <string name="use_ruby_support_summ">Ha a \"[\" és \"]\" karakterek jelen vannak, akkor az által közrezárt szöveget Ruby jegyzetként kezeli</string>
@@ -114,8 +97,6 @@
   <string name="col_path_summ">Path to where your collection is stored</string>
   <string name="fullscreen_review">Átnézés teljes képernyőn</string>
   <string name="fullscreen_review_summ">Eldöntheted, hogy szeretnéd-e használni az összes rendelkezésre álló területet a kártyák átnézéskor</string>
-  <string name="zoom">Nagyítás engedélyezése</string>
-  <string name="zoom_summ">Zoom vezérlők mutatása átnézésnél</string>
   <string name="zeemote">Zeemote js1 támogatás</string>
   <string name="zeemote_summ">Zeemote JS1 vezérlő használata.</string>
   <string name="zeemote_actions">Zeemote actions in Reviewer</string>
@@ -133,7 +114,6 @@
   <string name="swipe_summ_off">Kézmozdulatok használata a képernyők és a válasz kártyák közötti váltáshoz. Ez a beállítás nem összeegyeztethető a zoommal</string>
   <string name="swipe_summ_on">Elhúz horizontálisan: képernyők közötti váltás. Más funkcó lent beállítható</string>
   <string name="pref_cat_actions">Műveletek</string>
-  <string name="gestures_shake">Rázás</string>
   <string name="gestures_swipe_up">Elhúz fel</string>
   <string name="gestures_swipe_down">Swipe down</string>
   <string name="gestures_swipe_left">Elhúz balra</string>
@@ -155,8 +135,6 @@
   <string name="tts_summ">Felolvassa a kérdést és a választ, ha nincs csatolt hangfájl</string>
   <string name="play_sounds_at_start">Hangok azonnali lejátszása</string>
   <string name="play_sounds_at_start_summ">Kérdés/válasz mutatása után azonnal lejátsza a hangot</string>
-  <string name="shake_intensity">Rázás érzékenység</string>
-  <string name="shake_intensity_summ">Rázás küszöb: XXX</string>
   <string name="sync_fetch_missing_media">Média letöltése szinkronizáláskor</string>
   <string name="sync_fetch_missing_media_summ">Automatikusan töltse le a hiányzó médiát, amikor szinkronizál.</string>
   <string name="sync_account">AnkiWeb account</string>
@@ -179,10 +157,6 @@
   <string name="timeout_question_seconds">Hány másodperc múlva jöjjön a következő kérdés</string>
   <string name="select_locale_title">Válassz nyelvet</string>
   <string name="select_theme">Téma</string>
-  <string name="theme_animations">Animációk</string>
-  <string name="theme_animations_summ">Animáció a kártya fordításánál</string>
-  <string name="animation_speed">Animáció időtartama</string>
-  <string name="animation_speed_summ">Átmenet animációk ideje: XXX ms</string>
   <string name="eink_display">E-Ink Display Optimization</string>
   <string name="eink_display_summ">Disable all animations and do some optimization for E-Ink Display</string>
   <string name="vertical_centering">Center card content vertically</string>
@@ -219,21 +193,14 @@
   <string name="filter_google_translate_summ">Just save source word and translation</string>
   <string name="convert_fen_text_summ">Draw chessboard from Forsyth Edwards Notation. The notation must be enclosed in [fen][/fen] tag.</string>
   <string name="sync_set_journal_mode">Helyes naplózási mód beállítása...</string>
-  <string name="async_mode">Szinkron kikapcsolása</string>
-  <string name="async_mode_summ">Ez felgyorsítja az AnkiDroidot, de sérülhet az adatbázis, ha az Android rendszer összeomlik. Használj biztonsági mentést!</string>
-  <string name="async_mode_message">Figyelem! Ez az opció nem elég biztonságos, és a pakli sérüléséhez vezethet, ha az Android rendszer összeomlik (pl. ha kiesik az akkumlátor).\nErősen ajánlott a biztonsági mentési rendszer használata ennek az opciónak az engedélyezése esetén.\nÍgy is engedélyezed?</string>
-  <string name="fix_orientation">Fix tájolás</string>
-  <string name="fix_orientation_summ">Ne engedje a tájolás megváltozását átnézéskor</string>
   <string name="per_day">Naponta</string>
   <string name="studyoptions_new_cards_per_day">Új kártyák naponta</string>
   <string name="studyoptions_max_fail_card">Max sikertelen kártyák</string>
-  <string name="show_broadcast_messages">Aktuális üzenetek megjelenítése</string>
-  <string name="show_broadcast_messages_summ">Mutassa az AnkiDroid értesítéseket, mint pl. az új verzió, frissítések vagy más fontos hírek</string>
   <string name="input_workaround">Input megoldás</string>
   <string name="input_workaround_summ">Megoldás a HTML beviteli mezők hibáira. Sok eszközön problémákat okoz.</string>
   <string name="write_answers_message">You should define for every deck a field to compare the written answer with. You can do this via Anki Desktop (deck properties -&gt; edit model -&gt; card layout).\n\nIf no compare field is set, your written answer will always be compared with the whole card answer.</string>
   <string name="pref_cardbrowser_skip_init_search">Fast Card Browser Open</string>
-  <string name="pref_cardbrowser_skip_init_search_summ">Skips initial automatic search when the card browser opens.</string>
+  <string name="pref_cardbrowser_skip_init_search_summ">Skips initial automatic search when the card browser opens or the deck is changed.</string>
   <string name="pref_keep_screen_on">Képernyő be</string>
   <string name="pref_keep_screen_on_summ">Megakadályozza, hogy a képernyő átnézéskor kikapcsolódjon</string>
   <string name="pref_simple_interface">Egyszerű felület</string>
@@ -306,8 +273,6 @@
   <string name="deck_conf_cram_reschedule_summ">Reschedule cards based on my answers in this deck</string>
   <string name="deck_conf_cram_steps">Custom steps</string>
   <string name="deck_conf_cram_steps_summ">Define custom steps</string>
-  <string name="pref_show_splashscreen">Splash screen</string>
-  <string name="pref_show_splashscreen_summ">Show splash screen</string>
   <string name="pref_intent_add_instant">Instant add</string>
   <string name="pref_intent_add_instant_summ">Add new cards from dictionaries without opening AnkiDroid. You find them later under \'saved data\' in card adder.</string>
   <string name="pref_cat_intent_add">External data addition</string>

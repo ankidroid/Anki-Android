@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">Total de fitxes:</string>
   <string name="studyoptions_eta">Temps estimat (min.):</string>
   <string name="studyoptions_start">Study Now</string>
+  <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">Mostra la resposta</string>
   <string name="ease1_successive">De nou</string>
   <string name="ease2_successive">Difícil</string>
@@ -63,7 +64,7 @@
   <string name="card_unsuspended">S\'ha desfet la suspensió de la fitxa</string>
   <string name="card_suspended">Fitxa suspesa de nou</string>
   <string name="menu_rotate">Gira</string>
-  <string name="menu_import">Importació de les fitxes</string>
+  <string name="menu_import">Import file</string>
   <string name="undo">Desfés</string>
   <string name="undo_action_review">Revisió</string>
   <string name="undo_action_edit">Edita la nota</string>
@@ -82,6 +83,8 @@
   <string name="contextmenu_deckpicker_collapse_deck">Hide Subdecks</string>
   <string name="contextmenu_deckpicker_inflate_deck">Show Subdecks</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Diccionari personalitzat</string>
+  <string name="menu_add">Add</string>
+  <string name="menu_add_note">Add note</string>
   <string name="menu_download_deck">Baixa el paquet</string>
   <string name="menu_download_shared_deck">Paquet compartit</string>
   <string name="menu_my_account">Compte de sincronització</string>
@@ -99,9 +102,9 @@
   <string name="menu_search">Cerca-ho a %1$s</string>
   <string name="menu_mark_card">Marca la fitxa</string>
   <string name="menu_unmark_card">Desmarca la fitxa</string>
-  <string name="new_deck">Nou paquet</string>
+  <string name="new_deck">Create deck</string>
   <string name="create">Genera</string>
-  <string name="new_dynamic_deck">Nou paquet filtrat</string>
+  <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">Comentaris</string>
   <string name="studyoptions_load_tutorial_deck">Genera el tutorial</string>
   <string name="night_mode">Mode Nit</string>

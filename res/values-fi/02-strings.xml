@@ -42,19 +42,20 @@
   <string name="CardEditorCancelButton">Peruuta</string>
   <string name="CardEditorSaveButton">Tallenna</string>
   <string name="CardEditorLaterButton">Myöhemmin</string>
-  <string name="CardEditorPreviewButton">Esikatselu</string>
   <string name="CardEditorLaterMessage">Tiedot tallennettu myöhempää käyttöä varten</string>
   <string name="CardEditorCardDeck">Korttipakka: %s</string>
   <string name="CardEditorNoteDeck">Merkintäpaka: %s</string>
   <string name="CardEditorModel">Merkinnän tyyppi: %s</string>
   <string name="CardEditorTags">Tunnisteet: %1$s</string>
-  <string name="add_new_tag">Lisää uusi tunniste</string>
+  <string name="add_new_filter_tags">Add/Filter tags</string>
   <string name="note_type">Merkinnän tyyppi</string>
   <string name="card_type">Korttityyppi</string>
+  <string name="filter_tags">Filter tags</string>
   <string name="sdcard_missing_message">SD-kortti ei ole käytettävissä, koska se on kytketty USB-tilassa. Irrota USB käyttääksesi korttipakkojasi.</string>
   <string name="show_whiteboard">Näytä ajastin / valkotaulu</string>
   <string name="hide_whiteboard">Piilota valkotaulu</string>
   <string name="clear_whiteboard">Tyhjennä valkotaulu</string>
+  <string name="replay_audio">Replay audio</string>
   <string name="cram_edit_warning">Kortin muokkaaminen ei ole pänttäämisen aikana</string>
   <string name="suspend_leeches">Keskeyttää takiaiset</string>
   <string name="leech_suspend_notification">Kortti om merkitty takiaiseksi ja keskeytettiin</string>
@@ -83,6 +84,7 @@
   <string name="card_editor_reset">Tyhjennä</string>
   <string name="card_editor_copy_card">Kopioi kortti</string>
   <string name="card_editor_reset_card">Tyhjennä edistyminen</string>
+  <string name="card_editor_preview_card">Preview</string>
   <string name="error_insufficient_memory">Operaatio ei ole mahdollista laitteesi vähäisen muistimäärän vuoksi</string>
   <string name="tutorial_load">Luodaan ohjepakkaa.\nOdota...</string>
   <string name="tutorial_loading_error">Ohjepakan luominen epäonnistui</string>
@@ -134,11 +136,11 @@
     <item>Vastaus</item>
     <item>Kortti</item>
     <item>Pakka</item>
-    <item>Virheet</item>
-    <item>Merkintä</item>
-    <item>Kysymys</item>
-    <item>Arvostelut</item>
-    <item>Tunnisteet</item>
+    <item>Note</item>
+    <item>Question</item>
+    <item>Tags</item>
+    <item>Lapses</item>
+    <item>Reviews</item>
   </string-array>
   <string-array name="dynOrderLabels">
     <item>Vanhin ensin</item>

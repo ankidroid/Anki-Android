@@ -42,19 +42,20 @@
   <string name="CardEditorCancelButton">रद्द करें</string>
   <string name="CardEditorSaveButton">सहेजें</string>
   <string name="CardEditorLaterButton">बाद में</string>
-  <string name="CardEditorPreviewButton">पूर्वावलोकन</string>
   <string name="CardEditorLaterMessage">जानकारी के लिए बाद में बचा लिया</string>
   <string name="CardEditorCardDeck">कार्ड डेक: %s</string>
   <string name="CardEditorNoteDeck">नोट डेक: %s</string>
   <string name="CardEditorModel">नोट प्रकार: %s</string>
   <string name="CardEditorTags">टैग: %1$s</string>
-  <string name="add_new_tag">नए टैग जोड़ें</string>
+  <string name="add_new_filter_tags">Add/Filter tags</string>
   <string name="note_type">नोट प्रकार</string>
   <string name="card_type">कार्ड के प्रकार</string>
+  <string name="filter_tags">Filter tags</string>
   <string name="sdcard_missing_message">एसडी कार्ड उपलब्ध नहीं है क्योंकि यह USB भंडारण के रूप में इस्तेमाल किया जा रहा है। आपके डेक तक पहुँचने के लिए USB डिस्कनेक्ट करें।</string>
   <string name="show_whiteboard">Whiteboard दिखाएँ</string>
   <string name="hide_whiteboard">Whiteboard छुपाएँ</string>
   <string name="clear_whiteboard">स्पष्ट Whiteboard</string>
+  <string name="replay_audio">Replay audio</string>
   <string name="cram_edit_warning">कार्ड संपादन करते हुए cramming की अनुमति नहीं है</string>
   <string name="suspend_leeches">लीच को निलंबित</string>
   <string name="leech_suspend_notification">जोंक के रूप में के रूप में चिह्नित और निलंबित कार्ड</string>
@@ -83,6 +84,7 @@
   <string name="card_editor_reset">रीसेट करें</string>
   <string name="card_editor_copy_card">प्रति कार्ड</string>
   <string name="card_editor_reset_card">प्रगति को रीसेट</string>
+  <string name="card_editor_preview_card">Preview</string>
   <string name="error_insufficient_memory">आपकी डिवाइस पर अपर्याप्त स्मृति के कारण संभव नहीं ऑपरेशन</string>
   <string name="tutorial_load">बनाने ट्यूटोरियल डेक. \nPlease रुको...</string>
   <string name="tutorial_loading_error">ट्यूटोरियल डेक बनाया नहीं जा सका</string>
@@ -134,11 +136,11 @@
     <item>Answer</item>
     <item>Card</item>
     <item>Deck</item>
-    <item>Lapses</item>
     <item>Note</item>
     <item>Question</item>
-    <item>Reviews</item>
     <item>Tags</item>
+    <item>Lapses</item>
+    <item>Reviews</item>
   </string-array>
   <string-array name="dynOrderLabels">
     <item>सबसे पुराना देखा पहले</item>

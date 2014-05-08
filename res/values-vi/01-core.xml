@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">Tổng số thẻ:</string>
   <string name="studyoptions_eta">Thời gian ước tính (phút):</string>
   <string name="studyoptions_start">Study Now</string>
+  <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">Hiện đáp án</string>
   <string name="ease1_successive">Làm lại</string>
   <string name="ease2_successive">Khó</string>
@@ -63,7 +64,7 @@
   <string name="card_unsuspended">Đã hủy việc tạm dừng thẻ</string>
   <string name="card_suspended">Thẻ bị tạm dừng</string>
   <string name="menu_rotate">Xoay</string>
-  <string name="menu_import">Nhập thẻ</string>
+  <string name="menu_import">Import file</string>
   <string name="undo">Hoàn tác</string>
   <string name="undo_action_review">ôn tập</string>
   <string name="undo_action_edit">sửa ghi chú</string>
@@ -82,6 +83,8 @@
   <string name="contextmenu_deckpicker_collapse_deck">Hide Subdecks</string>
   <string name="contextmenu_deckpicker_inflate_deck">Show Subdecks</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Thiết lập từ điển riêng</string>
+  <string name="menu_add">Add</string>
+  <string name="menu_add_note">Add note</string>
   <string name="menu_download_deck">Tải về tập thẻ</string>
   <string name="menu_download_shared_deck">Tập thẻ chia sẻ</string>
   <string name="menu_my_account">Tài khoản đồng bộ</string>
@@ -99,9 +102,9 @@
   <string name="menu_search">Tra cứu trong %1$s</string>
   <string name="menu_mark_card">Đánh dấu thẻ</string>
   <string name="menu_unmark_card">Bỏ Dấu Thẻ</string>
-  <string name="new_deck">Tập thẻ mới</string>
+  <string name="new_deck">Create deck</string>
   <string name="create">Tạo</string>
-  <string name="new_dynamic_deck">New filtered deck</string>
+  <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">Phản hồi</string>
   <string name="studyoptions_load_tutorial_deck">Tạo hướng dẫn</string>
   <string name="night_mode">Chế độ ban đêm</string>

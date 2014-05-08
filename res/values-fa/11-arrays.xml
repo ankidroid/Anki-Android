@@ -112,7 +112,6 @@
   <string-array name="leech_action_labels">
     <item>تعلیق کارت</item>
     <item>تنها برچسب</item>
-    <item>برگرداندن به حالت جديد</item>
   </string-array>
   <string-array name="new_order_labels">
     <item>کارت های جدید در صورت تصادفی</item>

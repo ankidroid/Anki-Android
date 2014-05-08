@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">Укупно картица:</string>
   <string name="studyoptions_eta">Очекивано време (мин):</string>
   <string name="studyoptions_start">Започни учење</string>
+  <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">Прикажи одговор</string>
   <string name="ease1_successive">Поново</string>
   <string name="ease2_successive">Тешко</string>
@@ -63,7 +64,7 @@
   <string name="card_unsuspended">Карта неће бити отказана</string>
   <string name="card_suspended">Карта је поново блокирана</string>
   <string name="menu_rotate">Окрени</string>
-  <string name="menu_import">Увези карте</string>
+  <string name="menu_import">Import file</string>
   <string name="undo">Поништи</string>
   <string name="undo_action_review">Преглед</string>
   <string name="undo_action_edit">Уреди белешку</string>
@@ -82,6 +83,8 @@
   <string name="contextmenu_deckpicker_collapse_deck">Сакриј уметнуте шпилове</string>
   <string name="contextmenu_deckpicker_inflate_deck">Прикажи уметнуте шпилове</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Инсталирај кориснички речник</string>
+  <string name="menu_add">Add</string>
+  <string name="menu_add_note">Add note</string>
   <string name="menu_download_deck">Преузми шпил</string>
   <string name="menu_download_shared_deck">Заједнички шпил</string>
   <string name="menu_my_account">Синхронизовање налога</string>
@@ -99,9 +102,9 @@
   <string name="menu_search">Потражи у %1$s</string>
   <string name="menu_mark_card">Означи карту</string>
   <string name="menu_unmark_card">Уклони ознаку карте</string>
-  <string name="new_deck">Нови шпил</string>
+  <string name="new_deck">Create deck</string>
   <string name="create">Креирај</string>
-  <string name="new_dynamic_deck">Нови филтрирани шпил</string>
+  <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">Повратна веза</string>
   <string name="studyoptions_load_tutorial_deck">Креирај упутство</string>
   <string name="night_mode">Ноћни режим</string>

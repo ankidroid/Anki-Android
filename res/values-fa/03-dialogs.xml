@@ -122,6 +122,5 @@
     <item><![CDATA[آنکی دروید <a href="%1$s">یک نرم افزار متن باز است<a/>, همچنین هرکس می تواند در پیشبرد آن کمک به <a href="%2$s">مشارکت کند</a> the <a href="%3$s">اعانه دهد</a>:-)]]></item>
     <item><![CDATA[غیر از برنامه نویسان نیز سایر اشخاص می توانند کمک کنند , بعنوان نمونه به وسیله <a href="%1$s">ترجمه</a> آنکی دروید, بروزرسانی دانشنامه و عکس های برنامه, <a href="%2$s">اهداء کردن</a> برای نرم افزار کامپیوتر آنکی ، یا بلاگ درباره آنکی دروید!]]></item>
     <item><![CDATA[نرم افزار آنکی دروید تحت <a href="%1$s">GNU-GPL v3 license</a> و کدهای آن در دسترس است <a href="%2$s">اینجا</a>.]]></item>
-    <item><![CDATA[این بسته با استفاده از<a href="http://www.csse.monash.edu.au/~jwb/edict.html">EDICT</a> و <a href="http://www.csse.monash.edu.au/~jwb/kanjidic.html">KANJIDIC</a>فایل های واژه نامه. این فایل ها مالthe <a href="http://www.edrdg.org">پژوهش واژه نامه الکترونیکی و گروه توسعه</a>, و در پیروی با این گروه <a href="http://www.edrdg.org/edrdg/licence.html">مجوز</a>استفاده می شود]]></item>
   </string-array>
 </resources>

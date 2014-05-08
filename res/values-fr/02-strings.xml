@@ -42,19 +42,20 @@
   <string name="CardEditorCancelButton">Annuler</string>
   <string name="CardEditorSaveButton">Enregistrer</string>
   <string name="CardEditorLaterButton">Plus tard</string>
-  <string name="CardEditorPreviewButton">Aperçu</string>
   <string name="CardEditorLaterMessage">Information sauvegardée pour plus tard</string>
   <string name="CardEditorCardDeck">Paquet de cartes : %s</string>
   <string name="CardEditorNoteDeck">Incluse dans le paquet : %s</string>
   <string name="CardEditorModel">Type de note : %s</string>
   <string name="CardEditorTags">Marqueurs : %1$s</string>
-  <string name="add_new_tag">Ajouter un nouveau marqueur</string>
+  <string name="add_new_filter_tags">Add/Filter tags</string>
   <string name="note_type">Type de note</string>
   <string name="card_type">Type de carte</string>
+  <string name="filter_tags">Filter tags</string>
   <string name="sdcard_missing_message">La carte SD est indisponible car elle sert de mémoire USB. Déconnectez l’USB pour accéder à vos paquets.</string>
   <string name="show_whiteboard">Afficher le tableau blanc</string>
   <string name="hide_whiteboard">Masquer le tableau blanc</string>
   <string name="clear_whiteboard">Effacer le tableau blanc</string>
+  <string name="replay_audio">Replay audio</string>
   <string name="cram_edit_warning">L\'édition de cartes n\'est pas autorisées pendant le bachotage</string>
   <string name="suspend_leeches">Masquer les cartes encombrantes</string>
   <string name="leech_suspend_notification">La carte a été marquée « pénible » et est masquée</string>
@@ -83,6 +84,7 @@
   <string name="card_editor_reset">Réinitialiser</string>
   <string name="card_editor_copy_card">Copier la carte</string>
   <string name="card_editor_reset_card">Remettre les compteurs à 0</string>
+  <string name="card_editor_preview_card">Preview</string>
   <string name="error_insufficient_memory">L’opération n\'a pas pu être accomplie car votre appareil manque de mémoire disponible</string>
   <string name="tutorial_load">Mise en place du tutoriel.\nPatientez…</string>
   <string name="tutorial_loading_error">Le paquet-tutoriel n\'a pas pu être créé</string>
@@ -134,11 +136,11 @@
     <item>Réponse</item>
     <item>Carte</item>
     <item>Paquet</item>
-    <item>Erreurs</item>
     <item>Note</item>
     <item>Question</item>
-    <item>Révisions</item>
-    <item>Étiquettes</item>
+    <item>Tags</item>
+    <item>Lapses</item>
+    <item>Reviews</item>
   </string-array>
   <string-array name="dynOrderLabels">
     <item>Des plus au moins anciennes</item>

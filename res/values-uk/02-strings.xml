@@ -42,19 +42,20 @@
   <string name="CardEditorCancelButton">Скасувати</string>
   <string name="CardEditorSaveButton">Зберегти</string>
   <string name="CardEditorLaterButton">Пізніше</string>
-  <string name="CardEditorPreviewButton">Перегляд</string>
   <string name="CardEditorLaterMessage">Інформація збережена на пізніше</string>
   <string name="CardEditorCardDeck">Колода картки:%s</string>
   <string name="CardEditorNoteDeck">Колекція Запису:%s</string>
   <string name="CardEditorModel">Тип Запису:%s</string>
   <string name="CardEditorTags">Мітки: %1$s</string>
-  <string name="add_new_tag">Додати мітку</string>
+  <string name="add_new_filter_tags">Add/Filter tags</string>
   <string name="note_type">Тип Запису</string>
   <string name="card_type">Тип картки</string>
+  <string name="filter_tags">Filter tags</string>
   <string name="sdcard_missing_message">SD картка недоступна бо використовується як USB накопичувач. Для доступу до ваших колекцій від’єднайте USB.</string>
   <string name="show_whiteboard">Показати Дошку</string>
   <string name="hide_whiteboard">Заховати Дошку</string>
   <string name="clear_whiteboard">Очистити Дошку</string>
+  <string name="replay_audio">Replay audio</string>
   <string name="cram_edit_warning">Не можна змінювати картки під-час зубріння</string>
   <string name="suspend_leeches">Відкласти липкі картки</string>
   <string name="leech_suspend_notification">Картку позначено як липка, і відкладено</string>
@@ -83,6 +84,7 @@
   <string name="card_editor_reset">Скинути</string>
   <string name="card_editor_copy_card">Копіювати картку</string>
   <string name="card_editor_reset_card">Скинути поступ</string>
+  <string name="card_editor_preview_card">Preview</string>
   <string name="error_insufficient_memory">Дія не можлива через брак пам’яті на вашому пристрої</string>
   <string name="tutorial_load">Створення навчальної колоди.\n Будь ласка, зачекайте...</string>
   <string name="tutorial_loading_error">Неможливо створити навчальну колоду</string>
@@ -134,11 +136,11 @@
     <item>Answer</item>
     <item>Card</item>
     <item>Deck</item>
-    <item>Lapses</item>
     <item>Note</item>
     <item>Question</item>
-    <item>Reviews</item>
     <item>Tags</item>
+    <item>Lapses</item>
+    <item>Reviews</item>
   </string-array>
   <string-array name="dynOrderLabels">
     <item>Найстарші спочатку</item>

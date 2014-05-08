@@ -112,7 +112,6 @@
   <string-array name="leech_action_labels">
     <item>Одложи карту</item>
     <item>Додај само ознаку</item>
-    <item>Постави као нову</item>
   </string-array>
   <string-array name="new_order_labels">
     <item>Нове у случајном редоследу</item>

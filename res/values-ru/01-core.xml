@@ -51,6 +51,7 @@
   <string name="studyoptions_total_cards">Всего карт:</string>
   <string name="studyoptions_eta">Вероятно займёт (мин):</string>
   <string name="studyoptions_start">Начать обучение</string>
+  <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">Показать ответ</string>
   <string name="ease1_successive">Снова</string>
   <string name="ease2_successive">Трудно</string>
@@ -63,7 +64,7 @@
   <string name="card_unsuspended">Приостановка карты была отменена</string>
   <string name="card_suspended">Карта снова заблокирована</string>
   <string name="menu_rotate">Повернуть</string>
-  <string name="menu_import">Импортировать карты</string>
+  <string name="menu_import">Import file</string>
   <string name="undo">Отменить</string>
   <string name="undo_action_review">Просмотр</string>
   <string name="undo_action_edit">Редактировать запись</string>
@@ -82,6 +83,8 @@
   <string name="contextmenu_deckpicker_collapse_deck">Скрыть вложенные колоды</string>
   <string name="contextmenu_deckpicker_inflate_deck">Показать вложенные колоды</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Установить пользовательский словарь</string>
+  <string name="menu_add">Add</string>
+  <string name="menu_add_note">Add note</string>
   <string name="menu_download_deck">Скачать колоду</string>
   <string name="menu_download_shared_deck">Общедоступная колода</string>
   <string name="menu_my_account">Учётная запись синхронизации</string>
@@ -99,9 +102,9 @@
   <string name="menu_search">Поиск в %1$s</string>
   <string name="menu_mark_card">Отметить карту</string>
   <string name="menu_unmark_card">Снять пометку карты</string>
-  <string name="new_deck">Новая колода</string>
+  <string name="new_deck">Create deck</string>
   <string name="create">Создать</string>
-  <string name="new_dynamic_deck">Новая фильтрованная колода</string>
+  <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">Обратная связь</string>
   <string name="studyoptions_load_tutorial_deck">Создать учебник</string>
   <string name="night_mode">Ночной режим</string>
