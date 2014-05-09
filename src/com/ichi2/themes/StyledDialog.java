@@ -46,6 +46,7 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class StyledDialog extends Dialog {
@@ -116,9 +117,7 @@ public class StyledDialog extends Dialog {
             DialogInterface.OnClickListener listener) {
         mListView = listview;
         mItemList = new ArrayList<String>();
-        for (String titel : values) {
-            mItemList.add(titel);
-        }
+        Collections.addAll(mItemList, values);
         mListener = listener;
         if (type == 3) {
             mListView.setOnItemClickListener(new OnItemClickListener() {

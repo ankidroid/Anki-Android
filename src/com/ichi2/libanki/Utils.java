@@ -1168,9 +1168,7 @@ public class Utils {
         	deckCount = deckList.length;
         }
         List<File> decks = new ArrayList<File>();
-        for (int i = 0; i < deckCount; i++) {
-        	decks.add(deckList[i]);
-        }
+        decks.addAll(Arrays.asList(deckList).subList(0, deckCount));
        	return decks;
     }
 
