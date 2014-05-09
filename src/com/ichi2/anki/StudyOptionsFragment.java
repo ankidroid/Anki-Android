@@ -930,7 +930,7 @@ public class StudyOptionsFragment extends Fragment {
                         return lhs.compareToIgnoreCase(rhs);
                     }
                 });
-                allTags = tags_list.toArray(new String[0]);
+                allTags = tags_list.toArray(new String[tags_list.size()]);
                 builder1.setTitle(R.string.studyoptions_limit_select_tags);
                 builder1.setMultiChoiceItems(allTags, new boolean[allTags.length],
                         new DialogInterface.OnClickListener() {
