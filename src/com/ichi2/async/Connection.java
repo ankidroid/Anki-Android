@@ -653,7 +653,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                         AnkiDroidApp.openCollection(path);
                         return data;
                     }
-                    if (!((String) ret[0]).equals(BasicHttpSyncer.ANKIWEB_STATUS_OK)) {
+                    if (!ret[0].equals(BasicHttpSyncer.ANKIWEB_STATUS_OK)) {
                         data.success = false;
                         data.result = ret;
                         AnkiDroidApp.openCollection(path);
@@ -669,7 +669,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                         AnkiDroidApp.openCollection(path);
                         return data;
                     }
-                    if (!((String) ret[0]).equals("success")) {
+                    if (!ret[0].equals("success")) {
                         data.success = false;
                         data.result = ret;
                         if (!colCorruptFullSync) {
@@ -732,15 +732,6 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             return data;
         } else {
             data.success = true;
-            TreeSet<Object[]> decks = col.getSched().deckDueTree();
-            int[] counts = new int[] { 0, 0, 0 };
-            for (Object[] deck : decks) {
-                if (((String[]) deck[0]).length == 1) {
-                    counts[0] += (Integer) deck[2];
-                    counts[1] += (Integer) deck[3];
-                    counts[2] += (Integer) deck[4];
-                }
-            }
             Object[] dc = col.getSched().deckCounts();
             data.result = dc[0];
             data.data = new Object[] { conflictResolution, col, dc[1], dc[2], mediaError };
@@ -765,7 +756,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         String errorUrl = (String) data.data[1];
         String feedback = (String) data.data[2];
         ArrayList<HashMap<String, String>> errors = (ArrayList<HashMap<String, String>>) data.data[3];
-        String groupId = ((Long) data.data[4]).toString();
+        String groupId = data.data[4].toString();
         Application app = (Application) data.data[5];
         boolean deleteAfterSending = (Boolean) data.data[6];
 
@@ -821,8 +812,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         HashMap<String, String> missingPaths = new HashMap<String, String>();
         HashMap<String, String> missingSums = new HashMap<String, String>();
 
-        Decks deck = (Decks) data.data[0];
-        data.result = deck; // pass it to the return object so we close the deck in the deck picker
+        data.result = (Decks) data.data[0]; // pass it to the return object so we close the deck in the deck picker
         String syncName = "";// deck.getDeckName();
 
         data.success = false;
@@ -974,7 +964,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 httpsConn.setSSLSocketFactory(context.getSocketFactory());
                 conn = httpsConn;
             } else {
-                conn = (HttpURLConnection) fileUrl.openConnection();
+                conn = fileUrl.openConnection();
             }
             conn.setConnectTimeout(10000);
             conn.setReadTimeout(10000);
