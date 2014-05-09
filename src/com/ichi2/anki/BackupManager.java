@@ -138,7 +138,7 @@ public class BackupManager {
         if (lastBackupDate == null) {
             return true;
         } else {
-            return lastBackupDate.getTime() + days * 24 * 3600000 < Utils.intNow(1000);
+            return lastBackupDate.getTime() + days * 24L * 3600000 < Utils.intNow(1000);
         }
     }
 
@@ -200,7 +200,7 @@ public class BackupManager {
                 lastBackupDate = null;
             }
         }
-        if (lastBackupDate != null && lastBackupDate.getTime() + interval * 3600000 > Utils.intNow(1000) && !force) {
+        if (lastBackupDate != null && lastBackupDate.getTime() + interval * 3600000L > Utils.intNow(1000) && !force) {
             Log.i(AnkiDroidApp.TAG, "performBackup: No backup created. Last backup younger than 5 hours");
             return;
         }
