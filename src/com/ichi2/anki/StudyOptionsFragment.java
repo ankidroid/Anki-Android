@@ -266,10 +266,6 @@ public class StudyOptionsFragment extends Fragment {
                 case R.id.studyoptions_statistics:
                     showDialog(DIALOG_STATISTIC_TYPE);
                     return;
-                case R.id.studyoptions_congrats_message:
-                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler,
-                            new DeckTask.TaskData(col, Stats.TYPE_MONTH, false));
-                    return;
                 case R.id.studyoptions_options_cram:
                     openCramDeckOptions();
                     return;
@@ -662,7 +658,6 @@ public class StudyOptionsFragment extends Fragment {
         mTextCongratsMessage = (TextView) mCongratsView.findViewById(R.id.studyoptions_congrats_message);
         Themes.setTextViewStyle(mTextCongratsMessage);
 
-        mTextCongratsMessage.setOnClickListener(mButtonClickListener);
         mButtonCongratsUndo = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_undo);
         mButtonCongratsUnbury = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_unbury);
         mButtonCongratsCustomStudy = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_customstudy);
