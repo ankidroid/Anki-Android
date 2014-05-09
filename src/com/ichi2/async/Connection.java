@@ -1019,7 +1019,9 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             output.close();
         } catch (IOException e) {
             try {
-                output.close();
+                if (output != null) {
+                    output.close();
+                }
             } catch (IOException e1) {
                 // do nothing
             }

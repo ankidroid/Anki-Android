@@ -1133,11 +1133,13 @@ public class Utils {
                 }
             }
         }
-        for (int i = 0; i < ankiDroidFonts.length; i++) {
-            // Assume all files in the assets directory are actually fonts.
-            AnkiFont font = AnkiFont.createAnkiFont(context, ankiDroidFonts[i], true);
-        	if (font != null) {
-                fonts.add(font);
+        if (ankiDroidFonts != null) {
+            for (int i = 0; i < ankiDroidFonts.length; i++) {
+                // Assume all files in the assets directory are actually fonts.
+                AnkiFont font = AnkiFont.createAnkiFont(context, ankiDroidFonts[i], true);
+                if (font != null) {
+                    fonts.add(font);
+                }
             }
         }
 
