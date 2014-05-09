@@ -2458,7 +2458,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
      * @return
      */
     private static String enrichWithQADiv(String content, boolean isAnswer) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append("<div class=\"");
         if (isAnswer) {
             sb.append(ANSWER_CLASS);

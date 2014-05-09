@@ -362,7 +362,7 @@ public class ArabicReshaper{
 	public String reshapeIt(String unshapedWord){
 
 		//The reshaped Word to Return
-		StringBuffer reshapedWord=new StringBuffer("");
+		StringBuilder reshapedWord=new StringBuilder("");
 		int wordLength = unshapedWord.length();
 
 		//The Word Letters
