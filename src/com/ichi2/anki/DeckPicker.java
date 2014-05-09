@@ -2646,7 +2646,7 @@ public class DeckPicker extends ActionBarActivity {
                     dialog.setTitle(getResources().getString(R.string.check_db_title));
                     dialog.setMessage(String.format(Utils.ENGLISH_LOCALE,
                             getResources().getString(R.string.check_db_result_message),
-                            Math.round(result.getLong() / 1024)));
+                            Math.round(result.getLong() / 1024.)));
                     dialog.show();
                 } else {
                     handleDbError();
