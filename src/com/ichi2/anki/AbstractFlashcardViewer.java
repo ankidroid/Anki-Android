@@ -769,7 +769,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
     /**
      * Format question field when it contains typeAnswer or clozes. If there was an error during type text extraction, a
      * warning is displayed
-     * 
+     *
      * @param buf The question text
      * @return The formatted question text
      */
@@ -778,28 +778,47 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         if (mTypeWarning != null) {
             return m.replaceFirst(mTypeWarning);
         }
-        return m.replaceFirst("<span id=typeans class=typePrompt>........</span>");
+        if (mPrefWriteAnswers)
+        {
+            return m.replaceFirst("<span id=typeans class=\"typePrompt\">........</span>");
+        } else {
+            return m.replaceFirst("<span id=typeans class=\"typePrompt typeOff\">........</span>");
+        }
     }
 
 
     /**
-     * Format answer field when it contains typeAnswer or clozes
-     * 
+     * Fill the placeholder for the type comparison. Show the correct answer, and the comparison if appropriate.
+     *
      * @param buf The answer text
+     * @param userAnswer Text typed by the user, or empty.
+     * @param correctAnswer The correct answer, taken from the note.
      * @return The formatted answer text
      */
     private String typeAnsAnswerFilter(String buf, String userAnswer, String correctAnswer) {
         Matcher m = sTypeAnsPat.matcher(buf);
-
-        // Obtain the diff and send it to updateCard
         DiffEngine diff = new DiffEngine();
-        String diffUserAnswer = diff.diff_prettyHtml(diff.diff_main(userAnswer, correctAnswer), mNightMode);
-        if (userAnswer.equals(correctAnswer)) {
-            return m.replaceFirst("<div><code id=typeans>" + diffUserAnswer + "\u2714</code></div>");
-        } else {
-            return m.replaceFirst("<div><code id=typeans>" + diffUserAnswer + "<br>&darr;<br>"
-                    + diff.diff_prettyHtml(diff.diff_main(correctAnswer, correctAnswer), mNightMode) + "</code></div>");
+        StringBuilder sb = new StringBuilder();
+        boolean theSame = userAnswer.equals(correctAnswer);
+        sb.append("<div");
+        if (!mPrefWriteAnswers) {
+            sb.append(" class=\"typeOff\"");
         }
+        sb.append("><code id=typeans>");
+        if (!theSame && !userAnswer.isEmpty()) {
+            sb.append(diff.diff_prettyHtml(diff.diff_main(userAnswer, correctAnswer), mNightMode));
+            sb.append("<br>&darr;<br>");
+        }
+        if (mPrefWriteAnswers) {
+            sb.append(diff.diff_prettyHtml(diff.diff_main(correctAnswer, correctAnswer), mNightMode));
+            if (theSame) {
+                sb.append("\u2714");  // "Heavy check mark"
+            }
+        } else {
+            sb.append(correctAnswer);
+        }
+        sb.append("</code></div>");
+        return m.replaceFirst(sb.toString());
     }
 
 
@@ -1116,7 +1135,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
     /**
      * Returns the text stored in the clipboard or the empty string if the clipboard is empty or contains something that
      * cannot be convered to text.
-     * 
+     *
      * @return the text in clipboard or the empty string.
      */
     private CharSequence clipboardGetText() {
@@ -2291,7 +2310,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
     /**
      * Converts characters in Unicode Supplementary Multilingual Plane (SMP) to their equivalent Html Entities. This is
      * done because webview has difficulty displaying these characters.
-     * 
+     *
      * @param text
      * @return
      */
@@ -2309,7 +2328,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
 
     /**
      * Plays sounds (or TTS, if configured) for currently shown side of card.
-     * 
+     *
      * @param doAudioReplay indicates an anki desktop-like replay call is desired, whose behavior is identical to
      *            pressing the keyboard shortcut R on the desktop
      */
@@ -2347,7 +2366,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
 
     /**
      * Reads the text (using TTS) for the given side of a card.
-     * 
+     *
      * @param card The card to play TTS for
      * @param cardSide The side of the current card to play TTS for
      */
@@ -2364,7 +2383,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
 
     /**
      * Returns the configuration for the current {@link Card}.
-     * 
+     *
      * @return The configuration for the current {@link Card}
      */
     private JSONObject getConfigForCurrentCard() {
@@ -2374,7 +2393,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
 
     /**
      * Returns the deck ID of the given {@link Card}.
-     * 
+     *
      * @param card The {@link Card} to get the deck ID
      * @return The deck ID of the {@link Card}
      */
@@ -2455,7 +2474,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
 
     /**
      * Adds a div html tag around the contents to have an indication, where answer/question is displayed
-     * 
+     *
      * @param content
      * @param isAnswer if true then the class attribute is set to "answer", "question" otherwise.
      * @return
@@ -2484,7 +2503,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
      * this logic, eg nested span/divs with CSS classes having font-size declarations with relative units (40% dif
      * inside 120% div inside 60% div). Broken HTML also breaks this. Feel free to improve, but please keep it short and
      * fast.
-     * 
+     *
      * @param content The HTML content that will be font-size-adjusted.
      * @param percentage The relative font size percentage defined in preferences
      * @return
@@ -2556,7 +2575,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
     /**
      * Calculates a dynamic font size depending on the length of the contents taking into account that the input string
      * contains html-tags, which will not be displayed and therefore should not be taken into account.
-     * 
+     *
      * @param htmlContents
      * @return font size respecting MIN_DYNAMIC_FONT_SIZE and MAX_DYNAMIC_FONT_SIZE
      */
@@ -2705,7 +2724,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
      * WebView.
      * <p>
      * It is also needed to solve a refresh issue on Nook devices.
-     * 
+     *
      * @return true if we should use a single WebView
      */
     private boolean shouldUseQuickUpdate() {
