@@ -123,10 +123,9 @@
             -->
             <CheckBoxPreference
                 android:defaultValue="false"
-                android:disableDependentsState="false"
-                android:key="eInkDisplay"
-                android:summary="@string/eink_display_summ"
-                android:title="@string/eink_display" />
+                android:key="safeDisplay"
+                android:summary="@string/safe_display_summ"
+                android:title="@string/safe_display" />
         </PreferenceCategory>
         <PreferenceCategory android:title="@string/pref_cat_fonts" >
             <ListPreference
@@ -282,11 +281,6 @@
                 android:summary="@string/pref_simple_interface_exclude_tags_summ"
                 android:title="@string/pref_simple_interface_exclude_tags" />
 
-            <CheckBoxPreference
-                android:defaultValue="false"
-                android:key="forceQuickUpdate"
-                android:summary="@string/pref_force_quick_update_summary"
-                android:title="@string/pref_force_quick_update_title" />
         </PreferenceCategory>
         <PreferenceCategory android:title="@string/pref_cat_whiteboard" >
             <CheckBoxPreference

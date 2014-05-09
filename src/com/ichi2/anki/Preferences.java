@@ -81,7 +81,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private CheckBoxPreference showAnswerCheckBoxPreference;
     private CheckBoxPreference swipeCheckboxPreference;
     private CheckBoxPreference useBackupPreference;
-    private CheckBoxPreference eInkDisplayPreference;
+    private CheckBoxPreference safeDisplayPreference;
     private CheckBoxPreference convertFenText;
     private CheckBoxPreference fixHebrewText;
     private Preference syncAccount;
@@ -136,8 +136,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         keepScreenOnCheckBoxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("keepScreenOn");
         showAnswerCheckBoxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("timeoutAnswer");
         useBackupPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("useBackup");
-        eInkDisplayPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("eInkDisplay");
-        // ListPreference listpref = (ListPreference) getPreferenceScreen().findPreference("theme");
+        safeDisplayPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("safeDisplay");
         convertFenText = (CheckBoxPreference) getPreferenceScreen().findPreference("convertFenText");
         fixHebrewText = (CheckBoxPreference) getPreferenceScreen().findPreference("fixHebrewText");
         syncAccount = (Preference) getPreferenceScreen().findPreference("syncAccount");
@@ -148,8 +147,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         useCurrent = (ListPreference) getPreferenceScreen().findPreference("useCurrent");
         newSpread = (ListPreference) getPreferenceScreen().findPreference("newSpread");
         dayOffset = (SeekBarPreference) getPreferenceScreen().findPreference("dayOffset");
-        // String theme = listpref.getValue();
-        // animationsCheckboxPreference.setEnabled(theme.equals("2") || theme.equals("3"));
 
         initializeLanguageDialog();
         initializeCustomFontsDialog();

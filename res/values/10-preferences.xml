@@ -148,8 +148,8 @@
     <!-- <string name="timeout_question_seconds_summ">Select the amount of time before next question is automatically shown</string> -->
     <string name="select_locale_title">Select Language</string>
     <string name="select_theme">Theme</string>
-    <string name="eink_display">E-Ink Display Optimization</string>
-    <string name="eink_display_summ">Disable all animations and do some optimization for E-Ink Display</string>
+    <string name="safe_display">Safe Display Mode</string>
+    <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink and older devices using custom fonts may require this.</string>
     <string name="vertical_centering">Center card content vertically</string>
     <string name="vertical_centering_summ">Center the content of the cards vertically instead of showing it at the top.</string>
     <!-- deck_properties.xml -->
@@ -203,9 +203,7 @@
     <string name="pref_simple_interface_summ">Speeds up card showing but does not support all html features</string>
     <string name="pref_simple_interface_exclude_tags">Normal interface by tag</string>
     <string name="pref_simple_interface_exclude_tags_summ">Do not use simple interface for these tags: XXX</string>
-    <string name="pref_force_quick_update_title">Force quick update of Webview</string>
-    <string name="pref_force_quick_update_summary">Enabling this reduces flickering when flipping cards, but might cause the application to crash on some devices.</string>
-
+    
     <!-- Deck configurations -->
     <string name="deck_conf_deck_name">Deck name</string>
     <string name="deck_conf_deck_description">Deck description</string>

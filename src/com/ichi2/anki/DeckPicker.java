@@ -1308,10 +1308,27 @@ public class DeckPicker extends ActionBarActivity {
         }
     }
 
-
+    
+    /**
+     * @return true if the device is a Nook
+     */
+    private boolean isNookDevice() {
+        for (String s : new String[] { "nook" }) {
+            if (android.os.Build.DEVICE.toLowerCase().indexOf(s) != -1
+                    || android.os.Build.MODEL.toLowerCase().indexOf(s) != -1) {
+                return true;
+            }
+        }
+        return false;
+    }    
+    
+    
     private void upgradePreferences(int previousVersionCode) {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-        if (previousVersionCode < 20100108) {
+        if (previousVersionCode < 20200170) {
+        	boolean safeDisplayMode = preferences.getBoolean("eInkDisplay", false) || isNookDevice() || 
+        			!preferences.getBoolean("forceQuickUpdate", false);
+        	preferences.edit().putBoolean("safeDisplay", safeDisplayMode).commit();
             preferences.edit().putString("overrideFont", preferences.getString("defaultFont", "")).commit();
             preferences.edit().putString("defaultFont", "").commit();
         }
