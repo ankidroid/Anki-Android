@@ -1148,10 +1148,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     public static final class OldAnkiDeckFilter implements FileFilter {
         @Override
         public boolean accept(File pathname) {
-            if (pathname.isFile() && pathname.getName().endsWith(".anki")) {
-                return true;
-            }
-            return false;
+            return pathname.isFile() && pathname.getName().endsWith(".anki");
         }
     }
 

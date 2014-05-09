@@ -1158,10 +1158,7 @@ public class Utils {
         	deckList = dir.listFiles(new FileFilter(){
                 @Override
                 public boolean accept(File pathname) {
-                    if (pathname.isFile() && pathname.getName().endsWith(".apkg")) {
-                        return true;
-                    }
-                    return false;
+                    return pathname.isFile() && pathname.getName().endsWith(".apkg");
                 }
             });
         	deckCount = deckList.length;

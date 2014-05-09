@@ -481,10 +481,7 @@ public class Media {
      * @return Returns true if at least an illegal character is found.
      */
     private boolean illegal(String f) {
-        if (f.contains("/")) {
-            return true;
-        }
-        return false;
+        return f.contains("/");
     }
 
 

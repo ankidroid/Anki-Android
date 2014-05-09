@@ -355,7 +355,7 @@ public class SearchImageActivity extends Activity implements DialogInterface.OnC
             if (response == null)
                 break;
 
-            if (response.getOk() == false)
+            if (!response.getOk())
                 break;
 
             ResponseData rdata = response.getResponseData();

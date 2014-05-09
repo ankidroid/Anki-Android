@@ -1074,10 +1074,7 @@ public class DeckPicker extends ActionBarActivity {
             gestureDetector = new GestureDetector(new MyGestureDetector());
             mDeckListView.setOnTouchListener(new View.OnTouchListener() {
                 public boolean onTouch(View v, MotionEvent event) {
-                    if (gestureDetector.onTouchEvent(event)) {
-                        return true;
-                    }
-                    return false;
+                    return gestureDetector.onTouchEvent(event);
                 }
             });
         }
@@ -1190,10 +1187,7 @@ public class DeckPicker extends ActionBarActivity {
             // collection file exists
             return false;
         }
-        if (dir.listFiles(new OldAnkiDeckFilter()).length > 0) {
-            return true;
-        }
-        return false;
+        return dir.listFiles(new OldAnkiDeckFilter()).length > 0;
     }
 
 

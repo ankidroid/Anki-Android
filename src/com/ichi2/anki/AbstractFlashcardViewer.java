@@ -1581,10 +1581,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
                     if (mShowWhiteboard) {
                         return false;
                     }
-                    if (gestureDetector.onTouchEvent(event)) {
-                        return true;
-                    }
-                    return false;
+                    return gestureDetector.onTouchEvent(event);
                 }
             });
         }
@@ -2008,7 +2005,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
     protected Runnable mShowQuestionTask = new Runnable() {
         public void run() {
             // Assume hitting the "Again" button when auto next question
-            if (mEase1Layout.isEnabled() == true && mEase1Layout.getVisibility() == View.VISIBLE) {
+            if (mEase1Layout.isEnabled() && mEase1Layout.getVisibility() == View.VISIBLE) {
                 mEase1Layout.performClick();
             }
         }
@@ -2017,7 +2014,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
     protected Runnable mShowAnswerTask = new Runnable() {
         @Override
         public void run() {
-            if (mFlipCardLayout.isEnabled() == true && mFlipCardLayout.getVisibility() == View.VISIBLE) {
+            if (mFlipCardLayout.isEnabled() && mFlipCardLayout.getVisibility() == View.VISIBLE) {
                 mFlipCardLayout.performClick();
             }
         }
@@ -2545,10 +2542,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
      *         field to query
      */
     private final boolean typeAnswer() {
-        if (mPrefWriteAnswers && null != mTypeCorrect) {
-            return true;
-        }
-        return false;
+        return mPrefWriteAnswers && null != mTypeCorrect;
     }
 
 
@@ -3017,11 +3011,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (gestureDetector.onTouchEvent(event)) {
-            return true;
-        } else {
-            return false;
-        }
+        return gestureDetector.onTouchEvent(event);
     }
 
     class ScrollTextView extends TextView {
