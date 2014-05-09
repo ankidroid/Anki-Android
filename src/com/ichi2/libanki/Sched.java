@@ -1639,6 +1639,7 @@ public class Sched {
                 t = String.format(Locale.US,
                         "(case when queue=2 and due <= %d then (ivl / cast(%d-due+0.001 as real)) else 100000+due end)",
                         mToday, mToday);
+                break;
             default:
             	// if we don't understand the term, default to due order
             	t = "c.due";
