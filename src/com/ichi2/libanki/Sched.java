@@ -2393,7 +2393,7 @@ public class Sched {
     private class DueComparator implements Comparator<long[]> {
         @Override
         public int compare(long[] lhs, long[] rhs) {
-            return new Long(lhs[0]).compareTo(rhs[0]);
+            return Long.valueOf(lhs[0]).compareTo(rhs[0]);
         }
     }
 

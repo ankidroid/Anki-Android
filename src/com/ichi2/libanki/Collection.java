@@ -1155,7 +1155,7 @@ public class Collection {
     /** Undo menu item name, or "" if undo unavailable. */
     public String undoName(Resources res) {
         if (mUndo.size() > 0) {
-            int undoType = ((Integer) mUndo.getLast()[0]).intValue();
+            int undoType = (Integer) mUndo.getLast()[0];
             if (undoType >= 0 && undoType < fUndoNames.length) {
                 return res.getString(fUndoNames[undoType]);
             }

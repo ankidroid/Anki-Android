@@ -368,8 +368,8 @@ public class DeckPicker extends ActionBarActivity {
             Resources res = getResources();
             if (values[0] instanceof Boolean) {
                 // This is the part Download missing media of syncing
-                int total = ((Integer) values[1]).intValue();
-                int done = ((Integer) values[2]).intValue();
+                int total = (Integer) values[1];
+                int done = (Integer) values[2];
                 values[0] = ((String) values[3]);
                 values[1] = res.getString(R.string.sync_downloading_media, done, total);
             } else if (values[0] instanceof Integer) {

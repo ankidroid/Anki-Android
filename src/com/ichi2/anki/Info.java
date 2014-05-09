@@ -1001,7 +1001,7 @@ public class Info extends ActionBarActivity {
 
         @Override
         public void onProgressUpdate(Object... values) {
-            countDown = ((Integer) values[0]).intValue();
+            countDown = (Integer) values[0];
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
                 // mProgressDialog.setTitle((String) values[0]);
                 mProgressDialog.setMessage(getResources().getString(R.string.download_deck, countDown));
@@ -1090,8 +1090,8 @@ public class Info extends ActionBarActivity {
             Resources res = getResources();
             if (values[0] instanceof Boolean) {
                 // This is the part Download missing media of syncing
-                int total = ((Integer) values[1]).intValue();
-                int done = ((Integer) values[2]).intValue();
+                int total = (Integer) values[1];
+                int done = (Integer) values[2];
                 values[0] = ((String) values[3]);
                 values[1] = res.getString(R.string.sync_downloading_media, done, total);
             } else if (values[0] instanceof Integer) {

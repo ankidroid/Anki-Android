@@ -125,7 +125,7 @@ public class SeekBarPreference extends DialogPreference implements SeekBar.OnSee
         if (shouldPersist()) {
             persistInt(mValue);
         }
-        callChangeListener(new Integer(mValue));
+        callChangeListener(mValue);
         this.getDialog().dismiss();
     }
 

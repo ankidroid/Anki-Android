@@ -338,7 +338,7 @@ public abstract class XYChart extends AbstractChart {
           for (Double location : yTextLabelLocations) {
             if (minY[i] <= location && location <= maxY[i]) {
               float yLabel = (float) (bottom - yPixelsPerUnit[i]
-                  * (location.doubleValue() - minY[i]));
+                  * (location - minY[i]));
               String label = mRenderer.getYTextLabel(location, i);
               paint.setColor(mRenderer.getYLabelsColor(i));
               paint.setTextAlign(mRenderer.getYLabelsAlign(i));
@@ -716,7 +716,7 @@ public abstract class XYChart extends AbstractChart {
       paint.setColor(mRenderer.getXLabelsColor());
       for (Double location : xTextLabelLocations) {
         if (minX <= location && location <= maxX) {
-          float xLabel = (float) (left + xPixelsPerUnit * (location.doubleValue() - minX));
+          float xLabel = (float) (left + xPixelsPerUnit * (location - minX));
           paint.setColor(mRenderer.getXLabelsColor());
           canvas
               .drawLine(xLabel, bottom, xLabel, bottom + mRenderer.getLabelsTextSize() / 3, paint);
