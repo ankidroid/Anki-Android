@@ -1325,12 +1325,14 @@ public class DeckPicker extends ActionBarActivity {
     
     private void upgradePreferences(int previousVersionCode) {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+        if (previousVersionCode < 20100108) {
+            preferences.edit().putString("overrideFont", preferences.getString("defaultFont", "")).commit();
+            preferences.edit().putString("defaultFont", "").commit();            
+        }
         if (previousVersionCode < 20200170) {
         	boolean safeDisplayMode = preferences.getBoolean("eInkDisplay", false) || isNookDevice() || 
         			!preferences.getBoolean("forceQuickUpdate", false);
         	preferences.edit().putBoolean("safeDisplay", safeDisplayMode).commit();
-            preferences.edit().putString("overrideFont", preferences.getString("defaultFont", "")).commit();
-            preferences.edit().putString("defaultFont", "").commit();
         }
     }
 
