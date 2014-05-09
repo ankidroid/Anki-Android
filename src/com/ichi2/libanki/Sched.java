@@ -2546,7 +2546,7 @@ public class Sched {
                 revYesRate = cur.getDouble(0);
                 revTime = cur.getDouble(1);
                 
-                if (cur != null && !cur.isClosed()) {
+                if (!cur.isClosed()) {
                     cur.close();
                 }
                 

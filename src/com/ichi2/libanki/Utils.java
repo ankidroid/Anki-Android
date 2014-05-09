@@ -1024,21 +1024,23 @@ public class Utils {
      * @return The output with type long[]
      */
     public static long[] toPrimitive(Long[] array) {
+        if (array == null) {
+            return null;
+        }
         long[] results = new long[array.length];
-        if (array != null) {
-            for (int i = 0; i < array.length; i++) {
-                results[i] = array[i].longValue();
-            }
+        for (int i = 0; i < array.length; i++) {
+            results[i] = array[i];
         }
         return results;
     }
     public static long[] toPrimitive(Collection<Long> array) {
+        if (array == null) {
+            return null;
+        }
         long[] results = new long[array.size()];
-        if (array != null) {
-            int i = 0;
-            for (Long item : array) {
-                results[i++] = item.longValue();
-            }
+        int i = 0;
+        for (Long item : array) {
+            results[i++] = item;
         }
         return results;
     }
