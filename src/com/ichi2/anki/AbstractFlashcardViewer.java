@@ -2218,7 +2218,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
                 if (!mAnswerSoundsAdded) {
                     String afmt = getAnswerFormat();
                     String answerSoundSource = content;
-                    if (afmt.indexOf("{{FrontSide}}") != -1) { // don't grab front side audio
+                    if (afmt.contains("{{FrontSide}}")) { // don't grab front side audio
                         String fromFrontSide = mCurrentCard._getQA(false).get("q");
                         answerSoundSource = content.replace(fromFrontSide, "");
                     }

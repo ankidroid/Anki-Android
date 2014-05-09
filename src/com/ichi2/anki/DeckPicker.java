@@ -1314,8 +1314,8 @@ public class DeckPicker extends ActionBarActivity {
      */
     private boolean isNookDevice() {
         for (String s : new String[] { "nook" }) {
-            if (android.os.Build.DEVICE.toLowerCase().indexOf(s) != -1
-                    || android.os.Build.MODEL.toLowerCase().indexOf(s) != -1) {
+            if (android.os.Build.DEVICE.toLowerCase().contains(s)
+                    || android.os.Build.MODEL.toLowerCase().contains(s)) {
                 return true;
             }
         }
