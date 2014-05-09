@@ -951,8 +951,7 @@ public class Utils {
         df.setTimeZone(TimeZone.getTimeZone("GMT"));
         Calendar cal = new GregorianCalendar(TimeZone.getTimeZone("GMT"));
         cal.setTimeInMillis(System.currentTimeMillis() - (long) utcOffset * 1000l);
-        Date today = Date.valueOf(df.format(cal.getTime()));
-        return today;
+        return Date.valueOf(df.format(cal.getTime()));
     }
 
 

@@ -15,8 +15,7 @@ public class AnkiActivity extends ActionBarActivity {
 
     public boolean animationDisabled() {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
-        boolean eInkDisplay = preferences.getBoolean("eInkDisplay", false);
-        return eInkDisplay;
+        return preferences.getBoolean("eInkDisplay", false);
     }
 
 

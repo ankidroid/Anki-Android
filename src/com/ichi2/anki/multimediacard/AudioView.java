@@ -75,8 +75,7 @@ public class AudioView extends LinearLayout {
      */
     public static AudioView createPlayerInstance(Context context, int resPlay, int resPause, int resStop,
             String audioPath) {
-        AudioView audioView = new AudioView(context, resPlay, resPause, resStop, audioPath);
-        return audioView;
+        return new AudioView(context, resPlay, resPause, resStop, audioPath);
     }
 
 

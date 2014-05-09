@@ -108,8 +108,7 @@ public class Template
         }
 
         try {
-            Object value = fetcher.get(data, name);
-            return value;
+            return fetcher.get(data, name);
         } catch (Exception e) {
             throw new MustacheException(
                 "Failure fetching variable '" + name + "' on line " + line, e);

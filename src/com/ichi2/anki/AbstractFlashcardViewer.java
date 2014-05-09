@@ -2536,8 +2536,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
             m.appendReplacement(sb, String.format(Locale.US, "font-size:%.2f%s;", doubleSize, m.group(2)));
         }
         m.appendTail(sb);
-        String a = sb.toString();
-        return a;
+        return sb.toString();
     }
 
 

@@ -98,8 +98,7 @@ public class PieMapper implements Serializable {
         mCenterY - screenPoint.getY(), 2));
 
     double radiusSquared = mPieChartRadius * mPieChartRadius;
-    boolean isOnPieChart = sqValue <= radiusSquared;
-    return isOnPieChart;
+    return sqValue <= radiusSquared;
   }
 
   /**

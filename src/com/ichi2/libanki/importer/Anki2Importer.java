@@ -632,8 +632,7 @@ public class Anki2Importer {
     private boolean compareMedia(BufferedInputStream lhis, BufferedInputStream rhis) {
         byte[] lhbytes = _mediaPick(lhis);
         byte[] rhbytes = _mediaPick(rhis);
-        boolean result = Arrays.equals(lhbytes, rhbytes);
-        return result;
+        return Arrays.equals(lhbytes, rhbytes);
     }
 
 

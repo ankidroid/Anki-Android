@@ -139,7 +139,6 @@ public class MultipleCategorySeries implements Serializable {
    * @return the XY series
    */
   public XYSeries toXYSeries() {
-    XYSeries xySeries = new XYSeries(mTitle);
-    return xySeries;
+      return new XYSeries(mTitle);
   }
 }

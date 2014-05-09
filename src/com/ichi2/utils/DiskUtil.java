@@ -31,9 +31,7 @@ public class DiskUtil {
         Collection col = AnkiDroidApp.getCol();
         String mediaDir = col.getMedia().getDir() + "/";
 
-        File mediaDirFile = new File(mediaDir);
-
-        return mediaDirFile;
+        return new File(mediaDir);
     }
 
 }
