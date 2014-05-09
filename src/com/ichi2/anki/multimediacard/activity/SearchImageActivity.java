@@ -115,7 +115,7 @@ public class SearchImageActivity extends Activity implements DialogInterface.OnC
         setContentView(R.layout.activity_search_image);
 
         try {
-            mSource = getIntent().getExtras().getString(EXTRA_SOURCE).toString();
+            mSource = getIntent().getExtras().getString(EXTRA_SOURCE);
         } catch (Exception e) {
             mSource = "";
         }
@@ -262,7 +262,7 @@ public class SearchImageActivity extends Activity implements DialogInterface.OnC
                 for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements();) {
                     InetAddress inetAddress = enumIpAddr.nextElement();
                     if (!inetAddress.isLoopbackAddress()) {
-                        return inetAddress.getHostAddress().toString();
+                        return inetAddress.getHostAddress();
                     }
                 }
             }

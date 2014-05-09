@@ -46,7 +46,7 @@ public class ReadText {
     public static void speak(String text, String loc) {
         int result = mTts.setLanguage(new Locale(loc));
         if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-            Log.e(AnkiDroidApp.TAG, "Error loading locale " + loc.toString());
+            Log.e(AnkiDroidApp.TAG, "Error loading locale " + loc);
         } else {
             if (mTts.isSpeaking()) {
                 sTextQueue.add(new String[] { text, loc });
