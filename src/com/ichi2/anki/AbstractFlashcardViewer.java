@@ -202,7 +202,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
     private boolean mScrollingButtons;
     private boolean mGesturesEnabled;
     private boolean mPrefFixArabic;
-    private boolean mPrefForceQuickUpdate;
     // Android WebView
     private boolean mSpeakText;
     private boolean mDisableClipboard = false;
@@ -210,7 +209,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
     private int mCurrentBackgroundColor;
     private boolean mBlackWhiteboard = true;
     private boolean mNightMode = false;
-    private boolean mPrefEInkDisplay;
+    private boolean mPrefSafeDisplay;
     protected boolean mPrefUseTimer;
     private boolean mPrefCenterVertically;
     private boolean mSimpleInterface = false;
@@ -1632,7 +1631,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         if (AnkiDroidApp.SDK_VERSION > 7) {
             webView.setFocusableInTouchMode(false);
         }
-        if (mPrefEInkDisplay) {
+        if (mPrefSafeDisplay) {
             AnkiDroidApp.getCompat().setScrollbarFadingEnabled(webView, false);
         }
         Log.i(AnkiDroidApp.TAG,
@@ -1815,9 +1814,8 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         mRelativeButtonSize = preferences.getInt("answerButtonSize", 100);
         mInputWorkaround = preferences.getBoolean("inputWorkaround", false);
         mPrefFixArabic = preferences.getBoolean("fixArabicText", false);
-        mPrefForceQuickUpdate = preferences.getBoolean("forceQuickUpdate", false);
         mSpeakText = preferences.getBoolean("tts", false);
-        mPrefEInkDisplay = preferences.getBoolean("eInkDisplay", false);
+        mPrefSafeDisplay = preferences.getBoolean("safeDisplay", false);
         mPrefUseTimer = preferences.getBoolean("timeoutAnswer", false);
         mWaitAnswerSecond = preferences.getInt("timeoutAnswerSeconds", 20);
         mWaitQuestionSecond = preferences.getInt("timeoutQuestionSeconds", 60);
@@ -2700,20 +2698,6 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
 
 
     /**
-     * @return true if the device is a Nook
-     */
-    private boolean isNookDevice() {
-        for (String s : new String[] { "nook" }) {
-            if (android.os.Build.DEVICE.toLowerCase().indexOf(s) != -1
-                    || android.os.Build.MODEL.toLowerCase().indexOf(s) != -1) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-
-    /**
      * Returns true if we should update the content of a single {@link WebView} (called quick update) instead of switch
      * between two instances.
      * <p>
@@ -2725,12 +2709,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
      * @return true if we should use a single WebView
      */
     private boolean shouldUseQuickUpdate() {
-        if (mPrefForceQuickUpdate) {
-            // The user has requested us to use quick update in the preferences.
-            return true;
-        }
-        // Otherwise, use quick update only if there are no custom fonts.
-        return mExtensions.supportsQuickUpdate() && !isNookDevice();
+        return !mPrefSafeDisplay;
     }
 
 
