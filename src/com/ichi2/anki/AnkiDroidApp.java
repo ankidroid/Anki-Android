@@ -31,6 +31,7 @@ import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 
+import com.ichi2.anki.exception.AnkiDroidErrorReportException;
 import com.ichi2.async.Connection;
 import com.ichi2.compat.Compat;
 import com.ichi2.compat.CompatV15;
@@ -349,8 +350,22 @@ public class AnkiDroidApp extends Application {
     }
 
 
+    public static void saveExceptionReportFile(String origin, String additionalInfo) {
+        try {
+            throw new AnkiDroidErrorReportException();
+        } catch (AnkiDroidErrorReportException e) {
+            saveExceptionReportFile(e, origin, additionalInfo);
+        }
+    }
+    
+    
     public static void saveExceptionReportFile(Throwable e, String origin) {
-        CustomExceptionHandler.getInstance().uncaughtException(null, e, origin);
+        saveExceptionReportFile(e, origin, null);
+    }
+    
+    
+    public static void saveExceptionReportFile(Throwable e, String origin, String additionalInfo) {
+        CustomExceptionHandler.getInstance().uncaughtException(null, e, origin, additionalInfo);
     }
 
 
