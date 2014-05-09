@@ -46,7 +46,9 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class StyledDialog extends Dialog {
@@ -116,8 +118,14 @@ public class StyledDialog extends Dialog {
     private void setItems(int type, ListView listview, String[] values, int checkedItem, boolean[] checked,
             DialogInterface.OnClickListener listener) {
         mListView = listview;
-        mItemList = new ArrayList<String>();
-        Collections.addAll(mItemList, values);
+        mItemList = Arrays.asList(values);
+        Collections.sort(mItemList, new Comparator<String>() {
+            @Override
+            public int compare(String lhs, String rhs) {
+                return lhs.compareToIgnoreCase(rhs);
+            }
+        });
+
         mListener = listener;
         if (type == 3) {
             mListView.setOnItemClickListener(new OnItemClickListener() {
