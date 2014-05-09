@@ -2147,19 +2147,17 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
             }
 
             mAnswerField.setVisibility(View.GONE);
-            if (mCurrentCard != null) {
-                if (mPrefFixArabic) {
-                    // reshape
-                    mTypeCorrect = ArabicUtilities.reshapeSentence(mTypeCorrect, true);
-                }
-                // Obtain the user answer and the correct answer
-                String userAnswer = getAnswerText(mAnswerField.getText().toString());
-                String correctAnswer = getAnswerText(mTypeCorrect);
-                Log.i(AnkiDroidApp.TAG, "correct answer = " + correctAnswer);
-
-                answer = typeAnsAnswerFilter(answer, userAnswer, correctAnswer);
-                displayString = enrichWithQADiv(answer, true);
+            if (mPrefFixArabic) {
+                // reshape
+                mTypeCorrect = ArabicUtilities.reshapeSentence(mTypeCorrect, true);
             }
+            // Obtain the user answer and the correct answer
+            String userAnswer = getAnswerText(mAnswerField.getText().toString());
+            String correctAnswer = getAnswerText(mTypeCorrect);
+            Log.i(AnkiDroidApp.TAG, "correct answer = " + correctAnswer);
+
+            answer = typeAnsAnswerFilter(answer, userAnswer, correctAnswer);
+            displayString = enrichWithQADiv(answer, true);
         }
 
         mIsSelecting = false;
