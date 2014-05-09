@@ -864,12 +864,12 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         }
 
         totalMissing = missingPaths.size();
-        data.data[0] = new Integer(totalMissing);
+        data.data[0] = totalMissing;
         if (totalMissing == 0) {
             data.success = true;
             return data;
         }
-        publishProgress(Boolean.FALSE, new Integer(totalMissing), new Integer(0), syncName);
+        publishProgress(Boolean.FALSE, totalMissing, 0, syncName);
 
         URL url = null;
         HttpURLConnection connection = null;
@@ -949,11 +949,11 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     connection.disconnect();
                 }
             }
-            publishProgress(Boolean.TRUE, new Integer(totalMissing), new Integer(grabbed + missing), syncName);
+            publishProgress(Boolean.TRUE, totalMissing, grabbed + missing, syncName);
         }
 
-        data.data[1] = new Integer(grabbed);
-        data.data[2] = new Integer(missing);
+        data.data[1] = grabbed;
+        data.data[2] = missing;
         data.success = true;
         return data;
     }
