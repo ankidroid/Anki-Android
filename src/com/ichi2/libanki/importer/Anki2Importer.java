@@ -509,9 +509,7 @@ public class Anki2Importer {
                 // doesn't exist. strip off note info, and save src id for later
                 Object[] oc = card;
                 card = new Object[oc.length - 2];
-                for (int i = 0; i < card.length; i++) {
-                    card[i] = oc[i + 2];
-                }
+                System.arraycopy(oc, 2, card, 0, card.length);
                 long scid = (Long) card[0];
                 // ensure the card id is unique
                 while (existing.containsKey(card[0])) {
