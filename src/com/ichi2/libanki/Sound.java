@@ -21,7 +21,6 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.net.Uri;
-import android.net.rtp.AudioStream;
 import android.util.Log;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.ReadText;
@@ -44,7 +43,7 @@ public class Sound {
     /**
      * Pattern used to parse URI (according to http://tools.ietf.org/html/rfc3986#page-50)
      */
-    private static Pattern uriSchemaPattern = Pattern.compile("^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\\?([^#]*))?(#(.*))?$");
+    private static Pattern sUriPattern = Pattern.compile("^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\\?([^#]*))?(#(.*))?$");
 
     /**
      * Media player used to play the sounds
@@ -323,7 +322,7 @@ public class Sound {
      * @return true if path is well-formed URI and contains URI scheme.
      */
     private static boolean hasURIScheme(String path) {
-        Matcher uriMatcher = uriSchemaPattern.matcher(path.trim());
+        Matcher uriMatcher = sUriPattern.matcher(path.trim());
         return uriMatcher.matches() && uriMatcher.group(2) != null;
     }
 }
