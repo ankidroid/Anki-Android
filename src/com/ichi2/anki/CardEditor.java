@@ -34,6 +34,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.PopupMenu.OnMenuItemClickListener;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.Spanned;
@@ -64,6 +65,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.multimediacard.activity.MultimediaCardEditorActivity;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.async.DeckTask;
 import com.ichi2.filters.FilterFacade;
@@ -1386,6 +1388,23 @@ public class CardEditor extends ActionBarActivity {
                     PopupMenuWithIcons popup = new PopupMenuWithIcons(CardEditor.this, v, true);
                     MenuInflater inflater = popup.getMenuInflater();
                     inflater.inflate(R.menu.popupmenu_multimedia_options, popup.getMenu());
+                    
+                    popup.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+                        
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            switch( item.getItemId() ) {
+                                case R.id.menu_multimedia_editor:
+                                    
+                                    Intent editCard = new Intent(CardEditor.this, MultimediaCardEditorActivity.class);
+                                    editCard.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_DECKPICKER);
+                                    startActivityForResult(editCard, 12);
+                                    return true;
+                                default:
+                                    return false;
+                            }
+                        }
+                    });
                     popup.show();
                 }
             });
