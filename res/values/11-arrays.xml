@@ -26,7 +26,7 @@
         <item>Never report</item>
         <item>Ask me</item>
     </string-array>
-    <string-array name="widget_minimum_cards_due_labels">
+    <string-array name="notification_minimum_cards_due_labels">
         <item>10</item>
         <item>25</item>
         <item>50</item>
@@ -34,7 +34,7 @@
         <item>100</item>
         <item>150</item>
         <item>200</item>
-        <item>Never</item>
+        <item>Infinite</item>
     </string-array>
     <string-array name="cram_review_order_labels">
         <item>Show oldest modified first</item>

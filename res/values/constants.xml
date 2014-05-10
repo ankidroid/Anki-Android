@@ -45,7 +45,7 @@
         <item>1</item>
         <item>2</item>
     </string-array>
-    <string-array name="widget_minimum_cards_due_values">
+    <string-array name="notification_minimum_cards_due_values">
         <item>10</item>
         <item>25</item>
         <item>50</item>

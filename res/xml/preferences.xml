@@ -62,22 +62,22 @@
             android:key="reportErrorMode"
             android:summary="@string/error_reporting_choice_summary"
             android:title="@string/error_reporting_choice" />
-        <PreferenceCategory android:title="@string/widget_pref" >
+        <PreferenceCategory android:title="@string/notification_pref" >
             <ListPreference
                 android:defaultValue="1000000"
-                android:entries="@array/widget_minimum_cards_due_labels"
-                android:entryValues="@array/widget_minimum_cards_due_values"
+                android:entries="@array/notification_minimum_cards_due_labels"
+                android:entryValues="@array/notification_minimum_cards_due_values"
                 android:key="minimumCardsDueForNotification"
-                android:summary="@string/widget_minimum_cards_due_summary"
-                android:title="@string/widget_minimum_cards_due" />
+                android:summary="@string/notification_minimum_cards_due_summary"
+                android:title="@string/notification_minimum_cards_due" />
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="widgetVibrate"
-                android:title="@string/widget_minimum_cards_due_vibrate" />
+                android:title="@string/notification_minimum_cards_due_vibrate" />
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="widgetBlink"
-                android:title="@string/widget_minimum_cards_due_blink" />
+                android:title="@string/notification_minimum_cards_due_blink" />
         </PreferenceCategory>            
     </PreferenceScreen>
     
@@ -175,14 +175,14 @@
                 android:dependency="timeoutAnswer"
                 android:key="timeoutAnswerSeconds"
                 android:max="30"
-                android:summary="@string/timeout_answer_seconds"
+                android:summary="@string/timeout_answer_seconds_summ"
                 android:title="@string/timeout_answer_seconds" />
             <com.hlidskialf.android.preference.SeekBarPreference
                 android:defaultValue="60"
                 android:dependency="timeoutAnswer"
                 android:key="timeoutQuestionSeconds"
                 android:max="60"
-                android:summary="@string/timeout_question_seconds"
+                android:summary="@string/timeout_question_seconds_summ"
                 android:title="@string/timeout_question_seconds" />
         </PreferenceCategory>
     </PreferenceScreen>
@@ -228,15 +228,6 @@
                 app:min="50" />
             <com.hlidskialf.android.preference.SeekBarPreference
                 android:defaultValue="100"
-                android:key="relativeCardBrowserFontSize"
-                android:max="200"
-                android:summary="@string/card_browser_font_size_summ"
-                android:text=" %"
-                android:title="@string/card_browser_font_size"
-                app:interval="10"
-                app:min="10" />
-            <com.hlidskialf.android.preference.SeekBarPreference
-                android:defaultValue="100"
                 android:key="answerButtonSize"
                 android:max="170"
                 android:summary="@string/button_size_summ"
@@ -244,6 +235,15 @@
                 android:title="@string/button_size"
                 app:interval="10"
                 app:min="100" />
+            <com.hlidskialf.android.preference.SeekBarPreference
+                android:defaultValue="100"
+                android:key="relativeCardBrowserFontSize"
+                android:max="200"
+                android:summary="@string/card_browser_font_size_summ"
+                android:text=" %"
+                android:title="@string/card_browser_font_size"
+                app:interval="10"
+                app:min="10" />            
         </PreferenceCategory>
     </PreferenceScreen>        
     

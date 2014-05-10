@@ -96,9 +96,9 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             "gestureSwipeRight", "gestureDoubleTap", "gestureTapTop", "gestureTapBottom", "gestureTapRight",
             "gestureLongclick", "gestureTapLeft", "newSpread", "useCurrent" };// , "theme" };
     private static String[] mShowValueInSummSeek = { "relativeDisplayFontSize", "relativeCardBrowserFontSize",
-            "relativeImageSize", "answerButtonSize", "whiteBoardStrokeWidth", "swipeSensibility",
+            "relativeImageSize", "answerButtonSize", "whiteBoardStrokeWidth", "swipeSensitivity",
             "timeoutAnswerSeconds", "timeoutQuestionSeconds", "backupMax", "dayOffset" };
-    private static String[] mShowValueInSummEditText = { "simpleInterfaceExcludeTags" };
+    private static String[] mShowValueInSummEditText = { "simpleInterfaceExcludeTags", "deckPath" };
     private static String[] mShowValueInSummNumRange = { "timeLimit", "learnCutoff" };
     private TreeMap<String, String> mListsToUpdate = new TreeMap<String, String>();
     private StyledProgressDialog mProgressDialog;
