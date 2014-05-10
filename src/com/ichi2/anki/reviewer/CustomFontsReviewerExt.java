@@ -126,9 +126,10 @@ public class CustomFontsReviewerExt implements ReviewerExt {
     private String getOverrideFontStyle(Context context, Map<String, AnkiFont> customFontsMap) {
         if (mOverrideFontStyle == null) {
             SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
-            AnkiFont overrideFont = customFontsMap.get(preferences.getString("overrideFont", null));
-            if (overrideFont != null) {
-                mOverrideFontStyle = "BODY, .card, * { " + overrideFont.getCSS() + " }\n";
+            AnkiFont defaultFont = customFontsMap.get(preferences.getString("defaultFont", null));
+            boolean overrideFont = preferences.getString("overrideFontBehavior", "0").equals("1");
+            if (defaultFont != null && overrideFont) {
+                mOverrideFontStyle = "BODY, .card, * { " + defaultFont.getCSS() + " }\n";
             } else {
                 mOverrideFontStyle = "";
             }

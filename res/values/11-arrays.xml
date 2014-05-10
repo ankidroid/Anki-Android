@@ -131,5 +131,9 @@
         <item>New</item>
         <item>Due</item>
     </string-array>
+    <string-array name="override_font_labels">
+        <item>When no font specified on flashcards</item>
+        <item>Always</item>
+    </string-array>    
 
 </resources>

@@ -197,8 +197,10 @@
                 android:summary="@string/default_font_summ"
                 android:title="@string/default_font" />
             <ListPreference
-                android:defaultValue=""
-                android:key="overrideFont"
+                android:defaultValue="0"
+                android:key="overrideFontBehavior"
+            	android:entries="@array/override_font_labels"
+            	android:entryValues="@array/override_font_values"                
                 android:summary="@string/override_font_summ"
                 android:title="@string/override_font" />
             <ListPreference
