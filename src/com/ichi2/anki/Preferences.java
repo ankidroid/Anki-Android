@@ -132,7 +132,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
         addPreferencesFromResource(R.xml.preferences);
 
-        swipeCheckboxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("swipe");
+        swipeCheckboxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("gestures");
         keepScreenOnCheckBoxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("keepScreenOn");
         showAnswerCheckBoxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("timeoutAnswer");
         useBackupPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("useBackup");

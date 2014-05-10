@@ -379,11 +379,11 @@ public class AnkiDroidApp extends Application {
 
 
     public static boolean initiateGestures(Context context, SharedPreferences preferences) {
-        mGesturesEnabled = preferences.getBoolean("swipe", false);
+        mGesturesEnabled = preferences.getBoolean("gestures", false);
         if (mGesturesEnabled && sSwipeMinDistance == -1) {
             // Convert dip to pixel, code in parts from http://code.google.com/p/k9mail/
             final float gestureScale = context.getResources().getDisplayMetrics().density;
-            int sensitivity = preferences.getInt("swipesensitivity", 100);
+            int sensitivity = preferences.getInt("swipeSensitivity", 100);
             if (sensitivity != 100) {
                 float sens = (200 - sensitivity) / 100.0f;
                 sSwipeMinDistance = (int) (SWIPE_MIN_DISTANCE_DIP * sens * gestureScale + 0.5f);

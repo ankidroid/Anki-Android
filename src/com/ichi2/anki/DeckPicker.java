@@ -1331,7 +1331,10 @@ public class DeckPicker extends ActionBarActivity {
             preferences.edit().putString("defaultFont", "").commit();            
         }
         // when upgrading from before 2.2alpha66
-        if (previousVersionCode < 20200166) {            
+        if (previousVersionCode < 20200166) {
+            // change name from swipe to gestures            
+            preferences.edit().putInt("swipeSensitivity", preferences.getInt("swipeSensibility", 100)).commit();
+            preferences.edit().putBoolean("gestures", preferences.getBoolean("swipe", false)).commit();
             // set new safeDisplayMode preference based on old behavior
             boolean safeDisplayMode = preferences.getBoolean("eInkDisplay", false) || isNookDevice() || 
                     !preferences.getBoolean("forceQuickUpdate", false);            
