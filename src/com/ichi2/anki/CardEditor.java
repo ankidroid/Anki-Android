@@ -1428,7 +1428,8 @@ public class CardEditor extends ActionBarActivity {
                 }
                 */
             });
-
+            // TODO: Make clickable again after integration with MM editor is complete
+            mediaButton.setClickable(false);
             mFieldsLayoutContainer.addView(label);
             mFieldsLayoutContainer.addView(editline_view);
         }
