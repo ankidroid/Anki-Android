@@ -79,6 +79,7 @@ import com.ichi2.themes.Themes;
 import com.ichi2.widget.PopupMenuWithIcons;
 import com.ichi2.widget.WidgetStatus;
 
+import org.amr.arabic.ArabicUtilities;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -673,7 +674,7 @@ public class CardEditor extends ActionBarActivity {
         if (mAddNote) {
             // load all of the fields into the note
             for (FieldEditText f : mEditFields) {
-                f.updateField();
+                updateField(f);
             }
             try {
                 // Save deck to model
@@ -706,7 +707,7 @@ public class CardEditor extends ActionBarActivity {
             }
             // now load any changes to the fields from the form
             for (FieldEditText f : mEditFields) {
-                modified = modified | f.updateField();
+                modified = modified | updateField(f);
             }
             // added tag?
             for (String t : mCurrentTags) {
@@ -1368,13 +1369,9 @@ public class CardEditor extends ActionBarActivity {
 
         for (int i = 0; i < fields.length; i++) {
             View editline_view = getLayoutInflater().inflate(R.layout.card_multimedia_editline, null);
-            FieldEditText newTextbox  = (FieldEditText) editline_view.findViewById(R.id.id_note_editText);
-            newTextbox.init(i, fields[i]);
+            FieldEditText newTextbox = (FieldEditText) editline_view.findViewById(R.id.id_note_editText);
 
-            if (mCustomTypeface != null) {
-                newTextbox.setTypeface(mCustomTypeface);
-            }
-
+            initFieldEditText(newTextbox, i, fields[i], mCustomTypeface);
 
             TextView label = newTextbox.getLabel();
             label.setTextColor(Color.BLACK);
@@ -1395,6 +1392,40 @@ public class CardEditor extends ActionBarActivity {
 
             mFieldsLayoutContainer.addView(label);
             mFieldsLayoutContainer.addView(editline_view);
+        }
+    }
+
+
+    private void initFieldEditText(FieldEditText editText, int index, String[] values, Typeface customTypeface) {
+        String name = values[0];
+        String content = values[1];
+        if (mPrefFixArabic) {
+            content = ArabicUtilities.reshapeSentence(content);
+        }
+        editText.init(index, name, content);
+
+        if (customTypeface != null) {
+            editText.setTypeface(customTypeface);
+        }
+
+        if (index == 0) {
+            editText.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void afterTextChanged(Editable arg0) {
+                    mTimerHandler.removeCallbacks(checkDuplicatesRunnable);
+                    mTimerHandler.postDelayed(checkDuplicatesRunnable, WAIT_TIME_UNTIL_UPDATE);
+                }
+
+
+                @Override
+                public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+                }
+
+
+                @Override
+                public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+                }
+            });
         }
     }
 
@@ -1514,6 +1545,15 @@ public class CardEditor extends ActionBarActivity {
         mTagsButton.setText(getResources().getString(R.string.CardEditorTags,
                 mCol.getTags().join(mCol.getTags().canonify(mCurrentTags)).trim().replace(" ", ", ")));
     }
+    
+    private boolean updateField(FieldEditText field) {
+          String newValue = field.getText().toString().replace(FieldEditText.NEW_LINE, "<br>");
+          if (!mEditorNote.values()[field.getOrd()].equals(newValue)) {
+              mEditorNote.values()[field.getOrd()] = newValue;
+              return true;
+          }
+          return false;
+    }
 
 
     private String tagsAsString(List<String> tags) {
@@ -1523,96 +1563,6 @@ public class CardEditor extends ActionBarActivity {
     // ----------------------------------------------------------------------------
     // INNER CLASSES
     // ----------------------------------------------------------------------------
-
-    public static class FieldEditText extends EditText {
-
-        public final String NEW_LINE = System.getProperty("line.separator");
-        public final String NL_MARK = "newLineMark";
-
-        private String mName;
-        private int mOrd;
-
-        public FieldEditText(Context context) {
-            super(context);
-        }
-        
-        public FieldEditText(Context context, AttributeSet attr) {
-            super(context,attr);
-        }
-        
-        public FieldEditText(Context context, AttributeSet attrs, int defStyle) {
-            super(context, attrs, defStyle);
-        }
-
-        public FieldEditText(Context context, int ord, String[] value) {
-            super(context);
-            init(ord, value);
-        }
-
-        public TextView getLabel() {
-            TextView label = new TextView(this.getContext());
-            label.setText(mName);
-            return label;
-        }
-
-
-        public boolean updateField() {
-            //TODO (ramblurr)
-//            String newValue = this.getText().toString().replace(NEW_LINE, "<br>");
-//            if (!mEditorNote.values()[mOrd].equals(newValue)) {
-//                mEditorNote.values()[mOrd] = newValue;
-//                return true;
-//            }
-            return false;
-        }
-        
-        public void init(int ord, String[] value) {
-            mOrd = ord;
-            mName = value[0];
-            String content = value[1];
-
-            if (content == null) {
-                content = "";
-            } else {
-                content = content.replaceAll("<br(\\s*\\/*)>", NEW_LINE);
-            }
-          //TODO (ramblurr)
-//            if (mPrefFixArabic) {
-//
-//                this.setText(ArabicUtilities.reshapeSentence(content));
-//            } else {
-                this.setText(content);
-//            }
-            this.setMinimumWidth(400);
-            if (mOrd == 0) {
-                this.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void afterTextChanged(Editable arg0) {
-                        //TODO (ramblurr)
-//                        mTimerHandler.removeCallbacks(checkDuplicatesRunnable);
-//                        mTimerHandler.postDelayed(checkDuplicatesRunnable, WAIT_TIME_UNTIL_UPDATE);
-                    }
-
-
-                    @Override
-                    public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-                    }
-
-
-                    @Override
-                    public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-                    }
-                });
-            }
-        }
-
-        public String cleanText(String text) {
-            text = text.replaceAll("\\s*(" + NL_MARK + "\\s*)+", NEW_LINE);
-            text = text.replaceAll("^[,;:\\s\\)\\]" + NEW_LINE + "]*", "");
-            text = text.replaceAll("[,;:\\s\\(\\[" + NEW_LINE + "]*$", "");
-            return text;
-        }
-    }
 
     public class JSONNameComparator implements Comparator<JSONObject> {
         @Override
