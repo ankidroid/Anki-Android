@@ -39,10 +39,12 @@ import android.text.InputFilter;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +56,7 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -73,9 +76,9 @@ import com.ichi2.themes.StyledDialog.Builder;
 import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
+import com.ichi2.widget.PopupMenuWithIcons;
 import com.ichi2.widget.WidgetStatus;
 
-import org.amr.arabic.ArabicUtilities;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -825,7 +828,6 @@ public class CardEditor extends ActionBarActivity {
         }
     }
 
-
     // ----------------------------------------------------------------------------
     // CUSTOM METHODS
     // ----------------------------------------------------------------------------
@@ -1365,23 +1367,34 @@ public class CardEditor extends ActionBarActivity {
         }
 
         for (int i = 0; i < fields.length; i++) {
-            FieldEditText newTextbox = new FieldEditText(this, i, fields[i]);
+            View editline_view = getLayoutInflater().inflate(R.layout.card_multimedia_editline, null);
+            FieldEditText newTextbox  = (FieldEditText) editline_view.findViewById(R.id.id_note_editText);
+            newTextbox.init(i, fields[i]);
 
             if (mCustomTypeface != null) {
                 newTextbox.setTypeface(mCustomTypeface);
             }
 
+
             TextView label = newTextbox.getLabel();
             label.setTextColor(Color.BLACK);
             label.setPadding((int) UIUtils.getDensityAdjustedValue(this, 3.4f), 0, 0, 0);
             mEditFields.add(newTextbox);
-            FrameLayout frame = new FrameLayout(this);
-            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.RIGHT | Gravity.CENTER_VERTICAL);
-            params.rightMargin = 10;
-            frame.addView(newTextbox);
+
+            ImageButton mediaButton = (ImageButton) editline_view.findViewById(R.id.id_media_button);
+            mediaButton.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    PopupMenuWithIcons popup = new PopupMenuWithIcons(CardEditor.this, v, true);
+                    MenuInflater inflater = popup.getMenuInflater();
+                    inflater.inflate(R.menu.popupmenu_multimedia_options, popup.getMenu());
+                    popup.show();
+                }
+            });
+
             mFieldsLayoutContainer.addView(label);
-            mFieldsLayoutContainer.addView(frame);
+            mFieldsLayoutContainer.addView(editline_view);
         }
     }
 
@@ -1511,7 +1524,7 @@ public class CardEditor extends ActionBarActivity {
     // INNER CLASSES
     // ----------------------------------------------------------------------------
 
-    public class FieldEditText extends EditText {
+    public static class FieldEditText extends EditText {
 
         public final String NEW_LINE = System.getProperty("line.separator");
         public final String NL_MARK = "newLineMark";
@@ -1519,29 +1532,65 @@ public class CardEditor extends ActionBarActivity {
         private String mName;
         private int mOrd;
 
+        public FieldEditText(Context context) {
+            super(context);
+        }
+        
+        public FieldEditText(Context context, AttributeSet attr) {
+            super(context,attr);
+        }
+        
+        public FieldEditText(Context context, AttributeSet attrs, int defStyle) {
+            super(context, attrs, defStyle);
+        }
 
         public FieldEditText(Context context, int ord, String[] value) {
             super(context);
+            init(ord, value);
+        }
+
+        public TextView getLabel() {
+            TextView label = new TextView(this.getContext());
+            label.setText(mName);
+            return label;
+        }
+
+
+        public boolean updateField() {
+            //TODO (ramblurr)
+//            String newValue = this.getText().toString().replace(NEW_LINE, "<br>");
+//            if (!mEditorNote.values()[mOrd].equals(newValue)) {
+//                mEditorNote.values()[mOrd] = newValue;
+//                return true;
+//            }
+            return false;
+        }
+        
+        public void init(int ord, String[] value) {
             mOrd = ord;
             mName = value[0];
             String content = value[1];
+
             if (content == null) {
                 content = "";
             } else {
                 content = content.replaceAll("<br(\\s*\\/*)>", NEW_LINE);
             }
-            if (mPrefFixArabic) {
-                this.setText(ArabicUtilities.reshapeSentence(content));
-            } else {
+          //TODO (ramblurr)
+//            if (mPrefFixArabic) {
+//
+//                this.setText(ArabicUtilities.reshapeSentence(content));
+//            } else {
                 this.setText(content);
-            }
+//            }
             this.setMinimumWidth(400);
-            if (ord == 0) {
+            if (mOrd == 0) {
                 this.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void afterTextChanged(Editable arg0) {
-                        mTimerHandler.removeCallbacks(checkDuplicatesRunnable);
-                        mTimerHandler.postDelayed(checkDuplicatesRunnable, WAIT_TIME_UNTIL_UPDATE);
+                        //TODO (ramblurr)
+//                        mTimerHandler.removeCallbacks(checkDuplicatesRunnable);
+//                        mTimerHandler.postDelayed(checkDuplicatesRunnable, WAIT_TIME_UNTIL_UPDATE);
                     }
 
 
@@ -1556,24 +1605,6 @@ public class CardEditor extends ActionBarActivity {
                 });
             }
         }
-
-
-        public TextView getLabel() {
-            TextView label = new TextView(this.getContext());
-            label.setText(mName);
-            return label;
-        }
-
-
-        public boolean updateField() {
-            String newValue = this.getText().toString().replace(NEW_LINE, "<br>");
-            if (!mEditorNote.values()[mOrd].equals(newValue)) {
-                mEditorNote.values()[mOrd] = newValue;
-                return true;
-            }
-            return false;
-        }
-
 
         public String cleanText(String text) {
             text = text.replaceAll("\\s*(" + NL_MARK + "\\s*)+", NEW_LINE);
