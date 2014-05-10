@@ -21,6 +21,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.net.Uri;
+import android.net.rtp.AudioStream;
 import android.util.Log;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.ReadText;
@@ -230,13 +231,18 @@ public class Sound {
                 sMediaPlayer.setDataSource(AnkiDroidApp.getInstance().getApplicationContext(),
                                            soundUri);
                 sMediaPlayer.setVolume(AudioManager.STREAM_MUSIC, AudioManager.STREAM_MUSIC);
-                sMediaPlayer.prepare();
+                sMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                sMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        sMediaPlayer.start();
+                    }
+                });
                 if (playAllListener != null)
                     sMediaPlayer.setOnCompletionListener(playAllListener);
 
+                sMediaPlayer.prepareAsync();
                 AnkiDroidApp.getCompat().requestAudioFocus(sAudioManager);
-
-                sMediaPlayer.start();
             } catch (Exception e) {
                 Log.e(AnkiDroidApp.TAG, "playSounds - Error reproducing sound " + soundPath + " = " + e.getMessage());
                 releaseSound();
