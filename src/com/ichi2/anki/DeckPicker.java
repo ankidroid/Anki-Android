@@ -2751,6 +2751,9 @@ public class DeckPicker extends ActionBarActivity {
                     public void onGlobalLayout() {
                         mDeckListView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                         mDeckListView.performItemClick(null, lastPosition, 0);
+                        // Scroll the listView to the currently selected row, then offset it by half the
+                        // listview's height so that it is centered.
+                        mDeckListView.setSelectionFromTop(lastPosition, mDeckListView.getHeight() / 2);
                     }
                 });
                 break;
