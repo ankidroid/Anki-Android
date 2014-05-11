@@ -92,12 +92,12 @@ public class AnkiFont {
 
         // determine if override font or default font
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(ctx);
-        String overrideFont = preferences.getString("overrideFont", "");
-        if (overrideFont.equalsIgnoreCase(name)) {
-            createdFont.setAsOverride();
-        } else {
-            String defaultFont = preferences.getString("defaultFont", "");
-            if (defaultFont.equalsIgnoreCase(name)) {
+        String defaultFont = preferences.getString("defaultFont", "");
+        boolean overrideFont = preferences.getString("overrideFontBehavior", "0").equals("1");
+        if (defaultFont.equalsIgnoreCase(name)) {
+            if (overrideFont) {
+                createdFont.setAsOverride();
+            } else{
                 createdFont.setAsDefault();
             }
         }

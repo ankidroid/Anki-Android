@@ -94,11 +94,11 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private static String[] mShowValueInSummList = { "language", "dictionary", "reportErrorMode",
             "minimumCardsDueForNotification", "gestureSwipeUp", "gestureSwipeDown", "gestureSwipeLeft",
             "gestureSwipeRight", "gestureDoubleTap", "gestureTapTop", "gestureTapBottom", "gestureTapRight",
-            "gestureLongclick", "gestureTapLeft", "newSpread", "useCurrent" };// , "theme" };
+            "gestureLongclick", "gestureTapLeft", "newSpread", "useCurrent", "defaultFont", "overrideFontBehavior", "browserEditorFont" };
     private static String[] mShowValueInSummSeek = { "relativeDisplayFontSize", "relativeCardBrowserFontSize",
-            "relativeImageSize", "answerButtonSize", "whiteBoardStrokeWidth", "swipeSensibility",
+            "relativeImageSize", "answerButtonSize", "whiteBoardStrokeWidth", "swipeSensitivity",
             "timeoutAnswerSeconds", "timeoutQuestionSeconds", "backupMax", "dayOffset" };
-    private static String[] mShowValueInSummEditText = { "simpleInterfaceExcludeTags" };
+    private static String[] mShowValueInSummEditText = { "simpleInterfaceExcludeTags", "deckPath" };
     private static String[] mShowValueInSummNumRange = { "timeLimit", "learnCutoff" };
     private TreeMap<String, String> mListsToUpdate = new TreeMap<String, String>();
     private StyledProgressDialog mProgressDialog;
@@ -132,7 +132,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
         addPreferencesFromResource(R.xml.preferences);
 
-        swipeCheckboxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("swipe");
+        swipeCheckboxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("gestures");
         keepScreenOnCheckBoxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("keepScreenOn");
         showAnswerCheckBoxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("timeoutAnswer");
         useBackupPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("useBackup");
@@ -325,31 +325,16 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     /** Initializes the list of custom fonts shown in the preferences. */
     private void initializeCustomFontsDialog() {
         ListPreference defaultFontPreference = (ListPreference) getPreferenceScreen().findPreference("defaultFont");
-        ListPreference overrideFontPreference = (ListPreference) getPreferenceScreen().findPreference("overrideFont");
         if (defaultFontPreference != null) {
             defaultFontPreference.setEntries(getCustomFonts("System default"));
             defaultFontPreference.setEntryValues(getCustomFonts(""));
         }
-        if (overrideFontPreference != null) {
-            overrideFontPreference.setEntries(getCustomFonts("None"));
-            overrideFontPreference.setEntryValues(getCustomFonts(""));
-        }
-        onOverrideFontChange(overrideFontPreference, defaultFontPreference);
 
         ListPreference browserEditorCustomFontsPreference = (ListPreference) getPreferenceScreen().findPreference(
                 "browserEditorFont");
         browserEditorCustomFontsPreference.setEntries(getCustomFonts("System default"));
         browserEditorCustomFontsPreference.setEntryValues(getCustomFonts("", true));
     }
-
-
-    private void onOverrideFontChange(ListPreference overrideFontPreference, ListPreference defaultFontPreference) {
-        if (overrideFontPreference != null && defaultFontPreference != null) {
-            Boolean overrideIsSet = !TextUtils.isEmpty(overrideFontPreference.getValue());
-            defaultFontPreference.setEnabled(!overrideIsSet);
-        }
-    }
-
 
     @Override
     protected void onPause() {
@@ -433,12 +418,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 date.set(Calendar.HOUR_OF_DAY, hours);
                 mCol.setCrt(date.getTimeInMillis() / 1000);
                 mCol.setMod();
-            } else if (key.equals("overrideFont")) {
-                ListPreference overrideFontPreference = (ListPreference) getPreferenceScreen().findPreference(
-                        "overrideFont");
-                ListPreference defaultFontPreference = (ListPreference) getPreferenceScreen().findPreference(
-                        "defaultFont");
-                onOverrideFontChange(overrideFontPreference, defaultFontPreference);
             }
             if (Arrays.asList(mShowValueInSummList).contains(key)) {
                 updateListPreference(key);

@@ -94,7 +94,7 @@ public class ChartBuilder extends ActionBarActivity {
 
     private SharedPreferences restorePreferences() {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-        mSwipeEnabled = preferences.getBoolean("swipe", false);
+        mSwipeEnabled = preferences.getBoolean("gestures", false);
         return preferences;
     }
 

@@ -1325,12 +1325,28 @@ public class DeckPicker extends ActionBarActivity {
     
     private void upgradePreferences(int previousVersionCode) {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-        if (previousVersionCode < 20200170) {
-        	boolean safeDisplayMode = preferences.getBoolean("eInkDisplay", false) || isNookDevice() || 
-        			!preferences.getBoolean("forceQuickUpdate", false);
-        	preferences.edit().putBoolean("safeDisplay", safeDisplayMode).commit();
+        // when upgrading from before 2.1alpha08
+        if (previousVersionCode < 20100108) {
             preferences.edit().putString("overrideFont", preferences.getString("defaultFont", "")).commit();
-            preferences.edit().putString("defaultFont", "").commit();
+            preferences.edit().putString("defaultFont", "").commit();            
+        }
+        // when upgrading from before 2.2alpha66
+        if (previousVersionCode < 20200166) {
+            // change name from swipe to gestures            
+            preferences.edit().putInt("swipeSensitivity", preferences.getInt("swipeSensibility", 100)).commit();
+            preferences.edit().putBoolean("gestures", preferences.getBoolean("swipe", false)).commit();
+            // set new safeDisplayMode preference based on old behavior
+            boolean safeDisplayMode = preferences.getBoolean("eInkDisplay", false) || isNookDevice() || 
+                    !preferences.getBoolean("forceQuickUpdate", false);            
+            preferences.edit().putBoolean("safeDisplay", safeDisplayMode).commit();
+            // set overrideFontBehavior based on old overrideFont settings
+            String overrideFont = preferences.getString("overrideFont", "");
+            if (!overrideFont.equals("")){
+                preferences.edit().putString("defaultFont", overrideFont ).commit();
+                preferences.edit().putString("overrideFontBehavior", "1" ).commit();
+            } else {
+                preferences.edit().putString("overrideFontBehavior", "0" ).commit();
+            }
         }
     }
 
