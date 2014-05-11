@@ -34,15 +34,18 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.PopupMenu.OnMenuItemClickListener;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +57,7 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -61,6 +65,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.multimediacard.activity.MultimediaCardEditorActivity;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.async.DeckTask;
 import com.ichi2.filters.FilterFacade;
@@ -73,6 +78,7 @@ import com.ichi2.themes.StyledDialog.Builder;
 import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
+import com.ichi2.widget.PopupMenuWithIcons;
 import com.ichi2.widget.WidgetStatus;
 
 import org.amr.arabic.ArabicUtilities;
@@ -135,6 +141,7 @@ public class CardEditor extends ActionBarActivity {
 
     public static final int REQUEST_ADD = 0;
     public static final int REQUEST_INTENT_ADD = 1;
+    public static final int REQUEST_MULTIMEDIA_EDIT = 2;
 
     private static final int WAIT_TIME_UNTIL_UPDATE = 1000;
 
@@ -670,7 +677,7 @@ public class CardEditor extends ActionBarActivity {
         if (mAddNote) {
             // load all of the fields into the note
             for (FieldEditText f : mEditFields) {
-                f.updateField();
+                updateField(f);
             }
             try {
                 // Save deck to model
@@ -703,7 +710,7 @@ public class CardEditor extends ActionBarActivity {
             }
             // now load any changes to the fields from the form
             for (FieldEditText f : mEditFields) {
-                modified = modified | f.updateField();
+                modified = modified | updateField(f);
             }
             // added tag?
             for (String t : mCurrentTags) {
@@ -824,7 +831,6 @@ public class CardEditor extends ActionBarActivity {
 
         }
     }
-
 
     // ----------------------------------------------------------------------------
     // CUSTOM METHODS
@@ -1261,6 +1267,12 @@ public class CardEditor extends ActionBarActivity {
                     mChanged = true;
                 }
                 break;
+            case REQUEST_MULTIMEDIA_EDIT:
+                if (resultCode != RESULT_CANCELED) {
+                    mChanged = true;
+                    //TODO (ramblurr) Do something here to handle edited multimedia card
+                }
+                break;
         }
     }
 
@@ -1365,23 +1377,95 @@ public class CardEditor extends ActionBarActivity {
         }
 
         for (int i = 0; i < fields.length; i++) {
-            FieldEditText newTextbox = new FieldEditText(this, i, fields[i]);
+            View editline_view = getLayoutInflater().inflate(R.layout.card_multimedia_editline, null);
+            FieldEditText newTextbox = (FieldEditText) editline_view.findViewById(R.id.id_note_editText);
 
-            if (mCustomTypeface != null) {
-                newTextbox.setTypeface(mCustomTypeface);
-            }
+            initFieldEditText(newTextbox, i, fields[i], mCustomTypeface);
 
             TextView label = newTextbox.getLabel();
             label.setTextColor(Color.BLACK);
             label.setPadding((int) UIUtils.getDensityAdjustedValue(this, 3.4f), 0, 0, 0);
             mEditFields.add(newTextbox);
-            FrameLayout frame = new FrameLayout(this);
-            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.RIGHT | Gravity.CENTER_VERTICAL);
-            params.rightMargin = 10;
-            frame.addView(newTextbox);
+
+            ImageButton mediaButton = (ImageButton) editline_view.findViewById(R.id.id_media_button);
+
+            mediaButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent editCard = new Intent(CardEditor.this, MultimediaCardEditorActivity.class);
+                    if (!mAddNote) {
+                        editCard.putExtra(CardEditor.EXTRA_CARD_ID, mCurrentEditedCard.getId());
+                    } else {
+                        editCard.putExtra(CardEditor.EXTRA_CARD_ID, 0);
+                    }
+                    startActivityForResult(editCard, REQUEST_MULTIMEDIA_EDIT);
+                }
+                /* Popup menu - disabled for now
+                @Override
+                public void onClick(View v) {
+                    PopupMenuWithIcons popup = new PopupMenuWithIcons(CardEditor.this, v, true);
+                    MenuInflater inflater = popup.getMenuInflater();
+                    inflater.inflate(R.menu.popupmenu_multimedia_options, popup.getMenu());
+                    
+                    popup.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+                        
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            switch( item.getItemId() ) {
+                                case R.id.menu_multimedia_editor:
+                                    
+                                    Intent editCard = new Intent(CardEditor.this, MultimediaCardEditorActivity.class);
+                                    editCard.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_DECKPICKER);
+                                    startActivityForResult(editCard, 12);
+                                    return true;
+                                default:
+                                    return false;
+                            }
+                        }
+                    });
+                    popup.show();
+                }
+                */
+            });
+            // TODO: Make clickable again after integration with MM editor is complete
+            mediaButton.setClickable(false);
             mFieldsLayoutContainer.addView(label);
-            mFieldsLayoutContainer.addView(frame);
+            mFieldsLayoutContainer.addView(editline_view);
+        }
+    }
+
+
+    private void initFieldEditText(FieldEditText editText, int index, String[] values, Typeface customTypeface) {
+        String name = values[0];
+        String content = values[1];
+        if (mPrefFixArabic) {
+            content = ArabicUtilities.reshapeSentence(content);
+        }
+        editText.init(index, name, content);
+
+        if (customTypeface != null) {
+            editText.setTypeface(customTypeface);
+        }
+
+        if (index == 0) {
+            editText.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void afterTextChanged(Editable arg0) {
+                    mTimerHandler.removeCallbacks(checkDuplicatesRunnable);
+                    mTimerHandler.postDelayed(checkDuplicatesRunnable, WAIT_TIME_UNTIL_UPDATE);
+                }
+
+
+                @Override
+                public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+                }
+
+
+                @Override
+                public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+                }
+            });
         }
     }
 
@@ -1501,6 +1585,15 @@ public class CardEditor extends ActionBarActivity {
         mTagsButton.setText(getResources().getString(R.string.CardEditorTags,
                 mCol.getTags().join(mCol.getTags().canonify(mCurrentTags)).trim().replace(" ", ", ")));
     }
+    
+    private boolean updateField(FieldEditText field) {
+          String newValue = field.getText().toString().replace(FieldEditText.NEW_LINE, "<br>");
+          if (!mEditorNote.values()[field.getOrd()].equals(newValue)) {
+              mEditorNote.values()[field.getOrd()] = newValue;
+              return true;
+          }
+          return false;
+    }
 
 
     private String tagsAsString(List<String> tags) {
@@ -1510,78 +1603,6 @@ public class CardEditor extends ActionBarActivity {
     // ----------------------------------------------------------------------------
     // INNER CLASSES
     // ----------------------------------------------------------------------------
-
-    public class FieldEditText extends EditText {
-
-        public final String NEW_LINE = System.getProperty("line.separator");
-        public final String NL_MARK = "newLineMark";
-
-        private String mName;
-        private int mOrd;
-
-
-        public FieldEditText(Context context, int ord, String[] value) {
-            super(context);
-            mOrd = ord;
-            mName = value[0];
-            String content = value[1];
-            if (content == null) {
-                content = "";
-            } else {
-                content = content.replaceAll("<br(\\s*\\/*)>", NEW_LINE);
-            }
-            if (mPrefFixArabic) {
-                this.setText(ArabicUtilities.reshapeSentence(content));
-            } else {
-                this.setText(content);
-            }
-            this.setMinimumWidth(400);
-            if (ord == 0) {
-                this.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void afterTextChanged(Editable arg0) {
-                        mTimerHandler.removeCallbacks(checkDuplicatesRunnable);
-                        mTimerHandler.postDelayed(checkDuplicatesRunnable, WAIT_TIME_UNTIL_UPDATE);
-                    }
-
-
-                    @Override
-                    public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-                    }
-
-
-                    @Override
-                    public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-                    }
-                });
-            }
-        }
-
-
-        public TextView getLabel() {
-            TextView label = new TextView(this.getContext());
-            label.setText(mName);
-            return label;
-        }
-
-
-        public boolean updateField() {
-            String newValue = this.getText().toString().replace(NEW_LINE, "<br>");
-            if (!mEditorNote.values()[mOrd].equals(newValue)) {
-                mEditorNote.values()[mOrd] = newValue;
-                return true;
-            }
-            return false;
-        }
-
-
-        public String cleanText(String text) {
-            text = text.replaceAll("\\s*(" + NL_MARK + "\\s*)+", NEW_LINE);
-            text = text.replaceAll("^[,;:\\s\\)\\]" + NEW_LINE + "]*", "");
-            text = text.replaceAll("[,;:\\s\\(\\[" + NEW_LINE + "]*$", "");
-            return text;
-        }
-    }
 
     public class JSONNameComparator implements Comparator<JSONObject> {
         @Override

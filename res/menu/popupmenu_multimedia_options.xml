@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <group android:id="@+id/menu_multimedia_group"
+        android:title="Attach Media" >
+        <item
+            android:id="@+id/menu_multimedia_audio"
+            android:icon="@drawable/ic_action_mic"
+            android:title="Audio"/>
+        <item
+            android:id="@+id/menu_multimedia_photo"
+            android:icon="@drawable/ic_action_camera"
+            android:title="Photo"/>
+        
+        <item
+            android:id="@+id/menu_multimedia_editor"
+            android:icon="@drawable/ic_menu_marked"
+            android:title="Editor"/>
+    </group>
+
+</menu>
