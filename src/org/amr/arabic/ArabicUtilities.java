@@ -73,14 +73,16 @@ public class ArabicUtilities {
 		//Iterate over the 36 Characters in ARABIC_GLPHIES Matrix
 		for(int i = 0; i < ArabicReshaper.ARABIC_GLPHIES.length;i++){
 			//Check if the target Character exist in ARABIC_GLPHIES Matrix
-			if(ArabicReshaper.ARABIC_GLPHIES[i][0]==target)
-				return true;
+			if(ArabicReshaper.ARABIC_GLPHIES[i][0]==target) {
+                return true;
+            }
 		}
 
                 for(int i = 0; i < ArabicReshaper.HARAKATE.length;i++){
 			//Check if the target Character exist in ARABIC_GLPHIES Matrix
-			if(ArabicReshaper.HARAKATE[i]==target)
-				return true;
+			if(ArabicReshaper.HARAKATE[i]==target) {
+                return true;
+            }
 		}
 
 		return false;
@@ -109,8 +111,9 @@ public class ArabicUtilities {
 		//Iterate over the word to check all the word's letters
 		for(int i=0;i<word.length();i++){
 
-			if(isArabicCharacter(word.charAt(i)))
-				return true;
+			if(isArabicCharacter(word.charAt(i))) {
+                return true;
+            }
 		}
 		return false;
 	}
@@ -123,8 +126,9 @@ public class ArabicUtilities {
 	public static boolean isArabicWord(String word){
 		//Iterate over the Word
 		for(int i=0;i<word.length();i++){
-			if(!isArabicCharacter(word.charAt(i)))
-				return false;
+			if(!isArabicCharacter(word.charAt(i))) {
+                return false;
+            }
 		}
 		return true;
 	}

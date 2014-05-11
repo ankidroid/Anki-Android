@@ -801,24 +801,25 @@ public abstract class XYChart extends AbstractChart {
   }
 
   public SeriesSelection getSeriesAndPointForScreenCoordinate(final Point screenPoint) {
-    if (clickableAreas != null)
-      for (int seriesIndex = clickableAreas.size() - 1; seriesIndex >= 0; seriesIndex--) {
-        // series 0 is drawn first. Then series 1 is drawn on top, and series 2
-        // on top of that.
-        // we want to know what the user clicked on, so traverse them in the
-        // order they appear on the screen.
-        int pointIndex = 0;
-        if (clickableAreas.get(seriesIndex) != null) {
-          RectF rectangle;
-          for (ClickableArea area : clickableAreas.get(seriesIndex)) {
-            rectangle = area.getRect();
-            if (rectangle != null && rectangle.contains(screenPoint.getX(), screenPoint.getY())) {
-              return new SeriesSelection(seriesIndex, pointIndex, area.getX(), area.getY());
+    if (clickableAreas != null) {
+        for (int seriesIndex = clickableAreas.size() - 1; seriesIndex >= 0; seriesIndex--) {
+            // series 0 is drawn first. Then series 1 is drawn on top, and series 2
+            // on top of that.
+            // we want to know what the user clicked on, so traverse them in the
+            // order they appear on the screen.
+            int pointIndex = 0;
+            if (clickableAreas.get(seriesIndex) != null) {
+                RectF rectangle;
+                for (ClickableArea area : clickableAreas.get(seriesIndex)) {
+                    rectangle = area.getRect();
+                    if (rectangle != null && rectangle.contains(screenPoint.getX(), screenPoint.getY())) {
+                        return new SeriesSelection(seriesIndex, pointIndex, area.getX(), area.getY());
+                    }
+                    pointIndex++;
+                }
             }
-            pointIndex++;
-          }
         }
-      }
+    }
     return super.getSeriesAndPointForScreenCoordinate(screenPoint);
   }
 

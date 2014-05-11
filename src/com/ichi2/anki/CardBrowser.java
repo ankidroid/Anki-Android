@@ -904,9 +904,10 @@ public class CardBrowser extends ActionBarActivity implements ActionBar.OnNaviga
         @Override
         public void onPreExecute() {
             Resources res = getResources();
-            if (mProgressDialog == null)
+            if (mProgressDialog == null) {
                 mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "",
                         res.getString(R.string.saving_changes), true);
+            }
         }
 
 

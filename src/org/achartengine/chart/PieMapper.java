@@ -76,10 +76,11 @@ public class PieMapper implements Serializable {
 
     // We need to map to coord system when 0 degree is at 3 O'clock, 270 at 12
     // O'clock
-    if (inRads < 0)
-      inRads = Math.abs(inRads);
-    else
-      inRads = 2 * Math.PI - inRads;
+    if (inRads < 0) {
+        inRads = Math.abs(inRads);
+    } else {
+        inRads = 2 * Math.PI - inRads;
+    }
 
     return Math.toDegrees(inRads);
   }

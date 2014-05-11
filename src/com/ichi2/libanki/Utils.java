@@ -867,8 +867,9 @@ public class Utils {
             try {
                 printJSONObject(jsonObject, "-", buff);
             } finally {
-                if (buff != null)
+                if (buff != null) {
                     buff.close();
+                }
             }
         } catch (IOException ioe) {
             Log.e(AnkiDroidApp.TAG, "IOException = " + ioe.getMessage());

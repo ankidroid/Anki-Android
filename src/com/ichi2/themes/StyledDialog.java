@@ -243,8 +243,9 @@ public class StyledDialog extends Dialog {
         updateCheckedItems();
         ArrayList<String> selecteds = new ArrayList<String>();
         for (int i = 0; i < mItemList.size(); i++) {
-            if (mCheckedItems[i])
+            if (mCheckedItems[i]) {
                 selecteds.add(mItemList.get(i));
+            }
         }
 
         return selecteds;

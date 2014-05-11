@@ -217,13 +217,15 @@ public class Sound {
 //            ReadText.textToSpeech(soundPath.substring(4, soundPath.length()),
 //                    Integer.parseInt(soundPath.substring(3, 4)));
         } else {
-            if (sMediaPlayer == null)
+            if (sMediaPlayer == null) {
                 sMediaPlayer = new MediaPlayer();
-            else
+            } else {
                 sMediaPlayer.reset();
+            }
 
-			if (sAudioManager == null)
-				sAudioManager = (AudioManager) AnkiDroidApp.getInstance().getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+			if (sAudioManager == null) {
+                sAudioManager = (AudioManager) AnkiDroidApp.getInstance().getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+            }
 
             try {
                 Uri soundUri = Uri.parse(soundPath);
@@ -237,8 +239,9 @@ public class Sound {
                         sMediaPlayer.start();
                     }
                 });
-                if (playAllListener != null)
+                if (playAllListener != null) {
                     sMediaPlayer.setOnCompletionListener(playAllListener);
+                }
 
                 sMediaPlayer.prepareAsync();
                 AnkiDroidApp.getCompat().requestAudioFocus(sAudioManager);
@@ -273,10 +276,11 @@ public class Sound {
         @Override
         public void onCompletion(MediaPlayer mp) {
             // If there is still more sounds to play for the current card, play the next one
-            if (sSoundPaths.containsKey(mQa) && mNextToPlay < sSoundPaths.get(mQa).size())
+            if (sSoundPaths.containsKey(mQa) && mNextToPlay < sSoundPaths.get(mQa).size()) {
                 playSound(sSoundPaths.get(mQa).get(mNextToPlay++), this);
-            else
+            } else {
                 releaseSound();
+            }
         }
     }
 

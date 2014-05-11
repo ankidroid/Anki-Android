@@ -396,8 +396,9 @@ public class Card implements Cloneable {
         String s = _getQA(false).get("a");
         String target = "<hr id=answer>\n\n";
         int pos = s.indexOf(target);
-        if (pos == -1)
+        if (pos == -1) {
             return s;
+        }
         return s.substring(pos + target.length());
     }
 

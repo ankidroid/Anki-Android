@@ -252,8 +252,9 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     @Override
     protected Payload doInBackground(Payload... params) {
         super.doInBackground(params);
-        if (params.length != 1)
+        if (params.length != 1) {
             throw new IllegalArgumentException();
+        }
         return doOneInBackground(params[0]);
     }
 
