@@ -456,7 +456,7 @@ public class AnkiDroidApp extends Application {
             if (sInstance.mAccessThreadCount > 0) {
                 sInstance.mAccessThreadCount--;
             }
-            Log.i(AnkiDroidApp.TAG, "Access to collection jas been closed: (count: " + sInstance.mAccessThreadCount
+            Log.i(AnkiDroidApp.TAG, "Access to collection has been closed: (count: " + sInstance.mAccessThreadCount
                     + ")");
             if (sInstance.mAccessThreadCount == 0 && sInstance.mCurrentCollection != null) {
                 Collection col = sInstance.mCurrentCollection;

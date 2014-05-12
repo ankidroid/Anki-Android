@@ -41,18 +41,23 @@ public class Hook {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         Hook other = (Hook) obj;
         if (fName == null) {
-            if (other.fName != null)
+            if (other.fName != null) {
                 return false;
-        } else if (!fName.equals(other.fName))
+            }
+        } else if (!fName.equals(other.fName)) {
             return false;
+        }
         return true;
     }
 

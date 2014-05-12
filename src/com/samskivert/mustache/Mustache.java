@@ -340,7 +340,7 @@ public class Mustache
         }
 
         protected static void requireNoNewlines (String tag, int line) {
-            if (tag.indexOf("\n") != -1 || tag.indexOf("\r") != -1) {
+            if (tag.contains("\n") || tag.contains("\r")) {
                 throw new MustacheException("Invalid tag name: contains newline " +
                                             "[line=" + line + ", tag=" + tag + "]");
             }

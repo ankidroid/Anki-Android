@@ -75,8 +75,7 @@ public class AudioView extends LinearLayout {
      */
     public static AudioView createPlayerInstance(Context context, int resPlay, int resPause, int resStop,
             String audioPath) {
-        AudioView audioView = new AudioView(context, resPlay, resPause, resStop, audioPath);
-        return audioView;
+        return new AudioView(context, resPlay, resPause, resStop, audioPath);
     }
 
 
@@ -166,8 +165,9 @@ public class AudioView extends LinearLayout {
     public void notifyPlay() {
         mPlayPause.update();
         mStop.update();
-        if (mRecord != null)
+        if (mRecord != null) {
             mRecord.update();
+        }
     }
 
 
@@ -175,40 +175,45 @@ public class AudioView extends LinearLayout {
         // Send state change signal to all buttons
         mPlayPause.update();
         mStop.update();
-        if (mRecord != null)
+        if (mRecord != null) {
             mRecord.update();
+        }
     }
 
 
     public void notifyPause() {
         mPlayPause.update();
         mStop.update();
-        if (mRecord != null)
+        if (mRecord != null) {
             mRecord.update();
+        }
     }
 
 
     public void notifyRecord() {
         mPlayPause.update();
         mStop.update();
-        if (mRecord != null)
+        if (mRecord != null) {
             mRecord.update();
+        }
     }
 
 
     public void notifyStopRecord() {
         mPlayPause.update();
         mStop.update();
-        if (mRecord != null)
+        if (mRecord != null) {
             mRecord.update();
+        }
     }
 
     protected class PlayPauseButton extends ImageButton {
         OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mAudioPath == null)
+                if (mAudioPath == null) {
                     return;
+                }
 
                 switch (mStatus) {
                     case IDLE:
@@ -350,8 +355,9 @@ public class AudioView extends LinearLayout {
             @Override
             public void onClick(View v) {
                 // Since mAudioPath is not compulsory, we check if it exists
-                if (mAudioPath == null)
+                if (mAudioPath == null) {
                     return;
+                }
 
                 switch (mStatus) {
                     case IDLE: // If not already recorded or not already played

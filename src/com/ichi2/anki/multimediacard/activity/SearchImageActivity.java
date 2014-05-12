@@ -115,7 +115,7 @@ public class SearchImageActivity extends Activity implements DialogInterface.OnC
         setContentView(R.layout.activity_search_image);
 
         try {
-            mSource = getIntent().getExtras().getString(EXTRA_SOURCE).toString();
+            mSource = getIntent().getExtras().getString(EXTRA_SOURCE);
         } catch (Exception e) {
             mSource = "";
         }
@@ -262,7 +262,7 @@ public class SearchImageActivity extends Activity implements DialogInterface.OnC
                 for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements();) {
                     InetAddress inetAddress = enumIpAddr.nextElement();
                     if (!inetAddress.isLoopbackAddress()) {
-                        return inetAddress.getHostAddress().toString();
+                        return inetAddress.getHostAddress();
                     }
                 }
             }
@@ -352,21 +352,25 @@ public class SearchImageActivity extends Activity implements DialogInterface.OnC
 
         // No loop, just a good construct to break out from
         do {
-            if (response == null)
+            if (response == null) {
                 break;
+            }
 
-            if (response.getOk() == false)
+            if (!response.getOk()) {
                 break;
+            }
 
             ResponseData rdata = response.getResponseData();
 
-            if (rdata == null)
+            if (rdata == null) {
                 break;
+            }
 
             List<Result> results = rdata.getResults();
 
-            if (results == null)
+            if (results == null) {
                 break;
+            }
 
             for (Result result : results) {
                 if (result == null) {
@@ -380,8 +384,9 @@ public class SearchImageActivity extends Activity implements DialogInterface.OnC
                 }
             }
 
-            if (theImages.size() == 0)
+            if (theImages.size() == 0) {
                 break;
+            }
 
             proceedWithImages(theImages);
 

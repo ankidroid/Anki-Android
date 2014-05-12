@@ -410,7 +410,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 mCol.getConf().put("collapseTime", learnCutoff.getValue() * 60);
                 mCol.setMod();
             } else if (key.equals("useCurrent")) {
-                mCol.getConf().put("addToCur", useCurrent.getValue().equals("0") ? true : false);
+                mCol.getConf().put("addToCur", useCurrent.getValue().equals("0"));
                 mCol.setMod();
             } else if (key.equals("dayOffset")) {
                 int hours = dayOffset.getValue();

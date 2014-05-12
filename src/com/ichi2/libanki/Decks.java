@@ -541,7 +541,7 @@ public class Decks {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-        mDconf.put(Long.valueOf(id), c);
+        mDconf.put(id, c);
         save(c);
         return id;
     }

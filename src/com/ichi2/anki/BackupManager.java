@@ -137,10 +137,8 @@ public class BackupManager {
         }
         if (lastBackupDate == null) {
             return true;
-        } else if (lastBackupDate.getTime() + days * 24 * 3600000 < Utils.intNow(1000)) {
-            return true;
         } else {
-            return false;
+            return lastBackupDate.getTime() + days * 24L * 3600000 < Utils.intNow(1000);
         }
     }
 
@@ -202,7 +200,7 @@ public class BackupManager {
                 lastBackupDate = null;
             }
         }
-        if (lastBackupDate != null && lastBackupDate.getTime() + interval * 3600000 > Utils.intNow(1000) && !force) {
+        if (lastBackupDate != null && lastBackupDate.getTime() + interval * 3600000L > Utils.intNow(1000) && !force) {
             Log.i(AnkiDroidApp.TAG, "performBackup: No backup created. Last backup younger than 5 hours");
             return;
         }
@@ -247,11 +245,7 @@ public class BackupManager {
 
 
     public static boolean enoughDiscSpace(String path) {
-        if (getFreeDiscSpace(path) >= (MIN_FREE_SPACE * 1024 * 1024)) {
-            return true;
-        } else {
-            return false;
-        }
+        return getFreeDiscSpace(path) >= (MIN_FREE_SPACE * 1024 * 1024);
     }
 
 
@@ -327,10 +321,7 @@ public class BackupManager {
             }
             Log.i(AnkiDroidApp.TAG, "repairDeck - moved corrupt file to broken folder");
             File repairedFile = new File(deckPath + ".tmp");
-            if (!repairedFile.renameTo(deckFile)) {
-                return false;
-            }
-            return true;
+            return repairedFile.renameTo(deckFile);
         } catch (IOException e) {
             Log.e("AnkiDroidApp.TAG", "repairCollection - error: " + e);
         } catch (InterruptedException e) {

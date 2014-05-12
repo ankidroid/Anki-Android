@@ -39,11 +39,13 @@ public class MultimediaEditableNote implements IMultimediaEditableNote {
 
 
     public void circularSwap() {
-        if (mFields == null)
+        if (mFields == null) {
             return;
+        }
 
-        if (mFields.size() <= 1)
+        if (mFields.size() <= 1) {
             return;
+        }
 
         ArrayList<IField> newFields = new ArrayList<IField>();
         newFields.add(mFields.get(mFields.size() - 1));

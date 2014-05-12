@@ -154,7 +154,7 @@ public class GraphicalView extends View {
       height = getMeasuredHeight();
     }
     mChart.draw(canvas, left, top, width, height, mPaint);
-    if (mRenderer != null && mRenderer.isZoomEnabled() && mRenderer.isZoomButtonsVisible()) {
+    if (mRenderer.isZoomEnabled() && mRenderer.isZoomButtonsVisible()) {
       mPaint.setColor(ZOOM_BUTTONS_COLOR);
       zoomSize = Math.max(zoomSize, Math.min(width, height) / 7);
       mZoomR.set(left + width - zoomSize * 3, top + height - zoomSize * 0.775f, left + width, top

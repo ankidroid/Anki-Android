@@ -151,7 +151,7 @@ public class MathHelper {
     int length = values.size();
     float[] result = new float[length];
     for (int i = 0; i < length; i++) {
-      result[i] = values.get(i).floatValue();
+      result[i] = values.get(i);
     }
     return result;
   }
@@ -166,7 +166,7 @@ public class MathHelper {
     int length = values.size();
     double[] result = new double[length];
     for (int i = 0; i < length; i++) {
-      result[i] = values.get(i).doubleValue();
+      result[i] = values.get(i);
     }
     return result;
   }

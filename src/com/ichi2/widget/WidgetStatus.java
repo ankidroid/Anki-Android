@@ -83,27 +83,11 @@ public final class WidgetStatus {
         sDeckCounts = deckCounts;
 
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
-        if (preferences.getBoolean("widgetMediumEnabled", false)) {
-            mediumWidget = true;
-        } else {
-            mediumWidget = false;
-        }
-        if (preferences.getBoolean("widgetSmallEnabled", false)) {
-            smallWidget = true;
-        } else {
-            smallWidget = false;
-        }
-        if (updateBigWidget && preferences.getBoolean("widgetBigEnabled", false)) {
-            bigWidget = true;
-        } else {
-            bigWidget = false;
-        }
-        if (Integer.parseInt(preferences.getString("minimumCardsDueForNotification", "1000001")) < 1000000
-                && sDeckStatus == null) {
-            notification = true;
-        } else {
-            notification = false;
-        }
+        mediumWidget = preferences.getBoolean("widgetMediumEnabled", false);
+        smallWidget = preferences.getBoolean("widgetSmallEnabled", false);
+        bigWidget = updateBigWidget && preferences.getBoolean("widgetBigEnabled", false);
+        notification = Integer.parseInt(preferences.getString("minimumCardsDueForNotification", "1000001")) < 1000000
+                && sDeckStatus == null;
         if ((mediumWidget || smallWidget || bigWidget || notification)
                 && ((sUpdateDeckStatusAsyncTask == null) || (sUpdateDeckStatusAsyncTask.getStatus() == AsyncTask.Status.FINISHED))) {
             Log.d(AnkiDroidApp.TAG, "WidgetStatus.update(): updating");

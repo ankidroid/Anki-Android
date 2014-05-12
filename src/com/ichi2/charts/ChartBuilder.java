@@ -226,10 +226,7 @@ public class ChartBuilder extends ActionBarActivity {
         gestureDetector = new GestureDetector(new MyGestureDetector());
         mChartView.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
-                if (gestureDetector.onTouchEvent(event)) {
-                    return true;
-                }
-                return false;
+                return gestureDetector.onTouchEvent(event);
             }
         });
     }
@@ -265,10 +262,7 @@ public class ChartBuilder extends ActionBarActivity {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (gestureDetector.onTouchEvent(event))
-            return true;
-        else
-            return false;
+        return gestureDetector.onTouchEvent(event);
     }
 
 

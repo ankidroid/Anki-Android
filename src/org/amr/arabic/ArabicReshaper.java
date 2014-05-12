@@ -165,7 +165,9 @@ public class ArabicReshaper{
 			//Check if the character equals the target character
 			if(ARABIC_GLPHIES[n][0]==target)
 				//Get the number of Forms that the character has
-				return ARABIC_GLPHIES[n][5];
+            {
+                return ARABIC_GLPHIES[n][5];
+            }
 		}
 		//Return the number 2 Otherwise
 		return 2;
@@ -184,7 +186,9 @@ public class ArabicReshaper{
 			//Check if the character equals the target character
 			if(HARAKATE[n]==target)
 				//Get the number of Forms that the character has
-				return true;
+            {
+                return true;
+            }
 		}
 		return false;
 	}
@@ -208,9 +212,9 @@ public class ArabicReshaper{
 				}
 				if (harakaPosition < wordLetters.length) {
 					char lamAlef = 0;
-					if (lamPosition > 0 && getGlphyType(letterBefore) > 2)
-						lamAlef = getLamAlef(wordLetters[harakaPosition], candidateLam, false);
-					else {
+					if (lamPosition > 0 && getGlphyType(letterBefore) > 2) {
+                        lamAlef = getLamAlef(wordLetters[harakaPosition], candidateLam, false);
+                    } else {
 						lamAlef = getLamAlef(wordLetters[harakaPosition], candidateLam, true);
 					}
 					if (lamAlef != (char) 0){
@@ -242,8 +246,9 @@ public class ArabicReshaper{
 		char reshapedLamAlef=0;
 
 		//Check if at the end of the word
-		if(isEndOfWord)
-			shiftRate++;
+		if(isEndOfWord) {
+            shiftRate++;
+        }
 
 		//check if the Lam is matching the candidate Lam
 		if((int)DEFINED_CHARACTERS_ORGINAL_LAM ==(int)candidateLam){
@@ -362,7 +367,7 @@ public class ArabicReshaper{
 	public String reshapeIt(String unshapedWord){
 
 		//The reshaped Word to Return
-		StringBuffer reshapedWord=new StringBuffer("");
+		StringBuilder reshapedWord=new StringBuilder("");
 		int wordLength = unshapedWord.length();
 
 		//The Word Letters

@@ -528,8 +528,9 @@ public class Feedback extends AnkiActivity {
             while ((singleLine = br.readLine()) != null) {
                 int indexOfEquals = singleLine.indexOf('=');
 
-                if (indexOfEquals == -1)
+                if (indexOfEquals == -1) {
                     continue;
+                }
 
                 String key = singleLine.substring(0, indexOfEquals).toLowerCase();
                 String value = singleLine.substring(indexOfEquals + 1, singleLine.length());

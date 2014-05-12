@@ -249,7 +249,9 @@ public class BasicHttpSyncer implements HttpSyncer {
             return true;
         } catch (IOException e) {
             try {
-                output.close();
+                if (output != null) {
+                    output.close();
+                }
             } catch (IOException e1) {
                 // do nothing
             }

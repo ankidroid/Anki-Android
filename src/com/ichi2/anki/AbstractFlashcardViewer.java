@@ -1600,10 +1600,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
                     if (mShowWhiteboard) {
                         return false;
                     }
-                    if (gestureDetector.onTouchEvent(event)) {
-                        return true;
-                    }
-                    return false;
+                    return gestureDetector.onTouchEvent(event);
                 }
             });
         }
@@ -2027,7 +2024,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
     protected Runnable mShowQuestionTask = new Runnable() {
         public void run() {
             // Assume hitting the "Again" button when auto next question
-            if (mEase1Layout.isEnabled() == true && mEase1Layout.getVisibility() == View.VISIBLE) {
+            if (mEase1Layout.isEnabled() && mEase1Layout.getVisibility() == View.VISIBLE) {
                 mEase1Layout.performClick();
             }
         }
@@ -2036,7 +2033,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
     protected Runnable mShowAnswerTask = new Runnable() {
         @Override
         public void run() {
-            if (mFlipCardLayout.isEnabled() == true && mFlipCardLayout.getVisibility() == View.VISIBLE) {
+            if (mFlipCardLayout.isEnabled() && mFlipCardLayout.getVisibility() == View.VISIBLE) {
                 mFlipCardLayout.performClick();
             }
         }
@@ -2169,19 +2166,17 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
             }
 
             mAnswerField.setVisibility(View.GONE);
-            if (mCurrentCard != null) {
-                if (mPrefFixArabic) {
-                    // reshape
-                    mTypeCorrect = ArabicUtilities.reshapeSentence(mTypeCorrect, true);
-                }
-                // Obtain the user answer and the correct answer
-                String userAnswer = getAnswerText(mAnswerField.getText().toString());
-                String correctAnswer = getAnswerText(mTypeCorrect);
-                Log.i(AnkiDroidApp.TAG, "correct answer = " + correctAnswer);
-
-                answer = typeAnsAnswerFilter(answer, userAnswer, correctAnswer);
-                displayString = enrichWithQADiv(answer, true);
+            if (mPrefFixArabic) {
+                // reshape
+                mTypeCorrect = ArabicUtilities.reshapeSentence(mTypeCorrect, true);
             }
+            // Obtain the user answer and the correct answer
+            String userAnswer = getAnswerText(mAnswerField.getText().toString());
+            String correctAnswer = getAnswerText(mTypeCorrect);
+            Log.i(AnkiDroidApp.TAG, "correct answer = " + correctAnswer);
+
+            answer = typeAnsAnswerFilter(answer, userAnswer, correctAnswer);
+            displayString = enrichWithQADiv(answer, true);
         }
 
         mIsSelecting = false;
@@ -2237,7 +2232,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
                 if (!mAnswerSoundsAdded) {
                     String afmt = getAnswerFormat();
                     String answerSoundSource = content;
-                    if (afmt.indexOf("{{FrontSide}}") != -1) { // don't grab front side audio
+                    if (afmt.contains("{{FrontSide}}")) { // don't grab front side audio
                         String fromFrontSide = mCurrentCard._getQA(false).get("q");
                         answerSoundSource = content.replace(fromFrontSide, "");
                     }
@@ -2480,7 +2475,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
      * @return
      */
     private static String enrichWithQADiv(String content, boolean isAnswer) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append("<div class=\"");
         if (isAnswer) {
             sb.append(ANSWER_CLASS);
@@ -2555,8 +2550,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
             m.appendReplacement(sb, String.format(Locale.US, "font-size:%.2f%s;", doubleSize, m.group(2)));
         }
         m.appendTail(sb);
-        String a = sb.toString();
-        return a;
+        return sb.toString();
     }
 
 
@@ -2565,10 +2559,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
      *         field to query
      */
     private final boolean typeAnswer() {
-        if (mPrefWriteAnswers && null != mTypeCorrect) {
-            return true;
-        }
-        return false;
+        return mPrefWriteAnswers && null != mTypeCorrect;
     }
 
 
@@ -3037,11 +3028,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (gestureDetector.onTouchEvent(event)) {
-            return true;
-        } else {
-            return false;
-        }
+        return gestureDetector.onTouchEvent(event);
     }
 
     class ScrollTextView extends TextView {

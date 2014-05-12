@@ -165,6 +165,9 @@ public class StepsPreference extends EditTextPreference {
 
 
     private boolean getAllowEmptyFromAttributes(AttributeSet attrs) {
-        return attrs == null ? true : attrs.getAttributeBooleanValue(AnkiDroidApp.APP_NAMESPACE, "allowEmpty", true);
+        if (attrs == null) {
+            return true;
+        }
+        return attrs.getAttributeBooleanValue(AnkiDroidApp.APP_NAMESPACE, "allowEmpty", true);
     }
 }

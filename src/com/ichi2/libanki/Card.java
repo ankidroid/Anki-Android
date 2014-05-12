@@ -371,10 +371,7 @@ public class Card implements Cloneable {
 
     public boolean isEmpty() {
         ArrayList<Integer> ords = mCol.getModels().availOrds(model(), Utils.joinFields(note().getFields()));
-        if (!ords.contains(mOrd)) {
-            return true;
-        }
-        return false;
+        return !ords.contains(mOrd);
     }
 
 
@@ -399,8 +396,9 @@ public class Card implements Cloneable {
         String s = _getQA(false).get("a");
         String target = "<hr id=answer>\n\n";
         int pos = s.indexOf(target);
-        if (pos == -1)
+        if (pos == -1) {
             return s;
+        }
         return s.substring(pos + target.length());
     }
 

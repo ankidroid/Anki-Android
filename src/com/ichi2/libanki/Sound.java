@@ -22,12 +22,9 @@ import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.net.Uri;
 import android.util.Log;
-
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.ReadText;
 
-import java.io.File;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -42,6 +39,11 @@ public class Sound {
      * Pattern used to identify the markers for sound files
      */
     public static Pattern sSoundPattern = Pattern.compile("\\[sound\\:([^\\[\\]]*)\\]");
+
+    /**
+     * Pattern used to parse URI (according to http://tools.ietf.org/html/rfc3986#page-50)
+     */
+    private static Pattern sUriPattern = Pattern.compile("^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\\?([^#]*))?(#(.*))?$");
 
     /**
      * Media player used to play the sounds
@@ -104,11 +106,10 @@ public class Sound {
             }
 
             // Get the sound file name
-            String sound = matcher.group(1);
+            String sound = matcher.group(1).trim();
 
             // Construct the sound path and store it
-            String soundPath = soundDir + Uri.encode(sound);
-            sSoundPaths.get(qa).add(soundPath);
+            sSoundPaths.get(qa).add(getSoundPath(soundDir, sound));
         }
     }
     
@@ -162,10 +163,10 @@ public class Sound {
         // While there is matches of the pattern for sound markers
         while (matcher.find()) {
             // Get the sound file name
-            String sound = matcher.group(1);
+            String sound = matcher.group(1).trim();
 
             // Construct the sound path
-            String soundPath = soundDir + Uri.encode(sound);
+            String soundPath = getSoundPath(soundDir, sound);
 
             // Construct the new content, appending the substring from the beginning of the content left until the
             // beginning of the sound marker
@@ -205,7 +206,6 @@ public class Sound {
         }
     }
 
-
     /**
      * Plays the given sound, sets playAllListener if available on media player to start next sound
      */
@@ -217,27 +217,34 @@ public class Sound {
 //            ReadText.textToSpeech(soundPath.substring(4, soundPath.length()),
 //                    Integer.parseInt(soundPath.substring(3, 4)));
         } else {
-            if (sMediaPlayer == null)
+            if (sMediaPlayer == null) {
                 sMediaPlayer = new MediaPlayer();
-            else
+            } else {
                 sMediaPlayer.reset();
+            }
 
-			if (sAudioManager == null)
-				sAudioManager = (AudioManager) AnkiDroidApp.getInstance().getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+			if (sAudioManager == null) {
+                sAudioManager = (AudioManager) AnkiDroidApp.getInstance().getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+            }
 
             try {
-                // soundPath is usually an URI, but Media player requires a path not url encoded
-                URI soundURI = new URI(soundPath);
-                soundPath = new File(soundURI).getAbsolutePath();
-                sMediaPlayer.setDataSource(soundPath);
+                Uri soundUri = Uri.parse(soundPath);
+                sMediaPlayer.setDataSource(AnkiDroidApp.getInstance().getApplicationContext(),
+                                           soundUri);
                 sMediaPlayer.setVolume(AudioManager.STREAM_MUSIC, AudioManager.STREAM_MUSIC);
-                sMediaPlayer.prepare();
-                if (playAllListener != null)
+                sMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                sMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        sMediaPlayer.start();
+                    }
+                });
+                if (playAllListener != null) {
                     sMediaPlayer.setOnCompletionListener(playAllListener);
+                }
 
+                sMediaPlayer.prepareAsync();
                 AnkiDroidApp.getCompat().requestAudioFocus(sAudioManager);
-
-                sMediaPlayer.start();
             } catch (Exception e) {
                 Log.e(AnkiDroidApp.TAG, "playSounds - Error reproducing sound " + soundPath + " = " + e.getMessage());
                 releaseSound();
@@ -269,10 +276,11 @@ public class Sound {
         @Override
         public void onCompletion(MediaPlayer mp) {
             // If there is still more sounds to play for the current card, play the next one
-            if (sSoundPaths.containsKey(mQa) && mNextToPlay < sSoundPaths.get(mQa).size())
+            if (sSoundPaths.containsKey(mQa) && mNextToPlay < sSoundPaths.get(mQa).size()) {
                 playSound(sSoundPaths.get(mQa).get(mNextToPlay++), this);
-            else
+            } else {
                 releaseSound();
+            }
         }
     }
 
@@ -290,7 +298,6 @@ public class Sound {
         }
     }
 
-
     /**
      * Stops the playing sounds.
      */
@@ -300,5 +307,26 @@ public class Sound {
             releaseSound();
         }
         ReadText.stopTts();
+    }
+
+    /**
+     * @param soundDir -- base path to the media files.
+     * @param sound -- path to the sound file from the card content.
+     * @return absolute URI to the sound file.
+     */
+    private static String getSoundPath(String soundDir, String sound) {
+        if (hasURIScheme(sound)) {
+            return sound;
+        }
+        return soundDir + Uri.encode(sound);
+    }
+
+    /**
+     * @param path -- path to the sound file from the card content.
+     * @return true if path is well-formed URI and contains URI scheme.
+     */
+    private static boolean hasURIScheme(String path) {
+        Matcher uriMatcher = sUriPattern.matcher(path.trim());
+        return uriMatcher.matches() && uriMatcher.group(2) != null;
     }
 }

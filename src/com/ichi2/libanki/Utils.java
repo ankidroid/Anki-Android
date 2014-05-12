@@ -867,8 +867,9 @@ public class Utils {
             try {
                 printJSONObject(jsonObject, "-", buff);
             } finally {
-                if (buff != null)
+                if (buff != null) {
                     buff.close();
+                }
             }
         } catch (IOException ioe) {
             Log.e(AnkiDroidApp.TAG, "IOException = " + ioe.getMessage());
@@ -951,8 +952,7 @@ public class Utils {
         df.setTimeZone(TimeZone.getTimeZone("GMT"));
         Calendar cal = new GregorianCalendar(TimeZone.getTimeZone("GMT"));
         cal.setTimeInMillis(System.currentTimeMillis() - (long) utcOffset * 1000l);
-        Date today = Date.valueOf(df.format(cal.getTime()));
-        return today;
+        return Date.valueOf(df.format(cal.getTime()));
     }
 
 
@@ -1024,21 +1024,23 @@ public class Utils {
      * @return The output with type long[]
      */
     public static long[] toPrimitive(Long[] array) {
+        if (array == null) {
+            return null;
+        }
         long[] results = new long[array.length];
-        if (array != null) {
-            for (int i = 0; i < array.length; i++) {
-                results[i] = array[i].longValue();
-            }
+        for (int i = 0; i < array.length; i++) {
+            results[i] = array[i];
         }
         return results;
     }
     public static long[] toPrimitive(Collection<Long> array) {
+        if (array == null) {
+            return null;
+        }
         long[] results = new long[array.size()];
-        if (array != null) {
-            int i = 0;
-            for (Long item : array) {
-                results[i++] = item.longValue();
-            }
+        int i = 0;
+        for (Long item : array) {
+            results[i++] = item;
         }
         return results;
     }
@@ -1133,11 +1135,13 @@ public class Utils {
                 }
             }
         }
-        for (int i = 0; i < ankiDroidFonts.length; i++) {
-            // Assume all files in the assets directory are actually fonts.
-            AnkiFont font = AnkiFont.createAnkiFont(context, ankiDroidFonts[i], true);
-        	if (font != null) {
-                fonts.add(font);
+        if (ankiDroidFonts != null) {
+            for (int i = 0; i < ankiDroidFonts.length; i++) {
+                // Assume all files in the assets directory are actually fonts.
+                AnkiFont font = AnkiFont.createAnkiFont(context, ankiDroidFonts[i], true);
+                if (font != null) {
+                    fonts.add(font);
+                }
             }
         }
 
@@ -1155,18 +1159,13 @@ public class Utils {
         	deckList = dir.listFiles(new FileFilter(){
                 @Override
                 public boolean accept(File pathname) {
-                    if (pathname.isFile() && pathname.getName().endsWith(".apkg")) {
-                        return true;
-                    }
-                    return false;
+                    return pathname.isFile() && pathname.getName().endsWith(".apkg");
                 }
             });
         	deckCount = deckList.length;
         }
         List<File> decks = new ArrayList<File>();
-        for (int i = 0; i < deckCount; i++) {
-        	decks.add(deckList[i]);
-        }
+        decks.addAll(Arrays.asList(deckList).subList(0, deckCount));
        	return decks;
     }
 

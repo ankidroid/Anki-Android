@@ -368,8 +368,8 @@ public class DeckPicker extends ActionBarActivity {
             Resources res = getResources();
             if (values[0] instanceof Boolean) {
                 // This is the part Download missing media of syncing
-                int total = ((Integer) values[1]).intValue();
-                int done = ((Integer) values[2]).intValue();
+                int total = (Integer) values[1];
+                int done = (Integer) values[2];
                 values[0] = ((String) values[3]);
                 values[1] = res.getString(R.string.sync_downloading_media, done, total);
             } else if (values[0] instanceof Integer) {
@@ -1074,10 +1074,7 @@ public class DeckPicker extends ActionBarActivity {
             gestureDetector = new GestureDetector(new MyGestureDetector());
             mDeckListView.setOnTouchListener(new View.OnTouchListener() {
                 public boolean onTouch(View v, MotionEvent event) {
-                    if (gestureDetector.onTouchEvent(event)) {
-                        return true;
-                    }
-                    return false;
+                    return gestureDetector.onTouchEvent(event);
                 }
             });
         }
@@ -1190,10 +1187,7 @@ public class DeckPicker extends ActionBarActivity {
             // collection file exists
             return false;
         }
-        if (dir.listFiles(new OldAnkiDeckFilter()).length > 0) {
-            return true;
-        }
-        return false;
+        return dir.listFiles(new OldAnkiDeckFilter()).length > 0;
     }
 
 
@@ -1314,8 +1308,8 @@ public class DeckPicker extends ActionBarActivity {
      */
     private boolean isNookDevice() {
         for (String s : new String[] { "nook" }) {
-            if (android.os.Build.DEVICE.toLowerCase().indexOf(s) != -1
-                    || android.os.Build.MODEL.toLowerCase().indexOf(s) != -1) {
+            if (android.os.Build.DEVICE.toLowerCase().contains(s)
+                    || android.os.Build.MODEL.toLowerCase().contains(s)) {
                 return true;
             }
         }
@@ -2662,7 +2656,7 @@ public class DeckPicker extends ActionBarActivity {
                     dialog.setTitle(getResources().getString(R.string.check_db_title));
                     dialog.setMessage(String.format(Utils.ENGLISH_LOCALE,
                             getResources().getString(R.string.check_db_result_message),
-                            Math.round(result.getLong() / 1024)));
+                            Math.round(result.getLong() / 1024.0)));
                     dialog.show();
                 } else {
                     handleDbError();

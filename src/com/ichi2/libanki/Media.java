@@ -373,7 +373,7 @@ public class Media {
         try {
             for (int i = 0; i < fnames.length(); ++i) {
                 String f = fnames.optString(i);
-                if (f == "") {
+                if (f.equals("")) {
                     continue;
                 }
                 File file = new File(getDir(), f);
@@ -481,10 +481,7 @@ public class Media {
      * @return Returns true if at least an illegal character is found.
      */
     private boolean illegal(String f) {
-        if (f.contains("/")) {
-            return true;
-        }
-        return false;
+        return f.contains("/");
     }
 
 

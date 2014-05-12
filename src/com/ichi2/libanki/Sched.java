@@ -1639,6 +1639,7 @@ public class Sched {
                 t = String.format(Locale.US,
                         "(case when queue=2 and due <= %d then (ivl / cast(%d-due+0.001 as real)) else 100000+due end)",
                         mToday, mToday);
+                break;
             default:
             	// if we don't understand the term, default to due order
             	t = "c.due";
@@ -1975,7 +1976,7 @@ public class Sched {
         String sdids = Utils.ids2str(mCol.getDecks().active());
         int cnt = mCol.getDb().queryScalar(String.format(Locale.US,
                 "select 1 from cards where queue = -2 and did in %s limit 1", sdids), false);
-        return cnt == 0 ? false : true;
+        return cnt != 0;
     }
 
 
@@ -2392,7 +2393,7 @@ public class Sched {
     private class DueComparator implements Comparator<long[]> {
         @Override
         public int compare(long[] lhs, long[] rhs) {
-            return new Long(lhs[0]).compareTo(rhs[0]);
+            return Long.valueOf(lhs[0]).compareTo(rhs[0]);
         }
     }
 
@@ -2545,7 +2546,7 @@ public class Sched {
                 revYesRate = cur.getDouble(0);
                 revTime = cur.getDouble(1);
                 
-                if (cur != null && !cur.isClosed()) {
+                if (!cur.isClosed()) {
                     cur.close();
                 }
                 
@@ -2666,11 +2667,7 @@ public class Sched {
         JSONObject conf;
         try {
             conf = _cardConf(card).getJSONObject("lapse");
-            if (conf.getInt("leechAction") == 0) {
-                return true;
-            } else {
-                return false;
-            }
+            return conf.getInt("leechAction") == 0;
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }

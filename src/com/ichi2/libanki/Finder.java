@@ -906,8 +906,9 @@ public class Finder {
         search += "'" + fieldName + ":*'";
         // go through notes
 
+        List<Long> var = col.findNotes(search);
         String sql = "select id, mid, flds from notes where id in "
-                + Utils.ids2str(col.findNotes(search).toArray(new Long[] {}));
+                + Utils.ids2str(var.toArray(new Long[var.size()]));
         Cursor cur = null;
         Map<Long, Integer> fields = new HashMap<Long, Integer>();
         Map<String, List<Long>> vals = new HashMap<String, List<Long>>();

@@ -522,7 +522,7 @@ public class Syncer {
                 while (mCursor.moveToNext() && mCursor.getPosition() <= lim) {
                     JSONArray r = new JSONArray();
                     for (int i = 0; i < count; i++) {
-                        switch (colTypes.get(i).intValue()) {
+                        switch (colTypes.get(i)) {
                             case TYPE_STRING:
                                 r.put(mCursor.getString(i));
                                 break;

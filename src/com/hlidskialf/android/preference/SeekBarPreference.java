@@ -66,8 +66,8 @@ public class SeekBarPreference extends DialogPreference implements SeekBar.OnSee
             mValue = getPersistedInt(mDefault);
         }
 
-        mSeekBar.setMax((int) ((mMax - mMin) / mInterval));
-        mSeekBar.setProgress((int) ((mValue - mMin) / mInterval));
+        mSeekBar.setMax((mMax - mMin) / mInterval);
+        mSeekBar.setProgress((mValue - mMin) / mInterval);
 
         String t = String.valueOf(mValue);
         mValueText.setText(mSuffix == null ? t : t.concat(mSuffix));
@@ -78,8 +78,8 @@ public class SeekBarPreference extends DialogPreference implements SeekBar.OnSee
     @Override
     protected void onBindDialogView(View v) {
         super.onBindDialogView(v);
-        mSeekBar.setMax((int) ((mMax - mMin) / mInterval));
-        mSeekBar.setProgress((int) ((mValue - mMin) / mInterval));
+        mSeekBar.setMax((mMax - mMin) / mInterval);
+        mSeekBar.setProgress((mValue - mMin) / mInterval);
     }
 
 
@@ -125,7 +125,7 @@ public class SeekBarPreference extends DialogPreference implements SeekBar.OnSee
         if (shouldPersist()) {
             persistInt(mValue);
         }
-        callChangeListener(new Integer(mValue));
+        callChangeListener(mValue);
         this.getDialog().dismiss();
     }
 
