@@ -4,18 +4,17 @@
     <group android:id="@+id/menu_multimedia_group"
         android:title="Attach Media" >
         <item
-            android:id="@+id/menu_multimedia_audio"
-            android:icon="@drawable/ic_action_mic"
-            android:title="Audio"/>
-        <item
             android:id="@+id/menu_multimedia_photo"
             android:icon="@drawable/ic_action_camera"
-            android:title="Photo"/>
-        
+            android:title="@string/multimedia_editor_popup_image"/>        
         <item
-            android:id="@+id/menu_multimedia_editor"
-            android:icon="@drawable/ic_menu_marked"
-            android:title="Editor"/>
+            android:id="@+id/menu_multimedia_audio"
+            android:icon="@drawable/ic_action_mic"
+            android:title="@string/multimedia_editor_popup_audio"/>
+        <item
+            android:id="@+id/menu_multimedia_text"
+            android:icon="@drawable/text"
+            android:title="@string/multimedia_editor_popup_text"/>
     </group>
 
 </menu>
