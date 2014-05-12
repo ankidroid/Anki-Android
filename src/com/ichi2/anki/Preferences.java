@@ -89,15 +89,16 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private CheckBoxPreference convertFenText;
     private CheckBoxPreference fixHebrewText;
     private Preference syncAccount;
-    private static String[] mShowValueInSummList = { LANGUAGE, "dictionary", "reportErrorMode",
+    private static String[] sShowValueInSummList = { LANGUAGE, "dictionary", "reportErrorMode",
             "minimumCardsDueForNotification", "gestureSwipeUp", "gestureSwipeDown", "gestureSwipeLeft",
             "gestureSwipeRight", "gestureDoubleTap", "gestureTapTop", "gestureTapBottom", "gestureTapRight",
             "gestureLongclick", "gestureTapLeft", "newSpread", "useCurrent", "defaultFont", "overrideFontBehavior", "browserEditorFont" };
-    private static String[] mShowValueInSummSeek = { "relativeDisplayFontSize", "relativeCardBrowserFontSize",
+    private static String[] sListNumericCheck = {"minimumCardsDueForNotification"};
+    private static String[] sShowValueInSummSeek = { "relativeDisplayFontSize", "relativeCardBrowserFontSize",
             "relativeImageSize", "answerButtonSize", "whiteBoardStrokeWidth", "swipeSensitivity",
             "timeoutAnswerSeconds", "timeoutQuestionSeconds", "backupMax", "dayOffset" };
-    private static String[] mShowValueInSummEditText = { "simpleInterfaceExcludeTags", "deckPath" };
-    private static String[] mShowValueInSummNumRange = { "timeLimit", "learnCutoff" };
+    private static String[] sShowValueInSummEditText = { "simpleInterfaceExcludeTags", "deckPath" };
+    private static String[] sShowValueInSummNumRange = { "timeLimit", "learnCutoff" };
     private TreeMap<String, String> mListsToUpdate = new TreeMap<String, String>();
     private StyledProgressDialog mProgressDialog;
     private boolean lockCheckAction = false;
@@ -181,23 +182,27 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             useCurrent.setEnabled(false);
         }
 
-        for (String key : mShowValueInSummList) {
-            updateListPreference(key);
+        for (String key : sShowValueInSummList) {
+            if (Arrays.asList(sListNumericCheck).contains(key)) {
+                updateListPreference(key, true);
+            } else {
+                updateListPreference(key, false);
+            }            
         }
-        for (String key : mShowValueInSummSeek) {
+        for (String key : sShowValueInSummSeek) {
             updateSeekBarPreference(key);
         }
-        for (String key : mShowValueInSummEditText) {
+        for (String key : sShowValueInSummEditText) {
             updateEditTextPreference(key);
         }
-        for (String key : mShowValueInSummNumRange) {
+        for (String key : sShowValueInSummNumRange) {
             updateNumberRangePreference(key);
         }
 
     }
 
 
-    private void updateListPreference(String key) {
+    private void updateListPreference(String key, final boolean numericCheck) {
         ListPreference listpref = (ListPreference) getPreferenceScreen().findPreference(key);
         String entry;
         try {
@@ -207,12 +212,25 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             entry = "?";
         }
         if (mListsToUpdate.containsKey(key)) {
-            listpref.setSummary(replaceString(mListsToUpdate.get(key), entry));
+            if (numericCheck){
+                // replace any XXX with the value if value numeric, otherwise return value                
+                listpref.setSummary(replaceStringIfNumeric(mListsToUpdate.get(key), entry));
+            } else {
+                // replace any XXX with the value   
+                listpref.setSummary(replaceString(mListsToUpdate.get(key), entry));
+            }
         } else {
             String oldsum = (String) listpref.getSummary();
             if (oldsum.contains("XXX")) {
                 mListsToUpdate.put(key, oldsum);
-                listpref.setSummary(replaceString(oldsum, entry));
+                if (numericCheck) {
+                    // replace any XXX with the value if value numeric, otherwise return value                    
+                    listpref.setSummary(replaceStringIfNumeric(oldsum, entry));
+                } else {
+                    // replace any XXX with the value                    
+                    listpref.setSummary(replaceString(oldsum, entry));
+                }
+                
             } else {
                 listpref.setSummary(entry);
             }
@@ -291,7 +309,15 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             return str;
         }
     }
-
+    
+    private String replaceStringIfNumeric(String str, String value) {
+        try {
+            Double.parseDouble(value);
+            return replaceString(str, value);
+        } catch (NumberFormatException e){
+            return value;
+        }    
+    }  
 
     private void initializeLanguageDialog() {
         Map<String, String> items = new TreeMap<String, String>();
@@ -412,13 +438,17 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 mCol.setCrt(date.getTimeInMillis() / 1000);
                 mCol.setMod();
             }
-            if (Arrays.asList(mShowValueInSummList).contains(key)) {
-                updateListPreference(key);
-            } else if (Arrays.asList(mShowValueInSummSeek).contains(key)) {
+            if (Arrays.asList(sShowValueInSummList).contains(key)) {
+                if (Arrays.asList(sListNumericCheck).contains(key)) {
+                    updateListPreference(key, true);
+                } else {
+                    updateListPreference(key, false);
+                }
+            } else if (Arrays.asList(sShowValueInSummSeek).contains(key)) {
                 updateSeekBarPreference(key);
-            } else if (Arrays.asList(mShowValueInSummEditText).contains(key)) {
+            } else if (Arrays.asList(sShowValueInSummEditText).contains(key)) {
                 updateEditTextPreference(key);
-            } else if (Arrays.asList(mShowValueInSummNumRange).contains(key)) {
+            } else if (Arrays.asList(sShowValueInSummNumRange).contains(key)) {
                 updateNumberRangePreference(key);
             }
         } catch (BadTokenException e) {

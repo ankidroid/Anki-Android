@@ -102,7 +102,7 @@
     <string name="language_summ">XXX</string>
     <string name="language_system">System Language</string>
     <string name="notification_pref">Notifications</string>
-    <string name="notification_minimum_cards_due">Notify when more than:</string>
+    <string name="notification_minimum_cards_due">Notify when more than</string>
     <string name="notification_minimum_cards_due_summary">XXX cards due</string>
     <string name="notification_minimum_cards_due_vibrate">Vibrate</string>
     <string name="notification_minimum_cards_due_blink">Blink light</string>
