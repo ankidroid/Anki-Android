@@ -394,7 +394,9 @@
                 app:interval="1"
                 app:min="1" />
         </PreferenceCategory>
-        <PreferenceCategory android:title="@string/pref_cat_workarounds" >
+        <PreferenceCategory 
+            android:key="category_workarounds"
+            android:title="@string/pref_cat_workarounds" >
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="inputWorkaround"

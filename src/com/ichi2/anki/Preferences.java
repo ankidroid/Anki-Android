@@ -33,6 +33,7 @@ import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -86,7 +87,10 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private CheckBoxPreference useBackupPreference;
     private CheckBoxPreference safeDisplayPreference;
     private CheckBoxPreference convertFenText;
+    private CheckBoxPreference inputWorkaround;
+    private CheckBoxPreference longclickWorkaround;
     private CheckBoxPreference fixHebrewText;
+    private CheckBoxPreference fixArabicText;
     private Preference syncAccount;
     private static String[] sShowValueInSummList = { LANGUAGE, "dictionary", "reportErrorMode",
             "minimumCardsDueForNotification", "gestureSwipeUp", "gestureSwipeDown", "gestureSwipeLeft",
@@ -136,8 +140,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         useBackupPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("useBackup");
         safeDisplayPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("safeDisplay");
         convertFenText = (CheckBoxPreference) getPreferenceScreen().findPreference("convertFenText");
-        fixHebrewText = (CheckBoxPreference) getPreferenceScreen().findPreference("fixHebrewText");
-        syncAccount = getPreferenceScreen().findPreference("syncAccount");
+        syncAccount = (Preference) getPreferenceScreen().findPreference("syncAccount");
         showEstimates = (CheckBoxPreference) getPreferenceScreen().findPreference("showEstimates");
         showProgress = (CheckBoxPreference) getPreferenceScreen().findPreference("showProgress");
         learnCutoff = (NumberRangePreference) getPreferenceScreen().findPreference("learnCutoff");
@@ -145,7 +148,26 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         useCurrent = (ListPreference) getPreferenceScreen().findPreference("useCurrent");
         newSpread = (ListPreference) getPreferenceScreen().findPreference("newSpread");
         dayOffset = (SeekBarPreference) getPreferenceScreen().findPreference("dayOffset");
-
+        // Workaround preferences
+        PreferenceCategory workarounds = (PreferenceCategory) getPreferenceScreen().findPreference("category_workarounds");
+        inputWorkaround = (CheckBoxPreference) getPreferenceScreen().findPreference("inputWorkaround");        
+        longclickWorkaround = (CheckBoxPreference) getPreferenceScreen().findPreference("textSelectionLongclickWorkaround");
+        fixHebrewText = (CheckBoxPreference) getPreferenceScreen().findPreference("fixHebrewText");                
+        fixArabicText = (CheckBoxPreference) getPreferenceScreen().findPreference("fixArabicText");
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+        if (AnkiDroidApp.SDK_VERSION > 14){
+            workarounds.removePreference(inputWorkaround);
+            preferences.edit().putBoolean("inputWorkaround", false);
+        }
+        if (AnkiDroidApp.SDK_VERSION > 10){
+            workarounds.removePreference(longclickWorkaround);
+            preferences.edit().putBoolean("longclickWorkaround", false);
+        }
+        if (AnkiDroidApp.SDK_VERSION > 8){
+            workarounds.removePreference(fixArabicText);
+            preferences.edit().putBoolean("fixArabicText", false);
+        }        
+            
         initializeLanguageDialog();
         initializeCustomFontsDialog();
 
