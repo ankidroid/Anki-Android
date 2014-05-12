@@ -19,6 +19,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Environment;
 import android.os.StatFs;
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.io.File;
@@ -123,6 +124,11 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
 
 
     public void uncaughtException(Thread t, Throwable e, String origin) {
+        uncaughtException(t, e, origin, null);
+    }
+    
+    
+    public void uncaughtException(Thread t, Throwable e, String origin, String additionalInfo) {
         Log.i(AnkiDroidApp.TAG, "uncaughtException");
 
         collectInformation();
@@ -154,7 +160,11 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
 
             reportInformation.append(String.format("%s=%s\n", key.toLowerCase(), value));
         }
-
+        
+        if (additionalInfo != null && !TextUtils.isEmpty(additionalInfo)) {
+            reportInformation.append(String.format("additionalinformation=%s\n", additionalInfo));
+        }
+        
         reportInformation.append("stacktrace=\nBegin Stacktrace\n");
 
         // Stack trace

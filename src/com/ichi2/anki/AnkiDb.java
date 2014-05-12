@@ -24,6 +24,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -188,6 +189,8 @@ public class AnkiDb {
      * @return An ArrayList with the contents of the specified column.
      */
     public <T> ArrayList<T> queryColumn(Class<T> type, String query, int column) {
+        int nullExceptionCount = 0;
+        InvocationTargetException nullException = null; // to catch the null exception for reporting
         ArrayList<T> results = new ArrayList<T>();
         Cursor cursor = null;
 
@@ -195,8 +198,22 @@ public class AnkiDb {
             cursor = mDatabase.rawQuery(query, null);
             String methodName = getCursorMethodName(type.getSimpleName());
             while (cursor.moveToNext()) {
-                // The magical line. Almost as illegible as python code ;)
-                results.add(type.cast(Cursor.class.getMethod(methodName, int.class).invoke(cursor, column)));
+                try {
+                    // The magical line. Almost as illegible as python code ;)
+                    results.add(type.cast(Cursor.class.getMethod(methodName, int.class).invoke(cursor, column)));
+                } catch (InvocationTargetException e) {
+                    if (cursor.isNull(column)) { // null value encountered
+                        nullExceptionCount++;
+                        if (nullExceptionCount == 1) { // Toast and error report first time only
+                            nullException = e;
+                            Toast.makeText(AnkiDroidApp.getInstance().getBaseContext(),
+                                    "Error report pending: unexpected null in database.", Toast.LENGTH_LONG).show();
+                        }
+                        continue; // attempt to skip this null record
+                    } else {
+                        throw new RuntimeException(e);
+                    }                    
+                }
             }
         } catch (NoSuchMethodException e) {
             // This is really coding error, so it should be revealed if it ever happens
@@ -207,11 +224,25 @@ public class AnkiDb {
         } catch (IllegalAccessException e) {
             // This is really coding error, so it should be revealed if it ever happens
             throw new RuntimeException(e);
-        } catch (InvocationTargetException e) {
-            throw new RuntimeException(e);
         } finally {
             if (cursor != null) {
                 cursor.close();
+            }
+            if (nullExceptionCount > 0) {
+                if (nullException != null) {
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("AnkiDb.queryColumn (column " + column + "): ");
+                    sb.append("Exception due to null. Query: " + query);
+                    sb.append(" Null occurrences during this query: " + nullExceptionCount);
+                    AnkiDroidApp.saveExceptionReportFile(nullException, "queryColumn_encounteredNull", sb.toString());                    
+                    Log.w(AnkiDroidApp.TAG, sb.toString());
+                } else { // nullException not properly initialized
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("AnkiDb.queryColumn(): Critical error -- ");
+                    sb.append("unable to pass in the actual exception to error reporting.");
+                    AnkiDroidApp.saveExceptionReportFile("queryColumn_encounteredNull", sb.toString());                    
+                    Log.e(AnkiDroidApp.TAG, sb.toString());
+                }
             }
         }
 
