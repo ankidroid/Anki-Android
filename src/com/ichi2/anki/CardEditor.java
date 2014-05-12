@@ -98,7 +98,7 @@ import java.util.TreeSet;
  * Allows the user to edit a fact, for instance if there is a typo. A card is a presentation of a fact, and has two
  * sides: a question and an answer. Any number of fields can appear on each side. When you add a fact to Anki, cards
  * which show that fact are generated. Some models generate one card, others generate more than one.
- * 
+ *
  * @see http://ichi2.net/anki/wiki/KeyTermsAndConcepts#Cards
  */
 public class CardEditor extends ActionBarActivity {
@@ -161,7 +161,6 @@ public class CardEditor extends ActionBarActivity {
     private TextView mTagsButton;
     private TextView mModelButton;
     private TextView mDeckButton;
-    private Button mSwapButton;
 
     private Note mEditorNote;
     public static Card mCurrentEditedCard;
@@ -198,8 +197,6 @@ public class CardEditor extends ActionBarActivity {
     // private String mSourceLanguage;
     // private String mTargetLanguage;
     private String[] mSourceText;
-    private int mSourcePosition = 0;
-    private int mTargetPosition = 1;
     private boolean mCancelled = false;
 
     private boolean mPrefFixArabic;
@@ -354,13 +351,6 @@ public class CardEditor extends ActionBarActivity {
         mDeckButton = (TextView) findViewById(R.id.CardEditorDeckText);
         mModelButton = (TextView) findViewById(R.id.CardEditorModelText);
         mTagsButton = (TextView) findViewById(R.id.CardEditorTagText);
-        mSwapButton = (Button) findViewById(R.id.CardEditorSwapButton);
-        mSwapButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                swapText(false);
-            }
-        });
 
         Preferences.COMING_FROM_ADD = false;
 
@@ -488,16 +478,6 @@ public class CardEditor extends ActionBarActivity {
             });
         } else {
             setTitle(R.string.cardeditor_title_edit_card);
-            mSwapButton.setVisibility(View.GONE);
-            mSwapButton = (Button) findViewById(R.id.CardEditorLaterButton);
-            mSwapButton.setVisibility(View.VISIBLE);
-            mSwapButton.setText(getResources().getString(R.string.fact_adder_swap));
-            mSwapButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    swapText(false);
-                }
-            });
         }
 
         ((LinearLayout) findViewById(R.id.CardEditorDeckButton)).setOnClickListener(new View.OnClickListener() {
@@ -1316,53 +1296,6 @@ public class CardEditor extends ActionBarActivity {
     }
 
 
-    private void swapText(boolean reset) {
-        int len = mEditFields.size();
-        if (len < 2) {
-            return;
-        }
-        mSourcePosition = Math.min(mSourcePosition, len - 1);
-        mTargetPosition = Math.min(mTargetPosition, len - 1);
-
-        // get source text
-        FieldEditText field = mEditFields.get(mSourcePosition);
-        Editable sourceText = field.getText();
-
-        // get target text
-        field = mEditFields.get(mTargetPosition);
-        Editable targetText = field.getText();
-
-        if (len > mSourcePosition) {
-            mEditFields.get(mSourcePosition).setText("");
-        }
-        if (len > mTargetPosition) {
-            mEditFields.get(mTargetPosition).setText("");
-        }
-        if (reset) {
-            mSourcePosition = 0;
-            mTargetPosition = 1;
-        } else {
-            mTargetPosition++;
-            while (mTargetPosition == mSourcePosition || mTargetPosition >= mEditFields.size()) {
-                mTargetPosition++;
-                if (mTargetPosition >= mEditFields.size()) {
-                    mTargetPosition = 0;
-                    mSourcePosition++;
-                }
-                if (mSourcePosition >= mEditFields.size()) {
-                    mSourcePosition = 0;
-                }
-            }
-        }
-        if (sourceText != null) {
-            mEditFields.get(mSourcePosition).setText(sourceText);
-        }
-        if (targetText != null) {
-            mEditFields.get(mTargetPosition).setText(targetText);
-        }
-    }
-
-
     private void populateEditFields() {
         mFieldsLayoutContainer.removeAllViews();
         mEditFields = new LinkedList<FieldEditText>();
@@ -1563,7 +1496,6 @@ public class CardEditor extends ActionBarActivity {
         updateDeck();
         updateTags();
         populateEditFields();
-        swapText(true);
     }
 
 

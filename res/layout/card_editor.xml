@@ -88,16 +88,6 @@
                         android:gravity="left|center_vertical"
                         android:textColor="#000000" />
                 </LinearLayout>
-
-                <Button
-                    android:id="@+id/CardEditorSwapButton"
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/fact_adder_swap" />
             </LinearLayout>
 
             <LinearLayout
