@@ -65,8 +65,14 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
-import com.ichi2.anki.multimediacard.activity.MultimediaCardEditorActivity;
+import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
+import com.ichi2.anki.multimediacard.activity.EditFieldActivity;
+import com.ichi2.anki.multimediacard.fields.AudioField;
+import com.ichi2.anki.multimediacard.fields.IField;
+import com.ichi2.anki.multimediacard.fields.ImageField;
+import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote;
 import com.ichi2.anki.receiver.SdCardReceiver;
+import com.ichi2.anki.servicelayer.NoteService;
 import com.ichi2.async.DeckTask;
 import com.ichi2.filters.FilterFacade;
 import com.ichi2.libanki.Card;
@@ -111,6 +117,10 @@ public class CardEditor extends ActionBarActivity {
     public static final String EXTRA_CARD_ID = "CARD_ID";
     public static final String EXTRA_CONTENTS = "CONTENTS";
     public static final String EXTRA_ID = "ID";
+    public static final String EXTRA_FIELD_INDEX = "multim.card.ed.extra.field.index";
+    public static final String EXTRA_FIELD = "multim.card.ed.extra.field";
+    public static final String EXTRA_WHOLE_NOTE = "multim.card.ed.extra.whole.note";
+     
 
     private static final int DIALOG_DECK_SELECT = 0;
     private static final int DIALOG_MODEL_SELECT = 1;
@@ -1249,8 +1259,15 @@ public class CardEditor extends ActionBarActivity {
                 break;
             case REQUEST_MULTIMEDIA_EDIT:
                 if (resultCode != RESULT_CANCELED) {
+                    Bundle extras = data.getExtras();
+                    int index = extras.getInt(EditFieldActivity.EXTRA_RESULT_FIELD_INDEX);
+                    IField field = (IField) extras.get(EditFieldActivity.EXTRA_RESULT_FIELD);
+                    IMultimediaEditableNote mNote = NoteService.createEmptyNote(mEditorNote.model());
+                    NoteService.updateMultimediaNoteFromJsonNote(mEditorNote, mNote);
+                    mNote.setField(index, field);
+                    mEditFields.get(index).setText(field.getFormattedValue());
+                    NoteService.saveMedia((MultimediaEditableNote) mNote);
                     mChanged = true;
-                    //TODO (ramblurr) Do something here to handle edited multimedia card
                 }
                 break;
         }
@@ -1321,53 +1338,67 @@ public class CardEditor extends ActionBarActivity {
             mEditFields.add(newTextbox);
 
             ImageButton mediaButton = (ImageButton) editline_view.findViewById(R.id.id_media_button);
+            setMMButtonListener(mediaButton, i);
 
-            mediaButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    Intent editCard = new Intent(CardEditor.this, MultimediaCardEditorActivity.class);
-                    if (!mAddNote) {
-                        editCard.putExtra(CardEditor.EXTRA_CARD_ID, mCurrentEditedCard.getId());
-                    } else {
-                        editCard.putExtra(CardEditor.EXTRA_CARD_ID, 0);
-                    }
-                    startActivityForResult(editCard, REQUEST_MULTIMEDIA_EDIT);
-                }
-                /* Popup menu - disabled for now
-                @Override
-                public void onClick(View v) {
-                    PopupMenuWithIcons popup = new PopupMenuWithIcons(CardEditor.this, v, true);
-                    MenuInflater inflater = popup.getMenuInflater();
-                    inflater.inflate(R.menu.popupmenu_multimedia_options, popup.getMenu());
-                    
-                    popup.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-                        
-                        @Override
-                        public boolean onMenuItemClick(MenuItem item) {
-                            switch( item.getItemId() ) {
-                                case R.id.menu_multimedia_editor:
-                                    
-                                    Intent editCard = new Intent(CardEditor.this, MultimediaCardEditorActivity.class);
-                                    editCard.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_DECKPICKER);
-                                    startActivityForResult(editCard, 12);
-                                    return true;
-                                default:
-                                    return false;
-                            }
-                        }
-                    });
-                    popup.show();
-                }
-                */
-            });
-            // TODO: Make clickable again after integration with MM editor is complete
-            mediaButton.setClickable(false);
             mFieldsLayoutContainer.addView(label);
             mFieldsLayoutContainer.addView(editline_view);
         }
     }
 
+    private void setMMButtonListener(ImageButton mediaButton, final int index){                
+        mediaButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mEditorNote.items()[index][1].length() > 0) {
+                    // If the field already exists then we start the field editor, which figures out the type automatically
+                    IMultimediaEditableNote mNote = NoteService.createEmptyNote(mEditorNote.model());
+                    NoteService.updateMultimediaNoteFromJsonNote(mEditorNote, mNote);
+                    IField field = mNote.getField(index);
+                    startMultimediaFieldEditor(index, mNote, field);
+                }
+                else {
+                    // Otherwise we make a popup menu allowing the user to choose between audio/image/text field
+                    PopupMenuWithIcons popup = new PopupMenuWithIcons(CardEditor.this, v, true);
+                    MenuInflater inflater = popup.getMenuInflater();
+                    inflater.inflate(R.menu.popupmenu_multimedia_options, popup.getMenu());                    
+                    popup.setOnMenuItemClickListener(new OnMenuItemClickListener() {                        
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            IMultimediaEditableNote mNote = NoteService.createEmptyNote(mEditorNote.model());
+                            NoteService.updateMultimediaNoteFromJsonNote(mEditorNote, mNote);
+                            IField field = mNote.getField(index);
+                            switch( item.getItemId() ) {
+                                case R.id.menu_multimedia_audio:
+                                    field = new AudioField();
+                                    mNote.setField(index, field);
+                                    startMultimediaFieldEditor(index, mNote, field);
+                                    return true;
+                                case R.id.menu_multimedia_photo:
+                                    field = new ImageField();
+                                    mNote.setField(index, field);
+                                    startMultimediaFieldEditor(index, mNote, field);
+                                    return true;
+                                case R.id.menu_multimedia_text:
+                                    startMultimediaFieldEditor(index, mNote, field);
+                                    return true;                                    
+                                default:
+                                    return false;
+                            }
+                        }
+                    });
+                    popup.show();                     
+                }
+            }
+        });       
+    }
+    
+    private void startMultimediaFieldEditor(final int index, IMultimediaEditableNote mNote, IField field){
+        Intent editCard = new Intent(CardEditor.this, EditFieldActivity.class);
+        editCard.putExtra(EXTRA_FIELD_INDEX, index);
+        editCard.putExtra(EXTRA_FIELD, field);
+        editCard.putExtra(EXTRA_WHOLE_NOTE, mNote);                
+        startActivityForResult(editCard, REQUEST_MULTIMEDIA_EDIT);        
+    }
 
     private void initFieldEditText(FieldEditText editText, int index, String[] values, Typeface customTypeface) {
         String name = values[0];
