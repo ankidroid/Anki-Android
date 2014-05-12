@@ -1818,7 +1818,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         mPrefHideDueCount = preferences.getBoolean("hideDueCount", false);
         mPrefWhiteboard = preferences.getBoolean("whiteboard", false);
-        mPrefWriteAnswers = preferences.getBoolean("writeAnswers", true);
+        mPrefWriteAnswers = !preferences.getBoolean("writeAnswersDisable", false);
         mLongClickWorkaround = preferences.getBoolean("textSelectionLongclickWorkaround", false);
         // mDeckFilename = preferences.getString("deckFilename", "");
         mNightMode = preferences.getBoolean("invertedColors", false);

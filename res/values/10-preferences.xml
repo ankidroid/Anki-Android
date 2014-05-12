@@ -44,8 +44,8 @@
     <string name="whiteboard_stroke_width_summ">XXX</string>
     <string name="whiteboard_black">Monochrome strokes</string>
     <string name="whiteboard_black_summ">Uses less memory, but does not work in night mode</string>
-    <string name="write_answers">Write answers</string>
-    <string name="write_answers_summ">Lets you write the answer and compare it with the correct one</string>
+    <string name="write_answers_disable">Disable typing in answer</string>
+    <string name="write_answers_disable_summ">Prevents the keyboard from appearing on flashcards containing typed fields</string>
     <string name="text_selection_click">Longclick workaround</string>
     <string name="text_selection_click_summ">Enable this if you are not able to start text selection via long click</string>
     <string name="dictionary">Lookup dictionary</string>

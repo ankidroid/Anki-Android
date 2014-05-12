@@ -111,10 +111,10 @@
                 app:max="9999"
                 app:min="0" />
             <CheckBoxPreference
-                android:defaultValue="true"
-                android:key="writeAnswers"
-                android:summary="@string/write_answers_summ"
-                android:title="@string/write_answers" />
+                android:defaultValue="false"
+                android:key="writeAnswersDisable"
+                android:summary="@string/write_answers_disable_summ"
+                android:title="@string/write_answers_disable" />                 
         </PreferenceCategory>
         <PreferenceCategory android:title="@string/pref_cat_flashcard" >
             <CheckBoxPreference
@@ -199,8 +199,8 @@
             <ListPreference
                 android:defaultValue="0"
                 android:key="overrideFontBehavior"
-            	android:entries="@array/override_font_labels"
-            	android:entryValues="@array/override_font_values"                
+                android:entries="@array/override_font_labels"
+                android:entryValues="@array/override_font_values"                
                 android:summary="@string/override_font_summ"
                 android:title="@string/override_font" />
             <ListPreference
@@ -364,7 +364,7 @@
                 android:defaultValue="false"
                 android:key="safeDisplay"
                 android:summary="@string/safe_display_summ"
-                android:title="@string/safe_display" />
+                android:title="@string/safe_display" />                              
             <CheckBoxPreference
                 android:title="@string/pref_simple_interface"
                 android:summary="@string/pref_simple_interface_summ"

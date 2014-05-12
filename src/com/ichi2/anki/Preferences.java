@@ -72,7 +72,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     private static final int DIALOG_BACKUP = 2;
     private static final int DIALOG_HEBREW_FONT = 3;
-    private static final int DIALOG_WRITE_ANSWERS = 4;
     public static boolean COMING_FROM_ADD = false;
     
     /** Key of the language preference */
@@ -385,8 +384,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 keepScreenOnCheckBoxPreference.setChecked(showAnswerCheckBoxPreference.isChecked());
             } else if (key.equals(LANGUAGE)) {
                 closePreferences();
-            } else if (key.equals("writeAnswers") && sharedPreferences.getBoolean("writeAnswers", true)) {
-                showDialog(DIALOG_WRITE_ANSWERS);
             } else if (key.equals("useBackup")) {
                 if (lockCheckAction) {
                     lockCheckAction = false;
@@ -529,12 +526,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                     }
                 });
                 builder.setNegativeButton(res.getString(R.string.no), null);
-                break;
-            case DIALOG_WRITE_ANSWERS:
-                builder.setTitle(res.getString(R.string.write_answers));
-                builder.setCancelable(false);
-                builder.setMessage(res.getString(R.string.write_answers_message));
-                builder.setNegativeButton(res.getString(R.string.ok), null);
                 break;
             case DIALOG_HEBREW_FONT:
                 builder.setTitle(res.getString(R.string.fix_hebrew_text));
