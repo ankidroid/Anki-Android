@@ -101,7 +101,7 @@ public class StudyOptionsActivity extends ActionBarActivity {
         super.onActivityResult(requestCode, resultCode, intent);
         Log.i(AnkiDroidApp.TAG, "StudyOptionsActivity: onActivityResult");
 
-        String newLanguage = AnkiDroidApp.getSharedPrefs(this).getString("language", "");
+        String newLanguage = AnkiDroidApp.getSharedPrefs(this).getString(Preferences.LANGUAGE, "");
         if (AnkiDroidApp.setLanguage(newLanguage)) {
             AnkiDroidApp.getCompat().invalidateOptionsMenu(this);
         }

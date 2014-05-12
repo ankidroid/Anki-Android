@@ -288,7 +288,7 @@ public class DeckPicker extends ActionBarActivity {
                     StyledDialog.Builder builder2 = new StyledDialog.Builder(DeckPicker.this);
                     builder2.setTitle(res.getString(R.string.contextmenu_deckpicker_rename_deck));
 
-                    mDialogEditText = (EditText) new EditText(DeckPicker.this);
+                    mDialogEditText = new EditText(DeckPicker.this);
                     mDialogEditText.setSingleLine();
                     mDialogEditText.setText(AnkiDroidApp.getCol().getDecks().name(mCurrentDid));
                     // mDialogEditText.setFilters(new InputFilter[] { mDeckNameFilter });
@@ -1073,6 +1073,7 @@ public class DeckPicker extends ActionBarActivity {
         if (mSwipeEnabled) {
             gestureDetector = new GestureDetector(new MyGestureDetector());
             mDeckListView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
                 public boolean onTouch(View v, MotionEvent event) {
                     if (gestureDetector.onTouchEvent(event)) {
                         return true;
@@ -1205,7 +1206,7 @@ public class DeckPicker extends ActionBarActivity {
 
         // mInvertedColors = preferences.getBoolean("invertedColors", false);
         // mSwap = preferences.getBoolean("swapqa", false);
-        // mLocale = preferences.getString("language", "");
+        // mLocale = preferences.getString(Preferences.LANGUAGE, "");
         // setLanguage(mLocale);
 
         return preferences;
@@ -2194,7 +2195,7 @@ public class DeckPicker extends ActionBarActivity {
 
 
     public StudyOptionsFragment getFragment() {
-        Fragment frag = (Fragment) getSupportFragmentManager().findFragmentById(R.id.studyoptions_fragment);
+        Fragment frag = getSupportFragmentManager().findFragmentById(R.id.studyoptions_fragment);
         if (frag != null && (frag instanceof StudyOptionsFragment)) {
             return (StudyOptionsFragment) frag;
         }
@@ -2430,7 +2431,7 @@ public class DeckPicker extends ActionBarActivity {
             case R.id.action_new_deck:
                 StyledDialog.Builder builder2 = new StyledDialog.Builder(DeckPicker.this);
                 builder2.setTitle(res.getString(R.string.new_deck));
-                mDialogEditText = (EditText) new EditText(DeckPicker.this);
+                mDialogEditText = new EditText(DeckPicker.this);
                 // mDialogEditText.setFilters(new InputFilter[] { mDeckNameFilter });
                 builder2.setView(mDialogEditText, false, false);
                 builder2.setPositiveButton(res.getString(R.string.create), new DialogInterface.OnClickListener() {
@@ -2462,7 +2463,7 @@ public class DeckPicker extends ActionBarActivity {
             case R.id.action_new_filtered_deck:
                 StyledDialog.Builder builder3 = new StyledDialog.Builder(DeckPicker.this);
                 builder3.setTitle(res.getString(R.string.new_deck));
-                mDialogEditText = (EditText) new EditText(DeckPicker.this);
+                mDialogEditText = new EditText(DeckPicker.this);
                 ArrayList<String> names = AnkiDroidApp.getCol().getDecks().allNames();
                 int n = 1;
                 String cramDeckName = "Cram 1";
@@ -2582,7 +2583,7 @@ public class DeckPicker extends ActionBarActivity {
         } else if (requestCode == PREFERENCES_UPDATE) {
             String oldPath = mPrefDeckPath;
             SharedPreferences pref = restorePreferences();
-            String newLanguage = pref.getString("language", "");
+            String newLanguage = pref.getString(Preferences.LANGUAGE, "");
             if (AnkiDroidApp.setLanguage(newLanguage)) {
                 AnkiDroidApp.getCompat().invalidateOptionsMenu(this);
             }

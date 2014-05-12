@@ -26,7 +26,6 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Environment;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
@@ -43,6 +42,7 @@ import com.ichi2.compat.CompatV9;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.hooks.Hooks;
+import com.ichi2.utils.LanguageUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -146,7 +146,7 @@ public class AnkiDroidApp extends Application {
 
         SharedPreferences preferences = getSharedPrefs(this);
         sInstance.mHooks = new Hooks(preferences);
-        setLanguage(preferences.getString("language", ""));
+        setLanguage(preferences.getString(Preferences.LANGUAGE, ""));
         // Assign some default settings if necessary
         if (!preferences.contains("deckPath")) {
             Editor editor = preferences.edit();
@@ -167,7 +167,7 @@ public class AnkiDroidApp extends Application {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         // Preserve the language from the settings, e.g. when the device is rotated
-        setLanguage(getSharedPrefs(this).getString("language", ""));
+        setLanguage(getSharedPrefs(this).getString(Preferences.LANGUAGE, ""));
     }
 
 
@@ -357,13 +357,13 @@ public class AnkiDroidApp extends Application {
     /**
      * Sets the user language.
      * 
-     * @param language The language to set
+     * @param localeCode The locale code of the language to set
      * @return True if the language has changed, else false
      */
-    public static boolean setLanguage(String language) {
+    public static boolean setLanguage(String localeCode) {
         boolean languageChanged = false;
         Configuration config = getInstance().getResources().getConfiguration();
-        final Locale newLocale = TextUtils.isEmpty(language) ? Locale.getDefault() : new Locale(language);
+        Locale newLocale = LanguageUtil.getLocale(localeCode);
         if (!config.locale.equals(newLocale)) {
             languageChanged = true;
             config.locale = newLocale;
