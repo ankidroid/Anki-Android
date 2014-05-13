@@ -50,6 +50,7 @@ import com.ichi2.preferences.NumberRangePreference;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
+import com.ichi2.utils.LanguageUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -73,6 +74,9 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private static final int DIALOG_HEBREW_FONT = 3;
     private static final int DIALOG_WRITE_ANSWERS = 4;
     public static boolean COMING_FROM_ADD = false;
+    
+    /** Key of the language preference */
+    public static final String LANGUAGE = "language";
 
     // private boolean mVeecheckStatus;
     private Collection mCol;
@@ -85,13 +89,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private CheckBoxPreference convertFenText;
     private CheckBoxPreference fixHebrewText;
     private Preference syncAccount;
-    private ListPreference mLanguageSelection;
-    private CharSequence[] mLanguageDialogLabels;
-    private CharSequence[] mLanguageDialogValues;
-    private static String[] mAppLanguages = { "ar", "bg", "ca", "cs", "de", "el", "es-AR", "es-ES", "et", "fa", "fi",
-            "fr", "gl", "hi", "hu", "id", "it", "ja", "ko", "lt", "nl", "no", "pl", "pt_PT", "pt_BR", "ro", "ru", "sk",
-            "sl", "sr", "sv", "th", "tr", "uk", "vi", "zh_CN", "zh_TW", "en" };
-    private static String[] mShowValueInSummList = { "language", "dictionary", "reportErrorMode",
+    private static String[] mShowValueInSummList = { LANGUAGE, "dictionary", "reportErrorMode",
             "minimumCardsDueForNotification", "gestureSwipeUp", "gestureSwipeDown", "gestureSwipeLeft",
             "gestureSwipeRight", "gestureDoubleTap", "gestureTapTop", "gestureTapBottom", "gestureTapRight",
             "gestureLongclick", "gestureTapLeft", "newSpread", "useCurrent", "defaultFont", "overrideFontBehavior", "browserEditorFont" };
@@ -139,7 +137,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         safeDisplayPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("safeDisplay");
         convertFenText = (CheckBoxPreference) getPreferenceScreen().findPreference("convertFenText");
         fixHebrewText = (CheckBoxPreference) getPreferenceScreen().findPreference("fixHebrewText");
-        syncAccount = (Preference) getPreferenceScreen().findPreference("syncAccount");
+        syncAccount = getPreferenceScreen().findPreference("syncAccount");
         showEstimates = (CheckBoxPreference) getPreferenceScreen().findPreference("showEstimates");
         showProgress = (CheckBoxPreference) getPreferenceScreen().findPreference("showProgress");
         learnCutoff = (NumberRangePreference) getPreferenceScreen().findPreference("learnCutoff");
@@ -296,29 +294,24 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
 
     private void initializeLanguageDialog() {
-        TreeMap<String, String> items = new TreeMap<String, String>();
-        for (String localeCode : mAppLanguages) {
-            Locale loc;
-            if (localeCode.length() > 2) {
-                loc = new Locale(localeCode.substring(0, 2), localeCode.substring(3, 5));
-            } else {
-                loc = new Locale(localeCode);
-            }
+        Map<String, String> items = new TreeMap<String, String>();
+        for (String localeCode : LanguageUtil.APP_LANGUAGES) {
+            Locale loc = LanguageUtil.getLocale(localeCode);
             items.put(loc.getDisplayName(), loc.toString());
         }
-        mLanguageDialogLabels = new CharSequence[items.size() + 1];
-        mLanguageDialogValues = new CharSequence[items.size() + 1];
-        mLanguageDialogLabels[0] = getResources().getString(R.string.language_system);
-        mLanguageDialogValues[0] = "";
+        CharSequence[] languageDialogLabels = new CharSequence[items.size() + 1];
+        CharSequence[] languageDialogValues = new CharSequence[items.size() + 1];
+        languageDialogLabels[0] = getResources().getString(R.string.language_system);
+        languageDialogValues[0] = "";
         int i = 1;
         for (Map.Entry<String, String> e : items.entrySet()) {
-            mLanguageDialogLabels[i] = e.getKey();
-            mLanguageDialogValues[i] = e.getValue();
+            languageDialogLabels[i] = e.getKey();
+            languageDialogValues[i] = e.getValue();
             i++;
         }
-        mLanguageSelection = (ListPreference) getPreferenceScreen().findPreference("language");
-        mLanguageSelection.setEntries(mLanguageDialogLabels);
-        mLanguageSelection.setEntryValues(mLanguageDialogValues);
+        ListPreference languageSelection = (ListPreference) getPreferenceScreen().findPreference(LANGUAGE);
+        languageSelection.setEntries(languageDialogLabels);
+        languageSelection.setEntryValues(languageDialogValues);
     }
 
 
@@ -359,12 +352,12 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         }
     }
 
-
+    @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         try {
             if (key.equals("timeoutAnswer")) {
                 keepScreenOnCheckBoxPreference.setChecked(showAnswerCheckBoxPreference.isChecked());
-            } else if (key.equals("language")) {
+            } else if (key.equals(LANGUAGE)) {
                 closePreferences();
             } else if (key.equals("writeAnswers") && sharedPreferences.getBoolean("writeAnswers", true)) {
                 showDialog(DIALOG_WRITE_ANSWERS);
