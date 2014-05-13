@@ -32,20 +32,16 @@ import android.content.res.Resources.NotFoundException;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.PopupMenu.OnMenuItemClickListener;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,7 +80,6 @@ import com.ichi2.themes.StyledDialog.Builder;
 import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
-import com.ichi2.widget.PopupMenuWithIcons;
 import com.ichi2.widget.WidgetStatus;
 
 import org.amr.arabic.ArabicUtilities;
@@ -127,7 +122,6 @@ public class CardEditor extends ActionBarActivity {
     private static final int DIALOG_TAGS_SELECT = 2;
     private static final int DIALOG_RESET_CARD = 3;
     private static final int DIALOG_INTENT_INFORMATION = 4;
-    private static final int DIALOG_CONFIRM_DUPLICATE = 5;
 
     private static final String ACTION_CREATE_FLASHCARD = "org.openintents.action.CREATE_FLASHCARD";
     private static final String ACTION_CREATE_FLASHCARD_SEND = "android.intent.action.SEND";
@@ -153,7 +147,6 @@ public class CardEditor extends ActionBarActivity {
     public static final int REQUEST_INTENT_ADD = 1;
     public static final int REQUEST_MULTIMEDIA_EDIT = 2;
 
-    private static final int WAIT_TIME_UNTIL_UPDATE = 1000;
 
     private boolean mChanged = false;
 
@@ -515,11 +508,7 @@ public class CardEditor extends ActionBarActivity {
 
             @Override
             public void onClick(View v) {
-                if (duplicateCheck(true)) {
-                    showDialog(DIALOG_CONFIRM_DUPLICATE);
-                } else {
-                    saveNote();
-                }
+                saveNote();
             }
         });
 
@@ -1089,8 +1078,7 @@ public class CardEditor extends ActionBarActivity {
                             }
                             setNote();
                             resetEditFields(oldValues);
-                            mTimerHandler.removeCallbacks(checkDuplicatesRunnable);
-                            duplicateCheck(false);
+                            duplicateCheck();
                         }
                     }
                 });
@@ -1122,20 +1110,6 @@ public class CardEditor extends ActionBarActivity {
 
             case DIALOG_INTENT_INFORMATION:
                 dialog = createDialogIntentInformation(builder, res);
-                break;
-
-            case DIALOG_CONFIRM_DUPLICATE:
-                builder.setTitle(res.getString(R.string.save_duplicate_dialog_title));
-                builder.setMessage(res.getString(R.string.save_duplicate_dialog_message));
-                builder.setPositiveButton(res.getString(R.string.yes), new OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        saveNote();
-                    }
-                });
-                builder.setNegativeButton(res.getString(R.string.no), null);
-                builder.setCancelable(true);
-                dialog = builder.create();
                 break;
         }
 
@@ -1412,12 +1386,12 @@ public class CardEditor extends ActionBarActivity {
             editText.setTypeface(customTypeface);
         }
 
+        // Listen for changes in the first field so we can re-check duplicate status.
         if (index == 0) {
             editText.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void afterTextChanged(Editable arg0) {
-                    mTimerHandler.removeCallbacks(checkDuplicatesRunnable);
-                    mTimerHandler.postDelayed(checkDuplicatesRunnable, WAIT_TIME_UNTIL_UPDATE);
+                    duplicateCheck();
                 }
 
 
@@ -1453,27 +1427,26 @@ public class CardEditor extends ActionBarActivity {
     }
 
 
-    private boolean duplicateCheck(boolean checkEmptyToo) {
+    private boolean duplicateCheck() {
+        boolean isDupe;
         FieldEditText field = mEditFields.get(0);
+        // Keep copy of current internal value for this field.
+        String oldValue = mEditorNote.getFields()[0];
+        // Update the field in the Note so we can run a dupe check on it.
+        updateField(field);
         // 1 is empty, 2 is dupe, null is neither.
         Integer dupeCode = mEditorNote.dupeOrEmpty();
-        if (dupeCode != null && ((dupeCode == 1 && checkEmptyToo) || dupeCode == 2)) {
+        if (dupeCode != null && dupeCode == 2) {
             field.setBackgroundResource(R.drawable.white_edit_text_dupe);
-            return true;
+            isDupe = true;
         } else {
             field.setBackgroundResource(R.drawable.white_edit_text);
-            return false;
+            isDupe = false;
         }
+        // Put back the old value so we don't interfere with modification detection
+        mEditorNote.values()[0] = oldValue;
+        return isDupe;
     }
-
-    private Handler mTimerHandler = new Handler();
-
-    private Runnable checkDuplicatesRunnable = new Runnable() {
-        @Override
-        public void run() {
-            duplicateCheck(false);
-        }
-    };
 
 
     private String getFieldsText() {
