@@ -77,7 +77,6 @@
   <string name="studyoptions_no_external_storage_title">Ningún almacenamento externo dispoñible</string>
   <string name="studyoptions_no_external_storage_message">Non hai ningún almacenamento dispoñible actualmente. AnkiDroid necesita ter acceso á tarxeta SD para ler e cargar as túas barallas. Verifica que a túa tarxeta SD está montada e inténtao outra vez.</string>
   <string name="fact_adder_intent_title">Cartón AnkiDroid</string>
-  <string name="fact_adder_swap">Trocar</string>
   <string name="deckpicker_select_dictionary_title">Seleccionar dicionario</string>
   <string name="deckpicker_select_dictionary_default">Predeterminado</string>
   <string name="card_editor_add_card">Engadir notación</string>

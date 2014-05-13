@@ -77,7 +77,6 @@
   <string name="studyoptions_no_external_storage_title">Külső tároló nem elérhető</string>
   <string name="studyoptions_no_external_storage_message">Külső tároló jelenleg nem elérhető. Az AnkiDroid-nak hozzá kell férnie az SD kártyához az Anki paklik olvasásához és írásához. Ellenőrizd, hogy az SD kártya megfelelően rendelkezére áll, és próbáld megint.</string>
   <string name="fact_adder_intent_title">AnkiDroid Kártya</string>
-  <string name="fact_adder_swap">Csere</string>
   <string name="deckpicker_select_dictionary_title">Szótár kiválasztása</string>
   <string name="deckpicker_select_dictionary_default">Alap</string>
   <string name="card_editor_add_card">Jegyzet hozzáadása</string>

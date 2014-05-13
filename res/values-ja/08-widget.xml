@@ -39,11 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="widget_pref">ウィジェット</string>
-  <string name="widget_minimum_cards_due">ウィジェットの通知のしきい値</string>
-  <string name="widget_minimum_cards_due_summary">通知を行う期限切れカード数: XXX</string>
-  <string name="widget_minimum_cards_due_vibrate">バイブ</string>
-  <string name="widget_minimum_cards_due_blink">ライトの点滅</string>
   <string name="widget_minimum_cards_due_notification_ticker_title">残り</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">残り%d枚</string>
   <string name="widget_no_cards_due">期限切れ無し</string>

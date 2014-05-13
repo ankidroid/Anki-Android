@@ -39,11 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="widget_pref">Джаджа</string>
-  <string name="widget_minimum_cards_due">Праг за уведомяване на джаджа</string>
-  <string name="widget_minimum_cards_due_summary">Минималният брой на карти вследствие на която се подава известие: XXX</string>
-  <string name="widget_minimum_cards_due_vibrate">Вибрация</string>
-  <string name="widget_minimum_cards_due_blink">Примигване светлина</string>
   <string name="widget_minimum_cards_due_notification_ticker_title">Карти поради</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid карти поради</string>
   <string name="widget_no_cards_due">Няма дължими карти</string>

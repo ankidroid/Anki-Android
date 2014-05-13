@@ -77,7 +77,6 @@
   <string name="studyoptions_no_external_storage_title">कोई बाहरी संग्रहण उपलब्ध</string>
   <string name="studyoptions_no_external_storage_message">कोई बाह्य भंडारण अभी उपलब्ध नहीं है। AnkiDroid एसडी कार्ड के आदेश को पढ़ने और अपने Anki डेक को लोड करने के लिए उपयोग किया है की जरूरत है। कि आपके एसडी कार्ड पर चढ़कर है की जाँच करें और पुन: प्रयास करें।</string>
   <string name="fact_adder_intent_title">AnkiDroid कार्ड</string>
-  <string name="fact_adder_swap">स्वैप</string>
   <string name="deckpicker_select_dictionary_title">शब्दकोश का चयन करें</string>
   <string name="deckpicker_select_dictionary_default">डिफ़ॉल्ट</string>
   <string name="card_editor_add_card">नोट जोड़ें</string>

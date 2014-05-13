@@ -63,8 +63,6 @@
   <string name="reset_card_dialog_title">Reset postępu karty</string>
   <string name="reset_card_dialog_message">Reset postępów nauki dla wszystkich kart tej notatki (będą jak nowe karty).\nKontynuować?</string>
   <string name="reset_card_dialog_confirmation">Zresetowano wszystkie karty z tej notatki</string>
-  <string name="save_duplicate_dialog_title">Duplicate note</string>
-  <string name="save_duplicate_dialog_message">This note shares its primary field with another note. Save anyway?</string>
   <string name="answering_error_title">Błąd bazy danych</string>
   <string name="answering_error_message">Wystąpił błąd podczas zapisywania kolekcji. Powodem może być uszkodzona baza danych albo za mała ilość miejsca na dysku.\n\nJeśli zdarza się to częściej, sprawdź bazę danych, napraw kolekcję lub przywróć z kopii zapasowej (kliknij „Opcje”).\n\nRównie dobrze może to być błąd AnkiDroid; zgłoś błąd abyśmy mogli to sprawdzić.</string>
   <string name="answering_error_report">Zgłoś błąd</string>

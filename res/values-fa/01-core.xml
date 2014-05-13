@@ -51,7 +51,7 @@
   <string name="studyoptions_total_cards">کل کارتها:</string>
   <string name="studyoptions_eta">زمان برآورد شده (دقیقه):</string>
   <string name="studyoptions_start">مرور کردن</string>
-  <string name="type_answer_hint">Type answer</string>
+  <string name="type_answer_hint">پاسخ را تایپ کنید</string>
   <string name="show_answer">نمایش پاسخ</string>
   <string name="ease1_successive">دوباره</string>
   <string name="ease2_successive">سخت</string>
@@ -64,7 +64,7 @@
   <string name="card_unsuspended">تعلیق کارت رفع شد</string>
   <string name="card_suspended">کارت مجددا تعلیق شد</string>
   <string name="menu_rotate">چرخش</string>
-  <string name="menu_import">Import file</string>
+  <string name="menu_import">وارد کردن فایل</string>
   <string name="undo">تصحیح عمل قبلی</string>
   <string name="undo_action_review">مرور</string>
   <string name="undo_action_edit">ویرایش یادداشت</string>
@@ -83,8 +83,8 @@
   <string name="contextmenu_deckpicker_collapse_deck">مخفی کردن زیردسته</string>
   <string name="contextmenu_deckpicker_inflate_deck">نمایش زیردسته</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">تعیین واژه نامه سفارشی</string>
-  <string name="menu_add">Add</string>
-  <string name="menu_add_note">Add note</string>
+  <string name="menu_add">افزودن</string>
+  <string name="menu_add_note">افزودن یادداشت</string>
   <string name="menu_download_deck">دانلود دسته</string>
   <string name="menu_download_shared_deck">دسته ی به اشتراک گذاشته شده</string>
   <string name="menu_my_account">همگام سازی حساب</string>
@@ -102,9 +102,9 @@
   <string name="menu_search">جستجو در %1$s</string>
   <string name="menu_mark_card">علامت گذاری کارت</string>
   <string name="menu_unmark_card">برداشتن نشانه کارت</string>
-  <string name="new_deck">Create deck</string>
+  <string name="new_deck">ایجاد دسته</string>
   <string name="create">ساختن</string>
-  <string name="new_dynamic_deck">Create filtered deck</string>
+  <string name="new_dynamic_deck">ایجاد دسته فیلتر شده</string>
   <string name="studyoptions_feedback">بازخورد</string>
   <string name="studyoptions_load_tutorial_deck">ساختن خودآموز</string>
   <string name="night_mode">حالت شب</string>
@@ -128,7 +128,7 @@
   <string name="help_cloze">راهنما</string>
   <string name="button_sync">همگام سازی</string>
   <string name="restart">راه اندازی مجدد</string>
-  <string name="do_nothing">کاری نکنید</string>
+  <string name="do_nothing">کاری نکن</string>
   <string name="more_options">گزینه های بیشتر</string>
   <string name="now">حالا</string>
   <string name="back">بازگشت</string>

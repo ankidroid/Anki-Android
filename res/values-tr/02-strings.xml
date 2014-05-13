@@ -77,7 +77,6 @@
   <string name="studyoptions_no_external_storage_title">Mevcut Harici Depolama Yok</string>
   <string name="studyoptions_no_external_storage_message">Şu anda mevcut harici depolama yok. AnkiDroid Anki destelerinizi okumak ve yüklemek için SD kart erişimine ihtiyaç duyar. SD kartınızın takılı olduğuna emin olup tekrar deneyin.</string>
   <string name="fact_adder_intent_title">AnkiDroid Kartı</string>
-  <string name="fact_adder_swap">Yer değiştir</string>
   <string name="deckpicker_select_dictionary_title">Sözlük Seç</string>
   <string name="deckpicker_select_dictionary_default">Varsayılan</string>
   <string name="card_editor_add_card">Not ekle</string>

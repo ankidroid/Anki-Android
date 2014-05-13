@@ -47,15 +47,15 @@
   <string name="CardEditorNoteDeck">دسته یادداشت: %s</string>
   <string name="CardEditorModel">نوع یادداشت: %s</string>
   <string name="CardEditorTags">برچسب ها: %1$s</string>
-  <string name="add_new_filter_tags">Add/Filter tags</string>
+  <string name="add_new_filter_tags">افزودن/فیلترکردن برچسب ها</string>
   <string name="note_type">نوع یادداشت</string>
   <string name="card_type">نوع کارت</string>
-  <string name="filter_tags">Filter tags</string>
+  <string name="filter_tags">فیلترکردن برچسب ها</string>
   <string name="sdcard_missing_message">کارت حافظه در دسترس نیست زیرا حافظه یواس بی در حال استفاده است.اتصال را برای دسترسی به دسته های کارت قطع نمایید.</string>
   <string name="show_whiteboard">نمایش تخته سفید</string>
   <string name="hide_whiteboard">پنهان کردن تخته سفید</string>
   <string name="clear_whiteboard">پاک کردن تخته سفید</string>
-  <string name="replay_audio">Replay audio</string>
+  <string name="replay_audio">بازپخش صوت</string>
   <string name="cram_edit_warning">ویراستار کارت تا وقتی شتاب یادگیری فعال باشد اجازه ندارد</string>
   <string name="suspend_leeches">تعلیق کارت های مزاحم</string>
   <string name="leech_suspend_notification">کارت به عنوان مزاحم مشخص و تعلیق شده است</string>
@@ -77,14 +77,13 @@
   <string name="studyoptions_no_external_storage_title">حافظه خارجی در دسترس نیست</string>
   <string name="studyoptions_no_external_storage_message">حافظه خارجی در حال حاضر در دسترس نیست. آنکی دروید برای خواندن و بارگذاری دسته های آنکی به رم حافظه احتیاج دارد. بررسی کنید که رم حافظه در جایش قرار گرفته باشد و دوباره سعی کنید.</string>
   <string name="fact_adder_intent_title">کارت آنکی دروید</string>
-  <string name="fact_adder_swap">معاوضه</string>
   <string name="deckpicker_select_dictionary_title">انتخاب واژه نامه</string>
   <string name="deckpicker_select_dictionary_default">پیش فرض</string>
   <string name="card_editor_add_card">افزودن یادداشت</string>
   <string name="card_editor_reset">تنظیم مجدد</string>
   <string name="card_editor_copy_card">کپی کارت</string>
   <string name="card_editor_reset_card">تنظیم مجدد پیشرفت</string>
-  <string name="card_editor_preview_card">Preview</string>
+  <string name="card_editor_preview_card">پیش نمایش</string>
   <string name="error_insufficient_memory">به علت عدم وجود حافظه کافی در دستگاه شما عملیات امکان پذیر نیست</string>
   <string name="tutorial_load">در حال ساخت خودآموز دسته کارت.\nلطفا صبر کنید...</string>
   <string name="tutorial_loading_error">ساختن دسته کارت خودآموز ممکن نشد</string>
@@ -136,11 +135,11 @@
     <item>پاسخ</item>
     <item>کارد</item>
     <item>مجموعه</item>
-    <item>Note</item>
-    <item>Question</item>
-    <item>Tags</item>
-    <item>Lapses</item>
-    <item>Reviews</item>
+    <item>یادداشت</item>
+    <item>پرسش</item>
+    <item>برچسب ها</item>
+    <item>دفعات اشتباه</item>
+    <item>بازبینی ها</item>
   </string-array>
   <string-array name="dynOrderLabels">
     <item>اول قدیمی ها دیده می شود</item>

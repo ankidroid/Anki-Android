@@ -77,7 +77,6 @@
   <string name="studyoptions_no_external_storage_title">Tiada Storan Luaran Ditemui</string>
   <string name="studyoptions_no_external_storage_message">Storan luaran tidak ditemui. AnkiDroid tidak boleh memuat dek Anki tanpanya. Sila periksa kad SD terpasang dan cuba lagi.</string>
   <string name="fact_adder_intent_title">Kad AnkiDroid</string>
-  <string name="fact_adder_swap">Swap</string>
   <string name="deckpicker_select_dictionary_title">Pilih Kamus</string>
   <string name="deckpicker_select_dictionary_default">Standard</string>
   <string name="card_editor_add_card">Tambahkan catatan</string>

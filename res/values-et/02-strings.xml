@@ -77,7 +77,6 @@
   <string name="studyoptions_no_external_storage_title">Välismälu pole saadaval</string>
   <string name="studyoptions_no_external_storage_message">Välismälu pole hetkel saadaval. AnkiDroid vajab juurdepääsu SD kaardile sinu kaardipakkide lugemiseks ja laadimiseks. Kontrolli, kas sinu SD kaart on haagitud ja proovi uuesti.</string>
   <string name="fact_adder_intent_title">AnkiDroid kaart</string>
-  <string name="fact_adder_swap">Vaheta</string>
   <string name="deckpicker_select_dictionary_title">Valige sõnastik</string>
   <string name="deckpicker_select_dictionary_default">Vaikimisi</string>
   <string name="card_editor_add_card">Add note</string>

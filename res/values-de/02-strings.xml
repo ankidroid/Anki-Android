@@ -77,7 +77,6 @@
   <string name="studyoptions_no_external_storage_title">Externer Speicher nicht verfügbar</string>
   <string name="studyoptions_no_external_storage_message">Kein externer Speicher verfügbar. AnkiDroid benötigt Zugang zur SD-Karte, um Anki-Stapel zu öffnen und zu lesen. Überprüfen Sie, ob Ihre SD-Karte eingehängt ist, und versuchen Sie es erneut.</string>
   <string name="fact_adder_intent_title">AnkiDroid-Karte</string>
-  <string name="fact_adder_swap">Tauschen</string>
   <string name="deckpicker_select_dictionary_title">Wörterbuch wählen</string>
   <string name="deckpicker_select_dictionary_default">Standard</string>
   <string name="card_editor_add_card">Notiz hinzufügen</string>

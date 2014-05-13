@@ -77,7 +77,6 @@
   <string name="studyoptions_no_external_storage_title">Нет доступа к внешнему хранилищу</string>
   <string name="studyoptions_no_external_storage_message">Не доступно внешнее хранилище. AnkiDroid должен иметь доступ к SD-карте для того, чтобы читать и загружать колоды. Убедитесь, что ваша SD-карта смонтирована и попробуйте еще раз.</string>
   <string name="fact_adder_intent_title">AnkiDroid Карта</string>
-  <string name="fact_adder_swap">Обмен</string>
   <string name="deckpicker_select_dictionary_title">Выбрать словарь</string>
   <string name="deckpicker_select_dictionary_default">По умолчанию</string>
   <string name="card_editor_add_card">Добавить заметку</string>

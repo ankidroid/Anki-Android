@@ -51,7 +51,7 @@
   <string name="studyoptions_total_cards">Total cartões:</string>
   <string name="studyoptions_eta">Tempo estimado (min):</string>
   <string name="studyoptions_start">Estudar agora</string>
-  <string name="type_answer_hint">Type answer</string>
+  <string name="type_answer_hint">Digitar resposta</string>
   <string name="show_answer">Mostrar Resposta</string>
   <string name="ease1_successive">Novamente</string>
   <string name="ease2_successive">Difícil</string>
@@ -64,7 +64,7 @@
   <string name="card_unsuspended">Suspensão de cartão desfeita</string>
   <string name="card_suspended">Cartão ressuspendido</string>
   <string name="menu_rotate">Girar</string>
-  <string name="menu_import">Import file</string>
+  <string name="menu_import">Importar arquivo</string>
   <string name="undo">Desfazer</string>
   <string name="undo_action_review">rever</string>
   <string name="undo_action_edit">editar nota</string>
@@ -83,8 +83,8 @@
   <string name="contextmenu_deckpicker_collapse_deck">Esconder Subdecks</string>
   <string name="contextmenu_deckpicker_inflate_deck">Mostar Subdecks</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Usar dicionário personalizado</string>
-  <string name="menu_add">Add</string>
-  <string name="menu_add_note">Add note</string>
+  <string name="menu_add">Adicionar</string>
+  <string name="menu_add_note">Adicionar nota</string>
   <string name="menu_download_deck">Baixar deck</string>
   <string name="menu_download_shared_deck">Deck compartilhado</string>
   <string name="menu_my_account">Conta de sincronização</string>
@@ -102,9 +102,9 @@
   <string name="menu_search">Pesquisar em %1$s</string>
   <string name="menu_mark_card">Marcar Cartão</string>
   <string name="menu_unmark_card">Desmarcar Cartão</string>
-  <string name="new_deck">Create deck</string>
+  <string name="new_deck">Criar deck</string>
   <string name="create">Criar</string>
-  <string name="new_dynamic_deck">Create filtered deck</string>
+  <string name="new_dynamic_deck">Criar deck com filtros</string>
   <string name="studyoptions_feedback">Feedback</string>
   <string name="studyoptions_load_tutorial_deck">Criar tutorial</string>
   <string name="night_mode">Modo noite</string>

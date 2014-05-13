@@ -39,11 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="widget_pref">Widget</string>
-  <string name="widget_minimum_cards_due">Widget bildirim eşiği</string>
-  <string name="widget_minimum_cards_due_summary">Bir bildirimin oluşturulacağı en az kart sayısı: XXX</string>
-  <string name="widget_minimum_cards_due_vibrate">Titret</string>
-  <string name="widget_minimum_cards_due_blink">Işığı yak</string>
   <string name="widget_minimum_cards_due_notification_ticker_title">Çalışılacak Kart</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid kartı çalışılacak</string>
   <string name="widget_no_cards_due">Çalışılacak kart yok</string>

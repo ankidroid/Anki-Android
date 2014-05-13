@@ -77,7 +77,6 @@
   <string name="studyoptions_no_external_storage_title">No hi ha cap suport extern disponible</string>
   <string name="studyoptions_no_external_storage_message">No hi ha cap suport extern disponible. AnkiDroid necessita tenir accés a la targeta SD per llegir i carregar els vostres paquets. Comproveu que la targeta SD està muntada i torneu-ho a provar.</string>
   <string name="fact_adder_intent_title">Fitxa AnkiDroid</string>
-  <string name="fact_adder_swap">Intercanvia</string>
   <string name="deckpicker_select_dictionary_title">Trieu dic</string>
   <string name="deckpicker_select_dictionary_default">Per omisió</string>
   <string name="card_editor_add_card">Afegeix una nota</string>

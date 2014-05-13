@@ -77,7 +77,6 @@
   <string name="studyoptions_no_external_storage_title">No hay un dispositivo de almacenamiento externo disponible</string>
   <string name="studyoptions_no_external_storage_message">No hay un dispositivo de almacenamiento disponible. AnkiDroid requiere acceso a la tarjeta SD para leer y cargar sus mazos de Anki. Verifique que su tarjeta SD está montada e intente nuevamente.</string>
   <string name="fact_adder_intent_title">Tarjeta de AnkiDroid</string>
-  <string name="fact_adder_swap">Intercambiar</string>
   <string name="deckpicker_select_dictionary_title">Seleccionar diccionario</string>
   <string name="deckpicker_select_dictionary_default">Por defecto</string>
   <string name="card_editor_add_card">Añadir nota</string>

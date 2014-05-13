@@ -63,8 +63,6 @@
   <string name="reset_card_dialog_title">Скинути поступ картки</string>
   <string name="reset_card_dialog_message">Це скидає навчальний процес для усіх карток цього запису (вони будуть виглядати як нові картки).\nДійсно продовжити?</string>
   <string name="reset_card_dialog_confirmation">Скинути всі картки для цього запису</string>
-  <string name="save_duplicate_dialog_title">Duplicate note</string>
-  <string name="save_duplicate_dialog_message">This note shares its primary field with another note. Save anyway?</string>
   <string name="answering_error_title">Помилка бази даних</string>
   <string name="answering_error_message">Під час запису в колекцію сталася помилка. Причиною може бути пошкоджена база даних або відсутність місця на диску.\n\nЯкщо це трапляється більш часто, будь ласка, спробуйте перевірити базу даних, відремонтувати колекцію, або відновити її з резервної копії. Для цього натисніть на \"опції\".\n\nОднак, це також може бути недолік AnkiDroid; будь ласка, надішліть звіт для перевірки цього.</string>
   <string name="answering_error_report">Доповісти про помилку</string>

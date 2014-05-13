@@ -47,15 +47,15 @@
   <string name="CardEditorNoteDeck">Mazzo nota: %s</string>
   <string name="CardEditorModel">Tipo nota: %s</string>
   <string name="CardEditorTags">Etichette: %1$s</string>
-  <string name="add_new_filter_tags">Add/Filter tags</string>
+  <string name="add_new_filter_tags">Aggiungi/filtra etichette</string>
   <string name="note_type">Tipo di nota</string>
   <string name="card_type">Tipo di carta</string>
-  <string name="filter_tags">Filter tags</string>
+  <string name="filter_tags">Filtra etichette</string>
   <string name="sdcard_missing_message">La scheda SD non è disponibile, perché è usata come unità USB. Scollegare l\'USB per accedere ai mazzi.</string>
   <string name="show_whiteboard">Mostra lavagna</string>
   <string name="hide_whiteboard">Nascondi lavagna</string>
   <string name="clear_whiteboard">Pulisci lavagna</string>
-  <string name="replay_audio">Replay audio</string>
+  <string name="replay_audio">Riproduci audio</string>
   <string name="cram_edit_warning">Non è permesso modificare una carta durante lo studio focalizzato</string>
   <string name="suspend_leeches">Sospendi le sanguisughe</string>
   <string name="leech_suspend_notification">Carta contrassegnata come sanguisuga e sospesa</string>
@@ -77,14 +77,13 @@
   <string name="studyoptions_no_external_storage_title">Nessuna scheda di archiviazione esterna disponibile</string>
   <string name="studyoptions_no_external_storage_message">La memoria esterna non è disponibile. AnkiDroid deve avere accesso alla scheda SD per leggere e caricare i mazzi. Controlla che la scheda SD sia correttamente al suo posto e prova ancora.</string>
   <string name="fact_adder_intent_title">Carta AnkiDroid</string>
-  <string name="fact_adder_swap">Inverti</string>
   <string name="deckpicker_select_dictionary_title">Seleziona dizionario</string>
   <string name="deckpicker_select_dictionary_default">Predefinito</string>
   <string name="card_editor_add_card">Aggiungi nota</string>
   <string name="card_editor_reset">Reimposta</string>
   <string name="card_editor_copy_card">Copia carta</string>
   <string name="card_editor_reset_card">Reimposta progresso</string>
-  <string name="card_editor_preview_card">Preview</string>
+  <string name="card_editor_preview_card">Anteprima</string>
   <string name="error_insufficient_memory">Operazione non possibile a causa di memoria insufficiente sul tuo dispositivo</string>
   <string name="tutorial_load">Creazione del mazzo d\'esercizio.\nAttendi...</string>
   <string name="tutorial_loading_error">Il mazzo d\'esercizio non può essere creato</string>
@@ -136,11 +135,11 @@
     <item>Risposta</item>
     <item>Carta</item>
     <item>Mazzo</item>
-    <item>Note</item>
-    <item>Question</item>
-    <item>Tags</item>
-    <item>Lapses</item>
-    <item>Reviews</item>
+    <item>Nota</item>
+    <item>Domanda</item>
+    <item>Etichette</item>
+    <item>Errori</item>
+    <item>Ripetizioni</item>
   </string-array>
   <string-array name="dynOrderLabels">
     <item>Più vecchie visualizzate per prime</item>

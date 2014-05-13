@@ -63,8 +63,6 @@
   <string name="reset_card_dialog_title">Επαναφορά προόδου κάρτας</string>
   <string name="reset_card_dialog_message">Αυτό επαναφέρει την πρόοδο μάθησης για όλες τις κάρτες αυτής της σημείωσης (θα μοιάζουν σαν νέες κάρτες).\nΕίστε βέβαιοι;</string>
   <string name="reset_card_dialog_confirmation">Επαναφορά όλων των καρτών αυτής της σημείωσης</string>
-  <string name="save_duplicate_dialog_title">Duplicate note</string>
-  <string name="save_duplicate_dialog_message">This note shares its primary field with another note. Save anyway?</string>
   <string name="answering_error_title">Σφάλμα βάσης δεδομένων</string>
   <string name="answering_error_message">Παρουσιάστηκε σφάλμα κατά την εγγραφή στη συλλογή. Αυτό θα μπορεί να σχετίζεται με κατεστραμμένη βάση δεδομένων ή ανεπαρκή αποθηκευτικό χώρο.\n\nΑν συμβαίνει συχνά, προσπαθήστε να ελέγξετε τη βάση δεδομένων, να επιδιορθώσετε τη συλλογή ή να την επαναφέρετε από ένα αντίγραφο. Κάντε κλικ στις σχετικές «επιλογές».\n\nΕκτός αυτού, μπορεί να είναι και AnkiDroid· σφάλμα παρακαλούμε αναφέρετε το σφάλμα ώστε να το ελέγξουμε.</string>
   <string name="answering_error_report">Αναφορά σφάλματος</string>

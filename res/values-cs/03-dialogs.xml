@@ -63,8 +63,6 @@
   <string name="reset_card_dialog_title">Obnovit pokrok v učení</string>
   <string name="reset_card_dialog_message">Tímto obnovíte proces učení pro všechny karty této poznámky (budou vypadat jako nové karty). \nOpravdu pokračovat?</string>
   <string name="reset_card_dialog_confirmation">Všechny karty této poznámky resetovány</string>
-  <string name="save_duplicate_dialog_title">Duplicitní poznámka</string>
-  <string name="save_duplicate_dialog_message">Tato poznámka sdílí primární pole s jinou poznámku. Přesto uložit?</string>
   <string name="answering_error_title">Chyba databáze</string>
   <string name="answering_error_message">Došlo k chybě při zápisu do kolekce. To by mohlo souviset s poškozenou databází nebo nedostatečným místem na disku.\n\nJestliže se to stává častěji, prosím zkuste zkontrolovat databázi, opravit nebo obnovit kolekci ze zálohy. Klikněte na \'Možnosti\' pro toto.\n\nNicméně, mohla by to být chyba AnkiDroid. Prosím oznamte chybu, abychom to zkontrolovali.</string>
   <string name="answering_error_report">Hlášení chyby</string>

@@ -77,7 +77,6 @@
   <string name="studyoptions_no_external_storage_title">Brak zewnętrznej pamięci masowej</string>
   <string name="studyoptions_no_external_storage_message">Brak zewnętrznej pamięci masowej. AnkiDroid potrzebuje dostępu do karty SD, aby móc wczytać Twoje talie. Sprawdź, czy karta SD jest zamontowana i spróbuj ponownie.</string>
   <string name="fact_adder_intent_title">Karta AnkiDroida</string>
-  <string name="fact_adder_swap">Zamień</string>
   <string name="deckpicker_select_dictionary_title">Wybierz słownik</string>
   <string name="deckpicker_select_dictionary_default">Domyślny</string>
   <string name="card_editor_add_card">Dodaj notatkę</string>

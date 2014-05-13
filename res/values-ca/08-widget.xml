@@ -39,11 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="widget_pref">Giny</string>
-  <string name="widget_minimum_cards_due">Llindar de notificació del giny</string>
-  <string name="widget_minimum_cards_due_summary">Nombre mínim de fitxes pendents que provocarà un avís: XXX</string>
-  <string name="widget_minimum_cards_due_vibrate">Vibra</string>
-  <string name="widget_minimum_cards_due_blink">Parpelleja</string>
   <string name="widget_minimum_cards_due_notification_ticker_title">Fitxes pendents</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d fitxes pendents</string>
   <string name="widget_no_cards_due">No hi ha fitxes pendents</string>

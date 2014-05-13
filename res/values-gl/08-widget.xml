@@ -39,11 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="widget_pref">Widget</string>
-  <string name="widget_minimum_cards_due">Limiar de notificación do widget</string>
-  <string name="widget_minimum_cards_due_summary">Número mínimo de cartóns debido ao cal se lanza unha notificación: XXX</string>
-  <string name="widget_minimum_cards_due_vibrate">Vibrar</string>
-  <string name="widget_minimum_cards_due_blink">Chiscar luz</string>
   <string name="widget_minimum_cards_due_notification_ticker_title">Cartóns pendentes</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid cards due</string>
   <string name="widget_no_cards_due">No cards due</string>

@@ -39,11 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="widget_pref">Widżet</string>
-  <string name="widget_minimum_cards_due">Próg powiadomienia widżeta</string>
-  <string name="widget_minimum_cards_due_summary">Minimalna liczba kart do przejrzenia przy której zostanie wyświetlone powiadomienie: XXX</string>
-  <string name="widget_minimum_cards_due_vibrate">Wibracja</string>
-  <string name="widget_minimum_cards_due_blink">Miganie diody</string>
   <string name="widget_minimum_cards_due_notification_ticker_title">Karty do przejrzenia</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d kart AnkiDroid do przejrzenia</string>
   <string name="widget_no_cards_due">Brak kart do przejrzenia</string>

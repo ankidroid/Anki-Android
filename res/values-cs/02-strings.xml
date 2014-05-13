@@ -77,7 +77,6 @@
   <string name="studyoptions_no_external_storage_title">Není k dispozici externí paměť</string>
   <string name="studyoptions_no_external_storage_message">Žádná externí paměť není momentálně k dispozici. AnkiDroid potřebuje přistupovat k SD kartě, aby mohl načíst Anki balíčky. Zkontrolujte, zda je vaše SD karta připojena a akci opakujte.</string>
   <string name="fact_adder_intent_title">AnkiDroid karta</string>
-  <string name="fact_adder_swap">Vyměň</string>
   <string name="deckpicker_select_dictionary_title">Výběr slovníku</string>
   <string name="deckpicker_select_dictionary_default">Výchozí</string>
   <string name="card_editor_add_card">Přidat poznámku</string>

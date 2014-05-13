@@ -29,8 +29,8 @@ Ajoutez des cartes par le biais de l'application Anki Desktop ou directement ave
 • ajout de cartes par "intent" depuis d'autres applications comme des dictionnaires
 • prise en charge de polices personnalisées
 • système de sauvegarde 
-• navigation by swipe, tap
-• customisable
+Navigation par gestes
+Personalakte
 • gestion des paquets dynamiques
 • mode nuit
 • 27 localisations

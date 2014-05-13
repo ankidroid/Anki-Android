@@ -39,11 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="widget_pref">桌面小部件</string>
-  <string name="widget_minimum_cards_due">小部件通知的最小值</string>
-  <string name="widget_minimum_cards_due_summary">显示通知需要到期卡牌的最小数量: XXX</string>
-  <string name="widget_minimum_cards_due_vibrate">振动</string>
-  <string name="widget_minimum_cards_due_blink">指示灯</string>
   <string name="widget_minimum_cards_due_notification_ticker_title">卡牌到期</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">有%d张AnkiDroid卡牌到期需要复习</string>
   <string name="widget_no_cards_due">没有卡牌到期</string>

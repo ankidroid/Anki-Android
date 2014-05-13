@@ -39,11 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="widget_pref">桌面小工具</string>
-  <string name="widget_minimum_cards_due">小工具通知標準</string>
-  <string name="widget_minimum_cards_due_summary">累積多少到期卡片時要顯示通知：XXX</string>
-  <string name="widget_minimum_cards_due_vibrate">振動</string>
-  <string name="widget_minimum_cards_due_blink">閃爍燈</string>
   <string name="widget_minimum_cards_due_notification_ticker_title">卡片到期</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d張AnkiDroid卡片到期</string>
   <string name="widget_no_cards_due">無卡片到期</string>

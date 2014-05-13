@@ -77,7 +77,6 @@
   <string name="studyoptions_no_external_storage_title">Μη διαθέσιμη εξωτερική αποθήκευση</string>
   <string name="studyoptions_no_external_storage_message">Δεν υπάρχει διαθέσιμη εξωτερική αποθήκευση αυτή τη στιγμή. Το AnkiDroid χρειάζεται να έχει πρόσβαση στην κάρτα SD σας για να διαβάσει και να φορτώσει τις Anki τράπουλές σας. Ελέγξτε ότι η κάρτα SD σας είναι τοποθετημένη και προσπαθήστε ξανά.</string>
   <string name="fact_adder_intent_title">Κάρτα AnkiDroid</string>
-  <string name="fact_adder_swap">Εναλλαγή</string>
   <string name="deckpicker_select_dictionary_title">Επιλογή Λεξικού</string>
   <string name="deckpicker_select_dictionary_default">Προεπιλογή</string>
   <string name="card_editor_add_card">Προσθήκη σημείωσης</string>

@@ -45,7 +45,7 @@
     <item>Ніколи на доповідати</item>
     <item>Запитати</item>
   </string-array>
-  <string-array name="widget_minimum_cards_due_labels">
+  <string-array name="notification_minimum_cards_due_labels">
     <item>10</item>
     <item>25</item>
     <item>50</item>
@@ -53,7 +53,7 @@
     <item>100</item>
     <item>150</item>
     <item>200</item>
-    <item>Ніколи</item>
+    <item>Never notify</item>
   </string-array>
   <string-array name="cram_review_order_labels">
     <item>Показати останні змінені першими</item>
@@ -149,5 +149,9 @@
     <item>Усі карти</item>
     <item>Нові</item>
     <item>На черзі</item>
+  </string-array>
+  <string-array name="override_font_labels">
+    <item>When no font specified on flashcards</item>
+    <item>Always</item>
   </string-array>
 </resources>

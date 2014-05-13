@@ -77,7 +77,6 @@
   <string name="studyoptions_no_external_storage_title">Žiadne externé úložisko k dispozícii</string>
   <string name="studyoptions_no_external_storage_message">Žiadne externé úložisko momentálne nie je k dispozícii. AnkiDroid potrebuje mať prístup na SD kartu, aby mohol čítať a nahrať vaše Anki balíčky. Skontrolujte, že vaša SD karta je pripojená a skúste znova.</string>
   <string name="fact_adder_intent_title">AnkiDroid karta</string>
-  <string name="fact_adder_swap">Vymeniť</string>
   <string name="deckpicker_select_dictionary_title">Vybrať slovník</string>
   <string name="deckpicker_select_dictionary_default">Pôvodné nastavenie
 </string>

@@ -51,7 +51,7 @@
   <string name="studyoptions_total_cards">Karten gesamt:</string>
   <string name="studyoptions_eta">Geschätzte Zeit (Min.):</string>
   <string name="studyoptions_start">Jetzt lernen</string>
-  <string name="type_answer_hint">Type answer</string>
+  <string name="type_answer_hint">Antwort eingeben</string>
   <string name="show_answer">Antwort anzeigen</string>
   <string name="ease1_successive">Nochmal</string>
   <string name="ease2_successive">Schwer</string>

@@ -47,15 +47,15 @@
   <string name="CardEditorNoteDeck">Incluse dans le paquet : %s</string>
   <string name="CardEditorModel">Type de note : %s</string>
   <string name="CardEditorTags">Marqueurs : %1$s</string>
-  <string name="add_new_filter_tags">Add/Filter tags</string>
+  <string name="add_new_filter_tags">Ajouter un tag filtré</string>
   <string name="note_type">Type de note</string>
   <string name="card_type">Type de carte</string>
-  <string name="filter_tags">Filter tags</string>
+  <string name="filter_tags">Filtrer les tags</string>
   <string name="sdcard_missing_message">La carte SD est indisponible car elle sert de mémoire USB. Déconnectez l’USB pour accéder à vos paquets.</string>
   <string name="show_whiteboard">Afficher le tableau blanc</string>
   <string name="hide_whiteboard">Masquer le tableau blanc</string>
   <string name="clear_whiteboard">Effacer le tableau blanc</string>
-  <string name="replay_audio">Replay audio</string>
+  <string name="replay_audio">Rejouer le son</string>
   <string name="cram_edit_warning">L\'édition de cartes n\'est pas autorisées pendant le bachotage</string>
   <string name="suspend_leeches">Masquer les cartes encombrantes</string>
   <string name="leech_suspend_notification">La carte a été marquée « pénible » et est masquée</string>
@@ -77,14 +77,13 @@
   <string name="studyoptions_no_external_storage_title">Aucune mémoire externe disponible</string>
   <string name="studyoptions_no_external_storage_message">Pour l\'instant, aucun stockage externe n\'est disponible. Or, AnkiDroid a besoin d’un accès à la carte SD de vos paquets Anki afin de les lire et les charger. Vérifiez que votre carte SD est montée et essayez à nouveau.</string>
   <string name="fact_adder_intent_title">Carte AnkiDroid</string>
-  <string name="fact_adder_swap">Inverser</string>
   <string name="deckpicker_select_dictionary_title">Sélectionner un dictionnaire</string>
   <string name="deckpicker_select_dictionary_default">Par défaut</string>
   <string name="card_editor_add_card">Ajouter une note</string>
   <string name="card_editor_reset">Réinitialiser</string>
   <string name="card_editor_copy_card">Copier la carte</string>
   <string name="card_editor_reset_card">Remettre les compteurs à 0</string>
-  <string name="card_editor_preview_card">Preview</string>
+  <string name="card_editor_preview_card">Aperçu</string>
   <string name="error_insufficient_memory">L’opération n\'a pas pu être accomplie car votre appareil manque de mémoire disponible</string>
   <string name="tutorial_load">Mise en place du tutoriel.\nPatientez…</string>
   <string name="tutorial_loading_error">Le paquet-tutoriel n\'a pas pu être créé</string>
@@ -139,8 +138,8 @@
     <item>Note</item>
     <item>Question</item>
     <item>Tags</item>
-    <item>Lapses</item>
-    <item>Reviews</item>
+    <item>Erreurs</item>
+    <item>Révisions</item>
   </string-array>
   <string-array name="dynOrderLabels">
     <item>Des plus au moins anciennes</item>

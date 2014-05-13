@@ -77,7 +77,6 @@
   <string name="studyoptions_no_external_storage_title">Không Có Bộ lưu trữ Ngoài</string>
   <string name="studyoptions_no_external_storage_message">Không có bộ lưu trữ ngoài. AnkiDroid cần truy nhập vào thẻ SD để đọc và nạp các tập thẻ Anki. Xin kiểm tra xem thẻ SD đã được gắn vào và truy xuất được hay chưa rồi sau đó thử lại.</string>
   <string name="fact_adder_intent_title">Thẻ AnkiDroid</string>
-  <string name="fact_adder_swap">Chuyển đổi</string>
   <string name="deckpicker_select_dictionary_title">Chọn từ điển</string>
   <string name="deckpicker_select_dictionary_default">Mặc định</string>
   <string name="card_editor_add_card">Add note</string>

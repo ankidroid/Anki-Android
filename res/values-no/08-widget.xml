@@ -39,11 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="widget_pref">Widget</string>
-  <string name="widget_minimum_cards_due">Widget varslingsgrense</string>
-  <string name="widget_minimum_cards_due_summary">Minimum antall kort som skal forfalle for å gi melding: XXX</string>
-  <string name="widget_minimum_cards_due_vibrate">Vibrering</string>
-  <string name="widget_minimum_cards_due_blink">Blinkende lys</string>
   <string name="widget_minimum_cards_due_notification_ticker_title">Kort som forfaller</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid kort forfaller</string>
   <string name="widget_no_cards_due">Ingen kort forfaller</string>

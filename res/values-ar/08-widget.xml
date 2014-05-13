@@ -39,11 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="widget_pref">ودجة</string>
-  <string name="widget_minimum_cards_due">عتبة ودجة التنبيهات</string>
-  <string name="widget_minimum_cards_due_summary">الحد الأدنى من البطاقات التي تنتظر المراجعة في كل تنبيه زاد بمقدار:XXX</string>
-  <string name="widget_minimum_cards_due_vibrate">اهتزاز</string>
-  <string name="widget_minimum_cards_due_blink">وميض الضوء</string>
   <string name="widget_minimum_cards_due_notification_ticker_title">بطاقات تنتظر المراجعة</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d بطاقات آنكيدرويد تنتظر المراجعة</string>
   <string name="widget_no_cards_due">لا شيء للمراجعة</string>

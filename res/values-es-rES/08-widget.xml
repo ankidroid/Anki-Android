@@ -39,11 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="widget_pref">Widget</string>
-  <string name="widget_minimum_cards_due">Umbral de notificación</string>
-  <string name="widget_minimum_cards_due_summary">El número mínimo de tarjetas programadas que provoca una notificación: XXX</string>
-  <string name="widget_minimum_cards_due_vibrate">Vibración</string>
-  <string name="widget_minimum_cards_due_blink">Luz parpadeante</string>
   <string name="widget_minimum_cards_due_notification_ticker_title">Tarjetas pendientes</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d repasos pendientes</string>
   <string name="widget_no_cards_due">No hay tarjetas pendientes</string>

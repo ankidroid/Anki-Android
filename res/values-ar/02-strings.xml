@@ -77,7 +77,6 @@
   <string name="studyoptions_no_external_storage_title">لا تتوفر مساحة تخزين خارجية</string>
   <string name="studyoptions_no_external_storage_message">لا تتوفر بطاقة تخزين خارجية حاليا. آنكيدرويد يحتاج إلى الوصول إلى البطاقة التخزين الخارجية من أجل قراءة وتحميل رزم الآنكي الخاصة بك. تأكد من تحميل بطاقة التخزين وأعد المحاولة.</string>
   <string name="fact_adder_intent_title">بطاقة آنكيدرويد</string>
-  <string name="fact_adder_swap">بادل</string>
   <string name="deckpicker_select_dictionary_title">اختر قاموسا</string>
   <string name="deckpicker_select_dictionary_default">افتراضي</string>
   <string name="card_editor_add_card">أضف ملاحظة</string>

@@ -47,15 +47,15 @@
   <string name="CardEditorNoteDeck">Deck de Notas: %s</string>
   <string name="CardEditorModel">Tipo de Nota: %s</string>
   <string name="CardEditorTags">Tags: %1$s</string>
-  <string name="add_new_filter_tags">Add/Filter tags</string>
+  <string name="add_new_filter_tags">Adicionar/Filtrar tags</string>
   <string name="note_type">Tipo de nota</string>
   <string name="card_type">Tipo do cartão</string>
-  <string name="filter_tags">Filter tags</string>
+  <string name="filter_tags">Filtrar tags</string>
   <string name="sdcard_missing_message">Cartão SD não está disponível porque ele está sendo usado em armazenamento USB. Desconecte o USB para acessar seus decks.</string>
   <string name="show_whiteboard">Mostrar Quadro</string>
   <string name="hide_whiteboard">Esconder Quadro</string>
   <string name="clear_whiteboard">Limpar Quadro</string>
-  <string name="replay_audio">Replay audio</string>
+  <string name="replay_audio">Tocar audio novamente</string>
   <string name="cram_edit_warning">Edição de cartões não permitida enquanto estiver em cursinho</string>
   <string name="suspend_leeches">Suspender Sanguessugas</string>
   <string name="leech_suspend_notification">Cartão marcado como sanguessuga e suspenso</string>
@@ -77,14 +77,13 @@
   <string name="studyoptions_no_external_storage_title">Nenhum Armazenamento Externo Disponível</string>
   <string name="studyoptions_no_external_storage_message">Nenhum armazenamento externo está disponível no momento. AnkiDroid precisa ter acesso ao cartão SD para ler e carregar seus Decks. Verifique se o cartão SD está montado e tente novamente.</string>
   <string name="fact_adder_intent_title">Cartão AnkiDroid</string>
-  <string name="fact_adder_swap">Trocar</string>
   <string name="deckpicker_select_dictionary_title">Selecionar Dicionário</string>
   <string name="deckpicker_select_dictionary_default">Padrão</string>
   <string name="card_editor_add_card">Adicionar nota</string>
   <string name="card_editor_reset">Redefinir</string>
   <string name="card_editor_copy_card">Copiar cartão</string>
   <string name="card_editor_reset_card">Redefinir progresso</string>
-  <string name="card_editor_preview_card">Preview</string>
+  <string name="card_editor_preview_card">Pré-visualização</string>
   <string name="error_insufficient_memory">Operação impossível devido a memória insuficiente no dispositivo</string>
   <string name="tutorial_load">Criando deck tutorial. \nPor favor aguarde...</string>
   <string name="tutorial_loading_error">Deck tutorial não pôde ser criado</string>
@@ -136,11 +135,11 @@
     <item>Resposta</item>
     <item>Cartão</item>
     <item>Baralho</item>
-    <item>Note</item>
-    <item>Question</item>
+    <item>Nota</item>
+    <item>Questão</item>
     <item>Tags</item>
-    <item>Lapses</item>
-    <item>Reviews</item>
+    <item>Lapsos</item>
+    <item>Revisões</item>
   </string-array>
   <string-array name="dynOrderLabels">
     <item>Mais antigos primeiro</item>

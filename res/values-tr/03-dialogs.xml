@@ -63,8 +63,6 @@
   <string name="reset_card_dialog_title">Kart ilerlemesini sıfırla</string>
   <string name="reset_card_dialog_message">Bu işlem, bu notun bütün kartlarının öğrenme gidişâtını sıfırlar (yeni kart gibi görünecekler).\n Gerçekten devam edilsin mi?</string>
   <string name="reset_card_dialog_confirmation">Bu notun bütün kartları sıfırlandı</string>
-  <string name="save_duplicate_dialog_title">Notu Çoğalt</string>
-  <string name="save_duplicate_dialog_message">Bu notun birincil alanı bir başka notun ki ile aynı.Yİnede kaydedilsin mi?</string>
   <string name="answering_error_title">Veritabanı hatası</string>
   <string name="answering_error_message">Koleksiyon yazılırken bir hatâ meydana geldi. Bu bozuk bir veritabanıyla veya yetersiz disk alanıyla ilgili olabilir.\n\nEğer bu daha sık olmaya başlarsa, lütfen veritabanını kontrol etmeyi, koleksiyonu onarmayı veya bir yedekten geri yüklemeyi deneyin.\n\nTabii bu bir AnkiDroid sorunu da olabilir; lütfen hatâyı bildirin ki kontrol edebilelim.</string>
   <string name="answering_error_report">Hatayı bildir</string>

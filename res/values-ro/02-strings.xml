@@ -77,7 +77,6 @@
   <string name="studyoptions_no_external_storage_title">Stocare pe mediu extern indisponibila</string>
   <string name="studyoptions_no_external_storage_message">No external storage is currently available. AnkiDroid needs to have access to the sdcard in order to read and load your Anki decks. Check that your sdcard is mounted and try again.</string>
   <string name="fact_adder_intent_title">Card de AnkiDroid</string>
-  <string name="fact_adder_swap">Schimba</string>
   <string name="deckpicker_select_dictionary_title">Selectaţi dicţionarul</string>
   <string name="deckpicker_select_dictionary_default">Implicit</string>
   <string name="card_editor_add_card">Adauga nota</string>

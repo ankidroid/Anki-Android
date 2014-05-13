@@ -77,7 +77,6 @@
   <string name="studyoptions_no_external_storage_title">没有可用的外部存储</string>
   <string name="studyoptions_no_external_storage_message">没有可用的外部存储空间，AnkiDroid需要访问SD卡以载入您的Anki牌组。确认SD卡挂载后重试。</string>
   <string name="fact_adder_intent_title">AnkiDroid卡牌</string>
-  <string name="fact_adder_swap">交换</string>
   <string name="deckpicker_select_dictionary_title">选择词典</string>
   <string name="deckpicker_select_dictionary_default">默认</string>
   <string name="card_editor_add_card">添加卡牌记录</string>

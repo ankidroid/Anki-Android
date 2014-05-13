@@ -77,7 +77,6 @@
   <string name="studyoptions_no_external_storage_title">Ulkoista Muistia Ei Ole Saatavilla</string>
   <string name="studyoptions_no_external_storage_message">Ulkoista muistia ei ole tällä hetkellä saatavilla. AnkiDroid tarvitsee saada käyttöönsä SD-korttikortti voidaksesi lukea ja ladata Anki-korttipakkoja. Tarkista, että SD-kortti on asennettu ja yritä uudelleen.</string>
   <string name="fact_adder_intent_title">AnkiDroid-kortti</string>
-  <string name="fact_adder_swap">Vaihda</string>
   <string name="deckpicker_select_dictionary_title">Valitse sanakirja</string>
   <string name="deckpicker_select_dictionary_default">Oletus</string>
   <string name="card_editor_add_card">Lisää huomautus</string>

@@ -77,7 +77,6 @@
   <string name="studyoptions_no_external_storage_title">Немає доступної зовнішньої пам’яті</string>
   <string name="studyoptions_no_external_storage_message">Немає доступної зовнішньої пам’яті. AnkiDroid необхідний доступ до SD карти для завантаження та читання ваших колод Anki. Перевірте, що ваша SD картка встановлена і спробуйте знову.</string>
   <string name="fact_adder_intent_title">Картка AnkiDroid</string>
-  <string name="fact_adder_swap">Обміняти</string>
   <string name="deckpicker_select_dictionary_title">Вибрати Словник</string>
   <string name="deckpicker_select_dictionary_default">Стандартні налаштування</string>
   <string name="card_editor_add_card">Додати примітку</string>

@@ -77,7 +77,6 @@
   <string name="studyoptions_no_external_storage_title">Спољашње складиште је недоступно</string>
   <string name="studyoptions_no_external_storage_message">Недоступно је спољашње складиште. AnkiDroid мора да има приступ SD карти, да би могао да чита и учитава шпилове. Уверите се да је ваша SD карта монтирана и покушајте поново.</string>
   <string name="fact_adder_intent_title">AnkiDroid карта</string>
-  <string name="fact_adder_swap">Размена</string>
   <string name="deckpicker_select_dictionary_title">Изабери речник</string>
   <string name="deckpicker_select_dictionary_default">Подразумевано</string>
   <string name="card_editor_add_card">Додај белешку</string>

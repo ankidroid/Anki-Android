@@ -77,7 +77,6 @@
   <string name="studyoptions_no_external_storage_title">Geen externe opslag beschikbaar</string>
   <string name="studyoptions_no_external_storage_message">Er is momenteel geen externe opslag beschikbaar. AnkiDroid heeft toegang tot je SD-kaart nodig om je Ankisets te laden. Controleer of je SD-kaart goed zit en probeer het nog eens.</string>
   <string name="fact_adder_intent_title">Ankidroid kaart</string>
-  <string name="fact_adder_swap">Omkeren</string>
   <string name="deckpicker_select_dictionary_title">Selecteer Woordenboek</string>
   <string name="deckpicker_select_dictionary_default">Standaard</string>
   <string name="card_editor_add_card">Kaart toevoegen</string>

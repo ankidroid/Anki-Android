@@ -39,11 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="widget_pref">Widget</string>
-  <string name="widget_minimum_cards_due">Limit pre widget oznámenia</string>
-  <string name="widget_minimum_cards_due_summary">Minimálny počet kariet na skúšanie, pri ktorom sa objaví oznámenie : XXX</string>
-  <string name="widget_minimum_cards_due_vibrate">Vibrovať</string>
-  <string name="widget_minimum_cards_due_blink">Blikanie</string>
   <string name="widget_minimum_cards_due_notification_ticker_title">Kariet na skúšanie</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid kariet na skúšanie</string>
   <string name="widget_no_cards_due">Žiadne karty na skúšanie</string>

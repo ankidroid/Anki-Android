@@ -39,11 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="widget_pref">Віджет</string>
-  <string name="widget_minimum_cards_due">Поріг повідомлень віджета</string>
-  <string name="widget_minimum_cards_due_summary">Мінімальна кількість карток до перегляду для виведення повідомлення: XXX</string>
-  <string name="widget_minimum_cards_due_vibrate">Вібрувати</string>
-  <string name="widget_minimum_cards_due_blink">Блимати</string>
   <string name="widget_minimum_cards_due_notification_ticker_title">Карток до перегляду</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid карток до перегляду</string>
   <string name="widget_no_cards_due">Картки до перегляду відсутні</string>

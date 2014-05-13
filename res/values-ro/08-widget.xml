@@ -39,11 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="widget_pref">Widget</string>
-  <string name="widget_minimum_cards_due">Pragul de notificare widget</string>
-  <string name="widget_minimum_cards_due_summary">Numărul minim de carduri scadente pentru care o notificare este afișată: XXX</string>
-  <string name="widget_minimum_cards_due_vibrate">Vibrație</string>
-  <string name="widget_minimum_cards_due_blink">Lumină intermitentă</string>
   <string name="widget_minimum_cards_due_notification_ticker_title">Carduri scadente</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid carduri scadente</string>
   <string name="widget_no_cards_due">Nici un card scadent</string>

@@ -39,11 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="widget_pref">위젯</string>
-  <string name="widget_minimum_cards_due">위젯 알림 임계값</string>
-  <string name="widget_minimum_cards_due_summary">알림 설정에서 최소 학습 예정 카드 수: XXX</string>
-  <string name="widget_minimum_cards_due_vibrate">진동</string>
-  <string name="widget_minimum_cards_due_blink">화면 점멸</string>
   <string name="widget_minimum_cards_due_notification_ticker_title">복습예정카드</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid 카드 복습 예정</string>
   <string name="widget_no_cards_due">복습할 카드 없음</string>

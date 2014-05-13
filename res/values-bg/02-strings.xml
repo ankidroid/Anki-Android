@@ -77,7 +77,6 @@
   <string name="studyoptions_no_external_storage_title">Няма налична външна памет</string>
   <string name="studyoptions_no_external_storage_message">Външно запаметяващо устройство не е достъпно. AnkiDroid трябва да има достъп до картата на SD, за да четете и да заредите вашата колода. Проверете дали вашата SD карта е поставена и опитайте отново.</string>
   <string name="fact_adder_intent_title">AnkiDroid карта</string>
-  <string name="fact_adder_swap">Размяна</string>
   <string name="deckpicker_select_dictionary_title">Изберете речник</string>
   <string name="deckpicker_select_dictionary_default">По подразбиране</string>
   <string name="card_editor_add_card">Add note</string>

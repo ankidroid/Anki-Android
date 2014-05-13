@@ -39,11 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="widget_pref">Виџет</string>
-  <string name="widget_minimum_cards_due">Виџет обавештења</string>
-  <string name="widget_minimum_cards_due_summary">Минимални број карата за понављање, при којима ће се искакати саопштење: XXX</string>
-  <string name="widget_minimum_cards_due_vibrate">Вибрирај</string>
-  <string name="widget_minimum_cards_due_blink">Мигај</string>
   <string name="widget_minimum_cards_due_notification_ticker_title">Постоје карте за понављање</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid kartica za pregled</string>
   <string name="widget_no_cards_due">Нема карата за понављање</string>

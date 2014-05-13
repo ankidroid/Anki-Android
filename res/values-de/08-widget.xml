@@ -39,11 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="widget_pref">Widget</string>
-  <string name="widget_minimum_cards_due">Widget Benachrichtigungsschwelle</string>
-  <string name="widget_minimum_cards_due_summary">Die Mindestanzahl von Karten, bei der eine Benachrichtigung ausgelöst wird: XXX</string>
-  <string name="widget_minimum_cards_due_vibrate">Vibrieren</string>
-  <string name="widget_minimum_cards_due_blink">Blinken</string>
   <string name="widget_minimum_cards_due_notification_ticker_title">Fällige Karten</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid-Karten fällig</string>
   <string name="widget_no_cards_due">Keine fälligen Karten</string>

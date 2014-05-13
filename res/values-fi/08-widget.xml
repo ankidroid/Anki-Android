@@ -39,11 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="widget_pref">Widget</string>
-  <string name="widget_minimum_cards_due">Widget-ilmoituksen kynnys</string>
-  <string name="widget_minimum_cards_due_summary">Korttien vähimmäismäärä, jolloin ilmoitus on esitetty: XXX</string>
-  <string name="widget_minimum_cards_due_vibrate">Värähdellä</string>
-  <string name="widget_minimum_cards_due_blink">Valon vilkkuminen</string>
   <string name="widget_minimum_cards_due_notification_ticker_title">Kortien määrä</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid korttien määrä</string>
   <string name="widget_no_cards_due">Ei ole tiedossa korttien määrää</string>

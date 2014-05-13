@@ -77,7 +77,6 @@
   <string name="studyoptions_no_external_storage_title">외부 저장장치를 사용할 수 없음</string>
   <string name="studyoptions_no_external_storage_message">외부 저장 장치를 사용할 수 없습니다. AnkiDroid가 Anki 덱들을 읽어들이고 불러오기 위해서는 SD카드에 접근할 수 있는 권한이 필요합니다. SD 카드가 삽입되었는지 확인하시고 다시 한 번 시도해 보세요.</string>
   <string name="fact_adder_intent_title">AnkiDroid 카드</string>
-  <string name="fact_adder_swap">교체하기</string>
   <string name="deckpicker_select_dictionary_title">사전 선택</string>
   <string name="deckpicker_select_dictionary_default">디폴트</string>
   <string name="card_editor_add_card">노트 추가</string>

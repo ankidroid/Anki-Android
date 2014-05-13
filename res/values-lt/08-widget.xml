@@ -39,11 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="widget_pref">Widget</string>
-  <string name="widget_minimum_cards_due">Widget notification threshold</string>
-  <string name="widget_minimum_cards_due_summary">The minimum number of cards due at which a notification is raised: XXX</string>
-  <string name="widget_minimum_cards_due_vibrate">Vibruoti</string>
-  <string name="widget_minimum_cards_due_blink">Blink light</string>
   <string name="widget_minimum_cards_due_notification_ticker_title">Cards Due</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid kortelės laukia</string>
   <string name="widget_no_cards_due">No cards due</string>

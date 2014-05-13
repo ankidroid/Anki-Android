@@ -39,11 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="widget_pref">Widget</string>
-  <string name="widget_minimum_cards_due">Όριο κοινοποίησης του Widget</string>
-  <string name="widget_minimum_cards_due_summary">Ο ελάχιστος αριθμός δέουσων καρτών στον οποίο γίνεται κοινοποίηση</string>
-  <string name="widget_minimum_cards_due_vibrate">Δόνηση</string>
-  <string name="widget_minimum_cards_due_blink">Αναβόσβηση φωτός</string>
   <string name="widget_minimum_cards_due_notification_ticker_title">Αναμένουσες Κάρτες</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d κάρτες AnkiDroid εις αναμονή</string>
   <string name="widget_no_cards_due">Δεν απομένουν επαναλήψεις</string>

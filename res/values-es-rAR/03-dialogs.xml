@@ -63,8 +63,6 @@
   <string name="reset_card_dialog_title">Resetear el progreso de las tarjetas</string>
   <string name="reset_card_dialog_message">Esto resetea el progreso de aprendizaje para todas las tarjetas de esta nota (se verán como nuevas tarjetas).\n¿Continuar?</string>
   <string name="reset_card_dialog_confirmation">Resetear todas las tarjetas de esta nota</string>
-  <string name="save_duplicate_dialog_title">Duplicate note</string>
-  <string name="save_duplicate_dialog_message">This note shares its primary field with another note. Save anyway?</string>
   <string name="answering_error_title">Error en base de datos</string>
   <string name="answering_error_message">Ocurrió un error mientras se escribía en la colección. Esto puede deberse a una base de datos corrupta o a insuficiente espacio en disco.\n\nSi sucede más a menudo intente chequear la base de datos, reparar la colección o restaurarla desde una copia de seguridad. Cliquee en \'opciones\' para ello.\n\n\Sin embargo, puede tratarse también de un error de AnkiDroid. Por favor reporte el error para que podamos comprobarlo.</string>
   <string name="answering_error_report">Reportar un error</string>
