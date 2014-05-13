@@ -30,7 +30,7 @@
     <string name="pref_cat_fonts_formatting">Fonts and Style</string>
     <string name="pref_cat_fonts">Font Selection</string>
     <string name="pref_cat_fonts_size">Size</string>
-    <string name="pref_cat_gestures">Gestures</string>
+    <string name="pref_cat_gestures">Taps and Swipes</string>
     <string name="pref_cat_actions">Actions</string>
     <string name="pref_cat_advanced">Advanced</string>
     <string name="pref_cat_performance">Performance</string>

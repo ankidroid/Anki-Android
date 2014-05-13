@@ -270,7 +270,7 @@
             app:min="20" />        
         <PreferenceCategory android:title="@string/pref_cat_actions" >
             <ListPreference
-                android:defaultValue="9"
+                android:defaultValue="0"
                 android:dependency="gestures"
                 android:entries="@array/gestures_labels"
                 android:entryValues="@array/gestures_values"
@@ -286,7 +286,7 @@
                 android:summary=""
                 android:title="@string/gestures_swipe_down" />
             <ListPreference
-                android:defaultValue="8"
+                android:defaultValue="6"
                 android:dependency="gestures"
                 android:entries="@array/gestures_labels"
                 android:entryValues="@array/gestures_values"
@@ -294,7 +294,7 @@
                 android:summary=""
                 android:title="@string/gestures_swipe_left" />
             <ListPreference
-                android:defaultValue="17"
+                android:defaultValue="0"
                 android:dependency="gestures"
                 android:entries="@array/gestures_labels"
                 android:entryValues="@array/gestures_values"
@@ -302,7 +302,7 @@
                 android:summary=""
                 android:title="@string/gestures_swipe_right" />
             <ListPreference
-                android:defaultValue="7"
+                android:defaultValue="0"
                 android:dependency="gestures"
                 android:entries="@array/gestures_labels"
                 android:entryValues="@array/gestures_values"
@@ -310,7 +310,7 @@
                 android:summary=""
                 android:title="@string/gestures_double_tap" />
             <ListPreference
-                android:defaultValue="12"
+                android:defaultValue="1"
                 android:dependency="gestures"
                 android:entries="@array/gestures_labels"
                 android:entryValues="@array/gestures_values"
@@ -318,7 +318,7 @@
                 android:summary=""
                 android:title="@string/gestures_tap_top" />
             <ListPreference
-                android:defaultValue="2"
+                android:defaultValue="1"
                 android:dependency="gestures"
                 android:entries="@array/gestures_labels"
                 android:entryValues="@array/gestures_values"
@@ -326,7 +326,7 @@
                 android:summary=""
                 android:title="@string/gestures_tap_bottom" />
             <ListPreference
-                android:defaultValue="3"
+                android:defaultValue="1"
                 android:dependency="gestures"
                 android:entries="@array/gestures_labels"
                 android:entryValues="@array/gestures_values"
@@ -334,7 +334,7 @@
                 android:summary=""
                 android:title="@string/gestures_tap_left" />
             <ListPreference
-                android:defaultValue="6"
+                android:defaultValue="1"
                 android:dependency="gestures"
                 android:entries="@array/gestures_labels"
                 android:entryValues="@array/gestures_values"
