@@ -34,7 +34,7 @@
         <item>100</item>
         <item>150</item>
         <item>200</item>
-        <item>Infinite</item>
+        <item>Never notify</item>
     </string-array>
     <string-array name="cram_review_order_labels">
         <item>Show oldest modified first</item>

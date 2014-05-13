@@ -33,6 +33,7 @@ import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -72,7 +73,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     private static final int DIALOG_BACKUP = 2;
     private static final int DIALOG_HEBREW_FONT = 3;
-    private static final int DIALOG_WRITE_ANSWERS = 4;
     public static boolean COMING_FROM_ADD = false;
     
     /** Key of the language preference */
@@ -87,17 +87,21 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private CheckBoxPreference useBackupPreference;
     private CheckBoxPreference safeDisplayPreference;
     private CheckBoxPreference convertFenText;
+    private CheckBoxPreference inputWorkaround;
+    private CheckBoxPreference longclickWorkaround;
     private CheckBoxPreference fixHebrewText;
+    private CheckBoxPreference fixArabicText;
     private Preference syncAccount;
-    private static String[] mShowValueInSummList = { LANGUAGE, "dictionary", "reportErrorMode",
+    private static String[] sShowValueInSummList = { LANGUAGE, "dictionary", "reportErrorMode",
             "minimumCardsDueForNotification", "gestureSwipeUp", "gestureSwipeDown", "gestureSwipeLeft",
             "gestureSwipeRight", "gestureDoubleTap", "gestureTapTop", "gestureTapBottom", "gestureTapRight",
             "gestureLongclick", "gestureTapLeft", "newSpread", "useCurrent", "defaultFont", "overrideFontBehavior", "browserEditorFont" };
-    private static String[] mShowValueInSummSeek = { "relativeDisplayFontSize", "relativeCardBrowserFontSize",
+    private static String[] sListNumericCheck = {"minimumCardsDueForNotification"};
+    private static String[] sShowValueInSummSeek = { "relativeDisplayFontSize", "relativeCardBrowserFontSize",
             "relativeImageSize", "answerButtonSize", "whiteBoardStrokeWidth", "swipeSensitivity",
             "timeoutAnswerSeconds", "timeoutQuestionSeconds", "backupMax", "dayOffset" };
-    private static String[] mShowValueInSummEditText = { "simpleInterfaceExcludeTags", "deckPath" };
-    private static String[] mShowValueInSummNumRange = { "timeLimit", "learnCutoff" };
+    private static String[] sShowValueInSummEditText = { "simpleInterfaceExcludeTags", "deckPath" };
+    private static String[] sShowValueInSummNumRange = { "timeLimit", "learnCutoff" };
     private TreeMap<String, String> mListsToUpdate = new TreeMap<String, String>();
     private StyledProgressDialog mProgressDialog;
     private boolean lockCheckAction = false;
@@ -136,8 +140,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         useBackupPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("useBackup");
         safeDisplayPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("safeDisplay");
         convertFenText = (CheckBoxPreference) getPreferenceScreen().findPreference("convertFenText");
-        fixHebrewText = (CheckBoxPreference) getPreferenceScreen().findPreference("fixHebrewText");
-        syncAccount = getPreferenceScreen().findPreference("syncAccount");
+        syncAccount = (Preference) getPreferenceScreen().findPreference("syncAccount");
         showEstimates = (CheckBoxPreference) getPreferenceScreen().findPreference("showEstimates");
         showProgress = (CheckBoxPreference) getPreferenceScreen().findPreference("showProgress");
         learnCutoff = (NumberRangePreference) getPreferenceScreen().findPreference("learnCutoff");
@@ -145,7 +148,26 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         useCurrent = (ListPreference) getPreferenceScreen().findPreference("useCurrent");
         newSpread = (ListPreference) getPreferenceScreen().findPreference("newSpread");
         dayOffset = (SeekBarPreference) getPreferenceScreen().findPreference("dayOffset");
-
+        // Workaround preferences
+        PreferenceCategory workarounds = (PreferenceCategory) getPreferenceScreen().findPreference("category_workarounds");
+        inputWorkaround = (CheckBoxPreference) getPreferenceScreen().findPreference("inputWorkaround");        
+        longclickWorkaround = (CheckBoxPreference) getPreferenceScreen().findPreference("textSelectionLongclickWorkaround");
+        fixHebrewText = (CheckBoxPreference) getPreferenceScreen().findPreference("fixHebrewText");                
+        fixArabicText = (CheckBoxPreference) getPreferenceScreen().findPreference("fixArabicText");
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+        if (AnkiDroidApp.SDK_VERSION > 14){
+            workarounds.removePreference(inputWorkaround);
+            preferences.edit().putBoolean("inputWorkaround", false);
+        }
+        if (AnkiDroidApp.SDK_VERSION > 10){
+            workarounds.removePreference(longclickWorkaround);
+            preferences.edit().putBoolean("longclickWorkaround", false);
+        }
+        if (AnkiDroidApp.SDK_VERSION > 8){
+            workarounds.removePreference(fixArabicText);
+            preferences.edit().putBoolean("fixArabicText", false);
+        }        
+            
         initializeLanguageDialog();
         initializeCustomFontsDialog();
 
@@ -181,23 +203,27 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             useCurrent.setEnabled(false);
         }
 
-        for (String key : mShowValueInSummList) {
-            updateListPreference(key);
+        for (String key : sShowValueInSummList) {
+            if (Arrays.asList(sListNumericCheck).contains(key)) {
+                updateListPreference(key, true);
+            } else {
+                updateListPreference(key, false);
+            }            
         }
-        for (String key : mShowValueInSummSeek) {
+        for (String key : sShowValueInSummSeek) {
             updateSeekBarPreference(key);
         }
-        for (String key : mShowValueInSummEditText) {
+        for (String key : sShowValueInSummEditText) {
             updateEditTextPreference(key);
         }
-        for (String key : mShowValueInSummNumRange) {
+        for (String key : sShowValueInSummNumRange) {
             updateNumberRangePreference(key);
         }
 
     }
 
 
-    private void updateListPreference(String key) {
+    private void updateListPreference(String key, final boolean numericCheck) {
         ListPreference listpref = (ListPreference) getPreferenceScreen().findPreference(key);
         String entry;
         try {
@@ -207,12 +233,25 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             entry = "?";
         }
         if (mListsToUpdate.containsKey(key)) {
-            listpref.setSummary(replaceString(mListsToUpdate.get(key), entry));
+            if (numericCheck){
+                // replace any XXX with the value if value numeric, otherwise return value                
+                listpref.setSummary(replaceStringIfNumeric(mListsToUpdate.get(key), entry));
+            } else {
+                // replace any XXX with the value   
+                listpref.setSummary(replaceString(mListsToUpdate.get(key), entry));
+            }
         } else {
             String oldsum = (String) listpref.getSummary();
             if (oldsum.contains("XXX")) {
                 mListsToUpdate.put(key, oldsum);
-                listpref.setSummary(replaceString(oldsum, entry));
+                if (numericCheck) {
+                    // replace any XXX with the value if value numeric, otherwise return value                    
+                    listpref.setSummary(replaceStringIfNumeric(oldsum, entry));
+                } else {
+                    // replace any XXX with the value                    
+                    listpref.setSummary(replaceString(oldsum, entry));
+                }
+                
             } else {
                 listpref.setSummary(entry);
             }
@@ -291,7 +330,15 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             return str;
         }
     }
-
+    
+    private String replaceStringIfNumeric(String str, String value) {
+        try {
+            Double.parseDouble(value);
+            return replaceString(str, value);
+        } catch (NumberFormatException e){
+            return value;
+        }    
+    }  
 
     private void initializeLanguageDialog() {
         Map<String, String> items = new TreeMap<String, String>();
@@ -359,8 +406,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 keepScreenOnCheckBoxPreference.setChecked(showAnswerCheckBoxPreference.isChecked());
             } else if (key.equals(LANGUAGE)) {
                 closePreferences();
-            } else if (key.equals("writeAnswers") && sharedPreferences.getBoolean("writeAnswers", true)) {
-                showDialog(DIALOG_WRITE_ANSWERS);
             } else if (key.equals("useBackup")) {
                 if (lockCheckAction) {
                     lockCheckAction = false;
@@ -412,13 +457,17 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 mCol.setCrt(date.getTimeInMillis() / 1000);
                 mCol.setMod();
             }
-            if (Arrays.asList(mShowValueInSummList).contains(key)) {
-                updateListPreference(key);
-            } else if (Arrays.asList(mShowValueInSummSeek).contains(key)) {
+            if (Arrays.asList(sShowValueInSummList).contains(key)) {
+                if (Arrays.asList(sListNumericCheck).contains(key)) {
+                    updateListPreference(key, true);
+                } else {
+                    updateListPreference(key, false);
+                }
+            } else if (Arrays.asList(sShowValueInSummSeek).contains(key)) {
                 updateSeekBarPreference(key);
-            } else if (Arrays.asList(mShowValueInSummEditText).contains(key)) {
+            } else if (Arrays.asList(sShowValueInSummEditText).contains(key)) {
                 updateEditTextPreference(key);
-            } else if (Arrays.asList(mShowValueInSummNumRange).contains(key)) {
+            } else if (Arrays.asList(sShowValueInSummNumRange).contains(key)) {
                 updateNumberRangePreference(key);
             }
         } catch (BadTokenException e) {
@@ -499,12 +548,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                     }
                 });
                 builder.setNegativeButton(res.getString(R.string.no), null);
-                break;
-            case DIALOG_WRITE_ANSWERS:
-                builder.setTitle(res.getString(R.string.write_answers));
-                builder.setCancelable(false);
-                builder.setMessage(res.getString(R.string.write_answers_message));
-                builder.setNegativeButton(res.getString(R.string.ok), null);
                 break;
             case DIALOG_HEBREW_FONT:
                 builder.setTitle(res.getString(R.string.fix_hebrew_text));

@@ -1342,6 +1342,8 @@ public class DeckPicker extends ActionBarActivity {
             } else {
                 preferences.edit().putString("overrideFontBehavior", "0" ).commit();
             }
+            // change typed answers setting from enable to disable
+            preferences.edit().putBoolean("writeAnswersDisable", !preferences.getBoolean("writeAnswers", true) ).commit();            
         }
     }
 
