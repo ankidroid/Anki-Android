@@ -392,6 +392,8 @@ public class CardBrowser extends ActionBarActivity implements ActionBar.OnNaviga
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         mSelectedTags = new HashSet<String>();
+        // initialize mSearchTerms to a default value
+        mSearchTerms = "";
 
         // onNavigationItemSelected will be called automatically, replacing onSearch in onCreate.
         if (!mWholeCollection) {
