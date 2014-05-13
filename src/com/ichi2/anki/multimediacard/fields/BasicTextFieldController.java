@@ -31,6 +31,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ichi2.anki.R;
@@ -58,6 +59,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
     private static final int REQUEST_CODE_TRANSLATE_COLORDICT = 103;
     private static final int REQUEST_CODE_IMAGE_SEARCH = 104;
 
+    private TextView mSearchLabel;
     private EditText mEditText;
 
     // This is used to copy from another field value to this field
@@ -75,16 +77,18 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
         layoutTools.setOrientation(LinearLayout.HORIZONTAL);
         layout.addView(layoutTools);
 
-        LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT, 1);
+        LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.FILL_PARENT, 1);
 
         createCloneButton(layoutTools, p);
         createClearButton(layoutTools, p);
-
+        // search label
+        mSearchLabel = new TextView(mActivity);
+        mSearchLabel.setText(R.string.multimedia_editor_text_field_editing_search_label);
+        layout.addView(mSearchLabel);
+        // search buttons
         LinearLayout layoutTools2 = new LinearLayout(mActivity);
         layoutTools2.setOrientation(LinearLayout.HORIZONTAL);
         layout.addView(layoutTools2);
-
         createTranslateButton(layoutTools2, p);
         createPronounceButton(layoutTools2, p);
         createSearchImageButton(layoutTools2, p);
