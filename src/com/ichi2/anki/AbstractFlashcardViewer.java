@@ -45,6 +45,7 @@ import android.text.Html.TagHandler;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.SpannedString;
+import android.text.TextUtils;
 import android.text.style.StrikethroughSpan;
 import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
@@ -805,7 +806,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
             sb.append(" class=\"typeOff\"");
         }
         sb.append("><code id=typeans>");
-        if (!theSame && !userAnswer.isEmpty()) {
+        if (!theSame && !TextUtils.isEmpty(userAnswer)) {
             sb.append(diff.diff_prettyHtml(diff.diff_main(userAnswer, correctAnswer), mNightMode));
             sb.append("<br>&darr;<br>");
         }
