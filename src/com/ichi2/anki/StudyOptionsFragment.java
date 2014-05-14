@@ -77,8 +77,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 
 public class StudyOptionsFragment extends Fragment {
@@ -917,7 +920,14 @@ public class StudyOptionsFragment extends Fragment {
                 // Here we add the list of tags for the whole collection.
                 Collection col;
                 col = AnkiDroidApp.getCol();
-                allTags = col.getTags().all().toArray(new String[0]);
+                List<String> tags_list = col.getTags().all();
+                Collections.sort(tags_list, new Comparator<String>() {
+                    @Override
+                    public int compare(String lhs, String rhs) {
+                        return lhs.compareToIgnoreCase(rhs);
+                    }
+                });
+                allTags = tags_list.toArray(new String[tags_list.size()]);
                 builder1.setTitle(R.string.studyoptions_limit_select_tags);
                 builder1.setMultiChoiceItems(allTags, new boolean[allTags.length],
                         new DialogInterface.OnClickListener() {
