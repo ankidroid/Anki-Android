@@ -53,6 +53,7 @@
     <string name="reset_languages">Reset languages</string>
     <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks. Reset specific deck assignments on deck picker</string>
     <string name="reset_languages_question">Reset all language assignments?</string>
+    <string name="reset_confirmation">All states reset</string>
     <string name="display_font_size">Reviewer font scaling</string>
     <string name="display_font_size_summ">XXX %</string>
     <string name="image_size">Reviewer Image Scaling</string>
