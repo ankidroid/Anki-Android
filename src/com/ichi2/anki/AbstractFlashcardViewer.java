@@ -105,6 +105,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -798,25 +799,42 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
      */
     private String typeAnsAnswerFilter(String buf, String userAnswer, String correctAnswer) {
         Matcher m = sTypeAnsPat.matcher(buf);
-        DiffEngine diff = new DiffEngine();
+        DiffEngine diffEngine = new DiffEngine();
         StringBuilder sb = new StringBuilder();
-        boolean theSame = userAnswer.equals(correctAnswer);
+        // A bit of clean-up.
+        userAnswer = Utils.stripHTMLMedia(userAnswer).trim();
+        correctAnswer = Utils.stripHTMLMedia(correctAnswer).trim();
+        if (AnkiDroidApp.SDK_VERSION > 8) {
+            userAnswer = Normalizer.normalize(userAnswer, Normalizer.Form.NFC);
+            correctAnswer = Normalizer.normalize(correctAnswer, Normalizer.Form.NFC);
+        }
         sb.append("<div");
         if (!mPrefWriteAnswers) {
             sb.append(" class=\"typeOff\"");
         }
         sb.append("><code id=typeans>");
-        if (!theSame && !TextUtils.isEmpty(userAnswer)) {
-            sb.append(diff.diff_prettyHtml(diff.diff_main(userAnswer, correctAnswer), mNightMode));
-            sb.append("<br>&darr;<br>");
-        }
-        if (mPrefWriteAnswers) {
-            sb.append(diff.diff_prettyHtml(diff.diff_main(correctAnswer, correctAnswer), mNightMode));
-            if (theSame) {
-                sb.append("\u2714");  // "Heavy check mark"
+        if (!TextUtils.isEmpty(userAnswer)) {
+            // The user did type something.
+            if (userAnswer.equals(correctAnswer)) {
+                // and it was right.
+                sb.append(diffEngine.wrapGood(correctAnswer));
+                sb.append("\u2714");  // Heavy check mark
+            } else {
+                // Answer not correct.
+                // Only use the complex diff code when needed, that is when we have some typed text that is not
+                // exactly the same as the correct text.
+                String[] diffedStrings = diffEngine.diffedHtmlStrings(correctAnswer, userAnswer);
+                // We know we get back two strings.
+                sb.append(diffedStrings[0]);
+                sb.append("<br>&darr;<br>");
+                sb.append(diffedStrings[1]);
             }
         } else {
-            sb.append(correctAnswer);
+            if (mPrefWriteAnswers) {
+                sb.append(diffEngine.wrapMissing(correctAnswer));
+            } else {
+                sb.append(correctAnswer);
+            }
         }
         sb.append("</code></div>");
         return m.replaceFirst(sb.toString());
