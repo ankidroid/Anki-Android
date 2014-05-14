@@ -1,6 +1,7 @@
 /****************************************************************************************
  * Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>                         *
  * Copyright (c) 2012 Kostas Spyropoulos <inigo.aldana@gmail.com>                       *
+ * Copyright (c) 2014 Timothy Rae <perceptualchaos2@gmail.com>                          *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -65,6 +66,7 @@ import com.ichi2.libanki.Card;
 import com.ichi2.libanki.CardStats;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Note;
+import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.StyledProgressDialog;
@@ -80,6 +82,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class CardBrowser extends ActionBarActivity implements ActionBar.OnNavigationListener {
 
@@ -861,33 +864,75 @@ public class CardBrowser extends ActionBarActivity implements ActionBar.OnNaviga
         Note note = card.note();
         int pos;
         for (Card c : note.cards()) {
+            // get position in the mCards search results HashMap
             pos = getPosition(mCards, c.getId());
             if (pos < 0 || pos >= mCards.size()) {
                 continue;
             }
-
+            // update tags
             if (updatedCardTags != null) {
                 mCards.get(pos).put("tags", updatedCardTags);
-            }
-
+            }           
+            // update sfld
             String sfld = note.getSFld();
             mCards.get(pos).put("sfld", sfld);
-
-            if (mWholeCollection) {
-                String deckName;
-                try {
-                    deckName = mCol.getDecks().get(card.getDid()).getString("name");
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
-                mCards.get(pos).put("deck", deckName);
+            // update Q & A etc
+            updateSearchItemQA(mCards.get(pos), c);
+            // update deck
+            String deckName;
+            try {
+                deckName = mCol.getDecks().get(card.getDid()).getString("name");
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
             }
-
+            mCards.get(pos).put("deck", deckName);
+            // update flags (marked / suspended / etc) which determine color
             String flags = Integer.toString((c.getQueue() == -1 ? 1 : 0) + (note.hasTag("marked") ? 2 : 0));
             mCards.get(pos).put("flags", flags);
         }
         updateList();
     }
+    
+
+    public static void updateSearchItemQA(HashMap<String, String> item, Card c) {
+        // render question and answer
+        HashMap<String, String> qa = c._getQA(true, true);
+        // update the original hash map to include rendered question & answer
+        String q = qa.get("q");
+        String a = qa.get("a");
+        // remove the question from the start of the answer if it exists
+        if (a.startsWith(q)) {
+            a = a.replaceFirst(Pattern.quote(q), "");
+        }
+        // put all of the fields in except for those that have already been pulled out straight from the
+        // database
+        item.put("answer", formatQA(a));
+        item.put("card", c.template().optString("name"));
+        // item.put("changed",strftime("%Y-%m-%d", localtime(c.getMod())));
+        // item.put("created",strftime("%Y-%m-%d", localtime(c.note().getId()/1000)));
+        // item.put("due",getDueString(c));
+        // item.put("ease","");
+        // item.put("edited",strftime("%Y-%m-%d", localtime(c.note().getMod())));
+        // item.put("interval","");
+        item.put("lapses", Integer.toString(c.getLapses()));
+        item.put("note", c.model().optString("name"));
+        item.put("question", formatQA(q));
+        item.put("reviews", Integer.toString(c.getReps()));
+    }
+
+
+    private static String formatQA(String txt) {
+        /* Strips all formatting from the string txt for use in displaying question/answer in browser */
+        String s = txt.replace("<br>", " ");
+        s = s.replace("<br />", " ");
+        s = s.replace("<div>", " ");
+        s = s.replace("\n", " ");
+        s = s.replaceAll("\\[sound:[^]]+\\]", "");
+        s = s.replaceAll("\\[\\[type:[^]]+\\]\\]", "");
+        s = Utils.stripHTMLMedia(s);
+        s = s.trim();
+        return s;
+    }    
 
 
     private void deleteNote(Card card) {
