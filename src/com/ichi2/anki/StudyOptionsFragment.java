@@ -193,6 +193,8 @@ public class StudyOptionsFragment extends Fragment {
     public Bundle mCramInitialConfig = null;
 
     private boolean mFragmented;
+    
+    private Thread mFullNewCountThread = null;
 
     /**
      * Callbacks for UI events
@@ -446,6 +448,9 @@ public class StudyOptionsFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if (mFullNewCountThread != null) {
+            mFullNewCountThread.interrupt();
+        }
         Log.i(AnkiDroidApp.TAG, "StudyOptions - onDestroy()");
         // if (mUnmountReceiver != null) {
         // unregisterReceiver(mUnmountReceiver);
@@ -1490,7 +1495,40 @@ public class StudyOptionsFragment extends Fragment {
                 // } else {
                 mTextTodayRev.setText(String.valueOf(revCards));
                 // }
-                mTextNewTotal.setText(totalNew == 1000 ? ">1000" : String.valueOf(totalNew));
+                 
+                if (totalNew == 1000) { // TODO do not hardcode this number defined in Sched
+                    // there may be >1000, let's make a thread to allow them to load
+                    mTextNewTotal.setText(">1000");
+                    if (mFullNewCountThread != null) { // a thread was previously made -- interrupt it
+                        mFullNewCountThread.interrupt();
+                    }
+                    mFullNewCountThread = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Collection collection = AnkiDroidApp.getCol();
+                            // TODO: refactor code to not rewrite this query, add to Sched.totalNewForCurrentDeck()
+                            StringBuilder sbQuery = new StringBuilder();
+                            sbQuery.append("SELECT count(*) FROM cards WHERE did IN ");
+                            sbQuery.append(Utils.ids2str(collection.getDecks().active()));
+                            sbQuery.append(" AND queue = 0");
+                            final int fullNewCount = collection.getDb().queryScalar(sbQuery.toString(), false);
+                            if (fullNewCount > 0) {
+                                Runnable setNewTotalText = new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        mTextNewTotal.setText(String.valueOf(fullNewCount));
+                                    }
+                                 };
+                                if (!Thread.currentThread().isInterrupted()) {
+                                    mTextNewTotal.post(setNewTotalText);
+                                }
+                            }
+                        }
+                    });
+                    mFullNewCountThread.start();
+                } else {
+                    mTextNewTotal.setText(totalNew);
+                }
                 mTextTotal.setText(String.valueOf(totalCards));
                 if (eta != -1) {
                     mTextETA.setText(Integer.toString(eta));
