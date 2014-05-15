@@ -31,6 +31,7 @@ import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.BackupManager;
+import com.ichi2.anki.CardBrowser;
 import com.ichi2.anki.R;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
@@ -66,7 +67,6 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
-import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
@@ -744,29 +744,8 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             for (HashMap<String, String> item : items) {
                 // Extract card item
                 Card c = col.getCard(Long.parseLong(item.get("id"), 10));
-                // render question and answer
-                HashMap<String, String> qa = c._getQA(true, true);
-                // update the original hash map to include rendered question & answer
-                String q = qa.get("q");
-                String a = qa.get("a");
-                // remove the question from the start of the answer if it exists
-                if (a.startsWith(q)) {
-                    a = a.replaceFirst(Pattern.quote(q), "");
-                }
-                // put all of the fields in except for those that have already been pulled out straight from the
-                // database
-                item.put("answer", formatQA(a));
-                item.put("card", c.template().optString("name"));
-                // item.put("changed",strftime("%Y-%m-%d", localtime(c.getMod())));
-                // item.put("created",strftime("%Y-%m-%d", localtime(c.note().getId()/1000)));
-                // item.put("due",getDueString(c));
-                // item.put("ease","");
-                // item.put("edited",strftime("%Y-%m-%d", localtime(c.note().getMod())));
-                // item.put("interval","");
-                item.put("lapses", Integer.toString(c.getLapses()));
-                item.put("note", c.model().optString("name"));
-                item.put("question", formatQA(q));
-                item.put("reviews", Integer.toString(c.getReps()));
+                // Update item
+                CardBrowser.updateSearchItemQA(item, c);
                 // Send progress periodically so that QA list in browser updates
                 if (isCancelled()) {
                     return null;
@@ -776,7 +755,6 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                         TaskData result = new TaskData(items);
                         publishProgress(result);
                     }
-
                 }
             }
         } catch (OutOfMemoryError e) {
@@ -789,21 +767,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         publishProgress(result);
         return result;
     }
-
-
-    private String formatQA(String txt) {
-        /* Strips all formatting from the string txt for use in displaying question/answer in browser */
-        String s = txt.replace("<br>", " ");
-        s = s.replace("<br />", " ");
-        s = s.replace("<div>", " ");
-        s = s.replace("\n", " ");
-        s = s.replaceAll("\\[sound:[^]]+\\]", "");
-        s = s.replaceAll("\\[\\[type:[^]]+\\]\\]", "");
-        s = Utils.stripHTMLMedia(s);
-        s = s.trim();
-        return s;
-    }
-
+    
 
     private TaskData doInBackgroundLoadStatistics(TaskData... params) {
         Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadStatistics");
