@@ -120,6 +120,7 @@ public class DeckPicker extends ActionBarActivity {
     private static final int DIALOG_IMPORT_LOG = 29;
     private static final int DIALOG_IMPORT_HINT = 30;
     private static final int DIALOG_IMPORT_SELECT = 31;
+    private static final int DIALOG_CONFIRM_DATABASE_CHECK = 32;
     public static final String UPGRADE_OLD_COLLECTION_RENAME = "oldcollection.apkg";
     public static final String IMPORT_REPLACE_COLLECTION_NAME = "collection.apkg";
 
@@ -1978,6 +1979,20 @@ public class DeckPicker extends ActionBarActivity {
                 });
                 dialog = builder.create();
                 break;
+                
+            case DIALOG_CONFIRM_DATABASE_CHECK:
+                builder.setTitle(res.getString(R.string.check_db_title));
+                builder.setMessage(res.getString(R.string.check_db_confirm));
+                builder.setPositiveButton(res.getString(R.string.yes), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        integrityCheck();
+                    }
+                });
+                builder.setNegativeButton(res.getString(R.string.no), null);
+                builder.setCancelable(true);               
+                dialog = builder.create();
+                break;                
 
             default:
                 dialog = null;
@@ -2482,7 +2497,8 @@ public class DeckPicker extends ActionBarActivity {
                 return true;
 
             case R.id.action_check_database:
-                integrityCheck();
+                StyledDialog dialog = (StyledDialog) onCreateDialog(this.DIALOG_CONFIRM_DATABASE_CHECK);
+                dialog.show();
                 return true;
 
             case R.id.action_preferences:
