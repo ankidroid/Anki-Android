@@ -6,6 +6,12 @@
 # tools/release.sh # For an alpha or beta release
 # tools/release.sh public # For a public (non alpha/beta) release
 
+# Detect problems in code
+lint . --config lint.xml --nowarn --exitcode
+if [ $? -ne 0 ]; then
+  exit
+fi
+
 # Suffix configuration
 SUFFIX=""
 #SUFFIX="-EXPERIMENTAL"
