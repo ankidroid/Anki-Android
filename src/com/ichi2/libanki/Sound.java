@@ -231,7 +231,6 @@ public class Sound {
                 Uri soundUri = Uri.parse(soundPath);
                 sMediaPlayer.setDataSource(AnkiDroidApp.getInstance().getApplicationContext(),
                                            soundUri);
-                sMediaPlayer.setVolume(AudioManager.STREAM_MUSIC, AudioManager.STREAM_MUSIC);
                 sMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
                 sMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                     @Override
