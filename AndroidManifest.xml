@@ -189,7 +189,6 @@
             android:configChanges="locale"
             android:label="@string/preview_title" />
 
-        <service android:name="com.ichi2.anki.services.DownloadManagerService" />
         <service android:name="com.ichi2.anki.services.NotificationService" />
 
         <!-- small widget -->
