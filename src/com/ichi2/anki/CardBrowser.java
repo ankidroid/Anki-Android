@@ -53,6 +53,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.dialogs.CardBrowserDisplayOrderDialog;
 import com.ichi2.anki.dialogs.TagsDialog;
 import com.ichi2.anki.dialogs.TagsDialog.TagsDialogListener;
 import com.ichi2.anki.receiver.SdCardReceiver;
@@ -123,7 +124,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
     private static final int DEFAULT_FONT_SIZE_RATIO = 100;
 
     // Should match order of R.array.card_browser_order_labels
-    private static final int CARD_ORDER_NONE = 0;
+    public static final int CARD_ORDER_NONE = 0;
     private static final String[] fSortTypes = new String[] {
         "",
         "noteFld",
@@ -135,7 +136,6 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         "cardEase",
         "cardReps",
         "cardLapses"};
-    String[] mOrderByFields;
     // list of available keys in mCards corresponding to the column names in R.array.browser_column2_headings.
     // Note: the last 6 are currently hidden
     private static final String[] COLUMN_KEYS = {"answer",
@@ -270,7 +270,6 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         mActionBar.setListNavigationCallbacks(mDropDownAdapter, this);
 
-        mOrderByFields = res.getStringArray(R.array.card_browser_order_labels);
         try {
             mOrder = CARD_ORDER_NONE;
             String colOrder = getCol().getConf().getString("sortType");
@@ -281,7 +280,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                 }
             }
             if (mOrder == 1 && preferences.getBoolean("cardBrowserNoSorting", false)) {
-                mOrder = 0;
+                mOrder = CARD_ORDER_NONE;
             }
             mOrderAsc = Upgrade.upgradeJSONIfNecessary(getCol(), getCol().getConf(), "sortBackwards", false);
             // default to descending for non-text fields
@@ -508,7 +507,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                 return true;
 
             case R.id.action_sort_by_size:
-                showDialog(DIALOG_ORDER);
+                showDialogFragment(DIALOG_ORDER);
                 return true;
 
             case R.id.action_show_marked:
@@ -561,7 +560,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
     private DialogFragment showDialogFragment(int id) {
         DialogFragment dialogFragment = null;
         String tag = null;
-        switch(id) {
+        switch (id) {
             case DIALOG_TAGS:
                 TagsDialog dialog = com.ichi2.anki.dialogs.TagsDialog.newInstance(
                     TagsDialog.TYPE_FILTER_BY_TAG, new ArrayList<String>(), new ArrayList<String>(getCol().getTags().all()));
@@ -603,67 +602,24 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                 });
                 dialogFragment = dialog;
                 break;
+            case DIALOG_ORDER:
+                dialogFragment = CardBrowserDisplayOrderDialog.newInstance(mOrder, mOrderAsc);
+                tag = "cardBrowserDisplayOrderDialog";
+                break;
             default:
                 break;
         }
-        
-
         dialogFragment.show(getSupportFragmentManager(), tag);
         return dialogFragment;
     }
+
 
     @Override
     protected Dialog onCreateDialog(int id) {
         StyledDialog dialog = null;
         Resources res = getResources();
         StyledDialog.Builder builder = new StyledDialog.Builder(this);
-
         switch (id) {
-            case DIALOG_ORDER:
-                builder.setTitle(res.getString(R.string.card_browser_change_display_order_title));
-                builder.setMessage(res.getString(R.string.card_browser_change_display_order_reverse));
-                builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
-                builder.setSingleChoiceItems(res.getStringArray(R.array.card_browser_order_labels), mOrder,
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface arg0, int which) {
-                                if (which != mOrder) {
-                                    mOrder = which;
-                                    mOrderAsc = false;
-                                    try {
-                                        if (mOrder == 0) {
-                                            getCol().getConf().put("sortType", fSortTypes[1]);
-                                            AnkiDroidApp.getSharedPrefs(getBaseContext()).edit()
-                                                    .putBoolean("cardBrowserNoSorting", true).commit();
-                                        } else {
-                                            getCol().getConf().put("sortType", fSortTypes[mOrder]);
-                                            AnkiDroidApp.getSharedPrefs(getBaseContext()).edit()
-                                                    .putBoolean("cardBrowserNoSorting", false).commit();
-                                        }
-                                        // default to descending for non-text fields
-                                        if (fSortTypes[mOrder].equals("noteFld")) {
-                                            mOrderAsc = true;
-                                        }
-                                        getCol().getConf().put("sortBackwards", mOrderAsc);
-                                    } catch (JSONException e) {
-                                        throw new RuntimeException(e);
-                                    }
-                                    searchCards();
-                                } else if (which != CARD_ORDER_NONE) {
-                                    mOrderAsc = !mOrderAsc;
-                                    try {
-                                        getCol().getConf().put("sortBackwards", mOrderAsc);
-                                    } catch (JSONException e) {
-                                        throw new RuntimeException(e);
-                                    }
-                                    Collections.reverse(mCards);
-                                    updateList();
-                                }
-                            }
-                        });
-                dialog = builder.create();
-                break;
-
             case DIALOG_CONTEXT_MENU:
                 // FIXME:
                 String[] entries = new String[4];
@@ -688,19 +644,6 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         Resources res = getResources();
         StyledDialog ad = (StyledDialog) dialog;
         switch (id) {
-            case DIALOG_ORDER:
-                for (int i = 0; i < mOrderByFields.length; ++i) {
-                    if (i != CARD_ORDER_NONE && i == mOrder) {
-                        if (mOrderAsc) {
-                            ad.changeListItem(i, mOrderByFields[i] + " (\u25b2)");
-                        } else {
-                            ad.changeListItem(i, mOrderByFields[i] + " (\u25bc)");
-                        }
-                    } else {
-                        ad.changeListItem(i, mOrderByFields[i]);
-                    }
-                }
-                break;
             case DIALOG_CONTEXT_MENU:
                 HashMap<String, String> card = mCards.get(mPositionInCardsList);
                 int flags = Integer.parseInt(card.get("flags"));
@@ -1308,4 +1251,39 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         }
     }
 
+
+    public void changeDisplayOrder(int which) {
+        if (which != mOrder) {
+            mOrder = which;
+            mOrderAsc = false;
+            try {
+                if (mOrder == CARD_ORDER_NONE) {
+                    getCol().getConf().put("sortType", fSortTypes[1]);
+                    AnkiDroidApp.getSharedPrefs(getBaseContext()).edit()
+                            .putBoolean("cardBrowserNoSorting", true).commit();
+                } else {
+                    getCol().getConf().put("sortType", fSortTypes[mOrder]);
+                    AnkiDroidApp.getSharedPrefs(getBaseContext()).edit()
+                            .putBoolean("cardBrowserNoSorting", false).commit();
+                }
+                // default to descending for non-text fields
+                if (fSortTypes[mOrder].equals("noteFld")) {
+                    mOrderAsc = true;
+                }
+                getCol().getConf().put("sortBackwards", mOrderAsc);
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+            searchCards();
+        } else if (which != CARD_ORDER_NONE) {
+            mOrderAsc = !mOrderAsc;
+            try {
+                getCol().getConf().put("sortBackwards", mOrderAsc);
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+            Collections.reverse(mCards);
+            updateList();
+        }
+    }
 }
