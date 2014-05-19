@@ -23,31 +23,47 @@ import com.ichi2.anki.ReadText;
 @TargetApi(7)
 public class CompatV7 implements Compat {
 
-    @Override
-    public String normalizeUnicode(String txt) {
+
+    /*
+     *  Return the input string. Not doing the NFD normalization may cause problems with syncing media to Macs
+     *  where the file name contains diacritics, as file names are decomposed on HFS file systems.
+     *
+     * @param txt Text to be normalized
+     * @return The input text, not NFD normalized.
+    */
+    public String nfdNormalized(String txt) {
         return txt;
     }
 
 
-    @Override
+    /*
+     *  Return the input string. Not doing the NFC normalization may cause a typed answer to be displayed as
+     *  incorrect when it was correct, but stored in a differnt but equivalent form in the card. (E.g. umlauts
+     *  stored decomposed but typed as single characters.)
+     *
+     * @param txt Text to be normalized
+     * @return The input text not NFC normalized.
+    */
+    public String nfcNormalized(String txt) {
+        return txt;
+    }
+
+
     public void setScrollbarFadingEnabled(WebView webview, boolean enable) {
         webview.setScrollbarFadingEnabled(enable);
     }
 
 
-    @Override
     public void setOverScrollModeNever(View v) {
     }
 
 
-    @Override
     public void invalidateOptionsMenu(Activity activity) {
         ActionBarActivity actionBarActivity = (ActionBarActivity) activity;
         actionBarActivity.supportInvalidateOptionsMenu();
     }
 
 
-    @Override
     public void setActionBarBackground(Activity activity, int color) {
         ActionBarActivity actionBarActivity = (ActionBarActivity) activity;
         ActionBar actionBar = actionBarActivity.getSupportActionBar();
@@ -57,7 +73,6 @@ public class CompatV7 implements Compat {
     }
 
 
-    @Override
     public void setTitle(Activity activity, String title, boolean inverted) {
         ActionBarActivity actionBarActivity = (ActionBarActivity) activity;
         ActionBar actionBar = actionBarActivity.getSupportActionBar();
@@ -71,13 +86,11 @@ public class CompatV7 implements Compat {
     }
 
 
-    @Override
     public void setSubtitle(Activity activity, String title) {
         setSubtitle(activity, title, false);
     }
 
 
-    @Override
     public void setSubtitle(Activity activity, String title, boolean inverted) {
         ActionBarActivity actionBarActivity = (ActionBarActivity) activity;
         ActionBar actionBar = actionBarActivity.getSupportActionBar();
@@ -95,7 +108,6 @@ public class CompatV7 implements Compat {
     }
 
 
-    @Override
     public void setTtsOnUtteranceProgressListener(TextToSpeech tts) {
         tts.setOnUtteranceCompletedListener(new OnUtteranceCompletedListener() {
             @Override
@@ -109,17 +121,14 @@ public class CompatV7 implements Compat {
     }
 
 
-    @Override
     public void disableDatabaseWriteAheadLogging(SQLiteDatabase db) {
     }
 
 
-    @Override
     public void requestAudioFocus(AudioManager audioManager) {
     }
 
 
-    @Override
     public void abandonAudioFocus(AudioManager audioManager) {
     }
 
