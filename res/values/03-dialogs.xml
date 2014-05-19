@@ -76,7 +76,7 @@
     <string name="rebuild_custom_study_deck">Rebuilding custom study deck.\nPlease wait...</string>
     <string name="deck_upgrade_title">Deck Upgrade</string>
     <string name="deck_upgrade_rename_warning">Be aware that this will export your current collection to a file called \'%1$s\' and will create a new one from your old anki 1.x files. If desired, you can manually re-import the above apkg file after completing the wizard. Do you really want to continue?</string>
-    <string name="deck_upgrade_major_warning"><![CDATA[This is a major update to Ankidroid and the upgrade process will take at least 10-20 minutes.<br><br>Do you want to proceed now or later?<br><br><a href=\"http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en\">More info</a>]]></string>
+    <string name="deck_upgrade_major_warning"><![CDATA[This is a major update to Ankidroid and the upgrade process will take at least 10–20 minutes.<br><br>Do you want to proceed now or later?<br><br><a href=\"http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en\">More info</a>]]></string>
     <string name="deck_upgrade_start_again_to_upgrade_toast">Please start Ankidroid again when you have time to upgrade!</string>
     <string name="deck_upgrade_recommended_method"><![CDATA[The recommended upgrade method is to sync with a PC and upgrade with the desktop version of Anki.<br><br>There is also an alternative method where you can upgrade over the internet if you do not have access to a PC, and your collection is not too big.]]></string>
     <string name="deck_upgrade_more_options_exit">You can exit the upgrade wizard without importing your old cards by clicking the exit button below.</string>

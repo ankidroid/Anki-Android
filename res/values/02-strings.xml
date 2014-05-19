@@ -149,7 +149,7 @@
     <string name="import_log_error">Import failed</string>
     <string name="import_log_no_apkg">This is not a valid apkg file</string>
     <string name="import_importing">Importing cards.\nPlease wait...</string>
-    <string name="import_hint">To import cards, place the apkg file in directory %s and press ok</string>
+    <string name="import_hint">To import cards, place the apkg file in directory %s and press OK</string>
     <string name="upgrade_import_no_file_found">No importable %1$s file found</string>
     <string name="study_options">Options</string>
     <string name="custom_study">Custom Study</string>
