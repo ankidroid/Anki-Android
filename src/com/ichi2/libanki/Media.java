@@ -294,9 +294,8 @@ public class Media {
 
         Set<String> normrefs = new HashSet<String>();
         for (String f : allMedia()) {
-            if (AnkiDroidApp.SDK_VERSION > 9) {
-                f = AnkiDroidApp.getCompat().normalizeUnicode(f);
-            }
+            f = AnkiDroidApp.getCompat().nfdNormalized(f);
+            // N.B.: for API version <9 the normalization does not work.
             normrefs.add(f);
         }
         for (File file : mdir.listFiles()) {
@@ -308,9 +307,7 @@ public class Media {
                 continue;
             }
             String nfile = file.getName();
-            if (AnkiDroidApp.SDK_VERSION > 9) {
-                nfile = AnkiDroidApp.getCompat().normalizeUnicode(nfile);
-            }
+            nfile = AnkiDroidApp.getCompat().nfdNormalized(nfile);
             if (!normrefs.contains(nfile)) {
                 unused.add(file.getName());
             } else {

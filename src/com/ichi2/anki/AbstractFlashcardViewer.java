@@ -105,7 +105,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -804,10 +803,9 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         // A bit of clean-up.
         userAnswer = Utils.stripHTMLMedia(userAnswer).trim();
         correctAnswer = Utils.stripHTMLMedia(correctAnswer).trim();
-        if (AnkiDroidApp.SDK_VERSION > 8) {
-            userAnswer = Normalizer.normalize(userAnswer, Normalizer.Form.NFC);
-            correctAnswer = Normalizer.normalize(correctAnswer, Normalizer.Form.NFC);
-        }
+        userAnswer = AnkiDroidApp.getCompat().nfcNormalized(userAnswer);
+        correctAnswer = AnkiDroidApp.getCompat().nfcNormalized(correctAnswer);
+        // N.B. For API level <9 the NFC normalization is skipped. See also compat/CompatV[79].java.
         sb.append("<div");
         if (!mPrefWriteAnswers) {
             sb.append(" class=\"typeOff\"");

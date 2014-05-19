@@ -29,22 +29,23 @@ import android.webkit.WebView;
  * A set of implementations for the supported platforms are available.
  * <p>
  * Each implementation ends with a {@code V<n>} prefix, identifying the minimum API version on which this implementation
- * can be used. For example, see {@link CompatV5}.
+ * can be used. For example, see {@link CompatV8}.
  * <p>
  * Each implementation should extend the previous implementation and implement this interface.
  * <p>
  * Each implementation should only override the methods that first become available in its own version, use @Override.
  * <p>
- * Methods not supported by its api, will default to the empty implementations of CompatV4.
- * Methods first supported by lower APIs, will default to those implementations since we extended them.
+ * Methods not supported by its API will default to the empty implementations of CompatV7.  Methods first supported
+ * by lower APIs will default to those implementations since we extended them.
  * <p>
- * Example: CompatV9 extends CompatV5 as of the time of writing. This means that the normalizeUnicode method
- * that uses classes only available in API 9, should be implemented properly in CompatV9 with @Override annotatin.
- * On the other hand the method onAttachedToWindow that first becomes available in API 5 need not be implemented
- * again in CompatV9, unless the behaviour is supposed to be different there.
+ * Example: CompatV9 extends CompatV8. This means that the nfdNormalized function that uses classes only available
+ * in API 9, should be implemented properly in CompatV9 with @Override annotatin. On the other hand a method
+ * like requestAudioFocus that first becomes available in API 8 need not be implemented again in CompatV9, unless the
+ * behaviour is supposed to be different there.
  */
 public interface Compat {
-    public abstract String normalizeUnicode(String txt);
+    public abstract String nfdNormalized(String txt);
+    public abstract String nfcNormalized(String txt);
     public abstract void setScrollbarFadingEnabled(WebView webview, boolean enable);
     public abstract void setOverScrollModeNever(View v);
     public abstract void invalidateOptionsMenu(Activity activity);
