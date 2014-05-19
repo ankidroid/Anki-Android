@@ -1527,7 +1527,7 @@ public class StudyOptionsFragment extends Fragment {
                     });
                     mFullNewCountThread.start();
                 } else {
-                    mTextNewTotal.setText(totalNew);
+                    mTextNewTotal.setText(String.valueOf(totalNew));
                 }
                 mTextTotal.setText(String.valueOf(totalCards));
                 if (eta != -1) {
