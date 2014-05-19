@@ -27,7 +27,7 @@
     </plurals>
 
     <string name="card_browser_all_decks">All decks</string>
-    <string name="card_browser_load">Loading cards.\nPlease wait...</string>
+    <string name="card_browser_load">Loading cards…</string>
     <string name="card_browser_cardloading_error">Error on loading cards. This is probably related to your device\'s memory restrictions. Try again with a smaller deck</string>
     <string name="card_browser_delete_card">Delete note</string>
     <string name="card_browser_suspend_card">Suspend card</string>
@@ -62,8 +62,8 @@
     <string name="card_details_changed">Changed</string>
     <string name="card_details_tags">Tags</string>
     <string name="card_details_model">Note type</string>
-    <string name="card_browser_sorting_cards">Sorting cards.\nPlease wait...</string>
-    <string name="card_browser_filtering_cards">Filtering cards.\nPlease wait...</string>
+    <string name="card_browser_sorting_cards">Sorting cards…</string>
+    <string name="card_browser_filtering_cards">Filtering cards…</string>
     <string name="card_details_card_model">Card model</string>
 
     <string-array name="card_browser_order_labels">

@@ -1304,7 +1304,7 @@ public class DeckPicker extends ActionBarActivity {
         }
     }
 
-    
+
     /**
      * @return true if the device is a Nook
      */
@@ -1316,24 +1316,24 @@ public class DeckPicker extends ActionBarActivity {
             }
         }
         return false;
-    }    
-    
-    
+    }
+
+
     private void upgradePreferences(int previousVersionCode) {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         // when upgrading from before 2.1alpha08
         if (previousVersionCode < 20100108) {
             preferences.edit().putString("overrideFont", preferences.getString("defaultFont", "")).commit();
-            preferences.edit().putString("defaultFont", "").commit();            
+            preferences.edit().putString("defaultFont", "").commit();
         }
         // when upgrading from before 2.2alpha66
         if (previousVersionCode < 20200166) {
-            // change name from swipe to gestures            
+            // change name from swipe to gestures
             preferences.edit().putInt("swipeSensitivity", preferences.getInt("swipeSensibility", 100)).commit();
             preferences.edit().putBoolean("gestures", preferences.getBoolean("swipe", false)).commit();
             // set new safeDisplayMode preference based on old behavior
-            boolean safeDisplayMode = preferences.getBoolean("eInkDisplay", false) || isNookDevice() || 
-                    !preferences.getBoolean("forceQuickUpdate", false);            
+            boolean safeDisplayMode = preferences.getBoolean("eInkDisplay", false) || isNookDevice() ||
+                    !preferences.getBoolean("forceQuickUpdate", false);
             preferences.edit().putBoolean("safeDisplay", safeDisplayMode).commit();
             // set overrideFontBehavior based on old overrideFont settings
             String overrideFont = preferences.getString("overrideFont", "");
@@ -1344,7 +1344,7 @@ public class DeckPicker extends ActionBarActivity {
                 preferences.edit().putString("overrideFontBehavior", "0" ).commit();
             }
             // change typed answers setting from enable to disable
-            preferences.edit().putBoolean("writeAnswersDisable", !preferences.getBoolean("writeAnswers", true) ).commit();            
+            preferences.edit().putBoolean("writeAnswersDisable", !preferences.getBoolean("writeAnswers", true) ).commit();
         }
     }
 
@@ -1979,7 +1979,7 @@ public class DeckPicker extends ActionBarActivity {
                 });
                 dialog = builder.create();
                 break;
-                
+
             case DIALOG_CONFIRM_DATABASE_CHECK:
                 builder.setTitle(res.getString(R.string.check_db_title));
                 builder.setMessage(res.getString(R.string.check_db_confirm));
@@ -1990,9 +1990,9 @@ public class DeckPicker extends ActionBarActivity {
                     }
                 });
                 builder.setNegativeButton(res.getString(R.string.no), null);
-                builder.setCancelable(true);               
+                builder.setCancelable(true);
                 dialog = builder.create();
-                break;                
+                break;
 
             default:
                 dialog = null;
@@ -2284,7 +2284,7 @@ public class DeckPicker extends ActionBarActivity {
      * The mother of all syncing attempts. This might be called from sync() as first attempt to sync a collection OR
      * from the mSyncConflictResolutionListener if the first attempt determines that a full-sync is required. In the
      * second case, we have passed the mediaUsn that was obtained during the first attempt.
-     * 
+     *
      * @param syncConflictResolution Either "upload" or "download", depending on the user's choice.
      * @param syncMediaUsn The media Usn, as determined during the prior sync() attempt that determined that full
      *            syncing was required.
@@ -2673,9 +2673,13 @@ public class DeckPicker extends ActionBarActivity {
                 if (result.getBoolean()) {
                     StyledDialog dialog = (StyledDialog) onCreateDialog(DIALOG_OK);
                     dialog.setTitle(getResources().getString(R.string.check_db_title));
-                    dialog.setMessage(String.format(Utils.ENGLISH_LOCALE,
-                            getResources().getString(R.string.check_db_result_message),
-                            Math.round(result.getLong() / 1024.0)));
+                    double shrunk = Math.round(result.getLong() / 1024.0);
+                    if (shrunk > 0.0) {
+                        dialog.setMessage(String.format(Utils.ENGLISH_LOCALE,
+                                getResources().getString(R.string.check_db_result_message_shrunk), shrunk));
+                    } else {
+                        dialog.setMessage(getResources().getString(R.string.check_db_result_message));
+                    }
                     dialog.show();
                 } else {
                     handleDbError();
@@ -2767,7 +2771,7 @@ public class DeckPicker extends ActionBarActivity {
 
     /**
      * Programmatically click on a deck in the deck list.
-     * 
+     *
      * @param did The deck ID of the deck to select.
      */
     private void selectDeck(long did) {
@@ -2796,7 +2800,7 @@ public class DeckPicker extends ActionBarActivity {
      * <p>
      * Note that this method does not change the currently selected deck in the collection, only the highlighted deck in
      * the deck list. To select a deck, see {@link #selectDeck(long)}.
-     * 
+     *
      * @param did The deck ID of the deck to select.
      */
     public void setSelectedDeck(long did) {

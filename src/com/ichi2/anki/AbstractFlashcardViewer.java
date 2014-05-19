@@ -755,9 +755,9 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         }
         if (mTypeCorrect == null) {
             if (clozeIdx != 0) {
-                mTypeWarning = "Please run Tools>Maintenance>Empty Cards";
+                mTypeWarning = getResources().getString(R.string.empty_card_warning);
             } else {
-                mTypeWarning = "Type answer: unknown field " + fld;
+                mTypeWarning = getResources().getString(R.string.unknown_type_field_warning, fld);
             }
         } else if (mTypeCorrect.equals("")) {
             mTypeCorrect = null;

@@ -81,7 +81,7 @@
     <string name="more_scrolling_buttons">eReader</string>
     <string name="more_scrolling_buttons_summ">Also use Kanji/Katakana, Emoji/Kao-moji buttons for scrolling</string>
     <string name="double_scrolling_gap">Double scrolling</string>
-    <string name="double_scrolling_gap_summ">Enable this if you want to double the scroll gap with eReader</string>
+    <string name="double_scrolling_gap_summ">Double the scroll gap with eReader</string>
     <string name="swipe_sensitivity">Swipe sensitivity</string>
     <string name="swipe_sensitivity_summ">XXX</string>
     <string name="tts">Text to speech</string>
@@ -127,7 +127,7 @@
     <string name="pref_intent_add_instant">Instant add</string>
     <string name="pref_intent_add_instant_summ">Add new cards from dictionaries without opening AnkiDroid. You find them later under \'saved data\' in card adder</string>
     <string name="show_estimates">Show button time</string>
-    <string name="show_estimates_summ">Show next review time above answer buttons</string>
+    <string name="show_estimates_summ">Show next review time on the answer buttons</string>
     <string name="show_progress">Show remaining</string>
     <string name="show_progress_summ">Show remaining card count</string>
     <string name="use_current">Deck for new cards</string>

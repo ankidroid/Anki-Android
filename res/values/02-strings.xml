@@ -18,7 +18,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <string name="CardEditorCancelButton">Cancel</string>
     <string name="CardEditorSaveButton">Save</string>
@@ -32,7 +32,7 @@
     <string name="note_type">Note type</string>
     <string name="card_type">Card type</string>
     <string name="filter_tags">Filter tags</string>
-    <string name="sdcard_missing_message">SD card is unavailable because it is being used as USB storage. Disconnect USB to access your decks.</string>
+    <string name="sdcard_missing_message">Switch off USB storage to access your decks</string>
 
     <!-- Reviewer.java -->
     <string name="show_whiteboard">Show Whiteboard</string>
@@ -80,8 +80,8 @@
     <string name="add">Add</string>
     <string name="close">Close</string>
     <string name="select">Select</string>
-    <string name="saving_changes">Saving changes...</string>
-    <string name="reordering_cards">Reordering cards...</string>
+    <string name="saving_changes">Saving changes…</string>
+    <string name="reordering_cards">Reordering cards…</string>
 
     <plurals name="timebox_reached">
         <item quantity="one">1 card studied in %2$s</item>
@@ -104,7 +104,7 @@
     <string name="card_editor_reset_card">Reset progress</string>
     <string name="card_editor_preview_card">Preview</string>
     <string name="error_insufficient_memory">Operation not possible due to insufficient memory on your device</string>
-    <string name="tutorial_load">Creating tutorial deck.\nPlease wait...</string>
+    <string name="tutorial_load">Creating tutorial deck…</string>
     <string name="tutorial_loading_error">Tutorial deck could not be created</string>
     <string name="rename">Rename</string>
     <string name="rename_error">Deck %s could not be renamed</string>
@@ -120,9 +120,14 @@
     <string name="help_faq">FAQ</string>
     <string name="help_tutorial">Tutorial deck</string>
     <string name="check_db">Check database</string>
-    <string name="check_db_message">Checking database.\nPlease wait...</string>
-    <string name="simple_interface_hint">Empty %s. Bear in mind that simple interface cannot show pictures/sounds etc.</string>
-    <string name="delete_deck">Deleting deck...\nPlease wait.</string>
+    <string name="check_db_message">Checking database…</string>
+    <string
+        name="empty_card_warning"
+        tools:ignore="TypographyEllipsis">Empty card. Run \"Tools>Empty Cards...\" on the desktop client.</string>
+    <!-- The ... instead of … is cut-and-pasted from the desktop client, so keep that one. -->
+    <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
+    <string name="simple_interface_hint">Empty %s. Try switching off simple interface.</string>
+    <string name="delete_deck">Deleting deck…</string>
 
     <string-array name="dynOrderLabels">
         <item>Oldest seen first</item>
@@ -148,7 +153,7 @@
     <string name="import_log_success">Successfully imported %d cards</string>
     <string name="import_log_error">Import failed</string>
     <string name="import_log_no_apkg">This is not a valid apkg file</string>
-    <string name="import_importing">Importing cards.\nPlease wait...</string>
+    <string name="import_importing">Importing cards…</string>
     <string name="import_hint">To import cards, place the apkg file in directory %s and press OK</string>
     <string name="upgrade_import_no_file_found">No importable %1$s file found</string>
     <string name="study_options">Options</string>
@@ -158,11 +163,11 @@
     <string name="steps_error">Steps must be numbers greater than 0</string>
     <string name="steps_min_error">At least one step is required</string>
     <string name="custom_study_invalid_number">Invalid number</string>
-    <string name="template_error">Template error:</string>
-    <string name="template_error_detail">There is an error in the template of this card.</string>
-    <string name="template_error_fix">Please use the card editor on the desktop client to fix the error.</string>
+    <string name="template_error">Template error</string>
+    <string name="template_error_detail">The card template contains an error</string>
+    <string name="template_error_fix">Use the card editor on the desktop client to fix it.</string>
     <string name="sched_end">(end)</string>
     <string name="sched_unbury_button">To see them now, tap the Unbury button.</string>
-    <string name="sched_has_buried">Some related or buried cards were delayed until a later session.</string>
+    <string name="sched_has_buried">Some cards were delayed until tomorrow.</string>
 
 </resources>
