@@ -42,7 +42,7 @@
                 android:singleLine="true"
                 android:text="@string/widget_loading"
                 android:textColor="#000000"
-                android:textSize="18dip"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -78,7 +78,7 @@
                         android:singleLine="true"
                         android:text=""
                         android:textColor="#000000"
-                        android:textSize="18dip" />
+                        android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/anki_droid_status"
@@ -90,7 +90,7 @@
                         android:singleLine="true"
                         android:text=""
                         android:textColor="#777777"
-                        android:textSize="14dip" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <ImageView

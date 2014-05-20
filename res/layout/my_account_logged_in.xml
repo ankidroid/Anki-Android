@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:text="@string/logged_as"
             android:textColor="#000000"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/username_logged_in"
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="6dp"
             android:textColor="#000000"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textStyle="bold" />
     </LinearLayout>
 

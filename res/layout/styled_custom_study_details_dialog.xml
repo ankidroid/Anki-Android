@@ -33,7 +33,7 @@
         android:layout_marginRight="4dip"
         android:gravity="left"
         android:text=""
-        android:textSize="16dip" />
+        android:textSize="16sp" />
 
     <LinearLayout
         android:layout_width="fill_parent"

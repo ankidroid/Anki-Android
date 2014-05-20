@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:text=""
             android:textColor="@color/new_count"
-            android:textSize="14dip" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/learn_number"
@@ -52,7 +52,7 @@
             android:paddingLeft="8dp"
             android:text=""
             android:textColor="@color/learn_count"
-            android:textSize="14dip" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/review_number"
@@ -62,7 +62,7 @@
             android:paddingLeft="8dp"
             android:text=""
             android:textColor="@color/review_count"
-            android:textSize="14dip" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/choosen_answer"
@@ -71,7 +71,7 @@
             android:layout_centerHorizontal="true"
             android:gravity="center"
             android:text=""
-            android:textSize="14dip" />
+            android:textSize="14sp" />
 
         <Chronometer
             android:id="@+id/card_time"
@@ -80,7 +80,7 @@
             android:layout_alignParentRight="true"
             android:gravity="center"
             android:textColor="#000000"
-            android:textSize="14dip"
+            android:textSize="14sp"
             android:visibility="invisible" />
     </RelativeLayout>
     <!-- Card and whiteboard -->
