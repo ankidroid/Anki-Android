@@ -126,7 +126,7 @@ public class Feedback extends AnkiActivity {
         builder.setTitle(res.getString(R.string.connection_error_title));
         builder.setIcon(R.drawable.ic_dialog_alert);
         builder.setMessage(res.getString(R.string.connection_needed));
-        builder.setPositiveButton(res.getString(R.string.ok), new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(res.getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 mPostingFeedback = false;
@@ -369,7 +369,7 @@ public class Feedback extends AnkiActivity {
 
     /**
      * Delete the crash log files.
-     * 
+     *
      * @param onlyProcessed only delete the log files that have been sent.
      * @param keepLatest keep the latest log file. If the file has not been sent yet, it is not deleted even if this
      *            value is set to false.
@@ -562,7 +562,7 @@ public class Feedback extends AnkiActivity {
 
     /**
      * Posting feedback or error info to the server. This is called from the AsyncTask.
-     * 
+     *
      * @param url The url to post the feedback to.
      * @param type The type of the info, eg Feedback.TYPE_CRASH_STACKTRACE.
      * @param feedback For feedback types this is the message. For error/crash types this is the path to the error file.

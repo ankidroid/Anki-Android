@@ -20,12 +20,7 @@
 -->
 <resources>
 
-    <string name="btn_continue">Continue</string>
     <string name="app_name">AnkiDroid</string>
-    <string name="attention">Attention</string>
-    <string name="yes">Yes</string>
-    <string name="no">No</string>
-    <string name="ok">OK</string>
 
 <!-- <string name="studyoptions_title">Study Options</string> -->
     <string name="studyoptions_deck_name">Deck name</string>

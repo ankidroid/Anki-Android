@@ -749,7 +749,7 @@ public class Themes {
         }
         view.loadDataWithBaseURL("", text, "text/html", "UTF-8", "");
         builder.setView(view, true);
-        builder.setPositiveButton(context.getResources().getString(R.string.ok), okListener);
+        builder.setPositiveButton(context.getResources().getString(R.string.dialog_ok), okListener);
         builder.setCancelable(true);
         builder.setOnCancelListener(cancelListener);
         return builder.create();

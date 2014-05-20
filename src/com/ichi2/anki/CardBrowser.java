@@ -207,16 +207,17 @@ public class CardBrowser extends ActionBarActivity implements ActionBar.OnNaviga
                     builder.setIcon(R.drawable.ic_dialog_alert);
                     builder.setMessage(res.getString(R.string.delete_card_message, mCards.get(mPositionInCardsList)
                             .get("sfld")));
-                    builder.setPositiveButton(res.getString(R.string.yes), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Card card = mCol.getCard(Long.parseLong(mCards.get(mPositionInCardsList).get("id")));
-                            deleteNote(card);
-                            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDeleteNoteHandler,
-                                    new DeckTask.TaskData(mCol.getSched(), card, 3));
-                        }
-                    });
-                    builder.setNegativeButton(res.getString(R.string.no), null);
+                    builder.setPositiveButton(res.getString(R.string.dialog_positive_delete),
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Card card = mCol.getCard(Long.parseLong(mCards.get(mPositionInCardsList).get("id")));
+                                    deleteNote(card);
+                                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDeleteNoteHandler,
+                                                            new DeckTask.TaskData(mCol.getSched(), card, 3));
+                                }
+                            });
+                    builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
                     builder.create().show();
                     return;
 
@@ -351,7 +352,7 @@ public class CardBrowser extends ActionBarActivity implements ActionBar.OnNaviga
         });
         // get the font and font size from the preferences
         int sflRelativeFontSize = preferences.getInt("relativeCardBrowserFontSize", DEFAULT_FONT_SIZE_RATIO);
-        String sflCustomFont = preferences.getString("browserEditorFont", ""); 
+        String sflCustomFont = preferences.getString("browserEditorFont", "");
         // make a new list adapter mapping the data in mCards to column1 and column2 of R.layout.card_item_browser
         mCardsAdapter = new MultiColumnListAdapter(
                 this,
@@ -682,7 +683,7 @@ public class CardBrowser extends ActionBarActivity implements ActionBar.OnNaviga
                         searchCards();
                     }
                 });
-                builder.setNegativeButton(res.getString(R.string.cancel), new OnClickListener() {
+                builder.setNegativeButton(res.getString(R.string.dialog_cancel), new OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         mSelectedTags.clear();
@@ -872,7 +873,7 @@ public class CardBrowser extends ActionBarActivity implements ActionBar.OnNaviga
             // update tags
             if (updatedCardTags != null) {
                 mCards.get(pos).put("tags", updatedCardTags);
-            }           
+            }
             // update sfld
             String sfld = note.getSFld();
             mCards.get(pos).put("sfld", sfld);
@@ -892,7 +893,7 @@ public class CardBrowser extends ActionBarActivity implements ActionBar.OnNaviga
         }
         updateList();
     }
-    
+
 
     public static void updateSearchItemQA(HashMap<String, String> item, Card c) {
         // render question and answer
@@ -932,7 +933,7 @@ public class CardBrowser extends ActionBarActivity implements ActionBar.OnNaviga
         s = Utils.stripHTMLMedia(s);
         s = s.trim();
         return s;
-    }    
+    }
 
 
     private void deleteNote(Card card) {

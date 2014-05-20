@@ -95,7 +95,7 @@ public class ReadText {
             builder.setTitle(res.getString(R.string.no_tts_available_title));
             builder.setMessage(res.getString(R.string.no_tts_available_message));
             builder.setIcon(R.drawable.ic_dialog_alert);
-            builder.setPositiveButton(res.getString(R.string.ok), null);
+            builder.setPositiveButton(res.getString(R.string.dialog_ok), null);
         } else {
             ArrayList<CharSequence> dialogItems = new ArrayList<CharSequence>();
             final ArrayList<String> dialogIds = new ArrayList<String>();

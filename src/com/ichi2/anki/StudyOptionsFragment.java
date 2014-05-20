@@ -193,7 +193,7 @@ public class StudyOptionsFragment extends Fragment {
     public Bundle mCramInitialConfig = null;
 
     private boolean mFragmented;
-    
+
     private Thread mFullNewCountThread = null;
 
     /**
@@ -996,7 +996,7 @@ public class StudyOptionsFragment extends Fragment {
                                 Consts.DYN_RANDOM }, false);
                     }
                 });
-                builder1.setNegativeButton(res.getString(R.string.cancel), new OnClickListener() {
+                builder1.setNegativeButton(res.getString(R.string.dialog_cancel), new OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         mTagsDialog.setItemListChecked(false);
@@ -1026,8 +1026,8 @@ public class StudyOptionsFragment extends Fragment {
                  */
                 builder1.setContentView(mCustomStudyDetailsView);
                 builder1.setCancelable(true);
-                builder1.setNegativeButton(R.string.cancel, null);
-                builder1.setPositiveButton(R.string.ok, null);
+                builder1.setNegativeButton(R.string.dialog_cancel, null);
+                builder1.setPositiveButton(R.string.dialog_ok, null);
                 dialog = builder1.create();
                 break;
 
@@ -1095,12 +1095,13 @@ public class StudyOptionsFragment extends Fragment {
                     if (cur.getInt("dyn") != 1) {
                         StyledDialog.Builder builder = new StyledDialog.Builder(getActivity());
                         builder.setMessage(R.string.custom_study_deck_exists);
-                        builder.setNegativeButton(getResources().getString(R.string.cancel), new OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                //
-                            }
-                        });
+                        builder.setNegativeButton(getResources().getString(R.string.dialog_cancel),
+                                new OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        //
+                                    }
+                                });
                         builder.create().show();
                         return;
                     } else {
@@ -1495,7 +1496,7 @@ public class StudyOptionsFragment extends Fragment {
                 // } else {
                 mTextTodayRev.setText(String.valueOf(revCards));
                 // }
-                 
+
                 if (totalNew == 1000) { // TODO do not hardcode this number defined in Sched
                     // there may be >1000, let's make a thread to allow them to load
                     mTextNewTotal.setText(">1000");

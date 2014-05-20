@@ -80,7 +80,6 @@
     <string name="sync_conflict_remote">Download</string>
     <string name="sync_conflict_remote_confirm">Overwrite your local collection?</string>
     <string name="sync_conflict_local_confirm">Overwrite your collection on the server?</string>
-    <string name="sync_conflict_cancel">Cancel Syncing</string>
     <string name="sync_prepare_syncing">Preparing syncing…</string>
     <string name="sync_preparing_full_sync_message">Preparing full sync…</string>
     <string name="sync_uploading_message">Uploading…</string>
@@ -121,7 +120,7 @@
     <string name="sync_media_to_server">Sending media to server…</string>
     <string name="sync_media_sanity_check">Checking media counts…</string>
     <string name="sync_media_no_changes">No changes to media files</string>
-    <string name="sync_media_success">Media synced successfully</string>
+    <string name="sync_media_success">Media synced</string>
     <string name="sync_sanity_failed">After syncing, the collection was in an inconsistent state. To fix this problem, AnkiDroid will force a full sync. Choose which side you would like to keep.</string>
     <string name="sync_media_sanity_failed">Media sync completed, but the media count doesn\'t agree with the server. The next media sync will be full to correct any error.</string>
     <string name="sync_media_error">Error syncing media data</string>

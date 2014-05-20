@@ -1442,14 +1442,14 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         builder.setIcon(R.drawable.ic_dialog_alert);
         builder.setMessage(String.format(res.getString(R.string.delete_note_message),
                 Utils.stripHTML(mCurrentCard.q(true))));
-        builder.setPositiveButton(res.getString(R.string.yes), new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(res.getString(R.string.dialog_positive_delete), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
                         mSched, mCurrentCard, 3));
             }
         });
-        builder.setNegativeButton(res.getString(R.string.no), null);
+        builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
         dialog = builder.create();
         dialog.show();
     }

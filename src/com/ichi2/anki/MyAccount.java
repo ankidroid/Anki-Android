@@ -265,19 +265,19 @@ public class MyAccount extends AnkiActivity {
         builder.setTitle(res.getString(R.string.connection_error_title));
         builder.setIcon(R.drawable.ic_dialog_alert);
         builder.setMessage(res.getString(R.string.connection_needed));
-        builder.setPositiveButton(res.getString(R.string.ok), null);
+        builder.setPositiveButton(res.getString(R.string.dialog_ok), null);
         mNoConnectionAlert = builder.create();
 
         builder.setTitle(res.getString(R.string.register_title));
         builder.setIcon(R.drawable.ic_dialog_alert);
         builder.setMessage(res.getString(R.string.register_error));
-        builder.setPositiveButton(res.getString(R.string.ok), null);
+        builder.setPositiveButton(res.getString(R.string.dialog_ok), null);
         mErrorAlert = builder.create();
 
         builder.setTitle(res.getString(R.string.register_title));
         builder.setIcon(R.drawable.ic_dialog_alert);
         builder.setMessage(res.getString(R.string.register_mismatch));
-        builder.setPositiveButton(res.getString(R.string.ok), new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(res.getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -293,7 +293,7 @@ public class MyAccount extends AnkiActivity {
         builder.setTitle(res.getString(R.string.log_in));
         builder.setIcon(R.drawable.ic_dialog_alert);
         builder.setMessage(res.getString(R.string.invalid_username_password));
-        builder.setPositiveButton(res.getString(R.string.ok), null);
+        builder.setPositiveButton(res.getString(R.string.dialog_ok), null);
         mInvalidUserPassAlert = builder.create();
 
         builder = new StyledDialog.Builder(this);
@@ -307,7 +307,7 @@ public class MyAccount extends AnkiActivity {
                 login();
             }
         });
-        builder.setNegativeButton(res.getString(R.string.cancel), null);
+        builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
         mConnectionErrorAlert = builder.create();
     }
 
