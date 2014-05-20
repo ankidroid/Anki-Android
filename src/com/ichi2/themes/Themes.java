@@ -784,7 +784,7 @@ public class Themes {
 
     public static void setStyledDialogBackgrounds(View main) {
         int buttonCount = 0;
-        for (int id : new int[] { R.id.button1, R.id.button2, R.id.button3 }) {
+        for (int id : new int[] { R.id.positive_button, R.id.negative_button, R.id.neutral_button }) {
             if (main.findViewById(id).getVisibility() == View.VISIBLE) {
                 buttonCount++;
             }
