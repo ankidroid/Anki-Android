@@ -14,6 +14,7 @@ import android.text.SpannableStringBuilder;
 import android.text.style.CharacterStyle;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.webkit.WebView;
 
 import com.ichi2.anki.R;
@@ -132,4 +133,7 @@ public class CompatV7 implements Compat {
     public void abandonAudioFocus(AudioManager audioManager) {
     }
 
+    public int parentLayoutSize() {
+        return LayoutParams.FILL_PARENT;
+    }
 }

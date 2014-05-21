@@ -57,4 +57,5 @@ public interface Compat {
     public abstract void disableDatabaseWriteAheadLogging(SQLiteDatabase db);
     public abstract void requestAudioFocus(AudioManager audioManager);
     public abstract void abandonAudioFocus(AudioManager audioManager);
+    public abstract int parentLayoutSize();
 }

@@ -4,6 +4,7 @@ package com.ichi2.compat;
 import android.annotation.TargetApi;
 import android.media.AudioManager;
 import android.media.AudioManager.OnAudioFocusChangeListener;
+import android.view.ViewGroup.LayoutParams;
 
 /** Implementation of {@link Compat} for SDK level 8 */
 @TargetApi(8)
@@ -30,4 +31,8 @@ public class CompatV8 extends CompatV7 implements Compat {
         audioManager.abandonAudioFocus(afChangeListener);
     }
 
+    @Override
+    public int parentLayoutSize() {
+        return LayoutParams.MATCH_PARENT;
+    }
 }
