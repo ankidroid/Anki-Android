@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
@@ -76,7 +79,8 @@
             android:layout_weight="1"
             android:gravity="center"
             android:singleLine="true"
-            android:text="@string/sign_up" />
+            android:text="@string/sign_up"
+            tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/cancel_button"
@@ -86,7 +90,8 @@
             android:layout_weight="1"
             android:gravity="center"
             android:singleLine="true"
-            android:text="@string/cancel" />
+            android:text="@string/cancel"
+            tools:ignore="ButtonStyle" />
     </LinearLayout>
 
     <TextView
