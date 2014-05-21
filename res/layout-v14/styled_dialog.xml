@@ -210,7 +210,8 @@
             android:orientation="horizontal"
             android:paddingLeft="2dip"
             android:paddingRight="2dip"
-            android:paddingTop="2dip" >
+            android:paddingTop="2dip"
+            style="?android:attr/buttonBarStyle" >
 
             <!-- android:useLargestChild="true" -->
 
@@ -223,7 +224,7 @@
 
             <Button
                 android:id="@+id/negative_button"
-                style="?android:attr/buttonStyleSmall"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dip"
                 android:layout_height="fill_parent"
                 android:layout_gravity="right"
@@ -233,7 +234,7 @@
 
             <Button
                 android:id="@+id/positive_button"
-                style="?android:attr/buttonStyleSmall"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dip"
                 android:layout_height="fill_parent"
                 android:layout_gravity="left"
@@ -243,7 +244,7 @@
 
             <Button
                 android:id="@+id/neutral_button"
-                style="?android:attr/buttonStyleSmall"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dip"
                 android:layout_height="fill_parent"
                 android:layout_gravity="center_horizontal"

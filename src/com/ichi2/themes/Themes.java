@@ -842,7 +842,8 @@ public class Themes {
                 Log.e(AnkiDroidApp.TAG, "setStyledDialogBackgrounds - OutOfMemoryError occured: " + e);
                 buttonPanel.setBackgroundResource(R.color.white);
             }
-            if (buttonNumbers > 1) {
+            if (buttonNumbers > 1 || AnkiDroidApp.SDK_VERSION > 13) {
+                // Starting at API 14, the dialog looks quite different, and these spacers are in the way.
                 main.findViewById(R.id.rightSpacer).setVisibility(View.GONE);
                 main.findViewById(R.id.leftSpacer).setVisibility(View.GONE);
             }
