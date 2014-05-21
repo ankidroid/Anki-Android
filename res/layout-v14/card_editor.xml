@@ -33,7 +33,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/CardEditorCancelButton" />
+                android:text="@string/dialog_cancel" />
 
             <Button
                 android:id="@+id/CardEditorSaveButton"
@@ -43,7 +43,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/CardEditorSaveButton" />
+                android:text="@string/dialog_positive_save" />
 
             <Button
                 android:id="@+id/CardEditorLaterButton"
@@ -53,7 +53,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/CardEditorLaterButton"
+                android:text="@string/dialog_neutral_later"
                 android:visibility="gone" />
         </LinearLayout>
 

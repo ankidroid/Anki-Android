@@ -27,11 +27,11 @@
     <string name="multimedia_editor_languages_english">English</string>
 
     <!-- Main editor popup menu items -->
-    <string name="multimedia_editor_popup_image">Add Image</string>
-    <string name="multimedia_editor_popup_audio">Record Audio</string>
-    <string name="multimedia_editor_popup_text">Advanced Editor</string>
-    
-    <!-- Translation Activity (Glosbe) -->
+    <string name="multimedia_editor_popup_image">Add image</string>
+    <string name="multimedia_editor_popup_audio">Record audio</string>
+    <string name="multimedia_editor_popup_text">Advanced editor</string>
+
+    <!-- Translation activity (Glosbe) -->
     <string name="multimedia_editor_trans_poweredglosbe">Powered by glosbe.com</string>
     <!-- these are like translate f r o m  and t o  some othe languages -->
     <string name="multimedia_editor_trans_from">From</string>
@@ -50,14 +50,14 @@
     <!-- dialog asking to install ColorDict -->
     <string name="multimedia_editor_trans_install_color_dict">Install ColorDict first</string>
 
-    <!-- Pronunciation Activity (Beolingus) -->
+    <!-- Pronunciation activity (Beolingus) -->
     <string name="multimedia_editor_pron_load">Load</string>
     <string name="multimedia_editor_pron_looking_up">Looking up pronunciation</string>
     <!-- in controller when fails -->
     <string name="multimedia_editor_pron_pronunciation_failed">Pronunciation failed</string>
     <string name="multimedia_editor_word_search_try_lower_case">Try using only lower case characters</string>
 
-    <!-- Image Search Activity -->
+    <!-- Image search activity -->
     <!-- in progress dialog when loading the image -->
     <string name="multimedia_editor_imgs_saving_image">Saving image</string>
     <string name="multimedia_editor_imgs_loading_image">Loading image</string>
@@ -73,14 +73,14 @@
     <!-- while searching -->
     <string name="multimedia_editor_imgs_searching_for_images">Searching for images</string>
 
-    <!-- Field Editing General -->
+    <!-- Field editing general -->
     <!-- these are button names to convert field type -->
     <string name="multimedia_editor_field_editing_text">Text</string>
     <string name="multimedia_editor_field_editing_image">Image</string>
     <string name="multimedia_editor_field_editing_audio">Audio</string>
     <string name="multimedia_editor_field_editing_done">Done</string>
 
-    <!-- Text Field Editing -->
+    <!-- Text field editing -->
     <!-- buttons -->
     <string name="multimedia_editor_text_field_editing_search_label">Search for:</string>
     <string name="multimedia_editor_text_field_editing_show">Image</string>
@@ -94,7 +94,7 @@
     <!-- message when cloning -->
     <string name="multimedia_editor_text_field_editing_clone_source">Take from</string>
 
-    <!-- Multimedia Card Editor Activity -->
+    <!-- Multimedia card editor activity -->
     <!-- for buttons -->
     <string name="multimedia_editor_activity_note_type">Note type</string>
     <string name="multimedia_editor_activity_deck">Deck</string>
@@ -105,7 +105,7 @@
     <string name="multimedia_editor_activity_delete_confirm">Delete</string>
     <string name="multimedia_editor_activity_delete_reject">Keep</string>
 
-    <!-- Image Editing -->
+    <!-- Image editing -->
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">Gallery</string>
     <string name="multimedia_editor_image_field_editing_photo">Camera</string>
@@ -126,18 +126,18 @@
     <!-- General -->
     <string name="multimedia_editor_progress_wait_title">Wait</string>
     <!-- not a good message, when an unexpected error happens -->
-    <string name="multimedia_editor_something_wrong">Sorry, something went wrong</string>
+    <string name="multimedia_editor_something_wrong">Something went wrong</string>
 
-    <!-- Audio View -->
+    <!-- Audio view -->
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">Recording failed</string>
     <string name="multimedia_editor_audio_view_playing_failed">Playing failed</string>
 
-    <!-- Activity Titles -->
+    <!-- Activity titles -->
 
-    <string name="title_activity_edit_text">Editing Field</string>
+    <string name="title_activity_edit_text">Editing field</string>
     <string name="title_activity_translation">Translation</string>
-    <string name="title_activity_audio_recorder">Audio Recorder</string>
+    <string name="title_activity_audio_recorder">Audio recorder</string>
     <string name="title_activity_load_pronounciation">Pronunciation</string>
     <string name="title_activity_search_image">Google Image Search</string>
 

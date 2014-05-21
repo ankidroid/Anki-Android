@@ -22,13 +22,13 @@
 
     <string name="app_name">AnkiDroid</string>
 
-<!-- <string name="studyoptions_title">Study Options</string> -->
+<!-- <string name="studyoptions_title">Study options</string> -->
     <string name="studyoptions_deck_name">Deck name</string>
     <string name="studyoptions_due_today">Due today:</string>
     <string name="studyoptions_new_total">Total new cards:</string>
     <string name="studyoptions_total_cards">Total cards:</string>
     <string name="studyoptions_eta">Estimated time (min):</string>
-    <string name="studyoptions_start">Study Now</string>
+    <string name="studyoptions_start">Study</string>
 
     <!-- DeckPicker.java -->
     <plurals name="deckpicker_title">
@@ -50,9 +50,9 @@
 
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Type answer</string>
-    <string name="show_answer">Show Answer</string>
+    <string name="show_answer">Show answer</string>
     <!--
-<string name="show_question">Re-display Question</string>
+<string name="show_question">Re-display question</string>
 <string name="card_hint">Flashcard</string>
     -->
     <string name="ease1_successive">Again</string>
@@ -61,8 +61,8 @@
     <string name="ease3_learning">Easy</string>
     <string name="studyoptions_congrats_undo">Undo %s</string>
     <string name="studyoptions_congrats_unbury">Unbury</string>
-    <string name="studyoptions_congrats_custom_study">Custom Study</string>
-    <string name="studyoptions_congrats_open_other_deck">Open Other Deck</string>
+    <string name="studyoptions_congrats_custom_study">Custom study</string>
+    <string name="studyoptions_congrats_open_other_deck">Open other deck</string>
     <string name="card_unsuspended">Card suspension undone</string>
     <string name="card_suspended">Card resuspended</string>
     <string name="menu_rotate">Rotate</string>
@@ -78,12 +78,12 @@
     <string name="unbury">Unbury</string>
     <string name="finish_operation">Finishing previous operation (most likely backup creation)…</string>
     <string name="contextmenu_deckpicker_download_missing_media">Download missing media</string>
-    <string name="contextmenu_deckpicker_reset_language_assignments">Reset Language Assignments</string>
+    <string name="contextmenu_deckpicker_reset_language_assignments">Reset language assignments</string>
     <string name="contextmenu_deckpicker_reset_reset_message">Language reset</string>
     <string name="contextmenu_deckpicker_optimize_deck">Optimize database</string>
     <string name="contextmenu_deckpicker_rename_deck">Rename deck</string>
-    <string name="contextmenu_deckpicker_collapse_deck">Hide Subdecks</string>
-    <string name="contextmenu_deckpicker_inflate_deck">Show Subdecks</string>
+    <string name="contextmenu_deckpicker_collapse_deck">Hide subdecks</string>
+    <string name="contextmenu_deckpicker_inflate_deck">Show subdecks</string>
     <string name="contextmenu_deckpicker_set_custom_dictionary">Set custom dictionary</string>
     <string name="menu_add">Add</string>
     <string name="menu_add_note">Add note</string>
@@ -92,26 +92,26 @@
     <!-- <string name="menu_synchronize">Synchronize</string> -->
     <string name="menu_my_account">Sync account</string>
     <string name="menu_preferences">Preferences</string>
-    <!-- <string name="menu_deck_properties">Deck Properties</string> -->
+    <!-- <string name="menu_deck_properties">Deck properties</string> -->
     <string name="menu_about">About</string>
-    <string name="menu_dismiss_note">Dismiss Note…</string>
-    <string name="menu_bury_card">Bury Card</string>
-    <string name="menu_bury_note">Bury Note</string>
-    <string name="menu_suspend_card">Suspend Card</string>
-    <string name="menu_suspend_note">Suspend Note</string>
-    <string name="menu_delete_note">Delete Note</string>
+    <string name="menu_dismiss_note">Dismiss note…</string>
+    <string name="menu_bury_card">Bury card</string>
+    <string name="menu_bury_note">Bury note</string>
+    <string name="menu_suspend_card">Suspend card</string>
+    <string name="menu_suspend_note">Suspend note</string>
+    <string name="menu_delete_note">Delete note</string>
     <string name="delete_note_message">Really delete this note and all its cards?\n%s</string>
-    <string name="menu_edit_card">Edit Card</string>
+    <string name="menu_edit_card">Edit card</string>
     <string name="menu_select">Select text</string>
     <string name="menu_search">Lookup in %1$s</string>
-    <string name="menu_mark_card">Mark Card</string>
-    <string name="menu_unmark_card">Unmark Card</string>
+    <string name="menu_mark_card">Mark card</string>
+    <string name="menu_unmark_card">Unmark card</string>
     <string name="new_deck">Create deck</string>
     <string name="create">Create</string>
     <string name="new_dynamic_deck">Create filtered deck</string>
     <string name="studyoptions_feedback">Feedback</string>
     <string name="studyoptions_load_tutorial_deck">Create tutorial</string>
-    <!-- <string name="studyoptions_load_sample_deck">Load Sample Deck</string> -->
+    <!-- <string name="studyoptions_load_sample_deck">Load sample deck</string> -->
     <string name="night_mode">Night mode</string>
 
     <string-array name="next_review_s">
@@ -139,12 +139,12 @@
     <string name="rebuild_cram_label">Rebuild</string>
     <string name="empty_cram_label">Empty</string>
     <string name="empty_cram_deck">Emptying cram deck…</string>
-    <string name="custom_study_deck_name">Custom Study Session</string>
-    <string name="custom_study_deck_exists">Rename the existing Custom Study deck first</string>
+    <string name="custom_study_deck_name">Custom study session</string>
+    <string name="custom_study_deck_exists">Rename the existing custom study deck first</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_congrats_more_rev">Today\'s limit has been reached, but there are still cards to review.  You can increase the limit in the options.</string>
     <string name="studyoptions_congrats_more_new">Today\'s limit has been reached. There are more new cards available; you can increase the limit in the options, but this will increase your short-term review workload.</string>
-    <string name="studyoptions_congrats_custom">To study outside of the normal schedule, click the Custom Study button below</string>
+    <string name="studyoptions_congrats_custom">To study outside of the normal schedule, click the \"Custom study\" button below</string>
 
     <plurals name="studyoptions_congrats_message">
         <item quantity="one">Tomorrow there will be: 1 card to review and %2$s.\n Estimated time: %3$s</item>
@@ -159,14 +159,14 @@
         <item quantity="other">Estimated time: %1$d min.</item>
     </plurals>
 
-    <string name="sd_card_not_mounted">SD card is not mounted.\n\nYou can store your collection in the internal memory too, though it\'s not recommended as you cannot access the file that easily. You can activate this in the preferences (open them by clicking this text).</string>
+    <string name="sd_card_not_mounted">SD card not mounted.\n\nYou can store your collection in the internal memory too, though it\'s not recommended as you cannot access the file that easily. You can activate this in the preferences (open them by clicking this text).</string>
     <string name="studyoptions_options">Options</string>
-    <string name="empty_cloze_warning">Please edit this note and add some cloze deletions. (%1$s)</string>
+    <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
     <string name="help_cloze">help</string>
     <string name="button_sync">Sync</string>
     <string name="restart">Restart</string>
     <string name="do_nothing">Do nothing</string>
-    <string name="more_options">More Options</string>
+    <string name="more_options">More options</string>
     <string name="now">Now</string>
     <string name="back">Back</string>
     <string name="ankiweb">AnkiWeb</string>

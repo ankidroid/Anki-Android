@@ -20,34 +20,31 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <string name="CardEditorCancelButton">Cancel</string>
-    <string name="CardEditorSaveButton">Save</string>
-    <string name="CardEditorLaterButton">Later</string>
     <string name="CardEditorLaterMessage">Saved information for later</string>
     <string name="CardEditorCardDeck">Card deck: %s</string>
     <string name="CardEditorNoteDeck">Note deck: %s</string>
     <string name="CardEditorModel">Note type: %s</string>
     <string name="CardEditorTags">Tags: %1$s</string>
-    <string name="add_new_filter_tags">Add/Filter tags</string>
+    <string name="add_new_filter_tags">Add/filter tags</string>
     <string name="note_type">Note type</string>
     <string name="card_type">Card type</string>
     <string name="filter_tags">Filter tags</string>
     <string name="sdcard_missing_message">Switch off USB storage to access your decks</string>
 
     <!-- Reviewer.java -->
-    <string name="show_whiteboard">Show Whiteboard</string>
-    <string name="hide_whiteboard">Hide Whiteboard</string>
-    <string name="clear_whiteboard">Clear Whiteboard</string>
+    <string name="show_whiteboard">Show whiteboard</string>
+    <string name="hide_whiteboard">Hide whiteboard</string>
+    <string name="clear_whiteboard">Clear whiteboard</string>
     <string name="replay_audio">Replay audio</string>
     <string name="cram_edit_warning">Card editing not allowed while cramming</string>
-    <string name="suspend_leeches">Suspend Leeches</string>
+    <string name="suspend_leeches">Suspend leeches</string>
     <string name="leech_suspend_notification">Card marked as leech and suspended</string>
     <string name="leech_notification">Card marked as leech</string>
     <string name="corrupt_font">Corrupt font file %s</string>
 
     <!-- Browser -->
     <string-array name="browser_column1_headings">
-        <item>Search Field</item>
+        <item>Search field</item>
     </string-array>
     <string-array name="browser_column2_headings">
         <item>Answer</item>
@@ -68,11 +65,11 @@
         -->
     </string-array>
 
-    <!-- Card Editor -->
+    <!-- Card editor -->
     <string name="about_title">About</string>
-    <string name="cardeditor_title_add_note">Add Note</string>
-    <string name="cardeditor_title_edit_card">Edit Note</string>
-    <!-- <string name="factadder_title">Card Adder</string> -->
+    <string name="cardeditor_title_add_note">Add note</string>
+    <string name="cardeditor_title_edit_card">Edit note</string>
+    <!-- <string name="factadder_title">Card adder</string> -->
     <string name="factadder_saving_error">Error saving note</string>
     <string name="pref_lang_support">Language</string>
     <string name="saving_facts">Saving note</string>
@@ -93,10 +90,10 @@
     </plurals>
 
     <string name="studyoptions_welcome_title">Welcome to AnkiDroid</string>
-    <string name="studyoptions_no_external_storage_title">No External Storage Available</string>
+    <string name="studyoptions_no_external_storage_title">No external storage available</string>
     <string name="studyoptions_no_external_storage_message">No external storage is currently available. AnkiDroid needs to have access to the SD card in order to read and load your Anki decks. Check that your SD card is mounted and try again.</string>
-    <string name="fact_adder_intent_title">AnkiDroid Card</string>
-    <string name="deckpicker_select_dictionary_title">Select Dictionary</string>
+    <string name="fact_adder_intent_title">AnkiDroid card</string>
+    <string name="deckpicker_select_dictionary_title">Select dictionary</string>
     <string name="deckpicker_select_dictionary_default">Default</string>
     <string name="card_editor_add_card">Add note</string>
     <string name="card_editor_reset">Reset</string>
@@ -140,12 +137,12 @@
     </string-array>
 
     <string name="menu_cardbrowser">Card browser</string>
-    <string name="show_hint">Show Hint</string>
-    <string name="pref_lang_other">Language Preferences</string>
-    <string name="pref_font_UI">Custom UI Font</string>
+    <string name="show_hint">Show hint</string>
+    <string name="pref_lang_other">Language preferences</string>
+    <string name="pref_font_UI">Custom UI font</string>
     <string name="info_rate">Rate AnkiDroid</string>
     <string name="col_load_failed">Collection loading failed.\nPress back to close AnkiDroid.</string>
-    <string name="import_title">Import Cards</string>
+    <string name="import_title">Import cards</string>
     <string name="import_message">Add content of file %s to your collection or replace your collection with it?</string>
     <string name="import_message_add">Add</string>
     <string name="import_message_replace">Replace</string>
@@ -154,10 +151,10 @@
     <string name="import_log_error">Import failed</string>
     <string name="import_log_no_apkg">This is not a valid apkg file</string>
     <string name="import_importing">Importing cards…</string>
-    <string name="import_hint">Place the apkg file in directory %s and press OK to import cards</string>
+    <string name="import_hint">Place the apkg file in directory %s and press \"OK\" to import cards</string>
     <string name="upgrade_import_no_file_found">No importable %1$s file found</string>
     <string name="study_options">Options</string>
-    <string name="custom_study">Custom Study</string>
+    <string name="custom_study">Custom study</string>
     <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
     <string name="exit_wizard">Exit Wizard</string>
     <string name="steps_error">Steps must be numbers greater than 0</string>
@@ -167,7 +164,7 @@
     <string name="template_error_detail">The card template contains an error</string>
     <string name="template_error_fix">Use the card editor on the desktop client to fix it.</string>
     <string name="sched_end">(end)</string>
-    <string name="sched_unbury_button">To see them now, tap the Unbury button.</string>
+    <string name="sched_unbury_button">To see them now, tap the \"Unbury\" button.</string>
     <string name="sched_has_buried">Some cards were delayed until tomorrow.</string>
 
 </resources>
