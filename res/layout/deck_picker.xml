@@ -31,7 +31,8 @@
             android:layout_width="0dip"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:src="@drawable/studyoptions_add" />
+            android:src="@drawable/studyoptions_add"
+            android:contentDescription="@string/add_button_content" />
 
         <ImageButton
             android:id="@+id/deckpicker_card_browser"
@@ -39,7 +40,8 @@
             android:layout_width="0dip"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:src="@drawable/studyoptions_cards" />
+            android:src="@drawable/studyoptions_cards"
+            android:contentDescription="@string/card_browser_button_content" />
 
         <ImageButton
             android:id="@+id/statistics_all_button"
@@ -47,7 +49,8 @@
             android:layout_width="0dip"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:src="@drawable/studyoptions_stats" />
+            android:src="@drawable/studyoptions_stats"
+            android:contentDescription="@string/statistics_button_content" />
     </LinearLayout>
 
 </RelativeLayout>
