@@ -263,8 +263,8 @@ public class Info extends ActionBarActivity {
                 setTitle(R.string.deck_upgrade_title);
                 sb.append("<html><body>");
 
-                // add upgrade button
-                Button but = (Button) findViewById(R.id.info_tutorial);
+                // add "later" button
+                Button but = (Button) findViewById(R.id.info_later);
                 but.setVisibility(View.VISIBLE);
 
                 // add sync button
@@ -277,7 +277,6 @@ public class Info extends ActionBarActivity {
                 switch (mUpgradeStage) {
                     case UPGRADE_SCREEN_BASIC1:
                         sb.append(getString(R.string.deck_upgrade_major_warning));
-                        but.setText(R.string.later);
                         but.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View arg0) {
