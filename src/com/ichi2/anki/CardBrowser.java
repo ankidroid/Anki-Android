@@ -235,7 +235,7 @@ public class CardBrowser extends ActionBarActivity implements ActionBar.OnNaviga
 
 
     private void onSearch() {
-        mSearchTerms = mSearchView.getQuery().toString().toLowerCase();
+        mSearchTerms = mSearchView.getQuery().toString();
         if (mSearchTerms.length() == 0) {
             mSearchView.setQueryHint(getResources().getString(R.string.downloaddeck_search));
         }
@@ -572,7 +572,9 @@ public class CardBrowser extends ActionBarActivity implements ActionBar.OnNaviga
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler,
                     new DeckTask.TaskData(mCol.getSched(), sCardBrowserCard, false));
         } else if (requestCode == ADD_NOTE && resultCode == RESULT_OK) {
-            mSearchTerms = mSearchView.getQuery().toString().toLowerCase();
+            mSearchTerms = mSearchView.getQuery().toString();
+            // Both toLowerCase(Local.US) and toLowerCase(Locale.getDefault()) would be wrong here. Keywords are
+            // pulled toLowerCase(Locale.US) later.
             searchCards();
         }
     }

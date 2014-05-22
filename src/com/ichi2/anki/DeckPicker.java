@@ -84,6 +84,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.TreeSet;
 
 public class DeckPicker extends ActionBarActivity {
@@ -1310,8 +1311,8 @@ public class DeckPicker extends ActionBarActivity {
      */
     private boolean isNookDevice() {
         for (String s : new String[] { "nook" }) {
-            if (android.os.Build.DEVICE.toLowerCase().contains(s)
-                    || android.os.Build.MODEL.toLowerCase().contains(s)) {
+            if (android.os.Build.DEVICE.toLowerCase(Locale.US).contains(s)
+                    || android.os.Build.MODEL.toLowerCase(Locale.US).contains(s)) {
                 return true;
             }
         }

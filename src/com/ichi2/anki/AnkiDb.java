@@ -29,6 +29,7 @@ import android.widget.Toast;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Database layer for AnkiDroid. Can read the native Anki format through Android's SQLite driver.
@@ -102,7 +103,7 @@ public class AnkiDb {
 
     /**
      * Convenience method for querying the database for a single integer result.
-     * 
+     *
      * @param query The raw SQL query to use.
      * @return The integer result of the query.
      */
@@ -182,7 +183,7 @@ public class AnkiDb {
     /**
      * Convenience method for querying the database for an entire column. The column will be returned as an ArrayList of
      * the specified class. See Deck.initUndo() for a usage example.
-     * 
+     *
      * @param type The class of the column's data type. Example: int.class, String.class.
      * @param query The SQL query statement.
      * @param column The column id in the result set to return.
@@ -212,7 +213,7 @@ public class AnkiDb {
                         continue; // attempt to skip this null record
                     } else {
                         throw new RuntimeException(e);
-                    }                    
+                    }
                 }
             }
         } catch (NoSuchMethodException e) {
@@ -234,13 +235,13 @@ public class AnkiDb {
                     sb.append("AnkiDb.queryColumn (column " + column + "): ");
                     sb.append("Exception due to null. Query: " + query);
                     sb.append(" Null occurrences during this query: " + nullExceptionCount);
-                    AnkiDroidApp.saveExceptionReportFile(nullException, "queryColumn_encounteredNull", sb.toString());                    
+                    AnkiDroidApp.saveExceptionReportFile(nullException, "queryColumn_encounteredNull", sb.toString());
                     Log.w(AnkiDroidApp.TAG, sb.toString());
                 } else { // nullException not properly initialized
                     StringBuilder sb = new StringBuilder();
                     sb.append("AnkiDb.queryColumn(): Critical error -- ");
                     sb.append("unable to pass in the actual exception to error reporting.");
-                    AnkiDroidApp.saveExceptionReportFile("queryColumn_encounteredNull", sb.toString());                    
+                    AnkiDroidApp.saveExceptionReportFile("queryColumn_encounteredNull", sb.toString());
                     Log.e(AnkiDroidApp.TAG, sb.toString());
                 }
             }
@@ -252,7 +253,7 @@ public class AnkiDb {
 
     /**
      * Mapping of Java type names to the corresponding Cursor.get method.
-     * 
+     *
      * @param typeName The simple name of the type's class. Example: String.class.getSimpleName().
      * @return The name of the Cursor method to be called.
      */
@@ -279,7 +280,7 @@ public class AnkiDb {
 
 
     public void execute(String sql, Object[] object) {
-        String s = sql.trim().toLowerCase();
+        String s = sql.trim().toLowerCase(Locale.US);
         // mark modified?
         for (String mo : MOD_SQLS) {
             if (s.startsWith(mo)) {

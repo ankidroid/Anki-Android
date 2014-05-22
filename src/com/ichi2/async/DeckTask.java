@@ -62,6 +62,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -123,7 +124,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
      * Tasks will be executed serially, in the order in which they are started.
      * <p>
      * This method must be called on the main thread.
-     * 
+     *
      * @param type of the task to start
      * @param listener to the status and result of the task
      * @param params to pass to the task
@@ -767,7 +768,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         publishProgress(result);
         return result;
     }
-    
+
 
     private TaskData doInBackgroundLoadStatistics(TaskData... params) {
         Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadStatistics");
@@ -1167,11 +1168,12 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             cards.clear();
             HashSet<String> tags = new HashSet<String>();
             for (String s : (HashSet<String>) params[2].getObjArray()[0]) {
-                tags.add(s.toLowerCase());
+                tags.add(s.toLowerCase(Locale.getDefault()));
             }
             for (int i = 0; i < allCard.size(); i++) {
                 HashMap<String, String> card = allCard.get(i);
-                if (Arrays.asList(card.get("tags").toLowerCase().trim().split("\\s")).containsAll(tags)) {
+                if (Arrays.asList(card.get("tags").toLowerCase(Locale.getDefault()).trim().split("\\s"))
+                        .containsAll(tags)) {
                     cards.add(allCard.get(i));
                 }
             }

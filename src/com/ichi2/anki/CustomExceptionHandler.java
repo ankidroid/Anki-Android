@@ -126,8 +126,8 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
     public void uncaughtException(Thread t, Throwable e, String origin) {
         uncaughtException(t, e, origin, null);
     }
-    
-    
+
+
     public void uncaughtException(Thread t, Throwable e, String origin, String additionalInfo) {
         Log.i(AnkiDroidApp.TAG, "uncaughtException");
 
@@ -158,13 +158,13 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
         for (String key : mInformation.keySet()) {
             String value = mInformation.get(key);
 
-            reportInformation.append(String.format("%s=%s\n", key.toLowerCase(), value));
+            reportInformation.append(String.format(Locale.US, "%s=%s\n", key.toLowerCase(Locale.US), value));
         }
-        
+
         if (additionalInfo != null && !TextUtils.isEmpty(additionalInfo)) {
             reportInformation.append(String.format("additionalinformation=%s\n", additionalInfo));
         }
-        
+
         reportInformation.append("stacktrace=\nBegin Stacktrace\n");
 
         // Stack trace

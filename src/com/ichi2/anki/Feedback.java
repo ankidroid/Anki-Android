@@ -532,7 +532,7 @@ public class Feedback extends AnkiActivity {
                     continue;
                 }
 
-                String key = singleLine.substring(0, indexOfEquals).toLowerCase();
+                String key = singleLine.substring(0, indexOfEquals).toLowerCase(Locale.US);
                 String value = singleLine.substring(indexOfEquals + 1, singleLine.length());
 
                 if (key.equals("stacktrace")) {

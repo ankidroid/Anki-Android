@@ -14,6 +14,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 public class AnkiFont {
@@ -39,7 +40,7 @@ public class AnkiFont {
 
     /**
      * Factory for AnkiFont creation. Creates a typeface wrapper from a font file representing.
-     * 
+     *
      * @param ctx Activity context, needed to access assets
      * @param path Path to typeface file, needed when this is a custom font.
      * @param fromAssets True if the font is to be found in assets of application
@@ -60,29 +61,29 @@ public class AnkiFont {
             return null;
         }
 
-        if (tf.isBold() || name.toLowerCase().contains("bold")) {
+        if (tf.isBold() || name.toLowerCase(Locale.US).contains("bold")) {
             attributes.add("font-weight: bolder;");
             family = family.replaceFirst("(?i)-?Bold", "");
-        } else if (name.toLowerCase().contains("light")) {
+        } else if (name.toLowerCase(Locale.US).contains("light")) {
             attributes.add("font-weight: lighter;");
             family = family.replaceFirst("(?i)-?Light", "");
         } else {
             attributes.add("font-weight: normal;");
         }
-        if (tf.isItalic() || name.toLowerCase().contains("italic")) {
+        if (tf.isItalic() || name.toLowerCase(Locale.US).contains("italic")) {
             attributes.add("font-style: italic;");
             family = family.replaceFirst("(?i)-?Italic", "");
-        } else if (name.toLowerCase().contains("oblique")) {
+        } else if (name.toLowerCase(Locale.US).contains("oblique")) {
             attributes.add("font-style: oblique;");
             family = family.replaceFirst("(?i)-?Oblique", "");
         } else {
             attributes.add("font-style: normal;");
         }
-        if (name.toLowerCase().contains("condensed") || name.toLowerCase().contains("narrow")) {
+        if (name.toLowerCase(Locale.US).contains("condensed") || name.toLowerCase(Locale.US).contains("narrow")) {
             attributes.add("font-stretch: condensed;");
             family = family.replaceFirst("(?i)-?Condensed", "");
             family = family.replaceFirst("(?i)-?Narrow(er)?", "");
-        } else if (name.toLowerCase().contains("expanded") || name.toLowerCase().contains("wide")) {
+        } else if (name.toLowerCase(Locale.US).contains("expanded") || name.toLowerCase(Locale.US).contains("wide")) {
             attributes.add("font-stretch: expanded;");
             family = family.replaceFirst("(?i)-?Expanded", "");
             family = family.replaceFirst("(?i)-?Wide(r)?", "");
