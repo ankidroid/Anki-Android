@@ -279,6 +279,11 @@
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/title_activity_search_image" >
         </activity>
+        <activity
+            android:name="org.achartengine.GraphicalActivity"
+            android:configChanges="keyboardHidden|orientation|locale|screenSize"
+            android:label="@string/title_activity_graphical_activity" >
+        </activity>
 
         <!-- stuff for Samsung Multi-Window -->
         <uses-library
