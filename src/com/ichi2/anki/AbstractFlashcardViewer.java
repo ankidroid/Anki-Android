@@ -366,7 +366,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
     // LISTENERS
     // ----------------------------------------------------------------------------
 
-    private Handler mHandler = new Handler() {
+    private static Handler sHandler = new Handler() {
 
         @Override
         public void handleMessage(Message msg) {
@@ -2861,7 +2861,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         public void playSound(String soundPath) {
             Message msg = Message.obtain();
             msg.obj = soundPath;
-            mHandler.sendMessage(msg);
+            sHandler.sendMessage(msg);
         }
 
 
