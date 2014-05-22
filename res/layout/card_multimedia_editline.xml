@@ -10,19 +10,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawablePadding="8dp"
-        android:layout_alignParentLeft="true" 
+        android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@+id/id_media_button"
         android:layout_alignTop="@+id/id_media_button"
          />
 
     <ImageButton
         android:id="@+id/id_media_button"
-        android:contentDescription="Attach multimedia content to the note"
+        android:contentDescription="@string/multimedia_editor_attach_mm_content"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:gravity="right|center_vertical"
         android:background="@drawable/ic_media"
         android:layout_alignParentRight="true"  />
-        
+
 
 </RelativeLayout>

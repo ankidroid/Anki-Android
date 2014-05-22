@@ -21,6 +21,8 @@
 <resources>
 
     <string name="app_name">AnkiDroid</string>
+    <string name="app_name_anki">Anki</string>
+    <string name="app_name_droid">Droid</string>
 
 <!-- <string name="studyoptions_title">Study options</string> -->
     <string name="studyoptions_deck_name">Deck name</string>

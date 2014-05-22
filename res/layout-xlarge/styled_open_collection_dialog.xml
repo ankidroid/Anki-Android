@@ -40,14 +40,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Anki"
+                android:text="@string/app_name_anki"
                 android:textColor="#ffffff"
                 android:textSize="44sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Droid"
+                android:text="@string/app_name_droid"
                 android:textColor="#ffffff"
                 android:textSize="44sp"
                 android:textStyle="bold" />
