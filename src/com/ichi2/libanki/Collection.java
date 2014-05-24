@@ -1039,11 +1039,6 @@ public class Collection {
     }
 
 
-    /** Return a list of card ids */
-    public List<Long> findCards(String search, Boolean order) {
-        return new Finder(this).findCards(search, order.toString());
-    }
-
     public ArrayList<HashMap<String, String>> findCardsForCardBrowser(String search, String order, HashMap<String, String> deckNames) {
         return new Finder(this).findCardsForCardBrowser(search, order, deckNames);
     }
