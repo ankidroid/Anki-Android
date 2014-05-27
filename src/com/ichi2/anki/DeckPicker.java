@@ -1405,13 +1405,14 @@ public class DeckPicker extends ActionBarActivity {
                 break;
 
             case DIALOG_NO_SDCARD:
-                builder.setMessage("The SD card could not be read. Please, turn off USB storage.");
+                builder.setMessage(res.getString(R.string.sdcard_missing_message));
                 builder.setPositiveButton(R.string.dialog_ok, null);
                 dialog = builder.create();
                 break;
 
             case DIALOG_CONNECTION_ERROR:
-                builder.setTitle(res.getString(R.string.connection_error_title));
+                // From the Android style guide: “Most alerts don't need titles.” And "Attention" is quite unhelpful.
+                // builder.setTitle(res.getString(R.string.connection_error_title));
                 builder.setIcon(R.drawable.ic_dialog_alert);
                 builder.setMessage(res.getString(R.string.connection_error_message));
                 builder.setPositiveButton(res.getString(R.string.retry), new DialogInterface.OnClickListener() {
@@ -1528,9 +1529,9 @@ public class DeckPicker extends ActionBarActivity {
                 break;
 
             case DIALOG_USER_NOT_LOGGED_IN_SYNC:
-                builder.setTitle(res.getString(R.string.connection_error_title));
+                builder.setTitle(res.getString(R.string.not_logged_in_title));
                 builder.setIcon(R.drawable.ic_dialog_alert);
-                builder.setMessage(res.getString(R.string.no_user_password_error_message));
+                builder.setMessage(res.getString(R.string.login_create_account_message));
                 builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
                 builder.setPositiveButton(res.getString(R.string.log_in), new DialogInterface.OnClickListener() {
                     @Override
@@ -1567,9 +1568,9 @@ public class DeckPicker extends ActionBarActivity {
             // break;
 
             case DIALOG_NO_CONNECTION:
-                builder.setTitle(res.getString(R.string.connection_error_title));
+                // builder.setTitle(res.getString(R.string.connection_error_title));
                 builder.setIcon(R.drawable.ic_dialog_alert);
-                builder.setMessage(res.getString(R.string.connection_needed));
+                builder.setMessage(res.getString(R.string.youre_offline));
                 builder.setPositiveButton(res.getString(R.string.dialog_ok), null);
                 dialog = builder.create();
                 break;
@@ -1690,7 +1691,6 @@ public class DeckPicker extends ActionBarActivity {
                 builder.setPositiveButton(getString(R.string.sync_sanity_local), mSyncSanityFailListener);
                 builder.setNeutralButton(getString(R.string.sync_sanity_remote), mSyncSanityFailListener);
                 builder.setNegativeButton(res.getString(R.string.sync_conflict_cancel), mSyncSanityFailListener);
-                builder.setTitle(res.getString(R.string.sync_log_title));
                 dialog = builder.create();
                 break;
 
@@ -1726,12 +1726,10 @@ public class DeckPicker extends ActionBarActivity {
                         }
                     }
                 });
-                builder.setTitle(res.getString(R.string.sync_log_title));
                 dialog = builder.create();
                 break;
 
             case DIALOG_SYNC_LOG:
-                builder.setTitle(res.getString(R.string.sync_log_title));
                 builder.setPositiveButton(res.getString(R.string.dialog_ok), null);
                 dialog = builder.create();
                 break;
@@ -2335,7 +2333,6 @@ public class DeckPicker extends ActionBarActivity {
                                 }
                             });
                     builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
-                    builder.setTitle(res.getString(R.string.sync_log_title));
                     builder.setMessage(res.getString(R.string.sync_conflict_local_confirm));
                     builder.show();
                     break;
@@ -2354,7 +2351,6 @@ public class DeckPicker extends ActionBarActivity {
                                 }
                             });
                     builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
-                    builder.setTitle(res.getString(R.string.sync_log_title));
                     builder.setMessage(res.getString(R.string.sync_conflict_remote_confirm));
                     builder.show();
                     break;
@@ -2379,7 +2375,6 @@ public class DeckPicker extends ActionBarActivity {
                         }
                     });
                     builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
-                    builder.setTitle(res.getString(R.string.sync_log_title));
                     builder.setMessage(res.getString(R.string.sync_conflict_local_confirm));
                     builder.show();
                     break;
@@ -2393,7 +2388,6 @@ public class DeckPicker extends ActionBarActivity {
                                 }
                             });
                     builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
-                    builder.setTitle(res.getString(R.string.sync_log_title));
                     builder.setMessage(res.getString(R.string.sync_conflict_remote_confirm));
                     builder.show();
                     break;
@@ -2680,7 +2674,6 @@ public class DeckPicker extends ActionBarActivity {
                 }
                 if (result.getBoolean()) {
                     StyledDialog dialog = (StyledDialog) onCreateDialog(DIALOG_OK);
-                    dialog.setTitle(getResources().getString(R.string.check_db_title));
                     double shrunk = Math.round(result.getLong() / 1024.0);
                     if (shrunk > 0.0) {
                         dialog.setMessage(String.format(Utils.ENGLISH_LOCALE,

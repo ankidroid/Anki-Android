@@ -44,7 +44,6 @@
     </string-array>
 
     <string name="dont_show_again">Don\'t show again</string>
-    <string name="sync_log_title">Sync log</string>
     <!-- <string name="deckpicker_upgrade_failed">Upgrading failed!</string> -->
 
     <string name="notify_ticker">Application update</string>

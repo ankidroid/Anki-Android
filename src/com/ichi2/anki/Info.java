@@ -558,9 +558,9 @@ public class Info extends ActionBarActivity {
                 mWebView.loadDataWithBaseURL("", sb.toString(), "text/html", "utf-8", null);
 
                 StyledDialog.Builder builder2 = new StyledDialog.Builder(this);
-                builder2.setTitle(res.getString(R.string.connection_error_title));
+                // builder2.setTitle(res.getString(R.string.connection_error_title));
                 builder2.setIcon(R.drawable.ic_dialog_alert);
-                builder2.setMessage(res.getString(R.string.connection_needed));
+                builder2.setMessage(res.getString(R.string.youre_offline));
                 builder2.setPositiveButton(res.getString(R.string.dialog_ok), null);
                 mNoConnectionAlert = builder2.create();
                 break;
@@ -579,9 +579,9 @@ public class Info extends ActionBarActivity {
         StyledDialog.Builder builder = new StyledDialog.Builder(this);
         switch (id) {
             case DIALOG_USER_NOT_LOGGED_IN_SYNC:
-                builder.setTitle(R.string.connection_error_title);
+                builder.setTitle(R.string.not_logged_in_title);
                 builder.setIcon(R.drawable.ic_dialog_alert);
-                builder.setMessage(R.string.no_user_password_error_message);
+                builder.setMessage(R.string.login_create_account_message);
                 builder.setNegativeButton(R.string.dialog_cancel, null);
                 builder.setPositiveButton(R.string.log_in, new DialogInterface.OnClickListener() {
                     @Override
@@ -608,7 +608,6 @@ public class Info extends ActionBarActivity {
                 break;
 
             case DIALOG_SYNC_LOG:
-                builder.setTitle(R.string.sync_log_title);
                 builder.setPositiveButton(R.string.dialog_ok, null);
                 dialog = builder.create();
                 break;
@@ -622,7 +621,6 @@ public class Info extends ActionBarActivity {
                     }
                 });
                 builder.setNegativeButton(R.string.dialog_cancel, null);
-                builder.setTitle(R.string.sync_log_title);
                 dialog = builder.create();
                 break;
         }
@@ -900,7 +898,7 @@ public class Info extends ActionBarActivity {
                     ActivityTransitionAnimation.slide(Info.this, ActivityTransitionAnimation.LEFT);
                 } else {
                     StyledDialog.Builder builder = new StyledDialog.Builder(Info.this);
-                    builder.setTitle(res.getString(R.string.connection_error_title));
+                    // builder.setTitle(res.getString(R.string.connection_error_title));
                     builder.setIcon(R.drawable.ic_dialog_alert);
                     String failures = "";
                     if (failed.size() > 0) {
@@ -933,7 +931,7 @@ public class Info extends ActionBarActivity {
                 }
             } else {
                 StyledDialog.Builder builder = new StyledDialog.Builder(Info.this);
-                builder.setTitle(res.getString(R.string.connection_error_title));
+                builder.setTitle(res.getString(R.string.vague_error));
                 builder.setIcon(R.drawable.ic_dialog_alert);
                 builder.setMessage((String) data.data[0]);
                 builder.setPositiveButton(res.getString(R.string.dialog_ok), new Dialog.OnClickListener() {
@@ -1039,7 +1037,7 @@ public class Info extends ActionBarActivity {
                 ActivityTransitionAnimation.slide(Info.this, ActivityTransitionAnimation.LEFT);
             } else {
                 StyledDialog.Builder builder = new StyledDialog.Builder(Info.this);
-                builder.setTitle(res.getString(R.string.connection_error_title));
+                // builder.setTitle(res.getString(R.string.connection_error_title));
                 builder.setIcon(R.drawable.ic_dialog_alert);
                 builder.setMessage(res.getString(R.string.register_error));
                 builder.setPositiveButton(res.getString(R.string.dialog_ok), null);

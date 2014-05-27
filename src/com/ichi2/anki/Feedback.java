@@ -123,9 +123,9 @@ public class Feedback extends AnkiActivity {
 
         StyledDialog.Builder builder = new StyledDialog.Builder(this);
 
-        builder.setTitle(res.getString(R.string.connection_error_title));
+        // builder.setTitle(res.getString(R.string.connection_error_title));
         builder.setIcon(R.drawable.ic_dialog_alert);
-        builder.setMessage(res.getString(R.string.connection_needed));
+        builder.setMessage(res.getString(R.string.youre_offline));
         builder.setPositiveButton(res.getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

@@ -262,9 +262,9 @@ public class MyAccount extends AnkiActivity {
 
         StyledDialog.Builder builder = new StyledDialog.Builder(this);
 
-        builder.setTitle(res.getString(R.string.connection_error_title));
+        // builder.setTitle(res.getString(R.string.connection_error_title));
         builder.setIcon(R.drawable.ic_dialog_alert);
-        builder.setMessage(res.getString(R.string.connection_needed));
+        builder.setMessage(res.getString(R.string.youre_offline));
         builder.setPositiveButton(res.getString(R.string.dialog_ok), null);
         mNoConnectionAlert = builder.create();
 
@@ -297,7 +297,7 @@ public class MyAccount extends AnkiActivity {
         mInvalidUserPassAlert = builder.create();
 
         builder = new StyledDialog.Builder(this);
-        builder.setTitle(res.getString(R.string.connection_error_title));
+        // builder.setTitle(res.getString(R.string.connection_error_title));
         builder.setIcon(R.drawable.ic_dialog_alert);
         builder.setMessage(res.getString(R.string.connection_error_message));
         builder.setPositiveButton(res.getString(R.string.retry), new DialogInterface.OnClickListener() {
