@@ -1103,7 +1103,7 @@ public class CardEditor extends ActionBarActivity {
                         // mCardReset = true;
                         // Themes.showThemedToast(CardEditor.this,
                         // getResources().getString(
-                        // R.string.reset_card_dialog_confirmation), true);
+                        // R.string.reset_card_dialog_acknowledge), true);
                     }
                 });
                 builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);

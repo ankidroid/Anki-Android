@@ -110,10 +110,10 @@
   <string-array name="next_review_before_p">
     <item>%s초 전</item>
     <item>%s분 전</item>
-    <item>%s시간 전</item>
+    <item>﻿%s시간 전</item>
     <item>%s일 전</item>
     <item>%s개월 전</item>
-    <item>%s년 전</item>
+    <item>﻿%s년 전</item>
   </string-array>
   <string-array name="due_x_axis_title">
     <item>일</item>

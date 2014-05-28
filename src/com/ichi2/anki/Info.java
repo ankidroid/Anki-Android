@@ -378,7 +378,7 @@ public class Info extends ActionBarActivity {
                                 }
                             });
                         } else {
-                            syncButton.setText(R.string.deck_upgrade_create_new_collection);
+                            syncButton.setText(R.string.deck_upgrade_create_new_collection_button);
                             syncButton.setOnClickListener(new OnClickListener() {
                                 @Override
                                 public void onClick(View arg0) {

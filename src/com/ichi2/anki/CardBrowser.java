@@ -573,8 +573,8 @@ public class CardBrowser extends ActionBarActivity implements ActionBar.OnNaviga
                     new DeckTask.TaskData(mCol.getSched(), sCardBrowserCard, false));
         } else if (requestCode == ADD_NOTE && resultCode == RESULT_OK) {
             mSearchTerms = mSearchView.getQuery().toString();
-            // Both toLowerCase(Local.US) and toLowerCase(Locale.getDefault()) would be wrong here. Keywords are
-            // pulled toLowerCase(Locale.US) later.
+            // Both toLowerCase(Locale.US) and toLowerCase(Locale.getDefault()) would be wrong here. Keywords are pulled
+            // toLowerCase(Locale.US) later.
             searchCards();
         }
     }

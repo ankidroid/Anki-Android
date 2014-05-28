@@ -504,10 +504,10 @@ public class DeckPicker extends ActionBarActivity {
                         mDialogMessage = res.getString(R.string.sync_log_downloading_message);
                         // set downloaded collection as current one
                     } else {
-                        mDialogMessage = res.getString(R.string.sync_database_success);
+                        mDialogMessage = res.getString(R.string.sync_database_acknowledge);
                     }
                 } else {
-                    mDialogMessage = res.getString(R.string.sync_database_success);
+                    mDialogMessage = res.getString(R.string.sync_database_acknowledge);
                 }
 
                 showDialog(DIALOG_SYNC_LOG);
@@ -2676,10 +2676,10 @@ public class DeckPicker extends ActionBarActivity {
                     StyledDialog dialog = (StyledDialog) onCreateDialog(DIALOG_OK);
                     double shrunk = Math.round(result.getLong() / 1024.0);
                     if (shrunk > 0.0) {
-                        dialog.setMessage(String.format(Utils.ENGLISH_LOCALE,
-                                getResources().getString(R.string.check_db_result_message_shrunk), shrunk));
+                        dialog.setMessage(String.format(Locale.getDefault(),
+                                getResources().getString(R.string.check_db_acknowledge_shrunk), shrunk));
                     } else {
-                        dialog.setMessage(getResources().getString(R.string.check_db_result_message));
+                        dialog.setMessage(getResources().getString(R.string.check_db_acknowledge));
                     }
                     dialog.show();
                 } else {

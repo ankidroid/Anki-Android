@@ -34,7 +34,7 @@
     <string name="card_browser_unsuspend_card">Unsuspend card</string>
     <string name="card_browser_mark_card">Mark note</string>
     <string name="card_browser_unmark_card">Unmark note</string>
-    <string name="delete_card_title">Delete note</string>
+    <string name="delete_card_title">Delete note?</string>
     <string name="delete_card_message">Delete all cards of this note?\nSearch field: %s</string>
     <string name="card_browser_show_marked">Filter marked</string>
     <string name="card_browser_field">Change card browser field</string>

@@ -164,7 +164,7 @@
     <string name="template_error_detail">The card template contains an error</string>
     <string name="template_error_fix">Use the card editor on the desktop client to fix it.</string>
     <string name="sched_end">(end)</string>
-    <string name="sched_unbury_button">To see them now, tap the \"Unbury\" button.</string>
-    <string name="sched_has_buried">Some cards were delayed until tomorrow.</string>
+    <string name="sched_unbury_button">To see them now, touch the \"Unbury\" button.</string>
+    <string name="sched_has_buried">Some related or buried cards were delayed until tomorrow.</string>
 
 </resources>
