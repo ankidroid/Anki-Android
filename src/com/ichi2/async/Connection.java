@@ -639,7 +639,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 // publishProgress(R.string.sync_no_changes_message);
                 noChanges = true;
             } else {
-                // publishProgress(R.string.sync_database_success);
+                // publishProgress(R.string.sync_database_acknowledge);
             }
         } else {
             try {
@@ -803,7 +803,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
 
     /**
      * Downloads any missing media files according to the mediaURL deckvar.
-     * 
+     *
      * @param data
      * @return The return type contains data.resultType and an array of Integer in data.data. data.data[0] is the number
      *         of total missing media, data.data[1] is the number of downloaded ones.

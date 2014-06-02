@@ -366,7 +366,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
     // LISTENERS
     // ----------------------------------------------------------------------------
 
-    private Handler mHandler = new Handler() {
+    private static Handler sHandler = new Handler() {
 
         @Override
         public void handleMessage(Message msg) {
@@ -755,9 +755,9 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         }
         if (mTypeCorrect == null) {
             if (clozeIdx != 0) {
-                mTypeWarning = "Please run Tools>Maintenance>Empty Cards";
+                mTypeWarning = getResources().getString(R.string.empty_card_warning);
             } else {
-                mTypeWarning = "Type answer: unknown field " + fld;
+                mTypeWarning = getResources().getString(R.string.unknown_type_field_warning, fld);
             }
         } else if (mTypeCorrect.equals("")) {
             mTypeCorrect = null;
@@ -1442,14 +1442,14 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         builder.setIcon(R.drawable.ic_dialog_alert);
         builder.setMessage(String.format(res.getString(R.string.delete_note_message),
                 Utils.stripHTML(mCurrentCard.q(true))));
-        builder.setPositiveButton(res.getString(R.string.yes), new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(res.getString(R.string.dialog_positive_delete), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
                         mSched, mCurrentCard, 3));
             }
         });
-        builder.setNegativeButton(res.getString(R.string.no), null);
+        builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
         dialog = builder.create();
         dialog.show();
     }
@@ -2861,7 +2861,7 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
         public void playSound(String soundPath) {
             Message msg = Message.obtain();
             msg.obj = soundPath;
-            mHandler.sendMessage(msg);
+            sHandler.sendMessage(msg);
         }
 
 

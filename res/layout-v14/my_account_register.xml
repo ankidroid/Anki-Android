@@ -72,6 +72,17 @@
         android:orientation="horizontal" >
 
         <Button
+            android:id="@+id/cancel_button"
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="@string/cancel"
+            tools:ignore="ButtonStyle" />
+
+        <Button
             android:id="@+id/register_button"
             android:layout_width="0dip"
             android:layout_height="fill_parent"
@@ -82,16 +93,6 @@
             android:text="@string/sign_up"
             tools:ignore="ButtonStyle" />
 
-        <Button
-            android:id="@+id/cancel_button"
-            android:layout_width="0dip"
-            android:layout_height="fill_parent"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:singleLine="true"
-            android:text="@string/cancel"
-            tools:ignore="ButtonStyle" />
     </LinearLayout>
 
     <TextView

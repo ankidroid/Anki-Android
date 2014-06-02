@@ -263,8 +263,8 @@ public class Info extends ActionBarActivity {
                 setTitle(R.string.deck_upgrade_title);
                 sb.append("<html><body>");
 
-                // add upgrade button
-                Button but = (Button) findViewById(R.id.info_tutorial);
+                // add "later" button
+                Button but = (Button) findViewById(R.id.info_later);
                 but.setVisibility(View.VISIBLE);
 
                 // add sync button
@@ -277,7 +277,6 @@ public class Info extends ActionBarActivity {
                 switch (mUpgradeStage) {
                     case UPGRADE_SCREEN_BASIC1:
                         sb.append(getString(R.string.deck_upgrade_major_warning));
-                        but.setText(R.string.later);
                         but.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View arg0) {
@@ -379,7 +378,7 @@ public class Info extends ActionBarActivity {
                                 }
                             });
                         } else {
-                            syncButton.setText(R.string.deck_upgrade_create_new_collection);
+                            syncButton.setText(R.string.deck_upgrade_create_new_collection_button);
                             syncButton.setOnClickListener(new OnClickListener() {
                                 @Override
                                 public void onClick(View arg0) {
@@ -387,16 +386,17 @@ public class Info extends ActionBarActivity {
                                     builder.setTitle(R.string.deck_upgrade_create_new_collection_title);
                                     builder.setIcon(R.drawable.ic_dialog_alert);
                                     builder.setMessage(R.string.deck_upgrade_not_import_warning);
-                                    builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            Intent result = new Intent();
-                                            result.putExtra(TYPE_UPGRADE_STAGE, UPGRADE_CONTINUE);
-                                            setResult(RESULT_OK, result);
-                                            finishWithAnimation();
-                                        }
-                                    });
-                                    builder.setNegativeButton(R.string.no, null);
+                                    builder.setPositiveButton(R.string.dialog_positive_create,
+                                            new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    Intent result = new Intent();
+                                                    result.putExtra(TYPE_UPGRADE_STAGE, UPGRADE_CONTINUE);
+                                                    setResult(RESULT_OK, result);
+                                                    finishWithAnimation();
+                                                }
+                                            });
+                                    builder.setNegativeButton(R.string.dialog_cancel, null);
                                     builder.show();
                                 }
                             });
@@ -418,7 +418,7 @@ public class Info extends ActionBarActivity {
                             }
                         });
                         syncButton.setVisibility(View.GONE);
-                        continueButton.setText(R.string.yes);
+                        continueButton.setText(R.string.dialog_continue);
                         continueButton.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View arg0) {
@@ -558,10 +558,10 @@ public class Info extends ActionBarActivity {
                 mWebView.loadDataWithBaseURL("", sb.toString(), "text/html", "utf-8", null);
 
                 StyledDialog.Builder builder2 = new StyledDialog.Builder(this);
-                builder2.setTitle(res.getString(R.string.connection_error_title));
+                // builder2.setTitle(res.getString(R.string.connection_error_title));
                 builder2.setIcon(R.drawable.ic_dialog_alert);
-                builder2.setMessage(res.getString(R.string.connection_needed));
-                builder2.setPositiveButton(res.getString(R.string.ok), null);
+                builder2.setMessage(res.getString(R.string.youre_offline));
+                builder2.setPositiveButton(res.getString(R.string.dialog_ok), null);
                 mNoConnectionAlert = builder2.create();
                 break;
 
@@ -579,10 +579,10 @@ public class Info extends ActionBarActivity {
         StyledDialog.Builder builder = new StyledDialog.Builder(this);
         switch (id) {
             case DIALOG_USER_NOT_LOGGED_IN_SYNC:
-                builder.setTitle(R.string.connection_error_title);
+                builder.setTitle(R.string.not_logged_in_title);
                 builder.setIcon(R.drawable.ic_dialog_alert);
-                builder.setMessage(R.string.no_user_password_error_message);
-                builder.setNegativeButton(R.string.cancel, null);
+                builder.setMessage(R.string.login_create_account_message);
+                builder.setNegativeButton(R.string.dialog_cancel, null);
                 builder.setPositiveButton(R.string.log_in, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -597,7 +597,7 @@ public class Info extends ActionBarActivity {
 
             case DIALOG_UPGRADE_ERROR:
                 builder.setTitle(R.string.import_title);
-                builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         setResult(RESULT_CANCELED);
@@ -608,8 +608,7 @@ public class Info extends ActionBarActivity {
                 break;
 
             case DIALOG_SYNC_LOG:
-                builder.setTitle(R.string.sync_log_title);
-                builder.setPositiveButton(R.string.ok, null);
+                builder.setPositiveButton(R.string.dialog_ok, null);
                 dialog = builder.create();
                 break;
 
@@ -621,8 +620,7 @@ public class Info extends ActionBarActivity {
                         downloadCollection();
                     }
                 });
-                builder.setNegativeButton(R.string.cancel, null);
-                builder.setTitle(R.string.sync_log_title);
+                builder.setNegativeButton(R.string.dialog_cancel, null);
                 dialog = builder.create();
                 break;
         }
@@ -900,7 +898,7 @@ public class Info extends ActionBarActivity {
                     ActivityTransitionAnimation.slide(Info.this, ActivityTransitionAnimation.LEFT);
                 } else {
                     StyledDialog.Builder builder = new StyledDialog.Builder(Info.this);
-                    builder.setTitle(res.getString(R.string.connection_error_title));
+                    // builder.setTitle(res.getString(R.string.connection_error_title));
                     builder.setIcon(R.drawable.ic_dialog_alert);
                     String failures = "";
                     if (failed.size() > 0) {
@@ -921,7 +919,7 @@ public class Info extends ActionBarActivity {
                         failures += res.getString(R.string.upgrade_decks_media_failed, newMediaDir, sbb.toString());
                     }
                     builder.setMessage(failures);
-                    builder.setPositiveButton(res.getString(R.string.ok), new Dialog.OnClickListener() {
+                    builder.setPositiveButton(res.getString(R.string.dialog_ok), new Dialog.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             setResult(RESULT_OK);
@@ -933,10 +931,10 @@ public class Info extends ActionBarActivity {
                 }
             } else {
                 StyledDialog.Builder builder = new StyledDialog.Builder(Info.this);
-                builder.setTitle(res.getString(R.string.connection_error_title));
+                builder.setTitle(res.getString(R.string.vague_error));
                 builder.setIcon(R.drawable.ic_dialog_alert);
                 builder.setMessage((String) data.data[0]);
-                builder.setPositiveButton(res.getString(R.string.ok), new Dialog.OnClickListener() {
+                builder.setPositiveButton(res.getString(R.string.dialog_ok), new Dialog.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Intent result = new Intent();
@@ -1039,10 +1037,10 @@ public class Info extends ActionBarActivity {
                 ActivityTransitionAnimation.slide(Info.this, ActivityTransitionAnimation.LEFT);
             } else {
                 StyledDialog.Builder builder = new StyledDialog.Builder(Info.this);
-                builder.setTitle(res.getString(R.string.connection_error_title));
+                // builder.setTitle(res.getString(R.string.connection_error_title));
                 builder.setIcon(R.drawable.ic_dialog_alert);
                 builder.setMessage(res.getString(R.string.register_error));
-                builder.setPositiveButton(res.getString(R.string.ok), null);
+                builder.setPositiveButton(res.getString(R.string.dialog_ok), null);
                 builder.show();
             }
         }
@@ -1202,7 +1200,7 @@ public class Info extends ActionBarActivity {
         builder.setTitle(getString(R.string.upgrade_deck_cancelled_title));
         builder.setIcon(R.drawable.ic_dialog_alert);
         builder.setMessage(getString(R.string.upgrade_deck_cancelled_description));
-        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Intent result = new Intent();

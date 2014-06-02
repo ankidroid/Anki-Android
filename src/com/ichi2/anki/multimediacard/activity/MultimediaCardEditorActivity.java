@@ -143,7 +143,8 @@ public class MultimediaCardEditorActivity extends Activity {
 
         LinearLayout mToolsLayout = (LinearLayout) findViewById(R.id.LinearLayoutForButtons);
 
-        LayoutParams pars = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, 1);
+        LayoutParams pars = new LinearLayout.LayoutParams(AnkiDroidApp.getCompat().parentLayoutSize(),
+                LayoutParams.WRAP_CONTENT, 1);
 
         Button swapButton = new Button(this);
         swapButton.setText(gtxt(R.string.multimedia_editor_activity_swap_button));
@@ -218,7 +219,7 @@ public class MultimediaCardEditorActivity extends Activity {
 
     /**
      * Creates the UI for editor area inside EditorLayout
-     * 
+     *
      * @param note
      */
     private void createEditorUI(IMultimediaEditableNote note) {
@@ -285,7 +286,7 @@ public class MultimediaCardEditorActivity extends Activity {
 
                 TextView textView = new TextView(this);
                 textView.setText(field.getText());
-                linearLayout.addView(textView, LinearLayout.LayoutParams.MATCH_PARENT);
+                linearLayout.addView(textView, AnkiDroidApp.getCompat().parentLayoutSize());
 
                 break;
 
@@ -298,7 +299,8 @@ public class MultimediaCardEditorActivity extends Activity {
                 // Bitmap bm = BitmapFactory.decodeFile(myJpgPath, options);
                 // jpgView.setImageBitmap(bm);
 
-                LinearLayout.LayoutParams p = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+                LinearLayout.LayoutParams p = new LayoutParams(AnkiDroidApp.getCompat().parentLayoutSize(),
+                        LayoutParams.WRAP_CONTENT);
 
                 File f = new File(field.getImagePath());
 
@@ -338,7 +340,7 @@ public class MultimediaCardEditorActivity extends Activity {
 
         Button editButtonText = new Button(this);
         editButtonText.setText(gtxt(R.string.multimedia_editor_activity_edit_button));
-        linearLayout.addView(editButtonText, LinearLayout.LayoutParams.MATCH_PARENT);
+        linearLayout.addView(editButtonText, AnkiDroidApp.getCompat().parentLayoutSize());
 
         editButtonText.setOnClickListener(new View.OnClickListener() {
 
@@ -525,7 +527,7 @@ public class MultimediaCardEditorActivity extends Activity {
     /**
      * Change current model for the Note. Changes both MultimediaNote and the mEditorNote (Note Object) and copies
      * existing values to both.
-     * 
+     *
      * @param newId
      */
     protected void changeCurrentModel(long newId) {

@@ -80,6 +80,14 @@
             android:visibility="gone" />
 
         <Button
+            android:id="@+id/info_later"
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:text="@string/later"
+            android:visibility="gone" />
+
+        <Button
             android:id="@+id/info_sync"
             android:layout_width="0dip"
             android:layout_height="fill_parent"

@@ -34,8 +34,8 @@
     <string name="statistics_period_x_axis_minutes">Minutes</string>
     <string name="statistics_new_cards">New cards</string>
     <string name="statistics_failed_cards">Failed cards</string>
-    <string name="statistics_fullscreen">Toggle Fullscreen</string>
-    <string name="calculating_statistics">Calculating statistics.\nPlease wait...</string>
+    <string name="statistics_fullscreen">Toggle fullscreen</string>
+    <string name="calculating_statistics">Calculating statistics…</string>
     <string name="deck_summary_cards">Number of cards:</string>
     <string name="deck_summary_notes">Number of notes:</string>
     <string name="deck_summary_cards_mature">Mature cards:</string>
@@ -43,7 +43,7 @@
     <string name="deck_summary_cards_unseen">Unseen cards:</string>
     <string name="deck_summary_card_age">Card age</string>
     <string name="deck_summary_average_interval">Average interval: &lt;b&gt;%.1f&lt;/b&gt; days</string>
-    <string name="deck_summary_answers_correct">Correct Answers</string>
+    <string name="deck_summary_answers_correct">Correct answers</string>
     <string name="deck_summary_answers_mature">Mature cards: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; %2$s (%3$d of %4$d)</string>
     <string name="deck_summary_answers_young">Young cards: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d of %4$d)</string>
     <string name="deck_summary_answers_firstseen">Seen the first time: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d of %4$d)</string>

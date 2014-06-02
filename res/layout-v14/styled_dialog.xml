@@ -210,7 +210,8 @@
             android:orientation="horizontal"
             android:paddingLeft="2dip"
             android:paddingRight="2dip"
-            android:paddingTop="2dip" >
+            android:paddingTop="2dip"
+            style="?android:attr/buttonBarStyle" >
 
             <!-- android:useLargestChild="true" -->
 
@@ -222,8 +223,18 @@
                 android:orientation="horizontal" />
 
             <Button
+                android:id="@+id/negative_button"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dip"
+                android:layout_height="fill_parent"
+                android:layout_gravity="right"
+                android:layout_weight="1"
+                android:ellipsize="none"
+                android:singleLine="true" />
+
+            <Button
                 android:id="@+id/positive_button"
-                style="?android:attr/buttonStyleSmall"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dip"
                 android:layout_height="fill_parent"
                 android:layout_gravity="left"
@@ -233,20 +244,10 @@
 
             <Button
                 android:id="@+id/neutral_button"
-                style="?android:attr/buttonStyleSmall"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dip"
                 android:layout_height="fill_parent"
                 android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
-                android:ellipsize="none"
-                android:singleLine="true" />
-
-            <Button
-                android:id="@+id/negative_button"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="0dip"
-                android:layout_height="fill_parent"
-                android:layout_gravity="right"
                 android:layout_weight="1"
                 android:ellipsize="none"
                 android:singleLine="true" />

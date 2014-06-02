@@ -749,7 +749,7 @@ public class Themes {
         }
         view.loadDataWithBaseURL("", text, "text/html", "UTF-8", "");
         builder.setView(view, true);
-        builder.setPositiveButton(context.getResources().getString(R.string.ok), okListener);
+        builder.setPositiveButton(context.getResources().getString(R.string.dialog_ok), okListener);
         builder.setCancelable(true);
         builder.setOnCancelListener(cancelListener);
         return builder.create();
@@ -784,7 +784,7 @@ public class Themes {
 
     public static void setStyledDialogBackgrounds(View main) {
         int buttonCount = 0;
-        for (int id : new int[] { R.id.button1, R.id.button2, R.id.button3 }) {
+        for (int id : new int[] { R.id.positive_button, R.id.negative_button, R.id.neutral_button }) {
             if (main.findViewById(id).getVisibility() == View.VISIBLE) {
                 buttonCount++;
             }
@@ -842,7 +842,8 @@ public class Themes {
                 Log.e(AnkiDroidApp.TAG, "setStyledDialogBackgrounds - OutOfMemoryError occured: " + e);
                 buttonPanel.setBackgroundResource(R.color.white);
             }
-            if (buttonNumbers > 1) {
+            if (buttonNumbers > 1 || AnkiDroidApp.SDK_VERSION > 13) {
+                // Starting at API 14, the dialog looks quite different, and these spacers are in the way.
                 main.findViewById(R.id.rightSpacer).setVisibility(View.GONE);
                 main.findViewById(R.id.leftSpacer).setVisibility(View.GONE);
             }

@@ -58,7 +58,7 @@ public class HtmlColors {
                                 0xff - Integer.parseInt(m2.group(2), 16),
                                 0xff - Integer.parseInt(m2.group(3), 16));
                     }
-                } else if (color.length() > 9 && color.toLowerCase().startsWith("rgb")) {
+                } else if (color.length() > 9 && color.toLowerCase(Locale.US).startsWith("rgb")) {
                     m2 = fRgbColorPattern.matcher(color);
                     if (m2.find()) {
                         color = String.format(Locale.US, "rgb(%d, %d, %d)",

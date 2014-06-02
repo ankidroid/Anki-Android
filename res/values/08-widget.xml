@@ -20,11 +20,11 @@
 -->
 <resources>
 
-    <!-- Widget -->   
-    <string name="widget_minimum_cards_due_notification_ticker_title">Cards Due</string>
+    <!-- Widget -->
+    <string name="widget_minimum_cards_due_notification_ticker_title">Cards due</string>
     <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid cards due</string>
     <string name="widget_no_cards_due">No cards due</string>
-    <string name="widget_loading">Widget loading...</string>
+    <string name="widget_loading">Widget loading…</string>
 
     <plurals name="widget_cards_in_decks_due">
         <item quantity="one">1 card due in %2$s</item>
@@ -35,9 +35,9 @@
         <item quantity="other">%1$d decks</item>
     </plurals>
 
-    <string name="widget_medium">AnkiDroid Medium</string>
-    <string name="widget_small">AnkiDroid Small</string>
-    <string name="widget_big">AnkiDroid Big</string>
+    <string name="widget_medium">AnkiDroid medium</string>
+    <string name="widget_small">AnkiDroid small</string>
+    <string name="widget_big">AnkiDroid big</string>
     <string name="widget_big_restrictions_dialog">Due to some restrictions of Android\'s widget framework this widget can only show text but no images/sounds etc.</string>
     <string name="open_in_reviewer">Open deck in AnkiDroid</string>
 

@@ -16,6 +16,7 @@
 
 package com.ichi2.libanki.importer;
 
+import android.annotation.SuppressLint;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.util.Log;
@@ -681,7 +682,7 @@ public class Anki2Importer {
 
     /**
      * Data for FNAME in src collection.
-     * 
+     *
      * @return A string containing the contents of fname, limited to Anki2Importer.MEDIAPICKLIMIT bytes
      */
     private BufferedInputStream _srcMediaData(String fname) {
@@ -698,7 +699,7 @@ public class Anki2Importer {
 
     /**
      * Data for FNAME in src collection.
-     * 
+     *
      * @return A string containing the contents of fname, limited to Anki2Importer.MEDIAPICKLIMIT bytes
      */
     private BufferedInputStream _dstMediaData(String fname) {

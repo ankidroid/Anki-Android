@@ -53,7 +53,7 @@
             android:layout_weight="2"
             android:gravity="center_vertical"
             android:text="@string/sign_up_description"
-            android:textSize="16dp"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <LinearLayout
