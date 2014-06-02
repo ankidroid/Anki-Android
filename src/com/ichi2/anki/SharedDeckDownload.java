@@ -17,6 +17,8 @@ package com.ichi2.anki;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Locale;
+
 public class SharedDeckDownload extends Download implements Parcelable {
 
     public static final int STATUS_UPDATING = 5;
@@ -77,20 +79,20 @@ public class SharedDeckDownload extends Download implements Parcelable {
 
         if (hours > 0) {
             if (minutes > 0) {
-                return String.format("~ %dh %dm", hours, minutes);
+                return String.format(Locale.getDefault(), "~ %dh %dm", hours, minutes);
             } else {
-                return String.format("~ %dh", hours);
+                return String.format(Locale.getDefault(), "~ %dh", hours);
             }
         } else if (minutes > 10) {
-            return String.format("~ %dm", minutes);
+            return String.format(Locale.getDefault(), "~ %dm", minutes);
         } else if (minutes > 0) {
             if (seconds > 0) {
-                return String.format("~ %dm %ds", minutes, seconds);
+                return String.format(Locale.getDefault(), "~ %dm %ds", minutes, seconds);
             } else {
-                return String.format("~ %dm", minutes);
+                return String.format(Locale.getDefault(), "~ %dm", minutes);
             }
         } else {
-            return String.format("~ %ds", seconds);
+            return String.format(Locale.getDefault(), "~ %ds", seconds);
         }
     }
 

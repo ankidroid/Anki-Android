@@ -2,11 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <group android:id="@+id/menu_multimedia_group"
-        android:title="Attach Media" >
+        android:title="@string/multimedia_editor_attach_media" >
         <item
             android:id="@+id/menu_multimedia_photo"
             android:icon="@drawable/ic_action_camera"
-            android:title="@string/multimedia_editor_popup_image"/>        
+            android:title="@string/multimedia_editor_popup_image"/>
         <item
             android:id="@+id/menu_multimedia_audio"
             android:icon="@drawable/ic_action_mic"

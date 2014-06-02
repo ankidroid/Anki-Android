@@ -74,7 +74,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private static final int DIALOG_BACKUP = 2;
     private static final int DIALOG_HEBREW_FONT = 3;
     public static boolean COMING_FROM_ADD = false;
-    
+
     /** Key of the language preference */
     public static final String LANGUAGE = "language";
 
@@ -150,9 +150,9 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         dayOffset = (SeekBarPreference) getPreferenceScreen().findPreference("dayOffset");
         // Workaround preferences
         PreferenceCategory workarounds = (PreferenceCategory) getPreferenceScreen().findPreference("category_workarounds");
-        inputWorkaround = (CheckBoxPreference) getPreferenceScreen().findPreference("inputWorkaround");        
+        inputWorkaround = (CheckBoxPreference) getPreferenceScreen().findPreference("inputWorkaround");
         longclickWorkaround = (CheckBoxPreference) getPreferenceScreen().findPreference("textSelectionLongclickWorkaround");
-        fixHebrewText = (CheckBoxPreference) getPreferenceScreen().findPreference("fixHebrewText");                
+        fixHebrewText = (CheckBoxPreference) getPreferenceScreen().findPreference("fixHebrewText");
         fixArabicText = (CheckBoxPreference) getPreferenceScreen().findPreference("fixArabicText");
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         if (AnkiDroidApp.SDK_VERSION > 14){
@@ -166,8 +166,8 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         if (AnkiDroidApp.SDK_VERSION > 8){
             workarounds.removePreference(fixArabicText);
             preferences.edit().putBoolean("fixArabicText", false);
-        }        
-            
+        }
+
         initializeLanguageDialog();
         initializeCustomFontsDialog();
 
@@ -208,7 +208,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 updateListPreference(key, true);
             } else {
                 updateListPreference(key, false);
-            }            
+            }
         }
         for (String key : sShowValueInSummSeek) {
             updateSeekBarPreference(key);
@@ -234,10 +234,10 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         }
         if (mListsToUpdate.containsKey(key)) {
             if (numericCheck){
-                // replace any XXX with the value if value numeric, otherwise return value                
+                // replace any XXX with the value if value numeric, otherwise return value
                 listpref.setSummary(replaceStringIfNumeric(mListsToUpdate.get(key), entry));
             } else {
-                // replace any XXX with the value   
+                // replace any XXX with the value
                 listpref.setSummary(replaceString(mListsToUpdate.get(key), entry));
             }
         } else {
@@ -245,13 +245,13 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             if (oldsum.contains("XXX")) {
                 mListsToUpdate.put(key, oldsum);
                 if (numericCheck) {
-                    // replace any XXX with the value if value numeric, otherwise return value                    
+                    // replace any XXX with the value if value numeric, otherwise return value
                     listpref.setSummary(replaceStringIfNumeric(oldsum, entry));
                 } else {
-                    // replace any XXX with the value                    
+                    // replace any XXX with the value
                     listpref.setSummary(replaceString(oldsum, entry));
                 }
-                
+
             } else {
                 listpref.setSummary(entry);
             }
@@ -330,15 +330,15 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             return str;
         }
     }
-    
+
     private String replaceStringIfNumeric(String str, String value) {
         try {
             Double.parseDouble(value);
             return replaceString(str, value);
         } catch (NumberFormatException e){
             return value;
-        }    
-    }  
+        }
+    }
 
     private void initializeLanguageDialog() {
         Map<String, String> items = new TreeMap<String, String>();
@@ -533,10 +533,10 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         StyledDialog.Builder builder = new StyledDialog.Builder(this);
         switch (id) {
             case DIALOG_BACKUP:
-                builder.setTitle(res.getString(R.string.backup_manager_title));
+                builder.setTitle(res.getString(R.string.pref_disable_backup_title));
                 builder.setCancelable(false);
-                builder.setMessage(res.getString(R.string.pref_backup_warning));
-                builder.setPositiveButton(res.getString(R.string.yes), new OnClickListener() {
+                builder.setMessage(res.getString(R.string.pref_disable_backup_warning));
+                builder.setPositiveButton(res.getString(R.string.dialog_positive_disable), new OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
@@ -547,14 +547,14 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                                 (DeckTask.TaskData[]) null);
                     }
                 });
-                builder.setNegativeButton(res.getString(R.string.no), null);
+                builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
                 break;
             case DIALOG_HEBREW_FONT:
                 builder.setTitle(res.getString(R.string.fix_hebrew_text));
                 builder.setCancelable(false);
                 builder.setMessage(res.getString(R.string.fix_hebrew_instructions,
                         AnkiDroidApp.getCurrentAnkiDroidDirectory()));
-                builder.setNegativeButton(R.string.cancel, null);
+                builder.setNegativeButton(R.string.dialog_cancel, null);
                 builder.setPositiveButton(res.getString(R.string.fix_hebrew_download_font), new OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

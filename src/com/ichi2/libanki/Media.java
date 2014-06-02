@@ -43,6 +43,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -223,7 +224,7 @@ public class Media {
             m = p.matcher(string);
             while (m.find()) {
                 String fname = m.group(2);
-                if (includeRemote || (!fRemoteFilePattern.matcher(fname.toLowerCase()).find())) {
+                if (includeRemote || (!fRemoteFilePattern.matcher(fname.toLowerCase(Locale.US)).find())) {
                     l.add(fname);
                 }
             }

@@ -163,11 +163,11 @@ public class StyledDialog extends Dialog {
     public Button getButton(int which) {
         switch (which) {
             case Dialog.BUTTON_POSITIVE:
-                return (Button) super.getWindow().getDecorView().findViewById(R.id.button1);
+                return (Button) super.getWindow().getDecorView().findViewById(R.id.positive_button);
             case Dialog.BUTTON_NEGATIVE:
-                return (Button) super.getWindow().getDecorView().findViewById(R.id.button2);
+                return (Button) super.getWindow().getDecorView().findViewById(R.id.negative_button);
             case Dialog.BUTTON_NEUTRAL:
-                return (Button) super.getWindow().getDecorView().findViewById(R.id.button3);
+                return (Button) super.getWindow().getDecorView().findViewById(R.id.neutral_button);
             default:
                 return null;
         }
@@ -346,7 +346,7 @@ public class StyledDialog extends Dialog {
 
         /**
          * Set the Dialog message from String
-         * 
+         *
          * @param title
          * @return
          */
@@ -365,7 +365,7 @@ public class StyledDialog extends Dialog {
 
         /**
          * Set the Dialog message from resource
-         * 
+         *
          * @param title
          * @return
          */
@@ -383,7 +383,7 @@ public class StyledDialog extends Dialog {
 
         /**
          * Set the Dialog title from resource
-         * 
+         *
          * @param title
          * @return
          */
@@ -395,7 +395,7 @@ public class StyledDialog extends Dialog {
 
         /**
          * Set the Dialog title from String
-         * 
+         *
          * @param title
          * @return
          */
@@ -407,7 +407,7 @@ public class StyledDialog extends Dialog {
 
         /**
          * Set a custom content view for the Dialog. If a message is set, the contentView is not added to the Dialog...
-         * 
+         *
          * @param v
          * @return
          */
@@ -436,8 +436,8 @@ public class StyledDialog extends Dialog {
 
 
         /**
-         * Set the positive button resource and it's listener
-         * 
+         * Set the positive button resource and its listener
+         *
          * @param positiveButtonText
          * @param listener
          * @return
@@ -450,8 +450,8 @@ public class StyledDialog extends Dialog {
 
 
         /**
-         * Set the positive button text and it's listener
-         * 
+         * Set the positive button text and its listener
+         *
          * @param positiveButtonText
          * @param listener
          * @return
@@ -464,8 +464,8 @@ public class StyledDialog extends Dialog {
 
 
         /**
-         * Set the negative button resource and it's listener
-         * 
+         * Set the negative button resource and its listener
+         *
          * @param negativeButtonText
          * @param listener
          * @return
@@ -478,8 +478,8 @@ public class StyledDialog extends Dialog {
 
 
         /**
-         * Set the negative button text and it's listener
-         * 
+         * Set the negative button text and its listener
+         *
          * @param negativeButtonText
          * @param listener
          * @return
@@ -492,8 +492,8 @@ public class StyledDialog extends Dialog {
 
 
         /**
-         * Set the neutral button resource and it's listener
-         * 
+         * Set the neutral button resource and its listener
+         *
          * @param neutralButtonText
          * @param listener
          * @return
@@ -506,8 +506,8 @@ public class StyledDialog extends Dialog {
 
 
         /**
-         * Set the neutral button text and it's listener
-         * 
+         * Set the neutral button text and its listener
+         *
          * @param neutralButtonText
          * @param listener
          * @return
@@ -603,31 +603,31 @@ public class StyledDialog extends Dialog {
             // set buttons
             int numberOfButtons = 0;
             if (positiveButtonText != null) {
-                Button button1 = (Button) layout.findViewById(R.id.button1);
-                button1.setText(positiveButtonText);
-                button1.setOnClickListener(new OnClickForwarder(dialog, DialogInterface.BUTTON_POSITIVE,
+                Button positiveButton = (Button) layout.findViewById(R.id.positive_button);
+                positiveButton.setText(positiveButtonText);
+                positiveButton.setOnClickListener(new OnClickForwarder(dialog, DialogInterface.BUTTON_POSITIVE,
                         positiveButtonClickListener));
                 numberOfButtons++;
             } else {
-                layout.findViewById(R.id.button1).setVisibility(View.GONE);
+                layout.findViewById(R.id.positive_button).setVisibility(View.GONE);
             }
             if (negativeButtonText != null) {
-                Button button2 = (Button) layout.findViewById(R.id.button2);
-                button2.setText(negativeButtonText);
-                button2.setOnClickListener(new OnClickForwarder(dialog, DialogInterface.BUTTON_NEGATIVE,
+                Button negativeButton = (Button) layout.findViewById(R.id.negative_button);
+                negativeButton.setText(negativeButtonText);
+                negativeButton.setOnClickListener(new OnClickForwarder(dialog, DialogInterface.BUTTON_NEGATIVE,
                         negativeButtonClickListener));
                 numberOfButtons++;
             } else {
-                layout.findViewById(R.id.button2).setVisibility(View.GONE);
+                layout.findViewById(R.id.negative_button).setVisibility(View.GONE);
             }
             if (neutralButtonText != null) {
-                Button button3 = (Button) layout.findViewById(R.id.button3);
-                button3.setText(neutralButtonText);
-                button3.setOnClickListener(new OnClickForwarder(dialog, DialogInterface.BUTTON_NEUTRAL,
+                Button neutralButton = (Button) layout.findViewById(R.id.neutral_button);
+                neutralButton.setText(neutralButtonText);
+                neutralButton.setOnClickListener(new OnClickForwarder(dialog, DialogInterface.BUTTON_NEUTRAL,
                         neutralButtonClickListener));
                 numberOfButtons++;
             } else {
-                layout.findViewById(R.id.button3).setVisibility(View.GONE);
+                layout.findViewById(R.id.neutral_button).setVisibility(View.GONE);
             }
             if (numberOfButtons == 0) {
                 layout.findViewById(R.id.buttonPanel).setVisibility(View.GONE);
@@ -710,7 +710,7 @@ public class StyledDialog extends Dialog {
                     public void afterTextChanged(Editable s) {
                     }
                 });
-                dialog.setOnDismissListener(new OnDismissListener() {                    
+                dialog.setOnDismissListener(new OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
                         filterTags.setText("");

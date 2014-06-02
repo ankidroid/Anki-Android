@@ -395,7 +395,7 @@ public class Collection {
      */
 
     public int nextID(String type) {
-        type = "next" + type.toUpperCase();
+        type = "next" + type.toUpperCase(Locale.US);
         int id;
         try {
             id = mConf.getInt(type);
@@ -951,10 +951,10 @@ public class Collection {
                     }
                 }
 
-                // the following line differs from inherited libanki (original in comment)  
+                // the following line differs from inherited libanki (original in comment)
                 fields.put("FrontSide", d.get("q")); // fields.put("FrontSide", mMedia.stripAudio(d.get("q")));
-                
-                 
+
+
 
                 // runFilter mungeFields for type "a"
                 fparser = new Models.fieldParser(fields);

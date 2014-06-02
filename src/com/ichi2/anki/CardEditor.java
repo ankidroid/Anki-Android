@@ -118,7 +118,7 @@ public class CardEditor extends ActionBarActivity {
     public static final String EXTRA_FIELD_INDEX = "multim.card.ed.extra.field.index";
     public static final String EXTRA_FIELD = "multim.card.ed.extra.field";
     public static final String EXTRA_WHOLE_NOTE = "multim.card.ed.extra.whole.note";
-     
+
 
     private static final int DIALOG_DECK_SELECT = 0;
     private static final int DIALOG_MODEL_SELECT = 1;
@@ -904,7 +904,7 @@ public class CardEditor extends ActionBarActivity {
                         updateTags();
                     }
                 });
-                builder.setNegativeButton(res.getString(R.string.cancel), null);
+                builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
                 builder.setOnDismissListener(new OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
@@ -1091,7 +1091,7 @@ public class CardEditor extends ActionBarActivity {
             case DIALOG_RESET_CARD:
                 builder.setTitle(res.getString(R.string.reset_card_dialog_title));
                 builder.setMessage(res.getString(R.string.reset_card_dialog_message));
-                builder.setPositiveButton(res.getString(R.string.yes), new OnClickListener() {
+                builder.setPositiveButton(res.getString(R.string.dialog_positive_reset), new OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // for (long cardId :
@@ -1103,10 +1103,10 @@ public class CardEditor extends ActionBarActivity {
                         // mCardReset = true;
                         // Themes.showThemedToast(CardEditor.this,
                         // getResources().getString(
-                        // R.string.reset_card_dialog_confirmation), true);
+                        // R.string.reset_card_dialog_acknowledge), true);
                     }
                 });
-                builder.setNegativeButton(res.getString(R.string.no), null);
+                builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
                 builder.setCancelable(true);
                 dialog = builder.create();
                 break;
@@ -1322,7 +1322,7 @@ public class CardEditor extends ActionBarActivity {
         }
     }
 
-    private void setMMButtonListener(ImageButton mediaButton, final int index){                
+    private void setMMButtonListener(ImageButton mediaButton, final int index){
         mediaButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1337,8 +1337,8 @@ public class CardEditor extends ActionBarActivity {
                     // Otherwise we make a popup menu allowing the user to choose between audio/image/text field
                     PopupMenuWithIcons popup = new PopupMenuWithIcons(CardEditor.this, v, true);
                     MenuInflater inflater = popup.getMenuInflater();
-                    inflater.inflate(R.menu.popupmenu_multimedia_options, popup.getMenu());                    
-                    popup.setOnMenuItemClickListener(new OnMenuItemClickListener() {                        
+                    inflater.inflate(R.menu.popupmenu_multimedia_options, popup.getMenu());
+                    popup.setOnMenuItemClickListener(new OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
                             IMultimediaEditableNote mNote = NoteService.createEmptyNote(mEditorNote.model());
@@ -1357,24 +1357,24 @@ public class CardEditor extends ActionBarActivity {
                                     return true;
                                 case R.id.menu_multimedia_text:
                                     startMultimediaFieldEditor(index, mNote, field);
-                                    return true;                                    
+                                    return true;
                                 default:
                                     return false;
                             }
                         }
                     });
-                    popup.show();                     
+                    popup.show();
                 }
             }
-        });       
+        });
     }
-    
+
     private void startMultimediaFieldEditor(final int index, IMultimediaEditableNote mNote, IField field){
         Intent editCard = new Intent(CardEditor.this, EditFieldActivity.class);
         editCard.putExtra(EXTRA_FIELD_INDEX, index);
         editCard.putExtra(EXTRA_FIELD, field);
-        editCard.putExtra(EXTRA_WHOLE_NOTE, mNote);                
-        startActivityForResult(editCard, REQUEST_MULTIMEDIA_EDIT);        
+        editCard.putExtra(EXTRA_WHOLE_NOTE, mNote);
+        startActivityForResult(editCard, REQUEST_MULTIMEDIA_EDIT);
     }
 
     private void initFieldEditText(FieldEditText editText, int index, String[] values, Typeface customTypeface) {
@@ -1524,7 +1524,7 @@ public class CardEditor extends ActionBarActivity {
         mTagsButton.setText(getResources().getString(R.string.CardEditorTags,
                 mCol.getTags().join(mCol.getTags().canonify(mCurrentTags)).trim().replace(" ", ", ")));
     }
-    
+
     private boolean updateField(FieldEditText field) {
           String newValue = field.getText().toString().replace(FieldEditText.NEW_LINE, "<br>");
           if (!mEditorNote.values()[field.getOrd()].equals(newValue)) {

@@ -326,7 +326,8 @@
                     android:layout_width="0dip"
                     android:layout_height="fill_parent"
                     android:layout_weight="1"
-                    android:src="@drawable/studyoptions_add" />
+                    android:src="@drawable/studyoptions_add"
+                    android:contentDescription="@string/add_button_content" />
 
                 <ImageButton
                     android:id="@+id/studyoptions_card_browser"
@@ -334,7 +335,8 @@
                     android:layout_width="0dip"
                     android:layout_height="fill_parent"
                     android:layout_weight="1"
-                    android:src="@drawable/studyoptions_cards" />
+                    android:src="@drawable/studyoptions_cards"
+                    android:contentDescription="@string/card_browser_button_content" />
 
                 <ImageButton
                     android:id="@+id/studyoptions_statistics"
@@ -342,14 +344,16 @@
                     android:layout_width="0dip"
                     android:layout_height="fill_parent"
                     android:layout_weight="1"
-                    android:src="@drawable/studyoptions_stats" />
+                    android:src="@drawable/studyoptions_stats"
+                    android:contentDescription="@string/statistics_button_content" />
                 <!--
-				<ImageButton android:id="@+id/studyoptions_options"
-					android:layout_height="fill_parent"
-					android:src="@drawable/studyoptions_opts"
-					style="?android:attr/buttonStyleSmall"
-					android:layout_width="0dip"
-					android:layout_weight="1"/>
+                <ImageButton android:id="@+id/studyoptions_options"
+                    android:layout_height="fill_parent"
+                    android:src="@drawable/studyoptions_opts"
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="0dip"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/options_button_content"/>
                 -->
             </LinearLayout>
         </LinearLayout>

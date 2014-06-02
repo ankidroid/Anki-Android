@@ -84,6 +84,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.TreeSet;
 
 public class DeckPicker extends ActionBarActivity {
@@ -322,7 +323,7 @@ public class DeckPicker extends ActionBarActivity {
                             }
                         }
                     });
-                    builder2.setNegativeButton(res.getString(R.string.cancel), null);
+                    builder2.setNegativeButton(res.getString(R.string.dialog_cancel), null);
                     builder2.create().show();
                     return;
                 case CONTEXT_MENU_DECK_SUMMARY:
@@ -503,10 +504,10 @@ public class DeckPicker extends ActionBarActivity {
                         mDialogMessage = res.getString(R.string.sync_log_downloading_message);
                         // set downloaded collection as current one
                     } else {
-                        mDialogMessage = res.getString(R.string.sync_database_success);
+                        mDialogMessage = res.getString(R.string.sync_database_acknowledge);
                     }
                 } else {
-                    mDialogMessage = res.getString(R.string.sync_database_success);
+                    mDialogMessage = res.getString(R.string.sync_database_acknowledge);
                 }
 
                 showDialog(DIALOG_SYNC_LOG);
@@ -859,7 +860,7 @@ public class DeckPicker extends ActionBarActivity {
                 builder.setIcon(R.drawable.ic_dialog_alert);
                 builder.setTitle(R.string.export_progress_title);
                 builder.setMessage(getString(R.string.upgrade_deck_export_error));
-                builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit()
@@ -867,7 +868,7 @@ public class DeckPicker extends ActionBarActivity {
                     }
                 });
             }
-            builder.setPositiveButton(R.string.btn_continue, new DialogInterface.OnClickListener() {
+            builder.setPositiveButton(R.string.dialog_continue, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     showUpgradeScreen(true, Info.UPGRADE_SCREEN_BASIC1);
@@ -1304,36 +1305,36 @@ public class DeckPicker extends ActionBarActivity {
         }
     }
 
-    
+
     /**
      * @return true if the device is a Nook
      */
     private boolean isNookDevice() {
         for (String s : new String[] { "nook" }) {
-            if (android.os.Build.DEVICE.toLowerCase().contains(s)
-                    || android.os.Build.MODEL.toLowerCase().contains(s)) {
+            if (android.os.Build.DEVICE.toLowerCase(Locale.US).contains(s)
+                    || android.os.Build.MODEL.toLowerCase(Locale.US).contains(s)) {
                 return true;
             }
         }
         return false;
-    }    
-    
-    
+    }
+
+
     private void upgradePreferences(int previousVersionCode) {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         // when upgrading from before 2.1alpha08
         if (previousVersionCode < 20100108) {
             preferences.edit().putString("overrideFont", preferences.getString("defaultFont", "")).commit();
-            preferences.edit().putString("defaultFont", "").commit();            
+            preferences.edit().putString("defaultFont", "").commit();
         }
         // when upgrading from before 2.2alpha66
         if (previousVersionCode < 20200166) {
-            // change name from swipe to gestures            
+            // change name from swipe to gestures
             preferences.edit().putInt("swipeSensitivity", preferences.getInt("swipeSensibility", 100)).commit();
             preferences.edit().putBoolean("gestures", preferences.getBoolean("swipe", false)).commit();
             // set new safeDisplayMode preference based on old behavior
-            boolean safeDisplayMode = preferences.getBoolean("eInkDisplay", false) || isNookDevice() || 
-                    !preferences.getBoolean("forceQuickUpdate", false);            
+            boolean safeDisplayMode = preferences.getBoolean("eInkDisplay", false) || isNookDevice() ||
+                    !preferences.getBoolean("forceQuickUpdate", false);
             preferences.edit().putBoolean("safeDisplay", safeDisplayMode).commit();
             // set overrideFontBehavior based on old overrideFont settings
             String overrideFont = preferences.getString("overrideFont", "");
@@ -1344,7 +1345,7 @@ public class DeckPicker extends ActionBarActivity {
                 preferences.edit().putString("overrideFontBehavior", "0" ).commit();
             }
             // change typed answers setting from enable to disable
-            preferences.edit().putBoolean("writeAnswersDisable", !preferences.getBoolean("writeAnswers", true) ).commit();            
+            preferences.edit().putBoolean("writeAnswersDisable", !preferences.getBoolean("writeAnswers", true) ).commit();
         }
     }
 
@@ -1399,18 +1400,19 @@ public class DeckPicker extends ActionBarActivity {
 
         switch (id) {
             case DIALOG_OK:
-                builder.setPositiveButton(R.string.ok, null);
+                builder.setPositiveButton(R.string.dialog_ok, null);
                 dialog = builder.create();
                 break;
 
             case DIALOG_NO_SDCARD:
-                builder.setMessage("The SD card could not be read. Please, turn off USB storage.");
-                builder.setPositiveButton(R.string.ok, null);
+                builder.setMessage(res.getString(R.string.sdcard_missing_message));
+                builder.setPositiveButton(R.string.dialog_ok, null);
                 dialog = builder.create();
                 break;
 
             case DIALOG_CONNECTION_ERROR:
-                builder.setTitle(res.getString(R.string.connection_error_title));
+                // From the Android style guide: “Most alerts don't need titles.” And "Attention" is quite unhelpful.
+                // builder.setTitle(res.getString(R.string.connection_error_title));
                 builder.setIcon(R.drawable.ic_dialog_alert);
                 builder.setMessage(res.getString(R.string.connection_error_message));
                 builder.setPositiveButton(res.getString(R.string.retry), new DialogInterface.OnClickListener() {
@@ -1419,7 +1421,7 @@ public class DeckPicker extends ActionBarActivity {
                         sync();
                     }
                 });
-                builder.setNegativeButton(res.getString(R.string.cancel), null);
+                builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
                 dialog = builder.create();
                 break;
 
@@ -1429,7 +1431,7 @@ public class DeckPicker extends ActionBarActivity {
                 builder.setMessage(res.getString(R.string.sync_conflict_message));
                 builder.setPositiveButton(res.getString(R.string.sync_conflict_local), mSyncConflictResolutionListener);
                 builder.setNeutralButton(res.getString(R.string.sync_conflict_remote), mSyncConflictResolutionListener);
-                builder.setNegativeButton(res.getString(R.string.sync_conflict_cancel), mSyncConflictResolutionListener);
+                builder.setNegativeButton(res.getString(R.string.dialog_cancel), mSyncConflictResolutionListener);
                 builder.setCancelable(true);
                 dialog = builder.create();
                 break;
@@ -1511,7 +1513,7 @@ public class DeckPicker extends ActionBarActivity {
                         }
                     }
                 });
-                builder.setNegativeButton(res.getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(res.getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (mLoadFailed) {
@@ -1527,10 +1529,10 @@ public class DeckPicker extends ActionBarActivity {
                 break;
 
             case DIALOG_USER_NOT_LOGGED_IN_SYNC:
-                builder.setTitle(res.getString(R.string.connection_error_title));
+                builder.setTitle(res.getString(R.string.not_logged_in_title));
                 builder.setIcon(R.drawable.ic_dialog_alert);
-                builder.setMessage(res.getString(R.string.no_user_password_error_message));
-                builder.setNegativeButton(res.getString(R.string.cancel), null);
+                builder.setMessage(res.getString(R.string.login_create_account_message));
+                builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
                 builder.setPositiveButton(res.getString(R.string.log_in), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -1561,15 +1563,15 @@ public class DeckPicker extends ActionBarActivity {
             // }
             // });
             // }
-            // builder.setNegativeButton(res.getString(R.string.cancel), null);
+            // builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
             // dialog = builder.create();
             // break;
 
             case DIALOG_NO_CONNECTION:
-                builder.setTitle(res.getString(R.string.connection_error_title));
+                // builder.setTitle(res.getString(R.string.connection_error_title));
                 builder.setIcon(R.drawable.ic_dialog_alert);
-                builder.setMessage(res.getString(R.string.connection_needed));
-                builder.setPositiveButton(res.getString(R.string.ok), null);
+                builder.setMessage(res.getString(R.string.youre_offline));
+                builder.setPositiveButton(res.getString(R.string.dialog_ok), null);
                 dialog = builder.create();
                 break;
 
@@ -1580,46 +1582,46 @@ public class DeckPicker extends ActionBarActivity {
                 // Message is set in onPrepareDialog
                 builder.setTitle(res.getString(R.string.delete_deck_title));
                 builder.setIcon(R.drawable.ic_dialog_alert);
-                builder.setPositiveButton(res.getString(R.string.yes), new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DELETE_DECK, new DeckTask.TaskListener() {
+                builder.setPositiveButton(res.getString(R.string.dialog_positive_delete),
+                        new DialogInterface.OnClickListener() {
                             @Override
-                            public void onPreExecute() {
-                                mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "", getResources()
-                                        .getString(R.string.delete_deck), true);
+                            public void onClick(DialogInterface dialog, int which) {
+                                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DELETE_DECK, new DeckTask.TaskListener() {
+                                        @Override
+                                        public void onPreExecute() {
+                                            mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "",
+                                                    getResources().getString(R.string.delete_deck), true);
+                                        }
+
+                                        @Override
+                                        public void onPostExecute(TaskData result) {
+                                            if (result == null) {
+                                                return;
+                                            }
+                                            Object[] res = result.getObjArray();
+                                            updateDecksList((TreeSet<Object[]>) res[0], (Integer) res[1],
+                                                    (Integer) res[2]);
+                                            if (mFragmented) {
+                                                selectDeck(AnkiDroidApp.getCol().getDecks().selected());
+                                            }
+                                            if (mProgressDialog.isShowing()) {
+                                                try {
+                                                    mProgressDialog.dismiss();
+                                                } catch (Exception e) {
+                                                    Log.e(AnkiDroidApp.TAG,
+                                                          "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
+                                                }
+                                            }
+                                        }
+
+
+                                        @Override
+                                        public void onProgressUpdate(TaskData... values) {
+                                        }
+                                    }, new TaskData(AnkiDroidApp.getCol(), mCurrentDid));
                             }
-
-
-                            @Override
-                            public void onPostExecute(TaskData result) {
-                                if (result == null) {
-                                    return;
-                                }
-                                Object[] res = result.getObjArray();
-                                updateDecksList((TreeSet<Object[]>) res[0], (Integer) res[1], (Integer) res[2]);
-                                if (mFragmented) {
-                                    selectDeck(AnkiDroidApp.getCol().getDecks().selected());
-                                }
-                                if (mProgressDialog.isShowing()) {
-                                    try {
-                                        mProgressDialog.dismiss();
-                                    } catch (Exception e) {
-                                        Log.e(AnkiDroidApp.TAG,
-                                                "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
-                                    }
-                                }
-                            }
-
-
-                            @Override
-                            public void onProgressUpdate(TaskData... values) {
-                            }
-                        }, new TaskData(AnkiDroidApp.getCol(), mCurrentDid));
-                    }
-                });
-                builder.setNegativeButton(res.getString(R.string.cancel), null);
+                        });
+                builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
                 dialog = builder.create();
                 break;
 
@@ -1660,19 +1662,20 @@ public class DeckPicker extends ActionBarActivity {
                 builder.setTitle(res.getString(R.string.backup_repair_deck));
                 builder.setMessage(res.getString(R.string.repair_deck_dialog, BackupManager.BROKEN_DECKS_SUFFIX));
                 builder.setIcon(R.drawable.ic_dialog_alert);
-                builder.setPositiveButton(res.getString(R.string.yes), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REPAIR_DECK, mRepairDeckHandler,
-                                new DeckTask.TaskData(AnkiDroidApp.getCol(), AnkiDroidApp.getCollectionPath()));
-                    }
-                });
-                builder.setNegativeButton(res.getString(R.string.no), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        showDialog(DIALOG_ERROR_HANDLING);
-                    }
-                });
+                builder.setPositiveButton(res.getString(R.string.dialog_positive_repair),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REPAIR_DECK, mRepairDeckHandler,
+                                        new DeckTask.TaskData(AnkiDroidApp.getCol(), AnkiDroidApp.getCollectionPath()));
+                            }
+                        });
+                builder.setNegativeButton(res.getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            showDialog(DIALOG_ERROR_HANDLING);
+                        }
+                    });
                 builder.setOnCancelListener(new OnCancelListener() {
 
                     @Override
@@ -1688,7 +1691,6 @@ public class DeckPicker extends ActionBarActivity {
                 builder.setPositiveButton(getString(R.string.sync_sanity_local), mSyncSanityFailListener);
                 builder.setNeutralButton(getString(R.string.sync_sanity_remote), mSyncSanityFailListener);
                 builder.setNegativeButton(res.getString(R.string.sync_conflict_cancel), mSyncSanityFailListener);
-                builder.setTitle(res.getString(R.string.sync_log_title));
                 dialog = builder.create();
                 break;
 
@@ -1700,7 +1702,7 @@ public class DeckPicker extends ActionBarActivity {
                         sync("download", mSyncMediaUsn);
                     }
                 });
-                builder.setNegativeButton(res.getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(res.getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (mLoadFailed) {
@@ -1724,20 +1726,18 @@ public class DeckPicker extends ActionBarActivity {
                         }
                     }
                 });
-                builder.setTitle(res.getString(R.string.sync_log_title));
                 dialog = builder.create();
                 break;
 
             case DIALOG_SYNC_LOG:
-                builder.setTitle(res.getString(R.string.sync_log_title));
-                builder.setPositiveButton(res.getString(R.string.ok), null);
+                builder.setPositiveButton(res.getString(R.string.dialog_ok), null);
                 dialog = builder.create();
                 break;
 
             case DIALOG_BACKUP_NO_SPACE_LEFT:
-                builder.setTitle(res.getString(R.string.attention));
+                builder.setTitle(res.getString(R.string.sd_card_full_title));
                 builder.setMessage(res.getString(R.string.backup_deck_no_space_left));
-                builder.setPositiveButton(res.getString(R.string.ok), new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(res.getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         loadCollection();
@@ -1801,7 +1801,7 @@ public class DeckPicker extends ActionBarActivity {
                                 StyledDialog.Builder builder = new StyledDialog.Builder(DeckPicker.this);
                                 builder.setTitle(res.getString(R.string.import_title));
                                 builder.setMessage(res.getString(R.string.import_message_replace_confirm, mImportPath));
-                                builder.setPositiveButton(res.getString(R.string.yes),
+                                builder.setPositiveButton(res.getString(R.string.dialog_positive_replace),
                                         new DialogInterface.OnClickListener() {
 
                                             @Override
@@ -1813,11 +1813,11 @@ public class DeckPicker extends ActionBarActivity {
                                             }
 
                                         });
-                                builder.setNegativeButton(res.getString(R.string.no), null);
+                                builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
                                 builder.show();
                             }
                         });
-                builder.setNegativeButton(res.getString(R.string.cancel), null);
+                builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
                 builder.setCancelable(true);
                 dialog = builder.create();
                 break;
@@ -1830,27 +1830,27 @@ public class DeckPicker extends ActionBarActivity {
             case DIALOG_IMPORT_HINT:
                 builder.setTitle(res.getString(R.string.import_title));
                 builder.setMessage(res.getString(R.string.import_hint, AnkiDroidApp.getCurrentAnkiDroidDirectory()));
-                builder.setPositiveButton(res.getString(R.string.ok), new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(res.getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         showDialog(DIALOG_IMPORT_SELECT);
                     }
                 });
-                builder.setNegativeButton(res.getString(R.string.cancel), null);
+                builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
                 dialog = builder.create();
                 break;
 
             case DIALOG_IMPORT_LOG:
                 builder.setIcon(R.drawable.ic_dialog_alert);
                 builder.setTitle(res.getString(R.string.import_title));
-                builder.setPositiveButton(res.getString(R.string.ok), null);
+                builder.setPositiveButton(res.getString(R.string.dialog_ok), null);
                 dialog = builder.create();
                 break;
 
             case DIALOG_NO_SPACE_LEFT:
-                builder.setTitle(res.getString(R.string.attention));
+                builder.setTitle(res.getString(R.string.sd_card_almost_full_title));
                 builder.setMessage(res.getString(R.string.sd_space_warning, BackupManager.MIN_FREE_SPACE));
-                builder.setPositiveButton(res.getString(R.string.ok), new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(res.getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         finishWithAnimation();
@@ -1882,7 +1882,7 @@ public class DeckPicker extends ActionBarActivity {
                 if (mBackups.length == 0) {
                     builder.setTitle(getResources().getString(R.string.backup_restore));
                     builder.setMessage(res.getString(R.string.backup_restore_no_backups));
-                    builder.setPositiveButton(res.getString(R.string.ok), new Dialog.OnClickListener() {
+                    builder.setPositiveButton(res.getString(R.string.dialog_ok), new Dialog.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             showDialog(DIALOG_ERROR_HANDLING);
@@ -1926,20 +1926,21 @@ public class DeckPicker extends ActionBarActivity {
             case DIALOG_NEW_COLLECTION:
                 builder.setTitle(res.getString(R.string.backup_new_collection));
                 builder.setMessage(res.getString(R.string.backup_del_collection_question));
-                builder.setPositiveButton(res.getString(R.string.ok), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        AnkiDroidApp.closeCollection(false);
-                        String path = AnkiDroidApp.getCollectionPath();
-                        AnkiDatabaseManager.closeDatabase(path);
-                        if (BackupManager.moveDatabaseToBrokenFolder(path, false)) {
-                            loadCollection();
-                        } else {
+                builder.setPositiveButton(res.getString(R.string.dialog_positive_create),
+                       new DialogInterface.OnClickListener() {
+                           @Override
+                           public void onClick(DialogInterface dialog, int which) {
+                               AnkiDroidApp.closeCollection(false);
+                               String path = AnkiDroidApp.getCollectionPath();
+                               AnkiDatabaseManager.closeDatabase(path);
+                               if (BackupManager.moveDatabaseToBrokenFolder(path, false)) {
+                                   loadCollection();
+                               } else {
                             showDialog(DIALOG_ERROR_HANDLING);
-                        }
-                    }
-                });
-                builder.setNegativeButton(res.getString(R.string.no), new DialogInterface.OnClickListener() {
+                               }
+                           }
+                       });
+                builder.setNegativeButton(res.getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
                         showDialog(DIALOG_ERROR_HANDLING);
@@ -1958,13 +1959,14 @@ public class DeckPicker extends ActionBarActivity {
             case DIALOG_FULL_SYNC_FROM_SERVER:
                 builder.setTitle(res.getString(R.string.backup_full_sync_from_server));
                 builder.setMessage(res.getString(R.string.backup_full_sync_from_server_question));
-                builder.setPositiveButton(res.getString(R.string.ok), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        sync("download", mSyncMediaUsn);
-                    }
-                });
-                builder.setNegativeButton(res.getString(R.string.no), new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(res.getString(R.string.dialog_positive_overwrite),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                sync("download", mSyncMediaUsn);
+                            }
+                        });
+                builder.setNegativeButton(res.getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
                         showDialog(DIALOG_ERROR_HANDLING);
@@ -1979,20 +1981,21 @@ public class DeckPicker extends ActionBarActivity {
                 });
                 dialog = builder.create();
                 break;
-                
+
             case DIALOG_CONFIRM_DATABASE_CHECK:
                 builder.setTitle(res.getString(R.string.check_db_title));
-                builder.setMessage(res.getString(R.string.check_db_confirm));
-                builder.setPositiveButton(res.getString(R.string.yes), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        integrityCheck();
-                    }
-                });
-                builder.setNegativeButton(res.getString(R.string.no), null);
-                builder.setCancelable(true);               
+                builder.setMessage(res.getString(R.string.check_db_warning));
+                builder.setPositiveButton(res.getString(R.string.dialog_ok),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                integrityCheck();
+                            }
+                        });
+                builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
+                builder.setCancelable(true);
                 dialog = builder.create();
-                break;                
+                break;
 
             default:
                 dialog = null;
@@ -2284,7 +2287,7 @@ public class DeckPicker extends ActionBarActivity {
      * The mother of all syncing attempts. This might be called from sync() as first attempt to sync a collection OR
      * from the mSyncConflictResolutionListener if the first attempt determines that a full-sync is required. In the
      * second case, we have passed the mediaUsn that was obtained during the first attempt.
-     * 
+     *
      * @param syncConflictResolution Either "upload" or "download", depending on the user's choice.
      * @param syncMediaUsn The media Usn, as determined during the prior sync() attempt that determined that full
      *            syncing was required.
@@ -2317,37 +2320,37 @@ public class DeckPicker extends ActionBarActivity {
             switch (which) {
                 case DialogInterface.BUTTON_POSITIVE:
                     builder = new StyledDialog.Builder(DeckPicker.this);
-                    builder.setPositiveButton(res.getString(R.string.yes), new Dialog.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Collection col = AnkiDroidApp.getCol();
-                            if (col != null) {
-                                col.modSchema(true);
-                                col.setMod();
-                                sync("upload", 0);
-                            }
-                        }
-                    });
-                    builder.setNegativeButton(res.getString(R.string.no), null);
-                    builder.setTitle(res.getString(R.string.sync_log_title));
+                    builder.setPositiveButton(res.getString(R.string.dialog_positive_overwrite),
+                            new Dialog.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Collection col = AnkiDroidApp.getCol();
+                                    if (col != null) {
+                                        col.modSchema(true);
+                                        col.setMod();
+                                        sync("upload", 0);
+                                    }
+                                }
+                            });
+                    builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
                     builder.setMessage(res.getString(R.string.sync_conflict_local_confirm));
                     builder.show();
                     break;
                 case DialogInterface.BUTTON_NEUTRAL:
                     builder = new StyledDialog.Builder(DeckPicker.this);
-                    builder.setPositiveButton(res.getString(R.string.yes), new Dialog.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Collection col = AnkiDroidApp.getCol();
-                            if (col != null) {
-                                col.modSchema(true);
-                                col.setMod();
-                                sync("download", 0);
-                            }
-                        }
-                    });
-                    builder.setNegativeButton(res.getString(R.string.no), null);
-                    builder.setTitle(res.getString(R.string.sync_log_title));
+                    builder.setPositiveButton(res.getString(R.string.dialog_positive_overwrite),
+                            new Dialog.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Collection col = AnkiDroidApp.getCol();
+                                    if (col != null) {
+                                        col.modSchema(true);
+                                        col.setMod();
+                                        sync("download", 0);
+                                    }
+                                }
+                            });
+                    builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
                     builder.setMessage(res.getString(R.string.sync_conflict_remote_confirm));
                     builder.show();
                     break;
@@ -2365,27 +2368,26 @@ public class DeckPicker extends ActionBarActivity {
             switch (which) {
                 case DialogInterface.BUTTON_POSITIVE:
                     builder = new StyledDialog.Builder(DeckPicker.this);
-                    builder.setPositiveButton(res.getString(R.string.yes), new Dialog.OnClickListener() {
+                    builder.setPositiveButton(res.getString(R.string.dialog_positive_overwrite), new Dialog.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             sync("upload", mSyncMediaUsn);
                         }
                     });
-                    builder.setNegativeButton(res.getString(R.string.no), null);
-                    builder.setTitle(res.getString(R.string.sync_log_title));
+                    builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
                     builder.setMessage(res.getString(R.string.sync_conflict_local_confirm));
                     builder.show();
                     break;
                 case DialogInterface.BUTTON_NEUTRAL:
                     builder = new StyledDialog.Builder(DeckPicker.this);
-                    builder.setPositiveButton(res.getString(R.string.yes), new Dialog.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            sync("download", mSyncMediaUsn);
-                        }
-                    });
-                    builder.setNegativeButton(res.getString(R.string.no), null);
-                    builder.setTitle(res.getString(R.string.sync_log_title));
+                    builder.setPositiveButton(res.getString(R.string.dialog_positive_overwrite),
+                            new Dialog.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    sync("download", mSyncMediaUsn);
+                                }
+                            });
+                    builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
                     builder.setMessage(res.getString(R.string.sync_conflict_remote_confirm));
                     builder.show();
                     break;
@@ -2455,7 +2457,7 @@ public class DeckPicker extends ActionBarActivity {
                         loadCounts();
                     }
                 });
-                builder2.setNegativeButton(res.getString(R.string.cancel), null);
+                builder2.setNegativeButton(res.getString(R.string.dialog_cancel), null);
                 builder2.create().show();
                 return true;
 
@@ -2492,7 +2494,7 @@ public class DeckPicker extends ActionBarActivity {
                         openStudyOptions(id, new Bundle());
                     }
                 });
-                builder3.setNegativeButton(res.getString(R.string.cancel), null);
+                builder3.setNegativeButton(res.getString(R.string.dialog_cancel), null);
                 builder3.create().show();
                 return true;
 
@@ -2672,10 +2674,13 @@ public class DeckPicker extends ActionBarActivity {
                 }
                 if (result.getBoolean()) {
                     StyledDialog dialog = (StyledDialog) onCreateDialog(DIALOG_OK);
-                    dialog.setTitle(getResources().getString(R.string.check_db_title));
-                    dialog.setMessage(String.format(Utils.ENGLISH_LOCALE,
-                            getResources().getString(R.string.check_db_result_message),
-                            Math.round(result.getLong() / 1024.0)));
+                    double shrunk = Math.round(result.getLong() / 1024.0);
+                    if (shrunk > 0.0) {
+                        dialog.setMessage(String.format(Locale.getDefault(),
+                                getResources().getString(R.string.check_db_acknowledge_shrunk), shrunk));
+                    } else {
+                        dialog.setMessage(getResources().getString(R.string.check_db_acknowledge));
+                    }
                     dialog.show();
                 } else {
                     handleDbError();
@@ -2767,7 +2772,7 @@ public class DeckPicker extends ActionBarActivity {
 
     /**
      * Programmatically click on a deck in the deck list.
-     * 
+     *
      * @param did The deck ID of the deck to select.
      */
     private void selectDeck(long did) {
@@ -2796,7 +2801,7 @@ public class DeckPicker extends ActionBarActivity {
      * <p>
      * Note that this method does not change the currently selected deck in the collection, only the highlighted deck in
      * the deck list. To select a deck, see {@link #selectDeck(long)}.
-     * 
+     *
      * @param did The deck ID of the deck to select.
      */
     public void setSelectedDeck(long did) {
