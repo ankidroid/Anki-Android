@@ -39,12 +39,9 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="btn_continue">Continuar</string>
   <string name="app_name">AnkiDroid</string>
-  <string name="attention">Atención</string>
-  <string name="yes">Sí</string>
-  <string name="no">No</string>
-  <string name="ok">Aceptar</string>
+  <string name="app_name_anki">Anki</string>
+  <string name="app_name_droid">Droid</string>
   <string name="studyoptions_deck_name">Nombre del mazo</string>
   <string name="studyoptions_due_today">Programadas para hoy:</string>
   <string name="studyoptions_new_total">Tarjetas nuevas totales:</string>
@@ -182,4 +179,5 @@
   <string name="confirm">Confirmar</string>
   <string name="internet">Internet</string>
   <string name="pc">PC</string>
+  <string name="title_activity_graphical_activity">Statistical chart</string>
 </resources>

@@ -38,10 +38,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
-  <string name="CardEditorCancelButton">İptal</string>
-  <string name="CardEditorSaveButton">Kaydet</string>
-  <string name="CardEditorLaterButton">Daha sonra</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <string name="CardEditorLaterMessage">Bilgi daha sonrası için kaydedildi</string>
   <string name="CardEditorCardDeck">Kart destesi: %s</string>
   <string name="CardEditorNoteDeck">Not destesi: %s</string>
@@ -121,6 +118,8 @@
   <string name="help_tutorial">Eğitim destesi</string>
   <string name="check_db">Veritabanını denetle</string>
   <string name="check_db_message">Veritabanı denetleniyor.\nLütfen bekleyin...</string>
+  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
+  <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
   <string name="simple_interface_hint">Boş %s. Basit arayüzün resimleri/sesleri vb. gösteremediğini unutmayın.</string>
   <string name="delete_deck">Deste siliniyor...\nLütfen bekleyin.</string>
   <string-array name="dynOrderLabels">

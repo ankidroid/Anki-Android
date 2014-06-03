@@ -38,16 +38,13 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
-  <string name="CardEditorCancelButton">Cancelar</string>
-  <string name="CardEditorSaveButton">Guardar</string>
-  <string name="CardEditorLaterButton">Mais Tarde</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <string name="CardEditorLaterMessage">Informação guardada para mais tarde</string>
   <string name="CardEditorCardDeck">Baralho de Cartões: %s</string>
   <string name="CardEditorNoteDeck">Baralho de Notas: %s</string>
   <string name="CardEditorModel">Tipo de Nota: %s</string>
   <string name="CardEditorTags">Etiquetas: %1$s</string>
-  <string name="add_new_filter_tags">Add/Filter tags</string>
+  <string name="add_new_filter_tags">Add/filter tags</string>
   <string name="note_type">Tipo de nota</string>
   <string name="card_type">Tipo de cartão</string>
   <string name="filter_tags">Filter tags</string>
@@ -61,6 +58,19 @@
   <string name="leech_suspend_notification">Cartão marcado como Sanguessuga e suspenso</string>
   <string name="leech_notification">Cartão marcado como sanguessuga</string>
   <string name="corrupt_font">Ficheiro de tipo de letra corrompido %s</string>
+  <string-array name="browser_column1_headings">
+    <item>Search field</item>
+  </string-array>
+  <string-array name="browser_column2_headings">
+    <item>Answer</item>
+    <item>Card</item>
+    <item>Deck</item>
+    <item>Note</item>
+    <item>Question</item>
+    <item>Tags</item>
+    <item>Lapses</item>
+    <item>Reviews</item>
+  </string-array>
   <string name="about_title">Sobre</string>
   <string name="cardeditor_title_add_note">Adicionar nota</string>
   <string name="cardeditor_title_edit_card">Editar nota</string>
@@ -73,6 +83,14 @@
   <string name="select">Selecionar</string>
   <string name="saving_changes">A guardar as  alterações...</string>
   <string name="reordering_cards">Reordenação de cartões ...</string>
+  <plurals name="timebox_reached">
+    <item quantity="one">1 card studied in %2$s</item>
+    <item quantity="other">%1$d cards studied in %2$s</item>
+  </plurals>
+  <plurals name="timebox_reached_minutes">
+    <item quantity="one">1 minuto</item>
+    <item quantity="other">%1$d minutos</item>
+  </plurals>
   <string name="studyoptions_welcome_title">Bem-vindo ao AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">Nenhum armazenamento externo disponível</string>
   <string name="studyoptions_no_external_storage_message">Nenhum armazenamento externo está disponível neste momento. AnkiDroid precisa de ter acesso ao cartão SD para ler e carregar os seus baralhos. Verifique se o cartão SD está montado e tente novamente.</string>
@@ -90,14 +108,29 @@
   <string name="rename">Renomear</string>
   <string name="rename_error">Deck %s não pôde ser renomeado</string>
   <string name="default_conf_delete_error">The default options group can\'t be removed</string>
+  <plurals name="factadder_cards_added">
+    <item quantity="one">1 cartão adicionado</item>
+    <item quantity="other">%d cartões adicionados</item>
+  </plurals>
   <string name="help_title">Ajuda</string>
   <string name="help_online">Ajuda online</string>
   <string name="help_faq">FAQ</string>
   <string name="help_tutorial">Baralho Tutorial</string>
   <string name="check_db">Verificar base de dados</string>
   <string name="check_db_message">Verificando a base de dados.\nEspere um momento...</string>
+  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
+  <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
   <string name="simple_interface_hint">%s Vazio. Tenha em mente que nesta simples interface não é possível visualizar imagens/sons etc.</string>
   <string name="delete_deck">A eliminar baralho...\nEspere um momento.</string>
+  <string-array name="dynOrderLabels">
+    <item>Mais antigos primeiro</item>
+    <item>Aleatório</item>
+    <item>Intervalos creascentes</item>
+    <item>Intervalos decrescentes</item>
+    <item>Mais falhados</item>
+    <item>Ordem de adição</item>
+    <item>Ordem de revisão</item>
+  </string-array>
   <string name="menu_cardbrowser">Navegador de cartões</string>
   <string name="show_hint">Mostrar pista</string>
   <string name="pref_lang_other">Preferências de idioma</string>
@@ -122,44 +155,10 @@
   <string name="steps_error">Steps must be numbers greater than 0</string>
   <string name="steps_min_error">É necessário pelo menos um passo</string>
   <string name="custom_study_invalid_number">Número inválido</string>
-  <string name="template_error">Template error:</string>
-  <string name="template_error_detail">There is an error in the template of this card.</string>
-  <string name="template_error_fix">Please use the card editor on the desktop client to fix the error.</string>
+  <string name="template_error">Template error</string>
+  <string name="template_error_detail">The card template contains an error</string>
+  <string name="template_error_fix">Use the card editor on the desktop client to fix it.</string>
   <string name="sched_end">(fim)</string>
-  <string name="sched_unbury_button">To see them now, tap the Unbury button.</string>
-  <string name="sched_has_buried">Some related or buried cards were delayed until a later session.</string>
-  <string-array name="browser_column1_headings">
-    <item>Search Field</item>
-  </string-array>
-  <string-array name="browser_column2_headings">
-    <item>Answer</item>
-    <item>Card</item>
-    <item>Deck</item>
-    <item>Note</item>
-    <item>Question</item>
-    <item>Tags</item>
-    <item>Lapses</item>
-    <item>Reviews</item>
-  </string-array>
-  <string-array name="dynOrderLabels">
-    <item>Mais antigos primeiro</item>
-    <item>Aleatório</item>
-    <item>Intervalos creascentes</item>
-    <item>Intervalos decrescentes</item>
-    <item>Mais falhados</item>
-    <item>Ordem de adição</item>
-    <item>Ordem de revisão</item>
-  </string-array>
-  <plurals name="timebox_reached">
-    <item quantity="one">1 card studied in %2$s</item>
-    <item quantity="other">%1$d cards studied in %2$s</item>
-  </plurals>
-  <plurals name="timebox_reached_minutes">
-    <item quantity="one">1 minuto</item>
-    <item quantity="other">%1$d minutos</item>
-  </plurals>
-  <plurals name="factadder_cards_added">
-    <item quantity="one">1 cartão adicionado</item>
-    <item quantity="other">%d cartões adicionados</item>
-  </plurals>
+  <string name="sched_unbury_button">To see them now, touch the \"Unbury\" button.</string>
+  <string name="sched_has_buried">Some related or buried cards were delayed until tomorrow.</string>
 </resources>

@@ -39,6 +39,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <plurals name="card_browser_subtitle">
+    <item quantity="one">1 of %2$d cards shown</item>
+    <item quantity="other">%1$d of %2$d cards shown</item>
+  </plurals>
   <string name="card_browser_all_decks">Todas as barallas</string>
   <string name="card_browser_load">Cargando cartóns.\nAgarda por favor...</string>
   <string name="card_browser_cardloading_error">Erro ao cargar os cartóns. Probablemente estea relacionado coas restricións de memoria do teu dispositivo. Inténtao de novo cunha baralla máis pequena</string>
@@ -47,17 +51,17 @@
   <string name="card_browser_unsuspend_card">Reactivar o cartón</string>
   <string name="card_browser_mark_card">Mark note</string>
   <string name="card_browser_unmark_card">Unmark note</string>
-  <string name="delete_card_title">Delete note</string>
-  <string name="delete_card_message">Really delete all cards of this note?\nSearch field: %s</string>
+  <string name="delete_card_title">Delete note?</string>
+  <string name="delete_card_message">Delete all cards of this note?\nSearch field: %s</string>
   <string name="card_browser_show_marked">Filter marked</string>
-  <string name="card_browser_field">Change CardBrowser Field</string>
-  <string name="card_browser_field_title">Change CardBrowser Field</string>
+  <string name="card_browser_field">Change card browser field</string>
+  <string name="card_browser_field_title">Change card browser field</string>
   <string name="card_browser_show_suspended">Filter suspended</string>
   <string name="card_browser_search_by_tag">Filter by tag</string>
   <string name="card_browser_tags_shown">Tags: %1$s</string>
   <string name="card_browser_change_display_order">Change display order</string>
   <string name="card_browser_change_display_order_title">Choose display order</string>
-  <string name="card_browser_change_display_order_reverse">Select a field twice to reverse.</string>
+  <string name="card_browser_change_display_order_reverse">Select a field twice to reverse</string>
   <string name="card_browser_order_reverse">(reverse)</string>
   <string name="card_browser_card_details">Card details</string>
   <string name="card_details_question">Question</string>
@@ -75,8 +79,8 @@
   <string name="card_details_changed">Changed</string>
   <string name="card_details_tags">Tags</string>
   <string name="card_details_model">Note type</string>
-  <string name="card_browser_sorting_cards">Sorting cards.\nPlease wait...</string>
-  <string name="card_browser_filtering_cards">Filtering cards.\nPlease wait...</string>
+  <string name="card_browser_sorting_cards">Sorting cards&#8230;</string>
+  <string name="card_browser_filtering_cards">Filtering cards&#8230;</string>
   <string name="card_details_card_model">Card model</string>
   <string-array name="card_browser_order_labels">
     <item>No sorting (faster)</item>
@@ -90,8 +94,4 @@
     <item>By reviews</item>
     <item>By lapses</item>
   </string-array>
-  <plurals name="card_browser_subtitle">
-    <item quantity="one">1 of %2$d cards shown</item>
-    <item quantity="other">%1$d of %2$d cards shown</item>
-  </plurals>
 </resources>

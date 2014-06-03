@@ -53,8 +53,8 @@
   <string name="statistics_period_x_axis_minutes">Minutės</string>
   <string name="statistics_new_cards">Naujos kortelės</string>
   <string name="statistics_failed_cards">Failed cards</string>
-  <string name="statistics_fullscreen">Toggle Fullscreen</string>
-  <string name="calculating_statistics">Calculating statistics.\nPlease wait...</string>
+  <string name="statistics_fullscreen">Toggle fullscreen</string>
+  <string name="calculating_statistics">Calculating statistics&#8230;</string>
   <string name="deck_summary_cards">Number of cards:</string>
   <string name="deck_summary_notes">Number of notes:</string>
   <string name="deck_summary_cards_mature">Senos kortelės:</string>
@@ -80,9 +80,6 @@
   <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; cards/day</string>
   <string name="deck_summary_deck_age">Deck age: &lt;b&gt;%d&lt;/b&gt; days</string>
   <string name="deck_summary_all_decks">Visos malkos</string>
-  <string name="stats_forecast">Prognozė</string>
-  <string name="stats_review_count">Kartojimų skaičius</string>
-  <string name="stats_review_time">Kartojimų laikas</string>
   <string-array name="next_review_in_s">
     <item>po 1 sekundės</item>
     <item>po 1 minutės</item>
@@ -120,6 +117,9 @@
     <item>Savaitės</item>
     <item>Mėnesiai</item>
   </string-array>
+  <string name="stats_forecast">Prognozė</string>
+  <string name="stats_review_count">Kartojimų skaičius</string>
+  <string name="stats_review_time">Kartojimų laikas</string>
   <string-array name="stats_period">
     <item>1 month</item>
     <item>1 year</item>

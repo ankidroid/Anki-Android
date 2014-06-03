@@ -38,10 +38,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
-  <string name="CardEditorCancelButton">キャンセル</string>
-  <string name="CardEditorSaveButton">保存する</string>
-  <string name="CardEditorLaterButton">後で</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <string name="CardEditorLaterMessage">後日のために情報を保存</string>
   <string name="CardEditorCardDeck">カード単語帳: %s</string>
   <string name="CardEditorNoteDeck">ノート単語帳: %s</string>
@@ -121,6 +118,8 @@
   <string name="help_tutorial">チュートリアルの単語帳</string>
   <string name="check_db">データベースの検査</string>
   <string name="check_db_message">データを確認中です\nしばらくお待ちください</string>
+  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
+  <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
   <string name="simple_interface_hint">%s が空です。 簡単なインターフェースでは写真を表示したり、音を出したりはできません。</string>
   <string name="delete_deck">単語帳を削除中です\nしばらくお待ちください</string>
   <string-array name="dynOrderLabels">

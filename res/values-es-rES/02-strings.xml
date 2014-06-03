@@ -38,16 +38,13 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
-  <string name="CardEditorCancelButton">Cancelar</string>
-  <string name="CardEditorSaveButton">Guardar</string>
-  <string name="CardEditorLaterButton">Más tarde</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <string name="CardEditorLaterMessage">Información guardada para más tarde</string>
   <string name="CardEditorCardDeck">Mazo de la Tarjeta: %s</string>
   <string name="CardEditorNoteDeck">Mazo de la Nota: %s</string>
   <string name="CardEditorModel">Tipo de Nota: %s</string>
   <string name="CardEditorTags">Etiquetas: %1$s</string>
-  <string name="add_new_filter_tags">Add/Filter tags</string>
+  <string name="add_new_filter_tags">Add/filter tags</string>
   <string name="note_type">Tipo de Nota</string>
   <string name="card_type">Tipo de tarjeta</string>
   <string name="filter_tags">Filter tags</string>
@@ -121,6 +118,8 @@
   <string name="help_tutorial">Mazo tutorial</string>
   <string name="check_db">Comprobar base de datos</string>
   <string name="check_db_message">Comprobando base de datos.\nPor favor, espera...</string>
+  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
+  <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
   <string name="simple_interface_hint">Vaciar %s. Ten en cuenta que la interfaz simple no puede mostrar imágenes/sonidos etc.</string>
   <string name="delete_deck">Eliminando mazo...\nPor favor, espera.</string>
   <string-array name="dynOrderLabels">

@@ -39,18 +39,31 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="btn_continue">Continúa</string>
   <string name="app_name">AnkiDroid</string>
-  <string name="attention">Atenció</string>
-  <string name="yes">Sí</string>
-  <string name="no">No</string>
-  <string name="ok">D\'acord</string>
+  <string name="app_name_anki">Anki</string>
+  <string name="app_name_droid">Droid</string>
   <string name="studyoptions_deck_name">Nom del paquet</string>
   <string name="studyoptions_due_today">Venç avui:</string>
   <string name="studyoptions_new_total">Total de noves fitxes:</string>
   <string name="studyoptions_total_cards">Total de fitxes:</string>
   <string name="studyoptions_eta">Temps estimat (min.):</string>
-  <string name="studyoptions_start">Study Now</string>
+  <string name="studyoptions_start">Study</string>
+  <plurals name="deckpicker_title">
+    <item quantity="one">1 de %2$d vençuda (%3$s)</item>
+    <item quantity="other">%1$d de %2$d vençudes (%3$s)</item>
+  </plurals>
+  <plurals name="deckpicker_title_minutes">
+    <item quantity="one">1 min.</item>
+    <item quantity="other">%d min.</item>
+  </plurals>
+  <plurals name="deckpicker_due">
+    <item quantity="one">1 de %2$d pendent</item>
+    <item quantity="other">%1$d de %2$d pendents</item>
+  </plurals>
+  <plurals name="reviewer_window_title">
+    <item quantity="one">queda 1 minut</item>
+    <item quantity="other">queden %d minuts</item>
+  </plurals>
   <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">Mostra la resposta</string>
   <string name="ease1_successive">De nou</string>
@@ -80,8 +93,8 @@
   <string name="contextmenu_deckpicker_reset_reset_message">Restableix l\'idioma</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optimitza la base de dades</string>
   <string name="contextmenu_deckpicker_rename_deck">Canvia el nom del paquet</string>
-  <string name="contextmenu_deckpicker_collapse_deck">Hide Subdecks</string>
-  <string name="contextmenu_deckpicker_inflate_deck">Show Subdecks</string>
+  <string name="contextmenu_deckpicker_collapse_deck">Hide subdecks</string>
+  <string name="contextmenu_deckpicker_inflate_deck">Show subdecks</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Diccionari personalitzat</string>
   <string name="menu_add">Add</string>
   <string name="menu_add_note">Add note</string>
@@ -91,7 +104,7 @@
   <string name="menu_preferences">Preferències</string>
   <string name="menu_about">Quant a</string>
   <string name="menu_dismiss_note">Deixa nota...</string>
-  <string name="menu_bury_card">Bury Card</string>
+  <string name="menu_bury_card">Bury card</string>
   <string name="menu_bury_note">Enterra la nota</string>
   <string name="menu_suspend_card">Suspèn la fitxa</string>
   <string name="menu_suspend_note">Suspen la nota</string>
@@ -108,36 +121,6 @@
   <string name="studyoptions_feedback">Comentaris</string>
   <string name="studyoptions_load_tutorial_deck">Genera el tutorial</string>
   <string name="night_mode">Mode Nit</string>
-  <string name="visit">Visita</string>
-  <string name="later">Més tard</string>
-  <string name="download">Descarrega</string>
-  <string name="open_collection">S\'està obrint la col·lecció.\nUn moment si us plau...</string>
-  <string name="rebuild_cram_deck">S\'està reconstruïnt el paquet cram \nEspereu...</string>
-  <string name="rebuild_cram_label">Reconstrueix</string>
-  <string name="empty_cram_label">Buit</string>
-  <string name="empty_cram_deck">S\'està buidant el paquet cram. \nEspereu...</string>
-  <string name="custom_study_deck_name">Sessió d\'estudi a mida</string>
-  <string name="custom_study_deck_exists">Si us plau, primer canvieu de nom el paquet Estudi a Mida.</string>
-  <string name="studyoptions_congrats_finished">Felicitats! De moment ja heu acabat.</string>
-  <string name="studyoptions_congrats_more_rev">S\'ha assolit el límit de revisió d\'avui, però encara hi ha fitxes per a revisar. Per a optimitzar la memòria, considereu augmentar el límit diari a les opcions.</string>
-  <string name="studyoptions_congrats_more_new">Hi ha més fitxes noves, però s\'ha assolit el límit diari. Podeu augmentar el límit a les opcions, però si us plau, tingueu en compte que això farà augmentar la càrrega de treball de la revisió a curt termini.</string>
-  <string name="studyoptions_congrats_custom">Per a estudiar fora de la planificació normal, cliqueu al botó Estudi a Mida d\'aquí sota.</string>
-  <string name="sd_card_not_mounted">La targeta SD no està muntada.\n\n També podeu desar la vostra col·lecció a la memòria interna, tot i que no es recomana, ja que no podreu accedir al fitxer tan fàcilment. Podeu habilitar aquesta opció a les preferències (obriu-les clicant aquest text).</string>
-  <string name="studyoptions_options">Opcions</string>
-  <string name="empty_cloze_warning">Si us plau editeu aquesta nota i afegiu algunes supressions cloze. (%1$s)</string>
-  <string name="help_cloze">ajuda</string>
-  <string name="button_sync">Sincronització</string>
-  <string name="restart">Reinicia</string>
-  <string name="do_nothing">No facis res</string>
-  <string name="more_options">Més opcions</string>
-  <string name="now">Ara</string>
-  <string name="back">Torna</string>
-  <string name="ankiweb">AnkiWeb</string>
-  <string name="usb">USB</string>
-  <string name="_import">Importa</string>
-  <string name="confirm">Confirma</string>
-  <string name="internet">Internet</string>
-  <string name="pc">PC</string>
   <string-array name="next_review_s">
     <item>1 segon</item>
     <item>1 minut</item>
@@ -154,22 +137,20 @@
     <item>%s mesos</item>
     <item>%s anys</item>
   </string-array>
-  <plurals name="deckpicker_title">
-    <item quantity="one">1 de %2$d vençuda (%3$s)</item>
-    <item quantity="other">%1$d de %2$d vençudes (%3$s)</item>
-  </plurals>
-  <plurals name="deckpicker_title_minutes">
-    <item quantity="one">1 min.</item>
-    <item quantity="other">%d min.</item>
-  </plurals>
-  <plurals name="deckpicker_due">
-    <item quantity="one">1 de %2$d pendent</item>
-    <item quantity="other">%1$d de %2$d pendents</item>
-  </plurals>
-  <plurals name="reviewer_window_title">
-    <item quantity="one">queda 1 minut</item>
-    <item quantity="other">queden %d minuts</item>
-  </plurals>
+  <string name="visit">Visita</string>
+  <string name="later">Més tard</string>
+  <string name="download">Descarrega</string>
+  <string name="open_collection">S\'està obrint la col·lecció.\nUn moment si us plau...</string>
+  <string name="rebuild_cram_deck">S\'està reconstruïnt el paquet cram \nEspereu...</string>
+  <string name="rebuild_cram_label">Reconstrueix</string>
+  <string name="empty_cram_label">Buit</string>
+  <string name="empty_cram_deck">S\'està buidant el paquet cram. \nEspereu...</string>
+  <string name="custom_study_deck_name">Sessió d\'estudi a mida</string>
+  <string name="custom_study_deck_exists">Si us plau, primer canvieu de nom el paquet Estudi a Mida.</string>
+  <string name="studyoptions_congrats_finished">Felicitats! De moment ja heu acabat.</string>
+  <string name="studyoptions_congrats_more_rev">S\'ha assolit el límit de revisió d\'avui, però encara hi ha fitxes per a revisar. Per a optimitzar la memòria, considereu augmentar el límit diari a les opcions.</string>
+  <string name="studyoptions_congrats_more_new">Hi ha més fitxes noves, però s\'ha assolit el límit diari. Podeu augmentar el límit a les opcions, però si us plau, tingueu en compte que això farà augmentar la càrrega de treball de la revisió a curt termini.</string>
+  <string name="studyoptions_congrats_custom">Per a estudiar fora de la planificació normal, cliqueu al botó Estudi a Mida d\'aquí sota.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Demà hi haurà: 1 fitxa per revisar i %2$s.\n temps aproximat: %3$s</item>
     <item quantity="other">Demà hi haurà: %1$d fitxes per revisar i %2$s.\n Temps aproximat: %3$s</item>
@@ -182,4 +163,21 @@
     <item quantity="one">Temps estimat: 1 min.</item>
     <item quantity="other">Temps estimat: %1$d min.</item>
   </plurals>
+  <string name="sd_card_not_mounted">La targeta SD no està muntada.\n\n També podeu desar la vostra col·lecció a la memòria interna, tot i que no es recomana, ja que no podreu accedir al fitxer tan fàcilment. Podeu habilitar aquesta opció a les preferències (obriu-les clicant aquest text).</string>
+  <string name="studyoptions_options">Opcions</string>
+  <string name="empty_cloze_warning">Si us plau editeu aquesta nota i afegiu algunes supressions cloze. (%1$s)</string>
+  <string name="help_cloze">ajuda</string>
+  <string name="button_sync">Sincronització</string>
+  <string name="restart">Reinicia</string>
+  <string name="do_nothing">No facis res</string>
+  <string name="more_options">Més opcions</string>
+  <string name="now">Ara</string>
+  <string name="back">Torna</string>
+  <string name="ankiweb">AnkiWeb</string>
+  <string name="usb">USB</string>
+  <string name="_import">Importa</string>
+  <string name="confirm">Confirma</string>
+  <string name="internet">Internet</string>
+  <string name="pc">PC</string>
+  <string name="title_activity_graphical_activity">Statistical chart</string>
 </resources>

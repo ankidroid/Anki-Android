@@ -39,12 +39,9 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="btn_continue">ادامه</string>
   <string name="app_name">آنکی دروید</string>
-  <string name="attention">توجه</string>
-  <string name="yes">بله</string>
-  <string name="no">خیر</string>
-  <string name="ok">باشه</string>
+  <string name="app_name_anki">Anki</string>
+  <string name="app_name_droid">Droid</string>
   <string name="studyoptions_deck_name">نام دسته کارت</string>
   <string name="studyoptions_due_today">سر رسید امروز:</string>
   <string name="studyoptions_new_total">کل کارت های جدید:</string>
@@ -182,4 +179,5 @@
   <string name="confirm">تایید</string>
   <string name="internet">اینترنت</string>
   <string name="pc">رایانه</string>
+  <string name="title_activity_graphical_activity">Statistical chart</string>
 </resources>

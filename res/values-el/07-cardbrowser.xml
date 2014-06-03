@@ -39,6 +39,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <plurals name="card_browser_subtitle">
+    <item quantity="one">1 από %2$d κάρτες</item>
+    <item quantity="other">%1$d από %2$d κάρτες</item>
+  </plurals>
   <string name="card_browser_all_decks">Όλες οι τράπουλες</string>
   <string name="card_browser_load">Φόρτωση καρτών.\nΠαρακαλούμε περιμένετε...</string>
   <string name="card_browser_cardloading_error">Σφάλμα κατά τη φόρτωση καρτών. Αυτό πιθανώς σχετίζεται με τη περιορισμένη μνήμη της συσκευή σας. Δοκιμάστε ξανά με μικρότερο μέγεθος τράπουλας</string>
@@ -90,8 +94,4 @@
     <item>Με την επαναλήψεις</item>
     <item>Με τις αστοχίες</item>
   </string-array>
-  <plurals name="card_browser_subtitle">
-    <item quantity="one">1 από %2$d κάρτες</item>
-    <item quantity="other">%1$d από %2$d κάρτες</item>
-  </plurals>
 </resources>

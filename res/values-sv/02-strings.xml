@@ -38,10 +38,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
-  <string name="CardEditorCancelButton">Avbryt</string>
-  <string name="CardEditorSaveButton">Spara</string>
-  <string name="CardEditorLaterButton">Senare</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <string name="CardEditorLaterMessage">Sparad information för senare</string>
   <string name="CardEditorCardDeck">Kortlek: %s</string>
   <string name="CardEditorNoteDeck">Notkortlek: %s</string>
@@ -121,6 +118,8 @@
   <string name="help_tutorial">Övningskortlek</string>
   <string name="check_db">Kontrollera databas</string>
   <string name="check_db_message">Kontrollerar databasen. \nVänligen vänta...</string>
+  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
+  <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
   <string name="simple_interface_hint">Tom %s. Tänk på att det enkla gränssnittet inte kan visa bilder/ljud m.m.</string>
   <string name="delete_deck">Tar bort kortlek...\nVänligen vänta.</string>
   <string-array name="dynOrderLabels">

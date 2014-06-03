@@ -39,12 +39,9 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="btn_continue">Tiếp tục</string>
   <string name="app_name">AnkiDroid</string>
-  <string name="attention">Chú ý</string>
-  <string name="yes">Có</string>
-  <string name="no">Không</string>
-  <string name="ok">Đồng ý</string>
+  <string name="app_name_anki">Anki</string>
+  <string name="app_name_droid">Droid</string>
   <string name="studyoptions_deck_name">Tên tập thẻ</string>
   <string name="studyoptions_due_today">Tới hạn hôm nay:</string>
   <string name="studyoptions_new_total">Tổng số thẻ mới:</string>
@@ -182,4 +179,5 @@
   <string name="confirm">Xác nhận</string>
   <string name="internet">Internet</string>
   <string name="pc">MÁY TÍNH</string>
+  <string name="title_activity_graphical_activity">Statistical chart</string>
 </resources>

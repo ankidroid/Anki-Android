@@ -39,9 +39,11 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="welcome_message">With AnkiDroid, you can efficiently learn large amounts of vocabulary or any other material. AnkiDroid shows you the things to learn just before you forget them.\n\nTo get a first impression of how everything works, we recommend to start with a tutorial deck, which will give you some initial information, and try a bit out. Just click on \"Start Reviewing\" after having opened it.\n\nCreate the tutorial deck now?</string>
+  <string name="welcome_message">With AnkiDroid, you can efficiently learn large amounts of vocabulary or any other material. AnkiDroid shows you the things to learn just before you forget them.\n\nTo get a first impression of how everything works, we recommend to start with a tutorial deck, which will give you some initial information, and try a bit out. Just touch \"Study\" after having opened it.\n\nCreate the tutorial deck now?</string>
   <string name="check_db_title">Periksa database</string>
-  <string name="check_db_result_message">Database telah diperiksa dan dioptimalkan. \nMenyusut sebanyak %d kb</string>
+  <string name="check_db_warning">This may take a long time</string>
+  <string name="check_db_acknowledge">Database checked</string>
+  <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d kB.</string>
   <string name="contextmenu_deckpicker_delete_deck">Hapus Dek</string>
   <string name="delete_deck_title">Hapus Dek</string>
   <string name="delete_deck_message">Apakah Anda yakin akan menghapus semua kartu di %s?</string>
@@ -51,8 +53,14 @@
   <string name="no_tts_available_title">Text-ke-Suara</string>
   <string name="no_tts_available_message">Tiada teks-kepada-bahasa tersedia</string>
   <string name="tts_no_tts">Jangan sebut</string>
+  <string-array name="about_content">
+    <item><![CDATA[<h2>%1$s:<br/>Kad imbas untuk Android</h2>AnkiDroid ialah kad imbas yang juga serasi dengan perisian destop <a href="%2$s">Anki</a>. Anda boleh reka, muat turun dan belajar di antara dua perisian ini.]]></item>
+    <item><![CDATA[Bantu kami memperbaiki AnkiDroid dengan melapor bug di <a href="%1$s">sini</a>; Cadangan baru dijemput! Guna <a href="%2$s">wiki</a> dan bincang di dalam  <a href="%3$s">forum</a>.]]></item>
+    <item><![CDATA[AnkiDroid  <a href="%1$s">software terbuka<a/>, jadi semua orang dijemput untuk <a href="%2$s">serta</a> dan <a href="%3$s">menyumbang</a>:-)]]></item>
+    <item><![CDATA[Orang ramai boleh membantu, seperti <a href="%1$s">dengan alih bahasa</a> AnkiDroid, mengemas wiki dan gambar, <a href="%2$s">menderma</a> kepada Anki Desktop, atau blogging pasal AnkiDroid!]]></item>
+    <item><![CDATA[AnkiDroid tertakluk kepada <a href="%1$s">Lesen GNU-GPL v3 </a> dan kod sumber disimpan di <a href="%2$s">sini</a>.]]></item>
+  </string-array>
   <string name="dont_show_again">Jangan tampilkan lagi</string>
-  <string name="sync_log_title">Sinkronisasi Log</string>
   <string name="notify_ticker">Perbaharui Aplikasi</string>
   <string name="notify_title">AnkiDroid Diperbarui</string>
   <string name="notify_message">Unggah versi terbaru</string>
@@ -61,10 +69,10 @@
   <string name="notification_message">Versi baru AnkiDroid ada di Android Market.\n\nAnda ingin memasangnya?</string>
   <string name="notification_stop">Jangan beritahu saya tentang kemaskini ini lagi</string>
   <string name="reset_card_dialog_title">Set semula rekod kemajuan kad</string>
-  <string name="reset_card_dialog_message">This resets the learning progress for all cards of this note (they will look like new cards).\nReally continue?</string>
-  <string name="reset_card_dialog_confirmation">All cards of this note reset</string>
+  <string name="reset_card_dialog_message">All cards of this note will look like new cards.</string>
+  <string name="reset_card_dialog_acknowledge">Cards reset</string>
   <string name="answering_error_title">Ralat database</string>
-  <string name="answering_error_message">An error occurred while writing to the collection. This could be related to a corrupt database or to insufficient disc space.\n\nIf it happens more often, please try to check the database, repair the collection or restoring it from a backup. Click on \'options\' for that.\n\nNevertheless, it could be an AnkiDroid bug as well; please report the error that we can check this.</string>
+  <string name="answering_error_message">Writing to the collection failed. The databese could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch \'options\' for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
   <string name="answering_error_report">Lapor ralat</string>
   <string name="repair_deck_dialog">Apakah Anda benar-benar ingin mencoba untuk memperbaiki database?\n\nSebelum memulai, salinan akan dibuat dalam subfolder \'%s\'.</string>
   <string name="intent_add_saved_information">Data yang disimpan</string>
@@ -80,44 +88,56 @@
   <string name="custom_study_random">Select x cards randomly from the deck:</string>
   <string name="custom_study_preview">Preview new cards added in the last x days:</string>
   <string name="custom_study_tags">Masukkan Tag:</string>
-  <string name="rebuild_custom_study_deck">Rebuilding custom study deck.\nPlease wait...</string>
-  <string name="deck_upgrade_title">Deck Upgrade</string>
+  <string name="rebuild_custom_study_deck">Rebuilding custom study deck&#8230;</string>
+  <string name="deck_upgrade_title">Deck upgrade</string>
   <string name="deck_upgrade_rename_warning">Be aware that this will export your current collection to a file called \'%1$s\' and will create a new one from your old anki 1.x files. If desired, you can manually re-import the above apkg file after completing the wizard. Do you really want to continue?</string>
   <string name="deck_upgrade_major_warning"><![CDATA[Ini adalah update besar untuk Ankidroid dan proses upgrade akan memakan waktu setidaknya 10-20 menit. <br><br>Anda ingin melanjutkan sekarang atau nanti? <br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en"> Info lebih lanjut</a>]]></string>
-  <string name="deck_upgrade_start_again_to_upgrade_toast">Please start Ankidroid again when you have time to upgrade!</string>
-  <string name="deck_upgrade_recommended_method"><![CDATA[The recommended upgrade method is to sync with a PC and upgrade with the desktop version of Anki.<br><br>There is also an alternative method where you can upgrade over the internet if you do not have access to a PC, and your collection is not too big.]]></string>
-  <string name="deck_upgrade_more_options_exit">You can exit the upgrade wizard without importing your old cards by clicking the exit button below.</string>
-  <string name="deck_upgrade_more_options_new_collection">You can create a new empty collection by clicking below.</string>
-  <string name="deck_upgrade_more_options_downgrade"><![CDATA[<br><br>If you want to downgrade back to AnkiDroid 1 then please read <a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Continuing_to_use_AnkiDroid_1.1.3">these instructions</a>.]]></string>
+  <string name="deck_upgrade_start_again_to_upgrade_toast">Start AnkiDroid again when you have time to upgrade</string>
+  <string name="deck_upgrade_recommended_method"><![CDATA[The recommended upgrade method is to sync with a PC and upgrade with the desktop version of Anki.<br><br>There is also an alternative method where you can upgrade over the internet if you don\'t have access to a PC, and your collection isn\'t too big.]]></string>
+  <string name="deck_upgrade_more_options_exit">You can exit the upgrade wizard without importing your old cards by touching the exit button below.</string>
+  <string name="deck_upgrade_more_options_new_collection">You can create a new empty collection by touching below</string>
+  <string name="deck_upgrade_more_options_downgrade"><![CDATA[<br><br>If you want to downgrade back to AnkiDroid 1 read <a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Continuing_to_use_AnkiDroid_1.1.3">these instructions</a>.]]></string>
   <string name="deck_upgrade_create_new_collection">Membuat koleksi baru</string>
   <string name="deck_upgrade_create_new_collection_title">Membuat koleksi baru</string>
+  <string name="deck_upgrade_create_new_collection_button">New collection</string>
   <string name="deck_upgrade_not_import_warning">Apakah Anda yakin ingin melakukan ini? Data lama Anda tidak akan diimpor.</string>
-  <string name="deck_upgrade_via_web"><![CDATA[<b>This upgrade method is not recommended if you used media files, or have a big collection!</b><br><br>Your Anki1 decks will be zipped and uploaded to AnkiWeb, and the converted collection will then be downloaded.<br><br>Please note that a stable internet connection is required, and that there is a 50MB file limit.<br><br>Users of Anki Desktop are strongly encouraged to use the PC based upgrade method.<br><br>Do you still want to proceed?]]></string>
+  <string name="deck_upgrade_via_web"><![CDATA[<b>This upgrade method isn\'t recommended if you used media files, or have a big collection!</b><br><br>Your Anki1 decks will be zipped and uploaded to AnkiWeb, and the converted collection will then be downloaded.<br><br>A stable internet connection is required, and there is a 50MB file limit.<br><br>Users of Anki Desktop should use the PC based upgrade method.<br><br>Do you still want to proceed?]]></string>
   <string name="deck_upgrade_via_anki_desktop"><![CDATA[If you currently have an up-to-date version of your AnkiDroid collection in the Anki desktop software, you can upgrade from there and then download your upgraded collection by syncing with AnkiWeb.<br><br>Alternatively, you can copy your AnkiDroid collection to your PC using USB, then upgrade the collection and copy back to AnkiDroid.]]></string>
   <string name="deck_upgrade_auto_upgrade"><![CDATA[Please install and start Anki Desktop version 2.0.4 or greater to upgrade your collection, then sync your upgraded collection with AnkiWeb and press the "Download" button.<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_2:_Using_AnkiWeb_sync">More detailed information on upgrading using AnkiWeb</a>]]></string>
   <string name="deck_upgrade_manual"><![CDATA[Silahkan gandakan semua file *.anki Anda (dan semua folder *.media) dari folder AnkiDroid Anda ke folder Anki Desktop Anda, kemudian install dan jalankan Anki Desktop versi 2.0.4 atau lebih untuk mengupgrade koleksi Anda.<br><br>Ketiga upgrade selesai, silahkan export kolesi anda dari Anki2 dan gandakan file collection.apkg ke dalam folder AnkiDroid dan tekan tombol Import di bawah.<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_1:_Using_USB_(recommended)">Informasi lebih detail tentang mengupgrade menggunakan USB.</a>]]></string>
   <string name="upgrade_deck_cancelled_title">Upgrade dibatalkan</string>
-  <string name="upgrade_deck_cancelled_description">The upgrade attempt was cancelled, please try again one of the available upgrade methods.</string>
-  <string name="upgrade_deck_web_upgrade_failed">The upgrade process was unsuccessful. Please try again, or choose a different upgrade method</string>
-  <string name="upgrade_deck_web_upgrade_exceeds">The total compressed size of your Anki1 decks exceeds the limit that the server can process (50 mb), please try upgrading with a different method.</string>
-  <string name="upgrade_deck_web_upgrade_sdcard">The upgrade was completed, but there was an error while unpacking the resulting collection, please ensure that you have enough available disk (needed %1$d mb) and try again, or try upgrading with a different method.</string>
-  <string name="export_progress_title">Collection Export</string>
+  <string name="upgrade_deck_cancelled_description">The upgrade attempt was cancelled</string>
+  <string name="upgrade_deck_web_upgrade_failed">The upgrade process was unsuccessful</string>
+  <string name="upgrade_deck_web_upgrade_exceeds">The size of your Anki1 decks exceeds the 50 MB limit of the server. Try upgrading with a different method.</string>
+  <string name="upgrade_deck_web_upgrade_sdcard">The upgrade was completed, but there was an error while unpacking the resulting collection. Make sure that you have enough available disk (%1$d MB needed) and try again, or try upgrading with a different method.</string>
+  <string name="export_progress_title">Collection export</string>
   <string name="export_progress_exporting">Mengekspor koleksi, harap tunggu&#8230;</string>
-  <string name="upgrade_deck_export_successful">Your old collection has been successfully exported, proceeding with the upgrade process.</string>
-  <string name="upgrade_deck_export_error">Error during the export of your old collection. Would you like to continue with the upgrade process anyway (your old collection will be lost)?</string>
+  <string name="upgrade_deck_export_successful">Your old collection has been exported, proceeding with the upgrade process.</string>
+  <string name="upgrade_deck_export_error">Error during the export of your old collection. Would you like to continue with the upgrade process anyway? Your old collection will be lost.</string>
   <string name="upgrade_deck_sync_from_ankiweb">Sinkronisasi dari AnkiWeb</string>
-  <string name="upgrade_deck_have_you_synced">Are you sure you have upgraded your collection with Anki Desktop 2 and synced with AnkiWeb?</string>
+  <string name="upgrade_deck_have_you_synced">Have you upgraded your collection with Anki Desktop 2 and synced with AnkiWeb?</string>
   <string name="upgrade_deck_dont_upgrade">Jangan diperbaharui</string>
-  <string name="import_unpacking">Unpacking archive.\nPlease wait&#8230;</string>
+  <string name="import_unpacking">Unpacking archive&#8230;</string>
   <string name="importing_collection">Mengimpor koleksi.\nSilahkan tunggu&#8230;</string>
   <string name="import_media_count">Mengimpor file-file media %1$d%%\nSilahkan tunggu&#8230;</string>
   <string name="import_update_counts">Memperbarui hitungan dek. \nSilahkan tunggu&#8230;</string>
   <string name="import_add_progress">• Membuka arsip %1$s\n• Import catatan-catatan %2$d%%\n• Import kartu %3$d%%\n• Pembersihan %4$s</string>
-  <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s:<br/>Kad imbas untuk Android</h2>AnkiDroid ialah kad imbas yang juga serasi dengan perisian destop <a href="%2$s">Anki</a>. Anda boleh reka, muat turun dan belajar di antara dua perisian ini.]]></item>
-    <item><![CDATA[Bantu kami memperbaiki AnkiDroid dengan melapor bug di <a href="%1$s">sini</a>; Cadangan baru dijemput! Guna <a href="%2$s">wiki</a> dan bincang di dalam  <a href="%3$s">forum</a>.]]></item>
-    <item><![CDATA[AnkiDroid  <a href="%1$s">software terbuka<a/>, jadi semua orang dijemput untuk <a href="%2$s">serta</a> dan <a href="%3$s">menyumbang</a>:-)]]></item>
-    <item><![CDATA[Orang ramai boleh membantu, seperti <a href="%1$s">dengan alih bahasa</a> AnkiDroid, mengemas wiki dan gambar, <a href="%2$s">menderma</a> kepada Anki Desktop, atau blogging pasal AnkiDroid!]]></item>
-    <item><![CDATA[AnkiDroid tertakluk kepada <a href="%1$s">Lesen GNU-GPL v3 </a> dan kod sumber disimpan di <a href="%2$s">sini</a>.]]></item>
-  </string-array>
+  <string name="sd_card_full_title">SD card full</string>
+  <string name="sd_card_almost_full_title">SD card almost full</string>
+  <string name="dialog_cancel">Cancel</string>
+  <string name="dialog_ok">OK</string>
+  <string name="dialog_continue">Continue</string>
+  <string name="dialog_neutral_later">Later</string>
+  <string name="dialog_positive_create">Create</string>
+  <string name="dialog_positive_delete">Delete</string>
+  <string name="dialog_positive_disable">Disable</string>
+  <string name="dialog_positive_overwrite">Overwrite</string>
+  <string name="dialog_positive_repair">Repair</string>
+  <string name="dialog_positive_replace">Replace</string>
+  <string name="dialog_positive_reset">Reset</string>
+  <string name="dialog_positive_save">Save</string>
+  <string name="add_button_content">Add&#8230;</string>
+  <string name="card_browser_button_content">Card browser</string>
+  <string name="lookup_button_content">Look up</string>
+  <string name="statistics_button_content">Statistics</string>
 </resources>

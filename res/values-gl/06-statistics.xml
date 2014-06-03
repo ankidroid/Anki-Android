@@ -53,8 +53,8 @@
   <string name="statistics_period_x_axis_minutes">Minutes</string>
   <string name="statistics_new_cards">New cards</string>
   <string name="statistics_failed_cards">Failed cards</string>
-  <string name="statistics_fullscreen">Toggle Fullscreen</string>
-  <string name="calculating_statistics">Calculating statistics.\nPlease wait...</string>
+  <string name="statistics_fullscreen">Toggle fullscreen</string>
+  <string name="calculating_statistics">Calculating statistics&#8230;</string>
   <string name="deck_summary_cards">Number of cards:</string>
   <string name="deck_summary_notes">Number of notes:</string>
   <string name="deck_summary_cards_mature">Mature cards:</string>
@@ -62,7 +62,7 @@
   <string name="deck_summary_cards_unseen">Unseen cards:</string>
   <string name="deck_summary_card_age">Card age</string>
   <string name="deck_summary_average_interval">Average interval: &lt;b&gt;%.1f&lt;/b&gt; days</string>
-  <string name="deck_summary_answers_correct">Correct Answers</string>
+  <string name="deck_summary_answers_correct">Correct answers</string>
   <string name="deck_summary_answers_mature">Mature cards: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; %2$s (%3$d of %4$d)</string>
   <string name="deck_summary_answers_young">Young cards: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d of %4$d)</string>
   <string name="deck_summary_answers_firstseen">Seen the first time: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d of %4$d)</string>
@@ -80,9 +80,6 @@
   <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; cards/day</string>
   <string name="deck_summary_deck_age">Deck age: &lt;b&gt;%d&lt;/b&gt; days</string>
   <string name="deck_summary_all_decks">All decks</string>
-  <string name="stats_forecast">Forecast</string>
-  <string name="stats_review_count">Review count</string>
-  <string name="stats_review_time">Review time</string>
   <string-array name="next_review_in_s">
     <item>in 1 second</item>
     <item>in 1 minute</item>
@@ -120,6 +117,9 @@
     <item>Weeks</item>
     <item>Months</item>
   </string-array>
+  <string name="stats_forecast">Forecast</string>
+  <string name="stats_review_count">Review count</string>
+  <string name="stats_review_time">Review time</string>
   <string-array name="stats_period">
     <item>1 month</item>
     <item>1 year</item>

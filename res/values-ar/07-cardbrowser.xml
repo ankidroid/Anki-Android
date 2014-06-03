@@ -39,6 +39,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <plurals name="card_browser_subtitle">
+    <item quantity="one">شوهدت بطاقة من %2$d</item>
+    <item quantity="other">شوهدت %1$d من %2$d بطاقة</item>
+  </plurals>
   <string name="card_browser_all_decks">كل الرزم</string>
   <string name="card_browser_load">تحميل بطاقات.\nالرجاء الانتظار...</string>
   <string name="card_browser_cardloading_error">حدث خطأ في تحميل البطاقات. يرتبط هذه على الأرجح بقيود على ذاكرة جهازك. حاول مرة أخرى برزمة أصغر</string>
@@ -57,7 +61,7 @@
   <string name="card_browser_tags_shown">الوسوم: %1$s</string>
   <string name="card_browser_change_display_order">غير ترتيب العرض</string>
   <string name="card_browser_change_display_order_title">اختر ترتيب العرض</string>
-  <string name="card_browser_change_display_order_reverse">Select a field twice to reverse.</string>
+  <string name="card_browser_change_display_order_reverse">Select a field twice to reverse</string>
   <string name="card_browser_order_reverse">(reverse)</string>
   <string name="card_browser_card_details">تفاصيل البطاقة</string>
   <string name="card_details_question">السؤال</string>
@@ -90,8 +94,4 @@
     <item>By reviews</item>
     <item>By lapses</item>
   </string-array>
-  <plurals name="card_browser_subtitle">
-    <item quantity="one">شوهدت بطاقة من %2$d</item>
-    <item quantity="other">شوهدت %1$d من %2$d بطاقة</item>
-  </plurals>
 </resources>

@@ -38,10 +38,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
-  <string name="CardEditorCancelButton">Annuler</string>
-  <string name="CardEditorSaveButton">Enregistrer</string>
-  <string name="CardEditorLaterButton">Plus tard</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <string name="CardEditorLaterMessage">Information sauvegardée pour plus tard</string>
   <string name="CardEditorCardDeck">Paquet de cartes : %s</string>
   <string name="CardEditorNoteDeck">Incluse dans le paquet : %s</string>
@@ -84,7 +81,7 @@
   <string name="add">Ajouter</string>
   <string name="close">Fermer</string>
   <string name="select">Sélectionner</string>
-  <string name="saving_changes">Enregistrement des modifications…</string>
+  <string name="saving_changes">Enregistrement des modifications&#8230;</string>
   <string name="reordering_cards">Tri des cartes...</string>
   <plurals name="timebox_reached">
     <item quantity="one">1 carte étudiée en %2$s</item>
@@ -106,7 +103,7 @@
   <string name="card_editor_reset_card">Remettre les compteurs à 0</string>
   <string name="card_editor_preview_card">Aperçu</string>
   <string name="error_insufficient_memory">L’opération n\'a pas pu être accomplie car votre appareil manque de mémoire disponible</string>
-  <string name="tutorial_load">Mise en place du tutoriel.\nPatientez…</string>
+  <string name="tutorial_load">Mise en place du tutoriel.\nPatientez&#8230;</string>
   <string name="tutorial_loading_error">Le paquet-tutoriel n\'a pas pu être créé</string>
   <string name="rename">Renommer</string>
   <string name="rename_error">Le paquet %s n\'a pas pu être renommé</string>
@@ -120,9 +117,11 @@
   <string name="help_faq">FAQ</string>
   <string name="help_tutorial">Paquet-tutoriel</string>
   <string name="check_db">Vérification de la base de données</string>
-  <string name="check_db_message">Vérification de la base de données. \nVeuillez patienter…</string>
+  <string name="check_db_message">Vérification de la base de données. \nVeuillez patienter&#8230;</string>
+  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
+  <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
   <string name="simple_interface_hint">%s vide. Gardez à l\'esprit que l\'interface simplifiée ne peut afficher ni d\'images, ni de sons, etc.</string>
-  <string name="delete_deck">Suppression du paquet…\nVeuillez patienter.</string>
+  <string name="delete_deck">Suppression du paquet&#8230;\nVeuillez patienter.</string>
   <string-array name="dynOrderLabels">
     <item>Des plus au moins anciennes</item>
     <item>Aléatoirement</item>

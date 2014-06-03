@@ -38,10 +38,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
-  <string name="CardEditorCancelButton">Annulla</string>
-  <string name="CardEditorSaveButton">Salva</string>
-  <string name="CardEditorLaterButton">In seguito</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <string name="CardEditorLaterMessage">Informazione salvata per più tardi</string>
   <string name="CardEditorCardDeck">Mazzo carte: %s</string>
   <string name="CardEditorNoteDeck">Mazzo nota: %s</string>
@@ -121,6 +118,8 @@
   <string name="help_tutorial">Mazzo d\'esercizio</string>
   <string name="check_db">Controlla database</string>
   <string name="check_db_message">Controllo database.\nAttendi...</string>
+  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
+  <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
   <string name="simple_interface_hint">Vuoto %s. Tieni presente che l\'interfaccia semplice non può mostrare immagini/suoni ecc.</string>
   <string name="delete_deck">Eliminazione mazzo...\nAttendi.</string>
   <string-array name="dynOrderLabels">

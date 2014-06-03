@@ -40,15 +40,14 @@
 
 -->
 <resources>
-  <string name="connection_needed">Ви зараз не в мережі.</string>
+  <string name="youre_offline">You are offline</string>
   <string name="currently_downloading">Відбувається завантаження</string>
   <string name="starting_download">Початок завантаження...</string>
   <string name="downloading">Завантаження...</string>
   <string name="paused">Призупинено</string>
   <string name="downloaded">Завантажено</string>
-  <string name="error">Помилка</string>
+  <string name="vague_error">Error</string>
   <string name="cancelling">Відміна...</string>
-  <string name="connection_error_title">Увага</string>
   <string name="connection_error_return_message">Сталася помилка мережі. Повторіть спробу, або відмініть і поверніться до попереднього екрану.</string>
   <string name="retry">Повторити спробу</string>
   <string name="cancel">Відміна</string>
@@ -65,7 +64,8 @@
   <string name="download_button_return">Повернутися</string>
   <string name="connection_error_message">Виникла помилка мережі.</string>
   <string name="sync_log_db_error">Виникла помилка бази даних.</string>
-  <string name="no_user_password_error_message">Для продовження цієї дії, вам потрібно здійснити вхід в обліковий запис AnkiWeb.</string>
+  <string name="not_logged_in_title">Log in to AnkiWeb</string>
+  <string name="login_create_account_message">You must log in to an AnkiWeb account. You can create one in the next step.</string>
   <string name="username">Електронна адреса</string>
   <string name="username_repeat">Ще раз електронна адреса</string>
   <string name="password">Пароль</string>
@@ -91,7 +91,6 @@
   <string name="sync_conflict_remote">Завантаження</string>
   <string name="sync_conflict_remote_confirm">Ви справді бажаєте завантажити колекцію з сервера? Ця операція затре вашу локальну колекцію.</string>
   <string name="sync_conflict_local_confirm">Ви справді бажаєте відвантажити локальну колекцію на сервер? Ця операція затре вашу колекцію на сервері.</string>
-  <string name="sync_conflict_cancel">Відмінити синхронізацію</string>
   <string name="sync_prepare_syncing">Підготовка синхронізації...</string>
   <string name="sync_preparing_full_sync_message">Підготовка до повної синхронізації...</string>
   <string name="sync_uploading_message">Відвантаження...</string>
@@ -107,7 +106,7 @@
   <string name="sync_log_old_version">Протокол синхронізації змінено, будь ласка оновіть AnkiDroid до останньої версії. Дивіться %s</string>
   <string name="sync_conflict_title">Конфлікт синхронізації</string>
   <string name="sync_no_changes_message">Зміни не виявлено.</string>
-  <string name="sync_database_success">Колекція успішно синхронізована</string>
+  <string name="sync_database_acknowledge">Collection synchronized</string>
   <string name="sync_log_error_fix">Виникла помилка синхронізації%s.\n\nЯкщо це повторюється постійно, ви можете здійснити повну синхронізацію, що ймовірно вирішить проблему. Майте на увазі, що це перезапише вашу локальну колекцію, або колекцію в AnkiWeb.\nЯкщо ви дійсно хочете здійснити повну синхронізацію, будь ласка, виберіть між відвантаженням локальної колекції та завантаженням з серверу.</string>
   <string name="sync_log_error_specific">Помилка синхронізації, тип:%1$s, повідомлення: %2$s</string>
   <string name="sync_corrupt_database">Ваша база даних пошкоджена. Будь ласка, виправте її перед спробою повторної синхронізації.\n\nДивіться %s для інформації про виправлення бази даних.</string>

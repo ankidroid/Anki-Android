@@ -41,7 +41,9 @@
 <resources>
   <string name="welcome_message">S AkniDroid se můžete efektivně naučit velké množství slovíček, nebo jiných vědomostí. AnkiDroid Vám ukáže věci k zopakování těsně před tím, než byste je zapomněli.\n\nPro získání obrázku o tom jak to funguje, doporučujeme začít s balíčkem tutoriálu, který Vám podá základní informace a program si trochu vyzkoušíte. Jenom ho otevřete a klikněte na \"Začít opakovat\".\n\nChcete nyní vytvořit balíček tutoriálu?</string>
   <string name="check_db_title">Zkontrolovat databázi</string>
-  <string name="check_db_result_message">Databáze zkontrolována a optimalizována. \nZmenšena o %d kb</string>
+  <string name="check_db_warning">This may take a long time</string>
+  <string name="check_db_acknowledge">Database checked</string>
+  <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d kB.</string>
   <string name="contextmenu_deckpicker_delete_deck">Smazat balíček</string>
   <string name="delete_deck_title">Smazat balíček</string>
   <string name="delete_deck_message">Jste si jistý, že si přejete odstranit všechny karty v %s?</string>
@@ -59,7 +61,6 @@
     <item><![CDATA[AnkiDroid je publikován pod <a href="%1$s">GNU-GPL v3 licencí</a> a zdrojové kódy jsou dostupné <a href="%2$s">zde</a>.]]></item>
   </string-array>
   <string name="dont_show_again">Již nezobrazovat</string>
-  <string name="sync_log_title">Protokol synchronizace</string>
   <string name="notify_ticker">Aktualizace aplikace</string>
   <string name="notify_title">AnkiDroid aktualizován</string>
   <string name="notify_message">Stáhnout novou verzi</string>
@@ -69,7 +70,7 @@
   <string name="notification_stop">Již mě na tuto aktualizaci neupozorňujte</string>
   <string name="reset_card_dialog_title">Obnovit pokrok v učení</string>
   <string name="reset_card_dialog_message">Tímto obnovíte proces učení pro všechny karty této poznámky (budou vypadat jako nové karty). \nOpravdu pokračovat?</string>
-  <string name="reset_card_dialog_confirmation">Všechny karty této poznámky resetovány</string>
+  <string name="reset_card_dialog_acknowledge">Cards reset</string>
   <string name="answering_error_title">Chyba databáze</string>
   <string name="answering_error_message">Došlo k chybě při zápisu do kolekce. To by mohlo souviset s poškozenou databází nebo nedostatečným místem na disku.\n\nJestliže se to stává častěji, prosím zkuste zkontrolovat databázi, opravit nebo obnovit kolekci ze zálohy. Klikněte na \'Možnosti\' pro toto.\n\nNicméně, mohla by to být chyba AnkiDroid. Prosím oznamte chybu, abychom to zkontrolovali.</string>
   <string name="answering_error_report">Hlášení chyby</string>
@@ -98,6 +99,7 @@
   <string name="deck_upgrade_more_options_downgrade"><![CDATA[<br><br>Pokud chcete přejít zpět na AnkiDroid 1 tak prosím čtěte <a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Continuing_to_use_AnkiDroid_1.1.3">these instructions</a>.]]></string>
   <string name="deck_upgrade_create_new_collection">Vytvořit novou kolekci</string>
   <string name="deck_upgrade_create_new_collection_title">Vytvořit novou kolekci</string>
+  <string name="deck_upgrade_create_new_collection_button">New collection</string>
   <string name="deck_upgrade_not_import_warning">Opravdu toto chcete provést? Stará data nebudou importovány.</string>
   <string name="deck_upgrade_via_web"><![CDATA[<b> Tato upgradová metoda se nedoporučuje pokud jste použili multimediální soubory, nebo pokud máte velkou kolekci! </b><br><br>Vaše Anki1 balíčky budou zazipovány a nahrány na AnkiWeb. Převedená kolekce bude poté stažena.<br><br>Berte prosím na vědomí, že je vyžadováno stabilní připojení k internetu, a že limit pro soubory je 50MB.<br><br> Uživatelům Anki Desktop se se silně doporučuje použít upgradovací metodu na PC.<br><br>Stále ještě chcete pokračovat?]]></string>
   <string name="deck_upgrade_via_anki_desktop"><![CDATA[Pokud v současné době máte aktuální verzi vašich AnkiDroid kolekcí v softwaru Anki desktop, můžete upgradovat tam a pak stáhnout aktualizovanou kolekci pomocí synchronizace s AnkiWeb.<br><br>Případně můžete zkopírovat AnkiDroid kolekci do PC pomocí USB. Na PC proveďte upgrade kolekce a zkopírujte ji zpět do AnkiDroid.]]></string>
@@ -120,4 +122,22 @@
   <string name="import_media_count">Import mediálních souborů %1$d%%\nProsím čekejte&#8230;</string>
   <string name="import_update_counts">Aktualizace počtu balíčků. \nProsím čekejte&#8230;</string>
   <string name="import_add_progress">Rozbalování archivu %1$s\n• Import poznámek %2$d%%\n• Import karet %3$d%%\n• Čištění %4$s</string>
+  <string name="sd_card_full_title">SD card full</string>
+  <string name="sd_card_almost_full_title">SD card almost full</string>
+  <string name="dialog_cancel">Cancel</string>
+  <string name="dialog_ok">OK</string>
+  <string name="dialog_continue">Continue</string>
+  <string name="dialog_neutral_later">Later</string>
+  <string name="dialog_positive_create">Create</string>
+  <string name="dialog_positive_delete">Delete</string>
+  <string name="dialog_positive_disable">Disable</string>
+  <string name="dialog_positive_overwrite">Overwrite</string>
+  <string name="dialog_positive_repair">Repair</string>
+  <string name="dialog_positive_replace">Replace</string>
+  <string name="dialog_positive_reset">Reset</string>
+  <string name="dialog_positive_save">Save</string>
+  <string name="add_button_content">Add&#8230;</string>
+  <string name="card_browser_button_content">Card browser</string>
+  <string name="lookup_button_content">Look up</string>
+  <string name="statistics_button_content">Statistics</string>
 </resources>

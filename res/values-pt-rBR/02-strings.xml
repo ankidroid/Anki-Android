@@ -38,10 +38,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
-  <string name="CardEditorCancelButton">Cancelar</string>
-  <string name="CardEditorSaveButton">Salvar</string>
-  <string name="CardEditorLaterButton">Depois</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <string name="CardEditorLaterMessage">Informação salva para mais tarde</string>
   <string name="CardEditorCardDeck">Deck de Cartões: %s</string>
   <string name="CardEditorNoteDeck">Deck de Notas: %s</string>
@@ -121,6 +118,8 @@
   <string name="help_tutorial">Deck Tutorial</string>
   <string name="check_db">Verificar banco de dados</string>
   <string name="check_db_message">Verificando banco de dados.\nPor favor Aguarde...</string>
+  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
+  <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
   <string name="simple_interface_hint">%s Vazio. Tenha em mente que nessa simples interface não é possível visualizar imagens/sons etc.</string>
   <string name="delete_deck">Deletando deck...\nPor favor aguarde.</string>
   <string-array name="dynOrderLabels">

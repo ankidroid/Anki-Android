@@ -41,7 +41,9 @@
 <resources>
   <string name="welcome_message">S AnkiDroid sa môžete efektívne naučiť veľké množstvá slovíčok alebo akéhokoľvek iného materiálu. AnkiDroid vám ukáže to, čo sa učíte, tesne predtým ako by ste to zabudli.\n\nAby ste si vyskúšali ako to funguje, odporúčame vám začať s úvodným balíčkom, ktorý vám poskytne základné informácie. Stačí kliknúť na \"Začať opakovať\" po tom, čo ho otvoríte.\n\nChcete teraz vytvoriť úvodný balíček?</string>
   <string name="check_db_title">Kontrola databázy</string>
-  <string name="check_db_result_message">Databáza skontrolovaná a optimalizovaná. \nZmenšená o %d kB</string>
+  <string name="check_db_warning">This may take a long time</string>
+  <string name="check_db_acknowledge">Database checked</string>
+  <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d kB.</string>
   <string name="contextmenu_deckpicker_delete_deck">Odstrániť balíček</string>
   <string name="delete_deck_title">Odstrániť balíček</string>
   <string name="delete_deck_message">Naozaj chcete odstrániť všetky karty v %s?</string>
@@ -51,8 +53,14 @@
   <string name="no_tts_available_title">Prevod textu na reč (TTS)</string>
   <string name="no_tts_available_message">Žiaden TTS jazyk nie je k dispozícii</string>
   <string name="tts_no_tts">Nehovoriť</string>
+  <string-array name="about_content">
+    <item><![CDATA[<h2>%1$s: <br/>Kartičky pre Android</h2>AnkiDroid je aplikácia, ktorá je plne kompatibilná s počítačovou verziou <a href="%2$s"> Anki</a>. Môžete vytvárať, sťahovať a učiť sa materiály na AnkiDroid alebo počítačovej verzii Anki, a veľmi ľahko medzi nimi synchronizovať.]]></item>
+    <item><![CDATA[Aby ste nám pomohli vylepšiť AnkiDroid, prosím oznámte akúkoľvek chybu <a href="%1$s"> tu</a>; nápady na nové funkcie sú tiež veľmi vítané! Použite prosím <a href="%2$s"> wiki</a> a ozvite sa na <a href="%3$s"> fóre</a>.]]></item>
+    <item><![CDATA[AnkiDroid je <a href="%1$s"> open source softvér <a/>, takže každý je vítaný <a href="%2$s"> pripojiť</a>sa k <a href="%3$s"> prispievateľom</a> :-)]]></item>
+    <item><![CDATA[Nevývojári môžu tiež pomôcť, napríklad s <a href="%1$s"> prekladom</a> AnkiDroid, aktualizáciou wiki a screenshotmi, <a href="%2$s"> darovaním</a> počítačovej verzii Anki alebo blogovaním o AnkiDroid!]]></item>
+    <item><![CDATA[AnkiDroid je vydané pod <a href="%1$s"> licenciou GNU GPL v3</a> a zdrojový kód je k dispozícii <a href="%2$s"> tu</a>.]]></item>
+  </string-array>
   <string name="dont_show_again">Nabudúce nezobrazovať</string>
-  <string name="sync_log_title">Denník synchronizácie</string>
   <string name="notify_ticker">Aktualizácia aplikácie</string>
   <string name="notify_title">AnkiDroid aktualizované</string>
   <string name="notify_message">Stiahnuť novú verziu</string>
@@ -62,7 +70,7 @@
   <string name="notification_stop">Nabudúce na túto aktualizáciu neupozorňovať</string>
   <string name="reset_card_dialog_title">Vynulovať pokrok karty</string>
   <string name="reset_card_dialog_message">Týmto vynulujete pokrok všetkých kariet pre túto poznámku (budú sa javiť ako nové karty).\nSkutočne chcete pokračovať?</string>
-  <string name="reset_card_dialog_confirmation">Všetky karty tejto poznámky vynulované</string>
+  <string name="reset_card_dialog_acknowledge">Cards reset</string>
   <string name="answering_error_title">Chyba databázy</string>
   <string name="answering_error_message">Chyba pri zápise do zbierky. Môže to súvisieť s poškodenou databázou alebo nedostatkom miesta na disku.\n\nAk sa to stáva častejšie, skúste skontrolovať databázu, opraviť zbierku alebo obnoviť zo zálohy kliknutím na \"možnosti\".\n\nJednako to môže byť aj chyba AnkiDroid; prosím oznámte chybu, aby sme to mohli skontrolovať.</string>
   <string name="answering_error_report">Nahlásiť chybu</string>
@@ -91,6 +99,7 @@
   <string name="deck_upgrade_more_options_downgrade"><![CDATA[<br><br>Ak sa chcete vrátiť späť k AnkiDroid 1, prečítajte si prosím <a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Continuing_to_use_AnkiDroid_1.1.3"> tieto pokyny (v aj)</a>.]]></string>
   <string name="deck_upgrade_create_new_collection">Vytvoriť novú zbierku</string>
   <string name="deck_upgrade_create_new_collection_title">Vytvoriť novú zbierku</string>
+  <string name="deck_upgrade_create_new_collection_button">New collection</string>
   <string name="deck_upgrade_not_import_warning">Ste si istý? Vaše stará dáta nebudú importované.</string>
   <string name="deck_upgrade_via_web"><![CDATA[<b>Táto metóda aktualizácie sa neodporúča ak používate mediálne súbory alebo máte veľkú zbierku!</b><br><br>Vaše Anki1 balíčky budú komprimované a nahraté na AnkiWeb, odkiaľ bude potom stiahnutá konvertovaná zbierka. <br><br>Prosím berte na vedomie, že je potrebné stabilné pripojenie na internet, a že limit pre veľkosť súboru je 50MB.<br><br>Používateľom počítačovej verzie Anki sa dôrazne odporúča použiť počítačovú verziu aktualizácie. <br><br>Chcete napriek tomu pokračovať?]]></string>
   <string name="deck_upgrade_via_anki_desktop"><![CDATA[Ak je vaša zbierka synchronizovaná s počítačovou verziou Anki, môžete vykonať aktualizáciu tam a potom stiahnuť vašu aktualizovanú zbierku synchronizáciou s AnkiWeb.<br><br>Prípadne môžete skopírovať svoju AnkiDroid zbierku do PC pomocou USB, potom aktualizovať a skopírovať späť do AnkiDroid.]]></string>
@@ -113,11 +122,22 @@
   <string name="import_media_count">Importujem mediálne súbory %1$d%%\nProsím počkajte&#8230;</string>
   <string name="import_update_counts">Aktualizujem balíčky.\nProsím počkajte&#8230;</string>
   <string name="import_add_progress">• Rozbaľujem archív %1$s\n• Import poznámok %2$d%%\n• Import kariet %3$d%%\n• Vyčistenie %4$s</string>
-  <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s: <br/>Kartičky pre Android</h2>AnkiDroid je aplikácia, ktorá je plne kompatibilná s počítačovou verziou <a href="%2$s"> Anki</a>. Môžete vytvárať, sťahovať a učiť sa materiály na AnkiDroid alebo počítačovej verzii Anki, a veľmi ľahko medzi nimi synchronizovať.]]></item>
-    <item><![CDATA[Aby ste nám pomohli vylepšiť AnkiDroid, prosím oznámte akúkoľvek chybu <a href="%1$s"> tu</a>; nápady na nové funkcie sú tiež veľmi vítané! Použite prosím <a href="%2$s"> wiki</a> a ozvite sa na <a href="%3$s"> fóre</a>.]]></item>
-    <item><![CDATA[AnkiDroid je <a href="%1$s"> open source softvér <a/>, takže každý je vítaný <a href="%2$s"> pripojiť</a>sa k <a href="%3$s"> prispievateľom</a> :-)]]></item>
-    <item><![CDATA[Nevývojári môžu tiež pomôcť, napríklad s <a href="%1$s"> prekladom</a> AnkiDroid, aktualizáciou wiki a screenshotmi, <a href="%2$s"> darovaním</a> počítačovej verzii Anki alebo blogovaním o AnkiDroid!]]></item>
-    <item><![CDATA[AnkiDroid je vydané pod <a href="%1$s"> licenciou GNU GPL v3</a> a zdrojový kód je k dispozícii <a href="%2$s"> tu</a>.]]></item>
-  </string-array>
+  <string name="sd_card_full_title">SD card full</string>
+  <string name="sd_card_almost_full_title">SD card almost full</string>
+  <string name="dialog_cancel">Cancel</string>
+  <string name="dialog_ok">OK</string>
+  <string name="dialog_continue">Continue</string>
+  <string name="dialog_neutral_later">Later</string>
+  <string name="dialog_positive_create">Create</string>
+  <string name="dialog_positive_delete">Delete</string>
+  <string name="dialog_positive_disable">Disable</string>
+  <string name="dialog_positive_overwrite">Overwrite</string>
+  <string name="dialog_positive_repair">Repair</string>
+  <string name="dialog_positive_replace">Replace</string>
+  <string name="dialog_positive_reset">Reset</string>
+  <string name="dialog_positive_save">Save</string>
+  <string name="add_button_content">Add&#8230;</string>
+  <string name="card_browser_button_content">Card browser</string>
+  <string name="lookup_button_content">Look up</string>
+  <string name="statistics_button_content">Statistics</string>
 </resources>

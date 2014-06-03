@@ -43,12 +43,6 @@
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid carduri scadente</string>
   <string name="widget_no_cards_due">Nici un card scadent</string>
   <string name="widget_loading">Widget-ul se încarcă...</string>
-  <string name="widget_medium">AnkiDroid Mediu</string>
-  <string name="widget_small">AnkiDroid Mic</string>
-  <string name="widget_big">AnkiDroid Mare</string>
-  <string name="widget_big_restrictions_dialog">Din cauza unor restricţii impuse de Android widget-framework, acest widget poate afişa numai text, fără imagini, sunete etc.</string>
-  <string name="open_in_reviewer">Deschide pachetul în AnkiDroid</string>
-  <string name="widget_big_tomorrow_due">Scadente pe mâine:</string>
   <plurals name="widget_cards_in_decks_due">
     <item quantity="one">1 card scadent în %2$s</item>
     <item quantity="other">%1$d carduri scadente în %2$s</item>
@@ -57,8 +51,14 @@
     <item quantity="one">1 pachet</item>
     <item quantity="other">%1$d pachete</item>
   </plurals>
+  <string name="widget_medium">AnkiDroid Mediu</string>
+  <string name="widget_small">AnkiDroid Mic</string>
+  <string name="widget_big">AnkiDroid Mare</string>
+  <string name="widget_big_restrictions_dialog">Din cauza unor restricţii impuse de Android widget-framework, acest widget poate afişa numai text, fără imagini, sunete etc.</string>
+  <string name="open_in_reviewer">Deschide pachetul în AnkiDroid</string>
   <plurals name="widget_big_eta">
     <item quantity="one">Timp estimat: 1 min.</item>
     <item quantity="other">Timp estimat: %d min.</item>
   </plurals>
+  <string name="widget_big_tomorrow_due">Scadente pe mâine:</string>
 </resources>

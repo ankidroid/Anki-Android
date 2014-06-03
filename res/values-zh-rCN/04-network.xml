@@ -40,22 +40,21 @@
 
 -->
 <resources>
-  <string name="connection_needed">设备现在处于离线状态</string>
+  <string name="youre_offline">You are offline</string>
   <string name="currently_downloading">正在下载</string>
-  <string name="starting_download">正在开始下载…</string>
-  <string name="downloading">正在下载…</string>
+  <string name="starting_download">正在开始下载&#8230;</string>
+  <string name="downloading">正在下载&#8230;</string>
   <string name="paused">已暂停</string>
   <string name="downloaded">已下载</string>
-  <string name="error">错误</string>
-  <string name="cancelling">正在取消…</string>
-  <string name="connection_error_title">注意</string>
+  <string name="vague_error">Error</string>
+  <string name="cancelling">正在取消&#8230;</string>
   <string name="connection_error_return_message">出现网络错误。重试，或取消并返回上一个界面。</string>
   <string name="retry">重试</string>
   <string name="cancel">取消</string>
   <string name="download_overwrite">覆盖</string>
   <string name="download_cancel">取消下载</string>
   <string name="shared_decks">共享牌组</string>
-  <string name="loading_shared_decks">正在载入可用的共享牌组…</string>
+  <string name="loading_shared_decks">正在载入可用的共享牌组&#8230;</string>
   <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">条款和条件</a>
 </string>
   <string name="cancel_download">取消下载</string>
@@ -66,7 +65,8 @@
   <string name="download_button_return">返回</string>
   <string name="connection_error_message">出现网络错误。</string>
   <string name="sync_log_db_error">发生数据库错误。</string>
-  <string name="no_user_password_error_message">继续此操作，您需要一个AnkiWeb账户，并登陆。</string>
+  <string name="not_logged_in_title">Log in to AnkiWeb</string>
+  <string name="login_create_account_message">You must log in to an AnkiWeb account. You can create one in the next step.</string>
   <string name="username">电子邮件地址</string>
   <string name="username_repeat">重复电子邮件地址</string>
   <string name="password">密码</string>
@@ -77,7 +77,7 @@
   <string name="sign_up_terms">点击 <i>注册</i>按钮, 表示您确认已经阅读并同意我们的 <a href="https://ankiweb.net/account/terms">使用条款</a>。</string>
   <string name="logged_as">登录为</string>
   <string name="log_out">登出</string>
-  <string name="alert_logging_message">登入中，请稍等…</string>
+  <string name="alert_logging_message">登入中，请稍等&#8230;</string>
   <string name="invalid_username_password">错误的电子邮件地址或密码。</string>
   <string name="login_generic_error">登陆失败。</string>
   <string name="reset_password">Reset password</string>
@@ -92,11 +92,10 @@
   <string name="sync_conflict_remote">下载</string>
   <string name="sync_conflict_remote_confirm">确认要下载服务器的牌组集合吗？注意这会覆盖掉本地的牌组集合。</string>
   <string name="sync_conflict_local_confirm">确认要上传本地牌组集合吗？注意这会覆盖掉服务器端的牌组集合。</string>
-  <string name="sync_conflict_cancel">取消同步</string>
   <string name="sync_prepare_syncing">准备同步...</string>
-  <string name="sync_preparing_full_sync_message">准备完全同步…</string>
-  <string name="sync_uploading_message">正在上传…</string>
-  <string name="sync_downloading_message">正在下载…</string>
+  <string name="sync_preparing_full_sync_message">准备完全同步&#8230;</string>
+  <string name="sync_uploading_message">正在上传&#8230;</string>
+  <string name="sync_downloading_message">正在下载&#8230;</string>
   <string name="sync_reload_message">重新加载集合...</string>
   <string name="sync_title">同步</string>
   <string name="sync_downloading_media">正在下载媒体文件%1$d/%2$d...</string>
@@ -108,7 +107,7 @@
   <string name="sync_log_old_version">同步协议已改变，请升级到最新的AnkiDroid。详见%s</string>
   <string name="sync_conflict_title">同步冲突</string>
   <string name="sync_no_changes_message">没有发现变化</string>
-  <string name="sync_database_success">集合同步成功</string>
+  <string name="sync_database_acknowledge">Collection synchronized</string>
   <string name="sync_log_error_fix">发生同步错误%s.\n\n如果持续发生此错误，请进行一次完全同步，可能修复此问题。注意，完全同步会覆盖本地数据，或者AnkiWeb服务器上的数据。\n如果你想进行完全同步，请选择您想上传本地集合或从服务器下载。</string>
   <string name="sync_log_error_specific">同步错误，类型: %1$s，信息: %2$s</string>
   <string name="sync_corrupt_database">您的数据库已损坏。请修复后再尝试同步。\n\n查阅%s关于修复数据库的信息。</string>
@@ -142,10 +141,10 @@
   <string name="register_mismatch"> 用户名/密码重复不匹配，或者为空。请重新输入。</string>
   <string name="registering_message">创建账户。\n请等待...</string>
   <string name="upgrade_decks_zipping">压缩要上传的牌组。\n请等待...</string>
-  <string name="upgrade_decks_upload">正在上传压缩后的牌组\n按返回键取消操作\n请稍后……</string>
+  <string name="upgrade_decks_upload">正在上传压缩后的牌组\n按返回键取消操作\n请稍后&#8230;&#8230;</string>
   <string name="upgrade_decks_waiting">等待，队列位置：%s\n请等待...</string>
-  <string name="upgrade_decks_upgrade_started">升级已开始\n请稍候……</string>
-  <string name="upgrade_decks_downloading">正在下载升级的牌组\n按返回键取消操作\n请稍候……</string>
+  <string name="upgrade_decks_upgrade_started">升级已开始\n请稍候&#8230;&#8230;</string>
+  <string name="upgrade_decks_downloading">正在下载升级的牌组\n按返回键取消操作\n请稍候&#8230;&#8230;</string>
   <string name="upgrade_decks_media">复制旧媒体文件到新媒体位置。 \n 请稍候...</string>
   <string name="upgrade_decks_message">没有Anki 2.0集合可用，但找到一个或多个Anki 1.2 旧格式牌组：%s 为了在新版AnkiDroid中使用它们，您需要将其转换成Anki 2.0格式的单一集合。有三种方法：</string>
   <string name="upgrade_decks_message_pos1">使用Anki桌面客户端2.0，您的牌组将在首次启动时转换。您可以通过AnkiWeb同步，或者直接把新集合拷贝到移动设备上。从AnkiDroid拷贝牌组，复制到您计算机Anki桌面客户端1.2目录中(如果您还没有同步它们的话)，然后启动Anki桌面客户端2.0.</string>

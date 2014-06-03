@@ -41,7 +41,9 @@
 <resources>
   <string name="welcome_message">Met AnkiDroid, kunt u efficiënt woordenschat of andere kennis leren. AnkiDroid toont wat je moet leren vlak voordat je het vergeet.\n\nVoor een eerste indruk van de werking is het raadzaam om te beginnen met de voorbeeldset. Dit geeft u de eerste informatie en zo kunt het programma uitproberen. Klik op \"Begin met overhoren\" na opening.\n\nDe voorbeeldset nu aanmaken?</string>
   <string name="check_db_title">Controleer database</string>
-  <string name="check_db_result_message">Database gecontroleerd en geoptimaliseerd. \nVerkleind met %d kb</string>
+  <string name="check_db_warning">This may take a long time</string>
+  <string name="check_db_acknowledge">Database checked</string>
+  <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d kB.</string>
   <string name="contextmenu_deckpicker_delete_deck">Verwijder set</string>
   <string name="delete_deck_title">Verwijder set</string>
   <string name="delete_deck_message">Weet je zeker dat je alle kaarten in %s wilt verwijderen?</string>
@@ -51,8 +53,14 @@
   <string name="no_tts_available_title">Tekst-naar-Spraak</string>
   <string name="no_tts_available_message">Geen tekst-naar-spraak taal beschikbaar</string>
   <string name="tts_no_tts">Niet spreken</string>
+  <string-array name="about_content">
+    <item><![CDATA[<h2>%1$s:<br/>Flitskaarten voor Android</h2>AnkiDroid is een flitskaartprogramma dat volledig samenwerkt met de desktop programma <a href="%2$s">Anki</a>. Je kan content downloaden en leren op zowel AnkiDroid als Anki Desktop, en eenvoudig synchroniseren tussen beide.]]></item>
+    <item><![CDATA[Om Ankidroid te verbeteren, stuur je <a href="%1$s">hier</a>  het foutenverslag op; ook nieuwe ideeën zijn van harte welkom! Lees de <a href="%2$s">wiki</a> en zeg ons gedag op het <a href="%3$s">forum</a>.]]></item>
+    <item><![CDATA[AnkiDroid is <a href="%1$s">opensource-software<a/>, dus iedereen mag <a href="%2$s">meedoen</a> met de <a href="%3$s">medewerkers</a>:-)]]></item>
+    <item><![CDATA[Ook als niet-ontwikkelaar kan je ons helpen, bijvoorbeeld met <a href="%1$s">vertalen</a> van AnkiDroid, het up-to-date houden van de wiki en schermafbeeldingen, <a href="%2$s">doneren</a> aan Anki Desktop, of bloggen over AnkiDroid!]]></item>
+    <item><![CDATA[AnkiDroid is uitgebracht onder de <a href="%1$s">GNU-GPL v3 licentie</a> en de broncode is <a href="%2$s">hier</a> beschikbaar.]]></item>
+  </string-array>
   <string name="dont_show_again">Dit bericht niet meer tonen</string>
-  <string name="sync_log_title">Synchronisatie Log</string>
   <string name="notify_ticker">Bijwerken Toepassing</string>
   <string name="notify_title">AnkiDroid bijgewerkt</string>
   <string name="notify_message">Download een nieuwe versie</string>
@@ -62,7 +70,7 @@
   <string name="notification_stop">Toon me geen meldingen meer voor deze update</string>
   <string name="reset_card_dialog_title">Herstel leervoortgang</string>
   <string name="reset_card_dialog_message">Hiermee maak je de leervoortgang ongedaan voor alle kaarten gemaakt met deze memo (ze zullen zich gedragen als nieuwe kaarten).\nBent u zeker dat u wilt doorgaan?</string>
-  <string name="reset_card_dialog_confirmation">Alle kaarten gemaakt van deze memo resetten</string>
+  <string name="reset_card_dialog_acknowledge">Cards reset</string>
   <string name="answering_error_title">Fout in database</string>
   <string name="answering_error_message">Er is een fout opgetreden tijdens het schrijven naar de collectie. Dit kan wijzen op een corrupte database of op onvoldoende opslagruimte.\n\nAls dit vaker gebeurt, probeer de database te controleren, de collectie te herstellen of terug te zetten vanaf een back-up. Klik hiervoor op \'instellingen\'.\n\nHet kan ook een fout in AnkiDroid zijn; Meld de fout zodat we dit kunnen controleren.</string>
   <string name="answering_error_report">Fout melden</string>
@@ -91,6 +99,7 @@
   <string name="deck_upgrade_more_options_downgrade"><![CDATA[<br><br>Als u opnieuw wenst te downgraden naar AnkiDroid 1, gelieve eerst <a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Continuing_to_use_AnkiDroid_1.1.3">deze instructies</a> te lezen.]]></string>
   <string name="deck_upgrade_create_new_collection">Nieuwe collectie aanmaken</string>
   <string name="deck_upgrade_create_new_collection_title">Nieuwe collectie aanmaken</string>
+  <string name="deck_upgrade_create_new_collection_button">New collection</string>
   <string name="deck_upgrade_not_import_warning">Bent u zeker dat u dit wilt doen? Uw oude data zal niet worden geïmporteerd.</string>
   <string name="deck_upgrade_via_web"><![CDATA[<b>Deze manier van upgraden is niet aangeraden in het geval u mediabestanden gebruikt of uw collectie zeer groot is!</b><br><br>Uw Anki1-sets worden eerst gezipt en opgeladen naar AnkiWeb, en daarna wordt de geconverteerde collectie gedownload.<br><br>Hou er alstublieft rekening mee dat dit een stabiele internetconnectie vereist, en dat er een bestandslimiet van 50MB bestaat.<br><br>Gebruikers van Anki Desktop worden ten sterkste aangeraden om te upgraden via PC.<br><br>Wilt u nog steeds doorgaan?]]></string>
   <string name="deck_upgrade_via_anki_desktop"><![CDATA[Als u beschikt over de actuele versie van uw AnkiDroid-collectie op uw PC in uw Anki Desktop-toepassing, kunt u van daar upgraden en daarna die collectie downloaden na synchronisatie met AnkiWeb.<br><br>Alternatief kunt u uw AnkiDroid-collectie kopiëren naar uw PC via USB, dan uw collectie upgraden en vervolgens terugkopiëren naar AnkiDroid.]]></string>
@@ -113,11 +122,22 @@
   <string name="import_media_count">Mediabestanden aan het importeren %1$d%%\nGelieve even te wachten&#8230;</string>
   <string name="import_update_counts">Bezig met het aanpassen van uw setaantallen.\nEen ogenblik geduld...</string>
   <string name="import_add_progress">• Archief uitpakken %1$s\n• Memos importeren %2$d%%\n• Kaarten importeren %3$d%%\n• Opruimen %4$s</string>
-  <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s:<br/>Flitskaarten voor Android</h2>AnkiDroid is een flitskaartprogramma dat volledig samenwerkt met de desktop programma <a href="%2$s">Anki</a>. Je kan content downloaden en leren op zowel AnkiDroid als Anki Desktop, en eenvoudig synchroniseren tussen beide.]]></item>
-    <item><![CDATA[Om Ankidroid te verbeteren, stuur je <a href="%1$s">hier</a>  het foutenverslag op; ook nieuwe ideeën zijn van harte welkom! Lees de <a href="%2$s">wiki</a> en zeg ons gedag op het <a href="%3$s">forum</a>.]]></item>
-    <item><![CDATA[AnkiDroid is <a href="%1$s">opensource-software<a/>, dus iedereen mag <a href="%2$s">meedoen</a> met de <a href="%3$s">medewerkers</a>:-)]]></item>
-    <item><![CDATA[Ook als niet-ontwikkelaar kan je ons helpen, bijvoorbeeld met <a href="%1$s">vertalen</a> van AnkiDroid, het up-to-date houden van de wiki en schermafbeeldingen, <a href="%2$s">doneren</a> aan Anki Desktop, of bloggen over AnkiDroid!]]></item>
-    <item><![CDATA[AnkiDroid is uitgebracht onder de <a href="%1$s">GNU-GPL v3 licentie</a> en de broncode is <a href="%2$s">hier</a> beschikbaar.]]></item>
-  </string-array>
+  <string name="sd_card_full_title">SD card full</string>
+  <string name="sd_card_almost_full_title">SD card almost full</string>
+  <string name="dialog_cancel">Cancel</string>
+  <string name="dialog_ok">OK</string>
+  <string name="dialog_continue">Continue</string>
+  <string name="dialog_neutral_later">Later</string>
+  <string name="dialog_positive_create">Create</string>
+  <string name="dialog_positive_delete">Delete</string>
+  <string name="dialog_positive_disable">Disable</string>
+  <string name="dialog_positive_overwrite">Overwrite</string>
+  <string name="dialog_positive_repair">Repair</string>
+  <string name="dialog_positive_replace">Replace</string>
+  <string name="dialog_positive_reset">Reset</string>
+  <string name="dialog_positive_save">Save</string>
+  <string name="add_button_content">Add&#8230;</string>
+  <string name="card_browser_button_content">Card browser</string>
+  <string name="lookup_button_content">Look up</string>
+  <string name="statistics_button_content">Statistics</string>
 </resources>

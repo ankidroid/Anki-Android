@@ -99,13 +99,13 @@
     <item>Bury card</item>
     <item>Suspend card</item>
     <item>Delete card</item>
-    <item>Clear Whiteboard</item>
+    <item>Clear whiteboard</item>
     <item>Play media</item>
     <item>Abort learning</item>
   </string-array>
   <string-array name="theme_labels">
-    <item>Android Dark</item>
-    <item>Android Light</item>
+    <item>Android dark</item>
+    <item>Android light</item>
     <item>Azul</item>
     <item>White</item>
   </string-array>

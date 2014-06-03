@@ -40,15 +40,14 @@
 
 -->
 <resources>
-  <string name="connection_needed">Şu anda çevrimdışısınız.</string>
+  <string name="youre_offline">You are offline</string>
   <string name="currently_downloading">Şu anda indirilenler</string>
   <string name="starting_download">İndirme başlatılıyor...</string>
   <string name="downloading">İndiriliyor...</string>
   <string name="paused">Durduruldu</string>
   <string name="downloaded">İndirildi</string>
-  <string name="error">Hata</string>
+  <string name="vague_error">Error</string>
   <string name="cancelling">İptal ediliyor...</string>
-  <string name="connection_error_title">Dikkât</string>
   <string name="connection_error_return_message">Bir ağ hatası meydana geldi. Yeniden deneyin, veya iptal edip önceki ekrana dönün.</string>
   <string name="retry">Yeniden Dene</string>
   <string name="cancel">İptal</string>
@@ -65,7 +64,8 @@
   <string name="download_button_return">Geri dön</string>
   <string name="connection_error_message">Bir ağ hatası meydana geldi.</string>
   <string name="sync_log_db_error">Bir veritabanı hatası meydana geldi.</string>
-  <string name="no_user_password_error_message">Bu işleme devam etmek için, bir AnkiWeb hesabınız olmalı ve giriş yapmış olmalısınız.</string>
+  <string name="not_logged_in_title">Log in to AnkiWeb</string>
+  <string name="login_create_account_message">You must log in to an AnkiWeb account. You can create one in the next step.</string>
   <string name="username">Eposta adresi</string>
   <string name="username_repeat">Tekrar eposta adresi</string>
   <string name="password">Şifre</string>
@@ -91,7 +91,6 @@
   <string name="sync_conflict_remote">İndir</string>
   <string name="sync_conflict_remote_confirm">Sunucunun koleksiyonu istediğinizden emin misiniz? Unutmayın, yerel koleksiyonunuzun üzerine yazılır.</string>
   <string name="sync_conflict_local_confirm">Yerel koleksiyonuzu göndermek istediğinizden emin misiniz? Unutmayın, bu sunucu üzerindeki koleksiyonun üzerine yazılır.</string>
-  <string name="sync_conflict_cancel">Eşitlemeyi İptal Et</string>
   <string name="sync_prepare_syncing">Eşitlemeye hazırlanıyor...</string>
   <string name="sync_preparing_full_sync_message">Tam eşitlemeye hazırlanıyor...</string>
   <string name="sync_uploading_message">Karşıya yükleniyor...</string>
@@ -107,7 +106,7 @@
   <string name="sync_log_old_version">Eşitleme protokolü değişti, lütfen son AnkiDroid\'e güncelleyin. %s\'e bakın.</string>
   <string name="sync_conflict_title">Eşitleme çatışması</string>
   <string name="sync_no_changes_message">Değişiklik bulunmuyor.</string>
-  <string name="sync_database_success">Koleksiyon başarıyla eşitlendi</string>
+  <string name="sync_database_acknowledge">Collection synchronized</string>
   <string name="sync_log_error_fix">Bir eşitleme hatası meydana geldi%s.\n\nEğer bu sürekli oluyorsa, bir tam eşitleme yapmak sorunu muhtemelen giderir. Bunun ya yerel koleksiyonunuzun ya da AnkiWeb\'dekinin üzerine yazacağını bilin.\nEğer gerçekten tam eşitleme yapmak istiyorsanız, lütfen yerel koleksiyonunuzu karşıya yüklemek mi yoksa sunucudan indirmek mi istediğinizi seçin.</string>
   <string name="sync_log_error_specific">Eşitleme hatası, türü: %1$s, ileti: %2$s</string>
   <string name="sync_corrupt_database">Veritabanınız bozuk. Lütfen eşitlemeyi yeniden denemeden önce onu düzeltin.\n\nVeritabanınızı onarmak hakkında bilgi için %s bakın.</string>

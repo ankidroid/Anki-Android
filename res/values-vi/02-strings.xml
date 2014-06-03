@@ -38,10 +38,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
-  <string name="CardEditorCancelButton">Hủy bỏ</string>
-  <string name="CardEditorSaveButton">Lưu lại</string>
-  <string name="CardEditorLaterButton">Sửa sau</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <string name="CardEditorLaterMessage">Lưu thông tin cho sau này</string>
   <string name="CardEditorCardDeck">Thẻ Bài: %s</string>
   <string name="CardEditorNoteDeck">Ghi chú Bài: %s</string>
@@ -62,7 +59,7 @@
   <string name="leech_notification">Bài được đánh dấu như đã tải về</string>
   <string name="corrupt_font">Lỗi font dữ liệu %s</string>
   <string-array name="browser_column1_headings">
-    <item>Search Field</item>
+    <item>Search field</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Trả lời</item>
@@ -121,6 +118,8 @@
   <string name="help_tutorial">Tập thẻ hướng dẫn</string>
   <string name="check_db">Kiểm tra cơ sở dữ liệu</string>
   <string name="check_db_message">Đang kiểm tra cơ sở dữ liệu. \n Xin đợi chút...</string>
+  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
+  <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
   <string name="simple_interface_hint">%s trống. Xin lưu ý giao diện đơn giản sẽ không có hình ảnh, tiếng, v.v.</string>
   <string name="delete_deck">Đang xóa Bài...\nĐợi chút nhé.</string>
   <string-array name="dynOrderLabels">
@@ -161,5 +160,5 @@
   <string name="template_error_fix">Xin hãy sử dụng trình biên tập Thẻ trên máy tính PC để sửa lỗi này.</string>
   <string name="sched_end">(kết thúc)</string>
   <string name="sched_unbury_button">Để nhìn thấy chúng bây giờ, hãy nhấp vào nút Hồi phục.</string>
-  <string name="sched_has_buried">Some related or buried cards were delayed until a later session.</string>
+  <string name="sched_has_buried">Some related or buried cards were delayed until tomorrow.</string>
 </resources>

@@ -39,6 +39,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <plurals name="card_browser_subtitle">
+    <item quantity="one">1 з %2$d карток показана</item>
+    <item quantity="other">%1$d з %2$d карток показано</item>
+  </plurals>
   <string name="card_browser_all_decks">Всі колоди</string>
   <string name="card_browser_load">Завантаження карток.\nБудь ласка, зачекайте...</string>
   <string name="card_browser_cardloading_error">Помилка завантаження карток. Ймовірно це пов’язано з обмеженнями пам’яті на вашому пристрої. Спробуйте знову з меншою колодою</string>
@@ -90,8 +94,4 @@
     <item>По кількості повторень</item>
     <item>По кількості провалів</item>
   </string-array>
-  <plurals name="card_browser_subtitle">
-    <item quantity="one">1 з %2$d карток показана</item>
-    <item quantity="other">%1$d з %2$d карток показано</item>
-  </plurals>
 </resources>

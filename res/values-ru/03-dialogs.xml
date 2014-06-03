@@ -41,7 +41,9 @@
 <resources>
   <string name="welcome_message">С AnkiDroid вы можете эффективно пополнить свой словарный запас или заучить любую другую информацию. AnkiDroid повторно показывает карточки по определенному алгоритму так, чтобы вы не успели их забыть.\n\nДля получения первых впечатлений о программе, мы рекомендуем начать с учебной колоды, которая познакомит вас с тем, как здесь все работает. Просто нажмите «Начать просмотр» после открытия колоды.\n\nСоздать учебную колоду сейчас?</string>
   <string name="check_db_title">Проверка базы данных</string>
-  <string name="check_db_result_message">База данных проверена и оптимизирована.\nУменьшение на %d кб</string>
+  <string name="check_db_warning">This may take a long time</string>
+  <string name="check_db_acknowledge">Database checked</string>
+  <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d kB.</string>
   <string name="contextmenu_deckpicker_delete_deck">Удалить колоду</string>
   <string name="delete_deck_title">Удалить колоду</string>
   <string name="delete_deck_message">Вы уверены, что хотите удалить все карты в %s?</string>
@@ -59,7 +61,6 @@
     <item><![CDATA[AnkiDroid выпускается под <a href="%1$s">GNU-GPL v3 лицензией</a> и исходный код доступен <a href="%2$s">здесь</a>.]]></item>
   </string-array>
   <string name="dont_show_again">Не показывать снова</string>
-  <string name="sync_log_title">Ход синхронизации</string>
   <string name="notify_ticker">Обновление приложения</string>
   <string name="notify_title">Ankidroid обновлен</string>
   <string name="notify_message">Скачать новую версию</string>
@@ -69,7 +70,7 @@
   <string name="notification_stop">Не уведомлять меня об этом обновлении снова</string>
   <string name="reset_card_dialog_title">Сброс учебного прогресса карты</string>
   <string name="reset_card_dialog_message">Удаление прогресса обучения для всех карт к этой заметке (они будут выглядеть как новые).\nПродолжить?</string>
-  <string name="reset_card_dialog_confirmation">Сброс всех карт этой записки</string>
+  <string name="reset_card_dialog_acknowledge">Cards reset</string>
   <string name="answering_error_title">Ошибка базы данных</string>
   <string name="answering_error_message">Произошла ошибка при записи в коллекцию. Это может быть связано с тем, что база данных была ранее повреждена или что недостаточно места на диске.\n\nЕсли это случается часто, попробуйте проверить базу данных, восстановить коллекцию или восстановить из резервной копии. Нажмите для этого на «Настройки».\n\nОднако, дело может быть в ошибке  AnkiDroid; Пожалуйста, сообщите об ошибке, чтобы мы могли проверить это.</string>
   <string name="answering_error_report">Сообщить об ошибке</string>
@@ -98,6 +99,7 @@
   <string name="deck_upgrade_more_options_downgrade"><![CDATA[<br><br>Если вы хотите понизить версию AnkiDroid до версии 1, пожалуйста прочитайте <a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Continuing_to_use_AnkiDroid_1.1.3">инструкцию</a>.]]></string>
   <string name="deck_upgrade_create_new_collection">Создание новой коллекции</string>
   <string name="deck_upgrade_create_new_collection_title">Создание новой коллекции</string>
+  <string name="deck_upgrade_create_new_collection_button">New collection</string>
   <string name="deck_upgrade_not_import_warning">Вы уверены, что вы хотите это сделать? Ваши старые данные не будут импортированы.</string>
   <string name="deck_upgrade_via_web"><![CDATA[<b>Этот метод обновления не рекомендован, если вы используете медиа файлы или большую коллекцию!</b><br><br>Ваши Anki 1.x колоды будут архивированы и загружены на сервер AnkiWeb, после чего преобразованная коллекция будет скачана с сервера.<br><br>Обратите внимание, что стабильное интернет соединение обязательно, и файл не должен превышать 50Mb.<br><br>Пользователям Anki Desktop крайне рекомендовано использовать Anki Desktop для обновления.<br><br>Вы всё ещё хотите продолжить?]]></string>
   <string name="deck_upgrade_via_anki_desktop"><![CDATA[Если у Вас уже есть обновлённая AnkiDroid коллекция в Anki Desktop, Вы можете получить её оттуда, синхронизировав коллекции через AnkiWeb.<br><br>Альтернативно, можно просто скопировать вашу AnkiDroid коллекцию на ПК через USB, затем обновить и скопировать обратно в AnkiDroid.]]></string>
@@ -120,4 +122,22 @@
   <string name="import_media_count">Импорт медиа файлов %1$d%%\nПожалуйста подождите&#8230;</string>
   <string name="import_update_counts">Вычисление результатов обновления.\nПожалуйста подождите&#8230;</string>
   <string name="import_add_progress">• Распакованный архив %1$s\n• Импортировано заметок %2$d%%\n• Импортировано карт %3$d%%\n• Очищено %4$s</string>
+  <string name="sd_card_full_title">SD card full</string>
+  <string name="sd_card_almost_full_title">SD card almost full</string>
+  <string name="dialog_cancel">Cancel</string>
+  <string name="dialog_ok">OK</string>
+  <string name="dialog_continue">Continue</string>
+  <string name="dialog_neutral_later">Later</string>
+  <string name="dialog_positive_create">Create</string>
+  <string name="dialog_positive_delete">Delete</string>
+  <string name="dialog_positive_disable">Disable</string>
+  <string name="dialog_positive_overwrite">Overwrite</string>
+  <string name="dialog_positive_repair">Repair</string>
+  <string name="dialog_positive_replace">Replace</string>
+  <string name="dialog_positive_reset">Reset</string>
+  <string name="dialog_positive_save">Save</string>
+  <string name="add_button_content">Add&#8230;</string>
+  <string name="card_browser_button_content">Card browser</string>
+  <string name="lookup_button_content">Look up</string>
+  <string name="statistics_button_content">Statistics</string>
 </resources>

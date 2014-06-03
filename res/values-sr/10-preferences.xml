@@ -44,11 +44,11 @@
   <string name="pref_cat_reviewer_behaviour">Behavior</string>
   <string name="pref_cat_flashcard">Display</string>
   <string name="pref_cat_whiteboard">Табла</string>
-  <string name="pref_cat_automatic_display">Automatic Display Answer</string>
-  <string name="pref_cat_fonts_formatting">Fonts and Style</string>
-  <string name="pref_cat_fonts">Font Selection</string>
+  <string name="pref_cat_automatic_display">Automatic display answer</string>
+  <string name="pref_cat_fonts_formatting">Fonts and style</string>
+  <string name="pref_cat_fonts">Font selection</string>
   <string name="pref_cat_fonts_size">Size</string>
-  <string name="pref_cat_gestures">Taps and Swipes</string>
+  <string name="pref_cat_gestures">Touches and swipes</string>
   <string name="pref_cat_actions">Дејство</string>
   <string name="pref_cat_advanced">Advanced</string>
   <string name="pref_cat_performance">Перформансе</string>
@@ -58,20 +58,21 @@
   <string name="show_whiteboard_summ">Omogućava vam da pišete po ekranu</string>
   <string name="whiteboard_stroke_width">Stroke width</string>
   <string name="whiteboard_stroke_width_summ">XXX</string>
-  <string name="whiteboard_black">Monochrome strokes</string>
-  <string name="whiteboard_black_summ">Uses less memory, but does not work in night mode</string>
+  <string name="whiteboard_black">Black strokes</string>
+  <string name="whiteboard_black_summ">Uses less memory, unless in night mode</string>
   <string name="write_answers_disable">Disable typing in answer</string>
   <string name="write_answers_disable_summ">Prevents the keyboard from appearing on flashcards containing typed fields</string>
-  <string name="text_selection_click">Longclick workaround</string>
+  <string name="text_selection_click">Long press workaround</string>
   <string name="text_selection_click_summ">Укључите, ако не успевате да почнете означавање текста преко дугог притиска</string>
   <string name="dictionary">Lookup dictionary</string>
   <string name="dictionary_summ">XXX</string>
   <string name="reset_languages">Reset languages</string>
   <string name="reset_languages_summ">Ресетуј језике (за претварање текста у звук и речнике) за све шпилове. Ресетуј за конкретне шпилове - у садржају шпилова</string>
   <string name="reset_languages_question">Да ресетујем све језичке поставке?</string>
+  <string name="reset_confirmation">All states reset</string>
   <string name="display_font_size">Reviewer font scaling</string>
   <string name="display_font_size_summ">XXX %</string>
-  <string name="image_size">Reviewer Image Scaling</string>
+  <string name="image_size">Reviewer image scaling</string>
   <string name="image_size_summ">XXX %</string>
   <string name="button_size">Reviewer button size</string>
   <string name="button_size_summ">XXX %</string>
@@ -82,7 +83,7 @@
   <string name="fullscreen_review">Fullscreen mode</string>
   <string name="fullscreen_review_summ">Use all available screen space</string>
   <string name="gestures">Enable gestures</string>
-  <string name="gestures_summ">Use swipes and taps to perform actions such as answering and editing cards.</string>
+  <string name="gestures_summ">Use swipes and touches to perform actions such as answering and editing cards.</string>
   <string name="gestures_swipe_up">Пребацити горе</string>
   <string name="gestures_swipe_down">Пребацити доле</string>
   <string name="gestures_swipe_left">Пребацити лево</string>
@@ -94,9 +95,9 @@
   <string name="gestures_tap_right">Куцкање десно</string>
   <string name="gestures_longclick">Дуготрајни притисак</string>
   <string name="more_scrolling_buttons">eReader</string>
-  <string name="more_scrolling_buttons_summ">Also use Kanji/Katakana, Emoji/Kao-moji buttons for scrolling</string>
+  <string name="more_scrolling_buttons_summ">Also use kanji/katakana, emoji/kao-moji buttons for scrolling</string>
   <string name="double_scrolling_gap">Дупло проклизавање</string>
-  <string name="double_scrolling_gap_summ">Enable this if you want to double the scroll gap with eReader</string>
+  <string name="double_scrolling_gap_summ">Double the scroll gap with eReader</string>
   <string name="swipe_sensitivity">Swipe sensitivity</string>
   <string name="swipe_sensitivity_summ">XXX</string>
   <string name="tts">Text to speech</string>
@@ -138,9 +139,10 @@
   <string name="pref_backup_summ">Automatically create backups before opening a deck (once a day)</string>
   <string name="pref_backup_max">Max number of backups</string>
   <string name="pref_backup_max_summ">XXX</string>
-  <string name="pref_backup_warning">Искључење резервног копирања ће избрисати све текуће датотеке резервних копија. Да ипак наставим?</string>
+  <string name="pref_disable_backup_title">Disable backups?</string>
+  <string name="pref_disable_backup_warning">This will delete all backup files</string>
   <string name="pref_intent_add_instant">Вишеструко додавање</string>
-  <string name="pref_intent_add_instant_summ">Add new cards from dictionaries without opening AnkiDroid. You find them later under \'saved data\' in card adder</string>
+  <string name="pref_intent_add_instant_summ">Add new cards from dictionaries without opening AnkiDroid. You find them later under \'saved data\' in card adder.</string>
   <string name="show_estimates">Прикажи дугме времена</string>
   <string name="show_estimates_summ">Следећи пут прикажи разматрање изнад дугмета за одговоре</string>
   <string name="show_progress">Прикажи преостале</string>
@@ -154,7 +156,7 @@
   <string name="day_offset">Почетак следећег дана</string>
   <string name="day_offset_summ">XXX hours past midnight</string>
   <string name="input_workaround">Input workaround</string>
-  <string name="input_workaround_summ">Workaround for focusing problems on HTML input boxes. Causes problems on several devices</string>
+  <string name="input_workaround_summ">Workaround for focusing problems on HTML input boxes. Causes problems on several devices.</string>
   <string name="pref_cardbrowser_skip_init_search">Fast card browser open</string>
   <string name="pref_cardbrowser_skip_init_search_summ">Skips initial automatic search when the card browser opens or the deck is changed</string>
   <string name="pref_keep_screen_on">Keep screen on</string>
@@ -165,11 +167,11 @@
   <string name="pref_simple_interface_exclude_tags_summ">Не користи једноставно сучеље за ове ознаке: XXX</string>
   <string name="write_answers_message">You should define for every deck a field to compare the written answer with. You can do this via Anki Desktop (deck properties -&gt; edit model -&gt; card layout).\n\nIf no compare field is set, your written answer will always be compared with the whole card answer</string>
   <string name="fix_arabic_text">Побољшај приказ арапског</string>
-  <string name="fix_arabic_text_summ">Partial workaround for limited support of Arabic by Android platform. When activated it is not possible to modify cards</string>
+  <string name="fix_arabic_text_summ">Partial workaround for limited support of Arabic by Android platform. When activated it is not possible to modify cards.</string>
   <string name="convert_fen_text">Подршка шаховских бележака</string>
   <string name="filter_google_translate">Из Google Преводиоца</string>
   <string name="filter_google_translate_summ">Једноставно чување изворне речи и превода</string>
-  <string name="convert_fen_text_summ">Draw chessboard from Forsyth Edwards Notation. The notation must be enclosed in [fen][/fen] tag</string>
+  <string name="convert_fen_text_summ">Draw chessboard from Forsyth–Edwards Notation. The notation must be enclosed in [fen][/fen] tags.</string>
   <string name="studyoptions_limit_select_tags">Изаберите ознаке</string>
   <string name="studyoptions_limit_tags_active">Са: %1$s</string>
   <string name="studyoptions_limit_tags_inactive">Без: %1$s</string>
@@ -185,6 +187,10 @@
   <string name="deck_conf_deck_description">Опис шпила</string>
   <string name="deck_conf_pref_cat_options">Опције</string>
   <string name="deck_conf_group">Група</string>
+  <plurals name="deck_conf_group_summ">
+    <item quantity="one">%1$s\n1 шпилова користи ову групу</item>
+    <item quantity="other">%1$s\n%2$d шпилова користи ову групу</item>
+  </plurals>
   <string name="deck_conf_new_cards">Нове карте</string>
   <string name="deck_conf_rev_cards">Понављања</string>
   <string name="deck_conf_lps_cards">Промашаји</string>
@@ -227,6 +233,10 @@
   <string name="deck_conf_remove_title">Уклони</string>
   <string name="deck_conf_remove_message">Да уклоним текућу групу опција?</string>
   <string name="deck_conf_set_subdecks">Задај за све групе подшпилова</string>
+  <plurals name="deck_conf_set_subdecks_summ">
+    <item quantity="one">1 подшпил ће користити ову групу</item>
+    <item quantity="other">%s подшпил ће користити ову групу</item>
+  </plurals>
   <string name="deck_conf_set_subdecks_title">Задај за све групе шпилова</string>
   <string name="deck_conf_set_subdecks_message">Да задам текућу групу опција за све подшпилове ових шпилова?</string>
   <string name="pref_browser_editor_font">Browser and editor font</string>
@@ -241,12 +251,4 @@
   <string name="deck_conf_cram_reschedule_summ">Препланирање карата, засновано на мојим одговорима у том шпилу</string>
   <string name="deck_conf_cram_steps">Допунски кораци</string>
   <string name="deck_conf_cram_steps_summ">Одредити допунске кораке</string>
-  <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n1 шпилова користи ову групу</item>
-    <item quantity="other">%1$s\n%2$d шпилова користи ову групу</item>
-  </plurals>
-  <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">1 подшпил ће користити ову групу</item>
-    <item quantity="other">%s подшпил ће користити ову групу</item>
-  </plurals>
 </resources>

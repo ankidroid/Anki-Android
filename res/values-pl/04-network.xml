@@ -40,15 +40,14 @@
 
 -->
 <resources>
-  <string name="connection_needed">Brak połączenia z Internetem</string>
+  <string name="youre_offline">You are offline</string>
   <string name="currently_downloading">Trwa pobieranie</string>
   <string name="starting_download">Rozpoczynanie pobierania...</string>
   <string name="downloading">Pobieranie...</string>
   <string name="paused">Wstrzymane</string>
   <string name="downloaded">Pobrane</string>
-  <string name="error">Błąd</string>
+  <string name="vague_error">Error</string>
   <string name="cancelling">Anulowanie...</string>
-  <string name="connection_error_title">Uwaga</string>
   <string name="connection_error_return_message">Wystąpił błąd sieciowy. Spróbuj ponownie lub anuluj i powrócić do poprzedniego ekranu.</string>
   <string name="retry">Próbuj ponownie</string>
   <string name="cancel">Anuluj</string>
@@ -65,7 +64,8 @@
   <string name="download_button_return">Powrót</string>
   <string name="connection_error_message">Wystąpił błąd sieciowy.</string>
   <string name="sync_log_db_error">Wystąpił błąd bazy danych.</string>
-  <string name="no_user_password_error_message">Aby wykonać tę operację musisz posiadać konto AnkiWeb i być zalogowany.</string>
+  <string name="not_logged_in_title">Log in to AnkiWeb</string>
+  <string name="login_create_account_message">You must log in to an AnkiWeb account. You can create one in the next step.</string>
   <string name="username">Adres e-mail</string>
   <string name="username_repeat">Powtórz adres e-mail</string>
   <string name="password">Hasło</string>
@@ -91,7 +91,6 @@
   <string name="sync_conflict_remote">Pobieranie</string>
   <string name="sync_conflict_remote_confirm">Czy chcesz pobrać kolekcję z serwera? Należy pamiętać, że zastąpi ona lokalną kolekcję.</string>
   <string name="sync_conflict_local_confirm">Czy naprawdę chcesz przesłać lokalną kolekcję? Twoja kolekcja na serwerze zostanie nadpisana.</string>
-  <string name="sync_conflict_cancel">Anuluj synchronizację</string>
   <string name="sync_prepare_syncing">Przygotowywanie synchronizacji...</string>
   <string name="sync_preparing_full_sync_message">Przygotowanie pełnej synchronizacji...</string>
   <string name="sync_uploading_message">Wysyłanie...</string>
@@ -107,7 +106,7 @@
   <string name="sync_log_old_version">Zmienił się protokół synchronizacji, należy zaktualizować AnkiDroid do najnowszej wersji. Zobacz %s</string>
   <string name="sync_conflict_title">Konflikt synchronizacji</string>
   <string name="sync_no_changes_message">Nie znaleziono zmian.</string>
-  <string name="sync_database_success">Kolekcja pomyślnie zsynchronizowana</string>
+  <string name="sync_database_acknowledge">Collection synchronized</string>
   <string name="sync_log_error_fix">Wystąpił błąd synchronizacji%s.\n\nJeśli zdarza się to cały czas możesz dokonać pełnej synchronizacji, co prawdopodobnie naprawi problem. Jednak ta operacja nadpisze albo Twoją lokalną kolekcję albo tę na serwerze.\nJeśli naprawdę chcesz dokonać pełnej synchronizacji, wybierz czy chcesz ściągnąć wersję z serwera czy uplodować lokalną na serwer.</string>
   <string name="sync_log_error_specific">Błąd synchronizacji, typ: %1$s, wiadomość: %2$s</string>
   <string name="sync_corrupt_database">Twoja baza danych jest uszkodzona. Napraw ją, zanim ponownie spróbujesz synchronizacji.\n\nPod adresem %s znajdziesz informacje o naprawianiu bazy danych.</string>
@@ -127,10 +126,10 @@
   <string name="sync_check_upload_file">Sprawdzanie pliku przed wysłaniem...</string>
   <string name="sync_check_download_file">Sprawdzanie pobranego pliku...</string>
   <string name="sync_media_find">Wyszukiwanie zmienionych mediów...</string>
-  <string name="sync_media_remove">Przetwarzanie usuniętych mediów…</string>
-  <string name="sync_media_from_server">Pobieranie mediów z serwera…</string>
+  <string name="sync_media_remove">Przetwarzanie usuniętych mediów&#8230;</string>
+  <string name="sync_media_from_server">Pobieranie mediów z serwera&#8230;</string>
   <string name="sync_media_to_server">Wysyłanie multimediów do serwera...</string>
-  <string name="sync_media_sanity_check">Sprawdzanie liczby mediów…</string>
+  <string name="sync_media_sanity_check">Sprawdzanie liczby mediów&#8230;</string>
   <string name="sync_media_no_changes">Brak zmian w plikach mediów.</string>
   <string name="sync_media_success">Media zsynchronizowane.</string>
   <string name="sync_sanity_failed">Po synchronizacji kolekcja była niespójna. Aby to naprawić AnkiDroid wymusi pełną synchronizację. Wybierz którą wersję chcesz zatrzymać (lokalną czy z serwera) lub anuluj, jeśli chcesz synchronizować później.</string>
@@ -140,11 +139,11 @@
   <string name="register_title">Załóż konto</string>
   <string name="register_mismatch">Powtórnie wpisany login lub hasło nie pasuje lub jest puste. Wpisz ponownie.</string>
   <string name="registering_message">Tworzenie konta.\nProszę czekać...</string>
-  <string name="upgrade_decks_zipping">Kompresowanie talii przed przesłaniem.\nProszę czekaj…</string>
-  <string name="upgrade_decks_upload">Przesyłanie skompresowanych talii\nMożesz anulować przez wciśnięcie „wstecz”.\nProszę czekaj…</string>
-  <string name="upgrade_decks_waiting">Oczekiwanie, pozycja w kolejce: %s\nProszę czekaj…</string>
-  <string name="upgrade_decks_upgrade_started">Aktualizacja rozpoczęta\nProszę czekaj…</string>
-  <string name="upgrade_decks_downloading">Pobieranie zaktualizowanej kolekcji\nMożesz anulować przez wciśnięcie „wstecz”.\nProszę czekaj…</string>
+  <string name="upgrade_decks_zipping">Kompresowanie talii przed przesłaniem.\nProszę czekaj&#8230;</string>
+  <string name="upgrade_decks_upload">Przesyłanie skompresowanych talii\nMożesz anulować przez wciśnięcie „wstecz”.\nProszę czekaj&#8230;</string>
+  <string name="upgrade_decks_waiting">Oczekiwanie, pozycja w kolejce: %s\nProszę czekaj&#8230;</string>
+  <string name="upgrade_decks_upgrade_started">Aktualizacja rozpoczęta\nProszę czekaj&#8230;</string>
+  <string name="upgrade_decks_downloading">Pobieranie zaktualizowanej kolekcji\nMożesz anulować przez wciśnięcie „wstecz”.\nProszę czekaj&#8230;</string>
   <string name="upgrade_decks_media">Kopiowanie starych plików multimedialnych do nowej lokalizacji.\nProszę czekać...</string>
   <string name="upgrade_decks_message">Brak kolekcji w wersji Anki 2.0 ale znaleziono przynajmniej jedną kolekcję w starym formacie Anki 1.2:%sW celu użycia ich z nową wersją AnkiDroid muszą być najpierw przekonwertowane na kolekcję w nowym formacie Anki 2.0. Są trzy sposoby:</string>
   <string name="upgrade_decks_message_pos1">Przy pierwszym użyciu Anki Desktop 2.0, Twoje talie zostaną przekonwertowane. Można je zsynchronizować poprzez AnkiWeb lub po prostu skopiować nowe talie do urządzenia przenośnego. Skopiuj talie użytkownika z katalogu AnkiDroid (%s) do katalogu Anki Destop 1.2 na twoim komputerze (jeśli nie zostały już zsynchronizowane) i uruchom Anki Desktop 2.0.</string>
@@ -155,7 +154,7 @@
   <string name="upgrade_decks_button">Aktualizuj</string>
   <string name="upgrade_decks_failed">Następujące talie nie mogły zostać zaktualizowane:\n%sOtwórz je w Anki Desktop i włącz sprawdzanie bazy danych. Potem możesz je zaimportować za pomocą Anki Desktop.</string>
   <string name="upgrade_decks_media_failed">Kopiowanie mediów do nowego folderu mediów (%1$s) zakończyło się niepowodzeniem dla następujących talii:\n%2$sPrzenieś te pliki ręcznie.</string>
-  <string name="download_deck">Pobieranie talii (%d KB).\nProszę czekaj…</string>
+  <string name="download_deck">Pobieranie talii (%d KB).\nProszę czekaj&#8230;</string>
   <string name="sync_sanity_local">Lokalne</string>
   <string name="sync_sanity_remote">Zdalne</string>
 </resources>

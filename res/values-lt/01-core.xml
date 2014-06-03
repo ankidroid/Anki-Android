@@ -39,18 +39,31 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="btn_continue">Tęsti</string>
   <string name="app_name">Ankidroid</string>
-  <string name="attention">Dėmesio</string>
-  <string name="yes">Taip</string>
-  <string name="no">Ne</string>
-  <string name="ok">Taip</string>
+  <string name="app_name_anki">Anki</string>
+  <string name="app_name_droid">Droid</string>
   <string name="studyoptions_deck_name">Malkos pavadinimas</string>
   <string name="studyoptions_due_today">Šiandien laukia:</string>
   <string name="studyoptions_new_total">Viso naujų kortelių:</string>
   <string name="studyoptions_total_cards">Iš viso kortų:</string>
   <string name="studyoptions_eta">Apskaičiuotas laikas (min):</string>
   <string name="studyoptions_start">Pradėti mokytis</string>
+  <plurals name="deckpicker_title">
+    <item quantity="one">Laukia 1 iš %2$d (%3$s)</item>
+    <item quantity="other">Laukia %1$d iš %2$d (%3$s)</item>
+  </plurals>
+  <plurals name="deckpicker_title_minutes">
+    <item quantity="one">1 min.</item>
+    <item quantity="other">%d min.</item>
+  </plurals>
+  <plurals name="deckpicker_due">
+    <item quantity="one">Laukia 1 iš %2$d</item>
+    <item quantity="other">Laukia %1$d iš %2$d</item>
+  </plurals>
+  <plurals name="reviewer_window_title">
+    <item quantity="one">Dar 1 minutė</item>
+    <item quantity="other">Liko %d min</item>
+  </plurals>
   <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">Parodyti atsakymą</string>
   <string name="ease1_successive">Dar kartą</string>
@@ -59,7 +72,7 @@
   <string name="ease3_learning">Lengvai</string>
   <string name="studyoptions_congrats_undo">Atšaukti %s</string>
   <string name="studyoptions_congrats_unbury">Ištraukti</string>
-  <string name="studyoptions_congrats_custom_study">Custom Study</string>
+  <string name="studyoptions_congrats_custom_study">Custom study</string>
   <string name="studyoptions_congrats_open_other_deck">pastabos sustabdymą</string>
   <string name="card_unsuspended">Kortelės sustabdymas atšauktas</string>
   <string name="card_suspended">Kortelė iš naujo sustabdyta</string>
@@ -80,8 +93,8 @@
   <string name="contextmenu_deckpicker_reset_reset_message">Atkurti kalbą</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optimizuoti duomenų bazę</string>
   <string name="contextmenu_deckpicker_rename_deck">Pervadinti malką</string>
-  <string name="contextmenu_deckpicker_collapse_deck">Hide Subdecks</string>
-  <string name="contextmenu_deckpicker_inflate_deck">Show Subdecks</string>
+  <string name="contextmenu_deckpicker_collapse_deck">Hide subdecks</string>
+  <string name="contextmenu_deckpicker_inflate_deck">Show subdecks</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Nustatyti vartotojo žodyną</string>
   <string name="menu_add">Add</string>
   <string name="menu_add_note">Add note</string>
@@ -108,36 +121,6 @@
   <string name="studyoptions_feedback">Atsiliepimas</string>
   <string name="studyoptions_load_tutorial_deck">Sukurti vadovėlį</string>
   <string name="night_mode">Naktinis režimas</string>
-  <string name="visit">Lankyti</string>
-  <string name="later">Vėliau</string>
-  <string name="download">Atsiųsti</string>
-  <string name="open_collection">Kolekcija atidaroma.\n Prašau palaukti...</string>
-  <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait...</string>
-  <string name="rebuild_cram_label">Atstatyti</string>
-  <string name="empty_cram_label">Išvalyti</string>
-  <string name="empty_cram_deck">Emptying cram deck.\nPlease wait...</string>
-  <string name="custom_study_deck_name">Individualizuota studijų sesija</string>
-  <string name="custom_study_deck_exists">Prašome pirma pervardyti esamą Individualizuotą studijų malką.</string>
-  <string name="studyoptions_congrats_finished">Sveikinimai! Kol kas peržiūra pasibaigė.</string>
-  <string name="studyoptions_congrats_more_rev">Šiandienos apžvalgų riba pasiekta, bet dar yra likusių neperžvelgtų kortelių. Atminties optimizavimui siūlome parinktyse padidinti dienos limitą.</string>
-  <string name="studyoptions_congrats_more_new">There are more new cards available, but the daily limit has been reached. You can increase the limit in the options, but please bear in mind that this will increase your short-term review workload.</string>
-  <string name="studyoptions_congrats_custom">To study outside of the normal schedule, click the Custom Study button below.</string>
-  <string name="sd_card_not_mounted">SD card is not mounted.\n\nYou can store your collection in the internal memory too, though it\'s not recommended as you cannot access the file that easily. You can activate this in the preferences (open them by clicking this text).</string>
-  <string name="studyoptions_options">Parinktys</string>
-  <string name="empty_cloze_warning">Please edit this note and add some cloze deletions. (%1$s)</string>
-  <string name="help_cloze">pagalba</string>
-  <string name="button_sync">Sinchronizuoti</string>
-  <string name="restart">Paleisti iš naujo</string>
-  <string name="do_nothing">Nieko nedaryti</string>
-  <string name="more_options">Daugiau parinkčių</string>
-  <string name="now">Dabar</string>
-  <string name="back">Atgal</string>
-  <string name="ankiweb">AnkiWeb</string>
-  <string name="usb">USB</string>
-  <string name="_import">Importuoti</string>
-  <string name="confirm">Patvirtinti</string>
-  <string name="internet">Internetas</string>
-  <string name="pc">PC</string>
   <string-array name="next_review_s">
     <item>1 sekundė</item>
     <item>1 minutė</item>
@@ -154,22 +137,20 @@
     <item>%s mėn</item>
     <item>%s m.</item>
   </string-array>
-  <plurals name="deckpicker_title">
-    <item quantity="one">Laukia 1 iš %2$d (%3$s)</item>
-    <item quantity="other">Laukia %1$d iš %2$d (%3$s)</item>
-  </plurals>
-  <plurals name="deckpicker_title_minutes">
-    <item quantity="one">1 min.</item>
-    <item quantity="other">%d min.</item>
-  </plurals>
-  <plurals name="deckpicker_due">
-    <item quantity="one">Laukia 1 iš %2$d</item>
-    <item quantity="other">Laukia %1$d iš %2$d</item>
-  </plurals>
-  <plurals name="reviewer_window_title">
-    <item quantity="one">Dar 1 minutė</item>
-    <item quantity="other">Liko %d min</item>
-  </plurals>
+  <string name="visit">Lankyti</string>
+  <string name="later">Vėliau</string>
+  <string name="download">Atsiųsti</string>
+  <string name="open_collection">Kolekcija atidaroma.\n Prašau palaukti...</string>
+  <string name="rebuild_cram_deck">Rebuilding cram deck&#8230;</string>
+  <string name="rebuild_cram_label">Atstatyti</string>
+  <string name="empty_cram_label">Išvalyti</string>
+  <string name="empty_cram_deck">Emptying cram deck&#8230;</string>
+  <string name="custom_study_deck_name">Individualizuota studijų sesija</string>
+  <string name="custom_study_deck_exists">Prašome pirma pervardyti esamą Individualizuotą studijų malką.</string>
+  <string name="studyoptions_congrats_finished">Sveikinimai! Kol kas peržiūra pasibaigė.</string>
+  <string name="studyoptions_congrats_more_rev">Šiandienos apžvalgų riba pasiekta, bet dar yra likusių neperžvelgtų kortelių. Atminties optimizavimui siūlome parinktyse padidinti dienos limitą.</string>
+  <string name="studyoptions_congrats_more_new">Today\'s limit has been reached. There are more new cards available; you can increase the limit in the options, but this will increase your short-term review workload.</string>
+  <string name="studyoptions_congrats_custom">To study outside of the normal schedule, touch the \"Custom study\" button below</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Rytoj lauks 1 kortelė ir %2$s.\n Apskaičiuotas laikas: %3$s</item>
     <item quantity="other">Rytoj lauks %1$d kortelė ir %2$s.\n Apskaičiuotas laikas: %3$s</item>
@@ -182,4 +163,21 @@
     <item quantity="one">Apskaičiuotas laikas: 1 min.</item>
     <item quantity="other">Apskaičiuotas laikas: %1$d min.</item>
   </plurals>
+  <string name="sd_card_not_mounted">SD card not mounted.\n\nYou can store your collection in the internal memory too, though it\'s not recommended as you cannot access the file that easily. You can activate this in the preferences (open them by touching this text).</string>
+  <string name="studyoptions_options">Parinktys</string>
+  <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
+  <string name="help_cloze">pagalba</string>
+  <string name="button_sync">Sinchronizuoti</string>
+  <string name="restart">Paleisti iš naujo</string>
+  <string name="do_nothing">Nieko nedaryti</string>
+  <string name="more_options">Daugiau parinkčių</string>
+  <string name="now">Dabar</string>
+  <string name="back">Atgal</string>
+  <string name="ankiweb">AnkiWeb</string>
+  <string name="usb">USB</string>
+  <string name="_import">Importuoti</string>
+  <string name="confirm">Patvirtinti</string>
+  <string name="internet">Internetas</string>
+  <string name="pc">PC</string>
+  <string name="title_activity_graphical_activity">Statistical chart</string>
 </resources>

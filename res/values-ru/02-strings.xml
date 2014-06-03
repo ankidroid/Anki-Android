@@ -38,16 +38,13 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
-  <string name="CardEditorCancelButton">Отмена</string>
-  <string name="CardEditorSaveButton">Сохранить</string>
-  <string name="CardEditorLaterButton">Позже</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <string name="CardEditorLaterMessage">Сохранённая информация</string>
   <string name="CardEditorCardDeck">Карта колоды: %s</string>
   <string name="CardEditorNoteDeck">Заметка колоды: %s</string>
   <string name="CardEditorModel">Тип заметки: %s</string>
   <string name="CardEditorTags">Теги: %1$s</string>
-  <string name="add_new_filter_tags">Add/Filter tags</string>
+  <string name="add_new_filter_tags">Add/filter tags</string>
   <string name="note_type">Тип заметки</string>
   <string name="card_type">Тип карты</string>
   <string name="filter_tags">Filter tags</string>
@@ -121,6 +118,8 @@
   <string name="help_tutorial">Учебная колода</string>
   <string name="check_db">Проверка базы данных</string>
   <string name="check_db_message">Проверка базы данных. \nПожалуйста подождите...</string>
+  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
+  <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
   <string name="simple_interface_hint">Пустой %s. Имейте в виду то, что простой интерфейс не может показывать фотографии/звуки и т.д.</string>
   <string name="delete_deck">Удаление колоды...\nПожалуйста подождите...</string>
   <string-array name="dynOrderLabels">

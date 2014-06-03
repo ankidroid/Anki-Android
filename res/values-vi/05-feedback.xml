@@ -51,7 +51,7 @@
   <string name="feedback_message_sent_failure">Unable to send feedback, code %1$s</string>
   <string name="feedback_keep_latest">Keep latest error</string>
   <string name="feedback_clear_all">Clear all errors</string>
-  <string name="feedback_default_text">Please enter your feedback, or information about the nature of any errors you\'re reporting.</string>
+  <string name="feedback_default_text">Enter your feedback, or information about the nature of any errors you\'re reporting.</string>
   <string name="feedback_error_reply_new">Lỗi không rõ, thông báo lỗi mới</string>
   <string name="feedback_error_reply_known">Issue previously detected. Details welcome on AnkiDroid issue tracker.</string>
   <string name="feedback_error_reply_issue_unknown">Issue %1$d, unknown status</string>

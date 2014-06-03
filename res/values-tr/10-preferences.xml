@@ -69,6 +69,7 @@
   <string name="reset_languages">Dilleri sıfırla</string>
   <string name="reset_languages_summ">Tüm destelerdeki dil atamalarını sıfırla (metin okuma ve sözlükler için). Belirli deste atamalarını sıfırlamak için deste seçiciyi kullanın.</string>
   <string name="reset_languages_question">Tüm dil atamaları sıfırlansın mı?</string>
+  <string name="reset_confirmation">All states reset</string>
   <string name="display_font_size">Çalışma font ölçeği</string>
   <string name="display_font_size_summ">XXX %</string>
   <string name="image_size">Çalışma Resim Ölçeği</string>
@@ -138,7 +139,8 @@
   <string name="pref_backup_summ">Desteyi açmadan önce otomatik olarak yedek oluştur (günde bir kere)</string>
   <string name="pref_backup_max">En fazla yedek sayısı</string>
   <string name="pref_backup_max_summ">XXX</string>
-  <string name="pref_backup_warning">Yedekleri devredışı bırakmak bulunan tüm yedek dosyalarını silecek. Yine de devam edilsin mi?</string>
+  <string name="pref_disable_backup_title">Disable backups?</string>
+  <string name="pref_disable_backup_warning">This will delete all backup files</string>
   <string name="pref_intent_add_instant">Hızlı ekle</string>
   <string name="pref_intent_add_instant_summ">AnkiDroid\'i açmadan sözlüklerden yeni kartlar ekle. Bunları sonra kart ekleyicide \"kayıtlı veri\" altında bulabilirsiniz.</string>
   <string name="show_estimates">Düğmede zaman göster</string>

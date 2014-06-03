@@ -40,15 +40,14 @@
 
 -->
 <resources>
-  <string name="connection_needed">Ste v režime offline.</string>
+  <string name="youre_offline">You are offline</string>
   <string name="currently_downloading">Práve sťahujem</string>
   <string name="starting_download">Začínam sťahovanie...</string>
   <string name="downloading">Sťahujem ...</string>
   <string name="paused">Pozastavené</string>
   <string name="downloaded">Stiahnuté</string>
-  <string name="error">Chyba</string>
+  <string name="vague_error">Error</string>
   <string name="cancelling">Zrušenie...</string>
-  <string name="connection_error_title">Pozor</string>
   <string name="connection_error_return_message">Vyskytla sa chyba siete. Skúste znova, alebo postup zrušte a vráťte sa na predchádzajúcu obrazovku.</string>
   <string name="retry">Skúsiť znova</string>
   <string name="cancel">Zrušiť</string>
@@ -65,7 +64,8 @@
   <string name="download_button_return">Návrat</string>
   <string name="connection_error_message">Vyskytla sa chyba siete.</string>
   <string name="sync_log_db_error">Vyskytla sa chyba databázy.</string>
-  <string name="no_user_password_error_message">Ak chcete pokračovať v tejto operácii, musíte mať AnkiWeb účet a byť prihlásený.</string>
+  <string name="not_logged_in_title">Log in to AnkiWeb</string>
+  <string name="login_create_account_message">You must log in to an AnkiWeb account. You can create one in the next step.</string>
   <string name="username">E-mailová adresa</string>
   <string name="username_repeat">Zopakovať e-mailovú adresu</string>
   <string name="password">Heslo</string>
@@ -91,7 +91,6 @@
   <string name="sync_conflict_remote">Stiahnuť</string>
   <string name="sync_conflict_remote_confirm">Naozaj chcete stiahnuť zbierku zo serveru? Berte na vedomie, že táto prepíše vašu aktuálnu zbierku.</string>
   <string name="sync_conflict_local_confirm">Naozaj chcete na server nahrať vašu aktuálnu zbierku? Vezmite na vedomie, že takto sa prepíše zbierka momentálne uložená na serveri.</string>
-  <string name="sync_conflict_cancel">Zrušiť synchronizáciu</string>
   <string name="sync_prepare_syncing">Pripravuje sa synchronizácia...</string>
   <string name="sync_preparing_full_sync_message">Pripravuje sa úplná synchronizácia...</string>
   <string name="sync_uploading_message">Nahrávanie...</string>
@@ -107,7 +106,7 @@
   <string name="sync_log_old_version">Zmenil sa protokol synchronizácie, prosím aktualizujte na najnovšiu verziu AnkiDroid. Pozrite si %s</string>
   <string name="sync_conflict_title">Konflikt synchronizácie</string>
   <string name="sync_no_changes_message">Nenašli sa žiadne zmeny.</string>
-  <string name="sync_database_success">Zbierka bola úspešne synchronizovaná</string>
+  <string name="sync_database_acknowledge">Collection synchronized</string>
   <string name="sync_log_error_fix">Počas synchronizácie nastala chyba%s.\n\nAk sa to stáva pravidelne, môžete vykonať úplnú synchronizáciu, ktorá pravdepodobne problém odstráni. Buďte si ale vedomý toho, že tým prepíšete buď vašu miestnu zbierku, alebo tú na AnkiWeb.\nAk chcete skutočne vykonať úplnú synchronizáciu, prosím zvoľte, či chcete nahrať vašu miestnu zbierku, alebo stiahnuť tú zo servera.</string>
   <string name="sync_log_error_specific">Chyba synchronizácie, typ: %1$s, správa: %2$s</string>
   <string name="sync_corrupt_database">Vaša databáza je poškodená. Prosím opravte ju pred opätovným pokusom o synchronizáciu.\n\nPozrite si %s pre informácie o oprave databázy.</string>

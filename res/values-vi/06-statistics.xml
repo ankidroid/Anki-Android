@@ -54,7 +54,7 @@
   <string name="statistics_new_cards">New cards</string>
   <string name="statistics_failed_cards">Failed cards</string>
   <string name="statistics_fullscreen">Bật tắt toàn màn hình</string>
-  <string name="calculating_statistics">Calculating statistics.\nPlease wait...</string>
+  <string name="calculating_statistics">Calculating statistics&#8230;</string>
   <string name="deck_summary_cards">Số lượng các thẻ</string>
   <string name="deck_summary_notes">Number of notes:</string>
   <string name="deck_summary_cards_mature">Các thẻ trưởng thành:</string>

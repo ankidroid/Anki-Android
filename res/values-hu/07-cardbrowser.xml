@@ -39,6 +39,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <plurals name="card_browser_subtitle">
+    <item quantity="one">1 kártya látszik a %2$d közül</item>
+    <item quantity="other">%1$d kártya látszik a %2$d közül</item>
+  </plurals>
   <string name="card_browser_all_decks">Minden pakli</string>
   <string name="card_browser_load">Kártyák betöltése.\nKérlek, várj...</string>
   <string name="card_browser_cardloading_error">Hiba a kártyák betöltése közben. Ezt valószínűleg a készüléked memóriakorlátja okozza. Próbálj kisebb paklit betölteni</string>
@@ -90,8 +94,4 @@
     <item>Ismétlésszám szerint</item>
     <item>Tévesztések szerint</item>
   </string-array>
-  <plurals name="card_browser_subtitle">
-    <item quantity="one">1 kártya látszik a %2$d közül</item>
-    <item quantity="other">%1$d kártya látszik a %2$d közül</item>
-  </plurals>
 </resources>

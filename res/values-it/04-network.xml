@@ -40,15 +40,14 @@
 
 -->
 <resources>
-  <string name="connection_needed">Nessuna connessione a Internet</string>
+  <string name="youre_offline">You are offline</string>
   <string name="currently_downloading">Scaricamento in corso</string>
   <string name="starting_download">Inizio download...</string>
   <string name="downloading">Scarico...</string>
   <string name="paused">In pausa</string>
   <string name="downloaded">Scaricato</string>
-  <string name="error">Errore</string>
+  <string name="vague_error">Error</string>
   <string name="cancelling">Annullamento in corso...</string>
-  <string name="connection_error_title">Attenzione</string>
   <string name="connection_error_return_message">Si è verificato è un errore di rete. Riprovare, oppure Annulla e ritorna alla schermata precedente.</string>
   <string name="retry">Riprova</string>
   <string name="cancel">Annulla</string>
@@ -65,7 +64,8 @@
   <string name="download_button_return">Ritorna</string>
   <string name="connection_error_message">Si è verificato un errore di rete.</string>
   <string name="sync_log_db_error">Si è verificato un errore nel database.</string>
-  <string name="no_user_password_error_message">Per procedere con questa operazione devi avere un account AnkiWeb ed essere connesso.</string>
+  <string name="not_logged_in_title">Log in to AnkiWeb</string>
+  <string name="login_create_account_message">You must log in to an AnkiWeb account. You can create one in the next step.</string>
   <string name="username">Indirizzo e-mail</string>
   <string name="username_repeat">Ripeti indirizzo e-mail</string>
   <string name="password">Password</string>
@@ -91,7 +91,6 @@
   <string name="sync_conflict_remote">Scarica</string>
   <string name="sync_conflict_remote_confirm">Vuoi davvero scaricare la collezione del server? Fai attenzione che questo sovrascriverà la tua collezione locale.</string>
   <string name="sync_conflict_local_confirm">Vuoi davvero caricare la collezione locale? Fai attenzione che questo sovrascriverà la tua collezione sul server.</string>
-  <string name="sync_conflict_cancel">Annulla Sincronizzazione</string>
   <string name="sync_prepare_syncing">Preparazione sincronizzazione...</string>
   <string name="sync_preparing_full_sync_message">Sincronizzazione completa in preparazione...</string>
   <string name="sync_uploading_message">Carico...</string>
@@ -107,7 +106,7 @@
   <string name="sync_log_old_version">Il protocollo di sincronizzazione è cambiato, si prega di aggiornare AnkiDroid. Vedi %s</string>
   <string name="sync_conflict_title">Conflitto in fase di sincronizzazione</string>
   <string name="sync_no_changes_message">Nessuna modifica trovata.</string>
-  <string name="sync_database_success">Collezione sincronizzata con successo</string>
+  <string name="sync_database_acknowledge">Collection synchronized</string>
   <string name="sync_log_error_fix">Si è verificato un errore di sincronizzazione%s.\n\nSe succede ripetutamente, puoi eseguire una sincronizzazione completa, che probabilmente risolverà il problema. Tieni presente che una delle tue collezioni, o quella locale o quella su AnkiWeb, verrà sovrascritta.\nSe vuoi veramente eseguire una sincronizzazione completa, scegli se vuoi caricare la tua collezione locale o se vuoi scaricare quella dal server.</string>
   <string name="sync_log_error_specific">Errore sincronizzazione, tipo: %1$s, messaggio: %2$s</string>
   <string name="sync_corrupt_database">Il tuo database è corrotto. Riparalo prima di provare nuovamente a sincronizzare.\n\nVedi %s per informazioni su come riparare il database.</string>

@@ -38,16 +38,13 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
-  <string name="CardEditorCancelButton">取消</string>
-  <string name="CardEditorSaveButton">儲存</string>
-  <string name="CardEditorLaterButton">稍後</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <string name="CardEditorLaterMessage">封存的資訊</string>
   <string name="CardEditorCardDeck">卡片牌組： %s</string>
   <string name="CardEditorNoteDeck">筆記牌組： %s</string>
   <string name="CardEditorModel">筆記類型： %s</string>
   <string name="CardEditorTags">標籤: %1$s</string>
-  <string name="add_new_filter_tags">Add/Filter tags</string>
+  <string name="add_new_filter_tags">Add/filter tags</string>
   <string name="note_type">筆記類型</string>
   <string name="card_type">卡片種類</string>
   <string name="filter_tags">Filter tags</string>
@@ -61,6 +58,19 @@
   <string name="leech_suspend_notification">卡片已擱置，同時標為榨時卡</string>
   <string name="leech_notification">卡片標為榨時卡</string>
   <string name="corrupt_font">損壞的字型檔案 %s</string>
+  <string-array name="browser_column1_headings">
+    <item>Search field</item>
+  </string-array>
+  <string-array name="browser_column2_headings">
+    <item>Answer</item>
+    <item>Card</item>
+    <item>Deck</item>
+    <item>Note</item>
+    <item>Question</item>
+    <item>Tags</item>
+    <item>Lapses</item>
+    <item>Reviews</item>
+  </string-array>
   <string name="about_title">關於</string>
   <string name="cardeditor_title_add_note">新增筆記</string>
   <string name="cardeditor_title_edit_card">編輯筆記</string>
@@ -71,8 +81,16 @@
   <string name="add">新增</string>
   <string name="close">關閉</string>
   <string name="select">選擇</string>
-  <string name="saving_changes">正在儲存設定…</string>
+  <string name="saving_changes">正在儲存設定&#8230;</string>
   <string name="reordering_cards">正在重新排列卡片...</string>
+  <plurals name="timebox_reached">
+    <item quantity="one">1 card studied in %2$s</item>
+    <item quantity="other">%1$d cards studied in %2$s</item>
+  </plurals>
+  <plurals name="timebox_reached_minutes">
+    <item quantity="one">1 minute</item>
+    <item quantity="other">%1$d minutes</item>
+  </plurals>
   <string name="studyoptions_welcome_title">歡迎使用 AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">沒有可用的外部記憶卡</string>
   <string name="studyoptions_no_external_storage_message">目前沒有可用的外部記憶卡。Ankidroid需要權限來讀取記憶卡上的 Anki 牌組。請確認您的記憶卡裝載無誤，然後再試一次。</string>
@@ -90,14 +108,29 @@
   <string name="rename">重新命名</string>
   <string name="rename_error">無法重新命名牌組 %s </string>
   <string name="default_conf_delete_error">The default options group can\'t be removed</string>
+  <plurals name="factadder_cards_added">
+    <item quantity="one">新增了 1 張卡片</item>
+    <item quantity="other">新增了 %d 張卡片</item>
+  </plurals>
   <string name="help_title">說明</string>
   <string name="help_online">線上說明</string>
   <string name="help_faq">常見問題</string>
   <string name="help_tutorial">教學牌組</string>
   <string name="check_db">檢查資料庫</string>
   <string name="check_db_message">檢查資料庫。\n請稍後...</string>
+  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
+  <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
   <string name="simple_interface_hint">空的 %s。請注意，簡易介面無法顯示圖片或音效等等。</string>
   <string name="delete_deck">刪除牌組中...\n請稍候</string>
+  <string-array name="dynOrderLabels">
+    <item>舊卡先出現</item>
+    <item>隨機</item>
+    <item>間隔由小至大排列</item>
+    <item>間隔由大至小排列</item>
+    <item>最常忘記</item>
+    <item>依新增順序</item>
+    <item>依到期順序</item>
+  </string-array>
   <string name="menu_cardbrowser">卡片瀏覽器</string>
   <string name="show_hint">顯示提示</string>
   <string name="pref_lang_other">語言偏好設定</string>
@@ -124,42 +157,8 @@
   <string name="custom_study_invalid_number">數字無效</string>
   <string name="template_error">範本錯誤:</string>
   <string name="template_error_detail">這張卡片的範本有誤。</string>
-  <string name="template_error_fix">Please use the card editor on the desktop client to fix the error.</string>
+  <string name="template_error_fix">Use the card editor on the desktop client to fix it.</string>
   <string name="sched_end">(結束)</string>
-  <string name="sched_unbury_button">To see them now, tap the Unbury button.</string>
-  <string name="sched_has_buried">Some related or buried cards were delayed until a later session.</string>
-  <string-array name="browser_column1_headings">
-    <item>Search Field</item>
-  </string-array>
-  <string-array name="browser_column2_headings">
-    <item>Answer</item>
-    <item>Card</item>
-    <item>Deck</item>
-    <item>Note</item>
-    <item>Question</item>
-    <item>Tags</item>
-    <item>Lapses</item>
-    <item>Reviews</item>
-  </string-array>
-  <string-array name="dynOrderLabels">
-    <item>舊卡先出現</item>
-    <item>隨機</item>
-    <item>間隔由小至大排列</item>
-    <item>間隔由大至小排列</item>
-    <item>最常忘記</item>
-    <item>依新增順序</item>
-    <item>依到期順序</item>
-  </string-array>
-  <plurals name="timebox_reached">
-    <item quantity="one">1 card studied in %2$s</item>
-    <item quantity="other">%1$d cards studied in %2$s</item>
-  </plurals>
-  <plurals name="timebox_reached_minutes">
-    <item quantity="one">1 minute</item>
-    <item quantity="other">%1$d minutes</item>
-  </plurals>
-  <plurals name="factadder_cards_added">
-    <item quantity="one">新增了 1 張卡片</item>
-    <item quantity="other">新增了 %d 張卡片</item>
-  </plurals>
+  <string name="sched_unbury_button">To see them now, touch the \"Unbury\" button.</string>
+  <string name="sched_has_buried">Some related or buried cards were delayed until tomorrow.</string>
 </resources>

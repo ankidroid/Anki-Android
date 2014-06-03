@@ -39,18 +39,31 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="btn_continue">המשך</string>
   <string name="app_name">אנקידרויד</string>
-  <string name="attention">תשומת לב</string>
-  <string name="yes">כן</string>
-  <string name="no">לא</string>
-  <string name="ok">אישור</string>
+  <string name="app_name_anki">Anki</string>
+  <string name="app_name_droid">Droid</string>
   <string name="studyoptions_deck_name">:שם הדק</string>
   <string name="studyoptions_due_today">להיום:</string>
   <string name="studyoptions_new_total">סה\"כ כרטיסים חדשים:</string>
   <string name="studyoptions_total_cards">סה\"כ הכרטיסים:</string>
   <string name="studyoptions_eta">זמן משוער (דקות):</string>
   <string name="studyoptions_start">ללמוד עכשיו</string>
+  <plurals name="deckpicker_title">
+    <item quantity="one">1 of %2$d due (%3$s)</item>
+    <item quantity="other">%1$d of %2$d due (%3$s)</item>
+  </plurals>
+  <plurals name="deckpicker_title_minutes">
+    <item quantity="one">דקה אחת.</item>
+    <item quantity="other">דקות %d</item>
+  </plurals>
+  <plurals name="deckpicker_due">
+    <item quantity="one">1 of %2$d due</item>
+    <item quantity="other">%1$d of %2$d due</item>
+  </plurals>
+  <plurals name="reviewer_window_title">
+    <item quantity="one">דקה 1 נותרה</item>
+    <item quantity="other">נותרו %d דקות</item>
+  </plurals>
   <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">הצג תשובה</string>
   <string name="ease1_successive">שוב</string>
@@ -108,36 +121,6 @@
   <string name="studyoptions_feedback">משוב</string>
   <string name="studyoptions_load_tutorial_deck">יצירת ערכת לימוד</string>
   <string name="night_mode">מצב לילה</string>
-  <string name="visit">בקר</string>
-  <string name="later">מאוחר יותר</string>
-  <string name="download">הורד</string>
-  <string name="open_collection">פותח אוסף.‏\nנא להמתין...‏</string>
-  <string name="rebuild_cram_deck">השיקום cram הסיפון. \nPlease רגע...</string>
-  <string name="rebuild_cram_label">בונה מחדש</string>
-  <string name="empty_cram_label">ריק</string>
-  <string name="empty_cram_deck">מרקן את חפיסת הדחיסה.‏\nנא להמתין...‏</string>
-  <string name="custom_study_deck_name">Custom Study Session</string>
-  <string name="custom_study_deck_exists">Please rename the existing Custom Study deck first.</string>
-  <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
-  <string name="studyoptions_congrats_more_rev">Today\'s review limit has been reached, but there are still cards waiting to be reviewed. For optimum memory, consider increasing the daily limit in the options.</string>
-  <string name="studyoptions_congrats_more_new">There are more new cards available, but the daily limit has been reached. You can increase the limit in the options, but please bear in mind that this will increase your short-term review workload.</string>
-  <string name="studyoptions_congrats_custom">To study outside of the normal schedule, click the Custom Study button below.</string>
-  <string name="sd_card_not_mounted">SD card is not mounted.\n\nYou can store your collection in the internal memory too, though it\'s not recommended as you cannot access the file that easily. You can activate this in the preferences (open them by clicking this text).</string>
-  <string name="studyoptions_options">אפשרויות</string>
-  <string name="empty_cloze_warning">Please edit this note and add some cloze deletions. (%1$s)</string>
-  <string name="help_cloze">עזרה</string>
-  <string name="button_sync">סנכרן</string>
-  <string name="restart">התחל מחדש</string>
-  <string name="do_nothing">עשה כלום</string>
-  <string name="more_options">אפשרויות נוספות</string>
-  <string name="now">עכשיו</string>
-  <string name="back">חזור</string>
-  <string name="ankiweb">AnkiWeb</string>
-  <string name="usb">USB</string>
-  <string name="_import">ייבא</string>
-  <string name="confirm">אשר</string>
-  <string name="internet">אינטרנט</string>
-  <string name="pc">מחשב</string>
   <string-array name="next_review_s">
     <item>שנייה</item>
     <item>דקה</item>
@@ -154,22 +137,20 @@
     <item>חודשים %s</item>
     <item>שנים %s</item>
   </string-array>
-  <plurals name="deckpicker_title">
-    <item quantity="one">1 of %2$d due (%3$s)</item>
-    <item quantity="other">%1$d of %2$d due (%3$s)</item>
-  </plurals>
-  <plurals name="deckpicker_title_minutes">
-    <item quantity="one">דקה אחת.</item>
-    <item quantity="other">דקות %d</item>
-  </plurals>
-  <plurals name="deckpicker_due">
-    <item quantity="one">1 of %2$d due</item>
-    <item quantity="other">%1$d of %2$d due</item>
-  </plurals>
-  <plurals name="reviewer_window_title">
-    <item quantity="one">דקה 1 נותרה</item>
-    <item quantity="other">נותרו %d דקות</item>
-  </plurals>
+  <string name="visit">בקר</string>
+  <string name="later">מאוחר יותר</string>
+  <string name="download">הורד</string>
+  <string name="open_collection">פותח אוסף.‏\nנא להמתין...‏</string>
+  <string name="rebuild_cram_deck">השיקום cram הסיפון. \nPlease רגע...</string>
+  <string name="rebuild_cram_label">בונה מחדש</string>
+  <string name="empty_cram_label">ריק</string>
+  <string name="empty_cram_deck">מרקן את חפיסת הדחיסה.‏\nנא להמתין...‏</string>
+  <string name="custom_study_deck_name">Custom study session</string>
+  <string name="custom_study_deck_exists">Rename the existing custom study deck first</string>
+  <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
+  <string name="studyoptions_congrats_more_rev">Today\'s limit has been reached, but there are still cards to review.  You can increase the limit in the options.</string>
+  <string name="studyoptions_congrats_more_new">Today\'s limit has been reached. There are more new cards available; you can increase the limit in the options, but this will increase your short-term review workload.</string>
+  <string name="studyoptions_congrats_custom">To study outside of the normal schedule, touch the \"Custom study\" button below</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Tomorrow there will be: 1 card to review and %2$s.\n Estimated time: %3$s</item>
     <item quantity="other">Tomorrow there will be: %1$d cards to review and %2$s.\n Estimated time: %3$s</item>
@@ -182,4 +163,21 @@
     <item quantity="one">זמן משוער: דקה אחת.</item>
     <item quantity="other">זמן משוער: %1$d דקות.</item>
   </plurals>
+  <string name="sd_card_not_mounted">SD card not mounted.\n\nYou can store your collection in the internal memory too, though it\'s not recommended as you cannot access the file that easily. You can activate this in the preferences (open them by touching this text).</string>
+  <string name="studyoptions_options">אפשרויות</string>
+  <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
+  <string name="help_cloze">עזרה</string>
+  <string name="button_sync">סנכרן</string>
+  <string name="restart">התחל מחדש</string>
+  <string name="do_nothing">עשה כלום</string>
+  <string name="more_options">אפשרויות נוספות</string>
+  <string name="now">עכשיו</string>
+  <string name="back">חזור</string>
+  <string name="ankiweb">AnkiWeb</string>
+  <string name="usb">USB</string>
+  <string name="_import">ייבא</string>
+  <string name="confirm">אשר</string>
+  <string name="internet">אינטרנט</string>
+  <string name="pc">מחשב</string>
+  <string name="title_activity_graphical_activity">Statistical chart</string>
 </resources>

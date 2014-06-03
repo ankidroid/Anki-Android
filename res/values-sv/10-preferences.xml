@@ -69,6 +69,7 @@
   <string name="reset_languages">Nollställ språk</string>
   <string name="reset_languages_summ">Återställ språktilldelningar (för text till tal och ordböcker) för alla kortlekar. Återställ specifika kortlekstilldelningar i kortleksväljaren</string>
   <string name="reset_languages_question">Återställ alla språktilldelningar?</string>
+  <string name="reset_confirmation">All states reset</string>
   <string name="display_font_size">Typsnittsförstoring under repetition</string>
   <string name="display_font_size_summ">XXX %</string>
   <string name="image_size">Bildförstoring under repetition</string>
@@ -138,7 +139,8 @@
   <string name="pref_backup_summ">Säkerhetskopiera automatiskt innan du öppnar en kortlek (dagligen)</string>
   <string name="pref_backup_max">Max antal säkerhetskopior</string>
   <string name="pref_backup_max_summ">XXX</string>
-  <string name="pref_backup_warning">Inaktivering av säkerhetskopior kommer att ta bort alla nuvarande säkerhetskopior. Fortsätt ändå?</string>
+  <string name="pref_disable_backup_title">Disable backups?</string>
+  <string name="pref_disable_backup_warning">This will delete all backup files</string>
   <string name="pref_intent_add_instant">Lägg till omedelbart</string>
   <string name="pref_intent_add_instant_summ">Lägg till nya kort från ordböcker utan att öppna AnkiDroid. Du hittar dem senare under \"sparad data\" i kortskaparen</string>
   <string name="show_estimates">Visa tid på knappar</string>

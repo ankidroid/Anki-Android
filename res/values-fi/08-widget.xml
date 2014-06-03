@@ -43,12 +43,6 @@
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid korttien määrä</string>
   <string name="widget_no_cards_due">Ei ole tiedossa korttien määrää</string>
   <string name="widget_loading">Ladataan widgettiä...</string>
-  <string name="widget_medium">AnkiDroid Medium</string>
-  <string name="widget_small">AnkiDroid Small</string>
-  <string name="widget_big">AnkiDroid Big</string>
-  <string name="widget_big_restrictions_dialog">Due to some restrictions of Android\'s widget framework this widget can only show text but no images/sounds etc.</string>
-  <string name="open_in_reviewer">Open deck in AnkiDroid</string>
-  <string name="widget_big_tomorrow_due">Tomorrow due:</string>
   <plurals name="widget_cards_in_decks_due">
     <item quantity="one">1 kortti määrästä %2$s</item>
     <item quantity="other">%1$d korttia %2$s kortista</item>
@@ -57,8 +51,14 @@
     <item quantity="one">1 korttipakka</item>
     <item quantity="other">%1$d korttipakkaa</item>
   </plurals>
+  <string name="widget_medium">AnkiDroid medium</string>
+  <string name="widget_small">AnkiDroid small</string>
+  <string name="widget_big">AnkiDroid big</string>
+  <string name="widget_big_restrictions_dialog">Due to some restrictions of Android\'s widget framework this widget can only show text but no images/sounds etc.</string>
+  <string name="open_in_reviewer">Open deck in AnkiDroid</string>
   <plurals name="widget_big_eta">
     <item quantity="one">Estimated time: 1 min.</item>
     <item quantity="other">Estimated time: %d min.</item>
   </plurals>
+  <string name="widget_big_tomorrow_due">Tomorrow due:</string>
 </resources>

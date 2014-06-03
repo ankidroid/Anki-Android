@@ -40,15 +40,14 @@
 
 -->
 <resources>
-  <string name="connection_needed">沒有網路連線</string>
+  <string name="youre_offline">You are offline</string>
   <string name="currently_downloading">目前下載中</string>
   <string name="starting_download">開始下載...</string>
   <string name="downloading">下載中...</string>
   <string name="paused">暫停</string>
   <string name="downloaded">已下載</string>
-  <string name="error">錯誤</string>
+  <string name="vague_error">Error</string>
   <string name="cancelling">正在取消...</string>
-  <string name="connection_error_title">注意</string>
   <string name="connection_error_return_message">發生網路錯誤。請再試一次，或取消並返回上一畫面。</string>
   <string name="retry">重試</string>
   <string name="cancel">取消</string>
@@ -56,7 +55,7 @@
   <string name="download_cancel">取消下載</string>
   <string name="shared_decks">共享的牌組</string>
   <string name="loading_shared_decks">正在載入共享牌組...</string>
-  <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Terms and Conditions</a></string>
+  <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Terms and conditions</a></string>
   <string name="cancel_download">取消下載</string>
   <string name="resume_download">繼續下載</string>
   <string name="pause_download">暫停下載</string>
@@ -65,7 +64,8 @@
   <string name="download_button_return">返回</string>
   <string name="connection_error_message">網路出了點問題。</string>
   <string name="sync_log_db_error">資料庫發生了錯誤。</string>
-  <string name="no_user_password_error_message">要繼續進行下一步，您需要有一個AnkiOnline的帳戶，並登入完成。.</string>
+  <string name="not_logged_in_title">Log in to AnkiWeb</string>
+  <string name="login_create_account_message">You must log in to an AnkiWeb account. You can create one in the next step.</string>
   <string name="username">電子郵件地址</string>
   <string name="username_repeat">再次輸入電子郵件地址</string>
   <string name="password">密碼</string>
@@ -73,7 +73,7 @@
   <string name="log_in">登入</string>
   <string name="sign_up_description">沒有 AnkiWeb 帳戶嗎？它是免費的！</string>
   <string name="sign_up">註冊</string>
-  <string name="sign_up_terms">By tapping <i>Sign up</i>, you confirm that you have read and agree to our <a href="https://ankiweb.net/account/terms">terms of use</a>.</string>
+  <string name="sign_up_terms">By touching <i>Sign up</i>, you confirm that you have read and agree to our <a href="https://ankiweb.net/account/terms">terms of use</a>.</string>
   <string name="logged_as">登入為</string>
   <string name="log_out">登出</string>
   <string name="alert_logging_message">正在登入，請稍候...</string>
@@ -91,7 +91,6 @@
   <string name="sync_conflict_remote">下載</string>
   <string name="sync_conflict_remote_confirm">你真的想要下載伺服器上的收藏嗎？請注意這將覆寫您本地的收藏。</string>
   <string name="sync_conflict_local_confirm">你真的想上傳本地收藏嗎？注意：這將覆蓋您在伺服器上的收藏。</string>
-  <string name="sync_conflict_cancel">取消同步</string>
   <string name="sync_prepare_syncing">正在準備同步...</string>
   <string name="sync_preparing_full_sync_message">正在準備完整同步...</string>
   <string name="sync_uploading_message">上傳中...</string>
@@ -107,7 +106,7 @@
   <string name="sync_log_old_version">同步協定已更改，請升級到最新版的AnkiDroid。請參閱 %s</string>
   <string name="sync_conflict_title">同步衝突</string>
   <string name="sync_no_changes_message">未發現資料變動</string>
-  <string name="sync_database_success">收藏已經成功同步</string>
+  <string name="sync_database_acknowledge">Collection synchronized</string>
   <string name="sync_log_error_fix">同步錯誤 %s。\n\n如果一直出現這問題，進行完整同步也許可以解決此問題。不過要注意，完整同步會覆寫某一方的牌組收藏，可能是覆蓋本機的收藏或是 AnkiWeb 上的收藏。\n如果你確定要進行完整同步，請選擇是要上傳你的本地收藏，還是要從伺服器下載你的收藏。</string>
   <string name="sync_log_error_specific">同步錯誤，類型：%1$s，訊息：%2$s</string>
   <string name="sync_corrupt_database">您的資料庫已損壞。請先嘗試修復然後再試一次。關於如何修復資料庫，請參考 %s 。</string>

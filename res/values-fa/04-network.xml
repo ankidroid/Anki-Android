@@ -40,15 +40,14 @@
 
 -->
 <resources>
-  <string name="connection_needed">شما اكنون آفلاین هستيد.</string>
+  <string name="youre_offline">You are offline</string>
   <string name="currently_downloading">فعلا در حال بارگیری</string>
   <string name="starting_download">شروع بارگيري...</string>
   <string name="downloading">درحال بارگيري...</string>
   <string name="paused">توقف شده</string>
   <string name="downloaded">بارگيري شده</string>
-  <string name="error">خطا</string>
+  <string name="vague_error">Error</string>
   <string name="cancelling">درحال لغوكردن...</string>
-  <string name="connection_error_title">توجه</string>
   <string name="connection_error_return_message">خطاي شبكه رخ داده است. تلاش مجدد و يا لغو و بازگشت به صفحه قبلي.</string>
   <string name="retry">تلاش مجدد</string>
   <string name="cancel">لغو</string>
@@ -65,7 +64,8 @@
   <string name="download_button_return">بازگشت</string>
   <string name="connection_error_message">خطاي شبكه رخ داده است.</string>
   <string name="sync_log_db_error">خطاي پايگاه داده رخ داده است.</string>
-  <string name="no_user_password_error_message">به منظور ادامه این عملیات، شما نیاز به یک حساب کاربری در انکی وب و ورود به سیستم دارید.</string>
+  <string name="not_logged_in_title">Log in to AnkiWeb</string>
+  <string name="login_create_account_message">You must log in to an AnkiWeb account. You can create one in the next step.</string>
   <string name="username">نشانی پست الکترونیک</string>
   <string name="username_repeat">تکرار نشانی پست الکترونیک</string>
   <string name="password">رمزعبور</string>
@@ -91,7 +91,6 @@
   <string name="sync_conflict_remote">بارگیری</string>
   <string name="sync_conflict_remote_confirm">آیا مایلید مجموعه را از سرور بارگیری کنید؟ توجه داشته باشید که این مجموعه جایگزین مجموعه روی دستگاه شما خواهد شد.</string>
   <string name="sync_conflict_local_confirm">آیا مایلید مجموعه موجود بر روی دستگاه را بارگذاری كنيد؟ توجه كنيد كه این مجموعه جایگزین مجموعه موجود در سرویس دهنده خواهد شد.</string>
-  <string name="sync_conflict_cancel">لغو همگام سازي</string>
   <string name="sync_prepare_syncing">آماده همگام سازی...</string>
   <string name="sync_preparing_full_sync_message">آماده همگام سازی کامل...</string>
   <string name="sync_uploading_message">درحال بارگذاری...</string>
@@ -107,7 +106,7 @@
   <string name="sync_log_old_version">شیوه همگام سازی تغییر کرده است، لطفا به آخرین نسخه آنکی دروید به روز رسانی نمایید. %s را ببینید</string>
   <string name="sync_conflict_title">مشكل در همگامسازي</string>
   <string name="sync_no_changes_message">هيچ تغييري يافت نشد.</string>
-  <string name="sync_database_success">مجموعه با موفقیت همگام سازی شد</string>
+  <string name="sync_database_acknowledge">Collection synchronized</string>
   <string name="sync_log_error_fix">یک خطای همگام سازی رخ داد %s.\n\nاگر بی جهت اتفاق افتاده, شما می توانید همگام سازی کامل را انجام دهید, احتمالا مشکل رفع خواهد شد. آگاه باشید که بازنویسی یا روی مجموعه دستگاه شما و یا روی آنکی وب انجام خواهد شد.\nاگر مایل به انجام همگام سازی کامل هستید, لطفا آنچه را که می خواهید از مجموعه محلی تان بارگذاری کنید یا از سرور بارگیری کنید، انتخاب نمایید.</string>
   <string name="sync_log_error_specific">خطای همگام سازی, نوع: %1$s, پیام: %2$s</string>
   <string name="sync_corrupt_database">بانک اطلاعاتی شما آسیب دیده است. لطفا قبل از همگام سازی مجدد آن را تعمیر نمایید.\n\nببینید %s برای اطلاعاتی درباره تعمیر بانک اطلاعاتی تان.</string>

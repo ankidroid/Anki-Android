@@ -80,9 +80,6 @@
   <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; карата/дана</string>
   <string name="deck_summary_deck_age">Старост шпила: &lt;b&gt;%d&lt;/b&gt; дана</string>
   <string name="deck_summary_all_decks">Сви шпилови</string>
-  <string name="stats_forecast">Прогноза</string>
-  <string name="stats_review_count">Број прегледа</string>
-  <string name="stats_review_time">Време прегледа</string>
   <string-array name="next_review_in_s">
     <item>кроз 1 секунд</item>
     <item>кроз 1 минут</item>
@@ -120,6 +117,9 @@
     <item>Недеље</item>
     <item>Месеци</item>
   </string-array>
+  <string name="stats_forecast">Прогноза</string>
+  <string name="stats_review_count">Број прегледа</string>
+  <string name="stats_review_time">Време прегледа</string>
   <string-array name="stats_period">
     <item>1 месец</item>
     <item>1 година</item>

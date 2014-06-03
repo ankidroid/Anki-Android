@@ -39,18 +39,31 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="btn_continue">Продовжити</string>
   <string name="app_name">AnkiDroid</string>
-  <string name="attention">Увага</string>
-  <string name="yes">Так</string>
-  <string name="no">Ні</string>
-  <string name="ok">Гаразд</string>
+  <string name="app_name_anki">Anki</string>
+  <string name="app_name_droid">Droid</string>
   <string name="studyoptions_deck_name">Назва колоди</string>
   <string name="studyoptions_due_today">На сьогодні:</string>
   <string name="studyoptions_new_total">Всього нових карток:</string>
   <string name="studyoptions_total_cards">Всього карток:</string>
   <string name="studyoptions_eta">Оцінка часу (хв.):</string>
   <string name="studyoptions_start">Почати вивчення</string>
+  <plurals name="deckpicker_title">
+    <item quantity="one">повт. 1 з %2$d (%3$s)</item>
+    <item quantity="other">повт. %1$d з %2$d (%3$s)</item>
+  </plurals>
+  <plurals name="deckpicker_title_minutes">
+    <item quantity="one">1 хв.</item>
+    <item quantity="other">%d хв.</item>
+  </plurals>
+  <plurals name="deckpicker_due">
+    <item quantity="one">повт. 1 з %2$d</item>
+    <item quantity="other">повт. %1$d з %2$d</item>
+  </plurals>
+  <plurals name="reviewer_window_title">
+    <item quantity="one">Залишилася 1 хв.</item>
+    <item quantity="other">%d хвилин залишилося</item>
+  </plurals>
   <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">Показати відповідь</string>
   <string name="ease1_successive">Знову</string>
@@ -108,36 +121,6 @@
   <string name="studyoptions_feedback">Відгук</string>
   <string name="studyoptions_load_tutorial_deck">Створити підручник</string>
   <string name="night_mode">Нічний режим</string>
-  <string name="visit">Відвідати</string>
-  <string name="later">Пізніше</string>
-  <string name="download">Завантажити</string>
-  <string name="open_collection">Відкриття колекції.\n Будь ласка, зачекайте...</string>
-  <string name="rebuild_cram_deck">Перебудова колоди для Зубріння.\n Будь ласка, зачекайте...</string>
-  <string name="rebuild_cram_label">Перебудувати</string>
-  <string name="empty_cram_label">Порожньо</string>
-  <string name="empty_cram_deck">Очищення колоди для Зубріння.\n Будь ласка, зачекайте...</string>
-  <string name="custom_study_deck_name">Додатковий тренінг</string>
-  <string name="custom_study_deck_exists">Спочатку перейменуйте існуючу колоду для тренінгу.</string>
-  <string name="studyoptions_congrats_finished">Вітаємо! На разі це все.</string>
-  <string name="studyoptions_congrats_more_rev">Ви вичерпали ліміт повторювання на сьогодні, але досі є картки, які чекають на перегляд. Для оптимального запам\'ятовування можна збільшити щоденнній лиміт у налаштуваннях.</string>
-  <string name="studyoptions_congrats_more_new">Доступно більше нових карток але денний ліміт вичерпано. Ви можете збільшити ліміт в налаштуваннях, але, будь-ласка, зверніть увагу що це збільшить навантаження.</string>
-  <string name="studyoptions_congrats_custom">Для навчання за межами нормального разкладу клацніть на \"Додатковий Трейнінг\" внизу.</string>
-  <string name="sd_card_not_mounted">Карта памяті не вставлена.\n\nВи можете зберігати ваші колоди і у внутрішній памяті, але це не рекомендується так як ви не будете мати до них доступу. Ви можете активувати цей режим в налаштуваннях (клікніть тут).</string>
-  <string name="studyoptions_options">Параметри</string>
-  <string name="empty_cloze_warning">Будь ласка, відредагуйте цю примітку та додайте пропуски.(%1$s)</string>
-  <string name="help_cloze">допомога</string>
-  <string name="button_sync">Синхронізувати</string>
-  <string name="restart">Перезапустити</string>
-  <string name="do_nothing">Нічого не робити</string>
-  <string name="more_options">Додаткові параметри</string>
-  <string name="now">Зараз</string>
-  <string name="back">Назад</string>
-  <string name="ankiweb">AnkiWeb</string>
-  <string name="usb">USB</string>
-  <string name="_import">Імпорт</string>
-  <string name="confirm">Підтвердити</string>
-  <string name="internet">Інтернет</string>
-  <string name="pc">ПК</string>
   <string-array name="next_review_s">
     <item>1 секунда</item>
     <item>1 хвилина</item>
@@ -154,22 +137,20 @@
     <item>%s місяців</item>
     <item>%s років</item>
   </string-array>
-  <plurals name="deckpicker_title">
-    <item quantity="one">повт. 1 з %2$d (%3$s)</item>
-    <item quantity="other">повт. %1$d з %2$d (%3$s)</item>
-  </plurals>
-  <plurals name="deckpicker_title_minutes">
-    <item quantity="one">1 хв.</item>
-    <item quantity="other">%d хв.</item>
-  </plurals>
-  <plurals name="deckpicker_due">
-    <item quantity="one">повт. 1 з %2$d</item>
-    <item quantity="other">повт. %1$d з %2$d</item>
-  </plurals>
-  <plurals name="reviewer_window_title">
-    <item quantity="one">Залишилася 1 хв.</item>
-    <item quantity="other">%d хвилин залишилося</item>
-  </plurals>
+  <string name="visit">Відвідати</string>
+  <string name="later">Пізніше</string>
+  <string name="download">Завантажити</string>
+  <string name="open_collection">Відкриття колекції.\n Будь ласка, зачекайте...</string>
+  <string name="rebuild_cram_deck">Перебудова колоди для Зубріння.\n Будь ласка, зачекайте...</string>
+  <string name="rebuild_cram_label">Перебудувати</string>
+  <string name="empty_cram_label">Порожньо</string>
+  <string name="empty_cram_deck">Очищення колоди для Зубріння.\n Будь ласка, зачекайте...</string>
+  <string name="custom_study_deck_name">Додатковий тренінг</string>
+  <string name="custom_study_deck_exists">Спочатку перейменуйте існуючу колоду для тренінгу.</string>
+  <string name="studyoptions_congrats_finished">Вітаємо! На разі це все.</string>
+  <string name="studyoptions_congrats_more_rev">Ви вичерпали ліміт повторювання на сьогодні, але досі є картки, які чекають на перегляд. Для оптимального запам\'ятовування можна збільшити щоденнній лиміт у налаштуваннях.</string>
+  <string name="studyoptions_congrats_more_new">Доступно більше нових карток але денний ліміт вичерпано. Ви можете збільшити ліміт в налаштуваннях, але, будь-ласка, зверніть увагу що це збільшить навантаження.</string>
+  <string name="studyoptions_congrats_custom">Для навчання за межами нормального разкладу клацніть на \"Додатковий Трейнінг\" внизу.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Завтра буде: 1 картка повторити та %2$s.\n Оцінка часу: %3$s</item>
     <item quantity="other">Завтра буде: %1$d карток повторити та %2$d.\nПриблизний час: %3$s</item>
@@ -182,4 +163,21 @@
     <item quantity="one">Залишилось часу приблизно: 1 хв.</item>
     <item quantity="other">Залишилось часу приблизно: %1$d хв.</item>
   </plurals>
+  <string name="sd_card_not_mounted">Карта памяті не вставлена.\n\nВи можете зберігати ваші колоди і у внутрішній памяті, але це не рекомендується так як ви не будете мати до них доступу. Ви можете активувати цей режим в налаштуваннях (клікніть тут).</string>
+  <string name="studyoptions_options">Параметри</string>
+  <string name="empty_cloze_warning">Будь ласка, відредагуйте цю примітку та додайте пропуски.(%1$s)</string>
+  <string name="help_cloze">допомога</string>
+  <string name="button_sync">Синхронізувати</string>
+  <string name="restart">Перезапустити</string>
+  <string name="do_nothing">Нічого не робити</string>
+  <string name="more_options">Додаткові параметри</string>
+  <string name="now">Зараз</string>
+  <string name="back">Назад</string>
+  <string name="ankiweb">AnkiWeb</string>
+  <string name="usb">USB</string>
+  <string name="_import">Імпорт</string>
+  <string name="confirm">Підтвердити</string>
+  <string name="internet">Інтернет</string>
+  <string name="pc">ПК</string>
+  <string name="title_activity_graphical_activity">Statistical chart</string>
 </resources>

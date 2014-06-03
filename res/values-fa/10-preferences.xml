@@ -69,6 +69,7 @@
   <string name="reset_languages">بازنشانی زبان‌ها</string>
   <string name="reset_languages_summ">بازیابی زبان فعلی(برای تبدیل متن به گفتار و همه لغت نامه ها) برای همه دسته ها. بازیابی مخصوص دسته ویژه فعلی روی جمع کننده دسته</string>
   <string name="reset_languages_question">کل زبان فعلی را دوباره تنظیم می کنید؟</string>
+  <string name="reset_confirmation">All states reset</string>
   <string name="display_font_size">تغییر اندازه فونت بازبینی</string>
   <string name="display_font_size_summ">XXX %</string>
   <string name="image_size">تغییر اندازه تصویر بازبینی</string>
@@ -138,7 +139,8 @@
   <string name="pref_backup_summ">ایجاد پشتیبان بطور خودکار پیش از باز کردن یک دسته (یکبار در روز)</string>
   <string name="pref_backup_max">حداکثر تعداد پشتیبان‌ها</string>
   <string name="pref_backup_max_summ">XXX</string>
-  <string name="pref_backup_warning">غیر فعال کردن نسخه های پشتیبان موجب حذف تمام نسخه های پشتیبان خواهد شد.در هر صورت اقدام می کنید؟</string>
+  <string name="pref_disable_backup_title">Disable backups?</string>
+  <string name="pref_disable_backup_warning">This will delete all backup files</string>
   <string name="pref_intent_add_instant">اضافه کردن فوری</string>
   <string name="pref_intent_add_instant_summ">افزودن کارت‌های جدید از واژه‌نامه بدون بازکردن آنکی‌دروید. می‌توانید بعدا آنها را از قسمت \'اطلاعات ذخیره شده\' در اضافه کننده کارت پیدا کنید</string>
   <string name="show_estimates">نمایش  دکمه زمان</string>

@@ -38,16 +38,13 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
-  <string name="CardEditorCancelButton">取消</string>
-  <string name="CardEditorSaveButton">保存</string>
-  <string name="CardEditorLaterButton">稍后</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <string name="CardEditorLaterMessage">保存的信息</string>
   <string name="CardEditorCardDeck">卡牌所属牌组：%s</string>
   <string name="CardEditorNoteDeck">卡牌记录所属牌组：%s</string>
   <string name="CardEditorModel">卡牌记录类型:%s</string>
   <string name="CardEditorTags">标签: %1$s</string>
-  <string name="add_new_filter_tags">Add/Filter tags</string>
+  <string name="add_new_filter_tags">Add/filter tags</string>
   <string name="note_type">卡牌记录类型</string>
   <string name="card_type">卡牌类型</string>
   <string name="filter_tags">Filter tags</string>
@@ -61,6 +58,19 @@
   <string name="leech_suspend_notification">卡牌被标记为记忆难点并暂停复习</string>
   <string name="leech_notification">卡牌被标记为记忆难点</string>
   <string name="corrupt_font">字体文件 %s 已损坏</string>
+  <string-array name="browser_column1_headings">
+    <item>搜索字段</item>
+  </string-array>
+  <string-array name="browser_column2_headings">
+    <item>答案</item>
+    <item>卡牌</item>
+    <item>牌组</item>
+    <item>Note</item>
+    <item>Question</item>
+    <item>Tags</item>
+    <item>Lapses</item>
+    <item>Reviews</item>
+  </string-array>
   <string name="about_title">关于</string>
   <string name="cardeditor_title_add_note">增加条目注释</string>
   <string name="cardeditor_title_edit_card">编辑卡牌记录</string>
@@ -71,8 +81,16 @@
   <string name="add">添加</string>
   <string name="close">关闭</string>
   <string name="select">选择</string>
-  <string name="saving_changes">正在保存设置…</string>
+  <string name="saving_changes">正在保存设置&#8230;</string>
   <string name="reordering_cards">重新排列卡片中...</string>
+  <plurals name="timebox_reached">
+    <item quantity="one">在 %2$s 中学习了1个卡牌。</item>
+    <item quantity="other">在%2$s中学习了%1$d个卡牌</item>
+  </plurals>
+  <plurals name="timebox_reached_minutes">
+    <item quantity="one">1分钟</item>
+    <item quantity="other">%1$d分钟</item>
+  </plurals>
   <string name="studyoptions_welcome_title">欢迎进入 AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">没有可用的外部存储</string>
   <string name="studyoptions_no_external_storage_message">没有可用的外部存储空间，AnkiDroid需要访问SD卡以载入您的Anki牌组。确认SD卡挂载后重试。</string>
@@ -90,14 +108,29 @@
   <string name="rename">重命名</string>
   <string name="rename_error">牌组 %s 无法重命名</string>
   <string name="default_conf_delete_error">不能删除默认的选项组</string>
+  <plurals name="factadder_cards_added">
+    <item quantity="one">添加一张卡牌</item>
+    <item quantity="other">%d卡牌已添加</item>
+  </plurals>
   <string name="help_title">帮助</string>
   <string name="help_online">在线帮助</string>
   <string name="help_faq">常见问题</string>
   <string name="help_tutorial">教程词库</string>
   <string name="check_db">检查数据库</string>
   <string name="check_db_message">检查数据库。\n请等待...</string>
+  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
+  <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
   <string name="simple_interface_hint">空%s.请注意，简单界面无法显示图片或声音等素材。</string>
   <string name="delete_deck">删除牌组...\n请等待.</string>
+  <string-array name="dynOrderLabels">
+    <item>优先显示老卡牌</item>
+    <item>随机</item>
+    <item>增加时间间隔</item>
+    <item>减少时间间隔</item>
+    <item>错误最多的</item>
+    <item>添加的顺序</item>
+    <item>到期的顺序</item>
+  </string-array>
   <string name="menu_cardbrowser">卡牌浏览器</string>
   <string name="show_hint">显示提示信息</string>
   <string name="pref_lang_other">语言预置</string>
@@ -128,38 +161,4 @@
   <string name="sched_end">(结束)</string>
   <string name="sched_unbury_button">要显示这些卡牌，请点击取消隐藏按钮。</string>
   <string name="sched_has_buried">有些相关或隐藏卡牌，推迟到下一次显示。</string>
-  <string-array name="browser_column1_headings">
-    <item>搜索字段</item>
-  </string-array>
-  <string-array name="browser_column2_headings">
-    <item>答案</item>
-    <item>卡牌</item>
-    <item>牌组</item>
-    <item>Note</item>
-    <item>Question</item>
-    <item>Tags</item>
-    <item>Lapses</item>
-    <item>Reviews</item>
-  </string-array>
-  <string-array name="dynOrderLabels">
-    <item>优先显示老卡牌</item>
-    <item>随机</item>
-    <item>增加时间间隔</item>
-    <item>减少时间间隔</item>
-    <item>错误最多的</item>
-    <item>添加的顺序</item>
-    <item>到期的顺序</item>
-  </string-array>
-  <plurals name="timebox_reached">
-    <item quantity="one">在 %2$s 中学习了1个卡牌。</item>
-    <item quantity="other">在%2$s中学习了%1$d个卡牌</item>
-  </plurals>
-  <plurals name="timebox_reached_minutes">
-    <item quantity="one">1分钟</item>
-    <item quantity="other">%1$d分钟</item>
-  </plurals>
-  <plurals name="factadder_cards_added">
-    <item quantity="one">添加一张卡牌</item>
-    <item quantity="other">%d卡牌已添加</item>
-  </plurals>
 </resources>

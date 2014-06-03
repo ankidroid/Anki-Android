@@ -39,6 +39,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <plurals name="card_browser_subtitle">
+    <item quantity="one">1 од %2$d карата су приказане</item>
+    <item quantity="other">%1$d од %2$d карата су приказане</item>
+  </plurals>
   <string name="card_browser_all_decks">Сви шпилови</string>
   <string name="card_browser_load">Учитавање карата.\nМолим сачекајте...</string>
   <string name="card_browser_cardloading_error">Грешка при учитавању карата. Вероватно је то повезано са ограничењем меморије вашег уређаја. Покушајте поново са мањим шпилом</string>
@@ -90,8 +94,4 @@
     <item>по броју прегледа</item>
     <item>по круговима</item>
   </string-array>
-  <plurals name="card_browser_subtitle">
-    <item quantity="one">1 од %2$d карата су приказане</item>
-    <item quantity="other">%1$d од %2$d карата су приказане</item>
-  </plurals>
 </resources>

@@ -39,6 +39,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <plurals name="card_browser_subtitle">
+    <item quantity="one">Es mostra 1 de %2$d fitxes</item>
+    <item quantity="other">Es mostren %1$d de %2$d fitxes</item>
+  </plurals>
   <string name="card_browser_all_decks">Tots els paquets</string>
   <string name="card_browser_load">S\'estàn carregant les fitxes\nUn moment si us plau...</string>
   <string name="card_browser_cardloading_error">Hi ha hagut un error al carregar les fitxes. Això probablement té a veure amb les restriccions de memòria del dispositiu. Podeu provar amb un paquet més petit</string>
@@ -90,8 +94,4 @@
     <item>Per revisions</item>
     <item>Per intervals</item>
   </string-array>
-  <plurals name="card_browser_subtitle">
-    <item quantity="one">Es mostra 1 de %2$d fitxes</item>
-    <item quantity="other">Es mostren %1$d de %2$d fitxes</item>
-  </plurals>
 </resources>

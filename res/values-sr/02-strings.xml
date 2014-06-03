@@ -38,16 +38,13 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
-  <string name="CardEditorCancelButton">Откажи</string>
-  <string name="CardEditorSaveButton">Сачувај</string>
-  <string name="CardEditorLaterButton">Касније</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <string name="CardEditorLaterMessage">Сачувана информација</string>
   <string name="CardEditorCardDeck">Карта шпила: %s</string>
   <string name="CardEditorNoteDeck">Белешка шпила: %s</string>
   <string name="CardEditorModel">Тип белешке: %s</string>
   <string name="CardEditorTags">Ознаке: %1$s</string>
-  <string name="add_new_filter_tags">Add/Filter tags</string>
+  <string name="add_new_filter_tags">Add/filter tags</string>
   <string name="note_type">Тип белешке</string>
   <string name="card_type">Тип карте</string>
   <string name="filter_tags">Filter tags</string>
@@ -61,6 +58,19 @@
   <string name="leech_suspend_notification">Карта је означена као \"заразна\" и уклоњена</string>
   <string name="leech_notification">Карта је означена као заразна</string>
   <string name="corrupt_font">Оштећена датотека фонта %s</string>
+  <string-array name="browser_column1_headings">
+    <item>Претражи поље</item>
+  </string-array>
+  <string-array name="browser_column2_headings">
+    <item>Одговор</item>
+    <item>Картица</item>
+    <item>Шпил</item>
+    <item>Note</item>
+    <item>Question</item>
+    <item>Tags</item>
+    <item>Lapses</item>
+    <item>Reviews</item>
+  </string-array>
   <string name="about_title">О програму</string>
   <string name="cardeditor_title_add_note">Додај белешку</string>
   <string name="cardeditor_title_edit_card">Уреди белешку</string>
@@ -73,6 +83,14 @@
   <string name="select">Изабери</string>
   <string name="saving_changes">Сачувај промене...</string>
   <string name="reordering_cards">Промена редоследа карата...</string>
+  <plurals name="timebox_reached">
+    <item quantity="one">1 карта је изучена на %2$s</item>
+    <item quantity="other">%1$d карте су изучене на %2$s</item>
+  </plurals>
+  <plurals name="timebox_reached_minutes">
+    <item quantity="one">1 минут</item>
+    <item quantity="other">%1$d минута</item>
+  </plurals>
   <string name="studyoptions_welcome_title">Добро дошли у AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">Спољашње складиште је недоступно</string>
   <string name="studyoptions_no_external_storage_message">Недоступно је спољашње складиште. AnkiDroid мора да има приступ SD карти, да би могао да чита и учитава шпилове. Уверите се да је ваша SD карта монтирана и покушајте поново.</string>
@@ -90,14 +108,29 @@
   <string name="rename">Преименуј</string>
   <string name="rename_error">Шпил %s не може бити преименован</string>
   <string name="default_conf_delete_error">Подразумеване опције се не могу уклонити</string>
+  <plurals name="factadder_cards_added">
+    <item quantity="one">1 карта је додата</item>
+    <item quantity="other">%d карата је додато</item>
+  </plurals>
   <string name="help_title">Помоћ</string>
   <string name="help_online">Онлајн помоћ</string>
   <string name="help_faq">Питања и одговори</string>
   <string name="help_tutorial">Шпил за обуку</string>
   <string name="check_db">Провера базе података</string>
   <string name="check_db_message">Провера базе података.\nМолим сачекајте...</string>
+  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
+  <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
   <string name="simple_interface_hint">Празан %s. Имајте у виду да просто сучеље не може да приказује фотографије/звуке итд.</string>
   <string name="delete_deck">Брисање шпила...\nМолим сачекајте.</string>
+  <string-array name="dynOrderLabels">
+    <item>Најстарије се приказују прве</item>
+    <item>Случајно</item>
+    <item>Растући интервал</item>
+    <item>Опадајући интервал</item>
+    <item>Највећи лапсуси</item>
+    <item>Додат редослед прегледа</item>
+    <item>Одговарајући редослед</item>
+  </string-array>
   <string name="menu_cardbrowser">Прегледач карата</string>
   <string name="show_hint">Прикажи савет</string>
   <string name="pref_lang_other">Поставке језика</string>
@@ -128,38 +161,4 @@
   <string name="sched_end">(крај)</string>
   <string name="sched_unbury_button">Да бисте их видели, притисните дугме Одустани.</string>
   <string name="sched_has_buried">Неке повезане или скривене карте су одложене до следеће сесије.</string>
-  <string-array name="browser_column1_headings">
-    <item>Претражи поље</item>
-  </string-array>
-  <string-array name="browser_column2_headings">
-    <item>Одговор</item>
-    <item>Картица</item>
-    <item>Шпил</item>
-    <item>Note</item>
-    <item>Question</item>
-    <item>Tags</item>
-    <item>Lapses</item>
-    <item>Reviews</item>
-  </string-array>
-  <string-array name="dynOrderLabels">
-    <item>Најстарије се приказују прве</item>
-    <item>Случајно</item>
-    <item>Растући интервал</item>
-    <item>Опадајући интервал</item>
-    <item>Највећи лапсуси</item>
-    <item>Додат редослед прегледа</item>
-    <item>Одговарајући редослед</item>
-  </string-array>
-  <plurals name="timebox_reached">
-    <item quantity="one">1 карта је изучена на %2$s</item>
-    <item quantity="other">%1$d карте су изучене на %2$s</item>
-  </plurals>
-  <plurals name="timebox_reached_minutes">
-    <item quantity="one">1 минут</item>
-    <item quantity="other">%1$d минута</item>
-  </plurals>
-  <plurals name="factadder_cards_added">
-    <item quantity="one">1 карта је додата</item>
-    <item quantity="other">%d карата је додато</item>
-  </plurals>
 </resources>

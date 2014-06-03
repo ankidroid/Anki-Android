@@ -80,9 +80,6 @@
   <string name="deck_summary_cards_per_day">&lt;b&gt; %.1f &lt;/b&gt; kort/dag</string>
   <string name="deck_summary_deck_age">Alder på kortstokk: &lt;b&gt;%d&lt;/b&gt; dager</string>
   <string name="deck_summary_all_decks">Alle kortstokker</string>
-  <string name="stats_forecast">Prognose</string>
-  <string name="stats_review_count">Antall gjennomganger</string>
-  <string name="stats_review_time">Gjennomgangstid</string>
   <string-array name="next_review_in_s">
     <item>om ett sekund</item>
     <item>om ett minutt</item>
@@ -120,6 +117,9 @@
     <item>Uker</item>
     <item>Måneder</item>
   </string-array>
+  <string name="stats_forecast">Prognose</string>
+  <string name="stats_review_count">Antall gjennomganger</string>
+  <string name="stats_review_time">Gjennomgangstid</string>
   <string-array name="stats_period">
     <item>1 måned</item>
     <item>1 år</item>

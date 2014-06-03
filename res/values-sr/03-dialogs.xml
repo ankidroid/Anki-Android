@@ -41,7 +41,9 @@
 <resources>
   <string name="welcome_message">Са AnkiDroid можете ефикасно да повећате фонд речи или да научите било које градиво. AnkiDroid понавља приказивање карата пре него што их заборавите.\n\nДа бисте упознали програм, препоручујемо да почнете од шпила за обуку, која ће вас упознати са основама, и испробајте сами. Једноставно кликните \"Почни преглед\" после отварања карте.\n\nКреирати шпил за обуку сада?</string>
   <string name="check_db_title">Провери базу података</string>
-  <string name="check_db_result_message">База је проверена и оптимизована.\nУмањење за %d kb</string>
+  <string name="check_db_warning">This may take a long time</string>
+  <string name="check_db_acknowledge">Database checked</string>
+  <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d kB.</string>
   <string name="contextmenu_deckpicker_delete_deck">Избриши шпил</string>
   <string name="delete_deck_title">Избриши шпил</string>
   <string name="delete_deck_message">Да ли сте сигурни да желите да избришете све карте у %s?</string>
@@ -51,8 +53,14 @@
   <string name="no_tts_available_title">Претварање текста у говор</string>
   <string name="no_tts_available_message">Функција претварања текста у говор није доступна</string>
   <string name="tts_no_tts">Не изговарај</string>
+  <string-array name="about_content">
+    <item><![CDATA[<h2>%1$s:<br/>Flashcards за Android</h2>AnkiDroid је програм за изучавање обучавајућих карата и компатибилан је са десктоп верзијом <a href="%2$s">Anki</a>. Можете креирати, преузимати и проучавати информацију и у AnkiDroid и у Anki Desktop, синхронизујући их међусобно.]]></item>
+    <item><![CDATA[Да бисмо побољшали AnkiDroid известите нас о грешкама <a href="%1$s">here</a>; предлозима за нове функције или идејама! Користите <a href="%2$s">wiki</a> и учествујте у <a href="%3$s">форуму</a>.]]></item>
+    <item><![CDATA[AnkiDroid је <a href="%1$s">софтвер отвореног кода<a/>, па свако може <a href="%2$s">постати</a>  <a href="%3$s">учесник</a>:-)]]></item>
+    <item><![CDATA[Не-програмери могу помоћи <a href="%1$s">преводећи</a> AnkiDroid, обнављајући wiki и скриншоте, <a href="%2$s">донирајући</a> за Anki Desktop, или написавши у блогу о AnkiDroid!]]></item>
+    <item><![CDATA[AnkiDroid је публикован са  <a href="%1$s">GNU-GPL v3 лиценцом</a> и изворни код је доступан <a href="%2$s">овде</a>.]]></item>
+  </string-array>
   <string name="dont_show_again">Не приказуј поново</string>
-  <string name="sync_log_title">Ток синхронизације</string>
   <string name="notify_ticker">Ажурирање апликације</string>
   <string name="notify_title">Ankidroid је ажуриран</string>
   <string name="notify_message">Преузми нову верзију</string>
@@ -62,7 +70,7 @@
   <string name="notification_stop">Не обавештавај ме поново о овом ажурирању</string>
   <string name="reset_card_dialog_title">Ресетовање прогреса учења карте</string>
   <string name="reset_card_dialog_message">Уклањање прогреса учења за све карте за ову белешку (оне ће изгледати као нове).\nДа продужим?</string>
-  <string name="reset_card_dialog_confirmation">Све карте ове белешке ће бити ресетоване</string>
+  <string name="reset_card_dialog_acknowledge">Cards reset</string>
   <string name="answering_error_title">Грешка базе података</string>
   <string name="answering_error_message">Дошло је до грешке при запису у колекцију. Разлог може бити што је база раније оштећена или што је мало места на диску.\n\nАко се то често догађа, покушајте да проверите базу података, обновите колекцију или обновите из резервне копије. Кликните за то на \"Опције\".\n\nТакође, ствар може бити у грешци AnkiDroid. Молимо вас, известите нас о грешци, да бисмо могли то да проверимо.</string>
   <string name="answering_error_report">Извести о грешци</string>
@@ -91,6 +99,7 @@
   <string name="deck_upgrade_more_options_downgrade"><![CDATA[<br><br>Ако желите да снизите верзију AnkiDroid до верзије 1, тада прочитајте <a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Continuing_to_use_AnkiDroid_1.1.3">упутство</a>.]]></string>
   <string name="deck_upgrade_create_new_collection">Креирање нове колекције</string>
   <string name="deck_upgrade_create_new_collection_title">Креирање нове колекције</string>
+  <string name="deck_upgrade_create_new_collection_button">New collection</string>
   <string name="deck_upgrade_not_import_warning">Да ли сте сигурни да желите то да урадите? Ваши стари подаци неће бити увезени.</string>
   <string name="deck_upgrade_via_web"><![CDATA[<b>Не препоручујемо овај метод ажурирања ако користите медија датотеке или велику колекцију!</b><br><br>Ваши Anki1 шпилови ће бити архивирани и учитани на сервер AnkiWeb, а после ће преобразована колекција бити преузета са сервера.<br><br>Морате имати стабилан интернет и датотека не треба да буде већа од 50MB.<br><br>Корисницима Anki Desktop је препоручено да њега користе за ажурирање.<br><br>Желите ли да наставите?]]></string>
   <string name="deck_upgrade_via_anki_desktop"><![CDATA[Ако имате ажурирану AnkiDroid колекцију у Anki desktop програму, можете да је добијете одатле, синхронизовавши колекцију преко AnkiWeb.<br><br>Алтернативно, можете да копирате вашу AnkiDroid колекцију на PC преко USB, затим ажурирате и копирате обрнуто у AnkiDroid.]]></string>
@@ -113,11 +122,22 @@
   <string name="import_media_count">Увоз медија датотека %1$d%%\nМолим сачекајте&#8230;</string>
   <string name="import_update_counts">Прорачун резултата ажурарања.\nМолим сачекајте&#8230;</string>
   <string name="import_add_progress">• Распакована архива %1$s\n• Увезено бележака %2$d%%\n• Увезено карата %3$d%%\n• Очишћено %4$s</string>
-  <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s:<br/>Flashcards за Android</h2>AnkiDroid је програм за изучавање обучавајућих карата и компатибилан је са десктоп верзијом <a href="%2$s">Anki</a>. Можете креирати, преузимати и проучавати информацију и у AnkiDroid и у Anki Desktop, синхронизујући их међусобно.]]></item>
-    <item><![CDATA[Да бисмо побољшали AnkiDroid известите нас о грешкама <a href="%1$s">here</a>; предлозима за нове функције или идејама! Користите <a href="%2$s">wiki</a> и учествујте у <a href="%3$s">форуму</a>.]]></item>
-    <item><![CDATA[AnkiDroid је <a href="%1$s">софтвер отвореног кода<a/>, па свако може <a href="%2$s">постати</a>  <a href="%3$s">учесник</a>:-)]]></item>
-    <item><![CDATA[Не-програмери могу помоћи <a href="%1$s">преводећи</a> AnkiDroid, обнављајући wiki и скриншоте, <a href="%2$s">донирајући</a> за Anki Desktop, или написавши у блогу о AnkiDroid!]]></item>
-    <item><![CDATA[AnkiDroid је публикован са  <a href="%1$s">GNU-GPL v3 лиценцом</a> и изворни код је доступан <a href="%2$s">овде</a>.]]></item>
-  </string-array>
+  <string name="sd_card_full_title">SD card full</string>
+  <string name="sd_card_almost_full_title">SD card almost full</string>
+  <string name="dialog_cancel">Cancel</string>
+  <string name="dialog_ok">OK</string>
+  <string name="dialog_continue">Continue</string>
+  <string name="dialog_neutral_later">Later</string>
+  <string name="dialog_positive_create">Create</string>
+  <string name="dialog_positive_delete">Delete</string>
+  <string name="dialog_positive_disable">Disable</string>
+  <string name="dialog_positive_overwrite">Overwrite</string>
+  <string name="dialog_positive_repair">Repair</string>
+  <string name="dialog_positive_replace">Replace</string>
+  <string name="dialog_positive_reset">Reset</string>
+  <string name="dialog_positive_save">Save</string>
+  <string name="add_button_content">Add&#8230;</string>
+  <string name="card_browser_button_content">Card browser</string>
+  <string name="lookup_button_content">Look up</string>
+  <string name="statistics_button_content">Statistics</string>
 </resources>

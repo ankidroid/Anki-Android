@@ -38,16 +38,13 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
-  <string name="CardEditorCancelButton">Annuleren</string>
-  <string name="CardEditorSaveButton">Opslaan</string>
-  <string name="CardEditorLaterButton">Later</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <string name="CardEditorLaterMessage">Informatie opgeslagen voor later</string>
   <string name="CardEditorCardDeck">Kaart leerset: %s</string>
   <string name="CardEditorNoteDeck">Kaart leerset: %s</string>
   <string name="CardEditorModel">Kaarttype: %s</string>
   <string name="CardEditorTags">Kenmerken: %1$s</string>
-  <string name="add_new_filter_tags">Add/Filter tags</string>
+  <string name="add_new_filter_tags">Add/filter tags</string>
   <string name="note_type">Kaarttype</string>
   <string name="card_type">Kaarttype</string>
   <string name="filter_tags">Filter tags</string>
@@ -61,6 +58,19 @@
   <string name="leech_suspend_notification">Kaart gemarkeerd als moeilijk en uitgesteld</string>
   <string name="leech_notification">Kaart gemarkeerd als moeilijk</string>
   <string name="corrupt_font">Beschadigd lettertypebestand %s</string>
+  <string-array name="browser_column1_headings">
+    <item>Search field</item>
+  </string-array>
+  <string-array name="browser_column2_headings">
+    <item>Answer</item>
+    <item>Card</item>
+    <item>Deck</item>
+    <item>Note</item>
+    <item>Question</item>
+    <item>Tags</item>
+    <item>Lapses</item>
+    <item>Reviews</item>
+  </string-array>
   <string name="about_title">Over</string>
   <string name="cardeditor_title_add_note">Kaart toevoegen</string>
   <string name="cardeditor_title_edit_card">Kaart bewerken</string>
@@ -73,6 +83,14 @@
   <string name="select">Selecteren</string>
   <string name="saving_changes">Wijzigingen worden bewaard...</string>
   <string name="reordering_cards">Kaarten herschikken...</string>
+  <plurals name="timebox_reached">
+    <item quantity="one">1 kaart gestudeerd in %2$s</item>
+    <item quantity="other">%1$d kaarten gestudeerd in %2$s</item>
+  </plurals>
+  <plurals name="timebox_reached_minutes">
+    <item quantity="one">1 minuut</item>
+    <item quantity="other">%1$d minuten</item>
+  </plurals>
   <string name="studyoptions_welcome_title">Welkom bij AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">Geen externe opslag beschikbaar</string>
   <string name="studyoptions_no_external_storage_message">Er is momenteel geen externe opslag beschikbaar. AnkiDroid heeft toegang tot je SD-kaart nodig om je Ankisets te laden. Controleer of je SD-kaart goed zit en probeer het nog eens.</string>
@@ -90,14 +108,29 @@
   <string name="rename">Naam wijzigen</string>
   <string name="rename_error">Leerset %s kon niet worden hernoemd</string>
   <string name="default_conf_delete_error">De standaard \"optiesgroep\" kan niet verwijderd worden</string>
+  <plurals name="factadder_cards_added">
+    <item quantity="one">1 kaart toegevoegd</item>
+    <item quantity="other">%d kaarten toegevoegd</item>
+  </plurals>
   <string name="help_title">Help</string>
   <string name="help_online">Online help</string>
   <string name="help_faq">Veelgestelde vragen</string>
   <string name="help_tutorial">Voorbeeld set</string>
   <string name="check_db">Controleer database</string>
   <string name="check_db_message">De databank wordt gecontroleerd.\nEven geduld alstublieft...</string>
+  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
+  <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
   <string name="simple_interface_hint">Maak %s leeg. Pas op! Een eenvoudige interface kan geen beelden/geluiden etc. tonen.</string>
   <string name="delete_deck">Leerset verwijderen...\nEven wachten.</string>
+  <string-array name="dynOrderLabels">
+    <item>Langst niet gezien eerst</item>
+    <item>Willekeurig</item>
+    <item>Toenemende intervallen</item>
+    <item>Afnemende intervallen</item>
+    <item>Meeste missers</item>
+    <item>Volgorde van toevoegen</item>
+    <item>Op geplande volgorde</item>
+  </string-array>
   <string name="menu_cardbrowser">Kaartbrowser</string>
   <string name="show_hint">Toon tip</string>
   <string name="pref_lang_other">Taalinstellingen</string>
@@ -128,38 +161,4 @@
   <string name="sched_end">(einde)</string>
   <string name="sched_unbury_button">Om ze nu te zien, raak de knop deblokkeren aan.</string>
   <string name="sched_has_buried">Sommige gerelateerde of geblokkeerde kaarten zijn vertraagd tot een latere sessie.</string>
-  <string-array name="browser_column1_headings">
-    <item>Search Field</item>
-  </string-array>
-  <string-array name="browser_column2_headings">
-    <item>Answer</item>
-    <item>Card</item>
-    <item>Deck</item>
-    <item>Note</item>
-    <item>Question</item>
-    <item>Tags</item>
-    <item>Lapses</item>
-    <item>Reviews</item>
-  </string-array>
-  <string-array name="dynOrderLabels">
-    <item>Langst niet gezien eerst</item>
-    <item>Willekeurig</item>
-    <item>Toenemende intervallen</item>
-    <item>Afnemende intervallen</item>
-    <item>Meeste missers</item>
-    <item>Volgorde van toevoegen</item>
-    <item>Op geplande volgorde</item>
-  </string-array>
-  <plurals name="timebox_reached">
-    <item quantity="one">1 kaart gestudeerd in %2$s</item>
-    <item quantity="other">%1$d kaarten gestudeerd in %2$s</item>
-  </plurals>
-  <plurals name="timebox_reached_minutes">
-    <item quantity="one">1 minuut</item>
-    <item quantity="other">%1$d minuten</item>
-  </plurals>
-  <plurals name="factadder_cards_added">
-    <item quantity="one">1 kaart toegevoegd</item>
-    <item quantity="other">%d kaarten toegevoegd</item>
-  </plurals>
 </resources>

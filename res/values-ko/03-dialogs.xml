@@ -41,7 +41,9 @@
 <resources>
   <string name="welcome_message">AnkiDroid와 함께, 여러분은 많은 양의 어휘나 그 어떤 자료들도 효과적으로 학습하실 수 있습니다. AnkiDroid는 여러분이 잊어버리기 직전에 암기사항들을 보여주게 됩니다.\n\n어떻게 활용하는지 궁금하시다면, 튜토리얼 덱으로 시작하는 것을 권장합니다. 처음 시작할 때의 유용한 정보도 얻고 실제로 학습해보실 수 있습니다. 덱을 열고 \"복습 시작\"을 누르시기만 하면 됩니다.\n\n튜토리얼 덱을 지금 생성할까요?</string>
   <string name="check_db_title">데이터베이스 점검</string>
-  <string name="check_db_result_message">데이터베이스 점검 및 최적화 완료.\n %dkb 용량 감소</string>
+  <string name="check_db_warning">This may take a long time</string>
+  <string name="check_db_acknowledge">Database checked</string>
+  <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d kB.</string>
   <string name="contextmenu_deckpicker_delete_deck">덱 삭제</string>
   <string name="delete_deck_title">덱 삭제</string>
   <string name="delete_deck_message">%s에 있는 모든 카드를 정말로 삭제하시겠습니까?</string>
@@ -59,7 +61,6 @@
     <item><![CDATA[[AnkiDroid는 <a href="%1$s"> GNU GPL v 3 라이센스</a> 하에 배포할 수 있습니다. 소스 코드는<a href="%2$s"> 여기</a>에서 확인할 수 있습니다.]]></item>
   </string-array>
   <string name="dont_show_again">다시 표시 안 함</string>
-  <string name="sync_log_title">로그 동기화</string>
   <string name="notify_ticker">응용 프로그램 업데이트</string>
   <string name="notify_title">AnkiDroid 업데이트</string>
   <string name="notify_message">새 버전 다운로드</string>
@@ -69,7 +70,7 @@
   <string name="notification_stop">다시 업데이트를 알리지 않음</string>
   <string name="reset_card_dialog_title">카드 학습 진행 재설정</string>
   <string name="reset_card_dialog_message">이 노트에 대한 모든 카드의 학습 과정이 재설정됩니다.(재설정된 카드는 새카드처럼 보이게 됩니다.).\n 정말 계속할까요?</string>
-  <string name="reset_card_dialog_confirmation">이 노트에 대한 모든 카드 재설정</string>
+  <string name="reset_card_dialog_acknowledge">Cards reset</string>
   <string name="answering_error_title">데이터베이스 오류</string>
   <string name="answering_error_message">컬렉션 파일을 작성 중 오류가 발생했습니다. 데이타베이스가 엉켰거나 디스크 공간이 부족할 가능성이 있습니다.\n\n 이러한 현상이 자주 발생한다면, 데이터베이스를 점검하여 컬렉션을 수정하고 백업에서 복원하시기 바랍니다. 이를 위해 \'옵션\'을 선택하세요. \n\n 동시에 이는 Ankidroid 버그이므로 오류 보고를 해주시면 점검해 보겠습니다.</string>
   <string name="answering_error_report">오류 보고서</string>
@@ -98,6 +99,7 @@
   <string name="deck_upgrade_more_options_downgrade"><![CDATA[<br><br>AnkiDroid 1으로 다시 돌아가고 싶으시다면 <a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Continuing_to_use_AnkiDroid_1.1.3">이 안내(영문)</a>를 참고해주세요.]]></string>
   <string name="deck_upgrade_create_new_collection">새로운 컬렉션 만들기</string>
   <string name="deck_upgrade_create_new_collection_title">새로운 컬렉션 만들기</string>
+  <string name="deck_upgrade_create_new_collection_button">New collection</string>
   <string name="deck_upgrade_not_import_warning">정말로 계속할까요? 오래된 데이터들을 불러오지 않습니다.</string>
   <string name="deck_upgrade_via_web"><![CDATA[<b>이 업그레이드 방법은 미디어 파일이 포함되어 있거나 컬렉션이 너무 큰 경우에는 권장되지 않습니다.</b><br><br>Anki1 덱들은 압축 후 AnkiWeb에 업로드할 것이고, 그 후 변환된 컬렉션을 다운로드할 것입니다.<br><br>안정적인 인터넷 연결이 필요하고 50MB의 용량 제한이 있다는 것을 명심하십시오.<br><br>Anki 데스크탑 사용자의 경우에는 PC를 이용한 업그레이드를 추천합니다.<br><br>그래도 계속 진행하시겠습니까?]]></string>
   <string name="deck_upgrade_via_anki_desktop"><![CDATA[만약 현재 최신 버전의 Anki 데스크탑 프로그램을 가지고 계시다면, 그것을 이용해 업그레이드 후 AnkiWeb과의 동기화를 통해 업그레이드된 컬렉션을 다운로드할 수 있습니다.<br><br>AnkiDroid 컬렉션을 USB로 이용해 PC로 복사 후에 컬렉션을 업그레이드 후 AnkiDroid로 다시 복사하는 방법 또한 있습니다.]]></string>
@@ -120,4 +122,22 @@
   <string name="import_media_count">미디어 파일 불러오는 중 %1$d%%\n잠시만 기다려 주세요...</string>
   <string name="import_update_counts">덱 갯수를 업데이트 중.\n잠시만 기다려 주세요...</string>
   <string name="import_add_progress">• 압축 푸는 중 %1$s\n• 노트 가져오기 %2$d%%\n• 카드 가져오기 %3$d%%\n• 청소 %4$s</string>
+  <string name="sd_card_full_title">SD card full</string>
+  <string name="sd_card_almost_full_title">SD card almost full</string>
+  <string name="dialog_cancel">Cancel</string>
+  <string name="dialog_ok">OK</string>
+  <string name="dialog_continue">Continue</string>
+  <string name="dialog_neutral_later">Later</string>
+  <string name="dialog_positive_create">Create</string>
+  <string name="dialog_positive_delete">Delete</string>
+  <string name="dialog_positive_disable">Disable</string>
+  <string name="dialog_positive_overwrite">Overwrite</string>
+  <string name="dialog_positive_repair">Repair</string>
+  <string name="dialog_positive_replace">Replace</string>
+  <string name="dialog_positive_reset">Reset</string>
+  <string name="dialog_positive_save">Save</string>
+  <string name="add_button_content">Add&#8230;</string>
+  <string name="card_browser_button_content">Card browser</string>
+  <string name="lookup_button_content">Look up</string>
+  <string name="statistics_button_content">Statistics</string>
 </resources>

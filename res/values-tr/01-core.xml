@@ -39,12 +39,9 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="btn_continue">Devam Et</string>
   <string name="app_name">AnkiDroid</string>
-  <string name="attention">Dikkat</string>
-  <string name="yes">Evet</string>
-  <string name="no">Hayır</string>
-  <string name="ok">Tamam</string>
+  <string name="app_name_anki">Anki</string>
+  <string name="app_name_droid">Droid</string>
   <string name="studyoptions_deck_name">Deste adı</string>
   <string name="studyoptions_due_today">Bugün çıkacak:</string>
   <string name="studyoptions_new_total">Toplam yeni kart:</string>
@@ -182,4 +179,5 @@
   <string name="confirm">Onayla</string>
   <string name="internet">İnternet</string>
   <string name="pc">PC</string>
+  <string name="title_activity_graphical_activity">Statistical chart</string>
 </resources>

@@ -43,12 +43,6 @@
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid карток до перегляду</string>
   <string name="widget_no_cards_due">Картки до перегляду відсутні</string>
   <string name="widget_loading">Завантаження віджета...</string>
-  <string name="widget_medium">Середній AnkiDroid</string>
-  <string name="widget_small">Малий AnkiDroid</string>
-  <string name="widget_big">Великий AnkiDroid</string>
-  <string name="widget_big_restrictions_dialog">Через певні обмеження інструментів для створення віджетів Android цей віджет може показувати лише текст, але не рисунки/звуки і т. ін.</string>
-  <string name="open_in_reviewer">Відкрити колоду в AnkiDroid</string>
-  <string name="widget_big_tomorrow_due">Завтра до перегляду:</string>
   <plurals name="widget_cards_in_decks_due">
     <item quantity="one">1 картка до перегляду в %2$s</item>
     <item quantity="other">%1$d карток до перегляду в %2$s</item>
@@ -57,8 +51,14 @@
     <item quantity="one">1 колода</item>
     <item quantity="other">%1$d колод</item>
   </plurals>
+  <string name="widget_medium">Середній AnkiDroid</string>
+  <string name="widget_small">Малий AnkiDroid</string>
+  <string name="widget_big">Великий AnkiDroid</string>
+  <string name="widget_big_restrictions_dialog">Через певні обмеження інструментів для створення віджетів Android цей віджет може показувати лише текст, але не рисунки/звуки і т. ін.</string>
+  <string name="open_in_reviewer">Відкрити колоду в AnkiDroid</string>
   <plurals name="widget_big_eta">
     <item quantity="one">Приблизний час: 1хв.</item>
     <item quantity="other">Приблизний час: %d хв.</item>
   </plurals>
+  <string name="widget_big_tomorrow_due">Завтра до перегляду:</string>
 </resources>

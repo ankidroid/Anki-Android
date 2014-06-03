@@ -41,7 +41,9 @@
 <resources>
   <string name="welcome_message">AnkiDroid 可以讓您有效率的學習大量的字彙或是其他教材。 AnkiDroid 會在您快要忘記單字的意思前，讓卡片再次出現。\n\n想要對這個學習系統有個整體的觀念，我們建議您從教學用的牌組開始，裡面提供入門的基本資訊。打開牌組後，請按一下「開始複習」。\n\n現在要建立教學用的牌組嗎？</string>
   <string name="check_db_title">檢查資料庫</string>
-  <string name="check_db_result_message">檢查了資料庫並最佳化了。\n 縮小 %d kb</string>
+  <string name="check_db_warning">This may take a long time</string>
+  <string name="check_db_acknowledge">Database checked</string>
+  <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d kB.</string>
   <string name="contextmenu_deckpicker_delete_deck">刪除牌組</string>
   <string name="delete_deck_title">刪除牌組</string>
   <string name="delete_deck_message">您確定要刪除所有%s中的卡片嗎?</string>
@@ -51,8 +53,14 @@
   <string name="no_tts_available_title">朗讀</string>
   <string name="no_tts_available_message">沒有可用的朗讀語言</string>
   <string name="tts_no_tts">不要發音</string>
+  <string-array name="about_content">
+    <item><![CDATA[<h2>%1$s: <br/>Android 單字卡</h2>AnkiDroid 是一個單字卡應用程式，與電腦版的 <a href="%2$s">Anki</a> 完全相容。你可以在 AnkiDroid 或電腦版 Anki 上建立、 下載和學習教材，而且很容易就可以同步兩邊的內容。]]></item>
+    <item><![CDATA[要幫助我們把 AnkiDroid 變得更好，請 <a href="%1$s"> 到這裡</a>回報您發生的任何 bug；新功能的想法也是很受歡迎！請使用 <a href="%2$s"> wiki</a> 並來 <a href="%3$s"> 論壇</a> 打個招呼。]]></item>
+    <item><![CDATA[AnkiDroid 是 <a href="%1$s"> 開放原始碼軟體 <a/>，鼓勵大家一起 <a href="%2$s"> 加入 </a> ，成為 <a href="%3$s">貢獻者</a>:-)]]></item>
+    <item><![CDATA[如果您不是開發人員也同樣可以幫忙，像是 <a href="%1$s"> 翻譯</a> AnkiDroid 介面、或是更新 wiki 和螢幕擷圖、 <a href="%2$s">捐款</a>給電腦版的 Anki，或是在部落格上撰寫關於 AnkiDroid 的文章!]]></item>
+    <item><![CDATA[AnkiDroid 是在 <a href="%1$s"> GNU GPL v3 許可證</a> 下發布，程式原始碼可到 <a href="%2$s"> 這裡</a>取得。]]></item>
+  </string-array>
   <string name="dont_show_again">不要再顯示</string>
-  <string name="sync_log_title">同步化記錄</string>
   <string name="notify_ticker">更新程式</string>
   <string name="notify_title">Ankidroid 更新成功</string>
   <string name="notify_message">下載新版本</string>
@@ -62,7 +70,7 @@
   <string name="notification_stop">不要再提醒我更新</string>
   <string name="reset_card_dialog_title">重置卡片進度</string>
   <string name="reset_card_dialog_message">這會重設此筆記的所有卡片(變得像新卡片一樣)。\n確定要繼續嗎？</string>
-  <string name="reset_card_dialog_confirmation">重設本筆記的所有卡片</string>
+  <string name="reset_card_dialog_acknowledge">Cards reset</string>
   <string name="answering_error_title">資料庫錯誤</string>
   <string name="answering_error_message">寫入資料庫時發生錯誤。可能是資料庫毀損或是記憶卡空間不足。\n\n如果這經常發生的話，請嘗試檢查資料庫，修復您的收藏或從備份中還原。當然這也可能是 AnkiDroid 的 bug ，請回報錯誤讓我們知道。</string>
   <string name="answering_error_report">回報錯誤</string>
@@ -91,6 +99,7 @@
   <string name="deck_upgrade_more_options_downgrade"><![CDATA[<br><br>如果要降級回 AnkiDroid 1，那麼請閱讀 <a href="HTTP://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Continuing_to_use_AnkiDroid_1.1.3"> 這些說明</a>]]></string>
   <string name="deck_upgrade_create_new_collection">建立新的收藏</string>
   <string name="deck_upgrade_create_new_collection_title">建立新的收藏</string>
+  <string name="deck_upgrade_create_new_collection_button">New collection</string>
   <string name="deck_upgrade_not_import_warning">你確定你要這樣做？這將不會匯入您的舊資料。</string>
   <string name="deck_upgrade_via_web"><![CDATA[<b>如果您使用媒體檔案，或者收藏的檔案很大，不推薦此升級方法!</b><br><br>您的 Anki1 牌組將壓縮上傳到 AnkiWeb，經過轉換然後下載回來。 <br><br>請注意網路連線必須很穩定，而且檔案上限是 50 MB。<br><br>強烈建議電腦版 Anki 的使用者直接在自己的電腦上升級牌組。 <br><br>你仍要繼續嗎?]]></string>
   <string name="deck_upgrade_via_anki_desktop"><![CDATA[如果您電腦上有目前最新版本的 Anki ，你可以在電腦上升級牌組，然後透過與 AnkiWeb 同步來下載您升級過的收藏。 <br><br>或者，您可以透過 USB線連接電腦，然後複製您 AnkiDroid 收藏到您的電腦中，升級收藏以後再複製回 AnkiDroid。]]></string>
@@ -113,11 +122,22 @@
   <string name="import_media_count">匯入媒體檔案 %1$d%%\n 請稍後......</string>
   <string name="import_update_counts">更新牌組數值\n請稍後...</string>
   <string name="import_add_progress">• 解壓縮檔案 %1$s\n• 匯入筆記 %2$d%%\n• 匯入卡片 %3$d%%\n• 清理 %4$s</string>
-  <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s: <br/>Android 單字卡</h2>AnkiDroid 是一個單字卡應用程式，與電腦版的 <a href="%2$s">Anki</a> 完全相容。你可以在 AnkiDroid 或電腦版 Anki 上建立、 下載和學習教材，而且很容易就可以同步兩邊的內容。]]></item>
-    <item><![CDATA[要幫助我們把 AnkiDroid 變得更好，請 <a href="%1$s"> 到這裡</a>回報您發生的任何 bug；新功能的想法也是很受歡迎！請使用 <a href="%2$s"> wiki</a> 並來 <a href="%3$s"> 論壇</a> 打個招呼。]]></item>
-    <item><![CDATA[AnkiDroid 是 <a href="%1$s"> 開放原始碼軟體 <a/>，鼓勵大家一起 <a href="%2$s"> 加入 </a> ，成為 <a href="%3$s">貢獻者</a>:-)]]></item>
-    <item><![CDATA[如果您不是開發人員也同樣可以幫忙，像是 <a href="%1$s"> 翻譯</a> AnkiDroid 介面、或是更新 wiki 和螢幕擷圖、 <a href="%2$s">捐款</a>給電腦版的 Anki，或是在部落格上撰寫關於 AnkiDroid 的文章!]]></item>
-    <item><![CDATA[AnkiDroid 是在 <a href="%1$s"> GNU GPL v3 許可證</a> 下發布，程式原始碼可到 <a href="%2$s"> 這裡</a>取得。]]></item>
-  </string-array>
+  <string name="sd_card_full_title">SD card full</string>
+  <string name="sd_card_almost_full_title">SD card almost full</string>
+  <string name="dialog_cancel">Cancel</string>
+  <string name="dialog_ok">OK</string>
+  <string name="dialog_continue">Continue</string>
+  <string name="dialog_neutral_later">Later</string>
+  <string name="dialog_positive_create">Create</string>
+  <string name="dialog_positive_delete">Delete</string>
+  <string name="dialog_positive_disable">Disable</string>
+  <string name="dialog_positive_overwrite">Overwrite</string>
+  <string name="dialog_positive_repair">Repair</string>
+  <string name="dialog_positive_replace">Replace</string>
+  <string name="dialog_positive_reset">Reset</string>
+  <string name="dialog_positive_save">Save</string>
+  <string name="add_button_content">Add&#8230;</string>
+  <string name="card_browser_button_content">Card browser</string>
+  <string name="lookup_button_content">Look up</string>
+  <string name="statistics_button_content">Statistics</string>
 </resources>

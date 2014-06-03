@@ -39,6 +39,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <plurals name="card_browser_subtitle">
+    <item quantity="one">%2$d之1個卡片已經顯示</item>
+    <item quantity="other">顯示%2$d之%1$d卡片</item>
+  </plurals>
   <string name="card_browser_all_decks">所有牌組</string>
   <string name="card_browser_load">載入卡片中.\n 請稍候...</string>
   <string name="card_browser_cardloading_error">載入卡片時發生錯誤。這可能與你的裝置的記憶體限制有關。選擇一個更小的牌組再重試。</string>
@@ -90,8 +94,4 @@
     <item>依複習次數</item>
     <item>依忘記次數</item>
   </string-array>
-  <plurals name="card_browser_subtitle">
-    <item quantity="one">%2$d之1個卡片已經顯示</item>
-    <item quantity="other">顯示%2$d之%1$d卡片</item>
-  </plurals>
 </resources>

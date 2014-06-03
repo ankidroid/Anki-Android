@@ -39,18 +39,31 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="btn_continue">继续</string>
   <string name="app_name">AnkiDroid</string>
-  <string name="attention">注意</string>
-  <string name="yes">是</string>
-  <string name="no">否</string>
-  <string name="ok">确定</string>
+  <string name="app_name_anki">Anki</string>
+  <string name="app_name_droid">Droid</string>
   <string name="studyoptions_deck_name">牌组名称</string>
   <string name="studyoptions_due_today">今天到期:</string>
   <string name="studyoptions_new_total">新卡牌合计:</string>
   <string name="studyoptions_total_cards">全部卡牌:</string>
   <string name="studyoptions_eta">预计所需时间（分钟）：</string>
   <string name="studyoptions_start">开始学习</string>
+  <plurals name="deckpicker_title">
+    <item quantity="one">%2$d中的1到期(%3$s)</item>
+    <item quantity="other">%2$d中的%1$d到期(%3$s)</item>
+  </plurals>
+  <plurals name="deckpicker_title_minutes">
+    <item quantity="one">1分钟</item>
+    <item quantity="other">%d分钟</item>
+  </plurals>
+  <plurals name="deckpicker_due">
+    <item quantity="one">%2$d张中有1张待复习</item>
+    <item quantity="other">%2$d张中的%1$d张待复习</item>
+  </plurals>
+  <plurals name="reviewer_window_title">
+    <item quantity="one">1分钟剩余</item>
+    <item quantity="other">%d分钟剩余</item>
+  </plurals>
   <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">显示答案</string>
   <string name="ease1_successive">重来</string>
@@ -108,36 +121,6 @@
   <string name="studyoptions_feedback">反馈</string>
   <string name="studyoptions_load_tutorial_deck">创建教程牌组</string>
   <string name="night_mode">夜间模式</string>
-  <string name="visit">访问</string>
-  <string name="later">稍后</string>
-  <string name="download">下载</string>
-  <string name="open_collection">打开牌组集合。\n请等待...</string>
-  <string name="rebuild_cram_deck">重建强记模式牌组。\n请等待...</string>
-  <string name="rebuild_cram_label">重建</string>
-  <string name="empty_cram_label">空</string>
-  <string name="empty_cram_deck">清空强记模式牌组。\n请等待...</string>
-  <string name="custom_study_deck_name">自定义学习的进程</string>
-  <string name="custom_study_deck_exists">请先重命名现有的自定义学习牌组。</string>
-  <string name="studyoptions_congrats_finished">恭喜!你已经完成了今天的计划。</string>
-  <string name="studyoptions_congrats_more_rev">今天的复习数量限制已达到，但仍有一些卡牌需要复习。为了更好的记忆效果，请考虑在选项中增加每日的复习数量限制。</string>
-  <string name="studyoptions_congrats_more_new">还有新卡牌待学习，但已达到每日上限。您可以增加设置中的每日学习上限，不过请留意，这会增加您短期的复习工作量。</string>
-  <string name="studyoptions_congrats_custom">计划外学习，点击下面的自定义学习按钮。</string>
-  <string name="sd_card_not_mounted">SD卡没有加载。\n\n你也可以在内部存储器中存放卡牌集合，但不推荐这样做，因为访问文件不太容易。在预置参数中可以设置(点击本文字打开选项).</string>
-  <string name="studyoptions_options">选项</string>
-  <string name="empty_cloze_warning">请编辑此卡牌记录，并增加一些完形填空形式的题目。 (%1$s)</string>
-  <string name="help_cloze">帮助</string>
-  <string name="button_sync">同步</string>
-  <string name="restart">重新启动</string>
-  <string name="do_nothing">什么也不做</string>
-  <string name="more_options">更多选项</string>
-  <string name="now">现在</string>
-  <string name="back">返回</string>
-  <string name="ankiweb">AnkiWeb网站</string>
-  <string name="usb">USB</string>
-  <string name="_import">导入</string>
-  <string name="confirm">确认</string>
-  <string name="internet">互联网</string>
-  <string name="pc">PC个人电脑</string>
   <string-array name="next_review_s">
     <item>1秒</item>
     <item>1分钟</item>
@@ -154,22 +137,20 @@
     <item>%s月</item>
     <item>%s年</item>
   </string-array>
-  <plurals name="deckpicker_title">
-    <item quantity="one">%2$d中的1到期(%3$s)</item>
-    <item quantity="other">%2$d中的%1$d到期(%3$s)</item>
-  </plurals>
-  <plurals name="deckpicker_title_minutes">
-    <item quantity="one">1分钟</item>
-    <item quantity="other">%d分钟</item>
-  </plurals>
-  <plurals name="deckpicker_due">
-    <item quantity="one">%2$d张中有1张待复习</item>
-    <item quantity="other">%2$d张中的%1$d张待复习</item>
-  </plurals>
-  <plurals name="reviewer_window_title">
-    <item quantity="one">1分钟剩余</item>
-    <item quantity="other">%d分钟剩余</item>
-  </plurals>
+  <string name="visit">访问</string>
+  <string name="later">稍后</string>
+  <string name="download">下载</string>
+  <string name="open_collection">打开牌组集合。\n请等待...</string>
+  <string name="rebuild_cram_deck">重建强记模式牌组。\n请等待...</string>
+  <string name="rebuild_cram_label">重建</string>
+  <string name="empty_cram_label">空</string>
+  <string name="empty_cram_deck">清空强记模式牌组。\n请等待...</string>
+  <string name="custom_study_deck_name">自定义学习的进程</string>
+  <string name="custom_study_deck_exists">请先重命名现有的自定义学习牌组。</string>
+  <string name="studyoptions_congrats_finished">恭喜!你已经完成了今天的计划。</string>
+  <string name="studyoptions_congrats_more_rev">今天的复习数量限制已达到，但仍有一些卡牌需要复习。为了更好的记忆效果，请考虑在选项中增加每日的复习数量限制。</string>
+  <string name="studyoptions_congrats_more_new">还有新卡牌待学习，但已达到每日上限。您可以增加设置中的每日学习上限，不过请留意，这会增加您短期的复习工作量。</string>
+  <string name="studyoptions_congrats_custom">计划外学习，点击下面的自定义学习按钮。</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">明天将有：1张卡牌需要复习%2$s.\n预计耗时：%3$s</item>
     <item quantity="other">明天将有：%1$d张卡牌需要复习%2$s\n预计耗时：%3$s</item>
@@ -182,4 +163,21 @@
     <item quantity="one">预计耗时：1分钟。</item>
     <item quantity="other">预计耗时：%1$d分钟。</item>
   </plurals>
+  <string name="sd_card_not_mounted">SD卡没有加载。\n\n你也可以在内部存储器中存放卡牌集合，但不推荐这样做，因为访问文件不太容易。在预置参数中可以设置(点击本文字打开选项).</string>
+  <string name="studyoptions_options">选项</string>
+  <string name="empty_cloze_warning">请编辑此卡牌记录，并增加一些完形填空形式的题目。 (%1$s)</string>
+  <string name="help_cloze">帮助</string>
+  <string name="button_sync">同步</string>
+  <string name="restart">重新启动</string>
+  <string name="do_nothing">什么也不做</string>
+  <string name="more_options">更多选项</string>
+  <string name="now">现在</string>
+  <string name="back">返回</string>
+  <string name="ankiweb">AnkiWeb网站</string>
+  <string name="usb">USB</string>
+  <string name="_import">导入</string>
+  <string name="confirm">确认</string>
+  <string name="internet">互联网</string>
+  <string name="pc">PC个人电脑</string>
+  <string name="title_activity_graphical_activity">Statistical chart</string>
 </resources>

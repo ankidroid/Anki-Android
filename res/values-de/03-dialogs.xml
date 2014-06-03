@@ -41,7 +41,9 @@
 <resources>
   <string name="welcome_message">Mit AnkiDroid können Sie große Mengen an Vokabeln, oder jedem anderen beliebigen Stoff, effizient lernen. AnkiDroid zeigt Ihnen das zu Lernende kurz bevor Sie es wieder vergessen.\n\n Um einen ersten Eindruck von der Funktionsweise von AnkiDroid zu erhalten, empfehlen wir Ihnen einen Blick auf den Einführungsstapel zu werfen. Dieser gibt Ihnen einführende Informationen, und Sie können AnkiDroid ein wenig ausprobieren. Drücken Sie einfach auf „Lernen starten“, nachdem Sie ihn geöffnet haben.\n\nDen Einführungsstapel jetzt erstellen?</string>
   <string name="check_db_title">Datenbank überprüfen</string>
-  <string name="check_db_result_message">Datenbank wurde überprüft und optimiert.\nDie Größe wurde um %d kb reduziert</string>
+  <string name="check_db_warning">This may take a long time</string>
+  <string name="check_db_acknowledge">Database checked</string>
+  <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d kB.</string>
   <string name="contextmenu_deckpicker_delete_deck">Stapel löschen</string>
   <string name="delete_deck_title">Stapel löschen</string>
   <string name="delete_deck_message">Sind Sie sicher, dass Sie alle Karten in %s löschen wollen?</string>
@@ -59,7 +61,6 @@
     <item><![CDATA[AnkiDroid ist unter der <a href="%1$s">GNU-GPL-v3-Lizenz</a> veröffentlicht; der Quellcode ist <a href="%2$s">hier</a> verfügbar.]]></item>
   </string-array>
   <string name="dont_show_again">Nicht mehr anzeigen</string>
-  <string name="sync_log_title">Synchronisierungsprotokoll</string>
   <string name="notify_ticker">Anwendungsaktualisierung</string>
   <string name="notify_title">AnkiDroid aktualisiert</string>
   <string name="notify_message">Eine neue Version herunterladen</string>
@@ -69,7 +70,7 @@
   <string name="notification_stop">Nicht erneut über Aktualisierung benachrichtigen</string>
   <string name="reset_card_dialog_title">Lernfortschritt zurücksetzen</string>
   <string name="reset_card_dialog_message">Dies setzt den Lernfortschritt für alle Karten dieser Notiz zurück (sie sehen danach aus wie neue Karten).\nWirklich fortfahren?</string>
-  <string name="reset_card_dialog_confirmation">Alle Karten dieser Notiz zurückgesetzt</string>
+  <string name="reset_card_dialog_acknowledge">Cards reset</string>
   <string name="answering_error_title">Datenbankfehler</string>
   <string name="answering_error_message">Beim Zugriff auf die Datenbank ist ein Fehler aufgetreten. Dies kann entweder mit einer defekten Datenbank zusammenhängen oder an unzureichendem Speicherplatz liegen.\n\nWenn dies öfter vorkommt, versuchen Sie bitte, die Sammlung zu reparieren oder von einem Backup wiederherzustellen. Klicken Sie dafür auf \'Optionen\'.\n\nNichtsdestoweniger kann aber auch ein AnkiDroid-Fehler der Grund sein; bitte melden Sie den Fehler deshalb, damit wir das überprüfen können.</string>
   <string name="answering_error_report">Fehler melden</string>
@@ -98,6 +99,7 @@
   <string name="deck_upgrade_more_options_downgrade"><![CDATA[<br><br>Falls Sie ein Downgrade zurück zu AnkiDroid 1 durchführen möchten, lesen Sie bitte <a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Continuing_to_use_AnkiDroid_1.1.3">diese Instruktionen</a>.]]></string>
   <string name="deck_upgrade_create_new_collection">Neue Sammlung erstellen</string>
   <string name="deck_upgrade_create_new_collection_title">Neue Sammlung erstellen</string>
+  <string name="deck_upgrade_create_new_collection_button">New collection</string>
   <string name="deck_upgrade_not_import_warning">Sind Sie sicher? Ihre alten Daten werden nicht importiert.</string>
   <string name="deck_upgrade_via_web"><![CDATA[<b>Diese Aktualisierungsmethode wird nicht empfohlen, wenn Sie Mediendateien nutzten oder eine große Sammlung haben!</b><br><br>Ihre Anki 1 Stapel werden komprimiert und auf AnkiWeb hochgeladen und die konvertierte Sammlung heruntergeladen.<br><br>Bitte bedenken Sie, dass eine stabile Internetverbindung benötigt wird und ein 50MB Limit für Dateien besteht.<br><br>Benutzern von Anki Desktop wird empfohlen, die PC basierte Aktualisierungsmethode zu benutzen.<br><br>Wollen Sie immer noch fortfahren?]]></string>
   <string name="deck_upgrade_via_anki_desktop"><![CDATA[Falls Sie eine aktuelle version ihrer AnkiDroid Sammlung in der Anki Desktop Software haben, können Sie von dort aus aktualisieren und Ihre aktualisierte Sammlung dann durch synchronisieren mit AnkiWeb herunterladen.<br><br>Alternativ können Sie Ihre AnkiDroid Sammlung mit USB auf ihren Computer kopieren, sie dann aktualisieren und zurück zu AnkiDroid kopieren.]]></string>
@@ -120,4 +122,22 @@
   <string name="import_media_count">Mediendateien %1$d%% importieren\nBitte warten Sie...</string>
   <string name="import_update_counts">Stapelzähler aktualisieren.\nBitte warten Sie...</string>
   <string name="import_add_progress">• Archiv %1$s entpacken\n• Notizen %2$d%% importieren\n• Karten %3$d%% importieren\n• %4$s aufräumen</string>
+  <string name="sd_card_full_title">SD card full</string>
+  <string name="sd_card_almost_full_title">SD card almost full</string>
+  <string name="dialog_cancel">Cancel</string>
+  <string name="dialog_ok">OK</string>
+  <string name="dialog_continue">Continue</string>
+  <string name="dialog_neutral_later">Later</string>
+  <string name="dialog_positive_create">Create</string>
+  <string name="dialog_positive_delete">Delete</string>
+  <string name="dialog_positive_disable">Disable</string>
+  <string name="dialog_positive_overwrite">Overwrite</string>
+  <string name="dialog_positive_repair">Repair</string>
+  <string name="dialog_positive_replace">Replace</string>
+  <string name="dialog_positive_reset">Reset</string>
+  <string name="dialog_positive_save">Save</string>
+  <string name="add_button_content">Add&#8230;</string>
+  <string name="card_browser_button_content">Card browser</string>
+  <string name="lookup_button_content">Look up</string>
+  <string name="statistics_button_content">Statistics</string>
 </resources>

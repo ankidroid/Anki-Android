@@ -40,15 +40,14 @@
 
 -->
 <resources>
-  <string name="connection_needed">Ingen internetanslutning</string>
+  <string name="youre_offline">You are offline</string>
   <string name="currently_downloading">Hämtar just nu</string>
   <string name="starting_download">Startar hämtning...</string>
   <string name="downloading">Hämtar...</string>
   <string name="paused">Pausad</string>
   <string name="downloaded">Nedladdade</string>
-  <string name="error">Fel</string>
+  <string name="vague_error">Error</string>
   <string name="cancelling">Avbryter...</string>
-  <string name="connection_error_title">Observera</string>
   <string name="connection_error_return_message">Ett nätverksfel har uppstått. Försök igen eller avbryt och återgå till föregående skärm.</string>
   <string name="retry">Försök igen</string>
   <string name="cancel">Avbryt</string>
@@ -65,7 +64,8 @@
   <string name="download_button_return">Återvänd</string>
   <string name="connection_error_message">Ett nätverksfel har uppstått.</string>
   <string name="sync_log_db_error">Ett databasfel har inträffat.</string>
-  <string name="no_user_password_error_message">För att fortsätta med denna operation måste du ha ett AnkiWeb-konto och vara inloggad.</string>
+  <string name="not_logged_in_title">Log in to AnkiWeb</string>
+  <string name="login_create_account_message">You must log in to an AnkiWeb account. You can create one in the next step.</string>
   <string name="username">E-postadress</string>
   <string name="username_repeat">Upprepa e-postadress</string>
   <string name="password">Lösenord</string>
@@ -91,7 +91,6 @@
   <string name="sync_conflict_remote">Hämta</string>
   <string name="sync_conflict_remote_confirm">Vill du verkligen hämta serverns samling? Var medveten om att detta skriver över din lokala samling.</string>
   <string name="sync_conflict_local_confirm">Vill du verkligen ladda upp den lokala samlingen? Var medveten om att detta skriver över din samling på servern.</string>
-  <string name="sync_conflict_cancel">Avbryt synkning</string>
   <string name="sync_prepare_syncing">Förbereder synkning ...</string>
   <string name="sync_preparing_full_sync_message">Förbereder fullständig synkronisering...</string>
   <string name="sync_uploading_message">Laddar upp...</string>
@@ -107,7 +106,7 @@
   <string name="sync_log_old_version">Synkroniseringsprotokollet har ändrats, var god uppgradera till senaste AnkiDroid. Se %s</string>
   <string name="sync_conflict_title">Synkningskonflikt</string>
   <string name="sync_no_changes_message">Inga ändringar hittades.</string>
-  <string name="sync_database_success">Samlingen har synkroniserats</string>
+  <string name="sync_database_acknowledge">Collection synchronized</string>
   <string name="sync_log_error_fix">Ett synkroniseringsfel har uppstått%s.\n\nOm detta händer ofta kan du göra en full synkronisering för att fixa problemet. Var medveten om att full synkronisering innebär att din lokala samling eller serversamlingen kommer att skrivas över.\nOm du vill göra en full sync, välj om du vill behålla din lokala samling eller den på servern.</string>
   <string name="sync_log_error_specific">Synkningsfel, typ: %1$s, meddelande: %2$s</string>
   <string name="sync_corrupt_database">Din databas är korrupt. Var vänlig och åtgärda detta innan du försöker synkronisera igen.\n\nSe %s för mer information om att reparera din databas.</string>

@@ -39,12 +39,9 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="btn_continue">続ける</string>
   <string name="app_name">アンキドロイド</string>
-  <string name="attention">注意</string>
-  <string name="yes">はい</string>
-  <string name="no">いいえ</string>
-  <string name="ok">はい</string>
+  <string name="app_name_anki">Anki</string>
+  <string name="app_name_droid">Droid</string>
   <string name="studyoptions_deck_name">単語帳名</string>
   <string name="studyoptions_due_today">今日が期限:</string>
   <string name="studyoptions_new_total">新しいカードの枚数:</string>
@@ -182,4 +179,5 @@
   <string name="confirm">確認</string>
   <string name="internet">インターネット</string>
   <string name="pc">PC</string>
+  <string name="title_activity_graphical_activity">Statistical chart</string>
 </resources>

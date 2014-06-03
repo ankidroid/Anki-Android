@@ -39,18 +39,31 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="btn_continue">Doorgaan</string>
   <string name="app_name">AnkiDroid</string>
-  <string name="attention">Let op</string>
-  <string name="yes">Ja</string>
-  <string name="no">Nee</string>
-  <string name="ok">OK</string>
+  <string name="app_name_anki">Anki</string>
+  <string name="app_name_droid">Droid</string>
   <string name="studyoptions_deck_name">Setnaam</string>
   <string name="studyoptions_due_today">Vandaag te overhoren:</string>
   <string name="studyoptions_new_total">Aantal nieuwe kaarten:</string>
   <string name="studyoptions_total_cards">Totaal aantal kaarten:</string>
   <string name="studyoptions_eta">Geschatte tijd (min):</string>
   <string name="studyoptions_start">Studeer nu</string>
+  <plurals name="deckpicker_title">
+    <item quantity="one">1 van %2$d te doen(%3$s)</item>
+    <item quantity="other">%1$d van %2$d te doen(%3$s)</item>
+  </plurals>
+  <plurals name="deckpicker_title_minutes">
+    <item quantity="one">1 min.</item>
+    <item quantity="other">%d min.</item>
+  </plurals>
+  <plurals name="deckpicker_due">
+    <item quantity="one">1 van %2$d te doen</item>
+    <item quantity="other">%1$d van %2$d te doen</item>
+  </plurals>
+  <plurals name="reviewer_window_title">
+    <item quantity="one">Nog 1 minuut</item>
+    <item quantity="other">%d minuten over</item>
+  </plurals>
   <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">Toon antwoord</string>
   <string name="ease1_successive">Opnieuw</string>
@@ -108,36 +121,6 @@
   <string name="studyoptions_feedback">Feedback</string>
   <string name="studyoptions_load_tutorial_deck">Maak handleiding</string>
   <string name="night_mode">Nachtmodus</string>
-  <string name="visit">Bezoeken</string>
-  <string name="later">Later</string>
-  <string name="download">Downloaden</string>
-  <string name="open_collection">Collectie openen.\nEven wachten...</string>
-  <string name="rebuild_cram_deck">Stampset wordt opnieuw opgebouwd.\nEven geduld...</string>
-  <string name="rebuild_cram_label">Opnieuw opbouwen</string>
-  <string name="empty_cram_label">Leeg</string>
-  <string name="empty_cram_deck">Set om te stampen aan het leegmaken.\n Even geduld alstublieft...</string>
-  <string name="custom_study_deck_name">Aangepaste studiesessie</string>
-  <string name="custom_study_deck_exists">Gelieve eerst de bestaande aangepaste studieset te hernoemen.</string>
-  <string name="studyoptions_congrats_finished">Gefeliciteerd! Je bent nu klaar.</string>
-  <string name="studyoptions_congrats_more_rev">Je hebt de overhoringslimiet bereikt, maar er wachten nog kaarten om overhoord te worden. Voor een optimale geheugentraining, overweeg om de dagelijkse limiet te verhogen bij instellingen.</string>
-  <string name="studyoptions_congrats_more_new">Er zijn meer nieuwe kaarten beschikbaar, maar de dagelijkse limiet is bereikt. Je kunt de limiet verhogen in de instellingen, maar houd er rekening mee dat dit de werklast voor de korte termijn zal verhogen.</string>
-  <string name="studyoptions_congrats_custom">Om buiten het normale schema te studeren, klik op onderstaande knop Aangepast Studeren.</string>
-  <string name="sd_card_not_mounted">SD-kaart is niet aanwezig.\n\nU kan uw collectie ook in het interne geheugen opslaan, maar dit is niet aangeraden omdat het dan lastiger wordt voor u om het bestand te vinden. U kan dit activeren in de voorkeuren (klik op deze tekst om die te openen).</string>
-  <string name="studyoptions_options">Instellingen</string>
-  <string name="empty_cloze_warning">Bewerk deze memo en selecteer woorden die verborgen moeten blijven voor de invuloefening.(%1$s)</string>
-  <string name="help_cloze">help</string>
-  <string name="button_sync">Synchroniseer</string>
-  <string name="restart">Herstarten</string>
-  <string name="do_nothing">Niets doen</string>
-  <string name="more_options">Meer instellingen</string>
-  <string name="now">Nu</string>
-  <string name="back">Terug</string>
-  <string name="ankiweb">AnkiWeb</string>
-  <string name="usb">USB</string>
-  <string name="_import">Importeren</string>
-  <string name="confirm">Bevestigen</string>
-  <string name="internet">Internet</string>
-  <string name="pc">PC</string>
   <string-array name="next_review_s">
     <item>1 seconde</item>
     <item>1 minuut</item>
@@ -154,22 +137,20 @@
     <item>%s maanden</item>
     <item>%s jaren</item>
   </string-array>
-  <plurals name="deckpicker_title">
-    <item quantity="one">1 van %2$d te doen(%3$s)</item>
-    <item quantity="other">%1$d van %2$d te doen(%3$s)</item>
-  </plurals>
-  <plurals name="deckpicker_title_minutes">
-    <item quantity="one">1 min.</item>
-    <item quantity="other">%d min.</item>
-  </plurals>
-  <plurals name="deckpicker_due">
-    <item quantity="one">1 van %2$d te doen</item>
-    <item quantity="other">%1$d van %2$d te doen</item>
-  </plurals>
-  <plurals name="reviewer_window_title">
-    <item quantity="one">Nog 1 minuut</item>
-    <item quantity="other">%d minuten over</item>
-  </plurals>
+  <string name="visit">Bezoeken</string>
+  <string name="later">Later</string>
+  <string name="download">Downloaden</string>
+  <string name="open_collection">Collectie openen.\nEven wachten...</string>
+  <string name="rebuild_cram_deck">Stampset wordt opnieuw opgebouwd.\nEven geduld...</string>
+  <string name="rebuild_cram_label">Opnieuw opbouwen</string>
+  <string name="empty_cram_label">Leeg</string>
+  <string name="empty_cram_deck">Set om te stampen aan het leegmaken.\n Even geduld alstublieft...</string>
+  <string name="custom_study_deck_name">Aangepaste studiesessie</string>
+  <string name="custom_study_deck_exists">Gelieve eerst de bestaande aangepaste studieset te hernoemen.</string>
+  <string name="studyoptions_congrats_finished">Gefeliciteerd! Je bent nu klaar.</string>
+  <string name="studyoptions_congrats_more_rev">Je hebt de overhoringslimiet bereikt, maar er wachten nog kaarten om overhoord te worden. Voor een optimale geheugentraining, overweeg om de dagelijkse limiet te verhogen bij instellingen.</string>
+  <string name="studyoptions_congrats_more_new">Er zijn meer nieuwe kaarten beschikbaar, maar de dagelijkse limiet is bereikt. Je kunt de limiet verhogen in de instellingen, maar houd er rekening mee dat dit de werklast voor de korte termijn zal verhogen.</string>
+  <string name="studyoptions_congrats_custom">Om buiten het normale schema te studeren, klik op onderstaande knop Aangepast Studeren.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Morgen: 1 kaart te overhoren en %2$s.\n Geschatte tijd: %3$s</item>
     <item quantity="other">Morgen zijn er: %1$d kaarten te overhoren en %2$s.\n Geschatte tijd: %3$s</item>
@@ -182,4 +163,21 @@
     <item quantity="one">Geschatte tijd: 1 minuut.</item>
     <item quantity="other">Geschatte tijd: %1$d minuten.</item>
   </plurals>
+  <string name="sd_card_not_mounted">SD-kaart is niet aanwezig.\n\nU kan uw collectie ook in het interne geheugen opslaan, maar dit is niet aangeraden omdat het dan lastiger wordt voor u om het bestand te vinden. U kan dit activeren in de voorkeuren (klik op deze tekst om die te openen).</string>
+  <string name="studyoptions_options">Instellingen</string>
+  <string name="empty_cloze_warning">Bewerk deze memo en selecteer woorden die verborgen moeten blijven voor de invuloefening.(%1$s)</string>
+  <string name="help_cloze">help</string>
+  <string name="button_sync">Synchroniseer</string>
+  <string name="restart">Herstarten</string>
+  <string name="do_nothing">Niets doen</string>
+  <string name="more_options">Meer instellingen</string>
+  <string name="now">Nu</string>
+  <string name="back">Terug</string>
+  <string name="ankiweb">AnkiWeb</string>
+  <string name="usb">USB</string>
+  <string name="_import">Importeren</string>
+  <string name="confirm">Bevestigen</string>
+  <string name="internet">Internet</string>
+  <string name="pc">PC</string>
+  <string name="title_activity_graphical_activity">Statistical chart</string>
 </resources>

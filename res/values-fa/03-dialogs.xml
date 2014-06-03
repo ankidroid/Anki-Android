@@ -41,7 +41,9 @@
 <resources>
   <string name="welcome_message">با آنکی دروید شما می توانید انبوهی از واژگان یا هر موضوع دیگری را به خوبی فرا بگیرید. آنکی دروید درست پیش از فراموش کردن چیزهایی که می خواهید بیاموزید آنها را به شما نشان می دهد. \n\nبرای آشنایی اولیه با چگونگی کار پیشنهاد می کنیم با یک دسته کارت خودآموز شروع کنید که اطلاعات آغازین را در اختیارتان خواهد گذاشت. کافی است پس از باز کردن دسته کارت بر روی گزینه \"شروع مرور\" کلیک کنید.\n\n اکنون دسته کارت خودآموز ساخته شود؟</string>
   <string name="check_db_title">بررسی پایگاه داده</string>
-  <string name="check_db_result_message">پایگاه داده بررسی و بهینه سازی شده است. \nفضای خالی از بین رفته %d کیلوبایت</string>
+  <string name="check_db_warning">This may take a long time</string>
+  <string name="check_db_acknowledge">Database checked</string>
+  <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d kB.</string>
   <string name="contextmenu_deckpicker_delete_deck">حذف دسته</string>
   <string name="delete_deck_title">حذف دسته</string>
   <string name="delete_deck_message">شما مایل به حذف تمام کارت در %s هستید؟</string>
@@ -59,7 +61,6 @@
     <item><![CDATA[نرم افزار آنکی دروید تحت <a href="%1$s">GNU-GPL v3 license</a> و کدهای آن در دسترس است <a href="%2$s">اینجا</a>.]]></item>
   </string-array>
   <string name="dont_show_again">دوباره نشان نده</string>
-  <string name="sync_log_title">ورود به سیستم همگام سازی</string>
   <string name="notify_ticker">به روز رسانی برنامه</string>
   <string name="notify_title">به روز رسانی آنکی دروید</string>
   <string name="notify_message">دانلود نسخه جدید</string>
@@ -69,7 +70,7 @@
   <string name="notification_stop">دوباره این به روز رسانی را به من اطلاع نده</string>
   <string name="reset_card_dialog_title">بازنشانی پیشرفت کارت</string>
   <string name="reset_card_dialog_message">پیشرفت آموزش برای همه کارتهای این یادداشت بازنشانی می شود ( آن وقت بنظر می رسد که کارتها جدید است).\nواقعا ادامه می دهید؟</string>
-  <string name="reset_card_dialog_confirmation">همه کارتهای این یادداشت بازنشانی می شود</string>
+  <string name="reset_card_dialog_acknowledge">Cards reset</string>
   <string name="answering_error_title">خطای پایگاه داده</string>
   <string name="answering_error_message">یک خطا هنگام نوشتن مجموعه رخ داده است. که می تواند مربوط به پایگاه داده آسیب دیده و یا فضای ناکافی هارد باشد.\n\nاگر در اغلب موارد این حالت اتفاق می افتد, لطفا پایگاه داده را بررسی کنید, مجموعه را تعمیر کنید یا آن را از فایل پشتیبان بازگردانید.  به این منظور روی \'تنظیمات\' کلیک کنید .\n\nدر صورتی که درست نشد, احتمالا اشکال از برنامه آنکی دروید است; لطفا خطایی را که ما می توانیم آن را بررسی کنیم گزارش کنید.</string>
   <string name="answering_error_report">گزارش خطا</string>
@@ -99,6 +100,7 @@
   <string name="deck_upgrade_more_options_downgrade"><![CDATA[<br><br>اگر می خواهید به نسخه 1 آنکی دروید برگردید لطفا بخوانید <a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Continuing_to_use_AnkiDroid_1.1.3">این دستور العمل را</a>.]]></string>
   <string name="deck_upgrade_create_new_collection">ساختن مجموعه جدید</string>
   <string name="deck_upgrade_create_new_collection_title">ایجاد مجموعه جدید</string>
+  <string name="deck_upgrade_create_new_collection_button">New collection</string>
   <string name="deck_upgrade_not_import_warning">آیا برای انجام این کار مطمئن هستید؟ داده های قدیمی شما وارد نمی شوند.</string>
   <string name="deck_upgrade_via_web"><![CDATA[<b>اگر از فایلهای چند رسانه ای یا با حجم زیاد در مجموعه تان استفاده می کنید این روش به روز رسانی توصیه نمی شود!</b><br><br>دسته های آنکی 1 شما فشرده شده و به آنکی وب بارگذاری می شود و پس از تبدیل، مجموعه بارگیری خواهد شد.<br><br>توجه داشته باشید که اتصال اینترنتی ثابت نیاز دارید و فایلتان در حدود 50 مگابایت باشد.<br><br>کاربران نسخه رومیزی آنکی را قویا به استفاده از روش کامپیوتر جهت به روز رسانی تشویق می کنیم.<br><br>آیا هنوز مایلید ادامه دهید؟]]></string>
   <string name="deck_upgrade_via_anki_desktop"><![CDATA[اگر شما در حال حاضر نسخه به روز مجموعه آنکی دروید را در آنکی رومیزی دارید، می توانید از این طریق به روز رسانی نموده و سپس مجموعه به روز شده را از طریق همگامسازی با آنکی وب بارگیری نمایید.<br><br>شما می توانید پی در پی مجموعه آنکی دروید خویش را با استفاده از یو اس بی به کامپیوترتان کپی کرده و پس از به روز رسانی مجددا به آنکی دروید برگردانید.]]></string>
@@ -121,4 +123,22 @@
   <string name="import_media_count">در حال وارد کردن فایلهای جند رسانه ای %1$d%%\nلطفا صبر کنید&#8230;</string>
   <string name="import_update_counts">در حال به روز رسانی تعداد دسته ها.\nلطفا صبر کنید&#8230;</string>
   <string name="import_add_progress">• در حال باز کردن آرشیو %1$s\n• ورود یادداشتها %2$d%%\n• ورود کارتها %3$d%%\n• پاکسازی %4$s</string>
+  <string name="sd_card_full_title">SD card full</string>
+  <string name="sd_card_almost_full_title">SD card almost full</string>
+  <string name="dialog_cancel">Cancel</string>
+  <string name="dialog_ok">OK</string>
+  <string name="dialog_continue">Continue</string>
+  <string name="dialog_neutral_later">Later</string>
+  <string name="dialog_positive_create">Create</string>
+  <string name="dialog_positive_delete">Delete</string>
+  <string name="dialog_positive_disable">Disable</string>
+  <string name="dialog_positive_overwrite">Overwrite</string>
+  <string name="dialog_positive_repair">Repair</string>
+  <string name="dialog_positive_replace">Replace</string>
+  <string name="dialog_positive_reset">Reset</string>
+  <string name="dialog_positive_save">Save</string>
+  <string name="add_button_content">Add&#8230;</string>
+  <string name="card_browser_button_content">Card browser</string>
+  <string name="lookup_button_content">Look up</string>
+  <string name="statistics_button_content">Statistics</string>
 </resources>

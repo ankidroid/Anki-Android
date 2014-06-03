@@ -39,6 +39,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <plurals name="card_browser_subtitle">
+    <item quantity="one">显示%2$d张卡牌中的1张</item>
+    <item quantity="other">显示%2$d张卡牌中的%1$d张</item>
+  </plurals>
   <string name="card_browser_all_decks">所有牌组</string>
   <string name="card_browser_load">加载卡牌。\n请稍候...</string>
   <string name="card_browser_cardloading_error">载入卡牌时发生错误。这可能与你的设备的内存限制有关。选择一个更小的牌组再重试。</string>
@@ -90,8 +94,4 @@
     <item>按照复习时间排序</item>
     <item>按照失误次数排序</item>
   </string-array>
-  <plurals name="card_browser_subtitle">
-    <item quantity="one">显示%2$d张卡牌中的1张</item>
-    <item quantity="other">显示%2$d张卡牌中的%1$d张</item>
-  </plurals>
 </resources>

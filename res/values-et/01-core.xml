@@ -39,121 +39,15 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="btn_continue">Jätka</string>
   <string name="app_name">AnkiDroid</string>
-  <string name="attention">Tähelepanu</string>
-  <string name="yes">Jah</string>
-  <string name="no">Ei</string>
-  <string name="ok">OK</string>
+  <string name="app_name_anki">Anki</string>
+  <string name="app_name_droid">Droid</string>
   <string name="studyoptions_deck_name">Kaardipaki nimi</string>
   <string name="studyoptions_due_today">Due today:</string>
   <string name="studyoptions_new_total">Total new cards:</string>
   <string name="studyoptions_total_cards">Total cards:</string>
   <string name="studyoptions_eta">Eeldatav aeg (min):</string>
-  <string name="studyoptions_start">Study Now</string>
-  <string name="type_answer_hint">Type answer</string>
-  <string name="show_answer">Kuva vastus</string>
-  <string name="ease1_successive">Uuesti</string>
-  <string name="ease2_successive">Keeruline</string>
-  <string name="ease3_successive">Hea</string>
-  <string name="ease3_learning">Lihtne</string>
-  <string name="studyoptions_congrats_undo">Võta tagasi %s</string>
-  <string name="studyoptions_congrats_unbury">Unbury</string>
-  <string name="studyoptions_congrats_custom_study">Custom Study</string>
-  <string name="studyoptions_congrats_open_other_deck">Ava teine kaardipakk</string>
-  <string name="card_unsuspended">Card suspension undone</string>
-  <string name="card_suspended">Card resuspended</string>
-  <string name="menu_rotate">Pööra</string>
-  <string name="menu_import">Import file</string>
-  <string name="undo">Võta tagasi</string>
-  <string name="undo_action_review">review</string>
-  <string name="undo_action_edit">edit note</string>
-  <string name="undo_action_bury">bury note</string>
-  <string name="undo_action_suspend_card">suspend card</string>
-  <string name="undo_action_suspend_note">suspend note</string>
-  <string name="undo_action_delete">delete note</string>
-  <string name="undo_action_mark">mark note</string>
-  <string name="unbury">Unbury</string>
-  <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
-  <string name="contextmenu_deckpicker_download_missing_media">Lae alla puuduv meedia</string>
-  <string name="contextmenu_deckpicker_reset_language_assignments">Lähtesta keelemäärangud</string>
-  <string name="contextmenu_deckpicker_reset_reset_message">Keele lähtestamine</string>
-  <string name="contextmenu_deckpicker_optimize_deck">Optimeeri andmebaas</string>
-  <string name="contextmenu_deckpicker_rename_deck">Kaardipaki ümbernimetamine</string>
-  <string name="contextmenu_deckpicker_collapse_deck">Hide Subdecks</string>
-  <string name="contextmenu_deckpicker_inflate_deck">Show Subdecks</string>
-  <string name="contextmenu_deckpicker_set_custom_dictionary">Määra kohandatud sõnastik</string>
-  <string name="menu_add">Add</string>
-  <string name="menu_add_note">Add note</string>
-  <string name="menu_download_deck">Kaardipaki allalaadimine</string>
-  <string name="menu_download_shared_deck">Jagatud kaardipakk</string>
-  <string name="menu_my_account">Sünkrooni konto</string>
-  <string name="menu_preferences">Eelistused</string>
-  <string name="menu_about">Lähemalt</string>
-  <string name="menu_dismiss_note">Dismiss Note...</string>
-  <string name="menu_bury_card">Bury Card</string>
-  <string name="menu_bury_note">Bury Note</string>
-  <string name="menu_suspend_card">Peata kaart</string>
-  <string name="menu_suspend_note">Peata Märkus</string>
-  <string name="menu_delete_note">Kustuta märge</string>
-  <string name="delete_note_message">Really delete this note and all its cards?\n%s</string>
-  <string name="menu_edit_card">Redigeeri kaarti</string>
-  <string name="menu_select">Vali text</string>
-  <string name="menu_search">Lookup in %1$s</string>
-  <string name="menu_mark_card">Märgi kaart</string>
-  <string name="menu_unmark_card">Unmark Card</string>
-  <string name="new_deck">Create deck</string>
-  <string name="create">Loo</string>
-  <string name="new_dynamic_deck">Create filtered deck</string>
-  <string name="studyoptions_feedback">Tagasiside</string>
-  <string name="studyoptions_load_tutorial_deck">Loo õpetus</string>
-  <string name="night_mode">Öörežiim</string>
-  <string name="visit">Külastust</string>
-  <string name="later">Hiljem</string>
-  <string name="download">Allalaadimine</string>
-  <string name="open_collection">Avan kollektsiooni. \nPalun ootake...</string>
-  <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait...</string>
-  <string name="rebuild_cram_label">Taasta</string>
-  <string name="empty_cram_label">Tühi</string>
-  <string name="empty_cram_deck">Emptying cram deck.\nPlease wait...</string>
-  <string name="custom_study_deck_name">Kohandatud uuringu Session</string>
-  <string name="custom_study_deck_exists">Please rename the existing Custom Study deck first.</string>
-  <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
-  <string name="studyoptions_congrats_more_rev">Today\'s review limit has been reached, but there are still cards waiting to be reviewed. For optimum memory, consider increasing the daily limit in the options.</string>
-  <string name="studyoptions_congrats_more_new">There are more new cards available, but the daily limit has been reached. You can increase the limit in the options, but please bear in mind that this will increase your short-term review workload.</string>
-  <string name="studyoptions_congrats_custom">To study outside of the normal schedule, click the Custom Study button below.</string>
-  <string name="sd_card_not_mounted">SD card is not mounted.\n\nYou can store your collection in the internal memory too, though it\'s not recommended as you cannot access the file that easily. You can activate this in the preferences (open them by clicking this text).</string>
-  <string name="studyoptions_options">Valikud</string>
-  <string name="empty_cloze_warning">Please edit this note and add some cloze deletions. (%1$s)</string>
-  <string name="help_cloze">Abi</string>
-  <string name="button_sync">Sünkrooni</string>
-  <string name="restart">Taaskäivita</string>
-  <string name="do_nothing">Ära tee midagi</string>
-  <string name="more_options">Rohkem valikuid</string>
-  <string name="now">Nüüd</string>
-  <string name="back">Tagasi</string>
-  <string name="ankiweb">AnkiWeb</string>
-  <string name="usb">USB</string>
-  <string name="_import">importi</string>
-  <string name="confirm">Kinnita</string>
-  <string name="internet">Internet</string>
-  <string name="pc">PC</string>
-  <string-array name="next_review_s">
-    <item>1 sekund</item>
-    <item>1 minut</item>
-    <item>1 tund</item>
-    <item>1 päev</item>
-    <item>1 kuu</item>
-    <item>1 aasta</item>
-  </string-array>
-  <string-array name="next_review_p">
-    <item>%s sekundit</item>
-    <item>%s minutit</item>
-    <item>%s tundi</item>
-    <item>%s päeva</item>
-    <item>%s kuud</item>
-    <item>%s aastat</item>
-  </string-array>
+  <string name="studyoptions_start">Study</string>
   <plurals name="deckpicker_title">
     <item quantity="one">1 of %2$d due (%3$s)</item>
     <item quantity="other">%1$d of %2$d due (%3$s)</item>
@@ -170,6 +64,93 @@
     <item quantity="one">1 minut jäänud</item>
     <item quantity="other">%d minutit jäänud</item>
   </plurals>
+  <string name="type_answer_hint">Type answer</string>
+  <string name="show_answer">Kuva vastus</string>
+  <string name="ease1_successive">Uuesti</string>
+  <string name="ease2_successive">Keeruline</string>
+  <string name="ease3_successive">Hea</string>
+  <string name="ease3_learning">Lihtne</string>
+  <string name="studyoptions_congrats_undo">Võta tagasi %s</string>
+  <string name="studyoptions_congrats_unbury">Unbury</string>
+  <string name="studyoptions_congrats_custom_study">Custom study</string>
+  <string name="studyoptions_congrats_open_other_deck">Ava teine kaardipakk</string>
+  <string name="card_unsuspended">Card suspension undone</string>
+  <string name="card_suspended">Card resuspended</string>
+  <string name="menu_rotate">Pööra</string>
+  <string name="menu_import">Import file</string>
+  <string name="undo">Võta tagasi</string>
+  <string name="undo_action_review">review</string>
+  <string name="undo_action_edit">edit note</string>
+  <string name="undo_action_bury">bury note</string>
+  <string name="undo_action_suspend_card">suspend card</string>
+  <string name="undo_action_suspend_note">suspend note</string>
+  <string name="undo_action_delete">delete note</string>
+  <string name="undo_action_mark">mark note</string>
+  <string name="unbury">Unbury</string>
+  <string name="finish_operation">Finishing previous operation (most likely backup creation)&#8230;</string>
+  <string name="contextmenu_deckpicker_download_missing_media">Lae alla puuduv meedia</string>
+  <string name="contextmenu_deckpicker_reset_language_assignments">Lähtesta keelemäärangud</string>
+  <string name="contextmenu_deckpicker_reset_reset_message">Keele lähtestamine</string>
+  <string name="contextmenu_deckpicker_optimize_deck">Optimeeri andmebaas</string>
+  <string name="contextmenu_deckpicker_rename_deck">Kaardipaki ümbernimetamine</string>
+  <string name="contextmenu_deckpicker_collapse_deck">Hide subdecks</string>
+  <string name="contextmenu_deckpicker_inflate_deck">Show subdecks</string>
+  <string name="contextmenu_deckpicker_set_custom_dictionary">Määra kohandatud sõnastik</string>
+  <string name="menu_add">Add</string>
+  <string name="menu_add_note">Add note</string>
+  <string name="menu_download_deck">Kaardipaki allalaadimine</string>
+  <string name="menu_download_shared_deck">Jagatud kaardipakk</string>
+  <string name="menu_my_account">Sünkrooni konto</string>
+  <string name="menu_preferences">Eelistused</string>
+  <string name="menu_about">Lähemalt</string>
+  <string name="menu_dismiss_note">Dismiss note&#8230;</string>
+  <string name="menu_bury_card">Bury card</string>
+  <string name="menu_bury_note">Bury note</string>
+  <string name="menu_suspend_card">Peata kaart</string>
+  <string name="menu_suspend_note">Peata Märkus</string>
+  <string name="menu_delete_note">Kustuta märge</string>
+  <string name="delete_note_message">Really delete this note and all its cards?\n%s</string>
+  <string name="menu_edit_card">Redigeeri kaarti</string>
+  <string name="menu_select">Vali text</string>
+  <string name="menu_search">Lookup in %1$s</string>
+  <string name="menu_mark_card">Märgi kaart</string>
+  <string name="menu_unmark_card">Unmark card</string>
+  <string name="new_deck">Create deck</string>
+  <string name="create">Loo</string>
+  <string name="new_dynamic_deck">Create filtered deck</string>
+  <string name="studyoptions_feedback">Tagasiside</string>
+  <string name="studyoptions_load_tutorial_deck">Loo õpetus</string>
+  <string name="night_mode">Öörežiim</string>
+  <string-array name="next_review_s">
+    <item>1 sekund</item>
+    <item>1 minut</item>
+    <item>1 tund</item>
+    <item>1 päev</item>
+    <item>1 kuu</item>
+    <item>1 aasta</item>
+  </string-array>
+  <string-array name="next_review_p">
+    <item>%s sekundit</item>
+    <item>%s minutit</item>
+    <item>%s tundi</item>
+    <item>%s päeva</item>
+    <item>%s kuud</item>
+    <item>%s aastat</item>
+  </string-array>
+  <string name="visit">Külastust</string>
+  <string name="later">Hiljem</string>
+  <string name="download">Allalaadimine</string>
+  <string name="open_collection">Avan kollektsiooni. \nPalun ootake...</string>
+  <string name="rebuild_cram_deck">Rebuilding cram deck&#8230;</string>
+  <string name="rebuild_cram_label">Taasta</string>
+  <string name="empty_cram_label">Tühi</string>
+  <string name="empty_cram_deck">Emptying cram deck&#8230;</string>
+  <string name="custom_study_deck_name">Kohandatud uuringu Session</string>
+  <string name="custom_study_deck_exists">Rename the existing custom study deck first</string>
+  <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
+  <string name="studyoptions_congrats_more_rev">Today\'s limit has been reached, but there are still cards to review.  You can increase the limit in the options.</string>
+  <string name="studyoptions_congrats_more_new">Today\'s limit has been reached. There are more new cards available; you can increase the limit in the options, but this will increase your short-term review workload.</string>
+  <string name="studyoptions_congrats_custom">To study outside of the normal schedule, touch the \"Custom study\" button below</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Tomorrow there will be: 1 card to review and %2$s.\n Estimated time: %3$s</item>
     <item quantity="other">Tomorrow there will be: %1$d cards to review and %2$s.\n Estimated time: %3$s</item>
@@ -182,4 +163,21 @@
     <item quantity="one">Hinnanguline ajakulu: 1 min.</item>
     <item quantity="other">Hinnanguline ajakulu: %1$d min.</item>
   </plurals>
+  <string name="sd_card_not_mounted">SD card not mounted.\n\nYou can store your collection in the internal memory too, though it\'s not recommended as you cannot access the file that easily. You can activate this in the preferences (open them by touching this text).</string>
+  <string name="studyoptions_options">Valikud</string>
+  <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
+  <string name="help_cloze">Abi</string>
+  <string name="button_sync">Sünkrooni</string>
+  <string name="restart">Taaskäivita</string>
+  <string name="do_nothing">Ära tee midagi</string>
+  <string name="more_options">Rohkem valikuid</string>
+  <string name="now">Nüüd</string>
+  <string name="back">Tagasi</string>
+  <string name="ankiweb">AnkiWeb</string>
+  <string name="usb">USB</string>
+  <string name="_import">importi</string>
+  <string name="confirm">Kinnita</string>
+  <string name="internet">Internet</string>
+  <string name="pc">PC</string>
+  <string name="title_activity_graphical_activity">Statistical chart</string>
 </resources>

@@ -39,18 +39,31 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="btn_continue">Настави</string>
   <string name="app_name">AnkiDroid</string>
-  <string name="attention">Пажња</string>
-  <string name="yes">Да</string>
-  <string name="no">Не</string>
-  <string name="ok">У реду</string>
+  <string name="app_name_anki">Anki</string>
+  <string name="app_name_droid">Droid</string>
   <string name="studyoptions_deck_name">Назив шпила</string>
   <string name="studyoptions_due_today">За данас:</string>
   <string name="studyoptions_new_total">Укупно нових картица:</string>
   <string name="studyoptions_total_cards">Укупно картица:</string>
   <string name="studyoptions_eta">Очекивано време (мин):</string>
   <string name="studyoptions_start">Започни учење</string>
+  <plurals name="deckpicker_title">
+    <item quantity="one">понав. 1 од %2$d  (%3$s)</item>
+    <item quantity="other">понав. %1$d од %2$d (%3$s)</item>
+  </plurals>
+  <plurals name="deckpicker_title_minutes">
+    <item quantity="one">1 мин.</item>
+    <item quantity="other">%d мин.</item>
+  </plurals>
+  <plurals name="deckpicker_due">
+    <item quantity="one">понав. 1 од %2$d</item>
+    <item quantity="other">понав. %1$d од %2$d</item>
+  </plurals>
+  <plurals name="reviewer_window_title">
+    <item quantity="one">1 минута остало</item>
+    <item quantity="other">%d минута остало</item>
+  </plurals>
   <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">Прикажи одговор</string>
   <string name="ease1_successive">Поново</string>
@@ -108,36 +121,6 @@
   <string name="studyoptions_feedback">Повратна веза</string>
   <string name="studyoptions_load_tutorial_deck">Креирај упутство</string>
   <string name="night_mode">Ноћни режим</string>
-  <string name="visit">Посети</string>
-  <string name="later">Касније</string>
-  <string name="download">Преузми</string>
-  <string name="open_collection">Отварање колекције.\nМолим сачекајте...</string>
-  <string name="rebuild_cram_deck">Обнова слагања шпила.\nМолим сачекајте...</string>
-  <string name="rebuild_cram_label">Ремонтуј</string>
-  <string name="empty_cram_label">Очисти</string>
-  <string name="empty_cram_deck">Чишћење уклапања шпила.\nМолим сачекајте...</string>
-  <string name="custom_study_deck_name">Специјална сесија</string>
-  <string name="custom_study_deck_exists">Прво преименујте постојеће специјалне шпилове.</string>
-  <string name="studyoptions_congrats_finished">Честитамо! Завршили сте данашњи задатак.</string>
-  <string name="studyoptions_congrats_more_rev">Достигнут је лимит броја прегледа за данас, али још постоје карте које чекају на преглед. За оптимално памћење препоручује се да увећате дневни лимит у опцијама.</string>
-  <string name="studyoptions_congrats_more_new">Постоје нове карте, али дневни лимит је научен. Можете да повећате лимит, али имајте на уму, да ће то увећати и обим понављања следећих дана.</string>
-  <string name="studyoptions_congrats_custom">Да бисте променили уобичајени распоред учења карата, кликните \"Допунско учење\" испод.</string>
-  <string name="sd_card_not_mounted">Меморијска карта није монтирана.\n\nМожете чувати вашу колекцију у унутрашњој меморији, али се то не препоручује, јер ће вам бити теже да додеђете до датотеке. Можете да активирате ову опцију у подешавањима (да бисте их отворили, кликните на овај текст).</string>
-  <string name="studyoptions_options">Опције</string>
-  <string name="empty_cloze_warning">Уредите ову белешку и додајте елементе са размацима. (%1$s)</string>
-  <string name="help_cloze">Помоћ</string>
-  <string name="button_sync">Синхронизација</string>
-  <string name="restart">Рестарт</string>
-  <string name="do_nothing">Не ради ништа</string>
-  <string name="more_options">Више опција</string>
-  <string name="now">Сада</string>
-  <string name="back">Назад</string>
-  <string name="ankiweb">AnkiWeb</string>
-  <string name="usb">USB</string>
-  <string name="_import">Увоз</string>
-  <string name="confirm">Потврда</string>
-  <string name="internet">Интернет</string>
-  <string name="pc">ПР</string>
   <string-array name="next_review_s">
     <item>1 секунда</item>
     <item>1 минут</item>
@@ -154,22 +137,20 @@
     <item>%s месеци</item>
     <item>%s година</item>
   </string-array>
-  <plurals name="deckpicker_title">
-    <item quantity="one">понав. 1 од %2$d  (%3$s)</item>
-    <item quantity="other">понав. %1$d од %2$d (%3$s)</item>
-  </plurals>
-  <plurals name="deckpicker_title_minutes">
-    <item quantity="one">1 мин.</item>
-    <item quantity="other">%d мин.</item>
-  </plurals>
-  <plurals name="deckpicker_due">
-    <item quantity="one">понав. 1 од %2$d</item>
-    <item quantity="other">понав. %1$d од %2$d</item>
-  </plurals>
-  <plurals name="reviewer_window_title">
-    <item quantity="one">1 минута остало</item>
-    <item quantity="other">%d минута остало</item>
-  </plurals>
+  <string name="visit">Посети</string>
+  <string name="later">Касније</string>
+  <string name="download">Преузми</string>
+  <string name="open_collection">Отварање колекције.\nМолим сачекајте...</string>
+  <string name="rebuild_cram_deck">Обнова слагања шпила.\nМолим сачекајте...</string>
+  <string name="rebuild_cram_label">Ремонтуј</string>
+  <string name="empty_cram_label">Очисти</string>
+  <string name="empty_cram_deck">Чишћење уклапања шпила.\nМолим сачекајте...</string>
+  <string name="custom_study_deck_name">Специјална сесија</string>
+  <string name="custom_study_deck_exists">Прво преименујте постојеће специјалне шпилове.</string>
+  <string name="studyoptions_congrats_finished">Честитамо! Завршили сте данашњи задатак.</string>
+  <string name="studyoptions_congrats_more_rev">Достигнут је лимит броја прегледа за данас, али још постоје карте које чекају на преглед. За оптимално памћење препоручује се да увећате дневни лимит у опцијама.</string>
+  <string name="studyoptions_congrats_more_new">Постоје нове карте, али дневни лимит је научен. Можете да повећате лимит, али имајте на уму, да ће то увећати и обим понављања следећих дана.</string>
+  <string name="studyoptions_congrats_custom">Да бисте променили уобичајени распоред учења карата, кликните \"Допунско учење\" испод.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Сутра ће бити: 1 карта за преглед и %2$s.\n Предвиђено време: %3$s</item>
     <item quantity="other">Сутра ће бити: %1$d карата за преглед и %2$s.\n Предвиђено време: %3$s</item>
@@ -182,4 +163,21 @@
     <item quantity="one">Очекивано време: 1 мин.</item>
     <item quantity="other">Очекиваноено време: %1$d мин.</item>
   </plurals>
+  <string name="sd_card_not_mounted">Меморијска карта није монтирана.\n\nМожете чувати вашу колекцију у унутрашњој меморији, али се то не препоручује, јер ће вам бити теже да додеђете до датотеке. Можете да активирате ову опцију у подешавањима (да бисте их отворили, кликните на овај текст).</string>
+  <string name="studyoptions_options">Опције</string>
+  <string name="empty_cloze_warning">Уредите ову белешку и додајте елементе са размацима. (%1$s)</string>
+  <string name="help_cloze">Помоћ</string>
+  <string name="button_sync">Синхронизација</string>
+  <string name="restart">Рестарт</string>
+  <string name="do_nothing">Не ради ништа</string>
+  <string name="more_options">Више опција</string>
+  <string name="now">Сада</string>
+  <string name="back">Назад</string>
+  <string name="ankiweb">AnkiWeb</string>
+  <string name="usb">USB</string>
+  <string name="_import">Увоз</string>
+  <string name="confirm">Потврда</string>
+  <string name="internet">Интернет</string>
+  <string name="pc">ПР</string>
+  <string name="title_activity_graphical_activity">Statistical chart</string>
 </resources>

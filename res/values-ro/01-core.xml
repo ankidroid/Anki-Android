@@ -39,18 +39,31 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="btn_continue">Continuă</string>
   <string name="app_name">AnkiDroid</string>
-  <string name="attention">Atenție</string>
-  <string name="yes">Da</string>
-  <string name="no">Nu</string>
-  <string name="ok">OK</string>
+  <string name="app_name_anki">Anki</string>
+  <string name="app_name_droid">Droid</string>
   <string name="studyoptions_deck_name">Nume Pachet</string>
   <string name="studyoptions_due_today">Pentru astăzi:</string>
   <string name="studyoptions_new_total">Totalul cardurilor noi:</string>
   <string name="studyoptions_total_cards">Total carduri:</string>
   <string name="studyoptions_eta">Timp estimat (min):</string>
   <string name="studyoptions_start">Studiază Acum</string>
+  <plurals name="deckpicker_title">
+    <item quantity="one">1 de %2$d de facut (%3$s)</item>
+    <item quantity="other">%1$d de %2$d de facut(%3$s)</item>
+  </plurals>
+  <plurals name="deckpicker_title_minutes">
+    <item quantity="one">1 min.</item>
+    <item quantity="other">%d min.</item>
+  </plurals>
+  <plurals name="deckpicker_due">
+    <item quantity="one">1 de %2$d de facut</item>
+    <item quantity="other">%1$d din %2$d scadente</item>
+  </plurals>
+  <plurals name="reviewer_window_title">
+    <item quantity="one">a mai ramas 1 minut</item>
+    <item quantity="other">au mai ramas %d minute</item>
+  </plurals>
   <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">Arată răspuns</string>
   <string name="ease1_successive">Din nou</string>
@@ -108,36 +121,6 @@
   <string name="studyoptions_feedback">Feedback</string>
   <string name="studyoptions_load_tutorial_deck">Creare tutorial</string>
   <string name="night_mode">Mod de noapte</string>
-  <string name="visit">Vizitaţi</string>
-  <string name="later">Mai târziu</string>
-  <string name="download">Descarcare</string>
-  <string name="open_collection">Deschidere colecţie. \n Va rugam aşteptaţi...</string>
-  <string name="rebuild_cram_deck">Reconstruire pachet plin. \n Va rugam aşteptaţi...</string>
-  <string name="rebuild_cram_label">Reconstruieste</string>
-  <string name="empty_cram_label">Goleste</string>
-  <string name="empty_cram_deck">Golire pachet. \n Va rugam asteptati aşteptaţi...</string>
-  <string name="custom_study_deck_name">Sesiune de studiu personalizata</string>
-  <string name="custom_study_deck_exists">Vă rugăm să redenumiţi mai inati pachetul de Studiu Personalizat .</string>
-  <string name="studyoptions_congrats_finished">Felicitări! Aţi terminat pentru moment.</string>
-  <string name="studyoptions_congrats_more_rev">S-a atins limita de recapitulare pentru astăzi, dar încă mai există carduri ce aştepta sa fie revizuite. Pentru memorare optima, ia în considerare creşterea limitei zilnice în opţiuni.</string>
-  <string name="studyoptions_congrats_more_new">Sunt disponibile mai multe carduri noi, dar s-a atins limita zilnică. Puteţi mări limita în opţiuni, dar vă rugăm să ţineţi cont de faptul că aceasta va creşte volumul dumneavoastră de muncă de revizuire pe termen scurt.</string>
-  <string name="studyoptions_congrats_custom">Pentru a studia în afara programului normal, faceţi clic pe butonul Studiu Personalizat de mai jos.</string>
-  <string name="sd_card_not_mounted">SD card-ul nu este montat.\n\n Puteţi stoca colecția în memoria internă, deşi nu este recomandat deoarece nu prea puteti accesa fișierul cu uşurinţă. Aveţi posibilitatea să o activaţi în Preferinţe (deschideţi-le făcând clic pe acest text).</string>
-  <string name="studyoptions_options">Opţiuni</string>
-  <string name="empty_cloze_warning">Vă rugăm să editaţi această notă şi adăugaţi unele spatii goale. (%1$s)</string>
-  <string name="help_cloze">ajutor</string>
-  <string name="button_sync">Sincronizare</string>
-  <string name="restart">Restart</string>
-  <string name="do_nothing">Nu fac nimic</string>
-  <string name="more_options">Mai multe opțiuni</string>
-  <string name="now">Acum</string>
-  <string name="back">Inapoi</string>
-  <string name="ankiweb">AnkiWeb</string>
-  <string name="usb">USB</string>
-  <string name="_import">Importeaza</string>
-  <string name="confirm">Confirma</string>
-  <string name="internet">Internet</string>
-  <string name="pc">PC</string>
   <string-array name="next_review_s">
     <item>1 secundă</item>
     <item>1 minut</item>
@@ -154,22 +137,20 @@
     <item>%s luni</item>
     <item>%s ani</item>
   </string-array>
-  <plurals name="deckpicker_title">
-    <item quantity="one">1 de %2$d de facut (%3$s)</item>
-    <item quantity="other">%1$d de %2$d de facut(%3$s)</item>
-  </plurals>
-  <plurals name="deckpicker_title_minutes">
-    <item quantity="one">1 min.</item>
-    <item quantity="other">%d min.</item>
-  </plurals>
-  <plurals name="deckpicker_due">
-    <item quantity="one">1 de %2$d de facut</item>
-    <item quantity="other">%1$d din %2$d scadente</item>
-  </plurals>
-  <plurals name="reviewer_window_title">
-    <item quantity="one">a mai ramas 1 minut</item>
-    <item quantity="other">au mai ramas %d minute</item>
-  </plurals>
+  <string name="visit">Vizitaţi</string>
+  <string name="later">Mai târziu</string>
+  <string name="download">Descarcare</string>
+  <string name="open_collection">Deschidere colecţie. \n Va rugam aşteptaţi...</string>
+  <string name="rebuild_cram_deck">Reconstruire pachet plin. \n Va rugam aşteptaţi...</string>
+  <string name="rebuild_cram_label">Reconstruieste</string>
+  <string name="empty_cram_label">Goleste</string>
+  <string name="empty_cram_deck">Golire pachet. \n Va rugam asteptati aşteptaţi...</string>
+  <string name="custom_study_deck_name">Sesiune de studiu personalizata</string>
+  <string name="custom_study_deck_exists">Vă rugăm să redenumiţi mai inati pachetul de Studiu Personalizat .</string>
+  <string name="studyoptions_congrats_finished">Felicitări! Aţi terminat pentru moment.</string>
+  <string name="studyoptions_congrats_more_rev">S-a atins limita de recapitulare pentru astăzi, dar încă mai există carduri ce aştepta sa fie revizuite. Pentru memorare optima, ia în considerare creşterea limitei zilnice în opţiuni.</string>
+  <string name="studyoptions_congrats_more_new">Sunt disponibile mai multe carduri noi, dar s-a atins limita zilnică. Puteţi mări limita în opţiuni, dar vă rugăm să ţineţi cont de faptul că aceasta va creşte volumul dumneavoastră de muncă de revizuire pe termen scurt.</string>
+  <string name="studyoptions_congrats_custom">Pentru a studia în afara programului normal, faceţi clic pe butonul Studiu Personalizat de mai jos.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Mâine va fi: 1 card de recapitulat şi %2$s.\n timpul estimat: %3$s</item>
     <item quantity="other">Mâine vor fi: %1$d carduri de recapitulat şi %2$s.\n timp estimat: %3$s</item>
@@ -182,4 +163,21 @@
     <item quantity="one">Timp estimat: 1 min.</item>
     <item quantity="other">Timp estimat: %1$d min.</item>
   </plurals>
+  <string name="sd_card_not_mounted">SD card-ul nu este montat.\n\n Puteţi stoca colecția în memoria internă, deşi nu este recomandat deoarece nu prea puteti accesa fișierul cu uşurinţă. Aveţi posibilitatea să o activaţi în Preferinţe (deschideţi-le făcând clic pe acest text).</string>
+  <string name="studyoptions_options">Opţiuni</string>
+  <string name="empty_cloze_warning">Vă rugăm să editaţi această notă şi adăugaţi unele spatii goale. (%1$s)</string>
+  <string name="help_cloze">ajutor</string>
+  <string name="button_sync">Sincronizare</string>
+  <string name="restart">Restart</string>
+  <string name="do_nothing">Nu fac nimic</string>
+  <string name="more_options">Mai multe opțiuni</string>
+  <string name="now">Acum</string>
+  <string name="back">Inapoi</string>
+  <string name="ankiweb">AnkiWeb</string>
+  <string name="usb">USB</string>
+  <string name="_import">Importeaza</string>
+  <string name="confirm">Confirma</string>
+  <string name="internet">Internet</string>
+  <string name="pc">PC</string>
+  <string name="title_activity_graphical_activity">Statistical chart</string>
 </resources>

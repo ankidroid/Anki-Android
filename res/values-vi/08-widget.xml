@@ -42,7 +42,7 @@
   <string name="widget_minimum_cards_due_notification_ticker_title">Những thẻ tới hạn</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">Hạn của bài AnkiDroid</string>
   <string name="widget_no_cards_due">Không có thẻ tới hạn</string>
-  <string name="widget_loading">Widget loading...</string>
+  <string name="widget_loading">Widget loading&#8230;</string>
   <plurals name="widget_cards_in_decks_due">
     <item quantity="one">1 thẻ tới hạn trong %2$s</item>
     <item quantity="other">%1$d cards due in %2$s</item>
@@ -51,9 +51,9 @@
     <item quantity="one">1 tập thẻ</item>
     <item quantity="other">%1$d decks</item>
   </plurals>
-  <string name="widget_medium">AnkiDroid Medium</string>
-  <string name="widget_small">AnkiDroid Small</string>
-  <string name="widget_big">AnkiDroid Big</string>
+  <string name="widget_medium">AnkiDroid medium</string>
+  <string name="widget_small">AnkiDroid small</string>
+  <string name="widget_big">AnkiDroid big</string>
   <string name="widget_big_restrictions_dialog">Due to some restrictions of Android\'s widget framework this widget can only show text but no images/sounds etc.</string>
   <string name="open_in_reviewer">Open deck in AnkiDroid</string>
   <plurals name="widget_big_eta">

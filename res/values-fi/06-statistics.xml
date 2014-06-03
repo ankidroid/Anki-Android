@@ -80,9 +80,6 @@
   <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; korttia/päivä</string>
   <string name="deck_summary_deck_age">Pakan ikä: &lt;b&gt;%d&lt;/b&gt; päivää</string>
   <string name="deck_summary_all_decks">Kaikki pakat</string>
-  <string name="stats_forecast">Ennuste</string>
-  <string name="stats_review_count">Läpikäyntimäärä</string>
-  <string name="stats_review_time">Läpikäyntiaika</string>
   <string-array name="next_review_in_s">
     <item>sekunnissa</item>
     <item>minuutissa</item>
@@ -120,6 +117,9 @@
     <item>Viikot</item>
     <item>Kuukaudet</item>
   </string-array>
+  <string name="stats_forecast">Ennuste</string>
+  <string name="stats_review_count">Läpikäyntimäärä</string>
+  <string name="stats_review_time">Läpikäyntiaika</string>
   <string-array name="stats_period">
     <item>Kuukausi</item>
     <item>Vuosi</item>

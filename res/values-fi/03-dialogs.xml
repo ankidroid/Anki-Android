@@ -41,7 +41,9 @@
 <resources>
   <string name="welcome_message">AnkiDroidilla voit opiskella tehokkaasti suuria määriä sanastoja tai muuta materiaalia. AnkiDroid näyttää sinulle opeteltavat asiat juuri ennen kuin unohdat ne.\n\nSaadaksesi kuvan siitä miten kaikki toimii suosittelemme aloittamaan ohjepakalla, joka antaa yleiskuvan ja pääset kokeilemaan ohjelmaa hiukan. Napsauta \"Aloita läpikäynti\"-painiketta pakan avaamisen jälkeen aloittaaksesi.\n\nLuodaanko ohjepakka nyt?</string>
   <string name="check_db_title">Tarkasta tietokanta</string>
-  <string name="check_db_result_message">Tietokanta tarkastettu ja optimoitu.\nKoko väheni %d kilotavulla</string>
+  <string name="check_db_warning">This may take a long time</string>
+  <string name="check_db_acknowledge">Database checked</string>
+  <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d kB.</string>
   <string name="contextmenu_deckpicker_delete_deck">Poista korttipakka</string>
   <string name="delete_deck_title">Poista korttipakka</string>
   <string name="delete_deck_message">Haluatko varmasti poistaa kaikki kortit pakasta %s?</string>
@@ -51,8 +53,14 @@
   <string name="no_tts_available_title">Teksti puheeksi</string>
   <string name="no_tts_available_message">Teksti puheeksi kieli ei ole käytettävissä</string>
   <string name="tts_no_tts">Älä puhu</string>
+  <string-array name="about_content">
+    <item><![CDATA[<h2>%1$s:<br/>Flashcards for Android</h2>AnkiDroid is a flashcard application which is fully compatible with the desktop software <a href="%2$s">Anki</a>. You can create, download and learn contents on both, AnkiDroid or Anki Desktop, and synchronize them very easily.]]></item>
+    <item><![CDATA[To help us make AnkiDroid better, please report any bug <a href="%1$s">here</a>; new feature ideas are very welcome too! Use the <a href="%2$s">wiki</a> and say Hi on the <a href="%3$s">forum</a>.]]></item>
+    <item><![CDATA[AnkiDroid is <a href="%1$s">open source software<a/>, so everyone is encouraged to <a href="%2$s">join</a> the <a href="%3$s">contributors</a>:-)]]></item>
+    <item><![CDATA[Non-developers can also help, for instance by <a href="%1$s">translating</a> AnkiDroid, updating the wiki and screenshots, <a href="%2$s">donating</a> to Anki Desktop, or blogging about AnkiDroid!]]></item>
+    <item><![CDATA[AnkiDroid is released under the <a href="%1$s">GNU-GPL v3 license</a> and the source code is available <a href="%2$s">here</a>.]]></item>
+  </string-array>
   <string name="dont_show_again">Älä näytä uudelleen</string>
-  <string name="sync_log_title">Synkronointiloki</string>
   <string name="notify_ticker">Sovelluksen päivitys</string>
   <string name="notify_title">Ankidroid on päivitetty</string>
   <string name="notify_message">Lataa uusin versio</string>
@@ -62,7 +70,7 @@
   <string name="notification_stop">Älä ilmoita tästä päivityksestä uudelleen</string>
   <string name="reset_card_dialog_title">Nollaa kortin edistyminen</string>
   <string name="reset_card_dialog_message">Tämä nollaa edistymistiedot kaikilta huomautuksen korteilta (jonka jälkeen ne näyttävät uusilta korteilta).\nHaluatko varmasti jatkaa?</string>
-  <string name="reset_card_dialog_confirmation">Huomautuksen kaikki kortit nollattiin</string>
+  <string name="reset_card_dialog_acknowledge">Cards reset</string>
   <string name="answering_error_title">Tietokantavirhe</string>
   <string name="answering_error_message">Tapahtui virhe kirjoittaessa kokoelmaan. Tämä voi aiheutua korruptoituneesti tietokannasta tai liian vähäisestä levytilasta.\n\nJos tämä tapahtuu usein yritä tarkastaa tietokanta, korjata kokoelma tai palauttaa se varmuuskopioista. Käynnistä \"asetukset\" tehdäksesi tämän.\n\nKyseessä voi olla myös vika AnkiDroidissa, joten ilmoita tästä meille jotta voimme tarkastaa asian.</string>
   <string name="answering_error_report">Ilmoita viasta</string>
@@ -91,16 +99,17 @@
   <string name="deck_upgrade_more_options_downgrade"><![CDATA[<br><br>Jos haluat palata vanhaan versioon AnkiDroid 1 niin lue <a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Continuing_to_use_AnkiDroid_1.1.3"> nämä ohjeet</a>]]></string>
   <string name="deck_upgrade_create_new_collection">Luo uusi kokoelma</string>
   <string name="deck_upgrade_create_new_collection_title">Luo Uusi Kokoelma</string>
+  <string name="deck_upgrade_create_new_collection_button">New collection</string>
   <string name="deck_upgrade_not_import_warning">Oletko varma, että haluat tehdä tämän? Vanhoja tietoja ei tuoda.</string>
   <string name="deck_upgrade_via_web"><![CDATA[<b>Tämän päivitysmenetelmä ei ole suositeltava, jos olet käyttänyt mediatiedostoja tai sinulla on iso kokoelma!</b><br><br>Sinun Anki1 pakkasi tullaan pakkaamaan ja ladataan AnkiWebiin, jos muunnettu kokoelmasi sitten ladataan.<br><br>Huomaa että tämä tarvitsee luotettavan internet-yhteyden ja että 50MB on suurin mahdollinen tiedoston koko.<br><br>Anki työpöytäversioiden käyttäjiä kehotetaan käyttämään PC-pohjaista päivitysmenetelmää. <br><br>Haluatko yhä jatkaa?]]></string>
   <string name="deck_upgrade_via_anki_desktop"><![CDATA[Jos AnkiDroid-kokoelmasta on ajantasainen versio Anki-työpöytäohjelmistossa, voit päivittää siellä ja lataa päivitetyn kokoelman synkronoimalla AnkiWebin kanssa.<br><br>Vaihtoehtoisesti voit kopioida AnkiDroid-kokoelman tietokoneeseen USB-väylän kautta, päivittää kokoelman siellä ja kopioida takaisin AnkiDroidiin.]]></string>
   <string name="deck_upgrade_auto_upgrade"><![CDATA[Asenna ja käynnistä Anki Desktop 2.0.4 tai uudempi päivittääksesi kokoelman, synkronoi päivitetty kokoelmaasi AnkiWebin kanssa ja paina "Lataa"-painiketta. <br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=fi#Option_2:_Using_AnkiWeb_sync">Lisää tietoja päivittämisestä  AnkiWebin kanssa</a>]] ></string>
-  <string name="deck_upgrade_manual"><![CDATA[Please copy all of your *.anki files (and any *.media folders) from your AnkiDroid folder to your Anki Desktop folder, and then install and start Anki Desktop version 2.0.4 or greater to upgrade your collection.<br><br>When the upgrade is completed, please export your collection from Anki2 and copy the collection.apkg file to your AnkiDroid folder and press the Import button below.<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_1:_Using_USB_(recommended)">More detailed information on upgrading using USB.</a>]]></string>
+  <string name="deck_upgrade_manual"><![CDATA[Please copy all of your *.anki files (and any *.media folders) from your AnkiDroid folder to your Anki Desktop folder, and then install and start Anki Desktop version 2.0.4 or greater to upgrade your collection.<br><br>When the upgrade is completed, export your collection from Anki2 and copy the collection.apkg file to your AnkiDroid folder and press the Import button below.<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_1:_Using_USB_(recommended)">More detailed information on upgrading using USB.</a>]]></string>
   <string name="upgrade_deck_cancelled_title">Päivitys peruutettu</string>
-  <string name="upgrade_deck_cancelled_description">The upgrade attempt was cancelled, please try again one of the available upgrade methods.</string>
-  <string name="upgrade_deck_web_upgrade_failed">The upgrade process was unsuccessful. Please try again, or choose a different upgrade method</string>
-  <string name="upgrade_deck_web_upgrade_exceeds">The total compressed size of your Anki1 decks exceeds the limit that the server can process (50 mb), please try upgrading with a different method.</string>
-  <string name="upgrade_deck_web_upgrade_sdcard">The upgrade was completed, but there was an error while unpacking the resulting collection, please ensure that you have enough available disk (needed %1$d mb) and try again, or try upgrading with a different method.</string>
+  <string name="upgrade_deck_cancelled_description">The upgrade attempt was cancelled</string>
+  <string name="upgrade_deck_web_upgrade_failed">The upgrade process was unsuccessful</string>
+  <string name="upgrade_deck_web_upgrade_exceeds">The size of your Anki1 decks exceeds the 50 MB limit of the server. Try upgrading with a different method.</string>
+  <string name="upgrade_deck_web_upgrade_sdcard">The upgrade was completed, but there was an error while unpacking the resulting collection. Make sure that you have enough available disk (%1$d MB needed) and try again, or try upgrading with a different method.</string>
   <string name="export_progress_title">Kokoelman vienti</string>
   <string name="export_progress_exporting">Viedään kokoelmaa, odota&#8230;</string>
   <string name="upgrade_deck_export_successful">Vanhan kokoelman vienti onnistui, jatketaan päivitysprosessia.</string>
@@ -113,11 +122,22 @@
   <string name="import_media_count">Tuodaan mediatiedostoja %1$d%%\nOdota&#8230;</string>
   <string name="import_update_counts">Päivitetään pakkojen määriä.\nPlease odottaa&#8230;</string>
   <string name="import_add_progress">• Puretaan arkistoa %1$s\n• Merkintöjen tuonti %2$d%%\n• Korttien tuonti %3$d%%\n• Siistiminen %4$s</string>
-  <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s:<br/>Flashcards for Android</h2>AnkiDroid is a flashcard application which is fully compatible with the desktop software <a href="%2$s">Anki</a>. You can create, download and learn contents on both, AnkiDroid or Anki Desktop, and synchronize them very easily.]]></item>
-    <item><![CDATA[To help us make AnkiDroid better, please report any bug <a href="%1$s">here</a>; new feature ideas are very welcome too! Please use the <a href="%2$s">wiki</a> and say Hi on the <a href="%3$s">forum</a>.]]></item>
-    <item><![CDATA[AnkiDroid is <a href="%1$s">open source software<a/>, so everyone is encouraged to <a href="%2$s">join</a> the <a href="%3$s">contributors</a>:-)]]></item>
-    <item><![CDATA[Non-developers can also help, for instance by <a href="%1$s">translating</a> AnkiDroid, updating the wiki and screenshots, <a href="%2$s">donating</a> to Anki Desktop, or blogging about AnkiDroid!]]></item>
-    <item><![CDATA[AnkiDroid is released under the <a href="%1$s">GNU-GPL v3 license</a> and the source code is available <a href="%2$s">here</a>.]]></item>
-  </string-array>
+  <string name="sd_card_full_title">SD card full</string>
+  <string name="sd_card_almost_full_title">SD card almost full</string>
+  <string name="dialog_cancel">Cancel</string>
+  <string name="dialog_ok">OK</string>
+  <string name="dialog_continue">Continue</string>
+  <string name="dialog_neutral_later">Later</string>
+  <string name="dialog_positive_create">Create</string>
+  <string name="dialog_positive_delete">Delete</string>
+  <string name="dialog_positive_disable">Disable</string>
+  <string name="dialog_positive_overwrite">Overwrite</string>
+  <string name="dialog_positive_repair">Repair</string>
+  <string name="dialog_positive_replace">Replace</string>
+  <string name="dialog_positive_reset">Reset</string>
+  <string name="dialog_positive_save">Save</string>
+  <string name="add_button_content">Add&#8230;</string>
+  <string name="card_browser_button_content">Card browser</string>
+  <string name="lookup_button_content">Look up</string>
+  <string name="statistics_button_content">Statistics</string>
 </resources>

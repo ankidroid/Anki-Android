@@ -38,16 +38,13 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
-  <string name="CardEditorCancelButton">Batal</string>
-  <string name="CardEditorSaveButton">Simpan</string>
-  <string name="CardEditorLaterButton">Nanti</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <string name="CardEditorLaterMessage">Simpan informasi untuk nanti</string>
   <string name="CardEditorCardDeck">Dek kartu: %s</string>
   <string name="CardEditorNoteDeck">Dek Catatan: %s</string>
   <string name="CardEditorModel">Jenis catatan: %s</string>
   <string name="CardEditorTags">Tag: %1$s</string>
-  <string name="add_new_filter_tags">Add/Filter tags</string>
+  <string name="add_new_filter_tags">Add/filter tags</string>
   <string name="note_type">Jenis catatan</string>
   <string name="card_type">Jenis kartu</string>
   <string name="filter_tags">Filter tags</string>
@@ -61,6 +58,19 @@
   <string name="leech_suspend_notification">Kartu ditandai sebagai pacat dan digantung</string>
   <string name="leech_notification">Kartu ditandai sebagai pacat</string>
   <string name="corrupt_font">File font %s rusak</string>
+  <string-array name="browser_column1_headings">
+    <item>Search field</item>
+  </string-array>
+  <string-array name="browser_column2_headings">
+    <item>Answer</item>
+    <item>Card</item>
+    <item>Deck</item>
+    <item>Note</item>
+    <item>Question</item>
+    <item>Tags</item>
+    <item>Lapses</item>
+    <item>Reviews</item>
+  </string-array>
   <string name="about_title">Tentang</string>
   <string name="cardeditor_title_add_note">Tambahkan catatan</string>
   <string name="cardeditor_title_edit_card">Ubah catatan</string>
@@ -73,6 +83,14 @@
   <string name="select">Pilih</string>
   <string name="saving_changes">Menyimpan perubahan...</string>
   <string name="reordering_cards">Menata kembali kartu...</string>
+  <plurals name="timebox_reached">
+    <item quantity="one">1 kartu dipelajari dalam %2$s</item>
+    <item quantity="other">%1$d kartu dipelajari dalam %2$s</item>
+  </plurals>
+  <plurals name="timebox_reached_minutes">
+    <item quantity="one">1 menit</item>
+    <item quantity="other">%1$d menit</item>
+  </plurals>
   <string name="studyoptions_welcome_title">Selamat Datang ke AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">Tiada Storan Luaran Ditemui</string>
   <string name="studyoptions_no_external_storage_message">Storan luaran tidak ditemui. AnkiDroid tidak boleh memuat dek Anki tanpanya. Sila periksa kad SD terpasang dan cuba lagi.</string>
@@ -90,18 +108,33 @@
   <string name="rename">Ubah nama</string>
   <string name="rename_error">Dek %s tidak dapat diganti namanya</string>
   <string name="default_conf_delete_error">Kelompok pilihan default tidak dapat dihapus</string>
+  <plurals name="factadder_cards_added">
+    <item quantity="one">1 kartu ditambahkan</item>
+    <item quantity="other">%d kartu ditambahkan</item>
+  </plurals>
   <string name="help_title">Bantuan</string>
   <string name="help_online">Bantuan online</string>
   <string name="help_faq">FAQ</string>
   <string name="help_tutorial">Dek tutorial</string>
   <string name="check_db">Periksa database</string>
   <string name="check_db_message">Memeriksa database. \nSilahkan tunggu...</string>
-  <string name="simple_interface_hint">Empty %s. Bear in mind that simple interface cannot show pictures/sounds etc.</string>
+  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
+  <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
+  <string name="simple_interface_hint">Empty %s. Try switching off simple interface.</string>
   <string name="delete_deck">Menghapus dek...\nSilahkan menunggu.</string>
+  <string-array name="dynOrderLabels">
+    <item>Tertua pertama dilihat</item>
+    <item>Acak</item>
+    <item>Meningkatkan interval</item>
+    <item>Mengurangi interval</item>
+    <item>Most lapses</item>
+    <item>Urutan ditambahkan</item>
+    <item>Urut berdasarkan</item>
+  </string-array>
   <string name="menu_cardbrowser">Card browser</string>
   <string name="show_hint">Tampilkan Petunjuk</string>
   <string name="pref_lang_other">Preferensi Bahasa</string>
-  <string name="pref_font_UI">Custom UI Font</string>
+  <string name="pref_font_UI">Custom UI font</string>
   <string name="info_rate">Beri peringkat AnkiDroid</string>
   <string name="col_load_failed">Gagal memuat koleksi. \nTekan kembali untuk menutup AnkiDroid.</string>
   <string name="import_title">Impor kartu</string>
@@ -116,50 +149,16 @@
   <string name="import_hint">Untuk mengimpor kartu, tempatkan file apkg ke dalam direktori %s dan tekan ok</string>
   <string name="upgrade_import_no_file_found">Tidak ada %1$s file yang dapat di impor ditemukan</string>
   <string name="study_options">Options</string>
-  <string name="custom_study">Custom Study</string>
+  <string name="custom_study">Custom study</string>
   <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
   <string name="exit_wizard">Exit Wizard</string>
   <string name="steps_error">Langkah-langkah harus angka yang lebih besar daripada 0</string>
   <string name="steps_min_error">At least one step is required</string>
   <string name="custom_study_invalid_number">Invalid number</string>
-  <string name="template_error">Template error:</string>
-  <string name="template_error_detail">There is an error in the template of this card.</string>
-  <string name="template_error_fix">Please use the card editor on the desktop client to fix the error.</string>
+  <string name="template_error">Template error</string>
+  <string name="template_error_detail">The card template contains an error</string>
+  <string name="template_error_fix">Use the card editor on the desktop client to fix it.</string>
   <string name="sched_end">(akhir)</string>
-  <string name="sched_unbury_button">To see them now, tap the Unbury button.</string>
-  <string name="sched_has_buried">Some related or buried cards were delayed until a later session.</string>
-  <string-array name="browser_column1_headings">
-    <item>Search Field</item>
-  </string-array>
-  <string-array name="browser_column2_headings">
-    <item>Answer</item>
-    <item>Card</item>
-    <item>Deck</item>
-    <item>Note</item>
-    <item>Question</item>
-    <item>Tags</item>
-    <item>Lapses</item>
-    <item>Reviews</item>
-  </string-array>
-  <string-array name="dynOrderLabels">
-    <item>Tertua pertama dilihat</item>
-    <item>Acak</item>
-    <item>Meningkatkan interval</item>
-    <item>Mengurangi interval</item>
-    <item>Most lapses</item>
-    <item>Urutan ditambahkan</item>
-    <item>Urut berdasarkan</item>
-  </string-array>
-  <plurals name="timebox_reached">
-    <item quantity="one">1 kartu dipelajari dalam %2$s</item>
-    <item quantity="other">%1$d kartu dipelajari dalam %2$s</item>
-  </plurals>
-  <plurals name="timebox_reached_minutes">
-    <item quantity="one">1 menit</item>
-    <item quantity="other">%1$d menit</item>
-  </plurals>
-  <plurals name="factadder_cards_added">
-    <item quantity="one">1 kartu ditambahkan</item>
-    <item quantity="other">%d kartu ditambahkan</item>
-  </plurals>
+  <string name="sched_unbury_button">To see them now, touch the \"Unbury\" button.</string>
+  <string name="sched_has_buried">Some related or buried cards were delayed until tomorrow.</string>
 </resources>

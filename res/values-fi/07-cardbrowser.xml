@@ -39,6 +39,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <plurals name="card_browser_subtitle">
+    <item quantity="one">1/%2$d korttia näytetty</item>
+    <item quantity="other">%1$d/ %2$d korttia näytetty</item>
+  </plurals>
   <string name="card_browser_all_decks">Kaikki pakat</string>
   <string name="card_browser_load">Ladataan kortteja.\nOdota...</string>
   <string name="card_browser_cardloading_error">Virhe ladattaessa kortteja. Ongelma luultavasti liittyy laitteesi muistin rajoitukseen. Yritä uudelleen pienemmällä korttipakalla</string>
@@ -90,8 +94,4 @@
     <item>Kertauksien mukaan</item>
     <item>Unohduksien mukaan</item>
   </string-array>
-  <plurals name="card_browser_subtitle">
-    <item quantity="one">1/%2$d korttia näytetty</item>
-    <item quantity="other">%1$d/ %2$d korttia näytetty</item>
-  </plurals>
 </resources>

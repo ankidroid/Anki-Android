@@ -39,18 +39,31 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="btn_continue">Pokračovať</string>
   <string name="app_name">AnkiDroid</string>
-  <string name="attention">Pozor</string>
-  <string name="yes">Áno</string>
-  <string name="no">Nie</string>
-  <string name="ok">OK</string>
+  <string name="app_name_anki">Anki</string>
+  <string name="app_name_droid">Droid</string>
   <string name="studyoptions_deck_name">Názov balíčka</string>
   <string name="studyoptions_due_today">Dnes na opakovanie:</string>
   <string name="studyoptions_new_total">Celkový počet nových kariet:</string>
   <string name="studyoptions_total_cards">Celkový počet kariet:</string>
   <string name="studyoptions_eta">Odhadovaný čas (min):</string>
   <string name="studyoptions_start">Študovať teraz</string>
+  <plurals name="deckpicker_title">
+    <item quantity="one">Zostáva 1 z %2$d (%3$s)</item>
+    <item quantity="other">Zostáva %1$d z %2$d (%3$s)</item>
+  </plurals>
+  <plurals name="deckpicker_title_minutes">
+    <item quantity="one">1 min.</item>
+    <item quantity="other">%d min.</item>
+  </plurals>
+  <plurals name="deckpicker_due">
+    <item quantity="one">1 z %2$d na opakovanie</item>
+    <item quantity="other">%1$d z %2$d na opakovanie</item>
+  </plurals>
+  <plurals name="reviewer_window_title">
+    <item quantity="one">Zostáva 1 minúta</item>
+    <item quantity="other">Zostáva %d minút</item>
+  </plurals>
   <string name="type_answer_hint">Napísať odpoveď</string>
   <string name="show_answer">Zobraziť odpoveď</string>
   <string name="ease1_successive">Znovu</string>
@@ -108,36 +121,6 @@
   <string name="studyoptions_feedback">Spätná väzba</string>
   <string name="studyoptions_load_tutorial_deck">Vytvoriť úvodný balíček</string>
   <string name="night_mode">Nočný režim</string>
-  <string name="visit">Navštíviť</string>
-  <string name="later">Neskôr</string>
-  <string name="download">Stiahnuť</string>
-  <string name="open_collection">Otvára sa zbierka.\nProsím počkajte...</string>
-  <string name="rebuild_cram_deck">Obnovujem balíček na drvenie sa.\nProsím počkajte...</string>
-  <string name="rebuild_cram_label">Znovu zostaviť</string>
-  <string name="empty_cram_label">Prázdne</string>
-  <string name="empty_cram_deck">Vyprázdňujem balíček na drvenie sa.\nProsím počkajte...</string>
-  <string name="custom_study_deck_name">Vlastné štúdium</string>
-  <string name="custom_study_deck_exists">Prosím premenujte najprv existujúci balíček Vlastné štúdium.</string>
-  <string name="studyoptions_congrats_finished">Blahoželáme! Na teraz ste tento balíček dokončili.</string>
-  <string name="studyoptions_congrats_more_rev">Bol dosiahnutý denný limit, ale stále zostávajú nejaké karty na opakovanie. Pre optimálne zapamätanie zvážte zvýšenie tohto limitu v nastaveniach.</string>
-  <string name="studyoptions_congrats_more_new">Dostupné sú aj ďalšie nové karty, ale bol dosiahnutý denný limit.  Môžete ho zvýšiť v nastaveniach, ale prosím majte na pamäti, že tým sa v najbližšej dobe zvýši aj počet kariet na opakovanie.</string>
-  <string name="studyoptions_congrats_custom">Ak chcete študovať mimo bežný plán, kliknite na tlačidlo Vlastné štúdium nižšie.</string>
-  <string name="sd_card_not_mounted">SD karta nie je pripojená.\n\nVašu zbierku môžete uložiť aj na internú pamäť, aj keď to sa neodporúča, pretože k súboru potom nemáte taký jednoduchý prístup. Túto možnosť môžete aktivovať v nastaveniach (otvoríte ich kliknutím na tento text).</string>
-  <string name="studyoptions_options">Nastavenia</string>
-  <string name="empty_cloze_warning">Prosím upravte túto poznámku a pridajte nejaké doplňovačky. (%1$s)</string>
-  <string name="help_cloze">pomoc</string>
-  <string name="button_sync">Synchronizácia</string>
-  <string name="restart">Reštartovať</string>
-  <string name="do_nothing">Nerobiť nič</string>
-  <string name="more_options">Ďalšie možnosti</string>
-  <string name="now">Teraz</string>
-  <string name="back">Späť</string>
-  <string name="ankiweb">AnkiWeb</string>
-  <string name="usb">USB</string>
-  <string name="_import">Importovať</string>
-  <string name="confirm">Potvrdiť</string>
-  <string name="internet">Internet</string>
-  <string name="pc">PC</string>
   <string-array name="next_review_s">
     <item>1 sekunda</item>
     <item>1 minúta</item>
@@ -154,22 +137,20 @@
     <item>%s mesiacov</item>
     <item>%s rokov</item>
   </string-array>
-  <plurals name="deckpicker_title">
-    <item quantity="one">Zostáva 1 z %2$d (%3$s)</item>
-    <item quantity="other">Zostáva %1$d z %2$d (%3$s)</item>
-  </plurals>
-  <plurals name="deckpicker_title_minutes">
-    <item quantity="one">1 min.</item>
-    <item quantity="other">%d min.</item>
-  </plurals>
-  <plurals name="deckpicker_due">
-    <item quantity="one">1 z %2$d na opakovanie</item>
-    <item quantity="other">%1$d z %2$d na opakovanie</item>
-  </plurals>
-  <plurals name="reviewer_window_title">
-    <item quantity="one">Zostáva 1 minúta</item>
-    <item quantity="other">Zostáva %d minút</item>
-  </plurals>
+  <string name="visit">Navštíviť</string>
+  <string name="later">Neskôr</string>
+  <string name="download">Stiahnuť</string>
+  <string name="open_collection">Otvára sa zbierka.\nProsím počkajte...</string>
+  <string name="rebuild_cram_deck">Obnovujem balíček na drvenie sa.\nProsím počkajte...</string>
+  <string name="rebuild_cram_label">Znovu zostaviť</string>
+  <string name="empty_cram_label">Prázdne</string>
+  <string name="empty_cram_deck">Vyprázdňujem balíček na drvenie sa.\nProsím počkajte...</string>
+  <string name="custom_study_deck_name">Vlastné štúdium</string>
+  <string name="custom_study_deck_exists">Prosím premenujte najprv existujúci balíček Vlastné štúdium.</string>
+  <string name="studyoptions_congrats_finished">Blahoželáme! Na teraz ste tento balíček dokončili.</string>
+  <string name="studyoptions_congrats_more_rev">Bol dosiahnutý denný limit, ale stále zostávajú nejaké karty na opakovanie. Pre optimálne zapamätanie zvážte zvýšenie tohto limitu v nastaveniach.</string>
+  <string name="studyoptions_congrats_more_new">Dostupné sú aj ďalšie nové karty, ale bol dosiahnutý denný limit.  Môžete ho zvýšiť v nastaveniach, ale prosím majte na pamäti, že tým sa v najbližšej dobe zvýši aj počet kariet na opakovanie.</string>
+  <string name="studyoptions_congrats_custom">Ak chcete študovať mimo bežný plán, kliknite na tlačidlo Vlastné štúdium nižšie.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Zajtra: 1 karta na opakovanie a %2$s.\n Odhadovaný čas: %3$s</item>
     <item quantity="other">Zajtra: %1$d kariet na opakovanie a %2$s.\n Odhadovaný čas: %3$s</item>
@@ -182,4 +163,21 @@
     <item quantity="one">Odhadovaný čas: 1 min.</item>
     <item quantity="other">Odhadovaný čas: %1$d min.</item>
   </plurals>
+  <string name="sd_card_not_mounted">SD karta nie je pripojená.\n\nVašu zbierku môžete uložiť aj na internú pamäť, aj keď to sa neodporúča, pretože k súboru potom nemáte taký jednoduchý prístup. Túto možnosť môžete aktivovať v nastaveniach (otvoríte ich kliknutím na tento text).</string>
+  <string name="studyoptions_options">Nastavenia</string>
+  <string name="empty_cloze_warning">Prosím upravte túto poznámku a pridajte nejaké doplňovačky. (%1$s)</string>
+  <string name="help_cloze">pomoc</string>
+  <string name="button_sync">Synchronizácia</string>
+  <string name="restart">Reštartovať</string>
+  <string name="do_nothing">Nerobiť nič</string>
+  <string name="more_options">Ďalšie možnosti</string>
+  <string name="now">Teraz</string>
+  <string name="back">Späť</string>
+  <string name="ankiweb">AnkiWeb</string>
+  <string name="usb">USB</string>
+  <string name="_import">Importovať</string>
+  <string name="confirm">Potvrdiť</string>
+  <string name="internet">Internet</string>
+  <string name="pc">PC</string>
+  <string name="title_activity_graphical_activity">Statistical chart</string>
 </resources>

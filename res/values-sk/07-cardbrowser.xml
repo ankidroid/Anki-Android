@@ -39,6 +39,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <plurals name="card_browser_subtitle">
+    <item quantity="one">Zobrazená 1 z %2$d kariet</item>
+    <item quantity="other">Zobrazených %1$d z %2$d kariet</item>
+  </plurals>
   <string name="card_browser_all_decks">Všetky balíčky</string>
   <string name="card_browser_load">Nahrávam karty.\nProsím počkajte...</string>
   <string name="card_browser_cardloading_error">Pri nahrávaní kariet sa vyskytla chyba. Pravdepodobne to bolo spôsobené obmedzeniami pamäte na vašom zariadení. Skúste to znova s menším balíčkom</string>
@@ -90,8 +94,4 @@
     <item>Podľa opakovaní</item>
     <item>Podľa zabudnutí</item>
   </string-array>
-  <plurals name="card_browser_subtitle">
-    <item quantity="one">Zobrazená 1 z %2$d kariet</item>
-    <item quantity="other">Zobrazených %1$d z %2$d kariet</item>
-  </plurals>
 </resources>

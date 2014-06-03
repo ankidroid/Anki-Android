@@ -80,9 +80,6 @@
   <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; fitxes/dia</string>
   <string name="deck_summary_deck_age">Edat del paquet: &lt;b&gt;%d&lt;/b&gt; dies</string>
   <string name="deck_summary_all_decks">Tots els paquets</string>
-  <string name="stats_forecast">Previsió</string>
-  <string name="stats_review_count">Compte de revisions</string>
-  <string name="stats_review_time">L\'hora de revisió</string>
   <string-array name="next_review_in_s">
     <item>en 1 segon</item>
     <item>en 1 minut</item>
@@ -120,6 +117,9 @@
     <item>Setmanes</item>
     <item>Mesos</item>
   </string-array>
+  <string name="stats_forecast">Previsió</string>
+  <string name="stats_review_count">Compte de revisions</string>
+  <string name="stats_review_time">L\'hora de revisió</string>
   <string-array name="stats_period">
     <item>1 mes</item>
     <item>1 any</item>

@@ -38,16 +38,13 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
-  <string name="CardEditorCancelButton">Zrušiť</string>
-  <string name="CardEditorSaveButton">Uložiť</string>
-  <string name="CardEditorLaterButton">Neskôr</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <string name="CardEditorLaterMessage">Informácie uložené na neskôr</string>
   <string name="CardEditorCardDeck">Balíček kariet: %s</string>
   <string name="CardEditorNoteDeck">Poznámka balíčka: %s</string>
   <string name="CardEditorModel">Typ poznámky: %s</string>
   <string name="CardEditorTags">Štítky: %1$s</string>
-  <string name="add_new_filter_tags">Add/Filter tags</string>
+  <string name="add_new_filter_tags">Add/filter tags</string>
   <string name="note_type">Typ poznámky</string>
   <string name="card_type">Typ karty</string>
   <string name="filter_tags">Filter tags</string>
@@ -61,6 +58,19 @@
   <string name="leech_suspend_notification">Karta označená ako pijavica a odložená bokom</string>
   <string name="leech_notification">Karta označená ako pijavica</string>
   <string name="corrupt_font">Poškodený súbor písma %s</string>
+  <string-array name="browser_column1_headings">
+    <item>Vyhľadávacie pole</item>
+  </string-array>
+  <string-array name="browser_column2_headings">
+    <item>Odpoveď</item>
+    <item>Karta</item>
+    <item>Balíček</item>
+    <item>Note</item>
+    <item>Question</item>
+    <item>Tags</item>
+    <item>Lapses</item>
+    <item>Reviews</item>
+  </string-array>
   <string name="about_title">O aplikácii</string>
   <string name="cardeditor_title_add_note">Pridať poznámku</string>
   <string name="cardeditor_title_edit_card">Upraviť poznámku</string>
@@ -73,6 +83,14 @@
   <string name="select">Vybrať</string>
   <string name="saving_changes">Ukladajú sa zmeny ...</string>
   <string name="reordering_cards">Zmena poradia kariet...</string>
+  <plurals name="timebox_reached">
+    <item quantity="one">1 karta preštudovaná za %2$s</item>
+    <item quantity="other">%1$d kariet preštudovaných za %2$s</item>
+  </plurals>
+  <plurals name="timebox_reached_minutes">
+    <item quantity="one">1 minúta</item>
+    <item quantity="other">%1$d minút</item>
+  </plurals>
   <string name="studyoptions_welcome_title">Vitajte v AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">Žiadne externé úložisko k dispozícii</string>
   <string name="studyoptions_no_external_storage_message">Žiadne externé úložisko momentálne nie je k dispozícii. AnkiDroid potrebuje mať prístup na SD kartu, aby mohol čítať a nahrať vaše Anki balíčky. Skontrolujte, že vaša SD karta je pripojená a skúste znova.</string>
@@ -91,14 +109,29 @@
   <string name="rename">Premenovať</string>
   <string name="rename_error">Balíček %s nebolo možné premenovať</string>
   <string name="default_conf_delete_error">Predvolenú skupinu nastavení nie je možné odstrániť</string>
+  <plurals name="factadder_cards_added">
+    <item quantity="one">1 karta pridaná</item>
+    <item quantity="other">%d kariet pridaných</item>
+  </plurals>
   <string name="help_title">Pomocník</string>
   <string name="help_online">Pomocník online</string>
   <string name="help_faq">FAQ</string>
   <string name="help_tutorial">Úvodný balíček</string>
   <string name="check_db">Kontrola databázy</string>
   <string name="check_db_message">Kontrolujem databázu.\nProsím počkajte...</string>
+  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
+  <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
   <string name="simple_interface_hint">Prázdne %s. Majte na pamäti, že v jednoduchom rozhraní nie je možné zobraziť obrázky/zvuky atď.</string>
   <string name="delete_deck">Odstraňujem balíček...\nProsím počkajte.</string>
+  <string-array name="dynOrderLabels">
+    <item>Od najdávnejšie zobrazených</item>
+    <item>Náhodne</item>
+    <item>Rastúce intervaly</item>
+    <item>Klesajúce intervaly</item>
+    <item>Najviac zabudnutí</item>
+    <item>Zoradiť podľa pridania</item>
+    <item>Zoradiť podľa času opakovania</item>
+  </string-array>
   <string name="menu_cardbrowser">Prehliadač kariet</string>
   <string name="show_hint">Ukázať nápovedu</string>
   <string name="pref_lang_other">Nastavenia jazyka</string>
@@ -129,38 +162,4 @@
   <string name="sched_end">(koniec)</string>
   <string name="sched_unbury_button">Ak ich chcete vidieť teraz, kliknite na tlačidlo Vyhrabať.</string>
   <string name="sched_has_buried">Niektoré súvisiace alebo zahrabané karty boli posunuté na neskôr.</string>
-  <string-array name="browser_column1_headings">
-    <item>Vyhľadávacie pole</item>
-  </string-array>
-  <string-array name="browser_column2_headings">
-    <item>Odpoveď</item>
-    <item>Karta</item>
-    <item>Balíček</item>
-    <item>Note</item>
-    <item>Question</item>
-    <item>Tags</item>
-    <item>Lapses</item>
-    <item>Reviews</item>
-  </string-array>
-  <string-array name="dynOrderLabels">
-    <item>Od najdávnejšie zobrazených</item>
-    <item>Náhodne</item>
-    <item>Rastúce intervaly</item>
-    <item>Klesajúce intervaly</item>
-    <item>Najviac zabudnutí</item>
-    <item>Zoradiť podľa pridania</item>
-    <item>Zoradiť podľa času opakovania</item>
-  </string-array>
-  <plurals name="timebox_reached">
-    <item quantity="one">1 karta preštudovaná za %2$s</item>
-    <item quantity="other">%1$d kariet preštudovaných za %2$s</item>
-  </plurals>
-  <plurals name="timebox_reached_minutes">
-    <item quantity="one">1 minúta</item>
-    <item quantity="other">%1$d minút</item>
-  </plurals>
-  <plurals name="factadder_cards_added">
-    <item quantity="one">1 karta pridaná</item>
-    <item quantity="other">%d kariet pridaných</item>
-  </plurals>
 </resources>

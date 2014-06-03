@@ -38,16 +38,13 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
-  <string name="CardEditorCancelButton">Anuleaza</string>
-  <string name="CardEditorSaveButton">Salvează</string>
-  <string name="CardEditorLaterButton">Mai târziu</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <string name="CardEditorLaterMessage">Informaţie salvata pentru mai târziu</string>
   <string name="CardEditorCardDeck">Pachet de carduri: %s</string>
   <string name="CardEditorNoteDeck">Notaţi pachetul: %s</string>
   <string name="CardEditorModel">Notati tipul: %s</string>
   <string name="CardEditorTags">Tag-uri: %1$s</string>
-  <string name="add_new_filter_tags">Add/Filter tags</string>
+  <string name="add_new_filter_tags">Add/filter tags</string>
   <string name="note_type">Noteaza tipul</string>
   <string name="card_type">Tipul de card</string>
   <string name="filter_tags">Filter tags</string>
@@ -61,6 +58,19 @@
   <string name="leech_suspend_notification">Card marcat ca Lipitoare şi suspendat</string>
   <string name="leech_notification">Card marcat ca Lipitoare</string>
   <string name="corrupt_font">Fişierul de Fonturi corupt %s</string>
+  <string-array name="browser_column1_headings">
+    <item>Câmpul de căutare</item>
+  </string-array>
+  <string-array name="browser_column2_headings">
+    <item>Răspuns</item>
+    <item>Card</item>
+    <item>Pachet</item>
+    <item>Note</item>
+    <item>Question</item>
+    <item>Tags</item>
+    <item>Lapses</item>
+    <item>Reviews</item>
+  </string-array>
   <string name="about_title">Despre</string>
   <string name="cardeditor_title_add_note">Adauga nota</string>
   <string name="cardeditor_title_edit_card">Editare notă</string>
@@ -73,6 +83,14 @@
   <string name="select">Selectaţi</string>
   <string name="saving_changes">Se salvează modificările...</string>
   <string name="reordering_cards">Reordonare carduri...</string>
+  <plurals name="timebox_reached">
+    <item quantity="one">1 card studiat în %2$s</item>
+    <item quantity="other">%1$d carduri studiate în %2$s</item>
+  </plurals>
+  <plurals name="timebox_reached_minutes">
+    <item quantity="one">1 minut</item>
+    <item quantity="other">%1$d minute</item>
+  </plurals>
   <string name="studyoptions_welcome_title">Bine ati venit la AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">Stocare pe mediu extern indisponibila</string>
   <string name="studyoptions_no_external_storage_message">No external storage is currently available. AnkiDroid needs to have access to the sdcard in order to read and load your Anki decks. Check that your sdcard is mounted and try again.</string>
@@ -90,14 +108,29 @@
   <string name="rename">Redenumire</string>
   <string name="rename_error">Imposibil de redenumit pachet%s</string>
   <string name="default_conf_delete_error">Grupul de opţiuni implicite nu pot fi eliminate</string>
+  <plurals name="factadder_cards_added">
+    <item quantity="one">1 card adăugat</item>
+    <item quantity="other">%d carduri de adăugat</item>
+  </plurals>
   <string name="help_title">ajutor</string>
   <string name="help_online">Ajutor online</string>
   <string name="help_faq">INTREBARI FRECVENTE</string>
   <string name="help_tutorial">Pachet tutorial</string>
   <string name="check_db">Selectare bază de date</string>
   <string name="check_db_message">Verificarea bazei de date. \nVa rugam aşteptaţi...</string>
+  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
+  <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
   <string name="simple_interface_hint">Gol %s. Ţineţi minte că interfaţa simplă nu arată imagini/sunete etc.</string>
   <string name="delete_deck">Ştergerea pachet...\nVa rugam aşteptaţi.</string>
+  <string-array name="dynOrderLabels">
+    <item>Cel mai vechi văzut primul</item>
+    <item>Aleator</item>
+    <item>Intervale in creştere</item>
+    <item>Intervale in descreştere</item>
+    <item>Cele mai multe probleme</item>
+    <item>Insiruire adăugata</item>
+    <item>Insiruire de facut</item>
+  </string-array>
   <string name="menu_cardbrowser">Browser-ul de carduri</string>
   <string name="show_hint">Arată indiciu</string>
   <string name="pref_lang_other">Preferințe lingvistice</string>
@@ -128,38 +161,4 @@
   <string name="sched_end">(final)</string>
   <string name="sched_unbury_button">Pentru a le vedea acum, atingeți butonul Dezgroapă.</string>
   <string name="sched_has_buried">Unele carduri conexe sau îngropate  au fost amânate până la o sesiune ulterioară.</string>
-  <string-array name="browser_column1_headings">
-    <item>Câmpul de căutare</item>
-  </string-array>
-  <string-array name="browser_column2_headings">
-    <item>Răspuns</item>
-    <item>Card</item>
-    <item>Pachet</item>
-    <item>Note</item>
-    <item>Question</item>
-    <item>Tags</item>
-    <item>Lapses</item>
-    <item>Reviews</item>
-  </string-array>
-  <string-array name="dynOrderLabels">
-    <item>Cel mai vechi văzut primul</item>
-    <item>Aleator</item>
-    <item>Intervale in creştere</item>
-    <item>Intervale in descreştere</item>
-    <item>Cele mai multe probleme</item>
-    <item>Insiruire adăugata</item>
-    <item>Insiruire de facut</item>
-  </string-array>
-  <plurals name="timebox_reached">
-    <item quantity="one">1 card studiat în %2$s</item>
-    <item quantity="other">%1$d carduri studiate în %2$s</item>
-  </plurals>
-  <plurals name="timebox_reached_minutes">
-    <item quantity="one">1 minut</item>
-    <item quantity="other">%1$d minute</item>
-  </plurals>
-  <plurals name="factadder_cards_added">
-    <item quantity="one">1 card adăugat</item>
-    <item quantity="other">%d carduri de adăugat</item>
-  </plurals>
 </resources>

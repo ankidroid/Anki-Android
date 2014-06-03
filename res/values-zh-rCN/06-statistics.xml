@@ -80,9 +80,6 @@
   <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; 张卡牌/天</string>
   <string name="deck_summary_deck_age">牌组年龄： &lt;b&gt;%d&lt;/b&gt;天</string>
   <string name="deck_summary_all_decks">所有牌组</string>
-  <string name="stats_forecast">预测</string>
-  <string name="stats_review_count">复习计数</string>
-  <string name="stats_review_time">复习时间</string>
   <string-array name="next_review_in_s">
     <item>在 1 秒内</item>
     <item>在 1 分钟内</item>
@@ -120,6 +117,9 @@
     <item>周</item>
     <item>月</item>
   </string-array>
+  <string name="stats_forecast">预测</string>
+  <string name="stats_review_count">复习计数</string>
+  <string name="stats_review_time">复习时间</string>
   <string-array name="stats_period">
     <item>1个月</item>
     <item>1年</item>

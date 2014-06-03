@@ -39,121 +39,15 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="btn_continue">Lanjutkan</string>
   <string name="app_name">AnkiDroid</string>
-  <string name="attention">Perhatian</string>
-  <string name="yes">Ya</string>
-  <string name="no">Tidak</string>
-  <string name="ok">OK</string>
+  <string name="app_name_anki">Anki</string>
+  <string name="app_name_droid">Droid</string>
   <string name="studyoptions_deck_name">Nama Dek</string>
   <string name="studyoptions_due_today">Jatuh tempo hari ini:</string>
   <string name="studyoptions_new_total">Total kartu baru:</string>
   <string name="studyoptions_total_cards">Total kartu:</string>
   <string name="studyoptions_eta">Perkiraan waktu (menit):</string>
-  <string name="studyoptions_start">Study Now</string>
-  <string name="type_answer_hint">Type answer</string>
-  <string name="show_answer">Tampilkan jawaban</string>
-  <string name="ease1_successive">Ulang</string>
-  <string name="ease2_successive">Susah</string>
-  <string name="ease3_successive">Baik</string>
-  <string name="ease3_learning">Mudah</string>
-  <string name="studyoptions_congrats_undo">Batalkan %s</string>
-  <string name="studyoptions_congrats_unbury">Unbury</string>
-  <string name="studyoptions_congrats_custom_study">Custom Study</string>
-  <string name="studyoptions_congrats_open_other_deck">Buka Dek Lain</string>
-  <string name="card_unsuspended">Kad tergantung dibatal</string>
-  <string name="card_suspended">Kad digantung</string>
-  <string name="menu_rotate">Pusing</string>
-  <string name="menu_import">Import file</string>
-  <string name="undo">Membatalkan</string>
-  <string name="undo_action_review">tinjau ulang</string>
-  <string name="undo_action_edit">ubah catatan</string>
-  <string name="undo_action_bury">sembunyikan catatan</string>
-  <string name="undo_action_suspend_card">suspend card</string>
-  <string name="undo_action_suspend_note">suspend note</string>
-  <string name="undo_action_delete">Hapus Catatan</string>
-  <string name="undo_action_mark">tandai catatan</string>
-  <string name="unbury">Unbury</string>
-  <string name="finish_operation">Finishing previous operation (most likely backup creation).\nPlease wait...</string>
-  <string name="contextmenu_deckpicker_download_missing_media">Muat turun media kurang</string>
-  <string name="contextmenu_deckpicker_reset_language_assignments">Set Tugasan Bahasa</string>
-  <string name="contextmenu_deckpicker_reset_reset_message">Set bahasa</string>
-  <string name="contextmenu_deckpicker_optimize_deck">Optimumkan data</string>
-  <string name="contextmenu_deckpicker_rename_deck">Ubah nama deck</string>
-  <string name="contextmenu_deckpicker_collapse_deck">Hide Subdecks</string>
-  <string name="contextmenu_deckpicker_inflate_deck">Show Subdecks</string>
-  <string name="contextmenu_deckpicker_set_custom_dictionary">Tetapkan kamus sendiri</string>
-  <string name="menu_add">Add</string>
-  <string name="menu_add_note">Add note</string>
-  <string name="menu_download_deck">Muat turun dek</string>
-  <string name="menu_download_shared_deck">Dek kongsi</string>
-  <string name="menu_my_account">Sync account</string>
-  <string name="menu_preferences">Keutamaan</string>
-  <string name="menu_about">Tentang</string>
-  <string name="menu_dismiss_note">Abaikan Catatan...</string>
-  <string name="menu_bury_card">Bury Card</string>
-  <string name="menu_bury_note">Bury Note</string>
-  <string name="menu_suspend_card">Gantung Kad</string>
-  <string name="menu_suspend_note">Suspend Note</string>
-  <string name="menu_delete_note">Hapus Catatan</string>
-  <string name="delete_note_message">Really delete this note and all its cards?\n%s</string>
-  <string name="menu_edit_card">Edit Kad</string>
-  <string name="menu_select">Pilih teks</string>
-  <string name="menu_search">Pencarian di %1$s</string>
-  <string name="menu_mark_card">Tanda Kad</string>
-  <string name="menu_unmark_card">Unmark Card</string>
-  <string name="new_deck">Create deck</string>
-  <string name="create">Membuat</string>
-  <string name="new_dynamic_deck">Create filtered deck</string>
-  <string name="studyoptions_feedback">Maklum balas</string>
-  <string name="studyoptions_load_tutorial_deck">Membuat tutorial</string>
-  <string name="night_mode">Mode malam</string>
-  <string name="visit">Kunjungi</string>
-  <string name="later">Kemudian</string>
-  <string name="download">Muat turun</string>
-  <string name="open_collection">Opening collection.\nPlease wait...</string>
-  <string name="rebuild_cram_deck">Rebuilding cram deck.\nPlease wait...</string>
-  <string name="rebuild_cram_label">Membangun kembali</string>
-  <string name="empty_cram_label">Kosong</string>
-  <string name="empty_cram_deck">Emptying cram deck.\nPlease wait...</string>
-  <string name="custom_study_deck_name">Custom Study Session</string>
-  <string name="custom_study_deck_exists">Please rename the existing Custom Study deck first.</string>
-  <string name="studyoptions_congrats_finished">Selamat! Anda selesai sekarang.</string>
-  <string name="studyoptions_congrats_more_rev">Today\'s review limit has been reached, but there are still cards waiting to be reviewed. For optimum memory, consider increasing the daily limit in the options.</string>
-  <string name="studyoptions_congrats_more_new">Ada kartu baru lain yang tersedia, tetapi batas harian telah tercapai. Anda dapat meningkatkan batas dalam pilihan, tetapi Harap diingat bahwa hal ini akan meningkatkan beban kerja tinjauan jangka pendek Anda.</string>
-  <string name="studyoptions_congrats_custom">To study outside of the normal schedule, click the Custom Study button below.</string>
-  <string name="sd_card_not_mounted">SD Card tidak terpasang.\n\nAnda dapat menyimpan koleksi Anda dalam memori internal juga, meskipun itu tidak dianjurkan karena Anda tidak dapat mengakses file dengan mudah. Anda dapat mengaktifkan ini dalam preferensi (buka dengan mengklik teks ini).</string>
-  <string name="studyoptions_options">Pilihan</string>
-  <string name="empty_cloze_warning">Please edit this note and add some cloze deletions. (%1$s)</string>
-  <string name="help_cloze">Bantuan</string>
-  <string name="button_sync">Sinkronisasi</string>
-  <string name="restart">Mulai kembali</string>
-  <string name="do_nothing">Jangan lakukan apapun</string>
-  <string name="more_options">Pilihan lainnya</string>
-  <string name="now">Sekarang</string>
-  <string name="back">Kembali</string>
-  <string name="ankiweb">AnkiWeb</string>
-  <string name="usb">USB</string>
-  <string name="_import">Impor</string>
-  <string name="confirm">Konfirmasi</string>
-  <string name="internet">Internet</string>
-  <string name="pc">PC</string>
-  <string-array name="next_review_s">
-    <item>1 saat</item>
-    <item>1 minit</item>
-    <item>1 jam</item>
-    <item>1 hari</item>
-    <item>1 bulan</item>
-    <item>1 tahun</item>
-  </string-array>
-  <string-array name="next_review_p">
-    <item>%s saat</item>
-    <item>%s minit</item>
-    <item>%s jam</item>
-    <item>%s hari</item>
-    <item>%s bulan</item>
-    <item>%s tahun</item>
-  </string-array>
+  <string name="studyoptions_start">Study</string>
   <plurals name="deckpicker_title">
     <item quantity="one">1 dari %2$d karena (%3$s)</item>
     <item quantity="other">%1$d dari %2$d karena (%3$s)</item>
@@ -170,6 +64,93 @@
     <item quantity="one">1 menit tersisa</item>
     <item quantity="other">Tersisa %d menit</item>
   </plurals>
+  <string name="type_answer_hint">Type answer</string>
+  <string name="show_answer">Tampilkan jawaban</string>
+  <string name="ease1_successive">Ulang</string>
+  <string name="ease2_successive">Susah</string>
+  <string name="ease3_successive">Baik</string>
+  <string name="ease3_learning">Mudah</string>
+  <string name="studyoptions_congrats_undo">Batalkan %s</string>
+  <string name="studyoptions_congrats_unbury">Unbury</string>
+  <string name="studyoptions_congrats_custom_study">Custom study</string>
+  <string name="studyoptions_congrats_open_other_deck">Buka Dek Lain</string>
+  <string name="card_unsuspended">Kad tergantung dibatal</string>
+  <string name="card_suspended">Kad digantung</string>
+  <string name="menu_rotate">Pusing</string>
+  <string name="menu_import">Import file</string>
+  <string name="undo">Membatalkan</string>
+  <string name="undo_action_review">tinjau ulang</string>
+  <string name="undo_action_edit">ubah catatan</string>
+  <string name="undo_action_bury">sembunyikan catatan</string>
+  <string name="undo_action_suspend_card">suspend card</string>
+  <string name="undo_action_suspend_note">suspend note</string>
+  <string name="undo_action_delete">Hapus Catatan</string>
+  <string name="undo_action_mark">tandai catatan</string>
+  <string name="unbury">Unbury</string>
+  <string name="finish_operation">Finishing previous operation (most likely backup creation)&#8230;</string>
+  <string name="contextmenu_deckpicker_download_missing_media">Muat turun media kurang</string>
+  <string name="contextmenu_deckpicker_reset_language_assignments">Set Tugasan Bahasa</string>
+  <string name="contextmenu_deckpicker_reset_reset_message">Set bahasa</string>
+  <string name="contextmenu_deckpicker_optimize_deck">Optimumkan data</string>
+  <string name="contextmenu_deckpicker_rename_deck">Ubah nama deck</string>
+  <string name="contextmenu_deckpicker_collapse_deck">Hide subdecks</string>
+  <string name="contextmenu_deckpicker_inflate_deck">Show subdecks</string>
+  <string name="contextmenu_deckpicker_set_custom_dictionary">Tetapkan kamus sendiri</string>
+  <string name="menu_add">Add</string>
+  <string name="menu_add_note">Add note</string>
+  <string name="menu_download_deck">Muat turun dek</string>
+  <string name="menu_download_shared_deck">Dek kongsi</string>
+  <string name="menu_my_account">Sync account</string>
+  <string name="menu_preferences">Keutamaan</string>
+  <string name="menu_about">Tentang</string>
+  <string name="menu_dismiss_note">Abaikan Catatan...</string>
+  <string name="menu_bury_card">Bury card</string>
+  <string name="menu_bury_note">Bury note</string>
+  <string name="menu_suspend_card">Gantung Kad</string>
+  <string name="menu_suspend_note">Suspend note</string>
+  <string name="menu_delete_note">Hapus Catatan</string>
+  <string name="delete_note_message">Really delete this note and all its cards?\n%s</string>
+  <string name="menu_edit_card">Edit Kad</string>
+  <string name="menu_select">Pilih teks</string>
+  <string name="menu_search">Pencarian di %1$s</string>
+  <string name="menu_mark_card">Tanda Kad</string>
+  <string name="menu_unmark_card">Unmark card</string>
+  <string name="new_deck">Create deck</string>
+  <string name="create">Membuat</string>
+  <string name="new_dynamic_deck">Create filtered deck</string>
+  <string name="studyoptions_feedback">Maklum balas</string>
+  <string name="studyoptions_load_tutorial_deck">Membuat tutorial</string>
+  <string name="night_mode">Mode malam</string>
+  <string-array name="next_review_s">
+    <item>1 saat</item>
+    <item>1 minit</item>
+    <item>1 jam</item>
+    <item>1 hari</item>
+    <item>1 bulan</item>
+    <item>1 tahun</item>
+  </string-array>
+  <string-array name="next_review_p">
+    <item>%s saat</item>
+    <item>%s minit</item>
+    <item>%s jam</item>
+    <item>%s hari</item>
+    <item>%s bulan</item>
+    <item>%s tahun</item>
+  </string-array>
+  <string name="visit">Kunjungi</string>
+  <string name="later">Kemudian</string>
+  <string name="download">Muat turun</string>
+  <string name="open_collection">Opening collection&#8230;</string>
+  <string name="rebuild_cram_deck">Rebuilding cram deck&#8230;</string>
+  <string name="rebuild_cram_label">Membangun kembali</string>
+  <string name="empty_cram_label">Kosong</string>
+  <string name="empty_cram_deck">Emptying cram deck&#8230;</string>
+  <string name="custom_study_deck_name">Custom study session</string>
+  <string name="custom_study_deck_exists">Rename the existing custom study deck first</string>
+  <string name="studyoptions_congrats_finished">Selamat! Anda selesai sekarang.</string>
+  <string name="studyoptions_congrats_more_rev">Today\'s limit has been reached, but there are still cards to review.  You can increase the limit in the options.</string>
+  <string name="studyoptions_congrats_more_new">Ada kartu baru lain yang tersedia, tetapi batas harian telah tercapai. Anda dapat meningkatkan batas dalam pilihan, tetapi Harap diingat bahwa hal ini akan meningkatkan beban kerja tinjauan jangka pendek Anda.</string>
+  <string name="studyoptions_congrats_custom">To study outside of the normal schedule, touch the \"Custom study\" button below</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Besok akan ada: 1 kartu untuk ditinjau dan %2$s.\n Perkiraan waktu: %3$s</item>
     <item quantity="other">Besok akan ada: %1$d kartu untuk ditinjau dan %2$s.\n Perkiraan waktu: %3$s</item>
@@ -182,4 +163,21 @@
     <item quantity="one">Perkiraan waktu: 1 min.</item>
     <item quantity="other">Perkiraan waktu: %1$d min.</item>
   </plurals>
+  <string name="sd_card_not_mounted">SD Card tidak terpasang.\n\nAnda dapat menyimpan koleksi Anda dalam memori internal juga, meskipun itu tidak dianjurkan karena Anda tidak dapat mengakses file dengan mudah. Anda dapat mengaktifkan ini dalam preferensi (buka dengan mengklik teks ini).</string>
+  <string name="studyoptions_options">Pilihan</string>
+  <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
+  <string name="help_cloze">Bantuan</string>
+  <string name="button_sync">Sinkronisasi</string>
+  <string name="restart">Mulai kembali</string>
+  <string name="do_nothing">Jangan lakukan apapun</string>
+  <string name="more_options">Pilihan lainnya</string>
+  <string name="now">Sekarang</string>
+  <string name="back">Kembali</string>
+  <string name="ankiweb">AnkiWeb</string>
+  <string name="usb">USB</string>
+  <string name="_import">Impor</string>
+  <string name="confirm">Konfirmasi</string>
+  <string name="internet">Internet</string>
+  <string name="pc">PC</string>
+  <string name="title_activity_graphical_activity">Statistical chart</string>
 </resources>

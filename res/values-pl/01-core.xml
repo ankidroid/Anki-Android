@@ -39,18 +39,31 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="btn_continue">Kontynuuj</string>
   <string name="app_name">AnkiDroid</string>
-  <string name="attention">Uwaga</string>
-  <string name="yes">Tak</string>
-  <string name="no">Nie</string>
-  <string name="ok">OK</string>
+  <string name="app_name_anki">Anki</string>
+  <string name="app_name_droid">Droid</string>
   <string name="studyoptions_deck_name">Nazwa talii</string>
   <string name="studyoptions_due_today">Na dziś:</string>
   <string name="studyoptions_new_total">Łącznie nowych kart:</string>
   <string name="studyoptions_total_cards">Łącznie kart:</string>
   <string name="studyoptions_eta">Szacowany czas (min):</string>
   <string name="studyoptions_start">Ucz się teraz</string>
+  <plurals name="deckpicker_title">
+    <item quantity="one">1 z %2$d do przejrzenia (%3$s)</item>
+    <item quantity="other">%1$d z %2$d do przejrzenia (%3$s)</item>
+  </plurals>
+  <plurals name="deckpicker_title_minutes">
+    <item quantity="one">1 min.</item>
+    <item quantity="other">%d min.</item>
+  </plurals>
+  <plurals name="deckpicker_due">
+    <item quantity="one">1 z %2$d do przejrzenia</item>
+    <item quantity="other">%1$d z %2$d zaległych</item>
+  </plurals>
+  <plurals name="reviewer_window_title">
+    <item quantity="one">Została 1 minuta</item>
+    <item quantity="other">Pozostało minut: %d</item>
+  </plurals>
   <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">Pokaż odpowiedź</string>
   <string name="ease1_successive">Powtórz</string>
@@ -108,36 +121,6 @@
   <string name="studyoptions_feedback">Informacje zwrotne</string>
   <string name="studyoptions_load_tutorial_deck">Utwórz samouczek</string>
   <string name="night_mode">Tryb nocny</string>
-  <string name="visit">Odwiedź</string>
-  <string name="later">Później</string>
-  <string name="download">Pobierz</string>
-  <string name="open_collection">Otwieranie kolekcji.\nProszę czekać...</string>
-  <string name="rebuild_cram_deck">Przebudowywanie talii.\nProszę czekać...</string>
-  <string name="rebuild_cram_label">Odbuduj</string>
-  <string name="empty_cram_label">Wyczyść</string>
-  <string name="empty_cram_deck">Czyszczenie talii.\nProszę czekać...</string>
-  <string name="custom_study_deck_name">Sesja nauki niestandardowej</string>
-  <string name="custom_study_deck_exists">Najpierw zmień nazwę istniejącej talii nauki niestandardowej.</string>
-  <string name="studyoptions_congrats_finished">Gratulacje! Zakończono powtórki na dziś.</string>
-  <string name="studyoptions_congrats_more_rev">Dzisiejszy limit powtórek został wyczerpany, ale wciąż pozostają karty do przejrzenia. Dla optymalnego zapamiętywania proszę rozważyć zwiększenie dziennego limitu w ustawieniach.</string>
-  <string name="studyoptions_congrats_more_new">Pozostało więcej kart do przejrzenia, ale dzienny limit został osiągnięty. Możesz zwiększyć limit w opcjach, ale miej na uwadze, że zwiększy to ilość powtórzeń w najbliższych dniach.</string>
-  <string name="studyoptions_congrats_custom">Aby kontynuować naukę poza zwykłym schematem kliknij przycisk Nauki Niestandardowej poniżej.</string>
-  <string name="sd_card_not_mounted">Karta SD nie jest zamontowana.\n\nMożesz również przechowywać swoją kolekcję w pamięci wewnętrznej, jednak nie jest to zalecane, gdyż dostęp do tych plików nie będzie łatwy. Opcję tę możesz włączyć w ustawieniach (kliknij ten tekst).</string>
-  <string name="studyoptions_options">Opcje</string>
-  <string name="empty_cloze_warning">Edytuj tę notatkę i dodaj jakieś luki w tekście. (%1$s)</string>
-  <string name="help_cloze">pomoc</string>
-  <string name="button_sync">Synchronizuj</string>
-  <string name="restart">Zrestartuj</string>
-  <string name="do_nothing">Nic nie rób</string>
-  <string name="more_options">Więcej opcji</string>
-  <string name="now">Teraz</string>
-  <string name="back">Wstecz</string>
-  <string name="ankiweb">AnkiWeb</string>
-  <string name="usb">USB</string>
-  <string name="_import">Importuj</string>
-  <string name="confirm">Potwierdź</string>
-  <string name="internet">Internet</string>
-  <string name="pc">PC</string>
   <string-array name="next_review_s">
     <item>1 sekunda</item>
     <item>1 minuta</item>
@@ -154,22 +137,20 @@
     <item>%s miesięcy</item>
     <item>%s lat</item>
   </string-array>
-  <plurals name="deckpicker_title">
-    <item quantity="one">1 z %2$d do przejrzenia (%3$s)</item>
-    <item quantity="other">%1$d z %2$d do przejrzenia (%3$s)</item>
-  </plurals>
-  <plurals name="deckpicker_title_minutes">
-    <item quantity="one">1 min.</item>
-    <item quantity="other">%d min.</item>
-  </plurals>
-  <plurals name="deckpicker_due">
-    <item quantity="one">1 z %2$d do przejrzenia</item>
-    <item quantity="other">%1$d z %2$d zaległych</item>
-  </plurals>
-  <plurals name="reviewer_window_title">
-    <item quantity="one">Została 1 minuta</item>
-    <item quantity="other">Pozostało minut: %d</item>
-  </plurals>
+  <string name="visit">Odwiedź</string>
+  <string name="later">Później</string>
+  <string name="download">Pobierz</string>
+  <string name="open_collection">Otwieranie kolekcji.\nProszę czekać...</string>
+  <string name="rebuild_cram_deck">Przebudowywanie talii.\nProszę czekać...</string>
+  <string name="rebuild_cram_label">Odbuduj</string>
+  <string name="empty_cram_label">Wyczyść</string>
+  <string name="empty_cram_deck">Czyszczenie talii.\nProszę czekać...</string>
+  <string name="custom_study_deck_name">Sesja nauki niestandardowej</string>
+  <string name="custom_study_deck_exists">Najpierw zmień nazwę istniejącej talii nauki niestandardowej.</string>
+  <string name="studyoptions_congrats_finished">Gratulacje! Zakończono powtórki na dziś.</string>
+  <string name="studyoptions_congrats_more_rev">Dzisiejszy limit powtórek został wyczerpany, ale wciąż pozostają karty do przejrzenia. Dla optymalnego zapamiętywania proszę rozważyć zwiększenie dziennego limitu w ustawieniach.</string>
+  <string name="studyoptions_congrats_more_new">Pozostało więcej kart do przejrzenia, ale dzienny limit został osiągnięty. Możesz zwiększyć limit w opcjach, ale miej na uwadze, że zwiększy to ilość powtórzeń w najbliższych dniach.</string>
+  <string name="studyoptions_congrats_custom">Aby kontynuować naukę poza zwykłym schematem kliknij przycisk Nauki Niestandardowej poniżej.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Jutro będzie 1 karta do powtórki i %2$s.\n Szacowany czas: %3$s</item>
     <item quantity="other">Jutro będzie %1$d kart do powtórki i %2$s.\n Szacowany czas: %3$s</item>
@@ -182,4 +163,21 @@
     <item quantity="one">Szacowany czas: 1 min.</item>
     <item quantity="other">Szacowany czas: %1$d min.</item>
   </plurals>
+  <string name="sd_card_not_mounted">Karta SD nie jest zamontowana.\n\nMożesz również przechowywać swoją kolekcję w pamięci wewnętrznej, jednak nie jest to zalecane, gdyż dostęp do tych plików nie będzie łatwy. Opcję tę możesz włączyć w ustawieniach (kliknij ten tekst).</string>
+  <string name="studyoptions_options">Opcje</string>
+  <string name="empty_cloze_warning">Edytuj tę notatkę i dodaj jakieś luki w tekście. (%1$s)</string>
+  <string name="help_cloze">pomoc</string>
+  <string name="button_sync">Synchronizuj</string>
+  <string name="restart">Zrestartuj</string>
+  <string name="do_nothing">Nic nie rób</string>
+  <string name="more_options">Więcej opcji</string>
+  <string name="now">Teraz</string>
+  <string name="back">Wstecz</string>
+  <string name="ankiweb">AnkiWeb</string>
+  <string name="usb">USB</string>
+  <string name="_import">Importuj</string>
+  <string name="confirm">Potwierdź</string>
+  <string name="internet">Internet</string>
+  <string name="pc">PC</string>
+  <string name="title_activity_graphical_activity">Statistical chart</string>
 </resources>

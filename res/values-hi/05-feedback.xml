@@ -40,10 +40,10 @@
 -->
 <resources>
   <string name="error_ok">Report errors</string>
-  <string name="error_cancel">Do not report errors</string>
+  <string name="error_cancel">Don\'t report errors</string>
   <string name="error_reporting_choice">Error reporting mode</string>
   <string name="error_reporting_choice_summary">Errors can be reported automatically, never reported, or you can be prompted</string>
-  <string name="feedback_disclaimer">Disclaimer: We do not collect any personal information such as your email address, phone number, IP address or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves.</string>
+  <string name="feedback_disclaimer">Disclaimer: We don\'t collect any personal information such as your email address, phone number, IP address or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves.</string>
   <string name="feedback_title">Feedback</string>
   <string name="feedback_send_feedback">Send us your feedback</string>
   <string name="feedback_send_feedback_and_errors">Send errors and your feedback</string>
@@ -51,7 +51,7 @@
   <string name="feedback_message_sent_failure">Unable to send feedback, code %1$s</string>
   <string name="feedback_keep_latest">Keep latest error</string>
   <string name="feedback_clear_all">Clear all errors</string>
-  <string name="feedback_default_text">Please enter your feedback, or information about the nature of any errors you\'re reporting.</string>
+  <string name="feedback_default_text">Enter your feedback, or information about the nature of any errors you\'re reporting.</string>
   <string name="feedback_error_reply_new">Unknown issue, filed new bug</string>
   <string name="feedback_error_reply_known">Issue previously detected. Details welcome on AnkiDroid issue tracker.</string>
   <string name="feedback_error_reply_issue_unknown">Issue %1$d, unknown status</string>

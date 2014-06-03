@@ -38,10 +38,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
-  <string name="CardEditorCancelButton">لغو</string>
-  <string name="CardEditorSaveButton">ذخیره</string>
-  <string name="CardEditorLaterButton">بعدا</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <string name="CardEditorLaterMessage">اطلاعات برای بعد ذخیره شد</string>
   <string name="CardEditorCardDeck">دسته کارت: %s</string>
   <string name="CardEditorNoteDeck">دسته یادداشت: %s</string>
@@ -121,6 +118,8 @@
   <string name="help_tutorial">خودآموز دسته کارت</string>
   <string name="check_db">بررسی پایگاه داده</string>
   <string name="check_db_message">بررسی پایگاه داده.\nلطفا صبر کنید...</string>
+  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
+  <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
   <string name="simple_interface_hint">خالی %s. به خاطر داشته باشید که رابط کاربری ساده نمی تواند تصاویر/صداو غیره را نمایش  دهد.</string>
   <string name="delete_deck">حذف دسته کارت...\nلطفا صبر کنید.</string>
   <string-array name="dynOrderLabels">

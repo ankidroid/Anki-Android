@@ -40,15 +40,14 @@
 
 -->
 <resources>
-  <string name="connection_needed">Você está offline no momento.</string>
+  <string name="youre_offline">You are offline</string>
   <string name="currently_downloading">Atualmente baixando</string>
   <string name="starting_download">Iniciando download...</string>
   <string name="downloading">Baixando...</string>
   <string name="paused">Em pausa</string>
   <string name="downloaded">Baixado</string>
-  <string name="error">Erro</string>
+  <string name="vague_error">Error</string>
   <string name="cancelling">Cancelando...</string>
-  <string name="connection_error_title">Atenção</string>
   <string name="connection_error_return_message">Ocorreu um erro de rede. Tente novamente, ou cancele e retorne à tela anterior.</string>
   <string name="retry">Tentar novamente</string>
   <string name="cancel">Cancelar</string>
@@ -56,7 +55,7 @@
   <string name="download_cancel">Cancelar Download</string>
   <string name="shared_decks">Deck compartilhado</string>
   <string name="loading_shared_decks">Carregando decks compartilhados disponíveis...</string>
-  <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Terms and Conditions</a></string>
+  <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Terms and conditions</a></string>
   <string name="cancel_download">Cancelar Download</string>
   <string name="resume_download">Resumo do download</string>
   <string name="pause_download">Pausar Download</string>
@@ -65,7 +64,8 @@
   <string name="download_button_return">Voltar</string>
   <string name="connection_error_message">Ocorreu um erro de rede.</string>
   <string name="sync_log_db_error">Ocorreu um erro de banco de dados.</string>
-  <string name="no_user_password_error_message">Para continuar com esta operação, você precisa ter uma conta AnkiWeb e estar logado.</string>
+  <string name="not_logged_in_title">Log in to AnkiWeb</string>
+  <string name="login_create_account_message">You must log in to an AnkiWeb account. You can create one in the next step.</string>
   <string name="username">Endereço de email</string>
   <string name="username_repeat">Repita endereço de email</string>
   <string name="password">Senha</string>
@@ -73,7 +73,7 @@
   <string name="log_in">Logar</string>
   <string name="sign_up_description">Não tem uma conta AnkiWeb? É grátis!</string>
   <string name="sign_up">Inscreva se</string>
-  <string name="sign_up_terms">By tapping <i>Sign up</i>, you confirm that you have read and agree to our <a href="https://ankiweb.net/account/terms">terms of use</a>.</string>
+  <string name="sign_up_terms">By touching <i>Sign up</i>, you confirm that you have read and agree to our <a href="https://ankiweb.net/account/terms">terms of use</a>.</string>
   <string name="logged_as">Logado como</string>
   <string name="log_out">Sair</string>
   <string name="alert_logging_message">Fazendo login, por favor aguarde...</string>
@@ -89,9 +89,8 @@
   <string name="sync_conflict_message">Seus decks aqui e em AnkiWeb diferem de tal forma que eles não podem ser mesclados juntos, por isso é necessário substituir os decks de um lado com os decks do outro.\n\nDeseja fazer upload dos decks daqui, ou baixar os decks de AnkiWeb?</string>
   <string name="sync_conflict_local">Fazer upload</string>
   <string name="sync_conflict_remote">Baixar</string>
-  <string name="sync_conflict_remote_confirm">Do you really want to download the server\'s collection? Be aware that this will overwrite your local collection.</string>
-  <string name="sync_conflict_local_confirm">Do you really want to upload the local collection? Be aware that this will overwrite your collection on the server.</string>
-  <string name="sync_conflict_cancel">Cancelar sincronização</string>
+  <string name="sync_conflict_remote_confirm">Overwrite your local collection?</string>
+  <string name="sync_conflict_local_confirm">Overwrite your collection on the server?</string>
   <string name="sync_prepare_syncing">Preparando sincronização...</string>
   <string name="sync_preparing_full_sync_message">Preparando sincronização completa...</string>
   <string name="sync_uploading_message">Fazendo upload...</string>
@@ -101,13 +100,13 @@
   <string name="sync_downloading_media">Baixando mídia %1$d/%2$d...</string>
   <string name="sync_log_uploading_message">Sincronização completa do local</string>
   <string name="sync_log_downloading_message">Sincronização completa do servidor</string>
-  <string name="sync_log_clocks_unsynchronized">The clock on your device is incorrect by %1$d seconds%2$s; Syncing requires both your clock and timezone to be set correctly in order to avoid errors. Please ensure the date, time, and timezone on your phone are set correctly, then sync again.</string>
+  <string name="sync_log_clocks_unsynchronized">Your clock\'s off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</string>
   <string name="sync_log_clocks_unsynchronized_tz">, a zona de tempo do dispositivo possivelmente está errada</string>
   <string name="sync_log_clocks_unsynchronized_date">, a data do dispositivo possivelmente está errada</string>
   <string name="sync_log_old_version">O protocolo de sincronização foi alterado, por favor atualize para o AnkiDroid mais recente. Veja %s</string>
   <string name="sync_conflict_title">Conflito de sincronização</string>
   <string name="sync_no_changes_message">Não foram encontradas alterações.</string>
-  <string name="sync_database_success">Coleção sincronizada com êxito</string>
+  <string name="sync_database_acknowledge">Collection synchronized</string>
   <string name="sync_log_error_fix">A syncing error occurred%s.\n\nIf this happens consistently, you can do a full sync, which will probably fix the problem. Be aware that it will overwrite either your local collection or the one on AnkiWeb.\nIf you really want to do full sync, please choose if you want to upload your local collection or to download from the server.</string>
   <string name="sync_log_error_specific">Erro de Sincronização, tipo:%1$s, mensagem:%2$s</string>
   <string name="sync_corrupt_database">Seu banco de dados está corrompido. Por favor corrija-o antes de tentar novamente a sincronização.\n\nVeja %s para obter informações sobre como reparar o banco de dados.</string>
@@ -130,32 +129,32 @@
   <string name="sync_media_remove">Lidando com mídias apagadas...</string>
   <string name="sync_media_from_server">Recebendo mídias do servidor...</string>
   <string name="sync_media_to_server">Enviando mídias ao servidor...</string>
-  <string name="sync_media_sanity_check">Checking media counts...</string>
+  <string name="sync_media_sanity_check">Checking media counts&#8230;</string>
   <string name="sync_media_no_changes">Sem mudanças nos arquivos de mídia.</string>
   <string name="sync_media_success">Mídias sincronizadas com sucesso.</string>
-  <string name="sync_sanity_failed">After syncing, the collection was in an inconsistent state. To fix this problem, AnkiDroid will force a full sync. Please choose which side you would like to keep, or cancel if you prefer to sync later.</string>
+  <string name="sync_sanity_failed">After syncing, the collection was in an inconsistent state. To fix this problem, AnkiDroid will force a full sync. Choose which side you would like to keep.</string>
   <string name="sync_media_sanity_failed">Media sync completed, but the media count doesn\'t agree with the server. The next media sync will be full to correct any error.</string>
-  <string name="sync_media_error">Error syncing media data.</string>
+  <string name="sync_media_error">Error syncing media data</string>
   <string name="register_error">Ocorreu um erro. Por favor, tente novamente mais tarde.</string>
   <string name="register_title">Criar conta</string>
   <string name="register_mismatch">O nome do usuário/senha não bate com a repetição ou está vazio. Por favor, digite novamente.</string>
   <string name="registering_message">Criando conta.\nPor favor aguarde...</string>
   <string name="upgrade_decks_zipping">Comprimindo decks para upload.\nPor favor aguarde...</string>
-  <string name="upgrade_decks_upload">Uploading zipped decks\nYou can cancel by pressing back.\nPlease wait...</string>
+  <string name="upgrade_decks_upload">Uploading zipped decks&#8230;\nYou can cancel by pressing back.</string>
   <string name="upgrade_decks_waiting">Aguarde, posição na fila de espera: %s\n Por favor aguarde...</string>
-  <string name="upgrade_decks_upgrade_started">Upgrade started\nPlease wait...</string>
-  <string name="upgrade_decks_downloading">Downloading upgraded collection\nYou can cancel by pressing back.\nPlease wait...</string>
-  <string name="upgrade_decks_media">Copying old media files to new media location.\nPlease wait...</string>
+  <string name="upgrade_decks_upgrade_started">Upgrade started&#8230;</string>
+  <string name="upgrade_decks_downloading">Downloading upgraded collection&#8230;\nYou can cancel by pressing back.</string>
+  <string name="upgrade_decks_media">Copying old media files to new media location&#8230;</string>
   <string name="upgrade_decks_message">There is no Anki 2.0 collection available but one or more decks in the old Anki 1.2 format have been found:%sIn order to use your decks with the new version of AnkiDroid they need to be converted first into a single collection of the new Anki-2.0 format. There are three possibilities for this:</string>
   <string name="upgrade_decks_message_pos1">By using Anki Desktop 2.0, your decks will be converted at the first start. You can sync over AnkiWeb or just copy the new collection afterwards to your mobile device. Copy your decks from your AnkiDroid directory (%s) to your Anki Desktop 1.2 directory on your computer (if you haven\'t synced them anyway) and start Anki Desktop 2.0.</string>
   <string name="upgrade_decks_message_pos2">Se você já sincronizou os seus decks no ankiweb, você só precisa logar uma vez no %s e os seus deck serão convertidas lá. Depois você pode simplesmente sincronizar a nova coleção para o seu dispositivo.</string>
-  <string name="upgrade_decks_message_pos3">As a third possibility, you can have your decks converted via AnkiDroid itself and AnkiWeb. If you click on the upgrade button below, your decks will be bundled and uploaded to AnkiWeb. The converted collection will then be automatically downloaded and opened. You don\'t need any registration for that but be aware that it might be better to use a wifi connection in order to prevent too much traffic over your mobile connection. If the compressed decks amount to more than 50 mb, you cannot use this way. Please resort to the other options in this case. If your deck media files are hosted in custom folders or Dropbox custom folder, they might have to be copied manually to the new location.</string>
+  <string name="upgrade_decks_message_pos3">As a third possibility, you can have your decks converted via AnkiDroid itself and AnkiWeb. If you touch the upgrade button below, your decks will be bundled and uploaded to AnkiWeb. The converted collection will then be automatically downloaded and opened. You don\'t need any registration for that but be aware that it might be better to use a wifi connection in order to prevent too much traffic over your mobile connection. If the compressed decks amount to more than 50 mb, you cannot use this way. Please resort to the other options in this case. If your deck media files are hosted in custom folders or Dropbox custom folder, they might have to be copied manually to the new location.</string>
   <string name="upgrade_decks_message_finish">If you just proceed a new collection will be created without taking your old decks into account.</string>
   <string name="upgrade_required">Os seus decks no AnkiWeb ainda estão no formato antigo do Anki 1.2. Visite %s e logue com a sua conta. Os seus decks serão convertidos para o novo formato automaticamente.</string>
   <string name="upgrade_decks_button">Atualizar</string>
-  <string name="upgrade_decks_failed">These decks could not be upgraded:\n%sPlease open them in Anki Desktop and do a database check. Afterwards you can import them via Anki Desktop.</string>
+  <string name="upgrade_decks_failed">These decks couldn\'t be upgraded: Open them in Anki Desktop and do a database check. Afterwards you can import them via Anki Desktop.</string>
   <string name="upgrade_decks_media_failed">Copying the media files to the new media folder (%1$s) has failed for these decks:\n%2$sPlease move the media files manually.</string>
-  <string name="download_deck">Downloading deck (%d kb).\nPlease wait...</string>
+  <string name="download_deck">Downloading deck&#8230; (%d kB)</string>
   <string name="sync_sanity_local">Local</string>
   <string name="sync_sanity_remote">Remoto</string>
 </resources>

@@ -40,15 +40,14 @@
 
 -->
 <resources>
-  <string name="connection_needed">Нисте прикључени на Интернет.</string>
+  <string name="youre_offline">You are offline</string>
   <string name="currently_downloading">Тренутно се преузима</string>
   <string name="starting_download">Преузимање почиње...</string>
   <string name="downloading">Преузимање у току...</string>
   <string name="paused">Паузирано</string>
   <string name="downloaded">Преузето</string>
-  <string name="error">Грешка</string>
+  <string name="vague_error">Error</string>
   <string name="cancelling">Отказује се...</string>
-  <string name="connection_error_title">Пажња</string>
   <string name="connection_error_return_message">Дошло је до грешке. Покушајте поново, или откажите и вратите се на претходни екран.</string>
   <string name="retry">Понови</string>
   <string name="cancel">Откажи</string>
@@ -65,7 +64,8 @@
   <string name="download_button_return">Повратак</string>
   <string name="connection_error_message">Грешка у мрежи.</string>
   <string name="sync_log_db_error">Дошло је до грешке у бази података.</string>
-  <string name="no_user_password_error_message">Да бисте продужили ову операцију, неопходно је да имате регистрван налог на AnkiWeb и да сте на њега пријављени.</string>
+  <string name="not_logged_in_title">Log in to AnkiWeb</string>
+  <string name="login_create_account_message">You must log in to an AnkiWeb account. You can create one in the next step.</string>
   <string name="username">Адреса е-поште</string>
   <string name="username_repeat">Поновите адресу е-поште</string>
   <string name="password">Lozinka</string>
@@ -91,7 +91,6 @@
   <string name="sync_conflict_remote">Преузми</string>
   <string name="sync_conflict_remote_confirm">Да ли заиста желите да преузмете колекцију са сервера? Имајте на уму да ће то довести до презаписивања локалне колекције.</string>
   <string name="sync_conflict_local_confirm">Да ли заиста желите да учитате на сервер локалну колекцију? Имајте на умуз да ће то заменити вашу колекцију на серверу.</string>
-  <string name="sync_conflict_cancel">Одустани од Синхронизовања</string>
   <string name="sync_prepare_syncing">Припрема синхронизације...</string>
   <string name="sync_preparing_full_sync_message">Pripremanje pune sinhronizacije...</string>
   <string name="sync_uploading_message">Слање података...</string>
@@ -107,7 +106,7 @@
   <string name="sync_log_old_version">Протокол синхронизације је промењен, молимо да инсталирате најновију верзију AnkiDroid-a. Погледајте %s</string>
   <string name="sync_conflict_title">Конфликт у синхронизацији</string>
   <string name="sync_no_changes_message">Нема промена.</string>
-  <string name="sync_database_success">Колекција је успешно синхронизована</string>
+  <string name="sync_database_acknowledge">Collection synchronized</string>
   <string name="sync_log_error_fix">Грешка синхронизације%s.\n\nПокушајте да урадите потпуну синхронизацију ради исправљања те грешке. То ће презаписати или локалну колекцију или колекцију на серверу AnkiWeb.\nЗа потпуну синхронизацију изаберите учитавање ваше личне колекције на сервер или преузимање колекције са сервера.</string>
   <string name="sync_log_error_specific">Грешка синхронизације, тип: %1$s, порука: %2$s</string>
   <string name="sync_corrupt_database">Ваша база података је оштећена. Исправите оштећења пре него што поновите покушај синхронизације.\n\nПогледајте %s о обнављању базе података.</string>

@@ -39,6 +39,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <plurals name="card_browser_subtitle">
+    <item quantity="one">1 de %2$d cartões mostrados</item>
+    <item quantity="other">%1$d de %2$d cartões mostrados</item>
+  </plurals>
   <string name="card_browser_all_decks">Todos decks</string>
   <string name="card_browser_load">Carregando cartões. \nPor favor aguarde...</string>
   <string name="card_browser_cardloading_error">Erro no carregamento de cartões. Isso provavelmente esta relacionado a restrições de memória do seu dispositivo. Tente novamente com um deck de menor</string>
@@ -57,7 +61,7 @@
   <string name="card_browser_tags_shown">Tags: %1$s</string>
   <string name="card_browser_change_display_order">Alterar a ordem de exibição</string>
   <string name="card_browser_change_display_order_title">Escolha a ordem de exibição</string>
-  <string name="card_browser_change_display_order_reverse">Select a field twice to reverse.</string>
+  <string name="card_browser_change_display_order_reverse">Select a field twice to reverse</string>
   <string name="card_browser_order_reverse">(reverse)</string>
   <string name="card_browser_card_details">Detalhes do cartão</string>
   <string name="card_details_question">Pergunta</string>
@@ -90,8 +94,4 @@
     <item>Por comentários</item>
     <item>By lapses</item>
   </string-array>
-  <plurals name="card_browser_subtitle">
-    <item quantity="one">1 de %2$d cartões mostrados</item>
-    <item quantity="other">%1$d de %2$d cartões mostrados</item>
-  </plurals>
 </resources>

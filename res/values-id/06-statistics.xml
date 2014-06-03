@@ -54,7 +54,7 @@
   <string name="statistics_new_cards">Kad baru</string>
   <string name="statistics_failed_cards">Kad gagal</string>
   <string name="statistics_fullscreen">Beralih Fullscreen</string>
-  <string name="calculating_statistics">Calculating statistics.\nPlease wait...</string>
+  <string name="calculating_statistics">Calculating statistics&#8230;</string>
   <string name="deck_summary_cards">Bilangan kad:</string>
   <string name="deck_summary_notes">Number of notes:</string>
   <string name="deck_summary_cards_mature">Kad matang:</string>
@@ -80,9 +80,6 @@
   <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; kad/hari</string>
   <string name="deck_summary_deck_age">Umur dek: &lt;b&gt;%d&lt;/b&gt; hari</string>
   <string name="deck_summary_all_decks">Semua dek</string>
-  <string name="stats_forecast">Forecast</string>
-  <string name="stats_review_count">Review count</string>
-  <string name="stats_review_time">Review time</string>
   <string-array name="next_review_in_s">
     <item>dalam 1 saat</item>
     <item>dalam 1 minit</item>
@@ -120,6 +117,9 @@
     <item>Weeks</item>
     <item>Months</item>
   </string-array>
+  <string name="stats_forecast">Forecast</string>
+  <string name="stats_review_count">Review count</string>
+  <string name="stats_review_time">Review time</string>
   <string-array name="stats_period">
     <item>1 month</item>
     <item>1 year</item>

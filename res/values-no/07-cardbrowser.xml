@@ -39,6 +39,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <plurals name="card_browser_subtitle">
+    <item quantity="one">Ett av %2$d kort vises</item>
+    <item quantity="other">%1$d av %2$d kort vises</item>
+  </plurals>
   <string name="card_browser_all_decks">Alle kortstokker</string>
   <string name="card_browser_load">Laster kort.\nVennligst vent...</string>
   <string name="card_browser_cardloading_error">Feil ved lasting av kort. Dette er trolig relatert til enhetens minnerestriksjoner. Prøv igjen med en mindre kortstokk</string>
@@ -50,14 +54,14 @@
   <string name="delete_card_title">Slett notat</string>
   <string name="delete_card_message">Skal alle kort i dette notatet virkelig slettes?\nSøkefelt: %s</string>
   <string name="card_browser_show_marked">Filtrer merkede</string>
-  <string name="card_browser_field">Change CardBrowser Field</string>
-  <string name="card_browser_field_title">Change CardBrowser Field</string>
+  <string name="card_browser_field">Change card browser field</string>
+  <string name="card_browser_field_title">Change card browser field</string>
   <string name="card_browser_show_suspended">Filtrer suspenderte</string>
   <string name="card_browser_search_by_tag">Filtrer etter emneord</string>
   <string name="card_browser_tags_shown">Emneord: %1$s</string>
   <string name="card_browser_change_display_order">Endre visningsrekkefølgen</string>
   <string name="card_browser_change_display_order_title">Velg visningsrekkefølge</string>
-  <string name="card_browser_change_display_order_reverse">Select a field twice to reverse.</string>
+  <string name="card_browser_change_display_order_reverse">Select a field twice to reverse</string>
   <string name="card_browser_order_reverse">(reverse)</string>
   <string name="card_browser_card_details">Kortdetaljer</string>
   <string name="card_details_question">Spørsmål</string>
@@ -90,8 +94,4 @@
     <item>By reviews</item>
     <item>By lapses</item>
   </string-array>
-  <plurals name="card_browser_subtitle">
-    <item quantity="one">Ett av %2$d kort vises</item>
-    <item quantity="other">%1$d av %2$d kort vises</item>
-  </plurals>
 </resources>

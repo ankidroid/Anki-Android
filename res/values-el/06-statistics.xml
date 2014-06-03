@@ -80,9 +80,6 @@
   <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; κάρτες/μέρα</string>
   <string name="deck_summary_deck_age">Ηλικία τράπουλας: &lt;b&gt;%d&lt;/b&gt; μέρες</string>
   <string name="deck_summary_all_decks">Όλες οι τράπουλες</string>
-  <string name="stats_forecast">Πρόγνωση</string>
-  <string name="stats_review_count">Αριθμός επαναλήψεων</string>
-  <string name="stats_review_time">Χρόνος επαναλήψεων</string>
   <string-array name="next_review_in_s">
     <item>σε 1 δευτερόλεπτο</item>
     <item>σε 1 λεπτό</item>
@@ -120,6 +117,9 @@
     <item>Εβδομάδες</item>
     <item>Μήνες</item>
   </string-array>
+  <string name="stats_forecast">Πρόγνωση</string>
+  <string name="stats_review_count">Αριθμός επαναλήψεων</string>
+  <string name="stats_review_time">Χρόνος επαναλήψεων</string>
   <string-array name="stats_period">
     <item>1 μήνας</item>
     <item>1 έτος</item>

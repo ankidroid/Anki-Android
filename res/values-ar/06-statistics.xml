@@ -80,9 +80,6 @@
   <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; بطاقة/يوم</string>
   <string name="deck_summary_deck_age">عمر الرزمة: &lt;b&gt;%d&lt;/b&gt; يوما</string>
   <string name="deck_summary_all_decks">كل الرزم</string>
-  <string name="stats_forecast">التوقع</string>
-  <string name="stats_review_count">عداد المراجعة</string>
-  <string name="stats_review_time">وقت المراجعة</string>
   <string-array name="next_review_in_s">
     <item>في ثانية واحدة</item>
     <item>في دقيقة واحدة</item>
@@ -120,6 +117,9 @@
     <item>أسابيع</item>
     <item>شهور</item>
   </string-array>
+  <string name="stats_forecast">التوقع</string>
+  <string name="stats_review_count">عداد المراجعة</string>
+  <string name="stats_review_time">وقت المراجعة</string>
   <string-array name="stats_period">
     <item>شهر واحد</item>
     <item>سنة واحدة</item>

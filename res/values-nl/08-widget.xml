@@ -43,12 +43,6 @@
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid kaarten om te leren</string>
   <string name="widget_no_cards_due">Geen kaarten over</string>
   <string name="widget_loading">Widget laden...</string>
-  <string name="widget_medium">AnkiDroid Gemiddeld</string>
-  <string name="widget_small">AnkiDroid (klein)</string>
-  <string name="widget_big">AnkiDroid Groot</string>
-  <string name="widget_big_restrictions_dialog">Door beperkingen aan Android-widgets kan deze deze widget alleen tekst weergeven en geen beelden/geluiden etc.</string>
-  <string name="open_in_reviewer">Open leerset in AnkiDroid</string>
-  <string name="widget_big_tomorrow_due">Morgen te doen:</string>
   <plurals name="widget_cards_in_decks_due">
     <item quantity="one">1 kaart te doen in %2$s</item>
     <item quantity="other">%1$d kaarten te doen in %2$s</item>
@@ -57,8 +51,14 @@
     <item quantity="one">1 leerset</item>
     <item quantity="other">%1$d leersets</item>
   </plurals>
+  <string name="widget_medium">AnkiDroid Gemiddeld</string>
+  <string name="widget_small">AnkiDroid (klein)</string>
+  <string name="widget_big">AnkiDroid Groot</string>
+  <string name="widget_big_restrictions_dialog">Door beperkingen aan Android-widgets kan deze deze widget alleen tekst weergeven en geen beelden/geluiden etc.</string>
+  <string name="open_in_reviewer">Open leerset in AnkiDroid</string>
   <plurals name="widget_big_eta">
     <item quantity="one">Geschatte tijd: 1 min.</item>
     <item quantity="other">Geschatte tijd: %d min.</item>
   </plurals>
+  <string name="widget_big_tomorrow_due">Morgen te doen:</string>
 </resources>

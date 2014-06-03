@@ -41,7 +41,9 @@
 <resources>
   <string name="welcome_message">Avec AnkiDroid, vous pouvez apprendre efficacement de grandes quantités de vocabulaire comme beaucoup d’autres types de contenus. AnkiDroid vous les rappelle juste avant que vous les oubliez.\n\nPour vous faire une idée, nous vous conseillons de commencer avec un paquet tutoriel, qui vous donnera quelques indications. Une fois ouvert, il faut simplement « commencer à réviser ».\n\nCréer ce paquet tutoriel ?</string>
   <string name="check_db_title">Vérifier la base de données</string>
-  <string name="check_db_result_message">Base de données vérifiée et optimisée.\nÉconomie de %d Ko.</string>
+  <string name="check_db_warning">This may take a long time</string>
+  <string name="check_db_acknowledge">Database checked</string>
+  <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d kB.</string>
   <string name="contextmenu_deckpicker_delete_deck">Supprimer le jeu de cartes</string>
   <string name="delete_deck_title">Supprimer le jeu de cartes</string>
   <string name="delete_deck_message">Êtes-vous certain de vouloir supprimer toutes les cartes de %s ?</string>
@@ -59,7 +61,6 @@
     <item><![CDATA[AnkiDroid est mis à disposition sous la licence <a href="%1$s">GNU-GPL v3</a> et son code source est disponible <a href="%2$s">ici</a>.]]></item>
   </string-array>
   <string name="dont_show_again">Ne plus afficher</string>
-  <string name="sync_log_title">Journal de synchronisation</string>
   <string name="notify_ticker">Mise à jour de l\'application</string>
   <string name="notify_title">AnkiDroid mis à jour</string>
   <string name="notify_message">Télécharger une nouvelle version</string>
@@ -69,7 +70,7 @@
   <string name="notification_stop">Ne plus me prévenir pour cette mise à jour</string>
   <string name="reset_card_dialog_title">Réinitialiser les progrès de la carte</string>
   <string name="reset_card_dialog_message">Ceci va remettre à zéro les progrès pour chaque carte issue de cette note (elles redeviendront inédites).\nContinuer ?</string>
-  <string name="reset_card_dialog_confirmation">Remise à zéro de toutes les cartes issues de la note</string>
+  <string name="reset_card_dialog_acknowledge">Cards reset</string>
   <string name="answering_error_title">Erreur de la base de données</string>
   <string name="answering_error_message">Il s’est produit une erreur en écrivant dans la collection. Cela est peut-être lié à une base de données corrompue ou à un espace disque insuffisant.\n\nSi cela arrive souvent, vérifiez la base de données, réparez la collection ou restaurez-la à partir d’une sauvegarde, en allant dans les « options ».\n\nCependant, il peut s\'agir d\'un bug d’AnkiDroid. Signalez-le nous.</string>
   <string name="answering_error_report">Signaler les erreurs</string>
@@ -87,7 +88,7 @@
   <string name="custom_study_random">Sélectionner x cartes au hasard dans ce paquet :</string>
   <string name="custom_study_preview">Afficher les nouvelles cartes ajoutées dans les x derniers jours :</string>
   <string name="custom_study_tags">Saisir les étiquettes :</string>
-  <string name="rebuild_custom_study_deck">Reconstruction du paquet d\'étude personnalisée.\nMerci de patienter…</string>
+  <string name="rebuild_custom_study_deck">Reconstruction du paquet d\'étude personnalisée.\nMerci de patienter&#8230;</string>
   <string name="deck_upgrade_title">Mise à jour du paquet</string>
   <string name="deck_upgrade_rename_warning">Soyez conscient que cela va exporter votre collection actuelle dans un fichier nommé « %1$s » et en créera une nouvelle à partir de votre ancien fichier Anki 1.x. Si vous le souhaitez, vous pouvez réimporter manuellement le fichier apkg qui précède une fois l\'assistant terminé. Voulez-vous vraiment continuer?</string>
   <string name="deck_upgrade_major_warning"><![CDATA[Ceci est une mise à jour majeure de AnkiDroid. Le temps de mise à jour peut prendre entre 10 et 20 minutes.<br><br>Voulez vous commencer immédiatement ou le faire plus tard ?<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en">http://crowdin.net/translate/ankidroid/7303/en-fr#Plus d\'information</a>]]></string>
@@ -98,6 +99,7 @@
   <string name="deck_upgrade_more_options_downgrade"><![CDATA[<br><br>si vous souhaitez revenir à AnkiDroid 1 alors veuillez lire <a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Continuing_to_use_AnkiDroid_1.1.3"> ces instructions</a>.]]></string>
   <string name="deck_upgrade_create_new_collection">Créer une nouvelle collection</string>
   <string name="deck_upgrade_create_new_collection_title">Créer une nouvelle collection</string>
+  <string name="deck_upgrade_create_new_collection_button">New collection</string>
   <string name="deck_upgrade_not_import_warning">Êtes-vous sûr de vouloir faire ceci ? Votre ancienne collection ne sera pas importé.</string>
   <string name="deck_upgrade_via_web"><![CDATA[<b>Cette méthode de mise à jour n\'est pas recommandée si vous utilisez du contenu multimédia ou si vous avez une grosse collection!</b><br><br>Votre jeu de carte anki1 sera compressé et envoyé vers AnkiWeb, puis la collection convertie sera alors téléchargée.<br><br>Veuillez noter qu\'il vous faut une connexion à Internet stable et que la taille maximum autorisée par fichier est de 50Mo.<br><br>Les utilisateurs de la version PC de Anki sont fortement encouragés à utiliser la méthode de mise à jour via PC.<br><br>Êtes-vous sûr de vouloir continuer?]]></string>
   <string name="deck_upgrade_via_anki_desktop"><![CDATA[Si vous avez une version plus récente de votre collection AnkiDroid sur la version PC de Anki, vous pouvez récupérer cette collection depuis cette page en vous synchronisant sur AnkiWeb.<br><br>Autrement, vous pouvez copier votre collection AnkiDroid vers votre PC via USB, la mettre à jour, puis la copier à nouveau vers AnkiDroid.]]></string>
@@ -120,4 +122,22 @@
   <string name="import_media_count">Importation des fichiers médias %1$d%%\nVeuillez patienter&#8230;</string>
   <string name="import_update_counts">Mise à jour des compteurs des paquets.\nVeuillez patienter&#8230;</string>
   <string name="import_add_progress">• Décompression de l\'archive %1$s\n• Importation des notes %2$d%%\n• Importation des cartes %3$d%%\n• Nettoyage %4$s</string>
+  <string name="sd_card_full_title">SD card full</string>
+  <string name="sd_card_almost_full_title">SD card almost full</string>
+  <string name="dialog_cancel">Cancel</string>
+  <string name="dialog_ok">OK</string>
+  <string name="dialog_continue">Continue</string>
+  <string name="dialog_neutral_later">Later</string>
+  <string name="dialog_positive_create">Create</string>
+  <string name="dialog_positive_delete">Delete</string>
+  <string name="dialog_positive_disable">Disable</string>
+  <string name="dialog_positive_overwrite">Overwrite</string>
+  <string name="dialog_positive_repair">Repair</string>
+  <string name="dialog_positive_replace">Replace</string>
+  <string name="dialog_positive_reset">Reset</string>
+  <string name="dialog_positive_save">Save</string>
+  <string name="add_button_content">Add&#8230;</string>
+  <string name="card_browser_button_content">Card browser</string>
+  <string name="lookup_button_content">Look up</string>
+  <string name="statistics_button_content">Statistics</string>
 </resources>

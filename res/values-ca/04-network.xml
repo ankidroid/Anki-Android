@@ -40,15 +40,14 @@
 
 -->
 <resources>
-  <string name="connection_needed">En aquest moment sou fora de línia.</string>
+  <string name="youre_offline">You are offline</string>
   <string name="currently_downloading">S\'està baixant</string>
   <string name="starting_download">Ara comença la baixada...</string>
   <string name="downloading">S\'està baixant...</string>
   <string name="paused">En pausa</string>
   <string name="downloaded">S\'ha baixat</string>
-  <string name="error">S\'ha produït un error</string>
+  <string name="vague_error">Error</string>
   <string name="cancelling">S\'està cancel·lant...</string>
-  <string name="connection_error_title">Atenció</string>
   <string name="connection_error_return_message">Hi ha hagut un error de xarxa. Torneu-ho a provar, o cancel·leu i torneu a la pantalla anterior.</string>
   <string name="retry">Intenta-ho de nou</string>
   <string name="cancel">Anul·la</string>
@@ -56,7 +55,7 @@
   <string name="download_cancel">Atura la baixada</string>
   <string name="shared_decks">Paquets compartits</string>
   <string name="loading_shared_decks">S\estàn carregant els paquets compartits...</string>
-  <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Terms and Conditions</a></string>
+  <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Terms and conditions</a></string>
   <string name="cancel_download">Atura la baixada</string>
   <string name="resume_download">Reprèn la baixada</string>
   <string name="pause_download">Fes una pausa a la baixada</string>
@@ -65,7 +64,8 @@
   <string name="download_button_return">Torna</string>
   <string name="connection_error_message">Hi ha hagut un error de la xarxa.</string>
   <string name="sync_log_db_error">S\'ha produït un error de la base de dades.</string>
-  <string name="no_user_password_error_message">Per tal de continuar, us cal un compte a AnkiWeb i us heu de registrar.</string>
+  <string name="not_logged_in_title">Log in to AnkiWeb</string>
+  <string name="login_create_account_message">You must log in to an AnkiWeb account. You can create one in the next step.</string>
   <string name="username">Adreça de correu electrònic</string>
   <string name="username_repeat">Repeteix l\'adreça de correu electrònic</string>
   <string name="password">Contrasenya</string>
@@ -73,7 +73,7 @@
   <string name="log_in">Inicia la sessió</string>
   <string name="sign_up_description">No teniu un compte d\'AnkiWeb? És gratuït!</string>
   <string name="sign_up">Registreu-vos</string>
-  <string name="sign_up_terms">By tapping <i>Sign up</i>, you confirm that you have read and agree to our <a href="https://ankiweb.net/account/terms">terms of use</a>.</string>
+  <string name="sign_up_terms">By touching <i>Sign up</i>, you confirm that you have read and agree to our <a href="https://ankiweb.net/account/terms">terms of use</a>.</string>
   <string name="logged_as">Heu entrat com a</string>
   <string name="log_out">Desconnecta</string>
   <string name="alert_logging_message">S\'està iniciant la sessió, un moment...</string>
@@ -91,7 +91,6 @@
   <string name="sync_conflict_remote">Descarrega</string>
   <string name="sync_conflict_remote_confirm">Segur que voleu descarregar la col·lecció del servidor? Tingueu en compte que això sobreescriurà la vostra col·lecció local.</string>
   <string name="sync_conflict_local_confirm">Segur que voleu pujar la col·lecció local? Tingueu en compte que això sobreescriurà la vostra col. lecció del servidor.</string>
-  <string name="sync_conflict_cancel">Cancel·la la sincronització</string>
   <string name="sync_prepare_syncing">S\'està preparant la sincronització...</string>
   <string name="sync_preparing_full_sync_message">S\'està preparant una sincronització completa...</string>
   <string name="sync_uploading_message">S\'està pujant...</string>
@@ -107,7 +106,7 @@
   <string name="sync_log_old_version">El protocol de sincronització ha canviat, si us plau, actualitzeu a la darrera AnkiDroid. Veieu %s</string>
   <string name="sync_conflict_title">Conflicte de sincronització</string>
   <string name="sync_no_changes_message">No s\'ha trobat cap canvi.</string>
-  <string name="sync_database_success">S\'ha sincronitzat correctament la col·lecció</string>
+  <string name="sync_database_acknowledge">Collection synchronized</string>
   <string name="sync_log_error_fix">S\'ha produït un error de sincronització%s.\n\nSi això sempre passa, podeu fer una sincronització completa, que probablement es solucionarà el problema. Sapigueu que això sobreesciurà el paquet local o el d\'AnkiWeb.\nSi realment voleu fer una sincronització completa, si us plau, escolliu si voleu pujar el paquet local o per baixar el del servidor.</string>
   <string name="sync_log_error_specific">Error de sincronització, tipus: %1$s, missatge: %2$s</string>
   <string name="sync_corrupt_database">La base de dades està feta malbé. Corregiu-ho abans d\'intentar una nova sincronització.\n\nVeieu %s per a obtenir informació sobre com reparar la base de dades.</string>

@@ -43,12 +43,6 @@
   <string name="widget_minimum_cards_due_notification_ticker_text">%d張AnkiDroid卡片到期</string>
   <string name="widget_no_cards_due">無卡片到期</string>
   <string name="widget_loading">載入桌面小工具中...</string>
-  <string name="widget_medium">AnkiDroid 中型</string>
-  <string name="widget_small">AnkiDroid 小型</string>
-  <string name="widget_big">AnkiDroid 大型</string>
-  <string name="widget_big_restrictions_dialog">由於與 Android widget framework 衝突. 這個桌面小工具只能顯示文字而不能顯示影像/聲音.</string>
-  <string name="open_in_reviewer">在AnkiDroid中開啟牌組</string>
-  <string name="widget_big_tomorrow_due">明天到期:</string>
   <plurals name="widget_cards_in_decks_due">
     <item quantity="one">1張卡片於%2$s到期</item>
     <item quantity="other">%1$d張卡片於%2$s到期</item>
@@ -57,8 +51,14 @@
     <item quantity="one">1個牌組</item>
     <item quantity="other">%1$d個牌組</item>
   </plurals>
+  <string name="widget_medium">AnkiDroid 中型</string>
+  <string name="widget_small">AnkiDroid 小型</string>
+  <string name="widget_big">AnkiDroid 大型</string>
+  <string name="widget_big_restrictions_dialog">由於與 Android widget framework 衝突. 這個桌面小工具只能顯示文字而不能顯示影像/聲音.</string>
+  <string name="open_in_reviewer">在AnkiDroid中開啟牌組</string>
   <plurals name="widget_big_eta">
     <item quantity="one">估計時間: 1分鐘.</item>
     <item quantity="other">估計時間: %d 分鐘.</item>
   </plurals>
+  <string name="widget_big_tomorrow_due">明天到期:</string>
 </resources>

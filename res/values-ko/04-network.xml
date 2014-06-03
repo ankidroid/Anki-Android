@@ -40,15 +40,14 @@
 
 -->
 <resources>
-  <string name="connection_needed">현재 오프라인 상태입니다.</string>
+  <string name="youre_offline">You are offline</string>
   <string name="currently_downloading">지금 다운로드 중</string>
   <string name="starting_download">다운로드 시작...</string>
   <string name="downloading">다운로드 중...</string>
   <string name="paused">일시 중지</string>
   <string name="downloaded">다운로드 완료</string>
-  <string name="error">오류</string>
+  <string name="vague_error">Error</string>
   <string name="cancelling">취소 중...</string>
-  <string name="connection_error_title">주의점</string>
   <string name="connection_error_return_message">네트워크 오류가 발생 했습니다. 다시 시도 또는 취소 후 이전 화면으로 돌아갑니다.</string>
   <string name="retry">다시 시도</string>
   <string name="cancel">취소</string>
@@ -56,7 +55,7 @@
   <string name="download_cancel">다운로드 취소</string>
   <string name="shared_decks">공유된 암기묶음</string>
   <string name="loading_shared_decks">사용 가능 공유 암기묶음을 불러오고 있습니다...</string>
-  <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Terms and Conditions</a></string>
+  <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Terms and conditions</a></string>
   <string name="cancel_download">다운로드 취소</string>
   <string name="resume_download">다운로드 재시도</string>
   <string name="pause_download">다운로드 일시 중지</string>
@@ -65,7 +64,8 @@
   <string name="download_button_return">되돌리기</string>
   <string name="connection_error_message">네트워크 오류가 발생했습니다.</string>
   <string name="sync_log_db_error">데이터베이스 오류가 발생했습니다.</string>
-  <string name="no_user_password_error_message">이 작업을 계속 하기 위해서는 AnkiWeb 계정에 로그인해야 합니다.</string>
+  <string name="not_logged_in_title">Log in to AnkiWeb</string>
+  <string name="login_create_account_message">You must log in to an AnkiWeb account. You can create one in the next step.</string>
   <string name="username">이메일 주소</string>
   <string name="username_repeat">이메일 주소 다시 입력</string>
   <string name="password">비밀번호</string>
@@ -73,7 +73,7 @@
   <string name="log_in">로그인</string>
   <string name="sign_up_description">AnkiWeb 계정이 없으십니까? 무료입니다!</string>
   <string name="sign_up">회원가입</string>
-  <string name="sign_up_terms">By tapping <i>Sign up</i>, you confirm that you have read and agree to our <a href="https://ankiweb.net/account/terms">terms of use</a>.</string>
+  <string name="sign_up_terms">By touching <i>Sign up</i>, you confirm that you have read and agree to our <a href="https://ankiweb.net/account/terms">terms of use</a>.</string>
   <string name="logged_as">다음 사용자로 로그인 됨</string>
   <string name="log_out">로그아웃</string>
   <string name="alert_logging_message">로그인하는 중, 잠시 기다려 주십시오...</string>
@@ -91,7 +91,6 @@
   <string name="sync_conflict_remote">다운로드</string>
   <string name="sync_conflict_remote_confirm">정말로 서버에 저장된 컬렉션을 다운로드할까요? 장치에 저장된 컬렉션을 덮어쓰게 됨에 유의하세요.</string>
   <string name="sync_conflict_local_confirm">정말로 장치에 저장된 컬렉션을 업로드할까요? 서버에 저장된 컬렉션을 덮어쓰게 됨에 유의하세요.</string>
-  <string name="sync_conflict_cancel">동기화 취소</string>
   <string name="sync_prepare_syncing">동기화 준비 중...</string>
   <string name="sync_preparing_full_sync_message">전체 동기화를 준비하는 중...</string>
   <string name="sync_uploading_message">업로드 중...</string>
@@ -107,7 +106,7 @@
   <string name="sync_log_old_version">동기화 프로토콜이 변경되었습니다. 최신 Ankidroid로 업그레이드 하세요. %s 참조</string>
   <string name="sync_conflict_title">동기화 충돌</string>
   <string name="sync_no_changes_message">변경사항이 없습니다.</string>
-  <string name="sync_database_success">성공적으로 컬렉션 동기화</string>
+  <string name="sync_database_acknowledge">Collection synchronized</string>
   <string name="sync_log_error_fix">동기화 오류가 발생했습니다%s.\n\n만약 이러한 오류가 지속된다면, 완전 동기화를 시도해서 문제를 고칠 수 있습니다. 장치에 저장된 컬렉션 혹은 AnkiWeb 상의 컬렉션 둘 중 하나로 덮어써야 함에 유의하세요.\n정말로 완전 동기화를 하시려면, 장치에 저장된 컬렉션을 업로드할지, 아니면 서버로부터 다운로드 받을 지 선택해 주세요.</string>
   <string name="sync_log_error_specific">동기화 오류, 종류: %1$s, 메시지: %2$s</string>
   <string name="sync_corrupt_database">데이터베이스가 손상되었습니다. 동기화 재시도 전에 문제를 수정하십시오. \n\n 데이터베이스 수정을 위해서는 %s 를 참고하세요.</string>

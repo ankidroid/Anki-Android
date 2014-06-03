@@ -38,16 +38,13 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
-  <string name="CardEditorCancelButton">Peruuta</string>
-  <string name="CardEditorSaveButton">Tallenna</string>
-  <string name="CardEditorLaterButton">Myöhemmin</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <string name="CardEditorLaterMessage">Tiedot tallennettu myöhempää käyttöä varten</string>
   <string name="CardEditorCardDeck">Korttipakka: %s</string>
   <string name="CardEditorNoteDeck">Merkintäpaka: %s</string>
   <string name="CardEditorModel">Merkinnän tyyppi: %s</string>
   <string name="CardEditorTags">Tunnisteet: %1$s</string>
-  <string name="add_new_filter_tags">Add/Filter tags</string>
+  <string name="add_new_filter_tags">Add/filter tags</string>
   <string name="note_type">Merkinnän tyyppi</string>
   <string name="card_type">Korttityyppi</string>
   <string name="filter_tags">Filter tags</string>
@@ -61,6 +58,19 @@
   <string name="leech_suspend_notification">Kortti om merkitty takiaiseksi ja keskeytettiin</string>
   <string name="leech_notification">Kortti om merkitty takiaiseksi</string>
   <string name="corrupt_font">Korruptoitunut kirjasintiedosto %s</string>
+  <string-array name="browser_column1_headings">
+    <item>Hakukenttä</item>
+  </string-array>
+  <string-array name="browser_column2_headings">
+    <item>Vastaus</item>
+    <item>Kortti</item>
+    <item>Pakka</item>
+    <item>Note</item>
+    <item>Question</item>
+    <item>Tags</item>
+    <item>Lapses</item>
+    <item>Reviews</item>
+  </string-array>
   <string name="about_title">Tietoja</string>
   <string name="cardeditor_title_add_note">Lisää huomautus</string>
   <string name="cardeditor_title_edit_card">Muokkaa huomautusta</string>
@@ -73,6 +83,14 @@
   <string name="select">Valitse</string>
   <string name="saving_changes">Tallennetaan muutokset ...</string>
   <string name="reordering_cards">Uudelleenjärjestetään kortteja...</string>
+  <plurals name="timebox_reached">
+    <item quantity="one">1 kortti opiskeltu %2$s</item>
+    <item quantity="other">%1$d korttia opiskeltu %2$s</item>
+  </plurals>
+  <plurals name="timebox_reached_minutes">
+    <item quantity="one">1 minuutti</item>
+    <item quantity="other">%1$d minuuttia</item>
+  </plurals>
   <string name="studyoptions_welcome_title">Tervetuloa AnkiDroidiin</string>
   <string name="studyoptions_no_external_storage_title">Ulkoista Muistia Ei Ole Saatavilla</string>
   <string name="studyoptions_no_external_storage_message">Ulkoista muistia ei ole tällä hetkellä saatavilla. AnkiDroid tarvitsee saada käyttöönsä SD-korttikortti voidaksesi lukea ja ladata Anki-korttipakkoja. Tarkista, että SD-kortti on asennettu ja yritä uudelleen.</string>
@@ -90,14 +108,29 @@
   <string name="rename">Nimeä uudelleen</string>
   <string name="rename_error">Pakkaa %s ei voitu nimetä uudelleen</string>
   <string name="default_conf_delete_error">Oletusasetusryhmää ei voi poistaa</string>
+  <plurals name="factadder_cards_added">
+    <item quantity="one">Yksi kortti lisätty</item>
+    <item quantity="other">%d korttia lisätty</item>
+  </plurals>
   <string name="help_title">Ohje</string>
   <string name="help_online">Verkko-ohje</string>
   <string name="help_faq">UKK (FAQ)</string>
   <string name="help_tutorial">Ohjepakka</string>
   <string name="check_db">Tarkasta tietokanta</string>
   <string name="check_db_message">Tarkastetaan tietokantaa.\nOdota...</string>
+  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
+  <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
   <string name="simple_interface_hint">Tyhjä %s. Muista että yksinkertainen käyttöliittymä ei näytä kuvia/ääniä jne.</string>
   <string name="delete_deck">Poistetaan pakkaa...\nOdota.</string>
+  <string-array name="dynOrderLabels">
+    <item>Vanhin ensin</item>
+    <item>Satunnainen</item>
+    <item>kasvavin välein</item>
+    <item>vähentyvin välein</item>
+    <item>Eniten virheitä</item>
+    <item>Lisäysjärjestyksessä</item>
+    <item>Näyttöjärjestyksessä</item>
+  </string-array>
   <string name="menu_cardbrowser">Korttiselain</string>
   <string name="show_hint">Näytä vihje</string>
   <string name="pref_lang_other">Kieliasetukset</string>
@@ -128,38 +161,4 @@
   <string name="sched_end">(loppu)</string>
   <string name="sched_unbury_button">Nähdäksesi ne nyt, napauta Paljasta-nappia.</string>
   <string name="sched_has_buried">Liittyviä tai piilotettuja kortteja on viivästetty myöhempään istuntoon.</string>
-  <string-array name="browser_column1_headings">
-    <item>Hakukenttä</item>
-  </string-array>
-  <string-array name="browser_column2_headings">
-    <item>Vastaus</item>
-    <item>Kortti</item>
-    <item>Pakka</item>
-    <item>Note</item>
-    <item>Question</item>
-    <item>Tags</item>
-    <item>Lapses</item>
-    <item>Reviews</item>
-  </string-array>
-  <string-array name="dynOrderLabels">
-    <item>Vanhin ensin</item>
-    <item>Satunnainen</item>
-    <item>kasvavin välein</item>
-    <item>vähentyvin välein</item>
-    <item>Eniten virheitä</item>
-    <item>Lisäysjärjestyksessä</item>
-    <item>Näyttöjärjestyksessä</item>
-  </string-array>
-  <plurals name="timebox_reached">
-    <item quantity="one">1 kortti opiskeltu %2$s</item>
-    <item quantity="other">%1$d korttia opiskeltu %2$s</item>
-  </plurals>
-  <plurals name="timebox_reached_minutes">
-    <item quantity="one">1 minuutti</item>
-    <item quantity="other">%1$d minuuttia</item>
-  </plurals>
-  <plurals name="factadder_cards_added">
-    <item quantity="one">Yksi kortti lisätty</item>
-    <item quantity="other">%d korttia lisätty</item>
-  </plurals>
 </resources>

@@ -38,10 +38,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
-  <string name="CardEditorCancelButton">Zrušit</string>
-  <string name="CardEditorSaveButton">Uložit</string>
-  <string name="CardEditorLaterButton">Později</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <string name="CardEditorLaterMessage">Uložené informace na později</string>
   <string name="CardEditorCardDeck">Karta balíčku: %s</string>
   <string name="CardEditorNoteDeck">Poznámka balíčku: %s</string>
@@ -121,6 +118,8 @@
   <string name="help_tutorial">Výukový balíček</string>
   <string name="check_db">Zkontrolovat databázi</string>
   <string name="check_db_message">Kontrola databáze.\nProsím čekejte...</string>
+  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
+  <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
   <string name="simple_interface_hint">Prázdné %s. Mějte na paměti, že jednoduché rozhraní nemůže zobrazit obrázky/zvuky atd.</string>
   <string name="delete_deck">Odstraňování balíčku...\nProsím čekejte.</string>
   <string-array name="dynOrderLabels">
