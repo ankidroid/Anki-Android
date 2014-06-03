@@ -80,9 +80,6 @@
   <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; 카드/일</string>
   <string name="deck_summary_deck_age">덱 나이: &lt;b&gt;%d&lt;/b&gt;일</string>
   <string name="deck_summary_all_decks">모든 덱</string>
-  <string name="stats_forecast">예상</string>
-  <string name="stats_review_count">복습 횟수</string>
-  <string name="stats_review_time">복습 시간</string>
   <string-array name="next_review_in_s">
     <item>1초 내에</item>
     <item>1분에</item>
@@ -110,7 +107,7 @@
   <string-array name="next_review_before_p">
     <item>%s초 전</item>
     <item>%s분 전</item>
-    <item>﻿%s시간 전</item>
+    <item>%s 시간 전</item>
     <item>%s일 전</item>
     <item>%s개월 전</item>
     <item>﻿%s년 전</item>
@@ -120,6 +117,9 @@
     <item>주</item>
     <item>개월</item>
   </string-array>
+  <string name="stats_forecast">예상</string>
+  <string name="stats_review_count">복습 횟수</string>
+  <string name="stats_review_time">복습 시간</string>
   <string-array name="stats_period">
     <item>1개월</item>
     <item>1년</item>

@@ -51,6 +51,13 @@
   <string name="no_tts_available_title">Sintesi vocale</string>
   <string name="no_tts_available_message">Nessuna lingua per la sintesi vocale disponibile</string>
   <string name="tts_no_tts">Non parlare</string>
+  <string-array name="about_content">
+    <item><![CDATA[<h2>%1$s:<br/>Flashcard per Android</h2>AnkiDroid è un\'applicazione per flashcard pienamente compatibile con il software per desktop <a href="%2$s">Anki</a>. Puoi creare, scaricare e apprendere contenuti da entrambi, AnkiDroid o Anki Desktop, e sincronizzarli molto facilmente.]]></item>
+    <item><![CDATA[Aiutaci a migliorare AnkiDroid: segnala per favore ogni problema <a href="%1$s">qui</a>; idee relative a nuove funzionalità sono benvenute! Usa il <a href="%2$s">wiki</a> e presentati sul <a href="%3$s">forum</a>.]]></item>
+    <item><![CDATA[AnkiDroid è un <a href="%1$s">software open source <a/>, e ognuno è incoraggiato a <a href="%2$s">unirsi</a> agli <a href="%3$s">sviluppatori</a>:-)]]></item>
+    <item><![CDATA[Anche chi non è sviluppatore può aiutare, per esempio <a href="%1$s">traducendo</a> AnkiDroid, aggiornando le wiki e gli screenshot, <a href="%2$s">sostenendo</a> la versione per desktop di Anki, o scrivendo articoli sui blog a proposito di AnkiDroid!]]></item>
+    <item><![CDATA[AnkiDroid è rilasciato sotto la <a href="%1$s"> licenza GNU-GPL v3</a> e il codice sorgente è disponibile <a href="%2$s">qui</a>.]]></item>
+  </string-array>
   <string name="dont_show_again">Non mostrare più</string>
   <string name="sync_log_title">Log della sincronizzazione</string>
   <string name="notify_ticker">Aggiornamento applicazione</string>
@@ -113,11 +120,4 @@
   <string name="import_media_count">Importazione file multimediali %1$d%%\nAttendi&#8230;</string>
   <string name="import_update_counts">Aggiornamento conteggio mazzi.\nAttendi&#8230;</string>
   <string name="import_add_progress">• Estrazione archivio %1$s\n• Importazione note %2$d%%\n• Importazione carte %3$d%%\n• Pulizia %4$s</string>
-  <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s:<br/>Flashcard per Android</h2>AnkiDroid è un\'applicazione per flashcard pienamente compatibile con il software per desktop <a href="%2$s">Anki</a>. Puoi creare, scaricare e apprendere contenuti da entrambi, AnkiDroid o Anki Desktop, e sincronizzarli molto facilmente.]]></item>
-    <item><![CDATA[Aiutaci a migliorare AnkiDroid: segnala per favore ogni problema <a href="%1$s">qui</a>; idee relative a nuove funzionalità sono benvenute! Usa il <a href="%2$s">wiki</a> e presentati sul <a href="%3$s">forum</a>.]]></item>
-    <item><![CDATA[AnkiDroid è un <a href="%1$s">software open source <a/>, e ognuno è incoraggiato a <a href="%2$s">unirsi</a> agli <a href="%3$s">sviluppatori</a>:-)]]></item>
-    <item><![CDATA[Anche chi non è sviluppatore può aiutare, per esempio <a href="%1$s">traducendo</a> AnkiDroid, aggiornando le wiki e gli screenshot, <a href="%2$s">sostenendo</a> la versione per desktop di Anki, o scrivendo articoli sui blog a proposito di AnkiDroid!]]></item>
-    <item><![CDATA[AnkiDroid è rilasciato sotto la <a href="%1$s"> licenza GNU-GPL v3</a> e il codice sorgente è disponibile <a href="%2$s">qui</a>.]]></item>
-  </string-array>
 </resources>

@@ -80,9 +80,6 @@
   <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; karet/den</string>
   <string name="deck_summary_deck_age">Stáří balíčku: &lt;b&gt;%d&lt;/b&gt; dnů</string>
   <string name="deck_summary_all_decks">Všechny balíčky</string>
-  <string name="stats_forecast">Předpověď</string>
-  <string name="stats_review_count">Počet opakování</string>
-  <string name="stats_review_time">Čas opakování</string>
   <string-array name="next_review_in_s">
     <item>za 1 sekundu</item>
     <item>za 1 minutu</item>
@@ -120,6 +117,9 @@
     <item>Týdny</item>
     <item>Měsíce</item>
   </string-array>
+  <string name="stats_forecast">Předpověď</string>
+  <string name="stats_review_count">Počet opakování</string>
+  <string name="stats_review_time">Čas opakování</string>
   <string-array name="stats_period">
     <item>1 měsíc</item>
     <item>1 rok</item>

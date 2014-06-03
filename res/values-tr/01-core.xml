@@ -51,7 +51,23 @@
   <string name="studyoptions_total_cards">Toplam kart:</string>
   <string name="studyoptions_eta">Tahminî süre (dk):</string>
   <string name="studyoptions_start">Çalışmaya Başla</string>
-  <string name="type_answer_hint">Type answer</string>
+  <plurals name="deckpicker_title">
+    <item quantity="one">%2$d kartın 1\'i çıkacak (%3$s)</item>
+    <item quantity="other">%2$d kartın %1$d tanesi çıkacak (%3$s)</item>
+  </plurals>
+  <plurals name="deckpicker_title_minutes">
+    <item quantity="one">1 dk.</item>
+    <item quantity="other">%d dk.</item>
+  </plurals>
+  <plurals name="deckpicker_due">
+    <item quantity="one">%2$d\'in 1\'i</item>
+    <item quantity="other">%2$d\'in %1$d\'i</item>
+  </plurals>
+  <plurals name="reviewer_window_title">
+    <item quantity="one">1 dakika kaldı</item>
+    <item quantity="other">%d dakika kaldı</item>
+  </plurals>
+  <string name="type_answer_hint">Yanıtı yazın</string>
   <string name="show_answer">Yanıtı Göster</string>
   <string name="ease1_successive">Yeniden</string>
   <string name="ease2_successive">Zor</string>
@@ -64,7 +80,7 @@
   <string name="card_unsuspended">Askıya alma geri alındı</string>
   <string name="card_suspended">Kart yeniden askıya alındı</string>
   <string name="menu_rotate">Çevir</string>
-  <string name="menu_import">Import file</string>
+  <string name="menu_import">Dosya içeri aktar</string>
   <string name="undo">Geri Al</string>
   <string name="undo_action_review">Çalışmayı</string>
   <string name="undo_action_edit">Not düzenlemeyi</string>
@@ -83,8 +99,8 @@
   <string name="contextmenu_deckpicker_collapse_deck">Altdesteleri Gizle</string>
   <string name="contextmenu_deckpicker_inflate_deck">Altdesteleri Göster</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Harici sözlük ayarla</string>
-  <string name="menu_add">Add</string>
-  <string name="menu_add_note">Add note</string>
+  <string name="menu_add">Ekle</string>
+  <string name="menu_add_note">Not ekle</string>
   <string name="menu_download_deck">Deste indir</string>
   <string name="menu_download_shared_deck">Paylaşılan deste</string>
   <string name="menu_my_account">Hesabı eşitle</string>
@@ -102,42 +118,12 @@
   <string name="menu_search">%1$s\'de Ara</string>
   <string name="menu_mark_card">Kartı İşaretle</string>
   <string name="menu_unmark_card">İşaretini Kaldır</string>
-  <string name="new_deck">Create deck</string>
+  <string name="new_deck">Deste oluştur</string>
   <string name="create">Oluştur</string>
-  <string name="new_dynamic_deck">Create filtered deck</string>
+  <string name="new_dynamic_deck">Filtreli deste oluştur</string>
   <string name="studyoptions_feedback">Geribildirim</string>
   <string name="studyoptions_load_tutorial_deck">Eğitime başla</string>
   <string name="night_mode">Gece modu</string>
-  <string name="visit">Ziyaret et</string>
-  <string name="later">Daha sonra</string>
-  <string name="download">İndir</string>
-  <string name="open_collection">Koleksiyon açılıyor.\nLütfen bekleyin...</string>
-  <string name="rebuild_cram_deck">İnekleme destesi yeniden oluşturuluyor.\nLütfen bekleyin...</string>
-  <string name="rebuild_cram_label">Yeniden Oluştur</string>
-  <string name="empty_cram_label">Boş</string>
-  <string name="empty_cram_deck">İnekleme destesi boşaltılıyor.\nLütfen bekleyin...</string>
-  <string name="custom_study_deck_name">Kişiselleştirilmiş çalışma oturumu</string>
-  <string name="custom_study_deck_exists">Lütfen mevcut özelleştirilmiş çalışma destesini yeniden adlandırın.</string>
-  <string name="studyoptions_congrats_finished">Tebrikler! Şimdilik bitirdiniz.</string>
-  <string name="studyoptions_congrats_more_rev">Bugünün çalışma sınırına ulaşıldı, ama hâlâ çalışılmayı bekleyen kartlar var. En uygun belleme için, seçeneklerden günlük sınırı artırabilirsiniz.</string>
-  <string name="studyoptions_congrats_more_new">Daha çalışılacak yeni kartlar var, ama günlük sınıra ulaşıldı. Sınırı seçeneklerden artırabilirsiniz, ama lütfen unutmayın ki bu kısa vâdede çalışma yükünüzü artıracak.</string>
-  <string name="studyoptions_congrats_custom">Normal programın dışında çalışmak için, aşağıdaki Kişisel Çalışma düğmesine basın.</string>
-  <string name="sd_card_not_mounted">SD kart takılı değil.\n\n Destelerinizi telefon hafızasında da saklayabilirsiniz ancak telefon hafızasına erişim kolay olmadığı için bu önerilmez. Tercihlerden erişimi aktif edebilirsiniz. (buraya tıklayarak tercihleri aç).</string>
-  <string name="studyoptions_options">Seçenekler</string>
-  <string name="empty_cloze_warning">Lütfen bu notu düzenleyip bazı boşluklar ekleyin. (%1$s)</string>
-  <string name="help_cloze">Yardım</string>
-  <string name="button_sync">Eşitle</string>
-  <string name="restart">Baştan başlat</string>
-  <string name="do_nothing">Birşey yapma</string>
-  <string name="more_options">Daha Fazla Seçenek</string>
-  <string name="now">Şu anda</string>
-  <string name="back">Geri</string>
-  <string name="ankiweb">AnkiWeb</string>
-  <string name="usb">USB</string>
-  <string name="_import">İçeri aktar</string>
-  <string name="confirm">Onayla</string>
-  <string name="internet">İnternet</string>
-  <string name="pc">PC</string>
   <string-array name="next_review_s">
     <item>1 saniye</item>
     <item>1 dakika</item>
@@ -154,22 +140,20 @@
     <item>%s ay</item>
     <item>%s yıl</item>
   </string-array>
-  <plurals name="deckpicker_title">
-    <item quantity="one">%2$d kartın 1\'i çıkacak (%3$s)</item>
-    <item quantity="other">%2$d kartın %1$d tanesi çıkacak (%3$s)</item>
-  </plurals>
-  <plurals name="deckpicker_title_minutes">
-    <item quantity="one">1 dk.</item>
-    <item quantity="other">%d dk.</item>
-  </plurals>
-  <plurals name="deckpicker_due">
-    <item quantity="one">%2$d\'in 1\'i</item>
-    <item quantity="other">%2$d\'in %1$d\'i</item>
-  </plurals>
-  <plurals name="reviewer_window_title">
-    <item quantity="one">1 dakika kaldı</item>
-    <item quantity="other">%d dakika kaldı</item>
-  </plurals>
+  <string name="visit">Ziyaret et</string>
+  <string name="later">Daha sonra</string>
+  <string name="download">İndir</string>
+  <string name="open_collection">Koleksiyon açılıyor.\nLütfen bekleyin...</string>
+  <string name="rebuild_cram_deck">İnekleme destesi yeniden oluşturuluyor.\nLütfen bekleyin...</string>
+  <string name="rebuild_cram_label">Yeniden Oluştur</string>
+  <string name="empty_cram_label">Boş</string>
+  <string name="empty_cram_deck">İnekleme destesi boşaltılıyor.\nLütfen bekleyin...</string>
+  <string name="custom_study_deck_name">Kişiselleştirilmiş çalışma oturumu</string>
+  <string name="custom_study_deck_exists">Lütfen mevcut özelleştirilmiş çalışma destesini yeniden adlandırın.</string>
+  <string name="studyoptions_congrats_finished">Tebrikler! Şimdilik bitirdiniz.</string>
+  <string name="studyoptions_congrats_more_rev">Bugünün çalışma sınırına ulaşıldı, ama hâlâ çalışılmayı bekleyen kartlar var. En uygun belleme için, seçeneklerden günlük sınırı artırabilirsiniz.</string>
+  <string name="studyoptions_congrats_more_new">Daha çalışılacak yeni kartlar var, ama günlük sınıra ulaşıldı. Sınırı seçeneklerden artırabilirsiniz, ama lütfen unutmayın ki bu kısa vâdede çalışma yükünüzü artıracak.</string>
+  <string name="studyoptions_congrats_custom">Normal programın dışında çalışmak için, aşağıdaki Kişisel Çalışma düğmesine basın.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Yarın; 1 kart çalışılacak ve %2$s.\n Tahminî süre: %3$s</item>
     <item quantity="other">Yarın; %1$d kart çalışılacak ve %2$s.\n Tahminî süre: %3$s</item>
@@ -182,4 +166,20 @@
     <item quantity="one">Tahminî süre: 1 dk.</item>
     <item quantity="other">Tahminî süre: %1$d dk.</item>
   </plurals>
+  <string name="sd_card_not_mounted">SD kart takılı değil.\n\n Destelerinizi telefon hafızasında da saklayabilirsiniz ancak telefon hafızasına erişim kolay olmadığı için bu önerilmez. Tercihlerden erişimi aktif edebilirsiniz. (buraya tıklayarak tercihleri aç).</string>
+  <string name="studyoptions_options">Seçenekler</string>
+  <string name="empty_cloze_warning">Lütfen bu notu düzenleyip bazı boşluklar ekleyin. (%1$s)</string>
+  <string name="help_cloze">Yardım</string>
+  <string name="button_sync">Eşitle</string>
+  <string name="restart">Baştan başlat</string>
+  <string name="do_nothing">Birşey yapma</string>
+  <string name="more_options">Daha Fazla Seçenek</string>
+  <string name="now">Şu anda</string>
+  <string name="back">Geri</string>
+  <string name="ankiweb">AnkiWeb</string>
+  <string name="usb">USB</string>
+  <string name="_import">İçeri aktar</string>
+  <string name="confirm">Onayla</string>
+  <string name="internet">İnternet</string>
+  <string name="pc">PC</string>
 </resources>

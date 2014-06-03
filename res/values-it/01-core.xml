@@ -51,6 +51,22 @@
   <string name="studyoptions_total_cards">Totale carte:</string>
   <string name="studyoptions_eta">Tempo stimato (min):</string>
   <string name="studyoptions_start">Studia ora</string>
+  <plurals name="deckpicker_title">
+    <item quantity="one">1 di %2$d scaduta (%3$s)</item>
+    <item quantity="other">%1$d di %2$d scadute (%3$s)</item>
+  </plurals>
+  <plurals name="deckpicker_title_minutes">
+    <item quantity="one">1 min.</item>
+    <item quantity="other">%d min.</item>
+  </plurals>
+  <plurals name="deckpicker_due">
+    <item quantity="one">1 di %2$d scadute</item>
+    <item quantity="other">%1$d di %2$d da ripetere</item>
+  </plurals>
+  <plurals name="reviewer_window_title">
+    <item quantity="one">ancora 1 minuto</item>
+    <item quantity="other">ancora %d minuti</item>
+  </plurals>
   <string name="type_answer_hint">Digita la risposta</string>
   <string name="show_answer">Mostra la risposta</string>
   <string name="ease1_successive">Ripeti</string>
@@ -108,36 +124,6 @@
   <string name="studyoptions_feedback">Commenti e suggerimenti</string>
   <string name="studyoptions_load_tutorial_deck">Crea mazzo d\'esercizio</string>
   <string name="night_mode">Modalità notturna</string>
-  <string name="visit">Visita</string>
-  <string name="later">Più tardi</string>
-  <string name="download">Download</string>
-  <string name="open_collection">Apertura collezione.\nAttendi...</string>
-  <string name="rebuild_cram_deck">Ricreo mazzo per lo studio focalizzato.\nAttendi...</string>
-  <string name="rebuild_cram_label">Ricrea</string>
-  <string name="empty_cram_label">Svuota</string>
-  <string name="empty_cram_deck">Svuoto mazzo per lo studio focalizzato.\nAttendi...</string>
-  <string name="custom_study_deck_name">Sessione di Studio Personalizzato</string>
-  <string name="custom_study_deck_exists">Rinomina dapprima il mazzo di Studio Personalizzato esistente.</string>
-  <string name="studyoptions_congrats_finished">Complimenti! Per ora hai finito.</string>
-  <string name="studyoptions_congrats_more_rev">Il limite delle ripetizioni per oggi è stato raggiunto, ma ci sono ancora carte che aspettano di essere ripetute. Per un utilizzo ottimale della memoria, considera di aumentare il limite giornaliero nelle opzioni.</string>
-  <string name="studyoptions_congrats_more_new">Ci sono ulteriori carte nuove disponibili, ma il limite giornaliero è stato raggiunto. Puoi aumentare il limite nelle opzioni, ma ricordati che ciò aumenterà il tuo carico di lavoro per le ripetizioni a breve termine.</string>
-  <string name="studyoptions_congrats_custom">Per studiare al di fuori della programmazione normale, clicca sul pulsante \'Studio Personalizzato\' qui sotto.</string>
-  <string name="sd_card_not_mounted">La scheda SD non è montata.\n\nPuoi salvare la tua collezione anche nella memoria interna, ma non è consigliabile poiché non puoi accedere al file così facilmente. È possibile attivare questo nelle preferenze (aprile cliccando su questo testo).</string>
-  <string name="studyoptions_options">Opzioni</string>
-  <string name="empty_cloze_warning">Modifica questa nota e aggiungi testo da completare. (%1$s)</string>
-  <string name="help_cloze">aiuto</string>
-  <string name="button_sync">Sincronizza</string>
-  <string name="restart">Riavvia</string>
-  <string name="do_nothing">Non fare nulla</string>
-  <string name="more_options">Più opzioni</string>
-  <string name="now">Adesso</string>
-  <string name="back">Retro</string>
-  <string name="ankiweb">AnkiWeb</string>
-  <string name="usb">USB</string>
-  <string name="_import">Importazione</string>
-  <string name="confirm">Conferma</string>
-  <string name="internet">Internet</string>
-  <string name="pc">PC</string>
   <string-array name="next_review_s">
     <item>1 secondo</item>
     <item>1 minuto</item>
@@ -154,22 +140,20 @@
     <item>%s mesi</item>
     <item>%s anni</item>
   </string-array>
-  <plurals name="deckpicker_title">
-    <item quantity="one">1 di %2$d scaduta (%3$s)</item>
-    <item quantity="other">%1$d di %2$d scadute (%3$s)</item>
-  </plurals>
-  <plurals name="deckpicker_title_minutes">
-    <item quantity="one">1 min.</item>
-    <item quantity="other">%d min.</item>
-  </plurals>
-  <plurals name="deckpicker_due">
-    <item quantity="one">1 di %2$d scadute</item>
-    <item quantity="other">%1$d di %2$d da ripetere</item>
-  </plurals>
-  <plurals name="reviewer_window_title">
-    <item quantity="one">ancora 1 minuto</item>
-    <item quantity="other">ancora %d minuti</item>
-  </plurals>
+  <string name="visit">Visita</string>
+  <string name="later">Più tardi</string>
+  <string name="download">Download</string>
+  <string name="open_collection">Apertura collezione.\nAttendi...</string>
+  <string name="rebuild_cram_deck">Ricreo mazzo per lo studio focalizzato.\nAttendi...</string>
+  <string name="rebuild_cram_label">Ricrea</string>
+  <string name="empty_cram_label">Svuota</string>
+  <string name="empty_cram_deck">Svuoto mazzo per lo studio focalizzato.\nAttendi...</string>
+  <string name="custom_study_deck_name">Sessione di Studio Personalizzato</string>
+  <string name="custom_study_deck_exists">Rinomina dapprima il mazzo di Studio Personalizzato esistente.</string>
+  <string name="studyoptions_congrats_finished">Complimenti! Per ora hai finito.</string>
+  <string name="studyoptions_congrats_more_rev">Il limite delle ripetizioni per oggi è stato raggiunto, ma ci sono ancora carte che aspettano di essere ripetute. Per un utilizzo ottimale della memoria, considera di aumentare il limite giornaliero nelle opzioni.</string>
+  <string name="studyoptions_congrats_more_new">Ci sono ulteriori carte nuove disponibili, ma il limite giornaliero è stato raggiunto. Puoi aumentare il limite nelle opzioni, ma ricordati che ciò aumenterà il tuo carico di lavoro per le ripetizioni a breve termine.</string>
+  <string name="studyoptions_congrats_custom">Per studiare al di fuori della programmazione normale, clicca sul pulsante \'Studio Personalizzato\' qui sotto.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Domani ci sarà: 1 carta da ripetere e %2$s.\n Durata stimata: %3$s</item>
     <item quantity="other">Domani ci saranno: %1$d carte da ripetere e %2$s.\n Durata stimata: %3$s</item>
@@ -182,4 +166,20 @@
     <item quantity="one">Durata stimata: 1 min.</item>
     <item quantity="other">Durata stimata: %1$d min.</item>
   </plurals>
+  <string name="sd_card_not_mounted">La scheda SD non è montata.\n\nPuoi salvare la tua collezione anche nella memoria interna, ma non è consigliabile poiché non puoi accedere al file così facilmente. È possibile attivare questo nelle preferenze (aprile cliccando su questo testo).</string>
+  <string name="studyoptions_options">Opzioni</string>
+  <string name="empty_cloze_warning">Modifica questa nota e aggiungi testo da completare. (%1$s)</string>
+  <string name="help_cloze">aiuto</string>
+  <string name="button_sync">Sincronizza</string>
+  <string name="restart">Riavvia</string>
+  <string name="do_nothing">Non fare nulla</string>
+  <string name="more_options">Più opzioni</string>
+  <string name="now">Adesso</string>
+  <string name="back">Retro</string>
+  <string name="ankiweb">AnkiWeb</string>
+  <string name="usb">USB</string>
+  <string name="_import">Importazione</string>
+  <string name="confirm">Conferma</string>
+  <string name="internet">Internet</string>
+  <string name="pc">PC</string>
 </resources>

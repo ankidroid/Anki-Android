@@ -29,8 +29,8 @@ Fügen Sie neues Material mit der Desktop-Applikation oder direkt mit AnkiDroid 
 • Fügen Sie Karten über Intents von anderen Programmen (wie z.B. Wörterbüchern) hinzu
 • Unterstützung für andere Schriftarten
 • Ausgebautes Sicherungssystem
-• navigation by swipe, tap
-• customisable
+Navigation durch wischen, berühren
+• anpassbar
 • Dynamische Stapel
 • Nacht-Modus
 • 27 Sprachen

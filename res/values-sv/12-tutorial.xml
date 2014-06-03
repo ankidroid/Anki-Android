@@ -23,7 +23,7 @@
     <item><![CDATA[Ovanför varje svarsknapp hittar du information om tiden till nästa gång detta kort kommer att visas om den knappen används för att svara kortet.]]></item> 
     <item><![CDATA[Tanken är att visa dig kortet igen precis innan du gömmer bort det. Empiriska studier har visat att information kan läras in mest effektivt på det här sättet.]]></item> 
     <item><![CDATA[Lite kort om strukturen i AnkiDroid:<br /><br>All information måste anges som svar och fråga. Om du vill lära dig båda vägarna bör du skapa ett nytt kort som byter plats på svaret och frågan.]]></item> 
-    <item><![CDATA[Kort läggs samman i kortlekar och kan organiseras med hjälp av taggar.]]></item> 
+    <item><![CDATA[Kort läggs samman i kortlekar och kan organiseras med hjälp av etiketter.]]></item> 
     <item><![CDATA[Det finns huvudsakligen två sätt att få nya kort:<br />Antingen lägger du till kortlekar skapade av andra användare (välj &quot;delade kortlekar&quot; i kortlekssammanfattningen) eller skapa dem själv.]]></item> 
     <item><![CDATA[Men att skapa egna kortlekar är troligen bäst för dina egna behov. Du kan göra detta direkt i AnkiDroid...]]></item> 
     <item><![CDATA[Låt oss ta en titt på det översta fältet: <br /> i det vänstra övre hörnet ser du några siffror. Den blå visar hur många nya kort du förväntas göra idag. Den röda räknar antalet felbesvarade kort (som besvarats med &quot;igen&quot;), ]]></item> 

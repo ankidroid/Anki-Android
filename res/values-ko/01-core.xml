@@ -51,6 +51,22 @@
   <string name="studyoptions_total_cards">전체 카드:</string>
   <string name="studyoptions_eta">예상 소요 시간 (분):</string>
   <string name="studyoptions_start">Study Now</string>
+  <plurals name="deckpicker_title">
+    <item quantity="one">%2$d 중 1개 (%3$s초)</item>
+    <item quantity="other">%2$d개 중 %1$d개 남음 (%3$s)</item>
+  </plurals>
+  <plurals name="deckpicker_title_minutes">
+    <item quantity="one">1분.</item>
+    <item quantity="other">%d분.</item>
+  </plurals>
+  <plurals name="deckpicker_due">
+    <item quantity="one">%2$d개 중 1개 남음</item>
+    <item quantity="other">%2$d개 중 %1$d개 남음</item>
+  </plurals>
+  <plurals name="reviewer_window_title">
+    <item quantity="one">1분 남음</item>
+    <item quantity="other">%d분 남음</item>
+  </plurals>
   <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">정답 보기</string>
   <string name="ease1_successive">다시</string>
@@ -108,6 +124,22 @@
   <string name="studyoptions_feedback">피드백</string>
   <string name="studyoptions_load_tutorial_deck">도움말 만들기</string>
   <string name="night_mode">야간 모드</string>
+  <string-array name="next_review_s">
+    <item>1초</item>
+    <item>1분</item>
+    <item>1시간</item>
+    <item>1일</item>
+    <item>1개월</item>
+    <item>1년</item>
+  </string-array>
+  <string-array name="next_review_p">
+    <item>%s초</item>
+    <item>%s분</item>
+    <item>%s시간</item>
+    <item>%s일</item>
+    <item>%s개월</item>
+    <item>%s년</item>
+  </string-array>
   <string name="visit">방문하기</string>
   <string name="later">나중에</string>
   <string name="download">다운로드</string>
@@ -125,6 +157,18 @@
 그러면 단기적으로 공부할 양이 증가한다는 것을 명심하세요.
 </string>
   <string name="studyoptions_congrats_custom">평상시 일정을 넘어 더 공부하려면, 맞춤 학습 버튼을 누르십시오.</string>
+  <plurals name="studyoptions_congrats_message">
+    <item quantity="one">내일의 학습 일정: 복습할 카드 1개 및 %2$s.\n 예상 소요 시간: %3$s</item>
+    <item quantity="other">내일의 학습 일정: 복습할 카드 %1$d개 및 %2$s.\n 예상 소요 시간: %3$s</item>
+  </plurals>
+  <plurals name="studyoptions_congrats_new_cards">
+    <item quantity="one">1개의 새로운 카드</item>
+    <item quantity="other">%1$d개의 새로운 카드</item>
+  </plurals>
+  <plurals name="studyoptions_congrats_eta">
+    <item quantity="one">예상 소요 시간: 1분.</item>
+    <item quantity="other">예상 소요 시간: %1$d분.</item>
+  </plurals>
   <string name="sd_card_not_mounted">SD카드가 삽입되지 않았습니다.\n\n내장 메모리에 컬렉션을 저장할 수 있지만, 파일에 쉽게 접근할 수 없으므로 권장되지 않습니다. 환경 설정에서 이를 활성화할 수 있습니다 (이 텍스트를 눌러서 설정 창을 엽니다).</string>
   <string name="studyoptions_options">학습 옵션</string>
   <string name="empty_cloze_warning">이 노트를 편집하여서 cloze 빈칸을 추가하세요. (%1$s)</string>
@@ -141,48 +185,4 @@
   <string name="confirm">확정</string>
   <string name="internet">인터넷</string>
   <string name="pc">PC</string>
-  <string-array name="next_review_s">
-    <item>1초</item>
-    <item>1분</item>
-    <item>1시간</item>
-    <item>1일</item>
-    <item>1개월</item>
-    <item>1년</item>
-  </string-array>
-  <string-array name="next_review_p">
-    <item>%s초</item>
-    <item>%s분</item>
-    <item>%s시간</item>
-    <item>%s일</item>
-    <item>%s개월</item>
-    <item>%s년</item>
-  </string-array>
-  <plurals name="deckpicker_title">
-    <item quantity="one">%2$d 중 1개 (%3$s초)</item>
-    <item quantity="other">%2$d개 중 %1$d개 남음 (%3$s)</item>
-  </plurals>
-  <plurals name="deckpicker_title_minutes">
-    <item quantity="one">1분.</item>
-    <item quantity="other">%d분.</item>
-  </plurals>
-  <plurals name="deckpicker_due">
-    <item quantity="one">%2$d개 중 1개 남음</item>
-    <item quantity="other">%2$d개 중 %1$d개 남음</item>
-  </plurals>
-  <plurals name="reviewer_window_title">
-    <item quantity="one">1분 남음</item>
-    <item quantity="other">%d분 남음</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_message">
-    <item quantity="one">내일의 학습 일정: 복습할 카드 1개 및 %2$s.\n 예상 소요 시간: %3$s</item>
-    <item quantity="other">내일의 학습 일정: 복습할 카드 %1$d개 및 %2$s.\n 예상 소요 시간: %3$s</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">1개의 새로운 카드</item>
-    <item quantity="other">%1$d개의 새로운 카드</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">예상 소요 시간: 1분.</item>
-    <item quantity="other">예상 소요 시간: %1$d분.</item>
-  </plurals>
 </resources>

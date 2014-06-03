@@ -61,6 +61,19 @@
   <string name="leech_suspend_notification">Карта помечена как \"приставучая\" и отложена</string>
   <string name="leech_notification">Карта помечена как \"приставучая\"</string>
   <string name="corrupt_font">Повреждённый файл шрифта %s</string>
+  <string-array name="browser_column1_headings">
+    <item>Поле поиска</item>
+  </string-array>
+  <string-array name="browser_column2_headings">
+    <item>Ответ</item>
+    <item>Карта</item>
+    <item>Колода</item>
+    <item>Note</item>
+    <item>Question</item>
+    <item>Tags</item>
+    <item>Lapses</item>
+    <item>Reviews</item>
+  </string-array>
   <string name="about_title">О программе</string>
   <string name="cardeditor_title_add_note">Добавить заметку</string>
   <string name="cardeditor_title_edit_card">Изменить заметку</string>
@@ -73,6 +86,14 @@
   <string name="select">Выбрать</string>
   <string name="saving_changes">Сохранение изменений...</string>
   <string name="reordering_cards">Изменение очерёдности карт...</string>
+  <plurals name="timebox_reached">
+    <item quantity="one">1 карта изучена за %2$s</item>
+    <item quantity="other">%1$d карты изучено за %2$s</item>
+  </plurals>
+  <plurals name="timebox_reached_minutes">
+    <item quantity="one">1 минута</item>
+    <item quantity="other">%1$d минут</item>
+  </plurals>
   <string name="studyoptions_welcome_title">Добро пожаловать в AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">Нет доступа к внешнему хранилищу</string>
   <string name="studyoptions_no_external_storage_message">Не доступно внешнее хранилище. AnkiDroid должен иметь доступ к SD-карте для того, чтобы читать и загружать колоды. Убедитесь, что ваша SD-карта смонтирована и попробуйте еще раз.</string>
@@ -90,6 +111,10 @@
   <string name="rename">Переименовать</string>
   <string name="rename_error">Колода %s не может быть переименована</string>
   <string name="default_conf_delete_error">Невозможно удалить параметры по умолчанию</string>
+  <plurals name="factadder_cards_added">
+    <item quantity="one">1 карта добавлена</item>
+    <item quantity="other">%d карт добавлено</item>
+  </plurals>
   <string name="help_title">Справка</string>
   <string name="help_online">Онлайн помощь</string>
   <string name="help_faq">Вопросы и ответы</string>
@@ -98,6 +123,15 @@
   <string name="check_db_message">Проверка базы данных. \nПожалуйста подождите...</string>
   <string name="simple_interface_hint">Пустой %s. Имейте в виду то, что простой интерфейс не может показывать фотографии/звуки и т.д.</string>
   <string name="delete_deck">Удаление колоды...\nПожалуйста подождите...</string>
+  <string-array name="dynOrderLabels">
+    <item>Старейшие появляться первыми</item>
+    <item>Случайно</item>
+    <item>По увеличению интервалов</item>
+    <item>По уменьшению интервалов</item>
+    <item>Наибольшие периоды</item>
+    <item>Порядок просмотра добавлен</item>
+    <item>Соответствующий порядок</item>
+  </string-array>
   <string name="menu_cardbrowser">Редактор карт</string>
   <string name="show_hint">Показывать подсказки</string>
   <string name="pref_lang_other">Языковые настройки</string>
@@ -128,38 +162,4 @@
   <string name="sched_end">(конец)</string>
   <string name="sched_unbury_button">Чтобы увидеть их снова, нажмите кнопку \"Отменить сдвиг\".</string>
   <string name="sched_has_buried">Некоторые связанные или скрытые карты были отложены до следующей сессии.</string>
-  <string-array name="browser_column1_headings">
-    <item>Поле поиска</item>
-  </string-array>
-  <string-array name="browser_column2_headings">
-    <item>Ответ</item>
-    <item>Карта</item>
-    <item>Колода</item>
-    <item>Note</item>
-    <item>Question</item>
-    <item>Tags</item>
-    <item>Lapses</item>
-    <item>Reviews</item>
-  </string-array>
-  <string-array name="dynOrderLabels">
-    <item>Старейшие появляться первыми</item>
-    <item>Случайно</item>
-    <item>По увеличению интервалов</item>
-    <item>По уменьшению интервалов</item>
-    <item>Наибольшие периоды</item>
-    <item>Порядок просмотра добавлен</item>
-    <item>Соответствующий порядок</item>
-  </string-array>
-  <plurals name="timebox_reached">
-    <item quantity="one">1 карта изучена за %2$s</item>
-    <item quantity="other">%1$d карты изучено за %2$s</item>
-  </plurals>
-  <plurals name="timebox_reached_minutes">
-    <item quantity="one">1 минута</item>
-    <item quantity="other">%1$d минут</item>
-  </plurals>
-  <plurals name="factadder_cards_added">
-    <item quantity="one">1 карта добавлена</item>
-    <item quantity="other">%d карт добавлено</item>
-  </plurals>
 </resources>

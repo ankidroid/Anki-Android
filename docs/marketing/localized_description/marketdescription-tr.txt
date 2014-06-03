@@ -29,8 +29,8 @@ Masaüstü uygulaması Anki veya doğrudan Ankidroid yoluyla malzeme ekleyin Uyg
 • sözlük gibi diğer uygulamalardan istek tabanlı kart ekleme
 • hâricî yazı tipi desteği
 • tam yedekleme sistemi
-• navigation by swipe, tap
-• customisable
+• dokunma ve kaydırmalarla gezinme
+• kişiselleştirilebilir
 • dinamik deste kullanımı
 • gece modu
 • 27 dil seçeneği

@@ -80,9 +80,6 @@
   <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; کارتها/روز</string>
   <string name="deck_summary_deck_age">سن دسته: &lt;b&gt;%d&lt;/b&gt; روز</string>
   <string name="deck_summary_all_decks">تمام دسته ها</string>
-  <string name="stats_forecast">پیش بینی</string>
-  <string name="stats_review_count">شماره مرور</string>
-  <string name="stats_review_time">زمان مرور</string>
   <string-array name="next_review_in_s">
     <item>در 1 ثانیه</item>
     <item>در 1 دقیقه</item>
@@ -120,6 +117,9 @@
     <item>هفته</item>
     <item>ماه</item>
   </string-array>
+  <string name="stats_forecast">پیش بینی</string>
+  <string name="stats_review_count">شماره مرور</string>
+  <string name="stats_review_time">زمان مرور</string>
   <string-array name="stats_period">
     <item>1 ماه</item>
     <item>1 سال</item>

@@ -80,11 +80,8 @@
   <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; carte/giorno</string>
   <string name="deck_summary_deck_age">Età del mazzo: &lt;b&gt;%d&lt;/b&gt; giorni</string>
   <string name="deck_summary_all_decks">Tutti i mazzi</string>
-  <string name="stats_forecast">Previsioni</string>
-  <string name="stats_review_count">Conteggio delle ripetizioni</string>
-  <string name="stats_review_time">Durata delle ripetizioni</string>
   <string-array name="next_review_in_s">
-    <item>﻿in 1 secondo</item>
+    <item>in 1 secondo</item>
     <item>in 1 minuto</item>
     <item>in 1 ora</item>
     <item>in 1 giorno</item>
@@ -104,7 +101,7 @@
     <item>1 minuto prima</item>
     <item>1 ora prima</item>
     <item>1 giorno prima</item>
-    <item>﻿1 mese prima</item>
+    <item>1 mese prima</item>
     <item>1 anno prima</item>
   </string-array>
   <string-array name="next_review_before_p">
@@ -120,6 +117,9 @@
     <item>Settimane</item>
     <item>Mesi</item>
   </string-array>
+  <string name="stats_forecast">Previsioni</string>
+  <string name="stats_review_count">Conteggio delle ripetizioni</string>
+  <string name="stats_review_time">Durata delle ripetizioni</string>
   <string-array name="stats_period">
     <item>1 mese</item>
     <item>1 anno</item>

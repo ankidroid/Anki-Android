@@ -81,7 +81,7 @@
   <string name="col_path_summ">XXX</string>
   <string name="fullscreen_review">Fullscreen mode</string>
   <string name="fullscreen_review_summ">Use all available screen space</string>
-  <string name="gestures">Enable gestures</string>
+  <string name="gestures">Habilitar gestos</string>
   <string name="gestures_summ">Use swipes and taps to perform actions such as answering and editing cards.</string>
   <string name="gestures_swipe_up">Deslizar para cima</string>
   <string name="gestures_swipe_down">Deslizar para baixo</string>
@@ -117,7 +117,7 @@
   <string name="language">Idioma</string>
   <string name="language_summ">XXX</string>
   <string name="language_system">Idioma do Sistema</string>
-  <string name="notification_pref">Notifications</string>
+  <string name="notification_pref">Notificações</string>
   <string name="notification_minimum_cards_due">Notify when more than</string>
   <string name="notification_minimum_cards_due_summary">XXX cards due</string>
   <string name="notification_minimum_cards_due_vibrate">Vibrate</string>
@@ -185,6 +185,10 @@
   <string name="deck_conf_deck_description">Descrição do deck</string>
   <string name="deck_conf_pref_cat_options">Opções</string>
   <string name="deck_conf_group">Grupo</string>
+  <plurals name="deck_conf_group_summ">
+    <item quantity="one">%1$s\n1 deck usa este grupo</item>
+    <item quantity="other">%1$s\n%2$d decks usam este grupo</item>
+  </plurals>
   <string name="deck_conf_new_cards">Novos cartões</string>
   <string name="deck_conf_rev_cards">Revisões</string>
   <string name="deck_conf_lps_cards">Lapsos</string>
@@ -227,6 +231,10 @@
   <string name="deck_conf_remove_title">Remover</string>
   <string name="deck_conf_remove_message">Remover o grupo de opções atual?</string>
   <string name="deck_conf_set_subdecks">Definir para todos os subdecks</string>
+  <plurals name="deck_conf_set_subdecks_summ">
+    <item quantity="one">1 subdeck usará este grupo</item>
+    <item quantity="other">%s subdecks usarão este grupo</item>
+  </plurals>
   <string name="deck_conf_set_subdecks_title">Definir para todos os subdecks</string>
   <string name="deck_conf_set_subdecks_message">Definir o atual grupo de opções para todos os subdecks deste deck?</string>
   <string name="pref_browser_editor_font">Browser and editor font</string>
@@ -241,12 +249,4 @@
   <string name="deck_conf_cram_reschedule_summ">Reagendar cartões baseado nas minhas respostas deste deck</string>
   <string name="deck_conf_cram_steps">Passos personalizados</string>
   <string name="deck_conf_cram_steps_summ">Definir passoss personalizados</string>
-  <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n1 deck usa este grupo</item>
-    <item quantity="other">%1$s\n%2$d decks usam este grupo</item>
-  </plurals>
-  <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">1 subdeck usará este grupo</item>
-    <item quantity="other">%s subdecks usarão este grupo</item>
-  </plurals>
 </resources>

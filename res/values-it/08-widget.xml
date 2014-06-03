@@ -43,12 +43,6 @@
   <string name="widget_minimum_cards_due_notification_ticker_text">%d carte AnkiDroid scadute</string>
   <string name="widget_no_cards_due">Nessuna carta scaduta</string>
   <string name="widget_loading">Widget caricamento...</string>
-  <string name="widget_medium">AnkiDroid medio</string>
-  <string name="widget_small">AnkiDroid piccolo</string>
-  <string name="widget_big">AnkiDroid grande</string>
-  <string name="widget_big_restrictions_dialog">A causa di alcune restrizioni del widget framework di Android questo widget può solo mostrare il testo e non anche immagini/suoni etc.</string>
-  <string name="open_in_reviewer">Apri mazzo in AnkiDroid</string>
-  <string name="widget_big_tomorrow_due">Scadono domani:</string>
   <plurals name="widget_cards_in_decks_due">
     <item quantity="one">1 carta scaduta in %2$s</item>
     <item quantity="other">%1$d carte scadute in %2$s</item>
@@ -57,8 +51,14 @@
     <item quantity="one">1 corso</item>
     <item quantity="other">%1$d corsi</item>
   </plurals>
+  <string name="widget_medium">AnkiDroid medio</string>
+  <string name="widget_small">AnkiDroid piccolo</string>
+  <string name="widget_big">AnkiDroid grande</string>
+  <string name="widget_big_restrictions_dialog">A causa di alcune restrizioni del widget framework di Android questo widget può solo mostrare il testo e non anche immagini/suoni etc.</string>
+  <string name="open_in_reviewer">Apri mazzo in AnkiDroid</string>
   <plurals name="widget_big_eta">
     <item quantity="one">Durata stimata: 1 min.</item>
     <item quantity="other">Durata stimata: %d min.</item>
   </plurals>
+  <string name="widget_big_tomorrow_due">Scadono domani:</string>
 </resources>

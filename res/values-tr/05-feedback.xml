@@ -42,7 +42,7 @@
   <string name="error_ok">Hataları bildir</string>
   <string name="error_cancel">Hataları bildirme</string>
   <string name="error_reporting_choice">Hata bildirme modu</string>
-  <string name="error_reporting_choice_summary">Hatalar kendiliğinden bildirilebilir, hiç bildirilmeyebilir, veya size sorulabilir.</string>
+  <string name="error_reporting_choice_summary">Hatalar otomatik olarak bildirilebilir, hiç bildirilmeyebilir, veya size sorulabilir</string>
   <string name="feedback_disclaimer">Tekzip: Eposta adresinizi, telefon numaranızı, IP adresinizi, telefon IMEI\'ınızı veya başka hiçbir kişisel bilginizi toplamıyoruz. Cihazınız üreticisi, modeli, Android sürümü ve tabii bildirdiğiniz hataların kendileri hakkında bazı bilgileri topluyoruz.</string>
   <string name="feedback_title">Geribildirim</string>
   <string name="feedback_send_feedback">Görüşlerinizi bizimle paylaşın</string>

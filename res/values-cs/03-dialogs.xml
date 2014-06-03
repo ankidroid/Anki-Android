@@ -51,6 +51,13 @@
   <string name="no_tts_available_title">Předčítání</string>
   <string name="no_tts_available_message">Žádný jazyk k předčítání není k dispozici</string>
   <string name="tts_no_tts">Nemluv</string>
+  <string-array name="about_content">
+    <item><![CDATA[<h2>%1$s:<br/>Flashcards pro Android</h2>AnkiDroid je flashcard aplikace, která je plně kompatibilní s programem pro pc  <a href="%2$s">Anki</a>. Můžete vytvářet, stahovat a učit se v obou, v AnkiDroid nebo Anki pro pc, a vše mezi nimi velmi jednoduše synchronizovat.]]></item>
+    <item><![CDATA[Pomozte nám, prosím, zlepšit AnkiDroid a nahlašte nám chyby <a href="%1$s">zde</a>; nové nápady jsou vítany také! Prosím, využijte <a href="%2$s">wiki</a> a podělte se s námi o poznatky na <a href="%3$s">fóru</a>.]]></item>
+    <item><![CDATA[AnkiDroid je <a href="%1$s">open source program<a/>, tak se každý může <a href="%2$s">připojit</a> k <a href="%3$s">přispěvovatelům</a>:-)]]></item>
+    <item><![CDATA[Ne jen vývojáři mohou pomoci, např. můžete pomoci s <a href="%1$s">překladem</a> AnkiDroid, aktualizovat wiki dokumentaci a náhledy obrazovek, <a href="%2$s">finančně přispět</a> na program Anki, nebo psát do blogu o AnkiDroidu!]]></item>
+    <item><![CDATA[AnkiDroid je publikován pod <a href="%1$s">GNU-GPL v3 licencí</a> a zdrojové kódy jsou dostupné <a href="%2$s">zde</a>.]]></item>
+  </string-array>
   <string name="dont_show_again">Již nezobrazovat</string>
   <string name="sync_log_title">Protokol synchronizace</string>
   <string name="notify_ticker">Aktualizace aplikace</string>
@@ -113,11 +120,4 @@
   <string name="import_media_count">Import mediálních souborů %1$d%%\nProsím čekejte&#8230;</string>
   <string name="import_update_counts">Aktualizace počtu balíčků. \nProsím čekejte&#8230;</string>
   <string name="import_add_progress">Rozbalování archivu %1$s\n• Import poznámek %2$d%%\n• Import karet %3$d%%\n• Čištění %4$s</string>
-  <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s:<br/>Flashcards pro Android</h2>AnkiDroid je flashcard aplikace, která je plně kompatibilní s programem pro pc  <a href="%2$s">Anki</a>. Můžete vytvářet, stahovat a učit se v obou, v AnkiDroid nebo Anki pro pc, a vše mezi nimi velmi jednoduše synchronizovat.]]></item>
-    <item><![CDATA[Pomozte nám, prosím, zlepšit AnkiDroid a nahlašte nám chyby <a href="%1$s">zde</a>; nové nápady jsou vítany také! Prosím, využijte <a href="%2$s">wiki</a> a podělte se s námi o poznatky na <a href="%3$s">fóru</a>.]]></item>
-    <item><![CDATA[AnkiDroid je <a href="%1$s">open source program<a/>, tak se každý může <a href="%2$s">připojit</a> k <a href="%3$s">přispěvovatelům</a>:-)]]></item>
-    <item><![CDATA[Ne jen vývojáři mohou pomoci, např. můžete pomoci s <a href="%1$s">překladem</a> AnkiDroid, aktualizovat wiki dokumentaci a náhledy obrazovek, <a href="%2$s">finančně přispět</a> na program Anki, nebo psát do blogu o AnkiDroidu!]]></item>
-    <item><![CDATA[AnkiDroid je publikován pod <a href="%1$s">GNU-GPL v3 licencí</a> a zdrojové kódy jsou dostupné <a href="%2$s">zde</a>.]]></item>
-  </string-array>
 </resources>

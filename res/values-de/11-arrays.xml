@@ -53,7 +53,7 @@
     <item>100</item>
     <item>150</item>
     <item>200</item>
-    <item>Never notify</item>
+    <item>Nie benachrichtigen</item>
   </string-array>
   <string-array name="cram_review_order_labels">
     <item>Älteste zuerst</item>
@@ -122,7 +122,7 @@
     <item>Zufällig</item>
     <item>Steigende Intervalle</item>
     <item>Sinkende Intervalle</item>
-    <item>Am häufigsten vergessen</item>
+    <item>Meiste Fehlschläge</item>
     <item>Hinzufügungsreihenfolge</item>
     <item>Fälligkeitsreihenfolge</item>
     <item>Zuletzt hinzugefügte zuerst</item>
@@ -134,7 +134,7 @@
     <item>Im Voraus lernen</item>
     <item>Zufällige Kartenauswahl lernen</item>
     <item>Zeige Vorschau von neuen Karten</item>
-    <item>Auf bestimmte Tags beschränken</item>
+    <item>Auf bestimmte Schlagworte beschränken</item>
   </string-array>
   <string-array name="add_to_cur_labels">
     <item>Aktuellen Stapel verwenden</item>

@@ -80,9 +80,6 @@
   <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; Karten/Tag</string>
   <string name="deck_summary_deck_age">Stapelalter: &lt;b&gt;%d&lt;/b&gt; Tage</string>
   <string name="deck_summary_all_decks">Alle Stapel</string>
-  <string name="stats_forecast">Vorausschau</string>
-  <string name="stats_review_count">Anzahl Wiederholungen</string>
-  <string name="stats_review_time">Lernzeit</string>
   <string-array name="next_review_in_s">
     <item>in 1 Sekunde</item>
     <item>in 1 Minute</item>
@@ -120,6 +117,9 @@
     <item>Wochen</item>
     <item>Monate</item>
   </string-array>
+  <string name="stats_forecast">Vorausschau</string>
+  <string name="stats_review_count">Anzahl Wiederholungen</string>
+  <string name="stats_review_time">Lernzeit</string>
   <string-array name="stats_period">
     <item>1 Monat</item>
     <item>1 Jahr</item>

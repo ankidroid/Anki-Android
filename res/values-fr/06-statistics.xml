@@ -80,9 +80,6 @@
   <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; cartes p. jour</string>
   <string name="deck_summary_deck_age">Âge du paquet :  &lt;b&gt;%d&lt;/b&gt; jours</string>
   <string name="deck_summary_all_decks">Tous les paquets</string>
-  <string name="stats_forecast">Prévisions</string>
-  <string name="stats_review_count">Nombre de révisions</string>
-  <string name="stats_review_time">Temps de révision</string>
   <string-array name="next_review_in_s">
     <item>dans 1 seconde</item>
     <item>dans 1 minute</item>
@@ -120,6 +117,9 @@
     <item>semaines</item>
     <item>mois</item>
   </string-array>
+  <string name="stats_forecast">Prévisions</string>
+  <string name="stats_review_count">Nombre de révisions</string>
+  <string name="stats_review_time">Temps de révision</string>
   <string-array name="stats_period">
     <item>1 mois</item>
     <item>1 année</item>

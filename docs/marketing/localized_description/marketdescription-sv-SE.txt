@@ -29,8 +29,8 @@ Lägga till material genom skrivbordsprogrammet Anki eller direkt via Ankidroid.
 • lägga till kort från andra program som t.ex. ordlistor
 • stöd för anpassade teckensnitt
 • fullständigt säkerhetskopieringssystem
-• navigation by swipe, tap
-• customisable
+• navigering med svepgester, knackningar
+• anpassningsbar
 • dynamisk hantering av kortlekar
 • nattläge
 • översatt till 27 språk

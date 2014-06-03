@@ -41,26 +41,26 @@
 <resources>
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_reviewing">Ripetizioni</string>
-  <string name="pref_cat_reviewer_behaviour">Behavior</string>
-  <string name="pref_cat_flashcard">Display</string>
+  <string name="pref_cat_reviewer_behaviour">Comportamento</string>
+  <string name="pref_cat_flashcard">Visualizzazione</string>
   <string name="pref_cat_whiteboard">Lavagna</string>
-  <string name="pref_cat_automatic_display">Automatic Display Answer</string>
-  <string name="pref_cat_fonts_formatting">Fonts and Style</string>
-  <string name="pref_cat_fonts">Font Selection</string>
-  <string name="pref_cat_fonts_size">Size</string>
+  <string name="pref_cat_automatic_display">Visualizzazione automatica risposta</string>
+  <string name="pref_cat_fonts_formatting">Tipi di carattere e stile</string>
+  <string name="pref_cat_fonts">Selezione del tipo di carattere</string>
+  <string name="pref_cat_fonts_size">Dimensione</string>
   <string name="pref_cat_gestures">Taps and Swipes</string>
   <string name="pref_cat_actions">Azioni</string>
-  <string name="pref_cat_advanced">Advanced</string>
+  <string name="pref_cat_advanced">Avanzate</string>
   <string name="pref_cat_performance">Prestazioni</string>
-  <string name="pref_cat_workarounds">Workarounds</string>
-  <string name="pref_cat_plugins">Plugins</string>
-  <string name="enable_whiteboard">Enable whiteboard</string>
+  <string name="pref_cat_workarounds">Soluzioni alternative</string>
+  <string name="pref_cat_plugins">Plugin</string>
+  <string name="enable_whiteboard">Abilita la lavagna</string>
   <string name="show_whiteboard_summ">Consente di scrivere sullo schermo</string>
-  <string name="whiteboard_stroke_width">Stroke width</string>
+  <string name="whiteboard_stroke_width">Spessore tratto</string>
   <string name="whiteboard_stroke_width_summ">XXX</string>
-  <string name="whiteboard_black">Monochrome strokes</string>
-  <string name="whiteboard_black_summ">Uses less memory, but does not work in night mode</string>
-  <string name="write_answers_disable">Disable typing in answer</string>
+  <string name="whiteboard_black">Tratti monocromatici</string>
+  <string name="whiteboard_black_summ">Utilizza meno memoria, ma non funziona in modalità notte</string>
+  <string name="write_answers_disable">Disabilita digitazione della risposta</string>
   <string name="write_answers_disable_summ">Prevents the keyboard from appearing on flashcards containing typed fields</string>
   <string name="text_selection_click">Longclick workaround</string>
   <string name="text_selection_click_summ">Attiva questo se non sei in grado di iniziare la selezione di testo con un clic lungo</string>
@@ -119,7 +119,7 @@
   <string name="language_system">Lingua del sistema</string>
   <string name="notification_pref">Notifications</string>
   <string name="notification_minimum_cards_due">Notify when more than</string>
-  <string name="notification_minimum_cards_due_summary">XXX cards due</string>
+  <string name="notification_minimum_cards_due_summary">XXX carte scadute</string>
   <string name="notification_minimum_cards_due_vibrate">Vibrate</string>
   <string name="notification_minimum_cards_due_blink">Blink light</string>
   <string name="timeout_answer_text">Mostra automaticamente la risposta</string>
@@ -152,7 +152,7 @@
   <string name="time_limit">Limite di tempo per sessione</string>
   <string name="time_limit_summ">XXX min</string>
   <string name="day_offset">Inizio del giorno successivo</string>
-  <string name="day_offset_summ">XXX hours past midnight</string>
+  <string name="day_offset_summ">XXX ore dopo mezzanotte</string>
   <string name="input_workaround">Input workaround</string>
   <string name="input_workaround_summ">Workaround for focusing problems on HTML input boxes. Causes problems on several devices</string>
   <string name="pref_cardbrowser_skip_init_search">Fast card browser open</string>
@@ -185,6 +185,10 @@
   <string name="deck_conf_deck_description">Descrizione del mazzo</string>
   <string name="deck_conf_pref_cat_options">Opzioni</string>
   <string name="deck_conf_group">Gruppo</string>
+  <plurals name="deck_conf_group_summ">
+    <item quantity="one">%1$s\n1 mazzo utilizza questo gruppo</item>
+    <item quantity="other">%1$s\n%2$d mazzi utilizzano questo gruppo</item>
+  </plurals>
   <string name="deck_conf_new_cards">Carte nuove</string>
   <string name="deck_conf_rev_cards">Ripetizioni</string>
   <string name="deck_conf_lps_cards">Errori</string>
@@ -227,6 +231,10 @@
   <string name="deck_conf_remove_title">Rimuovi</string>
   <string name="deck_conf_remove_message">Rimuovere il gruppo di opzioni attuale?</string>
   <string name="deck_conf_set_subdecks">Imposta per tutti i sottomazzi</string>
+  <plurals name="deck_conf_set_subdecks_summ">
+    <item quantity="one">1 sottomazzo utilizzerà questo gruppo</item>
+    <item quantity="other">%s sottomazzi utilizzeranno questo gruppo</item>
+  </plurals>
   <string name="deck_conf_set_subdecks_title">Imposta per tutti i sottomazzi</string>
   <string name="deck_conf_set_subdecks_message">Impostare il gruppo di opzioni attuale per tutti i sottomazzi di questo mazzo?</string>
   <string name="pref_browser_editor_font">Browser and editor font</string>
@@ -241,12 +249,4 @@
   <string name="deck_conf_cram_reschedule_summ">Ripianifica le carte considerando le mie risposte in questo mazzo</string>
   <string name="deck_conf_cram_steps">Passi personalizzati</string>
   <string name="deck_conf_cram_steps_summ">Definisci passi personalizzati</string>
-  <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n1 mazzo utilizza questo gruppo</item>
-    <item quantity="other">%1$s\n%2$d mazzi utilizzano questo gruppo</item>
-  </plurals>
-  <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">1 sottomazzo utilizzerà questo gruppo</item>
-    <item quantity="other">%s sottomazzi utilizzeranno questo gruppo</item>
-  </plurals>
 </resources>

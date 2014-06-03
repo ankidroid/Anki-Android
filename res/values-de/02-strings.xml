@@ -47,20 +47,33 @@
   <string name="CardEditorNoteDeck">Notiz-Stapel: %s</string>
   <string name="CardEditorModel">Notiztyp: %s</string>
   <string name="CardEditorTags">Schlagworte: %1$s</string>
-  <string name="add_new_filter_tags">Add/Filter tags</string>
+  <string name="add_new_filter_tags">Schlagworte hinzfügen/filtern</string>
   <string name="note_type">Notiztyp</string>
   <string name="card_type">Kartentyp</string>
-  <string name="filter_tags">Filter tags</string>
+  <string name="filter_tags">Schlagworte filtern</string>
   <string name="sdcard_missing_message">Die SD-Karte ist nicht verfügbar, da sie als USB-Speicher verwendet wird. Trennen Sie die Verbindung, um auf Ihre Stapel zuzugreifen.</string>
   <string name="show_whiteboard">Whiteboard an</string>
   <string name="hide_whiteboard">Whiteboard aus</string>
   <string name="clear_whiteboard">Whiteboard säubern</string>
-  <string name="replay_audio">Replay audio</string>
+  <string name="replay_audio">Audio wiederholen</string>
   <string name="cram_edit_warning">Kartenbearbeitung während des Paukens nicht erlaubt</string>
   <string name="suspend_leeches">Lernbremsen aussetzen</string>
   <string name="leech_suspend_notification">Karte als Lernbremse markiert und ausgesetzt</string>
   <string name="leech_notification">Karte als Lernbremse markiert</string>
   <string name="corrupt_font">Fehlerhafte Schriftartdatei %s</string>
+  <string-array name="browser_column1_headings">
+    <item>Suchfeld</item>
+  </string-array>
+  <string-array name="browser_column2_headings">
+    <item>Antwort</item>
+    <item>Karte</item>
+    <item>Stapel</item>
+    <item>Notiz</item>
+    <item>Frage</item>
+    <item>Schlagworte</item>
+    <item>Fehlschläge</item>
+    <item>Reviews</item>
+  </string-array>
   <string name="about_title">Über</string>
   <string name="cardeditor_title_add_note">Notiz hinzufügen</string>
   <string name="cardeditor_title_edit_card">Notiz bearbeiten</string>
@@ -73,6 +86,14 @@
   <string name="select">Auswählen</string>
   <string name="saving_changes">Änderungen werden gespeichert…</string>
   <string name="reordering_cards">Sortiere Karten um...</string>
+  <plurals name="timebox_reached">
+    <item quantity="one">1 Karte gelernt in %2$s</item>
+    <item quantity="other">%1$d Karten gelernt in %2$s</item>
+  </plurals>
+  <plurals name="timebox_reached_minutes">
+    <item quantity="one">1 Minute</item>
+    <item quantity="other">%1$d Minuten</item>
+  </plurals>
   <string name="studyoptions_welcome_title">Willkommen in AnkiDroid!</string>
   <string name="studyoptions_no_external_storage_title">Externer Speicher nicht verfügbar</string>
   <string name="studyoptions_no_external_storage_message">Kein externer Speicher verfügbar. AnkiDroid benötigt Zugang zur SD-Karte, um Anki-Stapel zu öffnen und zu lesen. Überprüfen Sie, ob Ihre SD-Karte eingehängt ist, und versuchen Sie es erneut.</string>
@@ -83,13 +104,17 @@
   <string name="card_editor_reset">Zurücksetzen</string>
   <string name="card_editor_copy_card">Karte kopieren</string>
   <string name="card_editor_reset_card">Fortschritt zurücksetzen</string>
-  <string name="card_editor_preview_card">Preview</string>
+  <string name="card_editor_preview_card">Vorschau</string>
   <string name="error_insufficient_memory">Vorgang wegen unzureichenden Gerätespeichers nicht möglich</string>
   <string name="tutorial_load">Erstelle Einführungsstapel.\n Bitte warten…</string>
   <string name="tutorial_loading_error">Einführungsstapel konnte nicht erstellt werden</string>
   <string name="rename">Umbenennen</string>
   <string name="rename_error">Stapel %s konnte nicht umbenannt werden</string>
   <string name="default_conf_delete_error">Die Standard-Optionengruppe kann nicht gelöscht werden</string>
+  <plurals name="factadder_cards_added">
+    <item quantity="one">1 Karte hinzugefügt</item>
+    <item quantity="other">%d Karten hinzugefügt</item>
+  </plurals>
   <string name="help_title">Hilfe</string>
   <string name="help_online">Onlinehilfe</string>
   <string name="help_faq">Häufig gestellte Fragen</string>
@@ -98,6 +123,15 @@
   <string name="check_db_message">Prüfe Datenbank.\nBitte warten...</string>
   <string name="simple_interface_hint">Leere %s. Beachten Sie, dass die vereinfachte Oberfläche keine Bilder/Sounds etc. anzeigen kann.</string>
   <string name="delete_deck">Lösche Stapel…\nBitte warten.</string>
+  <string-array name="dynOrderLabels">
+    <item>Am frühesten gesehene zuerst</item>
+    <item>Zufällig</item>
+    <item>Steigende Intervalle</item>
+    <item>Sinkende Intervalle</item>
+    <item>Meiste Fehlschläge</item>
+    <item>Erstellungsreihenfolge</item>
+    <item>Fälligkeitsreihenfolge</item>
+  </string-array>
   <string name="menu_cardbrowser">Kartenübersicht</string>
   <string name="show_hint">Hinweis zeigen</string>
   <string name="pref_lang_other">Spracheinstellungen</string>
@@ -126,40 +160,6 @@
   <string name="template_error_detail">Die Vorlage für diese Karte enthält einen Fehler.</string>
   <string name="template_error_fix">Bitte benutzen sie den Karteneditor der Desktop-Anwendung um den Fehler zu beheben.</string>
   <string name="sched_end">(Ende)</string>
-  <string name="sched_unbury_button">Um sie jetzt zu sehen, tippen Sie auf „Vorläufiges Aussetzen aufheben“.</string>
+  <string name="sched_unbury_button">Um sie jetzt zu sehen, tippen Sie auf „Zurückstellen aufheben“.</string>
   <string name="sched_has_buried">Einige verwandte oder vorläufig ausgesetzte Karten wurden auf eine spätere Sitzung verschoben.</string>
-  <string-array name="browser_column1_headings">
-    <item>Suchfeld</item>
-  </string-array>
-  <string-array name="browser_column2_headings">
-    <item>Antwort</item>
-    <item>Karte</item>
-    <item>Stapel</item>
-    <item>Note</item>
-    <item>Question</item>
-    <item>Tags</item>
-    <item>Lapses</item>
-    <item>Reviews</item>
-  </string-array>
-  <string-array name="dynOrderLabels">
-    <item>Am frühesten gesehene zuerst</item>
-    <item>Zufällig</item>
-    <item>Steigende Intervalle</item>
-    <item>Sinkende Intervalle</item>
-    <item>Meiste Fehler</item>
-    <item>Erstellungsreihenfolge</item>
-    <item>Fälligkeitsreihenfolge</item>
-  </string-array>
-  <plurals name="timebox_reached">
-    <item quantity="one">1 Karte gelernt in %2$s</item>
-    <item quantity="other">%1$d Karten gelernt in %2$s</item>
-  </plurals>
-  <plurals name="timebox_reached_minutes">
-    <item quantity="one">1 Minute</item>
-    <item quantity="other">%1$d Minuten</item>
-  </plurals>
-  <plurals name="factadder_cards_added">
-    <item quantity="one">1 Karte hinzugefügt</item>
-    <item quantity="other">%d Karten hinzugefügt</item>
-  </plurals>
 </resources>

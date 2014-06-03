@@ -39,6 +39,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <plurals name="card_browser_subtitle">
+    <item quantity="one">%2$d개 중 1개의 카드 봄</item>
+    <item quantity="other">%1$d 중 %2$d 카드 표시</item>
+  </plurals>
   <string name="card_browser_all_decks">모든 덱</string>
   <string name="card_browser_load">카드를 불러오는 중.\n잠시만 기다려 주세요...</string>
   <string name="card_browser_cardloading_error">카드를 불러오는데 오류가 발생했습니다. 이는 장치 메모리 제한 때문일 가능성이 있습니다. 보다 적은 용량의 덱을 열어 다시 시도해보세요</string>
@@ -90,8 +94,4 @@
     <item>복습에 따라</item>
     <item>틀린 횟수에 의해</item>
   </string-array>
-  <plurals name="card_browser_subtitle">
-    <item quantity="one">%2$d개 중 1개의 카드 봄</item>
-    <item quantity="other">%1$d 중 %2$d 카드 표시</item>
-  </plurals>
 </resources>

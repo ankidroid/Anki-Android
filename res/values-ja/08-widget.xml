@@ -43,12 +43,6 @@
   <string name="widget_minimum_cards_due_notification_ticker_text">残り%d枚</string>
   <string name="widget_no_cards_due">期限切れ無し</string>
   <string name="widget_loading">ウィジェットをロード中...</string>
-  <string name="widget_medium">AnkiDroid 中</string>
-  <string name="widget_small">AnkiDroid 小</string>
-  <string name="widget_big">AnkiDroid 大</string>
-  <string name="widget_big_restrictions_dialog">Androidウィジェットの仕組みの制限により、このウィジェットが表示できるのはテキストのみで画像や音声などはできません。</string>
-  <string name="open_in_reviewer">AnkiDroidで単語帳を開く</string>
-  <string name="widget_big_tomorrow_due">明日が期限のカード:</string>
   <plurals name="widget_cards_in_decks_due">
     <item quantity="one">%2$s中1枚が期限です</item>
     <item quantity="other">%2$s中%1$d枚が期限です</item>
@@ -57,8 +51,14 @@
     <item quantity="one">1つの単語帳</item>
     <item quantity="other">%1$dつの単語帳</item>
   </plurals>
+  <string name="widget_medium">AnkiDroid 中</string>
+  <string name="widget_small">AnkiDroid 小</string>
+  <string name="widget_big">AnkiDroid 大</string>
+  <string name="widget_big_restrictions_dialog">Androidウィジェットの仕組みの制限により、このウィジェットが表示できるのはテキストのみで画像や音声などはできません。</string>
+  <string name="open_in_reviewer">AnkiDroidで単語帳を開く</string>
   <plurals name="widget_big_eta">
     <item quantity="one">予想時間: 1 分</item>
     <item quantity="other">予想時間: %d 分</item>
   </plurals>
+  <string name="widget_big_tomorrow_due">明日が期限のカード:</string>
 </resources>

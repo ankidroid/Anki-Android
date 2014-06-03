@@ -51,6 +51,13 @@
   <string name="no_tts_available_title">Text-to-Speech</string>
   <string name="no_tts_available_message">No text-to-speech language available</string>
   <string name="tts_no_tts">Không phát âm</string>
+  <string-array name="about_content">
+    <item><![CDATA[<h2>%1$s:<br/>Flashcards for Android</h2>AnkiDroid is a flashcard application which is fully compatible with the desktop software <a href="%2$s">Anki</a>. You can create, download and learn contents on both, AnkiDroid or Anki Desktop, and synchronize them very easily.]]></item>
+    <item><![CDATA[To help us make AnkiDroid better, please report any bug <a href="%1$s">here</a>; new feature ideas are very welcome too! Please use the <a href="%2$s">wiki</a> and say Hi on the <a href="%3$s">forum</a>.]]></item>
+    <item><![CDATA[AnkiDroid là <a href="%1$s">phần mềm nguồn mở<a/>, do đó, tất cả mọi người đều được khuyến khích <a href="%2$s">tham gia</a> vào <a href="%3$s">hội những người đóng góp</a> :-)]]></item>
+    <item><![CDATA[Non-developers can also help, for instance by <a href="%1$s">translating</a> AnkiDroid, updating the wiki and screenshots, <a href="%2$s">donating</a> to Anki Desktop, or blogging about AnkiDroid!]]></item>
+    <item><![CDATA[AnkiDroid được phát hành theo <a href="%1$s">giấy phép GNU-GPL v3</a> và mã nguồn có sẵn <a href="%2$s">tại đây</a>.]]></item>
+  </string-array>
   <string name="dont_show_again">Don\'t show again</string>
   <string name="sync_log_title">Sync Log</string>
   <string name="notify_ticker">Cập Nhật ứng dụng</string>
@@ -113,11 +120,4 @@
   <string name="import_media_count">Importing media files %1$d%%\nPlease wait&#8230;</string>
   <string name="import_update_counts">Updating deck counts.\nPlease wait&#8230;</string>
   <string name="import_add_progress">• Unpacking archive %1$s\n• Import of notes %2$d%%\n• Import of cards %3$d%%\n• Cleanup %4$s</string>
-  <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s:<br/>Flashcards for Android</h2>AnkiDroid is a flashcard application which is fully compatible with the desktop software <a href="%2$s">Anki</a>. You can create, download and learn contents on both, AnkiDroid or Anki Desktop, and synchronize them very easily.]]></item>
-    <item><![CDATA[To help us make AnkiDroid better, please report any bug <a href="%1$s">here</a>; new feature ideas are very welcome too! Please use the <a href="%2$s">wiki</a> and say Hi on the <a href="%3$s">forum</a>.]]></item>
-    <item><![CDATA[AnkiDroid là <a href="%1$s">phần mềm nguồn mở<a/>, do đó, tất cả mọi người đều được khuyến khích <a href="%2$s">tham gia</a> vào <a href="%3$s">hội những người đóng góp</a> :-)]]></item>
-    <item><![CDATA[Non-developers can also help, for instance by <a href="%1$s">translating</a> AnkiDroid, updating the wiki and screenshots, <a href="%2$s">donating</a> to Anki Desktop, or blogging about AnkiDroid!]]></item>
-    <item><![CDATA[AnkiDroid được phát hành theo <a href="%1$s">giấy phép GNU-GPL v3</a> và mã nguồn có sẵn <a href="%2$s">tại đây</a>.]]></item>
-  </string-array>
 </resources>

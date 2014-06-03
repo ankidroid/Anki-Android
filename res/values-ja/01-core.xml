@@ -51,7 +51,23 @@
   <string name="studyoptions_total_cards">カードの総数</string>
   <string name="studyoptions_eta">推定時間 (分):</string>
   <string name="studyoptions_start">学習開始</string>
-  <string name="type_answer_hint">Type answer</string>
+  <plurals name="deckpicker_title">
+    <item quantity="one">%2$d期限切れ中 1枚(%3$s)</item>
+    <item quantity="other">残り%2$d枚中%1$d枚 (%3$s)</item>
+  </plurals>
+  <plurals name="deckpicker_title_minutes">
+    <item quantity="one">1分</item>
+    <item quantity="other">%d 分</item>
+  </plurals>
+  <plurals name="deckpicker_due">
+    <item quantity="one">%2$d期限切れ中 1枚</item>
+    <item quantity="other">残り%2$d枚中%1$d枚</item>
+  </plurals>
+  <plurals name="reviewer_window_title">
+    <item quantity="one">1 分の残り</item>
+    <item quantity="other">%d 分残り</item>
+  </plurals>
+  <string name="type_answer_hint">回答の入力</string>
   <string name="show_answer">答えの表示</string>
   <string name="ease1_successive">もう一度</string>
   <string name="ease2_successive">難</string>
@@ -64,7 +80,7 @@
   <string name="card_unsuspended">カードの非表示を解除</string>
   <string name="card_suspended">カードが非表示に設定されました</string>
   <string name="menu_rotate">表示画面の回転</string>
-  <string name="menu_import">Import file</string>
+  <string name="menu_import">ファイルのインポート</string>
   <string name="undo">元に戻す</string>
   <string name="undo_action_review">カードの復習</string>
   <string name="undo_action_edit">ノートの編集</string>
@@ -83,8 +99,8 @@
   <string name="contextmenu_deckpicker_collapse_deck">単語帳折りたたみ</string>
   <string name="contextmenu_deckpicker_inflate_deck">単語帳展開</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">カスタム辞書設定</string>
-  <string name="menu_add">Add</string>
-  <string name="menu_add_note">Add note</string>
+  <string name="menu_add">追加</string>
+  <string name="menu_add_note">ノートの追加</string>
   <string name="menu_download_deck">単語帳をダウンロード</string>
   <string name="menu_download_shared_deck">共有の単語帳</string>
   <string name="menu_my_account">アカウントの設定と同期</string>
@@ -102,42 +118,12 @@
   <string name="menu_search">%1$sで探す</string>
   <string name="menu_mark_card">カードをマーク</string>
   <string name="menu_unmark_card">カードのマークを消す</string>
-  <string name="new_deck">Create deck</string>
+  <string name="new_deck">単語帳作成</string>
   <string name="create">作成</string>
-  <string name="new_dynamic_deck">Create filtered deck</string>
+  <string name="new_dynamic_deck">フィルター単語帳の作成</string>
   <string name="studyoptions_feedback">フィードバック</string>
   <string name="studyoptions_load_tutorial_deck">チュートリアル単語帳の作成</string>
   <string name="night_mode">夜間表示（反転）</string>
-  <string name="visit">訪問</string>
-  <string name="later">後で</string>
-  <string name="download">ダウンロード</string>
-  <string name="open_collection">コレクションを開いています\nしばらくお待ちください</string>
-  <string name="rebuild_cram_deck">フィルター単語帳を再構築しています\nしばらくお待ちください</string>
-  <string name="rebuild_cram_label">再構築</string>
-  <string name="empty_cram_label">全て戻す</string>
-  <string name="empty_cram_deck">カードを元の単語帳へ戻します。\nしばらくお待ちください</string>
-  <string name="custom_study_deck_name">カスタム学習セッション</string>
-  <string name="custom_study_deck_exists">最初に、既存のカスタム学習の単語帳の名称変更を行ってください。</string>
-  <string name="studyoptions_congrats_finished">おめでとうございます ！今日の目標を達成しました。</string>
-  <string name="studyoptions_congrats_more_rev">今日の復習目標を達成しました。まだ学習するカードは残っていますので、オプションの設定で制限を増やすことを検討してください。</string>
-  <string name="studyoptions_congrats_more_new">新しいカードの追加ができますが、毎日の制限に達しています。オプション設定で制限を増やすできますが、毎日の復習の負担が増加しますのでご注意ください。</string>
-  <string name="studyoptions_congrats_custom">通常のスケジュール以外で学習するには、下のカスタム学習ボタンをクリックします。</string>
-  <string name="sd_card_not_mounted">外部SDカードが見つかりません\n\n内部メモリーにコレクションを格納できますが、簡単にアクセスできませんので、お勧めできません。内部メモリーは環境設定でアクティブにすることができます。(このテキストをクリックして環境設定を開きます)</string>
-  <string name="studyoptions_options">オプション</string>
-  <string name="empty_cloze_warning">ノートを編集して「穴埋め問題」を追加してください。(%1$s)</string>
-  <string name="help_cloze">ヘルプ</string>
-  <string name="button_sync">同期</string>
-  <string name="restart">再スタート</string>
-  <string name="do_nothing">何もしない</string>
-  <string name="more_options">詳細オプション</string>
-  <string name="now">直ちに</string>
-  <string name="back">戻る</string>
-  <string name="ankiweb">AnkiWeb</string>
-  <string name="usb">USB</string>
-  <string name="_import">読み込み</string>
-  <string name="confirm">確認</string>
-  <string name="internet">インターネット</string>
-  <string name="pc">PC</string>
   <string-array name="next_review_s">
     <item>1秒</item>
     <item>1分</item>
@@ -154,22 +140,20 @@
     <item>%sヶ月</item>
     <item>%s年</item>
   </string-array>
-  <plurals name="deckpicker_title">
-    <item quantity="one">%2$d期限切れ中 1枚(%3$s)</item>
-    <item quantity="other">残り%2$d枚中%1$d枚 (%3$s)</item>
-  </plurals>
-  <plurals name="deckpicker_title_minutes">
-    <item quantity="one">1分</item>
-    <item quantity="other">%d 分</item>
-  </plurals>
-  <plurals name="deckpicker_due">
-    <item quantity="one">%2$d期限切れ中 1枚</item>
-    <item quantity="other">残り%2$d枚中%1$d枚</item>
-  </plurals>
-  <plurals name="reviewer_window_title">
-    <item quantity="one">1 分の残り</item>
-    <item quantity="other">%d 分残り</item>
-  </plurals>
+  <string name="visit">訪問</string>
+  <string name="later">後で</string>
+  <string name="download">ダウンロード</string>
+  <string name="open_collection">コレクションを開いています\nしばらくお待ちください</string>
+  <string name="rebuild_cram_deck">フィルター単語帳を再構築しています\nしばらくお待ちください</string>
+  <string name="rebuild_cram_label">再構築</string>
+  <string name="empty_cram_label">全て戻す</string>
+  <string name="empty_cram_deck">カードを元の単語帳へ戻します。\nしばらくお待ちください</string>
+  <string name="custom_study_deck_name">カスタム学習セッション</string>
+  <string name="custom_study_deck_exists">最初に、既存のカスタム学習の単語帳の名称変更を行ってください。</string>
+  <string name="studyoptions_congrats_finished">おめでとうございます ！今日の目標を達成しました。</string>
+  <string name="studyoptions_congrats_more_rev">今日の復習目標を達成しました。まだ学習するカードは残っていますので、オプションの設定で制限を増やすことを検討してください。</string>
+  <string name="studyoptions_congrats_more_new">新しいカードの追加ができますが、毎日の制限に達しています。オプション設定で制限を増やすできますが、毎日の復習の負担が増加しますのでご注意ください。</string>
+  <string name="studyoptions_congrats_custom">通常のスケジュール以外で学習するには、下のカスタム学習ボタンをクリックします。</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">明日は１枚のカードがあります。そして復習カードは %2$s.\n 必要な時間は%3$s</item>
     <item quantity="other">明日は %1$d 枚のカードがあります。そして復習カードは %2$s.\n 必要な時間は%3$s</item>
@@ -182,4 +166,20 @@
     <item quantity="one">推定時間；１分</item>
     <item quantity="other">推定時間: %1$d 分</item>
   </plurals>
+  <string name="sd_card_not_mounted">外部SDカードが見つかりません\n\n内部メモリーにコレクションを格納できますが、簡単にアクセスできませんので、お勧めできません。内部メモリーは環境設定でアクティブにすることができます。(このテキストをクリックして環境設定を開きます)</string>
+  <string name="studyoptions_options">オプション</string>
+  <string name="empty_cloze_warning">ノートを編集して「穴埋め問題」を追加してください。(%1$s)</string>
+  <string name="help_cloze">ヘルプ</string>
+  <string name="button_sync">同期</string>
+  <string name="restart">再スタート</string>
+  <string name="do_nothing">何もしない</string>
+  <string name="more_options">詳細オプション</string>
+  <string name="now">直ちに</string>
+  <string name="back">戻る</string>
+  <string name="ankiweb">AnkiWeb</string>
+  <string name="usb">USB</string>
+  <string name="_import">読み込み</string>
+  <string name="confirm">確認</string>
+  <string name="internet">インターネット</string>
+  <string name="pc">PC</string>
 </resources>

@@ -47,20 +47,33 @@
   <string name="CardEditorNoteDeck">ノート単語帳: %s</string>
   <string name="CardEditorModel">ノートタイプ: %s</string>
   <string name="CardEditorTags">タグ: %1$s</string>
-  <string name="add_new_filter_tags">Add/Filter tags</string>
+  <string name="add_new_filter_tags">フィルタータグの追加</string>
   <string name="note_type">ノートタイプ</string>
   <string name="card_type">カードタイプ</string>
-  <string name="filter_tags">Filter tags</string>
+  <string name="filter_tags">フィルタータグ</string>
   <string name="sdcard_missing_message">USBストレージとして使用されているので、SDカードは使用できません。単語帳にアクセスするには、USBを切断してください。</string>
   <string name="show_whiteboard">ホワイトボード有効化</string>
   <string name="hide_whiteboard">ホワイトボード無効化</string>
   <string name="clear_whiteboard">ホワイトボードをクリア</string>
-  <string name="replay_audio">Replay audio</string>
+  <string name="replay_audio">再生</string>
   <string name="cram_edit_warning">総復習中はカードの編集はできません</string>
   <string name="suspend_leeches">学習困難カードの非表示</string>
   <string name="leech_suspend_notification">このカードは学習困難カードとして登録されました</string>
   <string name="leech_notification">学習困難カードとして登録されました</string>
-  <string name="corrupt_font">請われているフォントファイル %s</string>
+  <string name="corrupt_font">使用できないフォントファイル %s</string>
+  <string-array name="browser_column1_headings">
+    <item>検索フィールド</item>
+  </string-array>
+  <string-array name="browser_column2_headings">
+    <item>回答</item>
+    <item>カード</item>
+    <item>単語帳</item>
+    <item>ノート</item>
+    <item>質問</item>
+    <item>タグ</item>
+    <item>忘却</item>
+    <item>復習</item>
+  </string-array>
   <string name="about_title">情報</string>
   <string name="cardeditor_title_add_note">ノートの追加</string>
   <string name="cardeditor_title_edit_card">ノートの編集</string>
@@ -73,6 +86,14 @@
   <string name="select">選択</string>
   <string name="saving_changes">変更を保存しています...</string>
   <string name="reordering_cards">カード順序の組換え</string>
+  <plurals name="timebox_reached">
+    <item quantity="one">1 カードを %2$s で勉強</item>
+    <item quantity="other">%1$d カードを %2$s で勉強</item>
+  </plurals>
+  <plurals name="timebox_reached_minutes">
+    <item quantity="one">1分</item>
+    <item quantity="other">%1$d 分</item>
+  </plurals>
   <string name="studyoptions_welcome_title">AnkiDroid へようこそ</string>
   <string name="studyoptions_no_external_storage_title">外部メモリーが接続されていません</string>
   <string name="studyoptions_no_external_storage_message">外部メモリーが接続されていません。SDカードがマウントされているかどうか、確認してください。</string>
@@ -83,13 +104,17 @@
   <string name="card_editor_reset">リセット</string>
   <string name="card_editor_copy_card">カードをコピーする</string>
   <string name="card_editor_reset_card">初めから</string>
-  <string name="card_editor_preview_card">Preview</string>
+  <string name="card_editor_preview_card">プレビュー</string>
   <string name="error_insufficient_memory">メモリ不足のため操作できませんでした。</string>
   <string name="tutorial_load">練習用単語帳を作成中です\nしばらくお待ちください</string>
   <string name="tutorial_loading_error">チュートリアルの単語帳を作成できませんでした。</string>
   <string name="rename">名前変更</string>
   <string name="rename_error">単語帳 %s の名前を変更できません。</string>
   <string name="default_conf_delete_error">標準オプショングループを削除することはできません。</string>
+  <plurals name="factadder_cards_added">
+    <item quantity="one">1 カード追加されました。</item>
+    <item quantity="other">%d カード追加されました。</item>
+  </plurals>
   <string name="help_title">ヘルプ</string>
   <string name="help_online">オンラインヘルプ</string>
   <string name="help_faq">よくある質問</string>
@@ -98,6 +123,15 @@
   <string name="check_db_message">データを確認中です\nしばらくお待ちください</string>
   <string name="simple_interface_hint">%s が空です。 簡単なインターフェースでは写真を表示したり、音を出したりはできません。</string>
   <string name="delete_deck">単語帳を削除中です\nしばらくお待ちください</string>
+  <string-array name="dynOrderLabels">
+    <item>古いものを先頭に</item>
+    <item>ランダム</item>
+    <item>間隔を減らす</item>
+    <item>間隔を減らす</item>
+    <item>最多未習得</item>
+    <item>追加順に</item>
+    <item>期限順に</item>
+  </string-array>
   <string name="menu_cardbrowser">カード ブラウザー</string>
   <string name="show_hint">ヒントの表示</string>
   <string name="pref_lang_other">使用言語の選択</string>
@@ -128,38 +162,4 @@
   <string name="sched_end">（終了）</string>
   <string name="sched_unbury_button">それらを表示すため、「延期解除」をタップしてください。</string>
   <string name="sched_has_buried">関連カード、延期カードは後のセッションまで遅延されます。</string>
-  <string-array name="browser_column1_headings">
-    <item>検索フィールド</item>
-  </string-array>
-  <string-array name="browser_column2_headings">
-    <item>回答</item>
-    <item>カード</item>
-    <item>単語帳</item>
-    <item>Note</item>
-    <item>Question</item>
-    <item>Tags</item>
-    <item>Lapses</item>
-    <item>Reviews</item>
-  </string-array>
-  <string-array name="dynOrderLabels">
-    <item>古いものを先頭に</item>
-    <item>ランダム</item>
-    <item>間隔を減らす</item>
-    <item>感覚を増やす</item>
-    <item>最多未習得</item>
-    <item>追加順に</item>
-    <item>期限順に</item>
-  </string-array>
-  <plurals name="timebox_reached">
-    <item quantity="one">1 カードを %2$s で勉強</item>
-    <item quantity="other">%1$d カードを %2$s で勉強</item>
-  </plurals>
-  <plurals name="timebox_reached_minutes">
-    <item quantity="one">1分</item>
-    <item quantity="other">%1$d 分</item>
-  </plurals>
-  <plurals name="factadder_cards_added">
-    <item quantity="one">1 カード追加されました。</item>
-    <item quantity="other">%d カード追加されました。</item>
-  </plurals>
 </resources>

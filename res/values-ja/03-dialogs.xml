@@ -45,12 +45,19 @@
   <string name="contextmenu_deckpicker_delete_deck">単語帳を削除</string>
   <string name="delete_deck_title">単語帳を削除</string>
   <string name="delete_deck_message">%s の中のすべてのカードを削除してもよろしいですか。</string>
-  <string name="delete_cram_deck_message">オリジナルの単語帳に %s のすべてのカードを送信してもよろしいですか？</string>
+  <string name="delete_cram_deck_message"> %s のすべてのカードを、元の単語帳に戻してもよろしいですか？</string>
   <string name="delete_deck_confirm">削除</string>
   <string name="new_version_message">新機能:</string>
   <string name="no_tts_available_title">テキスト読み上げ</string>
   <string name="no_tts_available_message">テキスト読み上げ可能な言語がありません</string>
   <string name="tts_no_tts">音声なし</string>
+  <string-array name="about_content">
+    <item><![CDATA[<h2>%1$s:<br/>Android用のフラッシュカード</h2>AnkiDroidは、デスクトップソフトウェア <a href="%2$s">Anki</a>と完全互換のフラッシュカードアプリです。あなたは、AnkiDroid と Anki Desktopのどちらでも教材を作成、ダウンロード、学習し、また、簡単に双方の同期をとることができます。]]></item>
+    <item><![CDATA[AnkiDroid 良くするため、できるだけバグを、 <a href="%1$s"> ここに</a>報告して頂けると助かります。 新しい機能のアイデアも大歓迎 ！<a href="%2$s"> wiki</a> を使用して、<a href="%3$s"> フォーラム</a>で意見交換してください。]]></item>
+    <item><![CDATA[AnkiDroid は、<a href="%1$s"> オープン ソース ソフトウェア <a/>で、誰でも <a href="%3$s"> 貢献者</a> として <a href="%2$s"> 参加</a> することを歓迎します:-)]]></item>
+    <item><![CDATA[開発者でなくても、例えばAnkiDroidを<a href="%1$s"> 翻訳</a>したり、wikiやスクリーン ショットを更新したり、Anki Desktopに<a href="%2$s"> 寄付</a>をしたり、AnkiDroid についてのブログを書いたりして貢献できます！]]></item>
+    <item><![CDATA[AnkiDroid は、<a href="%1$s"> GNU GPL v3 ライセンス</a> の下でリリースされており、ソースコードは <a href="%2$s">ここ</a>です。]]></item>
+  </string-array>
   <string name="dont_show_again">今後は表示しない</string>
   <string name="sync_log_title">同期の履歴</string>
   <string name="notify_ticker">アプリケーションの更新</string>
@@ -67,7 +74,7 @@
   <string name="answering_error_message">コレクションへの書き込み中にエラーが発生しました。これは、データの破損か、ディスクの容量の不足が原因と考えられます。\n\n繰り返しエラーが発生する場合には、データをチェックするか、バックアップからコレクションを修復してください。\n\nまた、AnkiDroidのバグかもしれませんので\'オプション\'をクリックして、エラーを報告してください。</string>
   <string name="answering_error_report">エラーを報告する</string>
   <string name="repair_deck_dialog">データを修復しますか？\n\nその前にサブフォルダーにコピーが作成されます。 \'%s\'</string>
-  <string name="intent_add_saved_information">﻿保存されたデータ</string>
+  <string name="intent_add_saved_information">保存されたデータ</string>
   <string name="intent_add_clear_all">すべて消去</string>
   <string name="intent_aedict_empty">カテゴリー \'default\' が空です。</string>
   <string name="intent_aedict_category">AnkiDroidにカードを登録するため、すべてのNotepadカテゴリを削除するか追、\'default\' という名前のカテゴリを追加してください。</string>
@@ -114,11 +121,4 @@
   <string name="import_media_count">メディアファイルをインポートしています。 %1$d%%\nお待ちください&#8230;</string>
   <string name="import_update_counts">単語帳の数を更新しています。\nお待ちください&#8230;</string>
   <string name="import_add_progress">• 解凍中のアーカイブ %1$s\n• ノートのインポート %2$d%%\n• カードのインポート %3$d%%\n• クリーンアップ %4$s</string>
-  <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s:<br/>Android用のフラッシュカード</h2>AnkiDroidは、デスクトップソフトウェア <a href="%2$s">Anki</a>と完全互換のフラッシュカードアプリです。あなたは、AnkiDroid と Anki Desktopのどちらでも教材を作成、ダウンロード、学習し、また、簡単に双方の同期をとることができます。]]></item>
-    <item><![CDATA[AnkiDroid 良くするため、できるだけバグを、 <a href="%1$s"> ここに</a>報告して頂けると助かります。 新しい機能のアイデアも大歓迎 ！<a href="%2$s"> wiki</a> を使用して、<a href="%3$s"> フォーラム</a>で意見交換してください。]]></item>
-    <item><![CDATA[AnkiDroid は、<a href="%1$s"> オープン ソース ソフトウェア <a/>で、誰でも <a href="%3$s"> 貢献者</a> として <a href="%2$s"> 参加</a> することを歓迎します:-)]]></item>
-    <item><![CDATA[開発者でなくても、例えばAnkiDroidを<a href="%1$s"> 翻訳</a>したり、wikiやスクリーン ショットを更新したり、Anki Desktopに<a href="%2$s"> 寄付</a>をしたり、AnkiDroid についてのブログを書いたりして貢献できます！]]></item>
-    <item><![CDATA[AnkiDroid は、<a href="%1$s"> GNU GPL v3 ライセンス</a> の下でリリースされており、ソースコードは <a href="%2$s">ここ</a>です。]]></item>
-  </string-array>
 </resources>

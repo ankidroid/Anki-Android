@@ -39,6 +39,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <plurals name="card_browser_subtitle">
+    <item quantity="one">1 carte sur %2$d affichée</item>
+    <item quantity="other">%1$d cartes sur %2$d affichées</item>
+  </plurals>
   <string name="card_browser_all_decks">Tous les jeux de cartes</string>
   <string name="card_browser_load">Chargement des cartes.\nVeuillez patienter...</string>
   <string name="card_browser_cardloading_error">Erreur lors du chargement des cartes. Ceci est probablement lié à la limitation de la mémoire de votre appareil. Recommencez avec un paquet plus petit</string>
@@ -90,8 +94,4 @@
     <item>Par le nombre de répétitions passées</item>
     <item>Par difficulté</item>
   </string-array>
-  <plurals name="card_browser_subtitle">
-    <item quantity="one">1 carte sur %2$d affichée</item>
-    <item quantity="other">%1$d cartes sur %2$d affichées</item>
-  </plurals>
 </resources>

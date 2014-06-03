@@ -30,7 +30,7 @@ přidání/ editace karet
 • podpora vlastního fontu písma
 • kompletní záložní systém
 • navigation by swipe, tap
-• customisable
+• přizpůsobitelné
 • dynamicky přizpůsobitelné balíčky
 • noční režim
 • 27 lokalizací

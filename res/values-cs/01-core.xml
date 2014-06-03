@@ -51,6 +51,22 @@
   <string name="studyoptions_total_cards">Celkem karet:</string>
   <string name="studyoptions_eta">Odhadovaný čas (min):</string>
   <string name="studyoptions_start">Studovat</string>
+  <plurals name="deckpicker_title">
+    <item quantity="one">1 z %2$d k zopakování (%3$s)</item>
+    <item quantity="other">%1$d z %2$d k zopakování (%3$s)</item>
+  </plurals>
+  <plurals name="deckpicker_title_minutes">
+    <item quantity="one">1 min.</item>
+    <item quantity="other">%d min.</item>
+  </plurals>
+  <plurals name="deckpicker_due">
+    <item quantity="one">1 z %2$d k zopakování</item>
+    <item quantity="other">zbývá %1$d / %2$d</item>
+  </plurals>
+  <plurals name="reviewer_window_title">
+    <item quantity="one">Zbývá 1 minuta</item>
+    <item quantity="other">Zbývá %d minut</item>
+  </plurals>
   <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">Zobrazit odpověď</string>
   <string name="ease1_successive">Znovu</string>
@@ -64,7 +80,7 @@
   <string name="card_unsuspended">Zrušeno vyřazení karty</string>
   <string name="card_suspended">Zrušeno pozastavení karty</string>
   <string name="menu_rotate">Otočit</string>
-  <string name="menu_import">Import file</string>
+  <string name="menu_import">Importovat soubor</string>
   <string name="undo">Vrátit zpět</string>
   <string name="undo_action_review">opakovat</string>
   <string name="undo_action_edit">upravit poznámku</string>
@@ -83,8 +99,8 @@
   <string name="contextmenu_deckpicker_collapse_deck">Sbalit balíček</string>
   <string name="contextmenu_deckpicker_inflate_deck">Rozbalit balíček</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Nastavit vlastní slovník</string>
-  <string name="menu_add">Add</string>
-  <string name="menu_add_note">Add note</string>
+  <string name="menu_add">Přidat</string>
+  <string name="menu_add_note">Přidat poznámku</string>
   <string name="menu_download_deck">Stáhnout balíček</string>
   <string name="menu_download_shared_deck">Sdílený balíček</string>
   <string name="menu_my_account">Synchronizovat účet</string>
@@ -102,42 +118,12 @@
   <string name="menu_search">Vyhledat v %1$s</string>
   <string name="menu_mark_card">Označit kartu</string>
   <string name="menu_unmark_card">Zrušit označení karty</string>
-  <string name="new_deck">Create deck</string>
+  <string name="new_deck">Vytvořit balíček</string>
   <string name="create">Vytvořit</string>
-  <string name="new_dynamic_deck">Create filtered deck</string>
+  <string name="new_dynamic_deck">Vytvořit filtrovaný balíček</string>
   <string name="studyoptions_feedback">Feedback</string>
   <string name="studyoptions_load_tutorial_deck">Vytvořit kurz</string>
   <string name="night_mode">Noční režim</string>
-  <string name="visit">Navštívit</string>
-  <string name="later">Později</string>
-  <string name="download">Stáhnout</string>
-  <string name="open_collection">Otevírání kolekce.\nProsím čekejte...</string>
-  <string name="rebuild_cram_deck">Rekonstrukce balíčku šprtání.\nProsím čekejte...</string>
-  <string name="rebuild_cram_label">Znovu sestavit</string>
-  <string name="empty_cram_label">Vyprázdnit</string>
-  <string name="empty_cram_deck">Vyprazdňování balíčku šprtání.\nProsím čekejte...</string>
-  <string name="custom_study_deck_name">Dodatečné procvičování</string>
-  <string name="custom_study_deck_exists">Nejdříve prosím přejmenujte balíček dodatečného tréninku.</string>
-  <string name="studyoptions_congrats_finished">Blahopřejeme! Prozatím jste hotov.</string>
-  <string name="studyoptions_congrats_more_rev">Bylo dosaženo limitu dnešního opakování, ale stále existují karty pro přezkoušení. Pro optimální zapamatování zvažte zvýšení denního limitu v možnostech.</string>
-  <string name="studyoptions_congrats_more_new">Existuje více nových karet, ale byl dosažen denní limit. Můžete zvýšit tento limit v Nastavení, ale mějte na paměti, že se krátkodobě zvýší vaše zátěž na opakování.</string>
-  <string name="studyoptions_congrats_custom">Pro studium mimo normální plán klepněte na tlačítko \'Vlastní učení\'.</string>
-  <string name="sd_card_not_mounted">Paměťová karta není vložena.\n\n Svou kolekci si přesto můžete uložit do interní paměti, avšak toto není doporučeno, protože dostupnost tohoto souboru není tak snadná. Tuto volbu aktivujete v nastavení (které otevřete kliknutím na tento text).</string>
-  <string name="studyoptions_options">Možnosti</string>
-  <string name="empty_cloze_warning">Prosím upravte tuto poznámku a přidejte nějaké doplňovačky.(%1$s)</string>
-  <string name="help_cloze">Pomoc</string>
-  <string name="button_sync">Synchronizovat</string>
-  <string name="restart">Restartovat</string>
-  <string name="do_nothing">Nedělat nic</string>
-  <string name="more_options">Další možnosti</string>
-  <string name="now">Nyní</string>
-  <string name="back">Zpět</string>
-  <string name="ankiweb">AnkiWeb</string>
-  <string name="usb">USB</string>
-  <string name="_import">Importovat</string>
-  <string name="confirm">Potvrdit</string>
-  <string name="internet">Internet</string>
-  <string name="pc">PC</string>
   <string-array name="next_review_s">
     <item>1 sekunda</item>
     <item>1 minuta</item>
@@ -154,22 +140,20 @@
     <item>%s měsíců</item>
     <item>%s roků</item>
   </string-array>
-  <plurals name="deckpicker_title">
-    <item quantity="one">1 z %2$d k zopakování (%3$s)</item>
-    <item quantity="other">%1$d z %2$d k zopakování (%3$s)</item>
-  </plurals>
-  <plurals name="deckpicker_title_minutes">
-    <item quantity="one">1 min.</item>
-    <item quantity="other">%d min.</item>
-  </plurals>
-  <plurals name="deckpicker_due">
-    <item quantity="one">1 z %2$d k zopakování</item>
-    <item quantity="other">zbývá %1$d / %2$d</item>
-  </plurals>
-  <plurals name="reviewer_window_title">
-    <item quantity="one">Zbývá 1 minuta</item>
-    <item quantity="other">Zbývá %d minut</item>
-  </plurals>
+  <string name="visit">Navštívit</string>
+  <string name="later">Později</string>
+  <string name="download">Stáhnout</string>
+  <string name="open_collection">Otevírání kolekce.\nProsím čekejte...</string>
+  <string name="rebuild_cram_deck">Rekonstrukce balíčku šprtání.\nProsím čekejte...</string>
+  <string name="rebuild_cram_label">Znovu sestavit</string>
+  <string name="empty_cram_label">Vyprázdnit</string>
+  <string name="empty_cram_deck">Vyprazdňování balíčku šprtání.\nProsím čekejte...</string>
+  <string name="custom_study_deck_name">Dodatečné procvičování</string>
+  <string name="custom_study_deck_exists">Nejdříve prosím přejmenujte balíček dodatečného tréninku.</string>
+  <string name="studyoptions_congrats_finished">Blahopřejeme! Prozatím jste hotov.</string>
+  <string name="studyoptions_congrats_more_rev">Bylo dosaženo limitu dnešního opakování, ale stále existují karty pro přezkoušení. Pro optimální zapamatování zvažte zvýšení denního limitu v možnostech.</string>
+  <string name="studyoptions_congrats_more_new">Existuje více nových karet, ale byl dosažen denní limit. Můžete zvýšit tento limit v Nastavení, ale mějte na paměti, že se krátkodobě zvýší vaše zátěž na opakování.</string>
+  <string name="studyoptions_congrats_custom">Pro studium mimo normální plán klepněte na tlačítko \'Vlastní učení\'.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Zítra bude: 1 karta k zopakování a %2$s.\nOdhadovaný čas: %3$s</item>
     <item quantity="other">Zítra bude: %1$d karet k zopakování a %2$s.\n Odhadovaný čas: %3$s</item>
@@ -182,4 +166,20 @@
     <item quantity="one">Odhadovaný čas: 1 min.</item>
     <item quantity="other">Odhadovaný čas: %1$d min.</item>
   </plurals>
+  <string name="sd_card_not_mounted">Paměťová karta není vložena.\n\n Svou kolekci si přesto můžete uložit do interní paměti, avšak toto není doporučeno, protože dostupnost tohoto souboru není tak snadná. Tuto volbu aktivujete v nastavení (které otevřete kliknutím na tento text).</string>
+  <string name="studyoptions_options">Možnosti</string>
+  <string name="empty_cloze_warning">Prosím upravte tuto poznámku a přidejte nějaké doplňovačky.(%1$s)</string>
+  <string name="help_cloze">Pomoc</string>
+  <string name="button_sync">Synchronizovat</string>
+  <string name="restart">Restartovat</string>
+  <string name="do_nothing">Nedělat nic</string>
+  <string name="more_options">Další možnosti</string>
+  <string name="now">Nyní</string>
+  <string name="back">Zpět</string>
+  <string name="ankiweb">AnkiWeb</string>
+  <string name="usb">USB</string>
+  <string name="_import">Importovat</string>
+  <string name="confirm">Potvrdit</string>
+  <string name="internet">Internet</string>
+  <string name="pc">PC</string>
 </resources>

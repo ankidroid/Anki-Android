@@ -39,6 +39,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <plurals name="card_browser_subtitle">
+    <item quantity="one">%2$d kartın 1 tanesi gösteriliyor</item>
+    <item quantity="other">%2$d kartın %1$d tanesi gösteriliyor</item>
+  </plurals>
   <string name="card_browser_all_decks">Bütün desteler</string>
   <string name="card_browser_load">Kartlar yükleniyor.\nLütfen bekleyin...</string>
   <string name="card_browser_cardloading_error">Kartlar yüklenirken hata. Bu muhtemelen cihazınızın bellek kısıtlamalarıyla ilgili. Daha küçük bir desteyle tekrar deneyin.</string>
@@ -53,7 +57,7 @@
   <string name="card_browser_field">Kart Tarayıcısı Alanını Değiştir</string>
   <string name="card_browser_field_title">Kart Tarayıcısı Alanını Değiştir</string>
   <string name="card_browser_show_suspended">Askıdakileri göster</string>
-  <string name="card_browser_search_by_tag">Etikete göre süz</string>
+  <string name="card_browser_search_by_tag">Etikete göre filtrele</string>
   <string name="card_browser_tags_shown">Etiketler: %1$s</string>
   <string name="card_browser_change_display_order">Gösterme sırasını seç</string>
   <string name="card_browser_change_display_order_title">Gösterme sırasını seç</string>
@@ -76,7 +80,7 @@
   <string name="card_details_tags">Etiketler</string>
   <string name="card_details_model">Not türü</string>
   <string name="card_browser_sorting_cards">Kartlar sıralanıyor.\nLütfen bekleyin...</string>
-  <string name="card_browser_filtering_cards">Kartlar süzülüyor.\nLütfen bekleyin...</string>
+  <string name="card_browser_filtering_cards">Kartlar filtreleniyor.\nLütfen bekleyin...</string>
   <string name="card_details_card_model">Kart modeli</string>
   <string-array name="card_browser_order_labels">
     <item>Sıralamadan (daha hızlı)</item>
@@ -90,8 +94,4 @@
     <item>İncelemelere göre</item>
     <item>Süresi dolana göre</item>
   </string-array>
-  <plurals name="card_browser_subtitle">
-    <item quantity="one">%2$d kartın 1 tanesi gösteriliyor</item>
-    <item quantity="other">%2$d kartın %1$d tanesi gösteriliyor</item>
-  </plurals>
 </resources>

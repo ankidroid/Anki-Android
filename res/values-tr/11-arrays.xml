@@ -53,7 +53,7 @@
     <item>100</item>
     <item>150</item>
     <item>200</item>
-    <item>Never notify</item>
+    <item>Hiçbir zaman bildirme</item>
   </string-array>
   <string-array name="cram_review_order_labels">
     <item>İlk önce en eski değiştirilmişler</item>
@@ -151,7 +151,7 @@
     <item>Çıkacak</item>
   </string-array>
   <string-array name="override_font_labels">
-    <item>When no font specified on flashcards</item>
-    <item>Always</item>
+    <item>Bilgi kartlarında font belirtilmediği zaman</item>
+    <item>Her zaman</item>
   </string-array>
 </resources>

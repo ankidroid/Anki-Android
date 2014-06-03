@@ -80,9 +80,6 @@
   <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; thẻ / ngày</string>
   <string name="deck_summary_deck_age">Tuổi bài: &lt;b&gt;%d &lt;/ b&gt; ngày</string>
   <string name="deck_summary_all_decks">Tất cả các bài</string>
-  <string name="stats_forecast">Forecast</string>
-  <string name="stats_review_count">Review count</string>
-  <string name="stats_review_time">Review time</string>
   <string-array name="next_review_in_s">
     <item>in 1 second</item>
     <item>in 1 minute</item>
@@ -120,6 +117,9 @@
     <item>Weeks</item>
     <item>Months</item>
   </string-array>
+  <string name="stats_forecast">Forecast</string>
+  <string name="stats_review_count">Review count</string>
+  <string name="stats_review_time">Review time</string>
   <string-array name="stats_period">
     <item>1 month</item>
     <item>1 year</item>

@@ -43,12 +43,6 @@
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid-Karten fällig</string>
   <string name="widget_no_cards_due">Keine fälligen Karten</string>
   <string name="widget_loading">Widget wird geladen…</string>
-  <string name="widget_medium">AnkiDroid Mittel</string>
-  <string name="widget_small">AnkiDroid Klein</string>
-  <string name="widget_big">AnkiDroid Groß</string>
-  <string name="widget_big_restrictions_dialog">Aufgrund von Einschränkungen des Android-Frameworks kann das Widget nur Text aber keine Bilder/Sounds o.ä. anzeigen</string>
-  <string name="open_in_reviewer">Stapel in AnkiDroid öffnen</string>
-  <string name="widget_big_tomorrow_due">Morgen fällig:</string>
   <plurals name="widget_cards_in_decks_due">
     <item quantity="one">1 Karte in %2$s fällig</item>
     <item quantity="other">%1$d Karten in %2$s fällig</item>
@@ -57,8 +51,14 @@
     <item quantity="one">1 Stapel</item>
     <item quantity="other">%1$d Stapeln</item>
   </plurals>
+  <string name="widget_medium">AnkiDroid Mittel</string>
+  <string name="widget_small">AnkiDroid Klein</string>
+  <string name="widget_big">AnkiDroid Groß</string>
+  <string name="widget_big_restrictions_dialog">Aufgrund von Einschränkungen des Android-Frameworks kann das Widget nur Text aber keine Bilder/Sounds o.ä. anzeigen</string>
+  <string name="open_in_reviewer">Stapel in AnkiDroid öffnen</string>
   <plurals name="widget_big_eta">
     <item quantity="one">Geschätzte Zeit: 1 Min.</item>
     <item quantity="other">Geschätzte Zeit: %d Min.</item>
   </plurals>
+  <string name="widget_big_tomorrow_due">Morgen fällig:</string>
 </resources>

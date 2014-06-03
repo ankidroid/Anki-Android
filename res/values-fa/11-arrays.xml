@@ -36,7 +36,7 @@
 -->
 <resources>
   <string-array name="newCardSchedulingLabels">
-    <item>توسعه از طریق بررسی</item>
+    <item>گسترش از طریق بازبینی‌ها</item>
     <item>پس از مرور</item>
     <item>قبل از مرور</item>
   </string-array>
@@ -53,7 +53,7 @@
     <item>100</item>
     <item>150</item>
     <item>200</item>
-    <item>Never notify</item>
+    <item>هرگز اطلاع نده</item>
   </string-array>
   <string-array name="cram_review_order_labels">
     <item>اول آخرين تغييرات نشان داده شود</item>
@@ -151,7 +151,7 @@
     <item>سر رسید</item>
   </string-array>
   <string-array name="override_font_labels">
-    <item>When no font specified on flashcards</item>
-    <item>Always</item>
+    <item>هنگامیکه هیچ فونتی برای فلش کارت تعیین نشده</item>
+    <item>همیشه</item>
   </string-array>
 </resources>

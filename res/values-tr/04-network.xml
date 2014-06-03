@@ -81,7 +81,7 @@
   <string name="login_generic_error">Giriş başarısız.</string>
   <string name="reset_password">Parolayı Sıfırla</string>
   <string name="download_finished">İndirme bitti</string>
-  <string name="personaldeckpicker_title">Çevrimiçi Deste Aç</string>
+  <string name="personaldeckpicker_title">Online Deste Aç</string>
   <string name="shareddeckpicker_title">İndirmek istediğiniz desteyi seçin</string>
   <string name="downloaddeck_search">Arama</string>
   <string name="preferences_title">Tercihler</string>

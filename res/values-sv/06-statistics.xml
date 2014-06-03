@@ -65,7 +65,7 @@
   <string name="deck_summary_answers_correct">Korrekta svar</string>
   <string name="deck_summary_answers_mature">Mogna kort: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; %2$s (%3$d av %4$d)</string>
   <string name="deck_summary_answers_young">Unga kort: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d av %4$d)</string>
-  <string name="deck_summary_answers_firstseen">Förstagångskort: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d av %4$d)</string>
+  <string name="deck_summary_answers_firstseen">Sedd första gången: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d av %4$d)</string>
   <string name="deck_summary_reviews">Repetitioner:</string>
   <string name="deck_summary_news">Nya kort:</string>
   <string name="deck_summary_average_week">Genomsnittligt sedda senaste veckan</string>
@@ -80,9 +80,6 @@
   <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; kort/dag</string>
   <string name="deck_summary_deck_age">Kortleksålder: &lt;b&gt;%d&lt;/b&gt; dagar</string>
   <string name="deck_summary_all_decks">Alla kortlekar</string>
-  <string name="stats_forecast">Prognos</string>
-  <string name="stats_review_count">Antal repetitioner</string>
-  <string name="stats_review_time">Repetitionsstid</string>
   <string-array name="next_review_in_s">
     <item>om 1 sekund</item>
     <item>om 1 minut</item>
@@ -120,6 +117,9 @@
     <item>Veckor</item>
     <item>Månader</item>
   </string-array>
+  <string name="stats_forecast">Prognos</string>
+  <string name="stats_review_count">Antal repetitioner</string>
+  <string name="stats_review_time">Repetitionsstid</string>
   <string-array name="stats_period">
     <item>1 månad</item>
     <item>1 år</item>

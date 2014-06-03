@@ -61,6 +61,19 @@
   <string name="leech_suspend_notification">Carta contrassegnata come sanguisuga e sospesa</string>
   <string name="leech_notification">Carta contrassegnata come sanguisuga</string>
   <string name="corrupt_font">File dei caratteri corrotto %s</string>
+  <string-array name="browser_column1_headings">
+    <item>Campo di ricerca</item>
+  </string-array>
+  <string-array name="browser_column2_headings">
+    <item>Risposta</item>
+    <item>Carta</item>
+    <item>Mazzo</item>
+    <item>Nota</item>
+    <item>Domanda</item>
+    <item>Etichette</item>
+    <item>Errori</item>
+    <item>Ripetizioni</item>
+  </string-array>
   <string name="about_title">Informazioni</string>
   <string name="cardeditor_title_add_note">Aggiungi nota</string>
   <string name="cardeditor_title_edit_card">Modifica nota</string>
@@ -73,6 +86,14 @@
   <string name="select">Seleziona</string>
   <string name="saving_changes">Salvataggio delle modifiche ...</string>
   <string name="reordering_cards">Riordino le carte...</string>
+  <plurals name="timebox_reached">
+    <item quantity="one">1 carta studiata in %2$s</item>
+    <item quantity="other">%1$d carte studiate in %2$s</item>
+  </plurals>
+  <plurals name="timebox_reached_minutes">
+    <item quantity="one">1 minuto</item>
+    <item quantity="other">%1$d minuti</item>
+  </plurals>
   <string name="studyoptions_welcome_title">Benvenuto in AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">Nessuna scheda di archiviazione esterna disponibile</string>
   <string name="studyoptions_no_external_storage_message">La memoria esterna non è disponibile. AnkiDroid deve avere accesso alla scheda SD per leggere e caricare i mazzi. Controlla che la scheda SD sia correttamente al suo posto e prova ancora.</string>
@@ -90,6 +111,10 @@
   <string name="rename">Rinomina</string>
   <string name="rename_error">Mazzo %s potrebbe non essere rinominato</string>
   <string name="default_conf_delete_error">Il gruppo di opzioni predefinito non può essere rimosso</string>
+  <plurals name="factadder_cards_added">
+    <item quantity="one">1 carta aggiunta</item>
+    <item quantity="other">%d carte aggiunte</item>
+  </plurals>
   <string name="help_title">Aiuto</string>
   <string name="help_online">Aiuto online</string>
   <string name="help_faq">FAQ</string>
@@ -98,6 +123,15 @@
   <string name="check_db_message">Controllo database.\nAttendi...</string>
   <string name="simple_interface_hint">Vuoto %s. Tieni presente che l\'interfaccia semplice non può mostrare immagini/suoni ecc.</string>
   <string name="delete_deck">Eliminazione mazzo...\nAttendi.</string>
+  <string-array name="dynOrderLabels">
+    <item>Più vecchie visualizzate per prime</item>
+    <item>Casuale</item>
+    <item>Intervalli crescenti</item>
+    <item>Intervalli decrescenti</item>
+    <item>Maggior numero di errori</item>
+    <item>Ordine di aggiunta</item>
+    <item>Ordine di scadenza</item>
+  </string-array>
   <string name="menu_cardbrowser">Browser delle carte</string>
   <string name="show_hint">Mostra suggerimento</string>
   <string name="pref_lang_other">Preferenze lingua</string>
@@ -128,38 +162,4 @@
   <string name="sched_end">(fine)</string>
   <string name="sched_unbury_button">Per vederle ora, tocca il pulsante Disseppellisci.</string>
   <string name="sched_has_buried">Alcune carte correlate o seppellite sono state rinviate ad una prossima sessione.</string>
-  <string-array name="browser_column1_headings">
-    <item>Campo di ricerca</item>
-  </string-array>
-  <string-array name="browser_column2_headings">
-    <item>Risposta</item>
-    <item>Carta</item>
-    <item>Mazzo</item>
-    <item>Nota</item>
-    <item>Domanda</item>
-    <item>Etichette</item>
-    <item>Errori</item>
-    <item>Ripetizioni</item>
-  </string-array>
-  <string-array name="dynOrderLabels">
-    <item>Più vecchie visualizzate per prime</item>
-    <item>Casuale</item>
-    <item>Intervalli crescenti</item>
-    <item>Intervalli decrescenti</item>
-    <item>Maggior numero di errori</item>
-    <item>Ordine di aggiunta</item>
-    <item>Ordine di scadenza</item>
-  </string-array>
-  <plurals name="timebox_reached">
-    <item quantity="one">1 carta studiata in %2$s</item>
-    <item quantity="other">%1$d carte studiate in %2$s</item>
-  </plurals>
-  <plurals name="timebox_reached_minutes">
-    <item quantity="one">1 minuto</item>
-    <item quantity="other">%1$d minuti</item>
-  </plurals>
-  <plurals name="factadder_cards_added">
-    <item quantity="one">1 carta aggiunta</item>
-    <item quantity="other">%d carte aggiunte</item>
-  </plurals>
 </resources>

@@ -61,6 +61,19 @@
   <string name="leech_suspend_notification">کارت به عنوان مزاحم مشخص و تعلیق شده است</string>
   <string name="leech_notification">کارت به عنوان مزاحم مشخص شده است</string>
   <string name="corrupt_font">فونت فایل خراب %s</string>
+  <string-array name="browser_column1_headings">
+    <item>کادر جستجو</item>
+  </string-array>
+  <string-array name="browser_column2_headings">
+    <item>پاسخ</item>
+    <item>کارد</item>
+    <item>مجموعه</item>
+    <item>یادداشت</item>
+    <item>پرسش</item>
+    <item>برچسب ها</item>
+    <item>دفعات اشتباه</item>
+    <item>بازبینی ها</item>
+  </string-array>
   <string name="about_title">درباره</string>
   <string name="cardeditor_title_add_note">افزودن یادداشت</string>
   <string name="cardeditor_title_edit_card">ویرایش یادداشت</string>
@@ -73,6 +86,14 @@
   <string name="select">انتخاب</string>
   <string name="saving_changes">ذخیره تغییرات</string>
   <string name="reordering_cards">مرتب سازی مجدد کارتها...</string>
+  <plurals name="timebox_reached">
+    <item quantity="one">یک کارت مرور شده در %2$s</item>
+    <item quantity="other">%1$d کارت مرور شده در %2$s</item>
+  </plurals>
+  <plurals name="timebox_reached_minutes">
+    <item quantity="one">1 دقیقه</item>
+    <item quantity="other">%1$d دقیقه</item>
+  </plurals>
   <string name="studyoptions_welcome_title">به آنکی دروید خوش آمدید</string>
   <string name="studyoptions_no_external_storage_title">حافظه خارجی در دسترس نیست</string>
   <string name="studyoptions_no_external_storage_message">حافظه خارجی در حال حاضر در دسترس نیست. آنکی دروید برای خواندن و بارگذاری دسته های آنکی به رم حافظه احتیاج دارد. بررسی کنید که رم حافظه در جایش قرار گرفته باشد و دوباره سعی کنید.</string>
@@ -90,6 +111,10 @@
   <string name="rename">تغییر نام</string>
   <string name="rename_error">نامگذاری مجدد دسته کارت %s ممکن نشد</string>
   <string name="default_conf_delete_error">امکان پاک کردن تنظیمات پیش فرض گروه نمی باشد</string>
+  <plurals name="factadder_cards_added">
+    <item quantity="one">1 کارت اضافه شده</item>
+    <item quantity="other">کارت های %d اضافه شده</item>
+  </plurals>
   <string name="help_title">کمک</string>
   <string name="help_online">راهنمای آنلاین</string>
   <string name="help_faq">پرسش و پاسخ</string>
@@ -98,6 +123,15 @@
   <string name="check_db_message">بررسی پایگاه داده.\nلطفا صبر کنید...</string>
   <string name="simple_interface_hint">خالی %s. به خاطر داشته باشید که رابط کاربری ساده نمی تواند تصاویر/صداو غیره را نمایش  دهد.</string>
   <string name="delete_deck">حذف دسته کارت...\nلطفا صبر کنید.</string>
+  <string-array name="dynOrderLabels">
+    <item>اول قدیمی ها دیده می شود</item>
+    <item>تصادفی</item>
+    <item>افزايش فواصل</item>
+    <item>کاهش فواصل</item>
+    <item>اکثر فراموش شده ها</item>
+    <item>سفارش اضافه شده</item>
+    <item>سفارش منقضی</item>
+  </string-array>
   <string name="menu_cardbrowser">مرورگر کارت</string>
   <string name="show_hint">نمایش راهنما</string>
   <string name="pref_lang_other">تنظیمات زبان</string>
@@ -128,38 +162,4 @@
   <string name="sched_end">(پایان)</string>
   <string name="sched_unbury_button">برای دیدن آنها در حال حاضر، دکمه Unbury بزنید.</string>
   <string name="sched_has_buried">تعدادی از کارت های مرتبط یا مخفی شده تا نشست بعدی نمایش داده نخواهند شد.</string>
-  <string-array name="browser_column1_headings">
-    <item>کادر جستجو</item>
-  </string-array>
-  <string-array name="browser_column2_headings">
-    <item>پاسخ</item>
-    <item>کارد</item>
-    <item>مجموعه</item>
-    <item>یادداشت</item>
-    <item>پرسش</item>
-    <item>برچسب ها</item>
-    <item>دفعات اشتباه</item>
-    <item>بازبینی ها</item>
-  </string-array>
-  <string-array name="dynOrderLabels">
-    <item>اول قدیمی ها دیده می شود</item>
-    <item>تصادفی</item>
-    <item>افزايش فواصل</item>
-    <item>کاهش فواصل</item>
-    <item>اکثر فراموش شده ها</item>
-    <item>سفارش اضافه شده</item>
-    <item>سفارش منقضی</item>
-  </string-array>
-  <plurals name="timebox_reached">
-    <item quantity="one">یک کارت مرور شده در %2$s</item>
-    <item quantity="other">%1$d کارت مرور شده در %2$s</item>
-  </plurals>
-  <plurals name="timebox_reached_minutes">
-    <item quantity="one">1 دقیقه</item>
-    <item quantity="other">%1$d دقیقه</item>
-  </plurals>
-  <plurals name="factadder_cards_added">
-    <item quantity="one">1 کارت اضافه شده</item>
-    <item quantity="other">کارت های %d اضافه شده</item>
-  </plurals>
 </resources>

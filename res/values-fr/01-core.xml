@@ -51,6 +51,22 @@
   <string name="studyoptions_total_cards">Cartes :</string>
   <string name="studyoptions_eta">Temps estimé (min):</string>
   <string name="studyoptions_start">Réviser maintenant</string>
+  <plurals name="deckpicker_title">
+    <item quantity="one">1 des %2$d prévues (%3$s)</item>
+    <item quantity="other">%1$d des %2$d prévues (%3$s)</item>
+  </plurals>
+  <plurals name="deckpicker_title_minutes">
+    <item quantity="one">1 minute.</item>
+    <item quantity="other">%d minute(s).</item>
+  </plurals>
+  <plurals name="deckpicker_due">
+    <item quantity="one">1 parmi %2$d dûe</item>
+    <item quantity="other">%1$d parmi %2$d dûes</item>
+  </plurals>
+  <plurals name="reviewer_window_title">
+    <item quantity="one">1 minute restante</item>
+    <item quantity="other">%d min. restantes</item>
+  </plurals>
   <string name="type_answer_hint">Taper la réponse</string>
   <string name="show_answer">Afficher la réponse</string>
   <string name="ease1_successive">Encore</string>
@@ -108,37 +124,6 @@
   <string name="studyoptions_feedback">Commentaires</string>
   <string name="studyoptions_load_tutorial_deck">Créer un tutoriel</string>
   <string name="night_mode">Mode nuit</string>
-  <string name="visit">Visiter</string>
-  <string name="later">Plus tard</string>
-  <string name="download">Télécharger</string>
-  <string name="open_collection">Chargement de la collection.\nVeuillez patienter…</string>
-  <string name="rebuild_cram_deck">Reconstruction du paquet de bachotage.\nVeuillez patienter…</string>
-  <string name="rebuild_cram_label">Réparer</string>
-  <string name="empty_cram_label">Vide</string>
-  <string name="empty_cram_deck">Paquet de bachotage en cours de vidage.\n
-Veuillez patienter...</string>
-  <string name="custom_study_deck_name">Session d\'étude personnalisée</string>
-  <string name="custom_study_deck_exists">Merci de renommer d\'abord le paquet d\'étude personnalisée.</string>
-  <string name="studyoptions_congrats_finished">FÉLICITATIONS ! Vous avez terminé… pour l’instant !</string>
-  <string name="studyoptions_congrats_more_rev">Vous avez atteint votre quota de révisions, mais il reste des cartes à reviser pour aujourd’hui. Pour une meilleure mémorisation, vous devriez peut-être augmenter le quota journalier dans les options.</string>
-  <string name="studyoptions_congrats_more_new">Il reste des nouvelles cartes disponibles, mais la limite journalière a été atteinte. Vous pouvez augmenter cette limite dans les options, mais gardez à l\'esprit que cela augmentera votre charge de travail à court terme.</string>
-  <string name="studyoptions_congrats_custom">Pour étudier en dehors des horaires normaux, cliquez sur le bouton d\'étude personnalisée ci-dessous.</string>
-  <string name="sd_card_not_mounted">La carte SD n\'est pas montée.\n\nVous pouvez également sauvegarder votre collection dans la mémoire interne bien que cela ne soit pas recommandé car cela rendrait plus difficile l\'accès au fichier. Vous pouvez activer cela dans les préférences (accédez-y en cliquant sur ce texte).</string>
-  <string name="studyoptions_options">Options</string>
-  <string name="empty_cloze_warning">N’oubliez pas le texte à trous. (%1$s)</string>
-  <string name="help_cloze">aide</string>
-  <string name="button_sync">Synchroniser</string>
-  <string name="restart">Redémarrer</string>
-  <string name="do_nothing">Ne rien faire</string>
-  <string name="more_options">Options supplémentaires</string>
-  <string name="now">Maintenant</string>
-  <string name="back">Retour</string>
-  <string name="ankiweb">AnkiWeb</string>
-  <string name="usb">USB</string>
-  <string name="_import">Importer</string>
-  <string name="confirm">Confirmer</string>
-  <string name="internet">Internet</string>
-  <string name="pc">PC</string>
   <string-array name="next_review_s">
     <item>1 seconde</item>
     <item>1 minute</item>
@@ -155,22 +140,21 @@ Veuillez patienter...</string>
     <item>%s mois</item>
     <item>%s années</item>
   </string-array>
-  <plurals name="deckpicker_title">
-    <item quantity="one">1 des %2$d prévues (%3$s)</item>
-    <item quantity="other">%1$d des %2$d prévues (%3$s)</item>
-  </plurals>
-  <plurals name="deckpicker_title_minutes">
-    <item quantity="one">1 minute.</item>
-    <item quantity="other">%d minute(s).</item>
-  </plurals>
-  <plurals name="deckpicker_due">
-    <item quantity="one">1 parmi %2$d dûe</item>
-    <item quantity="other">%1$d parmi %2$d dûes</item>
-  </plurals>
-  <plurals name="reviewer_window_title">
-    <item quantity="one">1 minute restante</item>
-    <item quantity="other">%d min. restantes</item>
-  </plurals>
+  <string name="visit">Visiter</string>
+  <string name="later">Plus tard</string>
+  <string name="download">Télécharger</string>
+  <string name="open_collection">Chargement de la collection.\nVeuillez patienter…</string>
+  <string name="rebuild_cram_deck">Reconstruction du paquet de bachotage.\nVeuillez patienter…</string>
+  <string name="rebuild_cram_label">Réparer</string>
+  <string name="empty_cram_label">Vide</string>
+  <string name="empty_cram_deck">Paquet de bachotage en cours de vidage.\n
+Veuillez patienter...</string>
+  <string name="custom_study_deck_name">Session d\'étude personnalisée</string>
+  <string name="custom_study_deck_exists">Merci de renommer d\'abord le paquet d\'étude personnalisée.</string>
+  <string name="studyoptions_congrats_finished">FÉLICITATIONS ! Vous avez terminé… pour l’instant !</string>
+  <string name="studyoptions_congrats_more_rev">Vous avez atteint votre quota de révisions, mais il reste des cartes à reviser pour aujourd’hui. Pour une meilleure mémorisation, vous devriez peut-être augmenter le quota journalier dans les options.</string>
+  <string name="studyoptions_congrats_more_new">Il reste des nouvelles cartes disponibles, mais la limite journalière a été atteinte. Vous pouvez augmenter cette limite dans les options, mais gardez à l\'esprit que cela augmentera votre charge de travail à court terme.</string>
+  <string name="studyoptions_congrats_custom">Pour étudier en dehors des horaires normaux, cliquez sur le bouton d\'étude personnalisée ci-dessous.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Demain, il y aura %2$s cartes nouvelles et 1 à revoir.\n Durée estimée : %3$s</item>
     <item quantity="other">Demain, il y aura %2$s cartes nouvelles et %1$d à revoir.\n Durée estimée : %3$s</item>
@@ -183,4 +167,20 @@ Veuillez patienter...</string>
     <item quantity="one">Durée estimée : 1 mn.</item>
     <item quantity="other">Durée estimée : %1$d mn.</item>
   </plurals>
+  <string name="sd_card_not_mounted">La carte SD n\'est pas montée.\n\nVous pouvez également sauvegarder votre collection dans la mémoire interne bien que cela ne soit pas recommandé car cela rendrait plus difficile l\'accès au fichier. Vous pouvez activer cela dans les préférences (accédez-y en cliquant sur ce texte).</string>
+  <string name="studyoptions_options">Options</string>
+  <string name="empty_cloze_warning">N’oubliez pas le texte à trous. (%1$s)</string>
+  <string name="help_cloze">aide</string>
+  <string name="button_sync">Synchroniser</string>
+  <string name="restart">Redémarrer</string>
+  <string name="do_nothing">Ne rien faire</string>
+  <string name="more_options">Options supplémentaires</string>
+  <string name="now">Maintenant</string>
+  <string name="back">Retour</string>
+  <string name="ankiweb">AnkiWeb</string>
+  <string name="usb">USB</string>
+  <string name="_import">Importer</string>
+  <string name="confirm">Confirmer</string>
+  <string name="internet">Internet</string>
+  <string name="pc">PC</string>
 </resources>

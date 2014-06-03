@@ -51,6 +51,13 @@
   <string name="no_tts_available_title">Преобразование текста в речь</string>
   <string name="no_tts_available_message">Функция преобразования текста в речь не доступна</string>
   <string name="tts_no_tts">Не произносить</string>
+  <string-array name="about_content">
+    <item><![CDATA[<h2>%1$s:<br/>Flashcards для Android</h2>AnkiDroid - это приложение для изучения учебных карточек, полностью совместимо с настольной версией <a href="%2$s">Anki</a>. Вы можете создавать, скачивать и изучать информацию, и в AnkiDroid и Anki Desktop, синхронизируя их между собой.]]></item>
+    <item><![CDATA[Чтобы сделать AnkiDroid лучше, пожалуйста, сообщайте нам о любых ошибках <a href="%1$s">здесь</a>; запрос новых функций или идеи также очень приветствуются! Пожалуйста используйте <a href="%2$s">wiki</a> и участвуйте в <a href="%3$s">форуме</a>.]]></item>
+    <item><![CDATA[AnkiDroid - <a href="%1$s">открытое программное обеспечение<a/>, любой может <a href="%2$s">стать</a> <a href="%3$s">участником</a>:-)]]></item>
+    <item><![CDATA[Не-программисты также могут помочь: <a href="%1$s">переводя</a> AnkiDroid, обновляя Вики и скриншоты, <a href="%2$s"> оказывая денежную помощь</a> или написав в блогах о AnkiDroid!]]></item>
+    <item><![CDATA[AnkiDroid выпускается под <a href="%1$s">GNU-GPL v3 лицензией</a> и исходный код доступен <a href="%2$s">здесь</a>.]]></item>
+  </string-array>
   <string name="dont_show_again">Не показывать снова</string>
   <string name="sync_log_title">Ход синхронизации</string>
   <string name="notify_ticker">Обновление приложения</string>
@@ -113,11 +120,4 @@
   <string name="import_media_count">Импорт медиа файлов %1$d%%\nПожалуйста подождите&#8230;</string>
   <string name="import_update_counts">Вычисление результатов обновления.\nПожалуйста подождите&#8230;</string>
   <string name="import_add_progress">• Распакованный архив %1$s\n• Импортировано заметок %2$d%%\n• Импортировано карт %3$d%%\n• Очищено %4$s</string>
-  <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s:<br/>Flashcards для Android</h2>AnkiDroid - это приложение для изучения учебных карточек, полностью совместимо с настольной версией <a href="%2$s">Anki</a>. Вы можете создавать, скачивать и изучать информацию, и в AnkiDroid и Anki Desktop, синхронизируя их между собой.]]></item>
-    <item><![CDATA[Чтобы сделать AnkiDroid лучше, пожалуйста, сообщайте нам о любых ошибках <a href="%1$s">здесь</a>; запрос новых функций или идеи также очень приветствуются! Пожалуйста используйте <a href="%2$s">wiki</a> и участвуйте в <a href="%3$s">форуме</a>.]]></item>
-    <item><![CDATA[AnkiDroid - <a href="%1$s">открытое программное обеспечение<a/>, любой может <a href="%2$s">стать</a> <a href="%3$s">участником</a>:-)]]></item>
-    <item><![CDATA[Не-программисты также могут помочь: <a href="%1$s">переводя</a> AnkiDroid, обновляя Вики и скриншоты, <a href="%2$s"> оказывая денежную помощь</a> или написав в блогах о AnkiDroid!]]></item>
-    <item><![CDATA[AnkiDroid выпускается под <a href="%1$s">GNU-GPL v3 лицензией</a> и исходный код доступен <a href="%2$s">здесь</a>.]]></item>
-  </string-array>
 </resources>

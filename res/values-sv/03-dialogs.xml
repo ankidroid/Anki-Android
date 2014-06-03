@@ -51,6 +51,13 @@
   <string name="no_tts_available_title">Text-till-tal</string>
   <string name="no_tts_available_message">Det finns inget språk för text-till-tal</string>
   <string name="tts_no_tts">Inget tal</string>
+  <string-array name="about_content">
+    <item><![CDATA[<h2>%1$s:<br/>Flashcards till Android</h2>AnkiDroid är en flashcardapplikation som är fullt kompatibel med skrivbordsmjukvaran <a href="%2$s">Anki</a>. Du kan skapa, ladda ner och lära dig nya saker via både AnkiDroid och Anki Desktop, och därefter enkelt synkronisera dem.]]></item>
+    <item><![CDATA[Hjälp gärna till att göra AnkiDroid ännu bättre genom att rapportera buggar <a href="%1$s">här</a>; Idéer på nya funktioner är också välkomna! Använd också <a href="%2$s">wikin</a> och säg Hej på <a href="%3$s">forumet</a>.]]></item>
+    <item><![CDATA[AnkiDroid är <a href="%1$s">öppen källkodsmjukvara<a/>, så alla uppmanas att <a href="%2$s">gå med</a> och <a href="%3$s">bidra</a>:-)]]></item>
+    <item><![CDATA[De som inte är utvecklare kan också hjälpa till, t.ex. genom att <a href="%1$s">översätta</a> AnkiDroid, uppdatera wikin och skärmdumpar, <a href="%2$s">donera</a> till Anki Desktop, eller blogga om AnkiDroid!]]></item>
+    <item><![CDATA[AnkiDroid är släppt under licensen <a href="%1$s">GNU GPLv3</a> och källkoden finns <a href="%2$s">här</a>.]]></item>
+  </string-array>
   <string name="dont_show_again">Visa inte igen</string>
   <string name="sync_log_title">Synk-logg</string>
   <string name="notify_ticker">Programuppdatering</string>
@@ -59,7 +66,7 @@
   <string name="notification_title">Bekräfta Ankidroid Uppdatera</string>
   <string name="preview_title">Förhandsgranskning</string>
   <string name="notification_message">En ny version av Ankidroid finns tillgänglig i Android Market.\n\nVill du installera den?</string>
-  <string name="notification_stop">Medela mig inte om denna uppdatering igen</string>
+  <string name="notification_stop">Meddela mig inte om denna uppdatering igen</string>
   <string name="reset_card_dialog_title">Nollställ inlärningsdata för kort</string>
   <string name="reset_card_dialog_message">Detta nollställer inlärningsdata för alla kort tillhörandes denna not (de kommer fungera som nya kort).\nVill du verkligen fortsätta?</string>
   <string name="reset_card_dialog_confirmation">Återställt alla kort tillhörandes denna not</string>
@@ -79,7 +86,7 @@
   <string name="custom_study_ahead">Repetera i förväg för x dagar:</string>
   <string name="custom_study_random">Välj x kort slumpmässigt från kortleken:</string>
   <string name="custom_study_preview">Förhandsgranska nya kort som lagts till de senaste x dagarna:</string>
-  <string name="custom_study_tags">Fyll i taggar:</string>
+  <string name="custom_study_tags">Fyll i etiketter:</string>
   <string name="rebuild_custom_study_deck">Bygger om anpassad studiekortlek.\nVar god dröj...</string>
   <string name="deck_upgrade_title">Kortleksuppgradering</string>
   <string name="deck_upgrade_rename_warning">Var medveten att detta kommer exportera din nuvarande samling till en fil \'%1$s\' och kommer skapa en ny från dina gamla anki 1.x-filer. Om du vill kan du manuellt importera ovanstående apkg-fil igen efter att guiden slutförts. Är du säker att du vill fortsätta?</string>
@@ -113,11 +120,4 @@
   <string name="import_media_count">Importerar mediafiler %1$d%%\nVar god dröj&#8230;</string>
   <string name="import_update_counts">Räknar kortlekar.\nVar god dröj&#8230;</string>
   <string name="import_add_progress">• Packar upp arkiv %1$s\n• Import av noter %2$d%%\n• Import av kort %3$d%%\n• Uppstädning %4$s</string>
-  <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s:<br/>Flashcards till Android</h2>AnkiDroid är en flashcardapplikation som är fullt kompatibel med skrivbordsmjukvaran <a href="%2$s">Anki</a>. Du kan skapa, ladda ner och lära dig nya saker via både AnkiDroid och Anki Desktop, och därefter enkelt synkronisera dem.]]></item>
-    <item><![CDATA[Hjälp gärna till att göra AnkiDroid ännu bättre genom att rapportera buggar <a href="%1$s">här</a>; Idéer på nya funktioner är också välkomna! Använd också <a href="%2$s">wikin</a> och säg Hej på <a href="%3$s">forumet</a>.]]></item>
-    <item><![CDATA[AnkiDroid är <a href="%1$s">öppen källkodsmjukvara<a/>, så alla uppmanas att <a href="%2$s">gå med</a> och <a href="%3$s">bidra</a>:-)]]></item>
-    <item><![CDATA[De som inte är utvecklare kan också hjälpa till, t.ex. genom att <a href="%1$s">översätta</a> AnkiDroid, uppdatera wikin och skärmdumpar, <a href="%2$s">donera</a> till Anki Desktop, eller blogga om AnkiDroid!]]></item>
-    <item><![CDATA[AnkiDroid är släppt under licensen <a href="%1$s">GNU GPLv3</a> och källkoden finns <a href="%2$s">här</a>.]]></item>
-  </string-array>
 </resources>

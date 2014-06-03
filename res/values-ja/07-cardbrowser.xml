@@ -39,6 +39,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <plurals name="card_browser_subtitle">
+    <item quantity="one">1 ／ %2$d 番目のカード</item>
+    <item quantity="other">%1$d ／ %2$d 番目のカード</item>
+  </plurals>
   <string name="card_browser_all_decks">すべての単語帳</string>
   <string name="card_browser_load">書き込み中です\nしばらくお待ちください</string>
   <string name="card_browser_cardloading_error">カードの読み込みエラーです. おそらく端末のメモリ制限に関連しています. 小さい単語帳で再試行してください</string>
@@ -90,8 +94,4 @@
     <item>カードの評価順</item>
     <item>未習得の順</item>
   </string-array>
-  <plurals name="card_browser_subtitle">
-    <item quantity="one">1 ／ %2$d 番目のカード</item>
-    <item quantity="other">%1$d ／ %2$d 番目のカード</item>
-  </plurals>
 </resources>

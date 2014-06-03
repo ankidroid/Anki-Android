@@ -51,6 +51,13 @@
   <string name="no_tts_available_title">Texto para Fala</string>
   <string name="no_tts_available_message">Nenhum idioma de texto para fala disponível</string>
   <string name="tts_no_tts">Não fale</string>
+  <string-array name="about_content">
+    <item><![CDATA[<h2>%1$s:<br/>Cartões de estudo para Android</h2>AnkiDroid é a aplicação de cartões de estudo que é totalmente compatível com o software de desktop <a href="%2$s">Anki</a>. Você pode criar, baixar e aprender conteúdos em ambos,AnkiDroid ou Anki Desktop, e sincronizá-los facilmente.]]></item>
+    <item><![CDATA[Para nos ajudar a fazer o AnkiDroid melhor, por favor reporte qualquer bug <a href="%1$s">aqui</a>; novas ideias são muito bem vindas também! Por favor use o <a href="%2$s">wiki</a> e diga Oi no <a href="%3$s">fórum</a>.]]></item>
+    <item><![CDATA[AnkiDroid é um <a href="%1$s">software open source<a/>, então todos são encorajados a <a href="%2$s">juntar-se</a> aos <a href="%3$s">colaboradores</a>:-)]]></item>
+    <item><![CDATA[Não-desenvolvedores podem ajudar também, por exemplo <a href="%1$s">traduzindo</a> AnkiDroid, atualizando o wiki e os screenshots, <a href="%2$s">doando</a> para o Anki Desktop, ou bloggando sobre AnkiDroid!]]></item>
+    <item><![CDATA[AnkiDroid é publicado sobre a licensa<a href="%1$s">GNU-GPL v3 license</a> e o codigo-fonte está <a href="%2$s">aqui</a>.]]></item>
+  </string-array>
   <string name="dont_show_again">Não mostrar novamente</string>
   <string name="sync_log_title">Log de sincronização</string>
   <string name="notify_ticker">Atualização do Aplicativo</string>
@@ -113,11 +120,4 @@
   <string name="import_media_count">Importando arquivos de mídia %1$d%%\nPor favor aguarde...</string>
   <string name="import_update_counts">Atualizando a contagem de decks.\nPor favor aguarde...</string>
   <string name="import_add_progress">• Descompactando arquivo %1$s\n• Importação de notas %2$d%%\n• Importação de cartões %3$d%%\n• Limpeza %4$s</string>
-  <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s:<br/>Cartões de estudo para Android</h2>AnkiDroid é a aplicação de cartões de estudo que é totalmente compatível com o software de desktop <a href="%2$s">Anki</a>. Você pode criar, baixar e aprender conteúdos em ambos,AnkiDroid ou Anki Desktop, e sincronizá-los facilmente.]]></item>
-    <item><![CDATA[Para nos ajudar a fazer o AnkiDroid melhor, por favor reporte qualquer bug <a href="%1$s">aqui</a>; novas ideias são muito bem vindas também! Por favor use o <a href="%2$s">wiki</a> e diga Oi no <a href="%3$s">fórum</a>.]]></item>
-    <item><![CDATA[AnkiDroid é um <a href="%1$s">software open source<a/>, então todos são encorajados a <a href="%2$s">juntar-se</a> aos <a href="%3$s">colaboradores</a>:-)]]></item>
-    <item><![CDATA[Não-desenvolvedores podem ajudar também, por exemplo <a href="%1$s">traduzindo</a> AnkiDroid, atualizando o wiki e os screenshots, <a href="%2$s">doando</a> para o Anki Desktop, ou bloggando sobre AnkiDroid!]]></item>
-    <item><![CDATA[AnkiDroid é publicado sobre a licensa<a href="%1$s">GNU-GPL v3 license</a> e o codigo-fonte está <a href="%2$s">aqui</a>.]]></item>
-  </string-array>
 </resources>

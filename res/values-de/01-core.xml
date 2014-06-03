@@ -51,6 +51,22 @@
   <string name="studyoptions_total_cards">Karten gesamt:</string>
   <string name="studyoptions_eta">Geschätzte Zeit (Min.):</string>
   <string name="studyoptions_start">Jetzt lernen</string>
+  <plurals name="deckpicker_title">
+    <item quantity="one">1 von %2$d fällig (%3$s)</item>
+    <item quantity="other">%1$d von %2$d fällig (%3$s)</item>
+  </plurals>
+  <plurals name="deckpicker_title_minutes">
+    <item quantity="one">1 Min.</item>
+    <item quantity="other">%d Min.</item>
+  </plurals>
+  <plurals name="deckpicker_due">
+    <item quantity="one">1 von %2$d fällig</item>
+    <item quantity="other">%1$d von %2$d fällig</item>
+  </plurals>
+  <plurals name="reviewer_window_title">
+    <item quantity="one">noch 1 Minute</item>
+    <item quantity="other">noch %d Minuten</item>
+  </plurals>
   <string name="type_answer_hint">Antwort eingeben</string>
   <string name="show_answer">Antwort anzeigen</string>
   <string name="ease1_successive">Nochmal</string>
@@ -64,7 +80,7 @@
   <string name="card_unsuspended">Aussetzen rückgängig gemacht</string>
   <string name="card_suspended">Karte wieder ausgesetzt</string>
   <string name="menu_rotate">Drehen</string>
-  <string name="menu_import">Import file</string>
+  <string name="menu_import">Datei importieren</string>
   <string name="undo">Rückgängig machen</string>
   <string name="undo_action_review">Lernen</string>
   <string name="undo_action_edit">Notiz bearbeiten</string>
@@ -83,8 +99,8 @@
   <string name="contextmenu_deckpicker_collapse_deck">Unterstapel verstecken</string>
   <string name="contextmenu_deckpicker_inflate_deck">Unterstapel anzeigen</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Eigenes Wörterbuch festlegen</string>
-  <string name="menu_add">Add</string>
-  <string name="menu_add_note">Add note</string>
+  <string name="menu_add">Hinzufügen</string>
+  <string name="menu_add_note">Notiz hinzufügen</string>
   <string name="menu_download_deck">Stapel herunterladen</string>
   <string name="menu_download_shared_deck">Öffentlicher Stapel</string>
   <string name="menu_my_account">Synchronisierungskonto</string>
@@ -102,42 +118,12 @@
   <string name="menu_search">In %1$s nachschlagen</string>
   <string name="menu_mark_card">Karte markieren</string>
   <string name="menu_unmark_card">Markierung entfernen</string>
-  <string name="new_deck">Create deck</string>
+  <string name="new_deck">Stapel erstellen</string>
   <string name="create">Erstellen</string>
-  <string name="new_dynamic_deck">Create filtered deck</string>
+  <string name="new_dynamic_deck">Gefilterten Stapel erstellen</string>
   <string name="studyoptions_feedback">Feedback</string>
   <string name="studyoptions_load_tutorial_deck">Einführungsstapel erstellen</string>
   <string name="night_mode">Nachtmodus</string>
-  <string name="visit">Besuchen</string>
-  <string name="later">Später</string>
-  <string name="download">Download</string>
-  <string name="open_collection">Öffne Sammlung.\nBitte warten…</string>
-  <string name="rebuild_cram_deck">Dynamischer Stapel wird neu aufgebaut.\nBitte warten...</string>
-  <string name="rebuild_cram_label">Neu aufbauen</string>
-  <string name="empty_cram_label">Leeren</string>
-  <string name="empty_cram_deck">Leere dynamischen Stapel.\n Bitte warten...</string>
-  <string name="custom_study_deck_name">Benutzerdefinierte Sitzung</string>
-  <string name="custom_study_deck_exists">Bitte benennen Sie zunächst den existierenden Stapel \"Benutzerdefinierte Sitzung\" um.</string>
-  <string name="studyoptions_congrats_finished">Herzlichen Glückwunsch! Sie sind für heute fertig.</string>
-  <string name="studyoptions_congrats_more_rev">Ihr heutiges Limit ist erreicht, aber es sind noch Karten fällig. Denken Sie für einen optimalen Lernerfolg darüber nach, das tägliche Limit in den Optionen zu erhöhen.</string>
-  <string name="studyoptions_congrats_more_new">Es sind noch neue Karten verfügbar, aber das tägliche Lernlimit wurde erreicht. Sie können das Limit in den Optionen erhöhen, bedenken Sie aber, dass dies Ihr kurzfristiges Arbeitspensum erhöht.</string>
-  <string name="studyoptions_congrats_custom">Klicken Sie unten auf \"Benutzerdefiniertes Lernen\", um außerhalb des regulären Lehrplans zu lernen.</string>
-  <string name="sd_card_not_mounted">Die SD-Karte ist nicht gemounted.\n\nDie Sammlung kann auch im internen Speicher abgelegt werden. Dies ist allerdings nicht zu empfehlen, da Sie nicht so einfach auf die Datei zugreifen können. Sie können dies in den Einstellungen aktivieren (auf diesen Text klicken um Einstellungen zu öffnen).</string>
-  <string name="studyoptions_options">Optionen</string>
-  <string name="empty_cloze_warning">Bitte bearbeiten Sie diese Notiz und fügen Sie einige Lückentext-Streichungen ein (%1$s)</string>
-  <string name="help_cloze">Hilfe</string>
-  <string name="button_sync">Synchronisieren</string>
-  <string name="restart">Neustart</string>
-  <string name="do_nothing">Nichts tun</string>
-  <string name="more_options">Mehr Optionen</string>
-  <string name="now">Jetzt</string>
-  <string name="back">Zurück</string>
-  <string name="ankiweb">AnkiWeb</string>
-  <string name="usb">USB</string>
-  <string name="_import">Importieren</string>
-  <string name="confirm">Bestätigen</string>
-  <string name="internet">Internet</string>
-  <string name="pc">PC</string>
   <string-array name="next_review_s">
     <item>1 Sekunde</item>
     <item>1 Minute</item>
@@ -154,22 +140,20 @@
     <item>%s Monate</item>
     <item>%s Jahre</item>
   </string-array>
-  <plurals name="deckpicker_title">
-    <item quantity="one">1 von %2$d fällig (%3$s)</item>
-    <item quantity="other">%1$d von %2$d fällig (%3$s)</item>
-  </plurals>
-  <plurals name="deckpicker_title_minutes">
-    <item quantity="one">1 Min.</item>
-    <item quantity="other">%d Min.</item>
-  </plurals>
-  <plurals name="deckpicker_due">
-    <item quantity="one">1 von %2$d fällig</item>
-    <item quantity="other">%1$d von %2$d fällig</item>
-  </plurals>
-  <plurals name="reviewer_window_title">
-    <item quantity="one">noch 1 Minute</item>
-    <item quantity="other">noch %d Minuten</item>
-  </plurals>
+  <string name="visit">Besuchen</string>
+  <string name="later">Später</string>
+  <string name="download">Download</string>
+  <string name="open_collection">Öffne Sammlung.\nBitte warten…</string>
+  <string name="rebuild_cram_deck">Dynamischer Stapel wird neu aufgebaut.\nBitte warten...</string>
+  <string name="rebuild_cram_label">Neu aufbauen</string>
+  <string name="empty_cram_label">Leeren</string>
+  <string name="empty_cram_deck">Leere dynamischen Stapel.\n Bitte warten...</string>
+  <string name="custom_study_deck_name">Benutzerdefinierte Sitzung</string>
+  <string name="custom_study_deck_exists">Bitte benennen Sie zunächst den existierenden Stapel \"Benutzerdefinierte Sitzung\" um.</string>
+  <string name="studyoptions_congrats_finished">Herzlichen Glückwunsch! Sie sind für heute fertig.</string>
+  <string name="studyoptions_congrats_more_rev">Ihr heutiges Limit ist erreicht, aber es sind noch Karten fällig. Denken Sie für einen optimalen Lernerfolg darüber nach, das tägliche Limit in den Optionen zu erhöhen.</string>
+  <string name="studyoptions_congrats_more_new">Es sind noch neue Karten verfügbar, aber das tägliche Lernlimit wurde erreicht. Sie können das Limit in den Optionen erhöhen, bedenken Sie aber, dass dies Ihr kurzfristiges Arbeitspensum erhöht.</string>
+  <string name="studyoptions_congrats_custom">Klicken Sie unten auf \"Benutzerdefiniertes Lernen\", um außerhalb des regulären Lehrplans zu lernen.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Morgen ist 1 Karte fällig und %2$s.\n Geschätzte Zeit: %3$s</item>
     <item quantity="other">Morgen sind %1$d Karten fällig und %2$s.\n Geschätzte Zeit: %3$s</item>
@@ -182,4 +166,20 @@
     <item quantity="one">Geschätzte Zeit: 1 Min.</item>
     <item quantity="other">Geschätzte Zeit: %1$d Min.</item>
   </plurals>
+  <string name="sd_card_not_mounted">Die SD-Karte ist nicht gemounted.\n\nDie Sammlung kann auch im internen Speicher abgelegt werden. Dies ist allerdings nicht zu empfehlen, da Sie nicht so einfach auf die Datei zugreifen können. Sie können dies in den Einstellungen aktivieren (auf diesen Text klicken um Einstellungen zu öffnen).</string>
+  <string name="studyoptions_options">Optionen</string>
+  <string name="empty_cloze_warning">Bitte bearbeiten Sie diese Notiz und fügen Sie einige Lückentext-Streichungen ein (%1$s)</string>
+  <string name="help_cloze">Hilfe</string>
+  <string name="button_sync">Synchronisieren</string>
+  <string name="restart">Neustart</string>
+  <string name="do_nothing">Nichts tun</string>
+  <string name="more_options">Mehr Optionen</string>
+  <string name="now">Jetzt</string>
+  <string name="back">Zurück</string>
+  <string name="ankiweb">AnkiWeb</string>
+  <string name="usb">USB</string>
+  <string name="_import">Importieren</string>
+  <string name="confirm">Bestätigen</string>
+  <string name="internet">Internet</string>
+  <string name="pc">PC</string>
 </resources>

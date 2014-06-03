@@ -51,6 +51,22 @@
   <string name="studyoptions_total_cards">Всего карт:</string>
   <string name="studyoptions_eta">Вероятно займёт (мин):</string>
   <string name="studyoptions_start">Начать обучение</string>
+  <plurals name="deckpicker_title">
+    <item quantity="one">повт. 1 из %2$d (%3$s)</item>
+    <item quantity="other">повт. %1$d из %2$d (%3$s)</item>
+  </plurals>
+  <plurals name="deckpicker_title_minutes">
+    <item quantity="one">1 мин.</item>
+    <item quantity="other">%d мин.</item>
+  </plurals>
+  <plurals name="deckpicker_due">
+    <item quantity="one">повт. 1 из %2$d</item>
+    <item quantity="other">повт. %1$d из %2$d</item>
+  </plurals>
+  <plurals name="reviewer_window_title">
+    <item quantity="one">1 минута осталась</item>
+    <item quantity="other">%d минут осталось</item>
+  </plurals>
   <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">Показать ответ</string>
   <string name="ease1_successive">Снова</string>
@@ -108,36 +124,6 @@
   <string name="studyoptions_feedback">Обратная связь</string>
   <string name="studyoptions_load_tutorial_deck">Создать учебник</string>
   <string name="night_mode">Ночной режим</string>
-  <string name="visit">Посетить</string>
-  <string name="later">Позже</string>
-  <string name="download">Скачать</string>
-  <string name="open_collection">Открытие коллекции.\nПожалуйста подождите...</string>
-  <string name="rebuild_cram_deck">Перестроение колоды для зубрёжки.\nПожалуйста, подождите...</string>
-  <string name="rebuild_cram_label">Перестроить</string>
-  <string name="empty_cram_label">Очистить</string>
-  <string name="empty_cram_deck">Очистка колоды для зубрёжки.\nПожалуйста, подождите...</string>
-  <string name="custom_study_deck_name">Специальная учебная сессия</string>
-  <string name="custom_study_deck_exists">Пожалуйста, сначала переименуйте существующие специальные колоды.</string>
-  <string name="studyoptions_congrats_finished">Поздравляем! На сегодня задание выполнено.</string>
-  <string name="studyoptions_congrats_more_rev">Достигнут ограничитель количества просмотров на сегодня, но всё ещё есть карты ожидающие просмотра. Для оптимального запоминания рекомендуется увеличить ежедневный лимит в параметрах.</string>
-  <string name="studyoptions_congrats_more_new">Есть ещё новые карты, но дневной лимит карт был уже выучен. Вы можете увеличить лимит, но учтите, что это увеличит и объёмы повторений в следующие дни.</string>
-  <string name="studyoptions_congrats_custom">Чтобы изменить привычный график изучения колоды, нажмите \"Дополнительное обучение\" ниже.</string>
-  <string name="sd_card_not_mounted">Карта памяти не смонтирована.\n\nВы также можете хранить вашу коллекцию во внутренней памяти, однако этого делать не рекомендуется, так как вам будет сложнее получить доступ к файлу. Вы можете активировать эту опцию в настройках (чтобы их открыть, щелкните на этот текст).</string>
-  <string name="studyoptions_options">Параметры</string>
-  <string name="empty_cloze_warning">Пожалуйста, отредактируйте эту заметку и добавьте элементы с пропусками.(%1$s)</string>
-  <string name="help_cloze">Справка</string>
-  <string name="button_sync">Синхронизация</string>
-  <string name="restart">Перезагрузка</string>
-  <string name="do_nothing">Ничего не делать</string>
-  <string name="more_options">Больше параметров</string>
-  <string name="now">Сейчас</string>
-  <string name="back">Назад</string>
-  <string name="ankiweb">AnkiWeb</string>
-  <string name="usb">USB</string>
-  <string name="_import">Импорт</string>
-  <string name="confirm">Подтверждение</string>
-  <string name="internet">Интернет</string>
-  <string name="pc">ПК</string>
   <string-array name="next_review_s">
     <item>1 секунда</item>
     <item>1 минута</item>
@@ -154,22 +140,20 @@
     <item>%s месяцев</item>
     <item>%s лет</item>
   </string-array>
-  <plurals name="deckpicker_title">
-    <item quantity="one">повт. 1 из %2$d (%3$s)</item>
-    <item quantity="other">повт. %1$d из %2$d (%3$s)</item>
-  </plurals>
-  <plurals name="deckpicker_title_minutes">
-    <item quantity="one">1 мин.</item>
-    <item quantity="other">%d мин.</item>
-  </plurals>
-  <plurals name="deckpicker_due">
-    <item quantity="one">повт. 1 из %2$d</item>
-    <item quantity="other">повт. %1$d из %2$d</item>
-  </plurals>
-  <plurals name="reviewer_window_title">
-    <item quantity="one">1 минута осталась</item>
-    <item quantity="other">%d минут осталось</item>
-  </plurals>
+  <string name="visit">Посетить</string>
+  <string name="later">Позже</string>
+  <string name="download">Скачать</string>
+  <string name="open_collection">Открытие коллекции.\nПожалуйста подождите...</string>
+  <string name="rebuild_cram_deck">Перестроение колоды для зубрёжки.\nПожалуйста, подождите...</string>
+  <string name="rebuild_cram_label">Перестроить</string>
+  <string name="empty_cram_label">Очистить</string>
+  <string name="empty_cram_deck">Очистка колоды для зубрёжки.\nПожалуйста, подождите...</string>
+  <string name="custom_study_deck_name">Специальная учебная сессия</string>
+  <string name="custom_study_deck_exists">Пожалуйста, сначала переименуйте существующие специальные колоды.</string>
+  <string name="studyoptions_congrats_finished">Поздравляем! На сегодня задание выполнено.</string>
+  <string name="studyoptions_congrats_more_rev">Достигнут ограничитель количества просмотров на сегодня, но всё ещё есть карты ожидающие просмотра. Для оптимального запоминания рекомендуется увеличить ежедневный лимит в параметрах.</string>
+  <string name="studyoptions_congrats_more_new">Есть ещё новые карты, но дневной лимит карт был уже выучен. Вы можете увеличить лимит, но учтите, что это увеличит и объёмы повторений в следующие дни.</string>
+  <string name="studyoptions_congrats_custom">Чтобы изменить привычный график изучения колоды, нажмите \"Дополнительное обучение\" ниже.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Завтра будет: 1 карта для просмотра и %2$s.\n Вероятно займёт: %3$s</item>
     <item quantity="other">Завтра будет: %1$d карт для просмотра и %2$s.\n Вероятно займёт: %3$s</item>
@@ -182,4 +166,20 @@
     <item quantity="one">Вероятно займёт: 1 мин.</item>
     <item quantity="other">Вероятно займёт: %1$d мин.</item>
   </plurals>
+  <string name="sd_card_not_mounted">Карта памяти не смонтирована.\n\nВы также можете хранить вашу коллекцию во внутренней памяти, однако этого делать не рекомендуется, так как вам будет сложнее получить доступ к файлу. Вы можете активировать эту опцию в настройках (чтобы их открыть, щелкните на этот текст).</string>
+  <string name="studyoptions_options">Параметры</string>
+  <string name="empty_cloze_warning">Пожалуйста, отредактируйте эту заметку и добавьте элементы с пропусками.(%1$s)</string>
+  <string name="help_cloze">Справка</string>
+  <string name="button_sync">Синхронизация</string>
+  <string name="restart">Перезагрузка</string>
+  <string name="do_nothing">Ничего не делать</string>
+  <string name="more_options">Больше параметров</string>
+  <string name="now">Сейчас</string>
+  <string name="back">Назад</string>
+  <string name="ankiweb">AnkiWeb</string>
+  <string name="usb">USB</string>
+  <string name="_import">Импорт</string>
+  <string name="confirm">Подтверждение</string>
+  <string name="internet">Интернет</string>
+  <string name="pc">ПК</string>
 </resources>

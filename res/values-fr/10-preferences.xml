@@ -42,25 +42,25 @@
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_reviewing">Révision</string>
   <string name="pref_cat_reviewer_behaviour">Behavior</string>
-  <string name="pref_cat_flashcard">Display</string>
+  <string name="pref_cat_flashcard">Afficher</string>
   <string name="pref_cat_whiteboard">Tableau blanc</string>
-  <string name="pref_cat_automatic_display">Automatic Display Answer</string>
-  <string name="pref_cat_fonts_formatting">Fonts and Style</string>
-  <string name="pref_cat_fonts">Font Selection</string>
-  <string name="pref_cat_fonts_size">Size</string>
+  <string name="pref_cat_automatic_display">Affichage automatique de la réponse</string>
+  <string name="pref_cat_fonts_formatting">Polices et style</string>
+  <string name="pref_cat_fonts">Sélection de la police</string>
+  <string name="pref_cat_fonts_size">Taille</string>
   <string name="pref_cat_gestures">Taps and Swipes</string>
   <string name="pref_cat_actions">Actions</string>
-  <string name="pref_cat_advanced">Advanced</string>
+  <string name="pref_cat_advanced">Avancé</string>
   <string name="pref_cat_performance">Performance</string>
   <string name="pref_cat_workarounds">Workarounds</string>
   <string name="pref_cat_plugins">Plugins</string>
-  <string name="enable_whiteboard">Enable whiteboard</string>
+  <string name="enable_whiteboard">Activer le tableau blanc</string>
   <string name="show_whiteboard_summ">Vous permet d\'écrire sur l\'écran</string>
   <string name="whiteboard_stroke_width">Stroke width</string>
   <string name="whiteboard_stroke_width_summ">XXX</string>
   <string name="whiteboard_black">Monochrome strokes</string>
-  <string name="whiteboard_black_summ">Uses less memory, but does not work in night mode</string>
-  <string name="write_answers_disable">Disable typing in answer</string>
+  <string name="whiteboard_black_summ">Utilise moins de mémoire, mais ne fonctionne pas en mode nuit</string>
+  <string name="write_answers_disable">Désactiver la saisie de la réponse</string>
   <string name="write_answers_disable_summ">Prevents the keyboard from appearing on flashcards containing typed fields</string>
   <string name="text_selection_click">Longclick workaround</string>
   <string name="text_selection_click_summ">Sélectionnez ceci si vous ne pouvez pas commencer une sélection de texte avec une pression longue</string>
@@ -185,6 +185,10 @@
   <string name="deck_conf_deck_description">Description du paquet</string>
   <string name="deck_conf_pref_cat_options">Options</string>
   <string name="deck_conf_group">Groupe</string>
+  <plurals name="deck_conf_group_summ">
+    <item quantity="one">%1$s\n1 paquet utilise ce groupe</item>
+    <item quantity="other">%1$s\n%2$d paquets utilisent ce groupe</item>
+  </plurals>
   <string name="deck_conf_new_cards">Nouvelles cartes</string>
   <string name="deck_conf_rev_cards">Révisions</string>
   <string name="deck_conf_lps_cards">Faux-pas</string>
@@ -227,6 +231,10 @@
   <string name="deck_conf_remove_title">Supprimer</string>
   <string name="deck_conf_remove_message">Supprimer le groupe d\'option actuel ?</string>
   <string name="deck_conf_set_subdecks">Définir pour tous les sous-paquets</string>
+  <plurals name="deck_conf_set_subdecks_summ">
+    <item quantity="one">1 sous-paquet utilise ce groupe</item>
+    <item quantity="other">%s sous-paquets utilisent ce groupe</item>
+  </plurals>
   <string name="deck_conf_set_subdecks_title">Définir pour tous les sous-paquets</string>
   <string name="deck_conf_set_subdecks_message">Définir ce groupe d\'option pour tous les sous-paquets de ce paquet ?</string>
   <string name="pref_browser_editor_font">Browser and editor font</string>
@@ -241,12 +249,4 @@
   <string name="deck_conf_cram_reschedule_summ">Replanifier les cartes selon mes réponses dans ce paquet</string>
   <string name="deck_conf_cram_steps">Pas personnalisé</string>
   <string name="deck_conf_cram_steps_summ">Définir le pas personnalisé</string>
-  <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n1 paquet utilise ce groupe</item>
-    <item quantity="other">%1$s\n%2$d paquets utilisent ce groupe</item>
-  </plurals>
-  <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">1 sous-paquet utilise ce groupe</item>
-    <item quantity="other">%s sous-paquets utilisent ce groupe</item>
-  </plurals>
 </resources>

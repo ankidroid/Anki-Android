@@ -39,6 +39,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <plurals name="card_browser_subtitle">
+    <item quantity="one">1 di %2$d carte mostrata</item>
+    <item quantity="other">%1$d di %2$d carte mostrate</item>
+  </plurals>
   <string name="card_browser_all_decks">Tutti i mazzi</string>
   <string name="card_browser_load">Carico carte.\nAttendi...</string>
   <string name="card_browser_cardloading_error">Errore nel caricamento delle carte. Questo è probabilmente dovuto alle limitazioni di memoria del tuo dispositivo. Prova ancora con un mazzo più piccolo</string>
@@ -90,8 +94,4 @@
     <item>Per ripetizioni</item>
     <item>Per errori</item>
   </string-array>
-  <plurals name="card_browser_subtitle">
-    <item quantity="one">1 di %2$d carte mostrata</item>
-    <item quantity="other">%1$d di %2$d carte mostrate</item>
-  </plurals>
 </resources>

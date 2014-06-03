@@ -43,12 +43,6 @@
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid 카드 복습 예정</string>
   <string name="widget_no_cards_due">복습할 카드 없음</string>
   <string name="widget_loading">위젯 로드중...</string>
-  <string name="widget_medium">AnkiDroid 매체</string>
-  <string name="widget_small">작은 화면 AnkiDroid</string>
-  <string name="widget_big">큰화면 Ankidroid</string>
-  <string name="widget_big_restrictions_dialog">안드로이드의 위젯 프레임워크의 제한으로 텍스트만 표시되며 이미지/소리 등이 표시되지 않습니다.</string>
-  <string name="open_in_reviewer">Ankidroid에서 암기묶음 열기</string>
-  <string name="widget_big_tomorrow_due">내일 학습예정:</string>
   <plurals name="widget_cards_in_decks_due">
     <item quantity="one">%2$s 중 1개 카드 예정</item>
     <item quantity="other">%2$s중 %1$d 카드 복습예정</item>
@@ -57,8 +51,14 @@
     <item quantity="one">1 암기묶음</item>
     <item quantity="other">%1$d 암기묶음</item>
   </plurals>
+  <string name="widget_medium">AnkiDroid 매체</string>
+  <string name="widget_small">작은 화면 AnkiDroid</string>
+  <string name="widget_big">큰화면 Ankidroid</string>
+  <string name="widget_big_restrictions_dialog">안드로이드의 위젯 프레임워크의 제한으로 텍스트만 표시되며 이미지/소리 등이 표시되지 않습니다.</string>
+  <string name="open_in_reviewer">Ankidroid에서 암기묶음 열기</string>
   <plurals name="widget_big_eta">
     <item quantity="one">예상시간: 1분</item>
     <item quantity="other">예상시간: %d분.</item>
   </plurals>
+  <string name="widget_big_tomorrow_due">내일 학습예정:</string>
 </resources>

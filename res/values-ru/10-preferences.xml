@@ -107,8 +107,8 @@
   <string name="sync_account_summ_logged_out">Не авторизованы</string>
   <string name="sync_account_summ_logged_in">%s</string>
   <string name="fix_hebrew_text">Исправление для гласных иврита</string>
-  <string name="fix_hebrew_text_summ">﻿Трюк для правильной отрисовки гласных на иврите.</string>
-  <string name="fix_hebrew_instructions">﻿Этот параметр обходит RTL алгоритм системы Android, чтобы показать правильно гласные в тексте на иврите.\n\nЧтобы это работало, вам нужно скачать шрифт Tohu.ttf и вручную скопировать в:\n%s/fonts/\n\nВам не нужно модифицировать ваши карты.</string>
+  <string name="fix_hebrew_text_summ">Трюк для правильной отрисовки гласных на иврите.</string>
+  <string name="fix_hebrew_instructions">Этот параметр обходит RTL алгоритм системы Android, чтобы показать правильно гласные в тексте на иврите.\n\nЧтобы это работало, вам нужно скачать шрифт Tohu.ttf и вручную скопировать в:\n%s/fonts/\n\nВам не нужно модифицировать ваши карты.</string>
   <string name="fix_hebrew_download_font">Скачать шрифт</string>
   <string name="default_font">Шрифт по умолчанию</string>
   <string name="default_font_summ">XXX</string>
@@ -185,6 +185,10 @@
   <string name="deck_conf_deck_description">Описание колоды</string>
   <string name="deck_conf_pref_cat_options">Параметры</string>
   <string name="deck_conf_group">Группа</string>
+  <plurals name="deck_conf_group_summ">
+    <item quantity="one">%1$s\n1 колода использует данную группу</item>
+    <item quantity="other">%1$s\n%2$d колод используют данную группу</item>
+  </plurals>
   <string name="deck_conf_new_cards">Новые карты</string>
   <string name="deck_conf_rev_cards">Повторов</string>
   <string name="deck_conf_lps_cards">Промахи</string>
@@ -227,6 +231,10 @@
   <string name="deck_conf_remove_title">Удалить</string>
   <string name="deck_conf_remove_message">Удалить текущую группу опций?</string>
   <string name="deck_conf_set_subdecks">Установить для всех подколод</string>
+  <plurals name="deck_conf_set_subdecks_summ">
+    <item quantity="one">1 подколода будет использовать данную группу</item>
+    <item quantity="other">%s подколод будут использовать данную группу</item>
+  </plurals>
   <string name="deck_conf_set_subdecks_title">Установить для всех подколод</string>
   <string name="deck_conf_set_subdecks_message">Установить текущую группу параметров для всех подколод данной колоды?</string>
   <string name="pref_browser_editor_font">Browser and editor font</string>
@@ -241,12 +249,4 @@
   <string name="deck_conf_cram_reschedule_summ">Перепланировать карты, основываясь на моих ответах в этой колоде</string>
   <string name="deck_conf_cram_steps">Дополнительные шаги</string>
   <string name="deck_conf_cram_steps_summ">Определить дополнительные шаги</string>
-  <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n1 колода использует данную группу</item>
-    <item quantity="other">%1$s\n%2$d колод используют данную группу</item>
-  </plurals>
-  <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">1 подколода будет использовать данную группу</item>
-    <item quantity="other">%s подколод будут использовать данную группу</item>
-  </plurals>
 </resources>
