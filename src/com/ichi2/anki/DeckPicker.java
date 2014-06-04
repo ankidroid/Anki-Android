@@ -1690,7 +1690,7 @@ public class DeckPicker extends ActionBarActivity {
             case DIALOG_SYNC_SANITY_ERROR:
                 builder.setPositiveButton(getString(R.string.sync_sanity_local), mSyncSanityFailListener);
                 builder.setNeutralButton(getString(R.string.sync_sanity_remote), mSyncSanityFailListener);
-                builder.setNegativeButton(res.getString(R.string.sync_conflict_cancel), mSyncSanityFailListener);
+                builder.setNegativeButton(res.getString(R.string.dialog_cancel), mSyncSanityFailListener);
                 dialog = builder.create();
                 break;
 
