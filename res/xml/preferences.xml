@@ -28,7 +28,7 @@
             android:defaultValue="/sdcard/AnkiDroid"
             android:key="deckPath"
             android:summary="@string/col_path_summ"
-            android:title="@string/col_path" />    
+            android:title="@string/col_path" />
         <Preference
             android:dialogTitle="@string/sync_account"
             android:key="syncAccount"
@@ -54,7 +54,7 @@
             android:defaultValue=""
             android:key="language"
             android:summary="@string/language_summ"
-            android:title="@string/language" />     
+            android:title="@string/language" />
         <ListPreference
             android:defaultValue="2"
             android:entries="@array/error_reporting_choice_labels"
@@ -78,9 +78,9 @@
                 android:defaultValue="false"
                 android:key="widgetBlink"
                 android:title="@string/notification_minimum_cards_due_blink" />
-        </PreferenceCategory>            
+        </PreferenceCategory>
     </PreferenceScreen>
-    
+
     <!-- Reviewing Preferences -->
     <PreferenceScreen android:title="@string/pref_cat_reviewing" >
         <PreferenceCategory android:title="@string/pref_cat_reviewer_behaviour" >
@@ -114,7 +114,7 @@
                 android:defaultValue="false"
                 android:key="writeAnswersDisable"
                 android:summary="@string/write_answers_disable_summ"
-                android:title="@string/write_answers_disable" />                 
+                android:title="@string/write_answers_disable" />
         </PreferenceCategory>
         <PreferenceCategory android:title="@string/pref_cat_flashcard" >
             <CheckBoxPreference
@@ -163,7 +163,7 @@
                 android:summary="@string/whiteboard_black_summ"
                 android:title="@string/whiteboard_black" />
         </PreferenceCategory>
-        <PreferenceCategory android:title="@string/pref_cat_automatic_display" >        
+        <PreferenceCategory android:title="@string/pref_cat_automatic_display" >
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:disableDependentsState="false"
@@ -186,7 +186,7 @@
                 android:title="@string/timeout_question_seconds" />
         </PreferenceCategory>
     </PreferenceScreen>
-    
+
     <!-- Fonts & Style Prefrences -->
     <PreferenceScreen android:title="@string/pref_cat_fonts_formatting" >
         <PreferenceCategory android:title="@string/pref_cat_fonts" >
@@ -200,7 +200,7 @@
                 android:defaultValue="0"
                 android:key="overrideFontBehavior"
                 android:entries="@array/override_font_labels"
-                android:entryValues="@array/override_font_values"                
+                android:entryValues="@array/override_font_values"
                 android:summary="@string/override_font_summ"
                 android:title="@string/override_font" />
             <ListPreference
@@ -245,10 +245,10 @@
                 android:text=" %"
                 android:title="@string/card_browser_font_size"
                 app:interval="10"
-                app:min="10" />            
+                app:min="10" />
         </PreferenceCategory>
-    </PreferenceScreen>        
-    
+    </PreferenceScreen>
+
     <!-- Navigation Prefrences -->
     <PreferenceScreen android:title="@string/pref_cat_gestures" >
         <CheckBoxPreference
@@ -267,7 +267,7 @@
             android:text=""
             android:title="@string/swipe_sensitivity"
             app:interval="1"
-            app:min="20" />        
+            app:min="20" />
         <PreferenceCategory android:title="@string/pref_cat_actions" >
             <ListPreference
                 android:defaultValue="0"
@@ -351,7 +351,7 @@
                 android:title="@string/gestures_longclick" />
         </PreferenceCategory>
     </PreferenceScreen>
-    
+
     <!-- Advanced Preferences -->
     <PreferenceScreen android:title="@string/pref_cat_advanced" >
         <PreferenceCategory android:title="@string/pref_cat_performance" >
@@ -394,14 +394,14 @@
                 app:interval="1"
                 app:min="1" />
         </PreferenceCategory>
-        <PreferenceCategory 
+        <PreferenceCategory
             android:key="category_workarounds"
             android:title="@string/pref_cat_workarounds" >
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="inputWorkaround"
                 android:summary="@string/input_workaround_summ"
-                android:title="@string/input_workaround" />        
+                android:title="@string/input_workaround" />
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="textSelectionLongclickWorkaround"
@@ -416,7 +416,7 @@
                 android:defaultValue="false"
                 android:key="fixArabicText"
                 android:summary="@string/fix_arabic_text_summ"
-                android:title="@string/fix_arabic_text" />      
+                android:title="@string/fix_arabic_text" />
         </PreferenceCategory>
         <PreferenceCategory android:title="@string/pref_cat_plugins" >
             <CheckBoxPreference
@@ -435,10 +435,10 @@
                 android:dialogIcon="@android:drawable/ic_dialog_alert"
                 android:dialogMessage="@string/reset_languages_question"
                 android:dialogTitle="@string/reset_languages"
-                android:negativeButtonText="@string/no"
-                android:positiveButtonText="@string/yes"
+                android:negativeButtonText="@string/dialog_cancel"
+                android:positiveButtonText="@string/dialog_positive_reset"
                 android:summary="@string/reset_languages_summ"
-                android:title="@string/reset_languages" />                
+                android:title="@string/reset_languages" />
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="intentAdditionInstantAdd"
@@ -453,7 +453,7 @@
                 android:defaultValue="false"
                 android:key="convertFenText"
                 android:summary="@string/convert_fen_text_summ"
-                android:title="@string/convert_fen_text" />                  
+                android:title="@string/convert_fen_text" />
             <CheckBoxPreference
                 android:id="@+id/scrolling_buttons_checkbox"
                 android:defaultValue="false"
@@ -465,7 +465,7 @@
                 android:defaultValue="false"
                 android:key="double_scrolling"
                 android:summary="@string/double_scrolling_gap_summ"
-                android:title="@string/double_scrolling_gap" />         
-        </PreferenceCategory>     
+                android:title="@string/double_scrolling_gap" />
+        </PreferenceCategory>
     </PreferenceScreen>
 </PreferenceScreen>

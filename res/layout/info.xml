@@ -100,7 +100,7 @@
             android:layout_width="0dip"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:text="@string/btn_continue" />
+            android:text="@string/dialog_continue" />
     </LinearLayout>
 
 </LinearLayout>

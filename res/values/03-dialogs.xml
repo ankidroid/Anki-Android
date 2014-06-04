@@ -118,10 +118,13 @@
     <string name="dialog_positive_delete">Delete</string>
     <string name="dialog_positive_disable">Disable</string>
     <string name="dialog_positive_overwrite">Overwrite</string>
+    <string name="dialog_positive_remove">Remove</string>
     <string name="dialog_positive_repair">Repair</string>
     <string name="dialog_positive_replace">Replace</string>
     <string name="dialog_positive_reset">Reset</string>
+    <string name="dialog_positive_restore">Restore</string>
     <string name="dialog_positive_save">Save</string>
+    <string name="dialog_positive_set">Set</string>
 
     <string name="add_button_content">Add…</string>
     <string name="card_browser_button_content">Card browser</string>
