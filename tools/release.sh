@@ -57,6 +57,9 @@ fi
 
 # Generate signed APK
 ant clean release
+if [ $? -ne 0 ]; then
+  exit
+fi
 
 # Upload APK to Google Project's downloads section
 cp bin/AnkiDroid-release.apk AnkiDroid-$VERSION.apk
