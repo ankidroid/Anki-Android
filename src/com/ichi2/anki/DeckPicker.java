@@ -2110,7 +2110,7 @@ public class DeckPicker extends ActionBarActivity {
                                 loadCollection();
                                 return;
                             case 1:
-                                integrityCheck();
+                                showDialog(DIALOG_CONFIRM_DATABASE_CHECK);
                                 return;
                             case 2:
                                 showDialog(DIALOG_REPAIR_COLLECTION);
@@ -2712,7 +2712,6 @@ public class DeckPicker extends ActionBarActivity {
     // }
 
     public void handleDbError() {
-        AnkiDatabaseManager.closeDatabase(AnkiDroidApp.getCollectionPath());
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_RESTORE_IF_MISSING, new DeckTask.TaskListener() {
             @Override
             public void onPreExecute() {
