@@ -2712,7 +2712,6 @@ public class DeckPicker extends ActionBarActivity {
     // }
 
     public void handleDbError() {
-        AnkiDatabaseManager.closeDatabase(AnkiDroidApp.getCollectionPath());
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_RESTORE_IF_MISSING, new DeckTask.TaskListener() {
             @Override
             public void onPreExecute() {
