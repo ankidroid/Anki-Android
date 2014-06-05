@@ -2110,7 +2110,7 @@ public class DeckPicker extends ActionBarActivity {
                                 loadCollection();
                                 return;
                             case 1:
-                                integrityCheck();
+                                showDialog(DIALOG_CONFIRM_DATABASE_CHECK);
                                 return;
                             case 2:
                                 showDialog(DIALOG_REPAIR_COLLECTION);

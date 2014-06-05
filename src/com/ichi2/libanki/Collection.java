@@ -1413,6 +1413,26 @@ public class Collection {
                     problems.add("Deleted " + ids.size() + " card(s) with missing note.");
                     remCards(Utils.arrayList2array(ids));
                 }
+                // cards with odue set when it shouldn't be
+                ids = mDb.queryColumn(Long.class,
+                        "select id from cards where odue > 0 and (type=1 or queue=2) and not odid", 0);
+                if (ids.size() != 0) {
+                    problems.add("Fixed " + ids.size() + " card(s) with invalid properties.");
+                    mDb.execute("update cards set odue=0 where id in " + Utils.ids2str(ids));
+                }
+                // cards with odid set when not in a dyn deck
+                ArrayList<Long> dids = new ArrayList<Long>();
+                for (long id : mDecks.allIds()) {
+                    if (!mDecks.isDyn(id)) {
+                        dids.add(id);
+                    }
+                }
+                ids = mDb.queryColumn(Long.class,
+                        "select id from cards where odid > 0 and did in " + Utils.ids2str(dids), 0);
+                if (ids.size() != 0) {
+                    problems.add("Fixed " + ids.size() + " card(s) with invalid properties.");
+                    mDb.execute("update cards set odid=0, odue=0 where id in " + Utils.ids2str(ids));
+                }
                 // tags
                 mTags.registerNotes();
                 // field cache
