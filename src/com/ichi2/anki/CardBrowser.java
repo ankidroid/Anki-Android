@@ -50,7 +50,6 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
@@ -802,7 +801,7 @@ public class CardBrowser extends ActionBarActivity implements ActionBar.OnNaviga
             mCards.clear();
             // Perform database query to get all card ids / sfld. Shows "filtering cards..." progress message
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SEARCH_CARDS, mSearchCardsHandler, new DeckTask.TaskData(
-                    new Object[] { mCol, mDeckNames, searchText, ((mOrder == CARD_ORDER_NONE) ? "" : "true") }));
+                    new Object[] { mCol, mDeckNames, searchText, ((mOrder == CARD_ORDER_NONE) ? false : true) }));
         }
     }
 

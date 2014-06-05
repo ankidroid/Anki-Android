@@ -58,8 +58,29 @@ public class Finder {
     }
 
 
+    /*
+     * NOTE: The python version of findCards can accept a boolean, a string, or no value for the _order parameter. The
+     * type of _order also determines which _order() method is used. To maintain type safety, we expose the three valid
+     * options here and safely type-cast accordingly at run-time.
+     */
+
     /** Return a list of card ids for QUERY */
+    public List<Long> findCards(String query) {
+        return findCards(query, false);
+    }
+
+
     public List<Long> findCards(String query, String _order) {
+        return _findCards(query, _order);
+    }
+
+
+    public List<Long> findCards(String query, boolean _order) {
+        return _findCards(query, _order);
+    }
+
+
+    private List<Long> _findCards(String query, Object _order) {
         String[] tokens = _tokenize(query);
         Pair<String, String[]> res1 = _where(tokens);
         String preds = res1.first;
@@ -68,7 +89,7 @@ public class Finder {
         if (preds == null) {
             return res;
         }
-        Pair<String, Boolean> res2 = _order(_order);
+        Pair<String, Boolean> res2 = _order instanceof Boolean ? _order((Boolean) _order) : _order((String) _order);
         String order = res2.first;
         boolean rev = res2.second;
         String sql = _query(preds, order);
@@ -987,8 +1008,21 @@ public class Finder {
      * ***********************************************************
      */
 
+    public ArrayList<HashMap<String, String>> findCardsForCardBrowser(String query, boolean _order,
+            HashMap<String, String> deckNames) {
+        return _findCardsForCardBrowser(query, _order, deckNames);
+    }
+
+
+    public ArrayList<HashMap<String, String>> findCardsForCardBrowser(String query, String _order,
+            HashMap<String, String> deckNames) {
+        return _findCardsForCardBrowser(query, _order, deckNames);
+    }
+
+
     /** Return a list of card ids for QUERY */
-    public ArrayList<HashMap<String, String>> findCardsForCardBrowser(String query, String _order, HashMap<String, String> deckNames) {
+    private ArrayList<HashMap<String, String>> _findCardsForCardBrowser(String query, Object _order,
+            HashMap<String, String> deckNames) {
         String[] tokens = _tokenize(query);
         Pair<String, String[]> res1 = _where(tokens);
         String preds = res1.first;
@@ -997,7 +1031,7 @@ public class Finder {
         if (preds == null) {
             return res;
         }
-        Pair<String, Boolean> res2 = _order(_order);
+        Pair<String, Boolean> res2 = _order instanceof Boolean ? _order((Boolean) _order) : _order((String) _order);
         String order = res2.first;
         boolean rev = res2.second;
         String sql = _queryForCardBrowser(preds, order);
