@@ -76,34 +76,6 @@
             android:layout_marginRight="6dip"
             android:gravity="center"
             android:textSize="14sp" />
-
-        <!--
-     	<FrameLayout android:id="@+id/deckpicker_progressbar_1"
-				android:background="@color/studyoptions_progressbar_frame_default"
-				android:layout_width="4dip"
-		   		android:layout_alignParentRight="true"
-				android:layout_centerVertical="true"
-				android:layout_height="30dp"
-				android:visibility="gone"
-				android:padding="0.3dip">
-				<LinearLayout
-					android:id="@+id/deckpicker_progressbar_content"
-					android:background="#ffffff"
-					android:orientation="vertical"
-					android:layout_width="fill_parent"
-					android:gravity="bottom"
-					android:layout_height="fill_parent">
-			    <TextView android:id="@+id/deckpicker_bar_all"
-						android:layout_width="fill_parent"
-						android:layout_height="0dip"
-						android:background="@color/studyoptions_progressbar_mature_default"/>
-				<TextView android:id="@+id/deckpicker_bar_mat"
-						android:layout_width="fill_parent"
-						android:layout_height="0dip"
-						android:background="@color/studyoptions_progressbar_young_default"/>
-				</LinearLayout>
-			</FrameLayout>
-        -->
     </RelativeLayout>
 
 </LinearLayout>

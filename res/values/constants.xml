@@ -191,5 +191,9 @@
         <item>0</item>
         <item>1</item>
     </string-array>     
-
+    <array name="drawer_images">
+        <item>@drawable/ic_action_storage</item>
+        <item>@drawable/ic_action_search</item>
+        <item>@drawable/ic_menu_statistics</item>
+    </array>    
 </resources>

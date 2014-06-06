@@ -19,7 +19,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-
+    <!-- Navigation Drawer Strings -->
+    <string name="drawer_open">Open Drawer</string>
+    <string name="drawer_close">Close Drawer</string>
+    
     <string name="CardEditorLaterMessage">Saved information for later</string>
     <string name="CardEditorCardDeck">Card deck: %s</string>
     <string name="CardEditorNoteDeck">Note deck: %s</string>
