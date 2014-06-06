@@ -1039,7 +1039,7 @@ public class Collection {
     }
 
 
-    public ArrayList<HashMap<String, String>> findCardsForCardBrowser(String search, String order, HashMap<String, String> deckNames) {
+    public ArrayList<HashMap<String, String>> findCardsForCardBrowser(String search, boolean order, HashMap<String, String> deckNames) {
         return new Finder(this).findCardsForCardBrowser(search, order, deckNames);
     }
 

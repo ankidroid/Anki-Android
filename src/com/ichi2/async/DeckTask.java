@@ -722,7 +722,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         Collection col = (Collection) params[0].getObjArray()[0];
         HashMap<String, String> deckNames = (HashMap<String, String>) params[0].getObjArray()[1];
         String query = (String) params[0].getObjArray()[2];
-        String order = (String) params[0].getObjArray()[3];
+        Boolean order = (Boolean) params[0].getObjArray()[3];
         TaskData result = new TaskData(col.findCardsForCardBrowser(query, order, deckNames));
         if (isCancelled()) {
             return null;
