@@ -50,7 +50,7 @@
   <string name="pref_cat_fonts_size">Größe</string>
   <string name="pref_cat_gestures">Berühren und Wischen</string>
   <string name="pref_cat_actions">Aktionen</string>
-  <string name="pref_cat_advanced">Quelle der Kopie</string>
+  <string name="pref_cat_advanced">Erweitert</string>
   <string name="pref_cat_performance">Leistung</string>
   <string name="pref_cat_workarounds">Workarounds</string>
   <string name="pref_cat_plugins">Zusatzprogramme/ Plug-Ins</string>
@@ -72,7 +72,7 @@
   <string name="reset_confirmation">All states reset</string>
   <string name="display_font_size">Schriftskalierung beim Lernen</string>
   <string name="display_font_size_summ">XXX %</string>
-  <string name="image_size">Reviewer image scaling</string>
+  <string name="image_size">Bilder beim Lernen skalieren</string>
   <string name="image_size_summ">XXX %</string>
   <string name="button_size">Reviewer button size</string>
   <string name="button_size_summ">XXX %</string>

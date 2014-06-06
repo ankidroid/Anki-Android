@@ -41,9 +41,9 @@
 <resources>
   <string name="welcome_message">AnkiDroidは、大量の語彙や他の覚えたい事を効率的に学ぶためのアプリです。AnkiDroid は、あなたが忘れてしまう前に繰り返し学習の機会を与えます\n\nまずは、さまざまな特長や使い方を知るために、チュートリアル単語帳を使ってみることを、お勧めします。「スタートレビュー」をクリックしてください。\n\nチュートリアル単語帳を作成しますか?</string>
   <string name="check_db_title">データベースの検査</string>
-  <string name="check_db_warning">This may take a long time</string>
-  <string name="check_db_acknowledge">Database checked</string>
-  <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d kB.</string>
+  <string name="check_db_warning">これには長い時間がかかります。</string>
+  <string name="check_db_acknowledge">データベースのチェック</string>
+  <string name="check_db_acknowledge_shrunk">データベースをチェックし、最適化します。\n 最適化後 %d kB.</string>
   <string name="contextmenu_deckpicker_delete_deck">単語帳を削除</string>
   <string name="delete_deck_title">単語帳を削除</string>
   <string name="delete_deck_message">%s の中のすべてのカードを削除してもよろしいですか。</string>
@@ -70,7 +70,7 @@
   <string name="notification_stop">更新の通知をしない</string>
   <string name="reset_card_dialog_title">カードの進行状況をリセット</string>
   <string name="reset_card_dialog_message">この操作は、ノートの中のカードの学習状況をリセットします（新規に作成したときの状態になります）  \n処理を続けますか？</string>
-  <string name="reset_card_dialog_acknowledge">Cards reset</string>
+  <string name="reset_card_dialog_acknowledge">カードのリセット</string>
   <string name="answering_error_title">データベース エラー</string>
   <string name="answering_error_message">コレクションへの書き込み中にエラーが発生しました。これは、データの破損か、ディスクの容量の不足が原因と考えられます。\n\n繰り返しエラーが発生する場合には、データをチェックするか、バックアップからコレクションを修復してください。\n\nまた、AnkiDroidのバグかもしれませんので\'オプション\'をクリックして、エラーを報告してください。</string>
   <string name="answering_error_report">エラーを報告する</string>
@@ -100,7 +100,7 @@
 </string>
   <string name="deck_upgrade_create_new_collection">新しいコレクションを作成します。</string>
   <string name="deck_upgrade_create_new_collection_title">新しいコレクションの作成</string>
-  <string name="deck_upgrade_create_new_collection_button">New collection</string>
+  <string name="deck_upgrade_create_new_collection_button">新しいコレクション</string>
   <string name="deck_upgrade_not_import_warning">実行しますか？古い単語帳のデータは読み込まれません</string>
   <string name="deck_upgrade_via_web"><![CDATA[<b>コレクション（単語帳、音声、画像他のメディアファイル）全体の容量サイズが大きい場合は、この方法は推奨できません。</b><br><br>古いAnki 1の 単語帳は圧縮された後 AnkiWebへアップロードされ、変換されてからアンドロイド端末にダウンロードされます。<br><br>安定したインターネット接続が必要であり、容量も50Mb以下に制限されます。<br><br>既にAnki Desktopを使っている場合は、パソコンを使ったアップグレード方法を推奨します。<br><br>操作を続行しますか？]]> </string>
   <string name="deck_upgrade_via_anki_desktop"><![CDATA[パソコン上の AnkiDesktopに、既に新しいバージョンへ更新されたコレクションがある場合には、更新されたコレクションをAnkiWeb経由でダウンロードできます。<br><br>あるいは、USBケーブルを使って、コレクションをパソコンへコピーした後、更新してから、AnkiDroid側へ書き戻すこともできます。]]> </string>
@@ -123,22 +123,23 @@
   <string name="import_media_count">メディアファイルをインポートしています。 %1$d%%\nお待ちください&#8230;</string>
   <string name="import_update_counts">単語帳の数を更新しています。\nお待ちください&#8230;</string>
   <string name="import_add_progress">• 解凍中のアーカイブ %1$s\n• ノートのインポート %2$d%%\n• カードのインポート %3$d%%\n• クリーンアップ %4$s</string>
-  <string name="sd_card_full_title">SD card full</string>
-  <string name="sd_card_almost_full_title">SD card almost full</string>
-  <string name="dialog_cancel">Cancel</string>
-  <string name="dialog_ok">OK</string>
-  <string name="dialog_continue">Continue</string>
-  <string name="dialog_neutral_later">Later</string>
-  <string name="dialog_positive_create">Create</string>
-  <string name="dialog_positive_delete">Delete</string>
-  <string name="dialog_positive_disable">Disable</string>
-  <string name="dialog_positive_overwrite">Overwrite</string>
-  <string name="dialog_positive_repair">Repair</string>
-  <string name="dialog_positive_replace">Replace</string>
-  <string name="dialog_positive_reset">Reset</string>
-  <string name="dialog_positive_save">Save</string>
-  <string name="add_button_content">Add&#8230;</string>
-  <string name="card_browser_button_content">Card browser</string>
-  <string name="lookup_button_content">Look up</string>
-  <string name="statistics_button_content">Statistics</string>
+  <string name="sd_card_full_title">SD カード残量なし</string>
+  <string name="sd_card_almost_full_title">SD カード残量わずか</string>
+  <string name="dialog_cancel">キャンセル</string>
+  <string name="dialog_ok">了解
+</string>
+  <string name="dialog_continue">続行</string>
+  <string name="dialog_neutral_later">後で</string>
+  <string name="dialog_positive_create">作成</string>
+  <string name="dialog_positive_delete">削除</string>
+  <string name="dialog_positive_disable">無効化</string>
+  <string name="dialog_positive_overwrite">上書き</string>
+  <string name="dialog_positive_repair">修復</string>
+  <string name="dialog_positive_replace">置換</string>
+  <string name="dialog_positive_reset">リセット</string>
+  <string name="dialog_positive_save">保存</string>
+  <string name="add_button_content">追加.</string>
+  <string name="card_browser_button_content">カード ブラウザー</string>
+  <string name="lookup_button_content">調べる</string>
+  <string name="statistics_button_content">統計情報</string>
 </resources>

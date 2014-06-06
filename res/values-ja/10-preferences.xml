@@ -69,7 +69,7 @@
   <string name="reset_languages">言語設定のリセット</string>
   <string name="reset_languages_summ">すべての単語帳の言語の設定(テキスト読み上げ, 辞書)をリセットします. 単語帳選択で選択した単語帳の設定をリセットします</string>
   <string name="reset_languages_question">言語の割り当てをリセットしますか?</string>
-  <string name="reset_confirmation">All states reset</string>
+  <string name="reset_confirmation">すべての状態をリセット</string>
   <string name="display_font_size">復習時フォントスケール</string>
   <string name="display_font_size_summ">XXX ％</string>
   <string name="image_size">復習時画像表示スケール</string>
@@ -139,8 +139,8 @@
   <string name="pref_backup_summ">自動的にバックアップを作成（単語帳をを開く前に1 日 1 回) </string>
   <string name="pref_backup_max">バックアップの残存数</string>
   <string name="pref_backup_max_summ">XXX</string>
-  <string name="pref_disable_backup_title">Disable backups?</string>
-  <string name="pref_disable_backup_warning">This will delete all backup files</string>
+  <string name="pref_disable_backup_title">バックアップを無効にしますか？</string>
+  <string name="pref_disable_backup_warning">この操作は、すべてのバックアップ ファイルを削除します。</string>
   <string name="pref_intent_add_instant">簡易追加</string>
   <string name="pref_intent_add_instant_summ">AnkiDroidを開かず、辞書から新しいカードを追加します。追加されたカードはカード追加画面で確認できます</string>
   <string name="show_estimates">ボタン上に時間を表示</string>

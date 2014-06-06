@@ -133,14 +133,14 @@
   <string name="safe_display">Režim bezpečného zobrazení</string>
   <string name="safe_display_summ">Zakázat všechny animace a použít bezpečnější metodu pro vykreslení karty. E-ink a starší zařízení pro použití vlastních písem toto může vyžadovat.</string>
   <string name="vertical_centering">Zarovnání na střed</string>
-  <string name="vertical_centering_summ">Center the content of cards vertically</string>
+  <string name="vertical_centering_summ">Obsah karet vycentrovat svisle na střed</string>
   <string name="pref_cat_backup">Zálohy</string>
   <string name="pref_backup">Použit zálohování</string>
   <string name="pref_backup_summ">Automaticky vytvořit zálohu před otevřením balíčku (jednou denně)</string>
   <string name="pref_backup_max">Maximální počet záloh</string>
   <string name="pref_backup_max_summ">XXX</string>
-  <string name="pref_disable_backup_title">Disable backups?</string>
-  <string name="pref_disable_backup_warning">This will delete all backup files</string>
+  <string name="pref_disable_backup_title">Zakázat zálohy?</string>
+  <string name="pref_disable_backup_warning">Tímto odstraníte všechny záložní soubory</string>
   <string name="pref_intent_add_instant">Rychlé přidání</string>
   <string name="pref_intent_add_instant_summ">Add new cards from dictionaries without opening AnkiDroid. You find them later under \'saved data\' in card adder.</string>
   <string name="show_estimates">Zobrazit tlačítko času</string>
@@ -158,7 +158,7 @@
   <string name="input_workaround">Input workaround</string>
   <string name="input_workaround_summ">Workaround for focusing problems on HTML input boxes. Causes problems on several devices.</string>
   <string name="pref_cardbrowser_skip_init_search">Fast card browser open</string>
-  <string name="pref_cardbrowser_skip_init_search_summ">Skips initial automatic search when the card browser opens or the deck is changed</string>
+  <string name="pref_cardbrowser_skip_init_search_summ">Přeskočit počáteční automatické vyhledávání, když prohlížeč otevře kartu nebo je balíček změněn</string>
   <string name="pref_keep_screen_on">Keep screen on</string>
   <string name="pref_keep_screen_on_summ">Disable screen timeout</string>
   <string name="pref_simple_interface">Jednoduché rozhraní</string>

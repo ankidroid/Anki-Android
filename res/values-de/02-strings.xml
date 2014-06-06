@@ -69,7 +69,7 @@
     <item>Frage</item>
     <item>Schlagworte</item>
     <item>Fehlschläge</item>
-    <item>Reviews</item>
+    <item>Wiederholungen</item>
   </string-array>
   <string name="about_title">Über</string>
   <string name="cardeditor_title_add_note">Notiz hinzufügen</string>
@@ -103,7 +103,7 @@
   <string name="card_editor_reset_card">Fortschritt zurücksetzen</string>
   <string name="card_editor_preview_card">Vorschau</string>
   <string name="error_insufficient_memory">Vorgang wegen unzureichenden Gerätespeichers nicht möglich</string>
-  <string name="tutorial_load">Erstelle Einführungsstapel.\n Bitte warten&#8230;</string>
+  <string name="tutorial_load">Erstelle Einführungsstapel&#8230;</string>
   <string name="tutorial_loading_error">Einführungsstapel konnte nicht erstellt werden</string>
   <string name="rename">Umbenennen</string>
   <string name="rename_error">Stapel %s konnte nicht umbenannt werden</string>
@@ -119,8 +119,8 @@
   <string name="check_db">Datenbank überprüfen</string>
   <string name="check_db_message">Prüfe Datenbank.\nBitte warten...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
-  <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
-  <string name="simple_interface_hint">Leere %s. Beachten Sie, dass die vereinfachte Oberfläche keine Bilder/Sounds etc. anzeigen kann.</string>
+  <string name="unknown_type_field_warning">Antworteingabe: Unbekanntes Feld %s</string>
+  <string name="simple_interface_hint">Leere %s. Versuchen Sie es bei abgeschalteter vereinfachter Oberfläche.</string>
   <string name="delete_deck">Lösche Stapel&#8230;\nBitte warten.</string>
   <string-array name="dynOrderLabels">
     <item>Am frühesten gesehene zuerst</item>
@@ -146,7 +146,7 @@
   <string name="import_log_error">Import fehlgeschlagen</string>
   <string name="import_log_no_apkg">Dies ist keine gültige apgk-Datei</string>
   <string name="import_importing">Karten werden importiert.\nBitte warten...</string>
-  <string name="import_hint">Um Karten zu importieren, kopieren Sie die apkg-Datei ins Verzeichnis %s und drücken Sie Ok</string>
+  <string name="import_hint">Kopieren Sie die apkg-Datei ins Verzeichnis %s und berühren Sie OK um Karten zu importieren</string>
   <string name="upgrade_import_no_file_found">Keine importierbare Datei %1$s gefunden</string>
   <string name="study_options">Optionen</string>
   <string name="custom_study">Benutzerdefiniertes Lernen</string>
@@ -154,11 +154,11 @@
   <string name="exit_wizard">Assistent verlassen</string>
   <string name="steps_error">Die Schrittanzahl muss größer als 0 sein</string>
   <string name="steps_min_error">Mindestens ein Schritt ist erforderlich</string>
-  <string name="custom_study_invalid_number">Ungültige Anzahl</string>
+  <string name="custom_study_invalid_number">Keine gültige Zahl</string>
   <string name="template_error">Fehler in Vorlage:</string>
-  <string name="template_error_detail">Die Vorlage für diese Karte enthält einen Fehler.</string>
-  <string name="template_error_fix">Bitte benutzen sie den Karteneditor der Desktop-Anwendung um den Fehler zu beheben.</string>
+  <string name="template_error_detail">Die Vorlage für diese Karte enthält einen Fehler</string>
+  <string name="template_error_fix">Benutzen sie den Karteneditor der Desktop-Anwendung um den Fehler zu beheben.</string>
   <string name="sched_end">(Ende)</string>
-  <string name="sched_unbury_button">Um sie jetzt zu sehen, tippen Sie auf „Zurückstellen aufheben“.</string>
-  <string name="sched_has_buried">Einige verwandte oder vorläufig ausgesetzte Karten wurden auf eine spätere Sitzung verschoben.</string>
+  <string name="sched_unbury_button">Um sie jetzt zu sehen, berühren Sie „Vorläufiges Aussetzen aufheben“.</string>
+  <string name="sched_has_buried">Einige verwandte oder vorläufig ausgesetzte Karten wurden auf morgen verschoben.</string>
 </resources>

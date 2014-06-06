@@ -151,7 +151,7 @@
     <item>Fällig</item>
   </string-array>
   <string-array name="override_font_labels">
-    <item>When no font specified on flashcards</item>
-    <item>Always</item>
+    <item>Wenn keine Schriftart auf Karte angegeben</item>
+    <item>Immer</item>
   </string-array>
 </resources>

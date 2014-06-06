@@ -52,7 +52,7 @@
   <string name="card_browser_mark_card">Notiz markieren</string>
   <string name="card_browser_unmark_card">Notiz-Markierung aufheben</string>
   <string name="delete_card_title">Notiz löschen</string>
-  <string name="delete_card_message">Sollen wirklich alle Karten dieser Notiz gelöscht werden?\nSuchfeld: %s</string>
+  <string name="delete_card_message">Alle Karten dieser Notiz löschen?\nSuchfeld: %s</string>
   <string name="card_browser_show_marked">Markierte herausfiltern</string>
   <string name="card_browser_field">Kartenübersichts-Feld ändern</string>
   <string name="card_browser_field_title">Kartenübersichts-Feld</string>
@@ -79,8 +79,8 @@
   <string name="card_details_changed">Geändert</string>
   <string name="card_details_tags">Schlagworte</string>
   <string name="card_details_model">Notiz-Typ</string>
-  <string name="card_browser_sorting_cards">Karten werden sortiert.\nBitte warten&#8230;</string>
-  <string name="card_browser_filtering_cards">Filtere Karten.\nBitte warten...</string>
+  <string name="card_browser_sorting_cards">Sortiere Karten&#8230;</string>
+  <string name="card_browser_filtering_cards">Filtere Karten&#8230;</string>
   <string name="card_details_card_model">Kartenvorlage</string>
   <string-array name="card_browser_order_labels">
     <item>Keine Sortierung (schneller)</item>
