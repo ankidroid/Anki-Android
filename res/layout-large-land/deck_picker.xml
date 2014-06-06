@@ -1,35 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/deckpicker_view"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="#000000"
-    android:orientation="horizontal">
-
-    <RelativeLayout
-        android:layout_width="0dip"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/deckpicker_drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?android:attr/colorBackground" >
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/deckpicker_view"
+        android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_weight="2"
-        android:orientation="vertical">
+        android:background="?android:attr/colorBackground"
+        android:orientation="horizontal">
 
-        <ListView
-            android:id="@+id/files"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:background="?android:attr/colorBackground"
-            android:drawSelectorOnTop="true"
-            android:fastScrollEnabled="true"
-            android:focusable="true" />
+        <RelativeLayout
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="2"
+            android:orientation="vertical">
 
-    </RelativeLayout>
+            <ListView
+                android:id="@+id/files"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:background="?android:attr/colorBackground"
+                android:drawSelectorOnTop="true"
+                android:fastScrollEnabled="true"
+                android:focusable="true" />
 
-    <FrameLayout
-        android:id="@+id/studyoptions_fragment"
-        android:name="com.ichi2.anki.StudyOptionsFragment"
-        android:layout_width="0dip"
-        android:layout_height="fill_parent"
-        android:layout_weight="3">
-    </FrameLayout>
+        </RelativeLayout>
 
-</LinearLayout>
+        <FrameLayout
+            android:id="@+id/studyoptions_fragment"
+            android:name="com.ichi2.anki.StudyOptionsFragment"
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="3">
+        </FrameLayout>
+
+    </LinearLayout>
+    <ListView
+        android:id="@+id/deckpicker_left_drawer"
+        android:layout_width="250dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="?android:attr/colorBackground"
+        android:choiceMode="singleChoice"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="16dp" />
+</android.support.v4.widget.DrawerLayout>

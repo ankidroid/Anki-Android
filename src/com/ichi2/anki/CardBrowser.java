@@ -32,6 +32,7 @@ import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
@@ -50,7 +51,6 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
@@ -84,7 +84,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-public class CardBrowser extends ActionBarActivity implements ActionBar.OnNavigationListener {
+public class CardBrowser extends NavigationDrawerActivity implements ActionBar.OnNavigationListener {
 
     // private List<Long> mCardIds = new ArrayList<Long>();
     private ArrayList<HashMap<String, String>> mCards;
@@ -310,6 +310,12 @@ public class CardBrowser extends ActionBarActivity implements ActionBar.OnNaviga
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
+        
+        // create inherited navigation drawer layout here so that it can be used by parent class
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.browser_drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.browser_left_drawer);
+        initNavigationDrawer();
+        selectNavigationItem(1);        
 
         mCards = new ArrayList<HashMap<String, String>>();
         mCardsListView = (ListView) findViewById(R.id.card_browser_list);
@@ -513,6 +519,12 @@ public class CardBrowser extends ActionBarActivity implements ActionBar.OnNaviga
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        // The action bar home/up action should open or close the drawer.
+        // ActionBarDrawerToggle will take care of this.
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }    	
+    	
         switch (item.getItemId()) {
 
             case R.id.action_add_card_from_card_browser:
@@ -1162,8 +1174,7 @@ public class CardBrowser extends ActionBarActivity implements ActionBar.OnNaviga
 
     private void closeCardBrowser(int result) {
         setResult(result);
-        finish();
-        ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
+        finishWithAnimation(ActivityTransitionAnimation.RIGHT);
     }
 
     private final class MultiColumnListAdapter extends BaseAdapter {

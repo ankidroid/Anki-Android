@@ -28,20 +28,6 @@
         android:title="@string/sync_title"
         ankidroid:showAsAction="always"/>
     <item
-        android:id="@+id/action_statistics"
-        android:enabled="false"
-        android:icon="@drawable/ic_menu_statistics"
-        android:title="@string/statistics_menu"
-        android:visible="false"
-        ankidroid:showAsAction="ifRoom"/>
-    <item
-        android:id="@+id/action_card_browser"
-        android:enabled="false"
-        android:icon="@drawable/ic_menu_cardbrowser"
-        android:title="@string/menu_cardbrowser"
-        android:visible="false"
-        ankidroid:showAsAction="ifRoom"/>
-    <item
         android:id="@+id/action_new_filtered_deck"
         android:enabled="false"
         android:menuCategory="secondary"

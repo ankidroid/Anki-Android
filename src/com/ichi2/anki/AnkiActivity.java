@@ -3,11 +3,11 @@ package com.ichi2.anki;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.animation.Animation;
+
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 
@@ -21,13 +21,6 @@ public class AnkiActivity extends ActionBarActivity {
 
     public boolean animationEnabled() {
         return !animationDisabled();
-    }
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // getWindow().setWindowAnimations(0);
     }
 
 
@@ -159,5 +152,4 @@ public class AnkiActivity extends ActionBarActivity {
             ActivityTransitionAnimation.slide(this, animation);
         }
     }
-
 }

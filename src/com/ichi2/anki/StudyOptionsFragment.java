@@ -45,7 +45,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -121,7 +120,6 @@ public class StudyOptionsFragment extends Fragment {
     /**
      * Preferences
      */
-    private int mStartedByBigWidget;
     private boolean mSwipeEnabled;
     private int mCurrentContentView = CONTENT_STUDY_OPTIONS;
     boolean mInvertedColors = false;
@@ -154,12 +152,8 @@ public class StudyOptionsFragment extends Fragment {
     private LinearLayout mSmallChart;
     private LinearLayout mDeckCounts;
     private LinearLayout mDeckChart;
-    private ImageButton mAddNote;
-    private ImageButton mCardBrowser;
     private Button mDeckOptions;
     private Button mCramOptions;
-    private ImageButton mStatisticsButton;
-    private EditText mDialogEditText = null;
     /**
      * UI elements for "Congrats" view
      */
@@ -180,8 +174,6 @@ public class StudyOptionsFragment extends Fragment {
     private String[] allTags;
     private HashSet<String> mSelectedTags;
     private String mSearchTerms;
-    private EditText mSearchEditText;
-    private RadioGroup mSelectWhichCards;
     private int mSelectedOption = -1;
 
     /**
@@ -262,12 +254,6 @@ public class StudyOptionsFragment extends Fragment {
                 case R.id.studyoptions_congrats_customstudy:
                     showDialog(DIALOG_CUSTOM_STUDY);
                     return;
-                case R.id.studyoptions_card_browser:
-                    openCardBrowser();
-                    return;
-                case R.id.studyoptions_statistics:
-                    showDialog(DIALOG_STATISTIC_TYPE);
-                    return;
                 case R.id.studyoptions_options_cram:
                     openCramDeckOptions();
                     return;
@@ -284,9 +270,6 @@ public class StudyOptionsFragment extends Fragment {
                             getResources().getString(R.string.empty_cram_deck), true);
                     DeckTask.launchDeckTask(DeckTask.TASK_TYPE_EMPTY_CRAM, mUpdateValuesFromDeckListener,
                             new DeckTask.TaskData(col, col.getDecks().selected(), mFragmented));
-                    return;
-                case R.id.studyoptions_add:
-                    addNote();
                     return;
                 default:
                     return;
@@ -598,27 +581,6 @@ public class StudyOptionsFragment extends Fragment {
         mButtonUnbury.setOnClickListener(mButtonClickListener);
         showOrHideUnburyButton();
 
-        if (!mFragmented) {
-            // Standard non-fragmented view for non-tablets, using standard layout file (in ./res/layout/)
-            mAddNote = (ImageButton) mStudyOptionsView.findViewById(R.id.studyoptions_add);
-            if (AnkiDroidApp.colIsOpen()) {
-                Collection col = AnkiDroidApp.getCol();
-                if (col.getDecks().isDyn(col.getDecks().selected())) {
-                    mAddNote.setEnabled(false);
-                }
-            }
-            mCardBrowser = (ImageButton) mStudyOptionsView.findViewById(R.id.studyoptions_card_browser);
-            mStatisticsButton = (ImageButton) mStudyOptionsView.findViewById(R.id.studyoptions_statistics);
-            mAddNote.setOnClickListener(mButtonClickListener);
-            mCardBrowser.setOnClickListener(mButtonClickListener);
-            mStatisticsButton.setOnClickListener(mButtonClickListener);
-        } else {
-            // Fragmented view for 10" tablets, which is different from smaller devices due to larger layout file (in
-            // ./res/layout-xlarge/)
-            // This tablet view shows the study options fragment simultaneously with the deck picker, and has different
-            // buttons from standard
-        }
-
         // Code common to both fragmented and non-fragmented view
         mTextTodayNew = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_new);
         mTextTodayLrn = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_lrn);
@@ -918,7 +880,6 @@ public class StudyOptionsFragment extends Fragment {
                  * Custom Study Deck (New, Due or All cards).
                  */
                 RadioGroup rg = formatRGCardType(context, res);
-                mSelectWhichCards = rg;
 
                 builder1.setView(rg, false, true);
 
@@ -1321,15 +1282,6 @@ public class StudyOptionsFragment extends Fragment {
             throw new RuntimeException();
         }
     }
-
-
-    private void openCardBrowser() {
-        mDontSaveOnStop = true;
-        Intent cardBrowser = new Intent(getActivity(), CardBrowser.class);
-        startActivityForResult(cardBrowser, BROWSE_CARDS);
-        animateLeft();
-    }
-
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

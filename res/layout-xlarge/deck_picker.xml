@@ -1,77 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/deckpicker_view"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="#000000"
-    android:orientation="horizontal" >
-
-    <RelativeLayout
-        android:layout_width="0dip"
-        android:layout_height="fill_parent"
-        android:layout_weight="2"
-        android:orientation="vertical" >
-
-        <ListView
-            android:id="@+id/files"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:background="?android:attr/colorBackground"
-            android:drawSelectorOnTop="true"
-            android:fastScrollEnabled="true"
-            android:focusable="true" />
-
-        <!--
-     	<LinearLayout
-		android:id="@+id/deckpicker_buttons"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/deckpicker_drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?android:attr/colorBackground" >
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:id="@+id/deckpicker_view"
 		android:layout_width="fill_parent"
-		android:layout_alignParentBottom="true"
-		android:layout_height="wrap_content"
-		android:visibility="gone"
-		android:orientation="horizontal">
-		<ImageButton
-			android:src="@drawable/studyoptions_add"
-			android:id="@+id/deckpicker_add"
-			android:layout_width="0dip" 
-			style="?android:attr/buttonStyleSmall"
-			android:layout_height="fill_parent"
-			android:layout_weight="1"/>
-		<ImageButton
-			android:src="@drawable/studyoptions_cards"
-			android:id="@+id/deckpicker_card_browser"
-			android:layout_width="0dip" 
-			style="?android:attr/buttonStyleSmall"
-			android:layout_height="fill_parent"
-			android:layout_weight="1"/>
-		<ImageButton android:id="@+id/statistics_all_button"
-			android:layout_height="fill_parent"
-			android:src="@drawable/studyoptions_stats"
-			style="?android:attr/buttonStyleSmall"
-			android:layout_width="0dip"
-			android:layout_weight="1"/>
-		<ImageButton android:id="@+id/sync_all_button"
-			android:layout_height="fill_parent"
-			android:src="@drawable/deckpicker_sync"
-			style="?android:attr/buttonStyleSmall"
-			android:layout_width="0dip"
-			android:layout_weight="1"/>
-		<ImageButton android:id="@+id/cram_deck_button"
-			android:layout_height="fill_parent"
-			android:src="@drawable/deckpicker_cram"
-			style="?android:attr/buttonStyleSmall"
-			android:layout_width="0dip"
-			android:layout_weight="1"/>
-			</LinearLayout>
-        -->
-    </RelativeLayout>
+		android:layout_height="fill_parent"
+		android:background="?android:attr/colorBackground"
+		android:orientation="horizontal" >
 
-    <FrameLayout
-        android:id="@+id/studyoptions_fragment"
-        android:name="com.ichi2.anki.StudyOptionsFragment"
-        android:layout_width="0dip"
-        android:layout_height="fill_parent"
-        android:layout_weight="3" >
-    </FrameLayout>
+		<RelativeLayout
+			android:layout_width="0dip"
+			android:layout_height="fill_parent"
+			android:layout_weight="2"
+			android:orientation="vertical" >
 
-</LinearLayout>
+			<ListView
+				android:id="@+id/files"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_alignParentTop="true"
+				android:background="?android:attr/colorBackground"
+				android:drawSelectorOnTop="true"
+				android:fastScrollEnabled="true"
+				android:focusable="true" />
+
+			<!--
+			<LinearLayout
+			android:id="@+id/deckpicker_buttons"
+			android:layout_width="fill_parent"
+			android:layout_alignParentBottom="true"
+			android:layout_height="wrap_content"
+			android:visibility="gone"
+			android:orientation="horizontal">
+			<ImageButton
+				android:src="@drawable/studyoptions_add"
+				android:id="@+id/deckpicker_add"
+				android:layout_width="0dip" 
+				style="?android:attr/buttonStyleSmall"
+				android:layout_height="fill_parent"
+				android:layout_weight="1"/>
+			<ImageButton
+				android:src="@drawable/studyoptions_cards"
+				android:id="@+id/deckpicker_card_browser"
+				android:layout_width="0dip" 
+				style="?android:attr/buttonStyleSmall"
+				android:layout_height="fill_parent"
+				android:layout_weight="1"/>
+			<ImageButton android:id="@+id/statistics_all_button"
+				android:layout_height="fill_parent"
+				android:src="@drawable/studyoptions_stats"
+				style="?android:attr/buttonStyleSmall"
+				android:layout_width="0dip"
+				android:layout_weight="1"/>
+			<ImageButton android:id="@+id/sync_all_button"
+				android:layout_height="fill_parent"
+				android:src="@drawable/deckpicker_sync"
+				style="?android:attr/buttonStyleSmall"
+				android:layout_width="0dip"
+				android:layout_weight="1"/>
+			<ImageButton android:id="@+id/cram_deck_button"
+				android:layout_height="fill_parent"
+				android:src="@drawable/deckpicker_cram"
+				style="?android:attr/buttonStyleSmall"
+				android:layout_width="0dip"
+				android:layout_weight="1"/>
+				</LinearLayout>
+			-->
+		</RelativeLayout>
+
+		<FrameLayout
+			android:id="@+id/studyoptions_fragment"
+			android:name="com.ichi2.anki.StudyOptionsFragment"
+			android:layout_width="0dip"
+			android:layout_height="fill_parent"
+			android:layout_weight="3" >
+		</FrameLayout>
+
+	</LinearLayout>
+    <ListView
+        android:id="@+id/deckpicker_left_drawer"
+        android:layout_width="250dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="?android:attr/colorBackground"
+        android:choiceMode="singleChoice"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="16dp" />
+</android.support.v4.widget.DrawerLayout>	

@@ -38,6 +38,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 import android.os.Vibrator;
+import android.support.v4.widget.DrawerLayout;
 import android.text.ClipboardManager;
 import android.text.Editable;
 import android.text.Html;
@@ -71,6 +72,7 @@ import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -113,7 +115,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public abstract class AbstractFlashcardViewer extends AnkiActivity {
+public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     /**
      * Whether to save the content of the card in the file system.
@@ -1201,6 +1203,12 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        // The action bar home/up action should open or close the drawer.
+        // ActionBarDrawerToggle will take care of this.
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        
         switch (item.getItemId()) {
 
             case android.R.id.home:
@@ -1517,6 +1525,11 @@ public abstract class AbstractFlashcardViewer extends AnkiActivity {
     // Set the content view to the one provided and initialize accessors.
     protected void initLayout(Integer layout) {
         setContentView(layout);
+        
+        // create inherited navigation drawer layout here so that it can be used by parent class
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.reviewer_drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.reviewer_left_drawer);
+        initNavigationDrawer();           
 
         mMainLayout = findViewById(R.id.main_layout);
         Themes.setContentStyle(mMainLayout, Themes.CALLER_REVIEWER);

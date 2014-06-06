@@ -15,6 +15,11 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+    <string-array name="navigation_titles">
+        <item>Decks</item>
+        <item>Card Browser</item>
+        <item>Statistics</item>
+    </string-array>
 
     <string-array name="newCardSchedulingLabels">
         <item>Spread out through reviews</item>

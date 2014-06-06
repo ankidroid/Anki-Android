@@ -23,12 +23,14 @@ import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.widget.EditText;
+import android.widget.ListView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.receiver.SdCardReceiver;
@@ -36,7 +38,7 @@ import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
 
-public class StudyOptionsActivity extends ActionBarActivity {
+public class StudyOptionsActivity extends NavigationDrawerActivity {
 
     private StudyOptionsFragment mCurrentFragment;
 
@@ -53,6 +55,10 @@ public class StudyOptionsActivity extends ActionBarActivity {
         // to android.R.id.content when an action bar is used in Android 2.1 (and potentially
         // higher) with the appcompat package.
         setContentView(R.layout.studyoptions);
+        // create inherited navigation drawer layout here so that it can be used by parent class
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.studyoptions_drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.studyoptions_left_drawer);
+        initNavigationDrawer();
         if (savedInstanceState == null) {
             loadContent(getIntent().getBooleanExtra("onlyFnsMsg", false));
         }
@@ -83,6 +89,12 @@ public class StudyOptionsActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        // The action bar home/up action should open or close the drawer.
+        // ActionBarDrawerToggle will take care of this.
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        
         switch (item.getItemId()) {
 
             case android.R.id.home:
@@ -119,8 +131,7 @@ public class StudyOptionsActivity extends ActionBarActivity {
     private void closeStudyOptions(int result) {
         // mCompat.invalidateOptionsMenu(this);
         setResult(result);
-        finish();
-        ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
+        finishWithAnimation(ActivityTransitionAnimation.RIGHT);
     }
 
 
