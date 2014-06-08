@@ -24,17 +24,16 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.util.TypedValue;
@@ -51,13 +50,13 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.dialogs.TagsDialog;
+import com.ichi2.anki.dialogs.TagsDialog.TagsDialogListener;
 import com.ichi2.anki.multimediacard.activity.MultimediaCardEditorActivity;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.async.DeckTask;
@@ -80,7 +79,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -101,8 +100,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
 
     private StyledProgressDialog mProgressDialog;
     private StyledOpenCollectionDialog mOpenCollectionDialog;
-    private StyledDialog mTagsDialog;
-
+    
     public static Card sCardBrowserCard;
 
     private int mPositionInCardsList;
@@ -171,8 +169,6 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
 
     private String[] allTags;
     private String[] mColumn2Indexs;
-    private HashSet<String> mSelectedTags;
-
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
      */
@@ -401,7 +397,6 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-        mSelectedTags = new HashSet<String>();
         // initialize mSearchTerms to a default value
         mSearchTerms = "";
 
@@ -463,7 +458,6 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
             } else {
                 mSearchView.setQuery("", false);
                 mSearchView.setQueryHint(getResources().getString(R.string.downloaddeck_search));
-                mSelectedTags.clear();
             }
             return true;
         }
@@ -553,7 +547,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                 return true;
 
             case R.id.action_search_by_tag:
-                showDialog(DIALOG_TAGS);
+                showDialogFragment(DIALOG_TAGS);
                 return true;
 
             default:
@@ -591,6 +585,61 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         }
     }
 
+    private DialogFragment showDialogFragment(int id) {
+        DialogFragment dialogFragment = null;
+        String tag = null;
+        switch(id) {
+            case DIALOG_TAGS:
+                allTags = mCol.getTags().all().toArray(new String[0]);
+
+                TagsDialog dialog = com.ichi2.anki.dialogs.TagsDialog.newInstance(
+                    TagsDialog.TYPE_FILTER_BY_TAG, new ArrayList<String>(), new ArrayList<String>(mCol.getTags().all()));
+                dialog.setTagsDialogListener(new TagsDialogListener() {                    
+                    @Override
+                    public void onPositive(List<String> selectedTags, int option) {
+                        mSearchView.setQuery("", false);
+                        String tags = selectedTags.toString();
+                        mSearchView.setQueryHint(getResources().getString(R.string.card_browser_tags_shown,
+                                tags.substring(1, tags.length() - 1)));
+                        StringBuilder sb = new StringBuilder();
+                        switch (option) {
+                            case 1:
+                                sb.append("is:new ");
+                                break;
+                            case 2:
+                                sb.append("is:due ");
+                                break;
+                            default:
+                                // Logging here might be appropriate : )
+                                break;
+                        }
+                        int i = 0;
+                        for (String tag : selectedTags) {
+                            if (i != 0) {
+                                sb.append("or ");
+                            } else {
+                                sb.append("("); // Only if we really have selected tags
+                            }
+                            sb.append("tag:").append(tag).append(" ");
+                            i++;
+                        }
+                        if (i > 0) {
+                            sb.append(")"); // Only if we added anything to the tag list
+                        }
+                        mSearchTerms = sb.toString();
+                        searchCards();
+                    }
+                });
+                dialogFragment = dialog;
+                break;
+            default:
+                break;
+        }
+        
+
+        dialogFragment.show(getSupportFragmentManager(), tag);
+        return dialogFragment;
+    }
 
     @Override
     protected Dialog onCreateDialog(int id) {
@@ -658,61 +707,6 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                 builder.setItems(entries, mContextMenuListener);
                 dialog = builder.create();
                 break;
-
-            case DIALOG_TAGS:
-                allTags = mCol.getTags().all().toArray(new String[0]);
-                builder.setTitle(R.string.studyoptions_limit_select_tags);
-                builder.setMultiChoiceItems(allTags, new boolean[allTags.length],
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                String tag = allTags[which];
-                                if (mSelectedTags.contains(tag)) {
-                                    Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
-                                    mSelectedTags.remove(tag);
-                                } else {
-                                    Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
-                                    mSelectedTags.add(tag);
-                                }
-                            }
-                        }, new OnCheckedChangeListener() {
-                            @Override
-                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                                mTagsDialog.setItemListChecked(isChecked);
-                                mSelectedTags = new HashSet<String>(mTagsDialog.getCheckedItems());
-                            }
-                        });
-                builder.setPositiveButton(res.getString(R.string.select), new OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        mSearchView.setQuery("", false);
-                        String tags = mSelectedTags.toString();
-                        mSearchView.setQueryHint(getResources().getString(R.string.card_browser_tags_shown,
-                                tags.substring(1, tags.length() - 1)));
-                        StringBuilder sb = new StringBuilder();
-                        for (String tag : mSelectedTags) {
-                            sb.append("tag:").append(tag).append(" ");
-                        }
-                        mSearchTerms = sb.toString();
-                        searchCards();
-                    }
-                });
-                builder.setNegativeButton(res.getString(R.string.dialog_cancel), new OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        mSelectedTags.clear();
-                    }
-                });
-                builder.setOnCancelListener(new OnCancelListener() {
-
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        mSelectedTags.clear();
-                    }
-                });
-                mTagsDialog = builder.create();
-                dialog = mTagsDialog;
-                break;
         }
         return dialog;
     }
@@ -752,28 +746,6 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                     ad.changeListItem(CONTEXT_MENU_SUSPEND, res.getString(R.string.card_browser_suspend_card));
                 }
                 ad.setTitle(card.get("sfld"));
-                break;
-            case DIALOG_TAGS:
-                mSelectedTags.clear();
-                ad.setMultiChoiceItems(allTags, new boolean[allTags.length], new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String tag = allTags[which];
-                        if (mSelectedTags.contains(tag)) {
-                            Log.d(AnkiDroidApp.TAG, "unchecked tag: " + tag);
-                            mSelectedTags.remove(tag);
-                        } else {
-                            Log.d(AnkiDroidApp.TAG, "checked tag: " + tag);
-                            mSelectedTags.add(tag);
-                        }
-                    }
-                }, new OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        mTagsDialog.setItemListChecked(isChecked);
-                        mSelectedTags = new HashSet<String>(mTagsDialog.getCheckedItems());
-                    }
-                });
                 break;
         }
     }

@@ -16,7 +16,6 @@ package com.ichi2.anki;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
@@ -27,12 +26,12 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Paint.Align;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -41,18 +40,15 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
+import com.ichi2.anki.dialogs.TagsDialog;
+import com.ichi2.anki.dialogs.TagsDialog.TagsDialogListener;
 import com.ichi2.async.DeckTask;
 import com.ichi2.async.DeckTask.TaskData;
 import com.ichi2.charts.ChartBuilder;
@@ -76,10 +72,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
@@ -129,7 +123,6 @@ public class StudyOptionsFragment extends Fragment {
     /** Alerts to inform the user about different situations */
     private StyledProgressDialog mProgressDialog;
     private StyledOpenCollectionDialog mOpenCollectionDialog;
-    private StyledDialog mTagsDialog;
 
     /**
      * UI elements for "Study Options" view
@@ -172,9 +165,9 @@ public class StudyOptionsFragment extends Fragment {
     private EditText mCustomStudyEditText;
 
     private String[] allTags;
-    private HashSet<String> mSelectedTags;
     private String mSearchTerms;
-    private int mSelectedOption = -1;
+
+    private EditText mSearchEditText;
 
     /**
      * Swipe Detection
@@ -332,7 +325,6 @@ public class StudyOptionsFragment extends Fragment {
         // 4, getActivity().getResources().getDisplayMetrics());
         // text.setPadding(padding, padding, padding, padding);
         // scroller.addView();
-        mSelectedTags = new HashSet<String>();
         return createView(inflater, savedInstanceState);
     }
 
@@ -645,6 +637,77 @@ public class StudyOptionsFragment extends Fragment {
         mDialogs.get(id).show();
     }
 
+    private DialogFragment showDialogFragment(int id) {
+
+        DialogFragment dialogFragment = null;
+        String tag = null;
+        switch(id) {
+            case DIALOG_CUSTOM_STUDY_TAGS:
+                /*
+                 * This handles the case where we want to create a Custom Study Deck using tags. This dialog needs to be
+                 * different from the normal Custom Study dialogs, because more information is required: --List of Tags
+                 * to select. --Which cards to select --(New cards, Due cards, or all cards, as in the desktop version)
+                 */
+                if (!AnkiDroidApp.colIsOpen()) {
+                    // TODO how should this error be handled?
+                }
+                allTags = AnkiDroidApp.getCol().getTags().all().toArray(new String[0]);
+
+                TagsDialog dialog = com.ichi2.anki.dialogs.TagsDialog.newInstance(
+                    TagsDialog.TYPE_CUSTOM_STUDY_TAGS, new ArrayList<String>(), 
+                    new ArrayList<String>(AnkiDroidApp.getCol().getTags().all()));
+
+                dialog.setTagsDialogListener(new TagsDialogListener() {
+                    @Override
+                    public void onPositive(List<String> selectedTags, int option) {
+                        /*
+                         * Here's the method that gathers the final selection of tags, type of cards and generates the search
+                         * screen for the custom study deck.
+                         */
+                        mCustomStudyEditText.setText("");
+                        String tags = selectedTags.toString();
+                        mCustomStudyEditText.setHint(getResources().getString(R.string.card_browser_tags_shown,
+                                tags.substring(1, tags.length() - 1)));
+                        StringBuilder sb = new StringBuilder();
+                        switch (option) {
+                            case 1:
+                                sb.append("is:new ");
+                                break;
+                            case 2:
+                                sb.append("is:due ");
+                                break;
+                            default:
+                                // Logging here might be appropriate : )
+                                break;
+                        }
+                        int i = 0;
+                        for (String tag : selectedTags) {
+                            if (i != 0) {
+                                sb.append("or ");
+                            } else {
+                                sb.append("("); // Only if we really have selected tags
+                            }
+                            sb.append("tag:").append(tag).append(" ");
+                            i++;
+                        }
+                        if (i > 0) {
+                            sb.append(")"); // Only if we added anything to the tag list
+                        }
+                        mSearchTerms = sb.toString();
+                        createFilteredDeck(new JSONArray(), new Object[] { mSearchTerms, Consts.DYN_MAX_SIZE,
+                                Consts.DYN_RANDOM }, false);
+                    }
+                });
+                
+                dialogFragment = dialog;
+                break;
+            default:
+                break;
+        }
+        
+        dialogFragment.show(getFragmentManager(), tag);
+        return dialogFragment;
+    }
 
     private void onPrepareDialog(int id, StyledDialog styledDialog) {
         Resources res = getResources();
@@ -854,7 +917,7 @@ public class StudyOptionsFragment extends Fragment {
                                      * number, it is necessary to collect a list of tags. This case handles the creation
                                      * of that Dialog.
                                      */
-                                    showDialog(DIALOG_CUSTOM_STUDY_TAGS);
+                                    showDialogFragment(DIALOG_CUSTOM_STUDY_TAGS);
                                     return;
                                 }
                                 showDialog(DIALOG_CUSTOM_STUDY_DETAILS);
@@ -864,122 +927,6 @@ public class StudyOptionsFragment extends Fragment {
                 dialog = builder1.create();
                 break;
 
-            case DIALOG_CUSTOM_STUDY_TAGS:
-                /*
-                 * This handles the case where we want to create a Custom Study Deck using tags. This dialog needs to be
-                 * different from the normal Custom Study dialogs, because more information is required: --List of Tags
-                 * to select. --Which cards to select --(New cards, Due cards, or all cards, as in the desktop version)
-                 */
-                if (!AnkiDroidApp.colIsOpen()) {
-                    // TODO how should this error be handled?
-                }
-
-                Context context = getActivity().getBaseContext();
-                /*
-                 * The following RadioButtons and RadioGroup are to select the category of cards to select for the
-                 * Custom Study Deck (New, Due or All cards).
-                 */
-                RadioGroup rg = formatRGCardType(context, res);
-
-                builder1.setView(rg, false, true);
-
-                // Here we add the list of tags for the whole collection.
-                Collection col;
-                col = AnkiDroidApp.getCol();
-                List<String> tags_list = col.getTags().all();
-                Collections.sort(tags_list, new Comparator<String>() {
-                    @Override
-                    public int compare(String lhs, String rhs) {
-                        return lhs.compareToIgnoreCase(rhs);
-                    }
-                });
-                allTags = tags_list.toArray(new String[tags_list.size()]);
-                builder1.setTitle(R.string.studyoptions_limit_select_tags);
-                builder1.setMultiChoiceItems(allTags, new boolean[allTags.length],
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                String tag = allTags[which];
-                                if (mSelectedTags.contains(tag)) {
-                                    Log.i(AnkiDroidApp.TAG, "unchecked tag: " + tag);
-                                    mSelectedTags.remove(tag);
-                                } else {
-                                    Log.i(AnkiDroidApp.TAG, "checked tag: " + tag);
-                                    mSelectedTags.add(tag);
-                                }
-                            }
-                        }, new CompoundButton.OnCheckedChangeListener() {
-                            @Override
-                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                                mTagsDialog.setItemListChecked(isChecked);
-                                mSelectedTags = new HashSet<String>(mTagsDialog.getCheckedItems());
-                            }
-                        });
-
-                /*
-                 * Here's the method that gathers the final selection of tags, type of cards and generates the search
-                 * screen for the custom study deck.
-                 */
-                builder1.setPositiveButton(res.getString(R.string.select), new OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        mCustomStudyEditText.setText("");
-                        String tags = mSelectedTags.toString();
-                        mCustomStudyEditText.setHint(getResources().getString(R.string.card_browser_tags_shown,
-                                tags.substring(1, tags.length() - 1)));
-                        StringBuilder sb = new StringBuilder();
-                        switch (mSelectedOption) {
-                            case 1:
-                                sb.append("is:new ");
-                                break;
-                            case 2:
-                                sb.append("is:due ");
-                                break;
-                            default:
-                                // Logging here might be appropriate : )
-                                break;
-                        }
-                        int i = 0;
-                        for (String tag : mSelectedTags) {
-                            if (i != 0) {
-                                sb.append("or ");
-                            } else {
-                                sb.append("("); // Only if we really have selected tags
-                            }
-                            sb.append("tag:").append(tag).append(" ");
-                            i++;
-                        }
-                        if (i > 0) {
-                            sb.append(")"); // Only if we added anything to the tag list
-                        }
-                        mSearchTerms = sb.toString();
-                        createFilteredDeck(new JSONArray(), new Object[] { mSearchTerms, Consts.DYN_MAX_SIZE,
-                                Consts.DYN_RANDOM }, false);
-                    }
-                });
-                builder1.setNegativeButton(res.getString(R.string.dialog_cancel), new OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        mTagsDialog.setItemListChecked(false);
-                        mSelectedTags.clear();
-                    }
-                });
-                builder1.setOnCancelListener(new OnCancelListener() {
-
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        mTagsDialog.setItemListChecked(false);
-                        mSelectedTags.clear();
-                    }
-                });
-                builder1.setShowFilterTags(true);
-
-                mTagsDialog = builder1.create();
-                dialog = mTagsDialog;
-                // without this the dialog goes up the screen in a way that the user isn't able to see the full item
-                // list.
-                mTagsDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-                break;
             case DIALOG_CUSTOM_STUDY_DETAILS:
                 /*
                  * This is the normal case for creating a custom study deck, where the dialog requires only a numeric
@@ -1000,49 +947,6 @@ public class StudyOptionsFragment extends Fragment {
         dialog.setOwnerActivity(getActivity());
         return dialog;
     }
-
-
-    /**
-     * formatRGCardType Returns: RadioGroup - A radio group that contains the options of All Cards, New, and Due cards,
-     * for the selection of cards when creating a CUSTOM_STUDY_DECKS based on TAGS. Takes: context, and resources of the
-     * App. This method just creates the RadioGroup required for the dialog to select tags for a new custom study deck.
-     */
-    private RadioGroup formatRGCardType(Context context, Resources res) {
-        RadioGroup rg = new RadioGroup(context);
-        final RadioButton[] radioButtonCards = new RadioButton[3];
-        rg.setOrientation(RadioGroup.HORIZONTAL);
-        RadioGroup.LayoutParams lp = new RadioGroup.LayoutParams(0, LayoutParams.MATCH_PARENT, 1);
-        int height = context.getResources().getDrawable(R.drawable.white_btn_radio).getIntrinsicHeight();
-
-        // This array contains "All Cards", "New", and "Due", in that order.
-        String[] text = res.getStringArray(R.array.cards_for_tag_filtered_deck_labels);
-        for (int i = 0; i < radioButtonCards.length; i++) {
-            radioButtonCards[i] = new RadioButton(context);
-            radioButtonCards[i].setClickable(true);
-            radioButtonCards[i].setText(text[i]);
-            radioButtonCards[i].setHeight(height * 2);
-            radioButtonCards[i].setSingleLine();
-            radioButtonCards[i].setGravity(Gravity.CENTER_VERTICAL);
-            rg.addView(radioButtonCards[i], lp);
-        }
-        radioButtonCards[0].setChecked(true);
-
-        rg.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup arg0, int arg1) {
-                int checked = arg0.getCheckedRadioButtonId();
-                for (int i = 0; i < 3; i++) {
-                    if (arg0.getChildAt(i).getId() == checked) {
-                        mSelectedOption = i;
-                        break;
-                    }
-                }
-            }
-        });
-        rg.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, height));
-        return rg;
-    }
-
 
     private void createFilteredDeck(JSONArray delays, Object[] terms, Boolean resched) {
         JSONObject dyn;
