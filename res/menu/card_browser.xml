@@ -5,7 +5,7 @@
         android:id="@+id/action_add_card_from_card_browser"
         android:icon="@drawable/ic_menu_add"
         android:title="@string/card_editor_add_card"
-        ankidroid:showAsAction="always"/>
+        ankidroid:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_search"
         android:icon="@drawable/ic_action_search"

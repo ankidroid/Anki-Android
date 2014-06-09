@@ -163,6 +163,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
     private int[] mBackground;
 
     private boolean mWholeCollection;
+    private boolean mFastBrowserOpen;
 
     private ActionBar mActionBar;
     private DeckDropDownAdapter mDropDownAdapter;
@@ -399,6 +400,9 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
 
         // initialize mSearchTerms to a default value
         mSearchTerms = "";
+        
+        // set fast browser variable
+        mFastBrowserOpen = preferences.getBoolean("cardBrowserNoSearchOnOpen", false);
 
         // onNavigationItemSelected will be called automatically, replacing onSearch in onCreate.
         if (!mWholeCollection) {
@@ -759,7 +763,9 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
 
     @Override
     public boolean onNavigationItemSelected(int position, long itemId) {
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+        // cancel rendering the question and answer, which has shared access to mCards
+        DeckTask.cancelTask(DeckTask.TASK_TYPE_RENDER_BROWSER_QA);
+        
         if (position == 0) {
             mRestrictOnDeck = "";
         } else {
@@ -775,7 +781,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
             mRestrictOnDeck = "deck:'" + deckName + "' ";
             AnkiDroidApp.getCol().getDecks().select(deckId);
         }
-        if (preferences.getBoolean("cardBrowserNoSearchOnOpen", false)) {
+        if (mFastBrowserOpen) {
             mCards.clear();
             updateList();
         } else {
