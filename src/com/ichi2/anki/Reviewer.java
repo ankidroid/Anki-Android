@@ -29,6 +29,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         try {
             String[] title = mSched.getCol().getDecks().current().getString("name").split("::");
             AnkiDroidApp.getCompat().setTitle(this, title[title.length - 1], mInvertedColors);
+            super.setTitle(title[title.length - 1]);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }

@@ -32,6 +32,7 @@ import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
+import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
@@ -169,7 +170,24 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         }
 
         initializeLanguageDialog();
-        initializeCustomFontsDialog();
+        
+        // Make custom fonts generated when fonts dialog opened
+        Preference fontsPreference = (Preference) getPreferenceScreen().findPreference("font_preference_group");
+        fontsPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+                public boolean onPreferenceClick(Preference preference) {
+                    initializeCustomFontsDialog();
+                    return false;
+                }
+            });         
+        
+        // About dialog
+        Preference dialogPreference = (Preference) getPreferenceScreen().findPreference("about_dialog_preference");
+        dialogPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+                public boolean onPreferenceClick(Preference preference) {
+                    startActivity(new Intent(Preferences.this, Info.class));
+                    return true;
+                }
+            });        
 
         if (mCol != null) {
             // For collection preferences, we need to fetch the correct values from the collection
@@ -374,6 +392,8 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 "browserEditorFont");
         browserEditorCustomFontsPreference.setEntries(getCustomFonts("System default"));
         browserEditorCustomFontsPreference.setEntryValues(getCustomFonts("", true));
+        updateListPreference("defaultFont", false);
+        updateListPreference("browserEditorFont", false);
     }
 
     @Override

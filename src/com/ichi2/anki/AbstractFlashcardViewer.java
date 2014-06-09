@@ -976,24 +976,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     protected void onResume() {
         mInBackground = false;
         super.onResume();
-        // Decks deck = DeckManager.getMainDeck();
-        // if (deck == null) {
-        // Log.e(AnkiDroidApp.TAG, "Reviewer: Deck already closed, returning to study options");
-        // closeReviewer(RESULT_DECK_CLOSED, false);
-        // return;
-        // }
-
-        // check if deck is already opened in big widget. If yes, reload card (to make sure it's not answered yet)
-        // if (DeckManager.deckIsOpenedInBigWidget(deck.getDeckPath()) && mCurrentCard != null && !mInEditor) {
-        // Log.i(AnkiDroidApp.TAG, "Reviewer: onResume: get card from big widget");
-        // blockControls();
-        // AnkiDroidWidgetBig.updateWidget(AnkiDroidWidgetBig.UpdateService.VIEW_NOT_SPECIFIED, true);
-        // DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(0, deck,
-        // null));
-        // } else {
         restartTimer();
-        // }
-        //
+        for (int i=0; i< mDrawerList.getCount(); i++) {
+            mDrawerList.setItemChecked(i, false);
+        }
+        setTitle();
+        updateScreenCounts();
     }
 
 
@@ -1529,7 +1517,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         // create inherited navigation drawer layout here so that it can be used by parent class
         mDrawerLayout = (DrawerLayout) findViewById(R.id.reviewer_drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.reviewer_left_drawer);
-        initNavigationDrawer();           
+        initNavigationDrawer();
 
         mMainLayout = findViewById(R.id.main_layout);
         Themes.setContentStyle(mMainLayout, Themes.CALLER_REVIEWER);

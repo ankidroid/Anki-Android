@@ -315,7 +315,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         mDrawerLayout = (DrawerLayout) findViewById(R.id.browser_drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.browser_left_drawer);
         initNavigationDrawer();
-        selectNavigationItem(1);        
+        selectNavigationItem(DRAWER_BROWSER);
 
         mCards = new ArrayList<HashMap<String, String>>();
         mCardsListView = (ListView) findViewById(R.id.card_browser_list);
@@ -469,6 +469,12 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         }
 
         return super.onKeyDown(keyCode, event);
+    }
+    
+    @Override
+    protected void onResume() {
+        super.onResume();
+        selectNavigationItem(DRAWER_BROWSER);
     }
 
 

@@ -19,6 +19,9 @@
         <item>Decks</item>
         <item>Card Browser</item>
         <item>Statistics</item>
+        <item>Settings</item>
+        <item>Help</item>
+        <item>Send Feedback</item>
     </string-array>
 
     <string-array name="newCardSchedulingLabels">

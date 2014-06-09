@@ -1,6 +1,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ankidroid="http://schemas.android.com/apk/res-auto" >
-
+    <item
+        android:id="@+id/action_add_note_from_study_options"
+        android:icon="@drawable/ic_menu_add"
+        android:title="@string/menu_add"
+        ankidroid:showAsAction="always"/>
+        
     <item
         android:id="@+id/action_night_mode"
         android:icon="@drawable/ic_menu_night"

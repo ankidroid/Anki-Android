@@ -195,5 +195,8 @@
         <item>@drawable/ic_action_storage</item>
         <item>@drawable/ic_action_search</item>
         <item>@drawable/ic_menu_statistics</item>
+        <item>@drawable/ic_action_settings</item>
+        <item>@drawable/ic_action_help</item>
+        <item>@drawable/ic_action_email</item>
     </array>    
 </resources>

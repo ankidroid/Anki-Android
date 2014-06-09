@@ -69,7 +69,7 @@
     </string-array>
 
     <!-- Card editor -->
-    <string name="about_title">About</string>
+    <string name="about_title">About AnkiDroid</string>
     <string name="cardeditor_title_add_note">Add note</string>
     <string name="cardeditor_title_edit_card">Edit note</string>
     <!-- <string name="factadder_title">Card adder</string> -->
@@ -118,7 +118,7 @@
     <string name="help_title">Help</string>
     <string name="help_online">Online help</string>
     <string name="help_faq">FAQ</string>
-    <string name="help_tutorial">Tutorial deck</string>
+    <string name="help_tutorial">Create tutorial deck</string>
     <string name="check_db">Check database</string>
     <string name="check_db_message">Checking database…</string>
     <string

@@ -5,19 +5,20 @@
     android:layout_height="wrap_content"   
     android:layout_marginLeft="10dip"
     android:layout_marginRight="5dip"
-    android:paddingTop="9dip"
-    android:paddingBottom="9dip"
+    android:paddingTop="5dip"
+    android:paddingBottom="5dip"
     android:gravity="center_vertical"
     android:orientation="horizontal" >
     <TextView
         android:id="@+id/drawer_list_item_text"
         android:layout_toRightOf="@+id/drawer_list_item_image"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:gravity="center_vertical"
         android:paddingLeft="4dp"
         android:paddingRight="16dp"
         android:drawablePadding="16dp"
         android:textColor="#000000"
-        android:textSize="20sp" />
+        android:textSize="12sp"
+        android:textAllCaps="true"/>
 </RelativeLayout>

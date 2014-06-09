@@ -4,43 +4,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:attr/colorBackground" >
-	
-	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-		android:layout_width="fill_parent"
-		android:layout_height="fill_parent"
-		android:background="?android:attr/colorBackground"
-		android:orientation="vertical" >
+    
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="?android:attr/colorBackground"
+        android:orientation="vertical" >
 
-		<LinearLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:background="?android:attr/colorBackground"
-			android:orientation="horizontal" >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/colorBackground"
+            android:orientation="horizontal" >
 
-			<Spinner
-				android:id="@+id/browser_column1_spinner"
-				android:layout_width="0dp"
-				android:layout_height="wrap_content"
-				android:layout_weight="1"
-				android:background="?android:attr/colorBackground" />
+            <Spinner
+                android:id="@+id/browser_column1_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="?android:attr/colorBackground" />
 
-			<Spinner
-				android:id="@+id/browser_column2_spinner"
-				android:layout_width="0dp"
-				android:layout_height="wrap_content"
-				android:layout_weight="1" />
-		</LinearLayout>
+            <Spinner
+                android:id="@+id/browser_column2_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
 
-		<ListView
-			android:id="@+id/card_browser_list"
-			android:layout_width="fill_parent"
-			android:layout_height="fill_parent"
-			android:background="?android:attr/colorBackground"
-			android:drawSelectorOnTop="true"
-			android:fastScrollEnabled="true" />
+        <ListView
+            android:id="@+id/card_browser_list"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="?android:attr/colorBackground"
+            android:drawSelectorOnTop="true"
+            android:fastScrollEnabled="true" />
 
-	</LinearLayout>
-	
+    </LinearLayout>
+    
     <ListView
         android:id="@+id/browser_left_drawer"
         android:layout_width="250dp"
@@ -48,6 +48,6 @@
         android:layout_gravity="start"
         android:background="?android:attr/colorBackground"
         android:choiceMode="singleChoice"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="16dp" />
-</android.support.v4.widget.DrawerLayout>	
+        android:divider="#d3d3d3"
+        android:dividerHeight="1dp" />
+</android.support.v4.widget.DrawerLayout>   

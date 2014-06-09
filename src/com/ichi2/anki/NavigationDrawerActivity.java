@@ -23,6 +23,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
@@ -33,7 +34,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -57,10 +57,14 @@ public class NavigationDrawerActivity extends AnkiActivity {
     // Porgress dialog
     private StyledProgressDialog mProgressDialog;
     // Navigation drawer list item entries
-    private static final int DRAWER_DECK_PICKER = 0;
-    private static final int DRAWER_BROWSER = 1;
-    private static final int DRAWER_STATISTICS = 2;    
+    protected static final int DRAWER_DECK_PICKER = 0;
+    protected static final int DRAWER_BROWSER = 1;
+    protected static final int DRAWER_STATISTICS = 2;
+    protected static final int DRAWER_SETTINGS = 3;
+    protected static final int DRAWER_HELP = 4;
+    protected static final int DRAWER_FEEDBACK = 5;
     // Intent return codes
+    private static final int PREFERENCES_UPDATE = 0;
     private static final int BROWSE_CARDS = 14;
     
     
@@ -78,7 +82,7 @@ public class NavigationDrawerActivity extends AnkiActivity {
         // enable ActionBar app icon to behave as action to toggle nav drawer
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-
+        
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the sliding drawer and the action bar app icon
         mDrawerToggle = new ActionBarDrawerToggle(
@@ -94,6 +98,8 @@ public class NavigationDrawerActivity extends AnkiActivity {
             }
 
             public void onDrawerOpened(View drawerView) {
+                AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit()
+                .putBoolean("navDrawerHasBeenOpened", true).commit();
                 getSupportActionBar().setTitle(mDrawerTitle);
                 supportInvalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
@@ -111,19 +117,19 @@ public class NavigationDrawerActivity extends AnkiActivity {
 
     protected void selectNavigationItem(int position) {
         // switch to new activity... be careful not to start own activity or we can get stuck in a loop
-    	switch (position){
+        switch (position){
             case DRAWER_DECK_PICKER:
                 if (!(this instanceof DeckPicker)) {
-                    setResult(0);
-                    finishWithoutAnimation();
-                	startActivityWithAnimation(new Intent(this, DeckPicker.class), ActivityTransitionAnimation.LEFT);
+                    Intent deckPicker = new Intent(this, DeckPicker.class);
+                    deckPicker.putExtra("viaNavigationDrawer", true);
+                    startActivityWithAnimation(deckPicker, ActivityTransitionAnimation.LEFT);
                 }
                 break;
             case DRAWER_BROWSER:
                 if (!(this instanceof CardBrowser)) {
-	                Intent cardBrowser = new Intent(this, CardBrowser.class);
-	                cardBrowser.putExtra("fromDeckpicker", true);
-	                startActivityForResultWithAnimation(cardBrowser, BROWSE_CARDS, ActivityTransitionAnimation.LEFT);
+                    Intent cardBrowser = new Intent(this, CardBrowser.class);
+                    cardBrowser.putExtra("fromDeckpicker", true);
+                    startActivityForResultWithAnimation(cardBrowser, BROWSE_CARDS, ActivityTransitionAnimation.LEFT);
                 }
                 break;
             case DRAWER_STATISTICS:
@@ -140,14 +146,28 @@ public class NavigationDrawerActivity extends AnkiActivity {
                 }, mFragmented);
                 dialog.show();
                 break;
+            case DRAWER_SETTINGS:
+                startActivityForResultWithAnimation(new Intent(this, Preferences.class), PREFERENCES_UPDATE, ActivityTransitionAnimation.LEFT);
+                break;
+            
+            case DRAWER_HELP:
+                Intent helpIntent = new Intent("android.intent.action.VIEW", Uri.parse(getResources().getString(R.string.link_faq)));
+                startActivityWithoutAnimation(helpIntent);
+                break;
+                
+            case DRAWER_FEEDBACK:
+                Intent feedbackIntent = new Intent("android.intent.action.VIEW", Uri.parse(getResources().getString(R.string.link_help)));
+                startActivityWithoutAnimation(feedbackIntent);
+                break;
+            
             default:
                 break;
         }
         
         // update selected item and title, then close the drawer
-        mDrawerList.setItemChecked(position, true);        
+        mDrawerList.setItemChecked(position, true);
         setTitle(mNavigationTitles[position]);
-        mDrawerLayout.closeDrawer(mDrawerList);           
+        mDrawerLayout.closeDrawer(mDrawerList);
     }
 
     @Override
@@ -178,7 +198,7 @@ public class NavigationDrawerActivity extends AnkiActivity {
     
     /* Adapter which controls how to display the items in the navigation drawer */
     private class NavDrawerListAdapter extends BaseAdapter {
-    	
+        
         private Context context;
         private String[] navDrawerTitles;
         private TypedArray navDrawerImages;
@@ -209,19 +229,21 @@ public class NavigationDrawerActivity extends AnkiActivity {
             if (convertView == null) {
                 LayoutInflater mInflater = (LayoutInflater)
                         context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-                convertView = mInflater.inflate(R.layout.drawer_list_item, null);
+                if (position > DRAWER_STATISTICS){
+                    convertView = mInflater.inflate(R.layout.drawer_submenu_list_item, null);
+                } else {
+                    convertView = mInflater.inflate(R.layout.drawer_list_item, null);
+                }
             }
-            // get ImageView and TextView for current drawer item
-            ImageView imgIcon = (ImageView) convertView.findViewById(R.id.drawer_list_item_image);
-            TextView txtTitle = (TextView) convertView.findViewById(R.id.drawer_list_item_text);
             // set the text and image according to lists specified in resources
-            imgIcon.setImageResource(navDrawerImages.getResourceId(position, -1));
+            TextView txtTitle = (TextView) convertView.findViewById(R.id.drawer_list_item_text);
             txtTitle.setText(navDrawerTitles[position]);
+            txtTitle.setCompoundDrawablesWithIntrinsicBounds(navDrawerImages.getResourceId(position, -1), 0, 0, 0);
             // make current item bold
             if (NavigationDrawerActivity.this.mDrawerList.getCheckedItemPosition()==position) {
-            	txtTitle.setTypeface(null, Typeface.BOLD);
+                txtTitle.setTypeface(null, Typeface.BOLD);
             } else {
-            	txtTitle.setTypeface(null, Typeface.NORMAL);
+                txtTitle.setTypeface(null, Typeface.NORMAL);
             }
             return convertView;
         }
@@ -231,7 +253,6 @@ public class NavigationDrawerActivity extends AnkiActivity {
     
     // Statistics
     DeckTask.TaskListener mLoadStatisticsHandler = new DeckTask.TaskListener() {
-
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
             if (mProgressDialog.isShowing()) {
@@ -265,5 +286,11 @@ public class NavigationDrawerActivity extends AnkiActivity {
         public void onProgressUpdate(DeckTask.TaskData... values) {
         }
 
-    };    
+    };
+    
+    @Override
+    protected void onDestroy() {       
+        super.onDestroy();
+        mNavigationImages.recycle();
+    }
 }

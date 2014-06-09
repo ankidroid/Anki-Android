@@ -188,7 +188,8 @@
     </PreferenceScreen>
 
     <!-- Fonts & Style Prefrences -->
-    <PreferenceScreen android:title="@string/pref_cat_fonts_formatting" >
+    <PreferenceScreen android:title="@string/pref_cat_fonts_formatting"
+        android:key="font_preference_group">
         <PreferenceCategory android:title="@string/pref_cat_fonts" >
             <ListPreference
                 android:defaultValue=""
@@ -468,4 +469,7 @@
                 android:title="@string/double_scrolling_gap" />
         </PreferenceCategory>
     </PreferenceScreen>
+    <Preference 
+        android:key="about_dialog_preference"
+        android:title="@string/about_title" />
 </PreferenceScreen>
