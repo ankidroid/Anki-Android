@@ -1148,11 +1148,10 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     private TaskData doInBackgroundRestoreDeck(TaskData... params) {
         Log.i(AnkiDroidApp.TAG, "doInBackgroundRestoreDeck");
         Object[] data = params[0].getObjArray();
-        Collection col = (Collection) data[0];
-        if (col != null) {
-            col.close(false);
-        }
-        return new TaskData(BackupManager.restoreBackup((String) data[1], (String) data[2]));
+        AnkiDroidApp.closeCollection(false);
+        int result = BackupManager.restoreBackup((String) data[1], (String) data[2]);
+        AnkiDroidApp.openCollection(AnkiDroidApp.getCollectionPath());
+        return new TaskData(result);
     }
 
 
