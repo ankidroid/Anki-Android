@@ -5,7 +5,7 @@
         android:id="@+id/action_add_decks"
         android:icon="@drawable/ic_menu_add"
         android:title="@string/menu_add"
-        ankidroid:showAsAction="ifRoom">
+        ankidroid:showAsAction="always">
         <menu>
             <item
                 android:id="@+id/action_add_note_from_deck_picker"
@@ -28,6 +28,10 @@
         android:title="@string/sync_title"
         ankidroid:showAsAction="always"/>
     <item
+        android:id="@+id/action_tutorial"
+        android:menuCategory="secondary"
+        android:title="@string/help_tutorial"/>        
+    <item
         android:id="@+id/action_new_filtered_deck"
         android:enabled="false"
         android:menuCategory="secondary"
@@ -37,31 +41,4 @@
         android:enabled="false"
         android:menuCategory="secondary"
         android:title="@string/check_db"/>
-    <item
-        android:id="@+id/action_preferences"
-        android:menuCategory="secondary"
-        android:title="@string/menu_preferences"/>
-    <item
-        android:id="@+id/action_help"
-        android:menuCategory="secondary"
-        android:title="@string/help_title">
-        <menu>
-            <item
-                android:id="@+id/action_tutorial"
-                android:title="@string/help_tutorial"/>
-            <item
-                android:id="@+id/action_online"
-                android:title="@string/help_online"/>
-            <item
-                android:id="@+id/action_faq"
-                android:title="@string/help_faq"/>
-            <item
-                android:id="@+id/action_feedback"
-                android:title="@string/studyoptions_feedback"/>
-            <item
-                android:id="@+id/action_about"
-                android:title="@string/menu_about"/>
-        </menu>
-    </item>
-
 </menu>

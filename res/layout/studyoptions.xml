@@ -4,10 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:attr/colorBackground" >
-	<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-		android:id="@+id/studyoptions_frame"
-		android:layout_width="fill_parent"
-		android:layout_height="fill_parent" />
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/studyoptions_frame"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
     <ListView
         android:id="@+id/studyoptions_left_drawer"
         android:layout_width="250dp"
@@ -15,7 +15,7 @@
         android:layout_gravity="start"
         android:background="?android:attr/colorBackground"
         android:choiceMode="singleChoice"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="16dp" />
+        android:divider="#d3d3d3"
+        android:dividerHeight="1dp" />
 </android.support.v4.widget.DrawerLayout>
 

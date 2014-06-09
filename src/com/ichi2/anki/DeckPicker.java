@@ -35,7 +35,6 @@ import android.content.res.Resources.NotFoundException;
 import android.database.SQLException;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -44,18 +43,17 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -68,7 +66,6 @@ import com.ichi2.async.Connection.Payload;
 import com.ichi2.async.DeckTask;
 import com.ichi2.async.DeckTask.Listener;
 import com.ichi2.async.DeckTask.TaskData;
-import com.ichi2.charts.ChartBuilder;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledDialog;
@@ -98,14 +95,12 @@ public class DeckPicker extends NavigationDrawerActivity {
     private static final int DIALOG_USER_NOT_LOGGED_IN_SYNC = 1;
     private static final int DIALOG_NO_CONNECTION = 3;
     private static final int DIALOG_DELETE_DECK = 4;
-    private static final int DIALOG_SELECT_STATISTICS_TYPE = 5;
     private static final int DIALOG_CONTEXT_MENU = 9;
     private static final int DIALOG_REPAIR_COLLECTION = 10;
     private static final int DIALOG_NO_SPACE_LEFT = 11;
     private static final int DIALOG_SYNC_CONFLICT_RESOLUTION = 12;
     private static final int DIALOG_CONNECTION_ERROR = 13;
     private static final int DIALOG_SYNC_LOG = 15;
-    private static final int DIALOG_SELECT_HELP = 16;
     private static final int DIALOG_BACKUP_NO_SPACE_LEFT = 17;
     private static final int DIALOG_OK = 18;
     private static final int DIALOG_DB_ERROR = 19;
@@ -855,7 +850,8 @@ public class DeckPicker extends NavigationDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) throws SQLException {
         Log.i(AnkiDroidApp.TAG, "DeckPicker - onCreate");
         Intent intent = getIntent();
-        if (!isTaskRoot()) {
+        // What purpose does this serve?
+        if (!intent.getBooleanExtra("viaNavigationDrawer", false) && !isTaskRoot()) {
             Log.i(AnkiDroidApp.TAG,
                     "DeckPicker - onCreate: Detected multiple instance of this activity, closing it and return to root activity");
             Intent reloadIntent = new Intent(DeckPicker.this, DeckPicker.class);
@@ -880,7 +876,7 @@ public class DeckPicker extends NavigationDrawerActivity {
             mOpenCollectionHandler.onPreExecute();
         }
         
-        Themes.applyTheme(this);               
+        Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
         
         setTitle(getResources().getString(R.string.app_name));
@@ -902,7 +898,7 @@ public class DeckPicker extends NavigationDrawerActivity {
         BroadcastMessages.checkForNewMessages(this);
 
         View mainView = getLayoutInflater().inflate(R.layout.deck_picker, null);
-        setContentView(mainView);      
+        setContentView(mainView);
 
         // check, if tablet layout
         View studyoptionsFrame = findViewById(R.id.studyoptions_fragment);
@@ -919,8 +915,13 @@ public class DeckPicker extends NavigationDrawerActivity {
         mDrawerList = (ListView) findViewById(R.id.deckpicker_left_drawer);
         initNavigationDrawer();
         if (savedInstanceState == null) {
-            selectNavigationItem(0);
+            selectNavigationItem(DRAWER_DECK_PICKER);
         }
+        //open the drawer on startup if it's never been opened voluntarily by the user (as per Android guidelines)
+        if (!intent.getBooleanExtra("viaNavigationDrawer", false) && !preferences.getBoolean("navDrawerHasBeenOpened", false)) {
+            mDrawerLayout.openDrawer(Gravity.LEFT);
+        }
+
 
         mDeckList = new ArrayList<HashMap<String, String>>();
         mDeckListView = (ListView) findViewById(R.id.files);
@@ -1011,8 +1012,16 @@ public class DeckPicker extends NavigationDrawerActivity {
         if (mFragmented) {
             mDeckListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         }
-
-        showStartupScreensAndDialogs(preferences, 0);
+        
+        
+        if (AnkiDroidApp.getCol() == null){
+            // Show splash screen and load collection if it's null            
+            showStartupScreensAndDialogs(preferences, 0);
+        } else {
+            // Otherwise just update the deck list            
+            Object[] counts = AnkiDroidApp.getCol().getSched().deckCounts();
+            updateDecksList((TreeSet<Object[]>) counts[0], (Integer) counts[1], (Integer) counts[2]);
+        }
 
         if (mSwipeEnabled) {
             gestureDetector = new GestureDetector(new MyGestureDetector());
@@ -1034,6 +1043,7 @@ public class DeckPicker extends NavigationDrawerActivity {
                 loadCounts();
             }
         }
+        selectNavigationItem(DRAWER_DECK_PICKER);
     }
 
 
@@ -2413,35 +2423,8 @@ public class DeckPicker extends NavigationDrawerActivity {
                 dialog.show();
                 return true;
 
-            case R.id.action_preferences:
-                startActivityForResult(new Intent(DeckPicker.this, Preferences.class), PREFERENCES_UPDATE);
-                return true;
-
             case R.id.action_tutorial:
                 createTutorialDeck();
-                return true;
-
-            case R.id.action_online:
-            case R.id.action_faq:
-                if (Utils.isIntentAvailable(DeckPicker.this, "android.intent.action.VIEW")) {
-                    Intent intent = new Intent("android.intent.action.VIEW", Uri.parse(getResources().getString(
-                            item.getItemId() == R.id.action_online ? R.string.link_help : R.string.link_faq)));
-                    startActivity(intent);
-                } else {
-                    startActivity(new Intent(DeckPicker.this, Info.class));
-                }
-                return true;
-
-            case R.id.action_feedback:
-                Intent i = new Intent(DeckPicker.this, Feedback.class);
-                i.putExtra("request", REPORT_FEEDBACK);
-                startActivityForResult(i, REPORT_FEEDBACK);
-                ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
-                return true;
-
-            case R.id.action_about:
-                startActivity(new Intent(DeckPicker.this, Info.class));
-                ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.RIGHT);
                 return true;
 
             default:

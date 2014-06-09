@@ -34,6 +34,7 @@ import android.widget.ListView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.receiver.SdCardReceiver;
+import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
@@ -83,9 +84,17 @@ public class StudyOptionsActivity extends NavigationDrawerActivity {
         mCurrentFragment.setArguments(args);
         getSupportFragmentManager().beginTransaction().add(R.id.studyoptions_frame, mCurrentFragment).commit();
     }
+    
+    @Override
+    protected void onResume() {
+        super.onResume();
+        for (int i=0; i< mDrawerList.getCount(); i++) {
+            mDrawerList.setItemChecked(i, false);
+        }
+    }    
 
 
-    // TODO: onpause, onresume, onstop
+    // TODO: onpause, onstop
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

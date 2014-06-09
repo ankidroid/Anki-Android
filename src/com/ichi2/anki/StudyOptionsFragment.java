@@ -208,34 +208,6 @@ public class StudyOptionsFragment extends Fragment {
                     resetAndUpdateValuesFromDeck();
                     mButtonUnbury.setVisibility(View.GONE);
                     return;
-                    // case R.id.studyoptions_limitup:
-                    // timeLimit = (mCol.getTimeLimit() / 60);
-                    // mCol.setTimeLimit((timeLimit + 1) * 60);
-                    // mToggleLimitToggle.setChecked(true);
-                    // mToggleLimitToggle.setText(String.valueOf(timeLimit + 1));
-                    // return;
-                    // case R.id.studyoptions_limitdown:
-                    // timeLimit = (mCol.getTimeLimit() / 60);
-                    // if (timeLimit > 1) {
-                    // mCol.setTimeLimit((timeLimit - 1) * 60);
-                    // mToggleLimitToggle.setChecked(true);
-                    // mToggleLimitToggle.setText(String.valueOf(timeLimit - 1));
-                    // } else if (timeLimit == 1) {
-                    // mCol.setTimeLimit(0);
-                    // mToggleLimitToggle.setChecked(false);
-                    // }
-                    // return;
-                    // case R.id.studyoptions_limittoggle:
-                    // timeLimit = (mCol.getTimeLimit() / 60);
-                    // if (timeLimit > 0) {
-                    // mToggleLimitToggle.setChecked(false);
-                    // mCol.setTimeLimit(0);
-                    // } else {
-                    // mToggleLimitToggle.setChecked(true);
-                    // mToggleLimitToggle.setText("1");
-                    // mCol.setTimeLimit(60);
-                    // }
-                    // return;
                 case R.id.studyoptions_congrats_undo:
                     if (AnkiDroidApp.colIsOpen()) {
                         col.undo();
@@ -453,6 +425,8 @@ public class StudyOptionsFragment extends Fragment {
         if (AnkiDroidApp.colIsOpen()) {
             if (Utils.now() > AnkiDroidApp.getCol().getSched().getDayCutoff()) {
                 updateValuesFromDeck(true);
+            } else {
+                updateValuesFromDeck();
             }
         }
         showOrHideUnburyButton();
@@ -1310,6 +1284,9 @@ public class StudyOptionsFragment extends Fragment {
                     item.setIcon(R.drawable.ic_menu_night_checked);
                 }
                 return true;
+                
+            case R.id.action_add_note_from_study_options:
+                addNote();
 
             default:
                 return super.onOptionsItemSelected(item);
