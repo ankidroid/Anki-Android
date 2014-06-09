@@ -126,9 +126,11 @@ public class NavigationDrawerActivity extends AnkiActivity {
                 }
                 break;
             case DRAWER_BROWSER:
+                Intent cardBrowser = new Intent(this, CardBrowser.class);
                 if (!(this instanceof CardBrowser)) {
-                    Intent cardBrowser = new Intent(this, CardBrowser.class);
-                    cardBrowser.putExtra("fromDeckpicker", true);
+                    if (this instanceof DeckPicker){
+                        cardBrowser.putExtra("fromDeckpicker", true);
+                    }                    
                     startActivityForResultWithAnimation(cardBrowser, BROWSE_CARDS, ActivityTransitionAnimation.LEFT);
                 }
                 break;
@@ -143,7 +145,7 @@ public class NavigationDrawerActivity extends AnkiActivity {
                                         .getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getBoolean(
                                                 "statsRange", true) : true));
                     }
-                }, mFragmented);
+                }, true);
                 dialog.show();
                 break;
             case DRAWER_SETTINGS:
