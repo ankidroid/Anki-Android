@@ -65,7 +65,6 @@ public class StyledDialog extends Dialog {
         mContext = context;
     }
 
-
     @Override
     public void show() {
         try {
@@ -231,7 +230,10 @@ public class StyledDialog extends Dialog {
         mListAdapter.notifyDataSetChanged();
     }
 
-
+    public List<String> getItemList() {
+        return mItemList;
+    }
+    
     public void setItemListChecked(boolean checked) {
         for (int i = 0; i < mListView.getCount(); i++) {
             mListView.setItemChecked(i, checked);
@@ -240,14 +242,15 @@ public class StyledDialog extends Dialog {
 
 
     public ArrayList<String> getCheckedItems() {
-        updateCheckedItems();
         ArrayList<String> selecteds = new ArrayList<String>();
-        for (int i = 0; i < mItemList.size(); i++) {
-            if (mCheckedItems[i]) {
-                selecteds.add(mItemList.get(i));
+        if (mItemList != null) {
+            updateCheckedItems();
+            for (int i = 0; i < mItemList.size(); i++) {
+                if (mCheckedItems[i]) {
+                    selecteds.add(mItemList.get(i));
+                }
             }
         }
-
         return selecteds;
     }
 
