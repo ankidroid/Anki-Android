@@ -117,6 +117,7 @@ public class DeckPicker extends NavigationDrawerActivity {
     private static final int DIALOG_IMPORT_HINT = 30;
     private static final int DIALOG_IMPORT_SELECT = 31;
     private static final int DIALOG_CONFIRM_DATABASE_CHECK = 32;
+    private static final int DIALOG_CONFIRM_RESTORE_BACKUP = 33;
     public static final String UPGRADE_OLD_COLLECTION_RENAME = "oldcollection.apkg";
     public static final String IMPORT_REPLACE_COLLECTION_NAME = "collection.apkg";
 
@@ -679,6 +680,7 @@ public class DeckPicker extends NavigationDrawerActivity {
             switch (result.getInt()) {
                 case BackupManager.RETURN_DECK_RESTORED:
                     loadCollection();
+                    // Force full sync on next upload
                     Collection col = AnkiDroidApp.getCol();
                     if (col != null) {
                         col.modSchema(false);
@@ -1924,6 +1926,20 @@ public class DeckPicker extends NavigationDrawerActivity {
                 dialog = builder.create();
                 break;
 
+            case DIALOG_CONFIRM_RESTORE_BACKUP:
+                builder.setTitle(res.getString(R.string.restore_backup_title));
+                builder.setMessage(res.getString(R.string.restore_backup));
+                builder.setPositiveButton(res.getString(R.string.dialog_continue),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                showDialog(DIALOG_RESTORE_BACKUP);
+                            }
+                        });
+                builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
+                builder.setCancelable(true);
+                dialog = builder.create();
+                break;
             default:
                 return super.onCreateDialog(id);
         }
@@ -2427,6 +2443,11 @@ public class DeckPicker extends NavigationDrawerActivity {
                 createTutorialDeck();
                 return true;
 
+            case R.id.action_restore_backup:
+                StyledDialog dialog2 = (StyledDialog) onCreateDialog(this.DIALOG_CONFIRM_RESTORE_BACKUP);
+                dialog2.show();
+                return true;
+                
             default:
                 return super.onOptionsItemSelected(item);
 
