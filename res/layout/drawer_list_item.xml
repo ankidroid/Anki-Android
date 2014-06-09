@@ -11,7 +11,6 @@
     android:orientation="horizontal" >
     <TextView
         android:id="@+id/drawer_list_item_text"
-        android:layout_toRightOf="@+id/drawer_list_item_image"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
