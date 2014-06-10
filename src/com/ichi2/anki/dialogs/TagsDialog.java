@@ -255,7 +255,9 @@ public class TagsDialog extends DialogFragment implements OnDismissListener, OnC
                         addFilterTagET.setText("");
                         return;
                     }
-                    mAllTags.add(tag);
+                    if (!mAllTags.contains(tag)) {
+                        mAllTags.add(tag);
+                    }
                     mCurrentTags.add(tag);
                     addFilterTagET.setText("");
                     actualizeCurrTagDialog();
