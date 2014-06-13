@@ -135,17 +135,21 @@ public class NavigationDrawerActivity extends AnkiActivity {
                 }
                 break;
             case DRAWER_STATISTICS:
+            	boolean selectAllDecksButton = false;
+            	if ((this instanceof DeckPicker && !mFragmented)) {
+            		selectAllDecksButton = true;
+            	}
                 Dialog dialog = ChartBuilder.getStatisticsDialog(this, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         DeckTask.launchDeckTask(
                                 DeckTask.TASK_TYPE_LOAD_STATISTICS,
                                 mLoadStatisticsHandler,
-                                new DeckTask.TaskData(AnkiDroidApp.getCol(), which, mFragmented ? AnkiDroidApp
+                                new DeckTask.TaskData(AnkiDroidApp.getCol(), which, AnkiDroidApp
                                         .getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getBoolean(
-                                                "statsRange", true) : true));
+                                                "statsRange", true)));
                     }
-                }, true);
+                }, selectAllDecksButton);
                 dialog.show();
                 break;
             case DRAWER_SETTINGS:

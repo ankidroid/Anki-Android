@@ -267,7 +267,7 @@ public class ChartBuilder extends ActionBarActivity {
 
 
     public static StyledDialog getStatisticsDialog(Context context, DialogInterface.OnClickListener listener,
-            boolean showWholeDeckSelection) {
+            boolean setWholeDeckSelection) {
         StyledDialog.Builder builder = new StyledDialog.Builder(context);
         builder.setTitle(context.getString(R.string.statistics_type_title));
         builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
@@ -324,43 +324,46 @@ public class ChartBuilder extends ActionBarActivity {
                 AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getInt("statsType",
                         Stats.TYPE_MONTH), Stats.TYPE_LIFE)].setChecked(true);
 
-        if (showWholeDeckSelection) {
-            // collection/current deck
-            final RadioButton[] statisticRadioButtons2 = new RadioButton[2];
-            RadioGroup rg2 = new RadioGroup(context);
-            rg2.setOrientation(RadioGroup.HORIZONTAL);
-            String[] text2 = res.getStringArray(R.array.stats_range);
-            for (int i = 0; i < statisticRadioButtons2.length; i++) {
-                statisticRadioButtons2[i] = new RadioButton(context);
-                statisticRadioButtons2[i].setClickable(true);
-                statisticRadioButtons2[i].setText("         " + text2[i]);
-                statisticRadioButtons2[i].setHeight(height * 2);
-                statisticRadioButtons2[i].setSingleLine();
-                statisticRadioButtons2[i].setBackgroundDrawable(null);
-                statisticRadioButtons2[i].setGravity(Gravity.CENTER_VERTICAL);
-                rg2.addView(statisticRadioButtons2[i], lp);
-            }
-            rg2.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(RadioGroup arg0, int arg1) {
-                    AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit()
-                            .putBoolean("statsRange", arg0.getCheckedRadioButtonId() == arg0.getChildAt(0).getId())
-                            .commit();
-                }
-            });
-            rg2.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, height));
-            statisticRadioButtons2[AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getBoolean(
-                    "statsRange", true) ? 0 : 1].setChecked(true);
 
-            LinearLayout ll = new LinearLayout(context);
-            ll.setOrientation(LinearLayout.VERTICAL);
-            ll.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-            ll.addView(rg);
-            ll.addView(rg2);
-            builder.setView(ll, false, true);
-        } else {
-            builder.setView(rg, false, true);
+        // collection/current deck
+        final RadioButton[] statisticRadioButtons2 = new RadioButton[2];
+        RadioGroup rg2 = new RadioGroup(context);
+        rg2.setOrientation(RadioGroup.HORIZONTAL);
+        String[] text2 = res.getStringArray(R.array.stats_range);
+        for (int i = 0; i < statisticRadioButtons2.length; i++) {
+            statisticRadioButtons2[i] = new RadioButton(context);
+            statisticRadioButtons2[i].setClickable(true);
+            statisticRadioButtons2[i].setText("         " + text2[i]);
+            statisticRadioButtons2[i].setHeight(height * 2);
+            statisticRadioButtons2[i].setSingleLine();
+            statisticRadioButtons2[i].setBackgroundDrawable(null);
+            statisticRadioButtons2[i].setGravity(Gravity.CENTER_VERTICAL);
+            rg2.addView(statisticRadioButtons2[i], lp);
         }
+        rg2.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup arg0, int arg1) {
+                AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit()
+                        .putBoolean("statsRange", arg0.getCheckedRadioButtonId() == arg0.getChildAt(0).getId())
+                        .commit();
+            }
+        });
+        rg2.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, height));
+        statisticRadioButtons2[AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getBoolean(
+                "statsRange", true) ? 0 : 1].setChecked(true);
+        // Make the by deck button selected by default if arg specified
+        if (setWholeDeckSelection) {
+        	rg2.check(rg2.getChildAt(0).getId());
+        } else {
+        	rg2.check(rg2.getChildAt(1).getId());
+        }
+                
+        LinearLayout ll = new LinearLayout(context);
+        ll.setOrientation(LinearLayout.VERTICAL);
+        ll.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+        ll.addView(rg);
+        ll.addView(rg2);
+        builder.setView(ll, false, true);
         return builder.create();
     }
 }
