@@ -128,7 +128,7 @@ public class NavigationDrawerActivity extends AnkiActivity {
             case DRAWER_BROWSER:
                 Intent cardBrowser = new Intent(this, CardBrowser.class);
                 if (!(this instanceof CardBrowser)) {
-                    if (this instanceof DeckPicker){
+                    if (this instanceof DeckPicker && !mFragmented){
                         cardBrowser.putExtra("fromDeckpicker", true);
                     }                    
                     startActivityForResultWithAnimation(cardBrowser, BROWSE_CARDS, ActivityTransitionAnimation.LEFT);
