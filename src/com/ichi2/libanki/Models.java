@@ -985,7 +985,10 @@ public class Models {
             }
 
             if (found) {
-                return rep.toString();
+                m.appendTail(rep);
+
+                // and display other clozes normally
+                return rep.toString().replaceAll(String.format(Locale.US, clozeReg, ".*?"), "$1");
             }
             else {
                 return "";
