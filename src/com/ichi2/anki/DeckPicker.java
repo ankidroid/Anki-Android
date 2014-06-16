@@ -583,6 +583,13 @@ public class DeckPicker extends NavigationDrawerActivity {
                 mOpenCollectionDialog.setMessage(message);
             }
         }
+
+
+        @Override
+        public void onCancelled() {
+            // TODO Auto-generated method stub
+            
+        }
     };
 
     DeckTask.TaskListener mLoadCountsHandler = new DeckTask.TaskListener() {
@@ -617,6 +624,13 @@ public class DeckPicker extends NavigationDrawerActivity {
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
         }
+
+
+        @Override
+        public void onCancelled() {
+            // TODO Auto-generated method stub
+            
+        }
     };
 
     DeckTask.TaskListener mCloseCollectionHandler = new DeckTask.TaskListener() {
@@ -633,6 +647,13 @@ public class DeckPicker extends NavigationDrawerActivity {
 
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
+        }
+
+
+        @Override
+        public void onCancelled() {
+            // TODO Auto-generated method stub
+            
         }
     };
 
@@ -662,6 +683,13 @@ public class DeckPicker extends NavigationDrawerActivity {
 
         @Override
         public void onProgressUpdate(TaskData... values) {
+        }
+
+
+        @Override
+        public void onCancelled() {
+            // TODO Auto-generated method stub
+            
         }
 
     };
@@ -703,6 +731,13 @@ public class DeckPicker extends NavigationDrawerActivity {
 
         @Override
         public void onProgressUpdate(TaskData... values) {
+        }
+
+
+        @Override
+        public void onCancelled() {
+            // TODO Auto-generated method stub
+            
         }
 
     };
@@ -749,6 +784,13 @@ public class DeckPicker extends NavigationDrawerActivity {
         public void onProgressUpdate(DeckTask.TaskData... values) {
             mProgressDialog.setMessage(values[0].getString());
         }
+
+
+        @Override
+        public void onCancelled() {
+            // TODO Auto-generated method stub
+            
+        }
     };
 
     DeckTask.TaskListener mImportReplaceListener = new DeckTask.TaskListener() {
@@ -788,6 +830,13 @@ public class DeckPicker extends NavigationDrawerActivity {
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
             mProgressDialog.setMessage(values[0].getString());
+        }
+
+
+        @Override
+        public void onCancelled() {
+            // TODO Auto-generated method stub
+            
         }
     };
 
@@ -839,6 +888,13 @@ public class DeckPicker extends NavigationDrawerActivity {
 
         @Override
         public void onProgressUpdate(TaskData... values) {
+        }
+
+
+        @Override
+        public void onCancelled() {
+            // TODO Auto-generated method stub
+            
         }
     };
 
@@ -1243,6 +1299,13 @@ public class DeckPicker extends NavigationDrawerActivity {
                     @Override
                     public void onProgressUpdate(DeckTask task, TaskData... values) {
                     }
+
+
+                    @Override
+                    public void onCancelled() {
+                        // TODO Auto-generated method stub
+                        
+                    }
                 }, new DeckTask.TaskData(AnkiDroidApp.getCollectionPath()));
             } else {
                 loadCollection();
@@ -1562,6 +1625,12 @@ public class DeckPicker extends NavigationDrawerActivity {
 
                                         @Override
                                         public void onProgressUpdate(TaskData... values) {
+                                        }
+
+                                        @Override
+                                        public void onCancelled() {
+                                            // TODO Auto-generated method stub
+                                            
                                         }
                                     }, new TaskData(AnkiDroidApp.getCol(), mCurrentDid));
                             }
@@ -2605,6 +2674,13 @@ public class DeckPicker extends NavigationDrawerActivity {
             @Override
             public void onProgressUpdate(TaskData... values) {
             }
+
+
+            @Override
+            public void onCancelled() {
+                // TODO Auto-generated method stub
+                
+            }
         }, new DeckTask.TaskData(AnkiDroidApp.getCol()));
     }
 
@@ -2649,6 +2725,13 @@ public class DeckPicker extends NavigationDrawerActivity {
 
             @Override
             public void onProgressUpdate(TaskData... values) {
+            }
+
+
+            @Override
+            public void onCancelled() {
+                // TODO Auto-generated method stub
+                
             }
         }, new DeckTask.TaskData(AnkiDroidApp.getCollectionPath()));
     }
@@ -2773,6 +2856,13 @@ public class DeckPicker extends NavigationDrawerActivity {
 
             @Override
             public void onProgressUpdate(TaskData... values) {
+            }
+
+
+            @Override
+            public void onCancelled() {
+                // TODO Auto-generated method stub
+                
             }
         }, new DeckTask.TaskData(AnkiDroidApp.getCol()));
     }

@@ -292,6 +292,13 @@ public class NavigationDrawerActivity extends AnkiActivity {
         public void onProgressUpdate(DeckTask.TaskData... values) {
         }
 
+
+        @Override
+        public void onCancelled() {
+            // TODO Auto-generated method stub
+            
+        }
+
     };
     
     @Override

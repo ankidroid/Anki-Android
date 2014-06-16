@@ -991,6 +991,13 @@ public class Info extends ActionBarActivity {
         public void onProgressUpdate(DeckTask.TaskData... values) {
             mProgressDialog.setMessage(values[0].getString());
         }
+
+
+        @Override
+        public void onCancelled() {
+            // TODO Auto-generated method stub
+            
+        }
     };
 
     Connection.TaskListener mDownloadDeckListener = new Connection.TaskListener() {

@@ -63,7 +63,7 @@
     <string name="card_details_tags">Tags</string>
     <string name="card_details_model">Note type</string>
     <string name="card_browser_sorting_cards">Sorting cards…</string>
-    <string name="card_browser_filtering_cards">Filtering cards…</string>
+    <string name="card_browser_filtering_cards">Filtering cards… \nPress back button to cancel</string>
     <string name="card_details_card_model">Card model</string>
 
     <string-array name="card_browser_order_labels">
