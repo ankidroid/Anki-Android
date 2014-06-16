@@ -4,7 +4,8 @@
         android:id="@+id/action_add_note_from_study_options"
         android:icon="@drawable/ic_menu_add"
         android:title="@string/menu_add"
-        ankidroid:showAsAction="always"/>
+        ankidroid:showAsAction="always"
+        android:visible="false" />
         
     <item
         android:id="@+id/action_night_mode"
