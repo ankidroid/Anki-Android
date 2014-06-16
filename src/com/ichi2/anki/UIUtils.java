@@ -50,6 +50,13 @@ public class UIUtils {
                 @Override
                 public void onProgressUpdate(TaskData... values) {
                 }
+
+
+                @Override
+                public void onCancelled() {
+                    // TODO Auto-generated method stub
+                    
+                }
             }, new DeckTask.TaskData(AnkiDroidApp.getCol()));
         }
     }

@@ -675,6 +675,13 @@ public class MultimediaCardEditorActivity extends Activity {
                 // TODO Auto-generated method stub
 
             }
+
+
+            @Override
+            public void onCancelled() {
+                // TODO Auto-generated method stub
+                
+            }
         };
 
         if (mAddNote) {

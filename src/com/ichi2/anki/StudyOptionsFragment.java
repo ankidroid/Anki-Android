@@ -499,6 +499,13 @@ public class StudyOptionsFragment extends Fragment {
             @Override
             public void onProgressUpdate(DeckTask.TaskData... values) {
             }
+
+
+            @Override
+            public void onCancelled() {
+                // TODO Auto-generated method stub
+                
+            }
         }, new DeckTask.TaskData(AnkiDroidApp.getCurrentAnkiDroidDirectory() + AnkiDroidApp.COLLECTION_PATH));
     }
 
@@ -1290,6 +1297,13 @@ public class StudyOptionsFragment extends Fragment {
         @Override
         public void onProgressUpdate(TaskData... values) {
         }
+
+
+        @Override
+        public void onCancelled() {
+            // TODO Auto-generated method stub
+            
+        }
     };
 
     DeckTask.TaskListener mUpdateValuesFromDeckListener = new DeckTask.TaskListener() {
@@ -1399,6 +1413,13 @@ public class StudyOptionsFragment extends Fragment {
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
         }
+
+
+        @Override
+        public void onCancelled() {
+            // TODO Auto-generated method stub
+            
+        }
     };
 
     DeckTask.TaskListener mLoadStatisticsHandler = new DeckTask.TaskListener() {
@@ -1435,6 +1456,13 @@ public class StudyOptionsFragment extends Fragment {
 
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
+        }
+
+
+        @Override
+        public void onCancelled() {
+            // TODO Auto-generated method stub
+            
         }
 
     };

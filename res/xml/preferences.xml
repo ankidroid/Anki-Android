@@ -358,11 +358,6 @@
         <PreferenceCategory android:title="@string/pref_cat_performance" >
             <CheckBoxPreference
                 android:defaultValue="false"
-                android:key="cardBrowserNoSearchOnOpen"
-                android:summary="@string/pref_cardbrowser_skip_init_search_summ"
-                android:title="@string/pref_cardbrowser_skip_init_search" />
-            <CheckBoxPreference
-                android:defaultValue="false"
                 android:key="safeDisplay"
                 android:summary="@string/safe_display_summ"
                 android:title="@string/safe_display" />

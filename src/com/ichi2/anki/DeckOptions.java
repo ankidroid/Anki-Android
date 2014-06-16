@@ -356,6 +356,13 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
                     updateSummaries();
                     mProgressDialog.dismiss();
                 }
+
+
+                @Override
+                public void onCancelled() {
+                    // TODO Auto-generated method stub
+                    
+                }
             };
         }
 

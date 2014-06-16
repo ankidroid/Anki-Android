@@ -27,6 +27,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.widget.EditText;
@@ -66,6 +67,13 @@ public class StudyOptionsActivity extends NavigationDrawerActivity {
         registerExternalStorageListener();
     }
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu){
+        // Make the add button visible when not fragmented layout
+        MenuItem addFromStudyOptions = menu.findItem(R.id.action_add_note_from_study_options);
+        addFromStudyOptions.setVisible(true);
+        return true;        
+    }
 
     public void loadContent(boolean onlyFnsMsg) {
         loadContent(onlyFnsMsg, null);

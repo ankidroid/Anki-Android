@@ -24,7 +24,9 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.CardBrowser;
 import com.ichi2.anki.Pair;
+import com.ichi2.async.DeckTask;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -1039,6 +1041,12 @@ public class Finder {
         try {
             cur = mCol.getDb().getDatabase().rawQuery(sql, args);
             while (cur.moveToNext()) {
+                // cancel if the launching task was cancelled. 
+                // Note that checking sSearchCancelled is a hack -- see comments in DeckTask.launchDeckTask
+                if (DeckTask.taskIsCancelled(DeckTask.TASK_TYPE_SEARCH_CARDS) || CardBrowser.sSearchCancelled){
+                    Log.i(AnkiDroidApp.TAG, "_findCardsForCardBrowser() cancelled...");
+                    return null;
+                }                
                 HashMap<String, String> map = new HashMap<String, String>();
                 map.put("id", cur.getString(0));
                 map.put("sfld", cur.getString(1));

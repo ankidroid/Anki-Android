@@ -529,6 +529,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 closeReviewer(DeckPicker.RESULT_DB_ERROR, true);
             }
         }
+
+
+        @Override
+        public void onCancelled() {
+            // TODO Auto-generated method stub
+            
+        }
     };
 
     private DeckTask.TaskListener mDismissCardHandler = new DeckTask.TaskListener() {
@@ -549,6 +556,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 closeReviewer(DeckPicker.RESULT_DB_ERROR, false);
             }
             mAnswerCardHandler.onPostExecute(result);
+        }
+
+
+        @Override
+        public void onCancelled() {
+            // TODO Auto-generated method stub
+            
         }
     };
 
@@ -619,6 +633,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             if (mNoMoreCards) {
                 closeReviewer(RESULT_NO_MORE_CARDS, true);
             }
+        }
+
+
+        @Override
+        public void onCancelled() {
+            // TODO Auto-generated method stub
+            
         }
     };
 
@@ -714,6 +735,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             }
             // set the correct mark/unmark icon on action bar
             refreshActionBar();
+        }
+
+
+        @Override
+        public void onCancelled() {
+            // TODO Auto-generated method stub
+            
         }
     };
 
@@ -1112,6 +1140,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
             @Override
             public void onProgressUpdate(DeckTask.TaskData... values) {
+            }
+
+
+            @Override
+            public void onCancelled() {
+                // TODO Auto-generated method stub
+                
             }
         }, new DeckTask.TaskData(AnkiDroidApp.getCurrentAnkiDroidDirectory() + AnkiDroidApp.COLLECTION_PATH, 0, true));
     }

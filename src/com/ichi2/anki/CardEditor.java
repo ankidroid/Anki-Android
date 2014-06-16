@@ -272,6 +272,13 @@ public class CardEditor extends ActionBarActivity {
                 closeCardEditor(DeckPicker.RESULT_DB_ERROR);
             }
         }
+
+
+        @Override
+        public void onCancelled() {
+            // TODO Auto-generated method stub
+            
+        }
     };
 
 
@@ -599,6 +606,13 @@ public class CardEditor extends ActionBarActivity {
 
             @Override
             public void onProgressUpdate(DeckTask.TaskData... values) {
+            }
+
+
+            @Override
+            public void onCancelled() {
+                // TODO Auto-generated method stub
+                
             }
         }, new DeckTask.TaskData(AnkiDroidApp.getCurrentAnkiDroidDirectory() + AnkiDroidApp.COLLECTION_PATH));
     }

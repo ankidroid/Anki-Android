@@ -607,6 +607,13 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             }
             lockCheckAction = false;
         }
+
+
+        @Override
+        public void onCancelled() {
+            // TODO Auto-generated method stub
+            
+        }
     };
 
 }
