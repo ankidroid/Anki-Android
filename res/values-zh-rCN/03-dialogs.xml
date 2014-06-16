@@ -41,9 +41,9 @@
 <resources>
   <string name="welcome_message">通过使用 AnkiDroid, 你可以高效地学习大量词汇或其他任何材料。AnkiDroid在你即将忘记的时候，帮助你复习。\n\n 要了解如何使用，我们推荐你从教学牌组开始，这个牌组提供一些基本信息，并让你试一试。在创建教学牌组后，点击\"开始复习\"按钮。\n\n现在创建教学牌组吗？</string>
   <string name="check_db_title">检查数据库</string>
-  <string name="check_db_warning">This may take a long time</string>
-  <string name="check_db_acknowledge">Database checked</string>
-  <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d kB.</string>
+  <string name="check_db_warning">这可能需要很长时间</string>
+  <string name="check_db_acknowledge">已检查数据库</string>
+  <string name="check_db_acknowledge_shrunk">已检查并优化数据库。\n缩小了 %d kB</string>
   <string name="contextmenu_deckpicker_delete_deck">删除牌组</string>
   <string name="delete_deck_title">删除牌组</string>
   <string name="delete_deck_message">你确定要删除%s中的所有卡牌吗？</string>
@@ -70,7 +70,7 @@
   <string name="notification_stop">不再提示更新</string>
   <string name="reset_card_dialog_title">重置卡牌进度</string>
   <string name="reset_card_dialog_message">此操作将重置使用此卡牌记录的所有卡牌的学习进度(恢复新卡牌状态)。\n你确定要继续吗？</string>
-  <string name="reset_card_dialog_acknowledge">Cards reset</string>
+  <string name="reset_card_dialog_acknowledge">重置卡片</string>
   <string name="answering_error_title">数据库错误</string>
   <string name="answering_error_message">写入集合时出错。可能是数据库损坏，或者磁盘空间不足。\n\n如果频繁发生此错误，请检查数据库，修复集合或从备份中恢复。点击\"选项\"按钮以执行上述操作。\n\n当然，也可能只是AnkiDroid的bug，请报告这个错误，我们会尽力解决。</string>
   <string name="answering_error_report">报告错误</string>
@@ -99,7 +99,7 @@
   <string name="deck_upgrade_more_options_downgrade"><![CDATA[<br><br>如果您想升级回到AnkiDroid1那么请阅读 <a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Continuing_to_use_AnkiDroid_1.1.3">下面的指南。</a>.]]></string>
   <string name="deck_upgrade_create_new_collection">创造新的收藏集</string>
   <string name="deck_upgrade_create_new_collection_title">创造新的收藏集</string>
-  <string name="deck_upgrade_create_new_collection_button">New collection</string>
+  <string name="deck_upgrade_create_new_collection_button">新牌组集合</string>
   <string name="deck_upgrade_not_import_warning">您确定您要这么做？您的旧数据将不会被导入。</string>
   <string name="deck_upgrade_via_web"><![CDATA[<b> 当您在使用媒体文件或者您的收藏集较大时，这个升级方法并不被推荐！</b><br><br>您在Anki1中的牌组将会被压缩并且上传到AnkiWeb, 转化后的牌组随后将被下载。<br><br>请注意，一个稳定的网络连接是必要的，并且您有50MB的容量限制。<br><br>强烈鼓励桌面Anki用户使用基于电脑的升级方法。<br><br>您仍然要继续吗？]]></string>
   <string name="deck_upgrade_via_anki_desktop"><![CDATA[ 如果在Anki桌面软件中您有最新版本的AnkiDroid收藏集，您可以从那里升级，然后通过与AnkiWeb同步从而下载收藏集。 <br><br> 或者，您可以通过USB链接把您的AnkiDroid收藏集复制到电脑上，升级收藏集然后复制回AnkiDroid.]]></string>
@@ -122,22 +122,22 @@
   <string name="import_media_count">正在导入媒体文件。请稍等...</string>
   <string name="import_update_counts">牌组更新正在倒计时。\n请稍候...</string>
   <string name="import_add_progress">• 正在打开存档%1$s\n• 导入备忘录%2$d%%\n• 导入牌组%3$d%%\n• 清除%4$s</string>
-  <string name="sd_card_full_title">SD card full</string>
-  <string name="sd_card_almost_full_title">SD card almost full</string>
-  <string name="dialog_cancel">Cancel</string>
-  <string name="dialog_ok">OK</string>
-  <string name="dialog_continue">Continue</string>
-  <string name="dialog_neutral_later">Later</string>
-  <string name="dialog_positive_create">Create</string>
-  <string name="dialog_positive_delete">Delete</string>
-  <string name="dialog_positive_disable">Disable</string>
-  <string name="dialog_positive_overwrite">Overwrite</string>
-  <string name="dialog_positive_repair">Repair</string>
-  <string name="dialog_positive_replace">Replace</string>
-  <string name="dialog_positive_reset">Reset</string>
-  <string name="dialog_positive_save">Save</string>
-  <string name="add_button_content">Add&#8230;</string>
-  <string name="card_browser_button_content">Card browser</string>
-  <string name="lookup_button_content">Look up</string>
-  <string name="statistics_button_content">Statistics</string>
+  <string name="sd_card_full_title">SD 卡已满</string>
+  <string name="sd_card_almost_full_title">SD 卡几乎已满</string>
+  <string name="dialog_cancel">取消</string>
+  <string name="dialog_ok">确定</string>
+  <string name="dialog_continue">继续</string>
+  <string name="dialog_neutral_later">稍后</string>
+  <string name="dialog_positive_create">创建</string>
+  <string name="dialog_positive_delete">删除</string>
+  <string name="dialog_positive_disable">禁用</string>
+  <string name="dialog_positive_overwrite">覆盖</string>
+  <string name="dialog_positive_repair">修复</string>
+  <string name="dialog_positive_replace">替换</string>
+  <string name="dialog_positive_reset">重置</string>
+  <string name="dialog_positive_save">保存</string>
+  <string name="add_button_content">添加...</string>
+  <string name="card_browser_button_content">卡片浏览器</string>
+  <string name="lookup_button_content">查找</string>
+  <string name="statistics_button_content">统计</string>
 </resources>

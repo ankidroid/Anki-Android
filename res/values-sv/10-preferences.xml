@@ -139,8 +139,8 @@
   <string name="pref_backup_summ">Säkerhetskopiera automatiskt innan du öppnar en kortlek (dagligen)</string>
   <string name="pref_backup_max">Max antal säkerhetskopior</string>
   <string name="pref_backup_max_summ">XXX</string>
-  <string name="pref_disable_backup_title">Disable backups?</string>
-  <string name="pref_disable_backup_warning">This will delete all backup files</string>
+  <string name="pref_disable_backup_title">Inaktivera säkerhetskopiering?</string>
+  <string name="pref_disable_backup_warning">Detta kommer radera alla säkerhetskopior</string>
   <string name="pref_intent_add_instant">Lägg till omedelbart</string>
   <string name="pref_intent_add_instant_summ">Lägg till nya kort från ordböcker utan att öppna AnkiDroid. Du hittar dem senare under \"sparad data\" i kortskaparen</string>
   <string name="show_estimates">Visa tid på knappar</string>
@@ -157,8 +157,6 @@
   <string name="day_offset_summ">XXX timmar efter midnatt</string>
   <string name="input_workaround">Specialfunktion för att skriva</string>
   <string name="input_workaround_summ">Specialfunktion för att fokusera problem på HTML-input boxar. Orsakar problem på flertalet enheter</string>
-  <string name="pref_cardbrowser_skip_init_search">Snapp öppning av kortbläddrare</string>
-  <string name="pref_cardbrowser_skip_init_search_summ">Skippar första automatiska sökningen när kortbläddraren öppnar eller kortleken ändras</string>
   <string name="pref_keep_screen_on">Håll skärm på</string>
   <string name="pref_keep_screen_on_summ">Inaktivera skärmtimeout</string>
   <string name="pref_simple_interface">Enkelt gränssnitt</string>

@@ -53,7 +53,7 @@
     <item>100</item>
     <item>150</item>
     <item>200</item>
-    <item>Never notify</item>
+    <item>Non notificare mai</item>
   </string-array>
   <string-array name="cram_review_order_labels">
     <item>Mostra per prime carte modificate da più tempo</item>
@@ -151,7 +151,7 @@
     <item>Scadute</item>
   </string-array>
   <string-array name="override_font_labels">
-    <item>When no font specified on flashcards</item>
-    <item>Always</item>
+    <item>Quando nessun tipo di carattere specificato nelle carte</item>
+    <item>Sempre</item>
   </string-array>
 </resources>

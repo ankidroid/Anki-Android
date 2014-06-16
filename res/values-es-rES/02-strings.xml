@@ -44,15 +44,15 @@
   <string name="CardEditorNoteDeck">Mazo de la Nota: %s</string>
   <string name="CardEditorModel">Tipo de Nota: %s</string>
   <string name="CardEditorTags">Etiquetas: %1$s</string>
-  <string name="add_new_filter_tags">Add/filter tags</string>
+  <string name="add_new_filter_tags">Añadir/filtrar etiquetas</string>
   <string name="note_type">Tipo de Nota</string>
   <string name="card_type">Tipo de tarjeta</string>
-  <string name="filter_tags">Filter tags</string>
+  <string name="filter_tags">Filtrar etiquetas</string>
   <string name="sdcard_missing_message">La tarjeta SD no se encuentra disponible porque está siendo usada como almacenamiento via USB. Desconecta el USB para acceder a tus mazos.</string>
   <string name="show_whiteboard">Mostrar pizarra</string>
   <string name="hide_whiteboard">Ocultar Pizarra</string>
   <string name="clear_whiteboard">Limpiar Pizarra</string>
-  <string name="replay_audio">Replay audio</string>
+  <string name="replay_audio">Repetir audio</string>
   <string name="cram_edit_warning">No se permite editar tarjetas mientras empollas</string>
   <string name="suspend_leeches">Suspender Sanguijuelas</string>
   <string name="leech_suspend_notification">Tarjeta marcada como sanguijuela y suspendida</string>
@@ -65,11 +65,11 @@
     <item>Respuesta</item>
     <item>Carta</item>
     <item>Mazo</item>
-    <item>Note</item>
-    <item>Question</item>
-    <item>Tags</item>
-    <item>Lapses</item>
-    <item>Reviews</item>
+    <item>Nota</item>
+    <item>Pregunta</item>
+    <item>Etiquetas</item>
+    <item>Olvidos</item>
+    <item>Repasos</item>
   </string-array>
   <string name="about_title">Acerca de</string>
   <string name="cardeditor_title_add_note">Añadir Nota</string>
@@ -101,7 +101,7 @@
   <string name="card_editor_reset">Restablecer</string>
   <string name="card_editor_copy_card">Copiar tarjeta</string>
   <string name="card_editor_reset_card">Reiniciar cuenta de progreso</string>
-  <string name="card_editor_preview_card">Preview</string>
+  <string name="card_editor_preview_card">Vista previa</string>
   <string name="error_insufficient_memory">La operación no es posible debido a insuficiencia de memoria en tu dispositivo</string>
   <string name="tutorial_load">Creando mazo tutorial.\nPor favor, espera...</string>
   <string name="tutorial_loading_error">No se pudo crear el mazo tutorial</string>
@@ -118,8 +118,8 @@
   <string name="help_tutorial">Mazo tutorial</string>
   <string name="check_db">Comprobar base de datos</string>
   <string name="check_db_message">Comprobando base de datos.\nPor favor, espera...</string>
-  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
-  <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
+  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Tarjeta vacía. Ejecute \"Herramientas&gt;Tarjetas vacías...\" en el cliente de escritorio.</string>
+  <string name="unknown_type_field_warning">Escribir respuesta: campo %s desconocido</string>
   <string name="simple_interface_hint">Vaciar %s. Ten en cuenta que la interfaz simple no puede mostrar imágenes/sonidos etc.</string>
   <string name="delete_deck">Eliminando mazo...\nPor favor, espera.</string>
   <string-array name="dynOrderLabels">

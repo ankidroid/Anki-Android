@@ -157,8 +157,6 @@
   <string name="day_offset_summ">深夜XXX 時間経過</string>
   <string name="input_workaround">回避方法を入力</string>
   <string name="input_workaround_summ">HTMLの入力ボックスへ、フォーカスが移動した時の問題を回避します。いくつかのデバイスで問題が発生しています。</string>
-  <string name="pref_cardbrowser_skip_init_search">高速カード ブラウザーのオープン</string>
-  <string name="pref_cardbrowser_skip_init_search_summ">カードブラウザーが開いているか、単語帳が変更されたときには、最初の自動的探索をスキップします</string>
   <string name="pref_keep_screen_on">画面を保持</string>
   <string name="pref_keep_screen_on_summ">画面タイムアウトの無効</string>
   <string name="pref_simple_interface">簡易なインターフェイス</string>

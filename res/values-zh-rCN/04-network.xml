@@ -40,13 +40,13 @@
 
 -->
 <resources>
-  <string name="youre_offline">You are offline</string>
+  <string name="youre_offline">您处于脱机状态</string>
   <string name="currently_downloading">正在下载</string>
   <string name="starting_download">正在开始下载&#8230;</string>
   <string name="downloading">正在下载&#8230;</string>
   <string name="paused">已暂停</string>
   <string name="downloaded">已下载</string>
-  <string name="vague_error">Error</string>
+  <string name="vague_error">错误</string>
   <string name="cancelling">正在取消&#8230;</string>
   <string name="connection_error_return_message">出现网络错误。重试，或取消并返回上一个界面。</string>
   <string name="retry">重试</string>
@@ -65,8 +65,8 @@
   <string name="download_button_return">返回</string>
   <string name="connection_error_message">出现网络错误。</string>
   <string name="sync_log_db_error">发生数据库错误。</string>
-  <string name="not_logged_in_title">Log in to AnkiWeb</string>
-  <string name="login_create_account_message">You must log in to an AnkiWeb account. You can create one in the next step.</string>
+  <string name="not_logged_in_title">登录到 AnkiWeb</string>
+  <string name="login_create_account_message">您必须登录到 AnkiWeb 的帐户。您可以通过下一步创建一个新帐户。</string>
   <string name="username">电子邮件地址</string>
   <string name="username_repeat">重复电子邮件地址</string>
   <string name="password">密码</string>
@@ -80,7 +80,7 @@
   <string name="alert_logging_message">登入中，请稍等&#8230;</string>
   <string name="invalid_username_password">错误的电子邮件地址或密码。</string>
   <string name="login_generic_error">登陆失败。</string>
-  <string name="reset_password">Reset password</string>
+  <string name="reset_password">重置密码</string>
   <string name="download_finished">下载完成</string>
   <string name="personaldeckpicker_title">打开线上牌组</string>
   <string name="shareddeckpicker_title">选择你要下载的牌组</string>
@@ -107,7 +107,7 @@
   <string name="sync_log_old_version">同步协议已改变，请升级到最新的AnkiDroid。详见%s</string>
   <string name="sync_conflict_title">同步冲突</string>
   <string name="sync_no_changes_message">没有发现变化</string>
-  <string name="sync_database_acknowledge">Collection synchronized</string>
+  <string name="sync_database_acknowledge">牌组集合同步</string>
   <string name="sync_log_error_fix">发生同步错误%s.\n\n如果持续发生此错误，请进行一次完全同步，可能修复此问题。注意，完全同步会覆盖本地数据，或者AnkiWeb服务器上的数据。\n如果你想进行完全同步，请选择您想上传本地集合或从服务器下载。</string>
   <string name="sync_log_error_specific">同步错误，类型: %1$s，信息: %2$s</string>
   <string name="sync_corrupt_database">您的数据库已损坏。请修复后再尝试同步。\n\n查阅%s关于修复数据库的信息。</string>

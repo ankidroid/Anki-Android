@@ -40,13 +40,13 @@
 
 -->
 <resources>
-  <string name="youre_offline">You are offline</string>
+  <string name="youre_offline">Vous n\'êtes pas connecté à Internet</string>
   <string name="currently_downloading">En cours de téléchargement</string>
   <string name="starting_download">Démarrage de téléchargement...</string>
   <string name="downloading">Téléchargement en cours...</string>
   <string name="paused">Arrêté</string>
   <string name="downloaded">Téléchargé</string>
-  <string name="vague_error">Error</string>
+  <string name="vague_error">Erreur</string>
   <string name="cancelling">Annulation...</string>
   <string name="connection_error_return_message">Une erreur réseau s\'est produite. Réessayer ou annuler et revenir à l\'écran précédent.</string>
   <string name="retry">Réessayer</string>
@@ -64,8 +64,8 @@
   <string name="download_button_return">Retour</string>
   <string name="connection_error_message">Une erreur réseau s\'est produite.</string>
   <string name="sync_log_db_error">Une erreur s\'est produite dans la base de données.</string>
-  <string name="not_logged_in_title">Log in to AnkiWeb</string>
-  <string name="login_create_account_message">You must log in to an AnkiWeb account. You can create one in the next step.</string>
+  <string name="not_logged_in_title">Se connecter à AnkiWeb</string>
+  <string name="login_create_account_message">Vous devez vous connecter à un compte AnkiDroid. Vous pourrez en créer un à la prochaine étape.</string>
   <string name="username">Adresse électronique</string>
   <string name="username_repeat">Confirmation de l\'adresse électronique</string>
   <string name="password">Mot de passe</string>
@@ -106,7 +106,7 @@
   <string name="sync_log_old_version">Le protocole de synchrnonisation a changé, veuillez mettre à jour AnkiDroid. Voir http://code.google.com/p/ankidroid</string>
   <string name="sync_conflict_title">Conflit de synchronisation</string>
   <string name="sync_no_changes_message">Aucun changement trouvé.</string>
-  <string name="sync_database_acknowledge">Collection synchronized</string>
+  <string name="sync_database_acknowledge">Collection synchronisée</string>
   <string name="sync_log_error_fix">Une erreur de synchronisation a eu lieu%s.\n\nSi cela arrive régulièrement, vous pouvez effectuer une synchronisation complète, qui résoudra probablement le problème. Sachez que cela va remplacer soit votre collection locale soit celle sur AnkiWeb.\nSi vous voulez vraiment une synchronisation complète, choisissez si vous souhaitez envoyer votre collection locale ou télécharger celle serveur.</string>
   <string name="sync_log_error_specific">Erreur de synchronisation, type:%1$s, message:%2$s</string>
   <string name="sync_corrupt_database">Votre base de données est corrompue. Veuillez la réparer avant de tenter à nouveau de synchroniser.\n\nVoir %s pour plus d\'informations sur la réparation de votre base de données.</string>

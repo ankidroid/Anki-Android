@@ -88,8 +88,8 @@
     <item quantity="other">%1$d cards studied in %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
-    <item quantity="one">1 minute</item>
-    <item quantity="other">%1$d minutes</item>
+    <item quantity="one">1분</item>
+    <item quantity="other">%1$d분</item>
   </plurals>
   <string name="studyoptions_welcome_title">AnkiDroid에 오신 것을 환영합니다</string>
   <string name="studyoptions_no_external_storage_title">외부 저장장치를 사용할 수 없음</string>
@@ -101,7 +101,7 @@
   <string name="card_editor_reset">재설정</string>
   <string name="card_editor_copy_card">카드 복사</string>
   <string name="card_editor_reset_card">학습 진도 재설정</string>
-  <string name="card_editor_preview_card">Preview</string>
+  <string name="card_editor_preview_card">미리보기</string>
   <string name="error_insufficient_memory">장치 메모리가 부족하여 작업을 더 이상 진행할 수 없습니다</string>
   <string name="tutorial_load">도움말 묶음 생성 중. \n 잠시 기다려주세요...</string>
   <string name="tutorial_loading_error">도움말 카드 묶음을 만들 수 없습니다</string>

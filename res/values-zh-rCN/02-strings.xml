@@ -44,15 +44,15 @@
   <string name="CardEditorNoteDeck">卡牌记录所属牌组：%s</string>
   <string name="CardEditorModel">卡牌记录类型:%s</string>
   <string name="CardEditorTags">标签: %1$s</string>
-  <string name="add_new_filter_tags">Add/filter tags</string>
+  <string name="add_new_filter_tags">添加/过滤标签</string>
   <string name="note_type">卡牌记录类型</string>
   <string name="card_type">卡牌类型</string>
-  <string name="filter_tags">Filter tags</string>
+  <string name="filter_tags">过滤标签</string>
   <string name="sdcard_missing_message">SD卡暂时不可用，因为当前正作为USB存储设备。拔掉USB之后即可访问你的牌组。</string>
   <string name="show_whiteboard">显示计时器/白板</string>
   <string name="hide_whiteboard">隐藏白板</string>
   <string name="clear_whiteboard">清除白板</string>
-  <string name="replay_audio">Replay audio</string>
+  <string name="replay_audio">重播</string>
   <string name="cram_edit_warning">强记模式不允许编辑卡牌</string>
   <string name="suspend_leeches">不要复习记忆难点</string>
   <string name="leech_suspend_notification">卡牌被标记为记忆难点并暂停复习</string>
@@ -65,11 +65,11 @@
     <item>答案</item>
     <item>卡牌</item>
     <item>牌组</item>
-    <item>Note</item>
-    <item>Question</item>
-    <item>Tags</item>
-    <item>Lapses</item>
-    <item>Reviews</item>
+    <item>注释</item>
+    <item>问题</item>
+    <item>标签</item>
+    <item>失误</item>
+    <item>复习</item>
   </string-array>
   <string name="about_title">关于</string>
   <string name="cardeditor_title_add_note">增加条目注释</string>
@@ -101,7 +101,7 @@
   <string name="card_editor_reset">复原</string>
   <string name="card_editor_copy_card">复制卡牌</string>
   <string name="card_editor_reset_card">清空学习记录</string>
-  <string name="card_editor_preview_card">Preview</string>
+  <string name="card_editor_preview_card">预览</string>
   <string name="error_insufficient_memory">由于设备内存不足导致操作无法完成。</string>
   <string name="tutorial_load">创建教学牌组。\n请等待...</string>
   <string name="tutorial_loading_error">无法创建教程词库。</string>
@@ -118,8 +118,8 @@
   <string name="help_tutorial">教程词库</string>
   <string name="check_db">检查数据库</string>
   <string name="check_db_message">检查数据库。\n请等待...</string>
-  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
-  <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
+  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">空卡牌。在桌面客户端上运行”工具 &gt; 空卡...\"。</string>
+  <string name="unknown_type_field_warning">键入答案： 未知的字段 %s</string>
   <string name="simple_interface_hint">空%s.请注意，简单界面无法显示图片或声音等素材。</string>
   <string name="delete_deck">删除牌组...\n请等待.</string>
   <string-array name="dynOrderLabels">

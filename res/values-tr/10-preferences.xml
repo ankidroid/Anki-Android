@@ -157,8 +157,6 @@
   <string name="day_offset_summ">Geceyarısından XXX saat sonra</string>
   <string name="input_workaround">Giriş çözümü</string>
   <string name="input_workaround_summ">HTML giriş kutularında odaklama sorunları için geçici çözüm. Bazı cihazlarda sorunlara yol açar.</string>
-  <string name="pref_cardbrowser_skip_init_search">Hızlı kart tarayıcısı açılışı</string>
-  <string name="pref_cardbrowser_skip_init_search_summ">Kart tarayıcısı açılırken veya deste değiştirilirken baştaki otomatik aramayı geçer</string>
   <string name="pref_keep_screen_on">Ekranı açık tut</string>
   <string name="pref_keep_screen_on_summ">Ekran zaman aşımını devredışı bırak</string>
   <string name="pref_simple_interface">Basit arayüz</string>

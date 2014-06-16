@@ -82,8 +82,8 @@
   <string name="undo_action_review">opakovat</string>
   <string name="undo_action_edit">upravit poznámku</string>
   <string name="undo_action_bury">přeskočit poznámku</string>
-  <string name="undo_action_suspend_card">vyřadit kartu</string>
-  <string name="undo_action_suspend_note">vyřadit poznámku</string>
+  <string name="undo_action_suspend_card">pozastavit kartu</string>
+  <string name="undo_action_suspend_note">pozastavit poznámka</string>
   <string name="undo_action_delete">odstranit poznámku</string>
   <string name="undo_action_mark">označit poznámku</string>
   <string name="unbury">Zruš odložení</string>
@@ -104,9 +104,9 @@
   <string name="menu_preferences">Nastavení</string>
   <string name="menu_about">O aplikaci</string>
   <string name="menu_dismiss_note">Zamítnout poznámku...</string>
-  <string name="menu_bury_card">Odložit kartu</string>
+  <string name="menu_bury_card">Přeskočit kartu</string>
   <string name="menu_bury_note">Přeskočit poznámku</string>
-  <string name="menu_suspend_card">Vyřadit kartu</string>
+  <string name="menu_suspend_card">Pozastavit kartu</string>
   <string name="menu_suspend_note">Pozastavit poznámku</string>
   <string name="menu_delete_note">Odstranit poznámku</string>
   <string name="delete_note_message">Opravdu smazat poznámku a všechny její karty?\n%s</string>

@@ -53,7 +53,7 @@
     <item>100</item>
     <item>150</item>
     <item>200</item>
-    <item>Never notify</item>
+    <item>No notificar nunca</item>
   </string-array>
   <string-array name="cram_review_order_labels">
     <item>Últimas modificadas primero</item>
@@ -137,21 +137,21 @@
     <item>Limitar a etiquetas concretas</item>
   </string-array>
   <string-array name="add_to_cur_labels">
-    <item>Use current deck</item>
-    <item>Decide by note type</item>
+    <item>Usar mazo actual</item>
+    <item>Decidir por tipo de nota</item>
   </string-array>
   <string-array name="new_spread_labels">
-    <item>Mix new cards and reviews</item>
-    <item>New cards after reviews</item>
-    <item>New cards before reviews</item>
+    <item>Mezclar tarjetas nuevas y repasos</item>
+    <item>Tarjetas nuevas después de repasos</item>
+    <item>Tarjetas nuevas antes de repasos</item>
   </string-array>
   <string-array name="cards_for_tag_filtered_deck_labels">
-    <item>All cards</item>
-    <item>New</item>
-    <item>Due</item>
+    <item>Todas las tarjetas</item>
+    <item>Nuevas</item>
+    <item>Pendientes</item>
   </string-array>
   <string-array name="override_font_labels">
-    <item>When no font specified on flashcards</item>
-    <item>Always</item>
+    <item>Cuando no hay una fuente especificada en las tarjetas</item>
+    <item>Siempre</item>
   </string-array>
 </resources>

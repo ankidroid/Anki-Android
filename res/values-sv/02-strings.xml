@@ -118,8 +118,8 @@
   <string name="help_tutorial">Övningskortlek</string>
   <string name="check_db">Kontrollera databas</string>
   <string name="check_db_message">Kontrollerar databasen. \nVänligen vänta...</string>
-  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
-  <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
+  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Tomt kort. Kör \"Verktyg&gt;Tomma kort...\" i skrivbordsversionen av Anki.</string>
+  <string name="unknown_type_field_warning">Skriv svar: okänt fält %s</string>
   <string name="simple_interface_hint">Tom %s. Tänk på att det enkla gränssnittet inte kan visa bilder/ljud m.m.</string>
   <string name="delete_deck">Tar bort kortlek...\nVänligen vänta.</string>
   <string-array name="dynOrderLabels">

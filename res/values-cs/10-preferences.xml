@@ -157,8 +157,6 @@
   <string name="day_offset_summ">XXX hodin po půlnoci</string>
   <string name="input_workaround">Input workaround</string>
   <string name="input_workaround_summ">Workaround for focusing problems on HTML input boxes. Causes problems on several devices.</string>
-  <string name="pref_cardbrowser_skip_init_search">Fast card browser open</string>
-  <string name="pref_cardbrowser_skip_init_search_summ">Přeskočit počáteční automatické vyhledávání, když prohlížeč otevře kartu nebo je balíček změněn</string>
   <string name="pref_keep_screen_on">Keep screen on</string>
   <string name="pref_keep_screen_on_summ">Disable screen timeout</string>
   <string name="pref_simple_interface">Jednoduché rozhraní</string>

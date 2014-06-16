@@ -39,7 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="welcome_message">Avec AnkiDroid, vous pouvez apprendre efficacement de grandes quantités de vocabulaire comme beaucoup d’autres types de contenus. AnkiDroid vous les rappelle juste avant que vous les oubliez.\n\nPour vous faire une idée, nous vous conseillons de commencer avec un paquet tutoriel, qui vous donnera quelques indications. Une fois ouvert, il faut simplement « commencer à réviser ».\n\nCréer ce paquet tutoriel ?</string>
+  <string name="welcome_message">Avec AnkiDroid, vous pouvez apprendre efficacement de grandes quantités de vocabulaire ou beaucoup d’autres types de contenus. AnkiDroid vous les rappelle juste avant que vous ne les oubliez.\n\nPour vous faire une idée, nous vous conseillons de commencer avec un paquet tutoriel, qui vous donnera quelques indications. Une fois ouvert, il faut simplement « commencer à réviser ».\n\nCréer ce paquet tutoriel ?</string>
   <string name="check_db_title">Vérifier la base de données</string>
   <string name="check_db_warning">This may take a long time</string>
   <string name="check_db_acknowledge">Database checked</string>

@@ -113,7 +113,7 @@
   <string name="sync_too_busy">Server überlastet. Versuchen Sie es später erneut.</string>
   <string name="sync_remote_db_error">Die heruntergeladene Datenbank war fehlerhaft. Bitte versuchen Sie es erneut.</string>
   <string name="sync_overwrite_error">Ihre aktuelle Sammlung konnte nicht durch die heruntergeladenen Datei überschrieben werden.</string>
-  <string name="sync_write_access_error">Die heruntergeladene Datei konnte nicht auf der SD-Karte gespeichert werden. Entweder ist diese schreibgeschützt eingebunden oder weist nicht genug Platz auf.</string>
+  <string name="sync_write_access_error">Die heruntergeladene Datei konnte nicht auf der SD-Karte gespeichert werden. Entweder ist diese schreibgeschützt eingehängt oder weist nicht genug Platz auf.</string>
   <string name="sync_deletions_message">Synchronisiere Löschungen&#8230;</string>
   <string name="sync_small_objects_message">Synchronisiere kleine Objekte&#8230;</string>
   <string name="sync_finish_message">Beende Synchronisierung&#8230;</string>

@@ -45,7 +45,7 @@
   <string name="pref_cat_flashcard">Display</string>
   <string name="pref_cat_whiteboard">화이트보드</string>
   <string name="pref_cat_automatic_display">Automatic display answer</string>
-  <string name="pref_cat_fonts_formatting">Fonts and style</string>
+  <string name="pref_cat_fonts_formatting">글꼴 및 모양</string>
   <string name="pref_cat_fonts">Font selection</string>
   <string name="pref_cat_fonts_size">Size</string>
   <string name="pref_cat_gestures">Touches and swipes</string>
@@ -80,9 +80,9 @@
   <string name="card_browser_font_size_summ">XXX %</string>
   <string name="col_path">컬렉션 저장 경로</string>
   <string name="col_path_summ">XXX</string>
-  <string name="fullscreen_review">Fullscreen mode</string>
+  <string name="fullscreen_review">전체 화면 모드</string>
   <string name="fullscreen_review_summ">Use all available screen space</string>
-  <string name="gestures">Enable gestures</string>
+  <string name="gestures">제스처 사용</string>
   <string name="gestures_summ">Use swipes and touches to perform actions such as answering and editing cards.</string>
   <string name="gestures_swipe_up">위쪽 밀기</string>
   <string name="gestures_swipe_down">아래로 밀기</string>
@@ -157,8 +157,6 @@
   <string name="day_offset_summ">XXX hours past midnight</string>
   <string name="input_workaround">Input workaround</string>
   <string name="input_workaround_summ">Workaround for focusing problems on HTML input boxes. Causes problems on several devices.</string>
-  <string name="pref_cardbrowser_skip_init_search">Fast card browser open</string>
-  <string name="pref_cardbrowser_skip_init_search_summ">Skips initial automatic search when the card browser opens or the deck is changed</string>
   <string name="pref_keep_screen_on">Keep screen on</string>
   <string name="pref_keep_screen_on_summ">Disable screen timeout</string>
   <string name="pref_simple_interface">Simple interface</string>

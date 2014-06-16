@@ -43,14 +43,14 @@
   <string name="app_name_anki">Anki</string>
   <string name="app_name_droid">Droid</string>
   <string name="studyoptions_deck_name">Nombre del mazo</string>
-  <string name="studyoptions_due_today">Programadas para hoy:</string>
+  <string name="studyoptions_due_today">Programadas hoy:</string>
   <string name="studyoptions_new_total">Tarjetas nuevas totales:</string>
   <string name="studyoptions_total_cards">Tarjetas totales:</string>
   <string name="studyoptions_eta">Tiempo estimado (min):</string>
-  <string name="studyoptions_start">Estudiar Ahora</string>
+  <string name="studyoptions_start">Estudiar</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">1 de %2$d programada(s) (%3$s)</item>
-    <item quantity="other">%1$d de %2$d programada(s) (%3$s)</item>
+    <item quantity="one">1 de %2$d programada (%3$s)</item>
+    <item quantity="other">%1$d de %2$d programadas (%3$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">1 min.</item>
@@ -64,7 +64,7 @@
     <item quantity="one">Queda 1 minuto</item>
     <item quantity="other">Quedan %d minutos</item>
   </plurals>
-  <string name="type_answer_hint">Type answer</string>
+  <string name="type_answer_hint">Escribir respuesta</string>
   <string name="show_answer">Mostrar respuesta</string>
   <string name="ease1_successive">Otra vez</string>
   <string name="ease2_successive">Difícil</string>
@@ -77,9 +77,9 @@
   <string name="card_unsuspended">Suspensión de la tarjeta anulada</string>
   <string name="card_suspended">Tarjeta resuspendida</string>
   <string name="menu_rotate">Rotar</string>
-  <string name="menu_import">Import file</string>
+  <string name="menu_import">Importar archivo</string>
   <string name="undo">Deshacer</string>
-  <string name="undo_action_review">repasar</string>
+  <string name="undo_action_review">repaso</string>
   <string name="undo_action_edit">editar nota</string>
   <string name="undo_action_bury">ocultar nota</string>
   <string name="undo_action_suspend_card">suspender tarjeta</string>
@@ -87,24 +87,24 @@
   <string name="undo_action_delete">eliminar nota</string>
   <string name="undo_action_mark">marcar nota</string>
   <string name="unbury">Desenterrar</string>
-  <string name="finish_operation">Finalizando la operación anterior (probablemente creación de copia de seguridad).\nPor favor, espera...</string>
+  <string name="finish_operation">Terminando la operación anterior (seguramente la creación de una copia de seguridad).\nPor favor, espera...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Descargar archivos multimedia que falten</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Restablecer las Asignaciones de Idioma</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Restablecer idioma</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optimizar la base de datos</string>
   <string name="contextmenu_deckpicker_rename_deck">Renombrar mazo</string>
-  <string name="contextmenu_deckpicker_collapse_deck">Ocultar Sub-mazos</string>
-  <string name="contextmenu_deckpicker_inflate_deck">Mostrar Sub-mazos</string>
+  <string name="contextmenu_deckpicker_collapse_deck">Ocultar submazos</string>
+  <string name="contextmenu_deckpicker_inflate_deck">Mostrar submazos</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Establecer diccionario personalizado</string>
-  <string name="menu_add">Add</string>
-  <string name="menu_add_note">Add note</string>
+  <string name="menu_add">Añadir</string>
+  <string name="menu_add_note">Añadir nota</string>
   <string name="menu_download_deck">Descargar mazo</string>
   <string name="menu_download_shared_deck">Mazo compartido</string>
   <string name="menu_my_account">Cuenta de sincronización</string>
   <string name="menu_preferences">Preferencias</string>
   <string name="menu_about">Acerca de</string>
   <string name="menu_dismiss_note">Descartar Nota...</string>
-  <string name="menu_bury_card">Enterrar tarjeta</string>
+  <string name="menu_bury_card">Ocultar tarjeta</string>
   <string name="menu_bury_note">Ocultar Nota</string>
   <string name="menu_suspend_card">Suspender Tarjeta</string>
   <string name="menu_suspend_note">Suspender Nota</string>
@@ -115,9 +115,9 @@
   <string name="menu_search">Búsqueda en %1$s</string>
   <string name="menu_mark_card">Marcar Tarjeta</string>
   <string name="menu_unmark_card">Desmarcar Tarjeta</string>
-  <string name="new_deck">Create deck</string>
+  <string name="new_deck">Crear mazo</string>
   <string name="create">Crear</string>
-  <string name="new_dynamic_deck">Create filtered deck</string>
+  <string name="new_dynamic_deck">Crear mazo filtrado</string>
   <string name="studyoptions_feedback">Sugerencias</string>
   <string name="studyoptions_load_tutorial_deck">Crear tutorial</string>
   <string name="night_mode">Modo Nocturno</string>
@@ -179,5 +179,5 @@
   <string name="confirm">Confirmar</string>
   <string name="internet">Internet</string>
   <string name="pc">PC</string>
-  <string name="title_activity_graphical_activity">Statistical chart</string>
+  <string name="title_activity_graphical_activity">Estadísticas</string>
 </resources>

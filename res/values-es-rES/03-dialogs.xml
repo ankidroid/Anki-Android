@@ -41,9 +41,9 @@
 <resources>
   <string name="welcome_message">Con AnkiDroid, puedes aprender eficazmente grandes cantidades de vocabulario o cualquier otro material. AnkiDroid muestra las cosas que has de aprender justo antes de que las olvides.\n\nPara tener una primera impresión de cómo funciona todo, te recomendamos empezar con un mazo tutorial, que te proporcionará información inicial y la oportunidad de probar un poco. Simplemente haz clic en \"Empezar a Repasar\" después de haberlo abierto.\n\n¿Quieres crear el mazo tutorial ahora?</string>
   <string name="check_db_title">Comprobar base de datos</string>
-  <string name="check_db_warning">This may take a long time</string>
-  <string name="check_db_acknowledge">Database checked</string>
-  <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d kB.</string>
+  <string name="check_db_warning">Esto podría tomar mucho tiempo</string>
+  <string name="check_db_acknowledge">Base de datos comprobada</string>
+  <string name="check_db_acknowledge_shrunk">Base de datos comprobada y optimizada.\nReducida en %d kB.</string>
   <string name="contextmenu_deckpicker_delete_deck">Eliminar mazo</string>
   <string name="delete_deck_title">Eliminar mazo</string>
   <string name="delete_deck_message">¿Estás seguro que deseas eliminar todas las tarjetas en %s?</string>
@@ -70,7 +70,7 @@
   <string name="notification_stop">No volver a notificarme acerca de esta actualización</string>
   <string name="reset_card_dialog_title">Resetear el progreso de la tarjeta</string>
   <string name="reset_card_dialog_message">Esto resetea el progreso de aprendizaje para todas las tarjetas de esta nota (se verán como nuevas tarjetas).\n¿Deseas continuar?</string>
-  <string name="reset_card_dialog_acknowledge">Cards reset</string>
+  <string name="reset_card_dialog_acknowledge">Tarjetas restablecidas</string>
   <string name="answering_error_title">Error en la base de datos</string>
   <string name="answering_error_message">Se ha producido un error al escribir en la colección. Esto podría estar relacionado con una base de datos dañada o con un espacio en disco insuficiente.\n\nSi esto ocurre con más frecuencia, intenta verificar la base de datos, reparar la colección o restaurar desde una copia de seguridad. Para ello, haz clic en \"Opciones\".\n\nDe todos modos, podría ser un error de AnkiDroid; por favor, informa del error para que podamos comprobarlo.</string>
   <string name="answering_error_report">Reportar error</string>
@@ -99,7 +99,7 @@
   <string name="deck_upgrade_more_options_downgrade"><![CDATA[<br><br>Si deseas desactualizar y volver a AnkiDroid 1, por favor, lee <a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Continuing_to_use_AnkiDroid_1.1.3">estas instrucciones</a>.]]></string>
   <string name="deck_upgrade_create_new_collection">Crear nueva colección</string>
   <string name="deck_upgrade_create_new_collection_title">Crear Nueva Colección</string>
-  <string name="deck_upgrade_create_new_collection_button">New collection</string>
+  <string name="deck_upgrade_create_new_collection_button">Nueva colección</string>
   <string name="deck_upgrade_not_import_warning">¿Estás seguro de que deseas hacer esto? Tu antigua información no será importada.</string>
   <string name="deck_upgrade_via_web"><![CDATA[<b>¡Este método de actualización no se recomienda si usabas archivos multimedia, o una gran colección!</b><br><br>Tus mazos de anki1 serán comprimidos y subidos a AnkiWeb, y luego la colección convertida será descargada.<br><br>Por favor, ten en cuenta que se requiere una conexión a Internet estable, y que hay un límite de 50MB de tamaño de archivos.<br><br>Se recomienda encarecidamente a los usuarios de Anki versión escritorio usar el método de actualización basado en el PC.<br><br>¿Deseas continuar con el proceso?]]></string>
   <string name="deck_upgrade_via_anki_desktop"><![CDATA[Si dispones de una versión actualizada de tu colección de AnkiDroid en el software de escritorio Anki, puedes actualizar desde ahí y luego descargar la colección actualizada sincronizando con AnkiWeb.<br><br>Como alternativa, puedes copiar tu colección de AnkiDroid a tu PC usando una conexión USB, luego actualizar la colección, y copiarla de vuelta a AnkiDroid.]]></string>
@@ -122,22 +122,22 @@
   <string name="import_media_count">Importando archivos multimedia %1$d%%\nPor favor, espera&#8230;</string>
   <string name="import_update_counts">Actualizando cuentas de mazos.\nPor favor, espera&#8230;</string>
   <string name="import_add_progress">• Descomprimir archivo %1$s\n• Importación de notas %2$d%%\n• Importación de tarjetas %3$d%%\n• Limpieza %4$s</string>
-  <string name="sd_card_full_title">SD card full</string>
-  <string name="sd_card_almost_full_title">SD card almost full</string>
-  <string name="dialog_cancel">Cancel</string>
-  <string name="dialog_ok">OK</string>
-  <string name="dialog_continue">Continue</string>
-  <string name="dialog_neutral_later">Later</string>
-  <string name="dialog_positive_create">Create</string>
-  <string name="dialog_positive_delete">Delete</string>
-  <string name="dialog_positive_disable">Disable</string>
-  <string name="dialog_positive_overwrite">Overwrite</string>
-  <string name="dialog_positive_repair">Repair</string>
-  <string name="dialog_positive_replace">Replace</string>
-  <string name="dialog_positive_reset">Reset</string>
-  <string name="dialog_positive_save">Save</string>
-  <string name="add_button_content">Add&#8230;</string>
-  <string name="card_browser_button_content">Card browser</string>
-  <string name="lookup_button_content">Look up</string>
-  <string name="statistics_button_content">Statistics</string>
+  <string name="sd_card_full_title">Tarjeta SD llena</string>
+  <string name="sd_card_almost_full_title">Tarjeta SD casi llena</string>
+  <string name="dialog_cancel">Cancelar</string>
+  <string name="dialog_ok">Aceptar</string>
+  <string name="dialog_continue">Continuar</string>
+  <string name="dialog_neutral_later">Más tarde</string>
+  <string name="dialog_positive_create">Crear</string>
+  <string name="dialog_positive_delete">Eliminar</string>
+  <string name="dialog_positive_disable">Deshabilitar</string>
+  <string name="dialog_positive_overwrite">Sobreescribir</string>
+  <string name="dialog_positive_repair">Reparar</string>
+  <string name="dialog_positive_replace">Reemplazar</string>
+  <string name="dialog_positive_reset">Restablecer</string>
+  <string name="dialog_positive_save">Guardar</string>
+  <string name="add_button_content">Añadir...</string>
+  <string name="card_browser_button_content">Explorador de tarjetas</string>
+  <string name="lookup_button_content">Buscar</string>
+  <string name="statistics_button_content">Estadísticas</string>
 </resources>

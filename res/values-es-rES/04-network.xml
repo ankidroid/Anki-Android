@@ -40,7 +40,7 @@
 
 -->
 <resources>
-  <string name="youre_offline">You are offline</string>
+  <string name="youre_offline">No estás conectado</string>
   <string name="currently_downloading">Actualmente descargando</string>
   <string name="starting_download">Comenzando descarga...</string>
   <string name="downloading">Descargando...</string>
@@ -55,7 +55,7 @@
   <string name="download_cancel">Cancelar Descarga</string>
   <string name="shared_decks">Mazos compartidos</string>
   <string name="loading_shared_decks">Cargando mazos compartidos disponibles...</string>
-  <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Terms and conditions</a></string>
+  <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Términos y condiciones</a></string>
   <string name="cancel_download">Cancelar descarga</string>
   <string name="resume_download">Reanudar la descarga</string>
   <string name="pause_download">Pausar la descarga</string>
@@ -64,8 +64,8 @@
   <string name="download_button_return">Volver</string>
   <string name="connection_error_message">Ha ocurrido un error de red.</string>
   <string name="sync_log_db_error">Ocurrió un error en la base de datos.</string>
-  <string name="not_logged_in_title">Log in to AnkiWeb</string>
-  <string name="login_create_account_message">You must log in to an AnkiWeb account. You can create one in the next step.</string>
+  <string name="not_logged_in_title">Iniciar sesión en AnkiWeb</string>
+  <string name="login_create_account_message">Debes iniciar sesión en una cuenta de AnkiWeb. Puedes crear una en el paso siguiente.</string>
   <string name="username">Dirección de correo electrónico</string>
   <string name="username_repeat">Repita la dirección de correo electrónico</string>
   <string name="password">Contraseña</string>
@@ -73,13 +73,13 @@
   <string name="log_in">Iniciar sesión</string>
   <string name="sign_up_description">¿No tienes una cuenta de AnkiWeb? ¡Es gratis!</string>
   <string name="sign_up">Regístrate</string>
-  <string name="sign_up_terms">By touching <i>Sign up</i>, you confirm that you have read and agree to our <a href="https://ankiweb.net/account/terms">terms of use</a>.</string>
+  <string name="sign_up_terms">Al seleccionar <i>Regístrate</i>, confirmas que has leído y aceptas nuestros <a href="https://ankiweb.net/account/terms">términos de uso</a>.</string>
   <string name="logged_as">Conectado como</string>
   <string name="log_out">Cerrar sesión</string>
   <string name="alert_logging_message">Iniciando sesión, por favor espera...</string>
   <string name="invalid_username_password">Dirección de correo electrónico o contraseña no válida.</string>
   <string name="login_generic_error">No se pudo iniciar sesión.</string>
-  <string name="reset_password">Reset password</string>
+  <string name="reset_password">Restablecer contraseña</string>
   <string name="download_finished">Descarga finalizada</string>
   <string name="personaldeckpicker_title">Abrir Mazo Online</string>
   <string name="shareddeckpicker_title">Selecciona el mazo que deseas descargar</string>
@@ -106,7 +106,7 @@
   <string name="sync_log_old_version">El protocolo de sincronización ha cambiado, por favor, actualice a la última versión de AnkiDroid. Vea %s</string>
   <string name="sync_conflict_title">Conflicto al sincronizar</string>
   <string name="sync_no_changes_message">No se encontraron cambios.</string>
-  <string name="sync_database_acknowledge">Collection synchronized</string>
+  <string name="sync_database_acknowledge">Colección sincronizada</string>
   <string name="sync_log_error_fix">Ocurrió un error de sincronización%s.\n\nSi esto sucede repetidamente, puedes hacer una sincronización completa que seguramente arreglará el problema. Ten en cuenta que esto sobrescribirá, o bien tu colección local en el dispositivo móvil, o bien la alojada en el servidor AnkiWeb.\nSi deseas hacer una sincronización completa, por favor, elige si quieres cargar tu colección local, o descargar desde el servidor.</string>
   <string name="sync_log_error_specific">Error de sincronización, tipo: %1$s, mensaje: %2$s</string>
   <string name="sync_corrupt_database">La base de datos está dañada. Por favor, arréglala antes de intentar volver a sincronizar.\n\nLee %s para obtener información acerca de cómo reparar la base de datos.</string>

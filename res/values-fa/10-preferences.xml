@@ -157,8 +157,6 @@
   <string name="day_offset_summ">XXX ساعت پس از نیمه شب</string>
   <string name="input_workaround">راه‌حل ورودی</string>
   <string name="input_workaround_summ">راه‌حلی برای برطرف کردن مشکلات در ورودی‌های HTML. باعث ایجاد مشکلاتی در برخی دستگاه‌ها می‌شود</string>
-  <string name="pref_cardbrowser_skip_init_search">گشودن سریع مرورگر کارت</string>
-  <string name="pref_cardbrowser_skip_init_search_summ">جستجوی خودکار اولیه را نادیده می‌گیرد هنگامیکه مرورگر کارت گشوده شده یا دسته کارت‌ها تغییر کرده است</string>
   <string name="pref_keep_screen_on">روشن نگه‌داشتن صفحه</string>
   <string name="pref_keep_screen_on_summ">غیرفعال کردن زمان خاموش شدن صفحه نمایش</string>
   <string name="pref_simple_interface">رابط کاربری ساده</string>

@@ -64,7 +64,7 @@
     <item quantity="one">1 perc van hátra</item>
     <item quantity="other">%d perc van hátra</item>
   </plurals>
-  <string name="type_answer_hint">Type answer</string>
+  <string name="type_answer_hint">Válasz begépelése</string>
   <string name="show_answer">Válasz mutatása</string>
   <string name="ease1_successive">Újra</string>
   <string name="ease2_successive">Nehéz</string>
@@ -77,7 +77,7 @@
   <string name="card_unsuspended">Kártya visszavonás nem sikerült</string>
   <string name="card_suspended">Kártya visszaállítva</string>
   <string name="menu_rotate">Forgatás</string>
-  <string name="menu_import">Import file</string>
+  <string name="menu_import">File importálás</string>
   <string name="undo">Visszavonás</string>
   <string name="undo_action_review">ismétlés</string>
   <string name="undo_action_edit">bejegyzés szerkesztése</string>
@@ -96,7 +96,7 @@
   <string name="contextmenu_deckpicker_collapse_deck">Subdecks elrejtése</string>
   <string name="contextmenu_deckpicker_inflate_deck">Subdecks mutatása</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Saját szótár beállítása</string>
-  <string name="menu_add">Add</string>
+  <string name="menu_add">Hozzáadás</string>
   <string name="menu_add_note">Add note</string>
   <string name="menu_download_deck">Pakli letöltése</string>
   <string name="menu_download_shared_deck">Megosztott pakli</string>
@@ -115,9 +115,9 @@
   <string name="menu_search">Keresés itt: %1$s</string>
   <string name="menu_mark_card">Kártya megjelölése</string>
   <string name="menu_unmark_card">Kártyajelölés törlése</string>
-  <string name="new_deck">Create deck</string>
+  <string name="new_deck">Pakli létrehozása</string>
   <string name="create">Létrehozás</string>
-  <string name="new_dynamic_deck">Create filtered deck</string>
+  <string name="new_dynamic_deck">Pakli szűrt elemekkel létrehozása</string>
   <string name="studyoptions_feedback">Visszajelzés</string>
   <string name="studyoptions_load_tutorial_deck">Bemutató létrehozása</string>
   <string name="night_mode">Éjszakai mód</string>
@@ -179,5 +179,5 @@
   <string name="confirm">Jóváhagyás</string>
   <string name="internet">Internet</string>
   <string name="pc">Számítógép</string>
-  <string name="title_activity_graphical_activity">Statistical chart</string>
+  <string name="title_activity_graphical_activity">Statisztikai diagramm</string>
 </resources>

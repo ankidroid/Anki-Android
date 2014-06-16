@@ -64,7 +64,7 @@
     <item quantity="one">1分钟剩余</item>
     <item quantity="other">%d分钟剩余</item>
   </plurals>
-  <string name="type_answer_hint">Type answer</string>
+  <string name="type_answer_hint">输入答案</string>
   <string name="show_answer">显示答案</string>
   <string name="ease1_successive">重来</string>
   <string name="ease2_successive">困难</string>
@@ -77,7 +77,7 @@
   <string name="card_unsuspended">撤消卡牌暂停</string>
   <string name="card_suspended">卡牌再次暂停</string>
   <string name="menu_rotate">旋转</string>
-  <string name="menu_import">Import file</string>
+  <string name="menu_import">导入文件</string>
   <string name="undo">撤销</string>
   <string name="undo_action_review">复习</string>
   <string name="undo_action_edit">编辑卡牌记录</string>
@@ -96,8 +96,8 @@
   <string name="contextmenu_deckpicker_collapse_deck">隐藏子牌组</string>
   <string name="contextmenu_deckpicker_inflate_deck">显示子牌组</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">设置自定义词典</string>
-  <string name="menu_add">Add</string>
-  <string name="menu_add_note">Add note</string>
+  <string name="menu_add">添加</string>
+  <string name="menu_add_note">添加注释</string>
   <string name="menu_download_deck">下载牌组</string>
   <string name="menu_download_shared_deck">共享牌组</string>
   <string name="menu_my_account">同步帐户</string>
@@ -115,9 +115,9 @@
   <string name="menu_search">在%1$s中查找</string>
   <string name="menu_mark_card">标记卡牌</string>
   <string name="menu_unmark_card">取消已标记卡牌</string>
-  <string name="new_deck">Create deck</string>
+  <string name="new_deck">创建牌组</string>
   <string name="create">创建</string>
-  <string name="new_dynamic_deck">Create filtered deck</string>
+  <string name="new_dynamic_deck">创建筛选过的牌组</string>
   <string name="studyoptions_feedback">反馈</string>
   <string name="studyoptions_load_tutorial_deck">创建教程牌组</string>
   <string name="night_mode">夜间模式</string>
@@ -179,5 +179,5 @@
   <string name="confirm">确认</string>
   <string name="internet">互联网</string>
   <string name="pc">PC个人电脑</string>
-  <string name="title_activity_graphical_activity">Statistical chart</string>
+  <string name="title_activity_graphical_activity">统计图表</string>
 </resources>

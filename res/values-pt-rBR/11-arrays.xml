@@ -53,7 +53,7 @@
     <item>100</item>
     <item>150</item>
     <item>200</item>
-    <item>Never notify</item>
+    <item>Nunca notificar</item>
   </string-array>
   <string-array name="cram_review_order_labels">
     <item>Mostrar com modificações mais antigas primeiro</item>
@@ -151,7 +151,7 @@
     <item>Programadas</item>
   </string-array>
   <string-array name="override_font_labels">
-    <item>When no font specified on flashcards</item>
-    <item>Always</item>
+    <item>Quando nenhuma fonte especificada nos cartões</item>
+    <item>Sempre</item>
   </string-array>
 </resources>
