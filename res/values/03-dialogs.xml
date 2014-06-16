@@ -132,5 +132,8 @@
     <string name="card_browser_button_content">Card browser</string>
     <string name="lookup_button_content">Look up</string>
     <string name="statistics_button_content">Statistics</string>
-
+    
+    
+    <string name="dialog_collection_path_title">Folder does not exit</string>
+    <string name="dialog_collection_path_text">The folder you specified does not exist, would you like to create it?</string>
 </resources>

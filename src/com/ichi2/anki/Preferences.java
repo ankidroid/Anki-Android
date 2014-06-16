@@ -19,6 +19,7 @@
 
 package com.ichi2.anki;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -32,6 +33,7 @@ import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
+import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
@@ -177,6 +179,34 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                     return false;
                 }
             });         
+        
+        // Check that input is valid when changing the collection path
+        collectionPathPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+            public boolean onPreferenceChange(Preference preference, final Object newValue) {
+                File collectionDirectory = new File((String) newValue);
+                if (!collectionDirectory.exists()) {
+                    Dialog pathCheckDialog = new AlertDialog.Builder(Preferences.this)
+                    .setTitle(R.string.dialog_collection_path_title)
+                    .setMessage(R.string.dialog_collection_path_text)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which)
+                        {
+                            AnkiDroidApp.getSharedPrefs(getBaseContext()).edit().putString("deckPath", (String) newValue).commit();
+                            updateEditTextPreference("deckPath");
+                            
+                        }
+                    })
+                    .create();
+                    pathCheckDialog.show();
+                    return false;
+                } else {
+                    return true;
+                }
+                
+            }
+        });
         
         // About dialog
         Preference dialogPreference = (Preference) getPreferenceScreen().findPreference("about_dialog_preference");
@@ -607,5 +637,4 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             lockCheckAction = false;
         }
     };
-
 }
