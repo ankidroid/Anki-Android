@@ -247,6 +247,13 @@ public class DeckPicker extends NavigationDrawerActivity {
                     return;
                 
                 case CONTEXT_MENU_DECK_OPTIONS:
+                    // set currently selected deck as clicked item
+                    mCurrentDid = Long.parseLong(mDeckList.get(mContextMenuPosition).get("did"));
+                    AnkiDroidApp.getCol().getDecks().select(mCurrentDid);
+                    if (mFragmented) {
+                        setStudyContentView(mCurrentDid, null);
+                    }
+                    // open deck options
                     if (AnkiDroidApp.getCol().getDecks().isDyn(mCurrentDid)){
                         // open cram options if filtered deck
                         Intent i = new Intent(DeckPicker.this, CramDeckOptions.class);
