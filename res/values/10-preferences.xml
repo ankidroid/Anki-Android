@@ -178,8 +178,7 @@
     <!-- Deck configurations -->
     <string name="deck_conf_deck_name">Deck name</string>
     <string name="deck_conf_deck_description">Deck description</string>
-    <string name="deck_conf_pref_cat_options">Options</string>
-    <string name="deck_conf_group">Group</string>
+    <string name="deck_conf_group">Options group</string>
     <plurals name="deck_conf_group_summ">
         <item quantity="one">%1$s\n1 deck uses this group</item>
         <item quantity="other">%1$s\n%2$d decks use this group</item>
