@@ -139,10 +139,8 @@ public class DeckPicker extends NavigationDrawerActivity {
      */
     private static final int CONTEXT_MENU_COLLAPSE_DECK = 0;
     private static final int CONTEXT_MENU_RENAME_DECK = 1;
-    private static final int CONTEXT_MENU_DELETE_DECK = 2;
-    private static final int CONTEXT_MENU_DECK_SUMMARY = 3;
-    private static final int CONTEXT_MENU_CUSTOM_DICTIONARY = 4;
-    private static final int CONTEXT_MENU_RESET_LANGUAGE = 5;
+    private static final int CONTEXT_MENU_DECK_OPTIONS = 2;
+    private static final int CONTEXT_MENU_DELETE_DECK = 3;
 
     public static final String EXTRA_START = "start";
     public static final String EXTRA_DECK_ID = "deckId";
@@ -247,37 +245,20 @@ public class DeckPicker extends NavigationDrawerActivity {
                 case CONTEXT_MENU_DELETE_DECK:
                     showDialog(DIALOG_DELETE_DECK);
                     return;
-                case CONTEXT_MENU_RESET_LANGUAGE:
-                    // resetDeckLanguages(data.get("filepath"));
+                
+                case CONTEXT_MENU_DECK_OPTIONS:
+                    if (AnkiDroidApp.getCol().getDecks().isDyn(mCurrentDid)){
+                        // open cram options if filtered deck
+                        Intent i = new Intent(DeckPicker.this, CramDeckOptions.class);
+                        i.putExtra("cramInitialConfig", (String) null);
+                        startActivityWithAnimation(i, ActivityTransitionAnimation.FADE);
+                    } else {
+                        // otherwise open regular options
+                        Intent i = new Intent(DeckPicker.this, DeckOptions.class);
+                        startActivityWithAnimation(i, ActivityTransitionAnimation.FADE);
+                    }
                     return;
-                case CONTEXT_MENU_CUSTOM_DICTIONARY:
-                    // String[] dicts = res.getStringArray(R.array.dictionary_labels);
-                    // String[] vals = res.getStringArray(R.array.dictionary_values);
-                    // int currentSet = MetaDB.getLookupDictionary(DeckPicker.this, data.get("filepath"));
-                    //
-                    // mCurrentDeckPath = data.get("filepath");
-                    // String[] labels = new String[dicts.length + 1];
-                    // mDictValues = new int[dicts.length + 1];
-                    // int currentChoice = 0;
-                    // labels[0] = res.getString(R.string.deckpicker_select_dictionary_default);
-                    // mDictValues[0] = -1;
-                    // for (int i = 1; i < labels.length; i++) {
-                    // labels[i] = dicts[i-1];
-                    // mDictValues[i] = Integer.parseInt(vals[i-1]);
-                    // if (currentSet == mDictValues[i]) {
-                    // currentChoice = i;
-                    // }
-                    // }
-                    // StyledDialog.Builder builder = new StyledDialog.Builder(DeckPicker.this);
-                    // builder.setTitle(res.getString(R.string.deckpicker_select_dictionary_title));
-                    // builder.setSingleChoiceItems(labels, currentChoice, new DialogInterface.OnClickListener() {
-                    // public void onClick(DialogInterface dialog, int item) {
-                    // MetaDB.storeLookupDictionary(DeckPicker.this, mCurrentDeckPath, mDictValues[item]);
-                    // }
-                    // });
-                    // StyledDialog alert = builder.create();
-                    // alert.show();
-                    return;
+                    
                 case CONTEXT_MENU_RENAME_DECK:
                     StyledDialog.Builder builder2 = new StyledDialog.Builder(DeckPicker.this);
                     builder2.setTitle(res.getString(R.string.contextmenu_deckpicker_rename_deck));
@@ -318,11 +299,7 @@ public class DeckPicker extends NavigationDrawerActivity {
                     builder2.setNegativeButton(res.getString(R.string.dialog_cancel), null);
                     builder2.create().show();
                     return;
-                case CONTEXT_MENU_DECK_SUMMARY:
-                    // mStatisticType = 0;
-                    // DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler, new
-                    // DeckTask.TaskData(DeckPicker.this, new String[]{data.get("filepath")}, mStatisticType, 0));
-                    return;
+
             }
         }
     };
@@ -1640,15 +1617,10 @@ public class DeckPicker extends NavigationDrawerActivity {
                 break;
 
             case DIALOG_CONTEXT_MENU:
-                String[] entries = new String[3];
-                // entries[CONTEXT_MENU_DECK_SUMMARY] =
-                // "XXXsum";//res.getStringArray(R.array.statistics_type_labels)[0];
-                // entries[CONTEXT_MENU_CUSTOM_DICTIONARY] =
-                // res.getString(R.string.contextmenu_deckpicker_set_custom_dictionary);
-                // entries[CONTEXT_MENU_RESET_LANGUAGE] =
-                // res.getString(R.string.contextmenu_deckpicker_reset_language_assignments);
+                String[] entries = new String[4];
                 entries[CONTEXT_MENU_COLLAPSE_DECK] = res.getString(R.string.contextmenu_deckpicker_collapse_deck);
                 entries[CONTEXT_MENU_RENAME_DECK] = res.getString(R.string.contextmenu_deckpicker_rename_deck);
+                entries[CONTEXT_MENU_DECK_OPTIONS] = res.getString(R.string.study_options);
                 entries[CONTEXT_MENU_DELETE_DECK] = res.getString(R.string.contextmenu_deckpicker_delete_deck);
                 builder.setTitle("Context Menu");
                 builder.setIcon(R.drawable.ic_menu_manage);
