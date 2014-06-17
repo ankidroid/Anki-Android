@@ -1851,6 +1851,8 @@ public class DeckPicker extends NavigationDrawerActivity {
                 break;
 
             case DIALOG_RESTORE_BACKUP:
+                // TODO: Check the integrity of the backups before attempting to restore (e.g. size should be > 0)
+                // can show R.string.show backup_restore_error if invalid and abort
                 File[] files = BackupManager.getBackups(new File(AnkiDroidApp.getCollectionPath()));
                 mBackups = new File[files.length];
                 for (int i = 0; i < files.length; i++) {
