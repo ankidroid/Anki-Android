@@ -118,6 +118,7 @@
     <string name="help_online">Online help</string>
     <string name="help_faq">FAQ</string>
     <string name="help_tutorial">Create tutorial deck</string>
+    <string name="tutorial_deck_name">Tutorial deck</string>
     <string name="check_db">Check database</string>
     <string name="check_db_message">Checking database…</string>
     <string
