@@ -479,6 +479,16 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
             this.addPreferencesFromResource(R.xml.deck_options);
             this.buildLists();
             this.updateSummaries();
+            // Set the activity title to include the name of the deck
+            String title = getResources().getString(R.string.deckpreferences_title);
+            if (title.contains("XXX")) {
+                try {
+                    title = title.replace("XXX", mDeck.getString("name"));
+                } catch (JSONException e) {
+                    title = title.replace("XXX", "???");
+                }
+            }
+            this.setTitle(title);
         }
     }
 

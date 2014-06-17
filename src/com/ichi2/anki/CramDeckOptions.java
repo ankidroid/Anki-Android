@@ -394,6 +394,17 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
+        
+        // Set the activity title to include the name of the deck
+        String title = getResources().getString(R.string.deckpreferences_title);
+        if (title.contains("XXX")) {
+            try {
+                title = title.replace("XXX", mDeck.getString("name"));
+            } catch (JSONException e) {
+                title = title.replace("XXX", "???");
+            }
+        }
+        this.setTitle(title);
     }
 
 
