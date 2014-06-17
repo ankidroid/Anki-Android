@@ -40,20 +40,25 @@
 -->
 <resources>
   <string name="pref_cat_general">AnkiDroid</string>
+  <string name="pref_cat_general_summ">General settings</string>
   <string name="pref_cat_reviewing">Reviewing</string>
+  <string name="pref_cat_reviewing_summ">Non-deck-specific reviewer settings</string>
   <string name="pref_cat_reviewer_behaviour">Behavior</string>
   <string name="pref_cat_flashcard">Display</string>
   <string name="pref_cat_whiteboard">Whiteboard</string>
   <string name="pref_cat_automatic_display">Automatic display answer</string>
-  <string name="pref_cat_fonts_formatting">Fonts and style</string>
-  <string name="pref_cat_fonts">Font selection</string>
-  <string name="pref_cat_fonts_size">Size</string>
-  <string name="pref_cat_gestures">Touches and swipes</string>
+  <string name="pref_cat_fonts">Fonts</string>
+  <string name="pref_cat_fonts_summ">Change default font and size</string>
+  <string name="pref_cat_gestures">Gestures</string>
+  <string name="pref_cat_gestures_summ">Use taps and swipes instead of buttons</string>
   <string name="pref_cat_actions">Actions</string>
   <string name="pref_cat_advanced">Advanced</string>
+  <string name="pref_cat_advanced_summ">Optimization and experimental features</string>
   <string name="pref_cat_performance">Performanţă</string>
   <string name="pref_cat_workarounds">Workarounds</string>
   <string name="pref_cat_plugins">Plugins</string>
+  <string name="about_title">About AnkiDroid</string>
+  <string name="about_version">Version: </string>
   <string name="enable_whiteboard">Enable whiteboard</string>
   <string name="show_whiteboard_summ">Vă permite să scrieţi pe ecran</string>
   <string name="whiteboard_stroke_width">Stroke width</string>
@@ -61,7 +66,7 @@
   <string name="whiteboard_black">Black strokes</string>
   <string name="whiteboard_black_summ">Uses less memory, unless in night mode</string>
   <string name="write_answers_disable">Disable typing in answer</string>
-  <string name="write_answers_disable_summ">Prevents the keyboard from appearing on flashcards containing typed fields</string>
+  <string name="write_answers_disable_summ">Prevents keyboard from appearing on cards containing \'type in the answer\' fields</string>
   <string name="text_selection_click">Long press workaround</string>
   <string name="text_selection_click_summ">Enable this if you are not able to select text with a long press</string>
   <string name="dictionary">Lookup dictionary</string>
@@ -74,16 +79,16 @@
   <string name="display_font_size_summ">XXX %</string>
   <string name="image_size">Reviewer image scaling</string>
   <string name="image_size_summ">XXX %</string>
-  <string name="button_size">Reviewer button size</string>
+  <string name="button_size">Answer button size</string>
   <string name="button_size_summ">XXX %</string>
   <string name="card_browser_font_size">Card browser font scaling</string>
   <string name="card_browser_font_size_summ">XXX %</string>
   <string name="col_path">Collection path</string>
   <string name="col_path_summ">XXX</string>
   <string name="fullscreen_review">Fullscreen mode</string>
-  <string name="fullscreen_review_summ">Use all available screen space</string>
+  <string name="fullscreen_review_summ">Hide the system status bar</string>
   <string name="gestures">Enable gestures</string>
-  <string name="gestures_summ">Use swipes and touches to perform actions such as answering and editing cards.</string>
+  <string name="gestures_summ">Assign gestures to actions such as answering and editing cards.</string>
   <string name="gestures_swipe_up">Swipe up</string>
   <string name="gestures_swipe_down">Swipe down</string>
   <string name="gestures_swipe_left">Swipe left</string>
@@ -144,7 +149,7 @@
   <string name="pref_intent_add_instant">Adaugă instant</string>
   <string name="pref_intent_add_instant_summ">Add new cards from dictionaries without opening AnkiDroid. You find them later under \'saved data\' in card adder.</string>
   <string name="show_estimates">Show button time</string>
-  <string name="show_estimates_summ">Show next review time on the answer buttons</string>
+  <string name="show_estimates_summ">Show next review time on answer buttons</string>
   <string name="show_progress">Show remaining</string>
   <string name="show_progress_summ">Show remaining card count</string>
   <string name="use_current">Deck for new cards</string>
@@ -183,8 +188,7 @@
   <string name="studyoptions_max_fail_card">Max fail cards</string>
   <string name="deck_conf_deck_name">Nume Pachet</string>
   <string name="deck_conf_deck_description">Descriere pachet</string>
-  <string name="deck_conf_pref_cat_options">Opţiuni</string>
-  <string name="deck_conf_group">Group</string>
+  <string name="deck_conf_group">Options group</string>
   <plurals name="deck_conf_group_summ">
     <item quantity="one">%1$s\n1 deck uses this group</item>
     <item quantity="other">%1$s\n%2$d decks use this group</item>

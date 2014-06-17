@@ -180,5 +180,5 @@ Veuillez patienter...</string>
   <string name="confirm">Confirmer</string>
   <string name="internet">Internet</string>
   <string name="pc">PC</string>
-  <string name="title_activity_graphical_activity">Statistical chart</string>
+  <string name="title_activity_graphical_activity">Graphique statistique</string>
 </resources>
