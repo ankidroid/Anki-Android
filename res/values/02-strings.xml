@@ -69,7 +69,6 @@
     </string-array>
 
     <!-- Card editor -->
-    <string name="about_title">About AnkiDroid</string>
     <string name="cardeditor_title_add_note">Add note</string>
     <string name="cardeditor_title_edit_card">Edit note</string>
     <!-- <string name="factadder_title">Card adder</string> -->
@@ -156,7 +155,7 @@
     <string name="import_importing">Importing cards…</string>
     <string name="import_hint">Place the apkg file in directory %s and press \"OK\" to import cards</string>
     <string name="upgrade_import_no_file_found">No importable %1$s file found</string>
-    <string name="study_options">Options</string>
+    <string name="study_options">Deck options</string>
     <string name="custom_study">Custom study</string>
     <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
     <string name="exit_wizard">Exit Wizard</string>

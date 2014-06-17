@@ -84,14 +84,13 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private PreferenceManager mPrefMan;
     private CheckBoxPreference keepScreenOnCheckBoxPreference;
     private CheckBoxPreference showAnswerCheckBoxPreference;
-    private CheckBoxPreference swipeCheckboxPreference;
     private CheckBoxPreference useBackupPreference;
-    private CheckBoxPreference safeDisplayPreference;
     private CheckBoxPreference convertFenText;
     private CheckBoxPreference inputWorkaround;
     private CheckBoxPreference longclickWorkaround;
     private CheckBoxPreference fixHebrewText;
     private CheckBoxPreference fixArabicText;
+    private EditTextPreference collectionPathPreference;
     private Preference syncAccount;
     private static String[] sShowValueInSummList = { LANGUAGE, "dictionary", "reportErrorMode",
             "minimumCardsDueForNotification", "gestureSwipeUp", "gestureSwipeDown", "gestureSwipeLeft",
@@ -135,11 +134,10 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
         addPreferencesFromResource(R.xml.preferences);
 
-        swipeCheckboxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("gestures");
+        collectionPathPreference = (EditTextPreference) getPreferenceScreen().findPreference("deckPath");
         keepScreenOnCheckBoxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("keepScreenOn");
         showAnswerCheckBoxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("timeoutAnswer");
         useBackupPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("useBackup");
-        safeDisplayPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("safeDisplay");
         convertFenText = (CheckBoxPreference) getPreferenceScreen().findPreference("convertFenText");
         syncAccount = (Preference) getPreferenceScreen().findPreference("syncAccount");
         showEstimates = (CheckBoxPreference) getPreferenceScreen().findPreference("showEstimates");
@@ -187,7 +185,8 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                     startActivity(new Intent(Preferences.this, Info.class));
                     return true;
                 }
-            });        
+            });
+        dialogPreference.setSummary(getResources().getString(R.string.about_version) + " " + AnkiDroidApp.getPkgVersionName());
 
         if (mCol != null) {
             // For collection preferences, we need to fetch the correct values from the collection
