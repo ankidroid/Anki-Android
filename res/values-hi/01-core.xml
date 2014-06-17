@@ -108,6 +108,7 @@
   <string name="menu_bury_note">नोट दफनाना</string>
   <string name="menu_suspend_card">कार्ड को निलंबित</string>
   <string name="menu_suspend_note">नोट को निलंबित</string>
+  <string name="menu_save_note">Save note</string>
   <string name="menu_delete_note">नोट हटाएँ</string>
   <string name="delete_note_message">वास्तव में इस नोट और उसके सभी cards?\n%s को हटाना</string>
   <string name="menu_edit_card">कार्ड संपादित करें</string>

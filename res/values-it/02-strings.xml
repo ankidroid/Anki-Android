@@ -39,6 +39,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
+  <string name="drawer_open">Open Drawer</string>
+  <string name="drawer_close">Close Drawer</string>
   <string name="CardEditorLaterMessage">Informazione salvata per più tardi</string>
   <string name="CardEditorCardDeck">Mazzo carte: %s</string>
   <string name="CardEditorNoteDeck">Mazzo nota: %s</string>
@@ -71,7 +73,6 @@
     <item>Errori</item>
     <item>Ripetizioni</item>
   </string-array>
-  <string name="about_title">Informazioni</string>
   <string name="cardeditor_title_add_note">Aggiungi nota</string>
   <string name="cardeditor_title_edit_card">Modifica nota</string>
   <string name="factadder_saving_error">Errore salvataggio nota</string>
@@ -115,7 +116,7 @@
   <string name="help_title">Aiuto</string>
   <string name="help_online">Aiuto online</string>
   <string name="help_faq">FAQ</string>
-  <string name="help_tutorial">Mazzo d\'esercizio</string>
+  <string name="help_tutorial">Create tutorial deck</string>
   <string name="check_db">Controlla database</string>
   <string name="check_db_message">Controllo database.\nAttendi...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Carta vuota. Esegui \"Strumenti&gt;Carte vuote...\" con la versione desktop.</string>
@@ -148,7 +149,7 @@
   <string name="import_importing">Importazione carte.\nAttendi...</string>
   <string name="import_hint">Per importare carte, inserisci il file apkg nella cartella %s e premi ok</string>
   <string name="upgrade_import_no_file_found">Nessun file importabile %1$s trovato</string>
-  <string name="study_options">Opzioni</string>
+  <string name="study_options">Deck options</string>
   <string name="custom_study">Studio personalizzato</string>
   <string name="dyn_deck_desc">Questo è un mazzo speciale per studiare al di fuori della pianificazione normale. Le carte ritorneranno automaticamente nel mazzo originale dopo che le hai ripetute. L\'eliminazione di questo mazzo dall\'elenco dei mazzi riporterà tutte le carte rimanenti nel loro mazzo originale.</string>
   <string name="exit_wizard">Esci dalla procedura guidata</string>

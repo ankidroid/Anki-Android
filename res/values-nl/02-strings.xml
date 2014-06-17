@@ -39,6 +39,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
+  <string name="drawer_open">Open Drawer</string>
+  <string name="drawer_close">Close Drawer</string>
   <string name="CardEditorLaterMessage">Informatie opgeslagen voor later</string>
   <string name="CardEditorCardDeck">Kaart leerset: %s</string>
   <string name="CardEditorNoteDeck">Kaart leerset: %s</string>
@@ -71,7 +73,6 @@
     <item>Lapses</item>
     <item>Reviews</item>
   </string-array>
-  <string name="about_title">Over</string>
   <string name="cardeditor_title_add_note">Kaart toevoegen</string>
   <string name="cardeditor_title_edit_card">Kaart bewerken</string>
   <string name="factadder_saving_error">Fout bij opslaan kaart</string>
@@ -115,7 +116,7 @@
   <string name="help_title">Help</string>
   <string name="help_online">Online help</string>
   <string name="help_faq">Veelgestelde vragen</string>
-  <string name="help_tutorial">Voorbeeld set</string>
+  <string name="help_tutorial">Create tutorial deck</string>
   <string name="check_db">Controleer database</string>
   <string name="check_db_message">De databank wordt gecontroleerd.\nEven geduld alstublieft...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
@@ -148,7 +149,7 @@
   <string name="import_importing">Kaarten importeren.\n Even geduld alstublieft...</string>
   <string name="import_hint">Om kaarten te importeren, plaats het apkg-bestand in map %s en klik ok</string>
   <string name="upgrade_import_no_file_found">Geen %1$s bestand gevonden om te importeren</string>
-  <string name="study_options">Opties</string>
+  <string name="study_options">Deck options</string>
   <string name="custom_study">Aangepast studeren</string>
   <string name="dyn_deck_desc">Dit is een speciale set bedoeld om buiten het normale schema te studeren. Kaarten keren onmiddellijk terug naar hun oorspronkelijke set nadat u hen herhaald heeft. Als u deze set verwijdert, keren alle overgebleven kaarten onmiddellijk terug naar hun oorspronkelijke set.</string>
   <string name="exit_wizard">Wizard afsluiten</string>

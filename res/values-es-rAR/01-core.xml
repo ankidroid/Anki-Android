@@ -64,7 +64,7 @@
     <item quantity="one">Resta 1 minuto</item>
     <item quantity="other">Restan %d minutos</item>
   </plurals>
-  <string name="type_answer_hint">Type answer</string>
+  <string name="type_answer_hint">Escribir respuesta</string>
   <string name="show_answer">Mostrar Respuesta</string>
   <string name="ease1_successive">Otra vez</string>
   <string name="ease2_successive">Difícil</string>
@@ -77,7 +77,7 @@
   <string name="card_unsuspended">Suspensión de tarjeta deshecha</string>
   <string name="card_suspended">Tarjeta resuspendida</string>
   <string name="menu_rotate">Girar</string>
-  <string name="menu_import">Import file</string>
+  <string name="menu_import">Importar archivo</string>
   <string name="undo">Deshacer</string>
   <string name="undo_action_review">Revisión</string>
   <string name="undo_action_edit">Editar nota</string>
@@ -96,8 +96,8 @@
   <string name="contextmenu_deckpicker_collapse_deck">Ocultar submazos</string>
   <string name="contextmenu_deckpicker_inflate_deck">Mostrar submazos</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Definir diccionario predeterminado</string>
-  <string name="menu_add">Add</string>
-  <string name="menu_add_note">Add note</string>
+  <string name="menu_add">Añadir</string>
+  <string name="menu_add_note">Añadir nota</string>
   <string name="menu_download_deck">Descargar mazo</string>
   <string name="menu_download_shared_deck">Mazo compartido</string>
   <string name="menu_my_account">Sincronizar cuenta</string>
@@ -108,6 +108,7 @@
   <string name="menu_bury_note">Enterrar nota</string>
   <string name="menu_suspend_card">Suspender tarjeta</string>
   <string name="menu_suspend_note">Suspender nota</string>
+  <string name="menu_save_note">Save note</string>
   <string name="menu_delete_note">Eliminar nota</string>
   <string name="delete_note_message">¿Eliminar esta nota y todas sus tarjetas?\n%s</string>
   <string name="menu_edit_card">Editar tarjeta</string>
@@ -115,9 +116,9 @@
   <string name="menu_search">Revisión en %1$s</string>
   <string name="menu_mark_card">Marcar tarjeta</string>
   <string name="menu_unmark_card">Desmarcar tarjeta</string>
-  <string name="new_deck">Create deck</string>
+  <string name="new_deck">Crear mazo</string>
   <string name="create">Crear</string>
-  <string name="new_dynamic_deck">Create filtered deck</string>
+  <string name="new_dynamic_deck">Crear mazo filtrado</string>
   <string name="studyoptions_feedback">Comentarios</string>
   <string name="studyoptions_load_tutorial_deck">Crear tutorial</string>
   <string name="night_mode">Modo nocturno</string>
@@ -179,5 +180,5 @@
   <string name="confirm">Confirmar</string>
   <string name="internet">Internet</string>
   <string name="pc">PC</string>
-  <string name="title_activity_graphical_activity">Statistical chart</string>
+  <string name="title_activity_graphical_activity">Estadísticas</string>
 </resources>

@@ -124,6 +124,8 @@
   <string name="import_add_progress">Rozbalování archivu %1$s\n• Import poznámek %2$d%%\n• Import karet %3$d%%\n• Čištění %4$s</string>
   <string name="sd_card_full_title">SD karta je plná</string>
   <string name="sd_card_almost_full_title">SD karta téměř plná</string>
+  <string name="restore_backup_title">Restore backup?</string>
+  <string name="restore_backup">Your collection will be replaced with an older copy. Any unsaved progress will be lost.</string>
   <string name="dialog_cancel">Zrušit</string>
   <string name="dialog_ok">Ok</string>
   <string name="dialog_continue">Pokračovat</string>
@@ -132,12 +134,17 @@
   <string name="dialog_positive_delete">Odstranit</string>
   <string name="dialog_positive_disable">Zakázat</string>
   <string name="dialog_positive_overwrite">Přepsat</string>
+  <string name="dialog_positive_remove">Remove</string>
   <string name="dialog_positive_repair">Opravit</string>
   <string name="dialog_positive_replace">Nahradit</string>
   <string name="dialog_positive_reset">Obnovit</string>
+  <string name="dialog_positive_restore">Restore</string>
   <string name="dialog_positive_save">Uložit</string>
+  <string name="dialog_positive_set">Set</string>
   <string name="add_button_content">Přidat&#8230;</string>
   <string name="card_browser_button_content">Prohlížeč karet</string>
   <string name="lookup_button_content">Vyhledat</string>
   <string name="statistics_button_content">Statistiky</string>
+  <string name="dialog_collection_path_title">Folder does not exit</string>
+  <string name="dialog_collection_path_text">The folder you specified does not exist, would you like to create it?</string>
 </resources>

@@ -124,6 +124,8 @@
   <string name="import_add_progress">• Descompactando arquivo %1$s\n• Importação de notas %2$d%%\n• Importação de cartões %3$d%%\n• Limpeza %4$s</string>
   <string name="sd_card_full_title">Cartão SD cheio</string>
   <string name="sd_card_almost_full_title">Cartão SD quase cheio</string>
+  <string name="restore_backup_title">Restore backup?</string>
+  <string name="restore_backup">Your collection will be replaced with an older copy. Any unsaved progress will be lost.</string>
   <string name="dialog_cancel">Cancelar</string>
   <string name="dialog_ok">OK</string>
   <string name="dialog_continue">Continuar</string>
@@ -132,12 +134,17 @@
   <string name="dialog_positive_delete">Remover</string>
   <string name="dialog_positive_disable">Desativar</string>
   <string name="dialog_positive_overwrite">Sobrescrever</string>
+  <string name="dialog_positive_remove">Remove</string>
   <string name="dialog_positive_repair">Reparar</string>
   <string name="dialog_positive_replace">Substituir</string>
   <string name="dialog_positive_reset">Redefinir</string>
+  <string name="dialog_positive_restore">Restore</string>
   <string name="dialog_positive_save">Salvar</string>
+  <string name="dialog_positive_set">Set</string>
   <string name="add_button_content">Adicionar&#8230;</string>
   <string name="card_browser_button_content">Navegador de cartões</string>
   <string name="lookup_button_content">Buscar</string>
   <string name="statistics_button_content">Estatísticas</string>
+  <string name="dialog_collection_path_title">Folder does not exit</string>
+  <string name="dialog_collection_path_text">The folder you specified does not exist, would you like to create it?</string>
 </resources>

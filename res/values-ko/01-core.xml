@@ -108,6 +108,7 @@
   <string name="menu_bury_note">노트 나중에 보기</string>
   <string name="menu_suspend_card">카드 비활성화하기</string>
   <string name="menu_suspend_note">노트 미뤄두기</string>
+  <string name="menu_save_note">Save note</string>
   <string name="menu_delete_note">노트 삭제하기</string>
   <string name="delete_note_message">다음 노트와 그 노트의 모든 카드를 정말로 삭제하시겠습니까?\n%s</string>
   <string name="menu_edit_card">카드 편집하기</string>

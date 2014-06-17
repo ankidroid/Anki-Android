@@ -39,6 +39,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
+  <string name="drawer_open">Open Drawer</string>
+  <string name="drawer_close">Close Drawer</string>
   <string name="CardEditorLaterMessage">Сохранённая информация</string>
   <string name="CardEditorCardDeck">Карта колоды: %s</string>
   <string name="CardEditorNoteDeck">Заметка колоды: %s</string>
@@ -71,7 +73,6 @@
     <item>Lapses</item>
     <item>Reviews</item>
   </string-array>
-  <string name="about_title">О программе</string>
   <string name="cardeditor_title_add_note">Добавить заметку</string>
   <string name="cardeditor_title_edit_card">Изменить заметку</string>
   <string name="factadder_saving_error">Ошибка при сохранении заметки</string>
@@ -115,7 +116,7 @@
   <string name="help_title">Справка</string>
   <string name="help_online">Онлайн помощь</string>
   <string name="help_faq">Вопросы и ответы</string>
-  <string name="help_tutorial">Учебная колода</string>
+  <string name="help_tutorial">Create tutorial deck</string>
   <string name="check_db">Проверка базы данных</string>
   <string name="check_db_message">Проверка базы данных. \nПожалуйста подождите...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
@@ -148,7 +149,7 @@
   <string name="import_importing">Импортирование карт.\nПожалуйста, подождите...</string>
   <string name="import_hint">Чтобы импортировать карты, поместите файл apkg в каталог %s и нажмите ОК</string>
   <string name="upgrade_import_no_file_found">Найден не импортируемый файл %1$s</string>
-  <string name="study_options">Параметры</string>
+  <string name="study_options">Deck options</string>
   <string name="custom_study">Дополнительное обучение</string>
   <string name="dyn_deck_desc">Это специальная колода для изучения вне нормального расписания. Карты будут автоматически возвращены в их изначальную колоду после их просмотра. Удаление этой колоды из списка колод возвратит все оставшиеся карты в их изначальную колоду.</string>
   <string name="exit_wizard">Выход из мастера</string>

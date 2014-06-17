@@ -39,20 +39,22 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
+  <string name="drawer_open">Open Drawer</string>
+  <string name="drawer_close">Close Drawer</string>
   <string name="CardEditorLaterMessage">Información guardada para más tarde</string>
   <string name="CardEditorCardDeck">Mazo de tarjetas: %s</string>
   <string name="CardEditorNoteDeck">Mazo de notas: %s</string>
   <string name="CardEditorModel">Tipo de nota: %s</string>
   <string name="CardEditorTags">Etiquetas: %1$s</string>
-  <string name="add_new_filter_tags">Add/filter tags</string>
+  <string name="add_new_filter_tags">Añadir/filtrar etiquetas</string>
   <string name="note_type">Tipo de nota</string>
   <string name="card_type">Tipo de tarjeta</string>
-  <string name="filter_tags">Filter tags</string>
+  <string name="filter_tags">Filtrar etiquetas</string>
   <string name="sdcard_missing_message">Tarjeta SD no disponible debido a que está siendo utilizada como un dispositivo USB. Desconecte el USB para acceder a sus mazos.</string>
   <string name="show_whiteboard">Mostrar pizarra</string>
   <string name="hide_whiteboard">Ocultar pizarra</string>
   <string name="clear_whiteboard">Despejar pizarra</string>
-  <string name="replay_audio">Replay audio</string>
+  <string name="replay_audio">Repetir audio</string>
   <string name="cram_edit_warning">La edición de tarjetas no está permitida durante empollado</string>
   <string name="suspend_leeches">Suspender sanguijuelas</string>
   <string name="leech_suspend_notification">Tarjeta marcada como sanguijuela y suspendida</string>
@@ -65,13 +67,12 @@
     <item>Respuesta</item>
     <item>Carta</item>
     <item>Mazo</item>
-    <item>Note</item>
-    <item>Question</item>
-    <item>Tags</item>
-    <item>Lapses</item>
-    <item>Reviews</item>
+    <item>Nota</item>
+    <item>Pregunta</item>
+    <item>Etiquetas</item>
+    <item>Olvidos</item>
+    <item>Repasos</item>
   </string-array>
-  <string name="about_title">Acerca de</string>
   <string name="cardeditor_title_add_note">Añadir nota</string>
   <string name="cardeditor_title_edit_card">Editar nota</string>
   <string name="factadder_saving_error">Error al guardar nota</string>
@@ -101,7 +102,7 @@
   <string name="card_editor_reset">Resetear</string>
   <string name="card_editor_copy_card">Copiar tarjeta</string>
   <string name="card_editor_reset_card">Resetear progreso</string>
-  <string name="card_editor_preview_card">Preview</string>
+  <string name="card_editor_preview_card">Vista previa</string>
   <string name="error_insufficient_memory">La operación no puede llevarse a cabo debido a memoria insuficiente en su dispositivo</string>
   <string name="tutorial_load">Creando un mazo tutorial.\nPor favor aguarde...</string>
   <string name="tutorial_loading_error">El mazo tutorial no pudo ser creado</string>
@@ -115,11 +116,11 @@
   <string name="help_title">Ayuda</string>
   <string name="help_online">Ayuda en línea</string>
   <string name="help_faq">Preguntas frecuentes</string>
-  <string name="help_tutorial">Mazo tutorial</string>
+  <string name="help_tutorial">Create tutorial deck</string>
   <string name="check_db">Comprobar base de datos</string>
   <string name="check_db_message">Comprobando base de datos.\nPor favor aguarde...</string>
-  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
-  <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
+  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Tarjeta vacía. Ejecute \"Herramientas&gt;Tarjetas vacías...\" en el cliente de escritorio.</string>
+  <string name="unknown_type_field_warning">Escribir respuesta: campo %s desconocido</string>
   <string name="simple_interface_hint">Vacío %s. Tenga en cuenta que la interfaz simple no puede mostrar imágenes/sonidos etc.</string>
   <string name="delete_deck">Eliminando mazo...\nPor favor aguarde.</string>
   <string-array name="dynOrderLabels">
@@ -148,7 +149,7 @@
   <string name="import_importing">Importando tarjetas.\nAguarde, por favor...</string>
   <string name="import_hint">Para importar tarjetas coloque el archivo apkg en el directorio %s y presione OK</string>
   <string name="upgrade_import_no_file_found">No se ha hallado archivos %1$s para importar</string>
-  <string name="study_options">Opciones</string>
+  <string name="study_options">Deck options</string>
   <string name="custom_study">Estudio personalizado</string>
   <string name="dyn_deck_desc">Este es un mazo especial para estudiar por fuera del cronograma normal. Las tarjetas serán automáticamente devueltas a sus mazos originales luego de que las haya repasado. Borrar este mazo de la lista de mazos devolverá todas las tarjetas restantes a sus mazos originales.</string>
   <string name="exit_wizard">Salir del asistente</string>

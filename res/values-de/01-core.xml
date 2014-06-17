@@ -108,6 +108,7 @@
   <string name="menu_bury_note">Notiz vorläufig aussetzen</string>
   <string name="menu_suspend_card">Karte dauerhaft aussetzen</string>
   <string name="menu_suspend_note">Notiz dauerhaft aussetzen</string>
+  <string name="menu_save_note">Save note</string>
   <string name="menu_delete_note">Notiz löschen</string>
   <string name="delete_note_message">Soll diese Notiz und alle ihre Karten tatsächlich gelöscht werden?\n%s</string>
   <string name="menu_edit_card">Karte bearbeiten</string>

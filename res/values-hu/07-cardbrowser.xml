@@ -80,7 +80,7 @@
   <string name="card_details_tags">Címkék</string>
   <string name="card_details_model">Jegyzet típus</string>
   <string name="card_browser_sorting_cards">Kártyák rendezése\nKérlek, várj...</string>
-  <string name="card_browser_filtering_cards">Kártyák szűrése.\nKérlek, várj...</string>
+  <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
   <string name="card_details_card_model">Kártya modell</string>
   <string-array name="card_browser_order_labels">
     <item>Rendezés nélkül (gyorsabb)</item>

@@ -39,6 +39,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
+  <string name="drawer_open">Open Drawer</string>
+  <string name="drawer_close">Close Drawer</string>
   <string name="CardEditorLaterMessage">जानकारी के लिए बाद में बचा लिया</string>
   <string name="CardEditorCardDeck">कार्ड डेक: %s</string>
   <string name="CardEditorNoteDeck">नोट डेक: %s</string>
@@ -71,7 +73,6 @@
     <item>Lapses</item>
     <item>Reviews</item>
   </string-array>
-  <string name="about_title">के बारे में</string>
   <string name="cardeditor_title_add_note">नोट जोड़ें</string>
   <string name="cardeditor_title_edit_card">नोट संपादित करें</string>
   <string name="factadder_saving_error">नोट सहेजने में त्रुटि</string>
@@ -115,7 +116,7 @@
   <string name="help_title">मदद</string>
   <string name="help_online">ऑनलाइन मदद</string>
   <string name="help_faq">अकसर किये गए सवाल</string>
-  <string name="help_tutorial">ट्यूटोरियल डेक</string>
+  <string name="help_tutorial">Create tutorial deck</string>
   <string name="check_db">डेटाबेस की जाँच करें</string>
   <string name="check_db_message">जाँच डेटाबेस। \nPlease रुको...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
@@ -148,7 +149,7 @@
   <string name="import_importing">आयात कार्ड। \nPlease रुको...</string>
   <string name="import_hint">कार्ड को आयात करने के लिए, apkg फ़ाइल %s निर्देशिका में रखें और ठीक दबाएँ</string>
   <string name="upgrade_import_no_file_found">कोई आयातयोग्य %1$s फ़ाइल मिली</string>
-  <string name="study_options">Options</string>
+  <string name="study_options">Deck options</string>
   <string name="custom_study">कस्टम अध्ययन</string>
   <string name="dyn_deck_desc">यह सामान्य समय के बाहर अध्ययन करने के लिए एक विशेष डेक है। तुम उन की समीक्षा करने के बाद कार्ड स्वचालित रूप से उनके मूल डेक को लौट जाएगा। इस डेक डेक सूची से हटाने के सभी शेष कार्ड उनके मूल डेक करने के लिए वापस आ जाएगी।</string>
   <string name="exit_wizard">विज़ार्ड से बाहर निकलें</string>

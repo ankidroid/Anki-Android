@@ -108,6 +108,7 @@
   <string name="menu_bury_note">לקבור הערה</string>
   <string name="menu_suspend_card">השהה כרטיס</string>
   <string name="menu_suspend_note">לעצור הערה</string>
+  <string name="menu_save_note">Save note</string>
   <string name="menu_delete_note">למחוק הערה</string>
   <string name="delete_note_message">אתה בטוח שברצונך למחוק את הערה זאת וכל קלפיה?‏\n%s</string>
   <string name="menu_edit_card">ערוך כרטיס</string>

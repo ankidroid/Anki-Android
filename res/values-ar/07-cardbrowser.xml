@@ -80,7 +80,7 @@
   <string name="card_details_tags">وسوم</string>
   <string name="card_details_model">نوع الملاحظة</string>
   <string name="card_browser_sorting_cards">فرز البطاقات.\nالرجاء الانتظار...</string>
-  <string name="card_browser_filtering_cards">تصفية بطاقات.\nالرجاء الانتظار...</string>
+  <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
   <string name="card_details_card_model">نموذج البطاقة</string>
   <string-array name="card_browser_order_labels">
     <item>بلا فرز (أسرع)</item>

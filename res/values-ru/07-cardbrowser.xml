@@ -80,7 +80,7 @@
   <string name="card_details_tags">Теги</string>
   <string name="card_details_model">Тип заметки</string>
   <string name="card_browser_sorting_cards">Сортировка карт.\nПожалуйста подождите...</string>
-  <string name="card_browser_filtering_cards">Фильтрация карт.\nПожалуйста, подождите...</string>
+  <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
   <string name="card_details_card_model">Модель карты</string>
   <string-array name="card_browser_order_labels">
     <item>Без сортировки (быстрее)</item>

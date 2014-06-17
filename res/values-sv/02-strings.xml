@@ -39,6 +39,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
+  <string name="drawer_open">Open Drawer</string>
+  <string name="drawer_close">Close Drawer</string>
   <string name="CardEditorLaterMessage">Sparad information för senare</string>
   <string name="CardEditorCardDeck">Kortlek: %s</string>
   <string name="CardEditorNoteDeck">Notkortlek: %s</string>
@@ -71,7 +73,6 @@
     <item>Felsvar</item>
     <item>Repetitioner</item>
   </string-array>
-  <string name="about_title">Om</string>
   <string name="cardeditor_title_add_note">Lägg till not</string>
   <string name="cardeditor_title_edit_card">Redigera not</string>
   <string name="factadder_saving_error">Fel vid sparande av not</string>
@@ -115,7 +116,7 @@
   <string name="help_title">Hjälp</string>
   <string name="help_online">Onlinehjälp</string>
   <string name="help_faq">FAQ</string>
-  <string name="help_tutorial">Övningskortlek</string>
+  <string name="help_tutorial">Create tutorial deck</string>
   <string name="check_db">Kontrollera databas</string>
   <string name="check_db_message">Kontrollerar databasen. \nVänligen vänta...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Tomt kort. Kör \"Verktyg&gt;Tomma kort...\" i skrivbordsversionen av Anki.</string>
@@ -148,7 +149,7 @@
   <string name="import_importing">Importerar kort.\nVar god vänta...</string>
   <string name="import_hint">För att importera kort, placera apkg-filen i katalogen %s och tryck på ok</string>
   <string name="upgrade_import_no_file_found">Ingen importerbar %1$s fil hittad</string>
-  <string name="study_options">Alternativ</string>
+  <string name="study_options">Deck options</string>
   <string name="custom_study">Anpassade studier</string>
   <string name="dyn_deck_desc">Det här är en specialkortlek för studier utanför det normala schemat. Kort återförs automatiskt till sina ursprungliga kortlekar efter att du repeterat dem. Om du tar bort denna kortlek återförs alla återstående kort till sina ursprungliga kortlekar.</string>
   <string name="exit_wizard">Avsluta guide</string>

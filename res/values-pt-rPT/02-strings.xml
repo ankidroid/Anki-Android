@@ -39,6 +39,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
+  <string name="drawer_open">Open Drawer</string>
+  <string name="drawer_close">Close Drawer</string>
   <string name="CardEditorLaterMessage">Informação guardada para mais tarde</string>
   <string name="CardEditorCardDeck">Baralho de Cartões: %s</string>
   <string name="CardEditorNoteDeck">Baralho de Notas: %s</string>
@@ -71,7 +73,6 @@
     <item>Lapses</item>
     <item>Reviews</item>
   </string-array>
-  <string name="about_title">Sobre</string>
   <string name="cardeditor_title_add_note">Adicionar nota</string>
   <string name="cardeditor_title_edit_card">Editar nota</string>
   <string name="factadder_saving_error">Erro ao guardar nota</string>
@@ -115,7 +116,7 @@
   <string name="help_title">Ajuda</string>
   <string name="help_online">Ajuda online</string>
   <string name="help_faq">FAQ</string>
-  <string name="help_tutorial">Baralho Tutorial</string>
+  <string name="help_tutorial">Create tutorial deck</string>
   <string name="check_db">Verificar base de dados</string>
   <string name="check_db_message">Verificando a base de dados.\nEspere um momento...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
@@ -148,7 +149,7 @@
   <string name="import_importing">A Importar cartões. \nPor favor aguarde...</string>
   <string name="import_hint">Para importar cartões, coloque o ficheiro apkg na pasta %s e prima ok</string>
   <string name="upgrade_import_no_file_found">Não foi encontrado %1$s ficheiro para importar</string>
-  <string name="study_options">Opções</string>
+  <string name="study_options">Deck options</string>
   <string name="custom_study">Estudo personalizado</string>
   <string name="dyn_deck_desc">Este é um baralho especial para estudar fora do horário normal. Os cartões irão automaticamente voltar para os seus baralhos originais após a revisão. Eliminando este baralho da lista de baralhos irá enviar os cartões restantes para o seu baralho original.</string>
   <string name="exit_wizard">Saír do assistente</string>

@@ -39,6 +39,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
+  <string name="drawer_open">Open Drawer</string>
+  <string name="drawer_close">Close Drawer</string>
   <string name="CardEditorLaterMessage">Información guardada para más tarde</string>
   <string name="CardEditorCardDeck">Mazo de la Tarjeta: %s</string>
   <string name="CardEditorNoteDeck">Mazo de la Nota: %s</string>
@@ -71,7 +73,6 @@
     <item>Olvidos</item>
     <item>Repasos</item>
   </string-array>
-  <string name="about_title">Acerca de</string>
   <string name="cardeditor_title_add_note">Añadir Nota</string>
   <string name="cardeditor_title_edit_card">Editar Nota</string>
   <string name="factadder_saving_error">Error al guardar la nota</string>
@@ -115,7 +116,7 @@
   <string name="help_title">Ayuda</string>
   <string name="help_online">Ayuda en línea</string>
   <string name="help_faq">Preguntas más frecuentes</string>
-  <string name="help_tutorial">Mazo tutorial</string>
+  <string name="help_tutorial">Create tutorial deck</string>
   <string name="check_db">Comprobar base de datos</string>
   <string name="check_db_message">Comprobando base de datos.\nPor favor, espera...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Tarjeta vacía. Ejecute \"Herramientas&gt;Tarjetas vacías...\" en el cliente de escritorio.</string>
@@ -148,7 +149,7 @@
   <string name="import_importing">Importando tarjetas.\nPor favor, espera...</string>
   <string name="import_hint">Para importar tarjetas, coloca el archivo apkg en el directorio %s y presiona ok</string>
   <string name="upgrade_import_no_file_found">No se encontró archivo importable %1$s</string>
-  <string name="study_options">Opciones</string>
+  <string name="study_options">Deck options</string>
   <string name="custom_study">Estudio personalizado</string>
   <string name="dyn_deck_desc">Este es un mazo especial para estudiar fuera del programa normal. Las tarjetas serán devueltas automáticamente a sus mazos originales después de que las repases. Borrar este mazo de la lista de mazos devolverá todas las tarjetas restantes a su mazo original.</string>
   <string name="exit_wizard">Salir del Asistente</string>

@@ -39,6 +39,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
+  <string name="drawer_open">Open Drawer</string>
+  <string name="drawer_close">Close Drawer</string>
   <string name="CardEditorLaterMessage">حفظ المعلومات لوقت لاحق</string>
   <string name="CardEditorCardDeck">بطاقة الرزمة: %s</string>
   <string name="CardEditorNoteDeck">ملاحظة الرزمة: %s</string>
@@ -71,7 +73,6 @@
     <item>Lapses</item>
     <item>Reviews</item>
   </string-array>
-  <string name="about_title">حول</string>
   <string name="cardeditor_title_add_note">أضف ملاحظة</string>
   <string name="cardeditor_title_edit_card">حرر الملاحظة</string>
   <string name="factadder_saving_error">حدث خطأ أثناء حفظ الملاحظة</string>
@@ -115,7 +116,7 @@
   <string name="help_title">تعليمات</string>
   <string name="help_online">تعليمات على الإنترنت</string>
   <string name="help_faq">الأسئلة الشائعة</string>
-  <string name="help_tutorial">الرزمة التعليمية</string>
+  <string name="help_tutorial">Create tutorial deck</string>
   <string name="check_db">افحص قاعدة البيانات</string>
   <string name="check_db_message">فحص قاعدة البيانات.\nالرجاء الانتظار...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
@@ -148,7 +149,7 @@
   <string name="import_importing">استيراد بطاقات.\n يرجى الانتظار...</string>
   <string name="import_hint">لاستيراد البطاقات، ضع الملف apkg في الدليل %s ثم اضغط موافق</string>
   <string name="upgrade_import_no_file_found">لا يوجد غير قابلة للاستيراد %1$s غير موجود</string>
-  <string name="study_options">Options</string>
+  <string name="study_options">Deck options</string>
   <string name="custom_study">دراسة مخصصة</string>
   <string name="dyn_deck_desc">هذه قاعدة خاصة للدراسة خارج الجدول الزمني الاعتيادي. البطاقات سوف تعود الى حالة القاعدة الاصلية تلقائياً بعد مراجعتها منك. حذف هذه القاعدة من قائمة القاعدة سوف يعيد كل البطاقات المتبقية إلى حالة القاعدة الاصلية.</string>
   <string name="exit_wizard">إنهاء المعالج</string>

@@ -80,7 +80,7 @@
   <string name="card_details_tags">태그</string>
   <string name="card_details_model">노트 유형</string>
   <string name="card_browser_sorting_cards">카드 정렬중.\n잠시만 기다려 주세요...</string>
-  <string name="card_browser_filtering_cards">카드 필터링 중.\n잠시만 기다려 주세요...</string>
+  <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
   <string name="card_details_card_model">카드 모델</string>
   <string-array name="card_browser_order_labels">
     <item>정렬 안함(빠름)</item>

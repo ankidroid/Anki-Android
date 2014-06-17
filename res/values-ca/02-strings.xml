@@ -39,6 +39,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
+  <string name="drawer_open">Open Drawer</string>
+  <string name="drawer_close">Close Drawer</string>
   <string name="CardEditorLaterMessage">S\'ha desat la informació per més tard</string>
   <string name="CardEditorCardDeck">Paquet de fitxes: %s</string>
   <string name="CardEditorNoteDeck">Nota del paquet: %s</string>
@@ -71,7 +73,6 @@
     <item>Lapses</item>
     <item>Reviews</item>
   </string-array>
-  <string name="about_title">Quant a</string>
   <string name="cardeditor_title_add_note">Afegeix una nota</string>
   <string name="cardeditor_title_edit_card">Edita la nota</string>
   <string name="factadder_saving_error">Hi ha hagurt un error en desar la nota</string>
@@ -115,7 +116,7 @@
   <string name="help_title">Ajuda</string>
   <string name="help_online">Ajuda online</string>
   <string name="help_faq">PMF</string>
-  <string name="help_tutorial">Paquet Tutorial</string>
+  <string name="help_tutorial">Create tutorial deck</string>
   <string name="check_db">Comprova la base de dades</string>
   <string name="check_db_message">S\'està comprovant la base de dades.\nUn moment si us plau...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
@@ -148,7 +149,7 @@
   <string name="import_importing">S\'estàn important les fitxes. \nEspereu...</string>
   <string name="import_hint">Per importar fitxes, poseu l\'arxiu apkg a la carpeta %s i premeu d\'acord</string>
   <string name="upgrade_import_no_file_found">No s\'ha trobat cap fitxer %1$s que es pugui importar</string>
-  <string name="study_options">Options</string>
+  <string name="study_options">Deck options</string>
   <string name="custom_study">Estudi a mida</string>
   <string name="dyn_deck_desc">Es tracta d\'un paquet especial per a l\'estudi fora de la planificació normal. Després de revisar-les, les fitxes es tornaran automàticament al seus paquets originals. Si suprimiu aquest paquet de la llista de paquets, totes les fitxes tornaran al seu paquet inicial.</string>
   <string name="exit_wizard">Surt de l\'auxiliar</string>

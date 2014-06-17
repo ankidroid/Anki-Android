@@ -39,6 +39,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
+  <string name="drawer_open">Open Drawer</string>
+  <string name="drawer_close">Close Drawer</string>
   <string name="CardEditorLaterMessage">Informação salva para mais tarde</string>
   <string name="CardEditorCardDeck">Deck de Cartões: %s</string>
   <string name="CardEditorNoteDeck">Deck de Notas: %s</string>
@@ -71,7 +73,6 @@
     <item>Lapsos</item>
     <item>Revisões</item>
   </string-array>
-  <string name="about_title">Sobre</string>
   <string name="cardeditor_title_add_note">Adicionar Nota</string>
   <string name="cardeditor_title_edit_card">Editar Nota</string>
   <string name="factadder_saving_error">Erro ao salvar nota</string>
@@ -115,7 +116,7 @@
   <string name="help_title">Ajuda</string>
   <string name="help_online">Ajuda Online</string>
   <string name="help_faq">FAQ</string>
-  <string name="help_tutorial">Deck Tutorial</string>
+  <string name="help_tutorial">Create tutorial deck</string>
   <string name="check_db">Verificar banco de dados</string>
   <string name="check_db_message">Verificando banco de dados.\nPor favor Aguarde...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Cartão vazio. Rode \"Ferramentas&gt;Cartões vazios...\" no cliente para desktop.</string>
@@ -148,7 +149,7 @@
   <string name="import_importing">Importando cartões.\nPor favor aguardar...</string>
   <string name="import_hint">Para importar cartões, coloque o arquivo apkg no diretório %s e pressione ok</string>
   <string name="upgrade_import_no_file_found">Nenhum arquivo %1$s importável encontrado</string>
-  <string name="study_options">Opções</string>
+  <string name="study_options">Deck options</string>
   <string name="custom_study">Estudo personalizado</string>
   <string name="dyn_deck_desc">Esse é um deck especial para estudar fora do planejamento normal. Os cartões serão retornados automaticamente para os decks originais após revisá-los. Ao apagar esse deck da lista de decks os cartões restantes serão retornados para os decks originais.</string>
   <string name="exit_wizard">Sair do assistente</string>

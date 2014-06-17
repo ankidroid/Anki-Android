@@ -108,6 +108,7 @@
   <string name="menu_bury_note">Ocultar Nota</string>
   <string name="menu_suspend_card">Suspender Tarjeta</string>
   <string name="menu_suspend_note">Suspender Nota</string>
+  <string name="menu_save_note">Save note</string>
   <string name="menu_delete_note">Eliminar Nota</string>
   <string name="delete_note_message">¿Realmente deseas eliminar esta nota y todas sus tarjetas?\n%s</string>
   <string name="menu_edit_card">Editar tarjeta</string>

@@ -39,6 +39,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
+  <string name="drawer_open">Open Drawer</string>
+  <string name="drawer_close">Close Drawer</string>
   <string name="CardEditorLaterMessage">Tiedot tallennettu myöhempää käyttöä varten</string>
   <string name="CardEditorCardDeck">Korttipakka: %s</string>
   <string name="CardEditorNoteDeck">Merkintäpaka: %s</string>
@@ -71,7 +73,6 @@
     <item>Lapses</item>
     <item>Reviews</item>
   </string-array>
-  <string name="about_title">Tietoja</string>
   <string name="cardeditor_title_add_note">Lisää huomautus</string>
   <string name="cardeditor_title_edit_card">Muokkaa huomautusta</string>
   <string name="factadder_saving_error">Virhe tallennettaessa huomautusta</string>
@@ -115,7 +116,7 @@
   <string name="help_title">Ohje</string>
   <string name="help_online">Verkko-ohje</string>
   <string name="help_faq">UKK (FAQ)</string>
-  <string name="help_tutorial">Ohjepakka</string>
+  <string name="help_tutorial">Create tutorial deck</string>
   <string name="check_db">Tarkasta tietokanta</string>
   <string name="check_db_message">Tarkastetaan tietokantaa.\nOdota...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
@@ -148,7 +149,7 @@
   <string name="import_importing">Tuodaan kortteja.\nOdota...</string>
   <string name="import_hint">Tuodaksesi kortteja aseta apkg-tiedosto hakemistoon %s ja paina Ok-painiketta</string>
   <string name="upgrade_import_no_file_found">Tuotavaa tiedostoa %1$s ei löytynyt</string>
-  <string name="study_options">Asetukset</string>
+  <string name="study_options">Deck options</string>
   <string name="custom_study">Mukautettu opiskelu</string>
   <string name="dyn_deck_desc">Tämä on erityispakka normaalin aikataulun ulkopuolella opiskeluun. Kortit palautetaan automaattisesti niiden alkuperäisiin pakkoihin läpikäynnin jälkeen. Tämän pakan poistaminen palauttaa kaikki sen sisältämät kortit alkuperäispakkoihin.</string>
   <string name="exit_wizard">Lopeta ohjattu toiminto</string>

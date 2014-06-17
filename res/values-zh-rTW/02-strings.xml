@@ -39,6 +39,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
+  <string name="drawer_open">Open Drawer</string>
+  <string name="drawer_close">Close Drawer</string>
   <string name="CardEditorLaterMessage">封存的資訊</string>
   <string name="CardEditorCardDeck">卡片牌組： %s</string>
   <string name="CardEditorNoteDeck">筆記牌組： %s</string>
@@ -71,7 +73,6 @@
     <item>Lapses</item>
     <item>Reviews</item>
   </string-array>
-  <string name="about_title">關於</string>
   <string name="cardeditor_title_add_note">新增筆記</string>
   <string name="cardeditor_title_edit_card">編輯筆記</string>
   <string name="factadder_saving_error">儲存筆記時發生錯誤</string>
@@ -115,7 +116,7 @@
   <string name="help_title">說明</string>
   <string name="help_online">線上說明</string>
   <string name="help_faq">常見問題</string>
-  <string name="help_tutorial">教學牌組</string>
+  <string name="help_tutorial">Create tutorial deck</string>
   <string name="check_db">檢查資料庫</string>
   <string name="check_db_message">檢查資料庫。\n請稍後...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
@@ -148,7 +149,7 @@
   <string name="import_importing">正在匯入卡片\n請稍候...</string>
   <string name="import_hint">若您要匯入卡片，請將 apkg 檔案放在 %s 目錄下，然後按OK</string>
   <string name="upgrade_import_no_file_found">找不到可匯入的%1$s檔案</string>
-  <string name="study_options">Options</string>
+  <string name="study_options">Deck options</string>
   <string name="custom_study">自訂學習</string>
   <string name="dyn_deck_desc">這是專門用來進行額外學習進度的牌組。卡片在您複習完以後會自動回歸原本的牌組。如果在牌組列表中刪除這個牌組，其他剩下的卡片也會回歸它們原本的牌組。</string>
   <string name="exit_wizard">退出精靈</string>

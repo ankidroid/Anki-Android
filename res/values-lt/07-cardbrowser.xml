@@ -80,7 +80,7 @@
   <string name="card_details_tags">Žymos</string>
   <string name="card_details_model">Pastabos tipas</string>
   <string name="card_browser_sorting_cards">Sorting cards&#8230;</string>
-  <string name="card_browser_filtering_cards">Filtering cards&#8230;</string>
+  <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
   <string name="card_details_card_model">Card model</string>
   <string-array name="card_browser_order_labels">
     <item>No sorting (faster)</item>

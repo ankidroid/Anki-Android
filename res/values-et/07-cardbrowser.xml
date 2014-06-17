@@ -80,7 +80,7 @@
   <string name="card_details_tags">Sildid</string>
   <string name="card_details_model">Note type</string>
   <string name="card_browser_sorting_cards">Sordin kaarte.\nPalun oota...</string>
-  <string name="card_browser_filtering_cards">Filtering cards&#8230;</string>
+  <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
   <string name="card_details_card_model">Kaardi mudel</string>
   <string-array name="card_browser_order_labels">
     <item>No sorting (faster)</item>

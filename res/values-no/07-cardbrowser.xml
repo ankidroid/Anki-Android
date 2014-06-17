@@ -80,7 +80,7 @@
   <string name="card_details_tags">Emneord</string>
   <string name="card_details_model">Notattype</string>
   <string name="card_browser_sorting_cards">Sortering kortene. \n Vennligst vent...</string>
-  <string name="card_browser_filtering_cards">Filtrerer kort.\nVennligst vent...</string>
+  <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
   <string name="card_details_card_model">Kortmodell</string>
   <string-array name="card_browser_order_labels">
     <item>Ingen sortering (kjappere)</item>

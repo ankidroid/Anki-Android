@@ -80,7 +80,7 @@
   <string name="card_details_tags">Etykiety</string>
   <string name="card_details_model">Typ notatki</string>
   <string name="card_browser_sorting_cards">Sortowanie kart.\nProszę czekać...</string>
-  <string name="card_browser_filtering_cards">Filtrowanie kart.\nProszę czekać...</string>
+  <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
   <string name="card_details_card_model">Model karty</string>
   <string-array name="card_browser_order_labels">
     <item>Bez sortowania (szybciej)</item>

@@ -80,7 +80,7 @@
   <string name="card_details_tags">標籤</string>
   <string name="card_details_model">筆記類型</string>
   <string name="card_browser_sorting_cards">排序卡片中.\n 請稍候...</string>
-  <string name="card_browser_filtering_cards">篩選卡片中.\n請稍後...</string>
+  <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
   <string name="card_details_card_model">卡片模版</string>
   <string-array name="card_browser_order_labels">
     <item>不要排序(較快)</item>

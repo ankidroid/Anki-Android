@@ -80,7 +80,7 @@
   <string name="card_details_tags">Štítky</string>
   <string name="card_details_model">Typ poznámky</string>
   <string name="card_browser_sorting_cards">Třídění karet.\nProsím čekejte...</string>
-  <string name="card_browser_filtering_cards">Filtrování karet. \nČekejte prosím...</string>
+  <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
   <string name="card_details_card_model">Šablona karty</string>
   <string-array name="card_browser_order_labels">
     <item>Žádné třídění (rychlejší)</item>

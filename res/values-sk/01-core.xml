@@ -108,6 +108,7 @@
   <string name="menu_bury_note">Zahrabať poznámku</string>
   <string name="menu_suspend_card">Dať kartu bokom</string>
   <string name="menu_suspend_note">Dať poznámku bokom</string>
+  <string name="menu_save_note">Save note</string>
   <string name="menu_delete_note">Odstrániť poznámku</string>
   <string name="delete_note_message">Naozaj chcete odstrániť túto poznámku a všetky jej karty?\n%s</string>
   <string name="menu_edit_card">Upraviť kartu</string>

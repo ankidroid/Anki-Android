@@ -80,7 +80,7 @@
   <string name="card_details_tags">Etiketter</string>
   <string name="card_details_model">Nottyp</string>
   <string name="card_browser_sorting_cards">Sorterar kort.\nVar god vänta...</string>
-  <string name="card_browser_filtering_cards">Filtrerar kort.\nVänligen vänta...</string>
+  <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
   <string name="card_details_card_model">Kortmodell</string>
   <string-array name="card_browser_order_labels">
     <item>Ingen sortering (snabbare)</item>

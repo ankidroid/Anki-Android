@@ -39,6 +39,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
+  <string name="drawer_open">Open Drawer</string>
+  <string name="drawer_close">Close Drawer</string>
   <string name="CardEditorLaterMessage">Informaţie salvata pentru mai târziu</string>
   <string name="CardEditorCardDeck">Pachet de carduri: %s</string>
   <string name="CardEditorNoteDeck">Notaţi pachetul: %s</string>
@@ -71,7 +73,6 @@
     <item>Lapses</item>
     <item>Reviews</item>
   </string-array>
-  <string name="about_title">Despre</string>
   <string name="cardeditor_title_add_note">Adauga nota</string>
   <string name="cardeditor_title_edit_card">Editare notă</string>
   <string name="factadder_saving_error">Eroare la salvarea Notei</string>
@@ -115,7 +116,7 @@
   <string name="help_title">ajutor</string>
   <string name="help_online">Ajutor online</string>
   <string name="help_faq">INTREBARI FRECVENTE</string>
-  <string name="help_tutorial">Pachet tutorial</string>
+  <string name="help_tutorial">Create tutorial deck</string>
   <string name="check_db">Selectare bază de date</string>
   <string name="check_db_message">Verificarea bazei de date. \nVa rugam aşteptaţi...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
@@ -148,7 +149,7 @@
   <string name="import_importing">Import carduri. \nVa rugam aşteptaţi...</string>
   <string name="import_hint">Pentru a importa cărţi, plasaţi fişierul apkg in directorul %s şi apăsaţi ok</string>
   <string name="upgrade_import_no_file_found">Nici un fișier importabil %1$s gasit</string>
-  <string name="study_options">Opţiuni</string>
+  <string name="study_options">Deck options</string>
   <string name="custom_study">Studiu personalizat</string>
   <string name="dyn_deck_desc">Acesta este un pachet special pentru a studia în afara programului normal. cardurile vor fi returnate automat la pachetele lor originale după ce le revizuiti. Şterge aceast pachet din lista de pachete va returna toate cărțile rămase in pachetele lor originale.</string>
   <string name="exit_wizard">Expertul de ieşire</string>

@@ -39,6 +39,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
+  <string name="drawer_open">Open Drawer</string>
+  <string name="drawer_close">Close Drawer</string>
   <string name="CardEditorLaterMessage">Інформація збережена на пізніше</string>
   <string name="CardEditorCardDeck">Колода картки:%s</string>
   <string name="CardEditorNoteDeck">Колекція Запису:%s</string>
@@ -71,7 +73,6 @@
     <item>Lapses</item>
     <item>Reviews</item>
   </string-array>
-  <string name="about_title">Про програму</string>
   <string name="cardeditor_title_add_note">Додати Запис</string>
   <string name="cardeditor_title_edit_card">Змінити запис</string>
   <string name="factadder_saving_error">Помилка збереження запису</string>
@@ -115,7 +116,7 @@
   <string name="help_title">Допомога</string>
   <string name="help_online">Допомога онлайн</string>
   <string name="help_faq">FAQ</string>
-  <string name="help_tutorial">Навчальна колода</string>
+  <string name="help_tutorial">Create tutorial deck</string>
   <string name="check_db">Перевірити базу даних</string>
   <string name="check_db_message">Перевірка бази даних.\n Будь ласка, зачекайте...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
@@ -148,7 +149,7 @@
   <string name="import_importing">Відбувається імпорт карт. \nЗачекайте, будь-ласка...</string>
   <string name="import_hint">Щоб імпортувати карти, помістіть apkg файл в каталог %s і натисніть кнопку ok</string>
   <string name="upgrade_import_no_file_found">Ввізного файлу %1$s не знайдено</string>
-  <string name="study_options">Параметри</string>
+  <string name="study_options">Deck options</string>
   <string name="custom_study">Додатковий трейнінг</string>
   <string name="dyn_deck_desc">Це спеціальна колекція для навчання поза межами нормального розкладу. Картки будуть автоматично повернуті до їх початкових колекцій після повторення. Видалення цієї колекції з списку поврне всі карточки до початкових колекцій.</string>
   <string name="exit_wizard">Покинути помічника</string>

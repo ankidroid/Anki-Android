@@ -108,6 +108,7 @@
   <string name="menu_bury_note">ノートの延期</string>
   <string name="menu_suspend_card">カードの保留</string>
   <string name="menu_suspend_note">ノートの保留</string>
+  <string name="menu_save_note">Save note</string>
   <string name="menu_delete_note">ノートの削除</string>
   <string name="delete_note_message">このノートとすべてのカードを削除してもよろしいですか？\n%s</string>
   <string name="menu_edit_card">カードの編集</string>

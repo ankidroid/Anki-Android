@@ -39,6 +39,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
+  <string name="drawer_open">Open Drawer</string>
+  <string name="drawer_close">Close Drawer</string>
   <string name="CardEditorLaterMessage">保存的信息</string>
   <string name="CardEditorCardDeck">卡牌所属牌组：%s</string>
   <string name="CardEditorNoteDeck">卡牌记录所属牌组：%s</string>
@@ -71,7 +73,6 @@
     <item>失误</item>
     <item>复习</item>
   </string-array>
-  <string name="about_title">关于</string>
   <string name="cardeditor_title_add_note">增加条目注释</string>
   <string name="cardeditor_title_edit_card">编辑卡牌记录</string>
   <string name="factadder_saving_error">保存条目注释时出现错误</string>
@@ -115,7 +116,7 @@
   <string name="help_title">帮助</string>
   <string name="help_online">在线帮助</string>
   <string name="help_faq">常见问题</string>
-  <string name="help_tutorial">教程词库</string>
+  <string name="help_tutorial">Create tutorial deck</string>
   <string name="check_db">检查数据库</string>
   <string name="check_db_message">检查数据库。\n请等待...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">空卡牌。在桌面客户端上运行”工具 &gt; 空卡...\"。</string>
@@ -148,7 +149,7 @@
   <string name="import_importing">导入卡牌。\n请稍后...</string>
   <string name="import_hint">要导入卡牌，请把apkg文件放在%s目录中，然后按确定。</string>
   <string name="upgrade_import_no_file_found">没有找到可导入的 %1$s 文件</string>
-  <string name="study_options">选项</string>
+  <string name="study_options">Deck options</string>
   <string name="custom_study">自定义学习</string>
   <string name="dyn_deck_desc">这是一个特殊牌组，在计划外学习。卡牌在复习后，会自动返回原来的牌组。在牌组列表中删除此牌组，将把所有卡牌发回原来的牌组。</string>
   <string name="exit_wizard">退出向导</string>

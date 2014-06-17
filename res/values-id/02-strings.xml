@@ -39,6 +39,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
+  <string name="drawer_open">Open Drawer</string>
+  <string name="drawer_close">Close Drawer</string>
   <string name="CardEditorLaterMessage">Simpan informasi untuk nanti</string>
   <string name="CardEditorCardDeck">Dek kartu: %s</string>
   <string name="CardEditorNoteDeck">Dek Catatan: %s</string>
@@ -71,7 +73,6 @@
     <item>Lapses</item>
     <item>Reviews</item>
   </string-array>
-  <string name="about_title">Tentang</string>
   <string name="cardeditor_title_add_note">Tambahkan catatan</string>
   <string name="cardeditor_title_edit_card">Ubah catatan</string>
   <string name="factadder_saving_error">Terjadi kesalahan dalam menyimpan catatan</string>
@@ -115,7 +116,7 @@
   <string name="help_title">Bantuan</string>
   <string name="help_online">Bantuan online</string>
   <string name="help_faq">FAQ</string>
-  <string name="help_tutorial">Dek tutorial</string>
+  <string name="help_tutorial">Create tutorial deck</string>
   <string name="check_db">Periksa database</string>
   <string name="check_db_message">Memeriksa database. \nSilahkan tunggu...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
@@ -148,7 +149,7 @@
   <string name="import_importing">Mengimpor kartu.\nSilahkan tunggu...</string>
   <string name="import_hint">Untuk mengimpor kartu, tempatkan file apkg ke dalam direktori %s dan tekan ok</string>
   <string name="upgrade_import_no_file_found">Tidak ada %1$s file yang dapat di impor ditemukan</string>
-  <string name="study_options">Options</string>
+  <string name="study_options">Deck options</string>
   <string name="custom_study">Custom study</string>
   <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
   <string name="exit_wizard">Exit Wizard</string>

@@ -108,6 +108,7 @@
   <string name="menu_bury_note">Bury note</string>
   <string name="menu_suspend_card">Gantung Kad</string>
   <string name="menu_suspend_note">Suspend note</string>
+  <string name="menu_save_note">Save note</string>
   <string name="menu_delete_note">Hapus Catatan</string>
   <string name="delete_note_message">Really delete this note and all its cards?\n%s</string>
   <string name="menu_edit_card">Edit Kad</string>

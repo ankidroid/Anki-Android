@@ -39,6 +39,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
+  <string name="drawer_open">Open Drawer</string>
+  <string name="drawer_close">Close Drawer</string>
   <string name="CardEditorLaterMessage">나중을 위해 저장된 정보</string>
   <string name="CardEditorCardDeck">카드 덱: %s</string>
   <string name="CardEditorNoteDeck">노트 덱: %s</string>
@@ -71,7 +73,6 @@
     <item>Lapses</item>
     <item>Reviews</item>
   </string-array>
-  <string name="about_title">AnkiDroid 정보</string>
   <string name="cardeditor_title_add_note">노트 추가하기</string>
   <string name="cardeditor_title_edit_card">노트 편집하기</string>
   <string name="factadder_saving_error">노트 저장 중 오류</string>
@@ -115,7 +116,7 @@
   <string name="help_title">도움말</string>
   <string name="help_online">온라인 도움말</string>
   <string name="help_faq">FAQ</string>
-  <string name="help_tutorial">튜토리얼 덱</string>
+  <string name="help_tutorial">Create tutorial deck</string>
   <string name="check_db">데이터베이스 점검하기</string>
   <string name="check_db_message">데이터베이스 점검 중.\n잠시만 기다려 주세요...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
@@ -148,7 +149,7 @@
   <string name="import_importing">카드를 가져오는중.\n잠시만 기다려 주세요...</string>
   <string name="import_hint">카드를 가져오려면, %s 폴더로 apkg 파일을 옮긴 후 확인을 눌러주세요</string>
   <string name="upgrade_import_no_file_found">가져올 수 있는 %1$s 파일이 발견되지 않음</string>
-  <string name="study_options">Options</string>
+  <string name="study_options">Deck options</string>
   <string name="custom_study">맞춤 학습</string>
   <string name="dyn_deck_desc">이것은 평상시 일정 이상으로 학습하기 위한 특별한 덱입니다. 카드들은 복습 후 자동으로 원래의 덱으로 돌아가게 됩니다. 덱 목록에서 이 덱을 지운다면 남아 있는 모든 카드는 원래의 덱으로 돌아가게 됩니다.</string>
   <string name="exit_wizard">마법사 끝내기</string>

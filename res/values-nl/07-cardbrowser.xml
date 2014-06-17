@@ -80,7 +80,7 @@
   <string name="card_details_tags">Labels</string>
   <string name="card_details_model">Soort memo</string>
   <string name="card_browser_sorting_cards">Kaarten sorteren.\nEven geduld alstublieft...</string>
-  <string name="card_browser_filtering_cards">Kaarten filteren.\nEven geduld alstublieft...</string>
+  <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
   <string name="card_details_card_model">Kaartmodel</string>
   <string-array name="card_browser_order_labels">
     <item>Niet sorteren (sneller)</item>

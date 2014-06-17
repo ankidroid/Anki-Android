@@ -80,7 +80,7 @@
   <string name="card_details_tags">标签</string>
   <string name="card_details_model">卡牌记录类型</string>
   <string name="card_browser_sorting_cards">卡牌排序。\n请稍候...</string>
-  <string name="card_browser_filtering_cards">筛选卡牌。\n请稍候...</string>
+  <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
   <string name="card_details_card_model">卡牌模板</string>
   <string-array name="card_browser_order_labels">
     <item>不排序(更快)</item>

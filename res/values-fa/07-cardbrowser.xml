@@ -80,7 +80,7 @@
   <string name="card_details_tags">برچسب ها</string>
   <string name="card_details_model">نوع یادداشت</string>
   <string name="card_browser_sorting_cards">مرتب سازی کارتها. \nلطفا صبر کنید...</string>
-  <string name="card_browser_filtering_cards">فیلتر کردن کارتها. \nلطفا صبر کنید...</string>
+  <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
   <string name="card_details_card_model">الگوی کارت</string>
   <string-array name="card_browser_order_labels">
     <item>مرتب سازی نکن (سریعتر)</item>

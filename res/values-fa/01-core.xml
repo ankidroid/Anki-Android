@@ -108,6 +108,7 @@
   <string name="menu_bury_note">مخفی کردن یادداشت</string>
   <string name="menu_suspend_card">تعلیق کارت</string>
   <string name="menu_suspend_note">تعلیق یادداشت</string>
+  <string name="menu_save_note">Save note</string>
   <string name="menu_delete_note">حذف یادداشت</string>
   <string name="delete_note_message">مطمئنید می خواهید این یادداشت و همه کارتهایش را پاک کنید؟\n%s</string>
   <string name="menu_edit_card">ویرایش کارت</string>

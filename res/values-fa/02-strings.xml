@@ -39,6 +39,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
+  <string name="drawer_open">Open Drawer</string>
+  <string name="drawer_close">Close Drawer</string>
   <string name="CardEditorLaterMessage">اطلاعات برای بعد ذخیره شد</string>
   <string name="CardEditorCardDeck">دسته کارت: %s</string>
   <string name="CardEditorNoteDeck">دسته یادداشت: %s</string>
@@ -71,7 +73,6 @@
     <item>دفعات اشتباه</item>
     <item>بازبینی ها</item>
   </string-array>
-  <string name="about_title">درباره</string>
   <string name="cardeditor_title_add_note">افزودن یادداشت</string>
   <string name="cardeditor_title_edit_card">ویرایش یادداشت</string>
   <string name="factadder_saving_error">خطای ذخیره سازی یادداشت</string>
@@ -115,7 +116,7 @@
   <string name="help_title">کمک</string>
   <string name="help_online">راهنمای آنلاین</string>
   <string name="help_faq">پرسش و پاسخ</string>
-  <string name="help_tutorial">خودآموز دسته کارت</string>
+  <string name="help_tutorial">Create tutorial deck</string>
   <string name="check_db">بررسی پایگاه داده</string>
   <string name="check_db_message">بررسی پایگاه داده.\nلطفا صبر کنید...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
@@ -148,7 +149,7 @@
   <string name="import_importing">وارد کردن کارت. \nPlease صبر کنید...</string>
   <string name="import_hint">برای وارد کردن کارتها,  apkg فایلهای در پوشه %s قرار داده و دکمه خب را فشار دهید</string>
   <string name="upgrade_import_no_file_found">غیر وارد کردنی %1$s فایل یافت شد</string>
-  <string name="study_options">تنظیمات</string>
+  <string name="study_options">Deck options</string>
   <string name="custom_study">مطالعه بر اساس تنظیمات دلخواه</string>
   <string name="dyn_deck_desc">این یک دسته ویژه برای مطالعه در خارج از زمان بندی عادی می باشد.بعد از مرور کارتها آنها بطور خودکار به دسته های اصلی برگردانده خواهد شد.حذف کردن این دسته از لیست دسته ها سبب می شود که همه کارتهای باقیمانده نیز به دسته اصلی برگردانده شود.</string>
   <string name="exit_wizard">خروج از سهل آموز</string>

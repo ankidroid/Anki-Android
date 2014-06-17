@@ -35,6 +35,14 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <string-array name="navigation_titles">
+    <item>Decks</item>
+    <item>Card Browser</item>
+    <item>Statistics</item>
+    <item>Settings</item>
+    <item>Help</item>
+    <item>Send Feedback</item>
+  </string-array>
   <string-array name="newCardSchedulingLabels">
     <item>Diseminar entre los repasos</item>
     <item>Luego de los repasos</item>
@@ -53,7 +61,7 @@
     <item>100</item>
     <item>150</item>
     <item>200</item>
-    <item>Never notify</item>
+    <item>No notificar nunca</item>
   </string-array>
   <string-array name="cram_review_order_labels">
     <item>Mostrar al principio la de modificación más antigua</item>
@@ -151,7 +159,7 @@
     <item>Programadas</item>
   </string-array>
   <string-array name="override_font_labels">
-    <item>When no font specified on flashcards</item>
-    <item>Always</item>
+    <item>Cuando no hay una fuente especificada en las tarjetas</item>
+    <item>Siempre</item>
   </string-array>
 </resources>

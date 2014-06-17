@@ -80,7 +80,7 @@
   <string name="card_details_tags">Schlagworte</string>
   <string name="card_details_model">Notiz-Typ</string>
   <string name="card_browser_sorting_cards">Sortiere Karten&#8230;</string>
-  <string name="card_browser_filtering_cards">Filtere Karten&#8230;</string>
+  <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
   <string name="card_details_card_model">Kartenvorlage</string>
   <string-array name="card_browser_order_labels">
     <item>Keine Sortierung (schneller)</item>

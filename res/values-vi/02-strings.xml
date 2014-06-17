@@ -39,6 +39,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
+  <string name="drawer_open">Open Drawer</string>
+  <string name="drawer_close">Close Drawer</string>
   <string name="CardEditorLaterMessage">Lưu thông tin cho sau này</string>
   <string name="CardEditorCardDeck">Thẻ Bài: %s</string>
   <string name="CardEditorNoteDeck">Ghi chú Bài: %s</string>
@@ -71,7 +73,6 @@
     <item>Sai sót</item>
     <item>Đánh giá</item>
   </string-array>
-  <string name="about_title">Về</string>
   <string name="cardeditor_title_add_note">Thêm ghi chú</string>
   <string name="cardeditor_title_edit_card">Sửa ghi chú</string>
   <string name="factadder_saving_error">Lỗi khi lưu lưu ý</string>
@@ -115,7 +116,7 @@
   <string name="help_title">Trợ giúp</string>
   <string name="help_online">Trợ giúp trực tuyến</string>
   <string name="help_faq">CÂU HỎI THƯỜNG GẶP</string>
-  <string name="help_tutorial">Tập thẻ hướng dẫn</string>
+  <string name="help_tutorial">Create tutorial deck</string>
   <string name="check_db">Kiểm tra cơ sở dữ liệu</string>
   <string name="check_db_message">Đang kiểm tra cơ sở dữ liệu. \n Xin đợi chút...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
@@ -148,7 +149,7 @@
   <string name="import_importing">Đang nhập thẻ.\nXin chờ chút...</string>
   <string name="import_hint">Để nhập thẻ, đặt tập tin apkg vào đường dẫn %s và bấm ok</string>
   <string name="upgrade_import_no_file_found">Không tìm thấy %1$s tập tin có thể nhập</string>
-  <string name="study_options">Các tùy chọn</string>
+  <string name="study_options">Deck options</string>
   <string name="custom_study">Sửa cách học</string>
   <string name="dyn_deck_desc">Đây là một bộ Bài đặc biệt phục vụ cho học ngoài lịch. Các thẻ sẽ tự động quay lại sau khi bại xem lại chúng. Việc xóa các bộ bài từ danh sách sẽ đưa tất cả các Thẻ về Bộ bài nguyên gốc.</string>
   <string name="exit_wizard">Thoát</string>

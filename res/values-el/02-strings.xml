@@ -39,6 +39,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
+  <string name="drawer_open">Open Drawer</string>
+  <string name="drawer_close">Close Drawer</string>
   <string name="CardEditorLaterMessage">Αποθήκευση πληροφοριών για αργότερα</string>
   <string name="CardEditorCardDeck">Τράπουλα κάρτας: %s</string>
   <string name="CardEditorNoteDeck">Τράπουλα σημείωσης: %s</string>
@@ -71,7 +73,6 @@
     <item>Lapses</item>
     <item>Reviews</item>
   </string-array>
-  <string name="about_title">Σχετικά</string>
   <string name="cardeditor_title_add_note">Προσθήκη Σημείωσης</string>
   <string name="cardeditor_title_edit_card">Σύνταξη Σημείωσης</string>
   <string name="factadder_saving_error">Σφάλμα κατά την αποθήκευση σημείωσης</string>
@@ -115,7 +116,7 @@
   <string name="help_title">Βοήθεια</string>
   <string name="help_online">Online βοήθεια</string>
   <string name="help_faq">Συχνές ερωτήσεις</string>
-  <string name="help_tutorial">Τράπουλα δείγμα</string>
+  <string name="help_tutorial">Create tutorial deck</string>
   <string name="check_db">Έλεγχος βάσης δεδομένων</string>
   <string name="check_db_message">Έλεγχος βάσης δεδομένων.\nΠαρακαλούμε περιμένετε...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
@@ -148,7 +149,7 @@
   <string name="import_importing">Εισαγωγής καρτών.\nΠαρακαλούμε περιμένετε...</string>
   <string name="import_hint">Για να εισαγάγετε κάρτες, τοποθετήστε το αρχείο apkg στον κατάλογο %s και πατήστε ΟΚ</string>
   <string name="upgrade_import_no_file_found">Δεν βρέθηκε αρχείο %1$s με δυνατότητα εισαγωγής</string>
-  <string name="study_options">Options</string>
+  <string name="study_options">Deck options</string>
   <string name="custom_study">Προσαρμοσμένη μελέτη</string>
   <string name="dyn_deck_desc">Αυτή είναι μια ειδική τράπουλα για μάθηση εκτός του κανονικού προγράμματος. Οι κάρτες θα επιστραφούν αυτόματα στην αρχική τους τράπουλα μετά την επανάληψή τους. Η διαγραφή αυτής της τράπουλας από τη λίστα τραπουλών θα επιστρέψει όλες τις κάρτες στην αρχική τους τράπουλα.</string>
   <string name="exit_wizard">Έξοδος απο τον οδηγό</string>

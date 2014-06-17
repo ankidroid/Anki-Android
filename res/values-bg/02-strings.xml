@@ -39,6 +39,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
+  <string name="drawer_open">Open Drawer</string>
+  <string name="drawer_close">Close Drawer</string>
   <string name="CardEditorLaterMessage">Saved information for later</string>
   <string name="CardEditorCardDeck">Card deck: %s</string>
   <string name="CardEditorNoteDeck">Note deck: %s</string>
@@ -71,7 +73,6 @@
     <item>Lapses</item>
     <item>Reviews</item>
   </string-array>
-  <string name="about_title">Относно</string>
   <string name="cardeditor_title_add_note">Add note</string>
   <string name="cardeditor_title_edit_card">Edit note</string>
   <string name="factadder_saving_error">Error saving note</string>
@@ -115,7 +116,7 @@
   <string name="help_title">Помощ</string>
   <string name="help_online">Онлайн помощ</string>
   <string name="help_faq">ЧЗВ</string>
-  <string name="help_tutorial">Колода инструкций</string>
+  <string name="help_tutorial">Create tutorial deck</string>
   <string name="check_db">Check database</string>
   <string name="check_db_message">Checking database&#8230;</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
@@ -148,7 +149,7 @@
   <string name="import_importing">Importing cards&#8230;</string>
   <string name="import_hint">Place the apkg file in directory %s and press \"OK\" to import cards</string>
   <string name="upgrade_import_no_file_found">No importable %1$s file found</string>
-  <string name="study_options">Options</string>
+  <string name="study_options">Deck options</string>
   <string name="custom_study">Custom study</string>
   <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
   <string name="exit_wizard">Exit Wizard</string>

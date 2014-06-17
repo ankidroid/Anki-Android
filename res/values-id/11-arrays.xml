@@ -35,6 +35,14 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <string-array name="navigation_titles">
+    <item>Decks</item>
+    <item>Card Browser</item>
+    <item>Statistics</item>
+    <item>Settings</item>
+    <item>Help</item>
+    <item>Send Feedback</item>
+  </string-array>
   <string-array name="newCardSchedulingLabels">
     <item>Sebar dalam reviu</item>
     <item>Selepas reviu</item>

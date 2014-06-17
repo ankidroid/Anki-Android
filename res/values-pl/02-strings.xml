@@ -39,6 +39,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
+  <string name="drawer_open">Open Drawer</string>
+  <string name="drawer_close">Close Drawer</string>
   <string name="CardEditorLaterMessage">Zapisz informacje na później</string>
   <string name="CardEditorCardDeck">Talia karty: %s</string>
   <string name="CardEditorNoteDeck">Talia notatki: %s</string>
@@ -71,7 +73,6 @@
     <item>Lapses</item>
     <item>Reviews</item>
   </string-array>
-  <string name="about_title">O programie</string>
   <string name="cardeditor_title_add_note">Dodaj notatkę</string>
   <string name="cardeditor_title_edit_card">Edytuj notatkę</string>
   <string name="factadder_saving_error">Błąd podczas zapisywania notatki</string>
@@ -115,7 +116,7 @@
   <string name="help_title">Pomoc</string>
   <string name="help_online">Pomoc online</string>
   <string name="help_faq">FAQ</string>
-  <string name="help_tutorial">Talia instruktażowa</string>
+  <string name="help_tutorial">Create tutorial deck</string>
   <string name="check_db">Sprawdź bazę danych</string>
   <string name="check_db_message">Sprawdzanie bazy danych.\nProszę czekać...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
@@ -148,7 +149,7 @@
   <string name="import_importing">Importowanie kart.\nProszę czekać...</string>
   <string name="import_hint">Aby zaimportować karty, umieść plik apkg w katalogu %s i naciśnij ok</string>
   <string name="upgrade_import_no_file_found">Nie znaleziono żadnych plików do zaimportowania (%1$s)</string>
-  <string name="study_options">Opcje</string>
+  <string name="study_options">Deck options</string>
   <string name="custom_study">Nauka niestandardowa</string>
   <string name="dyn_deck_desc">To jest specjalna talia do nauki poza normalnym trybem. Karty automatycznie powrócą do oryginalnych talii po ich przejrzeniu. Usunięcie tej talii z listy spowoduje przywrócenie pozostałych w niej kart do oryginalnych talii.</string>
   <string name="exit_wizard">Zakończ kreator</string>

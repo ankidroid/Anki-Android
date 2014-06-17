@@ -39,6 +39,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
+  <string name="drawer_open">Open Drawer</string>
+  <string name="drawer_close">Close Drawer</string>
   <string name="CardEditorLaterMessage">Informácie uložené na neskôr</string>
   <string name="CardEditorCardDeck">Balíček kariet: %s</string>
   <string name="CardEditorNoteDeck">Poznámka balíčka: %s</string>
@@ -71,7 +73,6 @@
     <item>Lapses</item>
     <item>Reviews</item>
   </string-array>
-  <string name="about_title">O aplikácii</string>
   <string name="cardeditor_title_add_note">Pridať poznámku</string>
   <string name="cardeditor_title_edit_card">Upraviť poznámku</string>
   <string name="factadder_saving_error">Chyba pri ukladaní poznámky</string>
@@ -116,7 +117,7 @@
   <string name="help_title">Pomocník</string>
   <string name="help_online">Pomocník online</string>
   <string name="help_faq">FAQ</string>
-  <string name="help_tutorial">Úvodný balíček</string>
+  <string name="help_tutorial">Create tutorial deck</string>
   <string name="check_db">Kontrola databázy</string>
   <string name="check_db_message">Kontrolujem databázu.\nProsím počkajte...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
@@ -149,7 +150,7 @@
   <string name="import_importing">Importujem karty.\nProsím počkajte...</string>
   <string name="import_hint">Ak chcete importovať karty, umiestnite súbor apkg do adresára %s a stlačte ok</string>
   <string name="upgrade_import_no_file_found">Žiaden importovateľný %1$s súbor nebol nájdený</string>
-  <string name="study_options">Nastavenia</string>
+  <string name="study_options">Deck options</string>
   <string name="custom_study">Vlastné štúdium</string>
   <string name="dyn_deck_desc">Toto je špeciálny balíček na štúdium mimo bežného plánu. Karty sa automaticky vrátia do ich pôvodných balíčkov po tom čo si ich zopakujete. Po odstránení tohto balíčka zo zoznamu balíčkov sa všetky zostávajúce karty vrátia do ich pôvodných balíčkov.</string>
   <string name="exit_wizard">Ukončiť sprievodcu</string>

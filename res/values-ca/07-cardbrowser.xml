@@ -80,7 +80,7 @@
   <string name="card_details_tags">Etiquetes</string>
   <string name="card_details_model">Tipus de nota</string>
   <string name="card_browser_sorting_cards">S\'està classificant les fitxes. \nEspereu...</string>
-  <string name="card_browser_filtering_cards">S\'estàn filtrant les targestes\nUn moment si us plau...</string>
+  <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
   <string name="card_details_card_model">Plantilla de fitxa</string>
   <string-array name="card_browser_order_labels">
     <item>Cap ordenació (més ràpid)</item>

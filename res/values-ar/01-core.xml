@@ -108,6 +108,7 @@
   <string name="menu_bury_note">أخف الملاحظة</string>
   <string name="menu_suspend_card">علق البطاقة</string>
   <string name="menu_suspend_note">ملاحظة التعليق</string>
+  <string name="menu_save_note">Save note</string>
   <string name="menu_delete_note">ملاحظة الحذف</string>
   <string name="delete_note_message">هل تريد حقا حذف هذه الملاحظة و جميع بطاقاتها؟\n%s</string>
   <string name="menu_edit_card">حرر البطاقة</string>

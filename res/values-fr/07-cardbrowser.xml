@@ -80,7 +80,7 @@
   <string name="card_details_tags">Balises</string>
   <string name="card_details_model">Type de note</string>
   <string name="card_browser_sorting_cards">En train de trier les cartes.\nAttendez s\'il vous plaît...</string>
-  <string name="card_browser_filtering_cards">Filtrage des cartes.\nVeuillez patienter...</string>
+  <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
   <string name="card_details_card_model">Modèle de carte</string>
   <string-array name="card_browser_order_labels">
     <item>Pas de tri (plus rapide)</item>

@@ -39,6 +39,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
+  <string name="drawer_open">Open Drawer</string>
+  <string name="drawer_close">Close Drawer</string>
   <string name="CardEditorLaterMessage">Information sauvegardée pour plus tard</string>
   <string name="CardEditorCardDeck">Paquet de cartes : %s</string>
   <string name="CardEditorNoteDeck">Incluse dans le paquet : %s</string>
@@ -71,7 +73,6 @@
     <item>Erreurs</item>
     <item>Révisions</item>
   </string-array>
-  <string name="about_title">À propos</string>
   <string name="cardeditor_title_add_note">Ajouter une note</string>
   <string name="cardeditor_title_edit_card">Modifier la note</string>
   <string name="factadder_saving_error">Erreur à l\'enregistrement de la note</string>
@@ -115,7 +116,7 @@
   <string name="help_title">Aide</string>
   <string name="help_online">Aide en ligne</string>
   <string name="help_faq">FAQ</string>
-  <string name="help_tutorial">Paquet-tutoriel</string>
+  <string name="help_tutorial">Create tutorial deck</string>
   <string name="check_db">Vérification de la base de données</string>
   <string name="check_db_message">Vérification de la base de données. \nVeuillez patienter&#8230;</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Carte vide. Lancer \"Outil&gt;Cartes vides...\" sur le client PC.</string>
@@ -148,7 +149,7 @@
   <string name="import_importing">Import en cours\nVeuillez patienter...</string>
   <string name="import_hint">Pour importer des cartes, placez le fichier apkg dans le répertoire %s et appuyez sur ok</string>
   <string name="upgrade_import_no_file_found">Pas de fichier %1$s importable trouvé</string>
-  <string name="study_options">Options</string>
+  <string name="study_options">Deck options</string>
   <string name="custom_study">Étude personnalisée</string>
   <string name="dyn_deck_desc">Ceci est un paquet pour l\'étude en dehors des horaires normaux. Les cartes reviendront automatiquement à leur paquet d\'origine après leur révision. La suppression de ce paquet remettra toutes les cartes restantes dans leur paquet d\'origine.</string>
   <string name="exit_wizard">Quitter l\'assistant</string>
