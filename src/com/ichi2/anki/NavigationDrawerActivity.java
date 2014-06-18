@@ -122,6 +122,7 @@ public class NavigationDrawerActivity extends AnkiActivity {
                 if (!(this instanceof DeckPicker)) {
                     Intent deckPicker = new Intent(this, DeckPicker.class);
                     deckPicker.putExtra("viaNavigationDrawer", true);
+                    deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);    // opening DeckPicker should clear back history
                     startActivityWithAnimation(deckPicker, ActivityTransitionAnimation.LEFT);
                 }
                 break;
