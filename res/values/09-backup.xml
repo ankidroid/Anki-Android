@@ -39,7 +39,9 @@
     <string name="backup_error_menu_repair">Repair database</string>
     <string name="backup_repair_deck">Repair</string>
     <string name="backup_repair_deck_progress">Repairing database…</string>
+    <string name="backup_error">Error</string>
     <string name="backup_restore_error">Collection could not be restored</string>
+    <string name="backup_invalid_file_error">The selected backup file was invalid</string>
     <string name="backup_restore_if_missing">Restoring collection if missing…</string>
     <string name="backup_restore_deck">Restoring collection…</string>
     <string name="backup_restore_select_title">Select backup to restore</string>

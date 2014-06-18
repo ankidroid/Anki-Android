@@ -21,6 +21,7 @@
 package com.ichi2.anki;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -1851,8 +1852,6 @@ public class DeckPicker extends NavigationDrawerActivity {
                 break;
 
             case DIALOG_RESTORE_BACKUP:
-                // TODO: Check the integrity of the backups before attempting to restore (e.g. size should be > 0)
-                // can show R.string.show backup_restore_error if invalid and abort
                 File[] files = BackupManager.getBackups(new File(AnkiDroidApp.getCollectionPath()));
                 mBackups = new File[files.length];
                 for (int i = 0; i < files.length; i++) {
@@ -1885,11 +1884,29 @@ public class DeckPicker extends NavigationDrawerActivity {
 
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            DeckTask.launchDeckTask(
-                                    DeckTask.TASK_TYPE_RESTORE_DECK,
-                                    mRestoreDeckHandler,
-                                    new DeckTask.TaskData(new Object[] { AnkiDroidApp.getCol(),
-                                            AnkiDroidApp.getCollectionPath(), mBackups[which].getPath() }));
+                            if (mBackups[which].length() > 0){
+                                // restore the backup if it's valid
+                                DeckTask.launchDeckTask(
+                                        DeckTask.TASK_TYPE_RESTORE_DECK,
+                                        mRestoreDeckHandler,
+                                        new DeckTask.TaskData(new Object[] { AnkiDroidApp.getCol(),
+                                                AnkiDroidApp.getCollectionPath(), mBackups[which].getPath() }));                                
+                            } else {
+                                // otherwise show an error dialog
+                                Dialog invalidFileDialog = new AlertDialog.Builder(DeckPicker.this)
+                                .setTitle(R.string.backup_error)
+                                .setMessage(R.string.backup_invalid_file_error)
+                                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
+                                {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which)
+                                    {                                      
+                                    }
+                                })
+                                .create();
+                                invalidFileDialog.show();                               
+                            }
+
                         }
                     });
                     builder.setCancelable(true).setOnCancelListener(new OnCancelListener() {
