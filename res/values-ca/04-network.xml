@@ -85,7 +85,7 @@
   <string name="shareddeckpicker_title">Trieu el paquet que voleu baixar</string>
   <string name="downloaddeck_search">Cerca</string>
   <string name="preferences_title">Preferències</string>
-  <string name="deckpreferences_title">Preferències del paquet</string>
+  <string name="deckpreferences_title">Options for XXX</string>
   <string name="sync_conflict_message">Els vostres paquets aquí i a AnkiWeb difereixen de tal manera que no es poden combinar junts, per això cal que trieu un dels dos paquets.\n\nVoleu carregar el paquets des d\'aquí, o descarregar el d\'AnkiWeb?</string>
   <string name="sync_conflict_local">Puja</string>
   <string name="sync_conflict_remote">Descarrega</string>

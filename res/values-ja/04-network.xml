@@ -85,7 +85,7 @@
   <string name="shareddeckpicker_title">ダウンロードする単語帳を選択</string>
   <string name="downloaddeck_search">検索</string>
   <string name="preferences_title">設定</string>
-  <string name="deckpreferences_title">単語帳設定</string>
+  <string name="deckpreferences_title">Options for XXX</string>
   <string name="sync_conflict_message">ダウンロードしたデータベースが壊れています。もう一度試してください。</string>
   <string name="sync_conflict_local">アップロード</string>
   <string name="sync_conflict_remote">ダウンロード</string>

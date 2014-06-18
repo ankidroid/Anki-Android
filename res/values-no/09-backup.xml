@@ -58,7 +58,9 @@
   <string name="backup_error_menu_repair">Reparer database</string>
   <string name="backup_repair_deck">Reparer</string>
   <string name="backup_repair_deck_progress">Reparerer databasen.\nVennligst vent...</string>
+  <string name="backup_error">Error</string>
   <string name="backup_restore_error">Samlingen kan ikke repareres</string>
+  <string name="backup_invalid_file_error">The selected backup file was invalid</string>
   <string name="backup_restore_if_missing">Gjenoppretter samling hvis mangler...</string>
   <string name="backup_restore_deck">Gjenoppretter samling.\nVennligst vent...</string>
   <string name="backup_restore_select_title">Velg sikkerhetskopiering som skal gjenopprettes</string>

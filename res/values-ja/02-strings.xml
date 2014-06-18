@@ -39,8 +39,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-  <string name="drawer_open">Open Drawer</string>
-  <string name="drawer_close">Close Drawer</string>
+  <string name="drawer_open">引き出しを開ける</string>
+  <string name="drawer_close">引き出しを閉じる</string>
   <string name="CardEditorLaterMessage">後日のために情報を保存</string>
   <string name="CardEditorCardDeck">カード単語帳: %s</string>
   <string name="CardEditorNoteDeck">ノート単語帳: %s</string>
@@ -116,7 +116,8 @@
   <string name="help_title">ヘルプ</string>
   <string name="help_online">オンラインヘルプ</string>
   <string name="help_faq">よくある質問</string>
-  <string name="help_tutorial">Create tutorial deck</string>
+  <string name="help_tutorial">チュートリアル単語帳の作成</string>
+  <string name="tutorial_deck_name">Tutorial deck</string>
   <string name="check_db">データベースの検査</string>
   <string name="check_db_message">データを確認中です\nしばらくお待ちください</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">空のカード。\"ツール &gt; 空のカード...\"をデスクトップ クライアントで実行。</string>
@@ -149,7 +150,7 @@
   <string name="import_importing">カード取得中です\nしばらくお待ちください</string>
   <string name="import_hint">カードを取り込むためにapkg ファイルをフォルダに保管してください %s そしてＯＫボタンをクリックしてください</string>
   <string name="upgrade_import_no_file_found">読み込み可能な %1$s のファイルが見つかりません</string>
-  <string name="study_options">Deck options</string>
+  <string name="study_options">単語帳オプション</string>
   <string name="custom_study">カスタム学習</string>
   <string name="dyn_deck_desc">指定された検索条件で抽出されたカードを集めたカスタム単語帳です。復習スケジュールは無視されます。復習後、又は、単語帳を削除すると、各カードは元の単語帳に戻されます。</string>
   <string name="exit_wizard">ウィザードの終了</string>

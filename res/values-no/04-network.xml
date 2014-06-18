@@ -85,7 +85,7 @@
   <string name="shareddeckpicker_title">Velg kortstokken du vil laste ned</string>
   <string name="downloaddeck_search">Søk</string>
   <string name="preferences_title">Innstillinger</string>
-  <string name="deckpreferences_title">Egenskaper for kort</string>
+  <string name="deckpreferences_title">Options for XXX</string>
   <string name="sync_conflict_message">Kortstokkene dine her og på AnkiWeb er så ulike at de ikke kan slåes sammen, så kortstokkene på den ene siden må overskrives av kortstokkene fra den andre.\n\nVil du laste opp kortstokkene herfra, eller laste ned kortstokkene fra AnkiWeb?</string>
   <string name="sync_conflict_local">Last opp</string>
   <string name="sync_conflict_remote">Last ned</string>

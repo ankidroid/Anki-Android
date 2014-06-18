@@ -36,12 +36,12 @@
 -->
 <resources>
   <string-array name="navigation_titles">
-    <item>Decks</item>
-    <item>Card Browser</item>
-    <item>Statistics</item>
-    <item>Settings</item>
-    <item>Help</item>
-    <item>Send Feedback</item>
+    <item>Paquet</item>
+    <item>Navigateur de carte</item>
+    <item>Statistiques</item>
+    <item>Paramètres</item>
+    <item>Aide</item>
+    <item>Envoyer un commentaire</item>
   </string-array>
   <string-array name="newCardSchedulingLabels">
     <item>Disperser les cartes inédites dans le paquet</item>

@@ -85,7 +85,7 @@
   <string name="shareddeckpicker_title">كارتي كه مي خواهيد بارگیری شود را انتخاب كنيد</string>
   <string name="downloaddeck_search">جستجو</string>
   <string name="preferences_title">تنظيمات</string>
-  <string name="deckpreferences_title">تنظيمات دسته</string>
+  <string name="deckpreferences_title">Options for XXX</string>
   <string name="sync_conflict_message">دسته های شما اینجا و در آنکی وب با یکدیگر متفاوتند چنانکه نمی توان آنها را با یکدیگر ادغام کرد, همچنین ضروری است دسته ها  از یک طرف با دسته های از طرف دیگر بازنویسی شوند.\n\nآیا مایلید دسته ها را از اینجا بارگذاری کنید, یا دسته ها را از آنکی وب بارگیری می کنید؟</string>
   <string name="sync_conflict_local">بارگذاری</string>
   <string name="sync_conflict_remote">بارگیری</string>

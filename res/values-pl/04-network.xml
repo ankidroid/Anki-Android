@@ -85,7 +85,7 @@
   <string name="shareddeckpicker_title">Wybierz talię do pobrania</string>
   <string name="downloaddeck_search">Szukaj</string>
   <string name="preferences_title">Ustawienia</string>
-  <string name="deckpreferences_title">Ustawienia talii</string>
+  <string name="deckpreferences_title">Options for XXX</string>
   <string name="sync_conflict_message">Twoje talie tutaj oraz na AnkiWeb różnią się do tego stopnia, że nie mogą być połączone. Konieczne jest zatem nadpisanie talii w jednym miejscu taliami skądinąd.\n\nCzy chciałbyś przesłać talie stąd czy pobrać talie z AnkiWeb?</string>
   <string name="sync_conflict_local">Wysyłanie</string>
   <string name="sync_conflict_remote">Pobieranie</string>

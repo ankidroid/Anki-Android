@@ -85,7 +85,7 @@
   <string name="shareddeckpicker_title">İndirmek istediğiniz desteyi seçin</string>
   <string name="downloaddeck_search">Arama</string>
   <string name="preferences_title">Tercihler</string>
-  <string name="deckpreferences_title">Deste Tercihleri</string>
+  <string name="deckpreferences_title">Options for XXX</string>
   <string name="sync_conflict_message">Buradaki ve AnkiWeb\'deki desteleriniz birbirleriyle birleştirilemeyecek şekilde farklıdır, bu yüzden bir taraftaki desteleri diğerleriyle değiştirmek gerekir.\n\nBuradaki desteleri yüklemek mi, yoksa AnkiWeb\'deki desteleri indirmek mi istiyorsunuz?</string>
   <string name="sync_conflict_local">Karşıya Yükle</string>
   <string name="sync_conflict_remote">İndir</string>

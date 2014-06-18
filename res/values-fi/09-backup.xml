@@ -59,7 +59,9 @@ Tämä nollaa edistymisesi ja poistaa kaikki kortit!</string>
   <string name="backup_error_menu_repair">Korjaa tietokanta</string>
   <string name="backup_repair_deck">Korjaus</string>
   <string name="backup_repair_deck_progress">Korjataan tietokantaa.\nOdota hetki...</string>
+  <string name="backup_error">Error</string>
   <string name="backup_restore_error">Kokoelman palautus epäonnistui</string>
+  <string name="backup_invalid_file_error">The selected backup file was invalid</string>
   <string name="backup_restore_if_missing">Palautetaan kokoelma, jos se puuttuu...</string>
   <string name="backup_restore_deck">Palautetaan kokoelmaa.\nOdota hetki...</string>
   <string name="backup_restore_select_title">Valitse varmuuskopio palauttaaksesi</string>

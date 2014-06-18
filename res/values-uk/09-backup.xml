@@ -58,7 +58,9 @@
   <string name="backup_error_menu_repair">Відлагодити базу даних</string>
   <string name="backup_repair_deck">Відлагодити</string>
   <string name="backup_repair_deck_progress">Відлагодження бази даних.\nБудь ласка, чекайте...</string>
+  <string name="backup_error">Error</string>
   <string name="backup_restore_error">Не можливо відновити колекцію</string>
+  <string name="backup_invalid_file_error">The selected backup file was invalid</string>
   <string name="backup_restore_if_missing">Відновлення колекції в разі втрати...</string>
   <string name="backup_restore_deck">Відновлення колекції.\nБудь ласка, зачекайте...</string>
   <string name="backup_restore_select_title">Виберіть резервну копію для відновлення</string>

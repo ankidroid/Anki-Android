@@ -58,7 +58,9 @@
   <string name="backup_error_menu_repair">데이터베이스 복구</string>
   <string name="backup_repair_deck">복구</string>
   <string name="backup_repair_deck_progress">데이터베이스 복구중. \ n 잠시 기다려 주세요...</string>
+  <string name="backup_error">Error</string>
   <string name="backup_restore_error">컬렉션 복구될 수 없음</string>
+  <string name="backup_invalid_file_error">The selected backup file was invalid</string>
   <string name="backup_restore_if_missing">누락된 컬렉션 복원 중...</string>
   <string name="backup_restore_deck">컬렉션 복구 중입니다.\n잠시만 기다려 주세요...</string>
   <string name="backup_restore_select_title">복원할 백업 파일 선택</string>

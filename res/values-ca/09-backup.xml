@@ -58,7 +58,9 @@
   <string name="backup_error_menu_repair">Reparació de la base de dades</string>
   <string name="backup_repair_deck">Repara</string>
   <string name="backup_repair_deck_progress">S\'està reparant la base de dades.\nUn moment si us plau...</string>
+  <string name="backup_error">Error</string>
   <string name="backup_restore_error">No ha estat possible reparar la col·lecció</string>
+  <string name="backup_invalid_file_error">The selected backup file was invalid</string>
   <string name="backup_restore_if_missing">S\'està restaurant la col·lecció si falta...</string>
   <string name="backup_restore_deck">S\'està restaurant la col·lecció. \nEspereu...</string>
   <string name="backup_restore_select_title">Seleccioneu la còpia de seguretat que voleu restaurar</string>

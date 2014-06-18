@@ -117,6 +117,7 @@
   <string name="help_online">在线帮助</string>
   <string name="help_faq">常见问题</string>
   <string name="help_tutorial">Create tutorial deck</string>
+  <string name="tutorial_deck_name">Tutorial deck</string>
   <string name="check_db">检查数据库</string>
   <string name="check_db_message">检查数据库。\n请等待...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">空卡牌。在桌面客户端上运行”工具 &gt; 空卡...\"。</string>

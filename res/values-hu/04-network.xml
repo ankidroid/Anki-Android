@@ -85,7 +85,7 @@
   <string name="shareddeckpicker_title">Válszd ki a letölteni kívánt paklit</string>
   <string name="downloaddeck_search">Keresés</string>
   <string name="preferences_title">Beállítások</string>
-  <string name="deckpreferences_title">Pakli beállításai</string>
+  <string name="deckpreferences_title">Options for XXX</string>
   <string name="sync_conflict_message">Az itteni és az AnkiWeb-es paklik között olyan a különbség, hogy nem lehet őket egybegyúrni, ezért szükséges felülirni az egyik helyen lévő paklit a másik helyen lévővel.\n\nSzeretnéd feltölteni innen a paklikat, vagy letöltöd őket az AnkiWeb-ről?</string>
   <string name="sync_conflict_local">Feltöltés</string>
   <string name="sync_conflict_remote">Letöltés</string>

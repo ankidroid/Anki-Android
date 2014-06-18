@@ -117,6 +117,7 @@
   <string name="help_online">Trợ giúp trực tuyến</string>
   <string name="help_faq">CÂU HỎI THƯỜNG GẶP</string>
   <string name="help_tutorial">Create tutorial deck</string>
+  <string name="tutorial_deck_name">Tutorial deck</string>
   <string name="check_db">Kiểm tra cơ sở dữ liệu</string>
   <string name="check_db_message">Đang kiểm tra cơ sở dữ liệu. \n Xin đợi chút...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>

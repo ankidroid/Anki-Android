@@ -36,12 +36,12 @@
 -->
 <resources>
   <string-array name="navigation_titles">
-    <item>Decks</item>
-    <item>Card Browser</item>
-    <item>Statistics</item>
-    <item>Settings</item>
-    <item>Help</item>
-    <item>Send Feedback</item>
+    <item>単語帳</item>
+    <item>カード ブラウザー</item>
+    <item>統計情報</item>
+    <item>設定</item>
+    <item>ヘルプ</item>
+    <item>フィードバックを送信</item>
   </string-array>
   <string-array name="newCardSchedulingLabels">
     <item>復習中に新しいカードを混ぜる</item>

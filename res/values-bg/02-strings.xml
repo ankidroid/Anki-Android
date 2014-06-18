@@ -117,6 +117,7 @@
   <string name="help_online">Онлайн помощ</string>
   <string name="help_faq">ЧЗВ</string>
   <string name="help_tutorial">Create tutorial deck</string>
+  <string name="tutorial_deck_name">Tutorial deck</string>
   <string name="check_db">Check database</string>
   <string name="check_db_message">Checking database&#8230;</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>

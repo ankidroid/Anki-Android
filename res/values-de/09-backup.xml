@@ -58,7 +58,9 @@
   <string name="backup_error_menu_repair">Repariere Datenbank</string>
   <string name="backup_repair_deck">Reparieren</string>
   <string name="backup_repair_deck_progress">Repariere Datenbank&#8230;</string>
+  <string name="backup_error">Error</string>
   <string name="backup_restore_error">Sammlung konnte nicht wiederhergestellt werden</string>
+  <string name="backup_invalid_file_error">The selected backup file was invalid</string>
   <string name="backup_restore_if_missing">Stelle Sammlung wieder her, falls sie fehlt&#8230;</string>
   <string name="backup_restore_deck">Stelle Sammlung wieder her&#8230;</string>
   <string name="backup_restore_select_title">Wählen Sie die Sicherungskopie, die wiederhergestellt werden soll</string>

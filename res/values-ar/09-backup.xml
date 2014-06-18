@@ -58,7 +58,9 @@
   <string name="backup_error_menu_repair">إصلاح قاعدة البيانات</string>
   <string name="backup_repair_deck">إصلاح</string>
   <string name="backup_repair_deck_progress">إصلاح قاعدة البيانات.\nالرجاء الانتظار...</string>
+  <string name="backup_error">Error</string>
   <string name="backup_restore_error">تعذر استعادة المجموعة</string>
+  <string name="backup_invalid_file_error">The selected backup file was invalid</string>
   <string name="backup_restore_if_missing">استعادة المجموعة إذا كانت مفقودة...</string>
   <string name="backup_restore_deck">استعادة المجموعة.\n يرجى الانتظار...</string>
   <string name="backup_restore_select_title">اختر نسخة احتياطية لاستعادتها</string>

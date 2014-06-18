@@ -85,7 +85,7 @@
   <string name="shareddeckpicker_title">Selecione o deck que você deseja baixar</string>
   <string name="downloaddeck_search">Pesquisa</string>
   <string name="preferences_title">Preferências</string>
-  <string name="deckpreferences_title">Preferências de Deck</string>
+  <string name="deckpreferences_title">Options for XXX</string>
   <string name="sync_conflict_message">Seus decks aqui e em AnkiWeb diferem de tal forma que eles não podem ser mesclados juntos, por isso é necessário substituir os decks de um lado com os decks do outro.\n\nDeseja fazer upload dos decks daqui, ou baixar os decks de AnkiWeb?</string>
   <string name="sync_conflict_local">Fazer upload</string>
   <string name="sync_conflict_remote">Baixar</string>

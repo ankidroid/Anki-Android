@@ -85,7 +85,7 @@
   <string name="shareddeckpicker_title">Chọn bài mà bạn muốn tải về</string>
   <string name="downloaddeck_search">Tìm kiếm</string>
   <string name="preferences_title">Tuỳ chọn</string>
-  <string name="deckpreferences_title">Tùy chọn Tập thẻ</string>
+  <string name="deckpreferences_title">Options for XXX</string>
   <string name="sync_conflict_message">Tập thẻ của bạn ở đây và trên AnkiWeb khác nhau theo cách mà chúng không thể kêt hợp với nhau, vậy nên cần ghi đè tập thẻ từ một phía bằng tập thẻ còn lại.\n\nBạn muốn tải lên tập thẻ từ đây, hay muốn tải xuống tập thẻ từ AnkiWeb?</string>
   <string name="sync_conflict_local">Tải lên</string>
   <string name="sync_conflict_remote">Tải xuống</string>

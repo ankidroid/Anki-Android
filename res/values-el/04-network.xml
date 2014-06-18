@@ -85,7 +85,7 @@
   <string name="shareddeckpicker_title">Επιλέξτε την τράπουλα που θέλετε να κατεβάσετε</string>
   <string name="downloaddeck_search">Αναζήτηση</string>
   <string name="preferences_title">Προτιμήσεις</string>
-  <string name="deckpreferences_title">Προτιμήσεις τράπουλας</string>
+  <string name="deckpreferences_title">Options for XXX</string>
   <string name="sync_conflict_message">Οι τράπουλές σας εδώ και στο AnkiWeb διαφέρουν κατά τέτοιο τρόπο που δε μπορούν να συγχωνευτούν, για αυτό πρέπει να αντικαταστήσετε τις τράπουλες της μίας τοποθεσίας με τις τράπουλες της άλλης.\n\nΘέλετε να στείλετε τις τράπουλες από εδώ, ή να λάβετε τις τράπουλες από το AnkiWeb;</string>
   <string name="sync_conflict_local">Αποστολή</string>
   <string name="sync_conflict_remote">Λήψη</string>

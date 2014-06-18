@@ -85,7 +85,7 @@
   <string name="shareddeckpicker_title">Выберите колоду, которую хотите загрузить</string>
   <string name="downloaddeck_search">Поиск</string>
   <string name="preferences_title">Настройки</string>
-  <string name="deckpreferences_title">Настройки колоды</string>
+  <string name="deckpreferences_title">Options for XXX</string>
   <string name="sync_conflict_message">Ваши колоды тут и на AnkiWeb-онлайн отличаются таким образом, что они не могут быть объединены вместе, так что нужно перезаписать одну колоду другой полностью.\n\nВы хотите выгрузить колоду отсюда или скачать колоду с AnkiWeb сюда?</string>
   <string name="sync_conflict_local">Выгрузка</string>
   <string name="sync_conflict_remote">Загрузить</string>

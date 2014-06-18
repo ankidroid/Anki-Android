@@ -85,7 +85,7 @@
   <string name="shareddeckpicker_title">Vyberte balíček, který chcete stáhnout</string>
   <string name="downloaddeck_search">Hledat</string>
   <string name="preferences_title">Nastavení</string>
-  <string name="deckpreferences_title">Předvolby balíčků</string>
+  <string name="deckpreferences_title">Options for XXX</string>
   <string name="sync_conflict_message">Vaše balíčky zde a na AnkiWeb se liší natolik, že nemohou být sloučeny dohromady, takže je nutné přepsat balíčky jedné strany druhou.\n\nChcete použít balíčky odtud nebo balíčky z AnkiWeb?</string>
   <string name="sync_conflict_local">Odeslat</string>
   <string name="sync_conflict_remote">Stáhnout</string>

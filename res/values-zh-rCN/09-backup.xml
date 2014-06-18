@@ -58,7 +58,9 @@
   <string name="backup_error_menu_repair">修复数据库</string>
   <string name="backup_repair_deck">修复</string>
   <string name="backup_repair_deck_progress">修复数据库。 \n 请稍候...</string>
+  <string name="backup_error">Error</string>
   <string name="backup_restore_error">集合无法还原</string>
+  <string name="backup_invalid_file_error">The selected backup file was invalid</string>
   <string name="backup_restore_if_missing">如果缺失，则恢复集合...</string>
   <string name="backup_restore_deck">恢复集合。 \n 请稍候...</string>
   <string name="backup_restore_select_title">选择要还原的备份</string>

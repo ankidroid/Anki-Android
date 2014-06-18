@@ -85,7 +85,7 @@
   <string name="shareddeckpicker_title">Izaberite špil koji želite skinuti</string>
   <string name="downloaddeck_search">Traži</string>
   <string name="preferences_title">Postavke</string>
-  <string name="deckpreferences_title">Podešavanje Špila</string>
+  <string name="deckpreferences_title">Options for XXX</string>
   <string name="sync_conflict_message">Ваши шпилови овде и на AnkiWeb се разликују и не могу бити обједињени, јер је неопходно попуно презаписати један шпил другим.\n\nЖелите ли да учитате шпил одавде или да преузмете шпил са AnkiWeb овамо?</string>
   <string name="sync_conflict_local">Учитавање</string>
   <string name="sync_conflict_remote">Преузми</string>

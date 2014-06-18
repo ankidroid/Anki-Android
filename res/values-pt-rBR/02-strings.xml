@@ -117,6 +117,7 @@
   <string name="help_online">Ajuda Online</string>
   <string name="help_faq">FAQ</string>
   <string name="help_tutorial">Create tutorial deck</string>
+  <string name="tutorial_deck_name">Tutorial deck</string>
   <string name="check_db">Verificar banco de dados</string>
   <string name="check_db_message">Verificando banco de dados.\nPor favor Aguarde...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Cartão vazio. Rode \"Ferramentas&gt;Cartões vazios...\" no cliente para desktop.</string>

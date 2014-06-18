@@ -58,7 +58,9 @@
   <string name="backup_error_menu_repair">Consertar banco de dados</string>
   <string name="backup_repair_deck">Consertar</string>
   <string name="backup_repair_deck_progress">Consertando banco de dados.\nPor favor aguarde...</string>
+  <string name="backup_error">Error</string>
   <string name="backup_restore_error">Coleção não pôde ser restaurada</string>
+  <string name="backup_invalid_file_error">The selected backup file was invalid</string>
   <string name="backup_restore_if_missing">Restaurando coleção caso esteja faltando...</string>
   <string name="backup_restore_deck">Restaurando coleção. \n Por favor aguarde...</string>
   <string name="backup_restore_select_title">Selecione o backup para restaurar</string>

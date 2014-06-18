@@ -117,6 +117,7 @@
   <string name="help_online">Ajuda online</string>
   <string name="help_faq">PMF</string>
   <string name="help_tutorial">Create tutorial deck</string>
+  <string name="tutorial_deck_name">Tutorial deck</string>
   <string name="check_db">Comprova la base de dades</string>
   <string name="check_db_message">S\'està comprovant la base de dades.\nUn moment si us plau...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>

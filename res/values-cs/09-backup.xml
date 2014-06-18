@@ -58,7 +58,9 @@
   <string name="backup_error_menu_repair">Opravit databázi</string>
   <string name="backup_repair_deck">Opravit</string>
   <string name="backup_repair_deck_progress">Opravuji databázi.\nPočkejte prosím...</string>
+  <string name="backup_error">Error</string>
   <string name="backup_restore_error">Kolekci nelze obnovit</string>
+  <string name="backup_invalid_file_error">The selected backup file was invalid</string>
   <string name="backup_restore_if_missing">Obnovení sbírky, pokud chybí...</string>
   <string name="backup_restore_deck">Oprava kolekce. \nProsím čekejte...</string>
   <string name="backup_restore_select_title">Vyberte zálohu pro obnovení</string>

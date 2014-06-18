@@ -117,6 +117,7 @@
   <string name="help_online">Onlinehjälp</string>
   <string name="help_faq">FAQ</string>
   <string name="help_tutorial">Create tutorial deck</string>
+  <string name="tutorial_deck_name">Tutorial deck</string>
   <string name="check_db">Kontrollera databas</string>
   <string name="check_db_message">Kontrollerar databasen. \nVänligen vänta...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Tomt kort. Kör \"Verktyg&gt;Tomma kort...\" i skrivbordsversionen av Anki.</string>

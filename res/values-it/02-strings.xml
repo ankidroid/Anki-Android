@@ -117,6 +117,7 @@
   <string name="help_online">Aiuto online</string>
   <string name="help_faq">FAQ</string>
   <string name="help_tutorial">Create tutorial deck</string>
+  <string name="tutorial_deck_name">Tutorial deck</string>
   <string name="check_db">Controlla database</string>
   <string name="check_db_message">Controllo database.\nAttendi...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Carta vuota. Esegui \"Strumenti&gt;Carte vuote...\" con la versione desktop.</string>

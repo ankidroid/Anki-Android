@@ -58,7 +58,9 @@
   <string name="backup_error_menu_repair">Обнављање базе података</string>
   <string name="backup_repair_deck">Обнављање</string>
   <string name="backup_repair_deck_progress">Обнављање базе података.\nМолим сачекајте...</string>
+  <string name="backup_error">Error</string>
   <string name="backup_restore_error">Колекција не може бити обновљена</string>
+  <string name="backup_invalid_file_error">The selected backup file was invalid</string>
   <string name="backup_restore_if_missing">Обнављање недостајуће колекције...</string>
   <string name="backup_restore_deck">Обнављање колекције.\nМолим сачекајте...</string>
   <string name="backup_restore_select_title">Изаберите резервну копију за обнављање</string>

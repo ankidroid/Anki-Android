@@ -58,7 +58,9 @@
   <string name="backup_error_menu_repair">修復資料庫</string>
   <string name="backup_repair_deck">修復</string>
   <string name="backup_repair_deck_progress">修復資料庫中\n請稍後...</string>
+  <string name="backup_error">Error</string>
   <string name="backup_restore_error">無法還原收藏</string>
+  <string name="backup_invalid_file_error">The selected backup file was invalid</string>
   <string name="backup_restore_if_missing">若失去集合，正恢復中&#8230;</string>
   <string name="backup_restore_deck">正在還原收藏\n請稍後...</string>
   <string name="backup_restore_select_title">請選擇要還原的備份檔案</string>

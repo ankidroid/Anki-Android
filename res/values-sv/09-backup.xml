@@ -58,7 +58,9 @@
   <string name="backup_error_menu_repair">Reparera databas</string>
   <string name="backup_repair_deck">Reparera</string>
   <string name="backup_repair_deck_progress">Reparerar databas.\nVar vänlig vänta...</string>
+  <string name="backup_error">Error</string>
   <string name="backup_restore_error">Samlingen kunde inte återställas</string>
+  <string name="backup_invalid_file_error">The selected backup file was invalid</string>
   <string name="backup_restore_if_missing">Återställer samling om den saknas...</string>
   <string name="backup_restore_deck">Återställer samling.\nVänligen vänta...</string>
   <string name="backup_restore_select_title">Välj säkerhetskopia att återställa</string>

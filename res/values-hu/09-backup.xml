@@ -58,7 +58,9 @@
   <string name="backup_error_menu_repair">Adatbázis javítása</string>
   <string name="backup_repair_deck">Javítás</string>
   <string name="backup_repair_deck_progress">Adatbázis javítása.\nKérlek, várj...</string>
+  <string name="backup_error">Error</string>
   <string name="backup_restore_error">Gyűjtemény nem javítható</string>
+  <string name="backup_invalid_file_error">The selected backup file was invalid</string>
   <string name="backup_restore_if_missing">Gyűjtemény visszaállítása, ha hiányzik...</string>
   <string name="backup_restore_deck">Gyűjtemény javítása. \nKérlek, várj...</string>
   <string name="backup_restore_select_title">Válaszd ki a visszaállítandó biztonsági másolatot</string>

@@ -58,7 +58,9 @@
   <string name="backup_error_menu_repair">Herstel database</string>
   <string name="backup_repair_deck">Herstel</string>
   <string name="backup_repair_deck_progress">Database herstellen.\nEven wachten...</string>
+  <string name="backup_error">Error</string>
   <string name="backup_restore_error">Collectie kon niet worden hersteld</string>
+  <string name="backup_invalid_file_error">The selected backup file was invalid</string>
   <string name="backup_restore_if_missing">Collectie terugzetten als die ontbreekt...</string>
   <string name="backup_restore_deck">Collectie herstellen.\nEven geduld alstublieft...</string>
   <string name="backup_restore_select_title">Selecteer de back-up om te herstellen</string>

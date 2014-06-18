@@ -85,7 +85,7 @@
   <string name="shareddeckpicker_title">Виберіть колоду для завантаження</string>
   <string name="downloaddeck_search">Пошук</string>
   <string name="preferences_title">Налаштування</string>
-  <string name="deckpreferences_title">Налаштування колоди</string>
+  <string name="deckpreferences_title">Options for XXX</string>
   <string name="sync_conflict_message">Ваші колоди тут та в AnkiWeb відрізняються так, що їх не можна об’єднати, тому потрібно перезаписати колоди з одного боку колодами з іншого.\n\nБажаєте відвантажити колоди звідси, чи завантажити з AnkiWeb?</string>
   <string name="sync_conflict_local">Відвантаження</string>
   <string name="sync_conflict_remote">Завантаження</string>

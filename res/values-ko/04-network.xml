@@ -85,7 +85,7 @@
   <string name="shareddeckpicker_title">다운로드하려는 암기묶음 선택</string>
   <string name="downloaddeck_search">검색</string>
   <string name="preferences_title">환경 설정</string>
-  <string name="deckpreferences_title">암기묶음 환경설정</string>
+  <string name="deckpreferences_title">Options for XXX</string>
   <string name="sync_conflict_message">AnkiWeb 서버와 현재 기기의 암기묶음이 서로 다르기 때문에 어떤 방식으로든 병합을 할 수가 없습니다. 그래서 한 쪽의 암기묶음 파일을 다른쪽으로 덮어쓰기해야만 합니다.\n\n 암기묶음을 서버로 업로드 할까요? 아니면 AnkiWeb 서버에서 다운로드 할까요?</string>
   <string name="sync_conflict_local">업로드</string>
   <string name="sync_conflict_remote">다운로드</string>

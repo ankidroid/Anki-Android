@@ -117,6 +117,7 @@
   <string name="help_online">Onlinehilfe</string>
   <string name="help_faq">Häufig gestellte Fragen</string>
   <string name="help_tutorial">Create tutorial deck</string>
+  <string name="tutorial_deck_name">Tutorial deck</string>
   <string name="check_db">Datenbank überprüfen</string>
   <string name="check_db_message">Prüfe Datenbank.\nBitte warten...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Leere Karte. Führen Sie \"Werkzeuge&gt;Leere Karten...\" mit dem Desktop-Programm aus.</string>

@@ -85,7 +85,7 @@
   <string name="shareddeckpicker_title">選擇你想下載的牌組</string>
   <string name="downloaddeck_search">搜尋</string>
   <string name="preferences_title">偏好設定</string>
-  <string name="deckpreferences_title">牌組偏好設定</string>
+  <string name="deckpreferences_title">Options for XXX</string>
   <string name="sync_conflict_message">您本地的牌組與 AnkiWeb 牌組之間的差異無法合併，因此需要以某一方的牌組來覆寫另一方的牌組。\n\n您想要上傳本地的牌組，或是從AnkiDroid 下載牌組呢？</string>
   <string name="sync_conflict_local">上傳</string>
   <string name="sync_conflict_remote">下載</string>

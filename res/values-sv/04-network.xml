@@ -85,7 +85,7 @@
   <string name="shareddeckpicker_title">Välj den kortlek du vill ladda ner</string>
   <string name="downloaddeck_search">Sök</string>
   <string name="preferences_title">Inställningar</string>
-  <string name="deckpreferences_title">Kortleksinställningar</string>
+  <string name="deckpreferences_title">Options for XXX</string>
   <string name="sync_conflict_message">Dina kortlekar här och på AnkiWeb skiljer sig på ett sätt så att de inte kan slås samman, så kortlekarna på ena sidan måste skrivas över med de från den andra sidan.\n\nVill du ladda upp kortlekarna som används här, eller hämta kortlekarna från AnkiWeb?</string>
   <string name="sync_conflict_local">Ladda upp</string>
   <string name="sync_conflict_remote">Hämta</string>

@@ -58,7 +58,9 @@
   <string name="backup_error_menu_repair">تعمیر پایگاه داده</string>
   <string name="backup_repair_deck">تعمیر</string>
   <string name="backup_repair_deck_progress">تعمیر پایگاه داده. \nلطفا صبر کنید...</string>
+  <string name="backup_error">Error</string>
   <string name="backup_restore_error">مجموعه را نمی توان بازگرداند</string>
+  <string name="backup_invalid_file_error">The selected backup file was invalid</string>
   <string name="backup_restore_if_missing">مجموعه را اگر از دست رفته باز می گرداند...</string>
   <string name="backup_restore_deck">درحال بازیابی مجموعه.\nلطفا صبر کنید...</string>
   <string name="backup_restore_select_title">نسخه پشتیبان را جهت بازیابی انتخاب کنید</string>

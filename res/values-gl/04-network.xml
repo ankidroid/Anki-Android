@@ -85,7 +85,7 @@
   <string name="shareddeckpicker_title">Select the deck you want to download</string>
   <string name="downloaddeck_search">Search</string>
   <string name="preferences_title">Preferencias</string>
-  <string name="deckpreferences_title">Deck preferences</string>
+  <string name="deckpreferences_title">Options for XXX</string>
   <string name="sync_conflict_message">You must either upload this collection or download it from Ankiweb, as they can\'t be merged. The collection on one side will be overwritten.</string>
   <string name="sync_conflict_local">Cargar</string>
   <string name="sync_conflict_remote">Descargar</string>

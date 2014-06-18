@@ -58,7 +58,9 @@
   <string name="backup_error_menu_repair">Réparation de la base de données</string>
   <string name="backup_repair_deck">Réparation</string>
   <string name="backup_repair_deck_progress">Réparation de la base de données.\nPatience&#8230;</string>
+  <string name="backup_error">Error</string>
   <string name="backup_restore_error">La collection n’a pas pu être restaurée</string>
+  <string name="backup_invalid_file_error">The selected backup file was invalid</string>
   <string name="backup_restore_if_missing">Rétablit la collection si manquante&#8230;</string>
   <string name="backup_restore_deck">Restauration de la collection.\nPatience&#8230;</string>
   <string name="backup_restore_select_title">Choisissez la sauvegarde à récupérer</string>

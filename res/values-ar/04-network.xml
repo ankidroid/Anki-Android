@@ -85,7 +85,7 @@
   <string name="shareddeckpicker_title">اختر الرزمة التي ترغب بتنزيلها</string>
   <string name="downloaddeck_search">بحث</string>
   <string name="preferences_title">تفضيلات</string>
-  <string name="deckpreferences_title">تفضيلات الرزمة</string>
+  <string name="deckpreferences_title">Options for XXX</string>
   <string name="sync_conflict_message">رزمك الخاص بك هنا وعلى أنكي ويب تختلف بطريقة بحيث لا يمكن دمجهما معا، لذلك من الضروري إحلال الرزم من جهة إلى جهة أخرى .\n\nهل تريد رفع الرزم من هنا، أو تنزيل الرزم من أنكي ويب؟</string>
   <string name="sync_conflict_local">رفع</string>
   <string name="sync_conflict_remote">تنزيل</string>

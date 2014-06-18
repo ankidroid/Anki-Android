@@ -85,7 +85,7 @@
   <string name="shareddeckpicker_title">Selecteer het deck dat u wil downloaden</string>
   <string name="downloaddeck_search">Zoeken</string>
   <string name="preferences_title">Voorkeuren</string>
-  <string name="deckpreferences_title">Deckvoorkeuren</string>
+  <string name="deckpreferences_title">Options for XXX</string>
   <string name="sync_conflict_message">Je leersets hier en die op AnkiWeb verschillen zodanig, dat zij niet kunnen worden samengevoegd. Dus het is noodzakelijk om de leersets van een kant te overschrijven.\n\nWil je de lokale leersets uploaden, de leersets van AnkiWeb downloaden?</string>
   <string name="sync_conflict_local">Upload</string>
   <string name="sync_conflict_remote">Download</string>

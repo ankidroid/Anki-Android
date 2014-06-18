@@ -58,7 +58,9 @@
   <string name="backup_error_menu_repair">Επισκευή βάσης δεδομένων</string>
   <string name="backup_repair_deck">Επισκευή</string>
   <string name="backup_repair_deck_progress">Επισκευή βάσης δεδομένων.\nΠαρακαλούμε περιμένετε...</string>
+  <string name="backup_error">Error</string>
   <string name="backup_restore_error">Η επαναφορά της συλλογής δεν ήταν δυνατή</string>
+  <string name="backup_invalid_file_error">The selected backup file was invalid</string>
   <string name="backup_restore_if_missing">Επαναφορά συλλογής άν λείπει...</string>
   <string name="backup_restore_deck">Επαναφορά συλλογής.\nΠαρακαλούμε περιμένετε...</string>
   <string name="backup_restore_select_title">Επιλέξτε το αντίγραφο για επαναφορά</string>

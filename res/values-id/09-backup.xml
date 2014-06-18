@@ -58,7 +58,9 @@
   <string name="backup_error_menu_repair">Perbaiki database</string>
   <string name="backup_repair_deck">Perbaiki</string>
   <string name="backup_repair_deck_progress">Memperbaiki database. \nSilahkan tunggu...</string>
+  <string name="backup_error">Error</string>
   <string name="backup_restore_error">Koleksi tidak dapat diperbaiki</string>
+  <string name="backup_invalid_file_error">The selected backup file was invalid</string>
   <string name="backup_restore_if_missing">Memulihkan koleksi jika hilang...</string>
   <string name="backup_restore_deck">Memulihkan koleksi. \nSilahkan tunggu...</string>
   <string name="backup_restore_select_title">Pilih salinan</string>

@@ -40,16 +40,16 @@
 -->
 <resources>
   <string name="pref_cat_general">AnkiDroid</string>
-  <string name="pref_cat_general_summ">General settings</string>
+  <string name="pref_cat_general_summ">Ajustes Generales</string>
   <string name="pref_cat_reviewing">Repasando</string>
   <string name="pref_cat_reviewing_summ">Non-deck-specific reviewer settings</string>
   <string name="pref_cat_reviewer_behaviour">Comportamiento</string>
   <string name="pref_cat_flashcard">Pantalla</string>
   <string name="pref_cat_whiteboard">Pizarra</string>
   <string name="pref_cat_automatic_display">Mostrar respuesta automáticamente</string>
-  <string name="pref_cat_fonts">Fonts</string>
+  <string name="pref_cat_fonts">Fuentes</string>
   <string name="pref_cat_fonts_summ">Change default font and size</string>
-  <string name="pref_cat_gestures">Gestures</string>
+  <string name="pref_cat_gestures">Gestos</string>
   <string name="pref_cat_gestures_summ">Use taps and swipes instead of buttons</string>
   <string name="pref_cat_actions">Acciones</string>
   <string name="pref_cat_advanced">Avanzado</string>
@@ -57,8 +57,8 @@
   <string name="pref_cat_performance">Rendimiento</string>
   <string name="pref_cat_workarounds">Workarounds</string>
   <string name="pref_cat_plugins">Complementos</string>
-  <string name="about_title">About AnkiDroid</string>
-  <string name="about_version">Version: </string>
+  <string name="about_title">Acerca de AnkiDroid</string>
+  <string name="about_version">Versión: </string>
   <string name="enable_whiteboard">Habilitar pizarra</string>
   <string name="show_whiteboard_summ">Te permite escribir en la pantalla</string>
   <string name="whiteboard_stroke_width">Ancho del trazo</string>
