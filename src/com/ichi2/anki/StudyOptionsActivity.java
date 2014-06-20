@@ -71,8 +71,10 @@ public class StudyOptionsActivity extends NavigationDrawerActivity {
     public boolean onPrepareOptionsMenu(Menu menu){
         // Make the add button visible when not fragmented layout
         MenuItem addFromStudyOptions = menu.findItem(R.id.action_add_note_from_study_options);
-        addFromStudyOptions.setVisible(true);
-        return true;        
+        if (addFromStudyOptions != null) {
+            addFromStudyOptions.setVisible(true);
+        }
+        return true;
     }
 
     public void loadContent(boolean onlyFnsMsg) {
