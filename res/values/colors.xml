@@ -85,7 +85,7 @@
     <color name="new_count">#000099</color>
     <color name="learn_count">#990000</color>
     <color name="review_count">#007700</color>
-    <color name="zero_count">#e0e0e0</color>
+    <color name="zero_count">#1f000000</color>
     <color name="new_count_night">#b1b1ff</color>
     <color name="learn_count_night">#f50000</color>
     <color name="review_count_night">#00cf00</color>
