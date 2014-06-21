@@ -534,7 +534,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         @Override
         public void onCancelled() {
             // TODO Auto-generated method stub
-            
+
         }
     };
 
@@ -562,7 +562,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         @Override
         public void onCancelled() {
             // TODO Auto-generated method stub
-            
+
         }
     };
 
@@ -639,7 +639,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         @Override
         public void onCancelled() {
             // TODO Auto-generated method stub
-            
+
         }
     };
 
@@ -741,7 +741,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         @Override
         public void onCancelled() {
             // TODO Auto-generated method stub
-            
+
         }
     };
 
@@ -830,9 +830,18 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         Matcher m = sTypeAnsPat.matcher(buf);
         DiffEngine diffEngine = new DiffEngine();
         StringBuilder sb = new StringBuilder();
-        // A bit of clean-up.
-        userAnswer = Utils.stripHTMLMedia(userAnswer).trim();
-        correctAnswer = Utils.stripHTMLMedia(correctAnswer).trim();
+        if (null == userAnswer)
+        {
+            userAnswer = "";
+        }
+        if (null == correctAnswer)
+        {
+            correctAnswer = "";
+        }
+        userAnswer = userAnswer.trim().replace("&", "&amp;").replace("<", "&lt;").replace(
+            ">", "&gt;").replace("[", "&#x5b;");
+        // Clean up HTML and [sound:NN] tags.
+        correctAnswer = correctAnswer.trim();
         userAnswer = AnkiDroidApp.getCompat().nfcNormalized(userAnswer);
         correctAnswer = AnkiDroidApp.getCompat().nfcNormalized(correctAnswer);
         // N.B. For API level <9 the NFC normalization is skipped. See also compat/CompatV[79].java.
@@ -1152,7 +1161,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             @Override
             public void onCancelled() {
                 // TODO Auto-generated method stub
-                
+
             }
         }, new DeckTask.TaskData(AnkiDroidApp.getCurrentAnkiDroidDirectory() + AnkiDroidApp.COLLECTION_PATH, 0, true));
     }
@@ -1237,7 +1246,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-        
+
         switch (item.getItemId()) {
 
             case android.R.id.home:
@@ -2166,7 +2175,17 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
     }
 
+    /**
+     * Remove HTML tags and links to sound files.
+     *
+     * This function is mis-named, it does not get any text, but just removes formating.  It also seems to be
+     * counter-productive. What if people want to learn html formating‽ Removed calls to this function. Candidate
+     * for clean-up.
+     *
+     * @param answer The text to clean up.
+     * @return The cleaned-up text.
 
+     */
     protected String getAnswerText(String answer) {
         if (answer == null || answer.equals("")) {
             return "";
@@ -2222,12 +2241,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 // reshape
                 mTypeCorrect = ArabicUtilities.reshapeSentence(mTypeCorrect, true);
             }
-            // Obtain the user answer and the correct answer
-            String userAnswer = getAnswerText(mAnswerField.getText().toString());
-            String correctAnswer = getAnswerText(mTypeCorrect);
-            Log.i(AnkiDroidApp.TAG, "correct answer = " + correctAnswer);
+            // // Obtain the user answer and the correct answer
+            // String userAnswer = getAnswerText(mAnswerField.getText().toString());
+            // String correctAnswer = getAnswerText(mTypeCorrect);
+            // Log.i(AnkiDroidApp.TAG, "correct answer = " + correctAnswer);
+            // // See getAnswerText’s JavaDoc… Also see typeAnsAnswerFilter.
 
-            answer = typeAnsAnswerFilter(answer, userAnswer, correctAnswer);
+            answer = typeAnsAnswerFilter(answer, mAnswerField.getText().toString(), mTypeCorrect);
             displayString = enrichWithQADiv(answer, true);
         }
 
