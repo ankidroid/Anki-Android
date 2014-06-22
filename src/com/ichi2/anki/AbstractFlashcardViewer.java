@@ -911,6 +911,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         mChangeBorderStyle = Themes.getTheme() == Themes.THEME_ANDROID_LIGHT
                 || Themes.getTheme() == Themes.THEME_ANDROID_DARK;
+        
+        // create inherited navigation drawer layout here so that it can be used by parent class
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.reviewer_drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.reviewer_left_drawer);
+        initNavigationDrawer();
 
         // The hardware buttons should control the music volume while reviewing.
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
@@ -1549,11 +1554,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     protected void initLayout(Integer layout) {
         setContentView(layout);
         
-        // create inherited navigation drawer layout here so that it can be used by parent class
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.reviewer_drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.reviewer_left_drawer);
-        initNavigationDrawer();
-
         mMainLayout = findViewById(R.id.main_layout);
         Themes.setContentStyle(mMainLayout, Themes.CALLER_REVIEWER);
 
