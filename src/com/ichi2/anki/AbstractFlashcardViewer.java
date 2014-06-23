@@ -913,6 +913,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 || Themes.getTheme() == Themes.THEME_ANDROID_DARK;
         
         // create inherited navigation drawer layout here so that it can be used by parent class
+        setContentView(R.layout.flashcard);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.reviewer_drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.reviewer_left_drawer);
         initNavigationDrawer();
@@ -957,7 +958,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         mUseQuickUpdate = shouldUseQuickUpdate();
 
-        initLayout(R.layout.flashcard);
+        initLayout();
 
         setTitle();
 
@@ -1551,9 +1552,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
 
     // Set the content view to the one provided and initialize accessors.
-    protected void initLayout(Integer layout) {
-        setContentView(layout);
-        
+    protected void initLayout() {
         mMainLayout = findViewById(R.id.main_layout);
         Themes.setContentStyle(mMainLayout, Themes.CALLER_REVIEWER);
 
