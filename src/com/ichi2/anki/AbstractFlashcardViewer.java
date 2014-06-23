@@ -187,6 +187,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private BroadcastReceiver mUnmountReceiver = null;
 
     private boolean mInBackground = false;
+    private boolean mReloadingCollection = false;
 
     /**
      * Variables to hold preferences
@@ -924,6 +925,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         Collection col = AnkiDroidApp.getCol();
         if (col == null) {
             // Reload the collection asynchronously, let onPostExecute method call initActivity()
+            mReloadingCollection = true;
             reloadCollection();
             return;
         } else {
@@ -988,6 +990,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         // Initialize dictionary lookup feature
         Lookup.initialize(this);
     }
+    
+        
+    private void deselectAllNavigationItems() {
+        // Deselect all entries in navigation drawer since the Reviewer isn't included in ND
+        for (int i=0; i< mDrawerList.getCount(); i++) {
+            mDrawerList.setItemChecked(i, false);
+        }
+        setTitle();
+        updateScreenCounts();
+    }
 
 
     // Saves deck each time Reviewer activity loses focus
@@ -1011,11 +1023,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mInBackground = false;
         super.onResume();
         restartTimer();
-        for (int i=0; i< mDrawerList.getCount(); i++) {
-            mDrawerList.setItemChecked(i, false);
+        
+        if (!mReloadingCollection) {
+            // Do any tasks which depend on initActivity() completing successfully below
+            deselectAllNavigationItems();
         }
-        setTitle();
-        updateScreenCounts();
     }
 
 
@@ -1129,6 +1141,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 } else {
                     finish();
                 }
+                
+                // Do any tasks below which were postponed in onCreate() or onResume() due to reloadCollection() 
+                deselectAllNavigationItems();
+                mReloadingCollection = false;
             }
 
 
