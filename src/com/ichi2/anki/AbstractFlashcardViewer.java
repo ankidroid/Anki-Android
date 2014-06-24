@@ -63,10 +63,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
-import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.EditText;
@@ -1711,7 +1711,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         webView.getSettings().setSupportZoom(true);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebChromeClient(new AnkiDroidWebChromeClient());
-        webView.addJavascriptInterface(new JavaScriptInterface(this), "ankidroid");
         if (AnkiDroidApp.SDK_VERSION > 7) {
             webView.setFocusableInTouchMode(false);
         }
@@ -1721,6 +1720,23 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         Log.i(AnkiDroidApp.TAG,
                 "Focusable = " + webView.isFocusable() + ", Focusable in touch mode = "
                         + webView.isFocusableInTouchMode());
+
+        // Filter any links using the custom "playsound" protocol defined in Sound.java.
+        // We play sounds through these links when a user taps the sound icon.
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                if (url.startsWith("playsound:")) {
+                    // Send a message that will be handled on the UI thread.
+                    Message msg = Message.obtain();
+                    String soundPath = url.replaceFirst("playsound:", "");
+                    msg.obj = soundPath;
+                    sHandler.sendMessage(msg);
+                    return true;
+                }
+                return false;
+            }
+        });
 
         return webView;
     }
@@ -2894,48 +2910,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             result.confirm();
             return true;
         }
-    }
-
-    public final class JavaScriptInterface {
-        private AbstractFlashcardViewer mCtx;
-
-
-        JavaScriptInterface(AbstractFlashcardViewer ctx) {
-            mCtx = ctx;
-        }
-
-
-        /**
-         * This is not called on the UI thread. Send a message that will be handled on the UI thread.
-         */
-        @JavascriptInterface
-        public void playSound(String soundPath) {
-            Message msg = Message.obtain();
-            msg.obj = soundPath;
-            sHandler.sendMessage(msg);
-        }
-
-
-        @JavascriptInterface
-        public int getAvailableWidth() {
-            if (mCtx.mAvailableInCardWidth == 0) {
-                mCtx.mAvailableInCardWidth = mCtx.calcAvailableInCardWidth();
-            }
-            return mCtx.mAvailableInCardWidth;
-        }
-    }
-
-
-    /** Calculate the width that is available to the webview for content */
-    public int calcAvailableInCardWidth() {
-        // The available width of the webview equals to the container's width, minus the container's padding
-        // divided by the default scale factor used by the WebView, and minus the WebView's padding
-        if (mCard != null && mCardFrame != null) {
-            return Math.round((mCardFrame.getWidth() - mCardFrame.getPaddingLeft() - mCardFrame.getPaddingRight()
-                    - mCard.getPaddingLeft() - mCard.getPaddingRight())
-                    / mCard.getScale());
-        }
-        return 0;
     }
 
 
