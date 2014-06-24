@@ -2187,10 +2187,6 @@ public class DeckPicker extends NavigationDrawerActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             Log.i(AnkiDroidApp.TAG, "DeckPicker - onBackPressed()");
-            if (mFragmented && getFragment().congratsShowing()) {
-                getFragment().finishCongrats();
-                return true;
-            }
             finishWithAnimation();
             return true;
         }

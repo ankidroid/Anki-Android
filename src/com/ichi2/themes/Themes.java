@@ -175,7 +175,7 @@ public class Themes {
                             LayoutParams.WRAP_CONTENT, 0, 6f, 0, 2f);
                     // setMargins(view.findViewById(R.id.studyoptions_statistic_field), LayoutParams.WRAP_CONTENT,
                     // LayoutParams.WRAP_CONTENT, 0, 2f, 0, 12f);
-                    ((View) view.findViewById(R.id.studyoptions_deckinformation))
+                    ((View) view.findViewById(R.id.studyoptions_scrollcontainer))
                             .setBackgroundResource(R.drawable.white_textview);
                     // ((View)
                     // view.findViewById(R.id.studyoptions_statistic_field)).setBackgroundResource(R.color.transparent);
@@ -184,6 +184,7 @@ public class Themes {
                     // view.findViewById(R.id.studyoptions_deckinformation)).setBackgroundResource(mTextViewStyle);
                     ((View) view.findViewById(R.id.studyoptions_main))
                             .setBackgroundResource(R.drawable.white_wallpaper);
+                    
                 } else {
                     // ((View)
                     // view.findViewById(R.id.studyoptions_statistic_field)).setBackgroundResource(mTextViewStyle);
