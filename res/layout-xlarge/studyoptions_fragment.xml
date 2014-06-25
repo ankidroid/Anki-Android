@@ -1,166 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/studyoptions_mainframe"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/studyoptions_main"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:orientation="vertical" >
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingTop="12dp" >
 
     <LinearLayout
-        android:id="@+id/studyoptions_deckinformation"
+        android:id="@+id/studyoptions_mainframe"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/studyoptions_bottom_buttons"
-        android:layout_alignParentTop="true"
         android:gravity="center"
         android:orientation="vertical" >
-
-        <TextView
-            android:id="@+id/studyoptions_deck_name"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:ellipsize="end"
-            android:gravity="center"
-            android:maxLines="3"
-            android:text=""
-            android:textColor="#000000"
-            android:textSize="28sp"
-            android:textStyle="bold" />
-
-        <LinearLayout
-            android:id="@+id/studyoptions_deckcounts"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dip"
-            android:layout_marginLeft="5dip"
-            android:layout_marginRight="3dip"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="invisible" >
-
-            <TableLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="5dip" >
-
-                <TableRow>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:paddingRight="5dip"
-                        android:text="@string/studyoptions_due_today"
-                        android:textColor="#000000" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="right"
-                        android:orientation="horizontal" >
-
-                        <TextView
-                            android:id="@+id/studyoptions_new"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingRight="5dip"
-                            android:textColor="@color/new_count" />
-
-                        <TextView
-                            android:id="@+id/studyoptions_lrn"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:paddingRight="5dip"
-                            android:textColor="@color/learn_count" />
-
-                        <TextView
-                            android:id="@+id/studyoptions_rev"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/review_count" />
-                    </LinearLayout>
-                </TableRow>
-
-                <TableRow>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingRight="5dip"
-                        android:text="@string/studyoptions_new_total"
-                        android:textColor="#000000" />
-
-                    <TextView
-                        android:id="@+id/studyoptions_total_new"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="right"
-                        android:textColor="#000000" />
-                </TableRow>
-
-                <TableRow>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingRight="5dip"
-                        android:text="@string/studyoptions_total_cards"
-                        android:textColor="#000000" />
-
-                    <TextView
-                        android:id="@+id/studyoptions_total"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="right"
-                        android:textColor="#000000" />
-                </TableRow>
-
-                <TableRow>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingRight="5dip"
-                        android:text="@string/studyoptions_eta"
-                        android:textColor="#000000" />
-
-                    <TextView
-                        android:id="@+id/studyoptions_eta"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="right"
-                        android:textColor="#000000" />
-                </TableRow>
-            </TableLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/studyoptions_chart"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:visibility="invisible" >
-
-            <LinearLayout
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <LinearLayout
-                android:id="@+id/studyoptions_mall_chart"
-                android:layout_width="0dip"
-                android:layout_height="250dip"
-                android:layout_weight="3"
-                android:orientation="vertical" />
-
-            <LinearLayout
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-        </LinearLayout>
 
         <ScrollView
             android:layout_width="fill_parent"
@@ -168,37 +21,204 @@
             android:layout_weight="1"
             android:fadeScrollbars="false"
             android:fillViewport="true" >
-
             <LinearLayout
+                android:id="@+id/studyoptions_scrollcontainer"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:orientation="vertical" >
-
-                <TextView
-                    android:id="@+id/studyoptions_deck_description"
+        	    <TextView
+                    android:id="@+id/studyoptions_deck_name"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
+                    android:layout_margin="5dp"
+                    android:ellipsize="end"
                     android:gravity="center"
+                    android:maxLines="3"
                     android:text=""
-                    android:textColor="#000000" />
-            </LinearLayout>
+                    android:textColor="#000000"
+                    android:textSize="28sp"
+                    android:textStyle="bold" />
+	            <LinearLayout
+	                android:id="@+id/studyoptions_deckinformation"
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:gravity="center"
+	                android:orientation="vertical" >
+	                <LinearLayout
+	                    android:id="@+id/studyoptions_deckcounts"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_marginBottom="5dip"
+	                    android:layout_marginLeft="5dip"
+	                    android:layout_marginRight="3dip"
+	                    android:gravity="center"
+	                    android:orientation="vertical"
+	                    android:visibility="invisible" >
+	
+	                    <TableLayout
+	                        android:layout_width="fill_parent"
+	                        android:layout_height="wrap_content"
+	                        android:layout_gravity="center_horizontal"
+	                        android:layout_marginBottom="5dip" >
+	
+	                        <TableRow>
+	
+	                            <TextView
+	                                android:layout_width="wrap_content"
+	                                android:layout_height="wrap_content"
+	                                android:layout_centerVertical="true"
+	                                android:paddingRight="5dip"
+	                                android:text="@string/studyoptions_due_today"
+	                                android:textColor="#000000" />
+	
+	                            <LinearLayout
+	                                android:layout_width="wrap_content"
+	                                android:layout_height="wrap_content"
+	                                android:gravity="right"
+	                                android:orientation="horizontal" >
+	
+	                                <TextView
+	                                    android:id="@+id/studyoptions_new"
+	                                    android:layout_width="wrap_content"
+	                                    android:layout_height="wrap_content"
+	                                    android:paddingRight="5dip"
+	                                    android:textColor="@color/new_count" />
+	
+	                                <TextView
+	                                    android:id="@+id/studyoptions_lrn"
+	                                    android:layout_width="wrap_content"
+	                                    android:layout_height="wrap_content"
+	                                    android:layout_gravity="center"
+	                                    android:paddingRight="5dip"
+	                                    android:textColor="@color/learn_count" />
+	
+	                                <TextView
+	                                    android:id="@+id/studyoptions_rev"
+	                                    android:layout_width="wrap_content"
+	                                    android:layout_height="wrap_content"
+	                                    android:textColor="@color/review_count" />
+	                            </LinearLayout>
+	                        </TableRow>
+	
+	                        <TableRow>
+	
+	                            <TextView
+	                                android:layout_width="wrap_content"
+	                                android:layout_height="wrap_content"
+	                                android:paddingRight="5dip"
+	                                android:text="@string/studyoptions_new_total"
+	                                android:textColor="#000000" />
+	
+	                            <TextView
+	                                android:id="@+id/studyoptions_total_new"
+	                                android:layout_width="wrap_content"
+	                                android:layout_height="wrap_content"
+	                                android:gravity="right"
+	                                android:textColor="#000000" />
+	                        </TableRow>
+	
+	                        <TableRow>
+	
+	                            <TextView
+	                                android:layout_width="wrap_content"
+	                                android:layout_height="wrap_content"
+	                                android:paddingRight="5dip"
+	                                android:text="@string/studyoptions_total_cards"
+	                                android:textColor="#000000" />
+	
+	                            <TextView
+	                                android:id="@+id/studyoptions_total"
+	                                android:layout_width="wrap_content"
+	                                android:layout_height="wrap_content"
+	                                android:gravity="right"
+	                                android:textColor="#000000" />
+	                        </TableRow>
+	
+	                        <TableRow>
+	
+	                            <TextView
+	                                android:layout_width="wrap_content"
+	                                android:layout_height="wrap_content"
+	                                android:paddingRight="5dip"
+	                                android:text="@string/studyoptions_eta"
+	                                android:textColor="#000000" />
+	
+	                            <TextView
+	                                android:id="@+id/studyoptions_eta"
+	                                android:layout_width="wrap_content"
+	                                android:layout_height="wrap_content"
+	                                android:gravity="right"
+	                                android:textColor="#000000" />
+	                        </TableRow>
+	                    </TableLayout>
+	                </LinearLayout>
+	
+	                <LinearLayout
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="wrap_content"
+	                    android:orientation="vertical" >
+	
+	                    <TextView
+	                        android:id="@+id/studyoptions_deck_description"
+	                        android:layout_width="fill_parent"
+	                        android:layout_height="wrap_content"
+	                        android:layout_marginBottom="5dp"
+	                        android:layout_marginLeft="5dp"
+	                        android:layout_marginRight="5dp"
+	                        android:gravity="center"
+	                        android:text=""
+	                        android:textColor="#000000" />
+	                </LinearLayout>
+	            </LinearLayout>
+	                <LinearLayout
+	                    android:id="@+id/studyoptions_congrats_layout"
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="wrap_content"
+	                    android:orientation="vertical" >
+	
+	                    <TextView
+	                        android:id="@+id/studyoptions_congrats_message"
+	                        android:layout_width="fill_parent"
+	                        android:layout_height="wrap_content"
+	                        android:layout_marginBottom="5dp"
+	                        android:layout_marginLeft="5dp"
+	                        android:layout_marginRight="5dp"
+	                        android:gravity="center"
+	                        android:text=""
+	                        android:textColor="#000000" />
+	                </LinearLayout>
+		        <LinearLayout
+		            android:id="@+id/studyoptions_chart"
+		            android:layout_width="fill_parent"
+		            android:layout_height="wrap_content"
+		            android:orientation="horizontal"
+		            android:visibility="invisible" >
+		
+		            <LinearLayout
+		                android:layout_width="0dip"
+		                android:layout_height="wrap_content"
+		                android:layout_weight="1" />
+		
+		            <LinearLayout
+		                android:id="@+id/studyoptions_mall_chart"
+		                android:layout_width="0dip"
+		                android:layout_height="250dip"
+		                android:layout_weight="3"
+		                android:orientation="vertical" />
+		
+		            <LinearLayout
+		                android:layout_width="0dip"
+		                android:layout_height="wrap_content"
+		                android:layout_weight="1" />
+		        </LinearLayout>	                
+            </LinearLayout>            
         </ScrollView>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/studyoptions_bottom_buttons"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:gravity="center"
-        android:orientation="vertical" >
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="vertical" >
 
             <LinearLayout
@@ -218,6 +238,45 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
             </LinearLayout>
+            <!--
+                 	<LinearLayout
+				    android:layout_width="0dip"
+				    android:layout_height="wrap_content"
+				    android:layout_weight="1"
+				    android:orientation="vertical" >
+				    <ToggleButton
+						android:id="@+id/studyoptions_limittoggle"
+						android:singleLine="true"
+						android:layout_height="0dip"
+       		  			android:layout_width="fill_parent"
+    			     	android:layout_weight="1"
+						android:textOff="-"
+						android:textOn="2" />
+				</LinearLayout>
+				<LinearLayout
+				    android:layout_width="0dip"
+				    android:layout_height="wrap_content"
+				    android:layout_weight="1"
+				    android:orientation="vertical" >
+
+				    <Button android:text="up"
+				        android:id="@+id/studyoptions_limitup"
+				        android:layout_width="fill_parent"
+				        android:layout_height="0dip"
+				        android:layout_weight="1"
+				        android:singleLine="true"
+				        />
+
+				    <Button android:text="down"
+				        android:id="@+id/studyoptions_limitdown"
+				        android:layout_width="fill_parent"
+				        android:layout_height="0dip"
+				        android:layout_weight="1"
+				        android:singleLine="true"
+				        />
+				</LinearLayout>
+            -->
+
             <!-- The below layout contains the components which are only shown when we DO NOT have a filtered deck -->
 
             <LinearLayout
@@ -259,55 +318,47 @@
             </LinearLayout>
 
             <!--
-              The below layout contains the components which are only shown when we have a filtered deck
-				It's set to hidden by default, and made visible in StudyOptionsFragment if filtered
+                  The below layout contains the components which are only shown when we have a filtered deck
+					It's set to hidden by default, and made visible in StudyOptionsFragment if filtered
             -->
 
             <LinearLayout
                 android:id="@+id/studyoptions_cram_buttons"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:visibility="gone" >
 
-                <Button
-                    android:id="@+id/studyoptions_options_cram"
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:text="@string/study_options"
-                    android:textSize="14sp" />
-
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:orientation="vertical" >
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <Button
+                        android:id="@+id/studyoptions_options_cram"
+                        android:layout_width="0px"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:text="@string/study_options"
+                        android:textSize="12sp" />
 
                     <Button
                         android:id="@+id/studyoptions_rebuild_cram"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_width="0px"
+                        android:layout_height="fill_parent"
                         android:layout_weight="1"
                         android:text="@string/rebuild_cram_label"
-                        android:textSize="14sp" />
+                        android:textSize="12sp" />
 
                     <Button
                         android:id="@+id/studyoptions_empty_cram"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_width="0px"
+                        android:layout_height="fill_parent"
                         android:layout_weight="1"
                         android:text="@string/empty_cram_label"
-                        android:textSize="14sp" />
+                        android:textSize="12sp" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-
-    <RelativeLayout
-        android:id="@+id/studyoptions_main"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="gone" />
-
-</RelativeLayout>
+</LinearLayout>
