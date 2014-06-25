@@ -535,7 +535,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         @Override
         public void onCancelled() {
             // TODO Auto-generated method stub
-            
+
         }
     };
 
@@ -563,7 +563,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         @Override
         public void onCancelled() {
             // TODO Auto-generated method stub
-            
+
         }
     };
 
@@ -640,7 +640,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         @Override
         public void onCancelled() {
             // TODO Auto-generated method stub
-            
+
         }
     };
 
@@ -742,7 +742,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         @Override
         public void onCancelled() {
             // TODO Auto-generated method stub
-            
+
         }
     };
 
@@ -912,7 +912,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         mChangeBorderStyle = Themes.getTheme() == Themes.THEME_ANDROID_LIGHT
                 || Themes.getTheme() == Themes.THEME_ANDROID_DARK;
-        
+
         // create inherited navigation drawer layout here so that it can be used by parent class
         setContentView(R.layout.flashcard);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.reviewer_drawer_layout);
@@ -990,8 +990,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         // Initialize dictionary lookup feature
         Lookup.initialize(this);
     }
-    
-        
+
+
     private void deselectAllNavigationItems() {
         // Deselect all entries in navigation drawer since the Reviewer isn't included in ND
         for (int i=0; i< mDrawerList.getCount(); i++) {
@@ -1023,7 +1023,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mInBackground = false;
         super.onResume();
         restartTimer();
-        
+
         if (!mReloadingCollection) {
             // Do any tasks which depend on initActivity() completing successfully below
             deselectAllNavigationItems();
@@ -1141,8 +1141,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 } else {
                     finish();
                 }
-                
-                // Do any tasks below which were postponed in onCreate() or onResume() due to reloadCollection() 
+
+                // Do any tasks below which were postponed in onCreate() or onResume() due to reloadCollection()
                 deselectAllNavigationItems();
                 mReloadingCollection = false;
             }
@@ -1168,7 +1168,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             @Override
             public void onCancelled() {
                 // TODO Auto-generated method stub
-                
+
             }
         }, new DeckTask.TaskData(AnkiDroidApp.getCurrentAnkiDroidDirectory() + AnkiDroidApp.COLLECTION_PATH, 0, true));
     }
@@ -1253,7 +1253,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-        
+
         switch (item.getItemId()) {
 
             case android.R.id.home:
