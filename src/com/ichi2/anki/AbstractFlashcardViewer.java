@@ -831,12 +831,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         Matcher m = sTypeAnsPat.matcher(buf);
         DiffEngine diffEngine = new DiffEngine();
         StringBuilder sb = new StringBuilder();
-        // A bit of clean-up.
-        userAnswer = Utils.stripHTMLMedia(userAnswer).trim();
-        correctAnswer = Utils.stripHTMLMedia(correctAnswer).trim();
-        userAnswer = AnkiDroidApp.getCompat().nfcNormalized(userAnswer);
-        correctAnswer = AnkiDroidApp.getCompat().nfcNormalized(correctAnswer);
-        // N.B. For API level <9 the NFC normalization is skipped. See also compat/CompatV[79].java.
         sb.append("<div");
         if (!mPrefWriteAnswers) {
             sb.append(" class=\"typeOff\"");
@@ -2199,18 +2193,37 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     }
 
 
-    protected String getAnswerText(String answer) {
+    /**
+     * Clean up the correct answer text, so it can be used for the comparison with the typed text
+     *
+     * @param answer The content of the field the text typed by the user is compared to.
+     * @return The correct answer text, with actual HTML and media references removed, and HTML entities unescaped.
+     */
+    protected String cleanCorrectAnswer(String answer) {
         if (answer == null || answer.equals("")) {
             return "";
         }
-
+        answer = answer.trim();
         Matcher matcher = sSpanPattern.matcher(Utils.stripHTMLMedia(answer));
         String answerText = matcher.replaceAll("");
         matcher = sBrPattern.matcher(answerText);
         answerText = matcher.replaceAll("\n");
         matcher = Sound.sSoundPattern.matcher(answerText);
         answerText = matcher.replaceAll("");
-        return answerText;
+        return AnkiDroidApp.getCompat().nfcNormalized(answerText);
+    }
+
+    /**
+     * Clean up the typed answer text, so it can be used for the comparison with the correct answer
+     *
+     * @param answer The answer text typed by the user.
+     * @return The typed answer text, cleaned up.
+     */
+    protected String cleanTypedAnswer(String answer) {
+        if (answer == null || answer.equals("")) {
+            return "";
+        }
+        return AnkiDroidApp.getCompat().nfcNormalized(answer.trim());
     }
 
 
@@ -2254,10 +2267,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 // reshape
                 mTypeCorrect = ArabicUtilities.reshapeSentence(mTypeCorrect, true);
             }
-            // Obtain the user answer and the correct answer
-            String userAnswer = getAnswerText(mAnswerField.getText().toString());
-            String correctAnswer = getAnswerText(mTypeCorrect);
+            // Clean up the user answer and the correct answer
+            String userAnswer = cleanTypedAnswer(mAnswerField.getText().toString());
+            String correctAnswer = cleanCorrectAnswer(mTypeCorrect);
             Log.i(AnkiDroidApp.TAG, "correct answer = " + correctAnswer);
+            Log.i(AnkiDroidApp.TAG, "user answer = " + userAnswer);
 
             answer = typeAnsAnswerFilter(answer, userAnswer, correctAnswer);
             displayString = enrichWithQADiv(answer, true);
