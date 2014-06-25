@@ -23,4 +23,6 @@ grep -RH '%' res/values* |
 
 grep -R '％' res/values*
 
+grep -R "CDATA " res/values*
+
 lint --check StringFormatInvalid ./res
