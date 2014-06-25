@@ -535,7 +535,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         @Override
         public void onCancelled() {
             // TODO Auto-generated method stub
-            
+
         }
     };
 
@@ -563,7 +563,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         @Override
         public void onCancelled() {
             // TODO Auto-generated method stub
-            
+
         }
     };
 
@@ -640,7 +640,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         @Override
         public void onCancelled() {
             // TODO Auto-generated method stub
-            
+
         }
     };
 
@@ -742,7 +742,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         @Override
         public void onCancelled() {
             // TODO Auto-generated method stub
-            
+
         }
     };
 
@@ -831,12 +831,21 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         Matcher m = sTypeAnsPat.matcher(buf);
         DiffEngine diffEngine = new DiffEngine();
         StringBuilder sb = new StringBuilder();
-        // A bit of clean-up.
-        userAnswer = Utils.stripHTMLMedia(userAnswer).trim();
-        correctAnswer = Utils.stripHTMLMedia(correctAnswer).trim();
+        if (null == userAnswer)
+        {
+            userAnswer = "";
+        }
+        if (null == correctAnswer)
+        {
+            correctAnswer = "";
+        }
         userAnswer = AnkiDroidApp.getCompat().nfcNormalized(userAnswer);
         correctAnswer = AnkiDroidApp.getCompat().nfcNormalized(correctAnswer);
         // N.B. For API level <9 the NFC normalization is skipped. See also compat/CompatV[79].java.
+        userAnswer = userAnswer.trim().replace("&", "&amp;").replace("<", "&lt;").replace(
+            ">", "&gt;").replace("[sound:", "&#x5b;sound:").replace("\\", "\\\\");
+        correctAnswer = correctAnswer.trim().replace("[sound:", "&#x5b;sound:").replace("\\", "\\\\");
+        // Clean up HTML and [sound:NN] tags, replace single “\”s with “\\”s, which will then be shown as single “\”s.
         sb.append("<div");
         if (!mPrefWriteAnswers) {
             sb.append(" class=\"typeOff\"");
@@ -912,7 +921,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         mChangeBorderStyle = Themes.getTheme() == Themes.THEME_ANDROID_LIGHT
                 || Themes.getTheme() == Themes.THEME_ANDROID_DARK;
-        
+
         // create inherited navigation drawer layout here so that it can be used by parent class
         setContentView(R.layout.flashcard);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.reviewer_drawer_layout);
@@ -1168,7 +1177,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             @Override
             public void onCancelled() {
                 // TODO Auto-generated method stub
-                
+
             }
         }, new DeckTask.TaskData(AnkiDroidApp.getCurrentAnkiDroidDirectory() + AnkiDroidApp.COLLECTION_PATH, 0, true));
     }
@@ -1253,7 +1262,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-        
+
         switch (item.getItemId()) {
 
             case android.R.id.home:
@@ -2198,22 +2207,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
     }
 
-
-    protected String getAnswerText(String answer) {
-        if (answer == null || answer.equals("")) {
-            return "";
-        }
-
-        Matcher matcher = sSpanPattern.matcher(Utils.stripHTMLMedia(answer));
-        String answerText = matcher.replaceAll("");
-        matcher = sBrPattern.matcher(answerText);
-        answerText = matcher.replaceAll("\n");
-        matcher = Sound.sSoundPattern.matcher(answerText);
-        answerText = matcher.replaceAll("");
-        return answerText;
-    }
-
-
     protected void displayCardAnswer() {
         Log.i(AnkiDroidApp.TAG, "displayCardAnswer");
 
@@ -2254,12 +2247,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 // reshape
                 mTypeCorrect = ArabicUtilities.reshapeSentence(mTypeCorrect, true);
             }
-            // Obtain the user answer and the correct answer
-            String userAnswer = getAnswerText(mAnswerField.getText().toString());
-            String correctAnswer = getAnswerText(mTypeCorrect);
-            Log.i(AnkiDroidApp.TAG, "correct answer = " + correctAnswer);
+            // Removed calls to a slightly miss-named getAnswerText() here – and the whole function. What that did was
+            // some clean-up of the typed and correct answers that was actually counter-productive when learning
+            // e.g. HTML. Clean up is now done in typeAnsAnswerFilter().
 
-            answer = typeAnsAnswerFilter(answer, userAnswer, correctAnswer);
+            answer = typeAnsAnswerFilter(answer, mAnswerField.getText().toString(), mTypeCorrect);
             displayString = enrichWithQADiv(answer, true);
         }
 
