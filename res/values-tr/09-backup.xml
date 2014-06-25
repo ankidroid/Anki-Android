@@ -58,9 +58,9 @@
   <string name="backup_error_menu_repair">Veritabanını onar</string>
   <string name="backup_repair_deck">Onar</string>
   <string name="backup_repair_deck_progress">Veritabanı onarılıyor.\nLütfen bekleyin...</string>
-  <string name="backup_error">Error</string>
+  <string name="backup_error">Hata</string>
   <string name="backup_restore_error">Koleksiyon geri yüklenemedi</string>
-  <string name="backup_invalid_file_error">The selected backup file was invalid</string>
+  <string name="backup_invalid_file_error">Seçilen yedek dosyası geçersizdi</string>
   <string name="backup_restore_if_missing">Koleksiyon eksikse geri yükleniyor...</string>
   <string name="backup_restore_deck">Koleksiyon geri yükleniyor.\nLütfen bekleyin...</string>
   <string name="backup_restore_select_title">Geri yüklenecek yedeği seçin</string>

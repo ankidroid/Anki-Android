@@ -162,11 +162,11 @@
   <string name="day_offset_summ">XXX heures après minuit</string>
   <string name="input_workaround">Input workaround</string>
   <string name="input_workaround_summ">Workaround for focusing problems on HTML input boxes. Causes problems on several devices.</string>
-  <string name="pref_keep_screen_on">Keep screen on</string>
-  <string name="pref_keep_screen_on_summ">Disable screen timeout</string>
-  <string name="pref_simple_interface">Simple interface</string>
+  <string name="pref_keep_screen_on">Garder l\'écran allumé</string>
+  <string name="pref_keep_screen_on_summ">Désactiver l\'extinction aromatique de l\'écran</string>
+  <string name="pref_simple_interface">Interface simplifiée</string>
   <string name="pref_simple_interface_summ">Accélère l\'affichage de la carte, mais supporte peu le HTML</string>
-  <string name="pref_simple_interface_exclude_tags">Tags to exclude</string>
+  <string name="pref_simple_interface_exclude_tags">Étiquettes à exclure</string>
   <string name="pref_simple_interface_exclude_tags_summ">Ne pas utiliser l\'interface simplifiée pour ces tags : XXX</string>
   <string name="write_answers_message">You should define for every deck a field to compare the written answer with. You can do this via Anki Desktop (deck properties -&gt; edit model -&gt; card layout).\n\nIf no compare field is set, your written answer will always be compared with the whole card answer</string>
   <string name="fix_arabic_text">Améliorer l\'affichage de l\'arabe</string>
@@ -188,7 +188,7 @@
   <string name="studyoptions_max_fail_card">Maximum de cartes échouées</string>
   <string name="deck_conf_deck_name">Nom du paquet</string>
   <string name="deck_conf_deck_description">Description du paquet</string>
-  <string name="deck_conf_group">Options group</string>
+  <string name="deck_conf_group">Groupe d\'option</string>
   <plurals name="deck_conf_group_summ">
     <item quantity="one">%1$s\n1 paquet utilise ce groupe</item>
     <item quantity="other">%1$s\n%2$d paquets utilisent ce groupe</item>
@@ -241,7 +241,7 @@
   </plurals>
   <string name="deck_conf_set_subdecks_title">Définir pour tous les sous-paquets</string>
   <string name="deck_conf_set_subdecks_message">Définir ce groupe d\'option pour tous les sous-paquets de ce paquet ?</string>
-  <string name="pref_browser_editor_font">Browser and editor font</string>
+  <string name="pref_browser_editor_font">Police du navigateur et de l\'éditeur</string>
   <string name="pref_browser_editor_font_summ">XXX</string>
   <string name="deck_conf_cram_filter">Révision</string>
   <string name="deck_conf_cram_options">Options</string>

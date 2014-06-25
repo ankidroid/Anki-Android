@@ -144,7 +144,7 @@
   <string name="dialog_positive_save">保存</string>
   <string name="dialog_positive_set">セット</string>
   <string name="add_button_content">追加.</string>
-  <string name="card_browser_button_content">カード ブラウザー</string>
+  <string name="card_browser_button_content">ブラウザー</string>
   <string name="lookup_button_content">調べる</string>
   <string name="statistics_button_content">統計情報</string>
   <string name="dialog_collection_path_title">フォルダーが存在しません</string>

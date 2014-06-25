@@ -85,7 +85,7 @@
   <string name="shareddeckpicker_title">Sélectionnez le jeu de carte que vous voulez télécharger</string>
   <string name="downloaddeck_search">Recherche</string>
   <string name="preferences_title">Préférences</string>
-  <string name="deckpreferences_title">Options for XXX</string>
+  <string name="deckpreferences_title">Options pour XXX</string>
   <string name="sync_conflict_message">Vos jeux de cartes ici et sur AnkiWeb diffèrent de telle manière qu\'ils ne peuvent pas être fusionnés, il est donc nécessaire d\'écraser les uns ou les autres.\n\nVoulez-vous garder et envoyer les jeux de cartes actuels, ou téléchargez ceux de AnkiWeb ?</string>
   <string name="sync_conflict_local">Envoi</string>
   <string name="sync_conflict_remote">Télécharger</string>

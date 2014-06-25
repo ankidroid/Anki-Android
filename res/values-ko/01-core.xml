@@ -71,15 +71,12 @@
   <string name="ease3_successive">괜찮음</string>
   <string name="ease3_learning">쉬움</string>
   <string name="studyoptions_congrats_undo">%s 취소</string>
-  <string name="studyoptions_congrats_unbury">Unbury</string>
-  <string name="studyoptions_congrats_custom_study">맞춤 학습</string>
-  <string name="studyoptions_congrats_open_other_deck">다른 덱 열기</string>
   <string name="card_unsuspended">카드가 다시 활성화 됨</string>
   <string name="card_suspended">카드가 다시 비활성화됨</string>
   <string name="menu_rotate">화면 회전</string>
   <string name="menu_import">파일 넣기</string>
   <string name="undo">실행 취소</string>
-  <string name="undo_action_review">복습</string>
+  <string name="undo_action_review">last review</string>
   <string name="undo_action_edit">노트 편집</string>
   <string name="undo_action_bury">노트 나중에 보기</string>
   <string name="undo_action_suspend_card">카드 미루기</string>

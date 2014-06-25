@@ -71,15 +71,12 @@
   <string name="ease3_successive">Dobre</string>
   <string name="ease3_learning">Ľahké</string>
   <string name="studyoptions_congrats_undo">Späť %s</string>
-  <string name="studyoptions_congrats_unbury">Vyhrabať</string>
-  <string name="studyoptions_congrats_custom_study">Vlastné štúdium</string>
-  <string name="studyoptions_congrats_open_other_deck">Otvoriť iný balíček</string>
   <string name="card_unsuspended">Odloženie karty bokom zrušené</string>
   <string name="card_suspended">Karta je znovu odložená bokom</string>
   <string name="menu_rotate">Otočiť</string>
   <string name="menu_import">Importovať súbor</string>
   <string name="undo">Späť</string>
-  <string name="undo_action_review">opakovať</string>
+  <string name="undo_action_review">last review</string>
   <string name="undo_action_edit">upraviť poznámku</string>
   <string name="undo_action_bury">zahrabať poznámku</string>
   <string name="undo_action_suspend_card">dať kartu bokom</string>

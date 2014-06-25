@@ -71,15 +71,12 @@
   <string name="ease3_successive">Добро</string>
   <string name="ease3_learning">Лако</string>
   <string name="studyoptions_congrats_undo">Опозови %s</string>
-  <string name="studyoptions_congrats_unbury">Одустани</string>
-  <string name="studyoptions_congrats_custom_study">Прилагођено учење</string>
-  <string name="studyoptions_congrats_open_other_deck">Отвори други шпил</string>
   <string name="card_unsuspended">Карта неће бити отказана</string>
   <string name="card_suspended">Карта је поново блокирана</string>
   <string name="menu_rotate">Окрени</string>
   <string name="menu_import">Import file</string>
   <string name="undo">Поништи</string>
-  <string name="undo_action_review">Преглед</string>
+  <string name="undo_action_review">last review</string>
   <string name="undo_action_edit">Уреди белешку</string>
   <string name="undo_action_bury">Сакриј запис</string>
   <string name="undo_action_suspend_card">Одложи карту</string>

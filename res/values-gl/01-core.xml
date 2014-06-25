@@ -71,15 +71,12 @@
   <string name="ease3_successive">Ben</string>
   <string name="ease3_learning">Doado</string>
   <string name="studyoptions_congrats_undo">Desfacer %s</string>
-  <string name="studyoptions_congrats_unbury">Unbury</string>
-  <string name="studyoptions_congrats_custom_study">Estudo personalizado</string>
-  <string name="studyoptions_congrats_open_other_deck">Abrir outra baralla</string>
   <string name="card_unsuspended">Suspensión do cartón desfeita</string>
   <string name="card_suspended">Cartón suspendido de novo</string>
   <string name="menu_rotate">Virar</string>
   <string name="menu_import">Import file</string>
   <string name="undo">Desfacer</string>
-  <string name="undo_action_review">repaso</string>
+  <string name="undo_action_review">last review</string>
   <string name="undo_action_edit">editar notación</string>
   <string name="undo_action_bury">agochar notación</string>
   <string name="undo_action_suspend_card">suspender cartón</string>

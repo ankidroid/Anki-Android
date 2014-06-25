@@ -71,15 +71,12 @@
   <string name="ease3_successive">Jó</string>
   <string name="ease3_learning">Könnyű</string>
   <string name="studyoptions_congrats_undo">Visszavonás %s</string>
-  <string name="studyoptions_congrats_unbury">Félretétel megszüntetése</string>
-  <string name="studyoptions_congrats_custom_study">Egyéni tanulás</string>
-  <string name="studyoptions_congrats_open_other_deck">Másik pakli megnyitása</string>
   <string name="card_unsuspended">Kártya visszavonás nem sikerült</string>
   <string name="card_suspended">Kártya visszaállítva</string>
   <string name="menu_rotate">Forgatás</string>
   <string name="menu_import">File importálás</string>
   <string name="undo">Visszavonás</string>
-  <string name="undo_action_review">ismétlés</string>
+  <string name="undo_action_review">last review</string>
   <string name="undo_action_edit">bejegyzés szerkesztése</string>
   <string name="undo_action_bury">jegyzet félretétele</string>
   <string name="undo_action_suspend_card">kártya felfüggesztése</string>

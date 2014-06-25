@@ -37,7 +37,7 @@
 <resources>
   <string-array name="navigation_titles">
     <item>単語帳</item>
-    <item>カード ブラウザー</item>
+    <item>ブラウザー</item>
     <item>統計情報</item>
     <item>設定</item>
     <item>ヘルプ</item>

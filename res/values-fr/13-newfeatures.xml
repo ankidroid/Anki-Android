@@ -40,14 +40,14 @@
 -->
 <resources>
   <string-array name="new_version_features">
-    <item>Redesign layout</item>
-    <item>Add pictures and sounds to flashcards (experimental)</item>
-    <item>Make second column in card browser configurable</item>
-    <item>Make images on flashcards zoomable</item>
-    <item>Improve preview feature and access via action bar</item>
-    <item>Simplify menus and settings</item>
-    <item>Make slow searches in card browser cancellable</item>
-    <item>Improve adding/removing tags</item>
+    <item>Interface totalement recrée pour votre confort</item>
+    <item>Ajoutez des images et des sons à vous cartes, directement depuis votre appareil Android (expérimental)</item>
+    <item>La seconde colonne du navigateur est maintenant configurable, pour mieux répondre à vos attentes</item>
+    <item>Toujours pour votre confort, vous pouvez maintenant zoomer sur les images pendant vos révisions</item>
+    <item>La fonction d\'aperçu a été amélioré. L\'accès se fait maintenant par la nouvelle barre d\'action</item>
+    <item>Les menus et réglages ont été simplifiés et réorganisés</item>
+    <item>Les longues recherches dans le navigateur peuvent maintenant être annulés</item>
+    <item>L\'ajout et la suppression d\'étiquette a été largement amélioré</item>
     <item>Fix \"type in the answer\" and cloze deletion features</item>
     <item>Fix whiteboard feature</item>
     <item>Restore backups from within the app</item>

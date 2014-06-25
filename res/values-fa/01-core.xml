@@ -43,7 +43,7 @@
   <string name="app_name_anki">Anki</string>
   <string name="app_name_droid">Droid</string>
   <string name="studyoptions_deck_name">نام دسته کارت</string>
-  <string name="studyoptions_due_today">سر رسید امروز:</string>
+  <string name="studyoptions_due_today">موعد مقرر امروز:</string>
   <string name="studyoptions_new_total">کل کارت های جدید:</string>
   <string name="studyoptions_total_cards">کل کارتها:</string>
   <string name="studyoptions_eta">زمان برآورد شده (دقیقه):</string>
@@ -71,15 +71,12 @@
   <string name="ease3_successive">خوب</string>
   <string name="ease3_learning">آسان</string>
   <string name="studyoptions_congrats_undo">تصحصح عمل  %s</string>
-  <string name="studyoptions_congrats_unbury">نمایش در نشست جاری</string>
-  <string name="studyoptions_congrats_custom_study">مطالعه سفارشی</string>
-  <string name="studyoptions_congrats_open_other_deck">بازکردن دسته دیگر</string>
   <string name="card_unsuspended">تعلیق کارت رفع شد</string>
   <string name="card_suspended">کارت مجددا تعلیق شد</string>
   <string name="menu_rotate">چرخش</string>
   <string name="menu_import">وارد کردن فایل</string>
   <string name="undo">تصحیح عمل قبلی</string>
-  <string name="undo_action_review">مرور</string>
+  <string name="undo_action_review">last review</string>
   <string name="undo_action_edit">ویرایش یادداشت</string>
   <string name="undo_action_bury">پوشاندن یادداشت</string>
   <string name="undo_action_suspend_card">تعلیق کارت</string>

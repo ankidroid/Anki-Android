@@ -71,15 +71,12 @@
   <string name="ease3_successive">טוב</string>
   <string name="ease3_learning">קל</string>
   <string name="studyoptions_congrats_undo">בטל את ה%s</string>
-  <string name="studyoptions_congrats_unbury">לחלץ</string>
-  <string name="studyoptions_congrats_custom_study">לימוד מותאם אישית</string>
-  <string name="studyoptions_congrats_open_other_deck">פתח חבילה אחרת</string>
   <string name="card_unsuspended">השהית הכרטיס בוטלה</string>
   <string name="card_suspended">קלף הוחזר</string>
   <string name="menu_rotate">סבב</string>
   <string name="menu_import">Import file</string>
   <string name="undo">בטל</string>
-  <string name="undo_action_review">סקור</string>
+  <string name="undo_action_review">last review</string>
   <string name="undo_action_edit">ערוך הערה</string>
   <string name="undo_action_bury">להחביא רשומה</string>
   <string name="undo_action_suspend_card">להשעות כרטיס</string>

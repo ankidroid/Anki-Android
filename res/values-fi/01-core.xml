@@ -71,15 +71,12 @@
   <string name="ease3_successive">Hyvä</string>
   <string name="ease3_learning">Helppo</string>
   <string name="studyoptions_congrats_undo">Peruuta %s</string>
-  <string name="studyoptions_congrats_unbury">Paljasta</string>
-  <string name="studyoptions_congrats_custom_study">Mukautettu opiskelu</string>
-  <string name="studyoptions_congrats_open_other_deck">Avaa muu pakka</string>
   <string name="card_unsuspended">Kortin jäädytys poistettu</string>
   <string name="card_suspended">Kortti uudelleenjäädytetty</string>
   <string name="menu_rotate">Käännä</string>
   <string name="menu_import">Import file</string>
   <string name="undo">Kumoa</string>
-  <string name="undo_action_review">läpikäynti</string>
+  <string name="undo_action_review">last review</string>
   <string name="undo_action_edit">huomautuksen muokkaus</string>
   <string name="undo_action_bury">huomautuksen piilotus</string>
   <string name="undo_action_suspend_card">jäädytä kortti</string>

@@ -71,15 +71,12 @@
   <string name="ease3_successive">中等</string>
   <string name="ease3_learning">簡單</string>
   <string name="studyoptions_congrats_undo">復原 %s</string>
-  <string name="studyoptions_congrats_unbury">Unbury</string>
-  <string name="studyoptions_congrats_custom_study">自訂學習</string>
-  <string name="studyoptions_congrats_open_other_deck">打開其他牌組</string>
   <string name="card_unsuspended">復原擱置卡片</string>
   <string name="card_suspended">重新擱置卡片</string>
   <string name="menu_rotate">旋轉</string>
   <string name="menu_import">Import file</string>
   <string name="undo">復原</string>
-  <string name="undo_action_review">複習</string>
+  <string name="undo_action_review">last review</string>
   <string name="undo_action_edit">編輯筆記</string>
   <string name="undo_action_bury">暫時隱藏筆記</string>
   <string name="undo_action_suspend_card">長久擱置卡片</string>

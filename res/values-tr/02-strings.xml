@@ -39,8 +39,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-  <string name="drawer_open">Open Drawer</string>
-  <string name="drawer_close">Close Drawer</string>
+  <string name="drawer_open">Çekmeceyi Aç</string>
+  <string name="drawer_close">Çekmeceyi Kapat</string>
   <string name="CardEditorLaterMessage">Bilgi daha sonrası için kaydedildi</string>
   <string name="CardEditorCardDeck">Kart destesi: %s</string>
   <string name="CardEditorNoteDeck">Not destesi: %s</string>
@@ -116,12 +116,12 @@
   <string name="help_title">Yardım</string>
   <string name="help_online">Online yardım</string>
   <string name="help_faq">SSS</string>
-  <string name="help_tutorial">Create tutorial deck</string>
-  <string name="tutorial_deck_name">Tutorial deck</string>
+  <string name="help_tutorial">Eğitim destesi oluştur</string>
+  <string name="tutorial_deck_name">Eğitim destesi</string>
   <string name="check_db">Veritabanını denetle</string>
   <string name="check_db_message">Veritabanı denetleniyor.\nLütfen bekleyin...</string>
-  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
-  <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
+  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Boş kart. Masaüstü istemcisinde \"Araçlar&gt;Boş Kartlar...\"ı kullanın.</string>
+  <string name="unknown_type_field_warning">Yanıtı yazın: bilinmeyen alan %s</string>
   <string name="simple_interface_hint">Boş %s. Basit arayüzün resimleri/sesleri vb. gösteremediğini unutmayın.</string>
   <string name="delete_deck">Deste siliniyor...\nLütfen bekleyin.</string>
   <string-array name="dynOrderLabels">
@@ -150,7 +150,7 @@
   <string name="import_importing">Kartlar aktarılıyor.\nLütfen bekleyin...</string>
   <string name="import_hint">İçeri kart aktarmak için, apkg dosyasını %s dizinine yerleştirip Tamam\'a basın</string>
   <string name="upgrade_import_no_file_found">İçeri aktarılabilir %1$s dosyası bulunmuyor</string>
-  <string name="study_options">Deck options</string>
+  <string name="study_options">Deste seçenekleri</string>
   <string name="custom_study">Kişisel Çalışma</string>
   <string name="dyn_deck_desc">Bu normal programın dışında çalışmak için özel bir deste. Kartlar çalışıldıktan sonra otomatik olarak kendi destelerine geri dönecekler. Bu desteyi deste listesinden silmek kalan bütün kartları kendi destelerine geri döndürecek.</string>
   <string name="exit_wizard">Sihirbazdan Çık</string>

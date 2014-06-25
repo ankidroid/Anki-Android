@@ -71,15 +71,12 @@
   <string name="ease3_successive">Tốt</string>
   <string name="ease3_learning">Dễ</string>
   <string name="studyoptions_congrats_undo">Hoàn tác %s</string>
-  <string name="studyoptions_congrats_unbury">Sửa lại</string>
-  <string name="studyoptions_congrats_custom_study">Quản lý chương trình học</string>
-  <string name="studyoptions_congrats_open_other_deck">Mở Tập thẻ Khác</string>
   <string name="card_unsuspended">Đã hủy việc tạm dừng thẻ</string>
   <string name="card_suspended">Thẻ bị tạm dừng</string>
   <string name="menu_rotate">Xoay</string>
   <string name="menu_import">Nhập dữ liệu</string>
   <string name="undo">Hoàn tác</string>
-  <string name="undo_action_review">ôn tập</string>
+  <string name="undo_action_review">last review</string>
   <string name="undo_action_edit">sửa ghi chú</string>
   <string name="undo_action_bury">Ghi chú bị quên</string>
   <string name="undo_action_suspend_card">tạm dừng thẻ</string>
@@ -108,7 +105,7 @@
   <string name="menu_bury_note">Ẩn ghi chú</string>
   <string name="menu_suspend_card">Tạm dừng thẻ</string>
   <string name="menu_suspend_note">Tạm Dừng Ghi Chú</string>
-  <string name="menu_save_note">Save note</string>
+  <string name="menu_save_note">Lưu lại Ghi chú</string>
   <string name="menu_delete_note">Xóa Ghi Chú</string>
   <string name="delete_note_message">Bạn thực sự muốn xóa bỏ ghi chú này cùng toàn bộ thẻ của nó?\n%s</string>
   <string name="menu_edit_card">Chỉnh sửa thẻ</string>
@@ -180,5 +177,5 @@
   <string name="confirm">Xác nhận</string>
   <string name="internet">Internet</string>
   <string name="pc">MÁY TÍNH</string>
-  <string name="title_activity_graphical_activity">Statistical chart</string>
+  <string name="title_activity_graphical_activity">Biểu đồ thống kê</string>
 </resources>

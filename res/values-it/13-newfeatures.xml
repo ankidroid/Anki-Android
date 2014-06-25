@@ -40,10 +40,10 @@
 -->
 <resources>
   <string-array name="new_version_features">
-    <item>Redesign layout</item>
-    <item>Add pictures and sounds to flashcards (experimental)</item>
-    <item>Make second column in card browser configurable</item>
-    <item>Make images on flashcards zoomable</item>
+    <item>Interfaccia ridisegnata</item>
+    <item>Aggiungere immagini e suoni alle carte (sperimentale)</item>
+    <item>La seconda colonna nel browser delle carte è ora configurabile</item>
+    <item>È possibile eseguire lo zoom delle immagini sulle carte</item>
     <item>Improve preview feature and access via action bar</item>
     <item>Simplify menus and settings</item>
     <item>Make slow searches in card browser cancellable</item>

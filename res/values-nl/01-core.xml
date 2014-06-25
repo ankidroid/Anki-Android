@@ -71,15 +71,12 @@
   <string name="ease3_successive">Goed</string>
   <string name="ease3_learning">Makkelijk</string>
   <string name="studyoptions_congrats_undo">Maak %s ongedaan</string>
-  <string name="studyoptions_congrats_unbury">Niet langer verbergen</string>
-  <string name="studyoptions_congrats_custom_study">Aangepast Studeren</string>
-  <string name="studyoptions_congrats_open_other_deck">Laad een andere set</string>
   <string name="card_unsuspended">Uitstellen kaart ongedaan gemaakt</string>
   <string name="card_suspended">Kaart opnieuw uitstellen</string>
   <string name="menu_rotate">Omkeren</string>
   <string name="menu_import">Import file</string>
   <string name="undo">Ongedaan maken</string>
-  <string name="undo_action_review">overhoren</string>
+  <string name="undo_action_review">last review</string>
   <string name="undo_action_edit">bewerk memo</string>
   <string name="undo_action_bury">verberg notitie</string>
   <string name="undo_action_suspend_card">blokkeer kaart</string>

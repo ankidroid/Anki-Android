@@ -71,15 +71,12 @@
   <string name="ease3_successive">Добре</string>
   <string name="ease3_learning">Лесно</string>
   <string name="studyoptions_congrats_undo">Undo %s</string>
-  <string name="studyoptions_congrats_unbury">Unbury</string>
-  <string name="studyoptions_congrats_custom_study">Custom study</string>
-  <string name="studyoptions_congrats_open_other_deck">Отваряне на друга колода</string>
   <string name="card_unsuspended">Скриване на картата отменено</string>
   <string name="card_suspended">Открий картата</string>
   <string name="menu_rotate">Завъртане</string>
   <string name="menu_import">Import file</string>
   <string name="undo">Отмени</string>
-  <string name="undo_action_review">review</string>
+  <string name="undo_action_review">last review</string>
   <string name="undo_action_edit">edit note</string>
   <string name="undo_action_bury">bury note</string>
   <string name="undo_action_suspend_card">suspend card</string>

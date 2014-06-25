@@ -71,15 +71,12 @@
   <string name="ease3_successive">Καλή</string>
   <string name="ease3_learning">Εύκολη</string>
   <string name="studyoptions_congrats_undo">Αναίρεση %s</string>
-  <string name="studyoptions_congrats_unbury">Unbury</string>
-  <string name="studyoptions_congrats_custom_study">Προσαρμοσμένη μελέτη</string>
-  <string name="studyoptions_congrats_open_other_deck">Ανοίξτε άλλη τράπουλα</string>
   <string name="card_unsuspended">Αναστολή κάρτας αναιρέθηκε</string>
   <string name="card_suspended">Κάρτα επαναστάλει</string>
   <string name="menu_rotate">Περιστροφή</string>
   <string name="menu_import">Import file</string>
   <string name="undo">Αναίρεση</string>
-  <string name="undo_action_review">επανάληψης</string>
+  <string name="undo_action_review">last review</string>
   <string name="undo_action_edit">επεξεργασίας σημείωσης</string>
   <string name="undo_action_bury">απόκρυψης σημείωσης</string>
   <string name="undo_action_suspend_card">αναστολής κάρτας</string>

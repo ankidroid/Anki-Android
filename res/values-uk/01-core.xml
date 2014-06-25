@@ -64,22 +64,19 @@
     <item quantity="one">Залишилася 1 хв.</item>
     <item quantity="other">%d хвилин залишилося</item>
   </plurals>
-  <string name="type_answer_hint">Type answer</string>
+  <string name="type_answer_hint">Введіть відповідь</string>
   <string name="show_answer">Показати відповідь</string>
   <string name="ease1_successive">Знову</string>
   <string name="ease2_successive">Важко</string>
   <string name="ease3_successive">Добре</string>
   <string name="ease3_learning">Легко</string>
   <string name="studyoptions_congrats_undo">Відмінити %s</string>
-  <string name="studyoptions_congrats_unbury">Скасувати зрушення</string>
-  <string name="studyoptions_congrats_custom_study">Додатковий трейнінг</string>
-  <string name="studyoptions_congrats_open_other_deck">Відкрити іншу колоду</string>
   <string name="card_unsuspended">Відкладення картки скасовано</string>
   <string name="card_suspended">Картка знову відкладена</string>
   <string name="menu_rotate">Повернути</string>
-  <string name="menu_import">Import file</string>
+  <string name="menu_import">Імпорт файлу</string>
   <string name="undo">Відмінити</string>
-  <string name="undo_action_review">Повторення</string>
+  <string name="undo_action_review">last review</string>
   <string name="undo_action_edit">Редагувати примітку</string>
   <string name="undo_action_bury">Сховати примітку</string>
   <string name="undo_action_suspend_card">Відкласти картку</string>
@@ -96,8 +93,8 @@
   <string name="contextmenu_deckpicker_collapse_deck">Приховати вкладені колоди</string>
   <string name="contextmenu_deckpicker_inflate_deck">Показати вкладені колоди</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Встановити словник користувача</string>
-  <string name="menu_add">Add</string>
-  <string name="menu_add_note">Add note</string>
+  <string name="menu_add">Додати</string>
+  <string name="menu_add_note">Додати примітку</string>
   <string name="menu_download_deck">Завантажити колоду</string>
   <string name="menu_download_shared_deck">Спільна колода</string>
   <string name="menu_my_account">Змінити обліковий запис</string>
@@ -108,7 +105,7 @@
   <string name="menu_bury_note">Сховати Примітку</string>
   <string name="menu_suspend_card">Відкласти картку</string>
   <string name="menu_suspend_note">Призупинити Примітку</string>
-  <string name="menu_save_note">Save note</string>
+  <string name="menu_save_note">Зберегти примітку</string>
   <string name="menu_delete_note">Видалити Примітку</string>
   <string name="delete_note_message">Дійсно видалити цю примітку і усі зв\'язані з нею картки?\n%s</string>
   <string name="menu_edit_card">Редагувати картку</string>
@@ -116,9 +113,9 @@
   <string name="menu_search">Пошук у %1$s</string>
   <string name="menu_mark_card">Помітити картку</string>
   <string name="menu_unmark_card">Зняти позначку з картки</string>
-  <string name="new_deck">Create deck</string>
+  <string name="new_deck">Створити колоду</string>
   <string name="create">Створити</string>
-  <string name="new_dynamic_deck">Create filtered deck</string>
+  <string name="new_dynamic_deck">Створити фільтровану колоду</string>
   <string name="studyoptions_feedback">Відгук</string>
   <string name="studyoptions_load_tutorial_deck">Створити підручник</string>
   <string name="night_mode">Нічний режим</string>
@@ -180,5 +177,5 @@
   <string name="confirm">Підтвердити</string>
   <string name="internet">Інтернет</string>
   <string name="pc">ПК</string>
-  <string name="title_activity_graphical_activity">Statistical chart</string>
+  <string name="title_activity_graphical_activity">Статистична діаграма</string>
 </resources>
