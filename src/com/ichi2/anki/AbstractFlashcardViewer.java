@@ -62,6 +62,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.view.inputmethod.EditorInfo;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
@@ -421,6 +422,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         public void onClick(View view) {
             Log.i(AnkiDroidApp.TAG, "Flip card changed:");
             mTimeoutHandler.removeCallbacks(mShowAnswerTask);
+            // Explicitly hide the soft keyboard. It *should* be hiding itself automatically, but sometimes failed to do
+            // so.
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(mAnswerField.getWindowToken(), 0);
             displayCardAnswer();
         }
     };
