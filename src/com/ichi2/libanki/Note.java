@@ -123,10 +123,16 @@ public class Note implements Cloneable {
     	flush(null);
     }
 
-
     public void flush(Long mod) {
+        flush(mod, true);
+    }
+
+    public void flush(Long mod, boolean changeUsn) {
         assert mScm == mCol.getScm();
         _preFlush();
+        if (changeUsn) {
+            mUsn = mCol.usn();
+        }
         String sfld = Utils.stripHTMLMedia(mFields[mCol.getModels().sortIdx(mModel)]);
         String tags = stringTags();
         String fields = joinedFields();
@@ -137,7 +143,6 @@ public class Note implements Cloneable {
         }
         long csum = Utils.fieldChecksum(mFields[0]);
         mMod = mod != null ? mod : Utils.intNow();
-        mUsn = mCol.usn();
         mCol.getDb().execute("insert or replace into notes values (?,?,?,?,?,?,?,?,?,?,?)",
                 new Object[] { mId, mGuId, mMid, mMod, mUsn, tags, fields, sfld, csum, mFlags, mData });
         mCol.getTags().register(mTags);
