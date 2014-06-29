@@ -841,6 +841,9 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
 
     private void updateList() {
         mCardsAdapter.notifyDataSetChanged();
+        int count = mCards.size();
+        mDropDownAdapter.setCounts(count, mTotalCount);
+        mDropDownAdapter.notifyDataSetChanged();
     }
 
 
@@ -1343,10 +1346,19 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         }
     }
 
+
+    private static class DeckDropDownViewHolder {
+        public TextView deckNameView;
+        public TextView deckCountsView;
+    }
+
+
     private final class DeckDropDownAdapter extends BaseAdapter {
 
         private Context context;
         private ArrayList<JSONObject> decks;
+        private int count;
+        private int totalCount;
 
 
         public DeckDropDownAdapter(Context context, ArrayList<JSONObject> decks) {
@@ -1379,6 +1391,40 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+            DeckDropDownViewHolder viewHolder;
+            TextView deckNameView;
+            TextView deckCountsView;
+            if (convertView == null) {
+                convertView = LayoutInflater.from(context).inflate(R.layout.dropdown_deck_selected_item, parent, false);
+                deckNameView = (TextView) convertView.findViewById(R.id.dropdown_deck_name);
+                deckCountsView = (TextView) convertView.findViewById(R.id.dropdown_deck_counts);
+                viewHolder = new DeckDropDownViewHolder();
+                viewHolder.deckNameView = deckNameView;
+                viewHolder.deckCountsView = deckCountsView;
+                convertView.setTag(viewHolder);
+            } else {
+                viewHolder = (DeckDropDownViewHolder) convertView.getTag();
+                deckNameView = (TextView) viewHolder.deckNameView;
+                deckCountsView = (TextView) viewHolder.deckCountsView;
+            }
+            if (position == 0) {
+                deckNameView.setText(context.getResources().getString(R.string.deck_summary_all_decks));
+            } else {
+                JSONObject deck = decks.get(position - 1);
+                try {
+                    String deckName = deck.getString("name");
+                    deckNameView.setText(deckName);
+                } catch (JSONException ex) {
+                    new RuntimeException();
+                }
+            }
+            deckCountsView.setText(getResources().getQuantityString(R.plurals.card_browser_subtitle, count, count, totalCount));
+            return convertView;
+        }
+
+
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
             TextView deckNameView;
             if (convertView == null) {
                 convertView = LayoutInflater.from(context).inflate(R.layout.dropdown_deck_item, parent, false);
@@ -1399,6 +1445,12 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                 }
             }
             return convertView;
+        }
+
+
+        public void setCounts(int count, int totalCount) {
+            this.count = count;
+            this.totalCount = totalCount;
         }
 
     }
