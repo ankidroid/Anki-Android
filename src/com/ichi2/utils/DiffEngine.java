@@ -19,6 +19,7 @@
 
 package com.ichi2.utils;
 
+import android.text.Html;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -1091,15 +1092,18 @@ public class DiffEngine {
     }
 
     public static String wrapBad(String in) {
-        return "<span class=\"typeBad\">" + in + "</span>";
+        // We do the comparison with “<”s &c. in the strings, but should of course not just put those in the HTML
+        // output. Also, it looks like the Android WebView swallows single “\”s, so replace those with the entity by
+        // hand.
+        return "<span class=\"typeBad\">" + Html.escapeHtml(in).replace("\\", "&#x5c;") + "</span>";
     }
 
     public static String wrapGood(String in) {
-        return "<span class=\"typeGood\">" + in + "</span>";
+        return "<span class=\"typeGood\">" + Html.escapeHtml(in).replace("\\", "&#x5c;") + "</span>";
     }
 
     public static String wrapMissing(String in) {
-        return "<span class=\"typeMissed\">" + in + "</span>";
+        return "<span class=\"typeMissed\">" + Html.escapeHtml(in).replace("\\", "&#x5c;") + "</span>";
     }
 
 
