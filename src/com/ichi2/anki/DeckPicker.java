@@ -2917,7 +2917,7 @@ public class DeckPicker extends NavigationDrawerActivity {
                 time = res.getQuantityString(R.plurals.deckpicker_title_minutes, eta, eta);
             }
             AnkiDroidApp.getCompat().setSubtitle(this,
-                    res.getQuantityString(R.plurals.deckpicker_title, due, due, count, time));
+                    res.getQuantityString(R.plurals.deckpicker_title, due, due, time));
         }
 
         // update widget
