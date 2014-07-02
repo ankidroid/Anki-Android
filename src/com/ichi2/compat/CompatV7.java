@@ -50,6 +50,23 @@ public class CompatV7 implements Compat {
     }
 
 
+    /*
+     *  Return the input string in a form suitable for display on a HTML page. Replace “<”, “>”, “&”, “"” and “'” with
+     *  HTML entities.
+     *
+     * @param txt Text to be cleaned.
+     * @return The input text, with HTML tags and entities escaped.
+    */
+    public String detagged(String txt) {
+        if (txt == null)
+        {
+            return "";
+        }
+        return txt.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;").replace(
+                "'", "&#39;");
+    }
+
+
     public void setScrollbarFadingEnabled(WebView webview, boolean enable) {
         webview.setScrollbarFadingEnabled(enable);
     }

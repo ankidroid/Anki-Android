@@ -46,6 +46,7 @@ import android.webkit.WebView;
 public interface Compat {
     public abstract String nfdNormalized(String txt);
     public abstract String nfcNormalized(String txt);
+    public abstract String detagged(String txt);
     public abstract void setScrollbarFadingEnabled(WebView webview, boolean enable);
     public abstract void setOverScrollModeNever(View v);
     public abstract void invalidateOptionsMenu(Activity activity);
