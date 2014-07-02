@@ -22,7 +22,7 @@
 
     <!-- CardBrowser -->
     <plurals name="card_browser_subtitle">
-        <item quantity="one">1 card shown</item>
+        <item quantity="one">%d card shown</item>
         <item quantity="other">%d cards shown</item>
     </plurals>
 

@@ -23,7 +23,7 @@
     <!-- Feedback.java -->
     <!--
 <plurals name="error_message">
-  <item quantity="one">There is one error to report</item>
+  <item quantity="one">There is %d error to report</item>
   <item quantity="other">There are %d errors to report</item>
 </plurals>
     -->
