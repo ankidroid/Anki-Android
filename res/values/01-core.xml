@@ -34,8 +34,8 @@
 
     <!-- DeckPicker.java -->
     <plurals name="deckpicker_title">
-        <item quantity="one">1 of %2$d due (%3$s)</item>
-        <item quantity="other">%1$d of %2$d due (%3$s)</item>
+        <item quantity="one">1 card due (%2$s)</item>
+        <item quantity="other">%1$d cards due (%2$s)</item>
     </plurals>
     <plurals name="deckpicker_title_minutes">
         <item quantity="one">1 min.</item>

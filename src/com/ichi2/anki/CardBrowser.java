@@ -842,7 +842,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
     private void updateList() {
         mCardsAdapter.notifyDataSetChanged();
         int count = mCards.size();
-        mDropDownAdapter.setCounts(count, mTotalCount);
+        mDropDownAdapter.setCardCount(count);
         mDropDownAdapter.notifyDataSetChanged();
     }
 
@@ -1358,7 +1358,6 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         private Context context;
         private ArrayList<JSONObject> decks;
         private int count;
-        private int totalCount;
 
 
         public DeckDropDownAdapter(Context context, ArrayList<JSONObject> decks) {
@@ -1418,7 +1417,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                     new RuntimeException();
                 }
             }
-            deckCountsView.setText(getResources().getQuantityString(R.plurals.card_browser_subtitle, count, count, totalCount));
+            deckCountsView.setText(getResources().getQuantityString(R.plurals.card_browser_subtitle, count, count));
             return convertView;
         }
 
@@ -1448,9 +1447,8 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         }
 
 
-        public void setCounts(int count, int totalCount) {
+        public void setCardCount(int count) {
             this.count = count;
-            this.totalCount = totalCount;
         }
 
     }
