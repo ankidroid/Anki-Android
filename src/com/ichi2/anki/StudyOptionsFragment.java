@@ -128,6 +128,7 @@ public class StudyOptionsFragment extends Fragment {
      * UI elements for "Study Options" view
      */
     private View mStudyOptionsView;
+    private View mDeckInfoLayout;
     private Button mButtonStart;
     private Button mButtonCustomStudy;
     private Button mButtonUnbury;
@@ -147,17 +148,9 @@ public class StudyOptionsFragment extends Fragment {
     private LinearLayout mDeckChart;
     private Button mDeckOptions;
     private Button mCramOptions;
-    /**
-     * UI elements for "Congrats" view
-     */
-    private View mCongratsView;
-    // private View mLearnMoreView;
-    // private View mReviewEarlyView;
     private TextView mTextCongratsMessage;
-    private Button mButtonCongratsUndo;
-    private Button mButtonCongratsUnbury;
-    private Button mButtonCongratsOpenOtherDeck;
-    private Button mButtonCongratsCustomStudy;
+    private View mCongratsLayout;
+
 
     private View mCustomStudyDetailsView;
     private TextView mCustomStudyTextView1;
@@ -200,24 +193,6 @@ public class StudyOptionsFragment extends Fragment {
                     col.getSched().unburyCards();
                     resetAndUpdateValuesFromDeck();
                     mButtonUnbury.setVisibility(View.GONE);
-                    return;
-                case R.id.studyoptions_congrats_undo:
-                    if (AnkiDroidApp.colIsOpen()) {
-                        col.undo();
-                        resetAndUpdateValuesFromDeck();
-                        finishCongrats();
-                    }
-                    return;
-                case R.id.studyoptions_congrats_unbury:
-                    col.getSched().unburyCards();
-                    resetAndUpdateValuesFromDeck();
-                    finishCongrats();
-                    return;
-                case R.id.studyoptions_congrats_open_other_deck:
-                    closeStudyOptions();
-                    return;
-                case R.id.studyoptions_congrats_customstudy:
-                    showDialog(DIALOG_CUSTOM_STUDY);
                     return;
                 case R.id.studyoptions_options_cram:
                     openCramDeckOptions();
@@ -333,7 +308,6 @@ public class StudyOptionsFragment extends Fragment {
 
         if (getArguments().getBoolean("onlyFnsMsg")) {
             prepareCongratsView();
-            return mCongratsView;
         } else {
             // clear undo if new deck is opened (do not clear if only congrats msg is shown)
             AnkiDroidApp.getCol().clearUndo();
@@ -344,6 +318,13 @@ public class StudyOptionsFragment extends Fragment {
         resetAndUpdateValuesFromDeck();
 
         setHasOptionsMenu(true);
+        
+        // Show the congratulations message if there are no cards scheduled
+        if (noDeckCounts()) {
+            prepareCongratsView();
+        } else {
+            finishCongrats();
+        }
 
         return mStudyOptionsView;
     }
@@ -370,9 +351,6 @@ public class StudyOptionsFragment extends Fragment {
         super.onConfigurationChanged(newConfig);
         mDontSaveOnStop = false;
         // initAllContentViews();
-        if (mCurrentContentView == CONTENT_CONGRATS) {
-            setFragmentContentView(mCongratsView);
-        }
         mTextDeckName.setText(title);
         mTextDeckName.setVisibility(View.VISIBLE);
         mTextDeckDescription.setText(desc);
@@ -524,19 +502,16 @@ public class StudyOptionsFragment extends Fragment {
     private void initAllContentViews(LayoutInflater inflater) {
         mStudyOptionsView = inflater.inflate(R.layout.studyoptions_fragment, null);
         Themes.setContentStyle(mStudyOptionsView, Themes.CALLER_STUDYOPTIONS);
+        mDeckInfoLayout = mStudyOptionsView.findViewById(R.id.studyoptions_deckinformation);
         mTextDeckName = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_deck_name);
         mTextDeckDescription = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_deck_description);
         mButtonStart = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_start);
         mButtonCustomStudy = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_custom);
         mDeckOptions = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_options);
         mCramOptions = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_options_cram);
-        // mButtonUp = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_limitup);
-        // mButtonDown = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_limitdown);
-        // mToggleLimitToggle = (ToggleButton) mStudyOptionsView.findViewById(R.id.studyoptions_limittoggle);
-
-        // mToggleNight = (ToggleButton) mStudyOptionsView
-        // .findViewById(R.id.studyoptions_night);
-        // mToggle.setChecked(mInvertedColors);
+        mCongratsLayout = mStudyOptionsView.findViewById(R.id.studyoptions_congrats_layout);
+        mTextCongratsMessage = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_congrats_message);
+        
 
         if (AnkiDroidApp.colIsOpen()
                 && AnkiDroidApp.getCol().getDecks().isDyn(AnkiDroidApp.getCol().getDecks().selected())) {
@@ -576,8 +551,6 @@ public class StudyOptionsFragment extends Fragment {
         // mToggleCram.setOnClickListener(mButtonClickListener);
         // mToggleNight.setOnClickListener(mButtonClickListener);
 
-        // The view that shows the congratulations view.
-        mCongratsView = inflater.inflate(R.layout.studyoptions_congrats, null);
 
         // The view that shows the learn more options
         mCustomStudyDetailsView = inflater.inflate(R.layout.styled_custom_study_details_dialog, null);
@@ -590,23 +563,6 @@ public class StudyOptionsFragment extends Fragment {
          * need a new, different dialog, that allows to select a list of tags:
          */
 
-        Themes.setWallpaper(mCongratsView);
-
-        mTextCongratsMessage = (TextView) mCongratsView.findViewById(R.id.studyoptions_congrats_message);
-        Themes.setTextViewStyle(mTextCongratsMessage);
-
-        mButtonCongratsUndo = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_undo);
-        mButtonCongratsUnbury = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_unbury);
-        mButtonCongratsCustomStudy = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_customstudy);
-        mButtonCongratsOpenOtherDeck = (Button) mCongratsView.findViewById(R.id.studyoptions_congrats_open_other_deck);
-        if (mFragmented) {
-            mButtonCongratsOpenOtherDeck.setVisibility(View.GONE);
-        }
-
-        mButtonCongratsUndo.setOnClickListener(mButtonClickListener);
-        mButtonCongratsUnbury.setOnClickListener(mButtonClickListener);
-        mButtonCongratsCustomStudy.setOnClickListener(mButtonClickListener);
-        mButtonCongratsOpenOtherDeck.setOnClickListener(mButtonClickListener);
     }
 
 
@@ -616,6 +572,18 @@ public class StudyOptionsFragment extends Fragment {
         }
         onPrepareDialog(id, mDialogs.get(id));
         mDialogs.get(id).show();
+    }
+    
+    private boolean noDeckCounts() {
+        // Check if there are any reviews due in current deck
+        DeckTask.waitToFinish();
+        int[] counts = AnkiDroidApp.getCol().getSched().counts();
+        if (counts[0]+counts[1]+counts[2]==0) {
+            return true;
+        } else {
+            return false;
+        }
+        
     }
 
     private DialogFragment showDialogFragment(int id) {
@@ -1121,51 +1089,20 @@ public class StudyOptionsFragment extends Fragment {
     }
 
 
-    public boolean congratsShowing() {
-        if (mCurrentContentView == CONTENT_CONGRATS) {
-            updateValuesFromDeck();
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-
     public void finishCongrats() {
         mCurrentContentView = CONTENT_STUDY_OPTIONS;
-        mStudyOptionsView.setVisibility(View.INVISIBLE);
-        mCongratsView.setVisibility(View.INVISIBLE);
-        mCongratsView.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_OUT, 500, 0));
-        setFragmentContentView(mStudyOptionsView);
-        mStudyOptionsView.setVisibility(View.VISIBLE);
-        mStudyOptionsView.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
-        mCongratsView.setVisibility(View.VISIBLE);
+        mDeckInfoLayout.setVisibility(View.VISIBLE);
+        mCongratsLayout.setVisibility(View.GONE);
+        mButtonStart.setVisibility(View.VISIBLE);
     }
 
 
     private void prepareCongratsView() {
         mCurrentContentView = CONTENT_CONGRATS;
-        if (!AnkiDroidApp.colIsOpen() || !AnkiDroidApp.getCol().undoAvailable()) {
-            mButtonCongratsUndo.setEnabled(false);
-            mButtonCongratsUndo.setVisibility(View.GONE);
-        } else {
-            Resources res = AnkiDroidApp.getAppResources();
-            mButtonCongratsUndo.setText(res.getString(R.string.studyoptions_congrats_undo, AnkiDroidApp.getCol()
-                    .undoName(res)));
-        }
-        if (AnkiDroidApp.colIsOpen() && !AnkiDroidApp.getCol().getSched().haveBuried()) {
-            mButtonCongratsUnbury.setVisibility(View.GONE);
-        }
+        mDeckInfoLayout.setVisibility(View.GONE);
+        mCongratsLayout.setVisibility(View.VISIBLE);
         mTextCongratsMessage.setText(AnkiDroidApp.getCol().getSched().finishedMsg(getActivity()));
-        // Filtered decks must not have a custom study button
-        try {
-            if (AnkiDroidApp.getCol().getDecks().current().getInt("dyn") == 1) {
-                mButtonCongratsCustomStudy.setEnabled(false);
-                mButtonCongratsCustomStudy.setVisibility(View.GONE);
-            }
-        } catch (JSONException e) {
-            throw new RuntimeException();
-        }
+        mButtonStart.setVisibility(View.GONE);
     }
 
     @Override
@@ -1177,6 +1114,14 @@ public class StudyOptionsFragment extends Fragment {
         } else {
             menu.findItem(R.id.action_night_mode).setIcon(R.drawable.ic_menu_night);
         }
+        
+        if (!AnkiDroidApp.colIsOpen() || !AnkiDroidApp.getCol().undoAvailable()) {
+            menu.findItem(R.id.action_undo).setVisible(false);
+        } else {
+            menu.findItem(R.id.action_undo).setVisible(true);
+            Resources res = AnkiDroidApp.getAppResources();
+            menu.findItem(R.id.action_undo).setTitle(res.getString(R.string.studyoptions_congrats_undo, AnkiDroidApp.getCol().undoName(res)));
+        }
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -1184,7 +1129,14 @@ public class StudyOptionsFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-
+            case R.id.action_undo:
+                if (AnkiDroidApp.colIsOpen()) {
+                    AnkiDroidApp.getCol().undo();
+                    resetAndUpdateValuesFromDeck();
+                    finishCongrats();
+                    getActivity().supportInvalidateOptionsMenu();
+                }
+                return true;
             case R.id.action_night_mode:
                 SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getActivity());
                 if (preferences.getBoolean("invertedColors", false)) {
@@ -1210,7 +1162,7 @@ public class StudyOptionsFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
         Log.i(AnkiDroidApp.TAG, "StudyOptionsFragment: onActivityResult");
-
+        getActivity().supportInvalidateOptionsMenu();
         if (resultCode == DeckPicker.RESULT_DB_ERROR) {
             closeStudyOptions(DeckPicker.RESULT_DB_ERROR);
         }
@@ -1242,7 +1194,14 @@ public class StudyOptionsFragment extends Fragment {
                     }
                     rebuildCramDeck();
                 } else {
+                    DeckTask.waitToFinish();
                     resetAndUpdateValuesFromDeck();
+                }
+                // Show the congratulations message if there are no cards scheduled
+                if (noDeckCounts()) {
+                    prepareCongratsView();
+                } else {
+                    finishCongrats();
                 }
             } else if (requestCode == ADD_NOTE && resultCode != Activity.RESULT_CANCELED) {
                 resetAndUpdateValuesFromDeck();
@@ -1258,7 +1217,6 @@ public class StudyOptionsFragment extends Fragment {
                         break;
                     case Reviewer.RESULT_NO_MORE_CARDS:
                         prepareCongratsView();
-                        setFragmentContentView(mCongratsView);
                         break;
                 }
                 mDontSaveOnStop = false;
@@ -1476,15 +1434,7 @@ public class StudyOptionsFragment extends Fragment {
                             && Math.abs(velocityX) > AnkiDroidApp.sSwipeThresholdVelocity
                             && Math.abs(e1.getY() - e2.getY()) < AnkiDroidApp.sSwipeMaxOffPath) {
                         // left
-                        if (mCongratsView != null && mCongratsView.getVisibility() == View.VISIBLE) {
-                            if (AnkiDroidApp.colIsOpen()) {
-                                AnkiDroidApp.getCol().undo();
-                                resetAndUpdateValuesFromDeck();
-                                finishCongrats();
-                            }
-                        } else {
-                            openReviewer();
-                        }
+                        openReviewer();
                     } else if (e2.getX() - e1.getX() > AnkiDroidApp.sSwipeMinDistance
                             && Math.abs(velocityX) > AnkiDroidApp.sSwipeThresholdVelocity
                             && Math.abs(e1.getY() - e2.getY()) < AnkiDroidApp.sSwipeMaxOffPath) {

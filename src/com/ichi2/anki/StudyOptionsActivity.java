@@ -158,10 +158,6 @@ public class StudyOptionsActivity extends NavigationDrawerActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             Log.i(AnkiDroidApp.TAG, "StudyOptions - onBackPressed()");
-            if (mCurrentFragment != null && mCurrentFragment.congratsShowing()) {
-                mCurrentFragment.finishCongrats();
-                return true;
-            }
             closeStudyOptions();
             return true;
         }
