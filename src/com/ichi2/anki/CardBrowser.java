@@ -248,6 +248,13 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         View mainView = getLayoutInflater().inflate(R.layout.card_browser, null);
         setContentView(mainView);
         Themes.setContentStyle(mainView, Themes.CALLER_CARDBROWSER);
+        
+        // Create inherited navigation drawer layout here so that it can be used by parent class
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.browser_drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.browser_left_drawer);
+        initNavigationDrawer();
+        selectNavigationItem(DRAWER_BROWSER);
+        
         // Try to load the collection
         mCol = AnkiDroidApp.getCol();
         if (mCol == null) {
@@ -308,12 +315,6 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
             throw new RuntimeException(e);
         }
         
-        // create inherited navigation drawer layout here so that it can be used by parent class
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.browser_drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.browser_left_drawer);
-        initNavigationDrawer();
-        selectNavigationItem(DRAWER_BROWSER);
-
         mCards = new ArrayList<HashMap<String, String>>();
         mCardsListView = (ListView) findViewById(R.id.card_browser_list);
         // Create a spinner for column1, but without letting the user change column
