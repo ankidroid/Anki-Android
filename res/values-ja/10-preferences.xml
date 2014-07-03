@@ -190,7 +190,7 @@
   <string name="deck_conf_deck_description">単語帳の説明</string>
   <string name="deck_conf_group">オプション グループ</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n1 単語帳はこのグループを使用しています。</item>
+    <item quantity="one">%1$s\n%2$d deck uses this group</item>
     <item quantity="other">%1$s\n%2$d 単語帳はこのグループを使用しています。</item>
   </plurals>
   <string name="deck_conf_new_cards">新しいカード</string>
@@ -236,7 +236,7 @@
   <string name="deck_conf_remove_message">現在のオプション グループを削除しますか？</string>
   <string name="deck_conf_set_subdecks">すべてのサブ単語帳のセット</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">1つのサブ単語帳 はこのグループを使用します。</item>
+    <item quantity="one">%s subdeck will use this group</item>
     <item quantity="other">%s 個のサブ単語帳 はこのグループを使用します。</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">すべてのサブ単語帳のセット</string>

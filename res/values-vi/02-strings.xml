@@ -85,11 +85,11 @@
   <string name="saving_changes">Đang lưu các sửa đồi...</string>
   <string name="reordering_cards">Đang sắp sếp lại các thẻ...</string>
   <plurals name="timebox_reached">
-    <item quantity="one">1 Đã được học trong %2$s</item>
+    <item quantity="one">%1$d card studied in %2$s</item>
     <item quantity="other">%1$d Các thẻ đã được học trong %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
-    <item quantity="one">1 phút</item>
+    <item quantity="one">%1$d minute</item>
     <item quantity="other">%1$d phút</item>
   </plurals>
   <string name="studyoptions_welcome_title">Chào mừng đến với AnkiDroid</string>
@@ -110,7 +110,7 @@
   <string name="rename_error">Không thể đổi tên tập thẻ %s</string>
   <string name="default_conf_delete_error">Nhóm tùy chọn mặc định không thể được gỡ bỏ</string>
   <plurals name="factadder_cards_added">
-    <item quantity="one">Đã thêm vào 1 thẻ</item>
+    <item quantity="one">%d card added</item>
     <item quantity="other">Đã thêm vào %d thẻ</item>
   </plurals>
   <string name="help_title">Trợ giúp</string>

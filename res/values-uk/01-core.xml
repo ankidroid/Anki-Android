@@ -49,19 +49,19 @@
   <string name="studyoptions_eta">Оцінка часу (хв.):</string>
   <string name="studyoptions_start">Почати вивчення</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">повт. 1 з %2$d (%3$s)</item>
-    <item quantity="other">повт. %1$d з %2$d (%3$s)</item>
+    <item quantity="one">%1$d card due (%2$s)</item>
+    <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one">1 хв.</item>
+    <item quantity="one">%d min.</item>
     <item quantity="other">%d хв.</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item quantity="one">повт. 1 з %2$d</item>
+    <item quantity="one">%1$d of %2$d due</item>
     <item quantity="other">повт. %1$d з %2$d</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">Залишилася 1 хв.</item>
+    <item quantity="one">%d minute left</item>
     <item quantity="other">%d хвилин залишилося</item>
   </plurals>
   <string name="type_answer_hint">Введіть відповідь</string>
@@ -150,15 +150,15 @@
   <string name="studyoptions_congrats_more_new">Доступно більше нових карток але денний ліміт вичерпано. Ви можете збільшити ліміт в налаштуваннях, але, будь-ласка, зверніть увагу що це збільшить навантаження.</string>
   <string name="studyoptions_congrats_custom">Для навчання за межами нормального разкладу клацніть на \"Додатковий Трейнінг\" внизу.</string>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Завтра буде: 1 картка повторити та %2$s.\n Оцінка часу: %3$s</item>
+    <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
     <item quantity="other">Завтра буде: %1$d карток повторити та %2$d.\nПриблизний час: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">1 нова картка</item>
+    <item quantity="one">%1$d new card</item>
     <item quantity="other">%1$d нових карт</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">Залишилось часу приблизно: 1 хв.</item>
+    <item quantity="one">Estimated time: %1$d min.</item>
     <item quantity="other">Залишилось часу приблизно: %1$d хв.</item>
   </plurals>
   <string name="sd_card_not_mounted">Карта памяті не вставлена.\n\nВи можете зберігати ваші колоди і у внутрішній памяті, але це не рекомендується так як ви не будете мати до них доступу. Ви можете активувати цей режим в налаштуваннях (клікніть тут).</string>

@@ -85,11 +85,11 @@
   <string name="saving_changes">ذخیره تغییرات</string>
   <string name="reordering_cards">مرتب سازی مجدد کارتها...</string>
   <plurals name="timebox_reached">
-    <item quantity="one">یک کارت مرور شده در %2$s</item>
+    <item quantity="one">%1$d card studied in %2$s</item>
     <item quantity="other">%1$d کارت مرور شده در %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
-    <item quantity="one">1 دقیقه</item>
+    <item quantity="one">%1$d minute</item>
     <item quantity="other">%1$d دقیقه</item>
   </plurals>
   <string name="studyoptions_welcome_title">به آنکی دروید خوش آمدید</string>
@@ -110,7 +110,7 @@
   <string name="rename_error">نامگذاری مجدد دسته کارت %s ممکن نشد</string>
   <string name="default_conf_delete_error">امکان پاک کردن تنظیمات پیش فرض گروه نمی باشد</string>
   <plurals name="factadder_cards_added">
-    <item quantity="one">1 کارت اضافه شده</item>
+    <item quantity="one">%d card added</item>
     <item quantity="other">کارت های %d اضافه شده</item>
   </plurals>
   <string name="help_title">کمک</string>

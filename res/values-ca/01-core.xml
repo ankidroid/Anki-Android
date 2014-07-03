@@ -49,19 +49,19 @@
   <string name="studyoptions_eta">Temps estimat (min.):</string>
   <string name="studyoptions_start">Study</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">1 de %2$d vençuda (%3$s)</item>
-    <item quantity="other">%1$d de %2$d vençudes (%3$s)</item>
+    <item quantity="one">%1$d card due (%2$s)</item>
+    <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one">1 min.</item>
+    <item quantity="one">%d min.</item>
     <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item quantity="one">1 de %2$d pendent</item>
+    <item quantity="one">%1$d of %2$d due</item>
     <item quantity="other">%1$d de %2$d pendents</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">queda 1 minut</item>
+    <item quantity="one">%d minute left</item>
     <item quantity="other">queden %d minuts</item>
   </plurals>
   <string name="type_answer_hint">Type answer</string>
@@ -150,15 +150,15 @@
   <string name="studyoptions_congrats_more_new">Hi ha més fitxes noves, però s\'ha assolit el límit diari. Podeu augmentar el límit a les opcions, però si us plau, tingueu en compte que això farà augmentar la càrrega de treball de la revisió a curt termini.</string>
   <string name="studyoptions_congrats_custom">Per a estudiar fora de la planificació normal, cliqueu al botó Estudi a Mida d\'aquí sota.</string>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Demà hi haurà: 1 fitxa per revisar i %2$s.\n temps aproximat: %3$s</item>
+    <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
     <item quantity="other">Demà hi haurà: %1$d fitxes per revisar i %2$s.\n Temps aproximat: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">1 fitxa nova</item>
+    <item quantity="one">%1$d new card</item>
     <item quantity="other">%1$d fitxes noves</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">Temps estimat: 1 min.</item>
+    <item quantity="one">Estimated time: %1$d min.</item>
     <item quantity="other">Temps estimat: %1$d min.</item>
   </plurals>
   <string name="sd_card_not_mounted">La targeta SD no està muntada.\n\n També podeu desar la vostra col·lecció a la memòria interna, tot i que no es recomana, ja que no podreu accedir al fitxer tan fàcilment. Podeu habilitar aquesta opció a les preferències (obriu-les clicant aquest text).</string>

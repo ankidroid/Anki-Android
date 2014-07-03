@@ -49,19 +49,19 @@
   <string name="studyoptions_eta">Thời gian ước tính (phút):</string>
   <string name="studyoptions_start">Bắt đầu học</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">1 trong số %2$d tới hạn (%3$s)</item>
-    <item quantity="other">%1$d trong số %2$d tới hạn (%3$s)</item>
+    <item quantity="one">%1$d card due (%2$s)</item>
+    <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one">1 phút</item>
+    <item quantity="one">%d min.</item>
     <item quantity="other">%d phút</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item quantity="one">1 trong số %2$d cần ôn tập</item>
+    <item quantity="one">%1$d of %2$d due</item>
     <item quantity="other">%1$d trong số %2$d tới hạn</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">còn 1 phút</item>
+    <item quantity="one">%d minute left</item>
     <item quantity="other">còn %d phút</item>
   </plurals>
   <string name="type_answer_hint">Trả lời</string>
@@ -150,15 +150,15 @@
   <string name="studyoptions_congrats_more_new">Không có thẻ mới, nhưng bạn đã đạt giới hạn hàng ngày. Bạn có thể tăng giới hạn trong các tùy chọn, nhưng vui lòng nhớ rằng điều này sẽ làm tăng khối lượng  công việc của bạn.</string>
   <string name="studyoptions_congrats_custom">Để học bên ngoài thời gian biểu, hãy chọn vào nút Lựa chọn việc học.</string>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Ngày mai sẽ có: 1 thẻ cần ôn tập và %2$s.\n Thời gian ước tính: %3$s</item>
+    <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
     <item quantity="other">Ngày mai sẽ có: %1$d thẻ cần ôn tập và %2$s.\n Thời gian ước tính: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">1 thẻ mới</item>
+    <item quantity="one">%1$d new card</item>
     <item quantity="other">%1$d thẻ mới</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">Thời gian ước tính: 1 phút.</item>
+    <item quantity="one">Estimated time: %1$d min.</item>
     <item quantity="other">Thời gian ước tính: %1$d phút.</item>
   </plurals>
   <string name="sd_card_not_mounted">Thẻ nhớ SD không được tìm thấy. \n\n Bạn có thể lưu trữ thư viện trên bộ nhớ điện thoại, dù không tốt bằng, do việc truy nhập dữ liệu khó khăn. Bạn có thể thay đổi trong mục tùy chọn (mở bằng cách nhấn vào Chữ).</string>

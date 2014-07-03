@@ -190,7 +190,7 @@
   <string name="deck_conf_deck_description">Kortleksbeskrivning</string>
   <string name="deck_conf_group">Options group</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n1 kortlekar använder denna grupp</item>
+    <item quantity="one">%1$s\n%2$d deck uses this group</item>
     <item quantity="other">%1$s\n%2$d kortlekar använder denna grupp</item>
   </plurals>
   <string name="deck_conf_new_cards">Nya kort</string>
@@ -236,7 +236,7 @@
   <string name="deck_conf_remove_message">Radera aktuell konfigurationsgrupp?</string>
   <string name="deck_conf_set_subdecks">Ställ in för alla underkortlekar</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">1 underkortlek kommer använda denna grupp</item>
+    <item quantity="one">%s subdeck will use this group</item>
     <item quantity="other">%s underkortlekar kommer använda denna grupp</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Ställ in för alla underkortlekar</string>

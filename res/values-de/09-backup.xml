@@ -41,7 +41,7 @@
 <resources>
   <string name="backup_collection">Erstelle Sicherung&#8230;</string>
   <string name="backup_deck_no_space_left">Sicherung nicht gespeichert. Nicht genug Speicherplatz auf der SD-Karte. Geben Sie mehr Speicherplatz frei oder verringern die Sicherungstiefe.</string>
-  <string name="sd_space_warning">Auf Ihrer SD-Karte sind weniger als %d MB frei.\nBitte geben Sie mehr Platz frei, um Datenverluste zu vermeiden.</string>
+  <string name="sd_space_warning">Auf Ihrer SD-Karte sind weniger als %d MB frei.\nGeben Sie mehr Platz frei, um Datenverluste zu vermeiden.</string>
   <string name="backup_deck_success">Sicherungskopie angelegt</string>
   <string name="backup_manager_title">Sicherungssystem</string>
   <string name="backup_delete">Lösche Sicherungen&#8230;</string>

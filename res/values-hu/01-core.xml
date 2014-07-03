@@ -49,19 +49,19 @@
   <string name="studyoptions_eta">Becsült idő (perc):</string>
   <string name="studyoptions_start">Gyakorlás</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">1 a %2$d-ból aktuális (%3$s)</item>
-    <item quantity="other">%1$d a %2$d-ból aktuális (%3$s)</item>
+    <item quantity="one">%1$d card due (%2$s)</item>
+    <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one">1 perc.</item>
+    <item quantity="one">%d min.</item>
     <item quantity="other">%d perc.</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item quantity="one">1 of %2$d miatt</item>
+    <item quantity="one">%1$d of %2$d due</item>
     <item quantity="other">%1$d a %2$d darabból esedékes</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">1 perc van hátra</item>
+    <item quantity="one">%d minute left</item>
     <item quantity="other">%d perc van hátra</item>
   </plurals>
   <string name="type_answer_hint">Válasz begépelése</string>
@@ -150,15 +150,15 @@
   <string name="studyoptions_congrats_more_new">További új kártyák állnak rendelkezésre, azonban a napi limitet elérted. A napi limitet az opciók menüben módosíthatod, de kérlek ne feledd, hogy ez rövidtávon megnöveli az ismétléseid számát.</string>
   <string name="studyoptions_congrats_custom">Ahhoz, hogy a szokásostól eltérő ütemben tanulhass, kattints lent, az \"Egyéni tanulás\" gombra.</string>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Holnap 1 kártyát kell átnézni és %2$s.\n Becsült idő: %3$s</item>
+    <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
     <item quantity="other">Holnap %1$d kártyát kell átnézni és %2$s.\n Becsült idő: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">1 új kártya</item>
+    <item quantity="one">%1$d new card</item>
     <item quantity="other">%1$d új kártyák</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">Becsült idő: 1 perc</item>
+    <item quantity="one">Estimated time: %1$d min.</item>
     <item quantity="other">Becsült idő: %1$d perc</item>
   </plurals>
   <string name="sd_card_not_mounted">Nincs SD kártya behelyezve.\n\nA gyűjteményt a belső memóriában is tárolhatod, bár ez nem ajánlott, mert így nem tudod olyan könnyen elérni a fájlt. Ezt a beállításoknál tudod bekapcsolni (Erre a szövegre kattintva nyithatod meg).</string>

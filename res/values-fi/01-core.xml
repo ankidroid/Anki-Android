@@ -49,19 +49,19 @@
   <string name="studyoptions_eta">Arvioitu aika (min):</string>
   <string name="studyoptions_start">Opiskele nyt</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">1/%2$d tehtävänä (%3$s)</item>
-    <item quantity="other">%1$d/%2$d tehtävänä (%3$s)</item>
+    <item quantity="one">%1$d card due (%2$s)</item>
+    <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one">1 min</item>
+    <item quantity="one">%d min.</item>
     <item quantity="other">%d min</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item quantity="one">1 / %2$d korttia</item>
+    <item quantity="one">%1$d of %2$d due</item>
     <item quantity="other">%1$d / %2$d jäljellä</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">Minuutti jäljellä</item>
+    <item quantity="one">%d minute left</item>
     <item quantity="other">%d minuuttia jäljellä</item>
   </plurals>
   <string name="type_answer_hint">Type answer</string>
@@ -150,15 +150,15 @@
   <string name="studyoptions_congrats_more_new">Pakassa on lisää uusia kortteja, mutta päivittäinen raja on täyttynyt. Voit korottaa rajaa asetuksista, mutta huomio että tämä lisää lyhytaikaisen läpikäynnin työmäärää.</string>
   <string name="studyoptions_congrats_custom">Opiskellaksesi normaalin aikataulun ulkopuolella, napsauta alapuolella olevaa Mukautettu opiskelu -painiketta.</string>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Huomenna ohjelmassa yhden kortin läpikäynti ja %2$s.\n Arvioitu kesto: %3$s</item>
+    <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
     <item quantity="other">Huomenna ohjelmassa: %1$d kortin läpikäynti ja %2$s.\n Arvioitu kesto: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">1 uusi kortti</item>
+    <item quantity="one">%1$d new card</item>
     <item quantity="other">%1$d uutta korttia</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">Arvioitu kesto: 1 min.</item>
+    <item quantity="one">Estimated time: %1$d min.</item>
     <item quantity="other">Arvioitu kesto: %1$d min.</item>
   </plurals>
   <string name="sd_card_not_mounted">SD-korttia ei löydy.\n\nVoit tallentaa kokoelmasi myös sisäiseen muistiin, mutta se ei ole suositeltavaa koska et pääse käsiksi kokoelmatiedostoon niin helposti. Voit aktivoida tämän asetukset asetuksista, joihin pääset tätä tekstiä napsauttamalla.</string>

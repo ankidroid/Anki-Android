@@ -49,19 +49,19 @@
   <string name="studyoptions_eta">Geschatte tijd (min):</string>
   <string name="studyoptions_start">Studeer nu</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">1 van %2$d te doen(%3$s)</item>
-    <item quantity="other">%1$d van %2$d te doen(%3$s)</item>
+    <item quantity="one">%1$d card due (%2$s)</item>
+    <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one">1 min.</item>
+    <item quantity="one">%d min.</item>
     <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item quantity="one">1 van %2$d te doen</item>
+    <item quantity="one">%1$d of %2$d due</item>
     <item quantity="other">%1$d van %2$d te doen</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">Nog 1 minuut</item>
+    <item quantity="one">%d minute left</item>
     <item quantity="other">%d minuten over</item>
   </plurals>
   <string name="type_answer_hint">Type answer</string>
@@ -150,15 +150,15 @@
   <string name="studyoptions_congrats_more_new">Er zijn meer nieuwe kaarten beschikbaar, maar de dagelijkse limiet is bereikt. Je kunt de limiet verhogen in de instellingen, maar houd er rekening mee dat dit de werklast voor de korte termijn zal verhogen.</string>
   <string name="studyoptions_congrats_custom">Om buiten het normale schema te studeren, klik op onderstaande knop Aangepast Studeren.</string>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Morgen: 1 kaart te overhoren en %2$s.\n Geschatte tijd: %3$s</item>
+    <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
     <item quantity="other">Morgen zijn er: %1$d kaarten te overhoren en %2$s.\n Geschatte tijd: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">1 nieuwe kaart</item>
+    <item quantity="one">%1$d new card</item>
     <item quantity="other">%1$d nieuwe kaarten</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">Geschatte tijd: 1 minuut.</item>
+    <item quantity="one">Estimated time: %1$d min.</item>
     <item quantity="other">Geschatte tijd: %1$d minuten.</item>
   </plurals>
   <string name="sd_card_not_mounted">SD-kaart is niet aanwezig.\n\nU kan uw collectie ook in het interne geheugen opslaan, maar dit is niet aangeraden omdat het dan lastiger wordt voor u om het bestand te vinden. U kan dit activeren in de voorkeuren (klik op deze tekst om die te openen).</string>

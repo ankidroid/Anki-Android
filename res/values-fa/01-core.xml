@@ -49,19 +49,19 @@
   <string name="studyoptions_eta">زمان برآورد شده (دقیقه):</string>
   <string name="studyoptions_start">مرور کردن</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">1 از %2$d وظیفه (%3$s)</item>
-    <item quantity="other">%1$d از %2$d وظیفه (%3$s)</item>
+    <item quantity="one">%1$d card due (%2$s)</item>
+    <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one">1 دقیقه</item>
+    <item quantity="one">%d min.</item>
     <item quantity="other">%d دقیقه</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item quantity="one">1 از %2$d تکالیف</item>
+    <item quantity="one">%1$d of %2$d due</item>
     <item quantity="other">%1$d از %2$d تکالبف</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">1 دقیقه مانده است</item>
+    <item quantity="one">%d minute left</item>
     <item quantity="other">دقیقه مانده است %d</item>
   </plurals>
   <string name="type_answer_hint">پاسخ را تایپ کنید</string>
@@ -150,15 +150,15 @@
   <string name="studyoptions_congrats_more_new">کارتهای جدید بیشتری موجودند، ولی شما به حد تعیین شده روزانه مرور رسیده اید. شما می توانید این حد را در بخش گزینه ها افزایش دهید، ولی لطفا به یاد داشته باشید که بار کاری مرور کوتاه مدت شما افزایش خواهد یافت.</string>
   <string name="studyoptions_congrats_custom">جهت مطالعه خارج از برنامه ، بر روی دکمه مطالعه سفارشی زیر کلیک کنید.</string>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">فردا 1 کارت برای مرور خواهید داشت و %2$s. \n زمان برآورد شده: %3$s</item>
+    <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
     <item quantity="other">فردا %1$d کارت برای مرور خواهید داشت و %2$s. \n زمان برآورد شده: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">1 کارت جدید</item>
+    <item quantity="one">%1$d new card</item>
     <item quantity="other">%1$d کارت های جدید</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">زمان برآورد شده : 1 دقیقه</item>
+    <item quantity="one">Estimated time: %1$d min.</item>
     <item quantity="other">زمان برآورد شده : %1$d دقیقه</item>
   </plurals>
   <string name="sd_card_not_mounted">کارت حافظه قرار داده نشده است.\n\nشما می توانید مجموعه تان را روی حافظه داخلی نیز ذخیره کنید, البته این عمل توصیه نمی شود. زیرا دستیابی به فایل ها به آسانی صورت نخواهد گرفت. در تنظیمات می توانید آن را فعال کنید (با کلیک بر روی این متن آنها را باز کنید).</string>

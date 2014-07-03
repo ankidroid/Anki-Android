@@ -190,7 +190,7 @@
   <string name="deck_conf_deck_description">Opis talii</string>
   <string name="deck_conf_group">Options group</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n1 talia używa tej grupy</item>
+    <item quantity="one">%1$s\n%2$d deck uses this group</item>
     <item quantity="other">%1$s\n%2$d talii używa tej grupy</item>
   </plurals>
   <string name="deck_conf_new_cards">Nowe karty</string>
@@ -236,7 +236,7 @@
   <string name="deck_conf_remove_message">Usunąć bieżące ustawienia grupy?</string>
   <string name="deck_conf_set_subdecks">Ustaw dla wszystkich sub-talii</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">1 sub-talia będzie używać tej grupy</item>
+    <item quantity="one">%s subdeck will use this group</item>
     <item quantity="other">%s sub-talii będzie używać tej grupy</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Ustaw dla wszystkich sub-talii</string>

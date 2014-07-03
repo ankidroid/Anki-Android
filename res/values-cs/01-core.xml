@@ -49,19 +49,19 @@
   <string name="studyoptions_eta">Odhadovaný čas (min):</string>
   <string name="studyoptions_start">Studovat</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">1 z %2$d k zopakování (%3$s)</item>
-    <item quantity="other">%1$d z %2$d k zopakování (%3$s)</item>
+    <item quantity="one">%1$d card due (%2$s)</item>
+    <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one">1 min.</item>
+    <item quantity="one">%d min.</item>
     <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item quantity="one">1 z %2$d k zopakování</item>
+    <item quantity="one">%1$d of %2$d due</item>
     <item quantity="other">zbývá %1$d / %2$d</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">Zbývá 1 minuta</item>
+    <item quantity="one">%d minute left</item>
     <item quantity="other">Zbývá %d minut</item>
   </plurals>
   <string name="type_answer_hint">Type answer</string>
@@ -150,15 +150,15 @@
   <string name="studyoptions_congrats_more_new">Existuje více nových karet, ale byl dosažen denní limit. Můžete zvýšit tento limit v Nastavení, ale mějte na paměti, že se krátkodobě zvýší vaše zátěž na opakování.</string>
   <string name="studyoptions_congrats_custom">Pro studium mimo normální plán klepněte na tlačítko \'Vlastní učení\'.</string>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Zítra bude: 1 karta k zopakování a %2$s.\nOdhadovaný čas: %3$s</item>
+    <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
     <item quantity="other">Zítra bude: %1$d karet k zopakování a %2$s.\n Odhadovaný čas: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">1 nová karta</item>
+    <item quantity="one">%1$d new card</item>
     <item quantity="other">%1$d nových karet</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">Odhadovaný čas: 1 min.</item>
+    <item quantity="one">Estimated time: %1$d min.</item>
     <item quantity="other">Odhadovaný čas: %1$d min.</item>
   </plurals>
   <string name="sd_card_not_mounted">Paměťová karta není vložena.\n\n Svou kolekci si přesto můžete uložit do interní paměti, avšak toto není doporučeno, protože dostupnost tohoto souboru není tak snadná. Tuto volbu aktivujete v nastavení (které otevřete kliknutím na tento text).</string>

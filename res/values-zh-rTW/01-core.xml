@@ -49,19 +49,19 @@
   <string name="studyoptions_eta">估計時間(分鐘):</string>
   <string name="studyoptions_start">Study</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%2$d之1到期(%3$s)</item>
-    <item quantity="other">%2$d之%1$d到期(%3$s)</item>
+    <item quantity="one">%1$d card due (%2$s)</item>
+    <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one">1分鐘</item>
+    <item quantity="one">%d min.</item>
     <item quantity="other">%d分鐘</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item quantity="one">%2$d之1到期</item>
+    <item quantity="one">%1$d of %2$d due</item>
     <item quantity="other">%2$d之%1$d到期</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">剩餘一分鐘</item>
+    <item quantity="one">%d minute left</item>
     <item quantity="other">還有 %d 分鐘</item>
   </plurals>
   <string name="type_answer_hint">Type answer</string>
@@ -151,15 +151,15 @@
   <string name="studyoptions_congrats_more_new">牌組裡還有其他新的卡片，只是您已經達到今天的進度了。您可以在選項中增加每日卡片數量上限，但請注意，這將會加重你短期的復習量。</string>
   <string name="studyoptions_congrats_custom">如果要有額外的學習進度，請按下方的「自訂學習」按鈕。</string>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">明天有: 1張卡片待複習和%2$s。\n估計時間: %3$s</item>
+    <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
     <item quantity="other">明天有: %1$d 張卡片待複習和%2$s。\n估計時間: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">1張新卡片</item>
+    <item quantity="one">%1$d new card</item>
     <item quantity="other">%1$d 張新卡片</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">估計時間: 1分鐘</item>
+    <item quantity="one">Estimated time: %1$d min.</item>
     <item quantity="other">估計時間: %1$d 分鐘</item>
   </plurals>
   <string name="sd_card_not_mounted">SD卡尚未掛載。\n\n你可以將你的收藏存放在內部記憶體，但不建議如此做，因為你無法輕易存取該檔案。你可以在偏好設定裡啟用此選項（點一下此文字以開啟）。</string>

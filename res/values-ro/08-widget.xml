@@ -44,11 +44,11 @@
   <string name="widget_no_cards_due">Nici un card scadent</string>
   <string name="widget_loading">Widget-ul se încarcă...</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">1 card scadent în %2$s</item>
+    <item quantity="one">%1$d card due in %2$s</item>
     <item quantity="other">%1$d carduri scadente în %2$s</item>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="one">1 pachet</item>
+    <item quantity="one">%1$d deck</item>
     <item quantity="other">%1$d pachete</item>
   </plurals>
   <string name="widget_medium">AnkiDroid Mediu</string>
@@ -57,7 +57,7 @@
   <string name="widget_big_restrictions_dialog">Din cauza unor restricţii impuse de Android widget-framework, acest widget poate afişa numai text, fără imagini, sunete etc.</string>
   <string name="open_in_reviewer">Deschide pachetul în AnkiDroid</string>
   <plurals name="widget_big_eta">
-    <item quantity="one">Timp estimat: 1 min.</item>
+    <item quantity="one">Estimated time: %d min.</item>
     <item quantity="other">Timp estimat: %d min.</item>
   </plurals>
   <string name="widget_big_tomorrow_due">Scadente pe mâine:</string>

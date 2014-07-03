@@ -49,19 +49,19 @@
   <string name="studyoptions_eta">Tiempo estimado (min):</string>
   <string name="studyoptions_start">Estudiar ahora</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">1 de %2$d programadas (%3$s)</item>
-    <item quantity="other">%1$d de %2$d programadas (%3$s)</item>
+    <item quantity="one">%1$d card due (%2$s)</item>
+    <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one">1 min.</item>
+    <item quantity="one">%d min.</item>
     <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item quantity="one">1 de %2$d programada</item>
+    <item quantity="one">%1$d of %2$d due</item>
     <item quantity="other">%1$d de %2$d programadas</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">Resta 1 minuto</item>
+    <item quantity="one">%d minute left</item>
     <item quantity="other">Restan %d minutos</item>
   </plurals>
   <string name="type_answer_hint">Escribir respuesta</string>
@@ -150,15 +150,15 @@
   <string name="studyoptions_congrats_more_new">Hay más tarjetas nuevas disponibles pero el límite diario ha sido alcanzado. Puede incrementar el límite en las opciones, pero por favor tenga en cuenta que esto incrementará el trabajo de revisión a corto plazo.</string>
   <string name="studyoptions_congrats_custom">Para estudiar por fuera de la programación normal, haga click en el botón inferior Estudio Personalizado.</string>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Mañana habrá: 1 tarjeta para revisar y %2$s.\n Tiempo estimado: %3$s</item>
+    <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
     <item quantity="other">Mañana habrá: %1$d tarjetas para revisar y %2$s.\n Tiempo estimado: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">1 tarjeta nueva</item>
+    <item quantity="one">%1$d new card</item>
     <item quantity="other">%1$d nuevas tarjetas</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">Tiempo estimado: 1 min.</item>
+    <item quantity="one">Estimated time: %1$d min.</item>
     <item quantity="other">Tiempo estimado: %1$d min.</item>
   </plurals>
   <string name="sd_card_not_mounted">La tarjeta SD no está montada.\n\nPuede almacenar su colección en la memoria interna también, aunque no es lo recomendado puesto que no puede acceder tan fácilmente al archivo. Puede activar esto en las preferencias (ábralas cliqueando sobre este texto).</string>

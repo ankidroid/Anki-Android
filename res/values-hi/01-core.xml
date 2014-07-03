@@ -49,19 +49,19 @@
   <string name="studyoptions_eta">अनुमानित समय (मिनट):</string>
   <string name="studyoptions_start">Study</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">1 of %2$d due (%3$s) </item>
-    <item quantity="other">%1$d of %2$d due (%3$s)</item>
+    <item quantity="one">%1$d card due (%2$s)</item>
+    <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one">1 मिनट.</item>
+    <item quantity="one">%d min.</item>
     <item quantity="other">%d मिनट.</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item quantity="one">1 की%2$d देय</item>
+    <item quantity="one">%1$d of %2$d due</item>
     <item quantity="other">%1$d की%2$dदेय</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">1 मिनट छोड़ दिया</item>
+    <item quantity="one">%d minute left</item>
     <item quantity="other">%d मिनट छोड़ दिया</item>
   </plurals>
   <string name="type_answer_hint">Type answer</string>
@@ -150,15 +150,15 @@
   <string name="studyoptions_congrats_more_new">वहाँ और अधिक नए कार्ड उपलब्ध हैं, लेकिन दैनिक सीमा तक पहुँच गया है। आप विकल्पों में सीमा में वृद्धि कर सकते हैं, लेकिन कि यह अपने अल्पकालिक समीक्षा काम का बोझ बढ़ जाएगा मन में भालू कृपया।</string>
   <string name="studyoptions_congrats_custom">सामान्य समय के बाहर का अध्ययन करने के लिए, कस्टम अध्ययन बटन नीचे क्लिक करें।</string>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">कल वहाँ हो जाएगा: 1 कार्ड की समीक्षा करने और %2$s.\n अनुमानित समय: %3$s</item>
+    <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
     <item quantity="other">कल वहाँ हो जाएगा: %1$d कार्ड की समीक्षा करने और %2$s.\n अनुमानित समय: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">1 नया कार्ड</item>
+    <item quantity="one">%1$d new card</item>
     <item quantity="other">%1$d नए कार्ड</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">अनुमानित समय: 1 मिनट।</item>
+    <item quantity="one">Estimated time: %1$d min.</item>
     <item quantity="other">अनुमानित समय शेष:  %1$d min</item>
   </plurals>
   <string name="sd_card_not_mounted">हालांकि यह अनुशंसित नहीं है जैसा कि आप फ़ाइल तक पहुँच नहीं कर सकता कि आसानी से एसडी कार्ड नहीं है mounted.\n\nYou अपने संग्रह भी, आंतरिक स्मृति में संग्रहीत कर सकते हैं। आप इस (उन्हें इस पाठ पर क्लिक करके खोल) वरीयताओं में सक्रिय कर सकते हैं।</string>

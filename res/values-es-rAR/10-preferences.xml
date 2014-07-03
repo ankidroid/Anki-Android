@@ -48,12 +48,12 @@
   <string name="pref_cat_whiteboard">Pizarra</string>
   <string name="pref_cat_automatic_display">Mostrar respuesta automáticamente</string>
   <string name="pref_cat_fonts">Fuentes</string>
-  <string name="pref_cat_fonts_summ">Change default font and size</string>
+  <string name="pref_cat_fonts_summ">Cambiar tamaño y fuente predeterminada</string>
   <string name="pref_cat_gestures">Gestos</string>
   <string name="pref_cat_gestures_summ">Use taps and swipes instead of buttons</string>
   <string name="pref_cat_actions">Acciones</string>
   <string name="pref_cat_advanced">Avanzado</string>
-  <string name="pref_cat_advanced_summ">Optimization and experimental features</string>
+  <string name="pref_cat_advanced_summ">Características experimentales y optimización</string>
   <string name="pref_cat_performance">Rendimiento</string>
   <string name="pref_cat_workarounds">Workarounds</string>
   <string name="pref_cat_plugins">Complementos</string>
@@ -188,9 +188,9 @@
   <string name="studyoptions_max_fail_card">Máximo de tarjetas falladas</string>
   <string name="deck_conf_deck_name">Nombre del mazo</string>
   <string name="deck_conf_deck_description">Descripción del mazo</string>
-  <string name="deck_conf_group">Options group</string>
+  <string name="deck_conf_group">Grupo de opciones</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n1 mazo utiliza este grupo</item>
+    <item quantity="one">%1$s\n%2$d deck uses this group</item>
     <item quantity="other">%1$s\n%2$d mazos utilizan este grupo</item>
   </plurals>
   <string name="deck_conf_new_cards">Nuevas tarjetas</string>
@@ -236,7 +236,7 @@
   <string name="deck_conf_remove_message">¿Remover el grupo de opciones actuales?</string>
   <string name="deck_conf_set_subdecks">Aplicar a todos los submazos</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">1 submazo utilizará este grupo</item>
+    <item quantity="one">%s subdeck will use this group</item>
     <item quantity="other">%s submazos utilizarán este grupo</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Aplicar a todos los submazos</string>
