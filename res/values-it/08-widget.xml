@@ -44,11 +44,11 @@
   <string name="widget_no_cards_due">Nessuna carta scaduta</string>
   <string name="widget_loading">Widget caricamento...</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">1 carta scaduta in %2$s</item>
+    <item quantity="one">%1$d card due in %2$s</item>
     <item quantity="other">%1$d carte scadute in %2$s</item>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="one">1 corso</item>
+    <item quantity="one">%1$d deck</item>
     <item quantity="other">%1$d corsi</item>
   </plurals>
   <string name="widget_medium">AnkiDroid medio</string>
@@ -57,7 +57,7 @@
   <string name="widget_big_restrictions_dialog">A causa di alcune restrizioni del widget framework di Android questo widget può solo mostrare il testo e non anche immagini/suoni etc.</string>
   <string name="open_in_reviewer">Apri mazzo in AnkiDroid</string>
   <plurals name="widget_big_eta">
-    <item quantity="one">Durata stimata: 1 min.</item>
+    <item quantity="one">Estimated time: %d min.</item>
     <item quantity="other">Durata stimata: %d min.</item>
   </plurals>
   <string name="widget_big_tomorrow_due">Scadono domani:</string>

@@ -190,7 +190,7 @@
   <string name="deck_conf_deck_description">Popis balíčku</string>
   <string name="deck_conf_group">Options group</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n1 balíček používá tuto skupinu</item>
+    <item quantity="one">%1$s\n%2$d deck uses this group</item>
     <item quantity="other">%1$s\n%2$d balíčků používá tuto skupinu</item>
   </plurals>
   <string name="deck_conf_new_cards">Nové karty</string>
@@ -236,7 +236,7 @@
   <string name="deck_conf_remove_message">Odstranit možnosti aktuální skupiny?</string>
   <string name="deck_conf_set_subdecks">Nastavit pro všechny podřízené balíčky</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">1 podřízený balíček bude používat tuto skupinu</item>
+    <item quantity="one">%s subdeck will use this group</item>
     <item quantity="other">%s podřízené(ých) balíčků bude používat tuto skupinu</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Nastavit pro všechny podřízené balíčky</string>

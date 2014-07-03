@@ -49,19 +49,19 @@
   <string name="studyoptions_eta">Tidsestimat (min.):</string>
   <string name="studyoptions_start">Study</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">1 av %2$d forfaller (%3$s)</item>
-    <item quantity="other">%1$d av %2$d forfaller (%3$s)</item>
+    <item quantity="one">%1$d card due (%2$s)</item>
+    <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one">1 min.</item>
+    <item quantity="one">%d min.</item>
     <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item quantity="one">1 av %2$d gjenstår</item>
+    <item quantity="one">%1$d of %2$d due</item>
     <item quantity="other">%1$d av %2$d gjenstår</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">1 minutt igjen</item>
+    <item quantity="one">%d minute left</item>
     <item quantity="other">%d minutter igjen</item>
   </plurals>
   <string name="type_answer_hint">Type answer</string>
@@ -150,15 +150,15 @@
   <string name="studyoptions_congrats_more_new">Det finnes flere nye kort tilgjengelig, men den daglige grensen er nådd. Du kan øke grensen i innstillingene, men vær oppmerksom på at dette også vil øke den kortsiktige mengden av kort til repetering.</string>
   <string name="studyoptions_congrats_custom">To study outside of the normal schedule, touch the \"Custom study\" button below</string>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">I morgen blir det: 1 kort å gå gjennom og %2$s.\n Estimert tid: %3$s</item>
+    <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
     <item quantity="other">I morgen blir det: %1$d kort å gå gjennomg og %2$s.\n Estimert tid: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">1 nytt kort</item>
+    <item quantity="one">%1$d new card</item>
     <item quantity="other">%1$d nye kort</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">Estimert tid: 1 min.</item>
+    <item quantity="one">Estimated time: %1$d min.</item>
     <item quantity="other">Estimert tid: %1$d min.</item>
   </plurals>
   <string name="sd_card_not_mounted">SD card not mounted.\n\nYou can store your collection in the internal memory too, though it\'s not recommended as you cannot access the file that easily. You can activate this in the preferences (open them by touching this text).</string>

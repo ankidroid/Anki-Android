@@ -92,7 +92,7 @@
   <string name="deck_upgrade_title">Stapel aktualisieren</string>
   <string name="deck_upgrade_rename_warning">Beachten Sie, dass dies Ihre aktuelle Sammlung in eine Datei namens \'%1$s\' exportieren und eine neue Sammlung aus Ihren alten anki 1.x Dateien erstellen wird. Falls gewünscht, können Sie die gesicherte apkg Datei nach Abschluss des Assistenten manuell neu importieren. Möchten Sie wirklich fortfahren?</string>
   <string name="deck_upgrade_major_warning"><![CDATA[Dies ist ein wichtiges Update für Ankidroid und kann 10-20 minuten dauern.<br><br>Wollen Sie fortfahren oder das Update später ausführen?<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en">Mehr Informationen</a>]]></string>
-  <string name="deck_upgrade_start_again_to_upgrade_toast">Bitte starten Sie Ankidroid erneut, wenn Sie Zeit für die Aktualisierung haben!</string>
+  <string name="deck_upgrade_start_again_to_upgrade_toast">Bitte starten Sie Ankidroid erneut, wenn Sie Zeit für die Aktualisierung haben</string>
   <string name="deck_upgrade_recommended_method"><![CDATA[Die empfohlene Aktualisierungsmethode ist die Synchronisation mit einem PC und aktualisieren mit der Desktopversion von Anki.<br><br>Es gibt auch eine alternative Methode zum aktualisieren über das Internet, falls Sie keinen Zugriff auf einen PC haben und Ihre Sammlung nicht zu gross ist.]]></string>
   <string name="deck_upgrade_more_options_exit">Sie können den Assistenten verlassen ohne Ihre alten Karten zu importieren, indem Sie den Verlassen-Button unten betätigen.</string>
   <string name="deck_upgrade_more_options_new_collection">Um eine neue leere Sammlung zu erstellen, klicken Sie unten.</string>

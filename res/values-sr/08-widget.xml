@@ -44,11 +44,11 @@
   <string name="widget_no_cards_due">Нема карата за понављање</string>
   <string name="widget_loading">Виџет се учитава...</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">данас 1 карта од %2$s</item>
+    <item quantity="one">%1$d card due in %2$s</item>
     <item quantity="other">данас %1$d од %2$s</item>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="one">1 шпила</item>
+    <item quantity="one">%1$d deck</item>
     <item quantity="other">%1$d шпилова</item>
   </plurals>
   <string name="widget_medium">AnkiDroid Medium</string>
@@ -57,7 +57,7 @@
   <string name="widget_big_restrictions_dialog">Због неких ограничења система Android, виџет може да приказује само текст, али не и слике/звуке итд.</string>
   <string name="open_in_reviewer">Отвори шпил у AnkiDroid</string>
   <plurals name="widget_big_eta">
-    <item quantity="one">Предвиђено време: 1 мин.</item>
+    <item quantity="one">Estimated time: %d min.</item>
     <item quantity="other">Предвиђено време: %d мин.</item>
   </plurals>
   <string name="widget_big_tomorrow_due">Сутра ће бити:</string>

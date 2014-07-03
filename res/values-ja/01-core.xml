@@ -49,19 +49,19 @@
   <string name="studyoptions_eta">推定時間 (分):</string>
   <string name="studyoptions_start">学習開始</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%2$d期限切れ中 1枚(%3$s)</item>
-    <item quantity="other">残り%2$d枚中%1$d枚 (%3$s)</item>
+    <item quantity="one">%1$d card due (%2$s)</item>
+    <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one">1分</item>
+    <item quantity="one">%d min.</item>
     <item quantity="other">%d 分</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item quantity="one">%2$d期限切れ中 1枚</item>
+    <item quantity="one">%1$d of %2$d due</item>
     <item quantity="other">残り%2$d枚中%1$d枚</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">1 分の残り</item>
+    <item quantity="one">%d minute left</item>
     <item quantity="other">%d 分残り</item>
   </plurals>
   <string name="type_answer_hint">回答の入力</string>
@@ -70,13 +70,13 @@
   <string name="ease2_successive">難</string>
   <string name="ease3_successive">普通</string>
   <string name="ease3_learning">簡単</string>
-  <string name="studyoptions_congrats_undo">戻す %s</string>
+  <string name="studyoptions_congrats_undo">%s を元に戻す</string>
   <string name="card_unsuspended">カードの非表示を解除</string>
   <string name="card_suspended">カードが非表示に設定されました</string>
   <string name="menu_rotate">表示画面の回転</string>
   <string name="menu_import">ファイルのインポート</string>
   <string name="undo">元に戻す</string>
-  <string name="undo_action_review">last review</string>
+  <string name="undo_action_review">最後の復習</string>
   <string name="undo_action_edit">ノートの編集</string>
   <string name="undo_action_bury">ノートの一時延期</string>
   <string name="undo_action_suspend_card">カードの非表示</string>
@@ -150,15 +150,15 @@
   <string name="studyoptions_congrats_more_new">新しいカードの追加ができますが、毎日の制限に達しています。オプション設定で制限を増やすできますが、毎日の復習の負担が増加しますのでご注意ください。</string>
   <string name="studyoptions_congrats_custom">通常のスケジュール以外で学習するには、下のカスタム学習ボタンをクリックします。</string>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">明日は１枚のカードがあります。そして復習カードは %2$s.\n 必要な時間は%3$s</item>
+    <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
     <item quantity="other">明日は %1$d 枚のカードがあります。そして復習カードは %2$s.\n 必要な時間は%3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">1枚の新しいカード</item>
+    <item quantity="one">%1$d new card</item>
     <item quantity="other">%1$d枚の新カード</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">推定時間；１分</item>
+    <item quantity="one">Estimated time: %1$d min.</item>
     <item quantity="other">推定時間: %1$d 分</item>
   </plurals>
   <string name="sd_card_not_mounted">外部SDカードが見つかりません\n\n内部メモリーにコレクションを格納できますが、簡単にアクセスできませんので、お勧めできません。内部メモリーは環境設定でアクティブにすることができます。(このテキストをクリックして環境設定を開きます)</string>

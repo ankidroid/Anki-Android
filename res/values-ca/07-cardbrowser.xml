@@ -40,8 +40,8 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="one">Es mostra 1 de %2$d fitxes</item>
-    <item quantity="other">Es mostren %1$d de %2$d fitxes</item>
+    <item quantity="one">%d card shown</item>
+    <item quantity="other">%d cards shown</item>
   </plurals>
   <string name="card_browser_all_decks">Tots els paquets</string>
   <string name="card_browser_load">S\'estàn carregant les fitxes\nUn moment si us plau...</string>

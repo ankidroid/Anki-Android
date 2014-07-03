@@ -85,11 +85,11 @@
   <string name="saving_changes">Ukládání změn ...</string>
   <string name="reordering_cards">Změnit pořadí karet...</string>
   <plurals name="timebox_reached">
-    <item quantity="one">1 karta studována v %2$s</item>
+    <item quantity="one">%1$d card studied in %2$s</item>
     <item quantity="other">%1$d karet studováno v %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
-    <item quantity="one">1 minuta</item>
+    <item quantity="one">%1$d minute</item>
     <item quantity="other">%1$d minut</item>
   </plurals>
   <string name="studyoptions_welcome_title">Vítejte v AnkiDroid</string>
@@ -110,7 +110,7 @@
   <string name="rename_error">Balíček %s nelze přejmenovat</string>
   <string name="default_conf_delete_error">Nelze odstranit výchozí skupinu</string>
   <plurals name="factadder_cards_added">
-    <item quantity="one">1 karta přidána</item>
+    <item quantity="one">%d card added</item>
     <item quantity="other">přidáno %d karet</item>
   </plurals>
   <string name="help_title">Nápověda</string>

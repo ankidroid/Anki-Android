@@ -49,19 +49,19 @@
   <string name="studyoptions_eta">Apskaičiuotas laikas (min):</string>
   <string name="studyoptions_start">Pradėti mokytis</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">Laukia 1 iš %2$d (%3$s)</item>
-    <item quantity="other">Laukia %1$d iš %2$d (%3$s)</item>
+    <item quantity="one">%1$d card due (%2$s)</item>
+    <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one">1 min.</item>
+    <item quantity="one">%d min.</item>
     <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item quantity="one">Laukia 1 iš %2$d</item>
+    <item quantity="one">%1$d of %2$d due</item>
     <item quantity="other">Laukia %1$d iš %2$d</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">Dar 1 minutė</item>
+    <item quantity="one">%d minute left</item>
     <item quantity="other">Liko %d min</item>
   </plurals>
   <string name="type_answer_hint">Type answer</string>
@@ -150,15 +150,15 @@
   <string name="studyoptions_congrats_more_new">Today\'s limit has been reached. There are more new cards available; you can increase the limit in the options, but this will increase your short-term review workload.</string>
   <string name="studyoptions_congrats_custom">To study outside of the normal schedule, touch the \"Custom study\" button below</string>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Rytoj lauks 1 kortelė ir %2$s.\n Apskaičiuotas laikas: %3$s</item>
+    <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
     <item quantity="other">Rytoj lauks %1$d kortelė ir %2$s.\n Apskaičiuotas laikas: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">1 nauja kortelė</item>
+    <item quantity="one">%1$d new card</item>
     <item quantity="other">%1$d nauja(os) korta(os)</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">Apskaičiuotas laikas: 1 min.</item>
+    <item quantity="one">Estimated time: %1$d min.</item>
     <item quantity="other">Apskaičiuotas laikas: %1$d min.</item>
   </plurals>
   <string name="sd_card_not_mounted">SD card not mounted.\n\nYou can store your collection in the internal memory too, though it\'s not recommended as you cannot access the file that easily. You can activate this in the preferences (open them by touching this text).</string>

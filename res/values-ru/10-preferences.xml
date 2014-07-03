@@ -190,7 +190,7 @@
   <string name="deck_conf_deck_description">Описание колоды</string>
   <string name="deck_conf_group">Options group</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n1 колода использует данную группу</item>
+    <item quantity="one">%1$s\n%2$d deck uses this group</item>
     <item quantity="other">%1$s\n%2$d колод используют данную группу</item>
   </plurals>
   <string name="deck_conf_new_cards">Новые карты</string>
@@ -236,7 +236,7 @@
   <string name="deck_conf_remove_message">Удалить текущую группу опций?</string>
   <string name="deck_conf_set_subdecks">Установить для всех подколод</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">1 подколода будет использовать данную группу</item>
+    <item quantity="one">%s subdeck will use this group</item>
     <item quantity="other">%s подколод будут использовать данную группу</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Установить для всех подколод</string>

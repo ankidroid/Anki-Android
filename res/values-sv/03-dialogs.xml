@@ -124,7 +124,7 @@
   <string name="import_add_progress">• Packar upp arkiv %1$s\n• Import av noter %2$d%%\n• Import av kort %3$d%%\n• Uppstädning %4$s</string>
   <string name="sd_card_full_title">SD-kort fullt</string>
   <string name="sd_card_almost_full_title">SD-kort nästan fullt</string>
-  <string name="restore_backup_title">Restore backup?</string>
+  <string name="restore_backup_title">Återställ säkerhetskopia?</string>
   <string name="restore_backup">Your collection will be replaced with an older copy. Any unsaved progress will be lost.</string>
   <string name="dialog_cancel">Avbryt</string>
   <string name="dialog_ok">OK</string>
@@ -134,17 +134,17 @@
   <string name="dialog_positive_delete">Radera</string>
   <string name="dialog_positive_disable">Inaktivera</string>
   <string name="dialog_positive_overwrite">Skriv över</string>
-  <string name="dialog_positive_remove">Remove</string>
+  <string name="dialog_positive_remove">Ta bort</string>
   <string name="dialog_positive_repair">Reparera</string>
   <string name="dialog_positive_replace">Ersätt</string>
   <string name="dialog_positive_reset">Nollställ</string>
-  <string name="dialog_positive_restore">Restore</string>
+  <string name="dialog_positive_restore">Återställ</string>
   <string name="dialog_positive_save">Spara</string>
-  <string name="dialog_positive_set">Set</string>
+  <string name="dialog_positive_set">Ange</string>
   <string name="add_button_content">Lägg till&#8230;</string>
   <string name="card_browser_button_content">Kortbläddrare</string>
   <string name="lookup_button_content">Slå upp</string>
   <string name="statistics_button_content">Statistik</string>
-  <string name="dialog_collection_path_title">Folder does not exit</string>
+  <string name="dialog_collection_path_title">Mappen finns inte</string>
   <string name="dialog_collection_path_text">The folder you specified does not exist, would you like to create it?</string>
 </resources>

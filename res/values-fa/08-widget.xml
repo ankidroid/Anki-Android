@@ -44,11 +44,11 @@
   <string name="widget_no_cards_due">بدون کارتهای موعد مرور</string>
   <string name="widget_loading">بارگذاری ویدجت...</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">1 کارت موعد مرور در %2$s</item>
+    <item quantity="one">%1$d card due in %2$s</item>
     <item quantity="other">%1$d کارتهای موعد مرور در %2$s</item>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="one">1 دسته</item>
+    <item quantity="one">%1$d deck</item>
     <item quantity="other">%1$d دسته</item>
   </plurals>
   <string name="widget_medium">آنکی دروید متوسط</string>
@@ -57,7 +57,7 @@
   <string name="widget_big_restrictions_dialog"> با توجه به برخی محدودیتهای چهارچوب ویجت آنکی دروید فقط متن کارتهای موعد مرور نمایش داده می شود و امکان نمایش تصویر ، صدا و غیره وجود ندارد.</string>
   <string name="open_in_reviewer">دسته را در آنکی دروید بازکن</string>
   <plurals name="widget_big_eta">
-    <item quantity="one">زمان تخمینی: 1 دقیقه.</item>
+    <item quantity="one">Estimated time: %d min.</item>
     <item quantity="other">زمان تخمینی: %d دقیقه.</item>
   </plurals>
   <string name="widget_big_tomorrow_due">موعد مرور فردا:</string>

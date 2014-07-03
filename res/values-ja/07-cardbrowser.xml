@@ -40,8 +40,8 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="one">1 ／ %2$d 番目のカード</item>
-    <item quantity="other">%1$d ／ %2$d 番目のカード</item>
+    <item quantity="one">%d card shown</item>
+    <item quantity="other">%d cards shown</item>
   </plurals>
   <string name="card_browser_all_decks">すべての単語帳</string>
   <string name="card_browser_load">書き込み中です\nしばらくお待ちください</string>

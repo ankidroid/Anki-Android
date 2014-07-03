@@ -44,11 +44,11 @@
   <string name="widget_no_cards_due">Няма дължими карти</string>
   <string name="widget_loading">Зареждане на джаджа...</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">1 карта поради  в %2$s</item>
+    <item quantity="one">%1$d card due in %2$s</item>
     <item quantity="other">%1$d карти поради в %2$s</item>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="one">1 колода</item>
+    <item quantity="one">%1$d deck</item>
     <item quantity="other">%1$d колоди</item>
   </plurals>
   <string name="widget_medium">AnkiDroid среден</string>
@@ -57,7 +57,7 @@
   <string name="widget_big_restrictions_dialog">Поради някои ограничения на Андроид  рамката на тази джаджа може да показва само текста, но без изображения/звуци и т.н.</string>
   <string name="open_in_reviewer">Отвори колода в AnkiDroid</string>
   <plurals name="widget_big_eta">
-    <item quantity="one">Приблизително време: 1 мин.</item>
+    <item quantity="one">Estimated time: %d min.</item>
     <item quantity="other">Приблизително време: %d мин.</item>
   </plurals>
   <string name="widget_big_tomorrow_due">Утре поради:</string>

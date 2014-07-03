@@ -49,19 +49,19 @@
   <string name="studyoptions_eta">Tahminî süre (dk):</string>
   <string name="studyoptions_start">Çalışmaya Başla</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%2$d kartın 1\'i çıkacak (%3$s)</item>
-    <item quantity="other">%2$d kartın %1$d tanesi çıkacak (%3$s)</item>
+    <item quantity="one">%1$d card due (%2$s)</item>
+    <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one">1 dk.</item>
+    <item quantity="one">%d min.</item>
     <item quantity="other">%d dk.</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item quantity="one">%2$d\'in 1\'i</item>
+    <item quantity="one">%1$d of %2$d due</item>
     <item quantity="other">%2$d\'in %1$d\'i</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">1 dakika kaldı</item>
+    <item quantity="one">%d minute left</item>
     <item quantity="other">%d dakika kaldı</item>
   </plurals>
   <string name="type_answer_hint">Yanıtı yazın</string>
@@ -150,15 +150,15 @@
   <string name="studyoptions_congrats_more_new">Daha çalışılacak yeni kartlar var, ama günlük sınıra ulaşıldı. Sınırı seçeneklerden artırabilirsiniz, ama lütfen unutmayın ki bu kısa vâdede çalışma yükünüzü artıracak.</string>
   <string name="studyoptions_congrats_custom">Normal programın dışında çalışmak için, aşağıdaki Kişisel Çalışma düğmesine basın.</string>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Yarın; 1 kart çalışılacak ve %2$s.\n Tahminî süre: %3$s</item>
+    <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
     <item quantity="other">Yarın; %1$d kart çalışılacak ve %2$s.\n Tahminî süre: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">1 yeni kart</item>
+    <item quantity="one">%1$d new card</item>
     <item quantity="other">%1$d yeni kart</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">Tahminî süre: 1 dk.</item>
+    <item quantity="one">Estimated time: %1$d min.</item>
     <item quantity="other">Tahminî süre: %1$d dk.</item>
   </plurals>
   <string name="sd_card_not_mounted">SD kart takılı değil.\n\n Destelerinizi telefon hafızasında da saklayabilirsiniz ancak telefon hafızasına erişim kolay olmadığı için bu önerilmez. Tercihlerden erişimi aktif edebilirsiniz. (buraya tıklayarak tercihleri aç).</string>

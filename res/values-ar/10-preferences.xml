@@ -190,7 +190,7 @@
   <string name="deck_conf_deck_description">وصف الرزمة</string>
   <string name="deck_conf_group">Options group</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n1 deck uses this group</item>
+    <item quantity="one">%1$s\n%2$d deck uses this group</item>
     <item quantity="other">%1$s\n%2$d decks use this group</item>
   </plurals>
   <string name="deck_conf_new_cards">بطاقات جديدة</string>
@@ -236,7 +236,7 @@
   <string name="deck_conf_remove_message">Remove current options group?</string>
   <string name="deck_conf_set_subdecks">Set for all subdecks</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">1 subdeck will use this group</item>
+    <item quantity="one">%s subdeck will use this group</item>
     <item quantity="other">%s subdecks will use this group</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Set for all subdecks</string>

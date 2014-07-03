@@ -40,8 +40,8 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="one">شوهدت بطاقة من %2$d</item>
-    <item quantity="other">شوهدت %1$d من %2$d بطاقة</item>
+    <item quantity="one">%d card shown</item>
+    <item quantity="other">%d cards shown</item>
   </plurals>
   <string name="card_browser_all_decks">كل الرزم</string>
   <string name="card_browser_load">تحميل بطاقات.\nالرجاء الانتظار...</string>

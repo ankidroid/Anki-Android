@@ -44,11 +44,11 @@
   <string name="widget_no_cards_due">Žiadne karty na skúšanie</string>
   <string name="widget_loading">Načítava sa widget...</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">1 karta na skúšanie za %2$s</item>
+    <item quantity="one">%1$d card due in %2$s</item>
     <item quantity="other">%1$d kariet na skúšanie za %2$s</item>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="one">1 balíček</item>
+    <item quantity="one">%1$d deck</item>
     <item quantity="other">%1$d balíčkov</item>
   </plurals>
   <string name="widget_medium">AnkiDroid stredné</string>
@@ -57,7 +57,7 @@
   <string name="widget_big_restrictions_dialog">Z dôvodu niektorých obmedzení widgetov na Androide môže tento widget zobrazovať text, ale žiadne obrázky/zvuky atď.</string>
   <string name="open_in_reviewer">Otvoriť balíček v AnkiDroid</string>
   <plurals name="widget_big_eta">
-    <item quantity="one">Odhadovaný čas: 1 min.</item>
+    <item quantity="one">Estimated time: %d min.</item>
     <item quantity="other">Odhadovaný čas: %d min.</item>
   </plurals>
   <string name="widget_big_tomorrow_due">Na skúšanie zajtra:</string>

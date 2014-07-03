@@ -40,25 +40,25 @@
 -->
 <resources>
   <string-array name="new_version_features">
-    <item>Interfaccia ridisegnata</item>
+    <item>Ridisegnato l\'interfaccia</item>
     <item>Aggiungere immagini e suoni alle carte (sperimentale)</item>
     <item>La seconda colonna nel browser delle carte è ora configurabile</item>
     <item>È possibile eseguire lo zoom delle immagini sulle carte</item>
-    <item>Improve preview feature and access via action bar</item>
-    <item>Simplify menus and settings</item>
-    <item>Make slow searches in card browser cancellable</item>
-    <item>Improve adding/removing tags</item>
-    <item>Fix \"type in the answer\" and cloze deletion features</item>
-    <item>Fix whiteboard feature</item>
-    <item>Restore backups from within the app</item>
-    <item>Make volume duck on any background music when sounds played</item>
-    <item>Make playing of sounds consistent with Desktop version</item>
-    <item>Remove animations feature due to being buggy</item>
-    <item>Improve speed of showing cards</item>
-    <item>Remove duplicate check dialog when adding new flashcards</item>
-    <item>Remove swap button when adding or editing flashcards</item>
-    <item>Remove kanji info feature (will become optional plugin in the future)</item>
-    <item>Make minimum Android version 2.1</item>
-    <item>Fix lots of bugs</item>
+    <item>Funzionalità anteprima migliorata e accesso tramite barra di azione</item>
+    <item>Menù e impostazioni semplificati</item>
+    <item>Ricerche lunghe nel browser delle carte sono ora annullabili</item>
+    <item>Migliorata l\'aggiunta/rimozione di etichette</item>
+    <item>Migliorato le funzioni di digitazione della risposta e di testo da completare</item>
+    <item>Migliorato funzione lavagna</item>
+    <item>Ripristino di backup con l\'app</item>
+    <item>Riduzione del volume di qualsiasi musica di sottofondo durante la riproduzione di suoni</item>
+    <item>Riproduzione di suoni resa coerente con la versione Desktop</item>
+    <item>Rimosso animazioni a causa di errori</item>
+    <item>Migliorata la velocità nel mostrare le carte</item>
+    <item>Rimossa la finestra di dialogo controllo duplicati durante l\'aggiunta di nuove carte</item>
+    <item>Rimosso il tasto di scambio durante l\'aggiunta o modifica di carte</item>
+    <item>Rimosse le informazioni kanji (diventerà un plugin opzionale in futuro)</item>
+    <item>La versione minima di Android è ora 2.1</item>
+    <item>Corretti molti errori</item>
   </string-array>
 </resources>

@@ -49,19 +49,19 @@
   <string name="studyoptions_eta">Odhadovaný čas (min):</string>
   <string name="studyoptions_start">Študovať teraz</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">Zostáva 1 z %2$d (%3$s)</item>
-    <item quantity="other">Zostáva %1$d z %2$d (%3$s)</item>
+    <item quantity="one">%1$d card due (%2$s)</item>
+    <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one">1 min.</item>
+    <item quantity="one">%d min.</item>
     <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item quantity="one">1 z %2$d na opakovanie</item>
+    <item quantity="one">%1$d of %2$d due</item>
     <item quantity="other">%1$d z %2$d na opakovanie</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">Zostáva 1 minúta</item>
+    <item quantity="one">%d minute left</item>
     <item quantity="other">Zostáva %d minút</item>
   </plurals>
   <string name="type_answer_hint">Napísať odpoveď</string>
@@ -150,15 +150,15 @@
   <string name="studyoptions_congrats_more_new">Dostupné sú aj ďalšie nové karty, ale bol dosiahnutý denný limit.  Môžete ho zvýšiť v nastaveniach, ale prosím majte na pamäti, že tým sa v najbližšej dobe zvýši aj počet kariet na opakovanie.</string>
   <string name="studyoptions_congrats_custom">Ak chcete študovať mimo bežný plán, kliknite na tlačidlo Vlastné štúdium nižšie.</string>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Zajtra: 1 karta na opakovanie a %2$s.\n Odhadovaný čas: %3$s</item>
+    <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
     <item quantity="other">Zajtra: %1$d kariet na opakovanie a %2$s.\n Odhadovaný čas: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">1 nová karta</item>
+    <item quantity="one">%1$d new card</item>
     <item quantity="other">%1$d nových kariet</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">Odhadovaný čas: 1 min.</item>
+    <item quantity="one">Estimated time: %1$d min.</item>
     <item quantity="other">Odhadovaný čas: %1$d min.</item>
   </plurals>
   <string name="sd_card_not_mounted">SD karta nie je pripojená.\n\nVašu zbierku môžete uložiť aj na internú pamäť, aj keď to sa neodporúča, pretože k súboru potom nemáte taký jednoduchý prístup. Túto možnosť môžete aktivovať v nastaveniach (otvoríte ich kliknutím na tento text).</string>

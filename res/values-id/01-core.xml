@@ -49,19 +49,19 @@
   <string name="studyoptions_eta">Perkiraan waktu (menit):</string>
   <string name="studyoptions_start">Study</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">1 dari %2$d karena (%3$s)</item>
-    <item quantity="other">%1$d dari %2$d karena (%3$s)</item>
+    <item quantity="one">%1$d card due (%2$s)</item>
+    <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one">1 min.</item>
+    <item quantity="one">%d min.</item>
     <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item quantity="one">1 %2$d menunggu</item>
+    <item quantity="one">%1$d of %2$d due</item>
     <item quantity="other">%1$d dari %2$d menunggu</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">1 menit tersisa</item>
+    <item quantity="one">%d minute left</item>
     <item quantity="other">Tersisa %d menit</item>
   </plurals>
   <string name="type_answer_hint">Type answer</string>
@@ -150,15 +150,15 @@
   <string name="studyoptions_congrats_more_new">Ada kartu baru lain yang tersedia, tetapi batas harian telah tercapai. Anda dapat meningkatkan batas dalam pilihan, tetapi Harap diingat bahwa hal ini akan meningkatkan beban kerja tinjauan jangka pendek Anda.</string>
   <string name="studyoptions_congrats_custom">To study outside of the normal schedule, touch the \"Custom study\" button below</string>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Besok akan ada: 1 kartu untuk ditinjau dan %2$s.\n Perkiraan waktu: %3$s</item>
+    <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
     <item quantity="other">Besok akan ada: %1$d kartu untuk ditinjau dan %2$s.\n Perkiraan waktu: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">1 kartu baru</item>
+    <item quantity="one">%1$d new card</item>
     <item quantity="other">%1$d kad baru</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">Perkiraan waktu: 1 min.</item>
+    <item quantity="one">Estimated time: %1$d min.</item>
     <item quantity="other">Perkiraan waktu: %1$d min.</item>
   </plurals>
   <string name="sd_card_not_mounted">SD Card tidak terpasang.\n\nAnda dapat menyimpan koleksi Anda dalam memori internal juga, meskipun itu tidak dianjurkan karena Anda tidak dapat mengakses file dengan mudah. Anda dapat mengaktifkan ini dalam preferensi (buka dengan mengklik teks ini).</string>

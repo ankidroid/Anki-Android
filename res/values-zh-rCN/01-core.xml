@@ -49,19 +49,19 @@
   <string name="studyoptions_eta">预计所需时间（分钟）：</string>
   <string name="studyoptions_start">开始学习</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%2$d中的1到期(%3$s)</item>
-    <item quantity="other">%2$d中的%1$d到期(%3$s)</item>
+    <item quantity="one">%1$d card due (%2$s)</item>
+    <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one">1分钟</item>
+    <item quantity="one">%d min.</item>
     <item quantity="other">%d分钟</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item quantity="one">%2$d张中有1张待复习</item>
+    <item quantity="one">%1$d of %2$d due</item>
     <item quantity="other">%2$d张中的%1$d张待复习</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">1分钟剩余</item>
+    <item quantity="one">%d minute left</item>
     <item quantity="other">%d分钟剩余</item>
   </plurals>
   <string name="type_answer_hint">输入答案</string>
@@ -150,15 +150,15 @@
   <string name="studyoptions_congrats_more_new">还有新卡牌待学习，但已达到每日上限。您可以增加设置中的每日学习上限，不过请留意，这会增加您短期的复习工作量。</string>
   <string name="studyoptions_congrats_custom">计划外学习，点击下面的自定义学习按钮。</string>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">明天将有：1张卡牌需要复习%2$s.\n预计耗时：%3$s</item>
+    <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
     <item quantity="other">明天将有：%1$d张卡牌需要复习%2$s\n预计耗时：%3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">1张新卡牌</item>
+    <item quantity="one">%1$d new card</item>
     <item quantity="other">%1$d张新卡牌</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">预计耗时：1分钟。</item>
+    <item quantity="one">Estimated time: %1$d min.</item>
     <item quantity="other">预计耗时：%1$d分钟。</item>
   </plurals>
   <string name="sd_card_not_mounted">SD卡没有加载。\n\n你也可以在内部存储器中存放卡牌集合，但不推荐这样做，因为访问文件不太容易。在预置参数中可以设置(点击本文字打开选项).</string>

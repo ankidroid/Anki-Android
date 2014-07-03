@@ -53,7 +53,7 @@
     <item>Wiederherstellen von Sicherungen aus der App</item>
     <item>Make volume duck on any background music when sounds played</item>
     <item>Make playing of sounds consistent with Desktop version</item>
-    <item>Remove animations feature due to being buggy</item>
+    <item>Animationsfunktionen entfernt, da sie fehlerhaft waren</item>
     <item>Improve speed of showing cards</item>
     <item>Remove duplicate check dialog when adding new flashcards</item>
     <item>Remove swap button when adding or editing flashcards</item>

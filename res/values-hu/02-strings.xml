@@ -85,11 +85,11 @@
   <string name="saving_changes">Módosítások mentése...</string>
   <string name="reordering_cards">Újrarendelési kártyák...</string>
   <plurals name="timebox_reached">
-    <item quantity="one">1 kártya megtanulva %2$s alatt</item>
+    <item quantity="one">%1$d card studied in %2$s</item>
     <item quantity="other">%1$d kártya megtanulva %2$s alatt</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
-    <item quantity="one">1 perc</item>
+    <item quantity="one">%1$d minute</item>
     <item quantity="other"> %1$d perc</item>
   </plurals>
   <string name="studyoptions_welcome_title">Üdv az AnkiDroidban!</string>
@@ -110,7 +110,7 @@
   <string name="rename_error">A %s paklit nem lehetett átnevezni</string>
   <string name="default_conf_delete_error">Az alapértelmezett beállítások csoport nem távolítható el</string>
   <plurals name="factadder_cards_added">
-    <item quantity="one">1 kártya hozzáadva</item>
+    <item quantity="one">%d card added</item>
     <item quantity="other">%d kártya hozzáadva</item>
   </plurals>
   <string name="help_title">Segítség</string>

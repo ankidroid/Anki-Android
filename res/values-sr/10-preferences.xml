@@ -190,7 +190,7 @@
   <string name="deck_conf_deck_description">Опис шпила</string>
   <string name="deck_conf_group">Options group</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n1 шпилова користи ову групу</item>
+    <item quantity="one">%1$s\n%2$d deck uses this group</item>
     <item quantity="other">%1$s\n%2$d шпилова користи ову групу</item>
   </plurals>
   <string name="deck_conf_new_cards">Нове карте</string>
@@ -236,7 +236,7 @@
   <string name="deck_conf_remove_message">Да уклоним текућу групу опција?</string>
   <string name="deck_conf_set_subdecks">Задај за све групе подшпилова</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">1 подшпил ће користити ову групу</item>
+    <item quantity="one">%s subdeck will use this group</item>
     <item quantity="other">%s подшпил ће користити ову групу</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Задај за све групе шпилова</string>

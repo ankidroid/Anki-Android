@@ -85,11 +85,11 @@
   <string name="saving_changes">Сачувај промене...</string>
   <string name="reordering_cards">Промена редоследа карата...</string>
   <plurals name="timebox_reached">
-    <item quantity="one">1 карта је изучена на %2$s</item>
+    <item quantity="one">%1$d card studied in %2$s</item>
     <item quantity="other">%1$d карте су изучене на %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
-    <item quantity="one">1 минут</item>
+    <item quantity="one">%1$d minute</item>
     <item quantity="other">%1$d минута</item>
   </plurals>
   <string name="studyoptions_welcome_title">Добро дошли у AnkiDroid</string>
@@ -110,7 +110,7 @@
   <string name="rename_error">Шпил %s не може бити преименован</string>
   <string name="default_conf_delete_error">Подразумеване опције се не могу уклонити</string>
   <plurals name="factadder_cards_added">
-    <item quantity="one">1 карта је додата</item>
+    <item quantity="one">%d card added</item>
     <item quantity="other">%d карата је додато</item>
   </plurals>
   <string name="help_title">Помоћ</string>

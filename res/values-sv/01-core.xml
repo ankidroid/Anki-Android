@@ -49,19 +49,19 @@
   <string name="studyoptions_eta">Beräknad tid (min):</string>
   <string name="studyoptions_start">Plugga nu</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">1 av %2$d i kö (%3$s)</item>
-    <item quantity="other">%1$d av %2$d i kö (%3$s)</item>
+    <item quantity="one">%1$d card due (%2$s)</item>
+    <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one">1 min.</item>
+    <item quantity="one">%d min.</item>
     <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item quantity="one">1 av %2$d i kö</item>
+    <item quantity="one">%1$d of %2$d due</item>
     <item quantity="other">%1$d av %2$d i kö</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">1 minut kvar</item>
+    <item quantity="one">%d minute left</item>
     <item quantity="other">%d minuter kvar</item>
   </plurals>
   <string name="type_answer_hint">Skriv svar</string>
@@ -76,7 +76,7 @@
   <string name="menu_rotate">Rotera</string>
   <string name="menu_import">Importera fil</string>
   <string name="undo">Ångra</string>
-  <string name="undo_action_review">last review</string>
+  <string name="undo_action_review">senaste recension</string>
   <string name="undo_action_edit">redigera not</string>
   <string name="undo_action_bury">dölj not</string>
   <string name="undo_action_suspend_card">lås kort</string>
@@ -150,15 +150,15 @@
   <string name="studyoptions_congrats_more_new">Det finns fler nya kort, men den dagliga gränsen har uppnåtts. Du kan höja gränsen i inställningarna, men kom ihåg att detta också ökar antalet repetitioner på kort sikt.</string>
   <string name="studyoptions_congrats_custom">Välj knappen Anpassade studier nedan för att studera utanför det normala schemat.</string>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">I morgon kommer det finnas: 1 kort att repetera och %2$s.\n Beräknad tid: %3$s</item>
+    <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
     <item quantity="other">I morgon kommer det finnas: %1$d kort att repetera och %2$s.\n Beräknad tid: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">1 nytt kort</item>
+    <item quantity="one">%1$d new card</item>
     <item quantity="other">%1$d nya kort</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">Beräknad tid: 1 min.</item>
+    <item quantity="one">Estimated time: %1$d min.</item>
     <item quantity="other">Beräknad tid: %1$d min.</item>
   </plurals>
   <string name="sd_card_not_mounted">SD-kort ej monterat.\n\nDu kan lagra din samling på det interna minnet också, men det är inte rekommenderat eftersom du inte kan komma åt filen så enkelt. Du kan aktivera detta i inställningarna (klicka på denna text för att öppna dem).</string>
