@@ -71,15 +71,12 @@
   <string name="ease3_successive">Correcte</string>
   <string name="ease3_learning">Fàcil</string>
   <string name="studyoptions_congrats_undo">Desfés %s</string>
-  <string name="studyoptions_congrats_unbury">Unbury</string>
-  <string name="studyoptions_congrats_custom_study">Estudi a mida</string>
-  <string name="studyoptions_congrats_open_other_deck">Obre un altre paquet</string>
   <string name="card_unsuspended">S\'ha desfet la suspensió de la fitxa</string>
   <string name="card_suspended">Fitxa suspesa de nou</string>
   <string name="menu_rotate">Gira</string>
   <string name="menu_import">Import file</string>
   <string name="undo">Desfés</string>
-  <string name="undo_action_review">Revisió</string>
+  <string name="undo_action_review">last review</string>
   <string name="undo_action_edit">Edita la nota</string>
   <string name="undo_action_bury">Enterra la nota</string>
   <string name="undo_action_suspend_card">Suspèn la fitxa</string>

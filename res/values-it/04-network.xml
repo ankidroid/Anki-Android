@@ -85,7 +85,7 @@
   <string name="shareddeckpicker_title">Seleziona il mazzo da scaricare</string>
   <string name="downloaddeck_search">Cerca</string>
   <string name="preferences_title">Preferenze</string>
-  <string name="deckpreferences_title">Options for XXX</string>
+  <string name="deckpreferences_title">Opzioni per XXX</string>
   <string name="sync_conflict_message">I tuoi mazzi qui e su AnkiWeb differiscono in modo tale che non è possibile unirli. È necessario sovrascrivere i mazzi in un posto con quelli nell\'altro posto.\n\nVuoi caricare i mazzi da qui o scaricare i mazzi da AnkiWeb?</string>
   <string name="sync_conflict_local">Carica</string>
   <string name="sync_conflict_remote">Scarica</string>

@@ -41,9 +41,9 @@
 <resources>
   <string name="welcome_message">AnkiDroid\'le, büyük miktarlarda sözcük veya başka herhangi bir materyali etkili biçimde öğrenebilirsiniz. AnkiDroid öğrenilecek şeyleri size siz unutmadan hemen önce gösterir.\n\nNasıl çalıştığı hakkında bir önizlenim edinmek için, size bazı temel bilgiler verecek olan eğitim destesiyle başlayıp biraz denemenizi öneriyoruz. Yalnızca açtıktan sonra \"Çalışmaya Başla\"ya tıklayın.\n\nEğitim destesi şimdi oluşturulsun mu?</string>
   <string name="check_db_title">Veritabanını kontrol et</string>
-  <string name="check_db_warning">This may take a long time</string>
-  <string name="check_db_acknowledge">Database checked</string>
-  <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d kB.</string>
+  <string name="check_db_warning">Bu uzun sürebilir</string>
+  <string name="check_db_acknowledge">Veritabanı kontrol edildi</string>
+  <string name="check_db_acknowledge_shrunk">Veritabanı kontrol ve optimize edildi.\n%d KB küçültüldü.</string>
   <string name="contextmenu_deckpicker_delete_deck">Desteyi Sil</string>
   <string name="delete_deck_title">Desteyi Sil</string>
   <string name="delete_deck_message">%s içindeki bütün kartları silmek istediğinize emin misiniz?</string>
@@ -54,7 +54,7 @@
   <string name="no_tts_available_message">Mevcut metin okuma dili yok</string>
   <string name="tts_no_tts">Konuşma</string>
   <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s:<br/>Android için bilgi kartları</h2>AnkiDroid <a href="%2$s">Anki</a> masaüstü uygulamasıyla tamamen uyumlu bir bilgi kartı uygulamasıdır. İster AnkiDroid\'de ister Anki Masaüstünde içerikler oluşturabilir, indirebilir, öğrenebilir ve kolaylıkla eşitleyebilirsiniz.]]></item>
+    <item><![CDATA[<h2>%1$s:<br/>Android için bilgi kartları</h2>AnkiDroid <a href="%2$s">Anki</a> masaüstü uygulamasıyla tamamen uyumlu bir bilgi kartı uygulamasıdır. İster AnkiDroid\'de ister Anki Masaüstünde içerikler oluşturabilir, indirebilir, öğrenebilir ve kolaylıkla senkronize edebilirsiniz.]]></item>
     <item><![CDATA[AnkiDroid\'i geliştirmemize yardımcı olmak için, lütfen karşılaştığınız sorunları <a href="%1$s">buradan</a> bildirin; yeni özellik fikirleri de çok iyi olur! Lütfen <a href="%2$s">vikiyi</a> kullanın ve <a href="%3$s">forumda</a> bir selam verin.]]></item>
     <item><![CDATA[AnkiDroid <a href="%1$s">açık kaynaklı bir yazılımdır<a/>, bu yüzden herkesin <a href="%3$s">katkı yapanlar listesine</a> <a href="%2$s">katılmasını</a> dileriz. :-)]]></item>
     <item><![CDATA[Programcı olmayanlar da örneğin AnkiDroid\'i <a href="%1$s">çevirerek</a>, vikiyi ve ekran görüntülerini güncelleyerek, Anki Masaüstüne <a href="%2$s">bağış yaparak</a>, veya AnkiDroid hakkında bloglayarak yardımcı olabilir!]]></item>
@@ -70,7 +70,7 @@
   <string name="notification_stop">Bu güncellemeyi bana bir daha hatırlatma</string>
   <string name="reset_card_dialog_title">Kart ilerlemesini sıfırla</string>
   <string name="reset_card_dialog_message">Bu işlem, bu notun bütün kartlarının öğrenme gidişâtını sıfırlar (yeni kart gibi görünecekler).\n Gerçekten devam edilsin mi?</string>
-  <string name="reset_card_dialog_acknowledge">Cards reset</string>
+  <string name="reset_card_dialog_acknowledge">Kartlar sıfırlandı</string>
   <string name="answering_error_title">Veritabanı hatası</string>
   <string name="answering_error_message">Koleksiyon yazılırken bir hatâ meydana geldi. Bu bozuk bir veritabanıyla veya yetersiz disk alanıyla ilgili olabilir.\n\nEğer bu daha sık olmaya başlarsa, lütfen veritabanını kontrol etmeyi, koleksiyonu onarmayı veya bir yedekten geri yüklemeyi deneyin.\n\nTabii bu bir AnkiDroid sorunu da olabilir; lütfen hatâyı bildirin ki kontrol edebilelim.</string>
   <string name="answering_error_report">Hatayı bildir</string>
@@ -99,14 +99,14 @@
   <string name="deck_upgrade_more_options_downgrade"><![CDATA[<br><br>Eğer AnkiDroid 1\'e geri alçaltmak isterseniz lütfen <a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Continuing_to_use_AnkiDroid_1.1.3">bu yönergeleri</a> okuyun.]]></string>
   <string name="deck_upgrade_create_new_collection">Yeni koleksiyon oluştur</string>
   <string name="deck_upgrade_create_new_collection_title">Yeni Koleksiyon Oluştur</string>
-  <string name="deck_upgrade_create_new_collection_button">New collection</string>
+  <string name="deck_upgrade_create_new_collection_button">Yeni koleksiyon</string>
   <string name="deck_upgrade_not_import_warning">Bunu yapmak istediğinize emin misiniz? Eski veriniz içeri aktarılmayacak.</string>
   <string name="deck_upgrade_via_web"><![CDATA[<b>Bu yükseltme yöntemi eğer medya dosyaları kullandıysanız veya büyük bir koleksiyonunuz varsa önerilmez!</b><br><br>Anki 1 desteleriniz sıkıştırılıp AnkiWeb\'e yüklenecek, ardından dönüştürülen koleksiyon indirilecek.<br><br>Karalı bir internet bağlantısı gereklidir ve 50 MB bir dosya sınırı vardır.<br><br>Anki Masaüstü kullanıcılarının PC tabanlı yükseltme yöntemini kullanmaları şiddetle önerilir.<br><br>Devam etmek istiyor musunuz?]]></string>
   <string name="deck_upgrade_via_anki_desktop"><![CDATA[Eğer şu anda Anki masaüstü yazılımında AnkiDroid koleksiyonunuzun güncel bir sürümü varsa, oradan yükseltip yükseltilen koleksiyonunuzu AnkiWeb\'le eşitleyerek indirebilirsiniz.<br><br>Alternatif olarak, AnkiDroid koleksiyonunuzu USB\'yle PC\'nize kopyalayıp, ardından koleksiyonu yükseltip AnkiDroid\'e geri kopyalayabilirsiniz.]]></string>
   <string name="deck_upgrade_auto_upgrade"><![CDATA[Koleksiyonunuzu yükseltmek için lütfen Anki Masaüstü 2.0.4 veya daha üstü sürümünü yükleyip açın, ardından yükseltilen koleksiyonunuzu AnkiWeb\'le eşitleyip "İndir" düğmesine basın.<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_2:_Using_AnkiWeb_sync">AnkiWeb kullanarak yükseltme konusunda daha ayrıntılı bilgi</a>]]></string>
   <string name="deck_upgrade_manual"><![CDATA[Koleksiyonunuzu yükseltmek için lütfen bütün *.anki dosyalarınızı (ve *.media klasörlerinizi) AnkiDroid klasörünüzden Anki Masaüstü klasörünüze kopyalayın, ardından Anki Masaüstü 2.0.4 veya daha üstü sürümünü yükleyip açın.<br><br>Yükseltme tamamlandığında, lütfen koleksiyonunuzu Anki 2\'den çıkarıp collection.apkg dosyasını AnkiDroid klasörünüze kopyalayın ve aşağıdaki İçeri Aktar düğmesine basın.<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_1:_Using_USB_(recommended)">USB kullanarak yükseltme konusunda daha ayrıntılı bilgi</a>]]></string>
-  <string name="upgrade_deck_cancelled_title">Yükseltme İptâl Edildi</string>
-  <string name="upgrade_deck_cancelled_description">Yükseltme girişimi iptâl edildi, lütfen mevcut yükseltme yöntemlerinden birini yeniden deneyin.</string>
+  <string name="upgrade_deck_cancelled_title">Yükseltme iptâl edildi</string>
+  <string name="upgrade_deck_cancelled_description">Yükseltme girişimi iptâl edildi</string>
   <string name="upgrade_deck_web_upgrade_failed">Yükseltme işlemi başarısız oldu. Lütfen yeniden deneyin, veya farklı bir yükseltme yöntemi seçin.</string>
   <string name="upgrade_deck_web_upgrade_exceeds">Anki 1 destelerinizin toplam sıkışık boyutu sunucunun işleyebildiği sınırı geçiyor (50 MB), lütfen farklı bir yöntemle yükseltmeyi deneyin.</string>
   <string name="upgrade_deck_web_upgrade_sdcard">Yükseltme tamamlandı, fakat elde edilen koleksiyonu açarken bir hata meydana geldi. Lütfen yeterli mevcut alanınızın olduğundan (%1$d MB gerekiyor) emin olup yeniden deneyin, veya farklı bir yöntemle yükseltmeyi deneyin.</string>
@@ -122,29 +122,29 @@
   <string name="import_media_count">Medya dosyaları %1$d%% içeri aktarılıyor.\nLütfen bekleyin&#8230;</string>
   <string name="import_update_counts">Deste sayıları güncelleniyor.\nLütfen bekleyin&#8230;</string>
   <string name="import_add_progress">• Arşiv açılıyor %1$s\n• Notların aktarımı %2$d%%\n• Kartların aktarımı %3$d%%\n• Temizlik %4$s</string>
-  <string name="sd_card_full_title">SD card full</string>
-  <string name="sd_card_almost_full_title">SD card almost full</string>
-  <string name="restore_backup_title">Restore backup?</string>
-  <string name="restore_backup">Your collection will be replaced with an older copy. Any unsaved progress will be lost.</string>
-  <string name="dialog_cancel">Cancel</string>
-  <string name="dialog_ok">OK</string>
-  <string name="dialog_continue">Continue</string>
-  <string name="dialog_neutral_later">Later</string>
-  <string name="dialog_positive_create">Create</string>
-  <string name="dialog_positive_delete">Delete</string>
-  <string name="dialog_positive_disable">Disable</string>
-  <string name="dialog_positive_overwrite">Overwrite</string>
-  <string name="dialog_positive_remove">Remove</string>
-  <string name="dialog_positive_repair">Repair</string>
-  <string name="dialog_positive_replace">Replace</string>
-  <string name="dialog_positive_reset">Reset</string>
-  <string name="dialog_positive_restore">Restore</string>
-  <string name="dialog_positive_save">Save</string>
-  <string name="dialog_positive_set">Set</string>
-  <string name="add_button_content">Add&#8230;</string>
-  <string name="card_browser_button_content">Card browser</string>
-  <string name="lookup_button_content">Look up</string>
-  <string name="statistics_button_content">Statistics</string>
-  <string name="dialog_collection_path_title">Folder does not exit</string>
-  <string name="dialog_collection_path_text">The folder you specified does not exist, would you like to create it?</string>
+  <string name="sd_card_full_title">SD kart dolu</string>
+  <string name="sd_card_almost_full_title">SD kart neredeyse dolu</string>
+  <string name="restore_backup_title">Yedek geri yüklensin mi?</string>
+  <string name="restore_backup">Koleksiyonunuz eski bir kopyayla değiştirilecek. Kaydedilmemiş ilerlemeler kaybolacak.</string>
+  <string name="dialog_cancel">İptâl</string>
+  <string name="dialog_ok">Tamam</string>
+  <string name="dialog_continue">Devam Et</string>
+  <string name="dialog_neutral_later">Sonra</string>
+  <string name="dialog_positive_create">Oluştur</string>
+  <string name="dialog_positive_delete">Sil</string>
+  <string name="dialog_positive_disable">Devredışı Bırak</string>
+  <string name="dialog_positive_overwrite">Üzerine Yaz</string>
+  <string name="dialog_positive_remove">Kaldır</string>
+  <string name="dialog_positive_repair">Onar</string>
+  <string name="dialog_positive_replace">Değiştir</string>
+  <string name="dialog_positive_reset">Sıfırla</string>
+  <string name="dialog_positive_restore">Geri Yükle</string>
+  <string name="dialog_positive_save">Kaydet</string>
+  <string name="dialog_positive_set">Ayarla</string>
+  <string name="add_button_content">Ekle&#8230;</string>
+  <string name="card_browser_button_content">Kart tarayıcısı</string>
+  <string name="lookup_button_content">Sözlüğe bak</string>
+  <string name="statistics_button_content">İstatistikler</string>
+  <string name="dialog_collection_path_title">Klasör yok</string>
+  <string name="dialog_collection_path_text">Belirttiğiniz klasör yok, oluşturmak ister miydiniz?</string>
 </resources>

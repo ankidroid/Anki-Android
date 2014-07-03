@@ -71,15 +71,12 @@
   <string name="ease3_successive">Bra</string>
   <string name="ease3_learning">Lett</string>
   <string name="studyoptions_congrats_undo">Angre %s</string>
-  <string name="studyoptions_congrats_unbury">Unbury</string>
-  <string name="studyoptions_congrats_custom_study">Tilpasset repetisjon</string>
-  <string name="studyoptions_congrats_open_other_deck">Åpne en annen kortstokk</string>
   <string name="card_unsuspended">Gjorde om suspendering av kort</string>
   <string name="card_suspended">Kort suspendert på nytt</string>
   <string name="menu_rotate">Roter</string>
   <string name="menu_import">Import file</string>
   <string name="undo">Angre</string>
-  <string name="undo_action_review">gjennomgang</string>
+  <string name="undo_action_review">last review</string>
   <string name="undo_action_edit">rediger notat</string>
   <string name="undo_action_bury">begrav notat</string>
   <string name="undo_action_suspend_card">suspender kort</string>

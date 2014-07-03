@@ -71,15 +71,12 @@
   <string name="ease3_successive">Dobrze</string>
   <string name="ease3_learning">Łatwo</string>
   <string name="studyoptions_congrats_undo">Cofnij %s</string>
-  <string name="studyoptions_congrats_unbury">Odkop</string>
-  <string name="studyoptions_congrats_custom_study">Nauka niestandardowa</string>
-  <string name="studyoptions_congrats_open_other_deck">Otwórz inną talię</string>
   <string name="card_unsuspended">Karta reaktywowana</string>
   <string name="card_suspended">Karta zawieszona</string>
   <string name="menu_rotate">Obrót</string>
   <string name="menu_import">Import file</string>
   <string name="undo">Cofnij</string>
-  <string name="undo_action_review">powtórkę</string>
+  <string name="undo_action_review">last review</string>
   <string name="undo_action_edit">edycję notatki</string>
   <string name="undo_action_bury">ukrycie notatki</string>
   <string name="undo_action_suspend_card">zawieszenie karty</string>

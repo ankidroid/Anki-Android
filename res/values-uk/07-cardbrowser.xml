@@ -80,7 +80,7 @@
   <string name="card_details_tags">Мітки</string>
   <string name="card_details_model">Тип запису</string>
   <string name="card_browser_sorting_cards">Сортування карток.\nБудь ласка, зачекайте...</string>
-  <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
+  <string name="card_browser_filtering_cards">Фільтрація карт... \nНатискніть кнопку назад, щоб скасувати</string>
   <string name="card_details_card_model">Модель картки</string>
   <string-array name="card_browser_order_labels">
     <item>Без сортування (швидше)</item>

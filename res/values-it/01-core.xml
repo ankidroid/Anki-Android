@@ -71,15 +71,12 @@
   <string name="ease3_successive">Buono</string>
   <string name="ease3_learning">Facile</string>
   <string name="studyoptions_congrats_undo">Annulla %s</string>
-  <string name="studyoptions_congrats_unbury">Disseppellisci</string>
-  <string name="studyoptions_congrats_custom_study">Studio Personalizzato</string>
-  <string name="studyoptions_congrats_open_other_deck">Apri un altro mazzo</string>
   <string name="card_unsuspended">Annulla la sospensione della carta</string>
   <string name="card_suspended">Carta risospesa</string>
   <string name="menu_rotate">Ruota</string>
   <string name="menu_import">Importa file</string>
   <string name="undo">Annulla</string>
-  <string name="undo_action_review">ripeti</string>
+  <string name="undo_action_review">last review</string>
   <string name="undo_action_edit">modifica nota</string>
   <string name="undo_action_bury">seppellisci nota</string>
   <string name="undo_action_suspend_card">sospendi carta</string>
@@ -108,7 +105,7 @@
   <string name="menu_bury_note">Seppellisci nota</string>
   <string name="menu_suspend_card">Sospendi carta</string>
   <string name="menu_suspend_note">Sospendi nota</string>
-  <string name="menu_save_note">Save note</string>
+  <string name="menu_save_note">Salva nota</string>
   <string name="menu_delete_note">Elimina nota</string>
   <string name="delete_note_message">Vuoi veramente eliminare questa nota e tutte le sue carte?\n%s</string>
   <string name="menu_edit_card">Modifica la carta</string>

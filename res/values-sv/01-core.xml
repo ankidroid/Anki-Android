@@ -71,15 +71,12 @@
   <string name="ease3_successive">Bra</string>
   <string name="ease3_learning">Lätt</string>
   <string name="studyoptions_congrats_undo">Ångra %s</string>
-  <string name="studyoptions_congrats_unbury">Visa dolda kort</string>
-  <string name="studyoptions_congrats_custom_study">Anpassade studier</string>
-  <string name="studyoptions_congrats_open_other_deck">Öppna annan kortlek</string>
   <string name="card_unsuspended">Kort upplåst</string>
   <string name="card_suspended">Kort åter låst</string>
   <string name="menu_rotate">Rotera</string>
   <string name="menu_import">Importera fil</string>
   <string name="undo">Ångra</string>
-  <string name="undo_action_review">repetition</string>
+  <string name="undo_action_review">last review</string>
   <string name="undo_action_edit">redigera not</string>
   <string name="undo_action_bury">dölj not</string>
   <string name="undo_action_suspend_card">lås kort</string>

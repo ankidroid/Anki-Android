@@ -36,12 +36,12 @@
 -->
 <resources>
   <string-array name="navigation_titles">
-    <item>Decks</item>
-    <item>Card Browser</item>
-    <item>Statistics</item>
-    <item>Settings</item>
-    <item>Help</item>
-    <item>Send Feedback</item>
+    <item>Mazzi</item>
+    <item>Browser delle carte</item>
+    <item>Statistiche</item>
+    <item>Impostazioni</item>
+    <item>Guida</item>
+    <item>Invia commenti</item>
   </string-array>
   <string-array name="newCardSchedulingLabels">
     <item>Distribuisci sulla sequenza di ripetizione</item>

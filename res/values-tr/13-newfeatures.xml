@@ -40,25 +40,25 @@
 -->
 <resources>
   <string-array name="new_version_features">
-    <item>Redesign layout</item>
-    <item>Add pictures and sounds to flashcards (experimental)</item>
-    <item>Make second column in card browser configurable</item>
-    <item>Make images on flashcards zoomable</item>
-    <item>Improve preview feature and access via action bar</item>
-    <item>Simplify menus and settings</item>
-    <item>Make slow searches in card browser cancellable</item>
-    <item>Improve adding/removing tags</item>
-    <item>Fix \"type in the answer\" and cloze deletion features</item>
-    <item>Fix whiteboard feature</item>
-    <item>Restore backups from within the app</item>
-    <item>Make volume duck on any background music when sounds played</item>
-    <item>Make playing of sounds consistent with Desktop version</item>
-    <item>Remove animations feature due to being buggy</item>
-    <item>Improve speed of showing cards</item>
-    <item>Remove duplicate check dialog when adding new flashcards</item>
-    <item>Remove swap button when adding or editing flashcards</item>
-    <item>Remove kanji info feature (will become optional plugin in the future)</item>
-    <item>Make minimum Android version 2.1</item>
-    <item>Fix lots of bugs</item>
+    <item>Arayüz yeniden tasarlandı</item>
+    <item>Bilgi kartlarına resim ve ses ekleme (deneysel)</item>
+    <item>Kart tarayıcısında ikinci sütun düzenlenebilir hâle getirildi</item>
+    <item>Bilgi kartlarındaki görüntüler yakınlaştırılabilir hâle getirildi</item>
+    <item>Önizleme özelliği geliştirildi ve eylem çubuğundan erişim sağlandı</item>
+    <item>Menüler ve ayarlar basitleştirildi</item>
+    <item>Kart tarayıcısında yavaş aramalar iptâl edilebilir hâle getirildi</item>
+    <item>Etiket ekleme/kaldırma geliştirildi</item>
+    <item>\"Yanıtı yazın\" ve boşluk doldurma silme özellikleri düzeltildi</item>
+    <item>Yazı tahtası özelliği düzeltildi</item>
+    <item>Uygulamanın içinden yedek geri yükleme</item>
+    <item>Ses çalındığında arkaplan müziğinin sesinin kısılması</item>
+    <item>Seslerin çalınması masaüstü sürümüyle tutarlı hâle getirildi</item>
+    <item>Buglı olduğundan animasyon özelliği kaldırıldı</item>
+    <item>Kart gösterme hızı geliştirildi</item>
+    <item>Yeni bilgi kartı eklerken eş kontrol diyaloğu kaldırıldı</item>
+    <item>Bilgi kartı eklerken veya düzenlerken takas düğmesi kaldırıldı</item>
+    <item>Kanji bilgi özelliği kaldırıldı (ilerde opsiyonel eklenti olacak)</item>
+    <item>Minimum Android sürümü 2.1 yapıldı</item>
+    <item>Bir sürü bug düzeltildi</item>
   </string-array>
 </resources>

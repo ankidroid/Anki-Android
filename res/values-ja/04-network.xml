@@ -60,7 +60,7 @@
   <string name="resume_download">ダウンロードを再開</string>
   <string name="pause_download">ダウンロード一時停止</string>
   <string name="duplicate_download">この単語帳は既にダウンロード中です</string>
-  <string name="menu_get_shared_decks">共有デッキの取得</string>
+  <string name="menu_get_shared_decks">共有単語帳の取得</string>
   <string name="download_button_return">戻る</string>
   <string name="connection_error_message">ネットワークエラーが発生しました。</string>
   <string name="sync_log_db_error">データベース エラーが発生しました。</string>
@@ -85,7 +85,7 @@
   <string name="shareddeckpicker_title">ダウンロードする単語帳を選択</string>
   <string name="downloaddeck_search">検索</string>
   <string name="preferences_title">設定</string>
-  <string name="deckpreferences_title">Options for XXX</string>
+  <string name="deckpreferences_title">XXX のオプション</string>
   <string name="sync_conflict_message">ダウンロードしたデータベースが壊れています。もう一度試してください。</string>
   <string name="sync_conflict_local">アップロード</string>
   <string name="sync_conflict_remote">ダウンロード</string>
@@ -99,7 +99,7 @@
   <string name="sync_title">同期</string>
   <string name="sync_downloading_media">メディア %1$d/%2$d をダウンロード中...</string>
   <string name="sync_log_uploading_message">サーバ側への完全同期</string>
-  <string name="sync_log_downloading_message">サーバー側からの完全同期</string>
+  <string name="sync_log_downloading_message">サーバー側からの完全同期を完了</string>
   <string name="sync_log_clocks_unsynchronized">端末の時計が正しくありません（%1$d 秒 %2$s）；データ同期時のエラー発生を防止するため、時計を正しくセットしてください。日付、時刻、およびタイムゾーンが正しく設定した後、再び同期を開始してください。</string>
   <string name="sync_log_clocks_unsynchronized_tz">, 端末のタイムゾーンが間違っています</string>
   <string name="sync_log_clocks_unsynchronized_date">, 端末の日付が間違っています</string>

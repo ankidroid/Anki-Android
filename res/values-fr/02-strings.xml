@@ -117,7 +117,7 @@
   <string name="help_online">Aide en ligne</string>
   <string name="help_faq">FAQ</string>
   <string name="help_tutorial">Créer un paquet tutoriel</string>
-  <string name="tutorial_deck_name">Tutorial deck</string>
+  <string name="tutorial_deck_name">Paquet tutoriel</string>
   <string name="check_db">Vérification de la base de données</string>
   <string name="check_db_message">Vérification de la base de données. \nVeuillez patienter&#8230;</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Carte vide. Lancer \"Outil&gt;Cartes vides...\" sur le client PC.</string>

@@ -71,15 +71,12 @@
   <string name="ease3_successive">Bom</string>
   <string name="ease3_learning">Fácil</string>
   <string name="studyoptions_congrats_undo">Desfazer %s</string>
-  <string name="studyoptions_congrats_unbury">Desenterrar</string>
-  <string name="studyoptions_congrats_custom_study">Estudo Personalizado</string>
-  <string name="studyoptions_congrats_open_other_deck">Abrir Outro Deck</string>
   <string name="card_unsuspended">Suspensão de cartão desfeita</string>
   <string name="card_suspended">Cartão ressuspendido</string>
   <string name="menu_rotate">Girar</string>
   <string name="menu_import">Importar arquivo</string>
   <string name="undo">Desfazer</string>
-  <string name="undo_action_review">rever</string>
+  <string name="undo_action_review">last review</string>
   <string name="undo_action_edit">editar nota</string>
   <string name="undo_action_bury">esconder nota</string>
   <string name="undo_action_suspend_card">suspender cartão</string>

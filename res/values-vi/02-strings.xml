@@ -39,8 +39,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-  <string name="drawer_open">Open Drawer</string>
-  <string name="drawer_close">Close Drawer</string>
+  <string name="drawer_open">Mở ngăn kéo</string>
+  <string name="drawer_close">Đóng ngăn kéo</string>
   <string name="CardEditorLaterMessage">Lưu thông tin cho sau này</string>
   <string name="CardEditorCardDeck">Thẻ Bài: %s</string>
   <string name="CardEditorNoteDeck">Ghi chú Bài: %s</string>
@@ -61,7 +61,7 @@
   <string name="leech_notification">Bài được đánh dấu như đã tải về</string>
   <string name="corrupt_font">Lỗi font dữ liệu %s</string>
   <string-array name="browser_column1_headings">
-    <item>Search field</item>
+    <item>Trường tìm kiếm</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Trả lời</item>
@@ -116,12 +116,12 @@
   <string name="help_title">Trợ giúp</string>
   <string name="help_online">Trợ giúp trực tuyến</string>
   <string name="help_faq">CÂU HỎI THƯỜNG GẶP</string>
-  <string name="help_tutorial">Create tutorial deck</string>
-  <string name="tutorial_deck_name">Tutorial deck</string>
+  <string name="help_tutorial">Tạo hướng dẫn</string>
+  <string name="tutorial_deck_name">Bài hướng dẫn</string>
   <string name="check_db">Kiểm tra cơ sở dữ liệu</string>
   <string name="check_db_message">Đang kiểm tra cơ sở dữ liệu. \n Xin đợi chút...</string>
-  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
-  <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
+  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Thẻ rỗng. Chạy \"công cụ &gt; Làm trống các thẻ...\" trên máy tính để bàn.</string>
+  <string name="unknown_type_field_warning">Nhập câu trả lời: không biết trường %s</string>
   <string name="simple_interface_hint">%s trống. Xin lưu ý giao diện đơn giản sẽ không có hình ảnh, tiếng, v.v.</string>
   <string name="delete_deck">Đang xóa Bài...\nĐợi chút nhé.</string>
   <string-array name="dynOrderLabels">
@@ -150,7 +150,7 @@
   <string name="import_importing">Đang nhập thẻ.\nXin chờ chút...</string>
   <string name="import_hint">Để nhập thẻ, đặt tập tin apkg vào đường dẫn %s và bấm ok</string>
   <string name="upgrade_import_no_file_found">Không tìm thấy %1$s tập tin có thể nhập</string>
-  <string name="study_options">Deck options</string>
+  <string name="study_options">Tùy chọn Bài</string>
   <string name="custom_study">Sửa cách học</string>
   <string name="dyn_deck_desc">Đây là một bộ Bài đặc biệt phục vụ cho học ngoài lịch. Các thẻ sẽ tự động quay lại sau khi bại xem lại chúng. Việc xóa các bộ bài từ danh sách sẽ đưa tất cả các Thẻ về Bộ bài nguyên gốc.</string>
   <string name="exit_wizard">Thoát</string>
@@ -162,5 +162,5 @@
   <string name="template_error_fix">Xin hãy sử dụng trình biên tập Thẻ trên máy tính PC để sửa lỗi này.</string>
   <string name="sched_end">(kết thúc)</string>
   <string name="sched_unbury_button">Để nhìn thấy chúng bây giờ, hãy nhấp vào nút Hồi phục.</string>
-  <string name="sched_has_buried">Some related or buried cards were delayed until tomorrow.</string>
+  <string name="sched_has_buried">Một số Thẻ liên quan hoặc bị chôn vùi bị trì hoãn cho đến ngày mai.</string>
 </resources>

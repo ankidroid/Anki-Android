@@ -71,15 +71,12 @@
   <string name="ease3_successive">İyi</string>
   <string name="ease3_learning">Kolay</string>
   <string name="studyoptions_congrats_undo">%s geri al</string>
-  <string name="studyoptions_congrats_unbury">Görünür Yap</string>
-  <string name="studyoptions_congrats_custom_study">Kişisel Çalışma</string>
-  <string name="studyoptions_congrats_open_other_deck">Başka Deste Aç</string>
   <string name="card_unsuspended">Askıya alma geri alındı</string>
   <string name="card_suspended">Kart yeniden askıya alındı</string>
   <string name="menu_rotate">Çevir</string>
   <string name="menu_import">Dosya içeri aktar</string>
   <string name="undo">Geri Al</string>
-  <string name="undo_action_review">Çalışmayı</string>
+  <string name="undo_action_review">last review</string>
   <string name="undo_action_edit">Not düzenlemeyi</string>
   <string name="undo_action_bury">Not gizlemeyi</string>
   <string name="undo_action_suspend_card">Kart askıya almayı</string>
@@ -100,7 +97,7 @@
   <string name="menu_add_note">Not ekle</string>
   <string name="menu_download_deck">Deste indir</string>
   <string name="menu_download_shared_deck">Paylaşılan deste</string>
-  <string name="menu_my_account">Hesabı eşitle</string>
+  <string name="menu_my_account">Hesabı senkronize et</string>
   <string name="menu_preferences">Tercihler</string>
   <string name="menu_about">Hakkında</string>
   <string name="menu_dismiss_note">Notu Yoksay...</string>
@@ -108,7 +105,7 @@
   <string name="menu_bury_note">Notu Gizle</string>
   <string name="menu_suspend_card">Kartı Askıya Al</string>
   <string name="menu_suspend_note">Notu Askıya Al</string>
-  <string name="menu_save_note">Save note</string>
+  <string name="menu_save_note">Notu kaydet</string>
   <string name="menu_delete_note">Notu Sil</string>
   <string name="delete_note_message">Bu not ve bütün kartları gerçekten silinsin mi?\n%s</string>
   <string name="menu_edit_card">Kartı Düzenle</string>
@@ -180,5 +177,5 @@
   <string name="confirm">Onayla</string>
   <string name="internet">İnternet</string>
   <string name="pc">PC</string>
-  <string name="title_activity_graphical_activity">Statistical chart</string>
+  <string name="title_activity_graphical_activity">İstatistik grafiği</string>
 </resources>

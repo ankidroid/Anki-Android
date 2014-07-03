@@ -39,39 +39,39 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-  <string name="drawer_open">Open Drawer</string>
-  <string name="drawer_close">Close Drawer</string>
+  <string name="drawer_open">Відкрити шухляду</string>
+  <string name="drawer_close">Закрити шухляду</string>
   <string name="CardEditorLaterMessage">Інформація збережена на пізніше</string>
   <string name="CardEditorCardDeck">Колода картки:%s</string>
   <string name="CardEditorNoteDeck">Колекція Запису:%s</string>
   <string name="CardEditorModel">Тип Запису:%s</string>
   <string name="CardEditorTags">Мітки: %1$s</string>
-  <string name="add_new_filter_tags">Add/filter tags</string>
+  <string name="add_new_filter_tags">Додати/фільтрувати теґи</string>
   <string name="note_type">Тип Запису</string>
   <string name="card_type">Тип картки</string>
-  <string name="filter_tags">Filter tags</string>
+  <string name="filter_tags">Фільтрувати теґи</string>
   <string name="sdcard_missing_message">SD картка недоступна бо використовується як USB накопичувач. Для доступу до ваших колекцій від’єднайте USB.</string>
   <string name="show_whiteboard">Показати Дошку</string>
   <string name="hide_whiteboard">Заховати Дошку</string>
   <string name="clear_whiteboard">Очистити Дошку</string>
-  <string name="replay_audio">Replay audio</string>
+  <string name="replay_audio">Повторити аудіо</string>
   <string name="cram_edit_warning">Не можна змінювати картки під-час зубріння</string>
   <string name="suspend_leeches">Відкласти липкі картки</string>
   <string name="leech_suspend_notification">Картку позначено як липка, і відкладено</string>
   <string name="leech_notification">Картка позначена як липка</string>
   <string name="corrupt_font">Пошкоджений файл шрифтів %s</string>
   <string-array name="browser_column1_headings">
-    <item>Search field</item>
+    <item>Пошук поля</item>
   </string-array>
   <string-array name="browser_column2_headings">
-    <item>Answer</item>
-    <item>Card</item>
-    <item>Deck</item>
-    <item>Note</item>
-    <item>Question</item>
-    <item>Tags</item>
-    <item>Lapses</item>
-    <item>Reviews</item>
+    <item>Відповідь</item>
+    <item>Картка</item>
+    <item>Колода</item>
+    <item>Примітка</item>
+    <item>Запитання</item>
+    <item>Мітка</item>
+    <item>Провали</item>
+    <item>Огляди</item>
   </string-array>
   <string name="cardeditor_title_add_note">Додати Запис</string>
   <string name="cardeditor_title_edit_card">Змінити запис</string>
@@ -102,7 +102,7 @@
   <string name="card_editor_reset">Скинути</string>
   <string name="card_editor_copy_card">Копіювати картку</string>
   <string name="card_editor_reset_card">Скинути поступ</string>
-  <string name="card_editor_preview_card">Preview</string>
+  <string name="card_editor_preview_card">Перегляд</string>
   <string name="error_insufficient_memory">Дія не можлива через брак пам’яті на вашому пристрої</string>
   <string name="tutorial_load">Створення навчальної колоди.\n Будь ласка, зачекайте...</string>
   <string name="tutorial_loading_error">Неможливо створити навчальну колоду</string>
@@ -116,12 +116,12 @@
   <string name="help_title">Допомога</string>
   <string name="help_online">Допомога онлайн</string>
   <string name="help_faq">FAQ</string>
-  <string name="help_tutorial">Create tutorial deck</string>
-  <string name="tutorial_deck_name">Tutorial deck</string>
+  <string name="help_tutorial">Створити колоду підручника</string>
+  <string name="tutorial_deck_name">Колода підручника</string>
   <string name="check_db">Перевірити базу даних</string>
   <string name="check_db_message">Перевірка бази даних.\n Будь ласка, зачекайте...</string>
-  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
-  <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
+  <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Порожня картка. Запустіть \"Інструменти &gt; порожні карти...\" на стільничному клієнті.</string>
+  <string name="unknown_type_field_warning">Введіть відповідь: невідоме поле %s</string>
   <string name="simple_interface_hint">Спорожнюється %s. Пам’ятайте, що простий інтерфейс не підтримує картинок/звуків та ін.</string>
   <string name="delete_deck">Видалення колоди...\n Будь ласка, зачекайте.</string>
   <string-array name="dynOrderLabels">
@@ -150,7 +150,7 @@
   <string name="import_importing">Відбувається імпорт карт. \nЗачекайте, будь-ласка...</string>
   <string name="import_hint">Щоб імпортувати карти, помістіть apkg файл в каталог %s і натисніть кнопку ok</string>
   <string name="upgrade_import_no_file_found">Ввізного файлу %1$s не знайдено</string>
-  <string name="study_options">Deck options</string>
+  <string name="study_options">Параметри колоди</string>
   <string name="custom_study">Додатковий трейнінг</string>
   <string name="dyn_deck_desc">Це спеціальна колекція для навчання поза межами нормального розкладу. Картки будуть автоматично повернуті до їх початкових колекцій після повторення. Видалення цієї колекції з списку поврне всі карточки до початкових колекцій.</string>
   <string name="exit_wizard">Покинути помічника</string>

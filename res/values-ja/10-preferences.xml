@@ -52,7 +52,7 @@
   <string name="pref_cat_gestures">ジェスチャー</string>
   <string name="pref_cat_gestures_summ">ボタンの代わりに、タップやスワイプを有効にします。</string>
   <string name="pref_cat_actions">アクション</string>
-  <string name="pref_cat_advanced">拡張</string>
+  <string name="pref_cat_advanced">拡張機能</string>
   <string name="pref_cat_advanced_summ">最適化と実験的な機能</string>
   <string name="pref_cat_performance">パフォーマンス</string>
   <string name="pref_cat_workarounds">回避策</string>
@@ -61,9 +61,9 @@
   <string name="about_version">バージョン：</string>
   <string name="enable_whiteboard">ホワイト ボード有効化</string>
   <string name="show_whiteboard_summ">復習中に、画面に文字を書くことができます。画面の右上にホワイトボードアイコンが表示されます。</string>
-  <string name="whiteboard_stroke_width">ストロークの幅</string>
+  <string name="whiteboard_stroke_width">描かれる線の太さ</string>
   <string name="whiteboard_stroke_width_summ">XXX</string>
-  <string name="whiteboard_black">モノクロ ストローク</string>
+  <string name="whiteboard_black">黒色の線</string>
   <string name="whiteboard_black_summ">メモリの節約、夜間モードでは動作しません</string>
   <string name="write_answers_disable">タイピング無効化</string>
   <string name="write_answers_disable_summ">解答入力フィールドがある場合にカード上にキーボードを表示させなくします</string>
@@ -124,10 +124,10 @@
   <string name="language_summ">XXX</string>
   <string name="language_system">システム言語</string>
   <string name="notification_pref">通知</string>
-  <string name="notification_minimum_cards_due">より以上のときに通知</string>
+  <string name="notification_minimum_cards_due">期限カードが増えた時の警告</string>
   <string name="notification_minimum_cards_due_summary">XXX の期限カード</string>
-  <string name="notification_minimum_cards_due_vibrate">振動</string>
-  <string name="notification_minimum_cards_due_blink">ライト点滅</string>
+  <string name="notification_minimum_cards_due_vibrate">振動で通知</string>
+  <string name="notification_minimum_cards_due_blink">ライト点滅で通知</string>
   <string name="timeout_answer_text">答えを自動的に表示</string>
   <string name="timeout_answer_summ">入力しなくても自動的に答えを表示</string>
   <string name="timeout_answer_seconds">答えを表示するまでの時間</string>
@@ -141,7 +141,7 @@
   <string name="vertical_centering_summ">コンテンツを垂直方向に中段揃え</string>
   <string name="pref_cat_backup">バックアップ</string>
   <string name="pref_backup">自動バックアップ</string>
-  <string name="pref_backup_summ">自動的にバックアップを作成（単語帳をを開く前に1 日 1 回) </string>
+  <string name="pref_backup_summ">自動的にバックアップを作成（単語帳を開く前に1 日 1 回) </string>
   <string name="pref_backup_max">バックアップの残存数</string>
   <string name="pref_backup_max_summ">XXX</string>
   <string name="pref_disable_backup_title">バックアップを無効にしますか？</string>
@@ -163,12 +163,12 @@
   <string name="input_workaround">回避方法を入力</string>
   <string name="input_workaround_summ">HTMLの入力ボックスへ、フォーカスが移動した時の問題を回避します。いくつかのデバイスで問題が発生しています。</string>
   <string name="pref_keep_screen_on">画面を保持</string>
-  <string name="pref_keep_screen_on_summ">画面タイムアウトの無効</string>
+  <string name="pref_keep_screen_on_summ">画面タイムアウトの無効化</string>
   <string name="pref_simple_interface">簡易なインターフェイス</string>
   <string name="pref_simple_interface_summ">高速表示をするために、htmlフォーマットを画面に反映しません。</string>
   <string name="pref_simple_interface_exclude_tags">除外するタグ</string>
   <string name="pref_simple_interface_exclude_tags_summ">シンプルなインターフェイスを使いたくないカードには、タグを付けてください。切換えに使用するタグ: XXX</string>
-  <string name="write_answers_message">書かれた答えを比較すために、Anki Desktopを使いデッキのフィールドを定義してください。 (デッキのプロパティ -&gt; 編集モデル　 -&gt; カードレイアウト）　\n\n 比較フィールドが設定されていない場合は、書かれた答えはカードのすべての答えと比較されます。</string>
+  <string name="write_answers_message">書かれた答えを比較すために、Anki Desktopを使い単語帳のフィールドを定義してください。 (単語帳のプロパティ -&gt; 編集モデル　 -&gt; カードレイアウト）　\n\n 比較フィールドが設定されていない場合は、書かれた答えはカードのすべての答えと比較されます。</string>
   <string name="fix_arabic_text">アラビア語の表示を改善</string>
   <string name="fix_arabic_text_summ">アラビア語の限定的なサポートのための部分的な回避策です。表示中ののカードの内容を変更することはできません</string>
   <string name="convert_fen_text">チェス表記のサポート</string>
@@ -190,8 +190,8 @@
   <string name="deck_conf_deck_description">単語帳の説明</string>
   <string name="deck_conf_group">オプション グループ</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n1 デッキはこのグループを使用しています。</item>
-    <item quantity="other">%1$s\n%2$d デッキはこのグループを使用しています。</item>
+    <item quantity="one">%1$s\n1 単語帳はこのグループを使用しています。</item>
+    <item quantity="other">%1$s\n%2$d 単語帳はこのグループを使用しています。</item>
   </plurals>
   <string name="deck_conf_new_cards">新しいカード</string>
   <string name="deck_conf_rev_cards">カードの復習と評価</string>
@@ -246,11 +246,11 @@
   <string name="deck_conf_cram_filter">フィルター</string>
   <string name="deck_conf_cram_options">オプション</string>
   <string name="deck_conf_cram_preset">プリセット</string>
-  <string name="deck_conf_cram_search">検索</string>
-  <string name="deck_conf_cram_limit">制限</string>
-  <string name="deck_conf_cram_order">選択されたカード</string>
-  <string name="deck_conf_cram_reschedule">再スケジュール</string>
-  <string name="deck_conf_cram_reschedule_summ">解答結果に基づく再スケジュールカード</string>
+  <string name="deck_conf_cram_search">フィルターの抽出条件</string>
+  <string name="deck_conf_cram_limit">抽出件数の上限</string>
+  <string name="deck_conf_cram_order">抽出されたカードの配置</string>
+  <string name="deck_conf_cram_reschedule">再スケジュール方法</string>
+  <string name="deck_conf_cram_reschedule_summ">復習結果を単語帳のスケジュールへ反映する</string>
   <string name="deck_conf_cram_steps">カスタムステップ</string>
-  <string name="deck_conf_cram_steps_summ">カスタムステップの定義</string>
+  <string name="deck_conf_cram_steps_summ">設定したカスタムステップを使用する</string>
 </resources>

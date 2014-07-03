@@ -71,15 +71,12 @@
   <string name="ease3_successive">Bine</string>
   <string name="ease3_learning">Ușor</string>
   <string name="studyoptions_congrats_undo">Anulare %s</string>
-  <string name="studyoptions_congrats_unbury">Dezgroapă</string>
-  <string name="studyoptions_congrats_custom_study">Studiu personalizat</string>
-  <string name="studyoptions_congrats_open_other_deck">Deschide alt pachet</string>
   <string name="card_unsuspended">Suspendarea cardului anulată</string>
   <string name="card_suspended">Card resuspendat</string>
   <string name="menu_rotate">Rotește</string>
   <string name="menu_import">Import file</string>
   <string name="undo">Anulare</string>
-  <string name="undo_action_review">Recapitulează</string>
+  <string name="undo_action_review">last review</string>
   <string name="undo_action_edit">Editare notă</string>
   <string name="undo_action_bury">Îngroapă nota</string>
   <string name="undo_action_suspend_card">suspendă cardul</string>

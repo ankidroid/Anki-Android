@@ -71,15 +71,12 @@
   <string name="ease3_successive">Gut</string>
   <string name="ease3_learning">Einfach</string>
   <string name="studyoptions_congrats_undo">%s rückgängig machen</string>
-  <string name="studyoptions_congrats_unbury">Vorläufiges Aussetzen aufheben</string>
-  <string name="studyoptions_congrats_custom_study">Benutzerdefiniertes Lernen</string>
-  <string name="studyoptions_congrats_open_other_deck">Einen anderen Stapel öffnen</string>
   <string name="card_unsuspended">Aussetzen rückgängig gemacht</string>
   <string name="card_suspended">Karte wieder ausgesetzt</string>
   <string name="menu_rotate">Drehen</string>
   <string name="menu_import">Datei importieren</string>
   <string name="undo">Rückgängig machen</string>
-  <string name="undo_action_review">Lernen</string>
+  <string name="undo_action_review">last review</string>
   <string name="undo_action_edit">Notiz bearbeiten</string>
   <string name="undo_action_bury">Notiz vorläufig aussetzen</string>
   <string name="undo_action_suspend_card">Karte dauerhaft aussetzen</string>
@@ -108,7 +105,7 @@
   <string name="menu_bury_note">Notiz vorläufig aussetzen</string>
   <string name="menu_suspend_card">Karte dauerhaft aussetzen</string>
   <string name="menu_suspend_note">Notiz dauerhaft aussetzen</string>
-  <string name="menu_save_note">Save note</string>
+  <string name="menu_save_note">Notiz speichern</string>
   <string name="menu_delete_note">Notiz löschen</string>
   <string name="delete_note_message">Soll diese Notiz und alle ihre Karten tatsächlich gelöscht werden?\n%s</string>
   <string name="menu_edit_card">Karte bearbeiten</string>

@@ -71,15 +71,12 @@
   <string name="ease3_successive">Хорошо</string>
   <string name="ease3_learning">Легко</string>
   <string name="studyoptions_congrats_undo">Отменить %s</string>
-  <string name="studyoptions_congrats_unbury">Отменить сдвиг</string>
-  <string name="studyoptions_congrats_custom_study">Дополнительное обучение</string>
-  <string name="studyoptions_congrats_open_other_deck">Открыть другую колоду</string>
   <string name="card_unsuspended">Приостановка карты была отменена</string>
   <string name="card_suspended">Карта снова заблокирована</string>
   <string name="menu_rotate">Повернуть</string>
   <string name="menu_import">Import file</string>
   <string name="undo">Отменить</string>
-  <string name="undo_action_review">Просмотр</string>
+  <string name="undo_action_review">last review</string>
   <string name="undo_action_edit">Редактировать запись</string>
   <string name="undo_action_bury">Скрыть запись</string>
   <string name="undo_action_suspend_card">Отложить карту</string>

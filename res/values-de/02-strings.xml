@@ -116,8 +116,8 @@
   <string name="help_title">Hilfe</string>
   <string name="help_online">Onlinehilfe</string>
   <string name="help_faq">Häufig gestellte Fragen</string>
-  <string name="help_tutorial">Create tutorial deck</string>
-  <string name="tutorial_deck_name">Tutorial deck</string>
+  <string name="help_tutorial">Einführungsstapel erstellen</string>
+  <string name="tutorial_deck_name">Einführungsstapel</string>
   <string name="check_db">Datenbank überprüfen</string>
   <string name="check_db_message">Prüfe Datenbank.\nBitte warten...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Leere Karte. Führen Sie \"Werkzeuge&gt;Leere Karten...\" mit dem Desktop-Programm aus.</string>
@@ -150,7 +150,7 @@
   <string name="import_importing">Karten werden importiert.\nBitte warten...</string>
   <string name="import_hint">Kopieren Sie die apkg-Datei ins Verzeichnis %s und berühren Sie OK um Karten zu importieren</string>
   <string name="upgrade_import_no_file_found">Keine importierbare Datei %1$s gefunden</string>
-  <string name="study_options">Deck options</string>
+  <string name="study_options">Stapeloptionen</string>
   <string name="custom_study">Benutzerdefiniertes Lernen</string>
   <string name="dyn_deck_desc">Dies ist ein besonderer Stapel, um außerhalb der normalen Planung zu lernen. Karten werden nach dem Lernen automatisch in ihren Originalstapel zurückgeschickt. Beim Löschen dieses Stapels werden alle verbleibenden Karten in ihren Originalstapel zurückgeschickt.</string>
   <string name="exit_wizard">Assistent verlassen</string>

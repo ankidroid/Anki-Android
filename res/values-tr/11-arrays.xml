@@ -36,12 +36,12 @@
 -->
 <resources>
   <string-array name="navigation_titles">
-    <item>Decks</item>
-    <item>Card Browser</item>
-    <item>Statistics</item>
-    <item>Settings</item>
-    <item>Help</item>
-    <item>Send Feedback</item>
+    <item>Desteler</item>
+    <item>Kart Tarayıcısı</item>
+    <item>İstatistikler</item>
+    <item>Ayarlar</item>
+    <item>Yardım</item>
+    <item>Geribildirim Gönder</item>
   </string-array>
   <string-array name="newCardSchedulingLabels">
     <item>Gözden geçirme boyunca dağıt</item>

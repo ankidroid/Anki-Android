@@ -71,15 +71,12 @@
   <string name="ease3_successive">अच्छा</string>
   <string name="ease3_learning">आसान</string>
   <string name="studyoptions_congrats_undo">पूर्ववत् करें %s</string>
-  <string name="studyoptions_congrats_unbury">Unbury</string>
-  <string name="studyoptions_congrats_custom_study">कस्टम अध्ययन</string>
-  <string name="studyoptions_congrats_open_other_deck">अन्य डेक खोलें</string>
   <string name="card_unsuspended">कार्ड निलंबन नष्ट कर दिया</string>
   <string name="card_suspended">Resuspended कार्ड</string>
   <string name="menu_rotate">रोटेट करें</string>
   <string name="menu_import">Import file</string>
   <string name="undo">पूर्ववत् करें</string>
-  <string name="undo_action_review">समीक्षा</string>
+  <string name="undo_action_review">last review</string>
   <string name="undo_action_edit">नोट संपादित करें</string>
   <string name="undo_action_bury">नोट गाड़</string>
   <string name="undo_action_suspend_card">कार्ड को निलंबित</string>

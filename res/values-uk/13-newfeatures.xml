@@ -40,25 +40,25 @@
 -->
 <resources>
   <string-array name="new_version_features">
-    <item>Redesign layout</item>
+    <item>Перероблено макет</item>
     <item>Add pictures and sounds to flashcards (experimental)</item>
     <item>Make second column in card browser configurable</item>
     <item>Make images on flashcards zoomable</item>
     <item>Improve preview feature and access via action bar</item>
-    <item>Simplify menus and settings</item>
+    <item>Спрощено меню та налаштування</item>
     <item>Make slow searches in card browser cancellable</item>
     <item>Improve adding/removing tags</item>
     <item>Fix \"type in the answer\" and cloze deletion features</item>
-    <item>Fix whiteboard feature</item>
-    <item>Restore backups from within the app</item>
+    <item>Виправлено функцію білої дошки</item>
+    <item>Відновлено резервне копіювання з кнопкою програми</item>
     <item>Make volume duck on any background music when sounds played</item>
     <item>Make playing of sounds consistent with Desktop version</item>
-    <item>Remove animations feature due to being buggy</item>
-    <item>Improve speed of showing cards</item>
+    <item>Видалено функцію анімації через її схильність до збоїв</item>
+    <item>Поліпшено швидкість показу карт</item>
     <item>Remove duplicate check dialog when adding new flashcards</item>
     <item>Remove swap button when adding or editing flashcards</item>
     <item>Remove kanji info feature (will become optional plugin in the future)</item>
-    <item>Make minimum Android version 2.1</item>
-    <item>Fix lots of bugs</item>
+    <item>Працює мінімум на Android в. 2.1</item>
+    <item>Виправлено численні помилки</item>
   </string-array>
 </resources>

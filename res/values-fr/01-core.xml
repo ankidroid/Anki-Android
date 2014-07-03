@@ -71,15 +71,12 @@
   <string name="ease3_successive">Bon</string>
   <string name="ease3_learning">Facile</string>
   <string name="studyoptions_congrats_undo">Annuler %s</string>
-  <string name="studyoptions_congrats_unbury">Déterrer</string>
-  <string name="studyoptions_congrats_custom_study">Étude personnalisée</string>
-  <string name="studyoptions_congrats_open_other_deck">Ouvrir un autre paquet</string>
   <string name="card_unsuspended">Suspension de la carte annulée</string>
   <string name="card_suspended">Carte re-suspendue</string>
   <string name="menu_rotate">Changer d\'orientation</string>
   <string name="menu_import">Importer un fichier</string>
   <string name="undo">Annuler</string>
-  <string name="undo_action_review">réviser</string>
+  <string name="undo_action_review">last review</string>
   <string name="undo_action_edit">modifier la note</string>
   <string name="undo_action_bury">enterrer la note</string>
   <string name="undo_action_suspend_card">suspendre la carte</string>

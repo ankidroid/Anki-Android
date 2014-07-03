@@ -71,15 +71,12 @@
   <string name="ease3_successive">Bom</string>
   <string name="ease3_learning">Fácil</string>
   <string name="studyoptions_congrats_undo">Anular %s</string>
-  <string name="studyoptions_congrats_unbury">Unbury</string>
-  <string name="studyoptions_congrats_custom_study">Estudo Personalizado</string>
-  <string name="studyoptions_congrats_open_other_deck">Abrir outro Baralho</string>
   <string name="card_unsuspended">Suspensão de cartão anulada</string>
   <string name="card_suspended">Cartão novamente suspendido</string>
   <string name="menu_rotate">Rodar</string>
   <string name="menu_import">Import file</string>
   <string name="undo">Anular</string>
-  <string name="undo_action_review">rever</string>
+  <string name="undo_action_review">last review</string>
   <string name="undo_action_edit">Editar nota</string>
   <string name="undo_action_bury">Enterrar nota</string>
   <string name="undo_action_suspend_card">suspender cartão</string>

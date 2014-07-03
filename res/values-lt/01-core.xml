@@ -71,15 +71,12 @@
   <string name="ease3_successive">Gerai</string>
   <string name="ease3_learning">Lengvai</string>
   <string name="studyoptions_congrats_undo">Atšaukti %s</string>
-  <string name="studyoptions_congrats_unbury">Ištraukti</string>
-  <string name="studyoptions_congrats_custom_study">Custom study</string>
-  <string name="studyoptions_congrats_open_other_deck">pastabos sustabdymą</string>
   <string name="card_unsuspended">Kortelės sustabdymas atšauktas</string>
   <string name="card_suspended">Kortelė iš naujo sustabdyta</string>
   <string name="menu_rotate">Pasukti</string>
   <string name="menu_import">Import file</string>
   <string name="undo">Atšaukti</string>
-  <string name="undo_action_review">kartojimą</string>
+  <string name="undo_action_review">last review</string>
   <string name="undo_action_edit">pastabos pakeitimą</string>
   <string name="undo_action_bury">pastabos slėpimą</string>
   <string name="undo_action_suspend_card">kortelės sustabdymą</string>

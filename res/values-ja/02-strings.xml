@@ -39,8 +39,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-  <string name="drawer_open">引き出しを開ける</string>
-  <string name="drawer_close">引き出しを閉じる</string>
+  <string name="drawer_open">ドロワーを開く</string>
+  <string name="drawer_close">ドロワーを閉じる</string>
   <string name="CardEditorLaterMessage">後日のために情報を保存</string>
   <string name="CardEditorCardDeck">カード単語帳: %s</string>
   <string name="CardEditorNoteDeck">ノート単語帳: %s</string>
@@ -61,7 +61,7 @@
   <string name="leech_notification">学習困難カードとして登録されました</string>
   <string name="corrupt_font">使用できないフォントファイル %s</string>
   <string-array name="browser_column1_headings">
-    <item>検索フィールド</item>
+    <item>先頭のフィールド</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>回答</item>
@@ -117,7 +117,7 @@
   <string name="help_online">オンラインヘルプ</string>
   <string name="help_faq">よくある質問</string>
   <string name="help_tutorial">チュートリアル単語帳の作成</string>
-  <string name="tutorial_deck_name">Tutorial deck</string>
+  <string name="tutorial_deck_name">チュートリアル単語帳</string>
   <string name="check_db">データベースの検査</string>
   <string name="check_db_message">データを確認中です\nしばらくお待ちください</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">空のカード。\"ツール &gt; 空のカード...\"をデスクトップ クライアントで実行。</string>
@@ -133,7 +133,7 @@
     <item>追加順に</item>
     <item>期限順に</item>
   </string-array>
-  <string name="menu_cardbrowser">カード ブラウザー</string>
+  <string name="menu_cardbrowser">ブラウザー</string>
   <string name="show_hint">ヒントの表示</string>
   <string name="pref_lang_other">使用言語の選択</string>
   <string name="pref_font_UI">使用フォントの設定</string>

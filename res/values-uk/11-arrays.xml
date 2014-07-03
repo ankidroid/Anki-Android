@@ -36,12 +36,12 @@
 -->
 <resources>
   <string-array name="navigation_titles">
-    <item>Decks</item>
-    <item>Card Browser</item>
-    <item>Statistics</item>
-    <item>Settings</item>
-    <item>Help</item>
-    <item>Send Feedback</item>
+    <item>Колоди</item>
+    <item>Переглядач карт</item>
+    <item>Статистика</item>
+    <item>Параметри</item>
+    <item>Допомога</item>
+    <item>Надіслати відгук</item>
   </string-array>
   <string-array name="newCardSchedulingLabels">
     <item>Розподілити по переглядах</item>
@@ -61,7 +61,7 @@
     <item>100</item>
     <item>150</item>
     <item>200</item>
-    <item>Never notify</item>
+    <item>Ніколи не сповіщати</item>
   </string-array>
   <string-array name="cram_review_order_labels">
     <item>Показати останні змінені першими</item>
@@ -159,7 +159,7 @@
     <item>На черзі</item>
   </string-array>
   <string-array name="override_font_labels">
-    <item>When no font specified on flashcards</item>
-    <item>Always</item>
+    <item>Коли немає шрифту, вказаного на навчальних картках</item>
+    <item>Завжди</item>
   </string-array>
 </resources>

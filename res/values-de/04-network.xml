@@ -85,7 +85,7 @@
   <string name="shareddeckpicker_title">Wählen Sie die Stapel, die Sie herunterladen möchten</string>
   <string name="downloaddeck_search">Suchen</string>
   <string name="preferences_title">Einstellungen</string>
-  <string name="deckpreferences_title">Options for XXX</string>
+  <string name="deckpreferences_title">Optionen für XXX</string>
   <string name="sync_conflict_message">Sie müssen entweder diese Sammlung hochladen oder die von AnkiWeb herunterladen, da sie nicht vereinigt werden können. Die Sammlung auf einer Seite wird überschreiben.</string>
   <string name="sync_conflict_local">Hochladen</string>
   <string name="sync_conflict_remote">Herunterladen</string>

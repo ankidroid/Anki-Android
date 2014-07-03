@@ -40,17 +40,17 @@
 -->
 <resources>
   <string-array name="new_version_features">
-    <item>Redesign layout</item>
+    <item>Neu gestaltetes Layout</item>
     <item>Add pictures and sounds to flashcards (experimental)</item>
-    <item>Make second column in card browser configurable</item>
-    <item>Make images on flashcards zoomable</item>
+    <item>Zweite Spalte in Kartenübersicht anpassbar gemacht</item>
+    <item>Bilder auf Karten zoombar gemacht</item>
     <item>Improve preview feature and access via action bar</item>
-    <item>Simplify menus and settings</item>
-    <item>Make slow searches in card browser cancellable</item>
-    <item>Improve adding/removing tags</item>
-    <item>Fix \"type in the answer\" and cloze deletion features</item>
-    <item>Fix whiteboard feature</item>
-    <item>Restore backups from within the app</item>
+    <item>Menüs und Einstellungen vereinfacht</item>
+    <item>Langsame Suchen in Kartenübersicht lassen sich abbrerchen</item>
+    <item>Hinzufügen/Entfernen von Schlagworten verbessert</item>
+    <item>\"Antwort eingeben\"- und Lückentext-Funktionen verbessert</item>
+    <item>Whiteboard-Funktion verbessert</item>
+    <item>Wiederherstellen von Sicherungen aus der App</item>
     <item>Make volume duck on any background music when sounds played</item>
     <item>Make playing of sounds consistent with Desktop version</item>
     <item>Remove animations feature due to being buggy</item>
@@ -58,7 +58,7 @@
     <item>Remove duplicate check dialog when adding new flashcards</item>
     <item>Remove swap button when adding or editing flashcards</item>
     <item>Remove kanji info feature (will become optional plugin in the future)</item>
-    <item>Make minimum Android version 2.1</item>
-    <item>Fix lots of bugs</item>
+    <item>Minimale Android-Version jetzt 2.1</item>
+    <item>Jede Menge Fehler behoben</item>
   </string-array>
 </resources>

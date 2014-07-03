@@ -71,15 +71,12 @@
   <string name="ease3_successive">一般</string>
   <string name="ease3_learning">简单</string>
   <string name="studyoptions_congrats_undo">撤消 %s</string>
-  <string name="studyoptions_congrats_unbury">取消隐藏</string>
-  <string name="studyoptions_congrats_custom_study">自定义学习</string>
-  <string name="studyoptions_congrats_open_other_deck">打开其他牌组</string>
   <string name="card_unsuspended">撤消卡牌暂停</string>
   <string name="card_suspended">卡牌再次暂停</string>
   <string name="menu_rotate">旋转</string>
   <string name="menu_import">导入文件</string>
   <string name="undo">撤销</string>
-  <string name="undo_action_review">复习</string>
+  <string name="undo_action_review">last review</string>
   <string name="undo_action_edit">编辑卡牌记录</string>
   <string name="undo_action_bury">隐藏卡牌记录</string>
   <string name="undo_action_suspend_card">暂停卡牌</string>
