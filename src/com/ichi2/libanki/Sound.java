@@ -22,6 +22,7 @@ import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.net.Uri;
 import android.util.Log;
+
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.ReadText;
 
@@ -174,10 +175,9 @@ public class Sound {
             String soundMarker = matcher.group();
             int markerStart = contentLeft.indexOf(soundMarker);
             stringBuilder.append(contentLeft.substring(0, markerStart));
-            stringBuilder
-                .append("<a onclick=\"window.ankidroid.playSound(this.title);\" title=\""
-                        + soundPath
-                        + "\"><span style=\"padding:5px;\"><img src=\"file:///android_asset/media_playback_start2.png\" /></span></a>");
+            stringBuilder.append("<a style='text-decoration:none' href='playsound:" + soundPath + "'>"
+                        + "<span style='padding:5px;'><img src='file:///android_asset/media_playback_start2.png' />"
+                        + "</span></a>");
             contentLeft = contentLeft.substring(markerStart + soundMarker.length());
             Log.i(AnkiDroidApp.TAG, "Content left = " + contentLeft);
         }
