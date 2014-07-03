@@ -6,12 +6,6 @@
 # tools/release.sh # For an alpha or beta release
 # tools/release.sh public # For a public (non alpha/beta) release
 
-# Detect problems in code
-lint . --config lint.xml --nowarn --exitcode
-if [ $? -ne 0 ]; then
-  exit
-fi
-
 # Suffix configuration
 SUFFIX=""
 #SUFFIX="-EXPERIMENTAL"
@@ -57,6 +51,14 @@ fi
 
 # Generate signed APK
 ant clean release
+if [ $? -ne 0 ]; then
+  # APK contains problems, abort release
+  git checkout -- AndroidManifest.xml # Revert version change
+  exit
+fi
+
+# Detect problems in code (Lint must run AFTER compilation)
+lint . --config lint.xml --nowarn --exitcode
 if [ $? -ne 0 ]; then
   exit
 fi
