@@ -22,7 +22,7 @@
     <!-- Navigation Drawer Strings -->
     <string name="drawer_open">Open Drawer</string>
     <string name="drawer_close">Close Drawer</string>
-    
+
     <string name="CardEditorLaterMessage">Saved information for later</string>
     <string name="CardEditorCardDeck">Card deck: %s</string>
     <string name="CardEditorNoteDeck">Note deck: %s</string>
@@ -83,11 +83,11 @@
     <string name="reordering_cards">Reordering cards…</string>
 
     <plurals name="timebox_reached">
-        <item quantity="one">1 card studied in %2$s</item>
+        <item quantity="one">%1$d card studied in %2$s</item>
         <item quantity="other">%1$d cards studied in %2$s</item>
     </plurals>
     <plurals name="timebox_reached_minutes">
-        <item quantity="one">1 minute</item>
+        <item quantity="one">%1$d minute</item>
         <item quantity="other">%1$d minutes</item>
     </plurals>
 
@@ -110,7 +110,7 @@
     <string name="default_conf_delete_error">The default options group can\'t be removed</string>
 
     <plurals name="factadder_cards_added">
-        <item quantity="one">1 card added</item>
+        <item quantity="one">%d card added</item>
         <item quantity="other">%d cards added</item>
     </plurals>
 
