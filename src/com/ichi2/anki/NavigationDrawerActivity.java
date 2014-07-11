@@ -38,6 +38,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.stats.AnkiStatsTaskHandler;
 import com.ichi2.async.DeckTask;
 import com.ichi2.charts.ChartBuilder;
 import com.ichi2.themes.StyledProgressDialog;
@@ -140,18 +141,11 @@ public class NavigationDrawerActivity extends AnkiActivity {
             	if ((this instanceof DeckPicker && !mFragmented)) {
             		selectAllDecksButton = true;
             	}
-                Dialog dialog = ChartBuilder.getStatisticsDialog(this, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        DeckTask.launchDeckTask(
-                                DeckTask.TASK_TYPE_LOAD_STATISTICS,
-                                mLoadStatisticsHandler,
-                                new DeckTask.TaskData(AnkiDroidApp.getCol(), which, AnkiDroidApp
-                                        .getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getBoolean(
-                                                "statsRange", true)));
-                    }
-                }, selectAllDecksButton);
-                dialog.show();
+                AnkiStatsTaskHandler.setIsWholeCollection(selectAllDecksButton);
+                Intent intent = new Intent(NavigationDrawerActivity.this, com.ichi2.anki.stats.AnkiStatsActivity.class);
+                startActivityWithAnimation(intent, ActivityTransitionAnimation.DOWN);
+
+
                 break;
             case DRAWER_SETTINGS:
                 startActivityForResultWithAnimation(new Intent(this, Preferences.class), PREFERENCES_UPDATE, ActivityTransitionAnimation.LEFT);

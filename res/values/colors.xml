@@ -32,6 +32,11 @@
     <color name="stats_learn">#00F</color>
     <color name="stats_relearn">#c00</color>
     <color name="stats_cram">#ff0</color>
+    <color name="stats_interval">#077</color>
+    <color name="stats_hours">#ccc</color>
+    <color name="stats_counts">#E6000000</color>
+    <color name="stats_unseen">#000</color>
+    <color name="stats_suspended">#ff0</color>
     <color name="progressbar_2">#ff9100</color>
     <color name="progressbar_3">#ffbe00</color>
     <color name="progressbar_4">#4aa02c</color>

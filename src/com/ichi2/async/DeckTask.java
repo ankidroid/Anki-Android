@@ -790,6 +790,26 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                 return new TaskData(stats.calculateDone(
                         AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getInt("statsType",
                                 Stats.TYPE_MONTH), false));
+            case Stats.TYPE_INTERVALS:
+                return new TaskData(stats.calculateIntervals(
+                        AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getInt("statsType",
+                                Stats.TYPE_MONTH)));
+            case Stats.TYPE_HOURLY_BREAKDOWN:
+                return new TaskData(stats.calculateBreakdown(
+                        AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getInt("statsType",
+                                Stats.TYPE_MONTH)));
+            case Stats.TYPE_WEEKLY_BREAKDOWN:
+                return new TaskData(stats.calculateWeeklyBreakdown(
+                        AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getInt("statsType",
+                                Stats.TYPE_MONTH)));
+            case Stats.TYPE_ANSWER_BUTTONS:
+                return new TaskData(stats.calculateAnswerButtons(
+                        AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getInt("statsType",
+                                Stats.TYPE_MONTH)));
+            case Stats.TYPE_CARDS_TYPES:
+                return new TaskData(stats.calculateCardsTypes(
+                        AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getInt("statsType",
+                                Stats.TYPE_MONTH)));
         }
     }
 
