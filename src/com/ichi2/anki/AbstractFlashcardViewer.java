@@ -38,7 +38,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 import android.os.Vibrator;
-import android.support.v4.widget.DrawerLayout;
 import android.text.ClipboardManager;
 import android.text.Editable;
 import android.text.Html;
@@ -913,10 +912,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 || Themes.getTheme() == Themes.THEME_ANDROID_DARK;
 
         // create inherited navigation drawer layout here so that it can be used by parent class
-        setContentView(R.layout.flashcard);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.reviewer_drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.reviewer_left_drawer);
-        initNavigationDrawer();
+        View mainView = getLayoutInflater().inflate(R.layout.flashcard, null);
+        setContentView(mainView);
+        initNavigationDrawer(mainView);
 
         // The hardware buttons should control the music volume while reviewing.
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
@@ -990,12 +988,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         Lookup.initialize(this);
     }
 
-
-    private void deselectAllNavigationItems() {
-        // Deselect all entries in navigation drawer since the Reviewer isn't included in ND
-        for (int i=0; i< mDrawerList.getCount(); i++) {
-            mDrawerList.setItemChecked(i, false);
-        }
+    @Override
+    protected void deselectAllNavigationItems() {
+        super.deselectAllNavigationItems();
         setTitle();
         updateScreenCounts();
     }
@@ -1249,7 +1244,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // The action bar home/up action should open or close the drawer.
         // ActionBarDrawerToggle will take care of this.
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
+        if (getDrawerToggle().onOptionsItemSelected(item)) {
             return true;
         }
 
@@ -1891,7 +1886,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     mFlipCardLayout.performClick();
                 }
-                return false; // We don’t “handle” this. Let Android hide the input method.
+                return false; // We don't handle this. Let Android hide the input method.
             }
         });
     }

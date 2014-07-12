@@ -46,11 +46,11 @@ import com.ichi2.themes.StyledProgressDialog;
 public class NavigationDrawerActivity extends AnkiActivity {
     
     /** Navigation Drawer */
-    protected DrawerLayout mDrawerLayout;
-    protected ListView mDrawerList;
-    protected ActionBarDrawerToggle mDrawerToggle;
     protected CharSequence mTitle;
     protected Boolean mFragmented = false;
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+    private ActionBarDrawerToggle mDrawerToggle;
     private CharSequence mDrawerTitle;
     private String[] mNavigationTitles;
     private TypedArray mNavigationImages;
@@ -69,7 +69,10 @@ public class NavigationDrawerActivity extends AnkiActivity {
     
     
     // navigation drawer stuff
-    protected void initNavigationDrawer(){
+    protected void initNavigationDrawer(View mainView){
+        // Create inherited navigation drawer layout here so that it can be used by parent class
+        mDrawerLayout = (DrawerLayout) mainView.findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView) mainView.findViewById(R.id.left_drawer);
         mTitle = mDrawerTitle = getTitle();
         mNavigationTitles = getResources().getStringArray(R.array.navigation_titles);
         mNavigationImages = getResources().obtainTypedArray(R.array.drawer_images);
@@ -175,6 +178,13 @@ public class NavigationDrawerActivity extends AnkiActivity {
         mDrawerList.setItemChecked(position, true);
         setTitle(mNavigationTitles[position]);
         mDrawerLayout.closeDrawer(mDrawerList);
+    }
+    
+    protected void deselectAllNavigationItems() {
+        // Deselect all entries in navigation drawer
+        for (int i=0; i< mDrawerList.getCount(); i++) {
+            mDrawerList.setItemChecked(i, false);
+        }
     }
 
     @Override
@@ -307,4 +317,16 @@ public class NavigationDrawerActivity extends AnkiActivity {
         super.onDestroy();
         mNavigationImages.recycle();
     }
+    
+    public DrawerLayout getDrawerLayout() {
+        return mDrawerLayout;
+    }
+    
+    public ListView getDrawerList() {
+        return mDrawerList;
+    }
+    
+    public ActionBarDrawerToggle getDrawerToggle() {
+        return mDrawerToggle;
+    }    
 }
