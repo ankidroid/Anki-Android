@@ -58,7 +58,7 @@ public class Lines implements Drawable, Legendable {
         Stroke oldStroke = g.getStroke();
         g.setStroke(new BasicStroke(this.size));  // set stroke width of 10
         if(mHasShadow){
-            g.setShadow(mShadowRadius, mShadowDx, mShadowDy, mShadowColor);
+            //g.setShadow(mShadowRadius, mShadowDx, mShadowDy, mShadowColor);
         }
 
         float[] coordStart = plotSheet.toGraphicPoint(pointList[0][0],pointList[1][0],field);
@@ -67,11 +67,23 @@ public class Lines implements Drawable, Legendable {
 		for(int i = 0; i< pointList[0].length; i++) {
 			coordEnd = coordStart;
 			coordStart = plotSheet.toGraphicPoint(pointList[0][i],pointList[1][i],field);
+            if(mHasShadow){
+                Stroke oldShadowLessStroke = g.getStroke();
+                g.setStroke(new BasicStroke(this.size*1.5f));  // set stroke width of 10
+                Color shadowColor = new Color(mShadowColor.getRed(), mShadowColor.getGreen(), mShadowColor.getBlue(), 80);
+                g.setColor(shadowColor);
+                g.drawLine(coordStart[0] + mShadowDx, coordStart[1] + mShadowDy, coordEnd[0] + mShadowDx, coordEnd[1] + mShadowDy);
+                g.setColor(color);
+                g.setStroke(oldShadowLessStroke);
+            }
 			g.drawLine(coordStart[0], coordStart[1], coordEnd[0], coordEnd[1]);
+
+
+
 			//drawPoint(pointList[0][i], pointList[1][i], canvas, paint, field);
 		}
         if(mHasShadow){
-            g.unsetShadow();
+            //g.unsetShadow();
         }
         g.setStroke(oldStroke);
 		g.setColor(oldColor);

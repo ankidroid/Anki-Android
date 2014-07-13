@@ -130,6 +130,7 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
 
     public void uncaughtException(Thread t, Throwable e, String origin, String additionalInfo) {
         Log.i(AnkiDroidApp.TAG, "uncaughtException");
+        Log.d(AnkiDroidApp.TAG, "origin: " + origin + e.toString());
 
         collectInformation();
 

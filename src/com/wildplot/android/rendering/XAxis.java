@@ -478,7 +478,7 @@ public class XAxis implements Drawable {
         return true;
     }
 
-    public void setExplicitTics(double[] tickPositions, String[] tickNameList){
+    public void setExplicitTicks(double[] tickPositions, String[] tickNameList){
         mTickPositions = tickPositions;
         mTickNameList = tickNameList;
     }

@@ -1,7 +1,5 @@
 package com.ichi2.anki.stats;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import android.support.v4.app.*;
@@ -10,14 +8,12 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.*;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.ichi2.anki.R;
 import com.ichi2.libanki.Stats;
+import com.wildplot.android.rendering.ChartView;
 
-import java.io.File;
 import java.util.Locale;
 
 
@@ -45,7 +41,7 @@ public class AnkiStatsActivity extends ActionBarActivity implements ActionBar.Ta
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-        mViewPager.setOffscreenPageLimit(3);
+        mViewPager.setOffscreenPageLimit(8);
 
         // When swiping between different sections, select the corresponding
         // tab. We can also use ActionBar.Tab#select() to do this if we have
@@ -134,7 +130,7 @@ public class AnkiStatsActivity extends ActionBarActivity implements ActionBar.Ta
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return ChartFragment.newInstance(position + 1);
+            return ChartFragment.newInstance(position);
         }
 
         @Override
@@ -178,14 +174,14 @@ public class AnkiStatsActivity extends ActionBarActivity implements ActionBar.Ta
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
-        private ImageView mChart;
+        private ChartView mChart;
         private ProgressBar mProgressBar;
         private int mHeight = 0;
         private int mWidth = 0;
         private ChartFragment mInstance = null;
         private int mSectionNumber;
         private Menu mMenu;
-        private int mType  = Stats.TYPE_MONTH;
+        private Stats.ChartPeriodType mType  = Stats.ChartPeriodType.MONTH;
         private boolean mIsCreated = false;
         private ViewPager mActivityPager;
         private SectionsPagerAdapter mActivitySectionPagerAdapter;
@@ -197,7 +193,7 @@ public class AnkiStatsActivity extends ActionBarActivity implements ActionBar.Ta
         public static ChartFragment newInstance(int sectionNumber) {
             ChartFragment fragment = new ChartFragment();
             Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            args.putInt(ARG_SECTION_NUMBER, sectionNumber+1);
             fragment.setArguments(args);
             return fragment;
         }
@@ -214,11 +210,14 @@ public class AnkiStatsActivity extends ActionBarActivity implements ActionBar.Ta
             //int sectionNumber = 0;
             System.err.println("sectionNumber: " + mSectionNumber);
             View rootView = inflater.inflate(R.layout.fragment_anki_stats, container, false);
-            mChart = (ImageView) rootView.findViewById(R.id.image_view_chart);
+            mChart = (ChartView) rootView.findViewById(R.id.image_view_chart);
             if(mChart == null)
                 Log.d(AnkiStatsTaskHandler.TAG, "mChart null!!!");
             else
                 Log.d(AnkiStatsTaskHandler.TAG, "mChart is not null!");
+
+            //mChart.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+
             mProgressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar_stats);
 
             mProgressBar.setVisibility(View.VISIBLE);
@@ -236,21 +235,21 @@ public class AnkiStatsActivity extends ActionBarActivity implements ActionBar.Ta
 
         private void createChart(){
             if(mSectionNumber == 1) {
-                (((AnkiStatsActivity)getActivity()).getTaskHandler()).createForecastChart(mChart, mProgressBar);
+                (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(Stats.ChartType.FORECAST, mChart, mProgressBar);
             } else if(mSectionNumber == 2) {
-                (((AnkiStatsActivity)getActivity()).getTaskHandler()).createReviewCountChart(mChart, mProgressBar);
+                (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(Stats.ChartType.REVIEW_COUNT, mChart, mProgressBar);
             } else if(mSectionNumber == 3) {
-                (((AnkiStatsActivity)getActivity()).getTaskHandler()).createReviewTimeChart(mChart, mProgressBar);
+                (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(Stats.ChartType.REVIEW_TIME, mChart, mProgressBar);
             } else if(mSectionNumber == 4) {
-                (((AnkiStatsActivity)getActivity()).getTaskHandler()).createIntervalChart(mChart, mProgressBar);
+                (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(Stats.ChartType.INTERVALS, mChart, mProgressBar);
             } else if(mSectionNumber == 5) {
-                (((AnkiStatsActivity)getActivity()).getTaskHandler()).createBreakdownChart(mChart, mProgressBar);
+                (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(Stats.ChartType.HOURLY_BREAKDOWN, mChart, mProgressBar);
             } else if(mSectionNumber == 6) {
-                (((AnkiStatsActivity)getActivity()).getTaskHandler()).createWeeklyBreakdownChart(mChart, mProgressBar);
+                (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(Stats.ChartType.WEEKLY_BREAKDOWN, mChart, mProgressBar);
             } else if(mSectionNumber == 7) {
-                (((AnkiStatsActivity)getActivity()).getTaskHandler()).createAnswerButtonTask(mChart, mProgressBar);
+                (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(Stats.ChartType.ANSWER_BUTTONS, mChart, mProgressBar);
             } else if(mSectionNumber == 8) {
-                (((AnkiStatsActivity)getActivity()).getTaskHandler()).createCardsTypesTask(mChart, mProgressBar);
+                (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(Stats.ChartType.CARDS_TYPES, mChart, mProgressBar);
             }
         }
 
@@ -298,8 +297,8 @@ public class AnkiStatsActivity extends ActionBarActivity implements ActionBar.Ta
 
             int id = item.getItemId();
             if(id == R.id.action_month) {
-                if(ankiStatsTaskHandler.getStatType() != Stats.TYPE_MONTH){
-                    ankiStatsTaskHandler.setStatType(Stats.TYPE_MONTH);
+                if(ankiStatsTaskHandler.getStatType() != Stats.ChartPeriodType.MONTH){
+                    ankiStatsTaskHandler.setStatType(Stats.ChartPeriodType.MONTH);
                     monthItem.setChecked(true);
                     yearItem.setChecked(false);
                     allItem.setChecked(false);
@@ -309,8 +308,8 @@ public class AnkiStatsActivity extends ActionBarActivity implements ActionBar.Ta
                 }
 
             } else if(id == R.id.action_year) {
-                if(ankiStatsTaskHandler.getStatType() != Stats.TYPE_YEAR){
-                    ankiStatsTaskHandler.setStatType(Stats.TYPE_YEAR);
+                if(ankiStatsTaskHandler.getStatType() != Stats.ChartPeriodType.YEAR){
+                    ankiStatsTaskHandler.setStatType(Stats.ChartPeriodType.YEAR);
                     monthItem.setChecked(false);
                     yearItem.setChecked(true);
                     allItem.setChecked(false);
@@ -319,8 +318,8 @@ public class AnkiStatsActivity extends ActionBarActivity implements ActionBar.Ta
                     //mActivityPager.invalidate();
                 }
             } else if(id == R.id.action_life_time) {
-                if(ankiStatsTaskHandler.getStatType() != Stats.TYPE_LIFE){
-                    ankiStatsTaskHandler.setStatType(Stats.TYPE_LIFE);
+                if(ankiStatsTaskHandler.getStatType() != Stats.ChartPeriodType.LIFE){
+                    ankiStatsTaskHandler.setStatType(Stats.ChartPeriodType.LIFE);
                     monthItem.setChecked(false);
                     yearItem.setChecked(false);
                     allItem.setChecked(true);
@@ -340,9 +339,9 @@ public class AnkiStatsActivity extends ActionBarActivity implements ActionBar.Ta
             MenuItem allItem = (MenuItem)menu.findItem(R.id.action_life_time);
             AnkiStatsTaskHandler ankiStatsTaskHandler = (((AnkiStatsActivity)getActivity()).getTaskHandler());
 
-            monthItem.setChecked(ankiStatsTaskHandler.getStatType() == Stats.TYPE_MONTH);
-            yearItem.setChecked(ankiStatsTaskHandler.getStatType() == Stats.TYPE_YEAR);
-            allItem.setChecked(ankiStatsTaskHandler.getStatType() == Stats.TYPE_LIFE);
+            monthItem.setChecked(ankiStatsTaskHandler.getStatType() == Stats.ChartPeriodType.MONTH);
+            yearItem.setChecked(ankiStatsTaskHandler.getStatType() == Stats.ChartPeriodType.YEAR);
+            allItem.setChecked(ankiStatsTaskHandler.getStatType() == Stats.ChartPeriodType.LIFE);
 
         }
 

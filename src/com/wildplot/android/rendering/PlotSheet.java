@@ -281,20 +281,16 @@ public class PlotSheet implements Drawable {
         prepareRunnables();
 		Vector<Drawable> offFrameDrawables = new Vector<Drawable>();
 		Vector<Drawable> onFrameDrawables = new Vector<Drawable>();
-		BufferedImage bufferedFrameImage = new BufferedImage(field.width, field.height, BufferedImage.TYPE_INT_ARGB);
-		Graphics2D gFrame = bufferedFrameImage.createGraphics();
-		gFrame.setClip(field);
 
-        gFrame.setTypeface(typeface);
+
         g.setTypeface(typeface);
         g.setColor(Color.white);
         g.fillRect(0, 0, field.width, field.height);
         g.setColor(Color.BLACK);
-        gFrame.setColor(Color.BLACK);
+
 
         if(fontSizeSet) {
             g.setFontSize(fontSize);
-            gFrame.setFontSize(fontSize);
         }
 		int i = 0;
 		
@@ -307,60 +303,60 @@ public class PlotSheet implements Drawable {
 				}
 			}
 		}
-		
-		//DEBUG
-		System.err.println("Frame: "+ field.width + " : " + field.height);
-		//END DEBUG
-		
-		
+
+        for(Drawable offFrameDrawing : offFrameDrawables){
+            offFrameDrawing.paint(g);
+
+        }
+
 		//paint white frame to over paint everything that was drawn over the border 
-		Color oldColor = gFrame.getColor();
+		Color oldColor = g.getColor();
 		if(this.frameThickness>0){
-			gFrame.setColor(Color.white);
+            g.setColor(Color.white);
 			//upper frame
-			gFrame.fillRect(0, 0, field.width, this.frameThickness);
+            g.fillRect(0, 0, field.width, this.frameThickness);
 
 			//left frame
-			gFrame.fillRect(0, this.frameThickness, this.frameThickness, field.height);
+            g.fillRect(0, this.frameThickness, this.frameThickness, field.height);
 			
 			//right frame
-			gFrame.fillRect(field.width+1-this.frameThickness, this.frameThickness,this.frameThickness+2, field.height-this.frameThickness);
+            g.fillRect(field.width+1-this.frameThickness, this.frameThickness,this.frameThickness+2, field.height-this.frameThickness);
 			
 			//bottom frame
 			//gFrame.setColor(Color.RED); //DEBUG
-			gFrame.fillRect(this.frameThickness, field.height-this.frameThickness, field.width-this.frameThickness,this.frameThickness+1);
+            g.fillRect(this.frameThickness, field.height-this.frameThickness, field.width-this.frameThickness,this.frameThickness+1);
 			
 			//make small black border frame
 			if(isBordered){
-				gFrame.setColor(Color.black);
+                g.setColor(Color.black);
 				//upper border
-				gFrame.fillRect(this.frameThickness-borderThickness+1, this.frameThickness-borderThickness+1, field.width-2*this.frameThickness+2*borderThickness-2, borderThickness);
+                g.fillRect(this.frameThickness-borderThickness+1, this.frameThickness-borderThickness+1, field.width-2*this.frameThickness+2*borderThickness-2, borderThickness);
 				
 				//lower border
-				gFrame.fillRect(this.frameThickness-borderThickness+1, field.height-this.frameThickness, field.width-2*this.frameThickness+2*borderThickness-2, borderThickness);
+                g.fillRect(this.frameThickness-borderThickness+1, field.height-this.frameThickness, field.width-2*this.frameThickness+2*borderThickness-2, borderThickness);
 				
 				//left border
-				gFrame.fillRect(this.frameThickness-borderThickness+1, this.frameThickness-borderThickness+1, borderThickness, field.height-2*this.frameThickness+2*borderThickness-2);
+                g.fillRect(this.frameThickness-borderThickness+1, this.frameThickness-borderThickness+1, borderThickness, field.height-2*this.frameThickness+2*borderThickness-2);
 				
 				//right border
-				gFrame.fillRect(field.width-this.frameThickness, this.frameThickness-borderThickness+1, borderThickness, field.height-2*this.frameThickness+2*borderThickness-2);
+                g.fillRect(field.width-this.frameThickness, this.frameThickness-borderThickness+1, borderThickness, field.height-2*this.frameThickness+2*borderThickness-2);
 				
 			}
-			
-			gFrame.setColor(oldColor);
+
+            g.setColor(oldColor);
 			
 //			Font oldFont = gFrame.getFont();
 //			gFrame.setFont(oldFont.deriveFont(20.0f));
             if(hasTitle) {
-                float oldFontSize = gFrame.getFontSize();
+                float oldFontSize = g.getFontSize();
                 float newFontSize = oldFontSize * 2;
-                gFrame.setFontSize(newFontSize);
-                FontMetrics fm = gFrame.getFontMetrics();
+                g.setFontSize(newFontSize);
+                FontMetrics fm = g.getFontMetrics();
                 float height = fm.getHeight();
 
                 float width = fm.stringWidth(this.title);
-                gFrame.drawString(this.title, field.width / 2 - width / 2, this.frameThickness - 10 - height);
-                gFrame.setFontSize(oldFontSize);
+                g.drawString(this.title, field.width / 2 - width / 2, this.frameThickness - 10 - height);
+                g.setFontSize(oldFontSize);
             }
 
             Set<String> keySet = mLegendMap.keySet();
@@ -368,7 +364,7 @@ public class PlotSheet implements Drawable {
             float ySpacer = 10;
             float rectangleSize = 16;
             System.out.println("!!!!!!! " + mLegendMap.size());
-            FontMetrics fm = gFrame.getFontMetrics();
+            FontMetrics fm = g.getFontMetrics();
             float currentPixelWidth = xPointer;
 
             for(String legendName : keySet){
@@ -377,29 +373,23 @@ public class PlotSheet implements Drawable {
                 float height = fm.getHeight();
                 float delta = rectangleSize - height;
                 Color color = mLegendMap.get(legendName);
-                gFrame.setColor(color);
+                g.setColor(color);
 
                 if(xPointer + rectangleSize*2 + stringWidth >= field.width){
                     xPointer = 10;
                     ySpacer += rectangleSize + 10;
                 }
-                gFrame.fillRect(xPointer, ySpacer, rectangleSize, rectangleSize);
-                gFrame.setColor(Color.BLACK);
-                gFrame.drawString(" : "+legendName, xPointer + rectangleSize , ySpacer+rectangleSize - delta/2);
+                g.fillRect(xPointer, ySpacer, rectangleSize, rectangleSize);
+                g.setColor(Color.BLACK);
+                g.drawString(" : "+legendName, xPointer + rectangleSize , ySpacer+rectangleSize - delta/2);
                 xPointer += rectangleSize*2 + stringWidth;
 
 
             }
-            gFrame.setColor(Color.BLACK);
+            g.setColor(Color.BLACK);
 //			gFrame.setFont(oldFont);
 		}
-		gFrame.dispose();
 
-		for(Drawable offFrameDrawing : offFrameDrawables){
-            offFrameDrawing.paint(g);
-
-		}
-		((Graphics2D)g).drawImage(bufferedFrameImage, null, 0, 0);
 		for(Drawable onFrameDrawing : onFrameDrawables){
 			onFrameDrawing.paint(g);
 		}

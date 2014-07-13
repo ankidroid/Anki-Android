@@ -252,7 +252,7 @@ public class YGrid implements Drawable {
         this.color = color;
     }
 
-    public void setExplicitTics(double[] tickPositions){
+    public void setExplicitTicks(double[] tickPositions){
         mTickPositions = tickPositions;
     }
     public void unsetExplicitTics(){
