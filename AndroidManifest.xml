@@ -22,7 +22,7 @@
     package="com.ichi2.anki"
     android:installLocation="auto"
     android:versionCode="20300101"
-    android:versionName="2.3aplha1" >
+    android:versionName="2.3alpha1" >
 
     <!--
         The version number is of the form:
