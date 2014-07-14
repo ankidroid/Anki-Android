@@ -413,9 +413,7 @@ public class ReliefDrawer implements Drawable {
 		double lowerBorder = this.f_xLowest;
 		double higherBorder = this.f_xHighest;
 		try{
-			if(borders == null){
-				System.err.println("!!!!!!!!!!!!!!!!!!! Borders null");
-			}
+
 			for(int i = 0 ; i< borders.length; i++) {
 				higherBorder = borders[i];
 				if((f_xy >= lowerBorder && f_xy < higherBorder)) {
@@ -426,7 +424,6 @@ public class ReliefDrawer implements Drawable {
 			}
 		} catch(NullPointerException e){
 			e.printStackTrace();
-			System.err.println("!!!!!!!!!!!!: " + borders.length);
 			System.exit(-1);
 		}
 		

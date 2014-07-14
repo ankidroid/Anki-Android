@@ -363,7 +363,6 @@ public class PlotSheet implements Drawable {
             int xPointer = 10;
             float ySpacer = 10;
             float rectangleSize = 16;
-            System.out.println("!!!!!!! " + mLegendMap.size());
             FontMetrics fm = g.getFontMetrics();
             float currentPixelWidth = xPointer;
 

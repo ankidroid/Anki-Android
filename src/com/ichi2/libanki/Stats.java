@@ -186,6 +186,7 @@ public class Stats {
                     + "sum(CASE WHEN ivl >= 21 THEN 1 ELSE 0 END) " // mature cards
                     + "FROM cards WHERE did IN " + _limit() + " AND queue IN (2,3)" + lim
                     + " GROUP BY day ORDER BY day";
+            Log.d(AnkiDroidApp.TAG, "Forecast query: " + query);
             cur = mCol
                     .getDb()
                     .getDatabase()
@@ -242,6 +243,19 @@ public class Stats {
         mHasColoredCumulative = false;
         mCumulative = Stats.createCumulative(new double[][]{mSeriesList[0], mSeriesList[1]}, mZeroIndex);
         mMcount = mCumulative[1][mCumulative[1].length-1];
+        //some adjustments to not crash the chartbuilding with emtpy data
+        if(mMaxElements == 0){
+            mMaxElements = 10;
+        }
+        if(mMcount == 0){
+            mMcount = 10;
+        }
+        if(mFirstElement == mLastElement){
+            mFirstElement = 0;
+            mLastElement = 6;
+        }
+        if(mMaxCards == 0)
+            mMaxCards = 10;
         return dues.size() > 0;
     }
 
@@ -453,6 +467,22 @@ public class Stats {
                     mMcount = mCumulative[i][j];
             }
         }
+
+        //some adjustments to not crash the chartbuilding with emtpy data
+
+        if(mMaxCards == 0)
+            mMaxCards = 10;
+
+        if(mMaxElements == 0){
+            mMaxElements = 10;
+        }
+        if(mMcount == 0){
+            mMcount = 10;
+        }
+        if(mFirstElement == mLastElement){
+            mFirstElement = -10;
+            mLastElement = 0;
+        }
         return list.size() > 0;
     }
 
@@ -572,6 +602,20 @@ public class Stats {
         mMaxElements = list.size()-1;
         mAverage = Utils.fmtTimeSpan((int)Math.round(avg*86400));
         mLongest = Utils.fmtTimeSpan((int)Math.round(max_*86400));
+
+        //some adjustments to not crash the chartbuilding with emtpy data
+        if(mMaxElements == 0){
+            mMaxElements = 10;
+        }
+        if(mMcount == 0){
+            mMcount = 10;
+        }
+        if(mFirstElement == mLastElement){
+            mFirstElement = 0;
+            mLastElement = 6;
+        }
+        if(mMaxCards == 0)
+            mMaxCards = 10;
         return list.size() > 0;
     }
 
@@ -628,18 +672,10 @@ public class Stats {
         }
 
         //TODO adjust for breakdown, for now only copied from intervals
-        // small adjustment for a proper chartbuilding with achartengine
-//        if (list.size() == 0 || list.get(0)[0] > 0) {
-//            list.add(0, new double[] { 0, 0, 0 });
-//        }
-//        if (num == -1 && list.size() < 2) {
-//            num = 31;
-//        }
-//        if (type != Utils.TYPE_LIFE && list.get(list.size() - 1)[0] < num) {
-//            list.add(new double[] { num, 0, 0 });
-//        } else if (type == Utils.TYPE_LIFE && list.size() < 2) {
-//            list.add(new double[] { Math.max(12, list.get(list.size() - 1)[0] + 1), 0, 0 });
-//        }
+        //small adjustment for a proper chartbuilding with achartengine
+        if (list.size() == 0) {
+            list.add(0, new double[] { 0, 0, 0 });
+        }
 
 
         for(int i = 0; i < list.size(); i++) {
@@ -703,6 +739,20 @@ public class Stats {
         mFirstElement = mSeriesList[0][0];
         mLastElement = mSeriesList[0][mSeriesList[0].length-1];
         mMaxElements = (int)(maxHour -minHour);
+
+        //some adjustments to not crash the chartbuilding with emtpy data
+        if(mMaxElements == 0){
+            mMaxElements = 10;
+        }
+        if(mMcount == 0){
+            mMcount = 10;
+        }
+        if(mFirstElement == mLastElement){
+            mFirstElement = 0;
+            mLastElement = 23;
+        }
+        if(mMaxCards == 0)
+            mMaxCards = 10;
         return list.size() > 0;
     }
 
@@ -767,17 +817,10 @@ public class Stats {
 
         //TODO adjust for breakdown, for now only copied from intervals
         // small adjustment for a proper chartbuilding with achartengine
-//        if (list.size() == 0 || list.get(0)[0] > 0) {
-//            list.add(0, new double[] { 0, 0, 0 });
-//        }
-//        if (num == -1 && list.size() < 2) {
-//            num = 31;
-//        }
-//        if (type != Utils.TYPE_LIFE && list.get(list.size() - 1)[0] < num) {
-//            list.add(new double[] { num, 0, 0 });
-//        } else if (type == Utils.TYPE_LIFE && list.size() < 2) {
-//            list.add(new double[] { Math.max(12, list.get(list.size() - 1)[0] + 1), 0, 0 });
-//        }
+        if (list.size() == 0 ) {
+            list.add(0, new double[] { 0, 0, 0 });
+        }
+
 
 
         mSeriesList = new double[4][list.size()];
@@ -822,6 +865,21 @@ public class Stats {
         mFirstElement = mSeriesList[0][0];
         mLastElement = mSeriesList[0][mSeriesList[0].length-1];
         mMaxElements = (int)(maxHour -minHour);
+
+        //some adjustments to not crash the chartbuilding with emtpy data
+        if(mMaxElements == 0){
+            mMaxElements = 10;
+        }
+        if(mMcount == 0){
+            mMcount = 10;
+        }
+        if(mFirstElement == mLastElement){
+            mFirstElement = 0;
+            mLastElement = 6;
+        }
+        if(mMaxCards == 0)
+            mMaxCards = 10;
+
         return list.size() > 0;
     }
 
@@ -840,11 +898,11 @@ public class Stats {
         mType = type;
         String lim = _revlogLimit().replaceAll("[\\[\\]]", "");
 
-        String lims = "";   //TODO when non whole collection selection is possible test this!
+        Vector<String> lims = new Vector<String>();
         int days = 0;
 
         if (lim.length() > 0)
-            lims += lim + " and ";
+            lims.add(lim);
 
         if (type == ChartPeriodType.MONTH)
             days = 30;
@@ -854,9 +912,12 @@ public class Stats {
             days = -1;
 
         if (days > 0)
-            lims += "id > " + ((mCol.getSched().getDayCutoff()-(days*86400))*1000);
-        if (lims.length() > 0)
-            lim = "where " + lims;
+            lims.add("id > " + ((mCol.getSched().getDayCutoff()-(days*86400))*1000));
+        if (lims.size() > 0) {
+            lim = "where " + lims.get(0);
+            for(int i=1; i<lims.size(); i++)
+                lim+= " and " + lims.get(i);
+        }
         else
             lim = "";
 
@@ -869,6 +930,7 @@ public class Stats {
                 "        (case when type in (0,2) and ease = 4 then 3 else ease end), count() from revlog " + lim + " "+
                 "        group by thetype, ease " +
                 "        order by thetype, ease";
+        Log.d(AnkiDroidApp.TAG, "AnswerButtons query: " + query);
 
         try {
             cur = mCol.getDb()
@@ -887,17 +949,10 @@ public class Stats {
 
         //TODO adjust for AnswerButton, for now only copied from intervals
         // small adjustment for a proper chartbuilding with achartengine
-//        if (list.size() == 0 || list.get(0)[0] > 0) {
-//            list.add(0, new double[] { 0, 0, 0 });
-//        }
-//        if (num == -1 && list.size() < 2) {
-//            num = 31;
-//        }
-//        if (type != Utils.TYPE_LIFE && list.get(list.size() - 1)[0] < num) {
-//            list.add(new double[] { num, 0, 0 });
-//        } else if (type == Utils.TYPE_LIFE && list.size() < 2) {
-//            list.add(new double[] { Math.max(12, list.get(list.size() - 1)[0] + 1), 0, 0 });
-//        }
+        if (list.size() == 0) {
+            list.add(0, new double[] { 0, 1, 0 });
+        }
+
 
 
         double[] totals= new double[3];
@@ -954,6 +1009,9 @@ public class Stats {
         mLastElement = 14.5;
         mMcount = 100;
         mMaxElements = 15;      //bars are positioned from 1 to 14
+        if(mMaxCards == 0)
+            mMaxCards = 10;
+
         return list.size() > 0;
     }
 
@@ -1015,6 +1073,13 @@ public class Stats {
 
         mSeriesList = new double[1][4];
         mSeriesList[0]= pieData;
+
+        mFirstElement = 0.5;
+        mLastElement = 9.5;
+        mMcount = 100;
+        mMaxElements = 10;      //bars are positioned from 1 to 14
+        if(mMaxCards == 0)
+            mMaxCards = 10;
         return list.size() > 0;
     }
 
