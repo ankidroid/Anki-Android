@@ -2,7 +2,7 @@
  * Copyright (c) 2009 Andrew Dubya <andrewdubya@gmail.com>                              *
  * Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>                           *
  * Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
- * Copyright (c) 2009 Daniel SvÃ¤rd <daniel.svard@gmail.com>                             *
+ * Copyright (c) 2009 Daniel Svﾃδ､rd <daniel.svard@gmail.com>                             *
  * Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>                         *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
@@ -39,7 +39,6 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -954,15 +953,13 @@ public class DeckPicker extends NavigationDrawerActivity {
         registerExternalStorageListener();
         
         // create inherited navigation drawer layout here so that it can be used by parent class
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.deckpicker_drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.deckpicker_left_drawer);
-        initNavigationDrawer();
+        initNavigationDrawer(mainView);
         if (savedInstanceState == null) {
             selectNavigationItem(DRAWER_DECK_PICKER);
         }
         //open the drawer on startup if it's never been opened voluntarily by the user (as per Android guidelines)
         if (!intent.getBooleanExtra("viaNavigationDrawer", false) && !preferences.getBoolean("navDrawerHasBeenOpened", false)) {
-            mDrawerLayout.openDrawer(Gravity.LEFT);
+            getDrawerLayout().openDrawer(Gravity.LEFT);
         }
 
 
@@ -1404,7 +1401,7 @@ public class DeckPicker extends NavigationDrawerActivity {
                 break;
 
             case DIALOG_CONNECTION_ERROR:
-                // From the Android style guide: â€œMost alerts don't need titles.â€� And "Attention" is quite unhelpful.
+                // From the Android style guide: ﾃ｢竄ｬﾅ溺ost alerts don't need titles.ﾃ｢竄ｬ�ｽ And "Attention" is quite unhelpful.
                 // builder.setTitle(res.getString(R.string.connection_error_title));
                 builder.setIcon(R.drawable.ic_dialog_alert);
                 builder.setMessage(res.getString(R.string.connection_error_message));
@@ -2427,7 +2424,7 @@ public class DeckPicker extends NavigationDrawerActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // The action bar home/up action should open or close the drawer.
         // ActionBarDrawerToggle will take care of this.
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
+        if (getDrawerToggle().onOptionsItemSelected(item)) {
             return true;
         }
         

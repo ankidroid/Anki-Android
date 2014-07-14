@@ -23,19 +23,16 @@ import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.EditText;
-import android.widget.ListView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.receiver.SdCardReceiver;
-import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
@@ -56,11 +53,10 @@ public class StudyOptionsActivity extends NavigationDrawerActivity {
         // The empty frame layout is a workaround for fragments not showing when they are added
         // to android.R.id.content when an action bar is used in Android 2.1 (and potentially
         // higher) with the appcompat package.
-        setContentView(R.layout.studyoptions);
+        View mainView = getLayoutInflater().inflate(R.layout.studyoptions, null);
+        setContentView(mainView);
         // create inherited navigation drawer layout here so that it can be used by parent class
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.studyoptions_drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.studyoptions_left_drawer);
-        initNavigationDrawer();
+        initNavigationDrawer(mainView);
         if (savedInstanceState == null) {
             loadContent(getIntent().getBooleanExtra("onlyFnsMsg", false));
         }
@@ -98,9 +94,7 @@ public class StudyOptionsActivity extends NavigationDrawerActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        for (int i=0; i< mDrawerList.getCount(); i++) {
-            mDrawerList.setItemChecked(i, false);
-        }
+        deselectAllNavigationItems();
     }    
 
 
@@ -110,7 +104,7 @@ public class StudyOptionsActivity extends NavigationDrawerActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // The action bar home/up action should open or close the drawer.
         // ActionBarDrawerToggle will take care of this.
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
+        if (getDrawerToggle().onOptionsItemSelected(item)) {
             return true;
         }
         

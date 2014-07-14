@@ -62,7 +62,7 @@ public class Previewer extends AbstractFlashcardViewer {
     @Override
     protected void initLayout() {
         super.initLayout();
-        mDrawerToggle.setDrawerIndicatorEnabled(false);
+        getDrawerToggle().setDrawerIndicatorEnabled(false);
         findViewById(R.id.answer_options_layout).setVisibility(View.GONE);
         mTopBarLayout.setVisibility(View.GONE);
         mFlipCardLayout.setVisibility(View.GONE);

@@ -32,7 +32,6 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
@@ -249,10 +248,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         setContentView(mainView);
         Themes.setContentStyle(mainView, Themes.CALLER_CARDBROWSER);
         
-        // Create inherited navigation drawer layout here so that it can be used by parent class
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.browser_drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.browser_left_drawer);
-        initNavigationDrawer();
+        initNavigationDrawer(mainView);
         selectNavigationItem(DRAWER_BROWSER);
         
         // Try to load the collection
@@ -518,7 +514,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
     public boolean onOptionsItemSelected(MenuItem item) {
         // The action bar home/up action should open or close the drawer.
         // ActionBarDrawerToggle will take care of this.
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
+        if (getDrawerToggle().onOptionsItemSelected(item)) {
             return true;
         }    	
     	
