@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnDismissListener;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -15,6 +16,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
+import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.ViewGroup.LayoutParams;
@@ -25,7 +27,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
+import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.themes.StyledDialog;
 
@@ -54,8 +58,8 @@ public class TagsDialog extends DialogFragment implements OnDismissListener, OnC
     private TreeSet<String> mCurrentTags;
     private ArrayList<String> mAllTags;
 
+    private ImageView mAddTagIV;
     private String mTitle = null;
-    private DialogInterface.OnClickListener mPositiveButtonListener = null;
     private DialogInterface.OnClickListener mNegativeButtonListener = null;
     private DialogInterface.OnCancelListener mOnCancelListener = null;
     private DialogInterface.OnDismissListener mOnDismissListener = null;
@@ -131,9 +135,6 @@ public class TagsDialog extends DialogFragment implements OnDismissListener, OnC
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 mCurrentTags.addAll(mStyledDialog.getCheckedItems());
-                if (mPositiveButtonListener != null) {
-                    mPositiveButtonListener.onClick(dialog, which);
-                }
                 mTagsDialogListener.onPositive(new ArrayList<String>(mCurrentTags), mSelectedOption);
             }
         });
@@ -243,12 +244,27 @@ public class TagsDialog extends DialogFragment implements OnDismissListener, OnC
             }
         };
         addFilterTagET.setFilters(new InputFilter[] { filter });
+        addFilterTagET.setOnFocusChangeListener(new OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                /* Show a hint message about the add tag tick button when TextEdit gets focus if the tick button
+                 * is actually shown, and the user has not previously learned how to add a new tag */
+                SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(getActivity());
+                if(mAddTagIV.isShown() && hasFocus && !prefs.getBoolean("knowsHowToAddTag",false)){
+                    Toast.makeText(getActivity(), R.string.tag_editor_add_hint , Toast.LENGTH_SHORT).show();
+                }
+               }
+            });
 
-        ImageView addTagIV = new ImageView(getActivity());
-        addTagIV.setImageResource(R.drawable.ic_addtag);
-        addTagIV.setOnClickListener(new View.OnClickListener() {
+        mAddTagIV = new ImageView(getActivity());
+        mAddTagIV.setImageResource(R.drawable.ic_addtag);
+        mAddTagIV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Remember when the user has learned how to add a new tag
+                SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(getActivity());
+                prefs.edit().putBoolean("knowsHowToAddTag", true).commit();
+                
                 String tag = addFilterTagET.getText().toString();
                 if (!TextUtils.isEmpty(tag)) {
                     if (mCurrentTags.contains(tag)) {
@@ -269,19 +285,10 @@ public class TagsDialog extends DialogFragment implements OnDismissListener, OnC
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.RIGHT | Gravity.CENTER_VERTICAL);
         params.rightMargin = 10;
-        addTagIV.setLayoutParams(params);
+        mAddTagIV.setLayoutParams(params);
         frame.addView(addFilterTagET);
-        frame.addView(addTagIV);
+        frame.addView(mAddTagIV);
 
-        mPositiveButtonListener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String tag = addFilterTagET.getText().toString();
-                if (tag.length() != 0) {
-                    mCurrentTags.add(tag);
-                }
-            }
-        };
         mOnDismissListener = new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
