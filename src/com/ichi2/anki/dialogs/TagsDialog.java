@@ -261,10 +261,6 @@ public class TagsDialog extends DialogFragment implements OnDismissListener, OnC
         mAddTagIV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Remember when the user has learned how to add a new tag
-                SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(getActivity());
-                prefs.edit().putBoolean("knowsHowToAddTag", true).commit();
-                
                 String tag = addFilterTagET.getText().toString();
                 if (!TextUtils.isEmpty(tag)) {
                     if (mCurrentTags.contains(tag)) {
@@ -277,6 +273,12 @@ public class TagsDialog extends DialogFragment implements OnDismissListener, OnC
                     mCurrentTags.add(tag);
                     addFilterTagET.setText("");
                     actualizeCurrTagDialog();
+                    // Show a toast to let the user know the tag was added successfully
+                    Resources res = getResources();
+                    Toast.makeText(getActivity(), res.getString(R.string.tag_editor_add_feedback, tag, res.getString(R.string.select)), Toast.LENGTH_LONG).show();                    
+                    // Remember that the user has learned how to add a new tag
+                    SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(getActivity());
+                    prefs.edit().putBoolean("knowsHowToAddTag", true).commit();
                 }
             }
         });
