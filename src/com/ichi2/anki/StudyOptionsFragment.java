@@ -265,20 +265,11 @@ public class StudyOptionsFragment extends Fragment {
             return null;
         }
 
-        // ScrollView scroller = new ScrollView(getActivity());
-        // TextView text = new TextView(getActivity());
-        // int padding = (int)TypedValue.applyDimension(
-        // TypedValue.COMPLEX_UNIT_DIP,
-        // 4, getActivity().getResources().getDisplayMetrics());
-        // text.setPadding(padding, padding, padding, padding);
-        // scroller.addView();
         return createView(inflater, savedInstanceState);
     }
 
 
     protected View createView(LayoutInflater inflater, Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
         Log.i(AnkiDroidApp.TAG, "StudyOptions - createView()");
 
         restorePreferences();
@@ -289,11 +280,6 @@ public class StudyOptionsFragment extends Fragment {
             reloadCollection();
             return null;
         }
-
-        // Intent intent = getActivity().getIntent();
-        // if (intent != null && intent.hasExtra(DeckPicker.EXTRA_DECK_ID)) {
-        // mCol.getDecks().select(intent.getLongExtra(DeckPicker.EXTRA_DECK_ID, 1));
-        // }
 
         initAllContentViews(inflater);
 
