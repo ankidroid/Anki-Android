@@ -164,4 +164,6 @@
   <string name="sched_end">(koniec)</string>
   <string name="sched_unbury_button">Ak ich chcete vidieť teraz, kliknite na tlačidlo Vyhrabať.</string>
   <string name="sched_has_buried">Niektoré súvisiace alebo zahrabané karty boli posunuté na neskôr.</string>
+  <string name="tag_editor_add_hint">Use tick mark on the right to add new tag</string>
+  <string name="tag_editor_add_feedback">Press \"%2$s\" button to confirm adding \"%1$s\"</string>
 </resources>

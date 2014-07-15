@@ -163,4 +163,6 @@
   <string name="sched_end">(slut)</string>
   <string name="sched_unbury_button">För att se dem nu, klicka på knappen \'\'Visa dolda kort\'\'.</string>
   <string name="sched_has_buried">En del relaterade eller dolda kort undanhålls till en senare session.</string>
+  <string name="tag_editor_add_hint">Use tick mark on the right to add new tag</string>
+  <string name="tag_editor_add_feedback">Press \"%2$s\" button to confirm adding \"%1$s\"</string>
 </resources>

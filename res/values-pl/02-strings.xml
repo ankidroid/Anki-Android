@@ -163,4 +163,6 @@
   <string name="sched_end">(koniec)</string>
   <string name="sched_unbury_button">Aby zobaczyć je teraz, naciśnij przycisk Odkop.</string>
   <string name="sched_has_buried">Niektóre związane lub zakopane karty zostały odroczone do następnej sesji.</string>
+  <string name="tag_editor_add_hint">Use tick mark on the right to add new tag</string>
+  <string name="tag_editor_add_feedback">Press \"%2$s\" button to confirm adding \"%1$s\"</string>
 </resources>

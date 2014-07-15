@@ -163,4 +163,6 @@
   <string name="sched_end">(loppu)</string>
   <string name="sched_unbury_button">Nähdäksesi ne nyt, napauta Paljasta-nappia.</string>
   <string name="sched_has_buried">Liittyviä tai piilotettuja kortteja on viivästetty myöhempään istuntoon.</string>
+  <string name="tag_editor_add_hint">Use tick mark on the right to add new tag</string>
+  <string name="tag_editor_add_feedback">Press \"%2$s\" button to confirm adding \"%1$s\"</string>
 </resources>

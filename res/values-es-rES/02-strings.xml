@@ -163,4 +163,6 @@
   <string name="sched_end">(fin)</string>
   <string name="sched_unbury_button">Para verlos ahora, pulse el botón Desenterrar.</string>
   <string name="sched_has_buried">Algunas tarjetas relacionadas o enterradas fueron postergadas para una sesión posterior.</string>
+  <string name="tag_editor_add_hint">Use tick mark on the right to add new tag</string>
+  <string name="tag_editor_add_feedback">Press \"%2$s\" button to confirm adding \"%1$s\"</string>
 </resources>

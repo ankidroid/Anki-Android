@@ -163,4 +163,6 @@
   <string name="sched_end">(akhir)</string>
   <string name="sched_unbury_button">To see them now, touch the \"Unbury\" button.</string>
   <string name="sched_has_buried">Some related or buried cards were delayed until tomorrow.</string>
+  <string name="tag_editor_add_hint">Use tick mark on the right to add new tag</string>
+  <string name="tag_editor_add_feedback">Press \"%2$s\" button to confirm adding \"%1$s\"</string>
 </resources>
