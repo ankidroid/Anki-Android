@@ -50,7 +50,7 @@
   <string name="pref_cat_fonts">Schriftarten</string>
   <string name="pref_cat_fonts_summ">Standardschriftart und -größe ändern</string>
   <string name="pref_cat_gestures">Gesten</string>
-  <string name="pref_cat_gestures_summ">Use taps and swipes instead of buttons</string>
+  <string name="pref_cat_gestures_summ">Berühren und Wischen statt Schaltflächen verwenden</string>
   <string name="pref_cat_actions">Aktionen</string>
   <string name="pref_cat_advanced">Erweitert</string>
   <string name="pref_cat_advanced_summ">Optimierung und experimentelle Funktionen</string>
@@ -86,9 +86,9 @@
   <string name="col_path">Sammlungs-Pfad</string>
   <string name="col_path_summ">XXX</string>
   <string name="fullscreen_review">Vollbildmodus</string>
-  <string name="fullscreen_review_summ">Hide the system status bar</string>
+  <string name="fullscreen_review_summ">Ausblenden der Statusleiste</string>
   <string name="gestures">Gesten aktivieren</string>
-  <string name="gestures_summ">Assign gestures to actions such as answering and editing cards.</string>
+  <string name="gestures_summ">Weise Aktionen, wie zum Beispiel Beantworten oder Bearbeiten der Karten, Gesten zu.</string>
   <string name="gestures_swipe_up">Nach oben wischen</string>
   <string name="gestures_swipe_down">Nach unten wischen</string>
   <string name="gestures_swipe_left">Nach links wischen</string>
@@ -100,7 +100,7 @@
   <string name="gestures_tap_right">Rechts antippen</string>
   <string name="gestures_longclick">Langklick</string>
   <string name="more_scrolling_buttons">eReader</string>
-  <string name="more_scrolling_buttons_summ">Also use kanji/katakana, emoji/kao-moji buttons for scrolling</string>
+  <string name="more_scrolling_buttons_summ">Auch mit Kanji/Katakana-, Emoji/Kao-mojitasten scrollen</string>
   <string name="double_scrolling_gap">Doppeltes scrollen</string>
   <string name="double_scrolling_gap_summ">Double the scroll gap with eReader</string>
   <string name="swipe_sensitivity">Wischempfindlichkeit</string>
@@ -155,14 +155,14 @@
   <string name="use_current">Stapel für neue Karten</string>
   <string name="new_spread">Position neuer Karten</string>
   <string name="learn_cutoff">Grenzwert für vorzeitiges Lernen</string>
-  <string name="learn_cutoff_summ">XXX min</string>
+  <string name="learn_cutoff_summ">XXX Min</string>
   <string name="time_limit">Zeitlimitwert</string>
-  <string name="time_limit_summ">XXX min</string>
+  <string name="time_limit_summ">XXX Min</string>
   <string name="day_offset">Anfang des nächsten Tages</string>
   <string name="day_offset_summ">XXX Stunden nach Mitternacht</string>
   <string name="input_workaround">Eingabe Abhilfe</string>
   <string name="input_workaround_summ">Abhilfe für die Fokussierungsprobleme auf HTML Eingabefeldern. Verursacht Probleme auf verschiedenen Geräten</string>
-  <string name="pref_keep_screen_on">Lassen Sie den Bildschirm an</string>
+  <string name="pref_keep_screen_on">Bildschirm nicht ausschalten</string>
   <string name="pref_keep_screen_on_summ">Bildschirm-Timeout deaktivieren</string>
   <string name="pref_simple_interface">Einfache Oberfläche</string>
   <string name="pref_simple_interface_summ">Beschleunigt die Kartenanzeige, unterstützt aber nicht alle Html-Features</string>
@@ -188,9 +188,9 @@
   <string name="studyoptions_max_fail_card">Maximum falscher Karten</string>
   <string name="deck_conf_deck_name">Stapelname</string>
   <string name="deck_conf_deck_description">Stapelbeschreibung</string>
-  <string name="deck_conf_group">Options group</string>
+  <string name="deck_conf_group">Optionengruppe</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n%2$d deck uses this group</item>
+    <item quantity="one">%1$s\n%2$d Stapel verwendet diese Gruppe</item>
     <item quantity="other">%1$s\n%2$d Stapel verwenden diese Gruppe</item>
   </plurals>
   <string name="deck_conf_new_cards">Neue Karten</string>
@@ -236,7 +236,7 @@
   <string name="deck_conf_remove_message">Aktuelle Optionsgruppe löschen?</string>
   <string name="deck_conf_set_subdecks">Auf alle Unterstapel anwenden</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">%s subdeck will use this group</item>
+    <item quantity="one">%s Unterstapel wird diese Gruppe verwenden</item>
     <item quantity="other">%s Unterstapel werden diese Gruppe verwenden</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Auf alle Unterstapel anwenden</string>

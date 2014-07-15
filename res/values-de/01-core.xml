@@ -49,19 +49,19 @@
   <string name="studyoptions_eta">Geschätzte Zeit (Min.):</string>
   <string name="studyoptions_start">Jetzt lernen</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%1$d card due (%2$s)</item>
-    <item quantity="other">%1$d cards due (%2$s)</item>
+    <item quantity="one">%1$d Karte fällig (%2$s)</item>
+    <item quantity="other">%1$d Karten fällig (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one">%d min.</item>
+    <item quantity="one">%d Min.</item>
     <item quantity="other">%d Min.</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item quantity="one">%1$d of %2$d due</item>
+    <item quantity="one">%1$d von %2$d fällig</item>
     <item quantity="other">%1$d von %2$d fällig</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%d minute left</item>
+    <item quantity="one">noch %d Minute</item>
     <item quantity="other">noch %d Minuten</item>
   </plurals>
   <string name="type_answer_hint">Antwort eingeben</string>
@@ -150,15 +150,15 @@
   <string name="studyoptions_congrats_more_new">Es sind noch neue Karten verfügbar, aber das tägliche Lernlimit wurde erreicht. Sie können das Limit in den Optionen erhöhen, bedenken Sie aber, dass dies Ihr kurzfristiges Arbeitspensum erhöht.</string>
   <string name="studyoptions_congrats_custom">Klicken Sie unten auf \"Benutzerdefiniertes Lernen\", um außerhalb des regulären Lehrplans zu lernen.</string>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
+    <item quantity="one">Morgen ist %1$d Karte fällig und %2$s.\n Geschätzte Zeit: %3$s</item>
     <item quantity="other">Morgen sind %1$d Karten fällig und %2$s.\n Geschätzte Zeit: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">%1$d new card</item>
+    <item quantity="one">%1$d neue Karte</item>
     <item quantity="other">%1$d neue Karten</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">Estimated time: %1$d min.</item>
+    <item quantity="one">Geschätzte Zeit: %1$d Min.</item>
     <item quantity="other">Geschätzte Zeit: %1$d Min.</item>
   </plurals>
   <string name="sd_card_not_mounted">Die SD-Karte ist nicht gemounted.\n\nDie Sammlung kann auch im internen Speicher abgelegt werden. Dies ist allerdings nicht zu empfehlen, da Sie nicht so einfach auf die Datei zugreifen können. Sie können dies in den Einstellungen aktivieren (auf diesen Text klicken um Einstellungen zu öffnen).</string>

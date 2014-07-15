@@ -40,8 +40,8 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="one">%d card shown</item>
-    <item quantity="other">%d cards shown</item>
+    <item quantity="one">%d Karte angezeigt</item>
+    <item quantity="other">%d Karten angezeigt</item>
   </plurals>
   <string name="card_browser_all_decks">Alle Stapel</string>
   <string name="card_browser_load">Lade Karten.\nBitte warten...</string>

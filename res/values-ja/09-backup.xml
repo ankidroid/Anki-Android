@@ -39,7 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="backup_collection">バックアップを作成します\ nしばらくは、しばらくお待ちください...</string>
+  <string name="backup_collection">バックアップを作成します...</string>
   <string name="backup_deck_no_space_left">最後のバックアップ·アクションは、あなたのSDカード上のスペース不足が原因で実行できませんでした\n\n必要なスペースを確保してください。</string>
   <string name="sd_space_warning">SDカードに、 %d mb 以下の空きしかありません。\nデータの損失を避けるために空き領域を増やしてください。</string>
   <string name="backup_deck_success">バックアップが正常に作成されました。</string>

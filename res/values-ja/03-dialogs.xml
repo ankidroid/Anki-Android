@@ -128,8 +128,7 @@
   <string name="restore_backup_title">バックアップを復元しますか？</string>
   <string name="restore_backup">コレクションは、古い物と置き換えられます。また、未保存のものは失われます。</string>
   <string name="dialog_cancel">キャンセル</string>
-  <string name="dialog_ok">了解
-</string>
+  <string name="dialog_ok">完了</string>
   <string name="dialog_continue">続行</string>
   <string name="dialog_neutral_later">後で</string>
   <string name="dialog_positive_create">作成</string>

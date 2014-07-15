@@ -40,12 +40,12 @@
 -->
 <resources>
   <string name="welcome_message">With AnkiDroid, you can efficiently learn large amounts of vocabulary or any other material. AnkiDroid shows you the things to learn just before you forget them.\n\nTo get a first impression of how everything works, we recommend to start with a tutorial deck, which will give you some initial information, and try a bit out. Just touch \"Study\" after having opened it.\n\nCreate the tutorial deck now?</string>
-  <string name="check_db_title">Check database?</string>
-  <string name="check_db_warning">This may take a long time</string>
-  <string name="check_db_acknowledge">Database checked</string>
+  <string name="check_db_title">Kontrolli andmebaasi?</string>
+  <string name="check_db_warning">See võib võtta kaua aega</string>
+  <string name="check_db_acknowledge">Andmebaas kontrollitud</string>
   <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d kB.</string>
-  <string name="contextmenu_deckpicker_delete_deck">Delete deck</string>
-  <string name="delete_deck_title">Delete deck?</string>
+  <string name="contextmenu_deckpicker_delete_deck">Kustuta kaardipakk</string>
+  <string name="delete_deck_title">Kustuta kaardipakk?</string>
   <string name="delete_deck_message">Delete all cards in %s?</string>
   <string name="delete_cram_deck_message">Send all cards in %s back to their original decks?</string>
   <string name="delete_deck_confirm">Kustuta see</string>
@@ -65,7 +65,7 @@
   <string name="notify_title">AnkiDroid on uuendatud</string>
   <string name="notify_message">Lae alla uus versioon</string>
   <string name="notification_title">Kinnita AnkiDroid\'i uuendamine</string>
-  <string name="preview_title">Preview</string>
+  <string name="preview_title">Eelvaade</string>
   <string name="notification_message">Uus värskendus on AnkiDroid\'ile saadaval Android\'i Marketis.\n\nKas te sooviksite selle installida?</string>
   <string name="notification_stop">Ära teavita mind sellest värskendusest enam</string>
   <string name="reset_card_dialog_title">Reset card progress</string>
@@ -79,7 +79,7 @@
   <string name="intent_add_clear_all">Kustuta kõik</string>
   <string name="intent_aedict_empty">Category \'default\' is empty</string>
   <string name="intent_aedict_category">To add cards to AnkiDroid remove all Notepad categories or add one named \'default\'</string>
-  <string name="custom_study_new_total_new">New cards in deck: %s</string>
+  <string name="custom_study_new_total_new">Uusi kaarte kaardipakis: %s</string>
   <string name="custom_study_rev_total_rev">Reviews due in deck: %s</string>
   <string name="custom_study_new_extend">Increase today\'s new card limit by</string>
   <string name="custom_study_rev_extend">Increase today\'s review limit by</string>
@@ -100,7 +100,7 @@
   <string name="deck_upgrade_create_new_collection">Loo uus kollektsioon</string>
   <string name="deck_upgrade_create_new_collection_title">Loo uus kollektsioon</string>
   <string name="deck_upgrade_create_new_collection_button">New collection</string>
-  <string name="deck_upgrade_not_import_warning">Your old data will not be imported</string>
+  <string name="deck_upgrade_not_import_warning">Sinu vanu andmeid ei impordita</string>
   <string name="deck_upgrade_via_web"><![CDATA[<b>This upgrade method isn\'t recommended if you used media files, or have a big collection!</b><br><br>Your Anki1 decks will be zipped and uploaded to AnkiWeb, and the converted collection will then be downloaded.<br><br>A stable internet connection is required, and there is a 50MB file limit.<br><br>Users of Anki Desktop should use the PC based upgrade method.<br><br>Do you still want to proceed?]]></string>
   <string name="deck_upgrade_via_anki_desktop"><![CDATA[If you currently have an up-to-date version of your AnkiDroid collection in the Anki desktop software, you can upgrade from there and then download your upgraded collection by syncing with AnkiWeb.<br><br>Alternatively, you can copy your AnkiDroid collection to your PC using USB, then upgrade the collection and copy back to AnkiDroid.]]></string>
   <string name="deck_upgrade_auto_upgrade"><![CDATA[Please install and start Anki Desktop version 2.0.4 or greater to upgrade your collection, then sync your upgraded collection with AnkiWeb and press the "Download" button.<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_2:_Using_AnkiWeb_sync">More detailed information on upgrading using AnkiWeb</a>]]></string>

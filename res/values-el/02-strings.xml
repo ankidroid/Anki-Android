@@ -65,7 +65,7 @@
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Answer</item>
-    <item>Card</item>
+    <item>Κάρτα</item>
     <item>Deck</item>
     <item>Note</item>
     <item>Question</item>

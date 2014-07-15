@@ -40,21 +40,21 @@
 
 -->
 <resources>
-  <string name="youre_offline">You are offline</string>
+  <string name="youre_offline">Võrguühenduseta</string>
   <string name="currently_downloading">Hetkel allalaadimas</string>
   <string name="starting_download">Allalaadimise alustamine...</string>
   <string name="downloading">Allalaadimine...</string>
   <string name="paused">Peatatud</string>
   <string name="downloaded">Allalaetud</string>
-  <string name="vague_error">Error</string>
+  <string name="vague_error">Viga</string>
   <string name="cancelling">Tühistamine...</string>
   <string name="connection_error_return_message">A network error has occurred. Retry, or cancel and return to the previous screen.</string>
   <string name="retry">Proovi uuesti</string>
   <string name="cancel">Loobu</string>
   <string name="download_overwrite">Kirjuta üle</string>
   <string name="download_cancel">Tühista allalaadimine</string>
-  <string name="shared_decks">Shared decks</string>
-  <string name="loading_shared_decks">Loading available shared decks&#8230;</string>
+  <string name="shared_decks">Ühiskasutusega kaardipakid</string>
+  <string name="loading_shared_decks">Laeb saadaolevaid jagatud kaardipakke&#8230;</string>
   <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Terms and conditions</a></string>
   <string name="cancel_download">Tühista allalaadimine</string>
   <string name="resume_download">Jätka allalaadimist</string>

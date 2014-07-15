@@ -86,7 +86,7 @@
   <string name="downloaddeck_search">検索</string>
   <string name="preferences_title">設定</string>
   <string name="deckpreferences_title">XXX のオプション</string>
-  <string name="sync_conflict_message">ダウンロードしたデータベースが壊れています。もう一度試してください。</string>
+  <string name="sync_conflict_message">コレクションのファイルをAnkiwebへアップロードするか、Ankiwebからダウンロードする必要があります。いずれの場合も一方のファイルは上書きされます。</string>
   <string name="sync_conflict_local">アップロード</string>
   <string name="sync_conflict_remote">ダウンロード</string>
   <string name="sync_conflict_remote_confirm">サーバのコレクションをダウンロードしてもよろしいですか？コレクションは上書きされ、元に戻すことはできません。</string>

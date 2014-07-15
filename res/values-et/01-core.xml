@@ -44,8 +44,8 @@
   <string name="app_name_droid">Droid</string>
   <string name="studyoptions_deck_name">Kaardipaki nimi</string>
   <string name="studyoptions_due_today">Due today:</string>
-  <string name="studyoptions_new_total">Total new cards:</string>
-  <string name="studyoptions_total_cards">Total cards:</string>
+  <string name="studyoptions_new_total">Uusi kaarte kokku:</string>
+  <string name="studyoptions_total_cards">Kokku kaarte:</string>
   <string name="studyoptions_eta">Eeldatav aeg (min):</string>
   <string name="studyoptions_start">Study</string>
   <plurals name="deckpicker_title">
@@ -64,7 +64,7 @@
     <item quantity="one">%d minute left</item>
     <item quantity="other">%d minutit jäänud</item>
   </plurals>
-  <string name="type_answer_hint">Type answer</string>
+  <string name="type_answer_hint">Kirjuta vastus</string>
   <string name="show_answer">Kuva vastus</string>
   <string name="ease1_successive">Uuesti</string>
   <string name="ease2_successive">Keeruline</string>
@@ -74,7 +74,7 @@
   <string name="card_unsuspended">Card suspension undone</string>
   <string name="card_suspended">Card resuspended</string>
   <string name="menu_rotate">Pööra</string>
-  <string name="menu_import">Import file</string>
+  <string name="menu_import">Impordi fail</string>
   <string name="undo">Võta tagasi</string>
   <string name="undo_action_review">last review</string>
   <string name="undo_action_edit">edit note</string>
@@ -90,10 +90,10 @@
   <string name="contextmenu_deckpicker_reset_reset_message">Keele lähtestamine</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optimeeri andmebaas</string>
   <string name="contextmenu_deckpicker_rename_deck">Kaardipaki ümbernimetamine</string>
-  <string name="contextmenu_deckpicker_collapse_deck">Hide subdecks</string>
-  <string name="contextmenu_deckpicker_inflate_deck">Show subdecks</string>
+  <string name="contextmenu_deckpicker_collapse_deck">Peida alamkaardipakid</string>
+  <string name="contextmenu_deckpicker_inflate_deck">Näita alamkaardipakke</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Määra kohandatud sõnastik</string>
-  <string name="menu_add">Add</string>
+  <string name="menu_add">Lisa</string>
   <string name="menu_add_note">Add note</string>
   <string name="menu_download_deck">Kaardipaki allalaadimine</string>
   <string name="menu_download_shared_deck">Jagatud kaardipakk</string>
@@ -113,7 +113,7 @@
   <string name="menu_search">Lookup in %1$s</string>
   <string name="menu_mark_card">Märgi kaart</string>
   <string name="menu_unmark_card">Unmark card</string>
-  <string name="new_deck">Create deck</string>
+  <string name="new_deck">Loo kaardipakk</string>
   <string name="create">Loo</string>
   <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">Tagasiside</string>
@@ -145,7 +145,7 @@
   <string name="empty_cram_deck">Emptying cram deck&#8230;</string>
   <string name="custom_study_deck_name">Kohandatud uuringu Session</string>
   <string name="custom_study_deck_exists">Rename the existing custom study deck first</string>
-  <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
+  <string name="studyoptions_congrats_finished">Palju õnne! Sa oled praeguseks lõpetanud.</string>
   <string name="studyoptions_congrats_more_rev">Today\'s limit has been reached, but there are still cards to review.  You can increase the limit in the options.</string>
   <string name="studyoptions_congrats_more_new">Today\'s limit has been reached. There are more new cards available; you can increase the limit in the options, but this will increase your short-term review workload.</string>
   <string name="studyoptions_congrats_custom">To study outside of the normal schedule, touch the \"Custom study\" button below</string>
@@ -158,7 +158,7 @@
     <item quantity="other">%1$d uued kaardid</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">Estimated time: %1$d min.</item>
+    <item quantity="one">Eeldatav aeg: %1$d min.</item>
     <item quantity="other">Hinnanguline ajakulu: %1$d min.</item>
   </plurals>
   <string name="sd_card_not_mounted">SD card not mounted.\n\nYou can store your collection in the internal memory too, though it\'s not recommended as you cannot access the file that easily. You can activate this in the preferences (open them by touching this text).</string>

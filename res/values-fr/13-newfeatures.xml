@@ -48,17 +48,17 @@
     <item>Les menus et réglages ont été simplifiés et réorganisés</item>
     <item>Les longues recherches dans le navigateur peuvent maintenant être annulés</item>
     <item>L\'ajout et la suppression d\'étiquette a été largement amélioré</item>
-    <item>Fix \"type in the answer\" and cloze deletion features</item>
-    <item>Fix whiteboard feature</item>
-    <item>Restore backups from within the app</item>
-    <item>Make volume duck on any background music when sounds played</item>
-    <item>Make playing of sounds consistent with Desktop version</item>
-    <item>Remove animations feature due to being buggy</item>
-    <item>Improve speed of showing cards</item>
-    <item>Remove duplicate check dialog when adding new flashcards</item>
-    <item>Remove swap button when adding or editing flashcards</item>
-    <item>Remove kanji info feature (will become optional plugin in the future)</item>
-    <item>Make minimum Android version 2.1</item>
-    <item>Fix lots of bugs</item>
+    <item>Corrigé \"Entrez la réponse\" et cloze</item>
+    <item>Corrigé tableau blanc</item>
+    <item>Restaurer les sauvegardes depuis l\'application</item>
+    <item>Baisser le volume musical avant de diffuser un son</item>
+    <item>Diffuse les sons comme dans Anki Desktop</item>
+    <item>Supprimé les animations à cause d\'un bug</item>
+    <item>Montre les cartes plus vite</item>
+    <item>Supprimé dialogue de vérification des duplicatas</item>
+    <item>Supprimé le bouton d\'inversion question/réponse</item>
+    <item>Supprimé les infos kanji (ce sera un plugin dans le futur)</item>
+    <item>Version minimum: Android 2.1</item>
+    <item>Corrigé beaucoup de bugs</item>
   </string-array>
 </resources>
