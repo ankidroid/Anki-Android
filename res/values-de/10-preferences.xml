@@ -67,9 +67,9 @@
   <string name="whiteboard_black_summ">Spart Hauptspeicher, jedoch nicht im Nachtmodus</string>
   <string name="write_answers_disable">Eingeben der Antwort ausschalten</string>
   <string name="write_answers_disable_summ">Verhindert dass die Tastatur bei Karten mit \"Antwort eingeben\" Feldern erscheint</string>
-  <string name="text_selection_click">Long press workaround</string>
+  <string name="text_selection_click">Abhilfe für langes Drücken</string>
   <string name="text_selection_click_summ">Falls der Langklick zum Textauswählen nicht funktioniert</string>
-  <string name="dictionary">Lookup dictionary</string>
+  <string name="dictionary">Nachschlagen in Wörterbuch</string>
   <string name="dictionary_summ">XXX</string>
   <string name="reset_languages">Sprachen zurücksetzen</string>
   <string name="reset_languages_summ">Setzt die Sprachzuordnungen (für Vorlesen und Wörterbücher) für alle Stapel zurück. Für einzelne Stapel: siehe Stapelauswahl</string>
@@ -102,7 +102,7 @@
   <string name="more_scrolling_buttons">eReader</string>
   <string name="more_scrolling_buttons_summ">Auch mit Kanji/Katakana-, Emoji/Kao-mojitasten scrollen</string>
   <string name="double_scrolling_gap">Doppeltes scrollen</string>
-  <string name="double_scrolling_gap_summ">Double the scroll gap with eReader</string>
+  <string name="double_scrolling_gap_summ">Auf eReadern mit doppelter Schrittgröße scrollen</string>
   <string name="swipe_sensitivity">Wischempfindlichkeit</string>
   <string name="swipe_sensitivity_summ">XXX</string>
   <string name="tts">Sprachausgabe</string>

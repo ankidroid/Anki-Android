@@ -163,4 +163,6 @@
   <string name="sched_end">(kết thúc)</string>
   <string name="sched_unbury_button">Để nhìn thấy chúng bây giờ, hãy nhấp vào nút Hồi phục.</string>
   <string name="sched_has_buried">Một số Thẻ liên quan hoặc bị chôn vùi bị trì hoãn cho đến ngày mai.</string>
+  <string name="tag_editor_add_hint">Use tick mark on the right to add new tag</string>
+  <string name="tag_editor_add_feedback">Press \"%2$s\" button to confirm adding \"%1$s\"</string>
 </resources>

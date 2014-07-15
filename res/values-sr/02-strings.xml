@@ -163,4 +163,6 @@
   <string name="sched_end">(крај)</string>
   <string name="sched_unbury_button">Да бисте их видели, притисните дугме Одустани.</string>
   <string name="sched_has_buried">Неке повезане или скривене карте су одложене до следеће сесије.</string>
+  <string name="tag_editor_add_hint">Use tick mark on the right to add new tag</string>
+  <string name="tag_editor_add_feedback">Press \"%2$s\" button to confirm adding \"%1$s\"</string>
 </resources>

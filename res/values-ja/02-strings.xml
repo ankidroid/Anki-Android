@@ -163,4 +163,6 @@
   <string name="sched_end">（終了）</string>
   <string name="sched_unbury_button">それらを表示すため、「延期解除」をタップしてください。</string>
   <string name="sched_has_buried">関連カード、延期カードは後のセッションまで遅延されます。</string>
+  <string name="tag_editor_add_hint">Use tick mark on the right to add new tag</string>
+  <string name="tag_editor_add_feedback">Press \"%2$s\" button to confirm adding \"%1$s\"</string>
 </resources>

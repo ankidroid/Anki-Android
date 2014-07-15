@@ -163,4 +163,6 @@
   <string name="sched_end">(अंत)</string>
   <string name="sched_unbury_button">उन्हें अब देखने के लिए, Unbury बटन नल।</string>
   <string name="sched_has_buried">कुछ संबंधित या दफन कार्ड एक बाद में सत्र तक देरी हो रहे थे।</string>
+  <string name="tag_editor_add_hint">Use tick mark on the right to add new tag</string>
+  <string name="tag_editor_add_feedback">Press \"%2$s\" button to confirm adding \"%1$s\"</string>
 </resources>

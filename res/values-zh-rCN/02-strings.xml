@@ -163,4 +163,6 @@
   <string name="sched_end">(结束)</string>
   <string name="sched_unbury_button">要显示这些卡牌，请点击取消隐藏按钮。</string>
   <string name="sched_has_buried">有些相关或隐藏卡牌，推迟到下一次显示。</string>
+  <string name="tag_editor_add_hint">Use tick mark on the right to add new tag</string>
+  <string name="tag_editor_add_feedback">Press \"%2$s\" button to confirm adding \"%1$s\"</string>
 </resources>

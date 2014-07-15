@@ -163,4 +163,6 @@
   <string name="sched_end">(конец)</string>
   <string name="sched_unbury_button">Чтобы увидеть их снова, нажмите кнопку \"Отменить сдвиг\".</string>
   <string name="sched_has_buried">Некоторые связанные или скрытые карты были отложены до следующей сессии.</string>
+  <string name="tag_editor_add_hint">Use tick mark on the right to add new tag</string>
+  <string name="tag_editor_add_feedback">Press \"%2$s\" button to confirm adding \"%1$s\"</string>
 </resources>
