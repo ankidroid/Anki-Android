@@ -204,12 +204,14 @@ public class StudyOptionsFragment extends Fragment {
                     return;
                 case R.id.studyoptions_rebuild_cram:
                     rebuildCramDeck();
+                    showCongratsIfNeeded();
                     return;
                 case R.id.studyoptions_empty_cram:
                     mProgressDialog = StyledProgressDialog.show(getActivity(), "",
                             getResources().getString(R.string.empty_cram_deck), true);
                     DeckTask.launchDeckTask(DeckTask.TASK_TYPE_EMPTY_CRAM, mUpdateValuesFromDeckListener,
                             new DeckTask.TaskData(col, col.getDecks().selected(), mFragmented));
+                    showCongratsIfNeeded();
                     return;
                 default:
                     return;
@@ -306,13 +308,17 @@ public class StudyOptionsFragment extends Fragment {
         setHasOptionsMenu(true);
         
         // Show the congratulations message if there are no cards scheduled
+        showCongratsIfNeeded();
+
+        return mStudyOptionsView;
+    }
+    
+    private void showCongratsIfNeeded() {
         if (noDeckCounts()) {
             prepareCongratsView();
         } else {
             finishCongrats();
         }
-
-        return mStudyOptionsView;
     }
 
 
@@ -1184,11 +1190,7 @@ public class StudyOptionsFragment extends Fragment {
                     resetAndUpdateValuesFromDeck();
                 }
                 // Show the congratulations message if there are no cards scheduled
-                if (noDeckCounts()) {
-                    prepareCongratsView();
-                } else {
-                    finishCongrats();
-                }
+                showCongratsIfNeeded();
             } else if (requestCode == ADD_NOTE && resultCode != Activity.RESULT_CANCELED) {
                 resetAndUpdateValuesFromDeck();
             } else if (requestCode == REQUEST_REVIEW) {
