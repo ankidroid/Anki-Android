@@ -44,11 +44,11 @@
   <string name="widget_no_cards_due">Pas de cartes dûes</string>
   <string name="widget_loading">Chargement du widget...</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">%1$d card due in %2$s</item>
+    <item quantity="one">%1$d carte dûe dans %2$s</item>
     <item quantity="other">%1$d cartes dûes parmi %2$s</item>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="one">%1$d deck</item>
+    <item quantity="one">%1$d paquet</item>
     <item quantity="other">%1$d jeux de cartes</item>
   </plurals>
   <string name="widget_medium">AnkiDroid moyen</string>
@@ -57,7 +57,7 @@
   <string name="widget_big_restrictions_dialog">En raison de certaines restrictions des widgets Android, ce widget affiche uniquement du texte</string>
   <string name="open_in_reviewer">Ouvrir le jeu de cartes dans AnkiDroid</string>
   <plurals name="widget_big_eta">
-    <item quantity="one">Estimated time: %d min.</item>
+    <item quantity="one">Durée estimée : %d min.</item>
     <item quantity="other">Temps estimé: %d min.</item>
   </plurals>
   <string name="widget_big_tomorrow_due">Révisions prévues demain :</string>

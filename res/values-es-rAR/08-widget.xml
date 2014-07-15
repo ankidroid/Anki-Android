@@ -44,11 +44,11 @@
   <string name="widget_no_cards_due">No hay tarjetas programadas</string>
   <string name="widget_loading">Cargando widget...</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">%1$d card due in %2$s</item>
+    <item quantity="one">%1$d tarjeta pendiente en %2$s</item>
     <item quantity="other">%1$d tarjetas programadas en %2$s</item>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="one">%1$d deck</item>
+    <item quantity="one">%1$d mazo</item>
     <item quantity="other">%1$d mazos</item>
   </plurals>
   <string name="widget_medium">AnkiDroid medio</string>
@@ -57,7 +57,7 @@
   <string name="widget_big_restrictions_dialog">Debido a algunas restricciones en el marco de funcionamiento del widget de Android este widget sólo puede mostrar texto pero no imágenes/sonidos etc.</string>
   <string name="open_in_reviewer">Abrir mazo en AnkiDroid</string>
   <plurals name="widget_big_eta">
-    <item quantity="one">Estimated time: %d min.</item>
+    <item quantity="one">Tiempo estimado: %d min.</item>
     <item quantity="other">Tiempo estimado: %d min.</item>
   </plurals>
   <string name="widget_big_tomorrow_due">Programadas para mañana:</string>

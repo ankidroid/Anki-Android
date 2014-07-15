@@ -36,12 +36,12 @@
 -->
 <resources>
   <string-array name="navigation_titles">
-    <item>Decks</item>
+    <item>Kaardipakid</item>
     <item>Card Browser</item>
-    <item>Statistics</item>
-    <item>Settings</item>
-    <item>Help</item>
-    <item>Send Feedback</item>
+    <item>Statistika</item>
+    <item>Seaded</item>
+    <item>Abi</item>
+    <item>Saada tagasisidet</item>
   </string-array>
   <string-array name="newCardSchedulingLabels">
     <item>Spread out through reviews</item>
@@ -61,7 +61,7 @@
     <item>100</item>
     <item>150</item>
     <item>200</item>
-    <item>Never notify</item>
+    <item>Ära teavita kunagi</item>
   </string-array>
   <string-array name="cram_review_order_labels">
     <item>Näita vanimaid muudetud esimesena</item>
@@ -93,14 +93,14 @@
   </string-array>
   <string-array name="gestures_labels">
     <item>Tegevus puudub</item>
-    <item>Show answer</item>
+    <item>Näita vastust</item>
     <item>Answer button 1</item>
     <item>Answer button 2</item>
     <item>Answer button 3</item>
     <item>Answer button 4</item>
     <item>Answer recommended (green)</item>
     <item>Answer better than recommended</item>
-    <item>Undo</item>
+    <item>Võta tagasi</item>
     <item>Redigeeri kaarti</item>
     <item>Märgi kaart</item>
     <item>Lookup expression</item>
@@ -109,7 +109,7 @@
     <item>Kustuta kaart</item>
     <item>Puhasta valgetahvel</item>
     <item>Play media</item>
-    <item>Abort learning</item>
+    <item>Katkesta õppimine</item>
   </string-array>
   <string-array name="theme_labels">
     <item>Android tume</item>
@@ -122,16 +122,16 @@
     <item>Tag only</item>
   </string-array>
   <string-array name="new_order_labels">
-    <item>New cards in random order</item>
-    <item>New cards in order added</item>
+    <item>Uued kaardid juhuslikus järjekorras</item>
+    <item>Uued kaardid lisamise järjekorras</item>
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
     <item>Oldest seen first</item>
-    <item>Random</item>
+    <item>Juhuslik</item>
     <item>Increasing intervals</item>
     <item>Decreasing intervals</item>
     <item>Most lapsed</item>
-    <item>Order added</item>
+    <item>Lisamise järjekord</item>
     <item>Order due</item>
     <item>Latest added first</item>
   </string-array>

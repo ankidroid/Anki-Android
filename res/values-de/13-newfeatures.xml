@@ -41,7 +41,7 @@
 <resources>
   <string-array name="new_version_features">
     <item>Neu gestaltetes Layout</item>
-    <item>Add pictures and sounds to flashcards (experimental)</item>
+    <item>Bilder und Sounds zu Karten hinzufügen (experimentell)</item>
     <item>Zweite Spalte in Kartenübersicht anpassbar gemacht</item>
     <item>Bilder auf Karten zoombar gemacht</item>
     <item>Improve preview feature and access via action bar</item>
@@ -51,13 +51,13 @@
     <item>\"Antwort eingeben\"- und Lückentext-Funktionen verbessert</item>
     <item>Whiteboard-Funktion verbessert</item>
     <item>Wiederherstellen von Sicherungen aus der App</item>
-    <item>Make volume duck on any background music when sounds played</item>
-    <item>Make playing of sounds consistent with Desktop version</item>
+    <item>Hintergrundmusik wird ausgeblendet, wenn Sounds abgespielt werden</item>
+    <item>Abspielen von Sounds an Verhalten der Desktopversion angepasst</item>
     <item>Animationsfunktionen entfernt, da sie fehlerhaft waren</item>
-    <item>Improve speed of showing cards</item>
-    <item>Remove duplicate check dialog when adding new flashcards</item>
-    <item>Remove swap button when adding or editing flashcards</item>
-    <item>Remove kanji info feature (will become optional plugin in the future)</item>
+    <item>Geschwindigkeit beim Zeigen von Karten erhöht</item>
+    <item>Duplikat-Prüfungs-Dialog beim Hinzufüguen neuer Karteikarten entfernt</item>
+    <item>Tauschen-Schaltfläche beim Hinzufügen oder Bearbeiten von Karten entfernt</item>
+    <item>Kanjiinfofunktion entfernt (wird in Zukunft ein optionales Plug-In)</item>
     <item>Minimale Android-Version jetzt 2.1</item>
     <item>Jede Menge Fehler behoben</item>
   </string-array>

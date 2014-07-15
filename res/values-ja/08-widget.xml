@@ -44,11 +44,11 @@
   <string name="widget_no_cards_due">期限切れ無し</string>
   <string name="widget_loading">ウィジェットをロード中...</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">%1$d card due in %2$s</item>
+    <item quantity="one">%2$s中%1$d枚が期限です</item>
     <item quantity="other">%2$s中%1$d枚が期限です</item>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="one">%1$d deck</item>
+    <item quantity="one">%1$d 単語帳</item>
     <item quantity="other">%1$dつの単語帳</item>
   </plurals>
   <string name="widget_medium">AnkiDroid 中</string>
@@ -57,7 +57,7 @@
   <string name="widget_big_restrictions_dialog">Androidウィジェットの仕組みの制限により、このウィジェットが表示できるのはテキストのみで画像や音声などはできません。</string>
   <string name="open_in_reviewer">AnkiDroidで単語帳を開く</string>
   <plurals name="widget_big_eta">
-    <item quantity="one">Estimated time: %d min.</item>
+    <item quantity="one">推定時間: %1$d 分</item>
     <item quantity="other">予想時間: %d 分</item>
   </plurals>
   <string name="widget_big_tomorrow_due">明日が期限のカード:</string>

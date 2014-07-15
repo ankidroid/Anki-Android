@@ -45,7 +45,7 @@
   <string name="statistics_relearn">Relearn</string>
   <string name="statistics_learn">Learn</string>
   <string name="statistics_cram">Cram</string>
-  <string name="statistics_type_title">Statistics</string>
+  <string name="statistics_type_title">Statistika</string>
   <string name="stats_cards">Kaardid</string>
   <string name="stats_answers">Vastused</string>
   <string name="stats_minutes">Minutit</string>
@@ -54,15 +54,15 @@
   <string name="statistics_new_cards">Uued kaardid</string>
   <string name="statistics_failed_cards">Failed cards</string>
   <string name="statistics_fullscreen">Lülita täisekraanile</string>
-  <string name="calculating_statistics">Calculating statistics&#8230;</string>
-  <string name="deck_summary_cards">Number of cards:</string>
+  <string name="calculating_statistics">Arvutab statistikat&#8230;</string>
+  <string name="deck_summary_cards">Kaartide arv:</string>
   <string name="deck_summary_notes">Number of notes:</string>
   <string name="deck_summary_cards_mature">Mature cards:</string>
   <string name="deck_summary_cards_young">Young cards:</string>
   <string name="deck_summary_cards_unseen">Unseen cards:</string>
-  <string name="deck_summary_card_age">Card age</string>
+  <string name="deck_summary_card_age">Kaardi vanus</string>
   <string name="deck_summary_average_interval">Average interval: &lt;b&gt;%.1f&lt;/b&gt; days</string>
-  <string name="deck_summary_answers_correct">Correct answers</string>
+  <string name="deck_summary_answers_correct">Õiged vastused</string>
   <string name="deck_summary_answers_mature">Mature cards: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; %2$s (%3$d of %4$d)</string>
   <string name="deck_summary_answers_young">Young cards: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d of %4$d)</string>
   <string name="deck_summary_answers_firstseen">Seen the first time: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d of %4$d)</string>
@@ -79,7 +79,7 @@
   <string name="deck_summary_finished_in">New cards finished in: &lt;b&gt;%d&lt;/b&gt; days</string>
   <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; cards/day</string>
   <string name="deck_summary_deck_age">Deck age: &lt;b&gt;%d&lt;/b&gt; days</string>
-  <string name="deck_summary_all_decks">All decks</string>
+  <string name="deck_summary_all_decks">Kõik kaardipakid</string>
   <string-array name="next_review_in_s">
     <item>in 1 second</item>
     <item>in 1 minute</item>
@@ -127,6 +127,6 @@
   </string-array>
   <string-array name="stats_range">
     <item>collection</item>
-    <item>current deck</item>
+    <item>praegune kaardipakk</item>
   </string-array>
 </resources>

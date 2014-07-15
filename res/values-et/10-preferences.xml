@@ -40,12 +40,12 @@
 -->
 <resources>
   <string name="pref_cat_general">AnkiDroid</string>
-  <string name="pref_cat_general_summ">General settings</string>
+  <string name="pref_cat_general_summ">Üldised seaded</string>
   <string name="pref_cat_reviewing">Reviewing</string>
   <string name="pref_cat_reviewing_summ">Non-deck-specific reviewer settings</string>
   <string name="pref_cat_reviewer_behaviour">Behavior</string>
   <string name="pref_cat_flashcard">Display</string>
-  <string name="pref_cat_whiteboard">Whiteboard</string>
+  <string name="pref_cat_whiteboard">Tahvel</string>
   <string name="pref_cat_automatic_display">Automatic display answer</string>
   <string name="pref_cat_fonts">Fonts</string>
   <string name="pref_cat_fonts_summ">Change default font and size</string>

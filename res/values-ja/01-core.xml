@@ -49,19 +49,19 @@
   <string name="studyoptions_eta">推定時間 (分):</string>
   <string name="studyoptions_start">学習開始</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%1$d card due (%2$s)</item>
-    <item quantity="other">%1$d cards due (%2$s)</item>
+    <item quantity="one">%1$d 期限カード (%2$s)</item>
+    <item quantity="other">%1$d 期限カード(%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one">%d min.</item>
+    <item quantity="one">%d 分</item>
     <item quantity="other">%d 分</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item quantity="one">%1$d of %2$d due</item>
+    <item quantity="one">%1$d 期限　全体 %2$d 枚</item>
     <item quantity="other">残り%2$d枚中%1$d枚</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%d minute left</item>
+    <item quantity="one">%d 分の残り</item>
     <item quantity="other">%d 分残り</item>
   </plurals>
   <string name="type_answer_hint">回答の入力</string>
@@ -84,7 +84,7 @@
   <string name="undo_action_delete">ノートの削除</string>
   <string name="undo_action_mark">ノートにマークをつける</string>
   <string name="unbury">延期</string>
-  <string name="finish_operation">以前の操作を継続します（バックアップ作成など）\nしばらくお待ちください</string>
+  <string name="finish_operation">以前の操作を継続します（バックアップ作成など）\n</string>
   <string name="contextmenu_deckpicker_download_missing_media">不足しているメディアをダウンロードします</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">言語設定のリセット</string>
   <string name="contextmenu_deckpicker_reset_reset_message">言語設定のリセット</string>
@@ -138,11 +138,11 @@
   <string name="visit">訪問</string>
   <string name="later">後で</string>
   <string name="download">ダウンロード</string>
-  <string name="open_collection">コレクションを開いています\nしばらくお待ちください</string>
-  <string name="rebuild_cram_deck">フィルター単語帳を再構築しています\nしばらくお待ちください</string>
+  <string name="open_collection">コレクションを開いています\n</string>
+  <string name="rebuild_cram_deck">フィルター単語帳を再構築しています</string>
   <string name="rebuild_cram_label">再構築</string>
   <string name="empty_cram_label">全て戻す</string>
-  <string name="empty_cram_deck">カードを元の単語帳へ戻します。\nしばらくお待ちください</string>
+  <string name="empty_cram_deck">カードを元の単語帳へ戻します。</string>
   <string name="custom_study_deck_name">カスタム学習セッション</string>
   <string name="custom_study_deck_exists">最初に、既存のカスタム学習の単語帳の名称変更を行ってください。</string>
   <string name="studyoptions_congrats_finished">おめでとうございます ！今日の目標を達成しました。</string>
@@ -150,15 +150,15 @@
   <string name="studyoptions_congrats_more_new">新しいカードの追加ができますが、毎日の制限に達しています。オプション設定で制限を増やすできますが、毎日の復習の負担が増加しますのでご注意ください。</string>
   <string name="studyoptions_congrats_custom">通常のスケジュール以外で学習するには、下のカスタム学習ボタンをクリックします。</string>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
+    <item quantity="one">明日は %1$d 枚の復習カードがあります。%2$s.\n 必要な時間　%3$s</item>
     <item quantity="other">明日は %1$d 枚のカードがあります。そして復習カードは %2$s.\n 必要な時間は%3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">%1$d new card</item>
+    <item quantity="one">%1$d の新しいカード</item>
     <item quantity="other">%1$d枚の新カード</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">Estimated time: %1$d min.</item>
+    <item quantity="one">推定時間: %1$d 分</item>
     <item quantity="other">推定時間: %1$d 分</item>
   </plurals>
   <string name="sd_card_not_mounted">外部SDカードが見つかりません\n\n内部メモリーにコレクションを格納できますが、簡単にアクセスできませんので、お勧めできません。内部メモリーは環境設定でアクティブにすることができます。(このテキストをクリックして環境設定を開きます)</string>

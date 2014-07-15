@@ -17,8 +17,8 @@
  
 <resources> 
  <string-array name="tutorial_questions"> 
-    <item><![CDATA[Thanks for installing AnkiDroid!<br />This is a short introduction.<br />What you see now is the <span style=\'font-weight:600;\'>question</span> part of a flashcard.<br />Please click on the large button below...]]></item> 
-    <item><![CDATA[The next card is shown now.<br />The idea is straightforward: Just like in &quot;real world&quot; paper flashcards, you write a question on the front and the answer on the back side of your cards.<br />(click the button to show the back side)]]></item> 
+    <item><![CDATA[Täname, et installisite AnkiDroidi!<br />See on lühike kasutusjuhend<br />Praegu näed sa<span style=\'font-weight:600;\'>küsimuse</span> poolt kaardist.<br />Palun kliki alloleval suurel nupul...]]></item> 
+    <item><![CDATA[Nüüd näidatakse järgmist kaarti.<br />Idee on lihtne: just nagu &quot;pärismaailma&quot; kaartidel kirjutatakse küsimus kaardi esiküljele ja vastus tahaküljele.<br />(vajuta nuppu, et näha kaardi tagakülge)]]></item> 
     <item><![CDATA[&quot;What is the capital of Burkina Faso?&quot;<br />Think a bit about the answer and click then &quot;show answer&quot;]]></item> 
     <item><![CDATA[Above every answer buttons, you find information about the time, after which the card will be shown again when answered by this button.]]></item> 
     <item><![CDATA[Eesmärk on näidata teile kaarti uuesti, vahetult enne kui te unustate selle. Empiirilised uuringud on näidanud, et see tähendab, et niimoodi teavet saab õppida kõige tõhusamalt.]]></item> 
@@ -32,8 +32,8 @@
     <item><![CDATA[These have been the main points of AnkiDroid usage.<br /><br>For more information about the key concept of Anki, visit http://ankisrs.net/]]></item> 
  </string-array>
  <string-array name="tutorial_answers">
-    <item><![CDATA[... in order to see the <span style=\'font-weight:600;\'>answer</span> part of the flashcard (below the line).<br />Click on the button on the right]]></item> 
-    <item><![CDATA[Let\'s assume you want to learn the world\'s capitals. Let the question be...<br />(click on one of the buttons to show the next card)]]></item> 
+    <item><![CDATA[... et näha <span style=\'font-weight:600;\'>vastuse</span> poolt kaardist (joone all).<br />Vajuta paremal asuvat nuppu]]></item> 
+    <item><![CDATA[Oletame, et sa tahad õppida maailma pealinnu. Olgu küsimus...<br />(vajuta üht nuppu, et näha järgmist kaarti)]]></item> 
     <item><![CDATA[&quot;Ouagadougou&quot; is the right answer. <br />You didn\'t know it? Click &quot;again&quot; to see the card again in a couple of minutes. Otherwise, click on the other buttons, depending on the easiness of the answer.]]></item> 
     <item><![CDATA[This time period is calculated of the last time you answered the card, the current ease choice and ease choices of previous answers of that card.]]></item> 
     <item><![CDATA[Kui soovite rohkem teada saada vahedega kordamine, külasta: <br>http://en.wikipedia.org/wiki/Spaced_repetition_system]]></item> 

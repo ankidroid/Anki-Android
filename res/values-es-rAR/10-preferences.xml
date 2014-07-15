@@ -42,7 +42,7 @@
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">Ajustes Generales</string>
   <string name="pref_cat_reviewing">Revisión</string>
-  <string name="pref_cat_reviewing_summ">Non-deck-specific reviewer settings</string>
+  <string name="pref_cat_reviewing_summ">No hay configuración de revisor específica de mazo</string>
   <string name="pref_cat_reviewer_behaviour">Comportamiento</string>
   <string name="pref_cat_flashcard">Pantalla</string>
   <string name="pref_cat_whiteboard">Pizarra</string>
@@ -50,12 +50,12 @@
   <string name="pref_cat_fonts">Fuentes</string>
   <string name="pref_cat_fonts_summ">Cambiar tamaño y fuente predeterminada</string>
   <string name="pref_cat_gestures">Gestos</string>
-  <string name="pref_cat_gestures_summ">Use taps and swipes instead of buttons</string>
+  <string name="pref_cat_gestures_summ">Puede tocar y deslizar en la pantalla en lugar de usar botones</string>
   <string name="pref_cat_actions">Acciones</string>
   <string name="pref_cat_advanced">Avanzado</string>
   <string name="pref_cat_advanced_summ">Características experimentales y optimización</string>
   <string name="pref_cat_performance">Rendimiento</string>
-  <string name="pref_cat_workarounds">Workarounds</string>
+  <string name="pref_cat_workarounds">Soluciones</string>
   <string name="pref_cat_plugins">Complementos</string>
   <string name="about_title">Acerca de AnkiDroid</string>
   <string name="about_version">Versión: </string>
@@ -66,7 +66,7 @@
   <string name="whiteboard_black">Trazos negros</string>
   <string name="whiteboard_black_summ">Utiliza menos memoria, excepto en modo nocturno</string>
   <string name="write_answers_disable">Deshabilitar la escritura de respuestas</string>
-  <string name="write_answers_disable_summ">Prevents keyboard from appearing on cards containing \'type in the answer\' fields</string>
+  <string name="write_answers_disable_summ">Impide que el teclado aparezca en tarjetas que contienen campos \'escriba la respuesta\'</string>
   <string name="text_selection_click">Long press workaround</string>
   <string name="text_selection_click_summ">Activar esta opción si no puede comenzar la selección de texto mediante un click prolongado</string>
   <string name="dictionary">Diccionario de búsqueda</string>
@@ -88,7 +88,7 @@
   <string name="fullscreen_review">Pantalla completa</string>
   <string name="fullscreen_review_summ">Hide the system status bar</string>
   <string name="gestures">Habilitar gestos</string>
-  <string name="gestures_summ">Assign gestures to actions such as answering and editing cards.</string>
+  <string name="gestures_summ">Asignar gestos a acciones tales como contestaro editar tarjetas.</string>
   <string name="gestures_swipe_up">Deslizar hacia arriba</string>
   <string name="gestures_swipe_down">Deslizar hacia abajo</string>
   <string name="gestures_swipe_left">Deslizar hacia la izquierda</string>
@@ -100,10 +100,10 @@
   <string name="gestures_tap_right">Presione derecha</string>
   <string name="gestures_longclick">Click largo</string>
   <string name="more_scrolling_buttons">Lector electrónico</string>
-  <string name="more_scrolling_buttons_summ">Also use kanji/katakana, emoji/kao-moji buttons for scrolling</string>
+  <string name="more_scrolling_buttons_summ">También puede usar botones kanji/katakana, emoji/kao-moji como desplazamiento</string>
   <string name="double_scrolling_gap">Doble desplazamiento</string>
-  <string name="double_scrolling_gap_summ">Double the scroll gap with eReader</string>
-  <string name="swipe_sensitivity">Swipe sensitivity</string>
+  <string name="double_scrolling_gap_summ">Doblar la distancia de desplazamiento con e-Reader</string>
+  <string name="swipe_sensitivity">Sensibilidad de deslizado</string>
   <string name="swipe_sensitivity_summ">XXX</string>
   <string name="tts">Texto a voz</string>
   <string name="tts_summ">Lee pregunta y respuesta si no hay un archivo de sonido incluido</string>
@@ -135,7 +135,7 @@
   <string name="timeout_question_seconds">Tiempo para mostrar la siguiente pregunta</string>
   <string name="timeout_question_seconds_summ">XXX s</string>
   <string name="select_locale_title">Seleccionar idioma</string>
-  <string name="safe_display">Safe display mode</string>
+  <string name="safe_display">Modo de visualización segura</string>
   <string name="safe_display_summ">Deshabilitar todas las animaciones y usar un método más seguro para dibujar las tarjetas. Los dispositivos de tinta electrónica y dispositivos más viejos que utilizan fuentes personalizadas pueden requerir esta opción.</string>
   <string name="vertical_centering">Alinear al centro</string>
   <string name="vertical_centering_summ">Centra verticalmente el contenido de las tarjetas</string>
@@ -147,7 +147,7 @@
   <string name="pref_disable_backup_title">¿Deshabilitar las copias de seguridad?</string>
   <string name="pref_disable_backup_warning">Esto borrará todos los archivos de copia de seguridad</string>
   <string name="pref_intent_add_instant">Añadir inmediatamente</string>
-  <string name="pref_intent_add_instant_summ">Add new cards from dictionaries without opening AnkiDroid. You find them later under \'saved data\' in card adder.</string>
+  <string name="pref_intent_add_instant_summ">Añadir nuevas tarjetas de diccionarios sin abrir AnkiDroid. Los podrá encontrar más tarde en \'datos guardados\' en el gestor de tarjetas.</string>
   <string name="show_estimates">Mostar el botón tiempo</string>
   <string name="show_estimates_summ">Mostrar el tiempo para el próximo repaso encima de los botones de respuesta</string>
   <string name="show_progress">Mostar restantes</string>
@@ -160,7 +160,7 @@
   <string name="time_limit_summ">XXX min</string>
   <string name="day_offset">Comienzo del siguiente día</string>
   <string name="day_offset_summ">XXX horas tras la medianoche</string>
-  <string name="input_workaround">Input workaround</string>
+  <string name="input_workaround">Introducir solución</string>
   <string name="input_workaround_summ">Workaround for focusing problems on HTML input boxes. Causes problems on several devices.</string>
   <string name="pref_keep_screen_on">Mantener la pantalla encendida</string>
   <string name="pref_keep_screen_on_summ">Disable screen timeout</string>
@@ -236,7 +236,7 @@
   <string name="deck_conf_remove_message">¿Remover el grupo de opciones actuales?</string>
   <string name="deck_conf_set_subdecks">Aplicar a todos los submazos</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">%s subdeck will use this group</item>
+    <item quantity="one">%s submazos utilizarán este grupo</item>
     <item quantity="other">%s submazos utilizarán este grupo</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Aplicar a todos los submazos</string>

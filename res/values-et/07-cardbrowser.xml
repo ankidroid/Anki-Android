@@ -43,9 +43,9 @@
     <item quantity="one">%d card shown</item>
     <item quantity="other">%d cards shown</item>
   </plurals>
-  <string name="card_browser_all_decks">All decks</string>
-  <string name="card_browser_load">Loading cards&#8230;</string>
-  <string name="card_browser_cardloading_error">Error on loading cards. This is probably related to your device\'s memory restrictions. Try again with a smaller deck.</string>
+  <string name="card_browser_all_decks">Kõik kaardipakid</string>
+  <string name="card_browser_load">Laeb kaarte&#8230;</string>
+  <string name="card_browser_cardloading_error">Viga kaartide laadimisel. See on tõenäoliselt seotud sinu seadme mälupiirangutega. Proovi uuesti väiksema kaardipakiga.</string>
   <string name="card_browser_delete_card">Delete note</string>
   <string name="card_browser_suspend_card">Peata kaart</string>
   <string name="card_browser_unsuspend_card">Jätka kaarti</string>
@@ -57,7 +57,7 @@
   <string name="card_browser_field">Change card browser field</string>
   <string name="card_browser_field_title">Change card browser field</string>
   <string name="card_browser_show_suspended">Filter suspended</string>
-  <string name="card_browser_search_by_tag">Filter by tag</string>
+  <string name="card_browser_search_by_tag">Filtreeri sildi järgi</string>
   <string name="card_browser_tags_shown">Sildid: %1$s</string>
   <string name="card_browser_change_display_order">Kuvamise järjestuse muutmine</string>
   <string name="card_browser_change_display_order_title">Valige kuvamisjärjestus</string>
@@ -83,10 +83,10 @@
   <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
   <string name="card_details_card_model">Kaardi mudel</string>
   <string-array name="card_browser_order_labels">
-    <item>No sorting (faster)</item>
-    <item>By search field</item>
-    <item>By created time</item>
-    <item>By edited time</item>
+    <item>Ilma sorteerimiseta (kiirem)</item>
+    <item>Otsinguvälja järgi</item>
+    <item>Loomisaja järgi</item>
+    <item>Muutmisaja järgi</item>
     <item>By changed time</item>
     <item>By due time</item>
     <item>By interval</item>

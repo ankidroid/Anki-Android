@@ -85,7 +85,7 @@
   <string name="shareddeckpicker_title">Seleccione el mazo que desea descargar</string>
   <string name="downloaddeck_search">Buscar</string>
   <string name="preferences_title">Preferencias</string>
-  <string name="deckpreferences_title">Options for XXX</string>
+  <string name="deckpreferences_title">Opciones para XXX</string>
   <string name="sync_conflict_message">Sus mazos aquí y en AnkiWeb difieren de tal modo que no pueden ser combinados, por lo cual se precisa sobreescribir los mazos en uno de esos sitios con los del otro.\n\n¿Desde subir desde aquí sus mazos o descargar los mazos de AnkiWeb?</string>
   <string name="sync_conflict_local">Subir</string>
   <string name="sync_conflict_remote">Descargar</string>

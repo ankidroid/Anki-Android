@@ -124,8 +124,8 @@
   <string name="import_add_progress">• Descomprimir archivo %1$s\n• Importación de notas %2$d%%\n• Importación de tarjetas %3$d%%\n• Limpieza %4$s</string>
   <string name="sd_card_full_title">Tarjeta SD llena</string>
   <string name="sd_card_almost_full_title">Tarjeta SD casi llena</string>
-  <string name="restore_backup_title">Restore backup?</string>
-  <string name="restore_backup">Your collection will be replaced with an older copy. Any unsaved progress will be lost.</string>
+  <string name="restore_backup_title">¿Restaurar copia de seguridad?</string>
+  <string name="restore_backup">Su colección será reemplazada con una copia más antigua. Cualquier progreso no guardado se perderá.</string>
   <string name="dialog_cancel">Cancelar</string>
   <string name="dialog_ok">Aceptar</string>
   <string name="dialog_continue">Continuar</string>
@@ -134,17 +134,17 @@
   <string name="dialog_positive_delete">Eliminar</string>
   <string name="dialog_positive_disable">Deshabilitar</string>
   <string name="dialog_positive_overwrite">Sobreescribir</string>
-  <string name="dialog_positive_remove">Remove</string>
+  <string name="dialog_positive_remove">Quitar</string>
   <string name="dialog_positive_repair">Reparar</string>
   <string name="dialog_positive_replace">Reemplazar</string>
   <string name="dialog_positive_reset">Restablecer</string>
-  <string name="dialog_positive_restore">Restore</string>
+  <string name="dialog_positive_restore">Restaurar</string>
   <string name="dialog_positive_save">Guardar</string>
-  <string name="dialog_positive_set">Set</string>
+  <string name="dialog_positive_set">Conjunto</string>
   <string name="add_button_content">Añadir...</string>
   <string name="card_browser_button_content">Explorador de tarjetas</string>
   <string name="lookup_button_content">Buscar</string>
   <string name="statistics_button_content">Estadísticas</string>
-  <string name="dialog_collection_path_title">Folder does not exit</string>
-  <string name="dialog_collection_path_text">The folder you specified does not exist, would you like to create it?</string>
+  <string name="dialog_collection_path_title">La carpeta no existe</string>
+  <string name="dialog_collection_path_text">La carpeta que ha especificado no existe, ¿desea crearla?</string>
 </resources>

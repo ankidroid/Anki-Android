@@ -85,7 +85,7 @@
   <string name="saving_changes">Enregistrement des modifications&#8230;</string>
   <string name="reordering_cards">Tri des cartes...</string>
   <plurals name="timebox_reached">
-    <item quantity="one">%1$d card studied in %2$s</item>
+    <item quantity="one">%1$d carte étudiée en %2$s</item>
     <item quantity="other">%1$d cartes étudiées en %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
@@ -110,7 +110,7 @@
   <string name="rename_error">Le paquet %s n\'a pas pu être renommé</string>
   <string name="default_conf_delete_error">Le groupe d\'option par défaut ne peut pas être supprimé</string>
   <plurals name="factadder_cards_added">
-    <item quantity="one">%d card added</item>
+    <item quantity="one">%d carte ajoutée</item>
     <item quantity="other">%d cartes ajoutées</item>
   </plurals>
   <string name="help_title">Aide</string>

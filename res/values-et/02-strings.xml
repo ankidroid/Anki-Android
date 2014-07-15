@@ -48,13 +48,13 @@
   <string name="CardEditorTags">Sildid: %1$s</string>
   <string name="add_new_filter_tags">Add/filter tags</string>
   <string name="note_type">Note type</string>
-  <string name="card_type">Card type</string>
+  <string name="card_type">Kaardi tüüp</string>
   <string name="filter_tags">Filter tags</string>
   <string name="sdcard_missing_message">SD kaart pole saadaval kuna see on kasutuses kui USB mäluseade. Katkesta USB ühendus kaardipakkidele juurdepääsuks.</string>
   <string name="show_whiteboard">Kuva valgetahvel</string>
   <string name="hide_whiteboard">Peida valgetahvel</string>
   <string name="clear_whiteboard">Puhasta valgetahvel</string>
-  <string name="replay_audio">Replay audio</string>
+  <string name="replay_audio">Mängi heli uuesti</string>
   <string name="cram_edit_warning">Card editing not allowed while cramming</string>
   <string name="suspend_leeches">Suspend leeches</string>
   <string name="leech_suspend_notification">Card marked as leech and suspended</string>
@@ -64,11 +64,11 @@
     <item>Search field</item>
   </string-array>
   <string-array name="browser_column2_headings">
-    <item>Answer</item>
-    <item>Card</item>
-    <item>Deck</item>
+    <item>Vastus</item>
+    <item>Kaart</item>
+    <item>Kaardipakk</item>
     <item>Note</item>
-    <item>Question</item>
+    <item>Küsimus</item>
     <item>Tags</item>
     <item>Lapses</item>
     <item>Reviews</item>
@@ -76,9 +76,9 @@
   <string name="cardeditor_title_add_note">Add note</string>
   <string name="cardeditor_title_edit_card">Edit note</string>
   <string name="factadder_saving_error">Error saving note</string>
-  <string name="pref_lang_support">Language</string>
+  <string name="pref_lang_support">Keel</string>
   <string name="saving_facts">Saving note</string>
-  <string name="deck">Deck</string>
+  <string name="deck">Kaardipakk</string>
   <string name="add">Lisa</string>
   <string name="close">Sulge</string>
   <string name="select">Vali</string>
@@ -102,7 +102,7 @@
   <string name="card_editor_reset">Lähtesta</string>
   <string name="card_editor_copy_card">Kopeeri kaart</string>
   <string name="card_editor_reset_card">Lähtestamise progress</string>
-  <string name="card_editor_preview_card">Preview</string>
+  <string name="card_editor_preview_card">Eelvaade</string>
   <string name="error_insufficient_memory">Tegevus pole võimalik seoses sinu seadme ebapiisava mäluga</string>
   <string name="tutorial_load">Creating tutorial deck&#8230;</string>
   <string name="tutorial_loading_error">Juhendkaardipakki ei saa luua</string>
