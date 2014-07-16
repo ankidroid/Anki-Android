@@ -26,6 +26,7 @@ import android.view.*;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.NavigationDrawerActivity;
 import com.ichi2.anki.R;
 import com.ichi2.libanki.Stats;
 import com.wildplot.android.rendering.ChartView;
@@ -33,11 +34,12 @@ import com.wildplot.android.rendering.ChartView;
 import java.util.Locale;
 
 
-public class AnkiStatsActivity extends ActionBarActivity implements ActionBar.TabListener {
+public class AnkiStatsActivity extends NavigationDrawerActivity implements ActionBar.TabListener {
 
     SectionsPagerAdapter mSectionsPagerAdapter;
     ViewPager mViewPager;
     AnkiStatsTaskHandler mTaskHandler = null;
+    ActionBar mActionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +47,13 @@ public class AnkiStatsActivity extends ActionBarActivity implements ActionBar.Ta
         mTaskHandler = new AnkiStatsTaskHandler();
 
 
-        setContentView(R.layout.activity_anki_stats);
+        View mainLayout = getLayoutInflater().inflate(R.layout.activity_anki_stats, null);
+        initNavigationDrawer(mainLayout);
+        setContentView(mainLayout);
+
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
+        mActionBar = actionBar;
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         // Create the adapter that will return a fragment for each of the three
@@ -88,6 +94,29 @@ public class AnkiStatsActivity extends ActionBarActivity implements ActionBar.Ta
         mTaskHandler.setmStandardTextSize(size);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        selectNavigationItem(NavigationDrawerActivity.DRAWER_STATISTICS);
+    }
+    @Override
+    public void onDestroy() {
+        if(mActionBar != null) {
+            mActionBar.removeAllTabs();
+            mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+        }
+        super.onDestroy();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // The action bar home/up action should open or close the drawer.
+        // ActionBarDrawerToggle will take care of this.
+        if (getDrawerToggle().onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     public AnkiStatsTaskHandler getTaskHandler(){
         return mTaskHandler;
