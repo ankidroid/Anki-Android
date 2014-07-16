@@ -1,11 +1,23 @@
-/**
- * 
- */
+/****************************************************************************************
+ * Copyright (c) 2014 Michael Goldbach <michael@wildplot.com>                           *
+ *                                                                                      *
+ * This program is free software; you can redistribute it and/or modify it under        *
+ * the terms of the GNU General Public License as published by the Free Software        *
+ * Foundation; either version 3 of the License, or (at your option) any later           *
+ * version.                                                                             *
+ *                                                                                      *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
+ *                                                                                      *
+ * You should have received a copy of the GNU General Public License along with         *
+ * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
+ ****************************************************************************************/
 package com.wildplot.android.rendering;
 
-import com.wildplot.android.rendering.graphics.wrapper.Color;
-import com.wildplot.android.rendering.graphics.wrapper.Graphics;
-import com.wildplot.android.rendering.graphics.wrapper.Rectangle;
+import com.wildplot.android.rendering.graphics.wrapper.ColorWrap;
+import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap;
+import com.wildplot.android.rendering.graphics.wrapper.RectangleWrap;
 import com.wildplot.android.rendering.interfaces.Drawable;
 
 
@@ -34,9 +46,9 @@ public class YAxisBarGraph implements Drawable {
 	
 	private double size = 1;
 	
-	private Color color;
+	private ColorWrap color;
 	
-	private Color fillColor;
+	private ColorWrap fillColor;
 	
 	private boolean filling = false;
 
@@ -47,7 +59,7 @@ public class YAxisBarGraph implements Drawable {
 	 * @param size size of bars from left to right
 	 * @param color border color of bars, for filling color use setFilling() and setFillingColor()
 	 */
-	public YAxisBarGraph(PlotSheet plotSheet, double[][] points, double start, double size, Color color) {
+	public YAxisBarGraph(PlotSheet plotSheet, double[][] points, double start, double size, ColorWrap color) {
 		super();
 		this.plotSheet = plotSheet;
 		this.points = points;
@@ -71,7 +83,7 @@ public class YAxisBarGraph implements Drawable {
 	 * set filling color for bars
 	 * @param fillColor
 	 */
-	public void setFillColor(Color fillColor) {
+	public void setFillColor(ColorWrap fillColor) {
 		this.fillColor = fillColor;
 	}
 
@@ -79,11 +91,11 @@ public class YAxisBarGraph implements Drawable {
 	 * @see rendering.Drawable#paint(java.awt.Graphics)
 	 */
 	@Override
-	public void paint(Graphics g) {
+	public void paint(GraphicsWrap g) {
 		
 		
-		Color oldColor = g.getColor();
-		Rectangle field = g.getClipBounds();
+		ColorWrap oldColor = g.getColor();
+		RectangleWrap field = g.getClipBounds();
 		g.setColor(color);
 		
 		if(autoscale){
@@ -123,7 +135,7 @@ public class YAxisBarGraph implements Drawable {
 	 * @param g graphic object used to draw this bar
 	 * @param field bounds of plot
 	 */
-	private void drawBar(double x, double y, Graphics g, Rectangle field) {
+	private void drawBar(double x, double y, GraphicsWrap g, RectangleWrap field) {
 		drawBar(x,y,g,field,this.size);
 	}
 	
@@ -135,7 +147,7 @@ public class YAxisBarGraph implements Drawable {
 	 * @param field bounds of plot
 	 * @param size specific size (width) of this bar
 	 */
-	private void drawBar(double y, double heigth, Graphics g, Rectangle field, double size) {
+	private void drawBar(double y, double heigth, GraphicsWrap g, RectangleWrap field, double size) {
 
 
         float[] pointUpLeft 		= plotSheet.toGraphicPoint(0,y+size , field);
@@ -158,7 +170,7 @@ public class YAxisBarGraph implements Drawable {
 		
 		
 		if(filling){
-			Color oldColor = g.getColor();
+			ColorWrap oldColor = g.getColor();
 			if(this.fillColor != null)
 				g.setColor(fillColor);
 			

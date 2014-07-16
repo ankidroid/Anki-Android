@@ -1,34 +1,43 @@
-/**
- * 
- */
+/****************************************************************************************
+ * Copyright (c) 2014 Michael Goldbach <michael@wildplot.com>                           *
+ *                                                                                      *
+ * This program is free software; you can redistribute it and/or modify it under        *
+ * the terms of the GNU General Public License as published by the Free Software        *
+ * Foundation; either version 3 of the License, or (at your option) any later           *
+ * version.                                                                             *
+ *                                                                                      *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
+ *                                                                                      *
+ * You should have received a copy of the GNU General Public License along with         *
+ * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
+ ****************************************************************************************/
 package com.wildplot.android.rendering;
 
 
-import com.wildplot.android.rendering.graphics.wrapper.Color;
+import com.wildplot.android.rendering.graphics.wrapper.ColorWrap;
 
 import java.util.Vector;
 
-/**
- * @author Michael Goldbach
- *
- */
+
 public class RelativeColorGradient {
-	public static Color[] makeGradient(Vector<Color> colorVector, int numberOfColorsInGradient) {
+	public static ColorWrap[] makeGradient(Vector<ColorWrap> colorVector, int numberOfColorsInGradient) {
 		if(colorVector == null) {
-			colorVector = new Vector<Color>();
+			colorVector = new Vector<ColorWrap>();
 		}
 		
 		if(colorVector.size() < 2) {
-			colorVector.add(new Color(255,255,255));
+			colorVector.add(new ColorWrap(255,255,255));
 			if(colorVector.size() < 2) {
-				colorVector.add(0, new Color(0,0,0));
+				colorVector.add(0, new ColorWrap(0,0,0));
 			}
 		}
 		numberOfColorsInGradient -= colorVector.size();
 		
 		while(numberOfColorsInGradient >= 0) {
-			Color firstColor = colorVector.get(0);
-			Color secondColor = colorVector.get(1);
+			ColorWrap firstColor = colorVector.get(0);
+			ColorWrap secondColor = colorVector.get(1);
 			int index = 1;
 			double highestDelta = 0;
 			
@@ -53,12 +62,12 @@ public class RelativeColorGradient {
 			int newGreen 	= firstColor.getGreen() - (firstColor.getGreen() - secondColor.getGreen())/2;
 			int newBlue 	= firstColor.getBlue() - (firstColor.getBlue() - secondColor.getBlue())/2;
 			
-			colorVector.add(index, new Color(newRed, newGreen, newBlue));
+			colorVector.add(index, new ColorWrap(newRed, newGreen, newBlue));
 			numberOfColorsInGradient--;
 		}
 		
 		
-		return colorVector.toArray(new Color[colorVector.size()]);
+		return colorVector.toArray(new ColorWrap[colorVector.size()]);
 	}
 	private static double delta(int first, int second) {
 		return Math.pow(Math.abs(first -second), 3);

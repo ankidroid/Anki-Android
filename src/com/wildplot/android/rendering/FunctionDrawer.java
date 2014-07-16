@@ -1,6 +1,18 @@
-/**
- * 
- */
+/****************************************************************************************
+ * Copyright (c) 2014 Michael Goldbach <michael@wildplot.com>                           *
+ *                                                                                      *
+ * This program is free software; you can redistribute it and/or modify it under        *
+ * the terms of the GNU General Public License as published by the Free Software        *
+ * Foundation; either version 3 of the License, or (at your option) any later           *
+ * version.                                                                             *
+ *                                                                                      *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
+ *                                                                                      *
+ * You should have received a copy of the GNU General Public License along with         *
+ * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
+ ****************************************************************************************/
 package com.wildplot.android.rendering;
 
 import com.wildplot.android.rendering.graphics.wrapper.*;
@@ -54,7 +66,7 @@ public class FunctionDrawer implements Drawable {
 	/**
 	 * the color of the function graph
 	 */
-	private Color color = new Color(255,0,0);
+	private ColorWrap color = new ColorWrap(255,0,0);
 
     private boolean isOnReset = false;
 
@@ -64,7 +76,7 @@ public class FunctionDrawer implements Drawable {
 	 * @param plotSheet the sheet the function will be drawn onto
 	 * @param color color of the function
 	 */
-	public FunctionDrawer(Function2D function, PlotSheet plotSheet, Color color) {
+	public FunctionDrawer(Function2D function, PlotSheet plotSheet, ColorWrap color) {
 		this.function = function;
 		this.plotSheet = plotSheet;
 		this.color = color;
@@ -76,7 +88,7 @@ public class FunctionDrawer implements Drawable {
 	 * @param plotSheet the sheet the function will be drawn onto
 	 * @param color color of the function
 	 */
-	public FunctionDrawer(Function2D function, PlotSheet plotSheet, Color color, double leftLimit, double rightLimit) {
+	public FunctionDrawer(Function2D function, PlotSheet plotSheet, ColorWrap color, double leftLimit, double rightLimit) {
 		this.function = function;
 		this.plotSheet = plotSheet;
 		this.color = color;
@@ -89,19 +101,19 @@ public class FunctionDrawer implements Drawable {
 	 * @see rendering.Drawable#paint(java.awt.Graphics)
 	 */
 	@Override
-	public void paint(Graphics g) {
+	public void paint(GraphicsWrap g) {
 
         isOnReset = false;
 		if(function instanceof StepFunction2D) {
 			this.isStepFunction = true;
 		}
 		
-		 Graphics2D g2D = (Graphics2D) g;     
-		 Stroke oldStroke = g2D.getStroke();
-		    g2D.setStroke(new BasicStroke(this.size));  // set stroke width of 10
+
+		 StrokeWrap oldStroke = g.getStroke();
+		    g.setStroke(new BasicStrokeWrap(this.size));  // set stroke width of 10
 		 
-		Color oldColor = g.getColor();
-		Rectangle field = g.getClipBounds();
+		ColorWrap oldColor = g.getColor();
+		RectangleWrap field = g.getClipBounds();
 		g.setColor(color);
 		
 		
@@ -173,13 +185,13 @@ public class FunctionDrawer implements Drawable {
 			}
 			
 		}
-		g2D.setStroke(oldStroke);
+		g.setStroke(oldStroke);
 		g.setColor(oldColor);
 
 	}
 	
 	public double getMaxValue(int pixelResolution){
-		Rectangle field = new Rectangle(pixelResolution, pixelResolution);
+		RectangleWrap field = new RectangleWrap(pixelResolution, pixelResolution);
 		double[] drawingPoint = plotSheet.toCoordinatePoint(field.x,0,field);
 		double max = Double.NEGATIVE_INFINITY;
 		

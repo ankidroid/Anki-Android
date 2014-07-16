@@ -1,6 +1,18 @@
-/**
- * 
- */
+/****************************************************************************************
+ * Copyright (c) 2014 Michael Goldbach <michael@wildplot.com>                           *
+ *                                                                                      *
+ * This program is free software; you can redistribute it and/or modify it under        *
+ * the terms of the GNU General Public License as published by the Free Software        *
+ * Foundation; either version 3 of the License, or (at your option) any later           *
+ * version.                                                                             *
+ *                                                                                      *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
+ *                                                                                      *
+ * You should have received a copy of the GNU General Public License along with         *
+ * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
+ ****************************************************************************************/
 package com.wildplot.android.rendering.graphics.wrapper;
 
 import android.graphics.*;
@@ -12,13 +24,13 @@ import android.graphics.PorterDuff.Mode;
  * @author Michael Goldbach
  *
  */
-public class Graphics {
+public class GraphicsWrap {
     private Canvas canvas;
     private Paint paint;
     
     
     
-    public Graphics(Canvas canvas, Paint paint) {
+    public GraphicsWrap(Canvas canvas, Paint paint) {
         super();
         this.canvas = canvas;
         this.paint = paint;
@@ -39,33 +51,37 @@ public class Graphics {
     }
     
     public void fillRect(float x, float y, float width, float height){
+//        boolean isAntiAlias = paint.isAntiAlias();
+//
+//        paint.setAntiAlias(true);
         Style oldStyle = paint.getStyle();
         paint.setStyle(Style.FILL);
         canvas.drawRect(x, y, x+width, y+height, paint);
         paint.setStyle(oldStyle);
+//        paint.setAntiAlias(isAntiAlias);
     }
 
-    public Stroke getStroke(){
-        return new Stroke(paint.getStrokeWidth());
+    public StrokeWrap getStroke(){
+        return new StrokeWrap(paint.getStrokeWidth());
     }
     
-    public void setStroke(Stroke stroke){
+    public void setStroke(StrokeWrap stroke){
         paint.setStrokeWidth(stroke.getStrokeSize());
     }
     
-    public Rectangle getClipBounds(){
-        return new Rectangle(canvas.getClipBounds());
+    public RectangleWrap getClipBounds(){
+        return new RectangleWrap(canvas.getClipBounds());
     }
     
-    public void setClip(Rectangle rectangle){
+    public void setClip(RectangleWrap rectangle){
         //seems to be not necessary
     }
     
-    public Color getColor(){
-        return new Color(paint.getColor());
+    public ColorWrap getColor(){
+        return new ColorWrap(paint.getColor());
     }
     
-    public void setColor(Color color){
+    public void setColor(ColorWrap color){
         paint.setColor(color.getColorValue());
     }
     
@@ -84,7 +100,7 @@ public class Graphics {
         paint.setStyle(oldStyle);
     }
     
-    public void drawImage(BufferedImage image, String tmp, float x, float y){
+    public void drawImage(BufferedImageWrap image, String tmp, float x, float y){
         //System.err.println("drawImage: " + image.getBitmap().getWidth() + " : "+ image.getBitmap().getHeight());
         Xfermode mode  = paint.getXfermode();
         paint.setXfermode(new PorterDuffXfermode(Mode.SRC_OVER));
@@ -116,12 +132,12 @@ public class Graphics {
         return null;
     }
 
-    public FontMetrics getFontMetrics(Object font) {
-        return new FontMetrics(this);
+    public FontMetricsWrap getFontMetrics(Object font) {
+        return new FontMetricsWrap(this);
     }
     
-    public FontMetrics getFontMetrics() {
-        return new FontMetrics(this);
+    public FontMetricsWrap getFontMetrics() {
+        return new FontMetricsWrap(this);
     }
     
     public void dispose(){
@@ -154,7 +170,7 @@ public class Graphics {
         return paint.getTypeface();
     }
 
-    public void setShadow(float radius, float dx, float dy, Color color){
+    public void setShadow(float radius, float dx, float dy, ColorWrap color){
         int colorVal = color.getColorValue();
         paint.setShadowLayer(radius, dx, dy, colorVal);
     }

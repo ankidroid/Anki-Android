@@ -13,68 +13,41 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.wildplot.android.rendering;
+package com.wildplot.android.rendering.graphics.wrapper;
 
-import com.wildplot.android.rendering.graphics.wrapper.ColorWrap;
-import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap;
-import com.wildplot.android.rendering.interfaces.Drawable;
-import com.wildplot.android.rendering.interfaces.Legendable;
+import android.graphics.Rect;
 
-
-public class LegendDrawable implements Drawable, Legendable {
-
-    private String mName = "";
-    private boolean mNameIsSet = false;
-
-
-
-    private ColorWrap color = ColorWrap.BLACK;
-
-    @Override
-    public void paint(GraphicsWrap g) {
-
+public class RectangleWrap {
+    Rect rect;
+    public int x;
+    public int y;
+    public int width;
+    public int height;
+    
+    public RectangleWrap(int width, int heigth){
+        this(new Rect(0,0,width,heigth));
     }
-
-    @Override
-    public boolean isOnFrame() {
-        return false;
+    
+    public RectangleWrap(Rect rect) {
+        super();
+        this.rect = rect;
+        
+        this.x=rect.left;
+        this.y=rect.top;
+        this.height = rect.height();
+        this.width = rect.width();
     }
-
-    @Override
-    public void abortAndReset() {
-
+    
+    public int width(){
+        return width;
     }
-
-    @Override
-    public boolean isClusterable() {
-        return false;
+    
+    public int height(){
+        return height;
     }
-
-    @Override
-    public boolean isCritical() {
-        return false;
+    
+    public Rect getRect(){
+        return new Rect(x, y, x+width, y+height);
     }
-
-    @Override
-    public ColorWrap getColor() {
-        return color;
-    }
-
-    @Override
-    public String getName() {
-        return mName;
-    }
-
-    @Override
-    public boolean nameIsSet() {
-        return mNameIsSet;
-    }
-
-    public void setName(String name){
-        mName = name;
-        mNameIsSet = true;
-    }
-    public void setColor(ColorWrap color){
-        this.color = color;
-    }
+    
 }

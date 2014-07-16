@@ -1,12 +1,24 @@
-/**
- * 
- */
+/****************************************************************************************
+ * Copyright (c) 2014 Michael Goldbach <michael@wildplot.com>                           *
+ *                                                                                      *
+ * This program is free software; you can redistribute it and/or modify it under        *
+ * the terms of the GNU General Public License as published by the Free Software        *
+ * Foundation; either version 3 of the License, or (at your option) any later           *
+ * version.                                                                             *
+ *                                                                                      *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
+ *                                                                                      *
+ * You should have received a copy of the GNU General Public License along with         *
+ * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
+ ****************************************************************************************/
 package com.wildplot.android.rendering;
 
 
-import com.wildplot.android.rendering.graphics.wrapper.FontMetrics;
-import com.wildplot.android.rendering.graphics.wrapper.Graphics;
-import com.wildplot.android.rendering.graphics.wrapper.Rectangle;
+import com.wildplot.android.rendering.graphics.wrapper.FontMetricsWrap;
+import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap;
+import com.wildplot.android.rendering.graphics.wrapper.RectangleWrap;
 import com.wildplot.android.rendering.interfaces.Drawable;
 
 import java.text.DecimalFormat;
@@ -150,8 +162,8 @@ public class XAxis implements Drawable {
 	 * (non-Javadoc)
 	 * @see rendering.Drawable#paint(java.awt.Graphics)
 	 */
-	public void paint(Graphics g) {
-		Rectangle field = g.getClipBounds();
+	public void paint(GraphicsWrap g) {
+		RectangleWrap field = g.getClipBounds();
 		
 		if(this.hasVariableLimits){
 			start = plotSheet.getxRange()[0];
@@ -192,8 +204,8 @@ public class XAxis implements Drawable {
 	 * draw markers on the axis
 	 * @param g graphic object used for drawing
 	 */
-	private void drawMarkers(Graphics g) {
-		Rectangle field = g.getClipBounds();
+	private void drawMarkers(GraphicsWrap g) {
+		RectangleWrap field = g.getClipBounds();
 
 
         if(mTickPositions == null)
@@ -205,7 +217,7 @@ public class XAxis implements Drawable {
 		//arrow
         float[] arowheadPos = {(plotSheet.getxRange()[1] >= this.end)? plotSheet.xToGraphic( this.end, field): plotSheet.xToGraphic(plotSheet.getxRange()[1], field), plotSheet.yToGraphic(yOffset, field) };
 
-		FontMetrics fm = g.getFontMetrics( g.getFont() );
+		FontMetricsWrap fm = g.getFontMetrics( g.getFont() );
         float fontHeigth = fm.getHeight(true);
         float width = fm.stringWidth(this.name);
 		if(!this.isOnFrame) {
@@ -218,8 +230,8 @@ public class XAxis implements Drawable {
 		}
 	}
 
-    private void drawImplicitMarker(Graphics g){
-        Rectangle field = g.getClipBounds();
+    private void drawImplicitMarker(GraphicsWrap g){
+        RectangleWrap field = g.getClipBounds();
         int tics = (int)((this.ticStart - this.start)/tic);
         double leftStart = this.ticStart - this.tic*tics;
 
@@ -246,8 +258,8 @@ public class XAxis implements Drawable {
         }
     }
 
-    private void drawExplicitMarkers(Graphics g){
-        Rectangle field = g.getClipBounds();
+    private void drawExplicitMarkers(GraphicsWrap g){
+        RectangleWrap field = g.getClipBounds();
         for(int i = 0; i < mTickPositions.length; i ++){
             double currentX = mTickPositions[i];
             if((!this.isOnFrame && plotSheet.xToGraphic(currentX, field) <= plotSheet.xToGraphic(this.end, field) -45
@@ -275,12 +287,12 @@ public class XAxis implements Drawable {
 	 * @param field bounds of plot
 	 * @param x position of number
 	 */
-	private void drawNumbering(Graphics g, Rectangle field, double x, int index) {
+	private void drawNumbering(GraphicsWrap g, RectangleWrap field, double x, int index) {
 		
 		if(this.tic < 1 && Math.abs(ticStart-x) <  this.tic*this.tic)
 			x = ticStart;
 		
-		FontMetrics fm = g.getFontMetrics( g.getFont() );
+		FontMetricsWrap fm = g.getFontMetrics( g.getFont() );
         float fontHeigth = fm.getHeight();
         float[] coordStart = plotSheet.toGraphicPoint(x, yOffset, field);
 		if(Math.abs(x) - Math.abs(xOffset) <0.001 && !this.isOnFrame){
@@ -310,7 +322,7 @@ public class XAxis implements Drawable {
 	 * @param field bounds of plot
 	 * @param x position of marker
 	 */
-	private void drawUpwardsMarker(Graphics g, Rectangle field, double x){
+	private void drawUpwardsMarker(GraphicsWrap g, RectangleWrap field, double x){
 
         float[] coordStart = plotSheet.toGraphicPoint(x, yOffset, field);
         float[] coordEnd = {coordStart[0], coordStart[1] - this.markerLength};
@@ -324,7 +336,7 @@ public class XAxis implements Drawable {
 	 * @param field bounds of plot
 	 * @param x position of marker
 	 */
-	private void drawDownwardsMarker(Graphics g, Rectangle field, double x){
+	private void drawDownwardsMarker(GraphicsWrap g, RectangleWrap field, double x){
         float[] coordStart = plotSheet.toGraphicPoint(x, yOffset, field);
         float[] coordEnd = {coordStart[0], coordStart[1] + this.markerLength};
 		g.drawLine(coordStart[0], coordStart[1], coordEnd[0], coordEnd[1]);
@@ -391,8 +403,8 @@ public class XAxis implements Drawable {
 	 * draw minor markers on the axis
 	 * @param g graphic object used for drawing
 	 */
-	private void drawMinorMarkers(Graphics g) {
-		Rectangle field = g.getClipBounds();
+	private void drawMinorMarkers(GraphicsWrap g) {
+		RectangleWrap field = g.getClipBounds();
 		
 		int tics = (int)((this.ticStart - this.start)/tic);
 		double leftStart = this.ticStart - this.tic*tics;
@@ -440,7 +452,7 @@ public class XAxis implements Drawable {
 	 * @param field bounds of plot
 	 * @param x position of marker
 	 */
-	private void drawUpwardsMinorMarker(Graphics g, Rectangle field, double x){
+	private void drawUpwardsMinorMarker(GraphicsWrap g, RectangleWrap field, double x){
 
         float[] coordStart = plotSheet.toGraphicPoint(x, yOffset, field);
         float[] coordEnd = {coordStart[0], (int) (coordStart[1] - 0.5*this.markerLength)};
@@ -454,7 +466,7 @@ public class XAxis implements Drawable {
 	 * @param field bounds of plot
 	 * @param x position of marker
 	 */
-	private void drawDownwardsMinorMarker(Graphics g, Rectangle field, double x){
+	private void drawDownwardsMinorMarker(GraphicsWrap g, RectangleWrap field, double x){
         float[] coordStart = plotSheet.toGraphicPoint(x, yOffset, field);
         float[] coordEnd = {coordStart[0], (int) (coordStart[1] + 0.5*this.markerLength)};
 		g.drawLine(coordStart[0], coordStart[1], coordEnd[0], coordEnd[1]);

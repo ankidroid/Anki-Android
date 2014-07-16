@@ -1,9 +1,24 @@
+/****************************************************************************************
+ * Copyright (c) 2014 Michael Goldbach <michael@wildplot.com>                           *
+ *                                                                                      *
+ * This program is free software; you can redistribute it and/or modify it under        *
+ * the terms of the GNU General Public License as published by the Free Software        *
+ * Foundation; either version 3 of the License, or (at your option) any later           *
+ * version.                                                                             *
+ *                                                                                      *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
+ *                                                                                      *
+ * You should have received a copy of the GNU General Public License along with         *
+ * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
+ ****************************************************************************************/
 package com.wildplot.android.rendering;
 
-import com.wildplot.android.rendering.graphics.wrapper.Color;
-import com.wildplot.android.rendering.graphics.wrapper.FontMetrics;
-import com.wildplot.android.rendering.graphics.wrapper.Graphics;
-import com.wildplot.android.rendering.graphics.wrapper.Rectangle;
+import com.wildplot.android.rendering.graphics.wrapper.ColorWrap;
+import com.wildplot.android.rendering.graphics.wrapper.FontMetricsWrap;
+import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap;
+import com.wildplot.android.rendering.graphics.wrapper.RectangleWrap;
 import com.wildplot.android.rendering.interfaces.Drawable;
 import com.wildplot.android.rendering.interfaces.Legendable;
 
@@ -18,14 +33,14 @@ public class PieChart implements Drawable, Legendable {
 	private int mColorHelper;
 	private PlotSheet mPlotSheet;
 
-	private Color[] mColors = {
-		new Color(255,  0,  0,180),
-		new Color(0  ,255,  0,180),
-		new Color(0  ,0,  255,180),
+	private ColorWrap[] mColors = {
+		new ColorWrap(255,  0,  0,180),
+		new ColorWrap(0  ,255,  0,180),
+		new ColorWrap(0  ,0,  255,180),
 		
-		new Color(255,255,  0,180),
-		new Color(  0,255,255,180),
-		new Color(255,  0,255,180)
+		new ColorWrap(255,255,  0,180),
+		new ColorWrap(  0,255,255,180),
+		new ColorWrap(255,  0,255,180)
 		};
 
 	public PieChart(PlotSheet plotSheet, double[] vals){
@@ -55,14 +70,14 @@ public class PieChart implements Drawable, Legendable {
 	 * (non-Javadoc)
 	 * @see rendering.Drawable#paint(java.awt.Graphics)
 	 */
-	public void paint(Graphics g){
-		Rectangle field = g.getClipBounds();
+	public void paint(GraphicsWrap g){
+		RectangleWrap field = g.getClipBounds();
         float realBorder= mPlotSheet.getFrameThickness() + 3;
         float diameter=Math.min(field.width, field.height)-2*realBorder;
 
         float xCenter = (float)(field.width/2.0);
         float yCenter = (float)(field.height/2.0);
-		Color oldColor = g.getColor();
+		ColorWrap oldColor = g.getColor();
 
         float xMiddle = xCenter - (float)(diameter/2.0);
         float yMiddle = yCenter - (float)(diameter/2.0);
@@ -81,11 +96,11 @@ public class PieChart implements Drawable, Legendable {
 		//last one does need some corrections to fill a full circle:
 		g.setColor(mColors[tmp% mColorHelper]);
 		g.fillArc(xMiddle, yMiddle, diameter, diameter, currentAngle, 360 - currentAngle);
-		g.setColor(Color.black);
+		g.setColor(ColorWrap.black);
 		g.drawArc(xMiddle, yMiddle, diameter, diameter, 0, 360);
 		
 		//Beschriftung
-		g.setColor(Color.white);
+		g.setColor(ColorWrap.white);
 		//g.drawString("" + Math.round(((mPercent[0]) * 100) * 100) / 100.0 + "%", (float) (xCenter + Math.cos(mPercent[0] * Math.PI) * 0.375 * diameter) - 20, (float) (yCenter - Math.sin(mPercent[0] * Math.PI) * 0.375 * diameter));
 		for(int j=0;j< mPercent.length;j++)
 		{
@@ -95,11 +110,11 @@ public class PieChart implements Drawable, Legendable {
             String text = ""+Math.round((((mPercent[j]- oldPercent))*100)*100)/100.0+"%";
             float x = (float)(xCenter+Math.cos((oldPercent+(mPercent[j]- oldPercent)*0.5)*360*Math.PI/180.0)*0.375*diameter)-20;
             float y = (float)(yCenter-Math.sin((oldPercent+(mPercent[j]- oldPercent)*0.5)*360*Math.PI/180.0)*0.375*diameter);
-            FontMetrics fm = g.getFontMetrics();
+            FontMetricsWrap fm = g.getFontMetrics();
             float width = fm.stringWidth(text);
             float height = fm.getHeight();
-            Color color = g.getColor();
-            g.setColor(new Color(0,0,0,0.5f));
+            ColorWrap color = g.getColor();
+            g.setColor(new ColorWrap(0,0,0,0.5f));
             g.fillRect(x-1,y-height+3,width+2,height);
             g.setColor(color);
 			g.drawString(text,x ,y );
@@ -125,7 +140,7 @@ public class PieChart implements Drawable, Legendable {
     }
 
     @Override
-    public Color getColor() {
+    public ColorWrap getColor() {
         return mColors[0];
     }
 
@@ -144,7 +159,7 @@ public class PieChart implements Drawable, Legendable {
         mNameIsSet = true;
     }
 
-    public void setColors(Color[] colors){
+    public void setColors(ColorWrap[] colors){
         mColors = colors;
         mColorHelper = mColors.length;
         if((mValues.length-1)%(mColors.length)==0)

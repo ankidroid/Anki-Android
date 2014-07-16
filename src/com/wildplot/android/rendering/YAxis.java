@@ -1,11 +1,23 @@
-/**
- * 
- */
+/****************************************************************************************
+ * Copyright (c) 2014 Michael Goldbach <michael@wildplot.com>                           *
+ *                                                                                      *
+ * This program is free software; you can redistribute it and/or modify it under        *
+ * the terms of the GNU General Public License as published by the Free Software        *
+ * Foundation; either version 3 of the License, or (at your option) any later           *
+ * version.                                                                             *
+ *                                                                                      *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
+ *                                                                                      *
+ * You should have received a copy of the GNU General Public License along with         *
+ * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
+ ****************************************************************************************/
 package com.wildplot.android.rendering;
 
-import com.wildplot.android.rendering.graphics.wrapper.FontMetrics;
-import com.wildplot.android.rendering.graphics.wrapper.Graphics;
-import com.wildplot.android.rendering.graphics.wrapper.Rectangle;
+import com.wildplot.android.rendering.graphics.wrapper.FontMetricsWrap;
+import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap;
+import com.wildplot.android.rendering.graphics.wrapper.RectangleWrap;
 import com.wildplot.android.rendering.interfaces.Drawable;
 
 import java.text.DecimalFormat;
@@ -137,8 +149,8 @@ public class YAxis implements Drawable {
 	 * (non-Javadoc)
 	 * @see rendering.Drawable#paint(java.awt.Graphics)
 	 */
-	public void paint(Graphics g) {
-		Rectangle field = g.getClipBounds();
+	public void paint(GraphicsWrap g) {
+		RectangleWrap field = g.getClipBounds();
 		
 		if(this.hasVariableLimits){
 			start = plotSheet.getyRange()[0];
@@ -174,8 +186,8 @@ public class YAxis implements Drawable {
 	 * draw markers on the axis
 	 * @param g graphic object used for drawing
 	 */
-	private void drawMarkers(Graphics g) {
-		Rectangle field = g.getClipBounds();
+	private void drawMarkers(GraphicsWrap g) {
+		RectangleWrap field = g.getClipBounds();
 
         float cleanSpace = 17; // space in pixel that will be unmarked on the end of the axis for arrow and description
 
@@ -216,7 +228,7 @@ public class YAxis implements Drawable {
 				currentY += this.tic;
 			}
 		}
-		FontMetrics fm = g.getFontMetrics( g.getFont() );
+		FontMetricsWrap fm = g.getFontMetrics( g.getFont() );
         float width = fm.stringWidth(this.name);
 		//arrow
 
@@ -254,7 +266,7 @@ public class YAxis implements Drawable {
 	 * @param field bounds of plot
 	 * @param y position of number
 	 */
-	private void drawNumbering(Graphics g, Rectangle field, double y) {
+	private void drawNumbering(GraphicsWrap g, RectangleWrap field, double y) {
 		
 		if(this.tic < 1 && Math.abs(ticStart-y) < this.tic*this.tic)
 			y = ticStart;
@@ -262,7 +274,7 @@ public class YAxis implements Drawable {
         float[] coordStart = plotSheet.toGraphicPoint(xOffset, y, field);
 		
 		
-		FontMetrics fm = g.getFontMetrics( g.getFont() );
+		FontMetricsWrap fm = g.getFontMetrics( g.getFont() );
         float fontHeight = fm.getHeight(true);
 		String font = df.format(y);
         float width = fm.stringWidth(font);
@@ -289,12 +301,12 @@ public class YAxis implements Drawable {
      * @param field bounds of plot
      * @param y position of number
      */
-    private void drawNumberingOnRightSide(Graphics g, Rectangle field, double y) {
+    private void drawNumberingOnRightSide(GraphicsWrap g, RectangleWrap field, double y) {
         if(this.tic < 1 && Math.abs(ticStart-y) < this.tic*this.tic)
             y = ticStart;
 
         float[] coordStart = plotSheet.toGraphicPoint(xOffset, y, field);
-        FontMetrics fm = g.getFontMetrics( g.getFont() );
+        FontMetricsWrap fm = g.getFontMetrics( g.getFont() );
         float fontHeight = fm.getHeight(true);
         String font = df.format(y);
         float width = fm.stringWidth(font);
@@ -321,7 +333,7 @@ public class YAxis implements Drawable {
 	 * @param field bounds of plot
 	 * @param y position of marker
 	 */
-	private void drawLeftMarker(Graphics g, Rectangle field, double y){
+	private void drawLeftMarker(GraphicsWrap g, RectangleWrap field, double y){
 
         float[] coordStart = plotSheet.toGraphicPoint(xOffset, y, field);
         float[] coordEnd = {coordStart[0] - this.markerLength, coordStart[1]};
@@ -334,7 +346,7 @@ public class YAxis implements Drawable {
 	 * @param field bounds of plot
 	 * @param y position of marker
 	 */
-	private void drawRightMarker(Graphics g, Rectangle field, double y){
+	private void drawRightMarker(GraphicsWrap g, RectangleWrap field, double y){
         float[] coordStart = plotSheet.toGraphicPoint(xOffset, y, field);
         float[] coordEnd = {coordStart[0] + this.markerLength, coordStart[1]};
 		g.drawLine(coordStart[0], coordStart[1], coordEnd[0], coordEnd[1]);
@@ -415,8 +427,8 @@ public class YAxis implements Drawable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	private void drawMinorMarkers(Graphics g) {
-		Rectangle field = g.getClipBounds();
+	private void drawMinorMarkers(GraphicsWrap g) {
+		RectangleWrap field = g.getClipBounds();
 		
 		int cleanSpace = 17; // space in pixel that will be unmarked on the end of the axis for arrow and description
 		
@@ -480,7 +492,7 @@ public class YAxis implements Drawable {
 	 * @param field bounds of plot
 	 * @param y position of marker
 	 */
-	private void drawLeftMinorMarker(Graphics g, Rectangle field, double y){
+	private void drawLeftMinorMarker(GraphicsWrap g, RectangleWrap field, double y){
 
         float[] coordStart = plotSheet.toGraphicPoint(xOffset, y, field);
         float[] coordEnd = {(int) (coordStart[0] - 0.5*this.markerLength), coordStart[1]};
@@ -493,7 +505,7 @@ public class YAxis implements Drawable {
 	 * @param field bounds of plot
 	 * @param y position of marker
 	 */
-	private void drawRightMinorMarker(Graphics g, Rectangle field, double y){
+	private void drawRightMinorMarker(GraphicsWrap g, RectangleWrap field, double y){
         float[] coordStart = plotSheet.toGraphicPoint(xOffset, y, field);
         float[] coordEnd = {(int) (coordStart[0] + 0.5*this.markerLength), coordStart[1]};
 		g.drawLine(coordStart[0], coordStart[1], coordEnd[0], coordEnd[1]);

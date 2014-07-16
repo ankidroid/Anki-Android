@@ -13,68 +13,26 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.wildplot.android.rendering;
+package com.wildplot.android.rendering.graphics.wrapper;
 
-import com.wildplot.android.rendering.graphics.wrapper.ColorWrap;
-import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap;
-import com.wildplot.android.rendering.interfaces.Drawable;
-import com.wildplot.android.rendering.interfaces.Legendable;
+public class FontMetricsWrap {
+    private GraphicsWrap g;
 
-
-public class LegendDrawable implements Drawable, Legendable {
-
-    private String mName = "";
-    private boolean mNameIsSet = false;
-
-
-
-    private ColorWrap color = ColorWrap.BLACK;
-
-    @Override
-    public void paint(GraphicsWrap g) {
-
+    public FontMetricsWrap(GraphicsWrap g) {
+        super();
+        this.g = g;
+    }
+    
+    public float stringWidth(String text){
+        return g.getPaint().measureText(text);
+        
     }
 
-    @Override
-    public boolean isOnFrame() {
-        return false;
+    public float getHeight() {
+        return g.getPaint().getTextSize();
     }
 
-    @Override
-    public void abortAndReset() {
-
-    }
-
-    @Override
-    public boolean isClusterable() {
-        return false;
-    }
-
-    @Override
-    public boolean isCritical() {
-        return false;
-    }
-
-    @Override
-    public ColorWrap getColor() {
-        return color;
-    }
-
-    @Override
-    public String getName() {
-        return mName;
-    }
-
-    @Override
-    public boolean nameIsSet() {
-        return mNameIsSet;
-    }
-
-    public void setName(String name){
-        mName = name;
-        mNameIsSet = true;
-    }
-    public void setColor(ColorWrap color){
-        this.color = color;
+    public float getHeight(boolean foo) {
+        return g.getPaint().getTextSize();
     }
 }

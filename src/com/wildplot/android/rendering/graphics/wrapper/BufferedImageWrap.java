@@ -13,68 +13,43 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.wildplot.android.rendering;
+package com.wildplot.android.rendering.graphics.wrapper;
 
-import com.wildplot.android.rendering.graphics.wrapper.ColorWrap;
-import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap;
-import com.wildplot.android.rendering.interfaces.Drawable;
-import com.wildplot.android.rendering.interfaces.Legendable;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Paint.Style;
+import android.graphics.PorterDuff.Mode;
 
-
-public class LegendDrawable implements Drawable, Legendable {
-
-    private String mName = "";
-    private boolean mNameIsSet = false;
-
-
-
-    private ColorWrap color = ColorWrap.BLACK;
-
-    @Override
-    public void paint(GraphicsWrap g) {
-
+public class BufferedImageWrap {
+    private Bitmap bitmap;
+    
+    public static final Bitmap.Config TYPE_INT_ARGB = Bitmap.Config.ARGB_8888;
+    
+    public BufferedImageWrap(int width, int height, Bitmap.Config bitmapConfig){
+        bitmap = Bitmap.createBitmap(width, height, bitmapConfig);
+    }
+    
+    public GraphicsWrap createGraphics(){
+        Canvas canvas = new Canvas(bitmap);
+        canvas.drawColor(android.graphics.Color.TRANSPARENT, Mode.CLEAR);
+        Paint paint = new Paint(Paint.LINEAR_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
+        paint.setStyle(Style.STROKE);
+//        System.err.println("XFERMODE: "+paint.getXfermode().toString());
+//        Paint transPainter = new Paint();
+//        transPainter.setXfermode(new PorterDuffXfermode(Mode.CLEAR));
+//                   
+//        canvas.drawRect(0, 0, bitmap.getWidth(), bitmap.getHeight(), transPainter);
+        return new GraphicsWrap(canvas, paint);
+    }
+    
+    public GraphicsWrap getGraphics(){
+        return createGraphics();
     }
 
-    @Override
-    public boolean isOnFrame() {
-        return false;
+    public Bitmap getBitmap() {
+        return bitmap;
     }
-
-    @Override
-    public void abortAndReset() {
-
-    }
-
-    @Override
-    public boolean isClusterable() {
-        return false;
-    }
-
-    @Override
-    public boolean isCritical() {
-        return false;
-    }
-
-    @Override
-    public ColorWrap getColor() {
-        return color;
-    }
-
-    @Override
-    public String getName() {
-        return mName;
-    }
-
-    @Override
-    public boolean nameIsSet() {
-        return mNameIsSet;
-    }
-
-    public void setName(String name){
-        mName = name;
-        mNameIsSet = true;
-    }
-    public void setColor(ColorWrap color){
-        this.color = color;
-    }
+    
+    
 }

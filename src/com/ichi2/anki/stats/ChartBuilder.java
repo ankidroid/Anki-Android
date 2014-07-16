@@ -1,5 +1,5 @@
 /****************************************************************************************
- * Copyright (c) 2014 Michael Goldbach <trashcutter@googlemail.com>                     *
+ * Copyright (c) 2014 Michael Goldbach <michael@m-goldbach.net>                         *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -17,12 +17,13 @@ package com.ichi2.anki.stats;
 
 import android.graphics.Paint;
 import android.util.Log;
+import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Stats;
 import com.wildplot.android.rendering.*;
-import com.wildplot.android.rendering.graphics.wrapper.Color;
-import com.wildplot.android.rendering.graphics.wrapper.Rectangle;
+import com.wildplot.android.rendering.graphics.wrapper.ColorWrap;
+import com.wildplot.android.rendering.graphics.wrapper.RectangleWrap;
 
 
 public class ChartBuilder {
@@ -109,14 +110,14 @@ public class ChartBuilder {
         int height = mChartView.getMeasuredHeight();
         int width = mChartView.getMeasuredWidth();
 
-        Log.d(AnkiStatsTaskHandler.TAG, "heigth: " + height + ", width: " + width + ", " + mChartView.getWidth());
+        Log.d(AnkiDroidApp.TAG, "heigth: " + height + ", width: " + width + ", " + mChartView.getWidth());
 
         if(height <=0 || width <= 0){
             return null;
         }
 
 
-        Rectangle rect = new Rectangle(width, height);
+        RectangleWrap rect = new RectangleWrap(width, height);
         float textSize = AnkiStatsTaskHandler.getInstance().getmStandardTextSize()*0.75f;
         paint.setTextSize(textSize);
         float FontHeigth = paint.getTextSize();
@@ -152,18 +153,18 @@ public class ChartBuilder {
     private PlotSheet createPieChart(PlotSheet plotSheet){
         PieChart pieChart = new PieChart(plotSheet, mSeriesList[0]);
 
-        Color[] colors = {new Color(mChartView.getResources().getColor(mColors[0])),
-                new Color(mChartView.getResources().getColor(mColors[1])),
-                new Color(mChartView.getResources().getColor(mColors[2])),
-                new Color(mChartView.getResources().getColor(mColors[3]))};
+        ColorWrap[] colors = {new ColorWrap(mChartView.getResources().getColor(mColors[0])),
+                new ColorWrap(mChartView.getResources().getColor(mColors[1])),
+                new ColorWrap(mChartView.getResources().getColor(mColors[2])),
+                new ColorWrap(mChartView.getResources().getColor(mColors[3]))};
         pieChart.setColors(colors);
         pieChart.setName(mChartView.getResources().getString(mValueLabels[0]) + ": " + (int)mSeriesList[0][0]);
         LegendDrawable legendDrawable1 = new LegendDrawable();
         LegendDrawable legendDrawable2 = new LegendDrawable();
         LegendDrawable legendDrawable3 = new LegendDrawable();
-        legendDrawable1.setColor(new Color(mChartView.getResources().getColor(mColors[1])));
-        legendDrawable2.setColor(new Color(mChartView.getResources().getColor(mColors[2])));
-        legendDrawable3.setColor(new Color(mChartView.getResources().getColor(mColors[3])));
+        legendDrawable1.setColor(new ColorWrap(mChartView.getResources().getColor(mColors[1])));
+        legendDrawable2.setColor(new ColorWrap(mChartView.getResources().getColor(mColors[2])));
+        legendDrawable3.setColor(new ColorWrap(mChartView.getResources().getColor(mColors[3])));
 
         legendDrawable1.setName(mChartView.getResources().getString(mValueLabels[1]) + ": " + (int)mSeriesList[0][1]);
         legendDrawable2.setName(mChartView.getResources().getString(mValueLabels[2]) + ": " + (int)mSeriesList[0][2]);
@@ -198,11 +199,11 @@ public class ChartBuilder {
                 }
             }
 
-            BarGraph barGraph = new BarGraph(usedPlotSheet, barThickness, bars, new Color(mChartView.getResources().getColor(mColors[i-1])));
+            BarGraph barGraph = new BarGraph(usedPlotSheet, barThickness, bars, new ColorWrap(mChartView.getResources().getColor(mColors[i-1])));
             barGraph.setFilling(true);
             barGraph.setName(mChartView.getResources().getString(mValueLabels[i - 1]));
             //barGraph.setFillColor(Color.GREEN.darker());
-            barGraph.setFillColor(new Color(mChartView.getResources().getColor(mColors[i - 1])));
+            barGraph.setFillColor(new ColorWrap(mChartView.getResources().getColor(mColors[i - 1])));
             plotSheet.addDrawable(barGraph);
         }
     }
@@ -213,10 +214,10 @@ public class ChartBuilder {
         for(int i = 1; i< mCumulative.length; i++){
             double[][] cumulative = {mCumulative[0], mCumulative[i]};
 
-            Color usedColor = Color.BLACK;
+            ColorWrap usedColor = ColorWrap.BLACK;
             String name = mChartView.getResources().getString(R.string.stats_cumulative);
             if(mHasColoredCumulative){      //also non colored Cumulatives have names!
-                usedColor = new Color(mChartView.getResources().getColor(mColors[i-1]));
+                usedColor = new ColorWrap(mChartView.getResources().getColor(mColors[i-1]));
 
             } else {
                 if(mChartType == Stats.ChartType.INTERVALS){
@@ -226,7 +227,7 @@ public class ChartBuilder {
 
             Lines lines = new Lines(hiddenPlotSheet,cumulative ,usedColor);
             lines.setSize(3f);
-            lines.setShadow(5f, 2f, 2f, Color.BLACK);
+            lines.setShadow(5f, 2f, 2f, ColorWrap.BLACK);
             if(!mHasColoredCumulative){
                 lines.setName(name);
             }
@@ -283,11 +284,11 @@ public class ChartBuilder {
     }
 
     private void setupGrid(PlotSheet plotSheet){
-        int red = Color.LIGHT_GRAY.getRed();
-        int green = Color.LIGHT_GRAY.getGreen();
-        int blue = Color.LIGHT_GRAY.getBlue();
+        int red = ColorWrap.LIGHT_GRAY.getRed();
+        int green = ColorWrap.LIGHT_GRAY.getGreen();
+        int blue = ColorWrap.LIGHT_GRAY.getBlue();
 
-        Color newGridColor = new Color(red,green,blue, 222);
+        ColorWrap newGridColor = new ColorWrap(red,green,blue, 222);
 
         XGrid xGrid = new XGrid(plotSheet, 0, 150);
         YGrid yGrid = new YGrid(plotSheet, 0, 150);
@@ -316,7 +317,7 @@ public class ChartBuilder {
     }
 
 
-    public double ticksCalcX(int pixelDistance, Rectangle field, double start, double end){
+    public double ticksCalcX(int pixelDistance, RectangleWrap field, double start, double end){
         double deltaRange = end - start;
         int ticlimit = field.width/pixelDistance;
         double tics = Math.pow(10, (int)Math.log10(deltaRange/ticlimit));
@@ -329,7 +330,7 @@ public class ChartBuilder {
         return tics;
     }
 
-    public double ticksCalcY(int pixelDistance, Rectangle field, double start, double end){
+    public double ticksCalcY(int pixelDistance, RectangleWrap field, double start, double end){
         double deltaRange = end - start;
         int ticlimit = field.height/pixelDistance;
         double tics = Math.pow(10, (int)Math.log10(deltaRange/ticlimit));
@@ -342,7 +343,7 @@ public class ChartBuilder {
         return tics;
     }
 
-    public double ticsCalc(int pixelDistance, Rectangle field, double deltaRange){
+    public double ticsCalc(int pixelDistance, RectangleWrap field, double deltaRange){
         int ticlimit = field.height/pixelDistance;
         double tics = Math.pow(10, (int)Math.log10(deltaRange/ticlimit));
         while(2.0*(deltaRange/(tics)) <= ticlimit) {

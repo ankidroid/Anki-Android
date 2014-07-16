@@ -1,6 +1,6 @@
 /****************************************************************************************
  * Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>                         *
- * Copyright (c) 2014 Michael Goldbach <trashcutter@googlemail.com>                     *
+ * Copyright (c) 2014 Michael Goldbach <michael@m-goldbach.net>                         *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *

@@ -1,11 +1,23 @@
-/**
- * 
- */
+/****************************************************************************************
+ * Copyright (c) 2014 Michael Goldbach <michael@wildplot.com>                           *
+ *                                                                                      *
+ * This program is free software; you can redistribute it and/or modify it under        *
+ * the terms of the GNU General Public License as published by the Free Software        *
+ * Foundation; either version 3 of the License, or (at your option) any later           *
+ * version.                                                                             *
+ *                                                                                      *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
+ *                                                                                      *
+ * You should have received a copy of the GNU General Public License along with         *
+ * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
+ ****************************************************************************************/
 package com.wildplot.android.rendering;
 
-import com.wildplot.android.rendering.graphics.wrapper.Color;
-import com.wildplot.android.rendering.graphics.wrapper.Graphics;
-import com.wildplot.android.rendering.graphics.wrapper.Rectangle;
+import com.wildplot.android.rendering.graphics.wrapper.ColorWrap;
+import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap;
+import com.wildplot.android.rendering.graphics.wrapper.RectangleWrap;
 import com.wildplot.android.rendering.interfaces.Drawable;
 
 
@@ -23,7 +35,7 @@ public class YGrid implements Drawable {
 	/**
 	 * the color of the grid lines
 	 */
-	private Color color = Color.LIGHT_GRAY;
+	private ColorWrap color = ColorWrap.LIGHT_GRAY;
 	
 	/**
 	 * the Sheet the grid lines will be drawn onto
@@ -91,7 +103,7 @@ public class YGrid implements Drawable {
 	 * @param ticStart start point for relative positioning of grid
 	 * @param tic the space between two grid lines
 	 */
-	public YGrid(Color color, PlotSheet plotSheet, double ticStart, double tic) {
+	public YGrid(ColorWrap color, PlotSheet plotSheet, double ticStart, double tic) {
 		super();
 		this.color = color;
 		this.plotSheet = plotSheet;
@@ -117,7 +129,7 @@ public class YGrid implements Drawable {
 	 * @param plotSheet the sheet the grid will be drawn onto
 	 * @param ticStart start point for relative positioning of grid
 	 */
-	public YGrid(Color color, PlotSheet plotSheet, double ticStart, int pixelDistance) {
+	public YGrid(ColorWrap color, PlotSheet plotSheet, double ticStart, int pixelDistance) {
 		super();
 		this.color = color;
 		this.plotSheet = plotSheet;
@@ -129,9 +141,9 @@ public class YGrid implements Drawable {
 	 * @see rendering.Drawable#paint(java.awt.Graphics)
 	 */
 	@Override
-	public void paint(Graphics g) {
-		Color oldColor = g.getColor();
-		Rectangle field = g.getClipBounds();
+	public void paint(GraphicsWrap g) {
+		ColorWrap oldColor = g.getColor();
+		RectangleWrap field = g.getClipBounds();
 		g.setColor(color);
 		
 		if(this.hasVariableLimits) {
@@ -165,8 +177,8 @@ public class YGrid implements Drawable {
 		g.setColor(oldColor);
 
 	}
-    private void drawImplicitLines(Graphics g, double leftStart){
-        Rectangle field = g.getClipBounds();
+    private void drawImplicitLines(GraphicsWrap g, double leftStart){
+        RectangleWrap field = g.getClipBounds();
         double currentX = leftStart;
 
         while(currentX <= this.xLength && !(currentX > 0 && !this.gridOnRight)) {
@@ -176,8 +188,8 @@ public class YGrid implements Drawable {
         }
     }
 
-    private void drawExplicitLines(Graphics g){
-        Rectangle field = g.getClipBounds();
+    private void drawExplicitLines(GraphicsWrap g){
+        RectangleWrap field = g.getClipBounds();
 
         for(int i = 0; i< mTickPositions.length; i++) {
             double currentX = mTickPositions[i];
@@ -191,7 +203,7 @@ public class YGrid implements Drawable {
 	 * @param g graphic the line shall be drawn onto
 	 * @param field definition of the graphic boundaries
 	 */
-	private void drawGridLine(double x, Graphics g, Rectangle field) {
+	private void drawGridLine(double x, GraphicsWrap g, RectangleWrap field) {
 		if(this.gridOnUpside) {
 			g.drawLine(plotSheet.xToGraphic(x, field), plotSheet.yToGraphic(0, field), plotSheet.xToGraphic(x, field), plotSheet.yToGraphic(yLength, field));
 		}
@@ -248,7 +260,7 @@ public class YGrid implements Drawable {
         return true;
     }
 
-    public void setColor(Color color) {
+    public void setColor(ColorWrap color) {
         this.color = color;
     }
 
