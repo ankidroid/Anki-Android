@@ -1,7 +1,8 @@
 language: java
 branches:
   only:
-    - /^v[0-9.]*-dev$/
+    - /^release-[0-9.]*$/
+    - /^develop$/
 
 before_install:
   # Needed to run Android SDK tools, which are 32-bit binaries.
