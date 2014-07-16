@@ -38,6 +38,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.stats.AnkiStatsActivity;
 import com.ichi2.anki.stats.AnkiStatsTaskHandler;
 import com.ichi2.async.DeckTask;
 import com.ichi2.charts.ChartBuilder;
@@ -141,13 +142,14 @@ public class NavigationDrawerActivity extends AnkiActivity {
                 break;
             case DRAWER_STATISTICS:
             	boolean selectAllDecksButton = false;
-            	if ((this instanceof DeckPicker && !mFragmented)) {
-            		selectAllDecksButton = true;
-            	}
-                AnkiStatsTaskHandler.setIsWholeCollection(selectAllDecksButton);
-                Intent intent = new Intent(NavigationDrawerActivity.this, com.ichi2.anki.stats.AnkiStatsActivity.class);
-                startActivityWithAnimation(intent, ActivityTransitionAnimation.DOWN);
-
+                if(!(this instanceof AnkiStatsActivity)) {
+                    if ((this instanceof DeckPicker && !mFragmented)) {
+                        selectAllDecksButton = true;
+                    }
+                    AnkiStatsTaskHandler.setIsWholeCollection(selectAllDecksButton);
+                    Intent intent = new Intent(this, AnkiStatsActivity.class);
+                    startActivityWithAnimation(intent, ActivityTransitionAnimation.DOWN);
+                }
 
                 break;
             case DRAWER_SETTINGS:
