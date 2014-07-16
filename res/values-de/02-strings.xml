@@ -163,6 +163,6 @@
   <string name="sched_end">(Ende)</string>
   <string name="sched_unbury_button">Um sie jetzt zu sehen, berühren Sie „Vorläufiges Aussetzen aufheben“.</string>
   <string name="sched_has_buried">Einige verwandte oder vorläufig ausgesetzte Karten wurden auf morgen verschoben.</string>
-  <string name="tag_editor_add_hint">Use tick mark on the right to add new tag</string>
-  <string name="tag_editor_add_feedback">Press \"%2$s\" button to confirm adding \"%1$s\"</string>
+  <string name="tag_editor_add_hint">Benutzen sie das Häkchen rechts, um neue Schlagworte hinzuzufügen</string>
+  <string name="tag_editor_add_feedback">Berühren Sie den  \"%2$s\"-Knopf um das Hinzufügen von \"%1$s\" zu bestätigen</string>
 </resources>
