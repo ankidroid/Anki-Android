@@ -777,8 +777,8 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         boolean wholeCollection = params[0].getBoolean();
 
         Stats stats = new Stats(col, wholeCollection);
-        Stats.ChartPeriodType chartPeriodType = Stats.ChartPeriodType.valueOf(AnkiDroidApp.getSharedPrefs(
-                AnkiDroidApp.getInstance().getBaseContext()).getInt("statsType", Stats.TYPE_MONTH));
+        int chartPeriodType = AnkiDroidApp.getSharedPrefs(
+                AnkiDroidApp.getInstance().getBaseContext()).getInt("statsType", Stats.TYPE_MONTH);
         switch (type) {
             default:
             case Stats.TYPE_FORECAST:

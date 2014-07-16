@@ -36,7 +36,7 @@ public class ChartBuilder {
     private int mFrameThickness = 60;
 
     int mMaxCards = 0;
-    private Stats.ChartPeriodType mType;
+    private int mType;
     private int[] mValueLabels;
     private int[] mColors;
     private int[] mAxisTitles;
@@ -57,7 +57,7 @@ public class ChartBuilder {
         mChartType = chartType;
     }
 
-    private void calcStats(Stats.ChartPeriodType type){
+    private void calcStats(int type){
         mType = type;
         Stats stats = new Stats(mCollectionData, mIsWholeCollection);
         switch (mChartType){
@@ -101,7 +101,7 @@ public class ChartBuilder {
         mDynamicAxis = (Boolean) metaData[20];
     }
 
-    public PlotSheet renderChart(Stats.ChartPeriodType type){
+    public PlotSheet renderChart(int type){
         calcStats(type);
         Paint paint = new Paint(Paint.LINEAR_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.STROKE);

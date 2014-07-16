@@ -34,26 +34,6 @@ import java.util.*;
  */
 public class Stats {
 
-    public static enum ChartPeriodType {
-        MONTH(0), YEAR(1), LIFE(2);
-        private int legNo;
-
-        private static Map<Integer, ChartPeriodType> map = new HashMap<Integer, ChartPeriodType>();
-
-        static {
-            for (ChartPeriodType legEnum : ChartPeriodType.values()) {
-                map.put(legEnum.legNo, legEnum);
-            }
-        }
-
-        private ChartPeriodType(final int leg) { legNo = leg; }
-
-        public static ChartPeriodType valueOf(int type) {
-            return map.get(type);
-        }
-
-    };
-
     public static final int TYPE_MONTH = 0;
     public static final int TYPE_YEAR = 1;
     public static final int TYPE_LIFE = 2;
@@ -82,7 +62,7 @@ public class Stats {
     private double[][] mSeriesList;
 
     private boolean mHasColoredCumulative = false;
-    private ChartPeriodType mType;
+    private int mType;
     private int mTitle;
     private boolean mBackwards;
     private int[] mValueLabels;
@@ -144,7 +124,7 @@ public class Stats {
      * Due and cumulative due
      * ***********************************************************************************************
      */
-    public boolean calculateDue(ChartPeriodType type) {
+    public boolean calculateDue(int type) {
         mHasColoredCumulative = false;
         mType = type;
         mDynamicAxis = true;
@@ -152,19 +132,19 @@ public class Stats {
         mTitle = R.string.stats_forecast;
         mValueLabels = new int[] { R.string.statistics_young, R.string.statistics_mature };
         mColors = new int[] { R.color.stats_young, R.color.stats_mature };
-        mAxisTitles = new int[] { type.ordinal(), R.string.stats_cards, R.string.stats_cumulative_cards };
+        mAxisTitles = new int[] { type, R.string.stats_cards, R.string.stats_cumulative_cards };
         int end = 0;
         int chunk = 0;
         switch (type) {
-            case MONTH:
+            case TYPE_MONTH:
                 end = 31;
                 chunk = 1;
                 break;
-            case YEAR:
+            case TYPE_YEAR:
                 end = 52;
                 chunk = 7;
                 break;
-            case LIFE:
+            case TYPE_LIFE:
                 end = -1;
                 chunk = 30;
                 break;
@@ -206,9 +186,9 @@ public class Stats {
         if (end == -1 && dues.size() < 2) {
             end = 31;
         }
-        if (type != ChartPeriodType.LIFE && dues.get(dues.size() - 1)[0] < end) {
+        if (type != TYPE_LIFE && dues.get(dues.size() - 1)[0] < end) {
             dues.add(new int[] { end, 0, 0 });
-        } else if (type == ChartPeriodType.LIFE && dues.size() < 2) {
+        } else if (type == TYPE_LIFE && dues.size() < 2) {
             dues.add(new int[] { Math.max(12, dues.get(dues.size() - 1)[0] + 1), 0, 0 });
         }
 
@@ -230,10 +210,10 @@ public class Stats {
         }
         mMaxElements = dues.size()-1;
         switch (mType) {
-            case MONTH:
+            case TYPE_MONTH:
                 mLastElement = 31;
                 break;
-            case YEAR:
+            case TYPE_YEAR:
                 mLastElement = 52;
                 break;
             default:
@@ -300,14 +280,14 @@ public class Stats {
         return serieslist;
     }
 
-    public boolean calculateDone(ChartPeriodType type, boolean reps) {
+    public boolean calculateDone(int type, boolean reps) {
         mHasColoredCumulative = true;
         mDynamicAxis = true;
         mType = type;
         mBackwards = true;
         if (reps) {
             mTitle = R.string.stats_review_count;
-            mAxisTitles = new int[] { type.ordinal(), R.string.stats_answers, R.string.stats_cumulative_answers };
+            mAxisTitles = new int[] { type, R.string.stats_answers, R.string.stats_cumulative_answers };
         } else {
             mTitle = R.string.stats_review_time;
         }
@@ -318,15 +298,15 @@ public class Stats {
         int num = 0;
         int chunk = 0;
         switch (type) {
-            case MONTH:
+            case TYPE_MONTH:
                 num = 31;
                 chunk = 1;
                 break;
-            case YEAR:
+            case TYPE_YEAR:
                 num = 52;
                 chunk = 7;
                 break;
-            case LIFE:
+            case TYPE_LIFE:
                 num = -1;
                 chunk = 30;
                 break;
@@ -352,12 +332,12 @@ public class Stats {
         String tf;
         if (!reps) {
             ti = "time/1000";
-            if (mType == ChartPeriodType.MONTH) {
+            if (mType == TYPE_MONTH) {
                 tf = "/60.0"; // minutes
-                mAxisTitles = new int[] { type.ordinal(), R.string.stats_minutes, R.string.stats_cumulative_time_minutes };
+                mAxisTitles = new int[] { type, R.string.stats_minutes, R.string.stats_cumulative_time_minutes };
             } else {
                 tf = "/3600.0"; // hours
-                mAxisTitles = new int[] { type.ordinal(), R.string.stats_hours, R.string.stats_cumulative_time_hours };
+                mAxisTitles = new int[] { type, R.string.stats_hours, R.string.stats_cumulative_time_hours };
             }
         } else {
             ti = "1";
@@ -396,9 +376,9 @@ public class Stats {
         }
 
         // small adjustment for a proper chartbuilding with achartengine
-        if (type != ChartPeriodType.LIFE && (list.size() == 0 || list.get(0)[0] > -num)) {
+        if (type != TYPE_LIFE && (list.size() == 0 || list.get(0)[0] > -num)) {
             list.add(0, new double[] { -num, 0, 0, 0, 0, 0 });
-        } else if (type == ChartPeriodType.LIFE && list.size() == 0) {
+        } else if (type == TYPE_LIFE && list.size() == 0) {
             list.add(0, new double[] { -12, 0, 0, 0, 0, 0 });
         }
         if (list.get(list.size() - 1)[0] < 0) {
@@ -447,10 +427,10 @@ public class Stats {
         }
 
         switch (mType) {
-            case MONTH:
+            case TYPE_MONTH:
                 mFirstElement = -31;
                 break;
-            case YEAR:
+            case TYPE_YEAR:
                 mFirstElement = -52;
                 break;
             default:
@@ -491,14 +471,14 @@ public class Stats {
      * Intervals ***********************************************************************************************
      */
 
-    public boolean calculateIntervals(ChartPeriodType type) {
+    public boolean calculateIntervals(int type) {
         mDynamicAxis = true;
         mType = type;
         double all = 0, avg = 0, max_ = 0;
         mBackwards = false;
 
         mTitle = R.string.stats_review_intervals;
-        mAxisTitles = new int[] { type.ordinal(), R.string.stats_cards, R.string.stats_percentage };
+        mAxisTitles = new int[] { type, R.string.stats_cards, R.string.stats_percentage };
 
         mValueLabels = new int[] { R.string.stats_cards_intervals};
         mColors = new int[] { R.color.stats_interval};
@@ -506,17 +486,17 @@ public class Stats {
         String lim = "";
         int chunk = 0;
         switch (type) {
-            case MONTH:
+            case TYPE_MONTH:
                 num = 31;
                 chunk = 1;
                 lim = " and grp <= 30";
                 break;
-            case YEAR:
+            case TYPE_YEAR:
                 num = 52;
                 chunk = 7;
                 lim = " and grp <= 52";
                 break;
-            case LIFE:
+            case TYPE_LIFE:
                 num = -1;
                 chunk = 30;
                 lim = "";
@@ -564,9 +544,9 @@ public class Stats {
         if (num == -1 && list.size() < 2) {
             num = 31;
         }
-        if (type != ChartPeriodType.LIFE && list.get(list.size() - 1)[0] < num) {
+        if (type != TYPE_LIFE && list.get(list.size() - 1)[0] < num) {
             list.add(new double[] { num, 0 });
-        } else if (type == ChartPeriodType.LIFE && list.size() < 2) {
+        } else if (type == TYPE_LIFE && list.size() < 2) {
             list.add(new double[] { Math.max(12, list.get(list.size() - 1)[0] + 1), 0 });
         }
 
@@ -589,10 +569,10 @@ public class Stats {
         mMcount = 100;
 
         switch (mType) {
-            case MONTH:
+            case TYPE_MONTH:
                 mLastElement = 31;
                 break;
-            case YEAR:
+            case TYPE_YEAR:
                 mLastElement = 52;
                 break;
             default:
@@ -622,7 +602,7 @@ public class Stats {
     /**
      * Hourly Breakdown
      */
-    public boolean calculateBreakdown(ChartPeriodType type) {
+    public boolean calculateBreakdown(int type) {
         mTitle = R.string.stats_breakdown;
         mAxisTitles = new int[] { R.string.stats_time_of_day, R.string.stats_percentage_correct, R.string.stats_reviews };
 
@@ -760,7 +740,7 @@ public class Stats {
      * Weekly Breakdown
      */
 
-    public boolean calculateWeeklyBreakdown(ChartPeriodType type) {
+    public boolean calculateWeeklyBreakdown(int type) {
         mTitle = R.string.stats_weekly_breakdown;
         mAxisTitles = new int[] { R.string.stats_day_of_week, R.string.stats_percentage_correct, R.string.stats_reviews };
 
@@ -887,7 +867,7 @@ public class Stats {
      * Answer Buttons
      */
 
-    public boolean calculateAnswerButtons(ChartPeriodType type) {
+    public boolean calculateAnswerButtons(int type) {
         mHasColoredCumulative = true;
         mTitle = R.string.stats_answer_buttons;
         mAxisTitles = new int[] { R.string.stats_answer_type, R.string.stats_answers, R.string.stats_cumulative_correct_percentage };
@@ -904,9 +884,9 @@ public class Stats {
         if (lim.length() > 0)
             lims.add(lim);
 
-        if (type == ChartPeriodType.MONTH)
+        if (type == TYPE_MONTH)
             days = 30;
-        else if (type == ChartPeriodType.YEAR)
+        else if (type == TYPE_YEAR)
             days = 365;
         else
             days = -1;
@@ -1018,7 +998,7 @@ public class Stats {
     /**
      * Cards Types
      */
-    public boolean calculateCardsTypes(ChartPeriodType type) {
+    public boolean calculateCardsTypes(int type) {
         mTitle = R.string.stats_cards_types;
         mIsPieChart = true;
         mAxisTitles = new int[] { R.string.stats_answer_type, R.string.stats_answers, R.string.stats_cumulative_correct_percentage };
@@ -1171,12 +1151,12 @@ public class Stats {
 
     private int _periodDays() {
         switch (mType){
-            case MONTH:
+            case TYPE_MONTH:
                 return 30;
-            case YEAR:
+            case TYPE_YEAR:
                 return 365;
             default:
-            case LIFE:
+            case TYPE_LIFE:
                 return -1;
         }
     }

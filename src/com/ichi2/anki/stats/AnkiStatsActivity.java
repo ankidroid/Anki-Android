@@ -197,7 +197,7 @@ public class AnkiStatsActivity extends ActionBarActivity implements ActionBar.Ta
         private ChartFragment mInstance = null;
         private int mSectionNumber;
         private Menu mMenu;
-        private Stats.ChartPeriodType mType  = Stats.ChartPeriodType.MONTH;
+        private int mType  = Stats.TYPE_MONTH;
         private boolean mIsCreated = false;
         private ViewPager mActivityPager;
         private SectionsPagerAdapter mActivitySectionPagerAdapter;
@@ -313,8 +313,8 @@ public class AnkiStatsActivity extends ActionBarActivity implements ActionBar.Ta
 
             int id = item.getItemId();
             if(id == R.id.action_month) {
-                if(ankiStatsTaskHandler.getStatType() != Stats.ChartPeriodType.MONTH){
-                    ankiStatsTaskHandler.setStatType(Stats.ChartPeriodType.MONTH);
+                if(ankiStatsTaskHandler.getStatType() != Stats.TYPE_MONTH){
+                    ankiStatsTaskHandler.setStatType(Stats.TYPE_MONTH);
                     monthItem.setChecked(true);
                     yearItem.setChecked(false);
                     allItem.setChecked(false);
@@ -324,8 +324,8 @@ public class AnkiStatsActivity extends ActionBarActivity implements ActionBar.Ta
                 }
 
             } else if(id == R.id.action_year) {
-                if(ankiStatsTaskHandler.getStatType() != Stats.ChartPeriodType.YEAR){
-                    ankiStatsTaskHandler.setStatType(Stats.ChartPeriodType.YEAR);
+                if(ankiStatsTaskHandler.getStatType() != Stats.TYPE_YEAR){
+                    ankiStatsTaskHandler.setStatType(Stats.TYPE_YEAR);
                     monthItem.setChecked(false);
                     yearItem.setChecked(true);
                     allItem.setChecked(false);
@@ -334,8 +334,8 @@ public class AnkiStatsActivity extends ActionBarActivity implements ActionBar.Ta
                     //mActivityPager.invalidate();
                 }
             } else if(id == R.id.action_life_time) {
-                if(ankiStatsTaskHandler.getStatType() != Stats.ChartPeriodType.LIFE){
-                    ankiStatsTaskHandler.setStatType(Stats.ChartPeriodType.LIFE);
+                if(ankiStatsTaskHandler.getStatType() != Stats.TYPE_LIFE){
+                    ankiStatsTaskHandler.setStatType(Stats.TYPE_LIFE);
                     monthItem.setChecked(false);
                     yearItem.setChecked(false);
                     allItem.setChecked(true);
@@ -355,9 +355,9 @@ public class AnkiStatsActivity extends ActionBarActivity implements ActionBar.Ta
             MenuItem allItem = (MenuItem)menu.findItem(R.id.action_life_time);
             AnkiStatsTaskHandler ankiStatsTaskHandler = (((AnkiStatsActivity)getActivity()).getTaskHandler());
 
-            monthItem.setChecked(ankiStatsTaskHandler.getStatType() == Stats.ChartPeriodType.MONTH);
-            yearItem.setChecked(ankiStatsTaskHandler.getStatType() == Stats.ChartPeriodType.YEAR);
-            allItem.setChecked(ankiStatsTaskHandler.getStatType() == Stats.ChartPeriodType.LIFE);
+            monthItem.setChecked(ankiStatsTaskHandler.getStatType() == Stats.TYPE_MONTH);
+            yearItem.setChecked(ankiStatsTaskHandler.getStatType() == Stats.TYPE_YEAR);
+            allItem.setChecked(ankiStatsTaskHandler.getStatType() == Stats.TYPE_LIFE);
 
         }
 

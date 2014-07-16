@@ -31,7 +31,7 @@ public class AnkiStatsTaskHandler {
 
     private Collection mCollectionData;
     private float mStandardTextSize = 10f;
-    private Stats.ChartPeriodType mStatType = Stats.ChartPeriodType.MONTH;
+    private int mStatType = Stats.TYPE_MONTH;
 
     private static boolean sIsWholeCollection = false;
 
@@ -97,11 +97,11 @@ public class AnkiStatsTaskHandler {
         this.mStandardTextSize = mStandardTextSize;
     }
 
-    public Stats.ChartPeriodType getStatType() {
+    public int getStatType() {
         return mStatType;
     }
 
-    public void setStatType(Stats.ChartPeriodType mStatType) {
+    public void setStatType(int mStatType) {
         this.mStatType = mStatType;
     }
 
