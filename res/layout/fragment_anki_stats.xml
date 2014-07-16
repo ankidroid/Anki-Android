@@ -1,0 +1,26 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context=".AnkiStatsActivity$PlaceholderFragment">
+
+    <com.wildplot.android.rendering.ChartView
+        android:layout_width="fill_parent"
+        android:id="@+id/image_view_chart"
+        android:layout_height="fill_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:background="@android:color/white"
+        android:textColor="#FFFFFF"
+        android:layout_margin="0dp"
+        android:visibility="visible"/>
+    <ProgressBar
+        android:id="@+id/progress_bar_stats"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:indeterminate="true" />
+
+
+</RelativeLayout>

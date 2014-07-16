@@ -777,19 +777,26 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         boolean wholeCollection = params[0].getBoolean();
 
         Stats stats = new Stats(col, wholeCollection);
+        int chartPeriodType = AnkiDroidApp.getSharedPrefs(
+                AnkiDroidApp.getInstance().getBaseContext()).getInt("statsType", Stats.TYPE_MONTH);
         switch (type) {
             default:
             case Stats.TYPE_FORECAST:
-                return new TaskData(stats.calculateDue(AnkiDroidApp.getSharedPrefs(
-                        AnkiDroidApp.getInstance().getBaseContext()).getInt("statsType", Stats.TYPE_MONTH)));
+                return new TaskData(stats.calculateDue(chartPeriodType));
             case Stats.TYPE_REVIEW_COUNT:
-                return new TaskData(stats.calculateDone(
-                        AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getInt("statsType",
-                                Stats.TYPE_MONTH), true));
+                return new TaskData(stats.calculateDone(chartPeriodType, true));
             case Stats.TYPE_REVIEW_TIME:
-                return new TaskData(stats.calculateDone(
-                        AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).getInt("statsType",
-                                Stats.TYPE_MONTH), false));
+                return new TaskData(stats.calculateDone(chartPeriodType, false));
+            case Stats.TYPE_INTERVALS:
+                return new TaskData(stats.calculateIntervals(chartPeriodType));
+            case Stats.TYPE_HOURLY_BREAKDOWN:
+                return new TaskData(stats.calculateBreakdown(chartPeriodType));
+            case Stats.TYPE_WEEKLY_BREAKDOWN:
+                return new TaskData(stats.calculateWeeklyBreakdown(chartPeriodType));
+            case Stats.TYPE_ANSWER_BUTTONS:
+                return new TaskData(stats.calculateAnswerButtons(chartPeriodType));
+            case Stats.TYPE_CARDS_TYPES:
+                return new TaskData(stats.calculateCardsTypes(chartPeriodType));
         }
     }
 
