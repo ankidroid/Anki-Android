@@ -245,25 +245,36 @@ public class ReliefDrawer implements Drawable {
 //			}
 //		}
 
-        float length = (field.x + field.width-plotSheet.getFrameThickness()) - (field.x+plotSheet.getFrameThickness());
+        float length = (field.x + field.width-plotSheet.getFrameThickness()[PlotSheet.RIGHT_FRAME_THICKNESS_INDEX]) -
+                (field.x+plotSheet.getFrameThickness()[PlotSheet.LEFT_FRAME_THICKNESS_INDEX]);
 		Thread[] threads = new Thread[threadCnt];
 		
 		PartRenderer[] partRenderer = new PartRenderer[threadCnt];
 		
 		GraphicsWrap gnew = bimages[0].getGraphics();
 		gnew.setClip(field);
-		partRenderer[0] = new PartRenderer(gnew, field.x+plotSheet.getFrameThickness(), field.x + plotSheet.getFrameThickness()+ length/threadCnt,function);
+		partRenderer[0] = new PartRenderer(gnew,
+                field.x + plotSheet.getFrameThickness()[PlotSheet.LEFT_FRAME_THICKNESS_INDEX],
+                field.x + plotSheet.getFrameThickness()[PlotSheet.LEFT_FRAME_THICKNESS_INDEX]+ length/threadCnt,
+                function);
 		threads[0] = new Thread(partRenderer[0]);
 		for(int i = 1; i< threads.length-1; i++){
 			gnew = bimages[i].getGraphics();
 			gnew.setClip(field);
-			partRenderer[i] = new PartRenderer(gnew, field.x + plotSheet.getFrameThickness() + length*i/threadCnt +1, field.x+ plotSheet.getFrameThickness() + length*(i+1)/threadCnt,function);
+			partRenderer[i] = new PartRenderer(gnew,
+                    field.x + plotSheet.getFrameThickness()[PlotSheet.LEFT_FRAME_THICKNESS_INDEX] +
+                            length*i/threadCnt +1,
+                    field.x + plotSheet.getFrameThickness()[PlotSheet.LEFT_FRAME_THICKNESS_INDEX] +
+                            length*(i+1)/threadCnt,function);
 			threads[i] = new Thread(partRenderer[i]);
 		}
 		if(threadCnt > 1){
 		gnew = bimages[threadCnt-1].getGraphics();
 		gnew.setClip(field);
-		partRenderer[threadCnt-1] = new PartRenderer(gnew, field.x + plotSheet.getFrameThickness() + length*(threadCnt-1)/threadCnt +1, field.x+ plotSheet.getFrameThickness() + length,function);
+		partRenderer[threadCnt-1] = new PartRenderer(gnew,
+                field.x + plotSheet.getFrameThickness()[PlotSheet.LEFT_FRAME_THICKNESS_INDEX] +
+                        length*(threadCnt-1)/threadCnt +1,
+                field.x+ plotSheet.getFrameThickness()[PlotSheet.LEFT_FRAME_THICKNESS_INDEX] + length,function);
 		threads[threadCnt-1] = new Thread(partRenderer[threadCnt-1]);
 		}
 		for(Thread thread : threads) {
@@ -295,8 +306,10 @@ public class ReliefDrawer implements Drawable {
 		double upToThisF_xy;
 		double leftToThisF_xy;
 		
-		for(int i = Math.round(field.x+plotSheet.getFrameThickness() + 1); i < field.x + field.width-plotSheet.getFrameThickness(); i++) {
-			for(int j = Math.round(field.y+plotSheet.getFrameThickness() + 1); j < field.y +field.height-plotSheet.getFrameThickness(); j++) {
+		for(int i = Math.round(field.x+plotSheet.getFrameThickness()[PlotSheet.LEFT_FRAME_THICKNESS_INDEX] + 1);
+            i < field.x + field.width-plotSheet.getFrameThickness()[PlotSheet.RIGHT_FRAME_THICKNESS_INDEX]; i++) {
+			for(int j = Math.round(field.y+plotSheet.getFrameThickness()[PlotSheet.UPPER_FRAME_THICKNESS_INDEX] + 1);
+                j < field.y +field.height-plotSheet.getFrameThickness()[PlotSheet.BOTTOM_FRAME_THICKNESS_INDEX]; j++) {
 				thisCoordinate = plotSheet.toCoordinatePoint(i, j, field);
 				upToThisCoordinate = plotSheet.toCoordinatePoint(i, j-1, field);
 				leftToThisCoordinate = plotSheet.toCoordinatePoint(i-1, j, field);
@@ -343,23 +356,29 @@ public class ReliefDrawer implements Drawable {
 		this.f_xHighest = f_xy;
 		this.f_xLowest 	= f_xy;
 
-        float length = (field.x + field.width-plotSheet.getFrameThickness()) - (field.x+plotSheet.getFrameThickness());
+        float length = (field.x + field.width-plotSheet.getFrameThickness()[PlotSheet.RIGHT_FRAME_THICKNESS_INDEX]) -
+                (field.x+plotSheet.getFrameThickness()[PlotSheet.LEFT_FRAME_THICKNESS_INDEX]);
 		Thread[] threads = new Thread[threadCnt];
 
         float stepSize = length/threadCnt;
 		
 		DepthSearcher[] dSearcher = new DepthSearcher[threadCnt];
 
-        float leftLim = field.x+plotSheet.getFrameThickness();
-        float rightLim = (field.x + plotSheet.getFrameThickness()+ (stepSize));
+        float leftLim = field.x+plotSheet.getFrameThickness()[PlotSheet.LEFT_FRAME_THICKNESS_INDEX];
+        float rightLim = (field.x + plotSheet.getFrameThickness()[PlotSheet.LEFT_FRAME_THICKNESS_INDEX]+ (stepSize));
 		dSearcher[0] = new DepthSearcher(field,leftLim ,rightLim );
 		threads[0] = new Thread(dSearcher[0]);
 		for(int i = 1; i< threads.length-1; i++){
-			dSearcher[i] = new DepthSearcher(field, field.x + plotSheet.getFrameThickness() + stepSize*i +1, field.x+ plotSheet.getFrameThickness() + stepSize*(i+1));
+			dSearcher[i] = new DepthSearcher(field,
+                    field.x + plotSheet.getFrameThickness()[PlotSheet.LEFT_FRAME_THICKNESS_INDEX] + stepSize*i +1,
+                    field.x + plotSheet.getFrameThickness()[PlotSheet.LEFT_FRAME_THICKNESS_INDEX] + stepSize*(i+1));
 			threads[i] = new Thread(dSearcher[i]);
 		}
 		if(threadCnt>1){
-			dSearcher[threadCnt-1] = new DepthSearcher(field, field.x + plotSheet.getFrameThickness() + stepSize*(threadCnt-1) +1, field.x+ plotSheet.getFrameThickness() + length);
+			dSearcher[threadCnt-1] = new DepthSearcher(field,
+                    field.x + plotSheet.getFrameThickness()[PlotSheet.LEFT_FRAME_THICKNESS_INDEX] +
+                            stepSize*(threadCnt-1) +1,
+                    field.x + plotSheet.getFrameThickness()[PlotSheet.LEFT_FRAME_THICKNESS_INDEX] + length);
 			threads[threadCnt-1] = new Thread(dSearcher[threadCnt-1]);
 		}
 		for(Thread thread : threads) {
@@ -624,7 +643,9 @@ public class ReliefDrawer implements Drawable {
 			
 			//scan for minimum and maximum f(x,y) in the given range
 			for(int i = Math.round(leftLim); i <= rightLim; i+=pixelSkip) {
-				for(int j = Math.round(field.y+plotSheet.getFrameThickness()); j < field.y +field.height-plotSheet.getFrameThickness(); j+=pixelSkip) {
+				for(int j = Math.round(field.y+plotSheet.getFrameThickness()[PlotSheet.UPPER_FRAME_THICKNESS_INDEX]);
+                    j < field.y +field.height-plotSheet.getFrameThickness()[PlotSheet.BOTTOM_FRAME_THICKNESS_INDEX];
+                    j+=pixelSkip) {
 					if(abortPaint){
 						return;
 					}
@@ -680,7 +701,9 @@ public class ReliefDrawer implements Drawable {
 			
 			double thisF_xy;
 			for(int i = Math.round(leftLim) ; i <= rightLim; i+=pixelSkip) {
-				for(int j = Math.round(field.y + +plotSheet.getFrameThickness()) ; j < field.y +field.height -plotSheet.getFrameThickness(); j+=pixelSkip) {
+				for(int j = Math.round(field.y + +plotSheet.getFrameThickness()[PlotSheet.UPPER_FRAME_THICKNESS_INDEX]);
+                    j < field.y +field.height -plotSheet.getFrameThickness()[PlotSheet.BOTTOM_FRAME_THICKNESS_INDEX];
+                    j+=pixelSkip) {
 					if(abortPaint)
 						return;
 					thisCoordinate = plotSheet.toCoordinatePoint(i, j, field);

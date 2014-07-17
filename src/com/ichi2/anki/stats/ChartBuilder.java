@@ -32,6 +32,7 @@ public class ChartBuilder {
     private boolean mIsWholeCollection = false;
     private ChartView mChartView;
     private Collection mCollectionData;
+    private int mDesiredPixelDistanceBetweenTicks = 200;
 
     private int mFrameThickness = 60;
 
@@ -121,11 +122,13 @@ public class ChartBuilder {
         float textSize = AnkiStatsTaskHandler.getInstance().getmStandardTextSize()*0.75f;
         paint.setTextSize(textSize);
         float FontHeigth = paint.getTextSize();
+        mDesiredPixelDistanceBetweenTicks = Math.round(paint.measureText("100000")*2.6f);
         mFrameThickness = Math.round( FontHeigth * 4.0f);
+
         //System.out.println("frame thickness: " + mFrameThickness);
 
         PlotSheet plotSheet = new PlotSheet(mFirstElement-0.5, mLastElement + 0.5, 0, mMaxCards*yAxisStretchFactor);
-        plotSheet.setFrameThickness(mFrameThickness);
+        plotSheet.setFrameThickness(mFrameThickness*0.66f, mFrameThickness*0.66f, mFrameThickness, mFrameThickness*0.9f);
         plotSheet.setFontSize(textSize);
 
         if(mChartType == Stats.ChartType.CARDS_TYPES){
@@ -133,19 +136,19 @@ public class ChartBuilder {
         }
 
         PlotSheet hiddenPlotSheet = new PlotSheet(mFirstElement-0.5, mLastElement + 0.5, 0, mMcount*yAxisStretchFactor);     //for second y-axis
-        hiddenPlotSheet.setFrameThickness(mFrameThickness);
+        hiddenPlotSheet.setFrameThickness(mFrameThickness*0.66f, mFrameThickness*0.66f, mFrameThickness, mFrameThickness*0.9f);
 
         setupBarGraphs(plotSheet, hiddenPlotSheet);
         setupCumulative(plotSheet, hiddenPlotSheet);
 
-        double xTicks = ticksCalcX(150, rect, mFirstElement, mLastElement);
+        double xTicks = ticksCalcX(mDesiredPixelDistanceBetweenTicks, rect, mFirstElement, mLastElement);
         setupXaxis(plotSheet, xTicks);
 
-        double yTicks = ticksCalcY(150, rect, 0, mMaxCards*yAxisStretchFactor);
+        double yTicks = ticksCalcY(mDesiredPixelDistanceBetweenTicks, rect, 0, mMaxCards*yAxisStretchFactor);
         setupYaxis(plotSheet,hiddenPlotSheet, yTicks, mAxisTitles[1], false);
-        double rightYtics = ticsCalc(150, rect,  mMcount*yAxisStretchFactor);
+        double rightYtics = ticsCalc(mDesiredPixelDistanceBetweenTicks, rect,  mMcount*yAxisStretchFactor);
         setupYaxis(plotSheet,hiddenPlotSheet, rightYtics, mAxisTitles[2], true );
-        setupGrid(plotSheet);
+        setupGrid(plotSheet, yTicks*0.5, xTicks*0.5);
 
         return plotSheet;
     }
@@ -171,6 +174,7 @@ public class ChartBuilder {
         legendDrawable3.setName(mChartView.getResources().getString(mValueLabels[3]) + ": " + (int)mSeriesList[0][3]);
 
 
+        plotSheet.unsetBorder();
         plotSheet.addDrawable(pieChart);
         plotSheet.addDrawable(legendDrawable1);
         plotSheet.addDrawable(legendDrawable2);
@@ -280,18 +284,19 @@ public class ChartBuilder {
         else
             yAxis.setOnFrame();
 
+        yAxis.setHasNumbersRotated();
         plotSheet.addDrawable(yAxis);
     }
 
-    private void setupGrid(PlotSheet plotSheet){
+    private void setupGrid(PlotSheet plotSheet, double yTicks, double xTicks){
         int red = ColorWrap.LIGHT_GRAY.getRed();
         int green = ColorWrap.LIGHT_GRAY.getGreen();
         int blue = ColorWrap.LIGHT_GRAY.getBlue();
 
         ColorWrap newGridColor = new ColorWrap(red,green,blue, 222);
 
-        XGrid xGrid = new XGrid(plotSheet, 0, 150);
-        YGrid yGrid = new YGrid(plotSheet, 0, 150);
+        XGrid xGrid = new XGrid(plotSheet, 0, yTicks);  //ticks are not wrong, xgrid is vertical to yaxis -> yticks
+        YGrid yGrid = new YGrid(plotSheet, 0, xTicks);
 
         double[] timePositions;
 
@@ -340,6 +345,7 @@ public class ChartBuilder {
         while((deltaRange/(tics))/2 >= ticlimit) {
             tics *= 2.0;
         }
+        Log.d(AnkiDroidApp.TAG, "ChartBuilder ticksCalcY: pixelDistance: " + pixelDistance + ", ticks: " + tics);
         return tics;
     }
 

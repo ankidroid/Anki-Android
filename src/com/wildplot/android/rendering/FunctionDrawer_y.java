@@ -115,7 +115,8 @@ public class FunctionDrawer_y implements Drawable {
 		
 		if(autoscale){
 			double[] start = this.plotSheet.toCoordinatePoint(0, 0, field);
-			double[] end = this.plotSheet.toCoordinatePoint(0+this.plotSheet.getFrameThickness(), 0, field);
+			double[] end = this.plotSheet.toCoordinatePoint(
+                    0+this.plotSheet.getFrameThickness()[PlotSheet.LEFT_FRAME_THICKNESS_INDEX], 0, field);
 			
 			this.scaleFactor = Math.abs(end[0] - start[0]);
 //			this.scaleFactor *= binSize;
@@ -128,7 +129,8 @@ public class FunctionDrawer_y implements Drawable {
 		
 		double[] drawingPoint = plotSheet.toCoordinatePoint(field.x,field.height,field);
 		if(this.isOnFrame)
-			drawingPoint = plotSheet.toCoordinatePoint(field.x,field.height-this.plotSheet.getFrameThickness(),field);
+			drawingPoint = plotSheet.toCoordinatePoint(field.x,
+                    field.height-this.plotSheet.getFrameThickness()[PlotSheet.BOTTOM_FRAME_THICKNESS_INDEX],field);
 		
 		double f_y = function.f(drawingPoint[1])*scaleFactor*extraScaleFactor;
 		double f_y_old = f_y;
@@ -142,8 +144,9 @@ public class FunctionDrawer_y implements Drawable {
         float leftStart = field.height+field.y;
         float rightEnd = field.y;
 		if(this.isOnFrame){
-			leftStart = field.height+field.y-this.plotSheet.getFrameThickness();
-			rightEnd = field.y+this.plotSheet.getFrameThickness();
+			leftStart = field.height + field.y -
+                    this.plotSheet.getFrameThickness()[PlotSheet.BOTTOM_FRAME_THICKNESS_INDEX];
+			rightEnd = field.y+this.plotSheet.getFrameThickness()[PlotSheet.UPPER_FRAME_THICKNESS_INDEX];
 		}
 		
 		if(this.hasLimit){
