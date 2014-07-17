@@ -44,7 +44,7 @@
     <item quantity="other">%d Karten angezeigt</item>
   </plurals>
   <string name="card_browser_all_decks">Alle Stapel</string>
-  <string name="card_browser_load">Lade Karten.\nBitte warten...</string>
+  <string name="card_browser_load">Lade Karten&#8230;</string>
   <string name="card_browser_cardloading_error">Fehler beim Laden der Karten. Vermutlich hängt dies mit einem zu geringen Gerätespeicher zusammen. Versuchen Sie es mit einem kleineren Stapel</string>
   <string name="card_browser_delete_card">Notiz löschen</string>
   <string name="card_browser_suspend_card">Karte aussetzen</string>
@@ -79,7 +79,7 @@
   <string name="card_details_changed">Geändert</string>
   <string name="card_details_tags">Schlagworte</string>
   <string name="card_details_model">Notiz-Typ</string>
-  <string name="card_browser_sorting_cards">Sortiere Karten&#8230;</string>
+  <string name="card_browser_sorting_cards">Karten werden sortiert&#8230;</string>
   <string name="card_browser_filtering_cards">Filtere Karten&#8230; \nAbbrechen mit \"Zurück\"</string>
   <string name="card_details_card_model">Kartenvorlage</string>
   <string-array name="card_browser_order_labels">

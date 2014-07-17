@@ -164,5 +164,5 @@
   <string name="sched_unbury_button">Pour les voir maintenant, appuyer sur le bouton Déterrer.</string>
   <string name="sched_has_buried">Certaines cartes enterrées ou différées ont été reportées à une prochaine séance.</string>
   <string name="tag_editor_add_hint">Utiliser la coche sur la droite pour ajouter une nouvelle étiquette</string>
-  <string name="tag_editor_add_feedback">Press \"%2$s\" button to confirm adding \"%1$s\"</string>
+  <string name="tag_editor_add_feedback">Appuyer « %2$s » pour confirmer l\'ajout de « %1$s »</string>
 </resources>

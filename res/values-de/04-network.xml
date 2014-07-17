@@ -76,7 +76,7 @@
   <string name="sign_up_terms">Indem Sie <i>Registrieren</i> berühren, bestätigen Sie, dass Sie unsere <a href="https://ankiweb.net/account/terms">Nutzungsbedingungen</a> gelesen haben und anerkennen.</string>
   <string name="logged_as">Eingeloggt als</string>
   <string name="log_out">Ausloggen</string>
-  <string name="alert_logging_message">Einloggen, bitte warten&#8230;</string>
+  <string name="alert_logging_message">Einloggen&#8230;</string>
   <string name="invalid_username_password">E-Mail-Adresse oder Passwort ungültig.</string>
   <string name="login_generic_error">Fehler beim Anmelden.</string>
   <string name="reset_password">Passwort zurücksetzen</string>
