@@ -103,8 +103,6 @@ public class NavigationDrawerActivity extends AnkiActivity {
             }
 
             public void onDrawerOpened(View drawerView) {
-                AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit()
-                .putBoolean("navDrawerHasBeenOpened", true).commit();
                 getSupportActionBar().setTitle(mDrawerTitle);
                 supportInvalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }

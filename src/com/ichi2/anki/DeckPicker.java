@@ -927,11 +927,13 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
 
         SharedPreferences preferences = restorePreferences();
 
-        // activate broadcast messages if first start of a day
-        if (mLastTimeOpened < UIUtils.getDayStart()) {
-            preferences.edit().putBoolean("showBroadcastMessageToday", true).commit();
+        // activate broadcast messages if first start of a day, and not fresh install
+        if (mLastTimeOpened > 0) {
+            if (mLastTimeOpened < UIUtils.getDayStart()) {
+                preferences.edit().putBoolean("showBroadcastMessageToday", true).commit();
+            }
+            preferences.edit().putLong("lastTimeOpened", System.currentTimeMillis()).commit();
         }
-        preferences.edit().putLong("lastTimeOpened", System.currentTimeMillis()).commit();
 
         // if (intent != null && intent.hasExtra(EXTRA_DECK_ID)) {
         // openStudyOptions(intent.getLongExtra(EXTRA_DECK_ID, 1));
@@ -961,7 +963,6 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
         if (!intent.getBooleanExtra("viaNavigationDrawer", false) && !preferences.getBoolean("navDrawerHasBeenOpened", false)) {
             getDrawerLayout().openDrawer(Gravity.LEFT);
         }
-
 
         mDeckList = new ArrayList<HashMap<String, String>>();
         mDeckListView = (ListView) findViewById(R.id.files);
@@ -2568,7 +2569,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
         } else if (requestCode == SHOW_INFO_WELCOME || requestCode == SHOW_INFO_NEW_VERSION) {
             if (resultCode == RESULT_OK) {
                 showStartupScreensAndDialogs(AnkiDroidApp.getSharedPrefs(getBaseContext()),
-                        requestCode == SHOW_INFO_WELCOME ? 1 : 2);
+                        requestCode == SHOW_INFO_WELCOME ? 2 : 3);
             } else {
                 finishWithAnimation();
             }
