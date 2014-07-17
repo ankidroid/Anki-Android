@@ -163,6 +163,6 @@
   <string name="sched_end">(fine)</string>
   <string name="sched_unbury_button">Per vederle ora, tocca il pulsante Disseppellisci.</string>
   <string name="sched_has_buried">Alcune carte correlate o seppellite sono state rinviate ad una prossima sessione.</string>
-  <string name="tag_editor_add_hint">Use tick mark on the right to add new tag</string>
-  <string name="tag_editor_add_feedback">Press \"%2$s\" button to confirm adding \"%1$s\"</string>
+  <string name="tag_editor_add_hint">Utilizza la casella sulla destra per aggiungere una nuova etichetta</string>
+  <string name="tag_editor_add_feedback">Premi il pulsante \"%2$s\" per confermare l\'aggiunta di \"%1$s\"</string>
 </resources>

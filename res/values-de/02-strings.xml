@@ -123,7 +123,7 @@
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Leere Karte. Führen Sie \"Werkzeuge&gt;Leere Karten...\" mit dem Desktop-Programm aus.</string>
   <string name="unknown_type_field_warning">Antworteingabe: Unbekanntes Feld %s</string>
   <string name="simple_interface_hint">Leere %s. Versuchen Sie es bei abgeschalteter vereinfachter Oberfläche.</string>
-  <string name="delete_deck">Lösche Stapel&#8230;\nBitte warten.</string>
+  <string name="delete_deck">Lösche Stapel&#8230;</string>
   <string-array name="dynOrderLabels">
     <item>Am frühesten gesehene zuerst</item>
     <item>Zufällig</item>
@@ -147,7 +147,7 @@
   <string name="import_log_success">Erfolgreich %d Karten importiert</string>
   <string name="import_log_error">Import fehlgeschlagen</string>
   <string name="import_log_no_apkg">Dies ist keine gültige apgk-Datei</string>
-  <string name="import_importing">Karten werden importiert.\nBitte warten...</string>
+  <string name="import_importing">Karten werden importiert&#8230;</string>
   <string name="import_hint">Kopieren Sie die apkg-Datei ins Verzeichnis %s und berühren Sie OK um Karten zu importieren</string>
   <string name="upgrade_import_no_file_found">Keine importierbare Datei %1$s gefunden</string>
   <string name="study_options">Stapeloptionen</string>

@@ -88,7 +88,7 @@
   <string name="custom_study_random">x Karten zufällig aus dem Stapel wählen:</string>
   <string name="custom_study_preview">Vorschau auf neue Karten, die in den letzten x Tagen hinzugefügt wurden:</string>
   <string name="custom_study_tags">Schlagworte eingeben:</string>
-  <string name="rebuild_custom_study_deck">Erstelle neuen Stapel für eine benutzerdefinierte Sitzung.\nBitte warten...</string>
+  <string name="rebuild_custom_study_deck">Erstelle neuen Stapel für eine benutzerdefinierte Sitzung&#8230;</string>
   <string name="deck_upgrade_title">Stapel aktualisieren</string>
   <string name="deck_upgrade_rename_warning">Beachten Sie, dass dies Ihre aktuelle Sammlung in eine Datei namens \'%1$s\' exportieren und eine neue Sammlung aus Ihren alten anki 1.x Dateien erstellen wird. Falls gewünscht, können Sie die gesicherte apkg Datei nach Abschluss des Assistenten manuell neu importieren. Möchten Sie wirklich fortfahren?</string>
   <string name="deck_upgrade_major_warning"><![CDATA[Dies ist ein wichtiges Update für Ankidroid und kann 10-20 minuten dauern.<br><br>Wollen Sie fortfahren oder das Update später ausführen?<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en">Mehr Informationen</a>]]></string>
@@ -111,7 +111,7 @@
   <string name="upgrade_deck_web_upgrade_exceeds">Die Gesamtgröße Ihrer komprimierten Anki1 Stapel überschreitet das 50MB Limit des Servers. Versuchen Sie mit einer anderen Methode zu aktualisieren.</string>
   <string name="upgrade_deck_web_upgrade_sdcard">Die Aktualisierung wurde abgeschlossen, aber es gab einen Fehler beim Entpacken der Sammlung. Bitte stellen Sie sicher, dass Sie genug freien Speicher haben (%1$dMB benötigt), oder versuchen Sie mit einer anderen Methode zu aktualisieren.</string>
   <string name="export_progress_title">Sammlung exportieren</string>
-  <string name="export_progress_exporting">Sammlung wird exportiert&#8230;</string>
+  <string name="export_progress_exporting">Exportiere Sammlung&#8230;</string>
   <string name="upgrade_deck_export_successful">Ihre alte Sammlung wurde exportiert, fahre mit der Aktualisierung fort.</string>
   <string name="upgrade_deck_export_error">Fehler beim Export Ihrer alten Sammlung. Wollen Sie mit der Aktualisierung fortfahren? Ihre alte Sammlung geht verloren.</string>
   <string name="upgrade_deck_sync_from_ankiweb">Synchronisieren mit AnkiWeb</string>
