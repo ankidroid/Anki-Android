@@ -2748,7 +2748,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
             intent.putExtra("index", deckId);
             intent.putExtra("cramInitialConfig", cramInitialConfig);
             intent.setClass(this, StudyOptionsActivity.class);
-            ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
+            startActivityForResultWithAnimation(intent, SHOW_STUDYOPTIONS, ActivityTransitionAnimation.LEFT);
         }
     }
 
