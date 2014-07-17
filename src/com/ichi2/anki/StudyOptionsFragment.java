@@ -988,6 +988,10 @@ public class StudyOptionsFragment extends Fragment {
             if (name.length > 2) {
                 nameBuilder.append("\n").append(name[name.length - 1]);
             }
+            // Workaround for issue 2182; probably there's a cleaner solution
+            if (mTextDeckName == null) {
+                initAllContentViews(getActivity().getLayoutInflater());
+            }
             mTextDeckName.setText(nameBuilder.toString());
 
             // open cram deck option if deck is opened for the first time

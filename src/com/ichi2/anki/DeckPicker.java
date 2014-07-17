@@ -2622,7 +2622,6 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                     mDontSaveOnStop = true;
                     Intent i = new Intent();
                     i.setClass(this, StudyOptionsActivity.class);
-                    i.putExtra("onlyFnsMsg", true);
                     startActivityForResult(i, SHOW_STUDYOPTIONS);
                     ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
                     break;
@@ -2749,17 +2748,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
             intent.putExtra("index", deckId);
             intent.putExtra("cramInitialConfig", cramInitialConfig);
             intent.setClass(this, StudyOptionsActivity.class);
-            // if (deckId != 0) {
-            // intent.putExtra(EXTRA_DECK_ID, deckId);
-            // }
-            startActivityForResult(intent, SHOW_STUDYOPTIONS);
-            // if (deckId != 0) {
-            // if (UIUtils.getApiLevel() > 4) {
-            // ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.NONE);
-            // }
-            // } else {
             ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
-            // }
         }
     }
 
