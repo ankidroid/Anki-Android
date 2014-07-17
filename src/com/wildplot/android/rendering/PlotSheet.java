@@ -86,7 +86,7 @@ public class PlotSheet implements Drawable {
 	 * the ploting screens, screen 0 is the only one in single mode
 	 */
 	Vector<MultiScreenPart> screenParts = new Vector<MultiScreenPart>();
-    private HashMap<String, ColorWrap> mLegendMap;
+    private HashMap<String, ColorWrap> mLegendMap = new HashMap<String, ColorWrap>();
 
     /**
 	 * Create a virtual sheet used for the plot
@@ -319,9 +319,6 @@ public class PlotSheet implements Drawable {
 	}
 	
 	private void drawSingleMode(GraphicsWrap g, int screenNr) {
-
-		mLegendMap = new HashMap<String, ColorWrap>();
-
         RectangleWrap field = g.getClipBounds();
 		this.currentScreen = screenNr;
         prepareRunnables();
@@ -425,6 +422,8 @@ public class PlotSheet implements Drawable {
 
             float currentPixelWidth = xPointer;
 
+            int legendCnt = 0;
+            Log.d(AnkiDroidApp.TAG, "should draw legend now, number of legend entries: " + mLegendMap.size());
             for(String legendName : keySet){
 
                 float stringWidth = fm.stringWidth(" : "+legendName);
@@ -433,15 +432,15 @@ public class PlotSheet implements Drawable {
                 ColorWrap color = mLegendMap.get(legendName);
                 g.setColor(color);
 
-                if(xPointer + rectangleSize*2 + stringWidth >= field.width){
+                if(legendCnt++ != 0 && xPointer + rectangleSize*2.0f + stringWidth >= field.width){
                     xPointer = spacerValue;
                     ySpacer += rectangleSize + spacerValue;
                 }
                 g.fillRect(xPointer, ySpacer, rectangleSize, rectangleSize);
                 g.setColor(ColorWrap.BLACK);
-                g.drawString(" : "+legendName, xPointer + rectangleSize , ySpacer+rectangleSize - delta/2);
-                xPointer += rectangleSize*1.3 + stringWidth;
-
+                g.drawString(" : "+legendName, xPointer + rectangleSize , ySpacer+rectangleSize);
+                xPointer += rectangleSize*1.3f + stringWidth;
+                Log.d(AnkiDroidApp.TAG, "drawing a legend Item: (" + legendName + ") " + (legendCnt -1) + ", x: " + (xPointer + rectangleSize) + ", y: " + (ySpacer+rectangleSize));
 
             }
             g.setFontSize(oldFontSize);

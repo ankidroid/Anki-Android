@@ -15,6 +15,7 @@
  ****************************************************************************************/
 package com.ichi2.anki.stats;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import android.support.v4.app.*;
@@ -36,10 +37,20 @@ import java.util.Locale;
 
 public class AnkiStatsActivity extends NavigationDrawerActivity implements ActionBar.TabListener {
 
-    SectionsPagerAdapter mSectionsPagerAdapter;
-    ViewPager mViewPager;
-    AnkiStatsTaskHandler mTaskHandler = null;
-    ActionBar mActionBar;
+    public static final int FORECAST_TAB_POSITION = 0;
+    public static final int REVIEW_COUNT_TAB_POSITION = 1;
+    public static final int REVIEW_TIME_TAB_POSITION = 2;
+    public static final int INTERVALS_TAB_POSITION = 3;
+    public static final int HOURLY_BREAKDOWN_TAB_POSITION = 4;
+    public static final int WEEKLY_BREAKDOWN_TAB_POSITION = 5;
+    public static final int ANSWER_BUTTONS_TAB_POSITION = 6;
+    public static final int CARDS_TYPES_TAB_POSITION = 7;
+
+
+    private SectionsPagerAdapter mSectionsPagerAdapter;
+    private ViewPager mViewPager;
+    private AnkiStatsTaskHandler mTaskHandler = null;
+    private ActionBar mActionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +99,7 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
         }
 
 
+        //Dirty way to get text size from a TextView with current style, change if possible
         float size = new TextView(this).getTextSize();
 
 
@@ -139,6 +151,9 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
         mViewPager.setCurrentItem(tab.getPosition());
         ChartFragment currentFragment = (ChartFragment) mSectionsPagerAdapter.getItem(tab.getPosition());
         currentFragment.checkAndUpdate();
+        if (android.os.Build.VERSION.SDK_INT <= android.os.Build.VERSION_CODES.GINGERBREAD) {
+            currentFragment.invalidateView();
+        }
         //System.err.println("!!!!!<<<<onTabSelected" + tab.getPosition());
     }
 
@@ -173,14 +188,11 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
             return ChartFragment.newInstance(position);
         }
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
             return 8;
         }
 
@@ -189,21 +201,21 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
             Locale l = Locale.getDefault();
 
             switch (position) {
-                case 0:
+                case FORECAST_TAB_POSITION:
                     return getString(R.string.stats_forecast).toUpperCase(l);
-                case 1:
+                case REVIEW_COUNT_TAB_POSITION:
                     return getString(R.string.stats_review_count).toUpperCase(l);
-                case 2:
+                case REVIEW_TIME_TAB_POSITION:
                     return getString(R.string.stats_review_time).toUpperCase(l);
-                case 3:
+                case INTERVALS_TAB_POSITION:
                     return getString(R.string.stats_review_intervals).toUpperCase(l);
-                case 4:
+                case HOURLY_BREAKDOWN_TAB_POSITION:
                     return getString(R.string.stats_breakdown).toUpperCase(l);
-                case 5:
+                case WEEKLY_BREAKDOWN_TAB_POSITION:
                     return getString(R.string.stats_weekly_breakdown).toUpperCase(l);
-                case 6:
+                case ANSWER_BUTTONS_TAB_POSITION:
                     return getString(R.string.stats_answer_buttons).toUpperCase(l);
-                case 7:
+                case CARDS_TYPES_TAB_POSITION:
                     return getString(R.string.stats_cards_types).toUpperCase(l);
             }
             return null;
@@ -230,6 +242,7 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
         private boolean mIsCreated = false;
         private ViewPager mActivityPager;
         private SectionsPagerAdapter mActivitySectionPagerAdapter;
+        private AsyncTask mCreateChartTask;
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -238,12 +251,13 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
         public static ChartFragment newInstance(int sectionNumber) {
             ChartFragment fragment = new ChartFragment();
             Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber+1);
+            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             fragment.setArguments(args);
             return fragment;
         }
 
         public ChartFragment() {
+            super();
         }
 
         @Override
@@ -253,7 +267,7 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
             Bundle bundle = getArguments();
             mSectionNumber = bundle.getInt(ARG_SECTION_NUMBER);
             //int sectionNumber = 0;
-            System.err.println("sectionNumber: " + mSectionNumber);
+            //System.err.println("sectionNumber: " + mSectionNumber);
             View rootView = inflater.inflate(R.layout.fragment_anki_stats, container, false);
             mChart = (ChartView) rootView.findViewById(R.id.image_view_chart);
             if(mChart == null)
@@ -270,6 +284,8 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
             createChart();
             mHeight = mChart.getMeasuredHeight();
             mWidth = mChart.getMeasuredWidth();
+            mChart.addFragment(this);
+
             mInstance = this;
             mType = (((AnkiStatsActivity)getActivity()).getTaskHandler()).getStatType();
             mIsCreated = true;
@@ -279,22 +295,41 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
         }
 
         private void createChart(){
-            if(mSectionNumber == 1) {
-                (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(Stats.ChartType.FORECAST, mChart, mProgressBar);
-            } else if(mSectionNumber == 2) {
-                (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(Stats.ChartType.REVIEW_COUNT, mChart, mProgressBar);
-            } else if(mSectionNumber == 3) {
-                (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(Stats.ChartType.REVIEW_TIME, mChart, mProgressBar);
-            } else if(mSectionNumber == 4) {
-                (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(Stats.ChartType.INTERVALS, mChart, mProgressBar);
-            } else if(mSectionNumber == 5) {
-                (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(Stats.ChartType.HOURLY_BREAKDOWN, mChart, mProgressBar);
-            } else if(mSectionNumber == 6) {
-                (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(Stats.ChartType.WEEKLY_BREAKDOWN, mChart, mProgressBar);
-            } else if(mSectionNumber == 7) {
-                (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(Stats.ChartType.ANSWER_BUTTONS, mChart, mProgressBar);
-            } else if(mSectionNumber == 8) {
-                (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(Stats.ChartType.CARDS_TYPES, mChart, mProgressBar);
+
+            switch (mSectionNumber){
+                case FORECAST_TAB_POSITION:
+                    mCreateChartTask = (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(
+                            Stats.ChartType.FORECAST, mChart, mProgressBar);
+                    break;
+                case REVIEW_COUNT_TAB_POSITION:
+                    mCreateChartTask = (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(
+                            Stats.ChartType.REVIEW_COUNT, mChart, mProgressBar);
+                    break;
+                case REVIEW_TIME_TAB_POSITION:
+                    mCreateChartTask = (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(
+                            Stats.ChartType.REVIEW_TIME, mChart, mProgressBar);
+                    break;
+                case INTERVALS_TAB_POSITION:
+                    mCreateChartTask = (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(
+                            Stats.ChartType.INTERVALS, mChart, mProgressBar);
+                    break;
+                case HOURLY_BREAKDOWN_TAB_POSITION:
+                    mCreateChartTask = (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(
+                            Stats.ChartType.HOURLY_BREAKDOWN, mChart, mProgressBar);
+                    break;
+                case WEEKLY_BREAKDOWN_TAB_POSITION:
+                    mCreateChartTask = (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(
+                            Stats.ChartType.WEEKLY_BREAKDOWN, mChart, mProgressBar);
+                    break;
+                case ANSWER_BUTTONS_TAB_POSITION:
+                    mCreateChartTask = (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(
+                            Stats.ChartType.ANSWER_BUTTONS, mChart, mProgressBar);
+                    break;
+                case CARDS_TYPES_TAB_POSITION:
+                    mCreateChartTask = (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(
+                            Stats.ChartType.CARDS_TYPES, mChart, mProgressBar);
+                    break;
+
             }
         }
 
@@ -311,11 +346,18 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
                 return;
             int height = mChart.getMeasuredHeight();
             int width = mChart.getMeasuredWidth();
+
+            //are height and width checks still necessary without bitmaps?
             if(height != 0 && width != 0){
                 if(mHeight != height || mWidth != width || mType != (((AnkiStatsActivity)getActivity()).getTaskHandler()).getStatType()){
                     mHeight = height;
                     mWidth = width;
                     mType = (((AnkiStatsActivity)getActivity()).getTaskHandler()).getStatType();
+                    mProgressBar.setVisibility(View.VISIBLE);
+                    mChart.setVisibility(View.GONE);
+                    if(mCreateChartTask != null && !mCreateChartTask.isCancelled()){
+                        mCreateChartTask.cancel(true);
+                    }
                     createChart();
                 }
             }
@@ -393,6 +435,18 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
+        }
+        public void invalidateView(){
+            if(mChart != null)
+                 mChart.invalidate();
+        }
+
+        @Override
+        public void onDestroy() {
+            super.onDestroy();
+            if(mCreateChartTask != null && !mCreateChartTask.isCancelled()){
+                mCreateChartTask.cancel(true);
+            }
         }
     }
 

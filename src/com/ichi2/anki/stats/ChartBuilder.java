@@ -16,6 +16,7 @@
 package com.ichi2.anki.stats;
 
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.util.Log;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
@@ -119,7 +120,7 @@ public class ChartBuilder {
 
 
         RectangleWrap rect = new RectangleWrap(width, height);
-        float textSize = AnkiStatsTaskHandler.getInstance().getmStandardTextSize()*0.75f;
+        float textSize = AnkiStatsTaskHandler.getInstance().getmStandardTextSize()*0.85f;
         paint.setTextSize(textSize);
         float FontHeigth = paint.getTextSize();
         mDesiredPixelDistanceBetweenTicks = Math.round(paint.measureText("100000")*2.6f);

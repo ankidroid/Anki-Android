@@ -21,13 +21,17 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
+import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.stats.AnkiStatsActivity;
 import com.ichi2.anki.stats.AnkiStatsTaskHandler;
 import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap;
 import com.wildplot.android.rendering.graphics.wrapper.RectangleWrap;
 
 public class ChartView extends View{
 
+    private AnkiStatsActivity.ChartFragment mFragment;
     private RectangleWrap mRectangle;
     private PlotSheet mPlotSheet;
     private boolean mDataIsSet;
@@ -71,8 +75,18 @@ public class ChartView extends View{
 
     }
 
+    public void addFragment(AnkiStatsActivity.ChartFragment fragment){
+        mFragment = fragment;
+    }
     public void setData(PlotSheet plotSheet){
         mPlotSheet = plotSheet;
         mDataIsSet = true;
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        Log.d(AnkiDroidApp.TAG, "ChartView sizeChange!");
+        mFragment.checkAndUpdate();
     }
 }
