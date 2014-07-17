@@ -973,6 +973,13 @@ public class StudyOptionsFragment extends Fragment {
         }
         JSONObject deck = AnkiDroidApp.getCol().getDecks().current();
         try {
+            // Workaround for issue 2166; probably there's a cleaner solution
+            if (mTextDeckName == null) {
+                initAllContentViews(getActivity().getLayoutInflater());
+                resetAndUpdateValuesFromDeck();
+                return;
+            }
+
             fullName = deck.getString("name");
             String[] name = fullName.split("::");
             StringBuilder nameBuilder = new StringBuilder();
@@ -987,10 +994,6 @@ public class StudyOptionsFragment extends Fragment {
             }
             if (name.length > 2) {
                 nameBuilder.append("\n").append(name[name.length - 1]);
-            }
-            // Workaround for issue 2182; probably there's a cleaner solution
-            if (mTextDeckName == null) {
-                initAllContentViews(getActivity().getLayoutInflater());
             }
             mTextDeckName.setText(nameBuilder.toString());
 
