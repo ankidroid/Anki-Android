@@ -78,6 +78,12 @@ import java.util.List;
 import java.util.Locale;
 
 public class StudyOptionsFragment extends Fragment {
+    
+    // Container Activity must implement this interface
+    public interface OnStudyOptionsReloadListener {
+        public void loadStudyOptionsFragment(long deckId, Bundle cramConfig);
+        public void loadStudyOptionsFragment();
+    }
 
     /**
      * Available options performed by other activities
@@ -241,13 +247,12 @@ public class StudyOptionsFragment extends Fragment {
     }
 
 
-    public static StudyOptionsFragment newInstance(long deckId, boolean onlyFnsMsg, Bundle cramInitialConfig) {
+    public static StudyOptionsFragment newInstance(long deckId, Bundle cramInitialConfig) {
         StudyOptionsFragment f = new StudyOptionsFragment();
 
         // Supply index input as an argument.
         Bundle args = new Bundle();
         args.putLong("deckId", deckId);
-        args.putBoolean("onlyFnsMsg", onlyFnsMsg);
         args.putBundle("cramInitialConfig", cramInitialConfig);
         f.setArguments(args);
 
@@ -294,7 +299,7 @@ public class StudyOptionsFragment extends Fragment {
             };
         }
 
-        if (getArguments().getBoolean("onlyFnsMsg")) {
+        if (noDeckCounts()) {
             prepareCongratsView();
         } else {
             // clear undo if new deck is opened (do not clear if only congrats msg is shown)
@@ -449,7 +454,7 @@ public class StudyOptionsFragment extends Fragment {
                 if (!AnkiDroidApp.colIsOpen()) {
                     closeStudyOptions();
                 } else if (!mFragmented) {
-                    ((StudyOptionsActivity) getActivity()).loadContent(false);
+                    ((OnStudyOptionsReloadListener) getActivity()).loadStudyOptionsFragment();
                 }
             }
 
@@ -930,16 +935,6 @@ public class StudyOptionsFragment extends Fragment {
                 ar.getJSONArray(0).put(2, terms[2]);
                 dyn.put("resched", resched);
 
-                if (mFragmented) {
-                    Bundle config = new Bundle();
-                    config.putString("searchSuffix", "'deck:" + dyn.getString("name") + "'");
-                    initAllContentViews(getLayoutInflater(config));
-                    finishCongrats();
-                } else {
-                    // Load a new fragment with the filtered deck view. The config passed is null, so it uses the
-                    // current deck. The deck we just created is internally set as the current deck.
-                    ((StudyOptionsActivity) getActivity()).loadContent(false, null);
-                }
 
                 // Initial rebuild
                 mProgressDialog = StyledProgressDialog.show(getActivity(), "",
@@ -1219,6 +1214,17 @@ public class StudyOptionsFragment extends Fragment {
             }
         }
     }
+    
+    private void dismissProgressDialog() {
+        // for rebuilding cram decks
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            try {
+                mProgressDialog.dismiss();
+            } catch (Exception e) {
+                Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
+            }
+        }        
+    }
 
 
     public SharedPreferences restorePreferences() {
@@ -1231,7 +1237,8 @@ public class StudyOptionsFragment extends Fragment {
     DeckTask.TaskListener mRebuildCustomStudyListener = new DeckTask.TaskListener() {
         @Override
         public void onPostExecute(TaskData result) {
-            resetAndUpdateValuesFromDeck();
+            dismissProgressDialog();
+            ((OnStudyOptionsReloadListener) getActivity()).loadStudyOptionsFragment();
         }
 
 
@@ -1341,13 +1348,7 @@ public class StudyOptionsFragment extends Fragment {
             }
 
             // for rebuilding cram decks
-            if (mProgressDialog != null && mProgressDialog.isShowing()) {
-                try {
-                    mProgressDialog.dismiss();
-                } catch (Exception e) {
-                    Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
-                }
-            }
+            dismissProgressDialog();
         }
 
 
@@ -1372,13 +1373,8 @@ public class StudyOptionsFragment extends Fragment {
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
-            if (mProgressDialog.isShowing()) {
-                try {
-                    mProgressDialog.dismiss();
-                } catch (Exception e) {
-                    Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
-                }
-            }
+            dismissProgressDialog();
+            
             if (result.getBoolean()) {
                 // if (mStatisticType == Statistics.TYPE_DECK_SUMMARY) {
                 // Statistics.showDeckSummary(getActivity());

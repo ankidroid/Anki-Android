@@ -24,7 +24,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -35,12 +34,11 @@ import android.widget.ListView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.receiver.SdCardReceiver;
-import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
 
-public class StudyOptionsActivity extends NavigationDrawerActivity {
+public class StudyOptionsActivity extends NavigationDrawerActivity implements StudyOptionsFragment.OnStudyOptionsReloadListener {
 
     private StudyOptionsFragment mCurrentFragment;
 
@@ -62,7 +60,7 @@ public class StudyOptionsActivity extends NavigationDrawerActivity {
         mDrawerList = (ListView) findViewById(R.id.studyoptions_left_drawer);
         initNavigationDrawer();
         if (savedInstanceState == null) {
-            loadContent(getIntent().getBooleanExtra("onlyFnsMsg", false));
+            loadStudyOptionsFragment();
         }
         registerExternalStorageListener();
     }
@@ -77,22 +75,20 @@ public class StudyOptionsActivity extends NavigationDrawerActivity {
         return true;
     }
 
-    public void loadContent(boolean onlyFnsMsg) {
-        loadContent(onlyFnsMsg, null);
+    public void loadStudyOptionsFragment() {
+        loadStudyOptionsFragment(0, null);
     }
 
 
-    public void loadContent(boolean onlyFnsMsg, Bundle cramConfig) {
-        mCurrentFragment = StudyOptionsFragment.newInstance(0, false, null);
+    public void loadStudyOptionsFragment(long deckId, Bundle cramConfig) {
+        mCurrentFragment = StudyOptionsFragment.newInstance(deckId, null);
         Bundle args = getIntent().getExtras();
-        if (onlyFnsMsg) {
-            args.putBoolean("onlyFnsMsg", onlyFnsMsg);
-        }
+
         if (cramConfig != null) {
             args.putBundle("cramInitialConfig", cramConfig);
         }
         mCurrentFragment.setArguments(args);
-        getSupportFragmentManager().beginTransaction().add(R.id.studyoptions_frame, mCurrentFragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.studyoptions_frame, mCurrentFragment).commit();
     }
     
     @Override
