@@ -37,7 +37,7 @@ import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
 
-public class StudyOptionsActivity extends NavigationDrawerActivity {
+public class StudyOptionsActivity extends NavigationDrawerActivity implements StudyOptionsFragment.OnStudyOptionsReloadListener {
 
     private StudyOptionsFragment mCurrentFragment;
 
@@ -58,7 +58,7 @@ public class StudyOptionsActivity extends NavigationDrawerActivity {
         // create inherited navigation drawer layout here so that it can be used by parent class
         initNavigationDrawer(mainView);
         if (savedInstanceState == null) {
-            loadContent(getIntent().getBooleanExtra("onlyFnsMsg", false));
+            loadStudyOptionsFragment();
         }
         registerExternalStorageListener();
     }
@@ -73,22 +73,20 @@ public class StudyOptionsActivity extends NavigationDrawerActivity {
         return true;
     }
 
-    public void loadContent(boolean onlyFnsMsg) {
-        loadContent(onlyFnsMsg, null);
+    public void loadStudyOptionsFragment() {
+        loadStudyOptionsFragment(0, null);
     }
 
 
-    public void loadContent(boolean onlyFnsMsg, Bundle cramConfig) {
-        mCurrentFragment = StudyOptionsFragment.newInstance(0, false, null);
+    public void loadStudyOptionsFragment(long deckId, Bundle cramConfig) {
+        mCurrentFragment = StudyOptionsFragment.newInstance(deckId, null);
         Bundle args = getIntent().getExtras();
-        if (onlyFnsMsg) {
-            args.putBoolean("onlyFnsMsg", onlyFnsMsg);
-        }
+
         if (cramConfig != null) {
             args.putBundle("cramInitialConfig", cramConfig);
         }
         mCurrentFragment.setArguments(args);
-        getSupportFragmentManager().beginTransaction().add(R.id.studyoptions_frame, mCurrentFragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.studyoptions_frame, mCurrentFragment).commit();
     }
     
     @Override

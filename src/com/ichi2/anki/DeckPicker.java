@@ -84,7 +84,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TreeSet;
 
-public class DeckPicker extends NavigationDrawerActivity {
+public class DeckPicker extends NavigationDrawerActivity implements StudyOptionsFragment.OnStudyOptionsReloadListener {
 
     public static final int CRAM_DECK_FRAGMENT = -1;
 
@@ -251,7 +251,7 @@ public class DeckPicker extends NavigationDrawerActivity {
                     mCurrentDid = Long.parseLong(mDeckList.get(mContextMenuPosition).get("did"));
                     AnkiDroidApp.getCol().getDecks().select(mCurrentDid);
                     if (mFragmented) {
-                        setStudyContentView(mCurrentDid, null);
+                        loadStudyOptionsFragment(mCurrentDid, null);
                     }
                     // open deck options
                     if (AnkiDroidApp.getCol().getDecks().isDyn(mCurrentDid)){
@@ -2201,10 +2201,14 @@ public class DeckPicker extends NavigationDrawerActivity {
     // CUSTOM METHODS
     // ----------------------------------------------------------------------------
 
-    public void setStudyContentView(long deckId, Bundle cramConfig) {
-        StudyOptionsFragment details = StudyOptionsFragment.newInstance(deckId, false, cramConfig);
+    public void loadStudyOptionsFragment() {
+        loadStudyOptionsFragment(0, null);
+    }
+
+  
+    public void loadStudyOptionsFragment(long deckId, Bundle cramConfig) {
+        StudyOptionsFragment details = StudyOptionsFragment.newInstance(deckId, cramConfig);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        // ft.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
         ft.replace(R.id.studyoptions_fragment, details);
         ft.commit();
@@ -2735,7 +2739,7 @@ public class DeckPicker extends NavigationDrawerActivity {
 
     private void openStudyOptions(long deckId, Bundle cramInitialConfig) {
         if (mFragmented) {
-            setStudyContentView(deckId, cramInitialConfig);
+            loadStudyOptionsFragment(deckId, cramInitialConfig);
         } else {
             mDontSaveOnStop = true;
             Intent intent = new Intent();
