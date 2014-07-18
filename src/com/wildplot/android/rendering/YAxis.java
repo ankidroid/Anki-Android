@@ -29,6 +29,8 @@ import java.text.DecimalFormat;
  */
 public class YAxis implements Drawable {
 
+    private boolean mHasNumbersRotated = false;
+
     private float maxTextWidth = 0;
 
     private boolean isIntegerNumbering = false;
@@ -244,15 +246,19 @@ public class YAxis implements Drawable {
 //			Font newFont = oldFont.deriveFont(fontAT);
 //			g.setFont(newFont);
 
+            float spacerValue = maxTextWidth;
+            if(mHasNumbersRotated)
+                spacerValue = g.getFontMetrics().getHeight();
+
             g.save();
             if(isOnRightSide) {
                 float[] middlePosition = {plotSheet.xToGraphic(xOffset, field), plotSheet.yToGraphic(0, field)};
-                g.rotate(90, Math.round(middlePosition[0]+maxTextWidth*1.4f), field.height / 2 - width / 2);
-                g.drawString(this.name, Math.round(middlePosition[0]+maxTextWidth*1.4f), field.height / 2 - width / 2);
+                g.rotate(90, middlePosition[0]+spacerValue*1.4f, field.height / 2 - width / 2);
+                g.drawString(this.name, middlePosition[0]+spacerValue*1.4f, field.height / 2 - width / 2);
             }else {
                 float[] middlePosition = {plotSheet.xToGraphic(xOffset, field), plotSheet.yToGraphic(0, field)};
-                g.rotate(-90, Math.round(middlePosition[0]-maxTextWidth*1.4f), field.height / 2 + width / 2);
-                g.drawString(this.name, Math.round(middlePosition[0]-maxTextWidth*1.4f), field.height / 2 + width / 2);
+                g.rotate(-90, middlePosition[0]-spacerValue*1.4f, field.height / 2 + width / 2);
+                g.drawString(this.name, middlePosition[0]-spacerValue*1.4f, field.height / 2 + width / 2);
             }
             g.restore();
 //			g.setFont(oldFont);
@@ -282,14 +288,19 @@ public class YAxis implements Drawable {
 			
 			font = dfScience.format(y);
 			width 		= fm.stringWidth(font);
-			g.drawString(font, Math.round(coordStart[0]-width*1.1f), Math.round(coordStart[1] + fontHeight*0.4f) );
 		}else if(isIntegerNumbering){
             font = dfInteger.format(y);
             width 		= fm.stringWidth(font);
+        }
+        g.save();
+        if(mHasNumbersRotated) {
+            float[] middlePosition = {plotSheet.xToGraphic(xOffset, field), plotSheet.yToGraphic(y, field)};
+            g.rotate(-90, middlePosition[0]-width*0.1f, middlePosition[1]+ width / 2.0f);
+            g.drawString(font, middlePosition[0]-width*0.1f, middlePosition[1]+ width / 2.0f );
+        }else
             g.drawString(font, Math.round(coordStart[0]-width*1.1f), Math.round(coordStart[1] + fontHeight*0.4f) );
-        }else {
-            g.drawString(font, Math.round(coordStart[0]-width*1.1f), Math.round(coordStart[1] + fontHeight*0.4f) );
-		}
+
+        g.restore();
         if(width > maxTextWidth)
             maxTextWidth = width;
 		//g.drawString(df.format(y), coordStart[0]-33, coordStart[1]+4);
@@ -310,18 +321,21 @@ public class YAxis implements Drawable {
         float fontHeight = fm.getHeight(true);
         String font = df.format(y);
         float width = fm.stringWidth(font);
+        g.save();
         if(this.isScientific && !isIntegerNumbering){
-
             font = dfScience.format(y);
             width = fm.stringWidth(font);
-            g.drawString(font, Math.round(coordStart[0]+width*0.1f), Math.round(coordStart[1] + fontHeight*0.4f) );
         }else if(isIntegerNumbering){
             font = dfInteger.format(y);
             width = fm.stringWidth(font);
-            g.drawString(font, Math.round(coordStart[0]+width*0.1f), Math.round(coordStart[1] + fontHeight*0.4f) );
-        }else {
-            g.drawString(font, Math.round(coordStart[0]+width*0.1f), Math.round(coordStart[1] + fontHeight*0.4f) );
         }
+        if(mHasNumbersRotated) {
+            float[] middlePosition = {plotSheet.xToGraphic(xOffset, field), plotSheet.yToGraphic(y, field)};
+            g.rotate(90, middlePosition[0]+width*0.1f, middlePosition[1]- width / 2.0f);
+            g.drawString(font, middlePosition[0]+width*0.1f, middlePosition[1]- width / 2.0f );
+        }else
+            g.drawString(font, Math.round(coordStart[0] + width * 0.1f), Math.round(coordStart[1] + fontHeight * 0.4f));
+        g.restore();
         if(width > maxTextWidth)
             maxTextWidth = width;
         //g.drawString(df.format(y), coordStart[0]-33, coordStart[1]+4);
@@ -348,7 +362,7 @@ public class YAxis implements Drawable {
 	 */
 	private void drawRightMarker(GraphicsWrap g, RectangleWrap field, double y){
         float[] coordStart = plotSheet.toGraphicPoint(xOffset, y, field);
-        float[] coordEnd = {coordStart[0] + this.markerLength, coordStart[1]};
+        float[] coordEnd = {coordStart[0] + this.markerLength+1, coordStart[1]};
 		g.drawLine(coordStart[0], coordStart[1], coordEnd[0], coordEnd[1]);
 		
 	}
@@ -495,7 +509,7 @@ public class YAxis implements Drawable {
 	private void drawLeftMinorMarker(GraphicsWrap g, RectangleWrap field, double y){
 
         float[] coordStart = plotSheet.toGraphicPoint(xOffset, y, field);
-        float[] coordEnd = {(int) (coordStart[0] - 0.5*this.markerLength), coordStart[1]};
+        float[] coordEnd = {(float) (coordStart[0] - 0.5*this.markerLength), coordStart[1]};
 		g.drawLine(coordStart[0], coordStart[1], coordEnd[0], coordEnd[1]);
 		
 	}
@@ -507,7 +521,7 @@ public class YAxis implements Drawable {
 	 */
 	private void drawRightMinorMarker(GraphicsWrap g, RectangleWrap field, double y){
         float[] coordStart = plotSheet.toGraphicPoint(xOffset, y, field);
-        float[] coordEnd = {(int) (coordStart[0] + 0.5*this.markerLength), coordStart[1]};
+        float[] coordEnd = {(float) (coordStart[0] + 0.5*this.markerLength+1), coordStart[1]};
 		g.drawLine(coordStart[0], coordStart[1], coordEnd[0], coordEnd[1]);
 		
 	}
@@ -536,5 +550,12 @@ public class YAxis implements Drawable {
     @Override
     public boolean isCritical() {
         return true;
+    }
+
+    public void setHasNumbersRotated(){
+        mHasNumbersRotated = true;
+    }
+    public  void unsetHasNumbersRotated(){
+        mHasNumbersRotated = false;
     }
 }

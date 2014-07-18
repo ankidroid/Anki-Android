@@ -104,7 +104,8 @@ public class XAxisHistoGram implements Drawable {
 		
 		if(autoscale){
 			double[] start = this.plotSheet.toCoordinatePoint(0, 0, field);
-			double[] end = this.plotSheet.toCoordinatePoint(0, 0+this.plotSheet.getFrameThickness(), field);
+			double[] end = this.plotSheet.toCoordinatePoint(0,
+                    0+this.plotSheet.getFrameThickness()[PlotSheet.UPPER_FRAME_THICKNESS_INDEX], field);
 			
 			this.scaleFactor = Math.abs(end[1] - start[1]);
 //			this.scaleFactor *= binSize;

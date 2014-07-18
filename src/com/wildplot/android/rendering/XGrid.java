@@ -29,7 +29,7 @@ public class XGrid implements Drawable {
 	
 	public boolean hasVariableLimits = true;
 	
-	private boolean isAutoTic = true;
+	private boolean isAutoTic = false;
 	
 	private int pixelDistance = 25;
 	
@@ -119,6 +119,7 @@ public class XGrid implements Drawable {
 		this.plotSheet = plotSheet;
 		this.ticStart = ticStart;
 		this.pixelDistance = pixelDistance;
+        isAutoTic = true;
 	}
 	
 	/**
@@ -132,6 +133,7 @@ public class XGrid implements Drawable {
 		this.plotSheet = plotSheet;
 		this.ticStart = ticStart;
 		this.pixelDistance = pixelDistance;
+        isAutoTic = true;
 	}
 
 

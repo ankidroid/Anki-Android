@@ -100,7 +100,8 @@ public class YAxisBarGraph implements Drawable {
 		
 		if(autoscale){
 			double[] start = this.plotSheet.toCoordinatePoint(0, 0, field);
-			double[] end = this.plotSheet.toCoordinatePoint(0+this.plotSheet.getFrameThickness(), 0, field);
+			double[] end = this.plotSheet.toCoordinatePoint(
+                    0 + this.plotSheet.getFrameThickness()[PlotSheet.LEFT_FRAME_THICKNESS_INDEX], 0, field);
 			
 			this.scaleFactor = Math.abs(end[0] - start[0]);
 		} else {

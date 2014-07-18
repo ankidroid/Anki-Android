@@ -16,6 +16,7 @@
 package com.ichi2.anki.stats;
 
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import com.ichi2.anki.AnkiDroidApp;
@@ -24,6 +25,8 @@ import com.ichi2.libanki.Stats;
 import com.wildplot.android.rendering.ChartView;
 import com.wildplot.android.rendering.PlotSheet;
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class AnkiStatsTaskHandler {
 
@@ -34,6 +37,7 @@ public class AnkiStatsTaskHandler {
     private int mStatType = Stats.TYPE_MONTH;
 
     private static boolean sIsWholeCollection = false;
+    private Lock lock = new ReentrantLock();
 
 
     public AnkiStatsTaskHandler(){
@@ -49,34 +53,54 @@ public class AnkiStatsTaskHandler {
         return sInstance;
     }
 
-    public void createChart(Stats.ChartType chartType, View... views){
+    public CreateChartTask createChart(Stats.ChartType chartType, View... views){
         CreateChartTask createChartTask = new CreateChartTask(chartType);
         createChartTask.execute(views);
+        return createChartTask;
     }
 
 
     private class CreateChartTask extends AsyncTask<View, Void, PlotSheet>{
-        ChartView mImageView;
-        ProgressBar mProgressBar;
+        private ChartView mImageView;
+        private ProgressBar mProgressBar;
 
+        private boolean mIsRunning = false;
         private Stats.ChartType mChartType;
 
         public CreateChartTask(Stats.ChartType chartType){
             super();
+            mIsRunning = true;
             mChartType = chartType;
         }
 
         @Override
         protected PlotSheet doInBackground(View... params) {
-            mImageView = (ChartView)params[0];
-            mProgressBar = (ProgressBar) params[1];
-            ChartBuilder chartBuilder = new ChartBuilder(mImageView, mCollectionData, sIsWholeCollection, mChartType);
-            return chartBuilder.renderChart(mStatType);
+            //make sure only one task of CreateChartTask is running, first to run should get lock
+            //only necessary on lower APIs because after honeycomb only one thread is used for all asynctasks
+            lock.lock();
+            try {
+                if (!mIsRunning) {
+                    Log.d(AnkiDroidApp.TAG, "quiting CreateChartTask(" + mChartType.name() + ") before execution");
+                    return null;
+                } else
+                    Log.d(AnkiDroidApp.TAG, "starting Create ChartTask, type: " + mChartType.name());
+                mImageView = (ChartView) params[0];
+                mProgressBar = (ProgressBar) params[1];
+                ChartBuilder chartBuilder = new ChartBuilder(mImageView, mCollectionData, sIsWholeCollection, mChartType);
+                return chartBuilder.renderChart(mStatType);
+            }finally {
+                lock.unlock();
+            }
+        }
+
+        @Override
+        protected void onCancelled() {
+            mIsRunning = false;
         }
 
         @Override
         protected void onPostExecute(PlotSheet plotSheet) {
-            if(plotSheet != null){
+            if(plotSheet != null && mIsRunning){
 
                 mImageView.setData(plotSheet);
                 mProgressBar.setVisibility(View.GONE);

@@ -22,7 +22,7 @@ import com.wildplot.android.rendering.graphics.wrapper.RectangleWrap;
 import com.wildplot.android.rendering.interfaces.Drawable;
 import com.wildplot.android.rendering.interfaces.Legendable;
 
-
+//TODO reimplement this whole mess!
 public class PieChart implements Drawable, Legendable {
 
     private String mName = "";
@@ -72,7 +72,12 @@ public class PieChart implements Drawable, Legendable {
 	 */
 	public void paint(GraphicsWrap g){
 		RectangleWrap field = g.getClipBounds();
-        float realBorder= mPlotSheet.getFrameThickness() + 3;
+        float maxSideBorders = Math.max(mPlotSheet.getFrameThickness()[PlotSheet.LEFT_FRAME_THICKNESS_INDEX],
+                mPlotSheet.getFrameThickness()[PlotSheet.RIGHT_FRAME_THICKNESS_INDEX]);
+        float maxUpperBottomBorders = Math.max(mPlotSheet.getFrameThickness()[PlotSheet.UPPER_FRAME_THICKNESS_INDEX],
+                mPlotSheet.getFrameThickness()[PlotSheet.BOTTOM_FRAME_THICKNESS_INDEX]);
+
+        float realBorder= Math.max(maxSideBorders, maxUpperBottomBorders) + 3;
         float diameter=Math.min(field.width, field.height)-2*realBorder;
 
         float xCenter = (float)(field.width/2.0);
