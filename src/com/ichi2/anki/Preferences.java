@@ -42,6 +42,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.WindowManager.BadTokenException;
+import android.widget.Toast;
 
 import com.hlidskialf.android.preference.SeekBarPreference;
 import com.ichi2.anim.ActivityTransitionAnimation;
@@ -183,8 +184,8 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         // Check that input is valid when changing the collection path
         collectionPathPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
             public boolean onPreferenceChange(Preference preference, final Object newValue) {
-                File collectionDirectory = new File((String) newValue);
-                if (!collectionDirectory.exists()) {
+                File collectionPath = new File((String) newValue);
+                if (!collectionPath.exists()) {
                     Dialog pathCheckDialog = new AlertDialog.Builder(Preferences.this)
                     .setTitle(R.string.dialog_collection_path_title)
                     .setMessage(R.string.dialog_collection_path_text)
@@ -193,7 +194,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                         @Override
                         public void onClick(DialogInterface dialog, int which)
                         {
-                            AnkiDroidApp.getSharedPrefs(getBaseContext()).edit().putString("deckPath", (String) newValue).commit();
+                            collectionPathPreference.setText((String) newValue);
                             updateEditTextPreference("deckPath");
                             
                         }
@@ -206,6 +207,9 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                     })
                     .create();
                     pathCheckDialog.show();
+                    return false;
+                } else if (collectionPath.exists() && !collectionPath.isDirectory()) {
+                    Toast.makeText(getApplicationContext(), R.string.dialog_collection_path_not_dir , Toast.LENGTH_LONG).show();
                     return false;
                 } else {
                     return true;

@@ -136,4 +136,5 @@
     
     <string name="dialog_collection_path_title">Folder does not exit</string>
     <string name="dialog_collection_path_text">The folder you specified does not exist, would you like to create it?</string>
+    <string name="dialog_collection_path_not_dir">The path specified was not a valid directory</string>
 </resources>
