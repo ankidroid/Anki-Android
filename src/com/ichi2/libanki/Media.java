@@ -742,6 +742,7 @@ public class Media {
 
     public void forceResync() {
         mDb.execute("delete from media");
+        mDb.execute("update meta set lastUsn=0,dirMod=0");
         mDb.execute("vacuum analyze");
         mDb.commit();
     }
