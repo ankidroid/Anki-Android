@@ -1,5 +1,6 @@
 /****************************************************************************************
  * Copyright (c) 2012 Kostas Spyropoulos <inigo.aldana@gmail.com>                       *
+ * Copyright (c) 2014 Houssam Salem <houssam.salem.au@gmail.com>                        *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -16,6 +17,7 @@
 
 package com.ichi2.libanki.sync;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.ichi2.anki.AnkiDroidApp;
@@ -23,12 +25,25 @@ import com.ichi2.anki.Pair;
 import com.ichi2.anki.R;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Consts;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.zip.ZipFile;
 
+/**
+ * About conflicts:
+ * - to minimize data loss, if both sides are marked for sending and one
+ *   side has been deleted, favour the add
+ * - if added/changed on both sides, favour the server version on the
+ *   assumption other syncers are in sync with the server
+ */
 public class MediaSyncer {
     Collection mCol;
     RemoteMediaServer mServer;
@@ -40,116 +55,150 @@ public class MediaSyncer {
     }
 
 
-    public String sync(long mediaUsn, Connection con) {
-        // step 1: check if there have been any changes
-        con.publishProgress(R.string.sync_media_find);
-        Log.i(AnkiDroidApp.TAG, "MediaSync: finding changed media");
-        mCol.getMedia().findChanges();
-        long lUsn = mCol.getMedia().usn();
-        if (lUsn == mediaUsn && !mCol.getMedia().hasChanged()) {
-            return "noChanges";
-        }
-
-        // step 2: send/recv deletions
-        con.publishProgress(R.string.sync_media_remove);
-        Log.i(AnkiDroidApp.TAG, "MediaSync: handling deleted media");
-        List<String> lRem = removed();
-        JSONArray rRem = mServer.remove(lRem, lUsn);
-        if (rRem == null) {
-            Log.e(AnkiDroidApp.TAG, "MediaSyncer: error (empty rRem) - returning");
-            return null;
-        }
-        remove(rRem);
-
-        // step 3: stream files from server
-        con.publishProgress(R.string.sync_media_from_server);
-        Log.i(AnkiDroidApp.TAG, "MediaSync: receiving media from server");
-        while (true) {
-            long usn = mCol.getMedia().usn();
-            File zip = mServer.files(usn, mCol.getPath().replaceFirst("collection\\.anki2$", "tmpSyncFromServer.zip"));
-            if (zip == null) {
-                break;
+    public String sync(Connection con) {
+        try {
+            // check if there have been any changes
+            con.publishProgress(R.string.sync_media_find);
+            Log.i(AnkiDroidApp.TAG, "MediaSyncer: finding changed media");
+            mCol.getMedia().findChanges();
+    
+            // begin session and check if in sync
+            int lastUsn = mCol.getMedia().lastUsn();
+            JSONObject ret = mServer.begin();
+            int srvUsn = ret.getInt("usn");
+            if ((lastUsn == srvUsn) && !(mCol.getMedia().haveDirty())) {
+                return "noChanges";
             }
-            // The temporary file gets deleted in addFiles
-            if (addFiles(zip)) {
-                break;
+            // loop through and process changes from server
+            Log.i(AnkiDroidApp.TAG, "MediaSyncer: Last local usn is: " + lastUsn);
+            while (true) {
+                JSONArray data = mServer.mediaChanges(lastUsn);
+                Log.i(AnkiDroidApp.TAG, "MediaSyncer: mediaChanges resp count: " + data.length());
+                if (data.length() == 0) {
+                    break;
+                }
+    
+                List<String> need = new ArrayList<String>();
+                lastUsn = data.getJSONArray(data.length()-1).getInt(1);
+                for (int i = 0; i < data.length(); i++) {
+                    String fname = data.getJSONArray(i).getString(0);
+                    int rusn = data.getJSONArray(i).getInt(1);
+                    String rsum = data.getJSONArray(i).optString(2);
+                    Pair<String, Integer> info = mCol.getMedia().syncInfo(fname);
+                    String lsum = info.first;
+                    int ldirty = info.second;
+                    Log.v(AnkiDroidApp.TAG, String.format("check: lsum=%s rsum=%s ldirty=%d rusn=%d fname=%s",
+                            TextUtils.isEmpty(lsum) ? "" : lsum.subSequence(0, 4),
+                            TextUtils.isEmpty(rsum) ? "" : rsum.subSequence(0, 4),
+                            ldirty,
+                            rusn,
+                            fname));
+                    
+                    if (!TextUtils.isEmpty(rsum)) {
+                        // added/changed remotely
+                        if (TextUtils.isEmpty(lsum) || !lsum.equals(rsum)) {
+                            Log.v(AnkiDroidApp.TAG, "will fetch");
+                            need.add(fname);
+                        } else {
+                            Log.v(AnkiDroidApp.TAG, "have same already");
+                        }
+                        mCol.getMedia().markClean(Arrays.asList(fname));
+                        
+                    } else if (!TextUtils.isEmpty(lsum)) {
+                        // deleted remotely
+                        if (ldirty != 0) {
+                            Log.v(AnkiDroidApp.TAG, "delete local");
+                            mCol.getMedia().syncDelete(fname);
+                        } else {
+                            // conflict: local add overrides remote delte
+                            Log.v(AnkiDroidApp.TAG, "conflict; will send");
+                        }
+                    } else {
+                        // deleted both sides
+                        Log.v(AnkiDroidApp.TAG, "both sides deleted");
+                        mCol.getMedia().markClean(Arrays.asList(fname));
+                    }
+                }
+                _downloadFiles(need);
+                
+                Log.v(AnkiDroidApp.TAG, "update last usn to " + lastUsn);
+                mCol.getMedia().setLastUsn(lastUsn); // commits
             }
-        }
+            
+            // at this point, we're all up to date with the server's changes,
+            // and we need to send our own
+            
+            boolean updateConflict = false;
+            while (true) {
+                Pair<File, List<String>> changesZip = mCol.getMedia().mediaChangesZip();
+                File zip = changesZip.first;
+                List<String> fnames = changesZip.second;
+                if (fnames.size() == 0) {
+                    break;
+                }
+                JSONArray changes = mServer.uploadChanges(zip);
+                int processedCnt = changes.getInt(0);
+                int serverLastUsn = changes.getInt(1);
+                mCol.getMedia().markClean(fnames.subList(0, processedCnt));
+                Log.v(AnkiDroidApp.TAG, String.format("processed %d, serverUsn %d, clientUsn %d", processedCnt,
+                        serverLastUsn, lastUsn));
 
-        // step 4: stream files to the server
-        con.publishProgress(R.string.sync_media_to_server);
-        Log.i(AnkiDroidApp.TAG, "MediaSync: sending media to server");
-        while (true) {
-            Pair<File, List<String>> zipAdded = files();
-            if (zipAdded.second == null || zipAdded.second.size() == 0) {
-                zipAdded.first.delete();
-                // finished
-                break;
+                if (serverLastUsn - processedCnt == lastUsn) {
+                    Log.v(AnkiDroidApp.TAG, "lastUsn in sync, updating local");
+                    lastUsn = serverLastUsn;
+                    mCol.getMedia().setLastUsn(serverLastUsn); // commits
+                } else {
+                    Log.v(AnkiDroidApp.TAG, "concurrent update, skipping usn update");
+                    // commit for markClean
+                    mCol.getMedia().getDb().commit();
+                    updateConflict = true;
+                }
             }
-            long usn = mServer.addFiles(zipAdded.first);
-            if (usn == 0) {
-                // an error occurred, return
-                return null;
+            if (updateConflict) {
+                Log.v(AnkiDroidApp.TAG, "restart sync due to concurrent update");
+                return sync(con);
             }
-            // after server has replied, safe to remove from log
-            zipAdded.first.delete(); // remove the temporary file created by Media.zipAdded
-            mCol.getMedia().forgetAdded(zipAdded.second);
-            mCol.getMedia().setUsn(usn);
-        }
-
-        // step 5: sanity check during beta testing
-        con.publishProgress(R.string.sync_media_sanity_check);
-        Log.i(AnkiDroidApp.TAG, "MediaSync: sanity check");
-        long sMediaSanity = mServer.mediaSanity();
-        Pair<Long, Long> cMediaSanity = mediaSanity();
-        if (cMediaSanity.first != 0 || sMediaSanity != cMediaSanity.second) {
-            Log.e(AnkiDroidApp.TAG, "Media sanity check failed. Diffs [local, server] - Logs: [" + cMediaSanity.first
-                    + ", 0], Counts: [" + cMediaSanity.second + ", " + sMediaSanity + "]");
-            if (cMediaSanity.first != 0) {
-                AnkiDroidApp.saveExceptionReportFile(
-                        new RuntimeException("Media sanity check failed. Logs not empty."),
-                        "doInBackgroundSync-mediaSync");
+            
+            int lcnt = mCol.getMedia().mediacount();
+            String sRet = mServer.mediaSanity(lcnt);
+            if (sRet.equals("OK")) {
+                return "OK";
             } else {
-                AnkiDroidApp.saveExceptionReportFile(
-                        new RuntimeException("Media sanity check failed. Counts are off."),
-                        "doInBackgroundSync-mediaSync");
+                mCol.getMedia().forceResync();
+                return sRet;
             }
-            mCol.getMedia().resetMediaDb();
-            return "sanityFailed";
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        } catch (Exception e) {
+            Log.e(AnkiDroidApp.TAG, "Syncing error: ", e);
+            throw new RuntimeException(e);
         }
-        return "success";
     }
 
-
-    private List<String> removed() {
-        return mCol.getMedia().removed();
-    }
-
-
-    private void remove(JSONArray fnames) {
-        mCol.getMedia().syncRemove(fnames);
-    }
-
-
-    private Pair<File, List<String>> files() {
-        return mCol.getMedia().zipAdded();
-    }
-
-
-    /**
-     * Adds any media sent from the server.
-     * 
-     * @param zip A temporary zip file that contains the media files.
-     * @return True if zip is the last in set. Server returns new usn instead.
-     */
-    private boolean addFiles(File zip) {
-        boolean result = mCol.getMedia().syncAdd(zip);
-        zip.delete();
-        return result;
-    }
-
-
-    private Pair<Long, Long> mediaSanity() {
-        return mCol.getMedia().sanityCheck();
+    // TODO: I think this method should be responsible for the life cycle of the zip file
+    // It can be safely deleted after this method has finished using it. Right now it is
+    // left in the AnkiDroid directory (harmless but takes up space).
+    private void _downloadFiles(List<String> fnames) {
+        Log.v(AnkiDroidApp.TAG, fnames.size() + " files to fetch");
+        while (fnames.size() > 0) {
+            try {
+                List<String> top = fnames.subList(0, Math.min(fnames.size(), Consts.SYNC_ZIP_COUNT));
+                Log.v(AnkiDroidApp.TAG, "fetch " + top);
+                ZipFile zipData = mServer.downloadFiles(top);
+                int cnt = mCol.getMedia().addFilesFromZip(zipData);
+                Log.v(AnkiDroidApp.TAG, "received " + cnt + " files");
+                // NOTE: The python version uses slices which return an empty list when indexed beyond what
+                // the list contains. Since we can't slice out an empty sublist in Java, we must check
+                // if we've reached the end and clear the fnames list manually.
+                if (cnt == fnames.size()) {
+                    fnames.clear();
+                } else {
+                    fnames = fnames.subList(cnt, fnames.size());
+                }
+            } catch (Exception e) {
+                Log.e(AnkiDroidApp.TAG, "Error downloading media files", e);
+                throw new RuntimeException(e);
+            }
+        }
     }
 }

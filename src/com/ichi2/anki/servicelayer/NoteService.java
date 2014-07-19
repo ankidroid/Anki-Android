@@ -178,7 +178,7 @@ public class NoteService {
                 File inFile = new File(tmpMediaPath);
                 if (inFile.exists()) {
                     Collection col = AnkiDroidApp.getCol();
-                    String mediaDir = col.getMedia().getDir() + "/";
+                    String mediaDir = col.getMedia().dir() + "/";
 
                     File mediaDirFile = new File(mediaDir);
 
