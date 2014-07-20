@@ -2,8 +2,8 @@
 package com.ichi2.filters;
 
 import android.content.SharedPreferences;
+import android.util.Pair;
 
-import com.ichi2.anki.Pair;
 
 /**
  * Card filter for garbage information. One card filter for one message type from one application. Card filters are
