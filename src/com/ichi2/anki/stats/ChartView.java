@@ -13,7 +13,7 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.wildplot.android.rendering;
+package com.ichi2.anki.stats;
 
 
 import android.content.Context;
@@ -26,6 +26,7 @@ import android.view.View;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.stats.AnkiStatsActivity;
 import com.ichi2.anki.stats.AnkiStatsTaskHandler;
+import com.wildplot.android.rendering.PlotSheet;
 import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap;
 import com.wildplot.android.rendering.graphics.wrapper.RectangleWrap;
 
@@ -36,27 +37,30 @@ public class ChartView extends View{
     private PlotSheet mPlotSheet;
     private boolean mDataIsSet;
 
+    //The following constructors are needed for the layout inflater
     public ChartView(Context context) {
         super(context);
+        setWillNotDraw(false);
     }
 
     public ChartView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        setWillNotDraw(false);
     }
 
     public ChartView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        setWillNotDraw(false);
     }
 
     @Override
     public void onDraw(Canvas canvas) {
+        //Log.d(AnkiDroidApp.TAG, "drawing chart");
         if(mDataIsSet){
             //Paint paint = new Paint(Paint.LINEAR_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
             Paint paint = new Paint(Paint.LINEAR_TEXT_FLAG);
             paint.setAntiAlias(true);
             paint.setStyle(Paint.Style.STROKE);
-            float textSize = AnkiStatsTaskHandler.getInstance().getmStandardTextSize()*0.75f;
-            paint.setTextSize(textSize);
             GraphicsWrap g = new GraphicsWrap(canvas, paint);
 
             Rect field = new Rect();
@@ -87,6 +91,7 @@ public class ChartView extends View{
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         Log.d(AnkiDroidApp.TAG, "ChartView sizeChange!");
-        mFragment.checkAndUpdate();
+        if(mFragment != null)
+            mFragment.checkAndUpdate();
     }
 }

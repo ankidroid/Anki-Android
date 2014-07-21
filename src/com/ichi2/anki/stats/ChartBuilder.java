@@ -15,9 +15,10 @@
  ****************************************************************************************/
 package com.ichi2.anki.stats;
 
+import android.content.res.Resources;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.util.Log;
+import android.widget.TextView;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.libanki.Collection;
@@ -143,12 +144,12 @@ public class ChartBuilder {
         setupCumulative(plotSheet, hiddenPlotSheet);
 
         double xTicks = ticksCalcX(mDesiredPixelDistanceBetweenTicks, rect, mFirstElement, mLastElement);
-        setupXaxis(plotSheet, xTicks);
+        setupXaxis(plotSheet, xTicks, true);
 
         double yTicks = ticksCalcY(mDesiredPixelDistanceBetweenTicks, rect, 0, mMaxCards*yAxisStretchFactor);
-        setupYaxis(plotSheet,hiddenPlotSheet, yTicks, mAxisTitles[1], false);
+        setupYaxis(plotSheet,hiddenPlotSheet, yTicks, mAxisTitles[1], false, true);
         double rightYtics = ticsCalc(mDesiredPixelDistanceBetweenTicks, rect,  mMcount*yAxisStretchFactor);
-        setupYaxis(plotSheet,hiddenPlotSheet, rightYtics, mAxisTitles[2], true );
+        setupYaxis(plotSheet,hiddenPlotSheet, rightYtics, mAxisTitles[2], true, true);
         setupGrid(plotSheet, yTicks*0.5, xTicks*0.5);
 
         return plotSheet;
@@ -241,13 +242,15 @@ public class ChartBuilder {
 
     }
 
-    private void setupXaxis(PlotSheet plotSheet, double xTicks){
+    private void setupXaxis(PlotSheet plotSheet, double xTicks, boolean hasName){
         XAxis xAxis = new XAxis(plotSheet, 0, xTicks, xTicks/2.0);
         xAxis.setOnFrame();
-        if(mDynamicAxis)
-            xAxis.setName(mChartView.getResources().getStringArray(R.array.due_x_axis_title)[mAxisTitles[0]]);
-        else {
-            xAxis.setName(mChartView.getResources().getString(mAxisTitles[0]));
+        if(hasName) {
+            if (mDynamicAxis)
+                xAxis.setName(mChartView.getResources().getStringArray(R.array.due_x_axis_title)[mAxisTitles[0]]);
+            else {
+                xAxis.setName(mChartView.getResources().getString(mAxisTitles[0]));
+            }
         }
         double[] timePositions;
 
@@ -271,15 +274,16 @@ public class ChartBuilder {
         plotSheet.addDrawable(xAxis);
     }
 
-    private void setupYaxis(PlotSheet plotSheet, PlotSheet hiddenPlotSheet, double yTicks, int title, boolean isOnRight){
+    private void setupYaxis(PlotSheet plotSheet, PlotSheet hiddenPlotSheet, double yTicks, int title, boolean isOnRight, boolean hasName){
         YAxis yAxis;
-        if(isOnRight)
+        if(isOnRight && hiddenPlotSheet != null)
             yAxis = new YAxis(hiddenPlotSheet, 0, yTicks, yTicks/2.0);
         else
             yAxis  = new YAxis(plotSheet, 0, yTicks, yTicks/2.0);
 
         yAxis.setIntegerNumbering(true);
-        yAxis.setName(mChartView.getResources().getString(title));
+        if(hasName)
+            yAxis.setName(mChartView.getResources().getString(title));
         if(isOnRight)
             yAxis.setOnRightSideFrame();
         else
@@ -320,6 +324,77 @@ public class ChartBuilder {
         yGrid.setColor(newGridColor);
         plotSheet.addDrawable(xGrid);
         plotSheet.addDrawable(yGrid);
+    }
+
+    public PlotSheet createSmallDueChart(double[][] serieslist){
+        int height = mChartView.getMeasuredHeight();
+        int width = mChartView.getMeasuredWidth();
+        Log.d(AnkiDroidApp.TAG, "SmallDueChart: heigth: " + height + ", width: " + width);
+        Paint paint = new Paint(Paint.LINEAR_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
+        paint.setStyle(Paint.Style.STROKE);
+
+        if(height <=0 || width <= 0){
+            return null;
+        }
+        RectangleWrap rect = new RectangleWrap(width, height);
+        float textSize = new TextView(mChartView.getContext()).getTextSize()*0.85f;
+        paint.setTextSize(textSize);
+        float FontHeigth = paint.getTextSize();
+        mDesiredPixelDistanceBetweenTicks = Math.round(paint.measureText("100000")*2.6f);
+        mFrameThickness = Math.round( FontHeigth * 4.0f);
+
+        //System.out.println("frame thickness: " + mFrameThickness);
+
+        double maxValueY = maxValue(serieslist, 1);
+        if(maxValueY <= 0){
+            maxValueY = 10;
+        }
+
+        PlotSheet plotSheet = new PlotSheet(-0.5, 7.5, 0, maxValueY*yAxisStretchFactor);
+        plotSheet.setFrameThickness(mFrameThickness*0.5f, 2f, 2f, mFrameThickness*0.5f);
+        plotSheet.setFontSize(textSize);
+
+        BarGraph barGraphYoung = new BarGraph(plotSheet, mBarThickness, new double[][]{serieslist[0], serieslist[1]},
+                new ColorWrap(mChartView.getResources().getColor(R.color.stats_young)));
+        barGraphYoung.setFilling(true);
+        //barGraphYoung.setFillColor(Color.GREEN.darker());
+        barGraphYoung.setFillColor(new ColorWrap(mChartView.getResources().getColor(R.color.stats_young)));
+
+        BarGraph barGraphMature = new BarGraph(plotSheet, mBarThickness, new double[][]{serieslist[0], serieslist[2]},
+                new ColorWrap(mChartView.getResources().getColor(R.color.stats_mature)));
+        barGraphMature.setFilling(true);
+        barGraphMature.setFillColor(new ColorWrap(mChartView.getResources().getColor(R.color.stats_mature)));
+
+        plotSheet.addDrawable(barGraphYoung);
+        plotSheet.addDrawable(barGraphMature);
+
+        double xTicks = 2;
+        setupXaxis(plotSheet, xTicks, false);
+
+        double yTicks = ticksCalcY(mDesiredPixelDistanceBetweenTicks, rect, 0, maxValueY*yAxisStretchFactor);
+        setupYaxis(plotSheet, null, yTicks, -1, false, false);
+        setupGrid(plotSheet, yTicks*0.5, xTicks*0.5);
+
+        return plotSheet;
+    }
+
+    private double maxValue(double[][] array, int startIndex){
+        double max = Double.NEGATIVE_INFINITY;
+        for(int i = startIndex; i<array.length; i++){
+            double thisArrayMax = maxValue(array[i]);
+            if(thisArrayMax > max)
+                max = thisArrayMax;
+        }
+        return max;
+    }
+    private double maxValue(double[] array){
+        double max = Double.NEGATIVE_INFINITY;
+        for(int i = 0; i<array.length; i++){
+            if(array[i]>max)
+                max = array[i];
+        }
+
+        return max;
     }
 
 

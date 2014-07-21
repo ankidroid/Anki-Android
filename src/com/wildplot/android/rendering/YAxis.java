@@ -54,6 +54,8 @@ public class YAxis implements Drawable {
 	private double xOffset = 0;
 	
 	private String name = "Y";
+
+    private boolean mHasName = false;
 	
 	/**
 	 * Format that is used to print numbers under markers
@@ -238,7 +240,8 @@ public class YAxis implements Drawable {
 		if(!this.isOnFrame) {
 			g.drawLine(arowheadPos[0]-1, arowheadPos[1]+1, arowheadPos[0]-3, arowheadPos[1]+6);
 			g.drawLine(arowheadPos[0]+1, arowheadPos[1]+1, arowheadPos[0]+3, arowheadPos[1]+6);
-			g.drawString(this.name, arowheadPos[0]-13-width, arowheadPos[1] + 10);
+            if(mHasName)
+			    g.drawString(this.name, arowheadPos[0]-13-width, arowheadPos[1] + 10);
 		} else {
 //			AffineTransform fontAT = new AffineTransform();
 //			Font oldFont = g.getFont();
@@ -254,11 +257,13 @@ public class YAxis implements Drawable {
             if(isOnRightSide) {
                 float[] middlePosition = {plotSheet.xToGraphic(xOffset, field), plotSheet.yToGraphic(0, field)};
                 g.rotate(90, middlePosition[0]+spacerValue*1.4f, field.height / 2 - width / 2);
-                g.drawString(this.name, middlePosition[0]+spacerValue*1.4f, field.height / 2 - width / 2);
+                if(mHasName)
+                    g.drawString(this.name, middlePosition[0]+spacerValue*1.4f, field.height / 2 - width / 2);
             }else {
                 float[] middlePosition = {plotSheet.xToGraphic(xOffset, field), plotSheet.yToGraphic(0, field)};
                 g.rotate(-90, middlePosition[0]-spacerValue*1.4f, field.height / 2 + width / 2);
-                g.drawString(this.name, middlePosition[0]-spacerValue*1.4f, field.height / 2 + width / 2);
+                if(mHasName)
+                    g.drawString(this.name, middlePosition[0]-spacerValue*1.4f, field.height / 2 + width / 2);
             }
             g.restore();
 //			g.setFont(oldFont);
@@ -440,6 +445,10 @@ public class YAxis implements Drawable {
 	 */
 	public void setName(String name) {
 		this.name = name;
+        if(name.equals(""))
+            mHasName = false;
+        else
+            mHasName = true;
 	}
 	private void drawMinorMarkers(GraphicsWrap g) {
 		RectangleWrap field = g.getClipBounds();

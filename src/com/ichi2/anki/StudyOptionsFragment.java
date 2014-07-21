@@ -49,6 +49,9 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
 import com.ichi2.anki.dialogs.TagsDialog;
 import com.ichi2.anki.dialogs.TagsDialog.TagsDialogListener;
+import com.ichi2.anki.stats.AnkiStatsActivity;
+import com.ichi2.anki.stats.AnkiStatsTaskHandler;
+import com.ichi2.anki.stats.ChartView;
 import com.ichi2.async.DeckTask;
 import com.ichi2.async.DeckTask.TaskData;
 import com.ichi2.charts.ChartBuilder;
@@ -1034,51 +1037,15 @@ public class StudyOptionsFragment extends Fragment {
 
     private void updateChart(double[][] serieslist) {
         if (mSmallChart != null) {
-            Resources res = getResources();
-            XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
-            XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
-            XYSeriesRenderer r = new XYSeriesRenderer();
-            r.setColor(res.getColor(R.color.stats_young));
-            renderer.addSeriesRenderer(r);
-            r = new XYSeriesRenderer();
-            r.setColor(res.getColor(R.color.stats_mature));
-            renderer.addSeriesRenderer(r);
 
-            for (int i = 1; i < serieslist.length; i++) {
-                XYSeries series = new XYSeries("");
-                for (int j = 0; j < serieslist[i].length; j++) {
-                    series.add(serieslist[0][j], serieslist[i][j]);
-                }
-                dataset.addSeries(series);
-            }
-            renderer.setBarSpacing(0.4);
-            renderer.setShowLegend(false);
-            renderer.setLabelsTextSize(13);
-            renderer.setXAxisMin(-0.5);
-            renderer.setXAxisMax(7.5);
-            renderer.setYAxisMin(0);
-            renderer.setGridColor(Color.LTGRAY);
-            renderer.setShowGrid(true);
-            renderer.setBackgroundColor(Color.WHITE);
-            renderer.setMarginsColor(Color.WHITE);
-            renderer.setAxesColor(Color.BLACK);
-            renderer.setLabelsColor(Color.BLACK);
-            renderer.setYLabelsColor(0, Color.BLACK);
-            renderer.setYLabelsAngle(-90);
-            renderer.setXLabelsColor(Color.BLACK);
-            renderer.setXLabelsAlign(Align.CENTER);
-            renderer.setYLabelsAlign(Align.CENTER);
-            renderer.setZoomEnabled(false, false);
-            // mRenderer.setMargins(new int[] { 15, 48, 30, 10 });
-            renderer.setAntialiasing(true);
-            renderer.setPanEnabled(true, false);
-            GraphicalView chartView = ChartFactory.getBarChartView(getActivity(), dataset, renderer,
-                    BarChart.Type.STACKED);
-            mSmallChart.addView(chartView, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+            ChartView chartView = (ChartView) mSmallChart.findViewById(R.id.chart_view_small_chart);
+            chartView.setBackgroundColor(Color.BLACK);
+            AnkiStatsTaskHandler.createSmallDueChartChart(serieslist, chartView);
             if (mDeckChart.getVisibility() == View.INVISIBLE) {
                 mDeckChart.setVisibility(View.VISIBLE);
                 mDeckChart.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
             }
+
         }
     }
 
