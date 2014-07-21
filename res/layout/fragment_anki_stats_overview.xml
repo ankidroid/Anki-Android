@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    tools:context=".AnkiStatsActivity$PlaceholderFragment">
+    tools:context=".AnkiStatsActivity$OverviewStatisticsFragment">
 
     <WebView
         android:layout_width="fill_parent"
