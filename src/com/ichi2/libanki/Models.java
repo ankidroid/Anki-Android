@@ -22,9 +22,9 @@ package com.ichi2.libanki;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.util.Log;
+import android.util.Pair;
 
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.Pair;
 import com.samskivert.mustache.Mustache;
 import com.samskivert.mustache.Template;
 

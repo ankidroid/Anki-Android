@@ -22,10 +22,10 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Pair;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CardBrowser;
-import com.ichi2.anki.Pair;
 import com.ichi2.async.DeckTask;
 
 import org.json.JSONArray;
