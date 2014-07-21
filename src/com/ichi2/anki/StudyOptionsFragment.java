@@ -451,10 +451,18 @@ public class StudyOptionsFragment extends Fragment {
                         Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
                     }
                 }
-                if (!AnkiDroidApp.colIsOpen()) {
-                    closeStudyOptions();
-                } else if (!mFragmented) {
-                    ((OnStudyOptionsReloadListener) getActivity()).loadStudyOptionsFragment();
+                try {
+                    if (!AnkiDroidApp.colIsOpen()) {
+                        closeStudyOptions();
+                    } else if (!mFragmented) {
+                        ((OnStudyOptionsReloadListener) getActivity()).loadStudyOptionsFragment();
+                    }
+                } catch (NullPointerException e) {
+                    if (!isAdded()) {
+                        // if the fragment is no longer attached to activity an NPE can arise (for example user presses back button really fast)
+                    } else {
+                        throw e;
+                    }
                 }
             }
 
