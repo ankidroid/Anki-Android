@@ -383,7 +383,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private final Runnable longClickTestRunnable = new Runnable() {
         @Override
         public void run() {
-            Log.i(AnkiDroidApp.TAG, "onEmulatedLongClick");
+            // Log.i(AnkiDroidApp.TAG, "onEmulatedLongClick");
             Vibrator vibratorManager = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
             vibratorManager.vibrate(50);
             longClickHandler.postDelayed(startLongClickAction, 300);
@@ -399,7 +399,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private View.OnClickListener mCardStatisticsListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Log.i(AnkiDroidApp.TAG, "Show card statistics");
+            // Log.i(AnkiDroidApp.TAG, "Show card statistics");
             stopTimer();
             // Themes.htmlOkDialog(AbstractReviewer.this, getResources().getString(R.string.card_browser_card_details),
             // mCurrentCard.getCardDetails(AbstractReviewer.this, false), new DialogInterface.OnClickListener() {
@@ -420,7 +420,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private View.OnClickListener mFlipCardListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Log.i(AnkiDroidApp.TAG, "Flip card changed:");
+            // Log.i(AnkiDroidApp.TAG, "Flip card changed:");
             mTimeoutHandler.removeCallbacks(mShowAnswerTask);
             // Explicitly hide the soft keyboard. It *should* be hiding itself automatically, but sometimes failed to do
             // so.
@@ -502,7 +502,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             if (mIsSelecting) {
                 return false;
             }
-            Log.i(AnkiDroidApp.TAG, "onLongClick");
+            // Log.i(AnkiDroidApp.TAG, "onLongClick");
             Vibrator vibratorManager = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
             vibratorManager.vibrate(50);
             longClickHandler.postDelayed(startLongClickAction, 300);
@@ -907,7 +907,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
-        Log.i(AnkiDroidApp.TAG, "AbstractReviewer - onCreate");
+        // Log.i(AnkiDroidApp.TAG, "AbstractReviewer - onCreate");
 
         mChangeBorderStyle = Themes.getTheme() == Themes.THEME_ANDROID_LIGHT
                 || Themes.getTheme() == Themes.THEME_ANDROID_DARK;
@@ -1005,7 +1005,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        Log.i(AnkiDroidApp.TAG, "AbstractReviewer - onPause()");
+        // Log.i(AnkiDroidApp.TAG, "AbstractReviewer - onPause()");
 
         mTimeoutHandler.removeCallbacks(mShowAnswerTask);
         mTimeoutHandler.removeCallbacks(mShowQuestionTask);
@@ -1061,7 +1061,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.i(AnkiDroidApp.TAG, "AbstractReviewer - onDestroy()");
+        // Log.i(AnkiDroidApp.TAG, "AbstractReviewer - onDestroy()");
         if (mSpeakText) {
             ReadText.releaseTts();
         }
@@ -1074,7 +1074,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            Log.i(AnkiDroidApp.TAG, "AbstractReviewer - onBackPressed()");
+            // Log.i(AnkiDroidApp.TAG, "AbstractReviewer - onBackPressed()");
             closeReviewer(RESULT_DEFAULT, false);
             return true;
         }
@@ -1116,7 +1116,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     private void updateBigWidget(boolean showProgressDialog) {
         // if (DeckManager.deckIsOpenedInBigWidget(DeckManager.getMainDeckPath())) {
-        // Log.i(AnkiDroidApp.TAG, "Reviewer: updateBigWidget");
+        // // Log.i(AnkiDroidApp.TAG, "Reviewer: updateBigWidget");
         // AnkiDroidWidgetBig.setCard(mCurrentCard);
         // AnkiDroidWidgetBig.updateWidget(AnkiDroidWidgetBig.UpdateService.VIEW_SHOW_QUESTION, showProgressDialog);
         // }
@@ -1353,7 +1353,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
         if (requestCode == EDIT_CURRENT_CARD) {
             if (resultCode != RESULT_CANCELED) {
-                Log.i(AnkiDroidApp.TAG, "Saving card...");
+                // Log.i(AnkiDroidApp.TAG, "Saving card...");
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler, new DeckTask.TaskData(
                         mSched, mCurrentCard, true));
             } else {
@@ -1446,7 +1446,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     protected void lookUpOrSelectText() {
         if (clipboardHasText()) {
-            Log.i(AnkiDroidApp.TAG, "Clipboard has text = " + clipboardHasText());
+            // Log.i(AnkiDroidApp.TAG, "Clipboard has text = " + clipboardHasText());
             lookUp();
         } else {
             selectAndCopyText();
@@ -1716,9 +1716,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (mPrefSafeDisplay) {
             AnkiDroidApp.getCompat().setScrollbarFadingEnabled(webView, false);
         }
-        Log.i(AnkiDroidApp.TAG,
-                "Focusable = " + webView.isFocusable() + ", Focusable in touch mode = "
-                        + webView.isFocusableInTouchMode());
+        // Log.i(AnkiDroidApp.TAG, "Focusable = " + webView.isFocusable() + ", Focusable in touch mode = " + webView.isFocusableInTouchMode());
 
         // Filter any links using the custom "playsound" protocol defined in Sound.java.
         // We play sounds through these links when a user taps the sound icon.
@@ -1991,8 +1989,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 try {
                     mSetTextIsSelectable = TextView.class.getMethod("setTextIsSelectable", boolean.class);
                 } catch (Throwable e) {
-                    Log.i(AnkiDroidApp.TAG,
-                            "mSetTextIsSelectable could not be found due to a too low Android version (< 3.0)");
+                    // Log.i(AnkiDroidApp.TAG, "mSetTextIsSelectable could not be found due to a too low Android version (< 3.0)");
                     mSetTextIsSelectable = null;
                 }
                 if (mSetTextIsSelectable != null) {
@@ -2161,7 +2158,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             question = ArabicUtilities.reshapeSentence(question, true);
         }
 
-        Log.i(AnkiDroidApp.TAG, "question: '" + question + "'");
+        // Log.i(AnkiDroidApp.TAG, "question: '" + question + "'");
 
         String displayString = "";
 
@@ -2233,7 +2230,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
 
     protected void displayCardAnswer() {
-        Log.i(AnkiDroidApp.TAG, "displayCardAnswer");
+        // Log.i(AnkiDroidApp.TAG, "displayCardAnswer");
 
         // prevent answering (by e.g. gestures) before card is loaded
         if (mCurrentCard == null) {
@@ -2275,8 +2272,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             // Clean up the user answer and the correct answer
             String userAnswer = cleanTypedAnswer(mAnswerField.getText().toString());
             String correctAnswer = cleanCorrectAnswer(mTypeCorrect);
-            Log.i(AnkiDroidApp.TAG, "correct answer = " + correctAnswer);
-            Log.i(AnkiDroidApp.TAG, "user answer = " + userAnswer);
+            // Log.i(AnkiDroidApp.TAG, "correct answer = " + correctAnswer);
+            // Log.i(AnkiDroidApp.TAG, "user answer = " + userAnswer);
 
             answer = typeAnsAnswerFilter(answer, userAnswer, correctAnswer);
             displayString = enrichWithQADiv(answer, true);
@@ -2314,7 +2311,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
 
     private void updateCard(String content) {
-        Log.i(AnkiDroidApp.TAG, "updateCard");
+        // Log.i(AnkiDroidApp.TAG, "updateCard");
 
         if (mCurrentSimpleInterface) {
             fillFlashcard();
@@ -2363,7 +2360,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 cardClass += " vertically_centered";
             }
 
-            Log.i(AnkiDroidApp.TAG, "content card = \n" + content);
+            // Log.i(AnkiDroidApp.TAG, "content card = \n" + content);
             StringBuilder style = new StringBuilder();
             mExtensions.updateCssStyle(style);
 
@@ -2371,7 +2368,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             if (mRelativeImageSize != 100) {
                 style.append(String.format("img { zoom: %s }\n", mRelativeImageSize / 100.0));
             }
-            Log.i(AnkiDroidApp.TAG, "::style::" + style);
+            // Log.i(AnkiDroidApp.TAG, "::style::" + style);
 
             if (mNightMode) {
                 content = HtmlColors.invertColors(content);
@@ -2381,7 +2378,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             content = SmpToHtmlEntity(content);
             mCardContent = new SpannedString(mCardTemplate.replace("::content::", content)
                     .replace("::style::", style.toString()).replace("::class::", cardClass));
-            Log.i(AnkiDroidApp.TAG, "base url = " + mBaseUrl);
+            // Log.i(AnkiDroidApp.TAG, "base url = " + mBaseUrl);
 
             if (SAVE_CARD_CONTENT) {
                 try {
@@ -2393,7 +2390,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                         f.close();
                     }
                 } catch (IOException e) {
-                    Log.d(AnkiDroidApp.TAG, "failed to save card", e);
+                    // Log.d(AnkiDroidApp.TAG, "failed to save card", e);
                 }
             }
             fillFlashcard();
@@ -2503,7 +2500,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
 
     public void fillFlashcard() {
-        Log.i(AnkiDroidApp.TAG, "base url = " + mBaseUrl);
+        // Log.i(AnkiDroidApp.TAG, "base url = " + mBaseUrl);
         if (mCurrentSimpleInterface && mSimpleCard != null) {
             mSimpleCard.setText(mCardContent);
         } else if (!mUseQuickUpdate && mCard != null && mNextCard != null) {
@@ -2925,7 +2922,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     public final class AnkiDroidWebChromeClient extends WebChromeClient {
         @Override
         public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
-            Log.i(AnkiDroidApp.TAG, message);
+            // Log.i(AnkiDroidApp.TAG, message);
             result.confirm();
             return true;
         }

@@ -1044,7 +1044,7 @@ public class Finder {
                 // cancel if the launching task was cancelled. 
                 // Note that checking sSearchCancelled is a hack -- see comments in DeckTask.launchDeckTask
                 if (DeckTask.taskIsCancelled(DeckTask.TASK_TYPE_SEARCH_CARDS) || CardBrowser.sSearchCancelled){
-                    Log.i(AnkiDroidApp.TAG, "_findCardsForCardBrowser() cancelled...");
+                    // Log.i(AnkiDroidApp.TAG, "_findCardsForCardBrowser() cancelled...");
                     return null;
                 }                
                 HashMap<String, String> map = new HashMap<String, String>();

@@ -86,7 +86,7 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
 
 
         protected void cacheValues() {
-            Log.i(AnkiDroidApp.TAG, "CramDeckOptions - CacheValues");
+            // Log.i(AnkiDroidApp.TAG, "CramDeckOptions - CacheValues");
 
             try {
                 JSONArray ar = mDeck.getJSONArray("terms").getJSONArray(0);
@@ -113,7 +113,7 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
 
             @Override
             public SharedPreferences.Editor clear() {
-                Log.d(AnkiDroidApp.TAG, "clear()");
+                // Log.d(AnkiDroidApp.TAG, "clear()");
                 mUpdate = new ContentValues();
                 return this;
             }
@@ -121,11 +121,11 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
 
             @Override
             public boolean commit() {
-                Log.d(AnkiDroidApp.TAG, "CramDeckOptions - commit() changes back to database");
+                // Log.d(AnkiDroidApp.TAG, "CramDeckOptions - commit() changes back to database");
 
                 try {
                     for (Entry<String, Object> entry : mUpdate.valueSet()) {
-                        Log.i(AnkiDroidApp.TAG, "Change value for key '" + entry.getKey() + "': " + entry.getValue());
+                        // Log.i(AnkiDroidApp.TAG, "Change value for key '" + entry.getKey() + "': " + entry.getValue());
                         if (entry.getKey().equals("search")) {
                             JSONArray ar = mDeck.getJSONArray("terms");
                             ar.getJSONArray(0).put(0, (String) entry.getValue());
@@ -245,7 +245,7 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
 
             @Override
             public SharedPreferences.Editor remove(String key) {
-                Log.d(this.getClass().toString(), String.format("Editor.remove(key=%s)", key));
+                // Log.d(this.getClass().toString(), String.format("Editor.remove(key=%s)", key));
                 mUpdate.remove(key);
                 return this;
             }
@@ -311,7 +311,7 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
 
         @Override
         public String getString(String key, String defValue) {
-            Log.d(this.getClass().toString(), String.format("getString(key=%s, defValue=%s)", key, defValue));
+            // Log.d(this.getClass().toString(), String.format("getString(key=%s, defValue=%s)", key, defValue));
             if (!mValues.containsKey(key)) {
                 return defValue;
             }
@@ -346,7 +346,7 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
 
     @Override
     public SharedPreferences getSharedPreferences(String name, int mode) {
-        Log.d(this.getClass().toString(), String.format("getSharedPreferences(name=%s)", name));
+        // Log.d(this.getClass().toString(), String.format("getSharedPreferences(name=%s)", name));
         return mPref;
     }
 
@@ -418,7 +418,7 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            Log.i(AnkiDroidApp.TAG, "DeckOptions - onBackPressed()");
+            // Log.i(AnkiDroidApp.TAG, "DeckOptions - onBackPressed()");
             finish();
             ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
             return true;

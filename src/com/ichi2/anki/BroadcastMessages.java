@@ -50,10 +50,10 @@ public class BroadcastMessages {
 
     public static void checkForNewMessages(Activity activity) {
         SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(activity);
-        Log.i(AnkiDroidApp.TAG, "BroadcastMessages: checkForNewMessages");
+        // Log.i(AnkiDroidApp.TAG, "BroadcastMessages: checkForNewMessages");
         // don't proceed if messages were already shown today
         if (!prefs.getBoolean("showBroadcastMessageToday", true)) {
-            Log.i(AnkiDroidApp.TAG, "BroadcastMessages: already shown today");
+            // Log.i(AnkiDroidApp.TAG, "BroadcastMessages: already shown today");
             return;
         }
         AsyncTask<Activity, Void, Context> checkForNewMessage = new DownloadBroadcastMessage();
@@ -147,7 +147,7 @@ public class BroadcastMessages {
         @Override
         protected Context doInBackground(Activity... params) {
             super.doInBackground(params);
-            Log.i(AnkiDroidApp.TAG, "BroadcastMessage.DownloadBroadcastMessage.doInBackground()");
+            // Log.i(AnkiDroidApp.TAG, "BroadcastMessage.DownloadBroadcastMessage.doInBackground()");
 
             Activity activity = params[0];
             mActivity = activity;
@@ -161,7 +161,7 @@ public class BroadcastMessages {
                 return activity;
             }
             try {
-                Log.i(AnkiDroidApp.TAG, "BroadcastMessage: download file " + FILE_URL);
+                // Log.i(AnkiDroidApp.TAG, "BroadcastMessage: download file " + FILE_URL);
                 URL fileUrl;
                 fileUrl = new URL(FILE_URL);
                 URLConnection conn = fileUrl.openConnection();
@@ -180,7 +180,7 @@ public class BroadcastMessages {
                         // get message number
                         mNum = Integer.parseInt(getXmlValue(el, NUM));
                         if (mNum <= lastNum) {
-                            Log.i(AnkiDroidApp.TAG, "BroadcastMessage - message " + mNum + " already shown");
+                            // Log.i(AnkiDroidApp.TAG, "BroadcastMessage - message " + mNum + " already shown");
                             continue;
                         }
 
@@ -188,15 +188,13 @@ public class BroadcastMessages {
                         mMinVersion = getXmlValue(el, MIN_VERSION);
                         if (mMinVersion != null && mMinVersion.length() > 0
                                 && compareVersions(mMinVersion, currentVersion) > 0) {
-                            Log.i(AnkiDroidApp.TAG, "BroadcastMessage - too low AnkiDroid version (" + currentVersion
-                                    + "), message " + mNum + " only for >= " + mMinVersion);
+                            // Log.i(AnkiDroidApp.TAG, "BroadcastMessage - too low AnkiDroid version (" + currentVersion + "), message " + mNum + " only for >= " + mMinVersion);
                             continue;
                         }
                         mMaxVersion = getXmlValue(el, MAX_VERSION);
                         if (mMaxVersion != null && mMaxVersion.length() > 0
                                 && compareVersions(mMaxVersion, currentVersion) < 0) {
-                            Log.i(AnkiDroidApp.TAG, "BroadcastMessage - too high AnkiDroid version (" + currentVersion
-                                    + "), message " + mNum + " only for <= " + mMaxVersion);
+                            // Log.i(AnkiDroidApp.TAG, "BroadcastMessage - too high AnkiDroid version (" + currentVersion + "), message " + mNum + " only for <= " + mMaxVersion);
                             continue;
                         }
 
@@ -210,7 +208,7 @@ public class BroadcastMessages {
                         }
                     }
                     // no valid message left
-                    Log.d(AnkiDroidApp.TAG, "BroadcastMessages: disable messaging system for today");
+                    // Log.d(AnkiDroidApp.TAG, "BroadcastMessages: disable messaging system for today");
                     prefs.edit().putBoolean("showBroadcastMessageToday", false).commit();
                     mShowDialog = false;
                 }
@@ -235,7 +233,7 @@ public class BroadcastMessages {
         @Override
         protected void onPostExecute(Context context) {
             super.onPostExecute(context);
-            Log.d(AnkiDroidApp.TAG, "BroadcastMessage.DownloadBroadcastMessage.onPostExecute()");
+            // Log.d(AnkiDroidApp.TAG, "BroadcastMessage.DownloadBroadcastMessage.onPostExecute()");
             if (!mShowDialog) {
                 return;
             }
@@ -280,7 +278,7 @@ public class BroadcastMessages {
             }
             try {
                 mDialog = builder.create();
-                Log.d(AnkiDroidApp.TAG, "BroadcastMessages: show dialog");
+                // Log.d(AnkiDroidApp.TAG, "BroadcastMessages: show dialog");
                 mDialog.setOwnerActivity(mActivity);
                 mDialog.show();
             } catch (BadTokenException e) {
@@ -292,7 +290,7 @@ public class BroadcastMessages {
 
     private static void setMessageRead(Context context, int num) {
         Editor editor = AnkiDroidApp.getSharedPrefs(context).edit();
-        Log.d(AnkiDroidApp.TAG, "BroadcastMessages: set message " + num + " as read");
+        // Log.d(AnkiDroidApp.TAG, "BroadcastMessages: set message " + num + " as read");
         editor.putInt("lastMessageNum", num);
         editor.commit();
     }
