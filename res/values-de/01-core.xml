@@ -83,7 +83,7 @@
   <string name="undo_action_suspend_note">Notiz dauerhaft aussetzen</string>
   <string name="undo_action_delete">Notiz löschen</string>
   <string name="undo_action_mark">Notiz markieren</string>
-  <string name="unbury">Zurückstellen aufheben</string>
+  <string name="unbury">Vorläufiges Aussetzen aufheben</string>
   <string name="finish_operation">Letzte Operation wird beendet\n(vermutlich eine Sicherung der Sammlung).\nBitte warten...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Fehlende Media-Daten herunterladen</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Sprachzuordnungen zurücksetzen</string>
@@ -101,8 +101,8 @@
   <string name="menu_preferences">Einstellungen</string>
   <string name="menu_about">Über</string>
   <string name="menu_dismiss_note">Notiz verwerfen&#8230;</string>
-  <string name="menu_bury_card">Karte zurückstellen</string>
-  <string name="menu_bury_note">Notiz zurückstellen</string>
+  <string name="menu_bury_card">Karte vorläufig aussetzen</string>
+  <string name="menu_bury_note">Notiz vorläufig aussetzen</string>
   <string name="menu_suspend_card">Karte dauerhaft aussetzen</string>
   <string name="menu_suspend_note">Notiz dauerhaft aussetzen</string>
   <string name="menu_save_note">Notiz speichern</string>
