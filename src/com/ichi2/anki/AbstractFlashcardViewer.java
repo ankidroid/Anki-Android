@@ -1719,8 +1719,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (mPrefSafeDisplay) {
             AnkiDroidApp.getCompat().setScrollbarFadingEnabled(webView, false);
         }
-        // Log.i(AnkiDroidApp.TAG,
-                "Focusable = " + webView.isFocusable() + ", Focusable in touch mode = " + webView.isFocusableInTouchMode());
+        // Log.i(AnkiDroidApp.TAG, "Focusable = " + webView.isFocusable() + ", Focusable in touch mode = " + webView.isFocusableInTouchMode());
 
         // Filter any links using the custom "playsound" protocol defined in Sound.java.
         // We play sounds through these links when a user taps the sound icon.
