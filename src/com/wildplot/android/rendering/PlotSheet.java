@@ -87,6 +87,7 @@ public class PlotSheet implements Drawable {
 	 */
 	Vector<MultiScreenPart> screenParts = new Vector<MultiScreenPart>();
     private HashMap<String, ColorWrap> mLegendMap = new HashMap<String, ColorWrap>();
+    private boolean mDrawablesPrepared = false;
 
     /**
 	 * Create a virtual sheet used for the plot
@@ -145,6 +146,7 @@ public class PlotSheet implements Drawable {
 	 */
 	public void addDrawable(Drawable draw) {
 		this.screenParts.get(0).addDrawable(draw);
+        mDrawablesPrepared = false;
 	}
 	
 
@@ -321,7 +323,7 @@ public class PlotSheet implements Drawable {
 	private void drawSingleMode(GraphicsWrap g, int screenNr) {
         RectangleWrap field = g.getClipBounds();
 		this.currentScreen = screenNr;
-        prepareRunnables();
+        prepareDrawables();
 		Vector<Drawable> offFrameDrawables = new Vector<Drawable>();
 		Vector<Drawable> onFrameDrawables = new Vector<Drawable>();
 
@@ -458,73 +460,75 @@ public class PlotSheet implements Drawable {
     /**
      *sort runnables and group them together to use lesser threads
      */
-    private void prepareRunnables(){
+    private void prepareDrawables(){
 
-        Vector<Drawable> drawables = this.screenParts.get(0).getDrawables();
-        Vector<Drawable> onFrameDrawables = new Vector<Drawable>();
-        Vector<Drawable> offFrameDrawables = new Vector<Drawable>();
+        if(!mDrawablesPrepared) {
+            mDrawablesPrepared = true;
+            Vector<Drawable> drawables = this.screenParts.get(0).getDrawables();
+            Vector<Drawable> onFrameDrawables = new Vector<Drawable>();
+            Vector<Drawable> offFrameDrawables = new Vector<Drawable>();
 
-        DrawableContainer onFrameContainer = new DrawableContainer(true, false);
+            DrawableContainer onFrameContainer = new DrawableContainer(true, false);
 
-        DrawableContainer offFrameContainer = new DrawableContainer(false, false);
-        for(Drawable drawable : drawables){
-            if(drawable instanceof Legendable && ((Legendable)drawable).nameIsSet()){
-                ColorWrap color = ((Legendable)drawable).getColor();
-                String name = ((Legendable)drawable).getName();
-                mLegendMap.put(name, color);
-            }
-            if(drawable.isOnFrame()){
-                if(drawable.isClusterable()){
-                    if(onFrameContainer.isCritical() == drawable.isCritical()){
-                        onFrameContainer.addDrawable(drawable);
-                    }else {
-                        if(onFrameContainer.getSize() > 0) {
+            DrawableContainer offFrameContainer = new DrawableContainer(false, false);
+            for (Drawable drawable : drawables) {
+                if (drawable instanceof Legendable && ((Legendable) drawable).nameIsSet()) {
+                    ColorWrap color = ((Legendable) drawable).getColor();
+                    String name = ((Legendable) drawable).getName();
+                    mLegendMap.put(name, color);
+                }
+                if (drawable.isOnFrame()) {
+                    if (drawable.isClusterable()) {
+                        if (onFrameContainer.isCritical() == drawable.isCritical()) {
+                            onFrameContainer.addDrawable(drawable);
+                        } else {
+                            if (onFrameContainer.getSize() > 0) {
+                                onFrameDrawables.add(onFrameContainer);
+                            }
+                            onFrameContainer = new DrawableContainer(true, drawable.isCritical());
+                            onFrameContainer.addDrawable(drawable);
+                        }
+                    } else {
+                        if (onFrameContainer.getSize() > 0) {
                             onFrameDrawables.add(onFrameContainer);
                         }
-                        onFrameContainer = new DrawableContainer(true, drawable.isCritical());
-                        onFrameContainer.addDrawable(drawable);
-                    }
-                }else{
-                    if(onFrameContainer.getSize() > 0) {
-                        onFrameDrawables.add(onFrameContainer);
-                    }
-                    onFrameDrawables.add(drawable);
-                    onFrameContainer = new DrawableContainer(true, false);
+                        onFrameDrawables.add(drawable);
+                        onFrameContainer = new DrawableContainer(true, false);
 
-                }
-            }else{
-                if(drawable.isClusterable()){
-                    if(offFrameContainer.isCritical() == drawable.isCritical()){
-                        offFrameContainer.addDrawable(drawable);
+                    }
+                } else {
+                    if (drawable.isClusterable()) {
+                        if (offFrameContainer.isCritical() == drawable.isCritical()) {
+                            offFrameContainer.addDrawable(drawable);
+                        } else {
+                            if (offFrameContainer.getSize() > 0) {
+                                offFrameDrawables.add(offFrameContainer);
+                            }
+                            offFrameContainer = new DrawableContainer(false, drawable.isCritical());
+                            offFrameContainer.addDrawable(drawable);
+                        }
                     } else {
-                        if(offFrameContainer.getSize() > 0){
+                        if (offFrameContainer.getSize() > 0) {
                             offFrameDrawables.add(offFrameContainer);
                         }
-                        offFrameContainer = new DrawableContainer(false, drawable.isCritical());
-                        offFrameContainer.addDrawable(drawable);
+                        offFrameDrawables.add(drawable);
+                        offFrameContainer = new DrawableContainer(false, false);
                     }
-                }else{
-                    if(offFrameContainer.getSize() > 0){
-                        offFrameDrawables.add(offFrameContainer);
-                    }
-                    offFrameDrawables.add(drawable);
-                    offFrameContainer = new DrawableContainer(false, false);
                 }
             }
+            if (onFrameContainer.getSize() > 0) {
+                onFrameDrawables.add(onFrameContainer);
+            }
+
+            if (offFrameContainer.getSize() > 0) {
+                offFrameDrawables.add(offFrameContainer);
+            }
+
+            this.screenParts.get(0).getDrawables().removeAllElements();
+            this.screenParts.get(0).getDrawables().addAll(offFrameDrawables);
+            this.screenParts.get(0).getDrawables().addAll(onFrameDrawables);
+
         }
-        if(onFrameContainer.getSize() > 0) {
-            onFrameDrawables.add(onFrameContainer);
-        }
-
-        if(offFrameContainer.getSize() > 0){
-            offFrameDrawables.add(offFrameContainer);
-        }
-
-        this.screenParts.get(0).getDrawables().removeAllElements();
-        this.screenParts.get(0).getDrawables().addAll(offFrameDrawables);
-        this.screenParts.get(0).getDrawables().addAll(onFrameDrawables);
-
-
     }
 	
 	/**
