@@ -21,30 +21,30 @@ import android.os.Bundle;
 import android.support.v4.app.*;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.*;
+import android.webkit.WebView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.NavigationDrawerActivity;
 import com.ichi2.anki.R;
 import com.ichi2.libanki.Stats;
-import com.wildplot.android.rendering.ChartView;
 
 import java.util.Locale;
 
 
 public class AnkiStatsActivity extends NavigationDrawerActivity implements ActionBar.TabListener {
 
-    public static final int FORECAST_TAB_POSITION = 0;
-    public static final int REVIEW_COUNT_TAB_POSITION = 1;
-    public static final int REVIEW_TIME_TAB_POSITION = 2;
-    public static final int INTERVALS_TAB_POSITION = 3;
-    public static final int HOURLY_BREAKDOWN_TAB_POSITION = 4;
-    public static final int WEEKLY_BREAKDOWN_TAB_POSITION = 5;
-    public static final int ANSWER_BUTTONS_TAB_POSITION = 6;
-    public static final int CARDS_TYPES_TAB_POSITION = 7;
+    public static final int TODAYS_STATS_TAB_POSITION = 0;
+    public static final int FORECAST_TAB_POSITION = 1;
+    public static final int REVIEW_COUNT_TAB_POSITION = 2;
+    public static final int REVIEW_TIME_TAB_POSITION = 3;
+    public static final int INTERVALS_TAB_POSITION = 4;
+    public static final int HOURLY_BREAKDOWN_TAB_POSITION = 5;
+    public static final int WEEKLY_BREAKDOWN_TAB_POSITION = 6;
+    public static final int ANSWER_BUTTONS_TAB_POSITION = 7;
+    public static final int CARDS_TYPES_TAB_POSITION = 8;
 
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
@@ -149,7 +149,7 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
         // When the given tab is selected, switch to the corresponding page in
         // the ViewPager.
         mViewPager.setCurrentItem(tab.getPosition());
-        ChartFragment currentFragment = (ChartFragment) mSectionsPagerAdapter.getItem(tab.getPosition());
+        StatisticFragment currentFragment = (StatisticFragment) mSectionsPagerAdapter.getItem(tab.getPosition());
         currentFragment.checkAndUpdate();
         if (android.os.Build.VERSION.SDK_INT <= android.os.Build.VERSION_CODES.GINGERBREAD) {
             currentFragment.invalidateView();
@@ -163,7 +163,7 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
 
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-        ChartFragment currentFragment = (ChartFragment) mSectionsPagerAdapter.getItem(tab.getPosition());
+        StatisticFragment currentFragment = (StatisticFragment) mSectionsPagerAdapter.getItem(tab.getPosition());
         currentFragment.checkAndUpdate();
     }
 
@@ -188,12 +188,12 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
 
         @Override
         public Fragment getItem(int position) {
-            return ChartFragment.newInstance(position);
+            return StatisticFragment.newInstance(position);
         }
 
         @Override
         public int getCount() {
-            return 8;
+            return 9;
         }
 
         @Override
@@ -201,6 +201,8 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
             Locale l = Locale.getDefault();
 
             switch (position) {
+                case TODAYS_STATS_TAB_POSITION:
+                    return getString(R.string.stats_today).toUpperCase(l);
                 case FORECAST_TAB_POSITION:
                     return getString(R.string.stats_forecast).toUpperCase(l);
                 case REVIEW_COUNT_TAB_POSITION:
@@ -222,115 +224,47 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
         }
     }
 
-    /**
-     * A chart fragment containing a ImageView.
-     */
-    public static class ChartFragment extends Fragment {
+    public static abstract class StatisticFragment extends Fragment{
+        protected ViewPager mActivityPager;
+        protected SectionsPagerAdapter mActivitySectionPagerAdapter;
+        private Menu mMenu;
         /**
          * The fragment argument representing the section number for this
          * fragment.
          */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-        private ChartView mChart;
-        private ProgressBar mProgressBar;
-        private int mHeight = 0;
-        private int mWidth = 0;
-        private ChartFragment mInstance = null;
-        private int mSectionNumber;
-        private Menu mMenu;
-        private int mType  = Stats.TYPE_MONTH;
-        private boolean mIsCreated = false;
-        private ViewPager mActivityPager;
-        private SectionsPagerAdapter mActivitySectionPagerAdapter;
-        private AsyncTask mCreateChartTask;
-
+        protected static final String ARG_SECTION_NUMBER = "section_number";
         /**
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static ChartFragment newInstance(int sectionNumber) {
-            ChartFragment fragment = new ChartFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public ChartFragment() {
-            super();
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            setHasOptionsMenu(true);
-            Bundle bundle = getArguments();
-            mSectionNumber = bundle.getInt(ARG_SECTION_NUMBER);
-            //int sectionNumber = 0;
-            //System.err.println("sectionNumber: " + mSectionNumber);
-            View rootView = inflater.inflate(R.layout.fragment_anki_stats, container, false);
-            mChart = (ChartView) rootView.findViewById(R.id.image_view_chart);
-            if(mChart == null)
-                Log.d(AnkiDroidApp.TAG, "mChart null!!!");
-            else
-                Log.d(AnkiDroidApp.TAG, "mChart is not null!");
-
-            //mChart.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-
-            mProgressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar_stats);
-
-            mProgressBar.setVisibility(View.VISIBLE);
-            //mChart.setVisibility(View.GONE);
-            createChart();
-            mHeight = mChart.getMeasuredHeight();
-            mWidth = mChart.getMeasuredWidth();
-            mChart.addFragment(this);
-
-            mInstance = this;
-            mType = (((AnkiStatsActivity)getActivity()).getTaskHandler()).getStatType();
-            mIsCreated = true;
-            mActivityPager = ((AnkiStatsActivity)getActivity()).getViewPager();
-            mActivitySectionPagerAdapter = ((AnkiStatsActivity)getActivity()).getSectionsPagerAdapter();
-            return rootView;
-        }
-
-        private void createChart(){
-
-            switch (mSectionNumber){
+        public static StatisticFragment newInstance(int sectionNumber) {
+            Fragment fragment;
+            Bundle args;
+            switch (sectionNumber){
                 case FORECAST_TAB_POSITION:
-                    mCreateChartTask = (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(
-                            Stats.ChartType.FORECAST, mChart, mProgressBar);
-                    break;
                 case REVIEW_COUNT_TAB_POSITION:
-                    mCreateChartTask = (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(
-                            Stats.ChartType.REVIEW_COUNT, mChart, mProgressBar);
-                    break;
                 case REVIEW_TIME_TAB_POSITION:
-                    mCreateChartTask = (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(
-                            Stats.ChartType.REVIEW_TIME, mChart, mProgressBar);
-                    break;
                 case INTERVALS_TAB_POSITION:
-                    mCreateChartTask = (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(
-                            Stats.ChartType.INTERVALS, mChart, mProgressBar);
-                    break;
                 case HOURLY_BREAKDOWN_TAB_POSITION:
-                    mCreateChartTask = (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(
-                            Stats.ChartType.HOURLY_BREAKDOWN, mChart, mProgressBar);
-                    break;
                 case WEEKLY_BREAKDOWN_TAB_POSITION:
-                    mCreateChartTask = (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(
-                            Stats.ChartType.WEEKLY_BREAKDOWN, mChart, mProgressBar);
-                    break;
                 case ANSWER_BUTTONS_TAB_POSITION:
-                    mCreateChartTask = (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(
-                            Stats.ChartType.ANSWER_BUTTONS, mChart, mProgressBar);
-                    break;
                 case CARDS_TYPES_TAB_POSITION:
-                    mCreateChartTask = (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(
-                            Stats.ChartType.CARDS_TYPES, mChart, mProgressBar);
-                    break;
+                    fragment = new ChartFragment();
+                    args = new Bundle();
+                    args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+                    fragment.setArguments(args);
+                    return (ChartFragment)fragment;
+                case TODAYS_STATS_TAB_POSITION:
+                    fragment = new OverviewStatisticsFragment();
+                    args = new Bundle();
+                    args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+                    fragment.setArguments(args);
+                    return (OverviewStatisticsFragment)fragment;
 
+                default:
+                    return null;
             }
+
         }
 
         @Override
@@ -339,29 +273,8 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
             checkAndUpdate();
 
         }
-
-        public void checkAndUpdate(){
-            //System.err.println("<<<<<<<checkAndUpdate" + mSectionNumber);
-            if(!mIsCreated)
-                return;
-            int height = mChart.getMeasuredHeight();
-            int width = mChart.getMeasuredWidth();
-
-            //are height and width checks still necessary without bitmaps?
-            if(height != 0 && width != 0){
-                if(mHeight != height || mWidth != width || mType != (((AnkiStatsActivity)getActivity()).getTaskHandler()).getStatType()){
-                    mHeight = height;
-                    mWidth = width;
-                    mType = (((AnkiStatsActivity)getActivity()).getTaskHandler()).getStatType();
-                    mProgressBar.setVisibility(View.VISIBLE);
-                    mChart.setVisibility(View.GONE);
-                    if(mCreateChartTask != null && !mCreateChartTask.isCancelled()){
-                        mCreateChartTask.cancel(true);
-                    }
-                    createChart();
-                }
-            }
-        }
+        public abstract void invalidateView();
+        public abstract void checkAndUpdate();
 
         //This seems to be called on every tab change, so using it to update
         @Override
@@ -432,13 +345,140 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
 
         }
 
+    }
+
+    /**
+     * A chart fragment containing a ChartView.
+     */
+    public static class ChartFragment extends StatisticFragment {
+
+        private ChartView mChart;
+        private ProgressBar mProgressBar;
+        private int mHeight = 0;
+        private int mWidth = 0;
+        private ChartFragment mInstance = null;
+        private int mSectionNumber;
+
+        private int mType  = Stats.TYPE_MONTH;
+        private boolean mIsCreated = false;
+
+        private AsyncTask mCreateChartTask;
+
+
+
+        public ChartFragment() {
+            super();
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            setHasOptionsMenu(true);
+            Bundle bundle = getArguments();
+            mSectionNumber = bundle.getInt(ARG_SECTION_NUMBER);
+            //int sectionNumber = 0;
+            //System.err.println("sectionNumber: " + mSectionNumber);
+            View rootView = inflater.inflate(R.layout.fragment_anki_stats, container, false);
+            mChart = (ChartView) rootView.findViewById(R.id.image_view_chart);
+            if(mChart == null)
+                Log.d(AnkiDroidApp.TAG, "mChart null!!!");
+            else
+                Log.d(AnkiDroidApp.TAG, "mChart is not null!");
+
+            //mChart.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+
+            mProgressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar_stats);
+
+            mProgressBar.setVisibility(View.VISIBLE);
+            //mChart.setVisibility(View.GONE);
+            createChart();
+            mHeight = mChart.getMeasuredHeight();
+            mWidth = mChart.getMeasuredWidth();
+            mChart.addFragment(this);
+
+            mInstance = this;
+            mType = (((AnkiStatsActivity)getActivity()).getTaskHandler()).getStatType();
+            mIsCreated = true;
+            mActivityPager = ((AnkiStatsActivity)getActivity()).getViewPager();
+            mActivitySectionPagerAdapter = ((AnkiStatsActivity)getActivity()).getSectionsPagerAdapter();
+            return rootView;
+        }
+
+        private void createChart(){
+
+            switch (mSectionNumber){
+                case FORECAST_TAB_POSITION:
+                    mCreateChartTask = (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(
+                            Stats.ChartType.FORECAST, mChart, mProgressBar);
+                    break;
+                case REVIEW_COUNT_TAB_POSITION:
+                    mCreateChartTask = (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(
+                            Stats.ChartType.REVIEW_COUNT, mChart, mProgressBar);
+                    break;
+                case REVIEW_TIME_TAB_POSITION:
+                    mCreateChartTask = (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(
+                            Stats.ChartType.REVIEW_TIME, mChart, mProgressBar);
+                    break;
+                case INTERVALS_TAB_POSITION:
+                    mCreateChartTask = (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(
+                            Stats.ChartType.INTERVALS, mChart, mProgressBar);
+                    break;
+                case HOURLY_BREAKDOWN_TAB_POSITION:
+                    mCreateChartTask = (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(
+                            Stats.ChartType.HOURLY_BREAKDOWN, mChart, mProgressBar);
+                    break;
+                case WEEKLY_BREAKDOWN_TAB_POSITION:
+                    mCreateChartTask = (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(
+                            Stats.ChartType.WEEKLY_BREAKDOWN, mChart, mProgressBar);
+                    break;
+                case ANSWER_BUTTONS_TAB_POSITION:
+                    mCreateChartTask = (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(
+                            Stats.ChartType.ANSWER_BUTTONS, mChart, mProgressBar);
+                    break;
+                case CARDS_TYPES_TAB_POSITION:
+                    mCreateChartTask = (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(
+                            Stats.ChartType.CARDS_TYPES, mChart, mProgressBar);
+                    break;
+
+            }
+        }
+
+
+
+        @Override
+        public void checkAndUpdate(){
+            //System.err.println("<<<<<<<checkAndUpdate" + mSectionNumber);
+            if(!mIsCreated)
+                return;
+            int height = mChart.getMeasuredHeight();
+            int width = mChart.getMeasuredWidth();
+
+            //are height and width checks still necessary without bitmaps?
+            if(height != 0 && width != 0){
+                if(mHeight != height || mWidth != width || mType != (((AnkiStatsActivity)getActivity()).getTaskHandler()).getStatType()){
+                    mHeight = height;
+                    mWidth = width;
+                    mType = (((AnkiStatsActivity)getActivity()).getTaskHandler()).getStatType();
+                    mProgressBar.setVisibility(View.VISIBLE);
+                    mChart.setVisibility(View.GONE);
+                    if(mCreateChartTask != null && !mCreateChartTask.isCancelled()){
+                        mCreateChartTask.cancel(true);
+                    }
+                    createChart();
+                }
+            }
+        }
+
+
+
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
         }
+        @Override
         public void invalidateView(){
             if(mChart != null)
-                 mChart.invalidate();
+                mChart.invalidate();
         }
 
         @Override
@@ -448,6 +488,98 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
                 mCreateChartTask.cancel(true);
             }
         }
+    }
+
+    public static class OverviewStatisticsFragment extends StatisticFragment{
+
+        private WebView mWebView;
+        private ProgressBar mProgressBar;
+        private int mHeight = 0;
+        private int mWidth = 0;
+        private OverviewStatisticsFragment mInstance = null;
+        private int mSectionNumber;
+        private int mType  = Stats.TYPE_MONTH;
+        private boolean mIsCreated = false;
+        private AsyncTask mCreateStatisticsOverviewTask;
+
+
+
+        public OverviewStatisticsFragment() {
+            super();
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            setHasOptionsMenu(true);
+            Bundle bundle = getArguments();
+            mSectionNumber = bundle.getInt(ARG_SECTION_NUMBER);
+            //int sectionNumber = 0;
+            //System.err.println("sectionNumber: " + mSectionNumber);
+            View rootView = inflater.inflate(R.layout.fragment_anki_stats_overview, container, false);
+            mWebView = (WebView) rootView.findViewById(R.id.web_view_stats);
+            if(mWebView == null)
+                Log.d(AnkiDroidApp.TAG, "mChart null!!!");
+            else
+                Log.d(AnkiDroidApp.TAG, "mChart is not null!");
+
+            //mChart.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+
+            mProgressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar_stats_overview);
+
+            mProgressBar.setVisibility(View.VISIBLE);
+            //mChart.setVisibility(View.GONE);
+            createStatisticOverview();
+            mHeight = mWebView.getMeasuredHeight();
+            mWidth = mWebView.getMeasuredWidth();
+
+            mInstance = this;
+            mType = (((AnkiStatsActivity)getActivity()).getTaskHandler()).getStatType();
+            mIsCreated = true;
+            mActivityPager = ((AnkiStatsActivity)getActivity()).getViewPager();
+            mActivitySectionPagerAdapter = ((AnkiStatsActivity)getActivity()).getSectionsPagerAdapter();
+            return rootView;
+        }
+
+        private void createStatisticOverview(){
+            mCreateStatisticsOverviewTask = (((AnkiStatsActivity)getActivity()).getTaskHandler()).createStatisticsOverview(
+                    mWebView, mProgressBar);
+        }
+
+        @Override
+        public void invalidateView() {
+            if(mWebView != null)
+                mWebView.invalidate();
+        }
+
+        @Override
+        public void checkAndUpdate() {
+            if(!mIsCreated)
+                return;
+            int height = mWebView.getMeasuredHeight();
+            int width = mWebView.getMeasuredWidth();
+            if(mType != (((AnkiStatsActivity)getActivity()).getTaskHandler()).getStatType()){
+                mHeight = height;
+                mWidth = width;
+                mType = (((AnkiStatsActivity)getActivity()).getTaskHandler()).getStatType();
+                mProgressBar.setVisibility(View.VISIBLE);
+                mWebView.setVisibility(View.GONE);
+                if(mCreateStatisticsOverviewTask != null && !mCreateStatisticsOverviewTask.isCancelled()){
+                    mCreateStatisticsOverviewTask.cancel(true);
+                }
+                createStatisticOverview();
+            }
+        }
+
+        @Override
+        public void onDestroy() {
+            super.onDestroy();
+            if(mCreateStatisticsOverviewTask != null && !mCreateStatisticsOverviewTask.isCancelled()){
+                mCreateStatisticsOverviewTask.cancel(true);
+            }
+        }
+
+
     }
 
 }

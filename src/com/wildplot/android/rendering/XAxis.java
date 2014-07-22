@@ -51,6 +51,8 @@ public class XAxis implements Drawable {
 	 * Name of axis
 	 */
 	private String name = "X";
+
+    private boolean mHasName = false;
 	
 	/**
 	 * Format that is used to print numbers under markers
@@ -223,10 +225,12 @@ public class XAxis implements Drawable {
 		if(!this.isOnFrame) {
 			g.drawLine(arowheadPos[0]-1, arowheadPos[1]-1, arowheadPos[0]-6, arowheadPos[1]-3);
 			g.drawLine(arowheadPos[0]-1, arowheadPos[1]+1, arowheadPos[0]-6, arowheadPos[1]+3);
-			g.drawString(this.name, arowheadPos[0]-14-width, arowheadPos[1] + 12);
+            if(mHasName)
+			    g.drawString(this.name, arowheadPos[0]-14-width, arowheadPos[1] + 12);
 		} else {
             float[] middlePosition = {plotSheet.xToGraphic(0, field), plotSheet.yToGraphic( yOffset, field) };
-			g.drawString(this.name, field.width/2-width/2, Math.round(middlePosition[1]+fontHeigth* 2.5f));
+            if(mHasName)
+			    g.drawString(this.name, field.width/2-width/2, Math.round(middlePosition[1]+fontHeigth* 2.5f));
 		}
 	}
 
@@ -398,6 +402,9 @@ public class XAxis implements Drawable {
 	 */
 	public void setName(String name) {
 		this.name = name;
+        mHasName = true;
+        if(name.equals(""))
+            mHasName = false;
 	}
 	/**
 	 * draw minor markers on the axis

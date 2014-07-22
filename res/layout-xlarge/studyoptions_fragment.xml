@@ -205,7 +205,17 @@
 		                android:layout_width="0dip"
 		                android:layout_height="250dip"
 		                android:layout_weight="3"
-		                android:orientation="vertical" />
+		                android:orientation="vertical">
+
+                        <com.ichi2.anki.stats.ChartView
+                            android:layout_width="match_parent"
+                            android:id="@+id/chart_view_small_chart"
+                            android:layout_height="match_parent"
+                            android:background="@android:color/black"
+                            android:textColor="#FFFFFF"
+                            android:layout_margin="0dp"
+                            android:visibility="visible"/>
+                    </LinearLayout>
 		
 		            <LinearLayout
 		                android:layout_width="0dip"

@@ -39,7 +39,7 @@ public class Stats {
     public static final int TYPE_LIFE = 2;
 
     public static enum ChartType {FORECAST, REVIEW_COUNT, REVIEW_TIME,
-        INTERVALS, HOURLY_BREAKDOWN, WEEKLY_BREAKDOWN, ANSWER_BUTTONS, CARDS_TYPES};
+        INTERVALS, HOURLY_BREAKDOWN, WEEKLY_BREAKDOWN, ANSWER_BUTTONS, CARDS_TYPES, OTHER};
     public static final int TYPE_FORECAST = 0;
     public static final int TYPE_REVIEW_COUNT = 1;
     public static final int TYPE_REVIEW_TIME = 2;
@@ -120,6 +120,67 @@ public class Stats {
     }
 
 
+    /**
+     * Todays statistics
+     */
+    public int[] calculateTodayStats(){
+        String lim = _revlogLimit();
+        if (lim.length() > 0)
+            lim = " and " + lim;
+
+        Cursor cur = null;
+        String query = "select count(), sum(time)/1000, "+
+                "sum(case when ease = 1 then 1 else 0 end), "+ /* failed */
+                "sum(case when type = 0 then 1 else 0 end), "+ /* learning */
+                "sum(case when type = 1 then 1 else 0 end), "+ /* review */
+                "sum(case when type = 2 then 1 else 0 end), "+ /* relearn */
+                "sum(case when type = 3 then 1 else 0 end) "+ /* filter */
+                "from revlog where id > " + ((mCol.getSched().getDayCutoff()-86400)*1000) + " " +  lim;
+        Log.d(AnkiDroidApp.TAG, "todays statistics query: " + query);
+
+        int cards, thetime, failed, lrn, rev, relrn, filt;
+        try {
+            cur = mCol.getDb()
+                    .getDatabase()
+                    .rawQuery(query, null);
+
+            cur.moveToFirst();
+            cards = cur.getInt(0);
+            thetime = cur.getInt(1);
+            failed = cur.getInt(2);
+            lrn = cur.getInt(3);
+            rev = cur.getInt(4);
+            relrn = cur.getInt(5);
+            filt = cur.getInt(6);
+
+
+
+        } finally {
+            if (cur != null && !cur.isClosed()) {
+                cur.close();
+            }
+        }
+        query = "select count(), sum(case when ease = 1 then 0 else 1 end) from revlog " +
+        "where lastIvl >= 21 and id > " + ((mCol.getSched().getDayCutoff()-86400)*1000) + " " +  lim;
+        Log.d(AnkiDroidApp.TAG, "todays statistics query 2: " + query);
+
+        int mcnt, msum;
+        try {
+            cur = mCol.getDb()
+                    .getDatabase()
+                    .rawQuery(query, null);
+
+            cur.moveToFirst();
+            mcnt = cur.getInt(0);
+            msum = cur.getInt(1);
+        } finally {
+            if (cur != null && !cur.isClosed()) {
+                cur.close();
+            }
+        }
+
+        return new int[]{cards, thetime, failed, lrn, rev, relrn, filt, mcnt, msum};
+    }
     /**
      * Due and cumulative due
      * ***********************************************************************************************
