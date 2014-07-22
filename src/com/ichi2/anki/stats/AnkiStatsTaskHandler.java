@@ -25,6 +25,8 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Stats;
 import com.wildplot.android.rendering.PlotSheet;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -211,7 +213,11 @@ public class AnkiStatsTaskHandler {
         protected void onPostExecute(String html) {
             if(html != null && mIsRunning){
 
-                mWebView.loadData(html, "text/html", null);
+                try {
+                    mWebView.loadData(URLEncoder.encode(html, "UTF-8").replaceAll("\\+"," "), "text/html", null);
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
                 mProgressBar.setVisibility(View.GONE);
                 mWebView.setVisibility(View.VISIBLE);
                 mWebView.invalidate();
