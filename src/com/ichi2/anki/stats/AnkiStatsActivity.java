@@ -225,6 +225,9 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
     }
 
     public static abstract class StatisticFragment extends Fragment{
+        protected ViewPager mActivityPager;
+        protected SectionsPagerAdapter mActivitySectionPagerAdapter;
+        private Menu mMenu;
         /**
          * The fragment argument representing the section number for this
          * fragment.
@@ -263,8 +266,84 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
             }
 
         }
+
+        @Override
+        public void onResume() {
+            super.onResume();
+            checkAndUpdate();
+
+        }
         public abstract void invalidateView();
         public abstract void checkAndUpdate();
+
+        //This seems to be called on every tab change, so using it to update
+        @Override
+        public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+            super.onCreateOptionsMenu(menu, inflater);
+            mMenu = menu;
+            //System.err.println("in onCreateOptionsMenu");
+            inflater.inflate(R.menu.anki_stats, menu);
+            checkAndUpdate();
+        }
+
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            //System.err.println("in onOptionsItemSelected");
+            AnkiStatsTaskHandler ankiStatsTaskHandler = (((AnkiStatsActivity)getActivity()).getTaskHandler());
+
+            MenuItem monthItem  = (MenuItem)mMenu.findItem(R.id.action_month);
+            MenuItem yearItem = (MenuItem)mMenu.findItem(R.id.action_year);
+            MenuItem allItem = (MenuItem)mMenu.findItem(R.id.action_life_time);
+
+            int id = item.getItemId();
+            if(id == R.id.action_month) {
+                if(ankiStatsTaskHandler.getStatType() != Stats.TYPE_MONTH){
+                    ankiStatsTaskHandler.setStatType(Stats.TYPE_MONTH);
+                    monthItem.setChecked(true);
+                    yearItem.setChecked(false);
+                    allItem.setChecked(false);
+                    mActivitySectionPagerAdapter.notifyDataSetChanged();
+                    //createChart();
+                    //mActivityPager.invalidate();
+                }
+
+            } else if(id == R.id.action_year) {
+                if(ankiStatsTaskHandler.getStatType() != Stats.TYPE_YEAR){
+                    ankiStatsTaskHandler.setStatType(Stats.TYPE_YEAR);
+                    monthItem.setChecked(false);
+                    yearItem.setChecked(true);
+                    allItem.setChecked(false);
+                    mActivitySectionPagerAdapter.notifyDataSetChanged();
+                    //createChart();
+                    //mActivityPager.invalidate();
+                }
+            } else if(id == R.id.action_life_time) {
+                if(ankiStatsTaskHandler.getStatType() != Stats.TYPE_LIFE){
+                    ankiStatsTaskHandler.setStatType(Stats.TYPE_LIFE);
+                    monthItem.setChecked(false);
+                    yearItem.setChecked(false);
+                    allItem.setChecked(true);
+                    mActivitySectionPagerAdapter.notifyDataSetChanged();
+                    //createChart();
+                    //mActivityPager.invalidate();
+                }
+            }
+            return true;
+        }
+
+        @Override
+        public void onPrepareOptionsMenu(Menu menu) {
+            super.onPrepareOptionsMenu(menu);
+            MenuItem monthItem  = (MenuItem)menu.findItem(R.id.action_month);
+            MenuItem yearItem = (MenuItem)menu.findItem(R.id.action_year);
+            MenuItem allItem = (MenuItem)menu.findItem(R.id.action_life_time);
+            AnkiStatsTaskHandler ankiStatsTaskHandler = (((AnkiStatsActivity)getActivity()).getTaskHandler());
+
+            monthItem.setChecked(ankiStatsTaskHandler.getStatType() == Stats.TYPE_MONTH);
+            yearItem.setChecked(ankiStatsTaskHandler.getStatType() == Stats.TYPE_YEAR);
+            allItem.setChecked(ankiStatsTaskHandler.getStatType() == Stats.TYPE_LIFE);
+
+        }
 
     }
 
@@ -279,11 +358,10 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
         private int mWidth = 0;
         private ChartFragment mInstance = null;
         private int mSectionNumber;
-        private Menu mMenu;
+
         private int mType  = Stats.TYPE_MONTH;
         private boolean mIsCreated = false;
-        private ViewPager mActivityPager;
-        private SectionsPagerAdapter mActivitySectionPagerAdapter;
+
         private AsyncTask mCreateChartTask;
 
 
@@ -365,12 +443,7 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
             }
         }
 
-        @Override
-        public void onResume() {
-            super.onResume();
-            checkAndUpdate();
 
-        }
 
         @Override
         public void checkAndUpdate(){
@@ -396,74 +469,7 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
             }
         }
 
-        //This seems to be called on every tab change, so using it to update
-        @Override
-        public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-            super.onCreateOptionsMenu(menu, inflater);
-            mMenu = menu;
-            //System.err.println("in onCreateOptionsMenu");
-            inflater.inflate(R.menu.anki_stats, menu);
-            checkAndUpdate();
-        }
 
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            //System.err.println("in onOptionsItemSelected");
-            AnkiStatsTaskHandler ankiStatsTaskHandler = (((AnkiStatsActivity)getActivity()).getTaskHandler());
-
-            MenuItem monthItem  = (MenuItem)mMenu.findItem(R.id.action_month);
-            MenuItem yearItem = (MenuItem)mMenu.findItem(R.id.action_year);
-            MenuItem allItem = (MenuItem)mMenu.findItem(R.id.action_life_time);
-
-            int id = item.getItemId();
-            if(id == R.id.action_month) {
-                if(ankiStatsTaskHandler.getStatType() != Stats.TYPE_MONTH){
-                    ankiStatsTaskHandler.setStatType(Stats.TYPE_MONTH);
-                    monthItem.setChecked(true);
-                    yearItem.setChecked(false);
-                    allItem.setChecked(false);
-                    mActivitySectionPagerAdapter.notifyDataSetChanged();
-                    //createChart();
-                    //mActivityPager.invalidate();
-                }
-
-            } else if(id == R.id.action_year) {
-                if(ankiStatsTaskHandler.getStatType() != Stats.TYPE_YEAR){
-                    ankiStatsTaskHandler.setStatType(Stats.TYPE_YEAR);
-                    monthItem.setChecked(false);
-                    yearItem.setChecked(true);
-                    allItem.setChecked(false);
-                    mActivitySectionPagerAdapter.notifyDataSetChanged();
-                    //createChart();
-                    //mActivityPager.invalidate();
-                }
-            } else if(id == R.id.action_life_time) {
-                if(ankiStatsTaskHandler.getStatType() != Stats.TYPE_LIFE){
-                    ankiStatsTaskHandler.setStatType(Stats.TYPE_LIFE);
-                    monthItem.setChecked(false);
-                    yearItem.setChecked(false);
-                    allItem.setChecked(true);
-                    mActivitySectionPagerAdapter.notifyDataSetChanged();
-                    //createChart();
-                    //mActivityPager.invalidate();
-                }
-            }
-            return true;
-        }
-
-        @Override
-        public void onPrepareOptionsMenu(Menu menu) {
-            super.onPrepareOptionsMenu(menu);
-            MenuItem monthItem  = (MenuItem)menu.findItem(R.id.action_month);
-            MenuItem yearItem = (MenuItem)menu.findItem(R.id.action_year);
-            MenuItem allItem = (MenuItem)menu.findItem(R.id.action_life_time);
-            AnkiStatsTaskHandler ankiStatsTaskHandler = (((AnkiStatsActivity)getActivity()).getTaskHandler());
-
-            monthItem.setChecked(ankiStatsTaskHandler.getStatType() == Stats.TYPE_MONTH);
-            yearItem.setChecked(ankiStatsTaskHandler.getStatType() == Stats.TYPE_YEAR);
-            allItem.setChecked(ankiStatsTaskHandler.getStatType() == Stats.TYPE_LIFE);
-
-        }
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -492,11 +498,8 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
         private int mWidth = 0;
         private OverviewStatisticsFragment mInstance = null;
         private int mSectionNumber;
-        private Menu mMenu;
         private int mType  = Stats.TYPE_MONTH;
         private boolean mIsCreated = false;
-        private ViewPager mActivityPager;
-        private SectionsPagerAdapter mActivitySectionPagerAdapter;
         private AsyncTask mCreateStatisticsOverviewTask;
 
 
@@ -551,7 +554,29 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
 
         @Override
         public void checkAndUpdate() {
+            if(!mIsCreated)
+                return;
+            int height = mWebView.getMeasuredHeight();
+            int width = mWebView.getMeasuredWidth();
+            if(mType != (((AnkiStatsActivity)getActivity()).getTaskHandler()).getStatType()){
+                mHeight = height;
+                mWidth = width;
+                mType = (((AnkiStatsActivity)getActivity()).getTaskHandler()).getStatType();
+                mProgressBar.setVisibility(View.VISIBLE);
+                mWebView.setVisibility(View.GONE);
+                if(mCreateStatisticsOverviewTask != null && !mCreateStatisticsOverviewTask.isCancelled()){
+                    mCreateStatisticsOverviewTask.cancel(true);
+                }
+                createStatisticOverview();
+            }
+        }
 
+        @Override
+        public void onDestroy() {
+            super.onDestroy();
+            if(mCreateStatisticsOverviewTask != null && !mCreateStatisticsOverviewTask.isCancelled()){
+                mCreateStatisticsOverviewTask.cancel(true);
+            }
         }
 
 
