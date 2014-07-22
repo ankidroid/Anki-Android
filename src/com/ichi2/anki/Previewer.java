@@ -30,7 +30,7 @@ public class Previewer extends AbstractFlashcardViewer {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.i(AnkiDroidApp.TAG, "PreviewClass - onCreate");
+        // Log.i(AnkiDroidApp.TAG, "PreviewClass - onCreate");
     }
 
 
