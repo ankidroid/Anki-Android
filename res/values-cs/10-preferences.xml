@@ -40,25 +40,25 @@
 -->
 <resources>
   <string name="pref_cat_general">AnkiDroid</string>
-  <string name="pref_cat_general_summ">General settings</string>
+  <string name="pref_cat_general_summ">Obecné nastavení</string>
   <string name="pref_cat_reviewing">Opakování</string>
-  <string name="pref_cat_reviewing_summ">Non-deck-specific reviewer settings</string>
+  <string name="pref_cat_reviewing_summ">Obecné nastavení pro opakování</string>
   <string name="pref_cat_reviewer_behaviour">Chování</string>
-  <string name="pref_cat_flashcard">Display</string>
+  <string name="pref_cat_flashcard">Zobrazení</string>
   <string name="pref_cat_whiteboard">Tabule</string>
   <string name="pref_cat_automatic_display">Automaticky zobrazovat odpověď</string>
-  <string name="pref_cat_fonts">Fonts</string>
-  <string name="pref_cat_fonts_summ">Change default font and size</string>
-  <string name="pref_cat_gestures">Gestures</string>
-  <string name="pref_cat_gestures_summ">Use taps and swipes instead of buttons</string>
+  <string name="pref_cat_fonts">Písmo</string>
+  <string name="pref_cat_fonts_summ">Změna výchozího písma a velikosti</string>
+  <string name="pref_cat_gestures">Gesta</string>
+  <string name="pref_cat_gestures_summ">Použití poklepání a gest místo tlačítek</string>
   <string name="pref_cat_actions">Akce</string>
   <string name="pref_cat_advanced">Pokročilé</string>
-  <string name="pref_cat_advanced_summ">Optimization and experimental features</string>
+  <string name="pref_cat_advanced_summ">Optimalizace a experimentální funkce</string>
   <string name="pref_cat_performance">Výkon</string>
-  <string name="pref_cat_workarounds">Workarounds</string>
+  <string name="pref_cat_workarounds">Možná zástupná řešení</string>
   <string name="pref_cat_plugins">Pluginy</string>
-  <string name="about_title">About AnkiDroid</string>
-  <string name="about_version">Version: </string>
+  <string name="about_title">O AnkiDroid</string>
+  <string name="about_version">Verze: </string>
   <string name="enable_whiteboard">Povolit Tabuly</string>
   <string name="show_whiteboard_summ">Umožňuje psát na obrazovku</string>
   <string name="whiteboard_stroke_width">Šířka tahu</string>
@@ -86,7 +86,7 @@
   <string name="col_path">Cesta ke kolekci</string>
   <string name="col_path_summ">XXX</string>
   <string name="fullscreen_review">Celoobrazovkový režim</string>
-  <string name="fullscreen_review_summ">Hide the system status bar</string>
+  <string name="fullscreen_review_summ">Skrýt stavový řádek systému</string>
   <string name="gestures">Povolit gesta</string>
   <string name="gestures_summ">Assign gestures to actions such as answering and editing cards.</string>
   <string name="gestures_swipe_up">Tažení nahoru</string>
@@ -127,7 +127,7 @@
   <string name="notification_minimum_cards_due">Upozornit, když se více než</string>
   <string name="notification_minimum_cards_due_summary">XXX cards due</string>
   <string name="notification_minimum_cards_due_vibrate">Vibrace</string>
-  <string name="notification_minimum_cards_due_blink">Blink light</string>
+  <string name="notification_minimum_cards_due_blink">Blikající světlo</string>
   <string name="timeout_answer_text">Automatické zobrazení odpovědi</string>
   <string name="timeout_answer_summ">Zobrazit automaticky odpověď bez zásahu uživatele</string>
   <string name="timeout_answer_seconds">Čas pro zobrazení odpovědi</string>
@@ -162,7 +162,7 @@
   <string name="day_offset_summ">XXX hodin po půlnoci</string>
   <string name="input_workaround">Input workaround</string>
   <string name="input_workaround_summ">Workaround for focusing problems on HTML input boxes. Causes problems on several devices.</string>
-  <string name="pref_keep_screen_on">Keep screen on</string>
+  <string name="pref_keep_screen_on">Nevypínat obrazovku</string>
   <string name="pref_keep_screen_on_summ">Disable screen timeout</string>
   <string name="pref_simple_interface">Jednoduché rozhraní</string>
   <string name="pref_simple_interface_summ">Urychluje zobrazení karet, ale nepodporuje všechny funkce html</string>
@@ -190,7 +190,7 @@
   <string name="deck_conf_deck_description">Popis balíčku</string>
   <string name="deck_conf_group">Options group</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n%2$d deck uses this group</item>
+    <item quantity="one">%1$s\n%2$d balíček používá tuto skupinu</item>
     <item quantity="other">%1$s\n%2$d balíčků používá tuto skupinu</item>
   </plurals>
   <string name="deck_conf_new_cards">Nové karty</string>
@@ -236,7 +236,7 @@
   <string name="deck_conf_remove_message">Odstranit možnosti aktuální skupiny?</string>
   <string name="deck_conf_set_subdecks">Nastavit pro všechny podřízené balíčky</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">%s subdeck will use this group</item>
+    <item quantity="one">%s podřízený balíček bude používat tuto skupinu</item>
     <item quantity="other">%s podřízené(ých) balíčků bude používat tuto skupinu</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Nastavit pro všechny podřízené balíčky</string>

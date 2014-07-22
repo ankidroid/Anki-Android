@@ -6,7 +6,7 @@ Estudia todo tipo de cosas donde y cuando quieras. ¡Aprovecha los tiempos muert
 
 Crea tus propios mazos de tarjetas o descarga mazos gratuitos creados para muchos idiomas y temas (más de 6000 disponibles).
 
-Añade contenido mediante la aplicación de escritorio Anki o directamente mediante Ankidroid. ¡La aplicación soporta incluso la creación de contenidos de forma automática a partir de un diccionario!
+Añade contenido mediante la aplicación de escritorio Anki o directamente mediante AnkiDroid. ¡La aplicación soporta incluso la creación de contenidos de forma automática a partir de un diccionario!
 
 ★ Características principales:
 • contenidos de tarjeta soportados: texto, imágenes, sonidos, LaTeX

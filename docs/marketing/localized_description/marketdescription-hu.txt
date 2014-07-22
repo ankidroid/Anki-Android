@@ -6,7 +6,7 @@ Tanulj meg akármit, bármikor, bárhol, ha rád tör a tanulhatnék! Használd 
 
 Készíts saját tanulókártya paklit, vagy tölts le néhányat a több mint 6000, különböző témájú és nyelvű ingyen elérhető pakli közül!
 
-Adj új szavakat a paklihoz az asztali Ankival, vagy közvetlenül az AnkiDroiddal! Az alkalmazással akár automatikusan is tudsz szavakat hozzáadni egy szótárból!
+Adj új szavakat a paklihoz az asztali Ankival, vagy közvetlenül az AnkiDroiddal. Az alkalmazással akár automatikusan is tudsz szavakat hozzáadni egy szótárból!
 
 ★ Fő funkciók:
 • támogatott szókártya tartalmak: szöveg, kép, hang, LaTeX

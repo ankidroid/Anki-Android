@@ -6,7 +6,7 @@ Studium mnoha věcí kdekoliv a kdykoliv chcete. Dobré využití volného času
 
 Vytvořte si vlastní balíčky kartiček nebo si stáhněte zdarma balíčky vytvořené pro mnoho jazyků a témat (k dispozici více než 6000).
 
-Přidání učebního materiálu prostřednictvím aplikace Anki nebo přímo přes Ankidroid. Aplikace také podporuje automatické přidávání materiálu ze slovníku!
+Přidání učebního materiálu prostřednictvím aplikace Anki nebo přímo přes AnkiDroid. Aplikace také podporuje automatické přidávání materiálu ze slovníku!
 
 Hlavní vlastnosti:
 • podporovaný obsah kartiček: text, obrázky, zvuky, LaTeX

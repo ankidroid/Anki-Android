@@ -83,7 +83,7 @@
   <string name="undo_action_suspend_note">Notiz dauerhaft aussetzen</string>
   <string name="undo_action_delete">Notiz löschen</string>
   <string name="undo_action_mark">Notiz markieren</string>
-  <string name="unbury">Vorläufiges Aussetzen aufheben</string>
+  <string name="unbury">Zurückstellen aufheben</string>
   <string name="finish_operation">Letzte Operation wird beendet\n(vermutlich eine Sicherung der Sammlung).\nBitte warten...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Fehlende Media-Daten herunterladen</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Sprachzuordnungen zurücksetzen</string>
@@ -101,8 +101,8 @@
   <string name="menu_preferences">Einstellungen</string>
   <string name="menu_about">Über</string>
   <string name="menu_dismiss_note">Notiz verwerfen&#8230;</string>
-  <string name="menu_bury_card">Karte vorläufig aussetzen</string>
-  <string name="menu_bury_note">Notiz vorläufig aussetzen</string>
+  <string name="menu_bury_card">Karte zurückstellen</string>
+  <string name="menu_bury_note">Notiz zurückstellen</string>
   <string name="menu_suspend_card">Karte dauerhaft aussetzen</string>
   <string name="menu_suspend_note">Notiz dauerhaft aussetzen</string>
   <string name="menu_save_note">Notiz speichern</string>
@@ -117,7 +117,7 @@
   <string name="create">Erstellen</string>
   <string name="new_dynamic_deck">Gefilterten Stapel erstellen</string>
   <string name="studyoptions_feedback">Feedback</string>
-  <string name="studyoptions_load_tutorial_deck">Einführungsstapel erstellen</string>
+  <string name="studyoptions_load_tutorial_deck">Tutorial erstellen</string>
   <string name="night_mode">Nachtmodus</string>
   <string-array name="next_review_s">
     <item>1 Sekunde</item>
@@ -139,7 +139,7 @@
   <string name="later">Später</string>
   <string name="download">Download</string>
   <string name="open_collection">Öffne Sammlung.\nBitte warten&#8230;</string>
-  <string name="rebuild_cram_deck">Dynamischer Stapel wird neu aufgebaut.\nBitte warten...</string>
+  <string name="rebuild_cram_deck">Schnellpauk-Stapel wird aufgebaut&#8230;</string>
   <string name="rebuild_cram_label">Neu aufbauen</string>
   <string name="empty_cram_label">Leeren</string>
   <string name="empty_cram_deck">Leere dynamischen Stapel.\n Bitte warten...</string>
@@ -147,7 +147,7 @@
   <string name="custom_study_deck_exists">Bitte benennen Sie zunächst den existierenden Stapel \"Benutzerdefinierte Sitzung\" um.</string>
   <string name="studyoptions_congrats_finished">Herzlichen Glückwunsch! Sie sind für heute fertig.</string>
   <string name="studyoptions_congrats_more_rev">Ihr heutiges Limit ist erreicht, aber es sind noch Karten fällig. Sie können das Limit in den Stapeloptionen erhöhen.</string>
-  <string name="studyoptions_congrats_more_new">Das tägliche Limit wurde erreicht. Es sind noch neue Karten verfügbar; Sie können das Limit in den Stapeloptionen erhöhen, aber dies wird Ihr kurzfristiges Arbeitspensum erhöht.</string>
+  <string name="studyoptions_congrats_more_new">Es sind noch neue Karten verfügbar, aber das tägliche Lernlimit wurde erreicht. Sie können das Limit in den Optionen erhöhen, bedenken Sie aber, dass dies Ihr kurzfristiges Arbeitspensum erhöht.</string>
   <string name="studyoptions_congrats_custom">Berühren Sie unten \"Benutzerdefiniertes Lernen\", um außerhalb des regulären Lehrplans zu lernen</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Morgen ist %1$d Karte fällig und %2$s.\n Geschätzte Zeit: %3$s</item>

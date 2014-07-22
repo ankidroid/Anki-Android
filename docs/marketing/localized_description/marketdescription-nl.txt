@@ -6,7 +6,7 @@ Leer van alles, waar en wanneer u maar wilt. Maak nuttig gebruik van wachttijden
 
 Bouw je eigen set flitskaarten of download de gratis sets voor talloze onderwerpen en in vele talen (meer dan 6000 beschikbaar).
 
-Voeg materiaal toe via de desktopapplicatie Anki of rechtstreeks via Ankidroid. De toepassing biedt zelfs ondersteuning voor het automatisch toevoegen van materiaal uit een woordenboek!
+Voeg materiaal toe via de desktopapplicatie Anki of rechtstreeks via AnkiDroid. De toepassing biedt zelfs ondersteuning voor het automatisch toevoegen van materiaal uit een woordenboek!
 
 ★ Belangrijkste functies:
 • flitskaarten maken met tekst, afbeeldingen, geluiden en LaTeX

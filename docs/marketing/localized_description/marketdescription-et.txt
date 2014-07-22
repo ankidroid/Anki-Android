@@ -6,7 +6,7 @@ Study all sorts of things wherever and whenever you want. Make good use of idle 
 
 Create your own flashcard decks or download free decks compiled for many languages and topics (more than 6000 available).
 
-Add material through the desktop application Anki or directly through Ankidroid. The application even supports adding material automatically from a dictionary!
+Add material through the desktop application Anki or directly through AnkiDroid. The application even supports adding material automatically from a dictionary!
 
 ★ Key features:
 • supported flashcard contents: text, images, sounds, LaTeX

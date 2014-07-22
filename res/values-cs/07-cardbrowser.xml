@@ -40,8 +40,8 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="one">%d card shown</item>
-    <item quantity="other">%d cards shown</item>
+    <item quantity="one">zobrazena %d karta</item>
+    <item quantity="other">zobrazeno %d karet</item>
   </plurals>
   <string name="card_browser_all_decks">Všechny balíčky</string>
   <string name="card_browser_load">Načítání karet. \nČekejte prosím...</string>

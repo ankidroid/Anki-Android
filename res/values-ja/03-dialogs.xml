@@ -62,7 +62,7 @@
   </string-array>
   <string name="dont_show_again">今後は表示しない</string>
   <string name="notify_ticker">アプリケーションの更新</string>
-  <string name="notify_title">新しいバージョンのアンキドロイドがあります</string>
+  <string name="notify_title">AnkiDroidは更新しました</string>
   <string name="notify_message">新しいバージョンをダウンロード</string>
   <string name="notification_title">AnkiDroidのアップデートの確認</string>
   <string name="preview_title">プレビュー</string>
