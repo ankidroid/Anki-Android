@@ -15,22 +15,27 @@
  ****************************************************************************************/
 package com.ichi2.anki.stats;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import android.support.v4.app.*;
-import android.support.v4.view.ViewPager;
+import android.support.v4.view.*;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.*;
 import android.webkit.WebView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
+import android.widget.*;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.NavigationDrawerActivity;
 import com.ichi2.anki.R;
 import com.ichi2.libanki.Stats;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 
@@ -46,11 +51,31 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
     public static final int ANSWER_BUTTONS_TAB_POSITION = 7;
     public static final int CARDS_TYPES_TAB_POSITION = 8;
 
+    private static final int MONTH_TYPE = 0;
+    private static final int YEAR_TYPE = 1;
+    private static final int ALL_TYPE = 2;
+
+    private Spinner mTimeSpinner;
+    private RelativeLayout mRelativeLayoutTime;
+    private ArrayList<JSONObject> mDropDownDecks;
+    private DeckDropDownAdapter mDropDownAdapter;
+    private RelativeLayout mRelativeLayoutDeck;
+    private Spinner mDeckSpinner;
+
+    protected long mDeckId;
+    protected boolean mIsWholeCollection;
+    private MenuItem mTimeItem;
+    private MenuItem mDeckItem;
+
+    private Menu mMenu;
+
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private AnkiStatsTaskHandler mTaskHandler = null;
     private ActionBar mActionBar;
+    private View mMainLayout;
+    private int mSelectedStatType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,9 +83,9 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
         mTaskHandler = new AnkiStatsTaskHandler();
 
 
-        View mainLayout = getLayoutInflater().inflate(R.layout.activity_anki_stats, null);
-        initNavigationDrawer(mainLayout);
-        setContentView(mainLayout);
+        mMainLayout = getLayoutInflater().inflate(R.layout.activity_anki_stats, null);
+        initNavigationDrawer(mMainLayout);
+        setContentView(mMainLayout);
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
@@ -120,12 +145,186 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
         super.onDestroy();
     }
 
+    private void showDeckDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater layoutInflater = LayoutInflater.from(this);
+        View view = layoutInflater.inflate(R.layout.action_view_spinner, null);
+        builder.setIcon(android.R.drawable.ic_input_get);
+        builder.setView(view);
+        builder.setTitle(getResources().getString(R.string.stats_select_decks));
+        mDropDownDecks = AnkiDroidApp.getCol().getDecks().allSorted();
+        mDropDownAdapter = new DeckDropDownAdapter(this, mDropDownDecks);
+        mDeckSpinner = (Spinner)((RelativeLayout)view).getChildAt(0);
+        mDeckSpinner.setAdapter(mDropDownAdapter);
+
+        if (!AnkiStatsTaskHandler.isWholeCollection()) {
+            String currentDeckName;
+            try {
+                currentDeckName = AnkiDroidApp.getCol().getDecks().current().getString("name");
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+            for (int dropDownDeckIdx = 0; dropDownDeckIdx < mDropDownDecks.size(); dropDownDeckIdx++) {
+                JSONObject deck = mDropDownDecks.get(dropDownDeckIdx);
+                String deckName;
+                try {
+                    deckName = deck.getString("name");
+                } catch (JSONException e) {
+                    throw new RuntimeException();
+                }
+                if (deckName.equals(currentDeckName)) {
+                    mDeckSpinner.setSelection(dropDownDeckIdx + 1, false);
+                    break;
+                }
+            }
+        } else {
+            mDeckSpinner.setSelection(0, false);
+        }
+
+        final boolean isWholeCollection = mIsWholeCollection;
+        final long currentDeckId = mDeckId;
+        mDeckSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                if (position == 0) {
+                    mIsWholeCollection = true;
+                } else {
+                    JSONObject deck = mDropDownDecks.get(position - 1);
+                    Long deckId;
+                    try {
+                        deckId = deck.getLong("id");
+                    } catch (JSONException e) {
+                        throw new RuntimeException();
+                    }
+                    mIsWholeCollection = false;
+                    mDeckId = deckId;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                //popupWindow.dismiss();
+            }
+
+        });
+
+        builder.setPositiveButton(getResources().getString(R.string.dialog_ok),new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog, int id)
+            {
+                AnkiStatsTaskHandler.setIsWholeCollection(mIsWholeCollection);
+                if(!mIsWholeCollection)
+                    AnkiDroidApp.getCol().getDecks().select(mDeckId);
+                mSectionsPagerAdapter.notifyDataSetChanged();
+            }});
+
+        builder.setNegativeButton(getResources().getString(R.string.dialog_cancel),new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog, int id)
+            {
+                mIsWholeCollection = isWholeCollection;
+                mDeckId = currentDeckId;
+                dialog.cancel();
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    private void showTimeDialog(){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater layoutInflater = LayoutInflater.from(this);
+        View view = layoutInflater.inflate(R.layout.action_view_spinner, null);
+        builder.setIcon(android.R.drawable.ic_input_get);
+        builder.setView(view);
+        builder.setTitle(getResources().getString(R.string.stats_select_time_scale));
+        mTimeSpinner = (Spinner)((RelativeLayout)view).getChildAt(0);
+        mTimeSpinner.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,
+                getResources().getStringArray(R.array.stats_period)));
+
+        mTimeSpinner.setSelection(mTaskHandler.getStatType(), false);
+        final int currentStatType = mSelectedStatType;
+        mTimeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+
+                switch (position) {
+                    case Stats.TYPE_MONTH:
+                        mSelectedStatType = Stats.TYPE_MONTH;
+                        break;
+                    case Stats.TYPE_YEAR:
+                        mSelectedStatType = Stats.TYPE_YEAR;
+                        break;
+                    case Stats.TYPE_LIFE:
+                        mSelectedStatType = Stats.TYPE_LIFE;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+            }
+
+        });
+
+        builder.setPositiveButton(getResources().getString(R.string.dialog_ok),new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog, int id)
+            {
+                if (mTaskHandler.getStatType() != mSelectedStatType) {
+                    mTaskHandler.setStatType(mSelectedStatType);
+                    mSectionsPagerAdapter.notifyDataSetChanged();
+                }
+                mSectionsPagerAdapter.notifyDataSetChanged();
+            }});
+
+        builder.setNegativeButton(getResources().getString(R.string.dialog_cancel),new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog, int id)
+            {
+                mSelectedStatType = currentStatType;
+                dialog.cancel();
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        mMenu = menu;
+        //System.err.println("in onCreateOptionsMenu");
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.anki_stats, mMenu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        return super.onPrepareOptionsMenu(menu);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // The action bar home/up action should open or close the drawer.
         // ActionBarDrawerToggle will take care of this.
         if (getDrawerToggle().onOptionsItemSelected(item)) {
             return true;
+        }
+        int itemId =item.getItemId();
+        switch (itemId) {
+            case R.id.action_time_spinner:
+                showTimeDialog();
+                return true;
+            case R.id.action_deck_spinner:
+                showDeckDialog();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -177,6 +376,8 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
             super(fm);
         }
 
+        //this is called when mSectionsPagerAdapter.notifyDataSetChanged() is called, so checkAndUpdate() here
+        //works best for updating all tabs
         @Override
         public int getItemPosition(Object object) {
             if (object instanceof ChartFragment) {
@@ -225,14 +426,22 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
     }
 
     public static abstract class StatisticFragment extends Fragment{
+
+        //track current settings for each individual fragment
+        protected long mDeckId;
+        protected boolean mIsWholeCollection;
+
         protected ViewPager mActivityPager;
         protected SectionsPagerAdapter mActivitySectionPagerAdapter;
-        private Menu mMenu;
+
         /**
          * The fragment argument representing the section number for this
          * fragment.
          */
         protected static final String ARG_SECTION_NUMBER = "section_number";
+
+
+
         /**
          * Returns a new instance of this fragment for the given section
          * number.
@@ -276,74 +485,7 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
         public abstract void invalidateView();
         public abstract void checkAndUpdate();
 
-        //This seems to be called on every tab change, so using it to update
-        @Override
-        public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-            super.onCreateOptionsMenu(menu, inflater);
-            mMenu = menu;
-            //System.err.println("in onCreateOptionsMenu");
-            inflater.inflate(R.menu.anki_stats, menu);
-            checkAndUpdate();
-        }
 
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            //System.err.println("in onOptionsItemSelected");
-            AnkiStatsTaskHandler ankiStatsTaskHandler = (((AnkiStatsActivity)getActivity()).getTaskHandler());
-
-            MenuItem monthItem  = (MenuItem)mMenu.findItem(R.id.action_month);
-            MenuItem yearItem = (MenuItem)mMenu.findItem(R.id.action_year);
-            MenuItem allItem = (MenuItem)mMenu.findItem(R.id.action_life_time);
-
-            int id = item.getItemId();
-            if(id == R.id.action_month) {
-                if(ankiStatsTaskHandler.getStatType() != Stats.TYPE_MONTH){
-                    ankiStatsTaskHandler.setStatType(Stats.TYPE_MONTH);
-                    monthItem.setChecked(true);
-                    yearItem.setChecked(false);
-                    allItem.setChecked(false);
-                    mActivitySectionPagerAdapter.notifyDataSetChanged();
-                    //createChart();
-                    //mActivityPager.invalidate();
-                }
-
-            } else if(id == R.id.action_year) {
-                if(ankiStatsTaskHandler.getStatType() != Stats.TYPE_YEAR){
-                    ankiStatsTaskHandler.setStatType(Stats.TYPE_YEAR);
-                    monthItem.setChecked(false);
-                    yearItem.setChecked(true);
-                    allItem.setChecked(false);
-                    mActivitySectionPagerAdapter.notifyDataSetChanged();
-                    //createChart();
-                    //mActivityPager.invalidate();
-                }
-            } else if(id == R.id.action_life_time) {
-                if(ankiStatsTaskHandler.getStatType() != Stats.TYPE_LIFE){
-                    ankiStatsTaskHandler.setStatType(Stats.TYPE_LIFE);
-                    monthItem.setChecked(false);
-                    yearItem.setChecked(false);
-                    allItem.setChecked(true);
-                    mActivitySectionPagerAdapter.notifyDataSetChanged();
-                    //createChart();
-                    //mActivityPager.invalidate();
-                }
-            }
-            return true;
-        }
-
-        @Override
-        public void onPrepareOptionsMenu(Menu menu) {
-            super.onPrepareOptionsMenu(menu);
-            MenuItem monthItem  = (MenuItem)menu.findItem(R.id.action_month);
-            MenuItem yearItem = (MenuItem)menu.findItem(R.id.action_year);
-            MenuItem allItem = (MenuItem)menu.findItem(R.id.action_life_time);
-            AnkiStatsTaskHandler ankiStatsTaskHandler = (((AnkiStatsActivity)getActivity()).getTaskHandler());
-
-            monthItem.setChecked(ankiStatsTaskHandler.getStatType() == Stats.TYPE_MONTH);
-            yearItem.setChecked(ankiStatsTaskHandler.getStatType() == Stats.TYPE_YEAR);
-            allItem.setChecked(ankiStatsTaskHandler.getStatType() == Stats.TYPE_LIFE);
-
-        }
 
     }
 
@@ -401,6 +543,8 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
             mIsCreated = true;
             mActivityPager = ((AnkiStatsActivity)getActivity()).getViewPager();
             mActivitySectionPagerAdapter = ((AnkiStatsActivity)getActivity()).getSectionsPagerAdapter();
+            mDeckId = AnkiDroidApp.getCol().getDecks().selected();
+            mIsWholeCollection = AnkiStatsTaskHandler.isWholeCollection();
             return rootView;
         }
 
@@ -455,12 +599,17 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
 
             //are height and width checks still necessary without bitmaps?
             if(height != 0 && width != 0){
-                if(mHeight != height || mWidth != width || mType != (((AnkiStatsActivity)getActivity()).getTaskHandler()).getStatType()){
+                if(mHeight != height || mWidth != width ||
+                        mType != (((AnkiStatsActivity)getActivity()).getTaskHandler()).getStatType() ||
+                        mDeckId != AnkiDroidApp.getCol().getDecks().selected() ||
+                        mIsWholeCollection != AnkiStatsTaskHandler.isWholeCollection()){
                     mHeight = height;
                     mWidth = width;
                     mType = (((AnkiStatsActivity)getActivity()).getTaskHandler()).getStatType();
                     mProgressBar.setVisibility(View.VISIBLE);
                     mChart.setVisibility(View.GONE);
+                    mDeckId = AnkiDroidApp.getCol().getDecks().selected();
+                    mIsWholeCollection = AnkiStatsTaskHandler.isWholeCollection();
                     if(mCreateChartTask != null && !mCreateChartTask.isCancelled()){
                         mCreateChartTask.cancel(true);
                     }
@@ -538,6 +687,10 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
             mIsCreated = true;
             mActivityPager = ((AnkiStatsActivity)getActivity()).getViewPager();
             mActivitySectionPagerAdapter = ((AnkiStatsActivity)getActivity()).getSectionsPagerAdapter();
+            mDeckId = AnkiDroidApp.getCol().getDecks().selected();
+            mIsWholeCollection = AnkiStatsTaskHandler.isWholeCollection();
+            mDeckId = AnkiDroidApp.getCol().getDecks().selected();
+            mIsWholeCollection = AnkiStatsTaskHandler.isWholeCollection();
             return rootView;
         }
 
@@ -558,12 +711,16 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
                 return;
             int height = mWebView.getMeasuredHeight();
             int width = mWebView.getMeasuredWidth();
-            if(mType != (((AnkiStatsActivity)getActivity()).getTaskHandler()).getStatType()){
+            if(mType != (((AnkiStatsActivity)getActivity()).getTaskHandler()).getStatType() ||
+                    mDeckId != AnkiDroidApp.getCol().getDecks().selected() ||
+                    mIsWholeCollection != AnkiStatsTaskHandler.isWholeCollection()){
                 mHeight = height;
                 mWidth = width;
                 mType = (((AnkiStatsActivity)getActivity()).getTaskHandler()).getStatType();
                 mProgressBar.setVisibility(View.VISIBLE);
                 mWebView.setVisibility(View.GONE);
+                mDeckId = AnkiDroidApp.getCol().getDecks().selected();
+                mIsWholeCollection = AnkiStatsTaskHandler.isWholeCollection();
                 if(mCreateStatisticsOverviewTask != null && !mCreateStatisticsOverviewTask.isCancelled()){
                     mCreateStatisticsOverviewTask.cancel(true);
                 }
@@ -579,6 +736,100 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
             }
         }
 
+
+    }
+
+    private static class DeckDropDownViewHolder {
+        public TextView deckNameView;
+    }
+
+
+    private final static class DeckDropDownAdapter extends BaseAdapter {
+
+        private Context context;
+        private ArrayList<JSONObject> decks;
+
+
+        public DeckDropDownAdapter(Context context, ArrayList<JSONObject> decks) {
+            this.context = context;
+            this.decks = decks;
+        }
+
+
+        @Override
+        public int getCount() {
+            return decks.size() + 1;
+        }
+
+
+        @Override
+        public Object getItem(int position) {
+            if (position == 0) {
+                return null;
+            } else {
+                return decks.get(position + 1);
+            }
+        }
+
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            DeckDropDownViewHolder viewHolder;
+            TextView deckNameView;
+            if (convertView == null) {
+                convertView = LayoutInflater.from(context).inflate(R.layout.dropdown_deck_item, parent, false);
+                deckNameView = (TextView) convertView.findViewById(R.id.dropdown_deck_name);
+                viewHolder = new DeckDropDownViewHolder();
+                viewHolder.deckNameView = deckNameView;
+                convertView.setTag(viewHolder);
+            } else {
+                viewHolder = (DeckDropDownViewHolder) convertView.getTag();
+                deckNameView = (TextView) viewHolder.deckNameView;
+            }
+            if (position == 0) {
+                deckNameView.setText(context.getResources().getString(R.string.deck_summary_all_decks));
+            } else {
+                JSONObject deck = decks.get(position - 1);
+                try {
+                    String deckName = deck.getString("name");
+                    deckNameView.setText(deckName);
+                } catch (JSONException ex) {
+                    new RuntimeException();
+                }
+            }
+            return convertView;
+        }
+
+
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+            TextView deckNameView;
+            if (convertView == null) {
+                convertView = LayoutInflater.from(context).inflate(R.layout.dropdown_deck_item, parent, false);
+                deckNameView = (TextView) convertView.findViewById(R.id.dropdown_deck_name);
+                convertView.setTag(deckNameView);
+            } else {
+                deckNameView = (TextView) convertView.getTag();
+            }
+            if (position == 0) {
+                deckNameView.setText(context.getResources().getString(R.string.deck_summary_all_decks));
+            } else {
+                JSONObject deck = decks.get(position - 1);
+                try {
+                    String deckName = deck.getString("name");
+                    deckNameView.setText(deckName);
+                } catch (JSONException ex) {
+                    new RuntimeException();
+                }
+            }
+            return convertView;
+        }
 
     }
 

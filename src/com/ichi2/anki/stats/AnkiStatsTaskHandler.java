@@ -39,16 +39,30 @@ public class AnkiStatsTaskHandler {
     private int mStatType = Stats.TYPE_MONTH;
 
     private static boolean sIsWholeCollection = false;
+    private static long sSelectedDeckId;
     private static Lock sLock = new ReentrantLock();
 
 
     public AnkiStatsTaskHandler(){
         sInstance = this;
         mCollectionData = AnkiDroidApp.getCol();
+        sSelectedDeckId = mCollectionData.getDecks().selected();
+    }
+
+    public static long getSelectedDeckId() {
+        return sSelectedDeckId;
+    }
+
+    public static void setsSelectedDeckId(long sSelectedDeckId) {
+        AnkiStatsTaskHandler.sSelectedDeckId = sSelectedDeckId;
     }
 
     public static void setIsWholeCollection(boolean isWholeCollection){
         sIsWholeCollection = isWholeCollection;
+    }
+
+    public static boolean isWholeCollection() {
+        return sIsWholeCollection;
     }
 
     public static AnkiStatsTaskHandler getInstance() {

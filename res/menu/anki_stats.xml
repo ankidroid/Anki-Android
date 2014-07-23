@@ -1,17 +1,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".AnkiStatsActivity" >
 
-    <item android:id="@+id/action_month"
-          android:title="@string/stats_period_month"
-          android:orderInCategory="100"
-          android:checkable="true"/>
-    <item android:id="@+id/action_year"
-          android:title="@string/stats_period_year"
-          android:orderInCategory="100"
-          android:checkable="true"/>
-    <item android:id="@+id/action_life_time"
-          android:title="@string/stats_period_lifetime"
-          android:orderInCategory="100"
-          android:checkable="true"/>
+    <item android:id="@+id/action_deck_spinner"
+          android:title="@string/stats_select_decks"
+          android:icon="@drawable/ic_action_action_settings"
+          app:showAsAction="always"/>
+    <item android:id="@+id/action_time_spinner"
+          android:title="@string/stats_select_time_scale"
+          android:icon="@drawable/ic_action_time"
+          app:showAsAction="always"/>
 </menu>

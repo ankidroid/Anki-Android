@@ -86,6 +86,8 @@
     <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; cards/day</string>
     <string name="deck_summary_deck_age">Deck age: &lt;b&gt;%d&lt;/b&gt; days</string>
     <string name="deck_summary_all_decks">All decks</string>
+    <string name="stats_select_decks">Select deck</string>
+    <string name="stats_select_time_scale">Select timescale</string>
 
     <!--
      	<string-array name="next_review_short">
