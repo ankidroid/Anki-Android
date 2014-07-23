@@ -14,9 +14,11 @@
         android:layout_alignParentEnd="true"/>
     <ProgressBar
         android:id="@+id/progress_bar_stats_overview"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:indeterminate="true" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:layout_alignParentEnd="false"
+        android:layout_centerInParent="true"/>
 
 
 

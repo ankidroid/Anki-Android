@@ -228,7 +228,7 @@ public class AnkiStatsTaskHandler {
             if(html != null && mIsRunning){
 
                 try {
-                    mWebView.loadData(URLEncoder.encode(html, "UTF-8").replaceAll("\\+"," "), "text/html", null);
+                    mWebView.loadData(URLEncoder.encode(html, "UTF-8").replaceAll("\\+"," "), "text/html; charset=utf-8",  "utf-8");
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }

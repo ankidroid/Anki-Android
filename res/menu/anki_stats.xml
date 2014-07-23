@@ -6,9 +6,9 @@
     <item android:id="@+id/action_deck_spinner"
           android:title="@string/stats_select_decks"
           android:icon="@drawable/ic_action_action_settings"
-          app:showAsAction="always"/>
+          app:showAsAction="ifRoom"/>
     <item android:id="@+id/action_time_spinner"
           android:title="@string/stats_select_time_scale"
           android:icon="@drawable/ic_action_time"
-          app:showAsAction="always"/>
+          app:showAsAction="ifRoom"/>
 </menu>
