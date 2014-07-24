@@ -38,7 +38,7 @@
     <string name="stats_cumulative_time_hours">Cumulative Hours</string>
     <string name="stats_cumulative">Cumulative</string>
     <string name="stats_cumulative_percentage">Cumulative Percentage</string>
-    <string name="stats_cumulative_correct_percentage">Cumulative Correct %</string>
+    <string formatted="false" name="stats_cumulative_correct_percentage">Cumulative Correct %</string>
     <string name="stats_answers">Answers</string>
     <string name="stats_minutes">Minutes</string>
     <string name="stats_hours">Hours</string>
@@ -50,7 +50,7 @@
     <string name="stats_deck_collection">collection</string>
     <string name="stats_time_of_day">Time of Day</string>
     <string name="stats_day_of_week">Day of Week</string>
-    <string name="stats_percentage_correct">% Correct</string>
+    <string formatted="false" name="stats_percentage_correct">% Correct</string>
     <string name="stats_reviews">Reviews</string>
     <string name="stats_answer_type">Answer Type</string>
     <string name="stats_today_again_count">Again count: &lt;b&gt;%d&lt;/b&gt;</string>
