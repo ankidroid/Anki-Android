@@ -39,16 +39,30 @@ public class AnkiStatsTaskHandler {
     private int mStatType = Stats.TYPE_MONTH;
 
     private static boolean sIsWholeCollection = false;
+    private static long sSelectedDeckId;
     private static Lock sLock = new ReentrantLock();
 
 
     public AnkiStatsTaskHandler(){
         sInstance = this;
         mCollectionData = AnkiDroidApp.getCol();
+        sSelectedDeckId = mCollectionData.getDecks().selected();
+    }
+
+    public static long getSelectedDeckId() {
+        return sSelectedDeckId;
+    }
+
+    public static void setsSelectedDeckId(long sSelectedDeckId) {
+        AnkiStatsTaskHandler.sSelectedDeckId = sSelectedDeckId;
     }
 
     public static void setIsWholeCollection(boolean isWholeCollection){
         sIsWholeCollection = isWholeCollection;
+    }
+
+    public static boolean isWholeCollection() {
+        return sIsWholeCollection;
     }
 
     public static AnkiStatsTaskHandler getInstance() {
@@ -214,7 +228,7 @@ public class AnkiStatsTaskHandler {
             if(html != null && mIsRunning){
 
                 try {
-                    mWebView.loadData(URLEncoder.encode(html, "UTF-8").replaceAll("\\+"," "), "text/html", null);
+                    mWebView.loadData(URLEncoder.encode(html, "UTF-8").replaceAll("\\+"," "), "text/html; charset=utf-8",  "utf-8");
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }

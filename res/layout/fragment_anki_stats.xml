@@ -18,9 +18,11 @@
         android:visibility="visible"/>
     <ProgressBar
         android:id="@+id/progress_bar_stats"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:indeterminate="true" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:layout_alignParentEnd="false"
+        android:layout_centerInParent="true"/>
 
 
 </RelativeLayout>
