@@ -62,12 +62,21 @@ import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Random;
 import java.util.zip.GZIPOutputStream;
 
 import javax.net.ssl.SSLException;
 
-public class BasicHttpSyncer implements HttpSyncer {
+/**
+ * # HTTP syncing tools
+ * Calling code should catch the following codes:
+ * - 501: client needs upgrade
+ * - 502: ankiweb down
+ * - 503/504: server too busy
+ */
+// TODO: Rename this to HTTPSyncer in a separate commit
+public class BasicHttpSyncer {
 
     private static final String BOUNDARY = "Anki-sync-boundary";
     public static final String ANKIWEB_STATUS_OK = "OK";
@@ -81,15 +90,17 @@ public class BasicHttpSyncer implements HttpSyncer {
      * Synchronization.
      */
 
-    private String mHKey;
-    private String mSKey;
-    private Connection mCon;
+    protected String mHKey;
+    protected String mSKey;
+    protected Connection mCon;
+    protected Map<String, Object> mPostVars;
 
 
     public BasicHttpSyncer(String hkey, Connection con) {
         mHKey = hkey;
         mSKey = Utils.checksum(Float.toString(new Random().nextFloat())).substring(0, 8);
         mCon = con;
+        mPostVars = new HashMap<String, Object>();
     }
 
 
@@ -99,47 +110,37 @@ public class BasicHttpSyncer implements HttpSyncer {
 
 
     public HttpResponse req(String method, InputStream fobj) {
-        return req(method, fobj, 6, true);
+        return req(method, fobj, 6);
     }
 
 
     public HttpResponse req(String method, int comp, InputStream fobj) {
-        return req(method, fobj, comp, true);
+        return req(method, fobj, comp);
     }
 
 
-    public HttpResponse req(String method, InputStream fobj, boolean hkey) {
-        return req(method, fobj, 6, hkey);
+    public HttpResponse req(String method, InputStream fobj, int comp) {
+        return req(method, fobj, comp, null);
     }
 
 
-    public HttpResponse req(String method, InputStream fobj, int comp, boolean hkey) {
-        return req(method, fobj, comp, hkey, null);
+    public HttpResponse req(String method, InputStream fobj, int comp, JSONObject registerData) {
+        return req(method, fobj, comp, registerData, null);
     }
 
 
-    public HttpResponse req(String method, InputStream fobj, int comp, boolean hkey, JSONObject registerData) {
-        return req(method, fobj, comp, hkey, registerData, null);
-    }
-
-
-    public HttpResponse req(String method, InputStream fobj, int comp, boolean hkey, JSONObject registerData,
+    public HttpResponse req(String method, InputStream fobj, int comp, JSONObject registerData,
             Connection.CancelCallback cancelCallback) {
         File tmpFileBuffer = null;
         try {
             String bdry = "--" + BOUNDARY;
             StringWriter buf = new StringWriter();
-            HashMap<String, Object> vars = new HashMap<String, Object>();
-            // compression flag and session key as post vars
-            vars.put("c", comp != 0 ? 1 : 0);
-            if (hkey) {
-                vars.put("k", mHKey);
-                vars.put("s", mSKey);
-            }
-            for (String key : vars.keySet()) {
+            // post vars
+            mPostVars.put("c", comp != 0 ? 1 : 0);
+            for (String key : mPostVars.keySet()) {
                 buf.write(bdry + "\r\n");
                 buf.write(String.format(Locale.US, "Content-Disposition: form-data; name=\"%s\"\r\n\r\n%s\r\n", key,
-                        vars.get(key)));
+                        mPostVars.get(key)));
             }
             tmpFileBuffer = File.createTempFile("syncer", ".tmp", new File(AnkiDroidApp.getCacheStorageDirectory()));
             FileOutputStream fos = new FileOutputStream(tmpFileBuffer);
@@ -176,14 +177,14 @@ public class BasicHttpSyncer implements HttpSyncer {
             bos.flush();
             bos.close();
             // connection headers
-            String url = Consts.SYNC_URL;
+            String url = Consts.SYNC_BASE;
             if (method.equals("register")) {
                 url = url + "account/signup" + "?username=" + registerData.getString("u") + "&password="
                         + registerData.getString("p");
             } else if (method.startsWith("upgrade")) {
                 url = url + method;
             } else {
-                url = url + "sync/" + method;
+                url = syncURL() + method;
             }
             HttpPost httpPost = new HttpPost(url);
             HttpEntity entity = new ProgressByteEntity(tmpFileBuffer);
@@ -424,5 +425,10 @@ public class BasicHttpSyncer implements HttpSyncer {
 
     public HttpResponse register(String user, String pw) {
         return null;
+    }
+
+
+    public String syncURL() {
+        return Consts.SYNC_BASE + "sync/";
     }
 }

@@ -150,7 +150,7 @@ public class AudioField extends FieldBase implements IField {
             res = m.group(1);
         }
         Collection col = AnkiDroidApp.getCol();
-        String mediaDir = col.getMedia().getDir() + "/";
+        String mediaDir = col.getMedia().dir() + "/";
         setAudioPath(mediaDir + res);
     }
 }

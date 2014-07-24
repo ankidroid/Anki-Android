@@ -1,8 +1,5 @@
 /****************************************************************************************
- * Copyright (c) 2013 Bibek Shrestha <bibekshrestha@gmail.com>                          *
- * Copyright (c) 2013 Zaur Molotnikov <qutorial@gmail.com>                              *
- * Copyright (c) 2013 Nicolas Raoul <nicolas.raoul@gmail.com>                           *
- * Copyright (c) 2013 Flavio Lerda <flerda@gmail.com>                                   *
+ * Copyright (c) 2014 Houssam Salem <houssam.salem.au@gmail.com>                        *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -19,19 +16,23 @@
 
 package com.ichi2.utils;
 
-import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Storage;
 
 import java.io.File;
+import java.io.IOException;
 
-public class DiskUtil {
+/**
+ * Shared methods for unit tests.
+ */
+public class Shared {
 
-    public static File getStoringDirectory() {
-
-        Collection col = AnkiDroidApp.getCol();
-        String mediaDir = col.getMedia().dir() + "/";
-
-        return new File(mediaDir);
+    public Collection getEmptyDeck() throws IOException {
+        File f = File.createTempFile("test", ".anki2");
+        // Provide a string instead of an actual File. Storage.Collection won't populate the DB
+        // if the file already exists (it assumes it's an existing DB).
+        String path = f.getAbsolutePath();
+        f.delete();
+        return Storage.Collection(path);
     }
-
 }

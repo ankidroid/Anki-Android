@@ -944,7 +944,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     protected void initActivity(Collection col) {
         mSched = col.getSched();
         mCollectionFilename = col.getPath();
-        mBaseUrl = Utils.getBaseUrl(col.getMedia().getDir());
+        mBaseUrl = Utils.getBaseUrl(col.getMedia().dir());
 
         restorePreferences();
 

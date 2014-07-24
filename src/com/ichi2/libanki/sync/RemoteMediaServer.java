@@ -1,5 +1,6 @@
 /****************************************************************************************
  * Copyright (c) 2012 Kostas Spyropoulos <inigo.aldana@gmail.com>                       *
+ * Copyright (c) 2014 Houssam Salem <houssam.salem.au@gmail.com>                        *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -16,15 +17,16 @@
 
 package com.ichi2.libanki.sync;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.async.Connection;
+import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Utils;
 
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.StatusLine;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,122 +34,147 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.zip.ZipFile;
 
 public class RemoteMediaServer extends BasicHttpSyncer {
 
-    public RemoteMediaServer(String hkey, Connection con) {
+    private Collection mCol;
+
+
+    public RemoteMediaServer(Collection col, String hkey, Connection con) {
         super(hkey, con);
+        mCol = col;
     }
 
 
-    public JSONArray remove(List<String> fnames, long minUsn) {
-        JSONObject data = new JSONObject();
+    @Override
+    public String syncURL() {
+        return Consts.SYNC_BASE + "msync/";
+    }
 
+
+    public JSONObject begin() {
         try {
-            data.put("fnames", new JSONArray(fnames));
-            data.put("minUsn", minUsn);
-            HttpResponse ret = super.req("remove", getInputStream(Utils.jsonToString(data)));
-            if (ret == null) {
-                return null;
-            }
-            String s;
-            int resultType = ret.getStatusLine().getStatusCode();
-            if (resultType == 200) {
-                s = super.stream2String(ret.getEntity().getContent());
-                if (s != null && !s.equalsIgnoreCase("null") && s.length() != 0) {
-                    return new JSONArray(s);
-                }
-            }
-            Log.e(AnkiDroidApp.TAG, "Error in RemoteMediaServer.remove(): " + ret.getStatusLine().getReasonPhrase());
-            return new JSONArray();
-        } catch (IllegalStateException e) {
+            mPostVars = new HashMap<String, Object>();
+            mPostVars.put("k", mHKey);
+            mPostVars.put("v",
+                    String.format(Locale.US, "ankidroid,%s,%s", AnkiDroidApp.getPkgVersionName(), Utils.platDesc()));
+
+            HttpResponse resp = super.req("begin", super.getInputStream(Utils.jsonToString(new JSONObject())));
+            JSONObject jresp = new JSONObject(super.stream2String(resp.getEntity().getContent()));
+            JSONObject ret = _dataOnly(jresp, JSONObject.class);
+            mSKey = ret.getString("sk");
+            return ret;
+        } catch (JSONException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+
+    // args: lastUsn
+    public JSONArray mediaChanges(int lastUsn) {
+        try {
+            mPostVars = new HashMap<String, Object>();
+            mPostVars.put("sk", mSKey);
+
+            HttpResponse resp = super.req("mediaChanges",
+                    super.getInputStream(Utils.jsonToString(new JSONObject().put("lastUsn", lastUsn))));
+            JSONObject jresp = new JSONObject(super.stream2String(resp.getEntity().getContent()));
+            return _dataOnly(jresp, JSONArray.class);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    // args: files
+    public ZipFile downloadFiles(List<String> top) {
+        try {
+            HttpResponse resp;
+            resp = super.req("downloadFiles",
+                    super.getInputStream(Utils.jsonToString(new JSONObject().put("files", new JSONArray(top)))));
+            String zipPath = mCol.getPath().replaceFirst("collection\\.anki2$", "tmpSyncFromServer.zip");
+            // retrieve contents and save to file on disk:
+            super.writeToFile(resp.getEntity().getContent(), zipPath);
+            return new ZipFile(new File(zipPath), ZipFile.OPEN_READ);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            Log.e(AnkiDroidApp.TAG, "Failed to create temp media sync zip file", e);
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public JSONArray uploadChanges(File zip) {
+        try {
+            // no compression, as we compress the zip file instead
+            HttpResponse resp = super.req("uploadChanges", new FileInputStream(zip), 0);
+            JSONObject jresp = new JSONObject(super.stream2String(resp.getEntity().getContent()));
+            return _dataOnly(jresp, JSONArray.class);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    // args: local
+    public String mediaSanity(int lcnt) {
+        try {
+            HttpResponse resp = super.req("mediaSanity",
+                    super.getInputStream(Utils.jsonToString(new JSONObject().put("local", lcnt))));
+            JSONObject jresp = new JSONObject(super.stream2String(resp.getEntity().getContent()));
+            return _dataOnly(jresp, String.class);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    /**
+     * Returns the "data" element from the JSON response from the server, or throws an exception if there is a value in
+     * the "err" element.
+     * <p>
+     * The python counterpart to this method is flexible with type coercion; the type of object returned is decided by
+     * the content of the "data" element, and there are several such types in the various server responses. Java
+     * requires us to specifically choose a type to convert to, so we need an additional parameter (returnType) to
+     * specify the type we expect.
+     * 
+     * @param resp The JSON response from the server
+     * @param returnType The type to coerce the 'data' element to.
+     * @return The "data" element from the HTTP response from the server. The type of object returned is determined by
+     *         returnType.
+     */
+    @SuppressWarnings("unchecked")
+    private <T> T _dataOnly(JSONObject resp, Class<T> returnType) {
+        try {
+            if (!TextUtils.isEmpty(resp.optString("err"))) {
+                String err = resp.getString("err");
+                Log.e(AnkiDroidApp.TAG, "RemoteMediaSyncer: Error returned: " + err);
+                throw new RuntimeException("SyncError: " + err);
+                // TODO: Should probably define a new exception and handle it accordingly
+            }
+            if (returnType == String.class) {
+                return (T) resp.getString("data");
+            } else if (returnType == JSONObject.class) {
+                return (T) resp.getJSONObject("data");
+            } else if (returnType == JSONArray.class) {
+                return (T) resp.getJSONArray("data");
+            }
+            throw new RuntimeException("Did not specify a valid type for the 'data' element in resopnse");
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-    }
-
-
-    public File files(long minUsn, String tmpMediaZip) {
-        JSONObject data = new JSONObject();
-        try {
-            data.put("minUsn", minUsn);
-            HttpResponse ret = super.req("files", getInputStream(Utils.jsonToString(data)));
-            if (ret == null) {
-                Log.e(AnkiDroidApp.TAG, "RemoteMediaServer.files: Exception during request");
-                return null;
-            }
-            int resultType = ret.getStatusLine().getStatusCode();
-            if (resultType == 200) {
-                super.writeToFile(ret.getEntity().getContent(), tmpMediaZip);
-                return new File(tmpMediaZip);
-            } else {
-                Log.e(AnkiDroidApp.TAG, "RemoteMediaServer.files: Request returned " + resultType);
-                return null;
-            }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalStateException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    public long addFiles(File zip) {
-        try {
-            HttpResponse ret = super.req("addFiles", 0, new FileInputStream(zip));
-            if (ret == null) {
-                return 0;
-            }
-            StatusLine sl = ret.getStatusLine();
-            HttpEntity ent = ret.getEntity();
-            String s;
-            if (sl != null && sl.getStatusCode() == 200 && ent != null) {
-                s = super.stream2String(ent.getContent());
-                if (s != null && !s.equalsIgnoreCase("null") && s.length() != 0) {
-                    try {
-                        return Long.parseLong(s);
-                    } catch (NumberFormatException e) {
-                        AnkiDroidApp.saveExceptionReportFile(e, "RemoteMediaServerAddFiles:" + s);
-                        return 0;
-                    }
-                }
-            }
-            Log.e(AnkiDroidApp.TAG, "Error in RemoteMediaServer.addFiles(): " + ret.getStatusLine().getReasonPhrase());
-            return 0;
-        } catch (IllegalStateException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    public long mediaSanity() {
-        HttpResponse ret = super.req("mediaSanity");
-        if (ret == null) {
-            return 0;
-        }
-        String s;
-        int resultType = ret.getStatusLine().getStatusCode();
-        if (resultType == 200) {
-            try {
-                s = super.stream2String(ret.getEntity().getContent());
-            } catch (IllegalStateException e) {
-                throw new RuntimeException(e);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            if (s != null && !s.equalsIgnoreCase("null") && s.length() != 0) {
-                return Long.parseLong(s);
-            }
-        }
-        Log.e(AnkiDroidApp.TAG, "Error in RemoteMediaServer.mediaSanity(): " + ret.getStatusLine().getReasonPhrase());
-        return 0;
     }
 }

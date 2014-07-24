@@ -296,6 +296,20 @@ public class AnkiDb {
     }
 
 
+    /**
+     * WARNING: This is a convenience method that splits SQL scripts into separate queries with semicolons (;) 
+     * as the delimiter. Only use this method on internal functions where we can guarantee that the script does
+     * not contain any non-statement-terminating semicolons.
+     */
+    public void executeScript(String sql) {
+        mMod = true;
+        String[] queries = sql.split(";");
+        for(String query : queries) {
+            mDatabase.execSQL(query);
+        }
+    }
+
+
     /** update must always be called via AnkiDb in order to mark the db as changed */
     public int update(String table, ContentValues values) {
         return update(table, values, null, null);
@@ -366,4 +380,10 @@ public class AnkiDb {
         AnkiDroidApp.getCompat().disableDatabaseWriteAheadLogging(db);
     }
 
+    /**
+     * @return The full path to this database file.
+     */
+    public String getPath() {
+        return mDatabase.getPath();
+    }
 }

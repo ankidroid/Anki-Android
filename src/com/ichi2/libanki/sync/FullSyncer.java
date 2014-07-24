@@ -25,6 +25,8 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Consts;
+import com.ichi2.libanki.Utils;
 
 import org.apache.http.HttpResponse;
 
@@ -33,6 +35,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Locale;
 
 public class FullSyncer extends BasicHttpSyncer {
 
@@ -42,8 +46,18 @@ public class FullSyncer extends BasicHttpSyncer {
 
     public FullSyncer(Collection col, String hkey, Connection con) {
         super(hkey, con);
+        mPostVars = new HashMap<String, Object>();
+        mPostVars.put("k", hkey);
+        mPostVars.put("v",
+                String.format(Locale.US, "ankidroid,%s,%s", AnkiDroidApp.getPkgVersionName(), Utils.platDesc()));
         mCol = col;
         mCon = con;
+    }
+
+
+    @Override
+    public String syncURL() {
+        return Consts.SYNC_BASE + "sync/";
     }
 
 
