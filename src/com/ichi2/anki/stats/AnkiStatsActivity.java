@@ -143,9 +143,35 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         //hide deck/collection selector when comming from deck picker without a selected deck
+
+        switch (mTaskHandler.getStatType()){
+            case Stats.TYPE_MONTH:
+                MenuItem monthItem = menu.findItem(R.id.item_time_month);
+                monthItem.setChecked(true);
+                break;
+            case Stats.TYPE_YEAR:
+                MenuItem yearItem = menu.findItem(R.id.item_time_year);
+                yearItem.setChecked(true);
+                break;
+            case Stats.TYPE_LIFE:
+                MenuItem lifeItem = menu.findItem(R.id.item_time_all);
+                lifeItem.setChecked(true);
+                break;
+        }
+
+
+
         if(sIsWholeCollectionOnly){
             MenuItem deckItem = menu.findItem(R.id.action_deck_chooser);
             deckItem.setVisible(false);
+        } else {
+            if(AnkiStatsTaskHandler.isWholeCollection()){
+                MenuItem collectionItem = menu.findItem(R.id.item_deck_life);
+                collectionItem.setChecked(true);
+            } else {
+                MenuItem deckOnlyItem = menu.findItem(R.id.item_deck_current);
+                deckOnlyItem.setChecked(true);
+            }
         }
         return super.onPrepareOptionsMenu(menu);
 
@@ -161,24 +187,32 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
         int itemId =item.getItemId();
         switch (itemId) {
             case R.id.item_time_month:
+                if (item.isChecked()) item.setChecked(false);
+                else item.setChecked(true);
                 if (mTaskHandler.getStatType() != Stats.TYPE_MONTH) {
                     mTaskHandler.setStatType(Stats.TYPE_MONTH);
                     mSectionsPagerAdapter.notifyDataSetChanged();
                 }
                 return true;
             case R.id.item_time_year:
+                if (item.isChecked()) item.setChecked(false);
+                else item.setChecked(true);
                 if (mTaskHandler.getStatType() != Stats.TYPE_YEAR) {
                     mTaskHandler.setStatType(Stats.TYPE_YEAR);
                     mSectionsPagerAdapter.notifyDataSetChanged();
                 }
                 return true;
             case R.id.item_time_all:
+                if (item.isChecked()) item.setChecked(false);
+                else item.setChecked(true);
                 if (mTaskHandler.getStatType() != Stats.TYPE_LIFE) {
                     mTaskHandler.setStatType(Stats.TYPE_LIFE);
                     mSectionsPagerAdapter.notifyDataSetChanged();
                 }
                 return true;
             case R.id.item_deck_current:
+                if (item.isChecked()) item.setChecked(false);
+                else item.setChecked(true);
                 if(AnkiStatsTaskHandler.isWholeCollection()){
                     AnkiStatsTaskHandler.setIsWholeCollection(false);
                     try {
@@ -194,6 +228,8 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
                 }
                 return true;
             case R.id.item_deck_life:
+                if (item.isChecked()) item.setChecked(false);
+                else item.setChecked(true);
                 if(!AnkiStatsTaskHandler.isWholeCollection()){
                     AnkiStatsTaskHandler.setIsWholeCollection(true);
                     if(sIsSubtitle)
