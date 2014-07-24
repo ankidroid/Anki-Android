@@ -54,7 +54,7 @@ import com.ichi2.anki.stats.AnkiStatsTaskHandler;
 import com.ichi2.anki.stats.ChartView;
 import com.ichi2.async.DeckTask;
 import com.ichi2.async.DeckTask.TaskData;
-import com.ichi2.charts.ChartBuilder;
+
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Stats;
@@ -64,13 +64,6 @@ import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 
-import org.achartengine.ChartFactory;
-import org.achartengine.GraphicalView;
-import org.achartengine.chart.BarChart;
-import org.achartengine.model.XYMultipleSeriesDataset;
-import org.achartengine.model.XYSeries;
-import org.achartengine.renderer.XYMultipleSeriesRenderer;
-import org.achartengine.renderer.XYSeriesRenderer;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -857,13 +850,15 @@ public class StudyOptionsFragment extends Fragment {
 
         switch (id) {
             case DIALOG_STATISTIC_TYPE:
-                dialog = ChartBuilder.getStatisticsDialog(getActivity(), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler,
-                                new DeckTask.TaskData(AnkiDroidApp.getCol(), which, false));
+                boolean selectAllDecksButton = false;
+                if(!(getActivity() instanceof AnkiStatsActivity)) {
+                    if ((getActivity() instanceof DeckPicker && !mFragmented)) {
+                        selectAllDecksButton = true;
                     }
-                }, mFragmented);
+                    AnkiStatsTaskHandler.setIsWholeCollection(selectAllDecksButton);
+                    Intent intent = new Intent(getActivity(), AnkiStatsActivity.class);
+                    startActivity(intent);
+                }
                 break;
 
             case DIALOG_CUSTOM_STUDY:
@@ -1358,46 +1353,6 @@ public class StudyOptionsFragment extends Fragment {
         }
     };
 
-    DeckTask.TaskListener mLoadStatisticsHandler = new DeckTask.TaskListener() {
-
-        @Override
-        public void onPostExecute(DeckTask.TaskData result) {
-            dismissProgressDialog();
-
-            if (result.getBoolean()) {
-                // if (mStatisticType == Statistics.TYPE_DECK_SUMMARY) {
-                // Statistics.showDeckSummary(getActivity());
-                // } else {
-                Intent intent = new Intent(getActivity(), com.ichi2.charts.ChartBuilder.class);
-                startActivityForResult(intent, STATISTICS);
-                ActivityTransitionAnimation.slide(getActivity(), ActivityTransitionAnimation.DOWN);
-                // }
-            } else {
-                // TODO: db error handling
-            }
-        }
-
-
-        @Override
-        public void onPreExecute() {
-            mProgressDialog = StyledProgressDialog.show(getActivity(), "",
-                    getResources().getString(R.string.calculating_statistics), true);
-        }
-
-
-        @Override
-        public void onProgressUpdate(DeckTask.TaskData... values) {
-        }
-
-
-        @Override
-        public void onCancelled() {
-            // TODO Auto-generated method stub
-
-        }
-
-    };
-
     class MyGestureDetector extends SimpleOnGestureListener {
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
@@ -1413,12 +1368,6 @@ public class StudyOptionsFragment extends Fragment {
                             && Math.abs(e1.getY() - e2.getY()) < AnkiDroidApp.sSwipeMaxOffPath) {
                         // right
                         closeStudyOptions();
-                    } else if (e2.getY() - e1.getY() > AnkiDroidApp.sSwipeMinDistance
-                            && Math.abs(velocityY) > AnkiDroidApp.sSwipeThresholdVelocity
-                            && Math.abs(e1.getX() - e2.getX()) < AnkiDroidApp.sSwipeMaxOffPath) {
-                        // down
-                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_STATISTICS, mLoadStatisticsHandler,
-                                new DeckTask.TaskData(AnkiDroidApp.getCol(), Stats.TYPE_FORECAST, false));
                     } else if (e1.getY() - e2.getY() > AnkiDroidApp.sSwipeMinDistance
                             && Math.abs(velocityY) > AnkiDroidApp.sSwipeThresholdVelocity
                             && Math.abs(e1.getX() - e2.getX()) < AnkiDroidApp.sSwipeMaxOffPath) {

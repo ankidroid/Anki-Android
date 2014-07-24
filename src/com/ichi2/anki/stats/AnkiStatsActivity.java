@@ -242,8 +242,10 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
         builder.setView(view);
         builder.setTitle(getResources().getString(R.string.stats_select_time_scale));
         mTimeSpinner = (Spinner)((RelativeLayout)view).getChildAt(0);
-        mTimeSpinner.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,
-                getResources().getStringArray(R.array.stats_period)));
+
+        ArrayAdapter<String> timeFrameAdapter =new ArrayAdapter<String>(this,R.layout.drawer_list_item,
+                R.id.drawer_list_item_text, getResources().getStringArray(R.array.stats_period));
+        mTimeSpinner.setAdapter(timeFrameAdapter);
 
         mTimeSpinner.setSelection(mTaskHandler.getStatType(), false);
         final int currentStatType = mSelectedStatType;

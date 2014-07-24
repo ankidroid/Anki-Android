@@ -41,7 +41,6 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.stats.AnkiStatsActivity;
 import com.ichi2.anki.stats.AnkiStatsTaskHandler;
 import com.ichi2.async.DeckTask;
-import com.ichi2.charts.ChartBuilder;
 import com.ichi2.themes.StyledProgressDialog;
 
 
@@ -261,51 +260,7 @@ public class NavigationDrawerActivity extends AnkiActivity {
     }
     
     /* Members not related directly to navigation drawer */
-    
-    // Statistics
-    DeckTask.TaskListener mLoadStatisticsHandler = new DeckTask.TaskListener() {
-        @Override
-        public void onPostExecute(DeckTask.TaskData result) {
-            if (mProgressDialog.isShowing()) {
-                try {
-                    mProgressDialog.dismiss();
-                } catch (Exception e) {
-                    Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
-                }
-            }
-            if (result.getBoolean()) {
-                // if (mStatisticType == Statistics.TYPE_DECK_SUMMARY) {
-                // Statistics.showDeckSummary(DeckPicker.this);
-                // } else {
-                Intent intent = new Intent(NavigationDrawerActivity.this, com.ichi2.charts.ChartBuilder.class);
-                startActivityWithAnimation(intent, ActivityTransitionAnimation.DOWN);
-                // }
-            } else {
-                // TODO: db error handling
-            }
-        }
 
-
-        @Override
-        public void onPreExecute() {
-            mProgressDialog = StyledProgressDialog.show(NavigationDrawerActivity.this, "",
-                    getResources().getString(R.string.calculating_statistics), true);
-        }
-
-
-        @Override
-        public void onProgressUpdate(DeckTask.TaskData... values) {
-        }
-
-
-        @Override
-        public void onCancelled() {
-            // TODO Auto-generated method stub
-            
-        }
-
-    };
-    
     @Override
     protected void onDestroy() {       
         super.onDestroy();

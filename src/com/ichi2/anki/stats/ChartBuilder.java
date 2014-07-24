@@ -35,6 +35,7 @@ public class ChartBuilder {
     private ChartView mChartView;
     private Collection mCollectionData;
     private int mDesiredPixelDistanceBetweenTicks = 200;
+    private float barOpacity = 0.7f;
 
     private int mFrameThickness = 60;
 
@@ -204,12 +205,23 @@ public class ChartBuilder {
                     barThickness = 0.2;
                 }
             }
+            ColorWrap color;
+            switch (mChartType){
+                case ANSWER_BUTTONS:
+                case HOURLY_BREAKDOWN:
+                case WEEKLY_BREAKDOWN:
+                case INTERVALS:
+                    color =new ColorWrap(mChartView.getResources().getColor(mColors[i-1]), barOpacity);
+                    break;
+                default:
+                    color =new ColorWrap(mChartView.getResources().getColor(mColors[i-1]));
+            }
 
-            BarGraph barGraph = new BarGraph(usedPlotSheet, barThickness, bars, new ColorWrap(mChartView.getResources().getColor(mColors[i-1])));
+            BarGraph barGraph = new BarGraph(usedPlotSheet, barThickness, bars, color);
             barGraph.setFilling(true);
             barGraph.setName(mChartView.getResources().getString(mValueLabels[i - 1]));
             //barGraph.setFillColor(Color.GREEN.darker());
-            barGraph.setFillColor(new ColorWrap(mChartView.getResources().getColor(mColors[i - 1])));
+            barGraph.setFillColor(color);
             plotSheet.addDrawable(barGraph);
         }
     }
