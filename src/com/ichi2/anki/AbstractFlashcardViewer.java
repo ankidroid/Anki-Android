@@ -110,6 +110,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Locale;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -867,18 +868,40 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         return m.replaceFirst(sb.toString());
     }
 
+    /**
+       Return the correct answer to use for {{type::cloze::NN}} fields.
+
+       @param txt The field text with the clozes
+       @param idx The index of the cloze to use
+       @return A string with a comma-separeted list of unique cloze strings with the corret index.
+    */
 
     private String contentForCloze(String txt, int idx) {
         Pattern re = Pattern.compile("\\{\\{c" + idx + "::(.+?)\\}\\}");
         Matcher m = re.matcher(txt);
-        if (!m.find()) {
-            return null;
-        }
-        String result = m.group(1);
+        Set<String> matches = new LinkedHashSet<String>();
+        // LinkedHashSet: make entries appear only once, like Anki desktop (see also issue #2208), and keep the order
+        // they appear in.
+        String groupOne = new String();
+        int colonColonIndex = -1;
         while (m.find()) {
-            result += ", " + m.group(1);
+            groupOne = m.group(1);
+            colonColonIndex = groupOne.indexOf("::");
+            if (colonColonIndex > -1) {
+                // Cut out the hint.
+                groupOne = groupOne.substring(0, colonColonIndex);
+            }
+            matches.add(groupOne);
         }
-        return result;
+        // Now do what the pythonic ", ".join(matches) does in a tricky way
+        String prefix = "";
+        StringBuilder resultBuilder = new StringBuilder();
+        for (String match : matches) {
+            resultBuilder.append(prefix);
+            resultBuilder.append(match);
+            prefix = ", ";
+        }
+        return resultBuilder.toString();
     }
 
     private Handler mTimerHandler = new Handler();
