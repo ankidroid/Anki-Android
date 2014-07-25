@@ -19,12 +19,18 @@ import android.webkit.WebView;
 
 import com.ichi2.anki.R;
 import com.ichi2.anki.ReadText;
+import com.ichi2.anki.exception.APIVersionException;
+
+import java.util.regex.Pattern;
 
 /** Implementation of {@link Compat} for SDK level 7 */
 @TargetApi(7)
 public class CompatV7 implements Compat {
 
 
+    // Only match text that is entirely ASCII.
+    private static final Pattern fASCII = Pattern.compile("^\\p{ASCII}*$");
+    
     /*
      *  Return the input string. Not doing the NFD normalization may cause problems with syncing media to Macs
      *  where the file name contains diacritics, as file names are decomposed on HFS file systems.
@@ -45,8 +51,16 @@ public class CompatV7 implements Compat {
      * @param txt Text to be normalized
      * @return The input text not NFC normalized.
     */
-    public String nfcNormalized(String txt) {
-        return txt;
+    @Override
+    public String nfcNormalized(String txt) throws APIVersionException {
+        // We will at least try to check if the string can be represented entirely in ASCII.
+        // If it can be, we can be sure it's normalized. If not, we throw since we can't
+        // make a guarantee about the actual normalized state of the string.
+        if (fASCII.matcher(txt).find()) {
+            return txt;
+        } else {
+            throw new APIVersionException("NFC normalization is not available in this API version");
+        }
     }
 
 

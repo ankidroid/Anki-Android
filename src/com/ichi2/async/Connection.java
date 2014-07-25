@@ -32,6 +32,7 @@ import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.Feedback;
 import com.ichi2.anki.R;
+import com.ichi2.anki.exception.UnsupportedSyncException;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Utils;
@@ -721,6 +722,10 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                         publishProgress(R.string.sync_media_success);
                     }
                 }
+            } catch (UnsupportedSyncException e) {
+                mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_unsupported);
+                AnkiDroidApp.getSharedPrefs(sContext).edit().putBoolean("syncFetchesMedia", false).commit();
+                AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync-mediaSync");
             } catch (RuntimeException e) {
                 AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync-mediaSync");
                 mediaError = e.getLocalizedMessage();
