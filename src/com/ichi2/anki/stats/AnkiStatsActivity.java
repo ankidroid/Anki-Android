@@ -146,6 +146,7 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
     }
 
     private void showDeckDialog(){
+        mIsWholeCollection = AnkiStatsTaskHandler.isWholeCollection();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         View view = layoutInflater.inflate(R.layout.action_view_spinner, null);
