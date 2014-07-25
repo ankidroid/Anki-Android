@@ -171,5 +171,5 @@
     <string name="sched_has_buried">Some related or buried cards were delayed until tomorrow.</string>
     <string name="tag_editor_add_hint">Use tick mark on the right to add new tag</string>
     <string name="tag_editor_add_feedback">Press \"%2$s\" button to confirm adding \"%1$s\"</string>
-
+    <string name="lookup_hint">After copying the text, tap anywhere on the flashcard to show the search icon</string>
 </resources>
