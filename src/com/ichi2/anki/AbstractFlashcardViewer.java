@@ -72,11 +72,9 @@ import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
 import com.ichi2.anki.receiver.SdCardReceiver;
@@ -384,6 +382,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         @Override
         public void run() {
             Log.i(AnkiDroidApp.TAG, "onEmulatedLongClick");
+            // Show hint about lookup function if dictionary available and Webview version supports text selection
+            if (!mDisableClipboard && Lookup.isAvailable() && AnkiDroidApp.SDK_VERSION >= 11) {
+                String lookupHint = getResources().getString(R.string.lookup_hint);
+                Themes.showThemedToast(AbstractFlashcardViewer.this, lookupHint, false);
+            }
             Vibrator vibratorManager = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
             vibratorManager.vibrate(50);
             longClickHandler.postDelayed(startLongClickAction, 300);
@@ -1920,6 +1923,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mPrefHideDueCount = preferences.getBoolean("hideDueCount", false);
         mPrefWhiteboard = preferences.getBoolean("whiteboard", false);
         mPrefWriteAnswers = !preferences.getBoolean("writeAnswersDisable", false);
+        mDisableClipboard = preferences.getString("dictionary","0").equals("0");
         mLongClickWorkaround = preferences.getBoolean("textSelectionLongclickWorkaround", false);
         // mDeckFilename = preferences.getString("deckFilename", "");
         mNightMode = preferences.getBoolean("invertedColors", false);
