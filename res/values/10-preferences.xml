@@ -50,7 +50,9 @@
     <string name="whiteboard_black">Black strokes</string>
     <string name="whiteboard_black_summ">Uses less memory, unless in night mode</string>
     <string name="write_answers_disable">Disable typing in answer</string>
-    <string name="write_answers_disable_summ">Prevents keyboard from appearing on cards containing \'type in the answer\' fields</string>
+    <string name="write_answers_disable_summ">Forces \'type in the answer\' fields to be disabled</string>
+    <string name="auto_keyboard_disable">Disable keyboard auto pop up</string>
+    <string name="auto_keyboard_disable_summ">Disables keyboard auto pop up for \'type in the answer\' fields</string>
     <string name="text_selection_click">Long press workaround</string>
     <string name="text_selection_click_summ">Enable this if you are not able to select text with a long press</string>
     <string name="dictionary">Lookup dictionary</string>
