@@ -22,7 +22,7 @@
 
     <!-- Be careful with a reordering. It will probably lead to a deletion of already translated strings on crowdin and should therefore only be done only immediately before release -->
     <string-array name="new_version_features">
-        <item>(new in 2.2.1) Fix 2 bugs for opening links and resuming the app</item>
+        <item>(new in 2.2.3) New media sync protocol</item>    
         <item>Redesign layout</item>
         <item>Add pictures and sounds to flashcards (experimental)</item>
         <item>Make second column in card browser configurable</item>
