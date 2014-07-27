@@ -1,14 +1,38 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".AnkiStatsActivity" >
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context=".AnkiStatsActivity">
 
-    <item android:id="@+id/action_deck_spinner"
-          android:title="@string/stats_select_decks"
-          android:icon="@drawable/ic_action_storage"
-          app:showAsAction="ifRoom"/>
-    <item android:id="@+id/action_time_spinner"
-          android:title="@string/stats_select_time_scale"
-          android:icon="@drawable/ic_action_time"
-          app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/action_deck_chooser"
+        android:title="@string/stats_select_decks"
+        android:icon="@drawable/ic_action_storage"
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/item_deck_current"
+                android:title="@string/stats_deck_current"/>
+            <item
+                android:id="@+id/item_deck_life"
+                android:title="@string/stats_deck_collection"/>
+        </menu>
+        </item>
+    <item
+        android:id="@+id/action_time_chooser"
+        android:title="@string/stats_select_time_scale"
+        android:icon="@drawable/ic_action_time"
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/item_time_month"
+                android:title="@string/stats_period_month"/>
+            <item
+                android:id="@+id/item_time_year"
+                android:title="@string/stats_period_year"/>
+            <item
+                android:id="@+id/item_time_all"
+                android:title="@string/stats_period_lifetime"/>
+        </menu>
+
+    </item>
 </menu>

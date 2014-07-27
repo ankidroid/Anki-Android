@@ -45,7 +45,9 @@
     <string name="stats_percentage">Percentage</string>
     <string name="stats_period_month">1 month</string>
     <string name="stats_period_year">1 year</string>
-    <string name="stats_period_lifetime">all</string>
+    <string name="stats_period_lifetime">deck life</string>
+    <string name="stats_deck_current">deck</string>
+    <string name="stats_deck_collection">collection</string>
     <string name="stats_time_of_day">Time of Day</string>
     <string name="stats_day_of_week">Day of Week</string>
     <string name="stats_percentage_correct">% Correct</string>

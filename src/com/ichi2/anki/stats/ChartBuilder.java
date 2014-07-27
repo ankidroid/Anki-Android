@@ -213,6 +213,13 @@ public class ChartBuilder {
                 case INTERVALS:
                     color =new ColorWrap(mChartView.getResources().getColor(mColors[i-1]), barOpacity);
                     break;
+                case REVIEW_COUNT:
+                case REVIEW_TIME:
+                case FORECAST:
+                    if(i == 1){
+                        color =new ColorWrap(mChartView.getResources().getColor(mColors[i-1]), barOpacity);
+                        break;
+                    }
                 default:
                     color =new ColorWrap(mChartView.getResources().getColor(mColors[i-1]));
             }
