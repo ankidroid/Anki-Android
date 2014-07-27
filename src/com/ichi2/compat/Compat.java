@@ -23,6 +23,8 @@ import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.webkit.WebView;
 
+import com.ichi2.anki.exception.APIVersionException;
+
 /**
  * This interface defines a set of functions that are not available on all platforms.
  * <p>
@@ -45,7 +47,7 @@ import android.webkit.WebView;
  */
 public interface Compat {
     public abstract String nfdNormalized(String txt);
-    public abstract String nfcNormalized(String txt);
+    public abstract String nfcNormalized(String txt) throws APIVersionException;
     public abstract String detagged(String txt);
     public abstract void setScrollbarFadingEnabled(WebView webview, boolean enable);
     public abstract void setOverScrollModeNever(View v);
