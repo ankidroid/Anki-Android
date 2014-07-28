@@ -27,6 +27,7 @@ import android.util.Pair;
 import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.exception.APIVersionException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -201,9 +202,11 @@ public class Media {
     }
 
 
-    // TODO: This might be needed since some SD cards can be formatted as FAT32
+    // TODO: Assume we are on FAT32 for every sync until we can find a reliable way to detect
+    // the file system type. This will trigger a media scan on every sync attempt even on devices
+    // that didn't need it, so it makes syncing a little slower.
     public boolean _isFAT32() {
-        return false;
+        return true;
     }
 
 
@@ -399,12 +402,12 @@ public class Media {
      *
      * @return A list containing three lists of files (missingFiles, unusedFiles, invalidFiles)
      */
-    public List<List<String>> check() {
+    public List<List<String>> check() throws APIVersionException {
         return check(null);
     }
 
 
-    private List<List<String>> check(File[] local) {
+    private List<List<String>> check(File[] local) throws APIVersionException {
         File mdir = new File(dir());
         // gather all media references in NFC form
         Set<String> allRefs = new HashSet<String>();
@@ -494,7 +497,7 @@ public class Media {
     }
 
 
-    private void _normalizeNoteRefs(long nid) {
+    private void _normalizeNoteRefs(long nid) throws APIVersionException {
         Note note = mCol.getNote(nid);
         String[] flds = note.getFields();
         for (int c = 0; c < flds.length; c++) {
@@ -542,7 +545,7 @@ public class Media {
     /**
      * Scan the media folder if it's changed, and note any changes.
      */
-    public void findChanges() {
+    public void findChanges() throws APIVersionException {
         if (_changed() != null) {
             _logChanges();
         }
@@ -589,7 +592,7 @@ public class Media {
     }
 
 
-    private void _logChanges() {
+    private void _logChanges() throws APIVersionException  {
         Pair<List<String>, List<String>> result = _changes();
         List<String> added = result.first;
         List<String> removed = result.second;
@@ -609,7 +612,7 @@ public class Media {
     }
 
 
-    private Pair<List<String>, List<String>> _changes() {
+    private Pair<List<String>, List<String>> _changes() throws APIVersionException  {
         Map<String, Object[]> cache = new HashMap<String, Object[]>();
         Cursor cur = null;
         try {
@@ -761,7 +764,7 @@ public class Media {
      * files (marked "dirty" in the DB) to send. <br>
      * TODO: Investigate performance impact of in-memory zip file.
      */
-    public Pair<File, List<String>> mediaChangesZip() {
+    public Pair<File, List<String>> mediaChangesZip() throws APIVersionException {
         File f = new File(mCol.getPath().replaceFirst("collection\\.anki2$", "tmpSyncToServer.zip"));
         Cursor cur = null;
         try {
@@ -829,7 +832,7 @@ public class Media {
      * caller to save the zip to disk first. This also spares us from holding the entire downloaded data in memory,
      * which is not practical on a mobile device.
      */
-    public int addFilesFromZip(ZipFile z) {
+    public int addFilesFromZip(ZipFile z) throws APIVersionException {
         try {
             List<Object[]> media = new ArrayList<Object[]>();
             // get meta info first

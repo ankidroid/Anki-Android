@@ -23,6 +23,8 @@ import android.util.Pair;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
+import com.ichi2.anki.exception.APIVersionException;
+import com.ichi2.anki.exception.UnsupportedSyncException;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
@@ -55,7 +57,7 @@ public class MediaSyncer {
     }
 
 
-    public String sync(Connection con) {
+    public String sync(Connection con) throws UnsupportedSyncException {
         try {
             // check if there have been any changes
             con.publishProgress(R.string.sync_media_find);
@@ -169,6 +171,10 @@ public class MediaSyncer {
             }
         } catch (JSONException e) {
             throw new RuntimeException(e);
+        } catch (APIVersionException e) {
+            UnsupportedSyncException ee = new UnsupportedSyncException("Cannot sync media on this version of Android");
+            Log.e(AnkiDroidApp.TAG, e.getMessage());
+            throw ee;
         } catch (Exception e) {
             Log.e(AnkiDroidApp.TAG, "Syncing error: ", e);
             throw new RuntimeException(e);
@@ -178,7 +184,7 @@ public class MediaSyncer {
     // TODO: I think this method should be responsible for the life cycle of the zip file
     // It can be safely deleted after this method has finished using it. Right now it is
     // left in the AnkiDroid directory (harmless but takes up space).
-    private void _downloadFiles(List<String> fnames) {
+    private void _downloadFiles(List<String> fnames) throws APIVersionException {
         Log.v(AnkiDroidApp.TAG, fnames.size() + " files to fetch");
         while (fnames.size() > 0) {
             try {

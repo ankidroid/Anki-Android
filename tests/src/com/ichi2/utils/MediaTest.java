@@ -20,6 +20,7 @@ import android.test.AndroidTestCase;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.BackupManager;
+import com.ichi2.anki.exception.APIVersionException;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Note;
 
@@ -138,19 +139,23 @@ public class MediaTest extends AndroidTestCase {
         os.write("test".getBytes());
         os.close();
         // check media
-        List<List<String>> ret = d.getMedia().check();
-        List<String> expected;
-        List<String> actual;
-
-        expected = Arrays.asList("fake2.png");
-        actual = ret.get(0);
-        actual.retainAll(expected);
-        assertEquals(expected.size(), actual.size());
-
-        expected = Arrays.asList("foo.jpg");
-        actual = ret.get(1);
-        actual.retainAll(expected);
-        assertEquals(expected.size(), actual.size());
+        try {
+            List<List<String>> ret = d.getMedia().check();
+            List<String> expected;
+            List<String> actual;
+    
+            expected = Arrays.asList("fake2.png");
+            actual = ret.get(0);
+            actual.retainAll(expected);
+            assertEquals(expected.size(), actual.size());
+    
+            expected = Arrays.asList("foo.jpg");
+            actual = ret.get(1);
+            actual.retainAll(expected);
+            assertEquals(expected.size(), actual.size());
+        } catch (APIVersionException e) {
+            // Can't test media on older APIs
+        }
     }
 
 

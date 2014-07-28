@@ -62,8 +62,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
@@ -78,6 +78,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
+import com.ichi2.anki.exception.APIVersionException;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.reviewer.ReviewerExtRegistry;
 import com.ichi2.async.DeckTask;
@@ -2251,7 +2252,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         answerText = matcher.replaceAll("\n");
         matcher = Sound.sSoundPattern.matcher(answerText);
         answerText = matcher.replaceAll("");
-        return AnkiDroidApp.getCompat().nfcNormalized(answerText);
+        try {
+            return AnkiDroidApp.getCompat().nfcNormalized(answerText);
+        } catch (APIVersionException e) {
+            return answerText;
+        }
     }
 
     /**
@@ -2264,7 +2269,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (answer == null || answer.equals("")) {
             return "";
         }
-        return AnkiDroidApp.getCompat().nfcNormalized(answer.trim());
+        try {
+            return AnkiDroidApp.getCompat().nfcNormalized(answer.trim());
+        } catch (APIVersionException e) {
+            return answer.trim();
+        }
     }
 
 
