@@ -225,8 +225,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             }
             try {
                 mPreviousTask.get();
-                Log.i(AnkiDroidApp.TAG, "Finished waiting for " + mPreviousTask.mType + " to finish. Status= "
-                        + mPreviousTask.getStatus());
+                Log.i(AnkiDroidApp.TAG, "Finished waiting for " + mPreviousTask.mType + " to finish. Status= " + mPreviousTask.getStatus());
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 // We have been interrupted, return immediately.
@@ -834,8 +833,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                 AnkiDroidApp.closeCollection(true);
                 BackupManager.performBackup(path);
             } catch (RuntimeException e) {
-                Log.i(AnkiDroidApp.TAG,
-                        "doInBackgroundCloseCollection: error occurred - collection not properly closed");
+                Log.i(AnkiDroidApp.TAG, "doInBackgroundCloseCollection: error occurred - collection not properly closed");
             }
         }
         return null;

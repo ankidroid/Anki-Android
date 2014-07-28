@@ -894,8 +894,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
         Intent intent = getIntent();
         // What purpose does this serve?
         if (!intent.getBooleanExtra("viaNavigationDrawer", false) && !isTaskRoot()) {
-            Log.i(AnkiDroidApp.TAG,
-                    "DeckPicker - onCreate: Detected multiple instance of this activity, closing it and return to root activity");
+            Log.i(AnkiDroidApp.TAG, "DeckPicker - onCreate: Detected multiple instance of this activity, closing it and return to root activity");
             Intent reloadIntent = new Intent(DeckPicker.this, DeckPicker.class);
             reloadIntent.setAction(Intent.ACTION_MAIN);
             if (intent != null && intent.getExtras() != null) {

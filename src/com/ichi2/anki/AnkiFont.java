@@ -127,8 +127,7 @@ public class AnkiFont {
                     sb.deleteCharAt(sb.length() - 1);
                     sb.append(" !important;");
                 } else {
-                    Log.d(AnkiDroidApp.TAG,
-                            "AnkiFont.getCSS() - unable to set a font attribute important while override is set.");
+                    Log.d(AnkiDroidApp.TAG, "AnkiFont.getCSS() - unable to set a font attribute important while override is set.");
                 }
             }
         }
