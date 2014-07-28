@@ -893,10 +893,9 @@ public class Models {
     }
 
 
-    // not in libanki
+    // originally from anki.template.template
     // Handle fields fetched from templates and any anki-specific formatting
     protected static final String clozeReg = "\\{\\{c%s::(.*?)(::(.*?))?\\}\\}";
-
     protected static class fieldParser implements Mustache.VariableFetcher {
         private Map<String, String> _fields;
 

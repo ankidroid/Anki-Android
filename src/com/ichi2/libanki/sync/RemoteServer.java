@@ -28,6 +28,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.Locale;
 
 public class RemoteServer extends BasicHttpSyncer {
@@ -41,10 +42,11 @@ public class RemoteServer extends BasicHttpSyncer {
     @Override
     public HttpResponse hostKey(String user, String pw) {
         try {
+            mPostVars = new HashMap<String, Object>();
             JSONObject jo = new JSONObject();
             jo.put("u", user);
             jo.put("p", pw);
-            return super.req("hostKey", super.getInputStream(Utils.jsonToString(jo)), false);
+            return super.req("hostKey", super.getInputStream(Utils.jsonToString(jo)));
         } catch (JSONException e) {
             return null;
         }
@@ -57,7 +59,7 @@ public class RemoteServer extends BasicHttpSyncer {
             JSONObject jo = new JSONObject();
             jo.put("u", URLEncoder.encode(user, "UTF-8"));
             jo.put("p", URLEncoder.encode(pw, "UTF-8"));
-            return super.req("register", null, 6, false, jo);
+            return super.req("register", null, 6, jo);
         } catch (JSONException e) {
             return null;
         } catch (UnsupportedEncodingException e) {
@@ -69,6 +71,9 @@ public class RemoteServer extends BasicHttpSyncer {
     @Override
     public HttpResponse meta() {
         try {
+            mPostVars = new HashMap<String, Object>();
+            mPostVars.put("k", mHKey);
+            mPostVars.put("s", mSKey);
             JSONObject jo = new JSONObject();
             jo.put("v", Consts.SYNC_VER);
             jo.put("cv",
