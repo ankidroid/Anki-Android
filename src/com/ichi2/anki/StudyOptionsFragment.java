@@ -404,17 +404,31 @@ public class StudyOptionsFragment extends Fragment {
 
 
     private void closeStudyOptions() {
-        getActivity();
         closeStudyOptions(Activity.RESULT_OK);
     }
 
 
     private void closeStudyOptions(int result) {
-        // mCompat.invalidateOptionsMenu(this);
-        if (!mFragmented) {
-            getActivity().setResult(result);
-            getActivity().finish();
-            ActivityTransitionAnimation.slide(getActivity(), ActivityTransitionAnimation.RIGHT);
+        Activity a = getActivity();
+        if (!mFragmented && a != null) {
+            a.setResult(result);
+            a.finish();
+            ActivityTransitionAnimation.slide(a, ActivityTransitionAnimation.RIGHT);
+        } else if (a == null) {
+            // getActivity() can return null if reference to fragment lingers after parent activity has been closed,
+            // which is particularly relevant when using AsyncTasks.
+            Log.e(AnkiDroidApp.TAG, "closeStudyOptions() failed due to getActivity() returning null");
+        }
+    }
+
+    private void reloadStudyOptions() {
+        Activity a = getActivity();
+        if (a != null) {
+            ((OnStudyOptionsReloadListener) a).loadStudyOptionsFragment();
+        } else {
+            // getActivity() can return null if reference to fragment lingers after parent activity has been closed,
+            // which is particularly relevant when using AsyncTasks.
+            Log.e(AnkiDroidApp.TAG, "reloadStudyOptions() failed due to getActivity() returning null");
         }
     }
 
@@ -456,8 +470,8 @@ public class StudyOptionsFragment extends Fragment {
                 }
                 if (!AnkiDroidApp.colIsOpen()) {
                     closeStudyOptions();
-                } else if (!mFragmented) {
-                    ((OnStudyOptionsReloadListener) getActivity()).loadStudyOptionsFragment();
+                } else {
+                    reloadStudyOptions();
                 }
             }
 
@@ -1212,7 +1226,7 @@ public class StudyOptionsFragment extends Fragment {
         @Override
         public void onPostExecute(TaskData result) {
             dismissProgressDialog();
-            ((OnStudyOptionsReloadListener) getActivity()).loadStudyOptionsFragment();
+            reloadStudyOptions();
         }
 
 
