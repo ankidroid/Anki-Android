@@ -140,7 +140,7 @@
     </string-array>
 
     <string name="menu_cardbrowser">Card browser</string>
-    <string name="show_hint">Show hint</string>
+    <string name="show_hint">Show %s</string>
     <string name="pref_lang_other">Language preferences</string>
     <string name="pref_font_UI">Custom UI font</string>
     <string name="info_rate">Rate AnkiDroid</string>
