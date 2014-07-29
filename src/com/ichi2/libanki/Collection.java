@@ -908,6 +908,7 @@ public class Collection {
         String[] flist = Utils.splitFields((String) data[6]);
         Map<String, String> fields = new HashMap<String, String>();
         long modelId = (Long) data[2];
+        int cardNum = ((Integer) data[4]) + 1;
         JSONObject model = mModels.get(modelId);
         Map<String, Pair<Integer, JSONObject>> fmap = mModels.fieldMap(model);
         for (String fname : fmap.keySet()) {
@@ -924,7 +925,7 @@ public class Collection {
                 template = model.getJSONArray("tmpls").getJSONObject(0);
             }
             fields.put("Card", template.getString("name"));
-            fields.put("c" + (((Integer) data[4]) + 1), "1");
+            fields.put("c" + cardNum, "1");
 
             // render q & a
             HashMap<String, String> d = new HashMap<String, String>();
@@ -938,9 +939,9 @@ public class Collection {
                 // runFilter mungeFields for type "q"
                 Models.fieldParser fparser = new Models.fieldParser(fields);
                 Matcher m = fClozePattern.matcher(qfmt);
-                format = m.replaceFirst(String.format(Locale.US, "{{cq:%d:", ((Integer) data[4]) + 1));
+                format = m.replaceAll(String.format(Locale.US, "{{cq:%d:", cardNum));
                 m = fAltClozePattern.matcher(format);
-                format = m.replaceFirst(String.format(Locale.US, "<%%cq:%d:",((Integer) data[4]) + 1));
+                format = m.replaceAll(String.format(Locale.US, "<%%cq:%d:", cardNum));
                 html = mModels.getCmpldTemplate(format).execute(fparser);
                 html = (String) AnkiDroidApp.getHooks().runFilter("mungeQA", html, "q", fields, model, data, this);
                 d.put("q", html);
@@ -959,9 +960,9 @@ public class Collection {
                 // runFilter mungeFields for type "a"
                 fparser = new Models.fieldParser(fields);
                 m = fClozePattern.matcher(afmt);
-                format = m.replaceFirst(String.format(Locale.US, "{{ca:%d:", ((Integer) data[4]) + 1));
+                format = m.replaceAll(String.format(Locale.US, "{{ca:%d:", cardNum));
                 m = fAltClozePattern.matcher(format);
-                format = m.replaceFirst(String.format(Locale.US, "<%%ca:%d:", ((Integer) data[4]) + 1));
+                format = m.replaceAll(String.format(Locale.US, "<%%ca:%d:", cardNum));
                 html = mModels.getCmpldTemplate(format).execute(fparser);
                 html = (String) AnkiDroidApp.getHooks().runFilter("mungeQA", html, "a", fields, model, data, this);
                 d.put("a", html);
