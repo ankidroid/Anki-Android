@@ -36,7 +36,7 @@ import com.ichi2.anki.exception.UnsupportedSyncException;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Utils;
-import com.ichi2.libanki.sync.BasicHttpSyncer;
+import com.ichi2.libanki.sync.HttpSyncer;
 import com.ichi2.libanki.sync.FullSyncer;
 import com.ichi2.libanki.sync.MediaSyncer;
 import com.ichi2.libanki.sync.RemoteMediaServer;
@@ -300,7 +300,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     private Payload doInBackgroundLogin(Payload data) {
         String username = (String) data.data[0];
         String password = (String) data.data[1];
-        BasicHttpSyncer server = new RemoteServer(this, null);
+        HttpSyncer server = new RemoteServer(this, null);
         HttpResponse ret = server.hostKey(username, password);
         String hostkey = null;
         boolean valid = false;
@@ -412,7 +412,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             return data;
         }
         // step 2: upload zip file to upgrade service and get token
-        BasicHttpSyncer h = new BasicHttpSyncer(null, null);
+        HttpSyncer h = new HttpSyncer(null, null);
         // note: server doesn't expect it to be gzip compressed, because the zip file is compressed
         // enable cancelling
         publishProgress(R.string.upgrade_decks_upload, null, true);
@@ -552,7 +552,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     private Payload doInBackgroundRegister(Payload data) {
         String username = (String) data.data[0];
         String password = (String) data.data[1];
-        BasicHttpSyncer server = new RemoteServer(this, null);
+        HttpSyncer server = new RemoteServer(this, null);
         HttpResponse ret = server.register(username, password);
         String hostkey = null;
         boolean valid = false;
@@ -609,7 +609,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         }
         String path = AnkiDroidApp.getCollectionPath();
 
-        BasicHttpSyncer server = new RemoteServer(this, hkey);
+        HttpSyncer server = new RemoteServer(this, hkey);
         Syncer client = new Syncer(col, server);
 
         // run sync and check state
@@ -653,7 +653,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                         AnkiDroidApp.openCollection(path);
                         return data;
                     }
-                    if (!ret[0].equals(BasicHttpSyncer.ANKIWEB_STATUS_OK)) {
+                    if (!ret[0].equals(HttpSyncer.ANKIWEB_STATUS_OK)) {
                         data.success = false;
                         data.result = ret;
                         AnkiDroidApp.openCollection(path);

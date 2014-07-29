@@ -75,8 +75,7 @@ import javax.net.ssl.SSLException;
  * - 502: ankiweb down
  * - 503/504: server too busy
  */
-// TODO: Rename this to HTTPSyncer in a separate commit
-public class BasicHttpSyncer {
+public class HttpSyncer {
 
     private static final String BOUNDARY = "Anki-sync-boundary";
     public static final String ANKIWEB_STATUS_OK = "OK";
@@ -96,7 +95,7 @@ public class BasicHttpSyncer {
     protected Map<String, Object> mPostVars;
 
 
-    public BasicHttpSyncer(String hkey, Connection con) {
+    public HttpSyncer(String hkey, Connection con) {
         mHKey = hkey;
         mSKey = Utils.checksum(Float.toString(new Random().nextFloat())).substring(0, 8);
         mCon = con;
