@@ -22,7 +22,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-
 import com.ichi2.libanki.Collection;
 
 public class Previewer extends AbstractFlashcardViewer {
@@ -37,13 +36,8 @@ public class Previewer extends AbstractFlashcardViewer {
     @Override
     protected void initActivity(Collection col) {
         super.initActivity(col);
-
         mCurrentCard = CardEditor.mCurrentEditedCard;
-
-        Previewer.this.displayCardQuestion();
-        Previewer.this.displayCardAnswer();
-
-        hideEaseButtons();
+        displayCardQuestion();
     }
 
 
@@ -63,15 +57,16 @@ public class Previewer extends AbstractFlashcardViewer {
     protected void initLayout() {
         super.initLayout();
         getDrawerToggle().setDrawerIndicatorEnabled(false);
-        findViewById(R.id.answer_options_layout).setVisibility(View.GONE);
         mTopBarLayout.setVisibility(View.GONE);
-        mFlipCardLayout.setVisibility(View.GONE);
     }
 
 
+    // Called via mFlipCardListener in parent class when answer button pressed
     @Override
     protected void displayCardAnswer() {
         super.displayCardAnswer();
+        findViewById(R.id.answer_options_layout).setVisibility(View.GONE);
+        mFlipCardLayout.setVisibility(View.GONE);
         hideEaseButtons();
     }
 
