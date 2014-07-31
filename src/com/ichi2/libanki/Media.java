@@ -221,7 +221,7 @@ public class Media {
      * TODO: This method is unreviewed and could contain errors. It is currently not used anywhere. The desktop client
      * makes use of this method to insert media into the collection through the note editor, which is currently not done
      * in AnkiDroid.
-     * 
+     *
      * @param opath The path where the media file exists before adding it.
      * @return The filename of the resulting file.
      */
@@ -316,7 +316,7 @@ public class Media {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-        
+
         for (String s : strings) {
             // handle latex
             s =  LaTeX.mungeQA(s, mCol); // TODO: why only two parameters? what about model?
@@ -339,7 +339,7 @@ public class Media {
         return l;
     }
 
-    
+
     // TODO: Not implemented yet. Currently not triggered by anything available in the UI, but must be completed
     // before we expose the "Media check" option in the future.
     private List<String> _expandClozes(String string) {
@@ -560,7 +560,7 @@ public class Media {
     /**
      * Returns the number of seconds from epoch since the last modification to the file in path. Important: this method
      * does not automatically append the root media directory to the path; the FULL path of the file must be specified.
-     * 
+     *
      * @param path The path to the file we are checking. path can be a file or a directory.
      * @return The number of seconds (rounded down).
      */
@@ -825,7 +825,7 @@ public class Media {
         }
     }
 
-    
+
     /**
      * Extract zip data; return the number of files extracted. Consume a file stored on disk instead of a String buffer
      * like in python. This allows us to use ZipFile utilities to interact with the file efficiently but requires the
@@ -839,7 +839,7 @@ public class Media {
             JSONObject meta = new JSONObject(Utils.convertStreamToString(z.getInputStream(z.getEntry("_meta"))));
             // then loop through all files
             int cnt = 0;
-            
+
             for (ZipEntry i : Collections.list(z.entries())) {
                 if (i.getName().equals("_meta")) {
                     // ignore previously-retrieved meta

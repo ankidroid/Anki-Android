@@ -55,16 +55,16 @@ public class Sound {
 	 * AudioManager to request/release audio focus
 	 */
 	private static AudioManager sAudioManager;
-	
+
     /**
      * Subset Flags: Flags that indicate the subset of sounds to involve
      */
     public static final int  SOUNDS_QUESTION = 0;
     public static final int  SOUNDS_ANSWER = 1;
-    public static final int  SOUNDS_QUESTION_AND_ANSWER = 2;	
+    public static final int  SOUNDS_QUESTION_AND_ANSWER = 2;
 
     /**
-     * sSoundPaths: Stores sounds for the current card, key is one of the subset flags. It is intended that it not contain empty lists, and code assumes this will be true. 
+     * sSoundPaths: Stores sounds for the current card, key is one of the subset flags. It is intended that it not contain empty lists, and code assumes this will be true.
      */
     private static HashMap<Integer, ArrayList<String>> sSoundPaths = new HashMap<Integer, ArrayList<String>>();
 
@@ -78,7 +78,7 @@ public class Sound {
     public static void resetSounds() {
         sSoundPaths.clear();
     }
-    
+
     /**
      * resetSounds removes lists of sounds
      * @param which -- One of the subset flags, such as Sound.SOUNDS_QUESTION
@@ -86,13 +86,13 @@ public class Sound {
     public static void resetSounds(int which) {
         sSoundPaths.remove(which);
     }
-    
+
 
     /**
      * The function addSounds() parses content for sound files, and stores entries to the filepaths for them,
      * categorized as belonging to the front (question) or back (answer) of cards. Note that all sounds embedded in
      * the content will be given the same base categorization of question or answer. Additionally, the result is to be
-     * sorted by the order of appearance on the card. 
+     * sorted by the order of appearance on the card.
      * @param soundDir -- base path to the media files
      * @param content -- parsed for sound entries, the entries expected in display order
      * @param qa -- the base categorization of the sounds in the content, Sound.SOUNDS_QUESTION or Sound.SOUNDS_ANSWER
@@ -113,7 +113,7 @@ public class Sound {
             sSoundPaths.get(qa).add(getSoundPath(soundDir, sound));
         }
     }
-    
+
     /**
      * makeQuestionAnswerSoundList creates a single list of both the question and answer audio only if it does not
      * already exist. It's intended for lazy evaluation, only in the rare cases when both sides are fully played
@@ -125,7 +125,7 @@ public class Sound {
         if (sSoundPaths.containsKey(Sound.SOUNDS_QUESTION_AND_ANSWER)) {
             return false; // combined list already exists
         }
-        
+
         // make combined list only if necessary to avoid an empty combined list
         if (sSoundPaths.containsKey(Sound.SOUNDS_QUESTION) || sSoundPaths.containsKey(Sound.SOUNDS_ANSWER)) {
             // some list exists to place into combined list
@@ -133,23 +133,23 @@ public class Sound {
         } else { // no need to make list
             return false;
         }
-        
+
         ArrayList<String> combinedSounds = sSoundPaths.get(Sound.SOUNDS_QUESTION_AND_ANSWER);
-        
+
         if (sSoundPaths.containsKey(Sound.SOUNDS_QUESTION)) {
             combinedSounds.addAll(sSoundPaths.get(Sound.SOUNDS_QUESTION));
         }
         if (sSoundPaths.containsKey(Sound.SOUNDS_ANSWER)) {
             combinedSounds.addAll(sSoundPaths.get(Sound.SOUNDS_ANSWER));
         }
-        
+
         return true;
     }
 
     /**
      * expandSounds takes content with embedded sound file placeholders and expands them to reference the actual media
      * file
-     * 
+     *
      * @param soundDir -- the base path of the media files
      * @param content -- card content to be rendered that may contain embedded audio
      * @return -- the same content but in a format that will render working play buttons when audio was embedded
@@ -181,7 +181,7 @@ public class Sound {
             contentLeft = contentLeft.substring(markerStart + soundMarker.length());
             Log.i(AnkiDroidApp.TAG, "Content left = " + contentLeft);
         }
-        
+
         // unused code related to tts support taken out after v2.2alpha55
         // if/when tts support is considered complete, these comment lines serve no purpose
 
