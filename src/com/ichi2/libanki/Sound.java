@@ -175,7 +175,7 @@ public class Sound {
             String soundMarker = matcher.group();
             int markerStart = contentLeft.indexOf(soundMarker);
             stringBuilder.append(contentLeft.substring(0, markerStart));
-            stringBuilder.append("<a style='text-decoration:none' href='playsound:" + soundPath + "'>"
+            stringBuilder.append("<a class='replaybutton' href='playsound:" + soundPath + "'>"
                         + "<span style='padding:5px;'><img src='file:///android_asset/media_playback_start2.png' />"
                         + "</span></a>");
             contentLeft = contentLeft.substring(markerStart + soundMarker.length());
