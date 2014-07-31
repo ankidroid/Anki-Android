@@ -20,16 +20,17 @@
 package com.ichi2.anki.multimediacard;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaRecorder;
+import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-
 import com.ichi2.anki.R;
 
 // Not designed for visual editing
@@ -352,6 +353,7 @@ public class AudioView extends LinearLayout {
 
     protected class RecordButton extends ImageButton {
         OnClickListener onClickListener = new View.OnClickListener() {
+            @TargetApi(Build.VERSION_CODES.GINGERBREAD_MR1)
             @Override
             public void onClick(View v) {
                 // Since mAudioPath is not compulsory, we check if it exists
@@ -362,30 +364,48 @@ public class AudioView extends LinearLayout {
                 switch (mStatus) {
                     case IDLE: // If not already recorded or not already played
                     case STOPPED: // if already recorded or played
-                        try {
+                        boolean highSampling = false;
 
-                            mRecorder = new MediaRecorder();
-                            mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-                            mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-                            mStatus = Status.INITIALIZED;
-                            mRecorder.setOutputFile(mAudioPath); // audioPath
-                                                                 // could
-                                                                 // change
-                            mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+                        int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+                        if (currentapiVersion >= android.os.Build.VERSION_CODES.GINGERBREAD_MR1) {
+                            try {
+                                // try high sampling rate first
+                                mRecorder = initMediaRecorder();
+                                mRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_WB); // sampling rate 16kHz
+                                mRecorder.setAudioChannels(2);
+                                mRecorder.setAudioEncodingBitRate(44100);
 
-                            mRecorder.prepare();
+                                mRecorder.prepare();
+                                mRecorder.start();
 
-                            mRecorder.start();
+                                highSampling = true;
 
-                            mStatus = Status.RECORDING;
-                            setImageResource(mResRecordImage);
-                            notifyRecord();
-
-                        } catch (Exception e) {
-                            Log.e("AudioView", e.getMessage());
-                            showToast(gtxt(R.string.multimedia_editor_audio_view_recording_failed));
-                            mStatus = Status.STOPPED;
+                            } catch (Exception e) {
+                            }
                         }
+
+                        if (!highSampling) {
+                            // fall back on default
+                            try {
+                                mRecorder = initMediaRecorder();
+                                mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+
+                                mRecorder.prepare();
+                                mRecorder.start();
+
+                            } catch (Exception e) {
+                                Log.e("AudioView", e.getMessage());
+                                showToast(gtxt(R.string.multimedia_editor_audio_view_recording_failed));
+                                mStatus = Status.STOPPED;
+                                break;
+                            }
+
+                        }
+
+                        mStatus = Status.RECORDING;
+                        setImageResource(mResRecordImage);
+                        notifyRecord();
+
                         break;
 
                     case RECORDING:
@@ -402,6 +422,17 @@ public class AudioView extends LinearLayout {
                     default:
                         // do nothing
                 }
+            }
+
+            private MediaRecorder initMediaRecorder() {
+                MediaRecorder mr = new MediaRecorder();
+                mr.setAudioSource(MediaRecorder.AudioSource.MIC);
+                mr.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+                mStatus = Status.INITIALIZED;
+                mr.setOutputFile(mAudioPath); // audioPath
+                                              // could
+                                              // change
+                return mr;
             }
         };
 
