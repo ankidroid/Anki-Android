@@ -1125,6 +1125,7 @@ public class StudyOptionsFragment extends Fragment {
 
             case R.id.action_add_note_from_study_options:
                 addNote();
+                return true;
 
             default:
                 return super.onOptionsItemSelected(item);
