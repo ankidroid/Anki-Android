@@ -35,6 +35,7 @@ import com.ichi2.anki.CardBrowser;
 import com.ichi2.anki.R;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Sched;
 import com.ichi2.libanki.Stats;
@@ -109,6 +110,8 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     public static final int TASK_TYPE_CONF_REMOVE = 35;
     public static final int TASK_TYPE_CONF_SET_SUBDECKS = 36;
     public static final int TASK_TYPE_RENDER_BROWSER_QA = 37;
+    public static final int TASK_TYPE_GENERATE_REVERSE = 38;
+    
 
     /**
      * The most recently started {@link DeckTask} instance.
@@ -337,6 +340,9 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
             case TASK_TYPE_RENDER_BROWSER_QA:
                 return doInBackgroundRenderBrowserQA(params);
+                
+            case TASK_TYPE_GENERATE_REVERSE:
+                return doInBackgroundGenerateReverse(params);
 
             default:
                 Log.e(AnkiDroidApp.TAG, "unknown task type: " + mType);
@@ -721,7 +727,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         HashMap<String, String> deckNames = (HashMap<String, String>) params[0].getObjArray()[1];
         String query = (String) params[0].getObjArray()[2];
         Boolean order = (Boolean) params[0].getObjArray()[3];
-        ArrayList<HashMap<String,String>> searchResult = col.findCardsForCardBrowser(query, order, deckNames);        
+        ArrayList<HashMap<String,String>> searchResult = col.findCardsForCardBrowser(query, order, deckNames);
         if (isCancelled() || CardBrowser.sSearchCancelled) {
             Log.i(AnkiDroidApp.TAG, "doInBackgroundSearchCards was cancelled so return null");
             return null;
@@ -1365,6 +1371,32 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             return new TaskData(false);
         }
     }
+    
+    private TaskData doInBackgroundGenerateReverse(TaskData... params) {
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundGenerateReverse");
+        Collection col = (Collection) params[0].getCollection();
+        Note note = (Note) params[0].getNote();
+        Card card = (Card) params[0].getCard();
+        String cardName = (String) params[0].getString();
+        Models mm = col.getModels();
+        // add a new card with reversed card template and name cardName
+        JSONObject t = mm.newTemplate(cardName);
+        JSONObject old = card.template();
+        try {
+            t.put("qfmt", old.get("afmt"));
+            t.put("afmt", old.get("qfmt"));
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        // add the new template
+        mm.addTemplate(note.model(), t);
+        
+        // generate new cards for model
+        col.getModels().save(note.model(), true);
+        // reset scheduling
+        col.reset();
+        return new TaskData(true);
+    }
 
     /**
      * Listener for the status and result of a {@link DeckTask}.
@@ -1606,6 +1638,13 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         public TaskData(Collection col, long value) {
             mCol = col;
             mLong = value;
+        }
+        
+        public TaskData(Collection col, Note note, Card card, String msg) {
+            mCol = col;
+            mNote = note;
+            mCard = card;
+            mMsg = msg;
         }
 
 

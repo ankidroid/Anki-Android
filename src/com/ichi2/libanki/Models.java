@@ -417,6 +417,20 @@ public class Models {
             throw new RuntimeException(e);
         }
     }
+    
+    /**
+     * Number of notes using m
+     * @param m The model to the count the notes of.
+     * @param ord The index of the card template
+     * @return The number of notes with that model.
+     */
+    public int tmplUseCount(JSONObject m, int ord) {
+        try {
+            return mCol.getDb().queryScalar("select count() from cards, notes where cards.nid = notes.id and notes.mid = " + m.getLong("id") + " and cards.ord = " + ord);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     /**
      * Copying ***********************************************************************************************

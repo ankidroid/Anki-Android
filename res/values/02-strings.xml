@@ -75,6 +75,7 @@
     <string name="factadder_saving_error">Error saving note</string>
     <string name="pref_lang_support">Language</string>
     <string name="saving_facts">Saving note</string>
+    <string name="saving_model">Saving model</string>
     <string name="deck">Deck</string>
     <string name="add">Add</string>
     <string name="close">Close</string>
@@ -102,6 +103,7 @@
     <string name="card_editor_copy_card">Copy card</string>
     <string name="card_editor_reset_card">Reset progress</string>
     <string name="card_editor_preview_card">Preview</string>
+    <string name="card_editor_reverse_cards">Reverse Cards</string>
     <string name="error_insufficient_memory">Operation not possible due to insufficient memory on your device</string>
     <string name="tutorial_load">Creating tutorial deck…</string>
     <string name="tutorial_loading_error">Tutorial deck could not be created</string>
