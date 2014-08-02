@@ -52,40 +52,19 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
     public static final int ANSWER_BUTTONS_TAB_POSITION = 7;
     public static final int CARDS_TYPES_TAB_POSITION = 8;
 
-    private static final int MONTH_TYPE = 0;
-    private static final int YEAR_TYPE = 1;
-    private static final int ALL_TYPE = 2;
-
-    private Spinner mTimeSpinner;
-    private RelativeLayout mRelativeLayoutTime;
-    private ArrayList<JSONObject> mDropDownDecks;
-    private DeckDropDownAdapter mDropDownAdapter;
-    private RelativeLayout mRelativeLayoutDeck;
-    private Spinner mDeckSpinner;
-
-    protected long mDeckId;
-    protected boolean mIsWholeCollection;
-    private MenuItem mTimeItem;
-    private MenuItem mDeckItem;
-
     private Menu mMenu;
-
-
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private AnkiStatsTaskHandler mTaskHandler = null;
     private ActionBar mActionBar;
     private View mMainLayout;
-    private int mSelectedStatType;
-    private TimePickerActionProvider mTimeMenuActionItem;
-    private DeckPickerActionProvider mDeckMenuActionItem;
     private static boolean sIsSubtitle;
     private static boolean sIsWholeCollectionOnly;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         sIsWholeCollectionOnly = AnkiStatsTaskHandler.isWholeCollection();  //if it starts with true, do not let user select deck
-        sIsSubtitle = false;
+        sIsSubtitle = true;
         super.onCreate(savedInstanceState);
         mTaskHandler = new AnkiStatsTaskHandler();
 
@@ -158,16 +137,6 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
         //System.err.println("in onCreateOptionsMenu");
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.anki_stats, mMenu);
-
-//        MenuItem timeItem = menu.findItem(R.id.action_time_chooser);
-//        mTimeMenuActionItem = (TimePickerActionProvider)
-//                MenuItemCompat.getActionProvider(timeItem);
-//
-//        MenuItem deckItem = menu.findItem(R.id.action_deck_chooser);
-//        mDeckMenuActionItem = (DeckPickerActionProvider)
-//                MenuItemCompat.getActionProvider(deckItem);
-
-
         return true;
     }
 
@@ -621,8 +590,6 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
             mActivitySectionPagerAdapter = ((AnkiStatsActivity)getActivity()).getSectionsPagerAdapter();
             mDeckId = AnkiDroidApp.getCol().getDecks().selected();
             mIsWholeCollection = AnkiStatsTaskHandler.isWholeCollection();
-            mDeckId = AnkiDroidApp.getCol().getDecks().selected();
-            mIsWholeCollection = AnkiStatsTaskHandler.isWholeCollection();
             if(!AnkiStatsTaskHandler.isWholeCollection()) {
                 try {
                     List<String> parts = Arrays.asList(AnkiDroidApp.getCol().getDecks().current().getString("name").split("::"));
@@ -685,142 +652,6 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
         }
 
 
-    }
-
-    private static class DeckDropDownViewHolder {
-        public TextView deckNameView;
-    }
-
-
-    private final static class DeckDropDownAdapter extends BaseAdapter {
-
-        private Context context;
-        private ArrayList<JSONObject> decks;
-
-
-        public DeckDropDownAdapter(Context context, ArrayList<JSONObject> decks) {
-            this.context = context;
-            this.decks = decks;
-        }
-
-
-        @Override
-        public int getCount() {
-            return decks.size() + 1;
-        }
-
-
-        @Override
-        public Object getItem(int position) {
-            if (position == 0) {
-                return null;
-            } else {
-                return decks.get(position + 1);
-            }
-        }
-
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            DeckDropDownViewHolder viewHolder;
-            TextView deckNameView;
-            if (convertView == null) {
-                convertView = LayoutInflater.from(context).inflate(R.layout.dropdown_deck_item, parent, false);
-                deckNameView = (TextView) convertView.findViewById(R.id.dropdown_deck_name);
-                viewHolder = new DeckDropDownViewHolder();
-                viewHolder.deckNameView = deckNameView;
-                convertView.setTag(viewHolder);
-            } else {
-                viewHolder = (DeckDropDownViewHolder) convertView.getTag();
-                deckNameView = (TextView) viewHolder.deckNameView;
-            }
-            if (position == 0) {
-                deckNameView.setText(context.getResources().getString(R.string.deck_summary_all_decks));
-            } else {
-                JSONObject deck = decks.get(position - 1);
-                try {
-                    String deckName = deck.getString("name");
-                    deckNameView.setText(deckName);
-                } catch (JSONException ex) {
-                    new RuntimeException();
-                }
-            }
-            return convertView;
-        }
-
-
-        @Override
-        public View getDropDownView(int position, View convertView, ViewGroup parent) {
-            TextView deckNameView;
-            if (convertView == null) {
-                convertView = LayoutInflater.from(context).inflate(R.layout.dropdown_deck_item, parent, false);
-                deckNameView = (TextView) convertView.findViewById(R.id.dropdown_deck_name);
-                convertView.setTag(deckNameView);
-            } else {
-                deckNameView = (TextView) convertView.getTag();
-            }
-            if (position == 0) {
-                deckNameView.setText(context.getResources().getString(R.string.deck_summary_all_decks));
-            } else {
-                JSONObject deck = decks.get(position - 1);
-                try {
-                    String deckName = deck.getString("name");
-                    deckNameView.setText(deckName);
-                } catch (JSONException ex) {
-                    new RuntimeException();
-                }
-            }
-            return convertView;
-        }
-
-    }
-
-    private class TimePickerActionProvider extends ActionProvider{
-
-
-        private final Context mContext;
-
-        public TimePickerActionProvider(Context context) {
-            super(context);
-            mContext = context;
-        }
-
-        @Override
-        public View onCreateActionView() {
-            return null;
-        }
-
-        @Override
-        public boolean hasSubMenu() {
-            return true;
-        }
-
-
-    }
-
-    private class DeckPickerActionProvider extends ActionProvider{
-        private final Context mContext;
-
-        public DeckPickerActionProvider(Context context) {
-            super(context);
-            mContext = context;
-        }
-
-        @Override
-        public View onCreateActionView() {
-            return null;
-        }
-
-        @Override
-        public boolean hasSubMenu() {
-            return true;
-        }
     }
 
 }

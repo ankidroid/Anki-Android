@@ -68,10 +68,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 public class StudyOptionsFragment extends Fragment {
 
@@ -1019,7 +1016,9 @@ public class StudyOptionsFragment extends Fragment {
         }
 
         if (!mFragmented) {
-            getActivity().setTitle(fullName);
+            getActivity().setTitle(getResources().getString(R.string.studyoptions_title));
+            List<String> parts = Arrays.asList(fullName.split("::"));
+            AnkiDroidApp.getCompat().setSubtitle(getActivity(), parts.get(parts.size() - 1));
         }
 
         String desc;

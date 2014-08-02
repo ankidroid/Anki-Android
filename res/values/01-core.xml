@@ -24,7 +24,7 @@
     <string name="app_name_anki">Anki</string>
     <string name="app_name_droid">Droid</string>
 
-<!-- <string name="studyoptions_title">Study options</string> -->
+    <string name="studyoptions_title">Study Options</string>
     <string name="studyoptions_deck_name">Deck name</string>
     <string name="studyoptions_due_today">Due today:</string>
     <string name="studyoptions_new_total">Total new cards:</string>
