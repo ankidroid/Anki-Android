@@ -31,7 +31,7 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Locale;
 
-public class RemoteServer extends BasicHttpSyncer {
+public class RemoteServer extends HttpSyncer {
 
     public RemoteServer(Connection con, String hkey) {
         super(hkey, con);

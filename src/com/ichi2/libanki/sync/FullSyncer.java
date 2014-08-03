@@ -38,7 +38,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Locale;
 
-public class FullSyncer extends BasicHttpSyncer {
+public class FullSyncer extends HttpSyncer {
 
     Collection mCol;
     Connection mCon;

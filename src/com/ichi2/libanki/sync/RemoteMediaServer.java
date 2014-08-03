@@ -39,7 +39,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.zip.ZipFile;
 
-public class RemoteMediaServer extends BasicHttpSyncer {
+public class RemoteMediaServer extends HttpSyncer {
 
     private Collection mCol;
 

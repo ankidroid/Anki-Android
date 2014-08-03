@@ -51,7 +51,7 @@ public class Syncer {
     public static final int TYPE_BLOB = 4;
 
     Collection mCol;
-    BasicHttpSyncer mServer;
+    HttpSyncer mServer;
     long mRMod;
     long mRScm;
     int mMaxUsn;
@@ -67,7 +67,7 @@ public class Syncer {
     private Cursor mCursor;
 
 
-    public Syncer(Collection col, BasicHttpSyncer server) {
+    public Syncer(Collection col, HttpSyncer server) {
         mCol = col;
         mServer = server;
     }
