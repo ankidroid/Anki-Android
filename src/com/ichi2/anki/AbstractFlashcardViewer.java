@@ -95,8 +95,6 @@ import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.DiffEngine;
-import com.ichi2.widget.WidgetStatus;
-
 import org.amr.arabic.ArabicUtilities;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -189,7 +187,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      */
     private BroadcastReceiver mUnmountReceiver = null;
 
-    private boolean mInBackground = false;
     private boolean mReloadingCollection = false;
 
     /**
@@ -672,11 +669,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         public void onProgressUpdate(DeckTask.TaskData... values) {
             Resources res = getResources();
 
-            // if in background, actualise widget
-            // if (mInBackground) {
-            // updateBigWidget(false);
-            // }
-
             if (mSched == null) {
                 // TODO: proper testing for restored activity
                 finish();
@@ -1044,41 +1036,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     @Override
     protected void onResume() {
-        mInBackground = false;
         super.onResume();
         restartTimer();
 
         if (!mReloadingCollection) {
             // Do any tasks which depend on initActivity() completing successfully below
             deselectAllNavigationItems();
-        }
-    }
-
-
-    @Override
-    protected void onStop() {
-        mInBackground = true;
-        super.onStop();
-        // Decks deck = DeckManager.getMainDeck();
-        // if (!isFinishing()) {
-        // // Save changes
-        // updateBigWidget(!mCardFrame.isEnabled());
-        // DeckTask.waitToFinish();
-        // if (deck != null) {
-        // deck.commitToDB();
-        // }
-        // }
-
-        if (!isFinishing()) {
-            // try {
-            if (AnkiDroidApp.colIsOpen()) {
-                WidgetStatus.update(this, mSched.progressToday(null, mCurrentCard, true));
-            }
-
-            // } catch (JSONException e) {
-            // throw new RuntimeException(e);
-            // }
-            UIUtils.saveCollectionInBackground();
         }
     }
 

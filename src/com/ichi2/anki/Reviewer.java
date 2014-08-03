@@ -20,6 +20,7 @@ package com.ichi2.anki;
 
 import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Collection;
+import com.ichi2.widget.WidgetStatus;
 
 import org.json.JSONException;
 
@@ -56,5 +57,17 @@ public class Reviewer extends AbstractFlashcardViewer {
         // show timer, if activated in the deck's preferences
         initTimer();
         super.displayCardQuestion();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        if (!isFinishing()) {
+            if (AnkiDroidApp.colIsOpen()) {
+                WidgetStatus.update(this, mSched.progressToday(null, mCurrentCard, true));
+            }
+            UIUtils.saveCollectionInBackground();
+        }
     }
 }
