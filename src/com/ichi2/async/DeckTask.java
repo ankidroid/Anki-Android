@@ -85,7 +85,6 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     public static final int TASK_TYPE_UPDATE_FACT = 7;
     public static final int TASK_TYPE_UNDO = 8;
     public static final int TASK_TYPE_DISMISS_NOTE = 11;
-    public static final int TASK_TYPE_LOAD_STATISTICS = 13;
     public static final int TASK_TYPE_CHECK_DATABASE = 14;
     public static final int TASK_TYPE_DELETE_BACKUPS = 16;
     public static final int TASK_TYPE_RESTORE_DECK = 17;
@@ -271,9 +270,6 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
             case TASK_TYPE_DISMISS_NOTE:
                 return doInBackgroundDismissNote(params);
-
-            case TASK_TYPE_LOAD_STATISTICS:
-                return doInBackgroundLoadStatistics(params);
 
             case TASK_TYPE_CHECK_DATABASE:
                 return doInBackgroundCheckDatabase(params);
@@ -766,37 +762,6 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         TaskData result = new TaskData(items);
         publishProgress(result);
         return result;
-    }
-
-
-    private TaskData doInBackgroundLoadStatistics(TaskData... params) {
-        Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadStatistics");
-        Collection col = params[0].getCollection();
-        int type = params[0].getInt();
-        boolean wholeCollection = params[0].getBoolean();
-
-        Stats stats = new Stats(col, wholeCollection);
-        int chartPeriodType = AnkiDroidApp.getSharedPrefs(
-                AnkiDroidApp.getInstance().getBaseContext()).getInt("statsType", Stats.TYPE_MONTH);
-        switch (type) {
-            default:
-            case Stats.TYPE_FORECAST:
-                return new TaskData(stats.calculateDue(chartPeriodType));
-            case Stats.TYPE_REVIEW_COUNT:
-                return new TaskData(stats.calculateDone(chartPeriodType, true));
-            case Stats.TYPE_REVIEW_TIME:
-                return new TaskData(stats.calculateDone(chartPeriodType, false));
-            case Stats.TYPE_INTERVALS:
-                return new TaskData(stats.calculateIntervals(chartPeriodType));
-            case Stats.TYPE_HOURLY_BREAKDOWN:
-                return new TaskData(stats.calculateBreakdown(chartPeriodType));
-            case Stats.TYPE_WEEKLY_BREAKDOWN:
-                return new TaskData(stats.calculateWeeklyBreakdown(chartPeriodType));
-            case Stats.TYPE_ANSWER_BUTTONS:
-                return new TaskData(stats.calculateAnswerButtons(chartPeriodType));
-            case Stats.TYPE_CARDS_TYPES:
-                return new TaskData(stats.calculateCardsTypes(chartPeriodType));
-        }
     }
 
 

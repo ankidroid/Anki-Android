@@ -56,6 +56,15 @@ public class ColorWrap {
         super();
         this.colorValue = colorValue;
     }
+
+    public ColorWrap(int colorValue, float af) {
+        super();
+        int a = Math.round(af * 255);
+        int r = android.graphics.Color.red(colorValue);
+        int g = android.graphics.Color.green(colorValue);
+        int b = android.graphics.Color.blue(colorValue);
+        this.colorValue = android.graphics.Color.argb(a, r, g, b);
+    }
     
     public ColorWrap(int r, int g, int b){
         this.colorValue = android.graphics.Color.rgb(r, g, b);
