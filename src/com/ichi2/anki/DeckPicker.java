@@ -60,6 +60,7 @@ import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.receiver.SdCardReceiver;
+import com.ichi2.anki.stats.AnkiStatsTaskHandler;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.OldAnkiDeckFilter;
 import com.ichi2.async.Connection.Payload;
@@ -533,6 +534,9 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                     Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
                 }
             }
+            TextView textView = (TextView) findViewById(R.id.today_stats_text_view);
+            textView.setVisibility(View.GONE);
+            AnkiStatsTaskHandler.createSmallTodayOverview(textView);
         }
 
 
@@ -1061,6 +1065,9 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
             // Otherwise just update the deck list            
             Object[] counts = AnkiDroidApp.getCol().getSched().deckCounts();
             updateDecksList((TreeSet<Object[]>) counts[0], (Integer) counts[1], (Integer) counts[2]);
+            TextView textView = (TextView) findViewById(R.id.today_stats_text_view);
+            textView.setVisibility(View.GONE);
+            AnkiStatsTaskHandler.createSmallTodayOverview(textView);
         }
 
         if (mSwipeEnabled) {
@@ -1124,6 +1131,9 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK_COUNTS, mLoadCountsHandler,
                     new TaskData(AnkiDroidApp.getCol()));
         }
+        TextView textView = (TextView) findViewById(R.id.today_stats_text_view);
+        textView.setVisibility(View.GONE);
+        AnkiStatsTaskHandler.createSmallTodayOverview(textView);
     }
 
 

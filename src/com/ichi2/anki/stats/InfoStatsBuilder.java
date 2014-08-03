@@ -66,7 +66,7 @@ public class InfoStatsBuilder {
         int[] todayStats = stats.calculateTodayStats();
         stringBuilder.append(_title(mWebView.getResources().getString(R.string.stats_today)));
 
-        stringBuilder.append(mWebView.getResources().getQuantityString(R.plurals.stats_today_cards, todayStats[CARDS_INDEX], todayStats[CARDS_INDEX], Utils.fmtTimeSpan(todayStats[THETIME_INDEX])));
+        stringBuilder.append(mWebView.getResources().getQuantityString(R.plurals.stats_today_cards, todayStats[CARDS_INDEX], todayStats[CARDS_INDEX], Utils.fmtTimeSpan(todayStats[THETIME_INDEX], 1)));
         stringBuilder.append("<br>");
         stringBuilder.append(mWebView.getResources().getString(R.string.stats_today_again_count, todayStats[FAILED_INDEX]));
         if(todayStats[CARDS_INDEX] > 0) {

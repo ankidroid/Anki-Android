@@ -26,6 +26,13 @@
                 android:drawSelectorOnTop="true"
                 android:fastScrollEnabled="true"
                 android:focusable="true" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/today_stats_text_view"
+                android:layout_below="@+id/files"
+                android:layout_centerInParent="true"
+                android:gravity="center"/>
         </RelativeLayout>
 
         <FrameLayout
