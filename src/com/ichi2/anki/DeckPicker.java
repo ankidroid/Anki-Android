@@ -503,6 +503,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                         throw new RuntimeException();
                     }
                 }
+                showTodayMiniStatistics();
             }
         }
     };
@@ -534,9 +535,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                     Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
                 }
             }
-            TextView textView = (TextView) findViewById(R.id.today_stats_text_view);
-            textView.setVisibility(View.GONE);
-            AnkiStatsTaskHandler.createSmallTodayOverview(textView);
+            showTodayMiniStatistics();
         }
 
 
@@ -1065,9 +1064,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
             // Otherwise just update the deck list            
             Object[] counts = AnkiDroidApp.getCol().getSched().deckCounts();
             updateDecksList((TreeSet<Object[]>) counts[0], (Integer) counts[1], (Integer) counts[2]);
-            TextView textView = (TextView) findViewById(R.id.today_stats_text_view);
-            textView.setVisibility(View.GONE);
-            AnkiStatsTaskHandler.createSmallTodayOverview(textView);
+            showTodayMiniStatistics();
         }
 
         if (mSwipeEnabled) {
@@ -2210,6 +2207,12 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
     // ----------------------------------------------------------------------------
     // CUSTOM METHODS
     // ----------------------------------------------------------------------------
+
+    private void showTodayMiniStatistics(){
+        TextView textView = (TextView) findViewById(R.id.today_stats_text_view);
+        textView.setVisibility(View.GONE);
+        AnkiStatsTaskHandler.createSmallTodayOverview(textView);
+    }
 
     public void loadStudyOptionsFragment() {
         loadStudyOptionsFragment(0, null);
