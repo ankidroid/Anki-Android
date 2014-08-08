@@ -17,6 +17,7 @@ package com.ichi2.anki.stats;
 
 import android.database.Cursor;
 import android.os.AsyncTask;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
@@ -92,6 +93,12 @@ public class AnkiStatsTaskHandler {
         CreateSmallDueChart createChartTask = new CreateSmallDueChart(seriesList);
         createChartTask.execute(views);
         return createChartTask;
+    }
+
+    public static CreateFirstStatisticChoserTask createFirstStatisticChoserTask(ViewPager viewPager){
+        CreateFirstStatisticChoserTask createFirstStatisticChoserTask = new CreateFirstStatisticChoserTask();
+        createFirstStatisticChoserTask.execute(viewPager);
+        return createFirstStatisticChoserTask;
     }
 
     private class CreateChartTask extends AsyncTask<View, Void, PlotSheet>{
@@ -312,6 +319,75 @@ public class AnkiStatsTaskHandler {
                 mTextView.setText(todayStatString);
                 mTextView.setVisibility(View.VISIBLE);
                 mTextView.invalidate();
+            }
+        }
+
+    }
+
+    private static class CreateFirstStatisticChoserTask extends AsyncTask<ViewPager, Void, Integer>{
+        private ViewPager mViewPager;
+
+        private boolean mIsRunning = false;
+
+        public CreateFirstStatisticChoserTask(){
+            super();
+            mIsRunning = true;
+        }
+
+        @Override
+        protected Integer doInBackground(ViewPager... params) {
+            //make sure only one task of CreateChartTask is running, first to run should get sLock
+            //only necessary on lower APIs because after honeycomb only one thread is used for all asynctasks
+            sLock.lock();
+            try {
+                if (!mIsRunning) {
+                    Log.d(AnkiDroidApp.TAG, "quiting CreateTodayLearnCountOnly before execution");
+                    return null;
+                } else
+                    Log.d(AnkiDroidApp.TAG, "starting CreateTodayLearnCountOnly" );
+                mViewPager = (ViewPager) params[0];
+                Collection collection = AnkiDroidApp.getCol();
+
+                //eventually put this in Stats (in desktop it is not though)
+                int cards;
+                Cursor cur = null;
+                String query = "select count() from revlog where id > " + ((collection.getSched().getDayCutoff()-86400)*1000);
+                Log.d(AnkiDroidApp.TAG, "CreateSmallTodayOverview query: " + query);
+
+                try {
+                    cur = collection.getDb()
+                            .getDatabase()
+                            .rawQuery(query, null);
+
+                    cur.moveToFirst();
+                    cards = cur.getInt(0);
+
+
+
+                } finally {
+                    if (cur != null && !cur.isClosed()) {
+                        cur.close();
+                    }
+                }
+                return cards;
+            }finally {
+                sLock.unlock();
+            }
+        }
+
+        @Override
+        protected void onCancelled() {
+            mIsRunning = false;
+        }
+
+        @Override
+        protected void onPostExecute(Integer todayStatString) {
+            if(todayStatString != null && mIsRunning && mViewPager != null){
+                int chosen = todayStatString;
+                switch (chosen){
+                    case 0:
+                        mViewPager.setCurrentItem(AnkiStatsActivity.FORECAST_TAB_POSITION);
+                }
             }
         }
 
