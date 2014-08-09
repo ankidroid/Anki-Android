@@ -95,10 +95,10 @@ public class AnkiStatsTaskHandler {
         return createChartTask;
     }
 
-    public static CreateFirstStatisticChoserTask createFirstStatisticChoserTask(ViewPager viewPager){
-        CreateFirstStatisticChoserTask createFirstStatisticChoserTask = new CreateFirstStatisticChoserTask();
-        createFirstStatisticChoserTask.execute(viewPager);
-        return createFirstStatisticChoserTask;
+    public static CreateFirstStatisticChooserTask createFirstStatisticChooserTask(ViewPager viewPager){
+        CreateFirstStatisticChooserTask createFirstStatisticChooserTask = new CreateFirstStatisticChooserTask();
+        createFirstStatisticChooserTask.execute(viewPager);
+        return createFirstStatisticChooserTask;
     }
 
     private class CreateChartTask extends AsyncTask<View, Void, PlotSheet>{
@@ -324,12 +324,12 @@ public class AnkiStatsTaskHandler {
 
     }
 
-    private static class CreateFirstStatisticChoserTask extends AsyncTask<ViewPager, Void, Integer>{
+    private static class CreateFirstStatisticChooserTask extends AsyncTask<ViewPager, Void, Integer>{
         private ViewPager mViewPager;
 
         private boolean mIsRunning = false;
 
-        public CreateFirstStatisticChoserTask(){
+        public CreateFirstStatisticChooserTask(){
             super();
             mIsRunning = true;
         }
