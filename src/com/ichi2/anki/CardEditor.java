@@ -286,7 +286,7 @@ public class CardEditor extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Log.i(AnkiDroidApp.TAG, "CardEditor: onCreate");
+        Log.i(AnkiDroidApp.TAG, "CardEditor: onCreate");
         Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
 
@@ -322,7 +322,7 @@ public class CardEditor extends ActionBarActivity {
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         Intent intent = getIntent();
-        // Log.i(AnkiDroidApp.TAG, "CardEditor: caller: " + mCaller);
+        Log.i(AnkiDroidApp.TAG, "CardEditor: caller: " + mCaller);
 
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
 
@@ -358,7 +358,7 @@ public class CardEditor extends ActionBarActivity {
 
         switch (mCaller) {
             case CALLER_NOCALLER:
-                // Log.i(AnkiDroidApp.TAG, "CardEditor: no caller could be identified, closing");
+                Log.i(AnkiDroidApp.TAG, "CardEditor: no caller could be identified, closing");
                 finish();
                 return;
 
@@ -718,7 +718,7 @@ public class CardEditor extends ActionBarActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            // Log.i(AnkiDroidApp.TAG, "CardEditor - onBackPressed()");
+            Log.i(AnkiDroidApp.TAG, "CardEditor - onBackPressed()");
             closeCardEditor();
             return true;
         }
@@ -739,11 +739,11 @@ public class CardEditor extends ActionBarActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         // TODO
-        // // Log.i(AnkiDroidApp.TAG, "onSaveInstanceState: " + path);
+        // Log.i(AnkiDroidApp.TAG, "onSaveInstanceState: " + path);
         // outState.putString("deckFilename", path);
         outState.putBoolean("addFact", mAddNote);
         outState.putInt("caller", mCaller);
-        // Log.i(AnkiDroidApp.TAG, "onSaveInstanceState - Ending");
+        Log.i(AnkiDroidApp.TAG, "onSaveInstanceState - Ending");
     }
 
 
@@ -1157,7 +1157,7 @@ public class CardEditor extends ActionBarActivity {
     private void updateIntentInformation() {
         mIntentInformation.clear();
         mIntentInformation.addAll(MetaDB.getIntentInformation(this));
-        // Log.d(AnkiDroidApp.TAG, "Saved data list size: " + mIntentInformation.size());
+        Log.d(AnkiDroidApp.TAG, "Saved data list size: " + mIntentInformation.size());
         if (mIntentInformationAdapter != null) {
             mIntentInformationAdapter.notifyDataSetChanged();
         }

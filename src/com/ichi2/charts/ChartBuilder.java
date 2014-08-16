@@ -134,7 +134,7 @@ public class ChartBuilder extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Log.i(AnkiDroidApp.TAG, "ChartBuilder.OnCreate");
+        Log.i(AnkiDroidApp.TAG, "ChartBuilder.OnCreate");
         Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
         restorePreferences();
@@ -162,7 +162,7 @@ public class ChartBuilder extends ActionBarActivity {
         String subTitle = (String) mMeta[6];
 
         if (mSeriesList == null || mSeriesList[0].length < 2) {
-            // Log.i(AnkiDroidApp.TAG, "ChartBuilder - Data variable empty, closing chartbuilder");
+            Log.i(AnkiDroidApp.TAG, "ChartBuilder - Data variable empty, closing chartbuilder");
             finish();
             return;
         }
@@ -235,7 +235,7 @@ public class ChartBuilder extends ActionBarActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            // Log.i(AnkiDroidApp.TAG, "ChartBuilder - onBackPressed()");
+            Log.i(AnkiDroidApp.TAG, "ChartBuilder - onBackPressed()");
             closeChartBuilder();
         }
         return super.onKeyDown(keyCode, event);

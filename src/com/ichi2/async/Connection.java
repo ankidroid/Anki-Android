@@ -306,7 +306,8 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         boolean valid = false;
         if (ret != null) {
             data.returnType = ret.getStatusLine().getStatusCode();
-            // Log.i(AnkiDroidApp.TAG, "doInBackgroundLogin - response from server: " + data.returnType + " (" + ret.getStatusLine().getReasonPhrase() + ")");
+            Log.i(AnkiDroidApp.TAG, "doInBackgroundLogin - response from server: " + data.returnType + " ("
+                    + ret.getStatusLine().getReasonPhrase() + ")");
             if (data.returnType == 200) {
                 try {
                     JSONObject jo = (new JSONObject(server.stream2String(ret.getEntity().getContent())));
@@ -615,7 +616,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         // run sync and check state
         boolean noChanges = false;
         if (conflictResolution == null) {
-            // Log.i(AnkiDroidApp.TAG, "Sync - starting sync");
+            Log.i(AnkiDroidApp.TAG, "Sync - starting sync");
             publishProgress(R.string.sync_prepare_syncing);
             Object[] ret = client.sync(this);
             data.message = client.getSyncMsg();
@@ -644,7 +645,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             try {
                 server = new FullSyncer(col, hkey, this);
                 if (conflictResolution.equals("upload")) {
-                    // Log.i(AnkiDroidApp.TAG, "Sync - fullsync - upload collection");
+                    Log.i(AnkiDroidApp.TAG, "Sync - fullsync - upload collection");
                     publishProgress(R.string.sync_preparing_full_sync_message);
                     Object[] ret = server.upload();
                     if (ret == null) {
@@ -660,7 +661,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                         return data;
                     }
                 } else if (conflictResolution.equals("download")) {
-                    // Log.i(AnkiDroidApp.TAG, "Sync - fullsync - download collection");
+                    Log.i(AnkiDroidApp.TAG, "Sync - fullsync - download collection");
                     publishProgress(R.string.sync_downloading_message);
                     Object[] ret = server.download();
                     if (ret == null) {
@@ -755,7 +756,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
 
 
     private Payload doInBackgroundSendFeedback(Payload data) {
-        // Log.i(AnkiDroidApp.TAG, "doInBackgroundSendFeedback");
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundSendFeedback");
         String feedbackUrl = (String) data.data[0];
         String errorUrl = (String) data.data[1];
         String feedback = (String) data.data[2];
@@ -812,7 +813,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
      *         of total missing media, data.data[1] is the number of downloaded ones.
      */
     private Payload doInBackgroundDownloadMissingMedia(Payload data) {
-        // Log.i(AnkiDroidApp.TAG, "DownloadMissingMedia");
+        Log.i(AnkiDroidApp.TAG, "DownloadMissingMedia");
         HashMap<String, String> missingPaths = new HashMap<String, String>();
         HashMap<String, String> missingSums = new HashMap<String, String>();
 
@@ -848,7 +849,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 if (!file.exists()) {
                     missingPaths.put(f, path);
                     missingSums.put(f, cursor.getString(1));
-                    // Log.i(AnkiDroidApp.TAG, "Missing file: " + f);
+                    Log.i(AnkiDroidApp.TAG, "Missing file: " + f);
                 }
             }
         } finally {
@@ -885,7 +886,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     FileOutputStream fos = new FileOutputStream(path);
                     while ((readbytes = bis.read(buf, 0, 4096)) != -1) {
                         fos.write(buf, 0, readbytes);
-                        // Log.i(AnkiDroidApp.TAG, "Downloaded " + readbytes + " file: " + path);
+                        Log.i(AnkiDroidApp.TAG, "Downloaded " + readbytes + " file: " + path);
                     }
                     fos.close();
 
@@ -895,7 +896,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                         grabbed++;
                     } else {
                         // Download corrupted, delete file
-                        // Log.i(AnkiDroidApp.TAG, "Downloaded media file " + path + " failed checksum.");
+                        Log.i(AnkiDroidApp.TAG, "Downloaded media file " + path + " failed checksum.");
                         File f = new File(path);
                         f.delete();
                         missing++;
