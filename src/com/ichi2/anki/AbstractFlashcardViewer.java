@@ -1744,7 +1744,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 {
                     return false;  // Let the webview load files, i.e. local images.
                 }
-                Log.d(AnkiDroidApp.TAG, "Opening external link \"" + url + "\" with an Intent");
+                // Log.d(AnkiDroidApp.TAG, "Opening external link \"" + url + "\" with an Intent");
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                 startActivity(intent);
                 return true;
