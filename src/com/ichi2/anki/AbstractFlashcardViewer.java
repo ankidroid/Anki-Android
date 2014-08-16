@@ -33,6 +33,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -108,6 +109,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -1731,7 +1734,20 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                     sHandler.sendMessage(msg);
                     return true;
                 }
-                return false;
+                try {
+                    new URL(url);  // dummy variable to check if the string looks like an url
+                } catch (MalformedURLException mue) {
+                    // Ignore malformed urls by handling them and then doing nothing.
+                    return true;
+                }
+                if (url.startsWith("file"))
+                {
+                    return false;  // Let the webview load files, i.e. local images.
+                }
+                Log.d(AnkiDroidApp.TAG, "Opening external link \"" + url + "\" with an Intent");
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                startActivity(intent);
+                return true;
             }
         });
 

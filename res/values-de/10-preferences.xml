@@ -205,10 +205,10 @@
   <string name="deck_conf_easy_ivl">Intervall für einfache Karten</string>
   <string name="deck_conf_start_ease">Anfänglicher Leichtigkeitsbonus</string>
   <string name="deck_conf_max_rev">Maximale Wiederholungen/Tag</string>
-  <string name="deck_conf_new_bury">Verwandte neue Karten zurückstellen</string>
-  <string name="deck_conf_new_bury_summ">Verwandte neue Karten werden bis zum nächsten Tag zurückgestellt</string>
-  <string name="deck_conf_rev_bury">Verwandte fällige Karten zurückstellen</string>
-  <string name="deck_conf_rev_bury_summ">Verwandte fällige Karten werden bis zum nächsten Tag zurückgestellt</string>
+  <string name="deck_conf_new_bury">Verwandte neue Karten vorläufig aussetzen</string>
+  <string name="deck_conf_new_bury_summ">Verwandte neue Karten werden bis zum nächsten Tag ausgesetzt</string>
+  <string name="deck_conf_rev_bury">Verwandte fällige Karten vorläufig aussetzen</string>
+  <string name="deck_conf_rev_bury_summ">Verwandte fällige Karten werden bis zum nächsten Tag ausgesetzt</string>
   <string name="deck_conf_easy_bonus">Bonus für \'einfach\'</string>
   <string name="deck_conf_ivl_fct">Interval-Faktor</string>
   <string name="deck_conf_max_ivl">Maximales Intervall</string>

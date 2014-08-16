@@ -29,8 +29,8 @@ Añada material a través de la aplicación de escritorio Anki o directamente a 
 • añadir tarjetas desde otras aplicaciones como diccionarios
 • soporte de fuentes personalizadas
 • sistema de copia de seguridad completa
-• navigation by swipe, tap
-• customisable
+• navegación por swipe, toque
+• personalizable
 • manejo dinámico del mazo
 • modo nocturno
 •  27 localizaciones

@@ -49,19 +49,19 @@
   <string name="studyoptions_eta">Odhadovaný čas (min):</string>
   <string name="studyoptions_start">Studovat</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%1$d card due (%2$s)</item>
-    <item quantity="other">%1$d cards due (%2$s)</item>
+    <item quantity="one">%1$d karta ke zkoušení (%2$s)</item>
+    <item quantity="other">%1$d karet ke zkoušení (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">%d min.</item>
     <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item quantity="one">%1$d of %2$d due</item>
+    <item quantity="one">zbývá %1$d / %2$d</item>
     <item quantity="other">zbývá %1$d / %2$d</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%d minute left</item>
+    <item quantity="one">Zbývá %d minuta</item>
     <item quantity="other">Zbývá %d minut</item>
   </plurals>
   <string name="type_answer_hint">Type answer</string>
@@ -76,7 +76,7 @@
   <string name="menu_rotate">Otočit</string>
   <string name="menu_import">Importovat soubor</string>
   <string name="undo">Vrátit zpět</string>
-  <string name="undo_action_review">last review</string>
+  <string name="undo_action_review">poslední opakování</string>
   <string name="undo_action_edit">upravit poznámku</string>
   <string name="undo_action_bury">přeskočit poznámku</string>
   <string name="undo_action_suspend_card">pozastavit kartu</string>
@@ -105,7 +105,7 @@
   <string name="menu_bury_note">Přeskočit poznámku</string>
   <string name="menu_suspend_card">Pozastavit kartu</string>
   <string name="menu_suspend_note">Pozastavit poznámku</string>
-  <string name="menu_save_note">Save note</string>
+  <string name="menu_save_note">Uložit poznámku</string>
   <string name="menu_delete_note">Odstranit poznámku</string>
   <string name="delete_note_message">Opravdu smazat poznámku a všechny její karty?\n%s</string>
   <string name="menu_edit_card">Upravit kartu</string>
@@ -150,15 +150,15 @@
   <string name="studyoptions_congrats_more_new">Existuje více nových karet, ale byl dosažen denní limit. Můžete zvýšit tento limit v Nastavení, ale mějte na paměti, že se krátkodobě zvýší vaše zátěž na opakování.</string>
   <string name="studyoptions_congrats_custom">Pro studium mimo normální plán klepněte na tlačítko \'Vlastní učení\'.</string>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
+    <item quantity="one">Zítra bude: %1$d karta k zopakování a %2$s.\n Odhadovaný čas: %3$s</item>
     <item quantity="other">Zítra bude: %1$d karet k zopakování a %2$s.\n Odhadovaný čas: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">%1$d new card</item>
+    <item quantity="one">%1$d nová karta</item>
     <item quantity="other">%1$d nových karet</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">Estimated time: %1$d min.</item>
+    <item quantity="one">Odhadovaný čas: %1$d min.</item>
     <item quantity="other">Odhadovaný čas: %1$d min.</item>
   </plurals>
   <string name="sd_card_not_mounted">Paměťová karta není vložena.\n\n Svou kolekci si přesto můžete uložit do interní paměti, avšak toto není doporučeno, protože dostupnost tohoto souboru není tak snadná. Tuto volbu aktivujete v nastavení (které otevřete kliknutím na tento text).</string>

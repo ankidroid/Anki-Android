@@ -36,12 +36,12 @@
 -->
 <resources>
   <string-array name="navigation_titles">
-    <item>Decks</item>
-    <item>Card Browser</item>
-    <item>Statistics</item>
-    <item>Settings</item>
-    <item>Help</item>
-    <item>Send Feedback</item>
+    <item>Balíčky</item>
+    <item>Prohlížení karet</item>
+    <item>Statistiky</item>
+    <item>Nastavení</item>
+    <item>Pomoc</item>
+    <item>Odeslat názor</item>
   </string-array>
   <string-array name="newCardSchedulingLabels">
     <item>Rozprostřít v průběhu opakování</item>

@@ -6,7 +6,7 @@ Estudieu tot tipus de temes on i quan vulgueu. Aprofiteu els temps morts en el v
 
 Prepareu els vostres paquets de fitxes o descarregueu gratuïtament paquets preparats per a molts idiomes i temes (en trobareu més de 6000 disponibles).
 
-Afegiu material a través de l'aplicació d'escriptori Anki o directament a través de l'Ankidroid. L'aplicació permet fins i tot afegir material de forma automàtica a partir d'un diccionari!
+Afegiu material a través de l'aplicació d'escriptori Anki o directament a través de l'AnkiDroid. L'aplicació permet fins i tot afegir material de forma automàtica a partir d'un diccionari!
 
 ★ Característiques principals:
 • contingut permès a les fitxes: text, imatges, sons, LaTeX

@@ -39,7 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="pref_cat_general">アンキドロイド</string>
+  <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">一般設定</string>
   <string name="pref_cat_reviewing">カードの復習と評価</string>
   <string name="pref_cat_reviewing_summ">特定の単語帳に限定されない設定</string>

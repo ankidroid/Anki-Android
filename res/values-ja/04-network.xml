@@ -103,7 +103,7 @@
   <string name="sync_log_clocks_unsynchronized">端末の時計が正しくありません（%1$d 秒 %2$s）；データ同期時のエラー発生を防止するため、時計を正しくセットしてください。日付、時刻、およびタイムゾーンが正しく設定した後、再び同期を開始してください。</string>
   <string name="sync_log_clocks_unsynchronized_tz">, 端末のタイムゾーンが間違っています</string>
   <string name="sync_log_clocks_unsynchronized_date">, 端末の日付が間違っています</string>
-  <string name="sync_log_old_version">同期プロトコルに変更がありました。%sを参照し、最新のアンキドロイドにアップグレードしてください。</string>
+  <string name="sync_log_old_version">同期プロトコルに変更がありました。%sを参照し、最新のAnkiDroidにアップグレードしてください。</string>
   <string name="sync_conflict_title">同期失敗</string>
   <string name="sync_no_changes_message">変更はありません。</string>
   <string name="sync_database_acknowledge">コレクションの同期</string>

@@ -6,7 +6,7 @@ Belajar segala macam hal dimanapun dan kapanpun Anda inginkan. Membuat baik peng
 
 Buat dek sendiri  atau download percuma dek untuk sebarang bahasa dan topik (lebih dari 6000 tersedia).
 
-Tambahkan bahan melalui aplikasi desktop Anki atau langsung melalui Ankidroid. Aplikasi mendukung menambahkan bahan secara otomatis dari kamus!
+Tambahkan bahan melalui aplikasi desktop Anki atau langsung melalui AnkiDroid. Aplikasi mendukung menambahkan bahan secara otomatis dari kamus!
 
 ★ fitur utama:
 • isi flashcard yang didukung: teks, gambar, suara, LaTeX
