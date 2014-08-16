@@ -16,7 +16,6 @@
 
 package com.ichi2.libanki.importer;
 
-import android.annotation.SuppressLint;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.util.Log;
@@ -143,7 +142,7 @@ public class Anki2Importer {
                 AnkiDatabaseManager.closeDatabase(mSrc.getPath());
             }
             // import static media
-            String mediaDir = mCol.getMedia().getDir();
+            String mediaDir = mCol.getMedia().dir();
             if (nameToNum.size() != 0) {
                 for (Map.Entry<String, String> entry : nameToNum.entrySet()) {
                     String file = entry.getKey();
@@ -176,7 +175,7 @@ public class Anki2Importer {
 
     private void _prepareFiles(String src) {
         mDst = mCol;
-        mDstMediaDir = mDst.getMedia().getDir() + File.separator;
+        mDstMediaDir = mDst.getMedia().dir() + File.separator;
         mSrc = Storage.Collection(src);
     }
 
@@ -587,11 +586,12 @@ public class Anki2Importer {
         String[] fs = Utils.splitFields(fields);
 
         for (int i = 0; i < fs.length; ++i) {
-            for (Pattern p : Media.fMediaRegexps) {
+            for (Pattern p : Media.mRegexps) {
                 Matcher m = p.matcher(fs[i]);
                 StringBuffer sb = new StringBuffer();
+                int fnameIdx = Media.indexOfFname(p);
                 while (m.find()) {
-                    String fname = m.group(2);
+                    String fname = m.group(fnameIdx);
                     BufferedInputStream srcData = _srcMediaData(fname);
                     BufferedInputStream dstData = _dstMediaData(fname);
                     if (srcData == null) {
@@ -703,7 +703,7 @@ public class Anki2Importer {
      * @return A string containing the contents of fname, limited to Anki2Importer.MEDIAPICKLIMIT bytes
      */
     private BufferedInputStream _dstMediaData(String fname) {
-        return _mediaData(fname, mDst.getMedia().getDir());
+        return _mediaData(fname, mDst.getMedia().dir());
     }
 
 

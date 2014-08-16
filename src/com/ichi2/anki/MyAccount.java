@@ -152,7 +152,8 @@ public class MyAccount extends AnkiActivity {
         editor.putString("username", "");
         editor.putString("hkey", "");
         editor.commit();
-
+        //  force media resync on deauth
+        AnkiDroidApp.getCol().getMedia().forceResync();
         setContentView(mLoginToMyAccountView);
     }
 

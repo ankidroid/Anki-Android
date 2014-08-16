@@ -1035,7 +1035,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                 jr.endObject();
                 jr.close();
             }
-            String mediaDir = col.getMedia().getDir();
+            String mediaDir = col.getMedia().dir();
             int total = nameToNum.size();
             int i = 0;
             for (Map.Entry<String, String> entry : nameToNum.entrySet()) {

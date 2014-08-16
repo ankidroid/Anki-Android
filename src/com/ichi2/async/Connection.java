@@ -32,6 +32,7 @@ import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.Feedback;
 import com.ichi2.anki.R;
+import com.ichi2.anki.exception.UnsupportedSyncException;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Utils;
@@ -72,7 +73,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.TreeSet;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -417,7 +417,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         // enable cancelling
         publishProgress(R.string.upgrade_decks_upload, null, true);
         try {
-            HttpResponse resp = h.req("upgrade/upload", new FileInputStream(zipFile), 0, false, null, mCancelCallback);
+            HttpResponse resp = h.req("upgrade/upload", new FileInputStream(zipFile), 0, null, mCancelCallback);
             if (resp == null && !isCancelled()) {
                 data.success = false;
                 data.data = new Object[] { sContext.getString(R.string.upgrade_deck_web_upgrade_failed) };
@@ -458,7 +458,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             // gzip compression if the client says it can handle it
             if (!isCancelled()) {
                 publishProgress(new Object[] { R.string.upgrade_decks_downloading });
-                resp = h.req("upgrade/download?key=" + key, null, 6, true, null, mCancelCallback);
+                resp = h.req("upgrade/download?key=" + key, null, 6, null, mCancelCallback);
                 // uploads/downloads have finished so disable cancelling
             }
             publishProgress(R.string.upgrade_decks_downloading, null, false);
@@ -504,7 +504,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     mediaDirs.add(new File(f.getAbsolutePath().replaceFirst("\\.anki$", ".media")));
                 }
             }
-            File newMediaDir = new File(col.getMedia().getDir());
+            File newMediaDir = new File(col.getMedia().dir());
 
             // step 6. move media files to new media directory
             publishProgress(new Object[] { R.string.upgrade_decks_media });
@@ -703,11 +703,11 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         boolean noMediaChanges = false;
         String mediaError = null;
         if (media) {
-            server = new RemoteMediaServer(hkey, this);
+            server = new RemoteMediaServer(col, hkey, this);
             MediaSyncer mediaClient = new MediaSyncer(col, (RemoteMediaServer) server);
             String ret;
             try {
-                ret = mediaClient.sync(mediaUsn, this);
+                ret = mediaClient.sync(this);
                 if (ret == null) {
                     mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_error);
                 } else {
@@ -721,6 +721,10 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                         publishProgress(R.string.sync_media_success);
                     }
                 }
+            } catch (UnsupportedSyncException e) {
+                mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_unsupported);
+                AnkiDroidApp.getSharedPrefs(sContext).edit().putBoolean("syncFetchesMedia", false).commit();
+                AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync-mediaSync");
             } catch (RuntimeException e) {
                 AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync-mediaSync");
                 mediaError = e.getLocalizedMessage();

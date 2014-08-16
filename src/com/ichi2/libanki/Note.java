@@ -352,6 +352,11 @@ public class Note implements Cloneable {
     }
 
 
+    public void setField(int index, String value) {
+        mFields[index] = value;
+    }
+
+
     public long getMod() {
         return mMod;
     }
