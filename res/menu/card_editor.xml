@@ -8,6 +8,12 @@
         android:visible="false"
         ankidroid:showAsAction="ifRoom"/>
     <item
+        android:id="@+id/action_reverse_generator"
+        android:icon="@drawable/ic_action_import_export"
+        android:title="@string/card_editor_reverse_cards"
+        android:visible="false"
+        ankidroid:showAsAction="ifRoom"/>
+    <item
         android:id="@+id/action_add_card_from_card_editor"
         android:title="@string/card_editor_add_card"
         android:visible="false"/>

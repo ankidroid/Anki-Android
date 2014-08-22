@@ -137,4 +137,11 @@
     <string name="dialog_collection_path_title">Folder does not exit</string>
     <string name="dialog_collection_path_text">The folder you specified does not exist, would you like to create it?</string>
     <string name="dialog_collection_path_not_dir">The path specified was not a valid directory</string>
+
+    <string name ="reverse_generator_main"><![CDATA[Reverse cards will be generated for <b>all</b> of the %1$d cards using the \"%2$s\" note type; this operation cannot easily be undone.<br><br>All cards added to this note type in the future will also have reverse cards generated automatically. <br><br>It is strongly recommended to read the <a href=\"%3$s\">AnkiDroid manual</a> before proceeding, to learn about the different ways of creating reverse cards.<br><br> Do you want to continue?]]></string>
+    <string name ="reverse_generator_already_exists"><![CDATA[A reverse card template already exists for the \"%1$s\" note type. Reverse cards will be automatically generated.<br><br>Consult the <a href=\"%2$s\">AnkiDroid manual</a> for more information.]]></string>
+    <string name ="reverse_generator_multiple_cards"><![CDATA[More than one card template already exists for the \"%1$s\" note type. AnkiDroid can only generate reverse cards when there is a single card template.<br><br>Consult the <a href=\"%2$s\">AnkiDroid manual</a> for more information.]]></string>
+    <string name="dialog_full_sync_required_title">Full sync required</string>
+    <string name="dialog_full_sync_required_text">The requested change will require a full upload of the database when you next synchronize your collection. If you have reviews or other changes waiting on another device that haven\'t been synchronized here yet, they will be lost. Continue?</string> 
+
 </resources>

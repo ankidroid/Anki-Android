@@ -55,6 +55,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.dialogs.ReverseGeneratorDialog;
 import com.ichi2.anki.dialogs.TagsDialog;
 import com.ichi2.anki.dialogs.TagsDialog.TagsDialogListener;
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
@@ -69,6 +70,7 @@ import com.ichi2.async.DeckTask;
 import com.ichi2.filters.FilterFacade;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledDialog;
@@ -117,6 +119,7 @@ public class CardEditor extends ActionBarActivity {
     private static final int DIALOG_TAGS_SELECT = 2;
     private static final int DIALOG_RESET_CARD = 3;
     private static final int DIALOG_INTENT_INFORMATION = 4;
+    private static final int DIALOG_REVERSE_GENERATOR = 5;
 
     private static final String ACTION_CREATE_FLASHCARD = "org.openintents.action.CREATE_FLASHCARD";
     private static final String ACTION_CREATE_FLASHCARD_SEND = "android.intent.action.SEND";
@@ -266,6 +269,47 @@ public class CardEditor extends ActionBarActivity {
                         closeCardEditor();
                     }
                 }
+            } else {
+                // RuntimeException occured on adding note
+                closeCardEditor(DeckPicker.RESULT_DB_ERROR);
+            }
+        }
+
+
+        @Override
+        public void onCancelled() {
+            // TODO Auto-generated method stub
+            
+        }
+    };
+    
+
+    /* Used for updating the collection when a reverse card is added */
+    private DeckTask.TaskListener mReverseCardHandler = new DeckTask.TaskListener() {
+        @Override
+        public void onPreExecute() {
+            Resources res = getResources();
+            mProgressDialog = StyledProgressDialog
+                    .show(CardEditor.this, "", res.getString(R.string.saving_model), true);
+        }
+
+
+        @Override
+        public void onProgressUpdate(DeckTask.TaskData... values) {
+        }
+
+
+        @Override
+        public void onPostExecute(DeckTask.TaskData result) {
+            if (result.getBoolean()) {
+                if (mProgressDialog != null && mProgressDialog.isShowing()) {
+                    try {
+                        mProgressDialog.dismiss();
+                    } catch (IllegalArgumentException e) {
+                        Log.e(AnkiDroidApp.TAG, "Card Editor: Error on dismissing progress dialog: " + e);
+                    }
+                }
+
             } else {
                 // RuntimeException occured on adding note
                 closeCardEditor(DeckPicker.RESULT_DB_ERROR);
@@ -755,6 +799,7 @@ public class CardEditor extends ActionBarActivity {
             menu.findItem(R.id.action_add_card_from_card_editor).setVisible(true);
             menu.findItem(R.id.action_reset_card_progress).setVisible(true);
             menu.findItem(R.id.action_preview).setVisible(true);
+            menu.findItem(R.id.action_reverse_generator).setVisible(true);
         }
         if (mEditFields != null) {
             for (int i = 0; i < mEditFields.size(); i++) {
@@ -791,6 +836,10 @@ public class CardEditor extends ActionBarActivity {
 
             case R.id.action_preview:
                 openReviewer();
+                return true;
+                
+            case R.id.action_reverse_generator:
+                showDialogFragment(DIALOG_REVERSE_GENERATOR);
                 return true;
 
             case R.id.action_add_card_from_card_editor:
@@ -908,6 +957,44 @@ public class CardEditor extends ActionBarActivity {
                     }
                 });
                 dialogFragment = dialog;
+                break;
+                
+            case DIALOG_REVERSE_GENERATOR:
+                // Get list of all card templates belonging to current note type
+                List<Card> cardTemplates = AnkiDroidApp.getCol().previewCards(mEditorNote, 2);
+                // Decide the content of the dialog
+                int dialogType;
+                if (cardTemplates.size() == 1) {
+                    // Allow adding reverse cards when there is only one card template
+                    dialogType = ReverseGeneratorDialog.NORMAL_DIALOG;
+                } else {
+                    // get the template name for card 2
+                    String templateTwoName;
+                    try {
+                        templateTwoName = cardTemplates.get(1).template().getString("name");
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                    if (cardTemplates.size() == 2 && templateTwoName.equals(getResources().getString(R.string.reverse_card_name))) {
+                        // Show a message telling the user that there is already a reverse card template
+                        dialogType = ReverseGeneratorDialog.REVERSE_ALREADY_EXISTS_DIALOG;
+                    } else {
+                        // Show a message telling the users that there is already an existing non-reverse template
+                        dialogType = ReverseGeneratorDialog.MULTIPLE_CARDS_DIALOG;
+                    }
+                }
+                // Find the number of cards which belong to the first card template of the current note
+                int numAffectedCards = AnkiDroidApp.getCol().getModels().tmplUseCount(mEditorNote.model(), 0);
+                // Find the name of the current note type
+                String modelName;
+                try {
+                    modelName = mEditorNote.model().getString("name");
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+                // Create dialog
+                ReverseGeneratorDialog reverseGenerator = com.ichi2.anki.dialogs.ReverseGeneratorDialog.newInstance(dialogType, numAffectedCards, modelName);
+                dialogFragment = reverseGenerator;
         }
         dialogFragment.show(getSupportFragmentManager(), tag);
         return dialogFragment;
@@ -1411,6 +1498,11 @@ public class CardEditor extends ActionBarActivity {
             return true;
         }
         return false;
+    }
+
+    public void generateReverseCards() {
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_GENERATE_REVERSE, mReverseCardHandler, 
+                new DeckTask.TaskData(AnkiDroidApp.getCol(), mEditorNote, mCurrentEditedCard, getResources().getString(R.string.reverse_card_name)));
     }
 
 

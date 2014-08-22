@@ -98,6 +98,7 @@
     <string name="link_contribution_contributors">http://code.google.com/p/ankidroid/wiki/Contribution</string>
     <string name="link_help">http://code.google.com/p/ankidroid/wiki/Help</string>
     <string name="link_faq">https://code.google.com/p/ankidroid/wiki/FAQ</string>
+    <string name="link_reverse_help">https://code.google.com/p/ankidroid/wiki/Manual#Reverse_Cards</string>
     <string name="link_hebrew_font">http://code.google.com/p/ankidroid/downloads/detail?name=Tohu.ttf</string>
     <string name="error_email">ankidroid@gmail.com</string>
     <string name="error_post_url">http://ankidroid-triage.appspot.com/crash_receiver</string>
@@ -106,6 +107,8 @@
     <string name="shared_decks_url">https://ankiweb.net/shared/decks/</string>
     <string name="repair_deck">http://ankisrs.net/docs/DeckErrors.html</string>
     <string name="resetpw_url">http://ankiweb.net/account/resetpw</string>
+    
+    <string name="reverse_card_name">AnkiDroid_Reverse</string>
 
     <string-array name="tutorial_capitals_questions">
         <item>Cambodia</item>
