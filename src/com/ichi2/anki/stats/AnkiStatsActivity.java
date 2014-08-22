@@ -15,13 +15,11 @@
  ****************************************************************************************/
 package com.ichi2.anki.stats;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import android.support.v4.app.*;
 import android.support.v4.view.*;
-import android.support.v4.view.ActionProvider;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.*;
@@ -32,9 +30,7 @@ import com.ichi2.anki.NavigationDrawerActivity;
 import com.ichi2.anki.R;
 import com.ichi2.libanki.Stats;
 import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -86,6 +82,7 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setOffscreenPageLimit(8);
+        AnkiStatsTaskHandler.createFirstStatisticChooserTask(mViewPager);
 
         // When swiping between different sections, select the corresponding
         // tab. We can also use ActionBar.Tab#select() to do this if we have

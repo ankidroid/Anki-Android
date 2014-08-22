@@ -15,14 +15,19 @@
  ****************************************************************************************/
 package com.ichi2.anki.stats;
 
+import android.database.Cursor;
 import android.os.AsyncTask;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.R;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Stats;
+import com.ichi2.libanki.Utils;
 import com.wildplot.android.rendering.PlotSheet;
 
 import java.io.UnsupportedEncodingException;
@@ -79,10 +84,21 @@ public class AnkiStatsTaskHandler {
         createChartTask.execute(views);
         return createChartTask;
     }
+    public static CreateSmallTodayOverview createSmallTodayOverview(View... views){
+        CreateSmallTodayOverview createSmallTodayOverview = new CreateSmallTodayOverview();
+        createSmallTodayOverview.execute(views);
+        return createSmallTodayOverview;
+    }
     public static CreateSmallDueChart createSmallDueChartChart(double[][] seriesList, View... views){
         CreateSmallDueChart createChartTask = new CreateSmallDueChart(seriesList);
         createChartTask.execute(views);
         return createChartTask;
+    }
+
+    public static CreateFirstStatisticChooserTask createFirstStatisticChooserTask(ViewPager viewPager){
+        CreateFirstStatisticChooserTask createFirstStatisticChooserTask = new CreateFirstStatisticChooserTask();
+        createFirstStatisticChooserTask.execute(viewPager);
+        return createFirstStatisticChooserTask;
     }
 
     private class CreateChartTask extends AsyncTask<View, Void, PlotSheet>{
@@ -236,6 +252,142 @@ public class AnkiStatsTaskHandler {
                 mWebView.setVisibility(View.VISIBLE);
                 mWebView.invalidate();
 
+            }
+        }
+
+    }
+
+    private static class CreateSmallTodayOverview extends AsyncTask<View, Void, String>{
+        private TextView mTextView;
+
+        private boolean mIsRunning = false;
+
+        public CreateSmallTodayOverview(){
+            super();
+            mIsRunning = true;
+        }
+
+        @Override
+        protected String doInBackground(View... params) {
+            //make sure only one task of CreateChartTask is running, first to run should get sLock
+            //only necessary on lower APIs because after honeycomb only one thread is used for all asynctasks
+            sLock.lock();
+            try {
+                if (!mIsRunning) {
+                    Log.d(AnkiDroidApp.TAG, "quiting CreateSmallTodayOverview before execution");
+                    return null;
+                } else
+                    Log.d(AnkiDroidApp.TAG, "starting CreateSmallTodayOverview" );
+                mTextView = (TextView) params[0];
+                Collection collection = AnkiDroidApp.getCol();
+
+                //eventually put this in Stats (in desktop it is not though)
+                int cards, thetime;
+                Cursor cur = null;
+                String query = "select count(), sum(time)/1000 from revlog where id > " + ((collection.getSched().getDayCutoff()-86400)*1000);
+                Log.d(AnkiDroidApp.TAG, "CreateSmallTodayOverview query: " + query);
+
+                try {
+                    cur = collection.getDb()
+                            .getDatabase()
+                            .rawQuery(query, null);
+
+                    cur.moveToFirst();
+                    cards = cur.getInt(0);
+                    thetime = cur.getInt(1);
+
+
+                } finally {
+                    if (cur != null && !cur.isClosed()) {
+                        cur.close();
+                    }
+                }
+                return mTextView.getResources().getQuantityString(R.plurals.stats_today_cards_not_bold, cards, cards, Utils.fmtTimeSpan(thetime, 1));
+            }finally {
+                sLock.unlock();
+            }
+        }
+
+        @Override
+        protected void onCancelled() {
+            mIsRunning = false;
+        }
+
+        @Override
+        protected void onPostExecute(String todayStatString) {
+            if(todayStatString != null && mIsRunning){
+                mTextView.setText(todayStatString);
+                mTextView.setVisibility(View.VISIBLE);
+                mTextView.invalidate();
+            }
+        }
+
+    }
+
+    private static class CreateFirstStatisticChooserTask extends AsyncTask<ViewPager, Void, Integer>{
+        private ViewPager mViewPager;
+
+        private boolean mIsRunning = false;
+
+        public CreateFirstStatisticChooserTask(){
+            super();
+            mIsRunning = true;
+        }
+
+        @Override
+        protected Integer doInBackground(ViewPager... params) {
+            //make sure only one task of CreateChartTask is running, first to run should get sLock
+            //only necessary on lower APIs because after honeycomb only one thread is used for all asynctasks
+            sLock.lock();
+            try {
+                if (!mIsRunning) {
+                    Log.d(AnkiDroidApp.TAG, "quiting CreateTodayLearnCountOnly before execution");
+                    return null;
+                } else
+                    Log.d(AnkiDroidApp.TAG, "starting CreateTodayLearnCountOnly" );
+                mViewPager = (ViewPager) params[0];
+                Collection collection = AnkiDroidApp.getCol();
+
+                //eventually put this in Stats (in desktop it is not though)
+                int cards;
+                Cursor cur = null;
+                String query = "select count() from revlog where id > " + ((collection.getSched().getDayCutoff()-86400)*1000);
+                Log.d(AnkiDroidApp.TAG, "CreateSmallTodayOverview query: " + query);
+
+                try {
+                    cur = collection.getDb()
+                            .getDatabase()
+                            .rawQuery(query, null);
+
+                    cur.moveToFirst();
+                    cards = cur.getInt(0);
+
+
+
+                } finally {
+                    if (cur != null && !cur.isClosed()) {
+                        cur.close();
+                    }
+                }
+                return cards;
+            }finally {
+                sLock.unlock();
+            }
+        }
+
+        @Override
+        protected void onCancelled() {
+            mIsRunning = false;
+        }
+
+        @Override
+        protected void onPostExecute(Integer todayStatString) {
+            if(todayStatString != null && mIsRunning && mViewPager != null){
+                int chosen = todayStatString;
+                switch (chosen){
+                    case 0:
+                        mViewPager.setCurrentItem(AnkiStatsActivity.FORECAST_TAB_POSITION);
+                }
             }
         }
 

@@ -25,7 +25,16 @@
                 android:background="?android:attr/colorBackground"
                 android:drawSelectorOnTop="true"
                 android:fastScrollEnabled="true"
+                android:layout_above="@+id/today_stats_text_view"
                 android:focusable="true" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/today_stats_text_view"
+                android:layout_alignParentBottom="true"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"/>
         </RelativeLayout>
 
         <FrameLayout

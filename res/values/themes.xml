@@ -79,6 +79,10 @@
         <item name="android:spinnerDropDownItemStyle">@style/White.Widget.DropDownItem.Spinner</item>
     </style>
 
+    <style name="Theme_White_Statistics" parent="@style/Theme_White">
+        <item name="android:radioButtonStyle">@android:style/Widget.CompoundButton.RadioButton</item>
+    </style>
+
     <!-- Basic theme for dialogs -->
     <style name="StyledDialog" parent="@style/Theme_Base_Dialog">
         <item name="android:windowBackground">@color/transparent</item>

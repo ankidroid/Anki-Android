@@ -193,4 +193,9 @@
         <item quantity="other">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
     </plurals>
 
+    <plurals name="stats_today_cards_not_bold">
+        <item quantity="one">Studied %1$d card in %2$s today.</item>
+        <item quantity="other">Studied %1$d cards in %2$s today.</item>
+    </plurals>
+
 </resources>

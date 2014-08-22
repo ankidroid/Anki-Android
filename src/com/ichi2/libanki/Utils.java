@@ -151,15 +151,17 @@ public class Utils {
      * Return a string representing a time span (eg '2 days').
      * @param inFormat: if true, return eg 'in 2 days'
      */
+    public static String fmtTimeSpan(int time, int unit) {
+        return fmtTimeSpan(time, 0, false, false, unit);
+    }
     public static String fmtTimeSpan(int time) {
-        return fmtTimeSpan(time, 0, false, false);
+        return fmtTimeSpan(time, 0, false, false, 99);
     }
     public static String fmtTimeSpan(int time, boolean _short) {
-        return fmtTimeSpan(time, 0, _short, false);
+        return fmtTimeSpan(time, 0, _short, false, 99);
     }
-    public static String fmtTimeSpan(int time, int format, boolean _short, boolean boldNumber) {
+    public static String fmtTimeSpan(int time, int format, boolean _short, boolean boldNumber, int unit) {
     	int type;
-    	int unit = 99;
     	int point = 0;
     	if (Math.abs(time) < 60 || unit < 1) {
     		type = TIME_SECONDS;
