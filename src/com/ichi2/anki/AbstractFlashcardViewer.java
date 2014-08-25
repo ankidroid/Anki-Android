@@ -1707,9 +1707,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         Log.i(AnkiDroidApp.TAG,
                 "Focusable = " + webView.isFocusable() + ", Focusable in touch mode = " + webView.isFocusableInTouchMode());
 
-        // Filter any links using the custom "playsound" protocol defined in Sound.java.
-        // We play sounds through these links when a user taps the sound icon.
+
         webView.setWebViewClient(new WebViewClient() {
+            // Filter any links using the custom "playsound" protocol defined in Sound.java.
+            // We play sounds through these links when a user taps the sound icon.
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 if (url.startsWith("playsound:")) {
@@ -1734,6 +1735,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                 startActivity(intent);
                 return true;
+            }
+            // Run any post-load events in javascript that rely on the window being completely loaded.
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                Log.d(AnkiDroidApp.TAG, "onPageFinished triggered");
+                view.loadUrl("javascript:onPageFinished();");
             }
         });
 

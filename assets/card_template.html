@@ -9,12 +9,9 @@
         <style>
         ::style::
         </style>
-    </head>
-    <body class="::class::">
-        <div id="content">
-        ::content::
-        </div>
         <script type="text/javascript">
+            var resizeDone = false;
+            
             /*
             Handle image resizing if the image exceeds the window dimensions.
             
@@ -27,11 +24,19 @@
             browser will not be scaled accordingly, giving us only the original dimensions. We
             have to fetch the zoom value and scale the dimensions with it before checking if the
             image exceeds the window bounds.
+            
+            If the WebView loads too early on Android <= 2.3 (which happens on the first card or
+            regularly with WebView switching enabled), then the window dimensions returned to us
+            are 0x0. In this case, we skip image resizing and try again after we know the window
+            has fully loaded with a method call initiated from Java (onPageFinished).
             */
-            window.onload = function() {
+            var resizeImages = function() {
                 if (navigator.userAgent.indexOf("Chrome") > -1) {
                     document.body.className = document.body.className + " chrome";
                 } else {
+                    if (window.innerWidth === 0 || window.innerHeight === 0) {
+                        return;
+                    }
                     var maxWidth = window.innerWidth * 0.90;
                     var maxHeight = window.innerHeight * 0.90;
                     var ratio = 0;
@@ -59,8 +64,32 @@
                         }
                     }
                 }
+                resizeDone = true;
             };
-            window.location.href = "#answer";
+            
+            window.onload = function() {
+                /* If the WebView loads too early on Android <= 4.3 (which happens on the first card or
+                   regularly with WebView switching enabled), the window dimensions returned to us
+                   will be default built-in values. In this case, issuing a scroll event will force
+                   the browser to recalculate the dimensions and give us the correct values, so we
+                   do this every time. This lets us resize images correctly. */
+                window.scrollTo(0,0);
+                resizeImages();
+                window.location.href = "#answer";
+            };
+            
+            var onPageFinished = function() {
+                if (!resizeDone) {
+                    resizeImages();
+                    /* Re-anchor to answer after image resize since the point changes */
+                    window.location.href = "#answer";
+                }
+            }
         </script>
+    </head>
+    <body class="::class::">
+        <div id="content">
+        ::content::
+        </div>
     </body>
 </html>
