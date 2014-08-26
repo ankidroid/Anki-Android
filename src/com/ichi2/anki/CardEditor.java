@@ -218,7 +218,22 @@ public class CardEditor extends ActionBarActivity {
             } else if (count > 0) {
                 mChanged = true;
                 mSourceText = null;
+                Note oldNote = mEditorNote.clone();
                 setNote();
+                // Respect "Remember last input when adding" field option.
+                JSONArray flds;
+                try {
+                    flds = mEditorNote.model().getJSONArray("flds");
+                    if (oldNote != null) {
+                        for (int fldIdx = 0; fldIdx < flds.length(); fldIdx++) {
+                            if (flds.getJSONObject(fldIdx).getBoolean("sticky")) {
+                                mEditFields.get(fldIdx).setText(oldNote.getFields()[fldIdx]);
+                            }
+                        }
+                    }
+                } catch (JSONException e) {
+                    throw new RuntimeException();
+                }
                 Themes.showThemedToast(CardEditor.this,
                         getResources().getQuantityString(R.plurals.factadder_cards_added, count, count), true);
             } else {
