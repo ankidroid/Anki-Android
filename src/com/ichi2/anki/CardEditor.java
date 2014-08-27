@@ -21,7 +21,6 @@ import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -32,7 +31,6 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.PopupMenu.OnMenuItemClickListener;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -73,7 +71,6 @@ import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledDialog.Builder;
-import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.PopupMenuWithIcons;
@@ -98,7 +95,7 @@ import java.util.Map;
  * 
  * @see http://ichi2.net/anki/wiki/KeyTermsAndConcepts#Cards
  */
-public class CardEditor extends ActionBarActivity {
+public class CardEditor extends AnkiActivity {
 
     public static final String SOURCE_LANGUAGE = "SOURCE_LANGUAGE";
     public static final String TARGET_LANGUAGE = "TARGET_LANGUAGE";
@@ -148,7 +145,6 @@ public class CardEditor extends ActionBarActivity {
      * Broadcast that informs us when the sd card is about to be unmounted
      */
     private BroadcastReceiver mUnmountReceiver = null;
-    private Bundle mSavedInstanceState;
 
     private LinearLayout mFieldsLayoutContainer;
 
@@ -172,26 +168,17 @@ public class CardEditor extends ActionBarActivity {
     /* indicates which activity called card editor */
     private int mCaller;
 
-    private Collection mCol;
-    private long mDeckId;
-
     private LinkedList<FieldEditText> mEditFields;
 
     private int mCardItemBackground;
     private final List<Map<String, String>> mIntentInformation = new ArrayList<Map<String, String>>();
     private SimpleAdapter mIntentInformationAdapter;
     private StyledDialog mIntentInformationDialog;
-    private StyledDialog mDeckSelectDialog;
-
-    private String[] allTags;
 
     private StyledProgressDialog mProgressDialog;
-    private StyledOpenCollectionDialog mOpenCollectionDialog;
 
-    // private String mSourceLanguage;
-    // private String mTargetLanguage;
     private String[] mSourceText;
-    private boolean mCancelled = false;
+
 
     private boolean mPrefFixArabic;
 
@@ -290,8 +277,6 @@ public class CardEditor extends ActionBarActivity {
 
         @Override
         public void onCancelled() {
-            // TODO Auto-generated method stub
-            
         }
     };
 
@@ -320,21 +305,15 @@ public class CardEditor extends ActionBarActivity {
                 }
             }
         }
-        // Try to load the collection
-        mCol = AnkiDroidApp.getCol();
-        if (mCol == null) {
-            // Reload the collection asynchronously, let onPostExecute method call initActivity()
-            reloadCollection();
-            return;
-        } else {
-            // If collection was not null then we can safely call initActivity() directly
-            initActivity(mCol);
-        }
+
+        loadCollection();
     }
 
 
     // Finish initializing the activity after the collection has been correctly loaded
-    private void initActivity(Collection col) {
+    @Override
+    protected void onCollectionLoaded(Collection col) {
+        super.onCollectionLoaded(col);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         Intent intent = getIntent();
@@ -348,7 +327,7 @@ public class CardEditor extends ActionBarActivity {
             MetaDB.saveIntentInformation(CardEditor.this, Utils.joinFields(mSourceText));
             Themes.showThemedToast(CardEditor.this, getResources().getString(R.string.app_name) + ": "
                     + getResources().getString(R.string.CardEditorLaterMessage), false);
-            finish();
+            finishWithoutAnimation();
             return;
         }
 
@@ -375,13 +354,13 @@ public class CardEditor extends ActionBarActivity {
         switch (mCaller) {
             case CALLER_NOCALLER:
                 Log.i(AnkiDroidApp.TAG, "CardEditor: no caller could be identified, closing");
-                finish();
+                finishWithoutAnimation();
                 return;
 
             case CALLER_REVIEWER:
                 mCurrentEditedCard = AbstractFlashcardViewer.getEditorCard();
                 if (mCurrentEditedCard == null) {
-                    finish();
+                    finishWithoutAnimation();
                     return;
                 }
                 mEditorNote = mCurrentEditedCard.note();
@@ -410,7 +389,7 @@ public class CardEditor extends ActionBarActivity {
             case CALLER_CARDBROWSER_EDIT:
                 mCurrentEditedCard = CardBrowser.sCardBrowserCard;
                 if (mCurrentEditedCard == null) {
-                    finish();
+                    finishWithoutAnimation();
                     return;
                 }
                 mEditorNote = mCurrentEditedCard.note();
@@ -432,11 +411,11 @@ public class CardEditor extends ActionBarActivity {
             case CALLER_INDICLASH:
                 fetchIntentInformation(intent);
                 if (mSourceText == null) {
-                    finish();
+                    finishWithoutAnimation();
                     return;
                 }
                 if (mSourceText[0].equals("Aedict Notepad") && addFromAedict(mSourceText[1])) {
-                    finish();
+                    finishWithoutAnimation();
                     return;
                 }
                 mAddNote = true;
@@ -533,6 +512,7 @@ public class CardEditor extends ActionBarActivity {
             }
 
         });
+        dismissCollectionLoadingDialog();
     }
 
 
@@ -581,54 +561,7 @@ public class CardEditor extends ActionBarActivity {
 
     private void openReviewer() {
         Intent reviewer = new Intent(CardEditor.this, Previewer.class);
-        startActivity(reviewer);
-    }
-
-
-    private void reloadCollection() {
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPEN_COLLECTION, new DeckTask.TaskListener() {
-
-            @Override
-            public void onPostExecute(DeckTask.TaskData result) {
-                if (mOpenCollectionDialog.isShowing()) {
-                    try {
-                        mOpenCollectionDialog.dismiss();
-                    } catch (Exception e) {
-                        Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
-                    }
-                }
-                mCol = result.getCollection();
-                if (mCol == null) {
-                    finish();
-                } else {
-                    initActivity(AnkiDroidApp.getCol());
-                }
-            }
-
-
-            @Override
-            public void onPreExecute() {
-                mOpenCollectionDialog = StyledOpenCollectionDialog.show(CardEditor.this,
-                        getResources().getString(R.string.open_collection), new OnCancelListener() {
-                            @Override
-                            public void onCancel(DialogInterface arg0) {
-                                finish();
-                            }
-                        });
-            }
-
-
-            @Override
-            public void onProgressUpdate(DeckTask.TaskData... values) {
-            }
-
-
-            @Override
-            public void onCancelled() {
-                // TODO Auto-generated method stub
-                
-            }
-        }, new DeckTask.TaskData(AnkiDroidApp.getCurrentAnkiDroidDirectory() + AnkiDroidApp.COLLECTION_PATH));
+        startActivityWithoutAnimation(reviewer);
     }
 
 
@@ -690,8 +623,8 @@ public class CardEditor extends ActionBarActivity {
                 for (String t : mSelectedTags) {
                     ja.put(t);
                 }
-                mCol.getModels().current().put("tags", ja);
-                mCol.getModels().setChanged();
+                getCol().getModels().current().put("tags", ja);
+                getCol().getModels().setChanged();
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
@@ -816,8 +749,7 @@ public class CardEditor extends ActionBarActivity {
                 if (item.getItemId() == R.id.action_copy_card) {
                     intent.putExtra(EXTRA_CONTENTS, getFieldsText());
                 }
-                startActivityForResult(intent, REQUEST_ADD);
-                ActivityTransitionAnimation.slide(CardEditor.this, ActivityTransitionAnimation.LEFT);
+                startActivityForResultWithAnimation(intent, REQUEST_ADD, ActivityTransitionAnimation.LEFT);
                 return true;
 
             case R.id.action_reset_card_progress:
@@ -848,7 +780,7 @@ public class CardEditor extends ActionBarActivity {
                 @Override
                 public void onReceive(Context context, Intent intent) {
                     if (intent.getAction().equals(SdCardReceiver.MEDIA_EJECT)) {
-                        finish();
+                        finishWithoutAnimation();
                     }
                 }
             };
@@ -856,11 +788,6 @@ public class CardEditor extends ActionBarActivity {
             iFilter.addAction(SdCardReceiver.MEDIA_EJECT);
             registerReceiver(mUnmountReceiver, iFilter);
         }
-    }
-
-
-    private void finishNoStorageAvailable() {
-        closeCardEditor(DeckPicker.RESULT_MEDIA_EJECTED);
     }
 
 
@@ -891,14 +818,14 @@ public class CardEditor extends ActionBarActivity {
         } else {
             setResult(result);
         }
-        finish();
+
         if (mCaller == CALLER_CARDEDITOR_INTENT_ADD || mCaller == CALLER_BIGWIDGET_EDIT
                 || mCaller == CALLER_BIGWIDGET_ADD) {
-            ActivityTransitionAnimation.slide(CardEditor.this, ActivityTransitionAnimation.FADE);
+            finishWithAnimation(ActivityTransitionAnimation.FADE);
         } else if (mCaller == CALLER_INDICLASH) {
-            ActivityTransitionAnimation.slide(CardEditor.this, ActivityTransitionAnimation.NONE);
+            finishWithAnimation(ActivityTransitionAnimation.NONE);
         } else {
-            ActivityTransitionAnimation.slide(CardEditor.this, ActivityTransitionAnimation.RIGHT);
+            finishWithAnimation(ActivityTransitionAnimation.RIGHT);
         }
     }
 
@@ -911,7 +838,7 @@ public class CardEditor extends ActionBarActivity {
                 if (mSelectedTags == null) {
                     mSelectedTags = new ArrayList<String>();
                 }
-                ArrayList<String> tags = new ArrayList<String>(mCol.getTags().all());
+                ArrayList<String> tags = new ArrayList<String>(getCol().getTags().all());
                 ArrayList<String> selTags = new ArrayList<String>(mSelectedTags);
                 TagsDialog dialog = com.ichi2.anki.dialogs.TagsDialog.newInstance(TagsDialog.TYPE_ADD_TAG, selTags,
                         tags);
@@ -942,7 +869,7 @@ public class CardEditor extends ActionBarActivity {
                 // Item(name)
                 final ArrayList<Long> dialogDeckIds = new ArrayList<Long>();
 
-                ArrayList<JSONObject> decks = mCol.getDecks().all();
+                ArrayList<JSONObject> decks = getCol().getDecks().all();
                 Collections.sort(decks, new JSONNameComparator());
                 builder.setTitle(R.string.deck);
                 for (JSONObject d : decks) {
@@ -971,7 +898,6 @@ public class CardEditor extends ActionBarActivity {
                 });
 
                 dialog = builder.create();
-                mDeckSelectDialog = dialog;
                 break;
 
             case DIALOG_MODEL_SELECT:
@@ -980,7 +906,7 @@ public class CardEditor extends ActionBarActivity {
                 // Item(name)
                 final ArrayList<Long> dialogIds = new ArrayList<Long>();
 
-                ArrayList<JSONObject> models = mCol.getModels().all();
+                ArrayList<JSONObject> models = getCol().getModels().all();
                 Collections.sort(models, new JSONNameComparator());
                 builder.setTitle(R.string.note_type);
                 for (JSONObject m : models) {
@@ -1000,23 +926,23 @@ public class CardEditor extends ActionBarActivity {
                     public void onClick(DialogInterface dialog, int item) {
                         long oldModelId;
                         try {
-                            oldModelId = mCol.getModels().current().getLong("id");
+                            oldModelId = getCol().getModels().current().getLong("id");
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }
                         long newId = dialogIds.get(item);
                         if (oldModelId != newId) {
-                            JSONObject model = mCol.getModels().get(newId);
-                            mCol.getModels().setCurrent(model);
-                            JSONObject cdeck = mCol.getDecks().current();
+                            JSONObject model = getCol().getModels().get(newId);
+                            getCol().getModels().setCurrent(model);
+                            JSONObject cdeck = getCol().getDecks().current();
                             try {
                                 cdeck.put("mid", newId);
                             } catch (JSONException e) {
                                 throw new RuntimeException(e);
                             }
-                            mCol.getDecks().save(cdeck);
+                            getCol().getDecks().save(cdeck);
                             // Update deck
-                            if (!mCol.getConf().optBoolean("addToCur", true)) {
+                            if (!getCol().getConf().optBoolean("addToCur", true)) {
                                 try {
                                     mCurrentDid = model.getLong("did");
                                     updateDeck();
@@ -1086,8 +1012,7 @@ public class CardEditor extends ActionBarActivity {
                 Map<String, String> map = mIntentInformation.get(position);
                 intent.putExtra(EXTRA_CONTENTS, map.get("fields"));
                 intent.putExtra(EXTRA_ID, map.get("id"));
-                startActivityForResult(intent, REQUEST_INTENT_ADD);
-                ActivityTransitionAnimation.slide(CardEditor.this, ActivityTransitionAnimation.FADE);
+                startActivityForResultWithAnimation(intent, REQUEST_INTENT_ADD, ActivityTransitionAnimation.FADE);
                 mIntentInformationDialog.dismiss();
             }
         });
@@ -1266,7 +1191,7 @@ public class CardEditor extends ActionBarActivity {
         editCard.putExtra(EXTRA_FIELD_INDEX, index);
         editCard.putExtra(EXTRA_FIELD, field);
         editCard.putExtra(EXTRA_WHOLE_NOTE, mNote);
-        startActivityForResult(editCard, REQUEST_MULTIMEDIA_EDIT);
+        startActivityForResultWithoutAnimation(editCard, REQUEST_MULTIMEDIA_EDIT);
     }
 
 
@@ -1363,11 +1288,11 @@ public class CardEditor extends ActionBarActivity {
     private void setNote(Note note) {
         try {
             if (note == null) {
-                JSONObject conf = mCol.getConf();
-                JSONObject model = mCol.getModels().current();
+                JSONObject conf = getCol().getConf();
+                JSONObject model = getCol().getModels().current();
                 if (conf.optBoolean("addToCur", true)) {
                     mCurrentDid = conf.getLong("curDeck");
-                    if (mCol.getDecks().isDyn(mCurrentDid)) {
+                    if (getCol().getDecks().isDyn(mCurrentDid)) {
                         /*
                          * If the deck in mCurrentDid is a filtered (dynamic) deck, then we can't create cards in it,
                          * and we set mCurrentDid to the Default deck. Otherwise, we keep the number that had been
@@ -1378,7 +1303,7 @@ public class CardEditor extends ActionBarActivity {
                 } else {
                     mCurrentDid = model.getLong("did");
                 }
-                mEditorNote = new Note(mCol, model);
+                mEditorNote = new Note(getCol(), model);
                 mEditorNote.model().put("did", mCurrentDid);
                 mModelButton.setText(getResources().getString(R.string.CardEditorModel, model.getString("name")));
             } else {
@@ -1401,7 +1326,7 @@ public class CardEditor extends ActionBarActivity {
         try {
             mDeckButton.setText(getResources().getString(
                     mAddNote ? R.string.CardEditorNoteDeck : R.string.CardEditorCardDeck,
-                    mCol.getDecks().get(mCurrentDid).getString("name")));
+                    getCol().getDecks().get(mCurrentDid).getString("name")));
         } catch (NotFoundException e) {
             throw new RuntimeException(e);
         } catch (JSONException e) {
@@ -1415,7 +1340,7 @@ public class CardEditor extends ActionBarActivity {
             mSelectedTags = new ArrayList<String>();
         }
         mTagsButton.setText(getResources().getString(R.string.CardEditorTags,
-                mCol.getTags().join(mCol.getTags().canonify(mSelectedTags)).trim().replace(" ", ", ")));
+                getCol().getTags().join(getCol().getTags().canonify(mSelectedTags)).trim().replace(" ", ", ")));
     }
 
 

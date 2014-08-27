@@ -34,8 +34,8 @@ public class Previewer extends AbstractFlashcardViewer {
 
 
     @Override
-    protected void initActivity(Collection col) {
-        super.initActivity(col);
+    protected void onCollectionLoaded(Collection col) {
+        super.onCollectionLoaded(col);
         mCurrentCard = CardEditor.mCurrentEditedCard;
         displayCardQuestion();
     }

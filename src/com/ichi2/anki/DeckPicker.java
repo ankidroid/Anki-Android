@@ -65,7 +65,6 @@ import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.OldAnkiDeckFilter;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.async.DeckTask;
-import com.ichi2.async.DeckTask.Listener;
 import com.ichi2.async.DeckTask.TaskData;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
@@ -85,7 +84,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TreeSet;
 
-public class DeckPicker extends NavigationDrawerActivity implements StudyOptionsFragment.OnStudyOptionsReloadListener {
+public class DeckPicker extends NavigationDrawerActivity
+    implements StudyOptionsFragment.OnStudyOptionsReloadListener  {
 
     public static final int CRAM_DECK_FRAGMENT = -1;
 
@@ -233,10 +233,10 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
             switch (item) {
                 case CONTEXT_MENU_COLLAPSE_DECK:
                     try {
-                        JSONObject deck = AnkiDroidApp.getCol().getDecks().get(mCurrentDid);
-                        if (AnkiDroidApp.getCol().getDecks().children(mCurrentDid).size() > 0) {
+                        JSONObject deck = getCol().getDecks().get(mCurrentDid);
+                        if (getCol().getDecks().children(mCurrentDid).size() > 0) {
                             deck.put("collapsed", !deck.getBoolean("collapsed"));
-                            AnkiDroidApp.getCol().getDecks().save(deck);
+                            getCol().getDecks().save(deck);
                             loadCounts();
                         }
                     } catch (JSONException e1) {
@@ -250,12 +250,12 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                 case CONTEXT_MENU_DECK_OPTIONS:
                     // set currently selected deck as clicked item
                     mCurrentDid = Long.parseLong(mDeckList.get(mContextMenuPosition).get("did"));
-                    AnkiDroidApp.getCol().getDecks().select(mCurrentDid);
+                    getCol().getDecks().select(mCurrentDid);
                     if (mFragmented) {
                         loadStudyOptionsFragment(mCurrentDid, null);
                     }
                     // open deck options
-                    if (AnkiDroidApp.getCol().getDecks().isDyn(mCurrentDid)){
+                    if (getCol().getDecks().isDyn(mCurrentDid)){
                         // open cram options if filtered deck
                         Intent i = new Intent(DeckPicker.this, CramDeckOptions.class);
                         i.putExtra("cramInitialConfig", (String) null);
@@ -273,7 +273,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
 
                     mDialogEditText = new EditText(DeckPicker.this);
                     mDialogEditText.setSingleLine();
-                    mDialogEditText.setText(AnkiDroidApp.getCol().getDecks().name(mCurrentDid));
+                    mDialogEditText.setText(getCol().getDecks().name(mCurrentDid));
                     // mDialogEditText.setFilters(new InputFilter[] { mDeckNameFilter });
                     builder2.setView(mDialogEditText, false, false);
                     builder2.setPositiveButton(res.getString(R.string.rename), new DialogInterface.OnClickListener() {
@@ -281,7 +281,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             String newName = mDialogEditText.getText().toString().replaceAll("['\"]", "");
-                            Collection col = AnkiDroidApp.getCol();
+                            Collection col = getCol();
                             if (col != null) {
                                 if (col.getDecks().rename(col.getDecks().get(mCurrentDid), newName)) {
                                     for (HashMap<String, String> d : mDeckList) {
@@ -440,7 +440,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                     } else if (resultType.equals("upgradeRequired")) {
                         showDialog(DIALOG_SYNC_UPGRADE_REQUIRED);
                     } else if (resultType.equals("sanityCheckError")) {
-                        Collection col = AnkiDroidApp.getCol();
+                        Collection col = getCol();
                         col.modSchema();
                         col.save();
                         mDialogMessage = res.getString(R.string.sync_sanity_failed);
@@ -497,87 +497,17 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                 if (mFragmented) {
                     try {
                         // Pick the correct deck after sync. Updates the values in the fragment if same deck.
-                        long did = AnkiDroidApp.getCol().getDecks().current().getLong("id");
+                        long did = getCol().getDecks().current().getLong("id");
                         selectDeck(did);
                     } catch (JSONException e) {
                         throw new RuntimeException();
                     }
                 }
-                showTodayMiniStatistics();
+                loadCounts();
             }
         }
     };
 
-    DeckTask.TaskListener mOpenCollectionHandler = new DeckTask.TaskListener() {
-
-        @Override
-        public void onPostExecute(DeckTask.TaskData result) {
-            Collection col = result.getCollection();
-            Object[] res = result.getObjArray();
-            if (col == null || res == null) {
-                AnkiDatabaseManager.closeDatabase(AnkiDroidApp.getCollectionPath());
-                showDialog(DIALOG_LOAD_FAILED);
-                return;
-            }
-            updateDecksList((TreeSet<Object[]>) res[0], (Integer) res[1], (Integer) res[2]);
-            // select last loaded deck if any
-            if (mFragmented) {
-                long did = col.getDecks().selected();
-                selectDeck(did);
-            }
-            if (AnkiDroidApp.colIsOpen() && mImportPath != null) {
-                showDialog(DIALOG_IMPORT);
-            }
-            if (mOpenCollectionDialog.isShowing()) {
-                try {
-                    mOpenCollectionDialog.dismiss();
-                } catch (Exception e) {
-                    Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
-                }
-            }
-            showTodayMiniStatistics();
-        }
-
-
-        @Override
-        public void onPreExecute() {
-            if (mOpenCollectionDialog == null || !mOpenCollectionDialog.isShowing()) {
-                mOpenCollectionDialog = StyledOpenCollectionDialog.show(DeckPicker.this,
-                        getResources().getString(R.string.open_collection), new OnCancelListener() {
-
-                            @Override
-                            public void onCancel(DialogInterface arg0) {
-                                // TODO: close dbs?
-                                DeckTask.cancelTask();
-                                finishWithAnimation();
-                            }
-                        });
-            }
-            if (mNotMountedDialog != null && mNotMountedDialog.isShowing()) {
-                try {
-                    mNotMountedDialog.dismiss();
-                } catch (Exception e) {
-                    Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
-                }
-            }
-        }
-
-
-        @Override
-        public void onProgressUpdate(DeckTask.TaskData... values) {
-            String message = values[0].getString();
-            if (message != null) {
-                mOpenCollectionDialog.setMessage(message);
-            }
-        }
-
-
-        @Override
-        public void onCancelled() {
-            // TODO Auto-generated method stub
-            
-        }
-    };
 
     DeckTask.TaskListener mLoadCountsHandler = new DeckTask.TaskListener() {
 
@@ -588,14 +518,12 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
             }
             Object[] res = result.getObjArray();
             updateDecksList((TreeSet<Object[]>) res[0], (Integer) res[1], (Integer) res[2]);
-            if (mOpenCollectionDialog != null && mOpenCollectionDialog.isShowing()) {
-                mOpenCollectionDialog.dismiss();
-            }
+            dismissCollectionLoadingDialog();
             try {
                 // Ensure we have the correct deck selected in the deck list after we have updated it. Check first
                 // if the collection is open since it might have been closed before this task completes.
-                if (AnkiDroidApp.getCol() != null) {
-                    setSelectedDeck(AnkiDroidApp.getCol().getDecks().current().getLong("id"));
+                if (getCol() != null) {
+                    setSelectedDeck(getCol().getDecks().current().getLong("id"));
                 }
             } catch (JSONException e) {
                 throw new RuntimeException();
@@ -696,7 +624,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                 case BackupManager.RETURN_DECK_RESTORED:
                     loadCollection();
                     // Force full sync on next upload
-                    Collection col = AnkiDroidApp.getCol();
+                    Collection col = getCol();
                     if (col != null) {
                         col.modSchema(false);
                     }
@@ -915,11 +843,6 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
             mImportPath = getIntent().getData().getEncodedPath();
         }
 
-        // need to start this here in order to avoid showing deckpicker before splashscreen
-        if (!AnkiDroidApp.colIsOpen()) {
-            mOpenCollectionHandler.onPreExecute();
-        }
-        
         Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
         
@@ -1014,30 +937,6 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                             : getResources().getColor(R.color.review_count));
                     return false;
                 }
-                // } else if (view.getId() == R.id.deckpicker_bar_mat || view.getId() == R.id.deckpicker_bar_all) {
-                // if (text.length() > 0 && !text.equals("-1.0")) {
-                // View parent = (View)view.getParent().getParent();
-                // if (text.equals("-2")) {
-                // parent.setVisibility(View.GONE);
-                // } else {
-                // Utils.updateProgressBars(view, (int) UIUtils.getDensityAdjustedValue(DeckPicker.this, 3.4f),
-                // (int) (Double.parseDouble(text) * ((View)view.getParent().getParent().getParent()).getHeight()));
-                // if (parent.getVisibility() == View.INVISIBLE) {
-                // parent.setVisibility(View.VISIBLE);
-                // parent.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
-                // }
-                // }
-                // }
-                // return true;
-                // } else if (view.getVisibility() == View.INVISIBLE) {
-                // if (!text.equals("-1")) {
-                // view.setVisibility(View.VISIBLE);
-                // view.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
-                // return false;
-                // }
-                // } else if (text.equals("-1")){
-                // view.setVisibility(View.INVISIBLE);
-                // return false;
                 return false;
             }
         });
@@ -1057,14 +956,12 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
         }
         
         
-        if (AnkiDroidApp.getCol() == null){
+        if (getCol() == null){
             // Show splash screen and load collection if it's null            
             showStartupScreensAndDialogs(preferences, 0);
         } else {
             // Otherwise just update the deck list            
-            Object[] counts = AnkiDroidApp.getCol().getSched().deckCounts();
-            updateDecksList((TreeSet<Object[]>) counts[0], (Integer) counts[1], (Integer) counts[2]);
-            showTodayMiniStatistics();
+            loadCounts();
         }
 
         if (mSwipeEnabled) {
@@ -1080,10 +977,28 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
 
 
     @Override
+    protected void onCollectionLoaded(Collection col) {
+        // keep reference to collection in parent
+        super.onCollectionLoaded(col);
+        // select last loaded deck if any
+        if (mFragmented) {
+            long did = col.getDecks().selected();
+            selectDeck(did);
+        }
+        // show import dialog if shared deck was opened
+        if (AnkiDroidApp.colIsOpen() && mImportPath != null) {
+            showDialog(DIALOG_IMPORT);
+        }
+        // prepare deck counts and mini-today-statistic
+        loadCounts();
+    }
+
+
+    @Override
     protected void onResume() {
         super.onResume();
-        if (AnkiDroidApp.getCol() != null) {
-            if (Utils.now() > AnkiDroidApp.getCol().getSched().getDayCutoff() && AnkiDroidApp.isSdCardMounted()) {
+        if (getCol() != null) {
+            if (Utils.now() > getCol().getSched().getDayCutoff() && AnkiDroidApp.isSdCardMounted()) {
                 loadCounts();
             }
         }
@@ -1107,26 +1022,11 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
     }
 
 
-    private void loadCollection() {
-        if (!AnkiDroidApp.isSdCardMounted()) {
-            showDialog(DIALOG_SD_CARD_NOT_MOUNTED);
-            return;
-        }
-        String path = AnkiDroidApp.getCollectionPath();
-        Collection col = AnkiDroidApp.getCol();
-        if (col == null || !col.getPath().equals(path) || mDeckListView == null || mDeckListView.getChildCount() == 0) {
-            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPEN_COLLECTION, mOpenCollectionHandler, new DeckTask.TaskData(
-                    path));
-        } else {
-            loadCounts();
-        }
-    }
-
 
     public void loadCounts() {
         if (AnkiDroidApp.colIsOpen()) {
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK_COUNTS, mLoadCountsHandler,
-                    new TaskData(AnkiDroidApp.getCol()));
+                    new TaskData(getCol()));
         }
         TextView textView = (TextView) findViewById(R.id.today_stats_text_view);
         textView.setVisibility(View.GONE);
@@ -1138,8 +1038,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
         Preferences.COMING_FROM_ADD = true;
         Intent intent = new Intent(DeckPicker.this, CardEditor.class);
         intent.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_DECKPICKER);
-        startActivityForResult(intent, ADD_NOTE);
-        ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.LEFT);
+        startActivityForResultWithAnimation(intent, ADD_NOTE, ActivityTransitionAnimation.LEFT);
     }
 
     private boolean hasErrorFiles() {
@@ -1161,8 +1060,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
         Intent upgradeIntent = new Intent(this, Info.class);
         upgradeIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_UPGRADE_DECKS);
         upgradeIntent.putExtra(Info.TYPE_UPGRADE_STAGE, stage);
-        startActivityForResult(upgradeIntent, SHOW_INFO_UPGRADE_DECKS);
-        ActivityTransitionAnimation.slide(this, left ? ActivityTransitionAnimation.LEFT
+        startActivityForResultWithAnimation(upgradeIntent, SHOW_INFO_UPGRADE_DECKS, left ? ActivityTransitionAnimation.LEFT
                 : ActivityTransitionAnimation.RIGHT);
     }
 
@@ -1203,17 +1101,20 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
         if (skip < 1 && preferences.getLong("lastTimeOpened", 0) == 0) {
             Intent infoIntent = new Intent(this, Info.class);
             infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_WELCOME);
-            startActivityForResult(infoIntent, SHOW_INFO_WELCOME);
             if (skip != 0) {
-                ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
+                startActivityForResultWithAnimation(infoIntent, SHOW_INFO_WELCOME, ActivityTransitionAnimation.LEFT);
+            } else {
+                startActivityForResultWithoutAnimation(infoIntent, SHOW_INFO_WELCOME);
             }
         } else if (skip < 2 && !preferences.getString("lastVersion", "").equals(AnkiDroidApp.getPkgVersionName())) {
             preferences.edit().putBoolean("showBroadcastMessageToday", true).commit();
             Intent infoIntent = new Intent(this, Info.class);
             infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION);
-            startActivityForResult(infoIntent, SHOW_INFO_NEW_VERSION);
+
             if (skip != 0) {
-                ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
+                startActivityForResultWithAnimation(infoIntent, SHOW_INFO_NEW_VERSION, ActivityTransitionAnimation.LEFT);
+            } else {
+                startActivityForResultWithoutAnimation(infoIntent, SHOW_INFO_NEW_VERSION);
             }
         } else if (skip < 3 && upgradeNeeded()) {
             // Note that the "upgrade needed" refers to upgrading Anki 1.x decks, not to newer
@@ -1223,9 +1124,10 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
             showUpgradeScreen(skip != 0, Info.UPGRADE_SCREEN_BASIC1);
         } else if (skip < 4 && hasErrorFiles()) {
             Intent i = new Intent(this, Feedback.class);
-            startActivityForResult(i, REPORT_ERROR);
             if (skip != 0) {
-                ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.LEFT);
+                startActivityForResultWithAnimation(i, REPORT_ERROR, ActivityTransitionAnimation.LEFT);
+            } else {
+                startActivityForResultWithoutAnimation(i, REPORT_ERROR);
             }
         } else if (!AnkiDroidApp.isSdCardMounted()) {
             showDialog(DIALOG_SD_CARD_NOT_MOUNTED);
@@ -1238,67 +1140,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
         } else if (mImportPath != null && AnkiDroidApp.colIsOpen()) {
             showDialog(DIALOG_IMPORT);
         } else {
-            // AnkiDroid is being updated and a collection already exists. We check if we are upgrading
-            // to a version that contains additions to the database integrity check routine that we would
-            // like to run on all collections. A missing version number is assumed to be a fresh
-            // installation of AnkiDroid and we don't run the check.
-            int current = AnkiDroidApp.getPkgVersionCode();
-            int previousTemp; // a non-final variable, for intermediate calculations
-            if (!preferences.contains("lastUpgradeVersion")) {
-                // Fresh install
-                previousTemp = current;
-            } else {
-                try {
-                    previousTemp = preferences.getInt("lastUpgradeVersion", current);
-                } catch (ClassCastException e) {
-                    // Previous versions stored this as a string.
-                    String s = preferences.getString("lastUpgradeVersion", "");
-                    // The last version of AnkiDroid that stored this as a string was 2.0.2.
-                    // We manually set the version here, but anything older will force a DB
-                    // check.
-                    if (s.equals("2.0.2")) {
-                        previousTemp = 40;
-                    } else {
-                        previousTemp = 0;
-                    }
-                }
-            }
-            final int previous = previousTemp;
-            preferences.edit().putInt("lastUpgradeVersion", current).commit();
-            if (previous < AnkiDroidApp.CHECK_DB_AT_VERSION || previous < AnkiDroidApp.CHECK_PREFERENCES_AT_VERSION) {
-
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPEN_COLLECTION, new Listener() {
-                    @Override
-                    public void onPostExecute(DeckTask task, TaskData result) {
-                        mOpenCollectionHandler.onPostExecute(result);
-                        if (previous < AnkiDroidApp.CHECK_DB_AT_VERSION) {
-                            integrityCheck();
-                        }
-                        if (previous < AnkiDroidApp.CHECK_PREFERENCES_AT_VERSION) {
-                            upgradePreferences(previous);
-                        }
-                    }
-
-
-                    @Override
-                    public void onPreExecute(DeckTask task) {
-                    }
-
-
-                    @Override
-                    public void onProgressUpdate(DeckTask task, TaskData... values) {
-                    }
-
-
-                    @Override
-                    public void onCancelled() {
-                        // TODO Auto-generated method stub
-                        
-                    }
-                }, new DeckTask.TaskData(AnkiDroidApp.getCollectionPath()));
-            } else {
-                loadCollection();
-            }
+            loadCollection();
         }
     }
 
@@ -1368,7 +1210,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
         if (!mDontSaveOnStop) {
             if (isFinishing()) {
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CLOSE_DECK, mCloseCollectionHandler, new TaskData(
-                        AnkiDroidApp.getCol()));
+                        getCol()));
             } else {
                 StudyOptionsFragment frag = getFragment();
                 if (!(frag != null && !frag.dbSaveNecessary())) {
@@ -1478,8 +1320,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                                 Intent i = new Intent(DeckPicker.this, Feedback.class);
                                 i.putExtra("request", RESULT_DB_ERROR);
                                 dialog.dismiss();
-                                startActivityForResult(i, REPORT_ERROR);
-                                ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.RIGHT);
+                                startActivityForResultWithAnimation(i, REPORT_ERROR, ActivityTransitionAnimation.RIGHT);
                             }
                         });
                 builder.setNegativeButton(res.getString(R.string.close), new DialogInterface.OnClickListener() {
@@ -1535,34 +1376,12 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                     public void onClick(DialogInterface dialog, int which) {
                         Intent myAccount = new Intent(DeckPicker.this, MyAccount.class);
                         myAccount.putExtra("notLoggedIn", true);
-                        startActivityForResult(myAccount, LOG_IN_FOR_SYNC);
-                        ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.FADE);
+                        startActivityForResultWithAnimation(myAccount, LOG_IN_FOR_SYNC, ActivityTransitionAnimation.FADE);
                     }
                 });
                 dialog = builder.create();
                 break;
 
-            // case DIALOG_USER_NOT_LOGGED_IN_DOWNLOAD:
-            // if (id == DIALOG_USER_NOT_LOGGED_IN_SYNC) {
-            // } else {
-            // builder.setPositiveButton(res.getString(R.string.log_in),
-            // new DialogInterface.OnClickListener() {
-            //
-            // @Override
-            // public void onClick(DialogInterface dialog, int which) {
-            // Intent myAccount = new Intent(DeckPicker.this,
-            // MyAccount.class);
-            // myAccount.putExtra("notLoggedIn", true);
-            // startActivityForResult(myAccount, LOG_IN_FOR_DOWNLOAD);
-            // if (UIUtils.getApiLevel() > 4) {
-            // ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.LEFT);
-            // }
-            // }
-            // });
-            // }
-            // builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
-            // dialog = builder.create();
-            // break;
 
             case DIALOG_NO_CONNECTION:
                 // builder.setTitle(res.getString(R.string.connection_error_title));
@@ -1599,7 +1418,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                                             updateDecksList((TreeSet<Object[]>) res[0], (Integer) res[1],
                                                     (Integer) res[2]);
                                             if (mFragmented) {
-                                                selectDeck(AnkiDroidApp.getCol().getDecks().selected());
+                                                selectDeck(getCol().getDecks().selected());
                                             }
                                             if (mProgressDialog.isShowing()) {
                                                 try {
@@ -1621,7 +1440,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                                             // TODO Auto-generated method stub
                                             
                                         }
-                                    }, new TaskData(AnkiDroidApp.getCol(), mCurrentDid));
+                                    }, new TaskData(getCol(), mCurrentDid));
                             }
                         });
                 builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
@@ -1649,7 +1468,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REPAIR_DECK, mRepairDeckHandler,
-                                        new DeckTask.TaskData(AnkiDroidApp.getCol(), AnkiDroidApp.getCollectionPath()));
+                                        new DeckTask.TaskData(getCol(), AnkiDroidApp.getCollectionPath()));
                             }
                         });
                 builder.setNegativeButton(res.getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {
@@ -1755,7 +1574,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
 
                                 @Override
                                 public void onClick(View v) {
-                                    startActivityForResult(new Intent(DeckPicker.this, Preferences.class),
+                                    startActivityForResultWithoutAnimation(new Intent(DeckPicker.this, Preferences.class),
                                             PREFERENCES_UPDATE);
                                 }
                             });
@@ -1771,7 +1590,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_IMPORT, mImportAddListener, new TaskData(
-                                        AnkiDroidApp.getCol(), mImportPath, false));
+                                        getCol(), mImportPath, false));
                                 mImportPath = null;
                             }
                         });
@@ -1789,7 +1608,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
                                                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_IMPORT_REPLACE,
-                                                        mImportReplaceListener, new TaskData(AnkiDroidApp.getCol(),
+                                                        mImportReplaceListener, new TaskData(getCol(),
                                                                 mImportPath));
                                                 mImportPath = null;
                                             }
@@ -1893,8 +1712,8 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                                 DeckTask.launchDeckTask(
                                         DeckTask.TASK_TYPE_RESTORE_DECK,
                                         mRestoreDeckHandler,
-                                        new DeckTask.TaskData(new Object[] { AnkiDroidApp.getCol(),
-                                                AnkiDroidApp.getCollectionPath(), mBackups[which].getPath() }));                                
+                                        new DeckTask.TaskData(new Object[] { getCol(),
+                                                AnkiDroidApp.getCollectionPath(), mBackups[which].getPath() }));
                             } else {
                                 // otherwise show an error dialog
                                 Dialog invalidFileDialog = new AlertDialog.Builder(DeckPicker.this)
@@ -1908,7 +1727,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                                     }
                                 })
                                 .create();
-                                invalidFileDialog.show();                               
+                                invalidFileDialog.show();
                             }
 
                         }
@@ -2030,13 +1849,13 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                 if (!AnkiDroidApp.colIsOpen() || mDeckList == null || mDeckList.size() == 0) {
                     return;
                 }
-                boolean isDyn = AnkiDroidApp.getCol().getDecks().isDyn(mCurrentDid);
+                boolean isDyn = getCol().getDecks().isDyn(mCurrentDid);
                 if (isDyn) {
                     ad.setMessage(String.format(res.getString(R.string.delete_cram_deck_message), "\'"
-                            + AnkiDroidApp.getCol().getDecks().name(mCurrentDid) + "\'"));
+                            + getCol().getDecks().name(mCurrentDid) + "\'"));
                 } else {
                     ad.setMessage(String.format(res.getString(R.string.delete_deck_message), "\'"
-                            + AnkiDroidApp.getCol().getDecks().name(mCurrentDid) + "\'"));
+                            + getCol().getDecks().name(mCurrentDid) + "\'"));
                 }
                 break;
 
@@ -2050,14 +1869,14 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                             CONTEXT_MENU_COLLAPSE_DECK,
                             getResources()
                                     .getString(
-                                            AnkiDroidApp.getCol().getDecks().get(mCurrentDid).getBoolean("collapsed") ? R.string.contextmenu_deckpicker_inflate_deck
+                                            getCol().getDecks().get(mCurrentDid).getBoolean("collapsed") ? R.string.contextmenu_deckpicker_inflate_deck
                                                     : R.string.contextmenu_deckpicker_collapse_deck));
                 } catch (NotFoundException e) {
                     // do nothing
                 } catch (JSONException e) {
                     // do nothing
                 }
-                ad.setTitle(AnkiDroidApp.getCol().getDecks().name(mCurrentDid));
+                ad.setTitle(getCol().getDecks().name(mCurrentDid));
                 break;
 
             case DIALOG_IMPORT_LOG:
@@ -2088,7 +1907,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
             case DIALOG_ERROR_HANDLING:
                 ArrayList<String> options = new ArrayList<String>();
                 ArrayList<Integer> values = new ArrayList<Integer>();
-                if (AnkiDroidApp.getCol() == null) {
+                if (getCol() == null) {
                     // retry
                     options.add(res.getString(R.string.backup_retry_opening));
                     values.add(0);
@@ -2167,12 +1986,12 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                         switch (mImportMethod) {
                             case IMPORT_METHOD_ADD:
                                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_IMPORT, mImportAddListener, new TaskData(
-                                        AnkiDroidApp.getCol(), mImportPath, false));
+                                        getCol(), mImportPath, false));
                                 mImportPath = null;
                                 break;
                             case IMPORT_METHOD_REPLACE:
                                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_IMPORT_REPLACE, mImportReplaceListener,
-                                        new TaskData(AnkiDroidApp.getCol(), mImportPath));
+                                        new TaskData(getCol(), mImportPath));
                                 mImportPath = null;
                                 break;
                             case IMPORT_METHOD_ASK:
@@ -2207,12 +2026,6 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
     // ----------------------------------------------------------------------------
     // CUSTOM METHODS
     // ----------------------------------------------------------------------------
-
-    private void showTodayMiniStatistics(){
-        TextView textView = (TextView) findViewById(R.id.today_stats_text_view);
-        textView.setVisibility(View.GONE);
-        AnkiStatsTaskHandler.createSmallTodayOverview(textView);
-    }
 
     public void loadStudyOptionsFragment() {
         loadStudyOptionsFragment(0, null);
@@ -2328,8 +2141,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
     private void addSharedDeck() {
         Intent intent = new Intent(DeckPicker.this, Info.class);
         intent.putExtra(Info.TYPE_EXTRA, Info.TYPE_SHARED_DECKS);
-        startActivityForResult(intent, ADD_SHARED_DECKS);
-        ActivityTransitionAnimation.slide(DeckPicker.this, ActivityTransitionAnimation.RIGHT);
+        startActivityForResultWithAnimation(intent, ADD_SHARED_DECKS, ActivityTransitionAnimation.RIGHT);
     }
 
     private DialogInterface.OnClickListener mSyncSanityFailListener = new DialogInterface.OnClickListener() {
@@ -2344,7 +2156,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                             new Dialog.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    Collection col = AnkiDroidApp.getCol();
+                                    Collection col = getCol();
                                     if (col != null) {
                                         col.modSchema(true);
                                         col.setMod();
@@ -2362,7 +2174,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                             new Dialog.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    Collection col = AnkiDroidApp.getCol();
+                                    Collection col = getCol();
                                     if (col != null) {
                                         col.modSchema(true);
                                         col.setMod();
@@ -2457,7 +2269,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                 return true;
 
             case R.id.action_shared_decks:
-                if (AnkiDroidApp.getCol() != null) {
+                if (getCol() != null) {
                     addSharedDeck();
                 }
                 return true;
@@ -2474,7 +2286,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                         String deckName = mDialogEditText.getText().toString()
                                 .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
                         Log.i(AnkiDroidApp.TAG, "Creating deck: " + deckName);
-                        AnkiDroidApp.getCol().getDecks().id(deckName, true);
+                        getCol().getDecks().id(deckName, true);
                         loadCounts();
                     }
                 });
@@ -2490,7 +2302,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                 StyledDialog.Builder builder3 = new StyledDialog.Builder(DeckPicker.this);
                 builder3.setTitle(res.getString(R.string.new_deck));
                 mDialogEditText = new EditText(DeckPicker.this);
-                ArrayList<String> names = AnkiDroidApp.getCol().getDecks().allNames();
+                ArrayList<String> names = getCol().getDecks().allNames();
                 int n = 1;
                 String cramDeckName = "Cram 1";
                 while (names.contains(cramDeckName)) {
@@ -2503,7 +2315,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                 builder3.setPositiveButton(res.getString(R.string.create), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        long id = AnkiDroidApp.getCol().getDecks().newDyn(mDialogEditText.getText().toString());
+                        long id = getCol().getDecks().newDyn(mDialogEditText.getText().toString());
                         openStudyOptions(id, new Bundle());
                     }
                 });
@@ -2618,7 +2430,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
             }
             if (AnkiDroidApp.colIsOpen() && mImportPath != null) {
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_IMPORT, mImportAddListener,
-                        new TaskData(AnkiDroidApp.getCol(), mImportPath, true));
+                        new TaskData(getCol(), mImportPath, true));
                 mImportPath = null;
             }
         } else if (requestCode == REQUEST_REVIEW) {
@@ -2632,8 +2444,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                     mDontSaveOnStop = true;
                     Intent i = new Intent();
                     i.setClass(this, StudyOptionsActivity.class);
-                    startActivityForResult(i, SHOW_STUDYOPTIONS);
-                    ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
+                    startActivityForResultWithAnimation(i, SHOW_STUDYOPTIONS, ActivityTransitionAnimation.RIGHT);
                     break;
             }
 
@@ -2688,7 +2499,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                 // TODO Auto-generated method stub
                 
             }
-        }, new DeckTask.TaskData(AnkiDroidApp.getCol()));
+        }, new DeckTask.TaskData(getCol()));
     }
 
 
@@ -2702,7 +2513,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
     //
     // public void openSharedDeckPicker() {
     // // deckLoaded = false;
-    // startActivityForResult(new Intent(this, SharedDeckPicker.class), DOWNLOAD_SHARED_DECK);
+    // startActivityForResultWithAnimation(new Intent(this, SharedDeckPicker.class), DOWNLOAD_SHARED_DECK);
     // if (UIUtils.getApiLevel() > 4) {
     // ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.RIGHT);
     // }
@@ -2818,7 +2629,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
         HashMap<String, String> data = (HashMap<String, String>) mDeckListAdapter.getItem(id);
         Log.i(AnkiDroidApp.TAG, "Selected " + deckFilename);
         long deckId = Long.parseLong(data.get("did"));
-        AnkiDroidApp.getCol().getDecks().select(deckId);
+        getCol().getDecks().select(deckId);
         openStudyOptions(deckId);
     }
 
@@ -2836,7 +2647,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
             public void onPostExecute(TaskData result) {
                 if (result.getBoolean()) {
                     loadCounts();
-                    openStudyOptions(AnkiDroidApp.getCol().getDecks().selected());
+                    openStudyOptions(getCol().getDecks().selected());
                 } else {
                     Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.tutorial_loading_error),
                             false);
@@ -2861,7 +2672,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                 // TODO Auto-generated method stub
                 
             }
-        }, new DeckTask.TaskData(AnkiDroidApp.getCol()));
+        }, new DeckTask.TaskData(getCol()));
     }
 
 
@@ -2958,14 +2769,12 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                             if (rect.top < pos && rect.bottom > pos) {
                                 HashMap<String, String> data = (HashMap<String, String>) mDeckListAdapter
                                         .getItem(mDeckListView.getPositionForView(v));
-                                Collection col = AnkiDroidApp.getCol();
+                                Collection col = getCol();
                                 if (col != null) {
                                     col.getDecks().select(Long.parseLong(data.get("did")));
                                     col.reset();
                                     Intent reviewer = new Intent(DeckPicker.this, Reviewer.class);
-                                    startActivityForResult(reviewer, REQUEST_REVIEW);
-                                    ActivityTransitionAnimation
-                                            .slide(DeckPicker.this, ActivityTransitionAnimation.LEFT);
+                                    startActivityForResultWithAnimation(reviewer, REQUEST_REVIEW, ActivityTransitionAnimation.LEFT);
                                     return true;
                                 }
                             }

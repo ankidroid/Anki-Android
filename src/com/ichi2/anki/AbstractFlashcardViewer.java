@@ -24,7 +24,6 @@ import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -91,7 +90,6 @@ import com.ichi2.libanki.Sound;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.HtmlColors;
 import com.ichi2.themes.StyledDialog;
-import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.DiffEngine;
@@ -171,9 +169,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     /** The percentage of the absolute font size specified in the deck. */
     private int mDisplayFontSize = 100;
 
-    /** The percentage of the original image size in the deck. */
-    private int mDisplayImageSize = 100;
-
     /** Pattern for font-size style declarations */
     private static final Pattern fFontSizePattern = Pattern.compile(
             "font-size\\s*:\\s*([0-9.]+)\\s*((?:px|pt|in|cm|mm|pc|%|em))\\s*;?", Pattern.CASE_INSENSITIVE);
@@ -187,8 +182,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      */
     private BroadcastReceiver mUnmountReceiver = null;
 
-    private boolean mReloadingCollection = false;
-
     /**
      * Variables to hold preferences
      */
@@ -199,7 +192,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private boolean mInputWorkaround;
     private boolean mLongClickWorkaround;
     private boolean mPrefFullscreenReview;
-    private String mCollectionFilename;
     private int mRelativeImageSize;
     private int mRelativeButtonSize;
     private boolean mDoubleScrolling;
@@ -219,7 +211,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private boolean mSimpleInterface = false;
     private boolean mCurrentSimpleInterface = false;
     private ArrayList<String> mSimpleInterfaceExcludeTags;
-    private int mAvailableInCardWidth;
 
     // Preferences from the collection
     private boolean mShowNextReviewTime;
@@ -230,10 +221,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      * The correct answer in the compare to field if answer should be given by learner. Null if no answer is expected.
      */
     private String mTypeCorrect;
-    /** The font name attribute of the type answer field for formatting */
-    private String mTypeFont;
-    /** The font size attribute of the type answer field for formatting */
-    private int mTypeSize;
     private String mTypeWarning;
 
     private boolean mIsSelecting = false;
@@ -278,7 +265,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     protected Whiteboard mWhiteboard;
     private ClipboardManager mClipboard;
     private StyledProgressDialog mProgressDialog;
-    private StyledOpenCollectionDialog mOpenCollectionDialog;
     private ProgressBar mProgressBar;
 
     protected Card mCurrentCard;
@@ -296,11 +282,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     private boolean mConfigurationChanged = false;
     private int mShowChosenAnswerLength = 2000;
-
-    private int mStatisticBarsMax;
-    private int mStatisticBarsHeight;
-
-    private long mSavedTimer = 0;
 
     /**
      * Whether to use a single {@link WebView} and update its content.
@@ -543,8 +524,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         @Override
         public void onCancelled() {
-            // TODO Auto-generated method stub
-
         }
     };
 
@@ -571,8 +550,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         @Override
         public void onCancelled() {
-            // TODO Auto-generated method stub
-
         }
     };
 
@@ -648,8 +625,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         @Override
         public void onCancelled() {
-            // TODO Auto-generated method stub
-
         }
     };
 
@@ -671,7 +646,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
             if (mSched == null) {
                 // TODO: proper testing for restored activity
-                finish();
+                finishWithoutAnimation();
                 return;
             }
 
@@ -707,14 +682,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 mSched.setReps(mSched.getReps() + 1);
             }
 
-            Long[] elapsed = AnkiDroidApp.getCol().timeboxReached();
+            Long[] elapsed = getCol().timeboxReached();
             if (elapsed != null) {
                 int nCards = elapsed[1].intValue();
                 int nMins = elapsed[0].intValue() / 60;
                 String mins = res.getQuantityString(R.plurals.timebox_reached_minutes, nMins, nMins);
                 String timeboxMessage = res.getQuantityString(R.plurals.timebox_reached, nCards, nCards, mins);
                 Themes.showThemedToast(AbstractFlashcardViewer.this, timeboxMessage, true);
-                AnkiDroidApp.getCol().startTimebox();
+                getCol().startTimebox();
             }
 
             // if (mChosenAnswer.getText().equals("")) {
@@ -745,8 +720,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         @Override
         public void onCancelled() {
-            // TODO Auto-generated method stub
-
         }
     };
 
@@ -780,8 +753,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                         // narrow to cloze
                         mTypeCorrect = contentForCloze(mTypeCorrect, clozeIdx);
                     }
-                    mTypeFont = (String) (ja.getJSONObject(i).get("font"));
-                    mTypeSize = (Integer) (ja.getJSONObject(i).get("size"));
                     break;
                 }
             }
@@ -940,17 +911,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         // The hardware buttons should control the music volume while reviewing.
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
-        // Try to load the collection
-        Collection col = AnkiDroidApp.getCol();
-        if (col == null) {
-            // Reload the collection asynchronously, let onPostExecute method call initActivity()
-            mReloadingCollection = true;
-            reloadCollection();
-            return;
-        } else {
-            // If collection was not null then we can safely call initActivity() directly
-            initActivity(col);
-        }
+        // Load the collection
+        loadCollection();
     }
 
 
@@ -958,9 +920,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
 
     // Finish initializing the activity after the collection has been correctly loaded
-    protected void initActivity(Collection col) {
+    @Override
+    protected void onCollectionLoaded(Collection col) {
+        super.onCollectionLoaded(col);
         mSched = col.getSched();
-        mCollectionFilename = col.getPath();
         mBaseUrl = Utils.getBaseUrl(col.getMedia().dir());
 
         restorePreferences();
@@ -1008,6 +971,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         // Initialize dictionary lookup feature
         Lookup.initialize(this);
+
+        deselectAllNavigationItems();
+        supportInvalidateOptionsMenu();
+        dismissCollectionLoadingDialog();
     }
 
     @Override
@@ -1038,11 +1005,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     protected void onResume() {
         super.onResume();
         restartTimer();
-
-        if (!mReloadingCollection) {
-            // Do any tasks which depend on initActivity() completing successfully below
-            deselectAllNavigationItems();
-        }
     }
 
 
@@ -1102,64 +1064,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     }
 
 
-    private void updateBigWidget(boolean showProgressDialog) {
-        // if (DeckManager.deckIsOpenedInBigWidget(DeckManager.getMainDeckPath())) {
-        // Log.i(AnkiDroidApp.TAG, "Reviewer: updateBigWidget");
-        // AnkiDroidWidgetBig.setCard(mCurrentCard);
-        // AnkiDroidWidgetBig.updateWidget(AnkiDroidWidgetBig.UpdateService.VIEW_SHOW_QUESTION, showProgressDialog);
-        // }
-    }
-
-
-    private void reloadCollection() {
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPEN_COLLECTION, new DeckTask.TaskListener() {
-
-            @Override
-            public void onPostExecute(DeckTask.TaskData result) {
-                if (mOpenCollectionDialog.isShowing()) {
-                    try {
-                        mOpenCollectionDialog.dismiss();
-                    } catch (Exception e) {
-                        Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
-                    }
-                }
-                if (AnkiDroidApp.colIsOpen()) {
-                    initActivity(AnkiDroidApp.getCol());
-                } else {
-                    finish();
-                }
-
-                // Do any tasks below which were postponed in onCreate() or onResume() due to reloadCollection()
-                deselectAllNavigationItems();
-                mReloadingCollection = false;
-            }
-
-
-            @Override
-            public void onPreExecute() {
-                mOpenCollectionDialog = StyledOpenCollectionDialog.show(AbstractFlashcardViewer.this, getResources()
-                        .getString(R.string.open_collection), new OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface arg0) {
-                        finish();
-                    }
-                });
-            }
-
-
-            @Override
-            public void onProgressUpdate(DeckTask.TaskData... values) {
-            }
-
-
-            @Override
-            public void onCancelled() {
-                // TODO Auto-generated method stub
-
-            }
-        }, new DeckTask.TaskData(AnkiDroidApp.getCurrentAnkiDroidDirectory() + AnkiDroidApp.COLLECTION_PATH, 0, true));
-    }
-
 
     // These three methods use a deprecated API - they should be updated to possibly use its more modern version.
     private boolean clipboardHasText() {
@@ -1204,7 +1108,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         } else {
             menu.findItem(R.id.action_mark_card).setTitle(R.string.menu_mark_card).setIcon(R.drawable.ic_menu_mark);
         }
-        if (AnkiDroidApp.colIsOpen() && AnkiDroidApp.getCol().undoAvailable()) {
+        if (getCol() != null && getCol().undoAvailable()) {
             menu.findItem(R.id.action_undo).setEnabled(true).setIcon(R.drawable.ic_menu_revert);
         } else {
             menu.findItem(R.id.action_undo).setEnabled(false).setIcon(R.drawable.ic_menu_revert_disabled);
@@ -1367,7 +1271,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 @Override
                 public void onReceive(Context context, Intent intent) {
                     if (intent.getAction().equals(SdCardReceiver.MEDIA_EJECT)) {
-                        finish();
+                        finishWithoutAnimation();
                     }
                 }
             };
@@ -1414,7 +1318,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     private void finishNoStorageAvailable() {
         AbstractFlashcardViewer.this.setResult(DeckPicker.RESULT_MEDIA_EJECTED);
-        finish();
+        finishWithoutAnimation();
     }
 
 
@@ -1733,7 +1637,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 }
                 Log.d(AnkiDroidApp.TAG, "Opening external link \"" + url + "\" with an Intent");
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                startActivity(intent);
+                startActivityWithoutAnimation(intent);
                 return true;
             }
             // Run any post-load events in javascript that rely on the window being completely loaded.
@@ -1964,8 +1868,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         // These are preferences we pull out of the collection instead of SharedPreferences
         try {
-            mShowNextReviewTime = AnkiDroidApp.getCol().getConf().getBoolean("estTimes");
-            mShowRemainingCardCount = AnkiDroidApp.getCol().getConf().getBoolean("dueCounts");
+            mShowNextReviewTime = getCol().getConf().getBoolean("estTimes");
+            mShowRemainingCardCount = getCol().getConf().getBoolean("dueCounts");
         } catch (JSONException e) {
             throw new RuntimeException();
         }
@@ -2069,7 +1973,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
 
         try {
-            String[] title = mSched.getCol().getDecks().get(mCurrentCard.getDid()).getString("name").split("::");
+            String[] title = getCol().getDecks().get(mCurrentCard.getDid()).getString("name").split("::");
             AnkiDroidApp.getCompat().setTitle(this, title[title.length - 1], mInvertedColors);
         } catch (JSONException e) {
             throw new RuntimeException(e);
@@ -2500,7 +2404,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      * @return The configuration for the current {@link Card}
      */
     private JSONObject getConfigForCurrentCard() {
-        return mSched.getCol().getDecks().confForDid(getDeckIdForCard(mCurrentCard));
+        return getCol().getDecks().confForDid(getDeckIdForCard(mCurrentCard));
     }
 
 
@@ -2894,7 +2798,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 closeReviewer(RESULT_DEFAULT, false);
                 break;
             case GESTURE_UNDO:
-                if (mSched.getCol().undoAvailable()) {
+                if (getCol().undoAvailable()) {
                     undo();
                 }
                 break;
@@ -2961,8 +2865,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (saveDeck) {
             UIUtils.saveCollectionInBackground();
         }
-        finish();
-        ActivityTransitionAnimation.slide(AbstractFlashcardViewer.this, ActivityTransitionAnimation.RIGHT);
+        finishWithAnimation(ActivityTransitionAnimation.RIGHT);
     }
 
 
