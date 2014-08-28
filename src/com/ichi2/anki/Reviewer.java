@@ -18,13 +18,19 @@
 
 package com.ichi2.anki;
 
+import android.content.SharedPreferences;
+import android.os.Bundle;
+
+import com.ichi2.anki.reviewer.WhiteboardListener;
 import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Collection;
 import com.ichi2.widget.WidgetStatus;
 
 import org.json.JSONException;
 
-public class Reviewer extends AbstractFlashcardViewer {
+public class Reviewer extends AbstractFlashcardViewer implements WhiteboardListener {
+    private boolean mHasDrawerSwipeConflicts = false;
+    
     @Override
     protected void setTitle() {
         try {
@@ -40,6 +46,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     @Override
     protected void onCollectionLoaded(Collection col) {
+        setWhiteboardListener(this);
         super.onCollectionLoaded(col);
         // Load the first card and start reviewing. Uses the answer card
         // task to load a card, but since we send null
@@ -49,6 +56,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
         // Since we aren't actually answering a card, decrement the rep count
         mSched.setReps(mSched.getReps() - 1);
+        disableDrawerSwipeOnConflicts();
     }
 
 
@@ -69,5 +77,35 @@ public class Reviewer extends AbstractFlashcardViewer {
             }
             UIUtils.saveCollectionInBackground();
         }
+    }
+
+
+    @Override
+    public void onShowWhiteboard() {
+        disableDrawerSwipe();
+    }
+
+
+    @Override
+    public void onHideWhiteboard() {
+        if (!mHasDrawerSwipeConflicts) {
+            enableDrawerSwipe();
+        }
+    }
+    
+    private void disableDrawerSwipeOnConflicts() {
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+        boolean gesturesEnabled = AnkiDroidApp.initiateGestures(this, preferences);
+        if (gesturesEnabled) {
+            int gestureSwipeUp = Integer.parseInt(preferences.getString("gestureSwipeUp", "9"));
+            int gestureSwipeDown = Integer.parseInt(preferences.getString("gestureSwipeDown", "0"));
+            int gestureSwipeRight = Integer.parseInt(preferences.getString("gestureSwipeRight", "17"));
+            if (gestureSwipeUp != GESTURE_NOTHING ||
+                    gestureSwipeDown != GESTURE_NOTHING ||
+                    gestureSwipeRight != GESTURE_NOTHING) {
+                mHasDrawerSwipeConflicts = true;
+                super.disableDrawerSwipe();
+            }
+        } 
     }
 }
