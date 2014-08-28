@@ -19,7 +19,6 @@
 package com.ichi2.async;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabaseCorruptException;
@@ -241,9 +240,6 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
         // Actually execute the task now that we are at the front of the queue.
         switch (mType) {
-            case TASK_TYPE_OPEN_COLLECTION:
-                return doInBackgroundOpenCollection(params);
-
             case TASK_TYPE_LOAD_DECK_COUNTS:
                 return doInBackgroundLoadDeckCounts(params);
 
@@ -483,59 +479,6 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             sHadCardQueue = false;
         }
         return sched.getCard();
-    }
-
-
-    private TaskData doInBackgroundOpenCollection(TaskData... params) {
-        Log.i(AnkiDroidApp.TAG, "doInBackgroundOpenCollection");
-        long time = Utils.intNow(1000);
-        Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
-        String collectionFile = params[0].getString();
-
-        SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
-
-        // see, if a collection is still opened
-        Collection oldCol = AnkiDroidApp.getCol();
-
-        Collection col = null;
-
-        publishProgress(new TaskData(res.getString(R.string.open_collection)));
-
-        if (!(AnkiDroidApp.colIsOpen() && oldCol.getPath().equals(collectionFile))) {
-
-            // do a safety backup if last backup is too old --> addresses
-            // android's delete db bug
-            if (BackupManager.safetyBackupNeeded(collectionFile)) {
-                publishProgress(new TaskData(res.getString(R.string.backup_collection)));
-                BackupManager.performBackup(collectionFile);
-            }
-            publishProgress(new TaskData(res.getString(R.string.open_collection)));
-
-            // load collection
-            try {
-                col = AnkiDroidApp.openCollection(collectionFile);
-            } catch (RuntimeException e) {
-                BackupManager.restoreCollectionIfMissing(collectionFile);
-                Log.e(AnkiDroidApp.TAG, "doInBackgroundOpenCollection - RuntimeException on opening collection: " + e);
-                AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundOpenCollection");
-                return new TaskData(false);
-            }
-            // create tutorial deck if needed
-            if (prefs.contains("createTutorial") && prefs.getBoolean("createTutorial", false)) {
-                prefs.edit().remove("createTutorial").commit();
-                publishProgress(new TaskData(res.getString(R.string.tutorial_load)));
-                doInBackgroundLoadTutorial(new TaskData(col));
-            }
-        } else {
-            Log.i(AnkiDroidApp.TAG, "doInBackgroundOpenCollection: collection still open - reusing it");
-            col = oldCol;
-        }
-        Object[] counts = null;
-        DeckTask.TaskData result = doInBackgroundLoadDeckCounts(new TaskData(col));
-        if (result != null) {
-            counts = result.getObjArray();
-        }
-        return new TaskData(col, counts);
     }
 
 

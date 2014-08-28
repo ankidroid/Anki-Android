@@ -1,8 +1,13 @@
 
 package com.ichi2.anki;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.DialogInterface.OnCancelListener;
+import android.os.Bundle;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -10,8 +15,22 @@ import android.view.animation.Animation;
 
 
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.async.CollectionLoader;
+import com.ichi2.libanki.Collection;
+import com.ichi2.themes.StyledOpenCollectionDialog;
 
-public class AnkiActivity extends ActionBarActivity {
+public class AnkiActivity extends ActionBarActivity implements LoaderManager.LoaderCallbacks<Collection>{
+    private Collection mCollection;
+    private StyledOpenCollectionDialog mOpenCollectionDialog;
+
+    // called when the CollectionLoader finishes... usually will be over-ridden
+    protected void onCollectionLoaded(Collection col) {
+        mCollection = col;
+    }
+
+    public Collection getCol() {
+        return mCollection;
+    }
 
     public boolean animationDisabled() {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
@@ -150,6 +169,62 @@ public class AnkiActivity extends ActionBarActivity {
             disableActivityAnimation();
         } else {
             ActivityTransitionAnimation.slide(this, animation);
+        }
+    }
+
+    // Method for loading the collection which is inherited by all AnkiActivitys
+    protected void loadCollection() {
+        // Initialize the open collection loader
+        if (AnkiDroidApp.getCol() == null) {
+            showCollectionLoadingDialog();
+        }
+        getSupportLoaderManager().initLoader(0, null, this);
+    }
+
+    // CollectionLoader Listener callbacks
+    @Override
+    public Loader<Collection> onCreateLoader(int id, Bundle args) {
+        // Currently only using one loader, so ignore id
+        return new CollectionLoader(this);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Collection> loader, Collection col) {
+        if (col != null) {
+            onCollectionLoaded(col);
+        } else {
+            AnkiDatabaseManager.closeDatabase(AnkiDroidApp.getCollectionPath());
+            //showDialog(DIALOG_LOAD_FAILED);
+        }
+    }
+
+
+    @Override
+    public void onLoaderReset(Loader<Collection> arg0) {
+        // We don't currently retain any references, so no need to free any data here
+    }
+
+    // Open collection dialog
+    public void showCollectionLoadingDialog() {
+        if (mOpenCollectionDialog == null || !mOpenCollectionDialog.isShowing()) {
+            mOpenCollectionDialog = StyledOpenCollectionDialog.show(AnkiActivity.this, getResources().getString(R.string.open_collection),
+                    new OnCancelListener() {@Override public void onCancel(DialogInterface arg0) {}}
+            );
+        }
+    }
+
+
+    // Dismiss progress dialog
+    public void dismissCollectionLoadingDialog() {
+        if (mOpenCollectionDialog != null && mOpenCollectionDialog.isShowing()) {
+            mOpenCollectionDialog.dismiss();
+        }
+    }
+
+    // Change string on progress dialog
+    public void setProgressMessage(String message) {
+        if (mOpenCollectionDialog != null && mOpenCollectionDialog.isShowing()) {
+            mOpenCollectionDialog.setMessage(message);
         }
     }
 }

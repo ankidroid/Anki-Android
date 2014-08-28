@@ -16,9 +16,7 @@
 package com.ichi2.anki;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
@@ -28,7 +26,6 @@ import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,8 +37,6 @@ import android.widget.TextView;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.stats.AnkiStatsActivity;
 import com.ichi2.anki.stats.AnkiStatsTaskHandler;
-import com.ichi2.async.DeckTask;
-import com.ichi2.themes.StyledProgressDialog;
 
 
 public class NavigationDrawerActivity extends AnkiActivity {
@@ -55,8 +50,6 @@ public class NavigationDrawerActivity extends AnkiActivity {
     private CharSequence mDrawerTitle;
     private String[] mNavigationTitles;
     private TypedArray mNavigationImages;
-    // Porgress dialog
-    private StyledProgressDialog mProgressDialog;
     // Navigation drawer list item entries
     protected static final int DRAWER_DECK_PICKER = 0;
     protected static final int DRAWER_BROWSER = 1;

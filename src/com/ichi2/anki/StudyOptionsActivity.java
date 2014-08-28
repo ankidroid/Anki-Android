@@ -29,8 +29,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.EditText;
-
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.themes.StyledOpenCollectionDialog;
@@ -43,7 +41,6 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
 
     private BroadcastReceiver mUnmountReceiver = null;
     private StyledOpenCollectionDialog mNotMountedDialog;
-    private EditText mDialogEditText = null;
 
 
     @Override
@@ -62,6 +59,7 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
         }
         registerExternalStorageListener();
     }
+
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu){
@@ -200,14 +198,14 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
 
                             @Override
                             public void onCancel(DialogInterface arg0) {
-                                finish();
+                                finishWithoutAnimation();
                             }
                         });
                     } else if (intent.getAction().equals(SdCardReceiver.MEDIA_MOUNT)) {
                         if (mNotMountedDialog != null && mNotMountedDialog.isShowing()) {
                             mNotMountedDialog.dismiss();
                         }
-                        mCurrentFragment.reloadCollection();
+                        loadCollection();
                     }
                 }
             };
