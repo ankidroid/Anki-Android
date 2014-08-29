@@ -189,6 +189,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private boolean mShowTimer;
     protected boolean mPrefWhiteboard;
     private boolean mPrefWriteAnswers;
+    private boolean mShowKeyboard;
     private boolean mInputWorkaround;
     private boolean mLongClickWorkaround;
     private boolean mPrefFullscreenReview;
@@ -1763,8 +1764,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (mFlipCardLayout.getVisibility() != View.VISIBLE) {
             mFlipCardLayout.setVisibility(View.VISIBLE);
             mFlipCardLayout.requestFocus();
-        } else if (typeAnswer()) {
-            mAnswerField.requestFocus();
+        }
+
+        if (typeAnswer() && mShowKeyboard) {
+                mAnswerField.requestFocus();
+
+                // Show soft keyboard
+                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.showSoftInput(mAnswerField, InputMethodManager.SHOW_FORCED);
         }
     }
 
@@ -1813,6 +1820,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mPrefHideDueCount = preferences.getBoolean("hideDueCount", false);
         mPrefWhiteboard = preferences.getBoolean("whiteboard", false);
         mPrefWriteAnswers = !preferences.getBoolean("writeAnswersDisable", false);
+        mShowKeyboard = !preferences.getBoolean("autoKeyboardDisable", false);
         mDisableClipboard = preferences.getString("dictionary","0").equals("0");
         mLongClickWorkaround = preferences.getBoolean("textSelectionLongclickWorkaround", false);
         // mDeckFilename = preferences.getString("deckFilename", "");

@@ -117,6 +117,11 @@
                 android:key="writeAnswersDisable"
                 android:summary="@string/write_answers_disable_summ"
                 android:title="@string/write_answers_disable" />
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="autoKeyboardDisable"
+                android:summary="@string/auto_keyboard_disable_summ"
+                android:title="@string/auto_keyboard_disable" />
         </PreferenceCategory>
         <PreferenceCategory android:title="@string/pref_cat_flashcard" >
             <CheckBoxPreference
