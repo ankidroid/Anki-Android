@@ -39,6 +39,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -176,7 +178,9 @@ public class Media {
                 mDb.commit();
             } catch (Exception e) {
                 // if we couldn't import the old db for some reason, just start anew
-                Log.e(AnkiDroidApp.TAG, "Failed to import old media db", e);
+                StringWriter sw = new StringWriter();
+                e.printStackTrace(new PrintWriter(sw));
+                mCol.log("failed to import old media db:" + sw.toString());
             }
             mDb.execute("detach old");
             File newDbFile = new File(oldpath + ".old");
@@ -789,7 +793,7 @@ public class Media {
                 String normname = AnkiDroidApp.getCompat().nfcNormalized(fname);
 
                 if (!TextUtils.isEmpty(csum)) {
-                    Log.v(AnkiDroidApp.TAG, "+media zip " + fname);
+                    mCol.log("+media zip " + fname);
                     File file = new File(dir(), fname);
                     BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file), 2048);
                     z.putNextEntry(new ZipEntry(Integer.toString(c)));
@@ -802,7 +806,7 @@ public class Media {
                     meta.put(new JSONArray().put(normname).put(Integer.toString(c)));
                     sz += file.length();
                 } else {
-                    Log.v(AnkiDroidApp.TAG, "-media zip " + fname);
+                    mCol.log("-media zip " + fname);
                     meta.put(new JSONArray().put(normname).put(""));
                 }
                 if (sz >= Consts.SYNC_ZIP_SIZE) {

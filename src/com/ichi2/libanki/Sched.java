@@ -120,6 +120,7 @@ public class Sched {
         }
         Card card = _getCard();
         if (card != null) {
+            mCol.log(card);
             if (!mBurySiblingsOnAnswer) {
                 _burySiblings(card);
             }
@@ -141,6 +142,7 @@ public class Sched {
 
 
     public void answerCard(Card card, int ease) {
+        mCol.log();
         Log.i(AnkiDroidApp.TAG, "answerCard - ease:" + ease);
         mCol.markReview(card);
         if (mBurySiblingsOnAnswer) {
@@ -257,6 +259,7 @@ public class Sched {
     public void unburyCards() {
         try {
             mCol.getConf().put("lastUnburied", mToday);
+            mCol.log(mCol.getDb().queryColumn(Long.class, "select id from cards where queue = -2", 0));
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -266,9 +269,10 @@ public class Sched {
 
 
     public void unburyCardsForDeck() {
-        mCol.getDb().execute(
-                "update cards set mod=?,usn=?,queue=type where queue = -2 and did in " + Utils.ids2str(mCol.getDecks().active()),
-                new Object[]{Utils.intNow(), mCol.usn()});
+        String sids = Utils.ids2str(mCol.getDecks().active());
+        mCol.log(mCol.getDb().queryColumn(Long.class, "select id from cards where queue = -2 and did in " + sids, 0));
+        mCol.getDb().execute("update cards set mod=?,usn=?,queue=type where queue = -2 and did in " + sids,
+                new Object[] { Utils.intNow(), mCol.usn() });
     }
 
 
@@ -1573,6 +1577,7 @@ public class Sched {
                 return ids;
             }
             // move the cards over
+            mCol.log(deck.getLong("id"), ids);
             _moveToDyn(deck.getLong("id"), ids);
         } catch (JSONException e) {
             throw new RuntimeException(e);
@@ -1590,6 +1595,7 @@ public class Sched {
         if (lim == null) {
             lim = "did = " + did;
         }
+        mCol.log(mCol.getDb().queryColumn(Long.class, "select id from cards where " + lim, 0));
         // move out of cram queue
         mCol.getDb().execute(
                 "UPDATE cards SET did = odid, queue = (CASE WHEN type = 1 THEN 0 "
@@ -1833,6 +1839,7 @@ public class Sched {
      */
 
     public void _updateCutoff() {
+        int oldToday = mToday;
         // calculate days since col created and store in mToday
         mToday = 0;
         Calendar crt = GregorianCalendar.getInstance();
@@ -1862,7 +1869,10 @@ public class Sched {
         // set end of day cutoff
         crt.add(Calendar.DAY_OF_YEAR, mToday + 1);
         mDayCutoff = crt.getTimeInMillis() / 1000;
-
+        if (oldToday != mToday) {
+            mCol.log(mToday, mDayCutoff);
+        }
+        
         // update all daily counts, but don't save decks to prevent needless conflicts. we'll save on card answer
         // instead
         for (JSONObject deck : mCol.getDecks().all()) {
@@ -2070,6 +2080,7 @@ public class Sched {
      * Suspend cards.
      */
     public void suspendCards(long[] ids) {
+        mCol.log(ids);
         remFromDyn(ids);
         removeLrn(ids);
         mCol.getDb().execute(
@@ -2082,6 +2093,7 @@ public class Sched {
      * Unsuspend cards
      */
     public void unsuspendCards(long[] ids) {
+        mCol.log(ids);
         mCol.getDb().execute(
                 "UPDATE cards SET queue = type, mod = " + Utils.intNow() + ", usn = " + mCol.usn()
                         + " WHERE queue = -1 AND id IN " + Utils.ids2str(ids));
@@ -2089,6 +2101,7 @@ public class Sched {
 
 
     public void buryCards(long[] cids) {
+        mCol.log(cids);
         remFromDyn(cids);
         removeLrn(cids);
         mCol.getDb().execute("update cards set queue=-2,mod=?,usn=? where id in " + Utils.ids2str(cids),
@@ -2098,7 +2111,7 @@ public class Sched {
 
     /**
      * Bury all cards for note until next session.
-     * @param nid The id of the targetted note.
+     * @param nid The id of the targeted note.
      */
     public void buryNote(long nid) {
         long[] cids = Utils.arrayList2array(mCol.getDb().queryColumn(Long.class,
@@ -2146,8 +2159,11 @@ public class Sched {
             }
         }
         // then bury
-        mCol.getDb().execute("update cards set queue=-2,mod=?,usn=? where id in " + Utils.ids2str(toBury),
-                new Object[]{Utils.now(), mCol.usn()});
+        if (toBury.size() > 0) {
+            mCol.getDb().execute("update cards set queue=-2,mod=?,usn=? where id in " + Utils.ids2str(toBury),
+                    new Object[] { Utils.now(), mCol.usn() });
+            mCol.log(toBury);
+        }
     }
 
 
@@ -2163,6 +2179,7 @@ public class Sched {
         int pmax = mCol.getDb().queryScalar("SELECT max(due) FROM cards WHERE type=0", false);
         // takes care of mod + usn
         sortCards(ids, pmax + 1);
+        mCol.log(ids);
     }
 
 
@@ -2186,6 +2203,7 @@ public class Sched {
         mCol.getDb().executeMany(
                 "update cards set type=2,queue=2,ivl=?,due=?,odue=0 " +
                 "usn=?,mod=?,factor=? where id=?", d);
+        mCol.log(ids);
     }
 
 
@@ -2197,6 +2215,7 @@ public class Sched {
                         "select id from cards where id in %s and (queue != 0 or type != 0)", Utils.ids2str(ids)), 0));
         mCol.getDb().execute("update cards set reps=0, lapses=0 where id in " + Utils.ids2str(nonNew));
         forgetCards(nonNew);
+        mCol.log(ids);
     }
 
 

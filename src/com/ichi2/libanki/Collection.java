@@ -21,6 +21,7 @@ import android.content.ContentValues;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.Pair;
 
@@ -35,7 +36,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -84,6 +89,8 @@ public class Collection {
     private LinkedList<Object[]> mUndo;
 
     private String mPath;
+    private boolean mDebugLog;
+    private PrintWriter mLogHnd;
 
     // Cloze regex
     private static final Pattern fClozePattern = Pattern.compile("\\{\\{cloze:");
@@ -123,13 +130,19 @@ public class Collection {
         this(db, path, false);
     }
 
-
     public Collection(AnkiDb db, String path, boolean server) {
+        this(db, path, false, false);
+    }
+
+    public Collection(AnkiDb db, String path, boolean server, boolean log) {
+        mDebugLog = log;
         mDb = db;
+        mPath = path;
+        _openLog();
+        log(path, AnkiDroidApp.getPkgVersionName());
         mServer = server;
         mLastSave = Utils.now();
         clearUndo();
-        mPath = path;
         mMedia = new Media(this, server);
         mModels = new Models(this);
         mDecks = new Decks(this);
@@ -304,11 +317,12 @@ public class Collection {
                     lock();
                 }
             } catch (RuntimeException e) {
-    			AnkiDroidApp.saveExceptionReportFile(e, "closeDB");
+                AnkiDroidApp.saveExceptionReportFile(e, "closeDB");
             }
             AnkiDatabaseManager.closeDatabase(mPath);
             mDb = null;
             mMedia.close();
+            _closeLog();
             Log.i(AnkiDroidApp.TAG, "Collection closed");
         }
     }
@@ -318,6 +332,7 @@ public class Collection {
         if (mDb == null) {
             mDb = AnkiDatabaseManager.getDatabase(mPath);
             mMedia.connect();
+            _openLog();
         }
     }
 
@@ -1489,6 +1504,50 @@ public class Collection {
         mDb.execute("ANALYZE");
     }
 
+
+    /**
+     * Logging
+     * ***********************************************************
+     */
+
+    public void log(Object... args) {
+        if (!mDebugLog) {
+            return;
+        }
+        StackTraceElement trace = Thread.currentThread().getStackTrace()[3];
+        String s = String.format("[%s] %s:%s(): %s", Utils.intNow(), trace.getFileName(), trace.getMethodName(),
+                TextUtils.join(",  ", args));
+        mLogHnd.println(s);
+        Log.d(AnkiDroidApp.TAG, s);
+    }
+
+
+    private void _openLog() {
+        if (!mDebugLog) {
+            return;
+        }
+        try {
+            File lpath = new File(mPath.replaceFirst("\\.anki2$", ".log"));
+            if (lpath.exists() && lpath.length() > 10*1024*1024) {
+                File lpath2 = new File(lpath + ".old");
+                if (lpath2.exists()) {
+                    lpath2.delete();
+                }
+                lpath.renameTo(lpath2);
+            }
+            mLogHnd = new PrintWriter(new BufferedWriter(new FileWriter(lpath, true)), true);
+        } catch (IOException e) {
+            // turn off logging if we can't open the log file
+            Log.e(AnkiDroidApp.TAG, "Failed to open collection.log file - disabling logging");
+            mDebugLog = false;
+        }
+    }
+
+
+    private void _closeLog() {
+        mLogHnd.close();
+        mLogHnd = null;
+    }
 
     /**
      * Getters/Setters ********************************************************** *************************************
