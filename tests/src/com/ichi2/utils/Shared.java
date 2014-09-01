@@ -27,7 +27,7 @@ import java.io.IOException;
  */
 public class Shared {
 
-    public Collection getEmptyDeck() throws IOException {
+    public Collection getEmptyCol() throws IOException {
         File f = File.createTempFile("test", ".anki2");
         // Provide a string instead of an actual File. Storage.Collection won't populate the DB
         // if the file already exists (it assumes it's an existing DB).

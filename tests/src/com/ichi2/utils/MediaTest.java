@@ -17,6 +17,7 @@
 package com.ichi2.utils;
 
 import android.test.AndroidTestCase;
+import android.test.suitebuilder.annotation.Suppress;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.BackupManager;
@@ -36,7 +37,7 @@ import java.util.List;
 public class MediaTest extends AndroidTestCase {
 
     public void testAdd() throws IOException {
-        Collection d = new Shared().getEmptyDeck();
+        Collection d = new Shared().getEmptyCol();
         File dir = new File(AnkiDroidApp.getCurrentAnkiDroidMediaDir());
         BackupManager.removeDir(dir);
         dir.mkdirs();
@@ -60,7 +61,7 @@ public class MediaTest extends AndroidTestCase {
 
 
     public void testStrings() throws IOException {
-        Collection d = new Shared().getEmptyDeck();
+        Collection d = new Shared().getEmptyCol();
         Long mid = d.getModels().getModels().entrySet().iterator().next().getKey();
         List<String> expected;
         List<String> actual;
@@ -115,7 +116,7 @@ public class MediaTest extends AndroidTestCase {
 
 
     public void testDeckIntegration() throws IOException {
-        Collection d = new Shared().getEmptyDeck();
+        Collection d = new Shared().getEmptyCol();
         File dir = new File(d.getMedia().dir());
         BackupManager.removeDir(dir);
         dir.mkdirs();
@@ -155,63 +156,71 @@ public class MediaTest extends AndroidTestCase {
             assertEquals(expected.size(), actual.size());
         } catch (APIVersionException e) {
             // Can't test media on older APIs
+            fail();
         }
     }
 
 
+    @Suppress
     private List<String> added(Collection d) {
-        return d.getMedia().getDb().queryColumn(String.class, "select fname from log where type = 0", 0);
+        return d.getMedia().getDb().queryColumn(String.class, "select fname from media where csum is not null", 0);
+    }
+
+    @Suppress
+    private List<String> removed(Collection d) {
+        return d.getMedia().getDb().queryColumn(String.class, "select fname from media where csum is null", 0);
     }
 
 
-    // These tests need to be updated on the desktop client.
     public void testChanges() throws IOException {
-        /*
-        Collection d = new Shared().getEmptyDeck();
-        // TODO: _changed() should return Long with null instead of 0
-        assertTrue(d.getMedia()._changed() != 0);
-        assertTrue(added(d).size() == 0);
-        assertTrue(d.getMedia().removed().size() == 0);
-        // add a file
-        File dir = new File(AnkiDroidApp.getCurrentAnkiDroidMediaDir());
-        BackupManager.removeDir(dir);
-        dir.mkdirs();
-        File f = new File(dir, "foo.jpg");
-        String path = f.getAbsolutePath();
-        FileOutputStream os;
-        os = new FileOutputStream(path, false);
-        os.write("hello".getBytes());
-        os.close();
-        path = d.getMedia().addFile(path);
-        // should have been logged
-        d.getMedia().findChanges();
-        assertTrue(added(d).size() > 0);
-        assertTrue(d.getMedia().removed().size() == 0);
-        // if we modify it, the cache won't notice
-        os = new FileOutputStream(path, true);
-        os.write("world".getBytes());
-        os.close();
-        assertTrue(added(d).size() == 1);
-        assertTrue(d.getMedia().removed().size() == 0);
-        // but if we add another file, it will
-        os = new FileOutputStream(path + "2", true);
-        os.write("yo".getBytes());
-        os.close();
-        d.getMedia().findChanges();
-        assertTrue(added(d).size() == 2);
-        assertTrue(d.getMedia().removed().size() == 0);
-        // deletions should get noticed too
-        new File(path + "2").delete();
-        d.getMedia().findChanges();
-        assertTrue(added(d).size() == 1);
-        assertTrue(d.getMedia().removed().size() == 1);
-        */
+        try {
+            Collection d = new Shared().getEmptyCol();
+            assertTrue(d.getMedia()._changed() != null);
+            assertTrue(added(d).size() == 0);
+            assertTrue(removed(d).size() == 0);
+            // add a file
+            File dir = new File(AnkiDroidApp.getCurrentAnkiDroidMediaDir());
+            BackupManager.removeDir(dir);
+            dir.mkdirs();
+            File f = new File(dir, "foo.jpg");
+            String path = f.getAbsolutePath();
+            FileOutputStream os;
+            os = new FileOutputStream(path, false);
+            os.write("hello".getBytes());
+            os.close();
+            path = d.getMedia().addFile(path);
+            // should have been logged
+            d.getMedia().findChanges();
+            assertTrue(added(d).size() > 0);
+            assertTrue(removed(d).size() == 0);
+            // if we modify it, the cache won't notice
+            os = new FileOutputStream(path, true);
+            os.write("world".getBytes());
+            os.close();
+            assertTrue(added(d).size() == 1);
+            assertTrue(removed(d).size() == 0);
+            // but if we add another file, it will
+            os = new FileOutputStream(path + "2", true);
+            os.write("yo".getBytes());
+            os.close();
+            d.getMedia().findChanges();
+            assertTrue(added(d).size() == 2);
+            assertTrue(removed(d).size() == 0);
+            // deletions should get noticed too
+            new File(path + "2").delete();
+            d.getMedia().findChanges();
+            assertTrue(added(d).size() == 1);
+            assertTrue(removed(d).size() == 1);
+        } catch (APIVersionException e) {
+            // Can't test media on older APIs
+            fail();
+        }
     }
 
 
     public void testIllegal() throws IOException {
-        Collection d = new Shared().getEmptyDeck();
-        String aString = "a:b|cd\\e/f\\0g*h";
+        Collection d = new Shared().getEmptyCol();
+        String aString = "a:b|cd\\e/f\0g*h";
         String good = "abcdefgh";
         assertTrue(d.getMedia().stripIllegal(aString).equals(good));
         for (int i = 0; i < aString.length(); i++) {
