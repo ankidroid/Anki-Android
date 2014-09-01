@@ -367,12 +367,17 @@ public class Media {
     }
 
 
+    public String escapeImages(String string) {
+        return escapeImages(string, false);
+    }
+
+
     /**
      * Percent-escape UTF-8 characters in local image filenames.
      * @param string The string to search for image references and escape the filenames.
      * @return The string with the filenames of any local images percent-escaped as UTF-8.
      */
-    public String escapeImages(String string) {
+    public String escapeImages(String string, boolean unescape) {
         for (Pattern p : Arrays.asList(fImgRegExpQ, fImgRegExpU)) {
             Matcher m = p.matcher(string);
             // NOTE: python uses the named group 'fname'. Java doesn't have named groups, so we have to determine
@@ -384,7 +389,11 @@ public class Media {
                 if (fRemotePattern.matcher(fname).find()) {
                     string = tag;
                 } else {
-                    string = tag.replace(fname, Uri.encode(fname));
+                    if (unescape) {
+                        string = tag.replace(fname, Uri.decode(fname));
+                    } else {
+                        string = tag.replace(fname, Uri.encode(fname));
+                    }
                 }
             }
         }
