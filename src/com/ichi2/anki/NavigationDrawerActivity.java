@@ -270,5 +270,26 @@ public class NavigationDrawerActivity extends AnkiActivity {
     
     public ActionBarDrawerToggle getDrawerToggle() {
         return mDrawerToggle;
+    }
+    
+    /**
+     * This function locks the navigation drawer closed in regards to swipes,
+     * but continues to allowed it to be opened via it's indicator button. This
+     * function in a noop if the drawer hasn't been initialized.
+     */
+    protected void disableDrawerSwipe() {
+        if (mDrawerLayout != null) {
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        }
+    }
+    
+    /**
+     * This function allows swipes to open the navigation drawer. This
+     * function in a noop if the drawer hasn't been initialized.
+     */    
+    protected void enableDrawerSwipe() {
+        if (mDrawerLayout != null) {
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+        }
     }    
 }

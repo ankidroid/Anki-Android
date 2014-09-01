@@ -80,6 +80,7 @@ import com.ichi2.anim.ViewAnimation;
 import com.ichi2.anki.exception.APIVersionException;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.reviewer.ReviewerExtRegistry;
+import com.ichi2.anki.reviewer.WhiteboardListener;
 import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
@@ -271,6 +272,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private int mCurrentEase;
 
     private boolean mShowWhiteboard = false;
+    private WhiteboardListener mWhiteboardListener;
 
     private int mNextTimeTextColor;
     private int mNextTimeTextRecomColor;
@@ -967,6 +969,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (mPrefWhiteboard && deckID != -1 && MetaDB.getWhiteboardState(this, deckID) == 1) {
             mShowWhiteboard = true;
             mWhiteboard.setVisibility(View.VISIBLE);
+            if (mWhiteboardListener != null) {
+                mWhiteboardListener.onShowWhiteboard();
+            }
         }
 
         // Initialize dictionary lookup feature
@@ -1210,11 +1215,17 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                     mWhiteboard.setVisibility(View.VISIBLE);
                     item.setTitle(R.string.hide_whiteboard);
                     MetaDB.storeWhiteboardState(this, deckID, 1);
+                    if (mWhiteboardListener != null) {
+                        mWhiteboardListener.onShowWhiteboard();
+                    }
                 } else {
                     // Hide whiteboard
                     mWhiteboard.setVisibility(View.GONE);
                     item.setTitle(R.string.show_whiteboard);
                     MetaDB.storeWhiteboardState(this, deckID, 0);
+                    if (mWhiteboardListener != null) {
+                        mWhiteboardListener.onHideWhiteboard();
+                    }                    
                 }
                 refreshActionBar();
                 return true;
@@ -3106,5 +3117,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     private Spanned convertToSimple(String text) {
         return Html.fromHtml(text, mSimpleInterfaceImagegetter, mSimpleInterfaceTagHandler);
+    }
+    
+    protected void setWhiteboardListener(WhiteboardListener listener) {
+        if (listener != null) {
+            mWhiteboardListener = listener;
+        }
     }
 }
