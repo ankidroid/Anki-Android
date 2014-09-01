@@ -656,8 +656,13 @@ public class Media {
                 continue;
             }
             // empty files are invalid; clean them up and continue
-            if (f.length() == 0) {
+            long sz = f.length();
+            if (sz == 0) {
                 f.delete();
+                continue;
+            }
+            if (sz > 100*1024*1024) {
+                //mCol.log("ignoring file over 100MB", f);
                 continue;
             }
             // check encoding
