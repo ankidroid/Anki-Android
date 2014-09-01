@@ -277,6 +277,8 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         return mStudyOptionsView;
     }
     
+    // Called when the collection loader has finished
+    // NOTE: Fragment transactions are NOT allowed to be called from here on
     private void onCollectionLoaded(Collection col) {
         mCollection = col;
         initAllContentViews();
@@ -1092,7 +1094,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
             closeStudyOptions(DeckPicker.RESULT_MEDIA_EJECTED);
         } else {
             if (!AnkiDroidApp.colIsOpen()) {
-                ((AnkiActivity) getActivity()).loadCollection();
+                ((AnkiActivity) getActivity()).startLoadingCollection();
                 mDontSaveOnStop = false;
                 return;
             }

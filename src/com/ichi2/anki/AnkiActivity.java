@@ -2,10 +2,11 @@
 package com.ichi2.anki;
 
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.DialogInterface.OnCancelListener;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBarActivity;
@@ -13,24 +14,25 @@ import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.animation.Animation;
 
-
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.async.CollectionLoader;
 import com.ichi2.libanki.Collection;
 import com.ichi2.themes.StyledOpenCollectionDialog;
 
-public class AnkiActivity extends ActionBarActivity implements LoaderManager.LoaderCallbacks<Collection>{
+public class AnkiActivity extends ActionBarActivity implements LoaderManager.LoaderCallbacks<Collection> {
     private Collection mCollection;
     private StyledOpenCollectionDialog mOpenCollectionDialog;
 
+
     // called when the CollectionLoader finishes... usually will be over-ridden
     protected void onCollectionLoaded(Collection col) {
-        mCollection = col;
     }
+
 
     public Collection getCol() {
         return mCollection;
     }
+
 
     public boolean animationDisabled() {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
@@ -172,14 +174,25 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
         }
     }
 
+
     // Method for loading the collection which is inherited by all AnkiActivitys
-    protected void loadCollection() {
+    public void startLoadingCollection() {
         // Initialize the open collection loader
         if (AnkiDroidApp.getCol() == null) {
-            showCollectionLoadingDialog();
+            showOpeningCollectionDialog();
         }
         getSupportLoaderManager().initLoader(0, null, this);
     }
+
+
+    // Kick user back to DeckPicker on collection load error unless this method is overridden
+    protected void onCollectionLoadError() {
+        Intent deckPicker = new Intent(this, DeckPicker.class);
+        deckPicker.putExtra("collectionLoadError", true); // don't currently do anything with this
+        deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivityWithAnimation(deckPicker, ActivityTransitionAnimation.LEFT);
+    }
+
 
     // CollectionLoader Listener callbacks
     @Override
@@ -188,13 +201,14 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
         return new CollectionLoader(this);
     }
 
+
     @Override
     public void onLoadFinished(Loader<Collection> loader, Collection col) {
-        if (col != null) {
+        mCollection = col;
+        if (col != null && AnkiDroidApp.colIsOpen()) {
             onCollectionLoaded(col);
         } else {
-            AnkiDatabaseManager.closeDatabase(AnkiDroidApp.getCollectionPath());
-            //showDialog(DIALOG_LOAD_FAILED);
+            onCollectionLoadError();
         }
     }
 
@@ -204,27 +218,38 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
         // We don't currently retain any references, so no need to free any data here
     }
 
-    // Open collection dialog
-    public void showCollectionLoadingDialog() {
+
+    public void showOpeningCollectionDialog() {
         if (mOpenCollectionDialog == null || !mOpenCollectionDialog.isShowing()) {
-            mOpenCollectionDialog = StyledOpenCollectionDialog.show(AnkiActivity.this, getResources().getString(R.string.open_collection),
-                    new OnCancelListener() {@Override public void onCancel(DialogInterface arg0) {}}
-            );
+            mOpenCollectionDialog = StyledOpenCollectionDialog.show(AnkiActivity.this,
+                    getResources().getString(R.string.open_collection), new OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface arg0) {
+                            finishWithoutAnimation();
+                        }
+                    });
         }
     }
 
 
-    // Dismiss progress dialog
-    public void dismissCollectionLoadingDialog() {
+    public void dismissOpeningCollectionDialog() {
         if (mOpenCollectionDialog != null && mOpenCollectionDialog.isShowing()) {
             mOpenCollectionDialog.dismiss();
         }
     }
 
-    // Change string on progress dialog
-    public void setProgressMessage(String message) {
+
+    // Change string on collection loading progress dialog
+    public void setOpeningCollectionDialogMessage(String message) {
         if (mOpenCollectionDialog != null && mOpenCollectionDialog.isShowing()) {
             mOpenCollectionDialog.setMessage(message);
         }
     }
+
+
+    // Dismiss whatever dialog is showing
+    public void dismissAllDialogFragments() {
+        getSupportFragmentManager().popBackStack("dialog", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+    }
+
 }

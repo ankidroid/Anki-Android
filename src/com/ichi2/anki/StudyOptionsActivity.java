@@ -205,7 +205,7 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
                         if (mNotMountedDialog != null && mNotMountedDialog.isShowing()) {
                             mNotMountedDialog.dismiss();
                         }
-                        loadCollection();
+                        startLoadingCollection();
                     }
                 }
             };

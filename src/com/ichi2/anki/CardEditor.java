@@ -306,7 +306,7 @@ public class CardEditor extends AnkiActivity {
             }
         }
 
-        loadCollection();
+        startLoadingCollection();
     }
 
 
@@ -512,7 +512,7 @@ public class CardEditor extends AnkiActivity {
             }
 
         });
-        dismissCollectionLoadingDialog();
+        dismissOpeningCollectionDialog();
     }
 
 

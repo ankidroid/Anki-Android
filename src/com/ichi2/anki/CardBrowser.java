@@ -241,7 +241,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         initNavigationDrawer(mainView);
         selectNavigationItem(DRAWER_BROWSER);
         
-        loadCollection();
+        startLoadingCollection();
     }
 
 
@@ -402,7 +402,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                 }
             }
         }
-        dismissCollectionLoadingDialog();
+        dismissOpeningCollectionDialog();
     }
 
 
