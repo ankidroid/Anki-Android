@@ -99,6 +99,7 @@ public class Syncer {
             try {
                 Log.i(AnkiDroidApp.TAG, "Sync: getting meta data from server");
                 JSONObject rMeta = new JSONObject(mServer.stream2String(ret.getEntity().getContent()));
+                mCol.log("rmeta", rMeta);
                 long rscm = rMeta.getLong("scm");
                 int rts = rMeta.getInt("ts");
                 mRMod = rMeta.getLong("mod");
@@ -115,6 +116,7 @@ public class Syncer {
                 }
                 Log.i(AnkiDroidApp.TAG, "Sync: building local meta data");
                 JSONObject lMeta = meta();
+                mCol.log("lmeta", lMeta);
                 mLMod = lMeta.getLong("mod");
                 mMinUsn = lMeta.getInt("usn");
                 long lscm = lMeta.getLong("scm");
@@ -122,16 +124,21 @@ public class Syncer {
 
                 long diff = Math.abs(rts - lts);
                 if (diff > 300) {
+                    mCol.log("clock off");
                     return new Object[] { "clockOff", diff };
                 }
                 if (mLMod == mRMod) {
                     Log.i(AnkiDroidApp.TAG, "Sync: no changes - returning");
+                    mCol.log("no changes");
                     return new Object[] { "noChanges" };
                 } else if (lscm != rscm) {
                     Log.i(AnkiDroidApp.TAG, "Sync: full sync necessary - returning");
+                    mCol.log("schema diff");
                     return new Object[] { "fullSync" };
                 }
                 mLNewer = mLMod > mRMod;
+                // TODO: step 1.5 appears to be missing here
+                
                 // step 2: deletions
                 publishProgress(con, R.string.sync_deletions_message);
 
@@ -181,6 +188,7 @@ public class Syncer {
                 while (true) {
                     Log.i(AnkiDroidApp.TAG, "Sync: downloading chunked data");
                     JSONObject chunk = mServer.chunk();
+                    mCol.log("server chunk", chunk);
                     if (chunk == null) {
                         Log.i(AnkiDroidApp.TAG, "Sync: error - returning");
                         return null;
@@ -200,6 +208,7 @@ public class Syncer {
                 while (true) {
                     Log.i(AnkiDroidApp.TAG, "Sync: collecting chunked data");
                     JSONObject chunk = chunk();
+                    mCol.log("client chunk", chunk);
                     JSONObject sech = new JSONObject();
                     sech.put("chunk", chunk);
                     Log.i(AnkiDroidApp.TAG, "Sync: sending chunked data");
@@ -866,6 +875,7 @@ public class Syncer {
                     update.add(ConvUtils.jsonArray2Objects(r));
                 }
             }
+            mCol.log(table, data);
             return update;
         } catch (JSONException e) {
             throw new RuntimeException(e);

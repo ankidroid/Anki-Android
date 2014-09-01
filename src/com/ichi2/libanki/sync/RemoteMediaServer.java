@@ -161,8 +161,8 @@ public class RemoteMediaServer extends HttpSyncer {
         try {
             if (!TextUtils.isEmpty(resp.optString("err"))) {
                 String err = resp.getString("err");
-                Log.e(AnkiDroidApp.TAG, "RemoteMediaSyncer: Error returned: " + err);
-                throw new RuntimeException("SyncError: " + err);
+                mCol.log("error returned: " + err);
+                throw new RuntimeException("SyncError:" + err);
                 // TODO: Should probably define a new exception and handle it accordingly
             }
             if (returnType == String.class) {

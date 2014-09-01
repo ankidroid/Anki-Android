@@ -429,7 +429,7 @@ public class AnkiDroidApp extends Application {
                     sInstance.mCurrentCollection.close();
                     sInstance.mAccessThreadCount = 0;
                 }
-                sInstance.mCurrentCollection = Storage.Collection(path);
+                sInstance.mCurrentCollection = Storage.Collection(path, false, true);
                 sInstance.mAccessThreadCount++;
                 Log.i(AnkiDroidApp.TAG, "Access to collection is requested: collection has been opened");
             } else {

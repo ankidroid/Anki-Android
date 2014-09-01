@@ -20,6 +20,7 @@ package com.ichi2.libanki;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.ichi2.anki.AnkiDroidApp;
@@ -27,9 +28,14 @@ import com.ichi2.anki.AnkiDroidApp;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 /**
  A Card is the ultimate entity subject to review; it encapsulates the scheduling parameters (from which to derive
@@ -204,6 +210,7 @@ public class Card implements Cloneable {
                 mFlags,
                 mData
         });
+        mCol.log(this);
     }
 
 
@@ -232,6 +239,7 @@ public class Card implements Cloneable {
         values.put("did", mDid);
         // TODO: The update DB call sets mod=true. Verify if this is intended.
         mCol.getDb().update("cards", values, "id = " + mId, null);
+        mCol.log(this);
     }
 
 
@@ -613,5 +621,28 @@ public class Card implements Cloneable {
         } catch (CloneNotSupportedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+
+    // A list of class members to skip in the toString() representation
+    public static final Set<String> SKIP_PRINT = new HashSet<String>(Arrays.asList("SKIP_PRINT", "$assertionsDisabled", "TYPE_LRN",
+            "TYPE_NEW", "TYPE_REV", "mNote", "mQA", "mCol", "mTimerStarted", "mTimerStopped"));
+
+    public String toString() {
+        List<String> members = new ArrayList<String>();
+        for (Field f : this.getClass().getDeclaredFields()) {
+            try {
+                // skip non-useful elements
+                if (SKIP_PRINT.contains(f.getName())) {
+                    continue;
+                }
+                members.add(String.format("'%s': %s", f.getName(), f.get(this)));
+            } catch (IllegalAccessException e) {
+                members.add(String.format("'%s': %s", f.getName(), "N/A"));
+            } catch (IllegalArgumentException e) {
+                members.add(String.format("'%s': %s", f.getName(), "N/A"));
+            }
+        }
+        return TextUtils.join(",  ", members);
     }
 }
