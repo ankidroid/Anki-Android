@@ -113,8 +113,6 @@ public class Tags {
 
 
     public void register(Iterable<String> tags, Integer usn) {
-        // case is stored as received, so user can create different case
-        // versions of the same tag if they ignore the qt autocomplete.
         //boolean found = false;
         for (String t : tags) {
             if (!mTags.containsKey(t)) {
@@ -268,7 +266,7 @@ public class Tags {
     /** Parse a string and return a list of tags. */
     public List<String> split(String tags) {
         ArrayList<String> list = new ArrayList<String>();
-        for (String s : tags.split("\\s")) {
+        for (String s : tags.replace('\u3000', ' ').split("\\s")) {
             if (s.length() > 0) {
                 list.add(s);
             }
@@ -324,13 +322,19 @@ public class Tags {
      * ***********************************************************
      */
 
-    /** Strip duplicates and sort. */
+    /** Strip duplicates, adjust case to match existing tags, and sort. */
     public TreeSet<String> canonify(List<String> tagList) {
         // NOTE: The python version creates a list of tags, puts them into a set, then sorts them. The TreeSet
         // used here already guarantees uniqueness and sort order, so we return it as-is without those steps.
         TreeSet<String> strippedTags = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
-        for (String x : tagList) {
-            strippedTags.add(sCanonify.matcher(x).replaceAll(""));
+        for (String t : tagList) {
+            String s = sCanonify.matcher(t).replaceAll("");
+            for (String existingTag : mTags.keySet()) {
+                if (s.equalsIgnoreCase(existingTag)) {
+                    s = existingTag;
+                }
+            }
+            strippedTags.add(s);
         }
         return strippedTags;
     }

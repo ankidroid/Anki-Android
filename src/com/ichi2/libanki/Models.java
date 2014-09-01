@@ -648,12 +648,12 @@ public class Models {
     public void renameField(JSONObject m, JSONObject field, String newName) {
         mCol.modSchema();
         try {
-            String pat = String.format("\\{\\{([:#^/]|[^:#/^}][^:}]*?:|)%s\\}\\}",
+            String pat = String.format("\\{\\{(.*)([:#^/]|[^:#/^}][^:}]*?:|)%s\\}\\}",
                     Pattern.quote(field.getString("name")));
             if (newName == null) {
                 newName = "";
             }
-            String repl = "{{$1" + newName + "}}";
+            String repl = "{{$1$2" + newName + "}}";
 
             JSONArray tmpls = m.getJSONArray("tmpls");
             for (int i = 0; i < tmpls.length(); ++i) {
