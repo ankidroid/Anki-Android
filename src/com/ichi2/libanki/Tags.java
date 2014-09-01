@@ -266,7 +266,7 @@ public class Tags {
     /** Parse a string and return a list of tags. */
     public List<String> split(String tags) {
         ArrayList<String> list = new ArrayList<String>();
-        for (String s : tags.split("\\s")) {
+        for (String s : tags.replace('\u3000', ' ').split("\\s")) {
             if (s.length() > 0) {
                 list.add(s);
             }
