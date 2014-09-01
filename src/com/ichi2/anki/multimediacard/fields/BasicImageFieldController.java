@@ -19,11 +19,13 @@
 
 package com.ichi2.anki.multimediacard.fields;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -32,6 +34,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 
+import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.utils.BitmapUtil;
 import com.ichi2.utils.ExifUtil;
@@ -93,12 +96,20 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         mBtnCamera = new Button(mActivity);
         mBtnCamera.setText(gtxt(R.string.multimedia_editor_image_field_editing_photo));
         mBtnCamera.setOnClickListener(new View.OnClickListener() {
-            @Override
+            @SuppressLint("NewApi")
+			@Override
             public void onClick(View v) {
                 Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                 File image;
+                File storageDir;
                 try {
-                    image = File.createTempFile("ankidroid_img", ".jpg");
+                    if (AnkiDroidApp.SDK_VERSION > 7) {
+                        storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+                    } else {
+                        storageDir = Environment.getExternalStorageDirectory();
+                        storageDir = new File(storageDir.getAbsolutePath() + "/DCIM");
+                    }
+                    image = File.createTempFile("ankidroid_img", ".jpg", storageDir);
                     mTempCameraImagePath = image.getPath();
                     Uri uriSavedImage = Uri.fromFile(image);
 

@@ -1188,9 +1188,9 @@ public class CardEditor extends AnkiActivity {
 
     private void startMultimediaFieldEditor(final int index, IMultimediaEditableNote mNote, IField field) {
         Intent editCard = new Intent(CardEditor.this, EditFieldActivity.class);
-        editCard.putExtra(EXTRA_FIELD_INDEX, index);
-        editCard.putExtra(EXTRA_FIELD, field);
-        editCard.putExtra(EXTRA_WHOLE_NOTE, mNote);
+        editCard.putExtra(EditFieldActivity.EXTRA_FIELD_INDEX, index);
+        editCard.putExtra(EditFieldActivity.EXTRA_FIELD, field);
+        editCard.putExtra(EditFieldActivity.EXTRA_WHOLE_NOTE, mNote);
         startActivityForResultWithoutAnimation(editCard, REQUEST_MULTIMEDIA_EDIT);
     }
 

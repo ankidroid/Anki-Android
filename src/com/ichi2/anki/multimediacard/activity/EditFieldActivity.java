@@ -49,6 +49,10 @@ public class EditFieldActivity extends FragmentActivity {
     public static final String EXTRA_RESULT_FIELD = "edit.field.result.field";
     public static final String EXTRA_RESULT_FIELD_INDEX = "edit.field.result.field.index";
 
+    public static final String EXTRA_FIELD_INDEX = "multim.card.ed.extra.field.index";
+    public static final String EXTRA_FIELD = "multim.card.ed.extra.field";
+    public static final String EXTRA_WHOLE_NOTE = "multim.card.ed.extra.whole.note";
+
     private static final String BUNDLE_KEY_SHUT_OFF = "key.edit.field.shut.off";
 
     IField mField;
@@ -72,12 +76,11 @@ public class EditFieldActivity extends FragmentActivity {
 
         setContentView(R.layout.activity_edit_text);
 
-        mField = (IField) this.getIntent().getExtras().getSerializable(MultimediaCardEditorActivity.EXTRA_FIELD);
+        mField = (IField) this.getIntent().getExtras().getSerializable(EXTRA_FIELD);
 
-        mNote = (IMultimediaEditableNote) this.getIntent().getSerializableExtra(
-                MultimediaCardEditorActivity.EXTRA_WHOLE_NOTE);
+        mNote = (IMultimediaEditableNote) this.getIntent().getSerializableExtra(EXTRA_WHOLE_NOTE);
 
-        mFieldIndex = this.getIntent().getIntExtra(MultimediaCardEditorActivity.EXTRA_FIELD_INDEX, 0);
+        mFieldIndex = this.getIntent().getIntExtra(EXTRA_FIELD_INDEX, 0);
 
         recreateEditingUi();
 
