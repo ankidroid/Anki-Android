@@ -19,7 +19,6 @@ package com.ichi2.utils;
 import android.test.AndroidTestCase;
 import android.test.suitebuilder.annotation.Suppress;
 
-import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.exception.APIVersionException;
 import com.ichi2.libanki.Collection;
@@ -36,13 +35,12 @@ import java.util.List;
  */
 public class MediaTest extends AndroidTestCase {
 
-    public void testAdd() throws IOException {
-        Collection d = new Shared().getEmptyCol();
-        File dir = new File(AnkiDroidApp.getCurrentAnkiDroidMediaDir());
+    public void testAdd() throws IOException, APIVersionException {
+        Collection d = Shared.getEmptyCol();
+        File dir = Shared.getTestDir();
         BackupManager.removeDir(dir);
         dir.mkdirs();
-        File f = new File(dir, "foo.jpg");
-        String path = f.getAbsolutePath();
+        File path = new File(dir, "foo.jpg");
         FileOutputStream os;
         os = new FileOutputStream(path, false);
         os.write("hello".getBytes());
@@ -61,7 +59,7 @@ public class MediaTest extends AndroidTestCase {
 
 
     public void testStrings() throws IOException {
-        Collection d = new Shared().getEmptyCol();
+        Collection d = Shared.getEmptyCol();
         Long mid = d.getModels().getModels().entrySet().iterator().next().getKey();
         List<String> expected;
         List<String> actual;
@@ -115,15 +113,14 @@ public class MediaTest extends AndroidTestCase {
     }
 
 
-    public void testDeckIntegration() throws IOException {
-        Collection d = new Shared().getEmptyCol();
-        File dir = new File(d.getMedia().dir());
-        BackupManager.removeDir(dir);
-        dir.mkdirs();
-        // Put a file into the media directory
-        File file = new File(dir, "fake.png");
+    public void testDeckIntegration() throws IOException, APIVersionException {
+        Collection d = Shared.getEmptyCol();
+        // create a media dir
+        d.getMedia().dir();
+        // Put a file into it
+        File file = new File(Shared.getTestDir(), "fake.png");
         file.createNewFile();
-        d.getMedia().addFile(file.getAbsolutePath());
+        d.getMedia().addFile(file);
         // add a note which references it
         Note f = d.newNote();
         f.setitem("Front", "one");
@@ -136,28 +133,21 @@ public class MediaTest extends AndroidTestCase {
         d.addNote(f);
         // and add another file which isn't used
         FileOutputStream os;
-        os = new FileOutputStream(new File(dir, "foo.jpg").getAbsolutePath(), false);
+        os = new FileOutputStream(new File(d.getMedia().dir(), "foo.jpg"), false);
         os.write("test".getBytes());
         os.close();
         // check media
-        try {
-            List<List<String>> ret = d.getMedia().check();
-            List<String> expected;
-            List<String> actual;
-    
-            expected = Arrays.asList("fake2.png");
-            actual = ret.get(0);
-            actual.retainAll(expected);
-            assertEquals(expected.size(), actual.size());
-    
-            expected = Arrays.asList("foo.jpg");
-            actual = ret.get(1);
-            actual.retainAll(expected);
-            assertEquals(expected.size(), actual.size());
-        } catch (APIVersionException e) {
-            // Can't test media on older APIs
-            fail();
-        }
+        List<List<String>> ret = d.getMedia().check();
+        List<String> expected;
+        List<String> actual;
+        expected = Arrays.asList("fake2.png");
+        actual = ret.get(0);
+        actual.retainAll(expected);
+        assertEquals(expected.size(), actual.size());
+        expected = Arrays.asList("foo.jpg");
+        actual = ret.get(1);
+        actual.retainAll(expected);
+        assertEquals(expected.size(), actual.size());
     }
 
 
@@ -172,54 +162,47 @@ public class MediaTest extends AndroidTestCase {
     }
 
 
-    public void testChanges() throws IOException {
-        try {
-            Collection d = new Shared().getEmptyCol();
-            assertTrue(d.getMedia()._changed() != null);
-            assertTrue(added(d).size() == 0);
-            assertTrue(removed(d).size() == 0);
-            // add a file
-            File dir = new File(AnkiDroidApp.getCurrentAnkiDroidMediaDir());
-            BackupManager.removeDir(dir);
-            dir.mkdirs();
-            File f = new File(dir, "foo.jpg");
-            String path = f.getAbsolutePath();
-            FileOutputStream os;
-            os = new FileOutputStream(path, false);
-            os.write("hello".getBytes());
-            os.close();
-            path = d.getMedia().addFile(path);
-            // should have been logged
-            d.getMedia().findChanges();
-            assertTrue(added(d).size() > 0);
-            assertTrue(removed(d).size() == 0);
-            // if we modify it, the cache won't notice
-            os = new FileOutputStream(path, true);
-            os.write("world".getBytes());
-            os.close();
-            assertTrue(added(d).size() == 1);
-            assertTrue(removed(d).size() == 0);
-            // but if we add another file, it will
-            os = new FileOutputStream(path + "2", true);
-            os.write("yo".getBytes());
-            os.close();
-            d.getMedia().findChanges();
-            assertTrue(added(d).size() == 2);
-            assertTrue(removed(d).size() == 0);
-            // deletions should get noticed too
-            new File(path + "2").delete();
-            d.getMedia().findChanges();
-            assertTrue(added(d).size() == 1);
-            assertTrue(removed(d).size() == 1);
-        } catch (APIVersionException e) {
-            // Can't test media on older APIs
-            fail();
-        }
+    public void testChanges() throws IOException, APIVersionException {
+        Collection d = Shared.getEmptyCol();
+        assertTrue(d.getMedia()._changed() != null);
+        assertTrue(added(d).size() == 0);
+        assertTrue(removed(d).size() == 0);
+        // add a file
+        File dir = Shared.getTestDir();
+        File path = new File(dir, "foo.jpg");
+        FileOutputStream os;
+        os = new FileOutputStream(path, false);
+        os.write("hello".getBytes());
+        os.close();
+        path = new File(d.getMedia().dir(), d.getMedia().addFile(path));
+        // should have been logged
+        d.getMedia().findChanges();
+        assertTrue(added(d).size() > 0);
+        assertTrue(removed(d).size() == 0);
+        // if we modify it, the cache won't notice
+        os = new FileOutputStream(path, true);
+        os.write("world".getBytes());
+        os.close();
+        assertTrue(added(d).size() == 1);
+        assertTrue(removed(d).size() == 0);
+        // but if we add another file, it will
+        path = new File(path.getAbsolutePath()+"2");
+        os = new FileOutputStream(path, true);
+        os.write("yo".getBytes());
+        os.close();
+        d.getMedia().findChanges();
+        assertTrue(added(d).size() == 2);
+        assertTrue(removed(d).size() == 0);
+        // deletions should get noticed too
+        path.delete();
+        d.getMedia().findChanges();
+        assertTrue(added(d).size() == 1);
+        assertTrue(removed(d).size() == 1);
     }
 
 
     public void testIllegal() throws IOException {
-        Collection d = new Shared().getEmptyCol();
+        Collection d = Shared.getEmptyCol();
         String aString = "a:b|cd\\e/f\0g*h";
         String good = "abcdefgh";
         assertTrue(d.getMedia().stripIllegal(aString).equals(good));
