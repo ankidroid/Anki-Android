@@ -21,8 +21,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ichi2.anki"
     android:installLocation="auto"
-    android:versionCode="20300110"
-    android:versionName="2.3alpha10" >
+    android:versionCode="20300111"
+    android:versionName="2.3alpha11" >
 
     <!--
         The version number is of the form:
@@ -255,11 +255,6 @@
             </intent-filter>
         </receiver>
 
-        <activity
-            android:name="com.ichi2.anki.multimediacard.activity.MultimediaCardEditorActivity"
-            android:configChanges="keyboardHidden|orientation|locale|screenSize"
-            android:label="@string/fact_adder_intent_title" >
-        </activity>
         <activity
             android:name="com.ichi2.anki.multimediacard.activity.EditFieldActivity"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
