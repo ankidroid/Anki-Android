@@ -331,7 +331,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private static final int GESTURE_BURY = 12;
     private static final int GESTURE_SUSPEND = 13;
     protected static final int GESTURE_DELETE = 14;
-    protected static final int GESTURE_CLEAR_WHITEBOARD = 15;
     protected static final int GESTURE_PLAY_MEDIA = 16;
     protected static final int GESTURE_EXIT = 17;
 
@@ -2833,11 +2832,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 break;
             case GESTURE_DELETE:
                 showDeleteNoteDialog();
-                break;
-            case GESTURE_CLEAR_WHITEBOARD:
-                if (mPrefWhiteboard) {
-                    mWhiteboard.clear();
-                }
                 break;
             case GESTURE_PLAY_MEDIA:
                 playSounds(true);
