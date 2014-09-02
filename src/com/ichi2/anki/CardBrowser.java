@@ -477,6 +477,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
             @Override
             public boolean onQueryTextSubmit(String query) {
                 onSearch();
+                mSearchView.clearFocus();
                 return true;
             }
         });
