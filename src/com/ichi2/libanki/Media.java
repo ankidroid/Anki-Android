@@ -219,72 +219,50 @@ public class Media {
      * ***********************************************************
      */
 
-    /**
-     * Copy opath to the media directory and return new filename. If the same name exists, compare checksums.
-     * <p>
-     * TODO: This method is unreviewed and could contain errors. It is currently not used anywhere. The desktop client
-     * makes use of this method to insert media into the collection through the note editor, which is currently not done
-     * in AnkiDroid.
-     *
-     * @param opath The path where the media file exists before adding it.
-     * @return The filename of the resulting file.
-     */
-    public String addFile(String opath) {
-        String mdir = dir();
-        // remove any dangerous characters
-        String base = fIllegalCharReg.matcher(new File(opath).getName()).replaceAll("");
-        // if it doesn't exist, copy it directly
-        File newMediaFile = new File(mdir, base);
-        String dst = newMediaFile.getAbsolutePath();
-        if (!newMediaFile.exists()) {
-            try {
-                Utils.copyFile(new File(opath), newMediaFile);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            return base;
-        }
+    public String addFile(File ofile) throws IOException, APIVersionException {
+        return writeData(ofile);
+    }
 
-        if (Utils.fileChecksum(opath).equals(Utils.fileChecksum(dst))) {
-            return base;
-        }
-        // otherwise, find a unique name
-        String root, ext;
-        int extIndex = base.lastIndexOf('.');
-        if (extIndex == 0 || extIndex == -1) {
-            root = base;
-            ext = "";
-        } else {
-            root = base.substring(0, extIndex);
-            ext = base.substring(extIndex);
-        }
-        StringBuilder sb = null;
-        String path = null;
-        Matcher m = null;
-        int n = 0;
-        Pattern fileOrdinal = Pattern.compile(" \\((\\d+)\\)$");
+
+    /**
+     * Copy a file to the media directory and return the filename it was stored as.
+     * <p>
+     * Unlike the python version of this method, we don't read the file into memory as a string. All our operations are
+     * done on streams opened on the file, so there is no second parameter for the string object here.
+     */
+    private String writeData(File ofile) throws IOException, APIVersionException {
+        // get the file name
+        String fname = ofile.getName();
+        // make sure we write it in NFC form and return an NFC-encoded reference
+        fname = AnkiDroidApp.getCompat().nfcNormalized(fname);
+        // remove any dangerous characters
+        String base = stripIllegal(fname);
+        String root = Utils.removeExtension(base);
+        String ext = Utils.getFileExtension(base);
+        // find the first available name
+        String csum = Utils.fileChecksum(ofile);
         while (true) {
-            sb = new StringBuilder(mdir);
-            path = sb.append(File.separatorChar).append(root).append(ext).toString();
-            newMediaFile = new File(path);
-            if (!newMediaFile.exists()) {
-                break;
+            fname = root + ext;
+            File path = new File(dir(), fname);
+            // if it doesn't exist, copy it directly
+            if (!path.exists()) {
+                Utils.copyFile(ofile, path);
+                return fname;
             }
-            m = fileOrdinal.matcher(root);
+            // if it's identical, reuse
+            if (Utils.fileChecksum(path).equals(csum)) {
+                return fname;
+            }
+            // otherwise, increment the index in the filename
+            Pattern reg = Pattern.compile(" \\((\\d+)\\)$");
+            Matcher m = reg.matcher(root);
             if (!m.find()) {
-                root = root.concat(" (1)");
+                root = root + " (1)";
             } else {
-                n = Integer.parseInt(m.group(1));
-                root = m.replaceFirst(" (" + String.valueOf(n + 1) + ")");
+                int n = Integer.parseInt(m.group(1));
+                root = String.format(" (%d)", n + 1);
             }
         }
-        // copy and return
-        try {
-            Utils.copyFile(new File(opath), newMediaFile);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return newMediaFile.getName();
     }
 
 

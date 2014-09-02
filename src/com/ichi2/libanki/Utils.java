@@ -644,6 +644,10 @@ public class Utils {
     }
 
 
+    public static String fileChecksum(File file) {
+        return fileChecksum(file.getAbsolutePath());
+    }
+
     /** Replace HTML line break tags with new lines. */
     public static String replaceLineBreak(String text) {
         return text.replaceAll("<br(\\s*\\/*)>", "\n");

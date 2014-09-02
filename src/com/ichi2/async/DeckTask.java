@@ -1036,7 +1036,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             // export media
             JSONObject media = new JSONObject();
             if (includeMedia) {
-                File mediaDir = new File(AnkiDroidApp.getCurrentAnkiDroidMediaDir());
+                File mediaDir = new File(AnkiDroidApp.getCol().getMedia().dir());
                 if (mediaDir.exists() && mediaDir.isDirectory()) {
                     File[] mediaFiles = mediaDir.listFiles();
                     int c = 0;
