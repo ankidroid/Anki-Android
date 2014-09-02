@@ -914,7 +914,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         // The hardware buttons should control the music volume while reviewing.
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
         // Load the collection
-        loadCollection();
+        startLoadingCollection();
     }
 
 
@@ -979,7 +979,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         deselectAllNavigationItems();
         supportInvalidateOptionsMenu();
-        dismissCollectionLoadingDialog();
+        dismissOpeningCollectionDialog();
     }
 
     @Override

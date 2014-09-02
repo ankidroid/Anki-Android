@@ -56,7 +56,7 @@ public class CollectionLoader extends AsyncTaskLoader<Collection> {
                 return;
             }
         }
-        // Loader is running so dismiss progress dialog and forward data to listener
+        // Loader is running so forward data to listener
         if (isStarted()) {
             super.deliverResult(col);
         }
@@ -93,7 +93,7 @@ public class CollectionLoader extends AsyncTaskLoader<Collection> {
         if (sActivity != null && sActivity.get() != null) {
             sActivity.get().runOnUiThread(new Runnable() {
                 public void run() {
-                    sActivity.get().setProgressMessage(message);
+                    sActivity.get().setOpeningCollectionDialogMessage(message);
                 }
             });
         }

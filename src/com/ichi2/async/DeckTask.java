@@ -179,7 +179,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
     public static void cancelTask(int taskType) {
         // cancel the current task only if it's of type taskType
-        if (sLatestInstance.mType == taskType) {
+        if (sLatestInstance != null && sLatestInstance.mType == taskType) {
             cancelTask();
         }
     }
@@ -660,7 +660,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         HashMap<String, String> deckNames = (HashMap<String, String>) params[0].getObjArray()[1];
         String query = (String) params[0].getObjArray()[2];
         Boolean order = (Boolean) params[0].getObjArray()[3];
-        ArrayList<HashMap<String,String>> searchResult = col.findCardsForCardBrowser(query, order, deckNames);        
+        ArrayList<HashMap<String,String>> searchResult = col.findCardsForCardBrowser(query, order, deckNames);
         if (isCancelled() || CardBrowser.sSearchCancelled) {
             Log.i(AnkiDroidApp.TAG, "doInBackgroundSearchCards was cancelled so return null");
             return null;
@@ -711,10 +711,23 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     private TaskData doInBackgroundCheckDatabase(TaskData... params) {
         Log.i(AnkiDroidApp.TAG, "doInBackgroundCheckDatabase");
         Collection col = params[0].getCollection();
+        // Try to reopen the collection if it's null
+        if (!AnkiDroidApp.colIsOpen()) {
+            Log.e(AnkiDroidApp.TAG, "doInBackgroundCheckDatabase :: collection not open, trying to reload");
+            AnkiDroidApp.openCollection(AnkiDroidApp.COLLECTION_PATH);
+            col = AnkiDroidApp.getCol();
+            if (col == null) {
+                Log.e(AnkiDroidApp.TAG, "doInBackgroundCheckDatabase :: collection reload failed");
+                return new TaskData(false);
+            }
+        }
+
         long result = col.fixIntegrity();
         if (result == -1) {
             return new TaskData(false);
         } else {
+            // Close the collection and we restart the app to reload
+            AnkiDroidApp.closeCollection(true);
             return new TaskData(0, result, true);
         }
     }

@@ -10,7 +10,6 @@ import com.ichi2.async.DeckTask;
 import com.ichi2.async.DeckTask.TaskData;
 
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 public class UIUtils {
 
@@ -20,7 +19,7 @@ public class UIUtils {
 
 
     public static long getDayStart() {
-        Calendar cal = GregorianCalendar.getInstance();
+        Calendar cal = Calendar.getInstance();
         if (cal.get(Calendar.HOUR_OF_DAY) < 4) {
             cal.roll(Calendar.DAY_OF_YEAR, -1);
         }
@@ -29,6 +28,38 @@ public class UIUtils {
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MILLISECOND, 0);
         return cal.getTimeInMillis();
+    }
+
+
+    public static void closeCollectionInBackground() {
+        // note: this code used to be called in the onStop() method of DeckPicker
+        // https://github.com/ankidroid/Anki-Android/blob/d7023159b3599d07e18c308fdaa4bb8f8935fd1d/src/com/ichi2/anki/DeckPicker.java#L1206
+        // it's currently not being used anywhere, in favor of letting the Android kernel automatically close the
+        // collection when it kills the process
+        if (AnkiDroidApp.colIsOpen()) {
+            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CLOSE_DECK, new DeckTask.TaskListener() {
+                @Override
+                public void onPreExecute() {
+                    Log.i(AnkiDroidApp.TAG, "closeCollectionInBackground: start");
+                }
+
+
+                @Override
+                public void onPostExecute(TaskData result) {
+                    Log.i(AnkiDroidApp.TAG, "closesCollectionInBackground: finished");
+                }
+
+
+                @Override
+                public void onProgressUpdate(TaskData... values) {
+                }
+
+
+                @Override
+                public void onCancelled() {
+                }
+            }, new DeckTask.TaskData(AnkiDroidApp.getCol()));
+        }
     }
 
 
@@ -54,8 +85,6 @@ public class UIUtils {
 
                 @Override
                 public void onCancelled() {
-                    // TODO Auto-generated method stub
-                    
                 }
             }, new DeckTask.TaskData(AnkiDroidApp.getCol()));
         }

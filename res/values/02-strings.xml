@@ -146,6 +146,7 @@
     <string name="info_rate">Rate AnkiDroid</string>
     <string name="col_load_failed">Collection loading failed.\nPress back to close AnkiDroid.</string>
     <string name="import_title">Import cards</string>
+    <string name="import_select_title">Choose a file to import</string>
     <string name="import_message">Add content of file %s to your collection or replace your collection with it?</string>
     <string name="import_message_add">Add</string>
     <string name="import_message_replace">Replace</string>

@@ -55,7 +55,6 @@ import android.widget.TextView;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.TagsDialog;
 import com.ichi2.anki.dialogs.TagsDialog.TagsDialogListener;
-import com.ichi2.anki.multimediacard.activity.MultimediaCardEditorActivity;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.async.DeckTask;
 import com.ichi2.async.DeckTask.TaskData;
@@ -241,7 +240,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         initNavigationDrawer(mainView);
         selectNavigationItem(DRAWER_BROWSER);
         
-        loadCollection();
+        startLoadingCollection();
     }
 
 
@@ -402,7 +401,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                 }
             }
         }
-        dismissCollectionLoadingDialog();
+        dismissOpeningCollectionDialog();
     }
 
 
@@ -547,14 +546,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
             closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
         }
 
-        // TODO(flerda): Currently we are using the regular card editor and
-        // delete is not possible. We should probably update this went
-        // switching back to the multimedia card editor.
-        if (requestCode == EDIT_CARD && resultCode == MultimediaCardEditorActivity.RESULT_DELETED) {
-            deleteNote(sCardBrowserCard);
-            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDeleteNoteHandler,
-                    new DeckTask.TaskData(getCol().getSched(), sCardBrowserCard, 3));
-        } else if (requestCode == EDIT_CARD && resultCode != RESULT_CANCELED) {
+        if (requestCode == EDIT_CARD && resultCode != RESULT_CANCELED) {
             Log.i(AnkiDroidApp.TAG, "CardBrowser: Saving card...");
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler,
                     new DeckTask.TaskData(getCol().getSched(), sCardBrowserCard, false));
