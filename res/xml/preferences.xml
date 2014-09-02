@@ -153,15 +153,8 @@
                 android:title="@string/show_progress" />
         </PreferenceCategory>
         <PreferenceCategory android:title="@string/pref_cat_whiteboard" >
-            <CheckBoxPreference
-                android:defaultValue="false"
-                android:disableDependentsState="false"
-                android:key="whiteboard"
-                android:summary="@string/show_whiteboard_summ"
-                android:title="@string/enable_whiteboard" />
             <com.hlidskialf.android.preference.SeekBarPreference
                 android:defaultValue="6"
-                android:dependency="whiteboard"
                 android:key="whiteBoardStrokeWidth"
                 android:max="30"
                 android:summary="@string/whiteboard_stroke_width_summ"
@@ -169,7 +162,6 @@
                 android:title="@string/whiteboard_stroke_width" />
             <CheckBoxPreference
                 android:defaultValue="true"
-                android:dependency="whiteboard"
                 android:key="blackWhiteboard"
                 android:summary="@string/whiteboard_black_summ"
                 android:title="@string/whiteboard_black" />

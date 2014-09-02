@@ -72,7 +72,7 @@
         <item>12</item>
         <item>13</item>
         <item>14</item>
-        <item>15</item>
+        <!--15 reserved for clear whiteboard action-->
         <item>16</item>
         <item>17</item>
     </string-array>
