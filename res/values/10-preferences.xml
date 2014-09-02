@@ -43,8 +43,6 @@
     <string name="about_version">Version: </string>
 
     <!-- preferences.xml entries-->
-    <string name="enable_whiteboard">Enable whiteboard</string>
-    <string name="show_whiteboard_summ">Lets you write on the screen</string>
     <string name="whiteboard_stroke_width">Stroke width</string>
     <string name="whiteboard_stroke_width_summ">XXX</string>
     <string name="whiteboard_black">Black strokes</string>

@@ -285,19 +285,19 @@ public class MetaDB {
      * 
      * @return 1 if the whiteboard should be shown, 0 otherwise
      */
-    public static int getWhiteboardState(Context context, long did) {
+    public static boolean getWhiteboardState(Context context, long did) {
         openDBIfClosed(context);
         Cursor cur = null;
         try {
             cur = mMetaDb.rawQuery("SELECT state FROM whiteboardState" + " WHERE did = " + did, null);
             if (cur.moveToNext()) {
-                return cur.getInt(0);
+                return cur.getInt(0) > 0;
             } else {
-                return 1;
+                return true;
             }
         } catch (Exception e) {
             Log.e("Error", "Error retrieving whiteboard state from MetaDB ", e);
-            return 0;
+            return false;
         } finally {
             if (cur != null && !cur.isClosed()) {
                 cur.close();
@@ -311,7 +311,8 @@ public class MetaDB {
      * 
      * @param state 1 if the whiteboard should be shown, 0 otherwise
      */
-    public static void storeWhiteboardState(Context context, long did, int state) {
+    public static void storeWhiteboardState(Context context, long did, boolean whiteboardState) {
+        int state = (whiteboardState) ? 1 : 0;
         openDBIfClosed(context);
         Cursor cur = null;
         try {
