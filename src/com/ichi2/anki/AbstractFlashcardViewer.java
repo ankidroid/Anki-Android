@@ -1144,13 +1144,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             // Configure the whiteboard related items in the action bar
             menu.findItem(R.id.action_enable_whiteboard).setTitle(R.string.disable_whiteboard);
             menu.findItem(R.id.action_hide_whiteboard).setVisible(true);
+            menu.findItem(R.id.action_clear_whiteboard).setVisible(true);
             if (mShowWhiteboard) {
+                menu.findItem(R.id.action_clear_whiteboard).setEnabled(true);
                 menu.findItem(R.id.action_hide_whiteboard).setIcon(R.drawable.whiteboard_hide);
                 menu.findItem(R.id.action_hide_whiteboard).setTitle(R.string.hide_whiteboard);
-                menu.findItem(R.id.action_clear_whiteboard).setVisible(true);
             } else {
                 menu.findItem(R.id.action_hide_whiteboard).setTitle(R.string.show_whiteboard);
-                menu.findItem(R.id.action_clear_whiteboard).setVisible(false);
+                menu.findItem(R.id.action_clear_whiteboard).setEnabled(false);
             }
         } else {
             menu.findItem(R.id.action_enable_whiteboard).setTitle(R.string.enable_whiteboard);
