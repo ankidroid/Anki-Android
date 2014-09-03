@@ -21,7 +21,6 @@ public class ImportDialog extends DialogFragment {
     public static final int DIALOG_IMPORT_SELECT = 1;
     public static final int DIALOG_IMPORT = 2;
     public static final int DIALOG_IMPORT_REPLACE_CONFIRM = 3;
-    public static final int DIALOG_IMPORT_LOG = 4;
 
     public interface ImportDialogListener {
         public void showImportDialog(int id, String message);
@@ -146,14 +145,6 @@ public class ImportDialog extends DialogFragment {
                         });
                 builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
                 return builder.create();                
-                
-            case DIALOG_IMPORT_LOG:
-                // Show log from import process
-                builder.setIcon(R.drawable.ic_dialog_alert);
-                builder.setTitle(res.getString(R.string.import_title));
-                builder.setPositiveButton(res.getString(R.string.dialog_ok), null);
-                builder.setMessage(getArguments().getString("dialogMessage"));
-                return builder.create();
 
             default:
                 return null;

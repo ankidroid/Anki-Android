@@ -66,7 +66,6 @@ import com.ichi2.anki.dialogs.DeckPickerContextMenu;
 import com.ichi2.anki.dialogs.DeckPickerConfirmDeleteDeckDialog;
 import com.ichi2.anki.dialogs.DeckPickerNoSpaceLeftDialog;
 import com.ichi2.anki.dialogs.ImportDialog;
-import com.ichi2.anki.dialogs.DeckPickerDatabaseCheckResultDialog;
 import com.ichi2.anki.dialogs.SyncErrorDialog;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.stats.AnkiStatsTaskHandler;
@@ -234,10 +233,10 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                     } else {
                         message = res.getString(R.string.import_log_error);
                     }
-                    showImportDialog(ImportDialog.DIALOG_IMPORT_LOG, message);
+                    showLogDialog(message);
                 } else {
                     message = res.getString(R.string.import_log_success, count);
-                    showImportDialog(ImportDialog.DIALOG_IMPORT_LOG, message);
+                    showLogDialog(message);
                     Object[] info = result.getObjArray();
                     updateDecksList((TreeSet<Object[]>) info[0], (Integer) info[1], (Integer) info[2]);
                 }
@@ -280,13 +279,13 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                 int code = result.getInt();
                 if (code == -2) {
                     // not a valid apkg file
-                    showImportDialog(ImportDialog.DIALOG_IMPORT_LOG, res.getString(R.string.import_log_no_apkg));
+                    showLogDialog(res.getString(R.string.import_log_no_apkg));
                 }
                 Object[] info = result.getObjArray();
                 updateDecksList((TreeSet<Object[]>) info[0], (Integer) info[1], (Integer) info[2]);
                 dismissOpeningCollectionDialog();
             } else {
-                showImportDialog(ImportDialog.DIALOG_IMPORT_LOG, res.getString(R.string.import_log_no_apkg));
+                showLogDialog(res.getString(R.string.import_log_no_apkg));
             }
         }
 
@@ -1049,6 +1048,29 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
         showDialogFragment(newFragment);
     }
 
+    private void showLogDialog(String message) {
+        showLogDialog(message, false);
+    }
+
+    private void showLogDialog(String message, final boolean reload) {
+        // Since this is called from onPostExecute() of an AsyncTask, we can't use a DialogFragment
+        // as we can't make commits to the fragment manager while the Activity is closed
+        StyledDialog.Builder builder = new StyledDialog.Builder(this);
+        builder.setMessage(message);
+        builder.setPositiveButton(getResources().getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dismissAllDialogFragments();
+                if (reload) {
+                    Intent deckPicker = new Intent(DeckPicker.this, DeckPicker.class);
+                    deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivityWithAnimation(deckPicker, ActivityTransitionAnimation.LEFT);
+                }
+            }
+        });
+        builder.create().show();
+    }
+
 
     @Override
     public void showImportDialog(int id) {
@@ -1114,7 +1136,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                     startLoadingCollection();
                 } else {
                     Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.deck_repair_error), true);
-                    showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_ERROR_HANDLING);
+                    onCollectionLoadError();
                 }
             }
 
@@ -1157,7 +1179,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                         msg = getResources().getString(R.string.check_db_acknowledge);
                     }
                     // Show result of database check and restart the app
-                    showDialogFragment(DeckPickerDatabaseCheckResultDialog.newInstance(msg));
+                    showLogDialog(msg, true);
                 } else {
                     handleDbError();
                 }
@@ -1200,7 +1222,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                         Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
                     }
                 }
-                showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_DB_ERROR);
+                onCollectionLoadError();
             }
 
 
@@ -1240,10 +1262,10 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                     case BackupManager.RETURN_ERROR:
                         Themes.showThemedToast(DeckPicker.this,
                                 getResources().getString(R.string.backup_restore_error), true);
-                        showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_ERROR_HANDLING);
+                        onCollectionLoadError();
                         break;
                     case BackupManager.RETURN_NOT_ENOUGH_SPACE:
-                        showDialogFragment(DeckPickerNoSpaceLeftDialog.newInstance());
+                        showLogDialog(getResources().getString(R.string.backup_deck_no_space_left), true);
                         break;
                 }
                 if (mProgressDialog != null && mProgressDialog.isShowing()) {
@@ -1388,11 +1410,11 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                         editor.putString("hkey", "");
                         editor.commit();
                         // then show
+                        // TODO: This will cause a crash in the rare case the activity has been stopped
                         showSyncErrorDialog(SyncErrorDialog.DIALOG_USER_NOT_LOGGED_IN_SYNC);
                     } else if (resultType.equals("noChanges")) {
                         dialogMessage = res.getString(R.string.sync_no_changes_message);
-                        showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_LOG,
-                                joinSyncMessages(dialogMessage, syncMessage));
+                        showLogDialog(joinSyncMessages(dialogMessage, syncMessage));
                     } else if (resultType.equals("clockOff")) {
                         long diff = (Long) result[1];
                         if (diff >= 86100) {
@@ -1407,8 +1429,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                         } else {
                             dialogMessage = res.getString(R.string.sync_log_clocks_unsynchronized, diff, "");
                         }
-                        showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_LOG,
-                                joinSyncMessages(dialogMessage, syncMessage));
+                        showLogDialog(joinSyncMessages(dialogMessage, syncMessage));
                     } else if (resultType.equals("fullSync")) {
                         if (data.data != null && data.data.length >= 1 && data.data[0] instanceof Integer) {
                             mSyncMediaUsn = (Integer) data.data[0];
@@ -1416,45 +1437,38 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                         showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_CONFLICT_RESOLUTION);
                     } else if (resultType.equals("dbError")) {
                         dialogMessage = res.getString(R.string.sync_corrupt_database, R.string.repair_deck);
-                        showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_LOG,
-                                joinSyncMessages(dialogMessage, syncMessage));
+                        showLogDialog(joinSyncMessages(dialogMessage, syncMessage));
                     } else if (resultType.equals("overwriteError")) {
                         dialogMessage = res.getString(R.string.sync_overwrite_error);
-                        showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_LOG,
-                                joinSyncMessages(dialogMessage, syncMessage));
+                        showLogDialog(joinSyncMessages(dialogMessage, syncMessage));
                     } else if (resultType.equals("remoteDbError")) {
                         dialogMessage = res.getString(R.string.sync_remote_db_error);
-                        showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_LOG,
-                                joinSyncMessages(dialogMessage, syncMessage));
+                        showLogDialog(joinSyncMessages(dialogMessage, syncMessage));
                     } else if (resultType.equals("sdAccessError")) {
                         dialogMessage = res.getString(R.string.sync_write_access_error);
-                        showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_LOG,
-                                joinSyncMessages(dialogMessage, syncMessage));
+                        showLogDialog(joinSyncMessages(dialogMessage, syncMessage));
                     } else if (resultType.equals("finishError")) {
                         dialogMessage = res.getString(R.string.sync_log_finish_error);
-                        showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_LOG,
-                                joinSyncMessages(dialogMessage, syncMessage));
+                        showLogDialog(joinSyncMessages(dialogMessage, syncMessage));
                     } else if (resultType.equals("IOException")) {
                         handleDbError();
                     } else if (resultType.equals("genericError")) {
                         dialogMessage = res.getString(R.string.sync_generic_error);
-                        showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_LOG,
-                                joinSyncMessages(dialogMessage, syncMessage));
+                        showLogDialog(joinSyncMessages(dialogMessage, syncMessage));
                     } else if (resultType.equals("OutOfMemoryError")) {
                         dialogMessage = res.getString(R.string.error_insufficient_memory);
-                        showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_LOG,
-                                joinSyncMessages(dialogMessage, syncMessage));
+                        showLogDialog(joinSyncMessages(dialogMessage, syncMessage));
                     } else if (resultType.equals("sanityCheckError")) {
                         Collection col = getCol();
                         col.modSchema();
                         col.save();
                         dialogMessage = res.getString(R.string.sync_sanity_failed);
+                        // TODO: This will cause a crash in the rare case the activity has been stopped
                         showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_SANITY_ERROR,
                                 joinSyncMessages(dialogMessage, syncMessage));
                     } else if (resultType.equals("serverAbort")) {
                         // syncMsg has already been set above, no need to fetch it here.
-                        showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_LOG,
-                                joinSyncMessages(dialogMessage, syncMessage));
+                        showLogDialog(joinSyncMessages(dialogMessage, syncMessage));
                     } else {
                         if (result.length > 1 && result[1] instanceof Integer) {
                             int type = (Integer) result[1];
@@ -1472,8 +1486,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                         } else {
                             dialogMessage = res.getString(R.string.sync_generic_error);
                         }
-                        showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_LOG,
-                                joinSyncMessages(dialogMessage, syncMessage));
+                        showLogDialog(joinSyncMessages(dialogMessage, syncMessage));
                     }
                 }
             } else {
@@ -1496,8 +1509,9 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                     dialogMessage = res.getString(R.string.sync_database_acknowledge);
                 }
 
-                showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_LOG, joinSyncMessages(dialogMessage, syncMessage));
-                dismissOpeningCollectionDialog();
+                // Synchronize the collection in AnkiActivity with the new one opened in AnkiDroidApp during the sync
+                startLoadingCollection();
+                showLogDialog(joinSyncMessages(dialogMessage, syncMessage));
 
                 if (mFragmented) {
                     try {
@@ -1508,8 +1522,6 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                         throw new RuntimeException();
                     }
                 }
-                loadCounts();
-
             }
         }
     };
@@ -1715,6 +1727,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
             public void onPostExecute(TaskData result) {
                 if (result.getBoolean()) {
                     loadCounts();
+                    // TODO: This will crash if we're using fragmented layout and activity has been stopped
                     openStudyOptions(getCol().getDecks().selected());
                 } else {
                     Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.tutorial_loading_error),

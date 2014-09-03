@@ -23,7 +23,6 @@ public class SyncErrorDialog extends DialogFragment {
     public static final int DIALOG_SYNC_SANITY_ERROR = 6;
     public static final int DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_LOCAL = 7;
     public static final int DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_REMOTE = 8;
-    public static final int DIALOG_SYNC_LOG = 9;
 
     public interface SyncErrorDialogListener {
         public void showSyncErrorDialog(int dialogType);
@@ -224,13 +223,6 @@ public class SyncErrorDialog extends DialogFragment {
                         });
                 builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
                 builder.setMessage(res.getString(R.string.sync_conflict_remote_confirm));
-                return builder.create();
-
-            case DIALOG_SYNC_LOG:
-                // Show log file
-                builder.setMessage(getArguments().getString("dialogMessage"));
-                builder.setPositiveButton(res.getString(R.string.dialog_ok), clearAllDialogsClickListener);
-                ((SyncErrorDialogListener) getActivity()).getCol().load();
                 return builder.create();
 
             default:
