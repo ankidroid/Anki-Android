@@ -181,7 +181,7 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
         if (AnkiDroidApp.getCol() == null) {
             showOpeningCollectionDialog();
         }
-        getSupportLoaderManager().initLoader(0, null, this);
+        getSupportLoaderManager().restartLoader(0, null, this);
     }
 
 
