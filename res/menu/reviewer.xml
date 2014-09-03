@@ -2,22 +2,17 @@
     xmlns:ankidroid="http://schemas.android.com/apk/res-auto" >
 
     <item
-        android:id="@+id/action_whiteboard"
-        android:title="@string/pref_cat_whiteboard"
+        android:id="@+id/action_clear_whiteboard"
+        android:title="@string/clear_whiteboard"
+        android:icon="@drawable/ic_menu_clear_playlist"
+        android:visible="false"
+        ankidroid:showAsAction="always"/>
+    <item
+        android:id="@+id/action_hide_whiteboard"
+        android:title="@string/hide_whiteboard"
         android:icon="@drawable/whiteboard_show"
         android:visible="false"
-        ankidroid:showAsAction="always" >
-        <menu>
-            <group android:id="@+id/whiteboard_group">
-                <item
-                    android:id="@+id/action_hide_whiteboard"
-                    android:title="@string/hide_whiteboard"/>
-                <item
-                    android:id="@+id/action_clear_whiteboard"
-                    android:title="@string/clear_whiteboard" />
-            </group>
-        </menu>
-    </item>
+        ankidroid:showAsAction="always"/>
     <item
         android:id="@+id/action_undo"
         android:enabled="false"
