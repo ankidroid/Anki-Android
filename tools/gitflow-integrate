@@ -8,7 +8,7 @@
 # to see how to use the tool.
 
 # Add this directory to the path.
-PATH=$(dirname $0):$PATH
+PATH=$(dirname $0)/lib:$PATH
 . bash-util.sh || exit 1
 . git-util.sh || exit 1
 
