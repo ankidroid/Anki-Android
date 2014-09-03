@@ -27,6 +27,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -49,8 +50,10 @@ import android.text.TextUtils;
 import android.text.style.StrikethroughSpan;
 import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Display;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.Gravity;
@@ -60,6 +63,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewConfiguration;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -919,6 +923,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     }
 
 
+    @ Override
+    public void onConfigurationChanged(Configuration config) {
+        // called when screen rotated, etc, since recreating the Webview is too expensive
+        super.onConfigurationChanged(config);
+        refreshActionBar();
+    }
+
+
     protected abstract void setTitle();
 
 
@@ -1100,7 +1112,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     }
 
 
-    @Override
+    @SuppressLint("NewApi")
+	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.reviewer, menu);
         Resources res = getResources();
@@ -1115,10 +1128,24 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             menu.findItem(R.id.action_undo).setEnabled(false).setIcon(R.drawable.ic_menu_revert_disabled);
         }
         if (mPrefWhiteboard) {
+            // Check if we can forceably squeeze in 3 items into the action bar, if not hide "show whiteboard"
+            if (AnkiDroidApp.SDK_VERSION >= 14 &&  !ViewConfiguration.get(this).hasPermanentMenuKey()) {
+                // Android 4.x device with overflow menu in the action bar and small screen can't
+                // support forcing 2 extra items into the action bar
+                Display display = getWindowManager().getDefaultDisplay();
+                DisplayMetrics outMetrics = new DisplayMetrics ();
+                display.getMetrics(outMetrics);
+                float density  = getResources().getDisplayMetrics().density;
+                float dpWidth  = outMetrics.widthPixels / density;
+                if (dpWidth < 360) {
+                    menu.findItem(R.id.action_hide_whiteboard).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+                }
+            }
+            // Configure the whiteboard related items in the action bar
             menu.findItem(R.id.action_enable_whiteboard).setTitle(R.string.disable_whiteboard);
-            menu.findItem(R.id.action_whiteboard).setVisible(true);
+            menu.findItem(R.id.action_hide_whiteboard).setVisible(true);
             if (mShowWhiteboard) {
-                menu.findItem(R.id.action_whiteboard).setIcon(R.drawable.whiteboard_hide);
+                menu.findItem(R.id.action_hide_whiteboard).setIcon(R.drawable.whiteboard_hide);
                 menu.findItem(R.id.action_hide_whiteboard).setTitle(R.string.hide_whiteboard);
                 menu.findItem(R.id.action_clear_whiteboard).setVisible(true);
             } else {
@@ -1201,17 +1228,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                     mWhiteboard.clear();    
                 }
                 break;
-
-            case R.id.action_whiteboard:
-                if (!mShowWhiteboard) {
-                    // Skip showing the submenu when whiteboard hidden, since only one entry
-                    item.getSubMenu().removeGroup(R.id.whiteboard_group);
-                    setWhiteboardVisibility(true);
-                    refreshActionBar();
-                    break;
-                } else {
-                    break;
-                }
 
             case R.id.action_hide_whiteboard:
                 // toggle whiteboard visibility
