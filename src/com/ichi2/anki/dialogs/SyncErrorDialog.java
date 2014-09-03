@@ -230,6 +230,7 @@ public class SyncErrorDialog extends DialogFragment {
                 // Show log file
                 builder.setMessage(getArguments().getString("dialogMessage"));
                 builder.setPositiveButton(res.getString(R.string.dialog_ok), clearAllDialogsClickListener);
+                ((SyncErrorDialogListener) getActivity()).getCol().load();
                 return builder.create();
 
             default:
