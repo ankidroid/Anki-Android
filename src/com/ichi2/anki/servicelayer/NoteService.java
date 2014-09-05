@@ -191,23 +191,20 @@ public class NoteService {
 
                     File outFile = new File(mediaDir + inFile.getName());
 
-                    if (!outFile.exists()) {
-                        if (field.hasTemporaryMedia()) {
-                            // Move
-                            inFile.renameTo(outFile);
-                        } else {
-                            // Copy
-                            InputStream in = new FileInputStream(tmpMediaPath);
-                            OutputStream out = new FileOutputStream(outFile.getAbsolutePath());
+                    if (field.hasTemporaryMedia()) {
+                        // Copy file to collection.media folder
+                        InputStream in = new FileInputStream(tmpMediaPath);
+                        OutputStream out = new FileOutputStream(outFile.getAbsolutePath());
 
-                            byte[] buf = new byte[1024];
-                            int len;
-                            while ((len = in.read(buf)) > 0) {
-                                out.write(buf, 0, len);
-                            }
-                            in.close();
-                            out.close();
+                        byte[] buf = new byte[1024];
+                        int len;
+                        while ((len = in.read(buf)) > 0) {
+                            out.write(buf, 0, len);
                         }
+                        in.close();
+                        out.close();
+                        // Delete original
+                        inFile.delete();
 
                         switch (field.getType()) {
                             case AUDIO:
