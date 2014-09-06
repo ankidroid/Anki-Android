@@ -1,6 +1,7 @@
 
 package com.ichi2.anki;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
@@ -178,7 +179,7 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
     // Method for loading the collection which is inherited by all AnkiActivitys
     public void startLoadingCollection() {
         // Initialize the open collection loader
-        if (AnkiDroidApp.getCol() == null) {
+        if (!AnkiDroidApp.colIsOpen()) {
             showOpeningCollectionDialog();
         }
         getSupportLoaderManager().restartLoader(0, null, this);
@@ -252,4 +253,17 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
         getSupportFragmentManager().popBackStack("dialog", FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
+
+    // Restart the activity
+    @SuppressLint("NewApi")
+    protected void restartActivity() {
+        if (AnkiDroidApp.SDK_VERSION >= 11) {
+            this.recreate();
+        } else {
+            Intent intent = new Intent();
+            intent.setClass(this, this.getClass());
+            this.startActivity(intent);
+            this.finishWithoutAnimation();
+        }
+    }
 }

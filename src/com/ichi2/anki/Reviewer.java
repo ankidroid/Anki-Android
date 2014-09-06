@@ -51,6 +51,7 @@ public class Reviewer extends AbstractFlashcardViewer implements WhiteboardListe
         // Load the first card and start reviewing. Uses the answer card
         // task to load a card, but since we send null
         // as the card to answer, no card will be answered.
+        col.getSched().reset();     // Reset schedule incase card had previous been loaded
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(mSched, null,
                 0));
 

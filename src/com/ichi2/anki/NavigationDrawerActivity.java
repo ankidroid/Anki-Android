@@ -50,6 +50,8 @@ public class NavigationDrawerActivity extends AnkiActivity {
     private CharSequence mDrawerTitle;
     private String[] mNavigationTitles;
     private TypedArray mNavigationImages;
+    // Other members
+    private String mOldColPath;
     // Navigation drawer list item entries
     protected static final int DRAWER_DECK_PICKER = 0;
     protected static final int DRAWER_BROWSER = 1;
@@ -57,9 +59,9 @@ public class NavigationDrawerActivity extends AnkiActivity {
     protected static final int DRAWER_SETTINGS = 3;
     protected static final int DRAWER_HELP = 4;
     protected static final int DRAWER_FEEDBACK = 5;
-    // Intent return codes
-    private static final int PREFERENCES_UPDATE = 0;
-    private static final int BROWSE_CARDS = 14;
+    // Intent request codes
+    public static final int REQUEST_PREFERENCES_UPDATE = 100;
+    public static final int REQUEST_BROWSE_CARDS = 101;
     
     
     // navigation drawer stuff
@@ -112,6 +114,11 @@ public class NavigationDrawerActivity extends AnkiActivity {
 
     protected void selectNavigationItem(int position) {
         // switch to new activity... be careful not to start own activity or we can get stuck in a loop
+        // update selected item and title, then close the drawer
+        mDrawerList.setItemChecked(position, true);
+        setTitle(mNavigationTitles[position]);
+        mDrawerLayout.closeDrawer(mDrawerList);
+
         switch (position){
             case DRAWER_DECK_PICKER:
                 if (!(this instanceof DeckPicker)) {
@@ -127,7 +134,7 @@ public class NavigationDrawerActivity extends AnkiActivity {
                     if (this instanceof DeckPicker && !mFragmented){
                         cardBrowser.putExtra("fromDeckpicker", true);
                     }                    
-                    startActivityForResultWithAnimation(cardBrowser, BROWSE_CARDS, ActivityTransitionAnimation.LEFT);
+                    startActivityForResultWithAnimation(cardBrowser, REQUEST_BROWSE_CARDS, ActivityTransitionAnimation.LEFT);
                 }
                 break;
             case DRAWER_STATISTICS:
@@ -143,7 +150,8 @@ public class NavigationDrawerActivity extends AnkiActivity {
 
                 break;
             case DRAWER_SETTINGS:
-                startActivityForResultWithAnimation(new Intent(this, Preferences.class), PREFERENCES_UPDATE, ActivityTransitionAnimation.LEFT);
+                mOldColPath = AnkiDroidApp.getSharedPrefs(this).getString("deckPath", "oldPath");
+                startActivityForResultWithAnimation(new Intent(this, Preferences.class), REQUEST_PREFERENCES_UPDATE, ActivityTransitionAnimation.LEFT);
                 break;
             
             case DRAWER_HELP:
@@ -159,11 +167,6 @@ public class NavigationDrawerActivity extends AnkiActivity {
             default:
                 break;
         }
-        
-        // update selected item and title, then close the drawer
-        mDrawerList.setItemChecked(position, true);
-        setTitle(mNavigationTitles[position]);
-        mDrawerLayout.closeDrawer(mDrawerList);
     }
     
     protected void deselectAllNavigationItems() {
@@ -291,5 +294,24 @@ public class NavigationDrawerActivity extends AnkiActivity {
         if (mDrawerLayout != null) {
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         }
-    }    
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Restart the activity on preference change
+        if (requestCode == REQUEST_PREFERENCES_UPDATE) {
+            String newPath = AnkiDroidApp.getSharedPrefs(this).getString("deckPath", "");
+            if (mOldColPath!=null && newPath.equals(mOldColPath)) {
+                // collection path hasn't been changed so just restart the current activity
+                restartActivity();
+            } else {
+                // collection path has changed so kick the user back to the DeckPicker
+                Intent deckPicker = new Intent(this, DeckPicker.class);
+                deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivityWithoutAnimation(deckPicker);
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
 }
