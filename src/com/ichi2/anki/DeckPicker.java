@@ -2,8 +2,9 @@
  * Copyright (c) 2009 Andrew Dubya <andrewdubya@gmail.com>                              *
  * Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>                           *
  * Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
- * Copyright (c) 2009 Daniel Svﾃδ､rd <daniel.svard@gmail.com>                             *
+ * Copyright (c) 2009 Daniel Svard <daniel.svard@gmail.com>                             *
  * Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>                         *
+ * Copyright (c) 2014 Timothy Rae <perceptualchaos2@gmail.com>
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -20,6 +21,7 @@
 
 package com.ichi2.anki;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -32,7 +34,6 @@ import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
 import android.database.SQLException;
 import android.graphics.PixelFormat;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -45,8 +46,8 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.Window;
 import android.widget.AbsListView;
@@ -60,8 +61,8 @@ import android.widget.TextView;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
 import com.ichi2.anki.dialogs.DeckPickerBackupNoSpaceLeftDialog;
-import com.ichi2.anki.dialogs.DeckPickerContextMenu;
 import com.ichi2.anki.dialogs.DeckPickerConfirmDeleteDeckDialog;
+import com.ichi2.anki.dialogs.DeckPickerContextMenu;
 import com.ichi2.anki.dialogs.DeckPickerNoSpaceLeftDialog;
 import com.ichi2.anki.dialogs.ImportDialog;
 import com.ichi2.anki.dialogs.SyncErrorDialog;
@@ -84,6 +85,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
@@ -99,6 +101,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
     public static final String IMPORT_REPLACE_COLLECTION_NAME = "collection.apkg";
 
     private String mImportPath;
+    private CollectionLoadingDialogHandler mHandler;
 
     public static final String EXTRA_START = "start";
     public static final String EXTRA_DECK_ID = "deckId";
@@ -120,17 +123,17 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
      * Available options performed by other activities
      */
     private static final int PREFERENCES_UPDATE = 0;
-    private static final int DOWNLOAD_SHARED_DECK = 3;
+    // private static final int DOWNLOAD_SHARED_DECK = 3;
     public static final int REPORT_FEEDBACK = 4;
-    private static final int LOG_IN_FOR_DOWNLOAD = 5;
+    // private static final int LOG_IN_FOR_DOWNLOAD = 5;
     private static final int LOG_IN_FOR_SYNC = 6;
-    private static final int STUDYOPTIONS = 7;
+    // private static final int STUDYOPTIONS = 7;
     private static final int SHOW_INFO_WELCOME = 8;
     private static final int SHOW_INFO_NEW_VERSION = 9;
     private static final int REPORT_ERROR = 10;
     public static final int SHOW_STUDYOPTIONS = 11;
     private static final int ADD_NOTE = 12;
-    private static final int LOG_IN = 13;
+    // private static final int LOG_IN = 13;
     private static final int BROWSE_CARDS = 14;
     private static final int ADD_SHARED_DECKS = 15;
     private static final int LOG_IN_FOR_SHARED_DECK = 16;
@@ -158,7 +161,6 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
 
     boolean mCompletionBarRestrictToActive = false; // set this to true in order to calculate completion bar only for
                                                     // active cards
-
 
     // ----------------------------------------------------------------------------
     // LISTENERS
@@ -348,7 +350,6 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
         // mStartedByBigWidget = intent.getIntExtra(EXTRA_START, EXTRA_START_NOTHING);
 
         SharedPreferences preferences = restorePreferences();
-
 
         View mainView = getLayoutInflater().inflate(R.layout.deck_picker, null);
         setContentView(mainView);
@@ -762,19 +763,34 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
     protected void onCollectionLoadError() {
         // Show dialogs for handling collection load error
         setOpeningCollectionDialogMessage(getResources().getString(R.string.col_load_failed));
-        // We're not allowed to commit fragment transactions from this method so need to show error dialog via handler:
-        // http://stackoverflow.com/questions/7746140/android-problems-using-fragmentactivity-loader-to-update-fragmentstatepagera
-        handler.sendEmptyMessage(MSG_SHOW_COLLECTION_LOADING_ERROR_DIALOG);
+        mHandler.sendEmptyMessage(MSG_SHOW_COLLECTION_LOADING_ERROR_DIALOG);
     }
 
-    private Handler handler = new Handler() {
+    /**
+     * We're not allowed to commit fragment transactions from Loader.onLoadCompleted() so we work around this by using a
+     * handler to show the error dialog:
+     * http://stackoverflow.com/questions/7746140/android-problems-using-fragmentactivity
+     * -loader-to-update-fragmentstatepagera
+     * 
+     * @param DeckPicker activity the main activity
+     */
+    static class CollectionLoadingDialogHandler extends Handler {
+        private final WeakReference<DeckPicker> mActivity;
+
+
+        CollectionLoadingDialogHandler(DeckPicker activity) {
+            // Use weak reference to main activity to prevent leaking the activity when it's closed
+            mActivity = new WeakReference<DeckPicker>(activity);
+        }
+
+
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == MSG_SHOW_COLLECTION_LOADING_ERROR_DIALOG) {
-                showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_LOAD_FAILED);
+                mActivity.get().showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_LOAD_FAILED);
             }
         }
-    };
+    }
 
 
     // Load deck counts, and update the today overview
@@ -890,7 +906,8 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                 if (previous < AnkiDroidApp.CHECK_DB_AT_VERSION) {
                     integrityCheck();
                 } else if (previous < AnkiDroidApp.CHECK_PREFERENCES_AT_VERSION) {
-                    // If integrityCheck() doesn't occur, but we did update preferences we should restart DeckPicker to proceed
+                    // If integrityCheck() doesn't occur, but we did update preferences we should restart DeckPicker to
+                    // proceed
                     Intent deckPicker = new Intent(this, DeckPicker.class);
                     deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivityWithoutAnimation(deckPicker);
@@ -902,7 +919,8 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                 infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION);
 
                 if (skip != 0) {
-                    startActivityForResultWithAnimation(infoIntent, SHOW_INFO_NEW_VERSION, ActivityTransitionAnimation.LEFT);
+                    startActivityForResultWithAnimation(infoIntent, SHOW_INFO_NEW_VERSION,
+                            ActivityTransitionAnimation.LEFT);
                 } else {
                     startActivityForResultWithoutAnimation(infoIntent, SHOW_INFO_NEW_VERSION);
                 }
@@ -1011,9 +1029,11 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
         showDialogFragment(newFragment);
     }
 
+
     private void showLogDialog(String message) {
         showLogDialog(message, false);
     }
+
 
     private void showLogDialog(String message, final boolean reload) {
         // Since this is called from onPostExecute() of an AsyncTask, we can't use a DialogFragment
@@ -1630,7 +1650,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                 mDeckListView.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
                     @Override
                     public void onGlobalLayout() {
-                        mDeckListView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                        removeOnGlobalLayoutListener(mDeckListView, this);
                         mDeckListView.performItemClick(null, lastPosition, 0);
                         // Scroll the listView to the currently selected row, then offset it by half the
                         // listview's height so that it is centered.
@@ -1639,6 +1659,17 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                 });
                 break;
             }
+        }
+    }
+
+
+    @SuppressLint("NewApi")
+    @SuppressWarnings("deprecation")
+    public static void removeOnGlobalLayoutListener(View v, ViewTreeObserver.OnGlobalLayoutListener listener) {
+        if (AnkiDroidApp.SDK_VERSION < 16) {
+            v.getViewTreeObserver().removeGlobalOnLayoutListener(listener);
+        } else {
+            v.getViewTreeObserver().removeOnGlobalLayoutListener(listener);
         }
     }
 
@@ -1921,6 +1952,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
             }
         }, new TaskData(getCol(), mContextMenuDid));
     }
+
 
     // ----------------------------------------------------------------------------
     // INNER CLASSES
