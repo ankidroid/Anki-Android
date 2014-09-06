@@ -152,7 +152,6 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
     private BroadcastReceiver mUnmountReceiver = null;
 
     private String mPrefDeckPath = null;
-    private long mLastTimeOpened;
     private long mContextMenuDid;
 
     private EditText mDialogEditText;
@@ -356,19 +355,6 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
 
         SharedPreferences preferences = restorePreferences();
 
-        // activate broadcast messages if first start of a day, and not fresh install
-        if (mLastTimeOpened > 0) {
-            if (mLastTimeOpened < UIUtils.getDayStart()) {
-                preferences.edit().putBoolean("showBroadcastMessageToday", true).commit();
-            }
-            preferences.edit().putLong("lastTimeOpened", System.currentTimeMillis()).commit();
-        }
-
-        // if (intent != null && intent.hasExtra(EXTRA_DECK_ID)) {
-        // openStudyOptions(intent.getLongExtra(EXTRA_DECK_ID, 1));
-        // }
-
-        BroadcastMessages.checkForNewMessages(this);
 
         View mainView = getLayoutInflater().inflate(R.layout.deck_picker, null);
         setContentView(mainView);
@@ -688,9 +674,6 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
             }
 
         }
-
-        // workaround for hidden dialog on return
-        BroadcastMessages.showDialog();
     }
 
 
@@ -863,7 +846,6 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
     private SharedPreferences restorePreferences() {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         mPrefDeckPath = AnkiDroidApp.getCurrentAnkiDroidDirectory();
-        mLastTimeOpened = preferences.getLong("lastTimeOpened", 0);
         mSwipeEnabled = AnkiDroidApp.initiateGestures(this, preferences);
 
         return preferences;
@@ -934,7 +916,6 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
             } else {
                 // If no changes are required we go to the new features activity
                 // There the "lastVersion" is set, so that this code is not reached again
-                preferences.edit().putBoolean("showBroadcastMessageToday", true).commit();
                 Intent infoIntent = new Intent(this, Info.class);
                 infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION);
 
