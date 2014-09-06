@@ -41,8 +41,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.GestureDetector;
-import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -161,10 +159,6 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
     boolean mCompletionBarRestrictToActive = false; // set this to true in order to calculate completion bar only for
                                                     // active cards
 
-    /** Swipe Detection */
-    private GestureDetector gestureDetector;
-    View.OnTouchListener gestureListener;
-    private boolean mSwipeEnabled;
 
     // ----------------------------------------------------------------------------
     // LISTENERS
@@ -457,16 +451,6 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
         } else {
             // Otherwise just update the deck list
             loadCounts();
-        }
-
-        if (mSwipeEnabled) {
-            gestureDetector = new GestureDetector(new MyGestureDetector());
-            mDeckListView.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    return gestureDetector.onTouchEvent(event);
-                }
-            });
         }
     }
 
@@ -846,8 +830,6 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
     private SharedPreferences restorePreferences() {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         mPrefDeckPath = AnkiDroidApp.getCurrentAnkiDroidDirectory();
-        mSwipeEnabled = AnkiDroidApp.initiateGestures(this, preferences);
-
         return preferences;
     }
 
@@ -1943,44 +1925,6 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
     // ----------------------------------------------------------------------------
     // INNER CLASSES
     // ----------------------------------------------------------------------------
-
-    class MyGestureDetector extends SimpleOnGestureListener {
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            if (mSwipeEnabled && !mFragmented) {
-                try {
-                    if (e1.getX() - e2.getX() > AnkiDroidApp.sSwipeMinDistance
-                            && Math.abs(velocityX) > AnkiDroidApp.sSwipeThresholdVelocity
-                            && Math.abs(e1.getY() - e2.getY()) < AnkiDroidApp.sSwipeMaxOffPath) {
-                        float pos = e1.getY();
-                        for (int j = 0; j < mDeckListView.getChildCount(); j++) {
-                            View v = mDeckListView.getChildAt(j);
-                            Rect rect = new Rect();
-                            v.getHitRect(rect);
-                            if (rect.top < pos && rect.bottom > pos) {
-                                @SuppressWarnings("unchecked")
-                                HashMap<String, String> data = (HashMap<String, String>) mDeckListAdapter
-                                        .getItem(mDeckListView.getPositionForView(v));
-                                Collection col = getCol();
-                                if (col != null) {
-                                    col.getDecks().select(Long.parseLong(data.get("did")));
-                                    col.reset();
-                                    Intent reviewer = new Intent(DeckPicker.this, Reviewer.class);
-                                    startActivityForResultWithAnimation(reviewer, REQUEST_REVIEW,
-                                            ActivityTransitionAnimation.LEFT);
-                                    return true;
-                                }
-                            }
-                        }
-                    }
-                } catch (Exception e) {
-                    Log.e(AnkiDroidApp.TAG, "onFling Exception = " + e.getMessage());
-                }
-            }
-            return false;
-        }
-    }
-
 
     public static String readableDeckName(String[] name) {
         int len = name.length;
