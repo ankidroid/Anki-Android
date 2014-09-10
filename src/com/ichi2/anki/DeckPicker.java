@@ -122,7 +122,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
     /**
      * Available options performed by other activities
      */
-    private static final int PREFERENCES_UPDATE = 0;
+    //private static final int PREFERENCES_UPDATE = 0;
     // private static final int DOWNLOAD_SHARED_DECK = 3;
     public static final int REPORT_FEEDBACK = 4;
     // private static final int LOG_IN_FOR_DOWNLOAD = 5;
@@ -604,18 +604,6 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
             } else {
                 finishWithAnimation();
             }
-        } else if (requestCode == PREFERENCES_UPDATE) {
-            String oldPath = mPrefDeckPath;
-            SharedPreferences pref = restorePreferences();
-            String newLanguage = pref.getString(Preferences.LANGUAGE, "");
-            if (AnkiDroidApp.setLanguage(newLanguage)) {
-                AnkiDroidApp.getCompat().invalidateOptionsMenu(this);
-            }
-            // reload the collection if the path has changed
-            if (!mPrefDeckPath.equals(oldPath)) {
-                startLoadingCollection();
-            }
-
         } else if (requestCode == REPORT_FEEDBACK && resultCode == RESULT_OK) {
         } else if (requestCode == LOG_IN_FOR_SYNC && resultCode == RESULT_OK) {
             sync();
@@ -903,9 +891,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                 } else if (previous < AnkiDroidApp.CHECK_PREFERENCES_AT_VERSION) {
                     // If integrityCheck() doesn't occur, but we did update preferences we should restart DeckPicker to
                     // proceed
-                    Intent deckPicker = new Intent(this, DeckPicker.class);
-                    deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivityWithoutAnimation(deckPicker);
+                    restartActivity();
                 }
             } else {
                 // If no changes are required we go to the new features activity
@@ -1075,7 +1061,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                         @Override
                         public void onClick(View v) {
                             startActivityForResultWithoutAnimation(new Intent(DeckPicker.this, Preferences.class),
-                                    PREFERENCES_UPDATE);
+                                    NavigationDrawerActivity.REQUEST_PREFERENCES_UPDATE);
                         }
                     });
         }

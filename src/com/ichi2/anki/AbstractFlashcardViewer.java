@@ -465,6 +465,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                             mTouchStarted = false;
                         }
                         break;
+                    default:
+                        longClickHandler.removeCallbacks(longClickTestRunnable);
+                        mTouchStarted = false;
                 }
             }
             try {
