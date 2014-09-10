@@ -786,7 +786,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     /**
      * Format question field when it contains typeAnswer or clozes. If there was an error during type text extraction, a
      * warning is displayed
-     * 
+     *
      * @param buf The question text
      * @return The formatted question text
      */
@@ -805,7 +805,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     /**
      * Fill the placeholder for the type comparison. Show the correct answer, and the comparison if appropriate.
-     * 
+     *
      * @param buf The answer text
      * @param userAnswer Text typed by the user, or empty.
      * @param correctAnswer The correct answer, taken from the note.
@@ -850,7 +850,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     /**
      * Return the correct answer to use for {{type::cloze::NN}} fields.
-     * 
+     *
      * @param txt The field text with the clozes
      * @param idx The index of the cloze to use
      * @return A string with a comma-separeted list of unique cloze strings with the corret index.
@@ -963,8 +963,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mPrefWhiteboard = MetaDB.getWhiteboardState(this, getParentDid());
         if (mPrefWhiteboard) {
             setWhiteboardEnabledState(true);
-        }        
-        
+        }
+
         initLayout();
 
         setTitle();
@@ -1106,7 +1106,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     /**
      * Returns the text stored in the clipboard or the empty string if the clipboard is empty or contains something that
      * cannot be convered to text.
-     * 
+     *
      * @return the text in clipboard or the empty string.
      */
     private CharSequence clipboardGetText() {
@@ -1149,12 +1149,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             menu.findItem(R.id.action_hide_whiteboard).setVisible(true);
             menu.findItem(R.id.action_clear_whiteboard).setVisible(true);
             if (mShowWhiteboard) {
-                menu.findItem(R.id.action_clear_whiteboard).setIcon(R.drawable.ic_whiteboard_clear_enabled);
-                menu.findItem(R.id.action_hide_whiteboard).setIcon(R.drawable.ic_whiteboard_visibility_enabled);
+                menu.findItem(R.id.action_clear_whiteboard).setIcon(R.drawable.ic_erase_whiteboard_enabled);
+                menu.findItem(R.id.action_hide_whiteboard).setIcon(R.drawable.ic_whiteboard_enabled);
                 menu.findItem(R.id.action_hide_whiteboard).setTitle(R.string.hide_whiteboard);
             } else {
-                menu.findItem(R.id.action_clear_whiteboard).setIcon(R.drawable.ic_whiteboard_clear_disabled);
-                menu.findItem(R.id.action_hide_whiteboard).setIcon(R.drawable.ic_whiteboard_visibility_disabled);
+                menu.findItem(R.id.action_clear_whiteboard).setIcon(R.drawable.ic_erase_whiteboard_disabled);
+                menu.findItem(R.id.action_hide_whiteboard).setIcon(R.drawable.ic_whiteboard_disabled);
                 menu.findItem(R.id.action_hide_whiteboard).setTitle(R.string.show_whiteboard);
             }
         } else {
@@ -1165,6 +1165,44 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                     .setTitle(clipboardHasText() ? Lookup.getSearchStringTitle() : res.getString(R.string.menu_select));
         }
         return super.onCreateOptionsMenu(menu);
+
+    }
+
+
+    /*
+     * Modify the options menu.
+     * Pick the right icons for the whiteboard actions.
+
+     *
+     * @param menu The menu as is.
+     * @return The result of
+     */
+	@Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // On old Androids this gets called each time the menu is opend, on newer ones (=> 3.0) only after it has been
+        // invalidated. We do *that* on purpose when toggeling the night mode.
+        if (mPrefWhiteboard) {
+            if (mShowWhiteboard){
+                if (mNightMode) {
+                    menu.findItem(R.id.action_clear_whiteboard).setIcon(R.drawable.ic_erase_whiteboard_enabled_night);
+                    menu.findItem(R.id.action_hide_whiteboard).setIcon(R.drawable.ic_whiteboard_enabled_night);
+                } else {
+                    menu.findItem(R.id.action_clear_whiteboard).setIcon(R.drawable.ic_erase_whiteboard_enabled);
+                    menu.findItem(R.id.action_hide_whiteboard).setIcon(R.drawable.ic_whiteboard_enabled);
+
+                }
+            } else {
+                if (mNightMode) {
+                    menu.findItem(R.id.action_clear_whiteboard).setIcon(R.drawable.ic_erase_whiteboard_disabled_night);
+                    menu.findItem(R.id.action_hide_whiteboard).setIcon(R.drawable.ic_whiteboard_disabled_night);
+                } else {
+                    menu.findItem(R.id.action_clear_whiteboard).setIcon(R.drawable.ic_erase_whiteboard_disabled);
+                    menu.findItem(R.id.action_hide_whiteboard).setIcon(R.drawable.ic_whiteboard_disabled);
+                }
+            }
+        }
+
+        return super.onPrepareOptionsMenu(menu);
     }
 
 
@@ -1230,7 +1268,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
             case R.id.action_clear_whiteboard:
                 if (mWhiteboard != null) {
-                    mWhiteboard.clear();    
+                    mWhiteboard.clear();
                 }
                 break;
 
@@ -1329,7 +1367,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 }
                 return gestureDetector.onTouchEvent(event);
             }
-        });  
+        });
         mWhiteboard.setEnabled(true);
     }
 
@@ -1729,6 +1767,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         Resources res = getResources();
 
         int[] colors = Themes.setNightMode(this, mMainLayout, invert);
+        refreshActionBar();  // So we can set the right images (dark or light) in the action bar
         mForegroundColor = colors[0];
         mNextTimeTextColor = mForegroundColor;
         mNextTimeTextRecomColor = colors[1];
@@ -2185,7 +2224,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     /**
      * Clean up the correct answer text, so it can be used for the comparison with the typed text
-     * 
+     *
      * @param answer The content of the field the text typed by the user is compared to.
      * @return The correct answer text, with actual HTML and media references removed, and HTML entities unescaped.
      */
@@ -2210,7 +2249,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     /**
      * Clean up the typed answer text, so it can be used for the comparison with the correct answer
-     * 
+     *
      * @param answer The answer text typed by the user.
      * @return The typed answer text, cleaned up.
      */
@@ -2402,7 +2441,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     /**
      * Converts characters in Unicode Supplementary Multilingual Plane (SMP) to their equivalent Html Entities. This is
      * done because webview has difficulty displaying these characters.
-     * 
+     *
      * @param text
      * @return
      */
@@ -2420,7 +2459,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     /**
      * Plays sounds (or TTS, if configured) for currently shown side of card.
-     * 
+     *
      * @param doAudioReplay indicates an anki desktop-like replay call is desired, whose behavior is identical to
      *            pressing the keyboard shortcut R on the desktop
      */
@@ -2458,7 +2497,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     /**
      * Reads the text (using TTS) for the given side of a card.
-     * 
+     *
      * @param card The card to play TTS for
      * @param cardSide The side of the current card to play TTS for
      */
@@ -2475,7 +2514,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     /**
      * Returns the configuration for the current {@link Card}.
-     * 
+     *
      * @return The configuration for the current {@link Card}
      */
     private JSONObject getConfigForCurrentCard() {
@@ -2485,7 +2524,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     /**
      * Returns the deck ID of the given {@link Card}.
-     * 
+     *
      * @param card The {@link Card} to get the deck ID
      * @return The deck ID of the {@link Card}
      */
@@ -2566,7 +2605,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     /**
      * Adds a div html tag around the contents to have an indication, where answer/question is displayed
-     * 
+     *
      * @param content
      * @param isAnswer if true then the class attribute is set to "answer", "question" otherwise.
      * @return
@@ -2595,7 +2634,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      * this logic, eg nested span/divs with CSS classes having font-size declarations with relative units (40% dif
      * inside 120% div inside 60% div). Broken HTML also breaks this. Feel free to improve, but please keep it short and
      * fast.
-     * 
+     *
      * @param content The HTML content that will be font-size-adjusted.
      * @param percentage The relative font size percentage defined in preferences
      * @return
@@ -2663,7 +2702,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     /**
      * Calculates a dynamic font size depending on the length of the contents taking into account that the input string
      * contains html-tags, which will not be displayed and therefore should not be taken into account.
-     * 
+     *
      * @param htmlContents
      * @return font size respecting MIN_DYNAMIC_FONT_SIZE and MAX_DYNAMIC_FONT_SIZE
      */
@@ -2812,7 +2851,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      * WebView.
      * <p>
      * It is also needed to solve a refresh issue on Nook devices.
-     * 
+     *
      * @return true if we should use a single WebView
      */
     private boolean shouldUseQuickUpdate() {
