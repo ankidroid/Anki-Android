@@ -57,7 +57,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
-
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
 import com.ichi2.anki.dialogs.DeckPickerBackupNoSpaceLeftDialog;
@@ -101,7 +100,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
     public static final String IMPORT_REPLACE_COLLECTION_NAME = "collection.apkg";
 
     private String mImportPath;
-    private CollectionLoadingDialogHandler mHandler;
+    private DialogHandler mHandler;
 
     public static final String EXTRA_START = "start";
     public static final String EXTRA_DECK_ID = "deckId";
@@ -118,6 +117,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
      * Handler messages
      */
     private static final int MSG_SHOW_COLLECTION_LOADING_ERROR_DIALOG = 0;
+    private static final int MSG_SHOW_COLLECTION_IMPORT_DIALOG = 1;
 
     /**
      * Available options performed by other activities
@@ -228,7 +228,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                     } else {
                         message = res.getString(R.string.import_log_error);
                     }
-                    showLogDialog(message);
+                    showLogDialog(message, true);
                 } else {
                     message = res.getString(R.string.import_log_success, count);
                     showLogDialog(message);
@@ -238,6 +238,8 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
             } else {
                 handleDbError();
             }
+            // reset import path so that it's not incorrectly imported next time Activity starts
+            mImportPath = null;
         }
 
 
@@ -280,8 +282,10 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                 updateDecksList((TreeSet<Object[]>) info[0], (Integer) info[1], (Integer) info[2]);
                 dismissOpeningCollectionDialog();
             } else {
-                showLogDialog(res.getString(R.string.import_log_no_apkg));
+                showLogDialog(res.getString(R.string.import_log_no_apkg), true);
             }
+            // reset import path so that it's not incorrectly imported next time Activity starts
+            mImportPath = null;
         }
 
 
@@ -315,28 +319,12 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
     @Override
     protected void onCreate(Bundle savedInstanceState) throws SQLException {
         Log.i(AnkiDroidApp.TAG, "DeckPicker - onCreate");
+        // Get the path to the apkg file if started via VIEW intent
         Intent intent = getIntent();
-        // What purpose does this serve?
-        if (!intent.getBooleanExtra("viaNavigationDrawer", false) && !isTaskRoot()) {
-            Log.i(AnkiDroidApp.TAG,
-                    "DeckPicker - onCreate: Detected multiple instance of this activity, closing it and return to root activity");
-            Intent reloadIntent = new Intent(DeckPicker.this, DeckPicker.class);
-            reloadIntent.setAction(Intent.ACTION_MAIN);
-            if (intent != null && intent.getExtras() != null) {
-                reloadIntent.putExtras(intent.getExtras());
-            }
-            if (intent != null && intent.getData() != null) {
-                reloadIntent.setData(intent.getData());
-            }
-            reloadIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-            reloadIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            finishWithoutAnimation();
-            startActivityIfNeeded(reloadIntent, 0);
-        }
         if (intent.getData() != null) {
             mImportPath = getIntent().getData().getEncodedPath();
         }
-
+        mHandler = new DialogHandler(this);
         // need to start this here in order to avoid showing deckpicker before splashscreen
         if (!AnkiDroidApp.colIsOpen()) {
             showOpeningCollectionDialog();
@@ -346,8 +334,6 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
         super.onCreate(savedInstanceState);
 
         setTitle(getResources().getString(R.string.app_name));
-
-        // mStartedByBigWidget = intent.getIntExtra(EXTRA_START, EXTRA_START_NOTHING);
 
         SharedPreferences preferences = restorePreferences();
 
@@ -664,6 +650,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
 
     @Override
     protected void onResume() {
+        Log.i(AnkiDroidApp.TAG, "DeckPicker - onResume");
         super.onResume();
         if (getCol() != null) {
             if (Utils.now() > getCol().getSched().getDayCutoff() && AnkiDroidApp.isSdCardMounted()) {
@@ -750,9 +737,12 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
             selectDeck(did);
         }
         // show import dialog if shared deck was opened
-        // TODO: This should default to ADD instead of asking the user to choose between ADD and REPLACE
+        // TODO: This should default to ADD instead of asking the user to choose between ADD and REPLACE, as per Anki Desktop
         if (AnkiDroidApp.colIsOpen() && mImportPath != null) {
-            showImportDialog(ImportDialog.DIALOG_IMPORT);
+            if (mHandler == null) {
+                mHandler = new DialogHandler(this);
+            }
+            mHandler.sendEmptyMessage(MSG_SHOW_COLLECTION_IMPORT_DIALOG);
         }
         // prepare deck counts and mini-today-statistic
         loadCounts();
@@ -763,6 +753,9 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
     protected void onCollectionLoadError() {
         // Show dialogs for handling collection load error
         setOpeningCollectionDialogMessage(getResources().getString(R.string.col_load_failed));
+        if (mHandler == null) {
+            mHandler = new DialogHandler(this);
+        }
         mHandler.sendEmptyMessage(MSG_SHOW_COLLECTION_LOADING_ERROR_DIALOG);
     }
 
@@ -774,11 +767,11 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
      * 
      * @param DeckPicker activity the main activity
      */
-    static class CollectionLoadingDialogHandler extends Handler {
+    static class DialogHandler extends Handler {
         private final WeakReference<DeckPicker> mActivity;
 
 
-        CollectionLoadingDialogHandler(DeckPicker activity) {
+        DialogHandler(DeckPicker activity) {
             // Use weak reference to main activity to prevent leaking the activity when it's closed
             mActivity = new WeakReference<DeckPicker>(activity);
         }
@@ -788,6 +781,8 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
         public void handleMessage(Message msg) {
             if (msg.what == MSG_SHOW_COLLECTION_LOADING_ERROR_DIALOG) {
                 mActivity.get().showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_LOAD_FAILED);
+            } else if (msg.what == MSG_SHOW_COLLECTION_IMPORT_DIALOG) {
+                mActivity.get().showImportDialog(ImportDialog.DIALOG_IMPORT, mActivity.get().mImportPath);
             }
         }
     }
@@ -939,8 +934,6 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
             } else {
                 startActivityForResultWithoutAnimation(i, REPORT_ERROR);
             }
-        } else if (mImportPath != null && AnkiDroidApp.colIsOpen()) {
-            showImportDialog(ImportDialog.DIALOG_IMPORT);
         } else {
             // This is the main call when there is nothing special required
             startLoadingCollection();
@@ -1616,6 +1609,8 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
         Intent intent = new Intent(DeckPicker.this, Info.class);
         intent.putExtra(Info.TYPE_EXTRA, Info.TYPE_SHARED_DECKS);
         startActivityForResultWithAnimation(intent, ADD_SHARED_DECKS, ActivityTransitionAnimation.RIGHT);
+        //Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(res.getString(R.string.shared_decks_url)));
+        startActivityWithAnimation(intent, ActivityTransitionAnimation.RIGHT);
     }
 
 
