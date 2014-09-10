@@ -84,13 +84,11 @@
         android:theme="@style/Theme_White"
         android:windowSoftInputMode="adjustResize" >
         <activity
-            android:name="com.ichi2.anki.DeckPicker"
+            android:name="com.ichi2.anki.IntentHandler"
             android:configChanges="keyboardHidden|orientation|screenSize|locale"
-            android:label="@string/app_name"
-            android:theme="@style/Theme_Start" >
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER" />
             </intent-filter>
@@ -129,6 +127,12 @@
                     android:pathPattern=".*\\.apkg"
                     android:scheme="file" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="com.ichi2.anki.DeckPicker"
+            android:configChanges="keyboardHidden|orientation|screenSize|locale"
+            android:label="@string/app_name"
+            android:theme="@style/Theme_Start" >"
         </activity>
         <activity
             android:name="com.ichi2.anki.StudyOptionsActivity"
