@@ -1545,8 +1545,10 @@ public class Collection {
 
 
     private void _closeLog() {
-        mLogHnd.close();
-        mLogHnd = null;
+        if (mLogHnd != null) {
+            mLogHnd.close();
+            mLogHnd = null;
+        }
     }
 
     /**

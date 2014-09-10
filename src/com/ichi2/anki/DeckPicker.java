@@ -1542,7 +1542,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
     @Override
     public void importReplace(String importPath) {
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_IMPORT_REPLACE, mImportReplaceListener, new TaskData(getCol(),
-                mImportPath));
+                importPath));
     }
 
 
