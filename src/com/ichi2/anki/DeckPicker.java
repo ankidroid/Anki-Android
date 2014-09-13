@@ -118,7 +118,8 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
      * Handler messages
      */
     private static final int MSG_SHOW_COLLECTION_LOADING_ERROR_DIALOG = 0;
-    private static final int MSG_SHOW_COLLECTION_IMPORT_DIALOG = 1;
+    private static final int MSG_SHOW_COLLECTION_IMPORT_REPLACE_DIALOG = 1;
+    private static final int MSG_SHOW_COLLECTION_IMPORT_ADD_DIALOG = 2;
 
     /**
      * Available options performed by other activities
@@ -776,14 +777,18 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
             long did = col.getDecks().selected();
             selectDeck(did);
         }
-        // show import dialog if shared deck was opened
-        // TODO: This should default to ADD instead of asking the user to choose between ADD and REPLACE, as per Anki
-        // Desktop
+        // Start import process if apkg file was opened via another app
         if (AnkiDroidApp.colIsOpen() && mImportPath != null) {
             if (mHandler == null) {
                 mHandler = new DialogHandler(this);
             }
-            mHandler.sendEmptyMessage(MSG_SHOW_COLLECTION_IMPORT_DIALOG);
+            if (mImportPath.split("/")[mImportPath.split("/").length - 1].equals("collection.apkg")) {
+                // Show confirmation dialog asking to confirm import with replace when file called "collection.apkg"
+                mHandler.sendEmptyMessage(MSG_SHOW_COLLECTION_IMPORT_REPLACE_DIALOG);
+            } else {
+                // Otherwise show confirmation dialog asking to confirm import with add
+                mHandler.sendEmptyMessage(MSG_SHOW_COLLECTION_IMPORT_ADD_DIALOG);
+            }
         }
         // prepare deck counts and mini-today-statistic
         loadCounts();
@@ -822,8 +827,10 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
         public void handleMessage(Message msg) {
             if (msg.what == MSG_SHOW_COLLECTION_LOADING_ERROR_DIALOG) {
                 mActivity.get().showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_LOAD_FAILED);
-            } else if (msg.what == MSG_SHOW_COLLECTION_IMPORT_DIALOG) {
-                mActivity.get().showImportDialog(ImportDialog.DIALOG_IMPORT, mActivity.get().mImportPath);
+            } else if (msg.what == MSG_SHOW_COLLECTION_IMPORT_REPLACE_DIALOG) {
+                mActivity.get().showImportDialog(ImportDialog.DIALOG_IMPORT_REPLACE_CONFIRM, mActivity.get().mImportPath);
+            } else if (msg.what == MSG_SHOW_COLLECTION_IMPORT_ADD_DIALOG) {
+                mActivity.get().showImportDialog(ImportDialog.DIALOG_IMPORT_ADD_CONFIRM, mActivity.get().mImportPath);
             }
         }
     }

@@ -153,6 +153,7 @@
     <string name="import_message_add">Add</string>
     <string name="import_message_replace">Replace</string>
     <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s</string>
+    <string name="import_message_add_confirm">Add \"%s\" to collection? This may take a long time</string>
     <string name="import_log_success">Imported %d cards</string>
     <string name="import_log_error">Import failed</string>
     <string name="import_log_no_apkg">This is not a valid apkg file</string>
