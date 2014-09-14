@@ -20,6 +20,7 @@
 package com.ichi2.anki.servicelayer;
 
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.exception.APIVersionException;
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
 import com.ichi2.anki.multimediacard.fields.AudioField;
 import com.ichi2.anki.multimediacard.fields.IField;
@@ -34,11 +35,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 
 public class NoteService {
     /**
@@ -178,48 +175,27 @@ public class NoteService {
                 File inFile = new File(tmpMediaPath);
                 if (inFile.exists()) {
                     Collection col = AnkiDroidApp.getCol();
-                    String mediaDir = col.getMedia().dir() + "/";
-
-                    File mediaDirFile = new File(mediaDir);
-
-                    File parent = inFile.getParentFile();
-
-                    // If already there.
-                    if (mediaDirFile.getAbsolutePath().contentEquals(parent.getAbsolutePath())) {
-                        return;
-                    }
-
-                    File outFile = new File(mediaDir + inFile.getName());
-
+                    String fname = col.getMedia().addFile(inFile);
+                    File outFile = new File(col.getMedia().dir(), fname);
                     if (field.hasTemporaryMedia()) {
-                        // Copy file to collection.media folder
-                        InputStream in = new FileInputStream(tmpMediaPath);
-                        OutputStream out = new FileOutputStream(outFile.getAbsolutePath());
-
-                        byte[] buf = new byte[1024];
-                        int len;
-                        while ((len = in.read(buf)) > 0) {
-                            out.write(buf, 0, len);
-                        }
-                        in.close();
-                        out.close();
                         // Delete original
                         inFile.delete();
-
-                        switch (field.getType()) {
-                            case AUDIO:
-                                field.setAudioPath(outFile.getAbsolutePath());
-                                break;
-
-                            case IMAGE:
-                                field.setImagePath(outFile.getAbsolutePath());
-                                break;
-                            default:
-                                break;
-                        }
+                    }
+                    switch (field.getType()) {
+                        case AUDIO:
+                            field.setAudioPath(outFile.getAbsolutePath());
+                            break;
+                        case IMAGE:
+                            field.setImagePath(outFile.getAbsolutePath());
+                            break;
+                        default:
+                            break;
                     }
                 }
             } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (APIVersionException e) {
+                // A useful error dialog would be a better idea here.
                 throw new RuntimeException(e);
             }
         }

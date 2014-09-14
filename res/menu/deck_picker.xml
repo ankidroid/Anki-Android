@@ -42,6 +42,11 @@
         android:menuCategory="secondary"
         android:title="@string/check_db"/>
     <item
+        android:id="@+id/action_check_media"
+        android:enabled="false"
+        android:menuCategory="secondary"
+        android:title="@string/check_media"/>
+    <item
         android:id="@+id/action_restore_backup"
         android:menuCategory="secondary"
         android:title="@string/backup_restore"/>

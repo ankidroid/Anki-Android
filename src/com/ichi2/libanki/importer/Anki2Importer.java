@@ -710,6 +710,8 @@ public class Anki2Importer {
     private void _writeDstMedia(String fname, BufferedInputStream is) {
         try {
             Utils.writeToFile(is, mDstMediaDir + fname);
+            // Also mark file addition to media db
+            mDst.getMedia().markFileAdd(fname);
         } catch (IOException e) {
             // the user likely used subdirectories
             Log.e(AnkiDroidApp.TAG, String.format(Locale.US,
