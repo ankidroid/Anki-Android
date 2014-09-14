@@ -19,7 +19,7 @@ public class ImportDialog extends DialogFragment {
     
     public static final int DIALOG_IMPORT_HINT = 0;
     public static final int DIALOG_IMPORT_SELECT = 1;
-    public static final int DIALOG_IMPORT = 2;
+    public static final int DIALOG_IMPORT_ADD_CONFIRM = 2;
     public static final int DIALOG_IMPORT_REPLACE_CONFIRM = 3;
 
     public interface ImportDialogListener {
@@ -96,40 +96,32 @@ public class ImportDialog extends DialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         String importPath = importValues[which];
                         // If the apkg file is called "collection.apkg", we assume the collection will be replaced
-                        if (importPath.split("/")[importPath.split("/").length - 1].equals("collection.apkg")) {
-                            ((ImportDialogListener) getActivity()).importReplace(importPath);
-                            dismissAllDialogFragments();
-                            // Otherwise we ask the user to choose
+                        if (filenameFromPath(importPath).equals("collection.apkg")) {
+                            ((ImportDialogListener) getActivity()).showImportDialog(DIALOG_IMPORT_REPLACE_CONFIRM, importPath);
+                            // Otherwise we add the file since exported decks / shared decks can't be imported via replace anyway
                         } else {
-                            ((ImportDialogListener) getActivity()).showImportDialog(DIALOG_IMPORT, importPath);
+                            ((ImportDialogListener) getActivity()).showImportDialog(DIALOG_IMPORT_ADD_CONFIRM, importPath);
                         }
                     }
                 });
                 return dialog;
-
-            case DIALOG_IMPORT:
-                // Ask the user whether they want to perform add or replace operation with imported file
+                
+            case DIALOG_IMPORT_ADD_CONFIRM:
                 builder.setTitle(res.getString(R.string.import_title));
-                builder.setMessage(res.getString(R.string.import_message, getArguments().getString("dialogMessage")));
+                builder.setMessage(res.getString(R.string.import_message_add_confirm, filenameFromPath(getArguments().getString("dialogMessage"))));
                 builder.setPositiveButton(res.getString(R.string.import_message_add),
                         new DialogInterface.OnClickListener() {
+
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 ((ImportDialogListener) getActivity()).importAdd(getArguments().getString("dialogMessage"));
                                 dismissAllDialogFragments();
                             }
+
                         });
-                builder.setNeutralButton(res.getString(R.string.import_message_replace),
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                ((ImportDialogListener) getActivity()).showImportDialog(DIALOG_IMPORT_REPLACE_CONFIRM);
-                            }
-                        });
-                builder.setNegativeButton(res.getString(R.string.dialog_cancel), clearAllDialogsClickListener);
-                builder.setCancelable(true);
+                builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
                 return builder.create();
-                
+
             case DIALOG_IMPORT_REPLACE_CONFIRM:
                 builder.setTitle(res.getString(R.string.import_title));
                 builder.setMessage(res.getString(R.string.import_message_replace_confirm, getArguments().getString("dialogMessage")));
@@ -162,5 +154,9 @@ public class ImportDialog extends DialogFragment {
     
     public void dismissAllDialogFragments() {
         ((ImportDialogListener) getActivity()).dismissAllDialogFragments();        
+    }
+
+    private static String filenameFromPath (String path) {
+        return path.split("/")[path.split("/").length - 1];
     }
 }
