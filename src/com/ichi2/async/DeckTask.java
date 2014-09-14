@@ -46,6 +46,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -1004,13 +1005,14 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
 
     private TaskData doInBackgroundExportApkg(TaskData... params) {
+        final int BUFFER_SIZE = 1024;
         Log.i(AnkiDroidApp.TAG, "doInBackgroundExportApkg");
         Object[] data = params[0].getObjArray();
         String colPath = (String) data[0];
         String apkgPath = (String) data[1];
         boolean includeMedia = (Boolean) data[2];
-
-        byte[] buf = new byte[1024];
+        
+        byte[] buf = new byte[BUFFER_SIZE];
         try {
             try {
                 AnkiDb d = AnkiDatabaseManager.getDatabase(colPath);
@@ -1023,15 +1025,15 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
             // export collection
             ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(apkgPath));
-            FileInputStream colFin = new FileInputStream(colPath);
+            BufferedInputStream bis = new BufferedInputStream(new FileInputStream(colPath), BUFFER_SIZE);
             ZipEntry ze = new ZipEntry("collection.anki2");
             zos.putNextEntry(ze);
             int len;
-            while ((len = colFin.read(buf)) >= 0) {
+            while ((len = bis.read(buf, 0, BUFFER_SIZE)) != -1) {
                 zos.write(buf, 0, len);
             }
             zos.closeEntry();
-            colFin.close();
+            bis.close();
 
             // export media
             JSONObject media = new JSONObject();
@@ -1048,6 +1050,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                             zos.write(buf, 0, len);
                         }
                         zos.closeEntry();
+                        mediaFin.close();
                         media.put(Integer.toString(c), f.getName());
                     }
                 }

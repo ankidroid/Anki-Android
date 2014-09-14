@@ -172,6 +172,7 @@
     <string name="ankiweb">AnkiWeb</string>
     <string name="usb">USB</string>
     <string name="_import">Import</string>
+    <string name="export">Export</string>
     <string name="confirm">Confirm</string>
     <string name="internet">Internet</string>
     <string name="pc">PC</string>

@@ -57,6 +57,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
 import com.ichi2.anki.dialogs.DeckPickerBackupNoSpaceLeftDialog;
@@ -122,7 +123,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
     /**
      * Available options performed by other activities
      */
-    //private static final int PREFERENCES_UPDATE = 0;
+    // private static final int PREFERENCES_UPDATE = 0;
     // private static final int DOWNLOAD_SHARED_DECK = 3;
     public static final int REPORT_FEEDBACK = 4;
     // private static final int LOG_IN_FOR_DOWNLOAD = 5;
@@ -302,6 +303,38 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
             mProgressDialog.setMessage(values[0].getString());
+        }
+
+
+        @Override
+        public void onCancelled() {
+        }
+    };
+
+    DeckTask.TaskListener mExportListener = new DeckTask.TaskListener() {
+
+        @Override
+        public void onPreExecute() {
+            mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "",
+                    getResources().getString(R.string.export_in_progress), true);
+        }
+
+
+        @Override
+        public void onPostExecute(DeckTask.TaskData result) {
+            if (mProgressDialog != null && mProgressDialog.isShowing()) {
+                mProgressDialog.dismiss();
+            }
+            if (result.getBoolean()) {
+                showLogDialog(getResources().getString(R.string.export_successful), true);
+            } else {
+                Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.export_unsuccessful), true);
+            }
+        }
+
+
+        @Override
+        public void onProgressUpdate(TaskData... values) {
         }
 
 
@@ -547,6 +580,25 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                 showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_CONFIRM_RESTORE_BACKUP);
                 return true;
 
+            case R.id.action_export:
+                // Export APKG file
+                StyledDialog.Builder builder = new StyledDialog.Builder(this);
+                builder.setMessage(res.getString(R.string.confirm_apkg_export));
+                builder.setPositiveButton(res.getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        boolean exportMedia = false; // TODO : Ask the user if they want to export media
+                        Object[] inputArgs = new Object[3];
+                        inputArgs[0] = getCol().getPath();
+                        inputArgs[1] = getCol().getPath().replace(".anki2", ".apkg");
+                        inputArgs[2] = exportMedia;
+                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_EXPORT_APKG, mExportListener,
+                                new TaskData(inputArgs));
+                    }
+                });
+                builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
+                builder.create().show();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
 
@@ -725,7 +777,8 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
             selectDeck(did);
         }
         // show import dialog if shared deck was opened
-        // TODO: This should default to ADD instead of asking the user to choose between ADD and REPLACE, as per Anki Desktop
+        // TODO: This should default to ADD instead of asking the user to choose between ADD and REPLACE, as per Anki
+        // Desktop
         if (AnkiDroidApp.colIsOpen() && mImportPath != null) {
             if (mHandler == null) {
                 mHandler = new DialogHandler(this);
@@ -1595,7 +1648,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
         Intent intent = new Intent(DeckPicker.this, Info.class);
         intent.putExtra(Info.TYPE_EXTRA, Info.TYPE_SHARED_DECKS);
         startActivityForResultWithAnimation(intent, ADD_SHARED_DECKS, ActivityTransitionAnimation.RIGHT);
-        //Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(res.getString(R.string.shared_decks_url)));
+        // Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(res.getString(R.string.shared_decks_url)));
         startActivityWithAnimation(intent, ActivityTransitionAnimation.RIGHT);
     }
 
