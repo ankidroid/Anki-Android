@@ -36,8 +36,8 @@ import com.ichi2.anki.exception.UnsupportedSyncException;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Utils;
-import com.ichi2.libanki.sync.HttpSyncer;
 import com.ichi2.libanki.sync.FullSyncer;
+import com.ichi2.libanki.sync.HttpSyncer;
 import com.ichi2.libanki.sync.MediaSyncer;
 import com.ichi2.libanki.sync.RemoteMediaServer;
 import com.ichi2.libanki.sync.RemoteServer;
@@ -704,10 +704,10 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         String mediaError = null;
         if (media) {
             server = new RemoteMediaServer(col, hkey, this);
-            MediaSyncer mediaClient = new MediaSyncer(col, (RemoteMediaServer) server);
+            MediaSyncer mediaClient = new MediaSyncer(col, (RemoteMediaServer) server, this);
             String ret;
             try {
-                ret = mediaClient.sync(this);
+                ret = mediaClient.sync();
                 if (ret == null) {
                     mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_error);
                 } else {
@@ -746,6 +746,11 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
 
     public void publishProgress(int id) {
         super.publishProgress(id);
+    }
+
+
+    public void publishProgress(String message) {
+        super.publishProgress(message);
     }
 
 

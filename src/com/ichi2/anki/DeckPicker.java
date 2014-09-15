@@ -65,6 +65,7 @@ import com.ichi2.anki.dialogs.DeckPickerConfirmDeleteDeckDialog;
 import com.ichi2.anki.dialogs.DeckPickerContextMenu;
 import com.ichi2.anki.dialogs.DeckPickerNoSpaceLeftDialog;
 import com.ichi2.anki.dialogs.ImportDialog;
+import com.ichi2.anki.dialogs.MediaCheckDialog;
 import com.ichi2.anki.dialogs.SyncErrorDialog;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.stats.AnkiStatsTaskHandler;
@@ -88,12 +89,13 @@ import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.TreeSet;
 
 public class DeckPicker extends NavigationDrawerActivity implements StudyOptionsFragment.OnStudyOptionsReloadListener,
         DatabaseErrorDialog.DatabaseErrorDialogListener, SyncErrorDialog.SyncErrorDialogListener,
-        ImportDialog.ImportDialogListener {
+        ImportDialog.ImportDialogListener, MediaCheckDialog.MediaCheckDialogListener {
 
     public static final int CRAM_DECK_FRAGMENT = -1;
 
@@ -484,6 +486,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
         menu.findItem(R.id.action_new_deck).setEnabled(sdCardAvailable);
         menu.findItem(R.id.action_new_filtered_deck).setEnabled(sdCardAvailable);
         menu.findItem(R.id.action_check_database).setEnabled(sdCardAvailable);
+        menu.findItem(R.id.action_check_media).setEnabled(sdCardAvailable);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -571,6 +574,10 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
 
             case R.id.action_check_database:
                 showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_CONFIRM_DATABASE_CHECK);
+                return true;
+
+            case R.id.action_check_media:
+                showMediaCheckDialog(MediaCheckDialog.DIALOG_CONFIRM_MEDIA_CHECK);
                 return true;
 
             case R.id.action_tutorial:
@@ -1054,8 +1061,21 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
         showDialogFragment(newFragment);
     }
 
+    @Override
+    public void showMediaCheckDialog(int id) {
+        DialogFragment newFragment = MediaCheckDialog.newInstance(id);
+        showDialogFragment(newFragment);
+    }
 
-    // Show dialogs to deal with database loading issues etc
+
+    @Override
+    public void showMediaCheckDialog(int id, List<List<String>> checkList) {
+        DialogFragment newFragment = MediaCheckDialog.newInstance(id, checkList);
+        showDialogFragment(newFragment);
+    }
+
+
+    // Show dialogs to deal with sync issues etc
     @Override
     public void showSyncErrorDialog(int id) {
         showSyncErrorDialog(id, "");
@@ -1219,6 +1239,51 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
         }, new DeckTask.TaskData(getCol()));
     }
 
+
+    @Override
+    public void mediaCheck() {
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CHECK_MEDIA, new DeckTask.TaskListener() {
+            @Override
+            public void onPreExecute() {
+                mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "",
+                        getResources().getString(R.string.check_media_message), true);
+            }
+
+
+            @Override
+            public void onPostExecute(TaskData result) {
+                if (mProgressDialog.isShowing()) {
+                    mProgressDialog.dismiss();
+                }
+                if (result.getBoolean()) {
+                    @SuppressWarnings("unchecked")
+                    List<List<String>> checkList = (List<List<String>>) result.getObjArray()[0];
+                    showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, checkList);
+                } else {
+                    showLogDialog(getResources().getString(R.string.check_media_failed));
+                }
+            }
+
+
+            @Override
+            public void onProgressUpdate(TaskData... values) {
+            }
+
+
+            @Override
+            public void onCancelled() {
+            }
+        }, new DeckTask.TaskData(getCol()));
+    }
+
+    @Override
+    public void deleteUnused(List<String> unused) {
+        com.ichi2.libanki.Media m = getCol().getMedia();
+        for (String fname : unused) {
+            m.deleteFile(fname);
+        }
+        showLogDialog(String.format(getResources().getString(R.string.check_media_deleted), unused.size()));
+    }
 
     @Override
     public void exit() {
@@ -1396,6 +1461,12 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                 if (id != 0) {
                     currentMessage = res.getString(id);
                 }
+                if (values.length >= 3) {
+                    countUp = (Long) values[1];
+                    countDown = (Long) values[2];
+                }
+            } else if (values[0] instanceof String) {
+                currentMessage = (String) values[0];
                 if (values.length >= 3) {
                     countUp = (Long) values[1];
                     countDown = (Long) values[2];

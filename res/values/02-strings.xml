@@ -122,6 +122,7 @@
     <string name="help_tutorial">Create tutorial deck</string>
     <string name="tutorial_deck_name">Tutorial deck</string>
     <string name="check_db">Check database</string>
+    <string name="check_media">Check media</string>
     <string name="check_db_message">Checking database…</string>
     <string
         name="empty_card_warning"

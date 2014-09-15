@@ -190,12 +190,12 @@ public class MediaTest extends AndroidTestCase {
         os = new FileOutputStream(path, true);
         os.write("yo".getBytes());
         os.close();
-        d.getMedia().findChanges();
+        d.getMedia().findChanges(true);
         assertTrue(added(d).size() == 2);
         assertTrue(removed(d).size() == 0);
         // deletions should get noticed too
         path.delete();
-        d.getMedia().findChanges();
+        d.getMedia().findChanges(true);
         assertTrue(added(d).size() == 1);
         assertTrue(removed(d).size() == 1);
     }

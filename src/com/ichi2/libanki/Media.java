@@ -206,21 +206,19 @@ public class Media {
     }
 
 
-    // TODO: Assume we are on FAT32 for every sync until we can find a reliable way to detect
-    // the file system type. This will trigger a media scan on every sync attempt even on devices
-    // that didn't need it, so it makes syncing a little slower.
-    public boolean _isFAT32() {
-        return true;
-    }
-
-
     /**
      * Adding media
      * ***********************************************************
      */
 
+    /**
+     * In AnkiDroid, adding a media file will not only copy it to the media directory, but will also insert an entry
+     * into the media database marking it as a new addition.
+     */
     public String addFile(File ofile) throws IOException, APIVersionException {
-        return writeData(ofile);
+        String fname = writeData(ofile);
+        markFileAdd(fname);
+        return fname;
     }
 
 
@@ -322,15 +320,30 @@ public class Media {
     }
 
 
-    // TODO: Not implemented yet. Currently not triggered by anything available in the UI, but must be completed
-    // before we expose the "Media check" option in the future.
     private List<String> _expandClozes(String string) {
         Set<String> ords = new TreeSet<String>();
-        Pattern cloze = Pattern.compile("{{c(\\\\d+)::.+?}}");
-        Matcher m = cloze.matcher(string);
+        Matcher m = Pattern.compile("\\{\\{c(\\d+)::.+?\\}\\}").matcher(string);
         while (m.find()) {
             ords.add(m.group(1));
         }
+        ArrayList<String> strings = new ArrayList<String>();
+        String clozeReg = Models.clozeReg;
+        
+        for (String ord : ords) {
+            StringBuffer buf = new StringBuffer();
+            m = Pattern.compile(String.format(Locale.US, clozeReg, ord)).matcher(string);
+            while (m.find()) {
+                if (!TextUtils.isEmpty(m.group(3))) {
+                    m.appendReplacement(buf, "[$3]");
+                } else {
+                    m.appendReplacement(buf, "[...]");
+                }
+            }
+            m.appendTail(buf);
+            String s = buf.toString().replaceAll(String.format(Locale.US, clozeReg, ".+?"), "$1");
+            strings.add(s);
+        }
+        strings.add(string.replaceAll(String.format(Locale.US, clozeReg, ".+?"), "$1"));
         return new ArrayList<String>();
     }
 
@@ -537,7 +550,16 @@ public class Media {
      * Scan the media folder if it's changed, and note any changes.
      */
     public void findChanges() throws APIVersionException {
-        if (_changed() != null) {
+        findChanges(false);
+    }
+
+
+    /**
+     * @param force Unconditionally scan the media folder for changes (i.e., ignore differences in recorded and current
+     *            directory mod times). Use this when rebuilding the media database.
+     */
+    public void findChanges(boolean force) throws APIVersionException {
+        if (force || _changed() != null) {
             _logChanges();
         }
     }
@@ -569,14 +591,14 @@ public class Media {
     /**
      * Return dir mtime if it has changed since the last findChanges()
      * Doesn't track edits, but user can add or remove a file to update
-     *
+     * 
      * @return The modification time of the media directory if it has changed since the last call of findChanges(). If
      *         it hasn't, it returns null.
      */
     public Long _changed() {
         long mod = mDb.queryLongScalar("select dirMod from meta");
         long mtime = _mtime(dir());
-        if (!_isFAT32() && mod != 0 && mod == mtime) {
+        if (mod != 0 && mod == mtime) {
             return null;
         }
         return mtime;
@@ -644,7 +666,7 @@ public class Media {
                 continue;
             }
             if (sz > 100*1024*1024) {
-                //mCol.log("ignoring file over 100MB", f);
+                mCol.log("ignoring file over 100MB", f);
                 continue;
             }
             // check encoding
@@ -736,6 +758,11 @@ public class Media {
 
     public int mediacount() {
         return mDb.queryScalar("select count() from media where csum is not null", false);
+    }
+
+
+    public int dirtyCount() {
+        return mDb.queryScalar("select count() from media where dirty=1", false);
     }
 
 
@@ -888,5 +915,43 @@ public class Media {
     public static int indexOfFname(Pattern p) {
         int fnameIdx = p == fSoundRegexps ? 2 : p == fImgRegExpU ? 2 : 3;
         return fnameIdx;
+    }
+
+
+    /**
+     * Add an entry into the media database for file named fname, or update it
+     * if it already exists.
+     */
+    public void markFileAdd(String fname) {
+        Log.i(AnkiDroidApp.TAG, "Marking media file addition in media db: " + fname);
+        String path = new File(dir(), fname).getAbsolutePath();
+        mDb.execute("insert or replace into media values (?,?,?,?)",
+                new Object[] { fname, _checksum(path), _mtime(path), 1 });
+    }
+
+    /**
+     * Remove a file from the media directory and mark it in the media database as removed.
+     */
+    public void deleteFile(String fname) {
+        File f = new File(dir(), fname);
+        if (f.exists()) {
+            f.delete();
+        }
+        Log.i(AnkiDroidApp.TAG, "Marking media file removal in media db: " + fname);
+        mDb.execute("insert or replace into media values (?,?,?,?)",
+                new Object[] { fname, null, 0, 1 });
+    }
+
+
+    /**
+     * @return True if the media db has not been populated yet.
+     */
+    public boolean needScan() {
+        long mod = mDb.queryLongScalar("select dirMod from meta");
+        if (mod == 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

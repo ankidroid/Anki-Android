@@ -32,6 +32,7 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.CardBrowser;
 import com.ichi2.anki.R;
+import com.ichi2.anki.exception.APIVersionException;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Note;
@@ -108,6 +109,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     public static final int TASK_TYPE_CONF_REMOVE = 35;
     public static final int TASK_TYPE_CONF_SET_SUBDECKS = 36;
     public static final int TASK_TYPE_RENDER_BROWSER_QA = 37;
+    public static final int TASK_TYPE_CHECK_MEDIA = 38;
 
     /**
      * The most recently started {@link DeckTask} instance.
@@ -330,6 +332,9 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
             case TASK_TYPE_RENDER_BROWSER_QA:
                 return doInBackgroundRenderBrowserQA(params);
+
+            case TASK_TYPE_CHECK_MEDIA:
+                return doInBackgroundCheckMedia(params);
 
             default:
                 Log.e(AnkiDroidApp.TAG, "unknown task type: " + mType);
@@ -1289,6 +1294,24 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             return new TaskData(false);
         }
     }
+
+
+    /**
+     * @return The results list from the check, or false if any errors.
+     */
+    private TaskData doInBackgroundCheckMedia(TaskData... params) {
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundCheckMedia");
+        try {
+            // A media check on AnkiDroid will also update the media db
+            AnkiDroidApp.getCol().getMedia().findChanges(true);
+            // Then do the actual check
+            List<List<String>> result = AnkiDroidApp.getCol().getMedia().check();
+            return new TaskData(0, new Object[]{result}, true);
+        } catch (APIVersionException e) {
+            return new TaskData(false);
+        }
+    }
+
 
     /**
      * Listener for the status and result of a {@link DeckTask}.
