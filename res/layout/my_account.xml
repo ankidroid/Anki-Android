@@ -51,7 +51,7 @@
             android:layout_width="0dip"
             android:layout_height="fill_parent"
             android:layout_weight="2"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:text="@string/sign_up_description"
             android:textSize="16sp"
             android:textStyle="bold" />
