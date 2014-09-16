@@ -561,6 +561,7 @@ public class CardEditor extends AnkiActivity {
 
     private void openReviewer() {
         Intent reviewer = new Intent(CardEditor.this, Previewer.class);
+        reviewer.putExtra("currentCardId", mCurrentEditedCard.getId());
         startActivityWithoutAnimation(reviewer);
     }
 
