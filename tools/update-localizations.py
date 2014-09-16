@@ -32,7 +32,6 @@ anyError = False
 titleFile = 'docs/marketing/localized_description/ankidroid-titles.txt'
 titleString = 'AnkiDroid Flashcards'
 
-
 import os
 import zipfile
 import urllib
@@ -99,7 +98,7 @@ def replacechars(filename, fileExt, isCrowdin):
 		print 'Error in file ' + filename
 		return False
 	else:
-		print 'File ' + filename + ' successfully copied'
+		# print 'File ' + filename + ' successfully copied' # Disabled, makes output too large.
 		return True
 
 def fileExtFor(f):
@@ -146,6 +145,19 @@ def update(valuesDirectory, f, source, fileExt, isCrowdin, language=''):
 		newfile = valuesDirectory + f + '.xml'
 		file(newfile, 'w').write(source)
 		return replacechars(newfile, fileExt, isCrowdin)
+
+def build():
+	try:
+		c = open("tools/crowdin_key.txt","r+")
+		CROWDIN_KEY = c.readline();
+		c.close()
+		print "Building ZIP on server..."
+		urllib.urlopen('https://api.crowdin.com/api/project/ankidroid/export?key=' + CROWDIN_KEY)
+		print "Built."
+	except IOError as e:
+		print "No crowdin_key.txt file, skipping build."
+
+build()
 
 zipname = 'ankidroid.zip'
 
