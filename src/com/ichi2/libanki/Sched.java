@@ -2201,7 +2201,7 @@ public class Sched {
         }
         remFromDyn(ids);
         mCol.getDb().executeMany(
-                "update cards set type=2,queue=2,ivl=?,due=?,odue=0 " +
+                "update cards set type=2,queue=2,ivl=?,due=?,odue=0, " +
                 "usn=?,mod=?,factor=? where id=?", d);
         mCol.log(ids);
     }
