@@ -121,6 +121,7 @@
   <string name="help_tutorial">Create tutorial deck</string>
   <string name="tutorial_deck_name">Voorbeeld set</string>
   <string name="check_db">Controleer database</string>
+  <string name="check_media">Check media</string>
   <string name="check_db_message">De databank wordt gecontroleerd.\nEven geduld alstublieft...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
   <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
@@ -147,10 +148,15 @@
   <string name="import_message_add">Toevoegen</string>
   <string name="import_message_replace">Vervangen</string>
   <string name="import_message_replace_confirm">Deze actie zal uw bestaande collectie verwijderen en vervangen door de data van bestand %s. Bent u zeker?</string>
+  <string name="import_message_add_confirm">Add \"%s\" to collection? This may take a long time</string>
   <string name="import_log_success">%d kaarten zijn succesvol geïmporteerd</string>
   <string name="import_log_error">Importeren mislukt</string>
   <string name="import_log_no_apkg">Dit is geen geldig apkg-bestand</string>
   <string name="import_importing">Kaarten importeren.\n Even geduld alstublieft...</string>
+  <string name="confirm_apkg_export">Export whole collection as apkg file? This may take a long time</string>
+  <string name="export_in_progress">Exporting apkg file&#8230;</string>
+  <string name="export_successful">\"Collection.apkg\" was exported to the AnkiDroid folder</string>
+  <string name="export_unsuccessful">Error exporting collection</string>
   <string name="import_hint">Om kaarten te importeren, plaats het apkg-bestand in map %s en klik ok</string>
   <string name="upgrade_import_no_file_found">Geen %1$s bestand gevonden om te importeren</string>
   <string name="study_options">Set opties</string>

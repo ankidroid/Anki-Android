@@ -63,7 +63,6 @@
   <string name="card_browser_change_display_order_title">Сортирање</string>
   <string name="card_browser_change_display_order_reverse">Изабери поље два пута за окретање.</string>
   <string name="card_browser_order_reverse">(окретање)</string>
-  <string name="card_browser_card_details">Информација о карти</string>
   <string name="card_details_question">Питање</string>
   <string name="card_details_answer">Одговор</string>
   <string name="card_details_due">Понављање</string>

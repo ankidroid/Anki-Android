@@ -63,7 +63,6 @@
   <string name="card_browser_change_display_order_title">Zvoliť poradie zobrazenia</string>
   <string name="card_browser_change_display_order_reverse">Pre prevrátenie vyberte pole dvakrát.</string>
   <string name="card_browser_order_reverse">(prevrátené)</string>
-  <string name="card_browser_card_details">Detaily karty</string>
   <string name="card_details_question">Otázka</string>
   <string name="card_details_answer">Odpoveď</string>
   <string name="card_details_due">Na skúšanie</string>

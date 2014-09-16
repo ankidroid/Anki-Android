@@ -107,8 +107,8 @@
     <item>Seppellisci carta</item>
     <item>Sospendi carta</item>
     <item>Cancella carta</item>
-    <item>Play media</item>
-    <item>Abort learning</item>
+    <item>Riproduci Media</item>
+    <item>Interrompi l\'apprendimento</item>
   </string-array>
   <string-array name="theme_labels">
     <item>Android scuro</item>

@@ -121,6 +121,7 @@
   <string name="help_tutorial">Tạo hướng dẫn</string>
   <string name="tutorial_deck_name">Bài hướng dẫn</string>
   <string name="check_db">Kiểm tra cơ sở dữ liệu</string>
+  <string name="check_media">Check media</string>
   <string name="check_db_message">Đang kiểm tra cơ sở dữ liệu. \n Xin đợi chút...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Thẻ rỗng. Chạy \"công cụ &gt; Làm trống các thẻ...\" trên máy tính để bàn.</string>
   <string name="unknown_type_field_warning">Nhập câu trả lời: không biết trường %s</string>
@@ -147,10 +148,15 @@
   <string name="import_message_add">Thêm</string>
   <string name="import_message_replace">Thay thế</string>
   <string name="import_message_replace_confirm">Bạn có chắc không. ĐIều này sẽ xóa toàn bộ dữ liệu hiện có, và thay thế bằng dữ liệu của file %s.</string>
+  <string name="import_message_add_confirm">Add \"%s\" to collection? This may take a long time</string>
   <string name="import_log_success">Hoàn thiện nhập dữ liệu %d Các thẻ</string>
   <string name="import_log_error">Nhập thất bại</string>
   <string name="import_log_no_apkg">Đây không phải tập tin apkg hợp lệ</string>
   <string name="import_importing">Đang nhập thẻ.\nXin chờ chút...</string>
+  <string name="confirm_apkg_export">Export whole collection as apkg file? This may take a long time</string>
+  <string name="export_in_progress">Exporting apkg file&#8230;</string>
+  <string name="export_successful">\"Collection.apkg\" was exported to the AnkiDroid folder</string>
+  <string name="export_unsuccessful">Error exporting collection</string>
   <string name="import_hint">Để nhập thẻ, đặt tập tin apkg vào đường dẫn %s và bấm ok</string>
   <string name="upgrade_import_no_file_found">Không tìm thấy %1$s tập tin có thể nhập</string>
   <string name="study_options">Tùy chọn Bài</string>

@@ -132,6 +132,8 @@
   <string name="sync_media_sanity_check">Перевіряемо кількість медіа файлів...</string>
   <string name="sync_media_no_changes">Жодних змін в медіа файлах.</string>
   <string name="sync_media_success">Медіа успішно синхронізовано.</string>
+  <string name="sync_media_changes_count">%d media changes to upload</string>
+  <string name="sync_media_downloaded_count">%d media files downloaded</string>
   <string name="sync_sanity_failed">Після синхронізації, деякі дані вашої колекції виявилися в суперечливому стані. Щоб усунути цю проблему, AnkiDroid виконає повну синхронізацію. Будь ласка, виберіть яку версію Ви хочете залишити, або скасуйте, якщо ви хочете синхронізувати пізніше.</string>
   <string name="sync_media_sanity_failed">Синхронізацію медіа завершено, але кількість медіа файлів не співпала з кількістю файлів на сервері. Наступна синхронізація буде повною, щоб виправити будь-які помилки.</string>
   <string name="sync_media_error">Помилка синхронізації даних медіа.</string>

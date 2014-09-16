@@ -132,6 +132,8 @@
   <string name="sync_media_sanity_check">Έλεγχος αριθμού πολυμέσων...</string>
   <string name="sync_media_no_changes">Καμία αλλαγή στα αρχεία πολυμέσων.</string>
   <string name="sync_media_success">Τα πολυμέσα συγχρονίστηκαν με επιτυχία.</string>
+  <string name="sync_media_changes_count">%d media changes to upload</string>
+  <string name="sync_media_downloaded_count">%d media files downloaded</string>
   <string name="sync_sanity_failed">After syncing, the collection was in an inconsistent state. To fix this problem, AnkiDroid will force a full sync. Choose which side you would like to keep.</string>
   <string name="sync_media_sanity_failed">Ο συγχρονισμός πολυμέσων ολοκληρώθηκε, αλλά ο αριθμός πολυμέσων διαφέρει από αυτόν του διακομιστή. Ο επόμενος συγχρονισμός θα είναι πλήρης για να διορθώσει οτιδήποτε σφάλμα.</string>
   <string name="sync_media_error">Σφάλμα κατά το συγχρονισμό πολυμέσων.</string>

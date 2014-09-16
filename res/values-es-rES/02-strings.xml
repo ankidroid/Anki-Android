@@ -121,6 +121,7 @@
   <string name="help_tutorial">Crear mazo tutorial</string>
   <string name="tutorial_deck_name">Mazo tutorial</string>
   <string name="check_db">Comprobar base de datos</string>
+  <string name="check_media">Check media</string>
   <string name="check_db_message">Comprobando base de datos.\nPor favor, espera...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Tarjeta vacía. Ejecute \"Herramientas&gt;Tarjetas vacías...\" en el cliente de escritorio.</string>
   <string name="unknown_type_field_warning">Escribir respuesta: campo %s desconocido</string>
@@ -147,10 +148,15 @@
   <string name="import_message_add">Añadir</string>
   <string name="import_message_replace">Reemplazar</string>
   <string name="import_message_replace_confirm">Esto eliminará tu colección actual y la reemplazará con los datos del archivo %s. ¿Estás seguro?</string>
+  <string name="import_message_add_confirm">Add \"%s\" to collection? This may take a long time</string>
   <string name="import_log_success">Se importaron con éxito %d tarjetas</string>
   <string name="import_log_error">La importación falló</string>
   <string name="import_log_no_apkg">Éste no es un archivo apkg válido</string>
   <string name="import_importing">Importando tarjetas.\nPor favor, espera...</string>
+  <string name="confirm_apkg_export">Export whole collection as apkg file? This may take a long time</string>
+  <string name="export_in_progress">Exporting apkg file&#8230;</string>
+  <string name="export_successful">\"Collection.apkg\" was exported to the AnkiDroid folder</string>
+  <string name="export_unsuccessful">Error exporting collection</string>
   <string name="import_hint">Para importar tarjetas, coloca el archivo apkg en el directorio %s y presiona ok</string>
   <string name="upgrade_import_no_file_found">No se encontró archivo importable %1$s</string>
   <string name="study_options">Opciones de mazo</string>

@@ -107,8 +107,8 @@
     <item>カード非表示</item>
     <item>カードを中止</item>
     <item>カードを削除</item>
-    <item>Play media</item>
-    <item>Abort learning</item>
+    <item>メディアを再生</item>
+    <item>学習を中断</item>
   </string-array>
   <string-array name="theme_labels">
     <item>Android Dark</item>
@@ -148,9 +148,9 @@
     <item>ノートタイプから選択</item>
   </string-array>
   <string-array name="new_spread_labels">
-    <item>新しいカードを織り込んで復習</item>
-    <item>復習後の新しいカード</item>
-    <item>復習前の新しいカード</item>
+    <item>新規カードと復習カードを混ぜる</item>
+    <item>復習カードの後に新規カードを学習する</item>
+    <item>復習カードの前に新規カードを学習する</item>
   </string-array>
   <string-array name="cards_for_tag_filtered_deck_labels">
     <item>すべてのカード</item>

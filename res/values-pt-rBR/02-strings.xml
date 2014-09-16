@@ -121,6 +121,7 @@
   <string name="help_tutorial">Create tutorial deck</string>
   <string name="tutorial_deck_name">Tutorial deck</string>
   <string name="check_db">Verificar banco de dados</string>
+  <string name="check_media">Check media</string>
   <string name="check_db_message">Verificando banco de dados.\nPor favor Aguarde...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Cartão vazio. Rode \"Ferramentas&gt;Cartões vazios...\" no cliente para desktop.</string>
   <string name="unknown_type_field_warning">Digite a resposta: campo desconhecido %s</string>
@@ -147,10 +148,15 @@
   <string name="import_message_add">Adicionar</string>
   <string name="import_message_replace">Substituir</string>
   <string name="import_message_replace_confirm">Isto irá apagar a sua coleção atual e substituí-la pelo conteúdo do arquivo %s. Você tem certeza?</string>
+  <string name="import_message_add_confirm">Add \"%s\" to collection? This may take a long time</string>
   <string name="import_log_success">%d cartões importados com êxito</string>
   <string name="import_log_error">Importação falhou</string>
   <string name="import_log_no_apkg">Este não é um arquivo apkg válido</string>
   <string name="import_importing">Importando cartões.\nPor favor aguardar...</string>
+  <string name="confirm_apkg_export">Export whole collection as apkg file? This may take a long time</string>
+  <string name="export_in_progress">Exporting apkg file&#8230;</string>
+  <string name="export_successful">\"Collection.apkg\" was exported to the AnkiDroid folder</string>
+  <string name="export_unsuccessful">Error exporting collection</string>
   <string name="import_hint">Para importar cartões, coloque o arquivo apkg no diretório %s e pressione ok</string>
   <string name="upgrade_import_no_file_found">Nenhum arquivo %1$s importável encontrado</string>
   <string name="study_options">Deck options</string>

@@ -63,7 +63,6 @@
   <string name="card_browser_change_display_order_title">Elija el orden de presentación</string>
   <string name="card_browser_change_display_order_reverse">Seleccione un campo dos veces para revertir.</string>
   <string name="card_browser_order_reverse">(reverso)</string>
-  <string name="card_browser_card_details">Detalles de la tarjeta</string>
   <string name="card_details_question">Pregunta</string>
   <string name="card_details_answer">Respuesta</string>
   <string name="card_details_due">Programada</string>

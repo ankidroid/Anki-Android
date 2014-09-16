@@ -132,6 +132,8 @@
   <string name="sync_media_sanity_check">미디어 갯수를 확인하는 중...</string>
   <string name="sync_media_no_changes">변경된 미디어 파일이 없습니다.</string>
   <string name="sync_media_success">미디어 파일이 성공적으로 동기화 되었습니다.</string>
+  <string name="sync_media_changes_count">%d media changes to upload</string>
+  <string name="sync_media_downloaded_count">%d media files downloaded</string>
   <string name="sync_sanity_failed">동기화 후에, 컬렉션이 불안정한 상태에 있습니다. 이 문제를 해결하기 위해, AnkiDroid는 완전 동기화를 시도할 것입니다. 어느 쪽을 유지하고 싶은지 선택해주세요. 나중에 동기화하고 싶다면 취소를 누르세요.</string>
   <string name="sync_media_sanity_failed">미디어 동기화는 마쳤지만, 미디어 갯수가 서버와 맞지 않습니다. 오류를 해결하기 위해 다음에는 미디어 완전 동기화가 필요합니다.</string>
   <string name="sync_media_error">미디어 데이터 동기화 에러.</string>

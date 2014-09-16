@@ -63,7 +63,6 @@
   <string name="card_browser_change_display_order_title">Choisir l\'ordre d\'affichage</string>
   <string name="card_browser_change_display_order_reverse">Inversez l’ordre par double-sélection du champ.</string>
   <string name="card_browser_order_reverse">(inverser l’ordre)</string>
-  <string name="card_browser_card_details">Détails de la carte</string>
   <string name="card_details_question">Question</string>
   <string name="card_details_answer">Réponse</string>
   <string name="card_details_due">Dû</string>

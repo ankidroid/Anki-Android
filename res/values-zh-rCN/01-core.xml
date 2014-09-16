@@ -175,6 +175,7 @@
   <string name="ankiweb">AnkiWeb网站</string>
   <string name="usb">USB</string>
   <string name="_import">导入</string>
+  <string name="export">Export</string>
   <string name="confirm">确认</string>
   <string name="internet">互联网</string>
   <string name="pc">PC个人电脑</string>

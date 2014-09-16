@@ -132,6 +132,8 @@
   <string name="sync_media_sanity_check">Bezig met het nagaan van de media-aantallen...</string>
   <string name="sync_media_no_changes">Mediabestanden bleven ongewijzigd.</string>
   <string name="sync_media_success">Media met succes gesynchroniseerd.</string>
+  <string name="sync_media_changes_count">%d media changes to upload</string>
+  <string name="sync_media_downloaded_count">%d media files downloaded</string>
   <string name="sync_sanity_failed">Na synchronisatie was de collectie in een inconsistente staat. Om dit probleem op te lossen zal AnkiDroid een volledige synchronisatie uitvoeren. Gelieve te kiezen welke zijde u wenst te behouden, of de operatie te onderbreken indien u liever later synchroniseert.</string>
   <string name="sync_media_sanity_failed">Synchronisatie van de media voltooid, maar het aantal mediabestanden komt niet overeen met dat op de server. De volgende keer zal een volledige synchronisatie van de media worden uitgevoerd om fouten te corrigeren.</string>
   <string name="sync_media_error">Fout tijdens het synchroniseren van mediagegevens.</string>

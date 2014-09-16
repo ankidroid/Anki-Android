@@ -132,6 +132,8 @@
   <string name="sync_media_sanity_check">بررسی شماره رسانه...</string>
   <string name="sync_media_no_changes">فایل رسانه تغییری نکرده است.</string>
   <string name="sync_media_success">رسانه با موفقیت همگام سازی شد.</string>
+  <string name="sync_media_changes_count">%d media changes to upload</string>
+  <string name="sync_media_downloaded_count">%d media files downloaded</string>
   <string name="sync_sanity_failed">پس از همگام سازی، این مجموعه در وضعیت متناقض بود. برای رفع این مشکل آنکی دروید یک همگامسازی کامل و تحمیلی انجام خواهد داد. لطفا آنچه را که دوست دارید نگه دارید انتخاب کنید، یا اگر ترجیح می دهید بعدا همگامسازی کنید آن را لغو کنید.</string>
   <string name="sync_media_sanity_failed">همگام سازی رسانه کامل شد, اما تعداد رسانه با سرویس دهنده یکسان نیست. برای رفع هر خطایی رسانه بعدی بطور کامل همگام سازی خواهد شد.</string>
   <string name="sync_media_error">خطا در همگام سازی اطلاعات رسانه.</string>

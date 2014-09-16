@@ -133,6 +133,8 @@
   <string name="sync_media_sanity_check">检查媒体数量...</string>
   <string name="sync_media_no_changes">媒体文件无更改。</string>
   <string name="sync_media_success">媒体同步成功。</string>
+  <string name="sync_media_changes_count">%d media changes to upload</string>
+  <string name="sync_media_downloaded_count">%d media files downloaded</string>
   <string name="sync_sanity_failed">同步之后，牌组集合处于不一致的状态。AnkiDroid将会强制完全同步以修复这一问题。请选择你想保留哪一边的状态，如果你想稍后再同步，请取消</string>
   <string name="sync_media_sanity_failed">媒体同步完成，但媒体数量与服务器不一致。下一次将进行全部同步，以纠正错误。</string>
   <string name="sync_media_error">同步媒体数据出错.</string>

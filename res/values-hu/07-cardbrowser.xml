@@ -63,7 +63,6 @@
   <string name="card_browser_change_display_order_title">Válassz megjelenítési sorrendet</string>
   <string name="card_browser_change_display_order_reverse">Fordított sorrendhez válaszd ki a mezőt kétszer.</string>
   <string name="card_browser_order_reverse">(visszafele)</string>
-  <string name="card_browser_card_details">Kártyaadatok</string>
   <string name="card_details_question">Kérdés</string>
   <string name="card_details_answer">Válasz</string>
   <string name="card_details_due">Esedékes</string>

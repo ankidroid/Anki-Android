@@ -121,6 +121,7 @@
   <string name="help_tutorial">Create tutorial deck</string>
   <string name="tutorial_deck_name">Tutorial deck</string>
   <string name="check_db">Periksa database</string>
+  <string name="check_media">Check media</string>
   <string name="check_db_message">Memeriksa database. \nSilahkan tunggu...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
   <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
@@ -147,10 +148,15 @@
   <string name="import_message_add">Tambahkan</string>
   <string name="import_message_replace">Ganti</string>
   <string name="import_message_replace_confirm">Ini akan menghapus koleksi Anda yang ada dan menggantinya dengan data dari file %s. Apakah Anda yakin?</string>
+  <string name="import_message_add_confirm">Add \"%s\" to collection? This may take a long time</string>
   <string name="import_log_success">Kartu %d berhasil diimport</string>
   <string name="import_log_error">Impor gagal</string>
   <string name="import_log_no_apkg">Bukan file apkg yang sah</string>
   <string name="import_importing">Mengimpor kartu.\nSilahkan tunggu...</string>
+  <string name="confirm_apkg_export">Export whole collection as apkg file? This may take a long time</string>
+  <string name="export_in_progress">Exporting apkg file&#8230;</string>
+  <string name="export_successful">\"Collection.apkg\" was exported to the AnkiDroid folder</string>
+  <string name="export_unsuccessful">Error exporting collection</string>
   <string name="import_hint">Untuk mengimpor kartu, tempatkan file apkg ke dalam direktori %s dan tekan ok</string>
   <string name="upgrade_import_no_file_found">Tidak ada %1$s file yang dapat di impor ditemukan</string>
   <string name="study_options">Deck options</string>

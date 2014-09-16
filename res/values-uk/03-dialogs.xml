@@ -148,4 +148,16 @@
   <string name="dialog_collection_path_title">Тека не існує</string>
   <string name="dialog_collection_path_text">Указана тека не існує, бажаєте її створити?</string>
   <string name="dialog_collection_path_not_dir">The path specified was not a valid directory</string>
+  <string name="check_media_title">Check media?</string>
+  <string name="check_media_warning">This may take a long time with large media collections</string>
+  <string name="check_media_message">Checking media&#8230;</string>
+  <string name="check_media_acknowledge">Media checked</string>
+  <string name="check_media_failed">Media checked failed</string>
+  <string name="check_media_invalid">Files with invalid encoding: %d</string>
+  <string name="check_media_unused">Files in media folder but not used by any cards: %d</string>
+  <string name="check_media_nohave">Files used on cards but not in media folder: %d</string>
+  <string name="check_media_no_unused_missing">No unused or missing files found.</string>
+  <string name="check_media_db_updated">Media database rebuilt.</string>
+  <string name="check_media_delete_unused">Delete unused</string>
+  <string name="check_media_deleted">Files deleted: %d</string>
 </resources>

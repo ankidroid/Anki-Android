@@ -121,6 +121,7 @@
   <string name="help_tutorial">Create tutorial deck</string>
   <string name="tutorial_deck_name">Tutorial deck</string>
   <string name="check_db">Провера базе података</string>
+  <string name="check_media">Check media</string>
   <string name="check_db_message">Провера базе података.\nМолим сачекајте...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
   <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
@@ -147,10 +148,15 @@
   <string name="import_message_add">Додај</string>
   <string name="import_message_replace">Замени</string>
   <string name="import_message_replace_confirm">Избрисати вашу постојећу колекцију и заменити је подацима из датотеке %s. Да ли сте сигурни?</string>
+  <string name="import_message_add_confirm">Add \"%s\" to collection? This may take a long time</string>
   <string name="import_log_success">Успешно увезено %d карата</string>
   <string name="import_log_error">Неуспешан увоз</string>
   <string name="import_log_no_apkg">Ово је неодговарајућа apkg датотека</string>
   <string name="import_importing">Увоз карата.\nМолим сачекајте...</string>
+  <string name="confirm_apkg_export">Export whole collection as apkg file? This may take a long time</string>
+  <string name="export_in_progress">Exporting apkg file&#8230;</string>
+  <string name="export_successful">\"Collection.apkg\" was exported to the AnkiDroid folder</string>
+  <string name="export_unsuccessful">Error exporting collection</string>
   <string name="import_hint">Да бисте увезли карте, ставите датотеке apkg у фасциклу %s и кликните ОК</string>
   <string name="upgrade_import_no_file_found">Пронађена је неувезена датотека %1$s</string>
   <string name="study_options">Deck options</string>

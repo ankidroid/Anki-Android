@@ -62,8 +62,8 @@
   <string name="stats_minutes">Minuty</string>
   <string name="stats_hours">Godziny</string>
   <string name="stats_percentage">Percentage</string>
-  <string name="stats_period_month">1 month</string>
-  <string name="stats_period_year">1 year</string>
+  <string name="stats_period_month">1 miesiąc</string>
+  <string name="stats_period_year">1 rok</string>
   <string name="stats_period_lifetime">deck life</string>
   <string name="stats_deck_current">deck</string>
   <string name="stats_deck_collection">collection</string>
@@ -165,11 +165,11 @@
     <item>Obecna talia</item>
   </string-array>
   <string-array name="stats_day_time_strings">
-    <item>4AM</item>
-    <item>10AM</item>
-    <item>4PM</item>
-    <item>10PM</item>
-    <item>3AM</item>
+    <item>04:00</item>
+    <item>10:00</item>
+    <item>16:00</item>
+    <item>22:00</item>
+    <item>03:00</item>
   </string-array>
   <string-array name="stats_week_days">
     <item>Sun</item>

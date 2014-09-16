@@ -121,6 +121,7 @@
   <string name="help_tutorial">Создать учебную колоду</string>
   <string name="tutorial_deck_name">Учебная колода</string>
   <string name="check_db">Проверка базы данных</string>
+  <string name="check_media">Check media</string>
   <string name="check_db_message">Проверка базы данных. \nПожалуйста подождите...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Пустая карта. Запустите «Инструменты&gt;Пустые карты...» на настольном клиенте.</string>
   <string name="unknown_type_field_warning">Тип ответа: неизвестное поле %s</string>
@@ -147,10 +148,15 @@
   <string name="import_message_add">Добавить</string>
   <string name="import_message_replace">Заменить</string>
   <string name="import_message_replace_confirm">Удалить Вашу существующую коллекцию и заменить её данными файла %s. Вы уверены?</string>
+  <string name="import_message_add_confirm">Add \"%s\" to collection? This may take a long time</string>
   <string name="import_log_success">Успешно импортированы %d карты</string>
   <string name="import_log_error">Импорт не удался</string>
   <string name="import_log_no_apkg">Это негодный apkg-файл</string>
   <string name="import_importing">Импортирование карт.\nПожалуйста, подождите...</string>
+  <string name="confirm_apkg_export">Export whole collection as apkg file? This may take a long time</string>
+  <string name="export_in_progress">Exporting apkg file&#8230;</string>
+  <string name="export_successful">\"Collection.apkg\" was exported to the AnkiDroid folder</string>
+  <string name="export_unsuccessful">Error exporting collection</string>
   <string name="import_hint">Чтобы импортировать карты, поместите файл apkg в каталог %s и нажмите ОК</string>
   <string name="upgrade_import_no_file_found">Найден не импортируемый файл %1$s</string>
   <string name="study_options">Опции колоды</string>

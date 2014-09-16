@@ -121,6 +121,7 @@
   <string name="help_tutorial">Create tutorial deck</string>
   <string name="tutorial_deck_name">Tutorial deck</string>
   <string name="check_db">Comprova la base de dades</string>
+  <string name="check_media">Check media</string>
   <string name="check_db_message">S\'està comprovant la base de dades.\nUn moment si us plau...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
   <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
@@ -147,10 +148,15 @@
   <string name="import_message_add">Afegeix</string>
   <string name="import_message_replace">Reemplaça</string>
   <string name="import_message_replace_confirm">Això suprimirà la vostra col·lecció actual i la reemplaçarà amb les dades del fitxer %s. Esteu segur que ho voleu?</string>
+  <string name="import_message_add_confirm">Add \"%s\" to collection? This may take a long time</string>
   <string name="import_log_success">S\'ha importat %d fitxes correctament</string>
   <string name="import_log_error">No ha estat possible la importació</string>
   <string name="import_log_no_apkg">Això no és un fitxer apkg vàlid</string>
   <string name="import_importing">S\'estàn important les fitxes. \nEspereu...</string>
+  <string name="confirm_apkg_export">Export whole collection as apkg file? This may take a long time</string>
+  <string name="export_in_progress">Exporting apkg file&#8230;</string>
+  <string name="export_successful">\"Collection.apkg\" was exported to the AnkiDroid folder</string>
+  <string name="export_unsuccessful">Error exporting collection</string>
   <string name="import_hint">Per importar fitxes, poseu l\'arxiu apkg a la carpeta %s i premeu d\'acord</string>
   <string name="upgrade_import_no_file_found">No s\'ha trobat cap fitxer %1$s que es pugui importar</string>
   <string name="study_options">Deck options</string>

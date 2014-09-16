@@ -132,10 +132,12 @@
   <string name="sync_media_sanity_check">Vérification du nombre de médias...</string>
   <string name="sync_media_no_changes">Pas de changements des fichiers medias.</string>
   <string name="sync_media_success">Médias synchronisés avec succès.</string>
+  <string name="sync_media_changes_count">%d media changes to upload</string>
+  <string name="sync_media_downloaded_count">%d media files downloaded</string>
   <string name="sync_sanity_failed">Après la synchronisation, la collection s\'est retrouvée dans un état incohérent. Pour résoudre ce problème, AnkiDroid va forcer une synchronisation complète. Veuillez choisir avec quelle version vous voulez continuer, ou annulez si vous voulez synchroniser plus tard.</string>
   <string name="sync_media_sanity_failed">La synchronisation des médias est achevée mais le nombre de média ne correspond pas à celui de serveur. La prochaine synchronisation des médias sera complète afin de corriger des erreurs éventuelles.</string>
   <string name="sync_media_error">Erreur pendant la synchronisation des médias.</string>
-  <string name="sync_media_unsupported">Complex media file names are not supported on Android 2.2 and below. Media syncing has been disabled.</string>
+  <string name="sync_media_unsupported">Les noms de fichiers de média compliqués ne sont gérés ni par Android 2.2 ni par ses versions antérieures. La synchronisation multimédia a été désactivée.</string>
   <string name="register_error">Une erreur s\'est produite. Veuillez réessayer plus tard.</string>
   <string name="register_title">Créer un compte</string>
   <string name="register_mismatch">Le couple nom d\'utilisateur/mot de passe ne correspond pas ou est vide. Veuillez réessayer.</string>

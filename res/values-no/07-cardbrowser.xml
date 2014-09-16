@@ -63,7 +63,6 @@
   <string name="card_browser_change_display_order_title">Velg visningsrekkefølge</string>
   <string name="card_browser_change_display_order_reverse">Select a field twice to reverse</string>
   <string name="card_browser_order_reverse">(reverse)</string>
-  <string name="card_browser_card_details">Kortdetaljer</string>
   <string name="card_details_question">Spørsmål</string>
   <string name="card_details_answer">Svar</string>
   <string name="card_details_due">Gjenstående</string>

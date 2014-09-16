@@ -51,8 +51,8 @@
   <string name="card_type">Kartentyp</string>
   <string name="filter_tags">Schlagworte filtern</string>
   <string name="sdcard_missing_message">Die SD-Karte ist nicht verfügbar, da sie als USB-Speicher verwendet wird. Trennen Sie die Verbindung, um auf Ihre Stapel zuzugreifen.</string>
-  <string name="enable_whiteboard">Enable whiteboard</string>
-  <string name="disable_whiteboard">Disable whiteboard</string>
+  <string name="enable_whiteboard">Whiteboard aktivieren</string>
+  <string name="disable_whiteboard">Whiteboard ausschalten</string>
   <string name="show_whiteboard">Whiteboard an</string>
   <string name="hide_whiteboard">Whiteboard aus</string>
   <string name="clear_whiteboard">Whiteboard säubern</string>
@@ -121,6 +121,7 @@
   <string name="help_tutorial">Einführungsstapel erstellen</string>
   <string name="tutorial_deck_name">Einführungsstapel</string>
   <string name="check_db">Datenbank überprüfen</string>
+  <string name="check_media">Check media</string>
   <string name="check_db_message">Prüfe Datenbank.\nBitte warten...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Leere Karte. Führen Sie \"Werkzeuge&gt;Leere Karten...\" mit dem Desktop-Programm aus.</string>
   <string name="unknown_type_field_warning">Antworteingabe: Unbekanntes Feld %s</string>
@@ -136,7 +137,7 @@
     <item>Fälligkeitsreihenfolge</item>
   </string-array>
   <string name="menu_cardbrowser">Kartenübersicht</string>
-  <string name="show_hint">Show %s</string>
+  <string name="show_hint">%s anzeigen</string>
   <string name="pref_lang_other">Spracheinstellungen</string>
   <string name="pref_font_UI">Benutzerdefinierte Oberflächenschriftart</string>
   <string name="info_rate">AnkiDroid bewerten</string>
@@ -147,10 +148,15 @@
   <string name="import_message_add">Hinzufügen</string>
   <string name="import_message_replace">Ersetzen</string>
   <string name="import_message_replace_confirm">Ihre bestehende Sammlung wird gelöscht und durch die aus der Datei %s ersetzt. Sind Sie sicher?</string>
+  <string name="import_message_add_confirm">Add \"%s\" to collection? This may take a long time</string>
   <string name="import_log_success">Erfolgreich %d Karten importiert</string>
   <string name="import_log_error">Import fehlgeschlagen</string>
   <string name="import_log_no_apkg">Dies ist keine gültige apgk-Datei</string>
   <string name="import_importing">Karten werden importiert&#8230;</string>
+  <string name="confirm_apkg_export">Export whole collection as apkg file? This may take a long time</string>
+  <string name="export_in_progress">Exporting apkg file&#8230;</string>
+  <string name="export_successful">\"Collection.apkg\" was exported to the AnkiDroid folder</string>
+  <string name="export_unsuccessful">Error exporting collection</string>
   <string name="import_hint">Kopieren Sie die apkg-Datei ins Verzeichnis %s und berühren Sie OK um Karten zu importieren</string>
   <string name="upgrade_import_no_file_found">Keine importierbare Datei %1$s gefunden</string>
   <string name="study_options">Stapeloptionen</string>

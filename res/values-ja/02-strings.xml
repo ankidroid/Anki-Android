@@ -51,11 +51,11 @@
   <string name="card_type">カードタイプ</string>
   <string name="filter_tags">フィルタータグ</string>
   <string name="sdcard_missing_message">USBストレージとして使用されているので、SDカードは使用できません。単語帳にアクセスするには、USBを切断してください。</string>
-  <string name="enable_whiteboard">Enable whiteboard</string>
-  <string name="disable_whiteboard">Disable whiteboard</string>
-  <string name="show_whiteboard">ホワイトボード有効化</string>
-  <string name="hide_whiteboard">ホワイトボード無効化</string>
-  <string name="clear_whiteboard">ホワイトボードをクリア</string>
+  <string name="enable_whiteboard">ホワイトボードを有効にする</string>
+  <string name="disable_whiteboard">ホワイトボードを無効にする</string>
+  <string name="show_whiteboard">ホワイトボードを表示する</string>
+  <string name="hide_whiteboard">ホワイトボードを隠す</string>
+  <string name="clear_whiteboard">ホワイトボードの内容を全て消去</string>
   <string name="replay_audio">再生</string>
   <string name="cram_edit_warning">総復習中はカードの編集はできません</string>
   <string name="suspend_leeches">学習困難カードの非表示</string>
@@ -121,6 +121,7 @@
   <string name="help_tutorial">チュートリアル単語帳の作成</string>
   <string name="tutorial_deck_name">チュートリアル単語帳</string>
   <string name="check_db">データベースの検査</string>
+  <string name="check_media">Check media</string>
   <string name="check_db_message">データを確認中です\nしばらくお待ちください</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">空のカード。\"ツール &gt; 空のカード...\"をデスクトップ クライアントで実行。</string>
   <string name="unknown_type_field_warning">タイピングして答えを入力: 不明なフィールド %s</string>
@@ -136,26 +137,31 @@
     <item>期限順に</item>
   </string-array>
   <string name="menu_cardbrowser">ブラウザー</string>
-  <string name="show_hint">Show %s</string>
+  <string name="show_hint">%s を表示</string>
   <string name="pref_lang_other">使用言語の選択</string>
   <string name="pref_font_UI">使用フォントの設定</string>
   <string name="info_rate">AnkiDroidの評価</string>
   <string name="col_load_failed">コレクションの取り込みに失敗しました\n AnkiDroidに戻ってください</string>
   <string name="import_title">カードのインポート</string>
-  <string name="import_select_title">Choose a file to import</string>
+  <string name="import_select_title">インポートするファイルを選択</string>
   <string name="import_message">ファイル%s の内容を、コレクションに追加、または、置き換えますか？</string>
   <string name="import_message_add">追加</string>
   <string name="import_message_replace">置換え</string>
   <string name="import_message_replace_confirm">このコレクションは削除され、ファイル中のデータに置き換えられます%s. よろしいでしょうか？</string>
+  <string name="import_message_add_confirm">Add \"%s\" to collection? This may take a long time</string>
   <string name="import_log_success">正常に取得できたカードは %d　カードです</string>
   <string name="import_log_error">インポート失敗</string>
   <string name="import_log_no_apkg">これは取り込み可能なapkgファイルではありません</string>
   <string name="import_importing">カード取得中です\nしばらくお待ちください</string>
+  <string name="confirm_apkg_export">Export whole collection as apkg file? This may take a long time</string>
+  <string name="export_in_progress">Exporting apkg file&#8230;</string>
+  <string name="export_successful">\"Collection.apkg\" was exported to the AnkiDroid folder</string>
+  <string name="export_unsuccessful">Error exporting collection</string>
   <string name="import_hint">カードを取り込むためにapkg ファイルをフォルダに保管してください %s そしてＯＫボタンをクリックしてください</string>
   <string name="upgrade_import_no_file_found">読み込み可能な %1$s のファイルが見つかりません</string>
   <string name="study_options">単語帳オプション</string>
   <string name="custom_study">カスタム学習</string>
-  <string name="dyn_deck_desc">指定された検索条件で抽出されたカードを集めたカスタム単語帳です。復習スケジュールは無視されます。復習後、又は、単語帳を削除すると、各カードは元の単語帳に戻されます。</string>
+  <string name="dyn_deck_desc">指定された検索条件で抽出されたカードを集めたカスタム単語帳です。通常の復習スケジュールとは別にカードを学習することができます。復習後、または、単語帳を削除すると、各カードは元の単語帳に戻されます。</string>
   <string name="exit_wizard">ウィザードの終了</string>
   <string name="steps_error">学習ステップはゼロより大きな数字</string>
   <string name="steps_min_error">少なくとも 1 つの学習ステップが必要です。</string>
@@ -164,9 +170,9 @@
   <string name="template_error_detail">このカードのテンプレートの中にエラーがあります</string>
   <string name="template_error_fix">このエラーを修正するために、PC上のAnkiDesktopでカードの編集をしてください</string>
   <string name="sched_end">（終了）</string>
-  <string name="sched_unbury_button">それらを表示すため、「延期解除」をタップしてください。</string>
-  <string name="sched_has_buried">関連カード、延期カードは後のセッションまで遅延されます。</string>
+  <string name="sched_unbury_button">それらのカードを今すぐ表示するには、「延期解除」ボタンをタップしてください。</string>
+  <string name="sched_has_buried">関連カード、延期カードの学習は明日まで延期されます。</string>
   <string name="tag_editor_add_hint">右側のチェックマークを使って、新しいタグを追加する</string>
   <string name="tag_editor_add_feedback">\"%2$s\" ボタンを使って \"%1$s\" の追加を確認する</string>
-  <string name="lookup_hint">After copying the text, tap anywhere on the flashcard to show the search icon</string>
+  <string name="lookup_hint">テキストをコピーした後、検索アイコンを表示するために カードのどこかをタップしてください。</string>
 </resources>

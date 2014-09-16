@@ -175,6 +175,7 @@
   <string name="ankiweb">AnkiWeb</string>
   <string name="usb">USB</string>
   <string name="_import">Importuoti</string>
+  <string name="export">Export</string>
   <string name="confirm">Patvirtinti</string>
   <string name="internet">Internetas</string>
   <string name="pc">PC</string>

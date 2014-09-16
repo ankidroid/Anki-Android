@@ -121,6 +121,7 @@
   <string name="help_tutorial">Create tutorial deck</string>
   <string name="tutorial_deck_name">Tutorial deck</string>
   <string name="check_db">بررسی پایگاه داده</string>
+  <string name="check_media">Check media</string>
   <string name="check_db_message">بررسی پایگاه داده.\nلطفا صبر کنید...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
   <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
@@ -147,10 +148,15 @@
   <string name="import_message_add">اضافه کردن</string>
   <string name="import_message_replace">جایگزین کردن</string>
   <string name="import_message_replace_confirm">با این کار مجموعه کنونی شما پاک شده و با داده های پرونده%sجایگزین خواهد شد. آیا مطمئنید؟</string>
+  <string name="import_message_add_confirm">Add \"%s\" to collection? This may take a long time</string>
   <string name="import_log_success">باموفقیت وارد شد %d کارتهای</string>
   <string name="import_log_error">عدم موفقیت در وارد کردن</string>
   <string name="import_log_no_apkg">این فایل، یک فایل معتبر apkg نیست.</string>
   <string name="import_importing">وارد کردن کارت. \nPlease صبر کنید...</string>
+  <string name="confirm_apkg_export">Export whole collection as apkg file? This may take a long time</string>
+  <string name="export_in_progress">Exporting apkg file&#8230;</string>
+  <string name="export_successful">\"Collection.apkg\" was exported to the AnkiDroid folder</string>
+  <string name="export_unsuccessful">Error exporting collection</string>
   <string name="import_hint">برای وارد کردن کارتها,  apkg فایلهای در پوشه %s قرار داده و دکمه خب را فشار دهید</string>
   <string name="upgrade_import_no_file_found">غیر وارد کردنی %1$s فایل یافت شد</string>
   <string name="study_options">Deck options</string>

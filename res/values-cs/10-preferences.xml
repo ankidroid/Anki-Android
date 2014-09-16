@@ -122,7 +122,7 @@
   <string name="language_summ">XXX</string>
   <string name="language_system">Jazyk systému</string>
   <string name="notification_pref">Oznámení</string>
-  <string name="notification_minimum_cards_due">Upozornit, když se více než</string>
+  <string name="notification_minimum_cards_due">Notify when more than</string>
   <string name="notification_minimum_cards_due_summary">XXX karet ke zkoušení</string>
   <string name="notification_minimum_cards_due_vibrate">Vibrace</string>
   <string name="notification_minimum_cards_due_blink">Blikající světlo</string>

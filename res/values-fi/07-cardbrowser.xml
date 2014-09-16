@@ -63,7 +63,6 @@
   <string name="card_browser_change_display_order_title">Valitse näytön järjestys</string>
   <string name="card_browser_change_display_order_reverse">Valitse kenttä kahdesti kääntääksesi päinvastoin.</string>
   <string name="card_browser_order_reverse">(käänteinen)</string>
-  <string name="card_browser_card_details">Korttitiedot</string>
   <string name="card_details_question">Kysymys</string>
   <string name="card_details_answer">Vastaus</string>
   <string name="card_details_due">Määrä</string>

@@ -63,7 +63,6 @@
   <string name="card_browser_change_display_order_title">표시 순서를 선택하세요</string>
   <string name="card_browser_change_display_order_reverse">순서를 바꾸기 위해서 필드를 두번 선택하세요.</string>
   <string name="card_browser_order_reverse">(거꾸로)</string>
-  <string name="card_browser_card_details">카드 상세 정보</string>
   <string name="card_details_question">질문</string>
   <string name="card_details_answer">정답</string>
   <string name="card_details_due">예정</string>

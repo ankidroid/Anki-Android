@@ -44,13 +44,13 @@
   <string name="statistics_mature">Развитые</string>
   <string name="statistics_young_and_learn">Young+Learn</string>
   <string name="statistics_unlearned">Unseen</string>
-  <string name="statistics_suspended">Suspended</string>
+  <string name="statistics_suspended">приостановлено</string>
   <string name="statistics_relearn">Переучивание</string>
   <string name="statistics_learn">Обучение</string>
   <string name="statistics_cram">Зубрёжка</string>
   <string name="statistics_type_title">Статистика</string>
   <string name="stats_cards">Карты</string>
-  <string name="stats_cards_intervals">Cards with given Interval</string>
+  <string name="stats_cards_intervals">карты с заданным интервалом</string>
   <string name="stats_cumulative_cards">Cumulative Cards</string>
   <string name="stats_cumulative_answers">Cumulative Answers</string>
   <string name="stats_cumulative_time_minutes">Cumulative Minutes</string>
@@ -65,13 +65,13 @@
   <string name="stats_period_month">1 month</string>
   <string name="stats_period_year">1 year</string>
   <string name="stats_period_lifetime">deck life</string>
-  <string name="stats_deck_current">deck</string>
-  <string name="stats_deck_collection">collection</string>
-  <string name="stats_time_of_day">Time of Day</string>
-  <string name="stats_day_of_week">Day of Week</string>
-  <string formatted="false" name="stats_percentage_correct">% Correct</string>
-  <string name="stats_reviews">Reviews</string>
-  <string name="stats_answer_type">Answer Type</string>
+  <string name="stats_deck_current">колода</string>
+  <string name="stats_deck_collection">коллекция</string>
+  <string name="stats_time_of_day">время суток</string>
+  <string name="stats_day_of_week">день недели</string>
+  <string formatted="false" name="stats_percentage_correct">% правильно</string>
+  <string name="stats_reviews">отзывы</string>
+  <string name="stats_answer_type">Тип ответа</string>
   <string name="stats_today_again_count">Again count: &lt;b&gt;%d&lt;/b&gt;</string>
   <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; correct)</string>
   <string name="stats_today_type_breakdown">Learn: &lt;b&gt;%1$s&lt;/b&gt;, Review: &lt;b&gt;%2$s&lt;/b&gt;, Relearn: &lt;b&gt;%3$s&lt;/b&gt;, Filtered: &lt;b&gt;%4$s&lt;/b&gt;</string>
@@ -107,8 +107,8 @@
   <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; карт/день</string>
   <string name="deck_summary_deck_age">Возраст колоды: &lt;b&gt;%d&lt;/b&gt; дней</string>
   <string name="deck_summary_all_decks">Все колоды</string>
-  <string name="stats_select_decks">Select deck</string>
-  <string name="stats_select_time_scale">Select timescale</string>
+  <string name="stats_select_decks">выберите колоду</string>
+  <string name="stats_select_time_scale">выберите временной интервал</string>
   <string-array name="next_review_in_s">
     <item>через 1 секунду</item>
     <item>через 1 минуту</item>
@@ -146,15 +146,15 @@
     <item>Недель</item>
     <item>Месяцев</item>
   </string-array>
-  <string name="stats_today">Today</string>
+  <string name="stats_today">Сегодня</string>
   <string name="stats_forecast">Прогноз</string>
   <string name="stats_review_count">Число просмотров</string>
   <string name="stats_review_time">Время просмотра</string>
-  <string name="stats_review_intervals">Intervals</string>
+  <string name="stats_review_intervals">Интервалы</string>
   <string name="stats_breakdown">Hourly Breakdown</string>
   <string name="stats_weekly_breakdown">Weekly Breakdown</string>
-  <string name="stats_answer_buttons">Answer Buttons</string>
-  <string name="stats_cards_types">Cards Types</string>
+  <string name="stats_answer_buttons">Кнопки Ответ</string>
+  <string name="stats_cards_types">Типы карт</string>
   <string-array name="stats_period">
     <item>1 месяц</item>
     <item>1 год</item>
@@ -172,13 +172,13 @@
     <item>3AM</item>
   </string-array>
   <string-array name="stats_week_days">
-    <item>Sun</item>
-    <item>Mon</item>
-    <item>Tue</item>
-    <item>Wed</item>
-    <item>Thu</item>
-    <item>Fri</item>
-    <item>Sat</item>
+    <item>Вск</item>
+    <item>Пнд</item>
+    <item>Втр</item>
+    <item>Ср</item>
+    <item>Чтв</item>
+    <item>Птн</item>
+    <item>Сбт</item>
   </string-array>
   <string-array name="stats_eases_ticks">
     <item>1</item>
@@ -199,6 +199,6 @@
   </plurals>
   <plurals name="stats_today_cards_not_bold">
     <item quantity="one">Studied %1$d card in %2$s today.</item>
-    <item quantity="other">Studied %1$d cards in %2$s today.</item>
+    <item quantity="other">Сегодня изучено %1$d карт в %2$s.</item>
   </plurals>
 </resources>

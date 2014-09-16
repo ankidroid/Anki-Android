@@ -63,7 +63,6 @@
   <string name="card_browser_change_display_order_title">排序方式</string>
   <string name="card_browser_change_display_order_reverse">选择字段两次，以翻转。</string>
   <string name="card_browser_order_reverse">(翻转)</string>
-  <string name="card_browser_card_details">详细信息</string>
   <string name="card_details_question">问题</string>
   <string name="card_details_answer">答案</string>
   <string name="card_details_due">到期时间</string>

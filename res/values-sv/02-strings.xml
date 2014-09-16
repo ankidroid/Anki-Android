@@ -121,6 +121,7 @@
   <string name="help_tutorial">Create tutorial deck</string>
   <string name="tutorial_deck_name">Tutorial deck</string>
   <string name="check_db">Kontrollera databas</string>
+  <string name="check_media">Check media</string>
   <string name="check_db_message">Kontrollerar databasen. \nVänligen vänta...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Tomt kort. Kör \"Verktyg&gt;Tomma kort...\" i skrivbordsversionen av Anki.</string>
   <string name="unknown_type_field_warning">Skriv svar: okänt fält %s</string>
@@ -147,10 +148,15 @@
   <string name="import_message_add">Lägg till</string>
   <string name="import_message_replace">Ersätt</string>
   <string name="import_message_replace_confirm">Detta kommer att ta bort din befintliga samling och ersätta den med datat i filen %s. Är du säker?</string>
+  <string name="import_message_add_confirm">Add \"%s\" to collection? This may take a long time</string>
   <string name="import_log_success">Importerade %d kort</string>
   <string name="import_log_error">Importen misslyckades</string>
   <string name="import_log_no_apkg">Detta är inte en giltig apkg-fil</string>
   <string name="import_importing">Importerar kort.\nVar god vänta...</string>
+  <string name="confirm_apkg_export">Export whole collection as apkg file? This may take a long time</string>
+  <string name="export_in_progress">Exporting apkg file&#8230;</string>
+  <string name="export_successful">\"Collection.apkg\" was exported to the AnkiDroid folder</string>
+  <string name="export_unsuccessful">Error exporting collection</string>
   <string name="import_hint">För att importera kort, placera apkg-filen i katalogen %s och tryck på ok</string>
   <string name="upgrade_import_no_file_found">Ingen importerbar %1$s fil hittad</string>
   <string name="study_options">Deck options</string>

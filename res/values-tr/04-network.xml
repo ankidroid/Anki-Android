@@ -132,6 +132,8 @@
   <string name="sync_media_sanity_check">Medya sayıları kontrol ediliyor...</string>
   <string name="sync_media_no_changes">Medya dosyalarında değişiklik yok.</string>
   <string name="sync_media_success">Medya başarıyla eşitlendi.</string>
+  <string name="sync_media_changes_count">%d media changes to upload</string>
+  <string name="sync_media_downloaded_count">%d media files downloaded</string>
   <string name="sync_sanity_failed">Eşitlemeden sonra, koleksiyon tutarsız bir durumdaydı. Bu sorunu düzeltmek için, AnkiDroid bir tam eşitleme gerektirecek. Lütfen hangi tarafı korumak istediğinizi seçin, veya sonra eşitlemeyi tercih ediyorsanız iptâl edin.</string>
   <string name="sync_media_sanity_failed">Medya eşitlemesi tamamlandı, ama medya sayısı sunucuyla uyuşmuyor. Bir sonraki medya eşitlemesi hataları düzeltmek için tam yapılacak.</string>
   <string name="sync_media_error">Medya veri senkronizasyonu hatası.</string>

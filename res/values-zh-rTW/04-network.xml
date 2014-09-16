@@ -132,6 +132,8 @@
   <string name="sync_media_sanity_check">檢查媒體檔數量...</string>
   <string name="sync_media_no_changes">媒體檔無變更</string>
   <string name="sync_media_success">成功同步媒體檔</string>
+  <string name="sync_media_changes_count">%d media changes to upload</string>
+  <string name="sync_media_downloaded_count">%d media files downloaded</string>
   <string name="sync_sanity_failed">您的收藏狀態在同步以後不一致，AnkiDroid 會強制進行完整同步來修復這問題。請選擇你想要保留哪一邊的檔案。如果您想要稍後進行同步，請選擇取消。</string>
   <string name="sync_media_sanity_failed">媒體檔案同步完成，不過媒體檔數量與伺服器上的不相等。下次將進行完整同步來更正這問題。</string>
   <string name="sync_media_error">同步媒體資料時出錯。</string>

@@ -36,8 +36,8 @@
 -->
 <resources>
   <string-array name="navigation_titles">
-    <item>Paquet</item>
-    <item>Navigateur de carte</item>
+    <item>Paquets</item>
+    <item>Navigateur de cartes</item>
     <item>Statistiques</item>
     <item>Paramètres</item>
     <item>Aide</item>
@@ -107,8 +107,8 @@
     <item>Enterrer la carte</item>
     <item>Suspendre la carte</item>
     <item>Supprimer la carte</item>
-    <item>Play media</item>
-    <item>Abort learning</item>
+    <item>Lancer le média</item>
+    <item>Interrompre l\'apprentissage</item>
   </string-array>
   <string-array name="theme_labels">
     <item>Android sombre</item>

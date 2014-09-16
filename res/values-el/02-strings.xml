@@ -121,6 +121,7 @@
   <string name="help_tutorial">Create tutorial deck</string>
   <string name="tutorial_deck_name">Tutorial deck</string>
   <string name="check_db">Έλεγχος βάσης δεδομένων</string>
+  <string name="check_media">Check media</string>
   <string name="check_db_message">Έλεγχος βάσης δεδομένων.\nΠαρακαλούμε περιμένετε...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
   <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
@@ -147,10 +148,15 @@
   <string name="import_message_add">Προσθήκη</string>
   <string name="import_message_replace">Αντικατάσταση</string>
   <string name="import_message_replace_confirm">Αυτό θα διαγράψει την υπάρχουσα συλλογή σας και θα την αντικαταστήσει με τα δεδομένα του αρχείου %s. Είστε σίγουροι?</string>
+  <string name="import_message_add_confirm">Add \"%s\" to collection? This may take a long time</string>
   <string name="import_log_success">Εισήχθησαν με επιτυχία %d κάρτες</string>
   <string name="import_log_error">Αποτυχία εισαγωγής</string>
   <string name="import_log_no_apkg">Αυτό δεν είναι έγκυρο αρχείο apkg</string>
   <string name="import_importing">Εισαγωγής καρτών.\nΠαρακαλούμε περιμένετε...</string>
+  <string name="confirm_apkg_export">Export whole collection as apkg file? This may take a long time</string>
+  <string name="export_in_progress">Exporting apkg file&#8230;</string>
+  <string name="export_successful">\"Collection.apkg\" was exported to the AnkiDroid folder</string>
+  <string name="export_unsuccessful">Error exporting collection</string>
   <string name="import_hint">Για να εισαγάγετε κάρτες, τοποθετήστε το αρχείο apkg στον κατάλογο %s και πατήστε ΟΚ</string>
   <string name="upgrade_import_no_file_found">Δεν βρέθηκε αρχείο %1$s με δυνατότητα εισαγωγής</string>
   <string name="study_options">Deck options</string>

@@ -48,7 +48,7 @@
   <string name="CardEditorTags">الوسوم: %1$s</string>
   <string name="add_new_filter_tags">Add/filter tags</string>
   <string name="note_type">نوع الملاحظة</string>
-  <string name="card_type">Card type</string>
+  <string name="card_type">نوع البطاقة</string>
   <string name="filter_tags">Filter tags</string>
   <string name="sdcard_missing_message">بطاقة التخزين المؤمنة غير متوفرة بسبب أنها مستخدمة كوحدة تخزين USB . افصل USB للوصول إلى رزمك.</string>
   <string name="enable_whiteboard">Enable whiteboard</string>
@@ -66,14 +66,14 @@
     <item>Search field</item>
   </string-array>
   <string-array name="browser_column2_headings">
-    <item>Answer</item>
+    <item>الجواب</item>
     <item>Card</item>
     <item>Deck</item>
     <item>Note</item>
     <item>Question</item>
     <item>Tags</item>
     <item>Lapses</item>
-    <item>Reviews</item>
+    <item>ملاحظات</item>
   </string-array>
   <string name="cardeditor_title_add_note">أضف ملاحظة</string>
   <string name="cardeditor_title_edit_card">حرر الملاحظة</string>
@@ -121,6 +121,7 @@
   <string name="help_tutorial">Create tutorial deck</string>
   <string name="tutorial_deck_name">Tutorial deck</string>
   <string name="check_db">افحص قاعدة البيانات</string>
+  <string name="check_media">Check media</string>
   <string name="check_db_message">فحص قاعدة البيانات.\nالرجاء الانتظار...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
   <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
@@ -147,10 +148,15 @@
   <string name="import_message_add">إضافة</string>
   <string name="import_message_replace">إستبدال</string>
   <string name="import_message_replace_confirm">سيقوم بحذف المجموعة الحالية الخاصة بك واستبدالها ببيانات الملف %s. هل أنت متأكد؟</string>
+  <string name="import_message_add_confirm">Add \"%s\" to collection? This may take a long time</string>
   <string name="import_log_success">استوردت %d بطاقة بنجاح</string>
   <string name="import_log_error">فشل الاستيراد</string>
   <string name="import_log_no_apkg">هذا ليس ملف apkg صالح</string>
   <string name="import_importing">استيراد بطاقات.\n يرجى الانتظار...</string>
+  <string name="confirm_apkg_export">Export whole collection as apkg file? This may take a long time</string>
+  <string name="export_in_progress">Exporting apkg file&#8230;</string>
+  <string name="export_successful">\"Collection.apkg\" was exported to the AnkiDroid folder</string>
+  <string name="export_unsuccessful">Error exporting collection</string>
   <string name="import_hint">لاستيراد البطاقات، ضع الملف apkg في الدليل %s ثم اضغط موافق</string>
   <string name="upgrade_import_no_file_found">لا يوجد غير قابلة للاستيراد %1$s غير موجود</string>
   <string name="study_options">Deck options</string>

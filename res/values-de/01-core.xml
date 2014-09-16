@@ -42,7 +42,7 @@
   <string name="app_name">AnkiDroid</string>
   <string name="app_name_anki">Anki</string>
   <string name="app_name_droid">Droid</string>
-  <string name="studyoptions_title">Study Options</string>
+  <string name="studyoptions_title">Lernoptionen</string>
   <string name="studyoptions_deck_name">Stapelname</string>
   <string name="studyoptions_due_today">Heute fällig:</string>
   <string name="studyoptions_new_total">Neue Karten gesamt:</string>
@@ -175,6 +175,7 @@
   <string name="ankiweb">AnkiWeb</string>
   <string name="usb">USB</string>
   <string name="_import">Importieren</string>
+  <string name="export">Export</string>
   <string name="confirm">Bestätigen</string>
   <string name="internet">Internet</string>
   <string name="pc">PC</string>

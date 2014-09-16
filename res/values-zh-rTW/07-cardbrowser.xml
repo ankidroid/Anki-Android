@@ -63,7 +63,6 @@
   <string name="card_browser_change_display_order_title">選擇顯示順序</string>
   <string name="card_browser_change_display_order_reverse">點兩下欄位來反向順序排列</string>
   <string name="card_browser_order_reverse">(反向)</string>
-  <string name="card_browser_card_details">卡片詳細資訊</string>
   <string name="card_details_question">問題</string>
   <string name="card_details_answer">答案</string>
   <string name="card_details_due">到期</string>

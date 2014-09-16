@@ -178,6 +178,7 @@
   <string name="ankiweb">AnkiWeb</string>
   <string name="usb">USB</string>
   <string name="_import">가져오기</string>
+  <string name="export">Export</string>
   <string name="confirm">확정</string>
   <string name="internet">인터넷</string>
   <string name="pc">PC</string>

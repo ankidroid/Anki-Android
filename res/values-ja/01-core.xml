@@ -42,7 +42,7 @@
   <string name="app_name">AnkiDroid</string>
   <string name="app_name_anki">Anki</string>
   <string name="app_name_droid">Droid</string>
-  <string name="studyoptions_title">Study Options</string>
+  <string name="studyoptions_title">学習オプション</string>
   <string name="studyoptions_deck_name">単語帳名</string>
   <string name="studyoptions_due_today">今日が期限:</string>
   <string name="studyoptions_new_total">新しいカードの枚数:</string>
@@ -50,8 +50,8 @@
   <string name="studyoptions_eta">推定時間 (分):</string>
   <string name="studyoptions_start">学習開始</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%1$d 期限カード (%2$s)</item>
-    <item quantity="other">%1$d 期限カード(%2$s)</item>
+    <item quantity="one">学習期日に達しているカードが %1$d 枚あります。 (%2$s)</item>
+    <item quantity="other">学習期日に達しているカードが %1$d 枚あります。 (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">%d 分</item>
@@ -62,8 +62,8 @@
     <item quantity="other">残り%2$d枚中%1$d枚</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%d 分の残り</item>
-    <item quantity="other">%d 分残り</item>
+    <item quantity="one">残り %d 分</item>
+    <item quantity="other">残り %d 分</item>
   </plurals>
   <string name="type_answer_hint">回答の入力</string>
   <string name="show_answer">答えの表示</string>
@@ -84,7 +84,7 @@
   <string name="undo_action_suspend_note">ノートの保留</string>
   <string name="undo_action_delete">ノートの削除</string>
   <string name="undo_action_mark">ノートにマークをつける</string>
-  <string name="unbury">延期</string>
+  <string name="unbury">延期解除</string>
   <string name="finish_operation">以前の操作を継続します（バックアップ作成など）\n</string>
   <string name="contextmenu_deckpicker_download_missing_media">不足しているメディアをダウンロードします</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">言語設定のリセット</string>
@@ -149,7 +149,7 @@
   <string name="studyoptions_congrats_finished">おめでとうございます ！今日の目標を達成しました。</string>
   <string name="studyoptions_congrats_more_rev">今日の復習目標を達成しました。まだ学習するカードは残っていますので、オプションの設定で制限を増やすことを検討してください。</string>
   <string name="studyoptions_congrats_more_new">新しいカードの追加ができますが、毎日の制限に達しています。オプション設定で制限を増やすできますが、毎日の復習の負担が増加しますのでご注意ください。</string>
-  <string name="studyoptions_congrats_custom">通常のスケジュール以外で学習するには、下のカスタム学習ボタンをクリックします。</string>
+  <string name="studyoptions_congrats_custom">通常のスケジュール以外で学習するには、下の「カスタム学習」ボタンをタップします。</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">明日は %1$d 枚の復習カードがあります。%2$s.\n 必要な時間　%3$s</item>
     <item quantity="other">明日は %1$d 枚のカードがあります。そして復習カードは %2$s.\n 必要な時間は%3$s</item>
@@ -175,6 +175,7 @@
   <string name="ankiweb">AnkiWeb</string>
   <string name="usb">USB</string>
   <string name="_import">読み込み</string>
+  <string name="export">Export</string>
   <string name="confirm">確認</string>
   <string name="internet">インターネット</string>
   <string name="pc">PC</string>

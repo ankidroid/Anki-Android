@@ -63,7 +63,6 @@
   <string name="card_browser_change_display_order_title">Kies weergavevolgorde</string>
   <string name="card_browser_change_display_order_reverse">Selecteer een veld tweemaal om de volgorde om te keren.</string>
   <string name="card_browser_order_reverse">(volgorde omkeren)</string>
-  <string name="card_browser_card_details">Kaartdetails</string>
   <string name="card_details_question">Vraag</string>
   <string name="card_details_answer">Antwoord</string>
   <string name="card_details_due">Te doen</string>

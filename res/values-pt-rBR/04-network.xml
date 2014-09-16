@@ -132,6 +132,8 @@
   <string name="sync_media_sanity_check">Verificando contagem de mídia...</string>
   <string name="sync_media_no_changes">Sem mudanças nos arquivos de mídia.</string>
   <string name="sync_media_success">Mídias sincronizadas com sucesso.</string>
+  <string name="sync_media_changes_count">%d media changes to upload</string>
+  <string name="sync_media_downloaded_count">%d media files downloaded</string>
   <string name="sync_sanity_failed">Depois de sincronizar, a coleção apresentou um estado inconsistente. Para corrigi isso, o AnkiDroid irá forçar uma sincronização completa. Por favor, escolha qual versão você gostaria de manter, ou cancele se preferir sincronizar depois.</string>
   <string name="sync_media_sanity_failed">Sincronização de mídia completada, mas a contagem de mídias não equivale com a do servidor. A próxima sincronização de mídia estará cheia para corrigir qualquer erro.</string>
   <string name="sync_media_error">Erro ao sincronizar dados de mídia.</string>

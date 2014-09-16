@@ -121,6 +121,7 @@
   <string name="help_tutorial">Create tutorial deck</string>
   <string name="tutorial_deck_name">Tutorial deck</string>
   <string name="check_db">डेटाबेस की जाँच करें</string>
+  <string name="check_media">Check media</string>
   <string name="check_db_message">जाँच डेटाबेस। \nPlease रुको...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
   <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
@@ -147,10 +148,15 @@
   <string name="import_message_add">जोड़ें</string>
   <string name="import_message_replace">की जगह</string>
   <string name="import_message_replace_confirm">यह अपने मौजूदा संग्रह को हटाने और यह फ़ाइल %s का डेटा के साथ बदलना होगा। क्या आपको यकीन है?</string>
+  <string name="import_message_add_confirm">Add \"%s\" to collection? This may take a long time</string>
   <string name="import_log_success">सफलतापूर्वक आयातित %d कार्ड</string>
   <string name="import_log_error">आयात विफल</string>
   <string name="import_log_no_apkg">यह एक मान्य apkg फ़ाइल नहीं है</string>
   <string name="import_importing">आयात कार्ड। \nPlease रुको...</string>
+  <string name="confirm_apkg_export">Export whole collection as apkg file? This may take a long time</string>
+  <string name="export_in_progress">Exporting apkg file&#8230;</string>
+  <string name="export_successful">\"Collection.apkg\" was exported to the AnkiDroid folder</string>
+  <string name="export_unsuccessful">Error exporting collection</string>
   <string name="import_hint">कार्ड को आयात करने के लिए, apkg फ़ाइल %s निर्देशिका में रखें और ठीक दबाएँ</string>
   <string name="upgrade_import_no_file_found">कोई आयातयोग्य %1$s फ़ाइल मिली</string>
   <string name="study_options">Deck options</string>

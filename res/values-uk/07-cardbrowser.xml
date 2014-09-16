@@ -63,7 +63,6 @@
   <string name="card_browser_change_display_order_title">Вибрати порядок відображення</string>
   <string name="card_browser_change_display_order_reverse">Виберіть поле двічі щоб обміняти.</string>
   <string name="card_browser_order_reverse">(обмін)</string>
-  <string name="card_browser_card_details">Деталі картки</string>
   <string name="card_details_question">Питання</string>
   <string name="card_details_answer">Вілповідь</string>
   <string name="card_details_due">До повторення</string>

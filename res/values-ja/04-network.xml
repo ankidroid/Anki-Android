@@ -132,10 +132,12 @@
   <string name="sync_media_sanity_check">メディアの総数を確認しています</string>
   <string name="sync_media_no_changes">メディアファイルへの変更はありません</string>
   <string name="sync_media_success">メディアは正常に同期しました</string>
+  <string name="sync_media_changes_count">%d media changes to upload</string>
+  <string name="sync_media_downloaded_count">%d media files downloaded</string>
   <string name="sync_sanity_failed">同期後にコレクションの不整合が発見されました。この問題を解決するためにコレクションの完全な同期が必要です。Ankiweb側か、AnkiDroid側のデータを保持するかを選択して同期するか、同期をキャンセルしてください。</string>
-  <string name="sync_media_sanity_failed">メディア同期化は完了しました。しかし、メディア数は、許容されません。次にメディアを同期するときには、すべてのエラーを修正できなくなります。</string>
+  <string name="sync_media_sanity_failed">メディアの同期が完了しました。しかし、メディアの数がサーバー上のものと一致しません。次にメディアを同期するときには、すべてのエラーを修正するために完全同期を行います。</string>
   <string name="sync_media_error">メディアデータの同期中のエラー</string>
-  <string name="sync_media_unsupported">Complex media file names are not supported on Android 2.2 and below. Media syncing has been disabled.</string>
+  <string name="sync_media_unsupported">Android 2.2 およびそれ以前のバージョンでは、複雑なメディア ファイル名はサポートされません。メディアの同期を無効にされています。</string>
   <string name="register_error">エラーが発生しました。後でもう一度実行してください。</string>
   <string name="register_title">アカウントの登録</string>
   <string name="register_mismatch">ユーザー名/パスワードが一致しません。再入力してください。</string>

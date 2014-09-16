@@ -132,6 +132,8 @@
   <string name="sync_media_sanity_check">Kollar antalet mediafiler...</string>
   <string name="sync_media_no_changes">Inga ändringar till mediafiler.</string>
   <string name="sync_media_success">Media har synkats.</string>
+  <string name="sync_media_changes_count">%d media changes to upload</string>
+  <string name="sync_media_downloaded_count">%d media files downloaded</string>
   <string name="sync_sanity_failed">Vid synkronisering var den lokala samlingen och den på AnkiWeb i ett oförenligt läge. För att fixa det här kommer AnkiDroid tvinga en full synkronisering. Vänligen välj vilken sida du vill behålla, eller avbryt om du vill synkronisera senare.</string>
   <string name="sync_media_sanity_failed">Mediasynkroniseringen slutfördes, men antalet mediafiler stämmer inte överens med servern. Nästa mediasynkronisering kommer bli en full synkronisering för att rätta till det som är fel.</string>
   <string name="sync_media_error">Fel vid synkronisering av medieinformation.</string>

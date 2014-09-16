@@ -121,6 +121,7 @@
   <string name="help_tutorial">Create tutorial deck</string>
   <string name="tutorial_deck_name">Tutorial deck</string>
   <string name="check_db">Selectare bază de date</string>
+  <string name="check_media">Check media</string>
   <string name="check_db_message">Verificarea bazei de date. \nVa rugam aşteptaţi...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
   <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
@@ -147,10 +148,15 @@
   <string name="import_message_add">Adauga</string>
   <string name="import_message_replace">Înlocuieste</string>
   <string name="import_message_replace_confirm">Aceasta va şterge colecţia existenta şi o va înlocui cu datele din fișierul %s. Eşti sigur?</string>
+  <string name="import_message_add_confirm">Add \"%s\" to collection? This may take a long time</string>
   <string name="import_log_success">Import cu succes de %d carduri</string>
   <string name="import_log_error">Importul nu a reușit</string>
   <string name="import_log_no_apkg">Acesta nu este un fişier valid apkg</string>
   <string name="import_importing">Import carduri. \nVa rugam aşteptaţi...</string>
+  <string name="confirm_apkg_export">Export whole collection as apkg file? This may take a long time</string>
+  <string name="export_in_progress">Exporting apkg file&#8230;</string>
+  <string name="export_successful">\"Collection.apkg\" was exported to the AnkiDroid folder</string>
+  <string name="export_unsuccessful">Error exporting collection</string>
   <string name="import_hint">Pentru a importa cărţi, plasaţi fişierul apkg in directorul %s şi apăsaţi ok</string>
   <string name="upgrade_import_no_file_found">Nici un fișier importabil %1$s gasit</string>
   <string name="study_options">Deck options</string>

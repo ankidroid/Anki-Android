@@ -121,6 +121,7 @@
   <string name="help_tutorial">Create tutorial deck</string>
   <string name="tutorial_deck_name">Tutorial deck</string>
   <string name="check_db">Verificar banco de datos</string>
+  <string name="check_media">Check media</string>
   <string name="check_db_message">Verificando banco de datos.\nAgarda, por favor...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
   <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
@@ -147,10 +148,15 @@
   <string name="import_message_add">Engadir</string>
   <string name="import_message_replace">Substituír</string>
   <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s</string>
+  <string name="import_message_add_confirm">Add \"%s\" to collection? This may take a long time</string>
   <string name="import_log_success">Imported %d cards</string>
   <string name="import_log_error">Import failed</string>
   <string name="import_log_no_apkg">This is not a valid apkg file</string>
   <string name="import_importing">Importing cards&#8230;</string>
+  <string name="confirm_apkg_export">Export whole collection as apkg file? This may take a long time</string>
+  <string name="export_in_progress">Exporting apkg file&#8230;</string>
+  <string name="export_successful">\"Collection.apkg\" was exported to the AnkiDroid folder</string>
+  <string name="export_unsuccessful">Error exporting collection</string>
   <string name="import_hint">Place the apkg file in directory %s and press \"OK\" to import cards</string>
   <string name="upgrade_import_no_file_found">No importable %1$s file found</string>
   <string name="study_options">Deck options</string>

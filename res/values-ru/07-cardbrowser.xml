@@ -63,7 +63,6 @@
   <string name="card_browser_change_display_order_title">Сортировка</string>
   <string name="card_browser_change_display_order_reverse">Выберите поле дважды, чтобы реверсировать.</string>
   <string name="card_browser_order_reverse">(реверс)</string>
-  <string name="card_browser_card_details">Информация о карте</string>
   <string name="card_details_question">Вопрос</string>
   <string name="card_details_answer">Ответ</string>
   <string name="card_details_due">Повтор</string>

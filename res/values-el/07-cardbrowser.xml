@@ -63,7 +63,6 @@
   <string name="card_browser_change_display_order_title">Επιλέξτε τη σειρά εμφάνισης</string>
   <string name="card_browser_change_display_order_reverse">Επιλέξτε ένα πεδίο δύο φορές για να αντιστρέψετε.</string>
   <string name="card_browser_order_reverse">(αντίστροφα)</string>
-  <string name="card_browser_card_details">Λεπτομέρειες κάρτας</string>
   <string name="card_details_question">Ερώτηση</string>
   <string name="card_details_answer">Απάντηση</string>
   <string name="card_details_due">Δέον χρόνος</string>

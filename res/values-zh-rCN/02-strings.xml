@@ -121,6 +121,7 @@
   <string name="help_tutorial">Create tutorial deck</string>
   <string name="tutorial_deck_name">Tutorial deck</string>
   <string name="check_db">检查数据库</string>
+  <string name="check_media">Check media</string>
   <string name="check_db_message">检查数据库。\n请等待...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">空卡牌。在桌面客户端上运行”工具 &gt; 空卡...\"。</string>
   <string name="unknown_type_field_warning">键入答案： 未知的字段 %s</string>
@@ -147,10 +148,15 @@
   <string name="import_message_add">添加</string>
   <string name="import_message_replace">替换</string>
   <string name="import_message_replace_confirm">这将删除你当前的牌组集合，并用文件%s中的内容加以替换。你确定吗？</string>
+  <string name="import_message_add_confirm">Add \"%s\" to collection? This may take a long time</string>
   <string name="import_log_success">成功导入 %d 张卡牌</string>
   <string name="import_log_error">导入失败</string>
   <string name="import_log_no_apkg">这不是一个正确的 apkg 文件</string>
   <string name="import_importing">导入卡牌。\n请稍后...</string>
+  <string name="confirm_apkg_export">Export whole collection as apkg file? This may take a long time</string>
+  <string name="export_in_progress">Exporting apkg file&#8230;</string>
+  <string name="export_successful">\"Collection.apkg\" was exported to the AnkiDroid folder</string>
+  <string name="export_unsuccessful">Error exporting collection</string>
   <string name="import_hint">要导入卡牌，请把apkg文件放在%s目录中，然后按确定。</string>
   <string name="upgrade_import_no_file_found">没有找到可导入的 %1$s 文件</string>
   <string name="study_options">Deck options</string>

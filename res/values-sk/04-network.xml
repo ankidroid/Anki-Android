@@ -132,6 +132,8 @@
   <string name="sync_media_sanity_check">Kontrolujem médiá...</string>
   <string name="sync_media_no_changes">Žiadne zmeny mediálnych súborov.</string>
   <string name="sync_media_success">Mediá boli úspešne synchronizované.</string>
+  <string name="sync_media_changes_count">%d media changes to upload</string>
+  <string name="sync_media_downloaded_count">%d media files downloaded</string>
   <string name="sync_sanity_failed">Po synchronizácii bola zbierka v nekonzistentnom stave. Pre vyriešenie tohto problému AnkiDroid vykoná úplnú synchronizáciu. Zvoľte prosím, ktorú stranu by ste chceli zachovať alebo postup zrušte, ak chcete synchronizovať neskôr.</string>
   <string name="sync_media_sanity_failed">Synchronizácia médií bola dokončená, ale počet médií nesúhlasí so serverom. Nasledujúca synchronizácia médií bude úplná, aby sa napravili akékoľvek chyby.</string>
   <string name="sync_media_error">Pri synchronizácií mediálnych súborov sa vyskytla chyba.</string>

@@ -132,6 +132,8 @@
   <string name="sync_media_sanity_check">التحقق من عدد الوسائط...</string>
   <string name="sync_media_no_changes">لا توجد تغييرات في ملفات الوسائط.</string>
   <string name="sync_media_success">تم مزامنة الوسائط بنجاح.</string>
+  <string name="sync_media_changes_count">%d media changes to upload</string>
+  <string name="sync_media_downloaded_count">%d media files downloaded</string>
   <string name="sync_sanity_failed">After syncing, the collection was in an inconsistent state. To fix this problem, AnkiDroid will force a full sync. Choose which side you would like to keep.</string>
   <string name="sync_media_sanity_failed">اكتملت مزامنة الوسائط، ولكن  عدد الوسائط لا يتوافق مع الخادم. مزامنة الوسائط القادمة ستكون شاملة لتصحيح أي خطأ.</string>
   <string name="sync_media_error">الخطأ في مزامنة معلومات الوسائط.</string>

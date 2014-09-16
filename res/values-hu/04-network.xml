@@ -132,6 +132,8 @@
   <string name="sync_media_sanity_check">Checking media counts&#8230;</string>
   <string name="sync_media_no_changes">Nincs változás a média fájlokban.</string>
   <string name="sync_media_success">Média szinkronizál sikeresen.</string>
+  <string name="sync_media_changes_count">%d media changes to upload</string>
+  <string name="sync_media_downloaded_count">%d media files downloaded</string>
   <string name="sync_sanity_failed">After syncing, the collection was in an inconsistent state. To fix this problem, AnkiDroid will force a full sync. Choose which side you would like to keep.</string>
   <string name="sync_media_sanity_failed">Media sync completed, but the media count doesn\'t agree with the server. The next media sync will be full to correct any error.</string>
   <string name="sync_media_error">Hiba a szinkronizálásnál média adatok.</string>

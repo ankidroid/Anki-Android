@@ -51,8 +51,8 @@
   <string name="card_type">Type de carte</string>
   <string name="filter_tags">Filtrer les tags</string>
   <string name="sdcard_missing_message">La carte SD est indisponible car elle sert de mémoire USB. Déconnectez l’USB pour accéder à vos paquets.</string>
-  <string name="enable_whiteboard">Enable whiteboard</string>
-  <string name="disable_whiteboard">Disable whiteboard</string>
+  <string name="enable_whiteboard">Activer le tableau blanc</string>
+  <string name="disable_whiteboard">Désactiver le tableau blanc</string>
   <string name="show_whiteboard">Afficher le tableau blanc</string>
   <string name="hide_whiteboard">Masquer le tableau blanc</string>
   <string name="clear_whiteboard">Effacer le tableau blanc</string>
@@ -121,6 +121,7 @@
   <string name="help_tutorial">Créer un paquet tutoriel</string>
   <string name="tutorial_deck_name">Paquet tutoriel</string>
   <string name="check_db">Vérification de la base de données</string>
+  <string name="check_media">Check media</string>
   <string name="check_db_message">Vérification de la base de données. \nVeuillez patienter&#8230;</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Carte vide. Lancer \"Outil&gt;Cartes vides...\" sur le client PC.</string>
   <string name="unknown_type_field_warning">Taper la réponse : champ inconnu %s</string>
@@ -136,21 +137,26 @@
     <item>Les plus urgentes d’abord</item>
   </string-array>
   <string name="menu_cardbrowser">Examiner les cartes</string>
-  <string name="show_hint">Show %s</string>
+  <string name="show_hint">Afficher %s</string>
   <string name="pref_lang_other">Préférences linguistiques</string>
   <string name="pref_font_UI">Police pour l’interface utilisateur</string>
   <string name="info_rate">Noter AnkiDroid</string>
   <string name="col_load_failed">Le chargement de la collection à échoué.\nAppuyez sur retour pour fermer AnkiDroid.</string>
   <string name="import_title">Importer des cartes</string>
-  <string name="import_select_title">Choose a file to import</string>
+  <string name="import_select_title">Choisir un fichier à importer</string>
   <string name="import_message">Voulez-vous ajouter le contenu du fichier %s à votre collection ou bien la remplacer par son contenu ?</string>
   <string name="import_message_add">Ajouter</string>
   <string name="import_message_replace">Remplacer</string>
   <string name="import_message_replace_confirm">Ceci va supprimer votre collection existante et la remplacer par les données du fichier %s. Êtes-vous d\'accord ?</string>
+  <string name="import_message_add_confirm">Add \"%s\" to collection? This may take a long time</string>
   <string name="import_log_success">%d cartes importées avec succès</string>
   <string name="import_log_error">Échec de l\'importation</string>
   <string name="import_log_no_apkg">Ce n\'est pas un fichier apkg valide</string>
   <string name="import_importing">Import en cours\nVeuillez patienter...</string>
+  <string name="confirm_apkg_export">Export whole collection as apkg file? This may take a long time</string>
+  <string name="export_in_progress">Exporting apkg file&#8230;</string>
+  <string name="export_successful">\"Collection.apkg\" was exported to the AnkiDroid folder</string>
+  <string name="export_unsuccessful">Error exporting collection</string>
   <string name="import_hint">Pour importer des cartes, placez le fichier apkg dans le répertoire %s et appuyez sur ok</string>
   <string name="upgrade_import_no_file_found">Pas de fichier %1$s importable trouvé</string>
   <string name="study_options">Option des paquets</string>
@@ -168,5 +174,5 @@
   <string name="sched_has_buried">Certaines cartes enterrées ou différées ont été reportées à une prochaine séance.</string>
   <string name="tag_editor_add_hint">Utiliser la coche sur la droite pour ajouter une nouvelle étiquette</string>
   <string name="tag_editor_add_feedback">Appuyer sur « %2$s » pour confirmer l\'ajout de « %1$s »</string>
-  <string name="lookup_hint">After copying the text, tap anywhere on the flashcard to show the search icon</string>
+  <string name="lookup_hint">Après avoir copié le texte, touchez la carte n\'importe où pour afficher l\'icône de recherche</string>
 </resources>

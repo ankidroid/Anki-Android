@@ -40,7 +40,7 @@
 -->
 <resources>
   <string name="app_name">AnkiDroid</string>
-  <string name="app_name_anki">Anki</string>
+  <string name="app_name_anki">Hello my name is Frances</string>
   <string name="app_name_droid">Droid</string>
   <string name="studyoptions_title">Study Options</string>
   <string name="studyoptions_deck_name">Kaardipaki nimi</string>
@@ -175,6 +175,7 @@
   <string name="ankiweb">AnkiWeb</string>
   <string name="usb">USB</string>
   <string name="_import">importi</string>
+  <string name="export">Export</string>
   <string name="confirm">Kinnita</string>
   <string name="internet">Internet</string>
   <string name="pc">PC</string>

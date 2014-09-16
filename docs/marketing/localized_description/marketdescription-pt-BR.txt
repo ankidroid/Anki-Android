@@ -6,7 +6,7 @@ Estude qualquer tipo de coisa, onde e quando quiser. Faça bom uso do tempo livr
 
 Crie seus próprios decks com cartões de estudo ou baixe decks prontos para vários idiomas e tópicos (mais de 6000 disponíveis).
 
-Adicione material através da aplicação de desktop do Anki ou diretamente pelo Ankidroid. O aplicativo ainda suporta adicionar material automaticamente a partir de um dicionário!
+Adicione material através da aplicação de desktop do Anki ou diretamente pelo AnkiDroid. O aplicativo ainda suporta adicionar material automaticamente a partir de um dicionário!
 
 ★ Principais características:
 • conteúdos suportados dos cartões de estudo: texto, imagens, sons, LaTeX

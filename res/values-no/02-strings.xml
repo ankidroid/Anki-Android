@@ -121,6 +121,7 @@
   <string name="help_tutorial">Create tutorial deck</string>
   <string name="tutorial_deck_name">Tutorial deck</string>
   <string name="check_db">Kontroller database</string>
+  <string name="check_media">Check media</string>
   <string name="check_db_message">Undersøker database.\nVennligst vent...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
   <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
@@ -147,10 +148,15 @@
   <string name="import_message_add">Add</string>
   <string name="import_message_replace">Replace</string>
   <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s</string>
+  <string name="import_message_add_confirm">Add \"%s\" to collection? This may take a long time</string>
   <string name="import_log_success">Importerte %d kort problemfritt</string>
   <string name="import_log_error">Import feilet</string>
   <string name="import_log_no_apkg">This is not a valid apkg file</string>
   <string name="import_importing">Importerer kort.\nVennligst vent...</string>
+  <string name="confirm_apkg_export">Export whole collection as apkg file? This may take a long time</string>
+  <string name="export_in_progress">Exporting apkg file&#8230;</string>
+  <string name="export_successful">\"Collection.apkg\" was exported to the AnkiDroid folder</string>
+  <string name="export_unsuccessful">Error exporting collection</string>
   <string name="import_hint">For å importere kort, legg apkg-filen i mappen %s og trykk ok</string>
   <string name="upgrade_import_no_file_found">No importable %1$s file found</string>
   <string name="study_options">Deck options</string>

@@ -121,6 +121,7 @@
   <string name="help_tutorial">Створити колоду підручника</string>
   <string name="tutorial_deck_name">Колода підручника</string>
   <string name="check_db">Перевірити базу даних</string>
+  <string name="check_media">Check media</string>
   <string name="check_db_message">Перевірка бази даних.\n Будь ласка, зачекайте...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Порожня картка. Запустіть \"Інструменти &gt; порожні карти...\" на стільничному клієнті.</string>
   <string name="unknown_type_field_warning">Введіть відповідь: невідоме поле %s</string>
@@ -147,10 +148,15 @@
   <string name="import_message_add">Додати</string>
   <string name="import_message_replace">Замінити</string>
   <string name="import_message_replace_confirm">Дана операція видалить вміст колеції і замінить її даними з файлу %s. Продовжити?</string>
+  <string name="import_message_add_confirm">Add \"%s\" to collection? This may take a long time</string>
   <string name="import_log_success">Успішно імпортовано %d карт</string>
   <string name="import_log_error">Не вдалося виконати імпорт</string>
   <string name="import_log_no_apkg">Це некоректний файлом apkg</string>
   <string name="import_importing">Відбувається імпорт карт. \nЗачекайте, будь-ласка...</string>
+  <string name="confirm_apkg_export">Export whole collection as apkg file? This may take a long time</string>
+  <string name="export_in_progress">Exporting apkg file&#8230;</string>
+  <string name="export_successful">\"Collection.apkg\" was exported to the AnkiDroid folder</string>
+  <string name="export_unsuccessful">Error exporting collection</string>
   <string name="import_hint">Щоб імпортувати карти, помістіть apkg файл в каталог %s і натисніть кнопку ok</string>
   <string name="upgrade_import_no_file_found">Ввізного файлу %1$s не знайдено</string>
   <string name="study_options">Параметри колоди</string>
