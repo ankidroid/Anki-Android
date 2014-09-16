@@ -78,7 +78,7 @@ def updateMasterFile(selu):
 		print 'Update of Master File ' + targetName
 		c = pycurl.Curl()
 		fields = [('files['+targetName+']', (c.FORM_FILE, sourceName))]
-		c.setopt(pycurl.URL, 'http://crowdin.net/api/project/' + PROJECT_IDENTIFIER + '/update-file?key=' + CROWDIN_KEY)
+		c.setopt(pycurl.URL, 'https://api.crowdin.com/api/project/' + PROJECT_IDENTIFIER + '/update-file?key=' + CROWDIN_KEY)
 		c.setopt(pycurl.HTTPPOST, fields)
 		b = StringIO.StringIO()
 		c.setopt(pycurl.WRITEFUNCTION, b.write) 
