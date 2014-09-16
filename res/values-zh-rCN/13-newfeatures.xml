@@ -40,25 +40,25 @@
 -->
 <resources>
   <string-array name="new_version_features">
-    <item>Redesign layout</item>
-    <item>Add pictures and sounds to flashcards (experimental)</item>
-    <item>Make second column in card browser configurable</item>
-    <item>Make images on flashcards zoomable</item>
-    <item>Improve preview feature and access via action bar</item>
-    <item>Simplify menus and settings</item>
-    <item>Make slow searches in card browser cancellable</item>
-    <item>Improve adding/removing tags</item>
-    <item>Fix \"type in the answer\" and cloze deletion features</item>
-    <item>Fix whiteboard feature</item>
-    <item>Restore backups from within the app</item>
-    <item>Make volume duck on any background music when sounds played</item>
-    <item>Make playing of sounds consistent with Desktop version</item>
-    <item>Remove animations feature due to being buggy</item>
-    <item>Improve speed of showing cards</item>
-    <item>Remove duplicate check dialog when adding new flashcards</item>
-    <item>Remove swap button when adding or editing flashcards</item>
-    <item>Remove kanji info feature (will become optional plugin in the future)</item>
-    <item>Make minimum Android version 2.1</item>
-    <item>Fix lots of bugs</item>
+    <item>重新设计界面布局</item>
+    <item>快闪卡中添加图片和声音 （测试中）</item>
+    <item>卡牌浏览器中的第二列和配置</item>
+    <item>快闪卡中的图片可缩放</item>
+    <item>改进预览，并可通过动作栏访问</item>
+    <item>简化菜单和设置</item>
+    <item>卡牌浏览器的搜索过程可取消</item>
+    <item>改进 添加/移除 标签</item>
+    <item>修复 \"输入答案\" 和完形删除功能</item>
+    <item>修复白版功能</item>
+    <item>应用中可恢复备份</item>
+    <item>播放声音时，渐浅任何后台音乐音量</item>
+    <item>播放声音与桌面版本保持一致</item>
+    <item>移除导致bug的动画</item>
+    <item>改进显示卡牌的速度</item>
+    <item>移除添加快闪卡时重复的检查对话框</item>
+    <item>移除添加或编辑快闪卡中的交换按钮</item>
+    <item>移除 kanji （将来会成为一个可选的插件）</item>
+    <item>降低最低要求为Android 2.1</item>
+    <item>修复众多bug</item>
   </string-array>
 </resources>

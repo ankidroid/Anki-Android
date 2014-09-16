@@ -42,27 +42,27 @@
   <string name="app_name">AnkiDroid</string>
   <string name="app_name_anki">Anki</string>
   <string name="app_name_droid">Droid</string>
-  <string name="studyoptions_title">Study Options</string>
+  <string name="studyoptions_title">学习选项</string>
   <string name="studyoptions_deck_name">牌组名称</string>
-  <string name="studyoptions_due_today">今天到期:</string>
+  <string name="studyoptions_due_today">今天待复习:</string>
   <string name="studyoptions_new_total">新卡牌合计:</string>
   <string name="studyoptions_total_cards">全部卡牌:</string>
   <string name="studyoptions_eta">预计所需时间（分钟）：</string>
   <string name="studyoptions_start">开始学习</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%1$d card due (%2$s)</item>
-    <item quantity="other">%1$d cards due (%2$s)</item>
+    <item quantity="one">%1$d张卡牌待复习 (%2$s)</item>
+    <item quantity="other">%1$d张卡牌待复习 (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one">%d min.</item>
+    <item quantity="one">%d分钟</item>
     <item quantity="other">%d分钟</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item quantity="one">%1$d of %2$d due</item>
+    <item quantity="one">%1$d张中的%2$d张待复习</item>
     <item quantity="other">%2$d张中的%1$d张待复习</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%d minute left</item>
+    <item quantity="one">%d分钟剩余</item>
     <item quantity="other">%d分钟剩余</item>
   </plurals>
   <string name="type_answer_hint">输入答案</string>
@@ -77,7 +77,7 @@
   <string name="menu_rotate">旋转</string>
   <string name="menu_import">导入文件</string>
   <string name="undo">撤销</string>
-  <string name="undo_action_review">last review</string>
+  <string name="undo_action_review">上次复习</string>
   <string name="undo_action_edit">编辑卡牌记录</string>
   <string name="undo_action_bury">隐藏卡牌记录</string>
   <string name="undo_action_suspend_card">暂停卡牌</string>
@@ -106,7 +106,7 @@
   <string name="menu_bury_note">隐藏卡牌记录</string>
   <string name="menu_suspend_card">暂停卡牌</string>
   <string name="menu_suspend_note">暂停卡牌记录</string>
-  <string name="menu_save_note">Save note</string>
+  <string name="menu_save_note">保存记录</string>
   <string name="menu_delete_note">删除卡牌记录</string>
   <string name="delete_note_message">确定要删除此卡牌记录及所有从属卡牌?\n%s</string>
   <string name="menu_edit_card">编辑卡牌</string>
@@ -124,7 +124,7 @@
     <item>1秒</item>
     <item>1分钟</item>
     <item>1小时</item>
-    <item>1 天</item>
+    <item>1天</item>
     <item>1月</item>
     <item>1年</item>
   </string-array>
@@ -151,15 +151,15 @@
   <string name="studyoptions_congrats_more_new">还有新卡牌待学习，但已达到每日上限。您可以增加设置中的每日学习上限，不过请留意，这会增加您短期的复习工作量。</string>
   <string name="studyoptions_congrats_custom">计划外学习，点击下面的自定义学习按钮。</string>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
+    <item quantity="one">明天将有：%1$d张卡牌需要复习%2$s\n预计耗时：%3$s</item>
     <item quantity="other">明天将有：%1$d张卡牌需要复习%2$s\n预计耗时：%3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">%1$d new card</item>
+    <item quantity="one">%1$d张新卡牌</item>
     <item quantity="other">%1$d张新卡牌</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">Estimated time: %1$d min.</item>
+    <item quantity="one">预计耗时：%1$d分钟。</item>
     <item quantity="other">预计耗时：%1$d分钟。</item>
   </plurals>
   <string name="sd_card_not_mounted">SD卡没有加载。\n\n你也可以在内部存储器中存放卡牌集合，但不推荐这样做，因为访问文件不太容易。在预置参数中可以设置(点击本文字打开选项).</string>
@@ -175,7 +175,7 @@
   <string name="ankiweb">AnkiWeb网站</string>
   <string name="usb">USB</string>
   <string name="_import">导入</string>
-  <string name="export">Export</string>
+  <string name="export">导出</string>
   <string name="confirm">确认</string>
   <string name="internet">互联网</string>
   <string name="pc">PC个人电脑</string>
