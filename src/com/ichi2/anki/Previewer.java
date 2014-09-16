@@ -25,18 +25,20 @@ import android.view.View;
 import com.ichi2.libanki.Collection;
 
 public class Previewer extends AbstractFlashcardViewer {
+    Long mCurrentCardId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.i(AnkiDroidApp.TAG, "PreviewClass - onCreate");
+        mCurrentCardId=getIntent().getLongExtra("currentCardId", -1);
     }
 
 
     @Override
     protected void onCollectionLoaded(Collection col) {
         super.onCollectionLoaded(col);
-        mCurrentCard = CardEditor.mCurrentEditedCard;
+        mCurrentCard = col.getCard(mCurrentCardId);
         displayCardQuestion();
     }
 

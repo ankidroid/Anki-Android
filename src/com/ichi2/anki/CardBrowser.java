@@ -207,11 +207,10 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                     return;
 
                 case CONTEXT_MENU_DETAILS:
-                    Card tempCard = getCol().getCard(Long.parseLong(mCards.get(mPositionInCardsList).get("id")));
-                    Themes.htmlOkDialog(
-                            CardBrowser.this,
-                            getResources().getString(R.string.card_browser_card_details),
-                            CardStats.report(CardBrowser.this, tempCard, getCol())).show();
+                    Long cardId = Long.parseLong(mCards.get(mPositionInCardsList).get("id"));
+                    Intent previewer = new Intent(CardBrowser.this, Previewer.class);
+                    previewer.putExtra("currentCardId", cardId);
+                    startActivityWithoutAnimation(previewer);
                     return;
             }
         }
@@ -673,7 +672,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                 entries[CONTEXT_MENU_MARK] = res.getString(R.string.card_browser_mark_card);
                 entries[CONTEXT_MENU_SUSPEND] = res.getString(R.string.card_browser_suspend_card);
                 entries[CONTEXT_MENU_DELETE] = res.getString(R.string.card_browser_delete_card);
-                entries[CONTEXT_MENU_DETAILS] = res.getString(R.string.card_browser_card_details);
+                entries[CONTEXT_MENU_DETAILS] = res.getString(R.string.card_editor_preview_card);
                 builder.setTitle("contextmenu");
                 builder.setIcon(R.drawable.ic_menu_manage);
                 builder.setItems(entries, mContextMenuListener);
