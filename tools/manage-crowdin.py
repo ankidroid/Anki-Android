@@ -98,7 +98,7 @@ sel = raw_input("update (m)aster file, update (t)ranslation or (r)efresh builds?
 
 if sel == 'm':
 	# Update Master Files:
-	selu = raw_input("update 0(1)-core, 0(2)-strings, 0(3)-dialogs, 0(4)-network, 0(5)-feedback, 0(6)-statistics, 0(7)-cardbrowser, 0(8)-widget, 0(9)-backup, (10)-preferences, (11)-arrays, (12)-tutorial, (13)-newfeatures, (14)-marketdescription? ")
+	selu = raw_input("update 0(1)-core, 0(2)-strings, 0(3)-dialogs, 0(4)-network, 0(5)-feedback, 0(6)-statistics, 0(7)-cardbrowser, 0(8)-widget, 0(9)-backup, (10)-preferences, (11)-arrays, (12)-tutorial, (13)-newfeatures, (14)-marketdescription, (all)?")
 	if selu == 'all':
 		for n in range(1, len(files) + 1):
 			updateMasterFile(str(n))
@@ -134,7 +134,7 @@ elif sel == 'r':
 	# Update Translations:
 	print "Force translation export"
 	c = pycurl.Curl()
-	c.setopt(pycurl.URL, 'http://crowdin.net/api/project/' + PROJECT_IDENTIFIER + '/export?&key=' + CROWDIN_KEY)
+	c.setopt(pycurl.URL, 'https://api.crowdin.com/api/project/' + PROJECT_IDENTIFIER + '/export?&key=' + CROWDIN_KEY)
 	b = StringIO.StringIO()
 	c.setopt(pycurl.WRITEFUNCTION, b.write) 
 	c.perform()
