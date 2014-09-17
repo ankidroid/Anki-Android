@@ -44,7 +44,7 @@
   <string name="app_name_droid">Droid</string>
   <string name="studyoptions_title">学习选项</string>
   <string name="studyoptions_deck_name">牌组名称</string>
-  <string name="studyoptions_due_today">今天待复习:</string>
+  <string name="studyoptions_due_today">今天到期:</string>
   <string name="studyoptions_new_total">新卡牌合计:</string>
   <string name="studyoptions_total_cards">全部卡牌:</string>
   <string name="studyoptions_eta">预计所需时间（分钟）：</string>

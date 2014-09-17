@@ -121,7 +121,7 @@
   <string name="help_tutorial">Einführungsstapel erstellen</string>
   <string name="tutorial_deck_name">Einführungsstapel</string>
   <string name="check_db">Datenbank überprüfen</string>
-  <string name="check_media">Check media</string>
+  <string name="check_media">Medien überprüfen</string>
   <string name="check_db_message">Prüfe Datenbank.\nBitte warten...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Leere Karte. Führen Sie \"Werkzeuge&gt;Leere Karten...\" mit dem Desktop-Programm aus.</string>
   <string name="unknown_type_field_warning">Antworteingabe: Unbekanntes Feld %s</string>
@@ -143,20 +143,20 @@
   <string name="info_rate">AnkiDroid bewerten</string>
   <string name="col_load_failed">Laden der Sammlung fehlgeschlagen.\nDrücken Sie \"zurück\", um AnkiDroid zu schließen.</string>
   <string name="import_title">Karten importieren</string>
-  <string name="import_select_title">Choose a file to import</string>
+  <string name="import_select_title">Zu importierende Datei auswählen</string>
   <string name="import_message">Möchten Sie den Inhalt der Datei %s zu Ihrer Sammlung hinzufügen, oder Ihre Sammlung damit ersetzen?</string>
   <string name="import_message_add">Hinzufügen</string>
   <string name="import_message_replace">Ersetzen</string>
   <string name="import_message_replace_confirm">Ihre bestehende Sammlung wird gelöscht und durch die aus der Datei %s ersetzt. Sind Sie sicher?</string>
-  <string name="import_message_add_confirm">Add \"%s\" to collection? This may take a long time</string>
+  <string name="import_message_add_confirm">\"%s\" zu Ihrer Sammlung hinzufügen? Das kann lange dauern</string>
   <string name="import_log_success">Erfolgreich %d Karten importiert</string>
   <string name="import_log_error">Import fehlgeschlagen</string>
   <string name="import_log_no_apkg">Dies ist keine gültige apgk-Datei</string>
   <string name="import_importing">Karten werden importiert&#8230;</string>
-  <string name="confirm_apkg_export">Export whole collection as apkg file? This may take a long time</string>
-  <string name="export_in_progress">Exporting apkg file&#8230;</string>
-  <string name="export_successful">\"Collection.apkg\" was exported to the AnkiDroid folder</string>
-  <string name="export_unsuccessful">Error exporting collection</string>
+  <string name="confirm_apkg_export">Ganze Sammlung als apkg-Datei exportieren? Das kann lange dauern</string>
+  <string name="export_in_progress">Exportiere apkg-Datei&#8230;</string>
+  <string name="export_successful">\"Collection.apkg\" wurde in Ihren AnkiDroid-Ordner exportiert</string>
+  <string name="export_unsuccessful">Fehler beim Exportieren der Sammlung</string>
   <string name="import_hint">Kopieren Sie die apkg-Datei ins Verzeichnis %s und berühren Sie OK um Karten zu importieren</string>
   <string name="upgrade_import_no_file_found">Keine importierbare Datei %1$s gefunden</string>
   <string name="study_options">Stapeloptionen</string>
@@ -174,5 +174,5 @@
   <string name="sched_has_buried">Einige verwandte oder vorläufig ausgesetzte Karten wurden auf morgen verschoben.</string>
   <string name="tag_editor_add_hint">Benutzen sie das Häkchen rechts, um neue Schlagworte hinzuzufügen</string>
   <string name="tag_editor_add_feedback">Berühren Sie den  \"%2$s\"-Knopf um das Hinzufügen von \"%1$s\" zu bestätigen</string>
-  <string name="lookup_hint">After copying the text, tap anywhere on the flashcard to show the search icon</string>
+  <string name="lookup_hint">Nach dem Kopieren der Texte, tippen irgendwo auf der Karteikarten um das Suchsymbol zu zeigen</string>
 </resources>

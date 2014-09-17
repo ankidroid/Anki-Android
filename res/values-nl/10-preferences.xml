@@ -40,28 +40,28 @@
 -->
 <resources>
   <string name="pref_cat_general">AnkiDroid</string>
-  <string name="pref_cat_general_summ">General settings</string>
+  <string name="pref_cat_general_summ">Algemene instellingen</string>
   <string name="pref_cat_reviewing">Overhoren</string>
   <string name="pref_cat_reviewing_summ">Non-deck-specific reviewer settings</string>
-  <string name="pref_cat_reviewer_behaviour">Behavior</string>
-  <string name="pref_cat_flashcard">Display</string>
+  <string name="pref_cat_reviewer_behaviour">Gedrag</string>
+  <string name="pref_cat_flashcard">Weergave</string>
   <string name="pref_cat_whiteboard">Schrijfbord</string>
   <string name="pref_cat_automatic_display">Automatic display answer</string>
-  <string name="pref_cat_fonts">Fonts</string>
+  <string name="pref_cat_fonts">Lettertypes</string>
   <string name="pref_cat_fonts_summ">Change default font and size</string>
-  <string name="pref_cat_gestures">Gestures</string>
+  <string name="pref_cat_gestures">Gebaren</string>
   <string name="pref_cat_gestures_summ">Use taps and swipes instead of buttons</string>
   <string name="pref_cat_actions">Acties</string>
-  <string name="pref_cat_advanced">Advanced</string>
+  <string name="pref_cat_advanced">Geadvanceerd</string>
   <string name="pref_cat_advanced_summ">Optimization and experimental features</string>
   <string name="pref_cat_performance">Prestaties</string>
   <string name="pref_cat_workarounds">Workarounds</string>
   <string name="pref_cat_plugins">Plugins</string>
-  <string name="about_title">About AnkiDroid</string>
-  <string name="about_version">Version: </string>
-  <string name="whiteboard_stroke_width">Stroke width</string>
+  <string name="about_title">Over AnkiDroid</string>
+  <string name="about_version">Versie: </string>
+  <string name="whiteboard_stroke_width">Lijnbreedte</string>
   <string name="whiteboard_stroke_width_summ">XXX</string>
-  <string name="whiteboard_black">Black strokes</string>
+  <string name="whiteboard_black">Zwarte lijnen</string>
   <string name="whiteboard_black_summ">Uses less memory, unless in night mode</string>
   <string name="write_answers_disable">Disable typing in answer</string>
   <string name="write_answers_disable_summ">Prevents keyboard from appearing on cards containing \'type in the answer\' fields</string>
@@ -121,7 +121,7 @@
   <string name="language">Taal</string>
   <string name="language_summ">XXX</string>
   <string name="language_system">Systeemtaal</string>
-  <string name="notification_pref">Notifications</string>
+  <string name="notification_pref">Meldingen</string>
   <string name="notification_minimum_cards_due">Notify when more than</string>
   <string name="notification_minimum_cards_due_summary">XXX cards due</string>
   <string name="notification_minimum_cards_due_vibrate">Vibrate</string>
@@ -142,7 +142,7 @@
   <string name="pref_backup_summ">Automatically create backups before opening a deck (once a day)</string>
   <string name="pref_backup_max">Max number of backups</string>
   <string name="pref_backup_max_summ">XXX</string>
-  <string name="pref_disable_backup_title">Disable backups?</string>
+  <string name="pref_disable_backup_title">Back-ups uitschakelen?</string>
   <string name="pref_disable_backup_warning">This will delete all backup files</string>
   <string name="pref_intent_add_instant">Voeg direct toe</string>
   <string name="pref_intent_add_instant_summ">Add new cards from dictionaries without opening AnkiDroid. You find them later under \'saved data\' in card adder.</string>
@@ -157,7 +157,7 @@
   <string name="time_limit">Stel een tijdslimiet in</string>
   <string name="time_limit_summ">XXX min</string>
   <string name="day_offset">Een dag begint</string>
-  <string name="day_offset_summ">XXX hours past midnight</string>
+  <string name="day_offset_summ">XXX uur na middernacht</string>
   <string name="input_workaround">Input workaround</string>
   <string name="input_workaround_summ">Workaround for focusing problems on HTML input boxes. Causes problems on several devices.</string>
   <string name="pref_keep_screen_on">Keep screen on</string>

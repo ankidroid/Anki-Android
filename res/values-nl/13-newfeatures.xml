@@ -40,7 +40,7 @@
 -->
 <resources>
   <string-array name="new_version_features">
-    <item>Redesign layout</item>
+    <item>Lay-out herontworpen</item>
     <item>Add pictures and sounds to flashcards (experimental)</item>
     <item>Make second column in card browser configurable</item>
     <item>Make images on flashcards zoomable</item>
@@ -59,6 +59,6 @@
     <item>Remove swap button when adding or editing flashcards</item>
     <item>Remove kanji info feature (will become optional plugin in the future)</item>
     <item>Make minimum Android version 2.1</item>
-    <item>Fix lots of bugs</item>
+    <item>Veel bugs gerepareerd</item>
   </string-array>
 </resources>

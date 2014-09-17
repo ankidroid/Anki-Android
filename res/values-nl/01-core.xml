@@ -42,7 +42,7 @@
   <string name="app_name">AnkiDroid</string>
   <string name="app_name_anki">Anki</string>
   <string name="app_name_droid">Droid</string>
-  <string name="studyoptions_title">Study Options</string>
+  <string name="studyoptions_title">Studieopties</string>
   <string name="studyoptions_deck_name">Setnaam</string>
   <string name="studyoptions_due_today">Vandaag te overhoren:</string>
   <string name="studyoptions_new_total">Aantal nieuwe kaarten:</string>
@@ -62,7 +62,7 @@
     <item quantity="other">%1$d van %2$d te doen</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%d minute left</item>
+    <item quantity="one">%d minuut over</item>
     <item quantity="other">%d minuten over</item>
   </plurals>
   <string name="type_answer_hint">Antwoord schrijven</string>
@@ -114,7 +114,7 @@
   <string name="menu_search">Opzoeken in %1$s</string>
   <string name="menu_mark_card">Markeer kaart</string>
   <string name="menu_unmark_card">Kaart demarkeren</string>
-  <string name="new_deck">Create deck</string>
+  <string name="new_deck">Maak set</string>
   <string name="create">Maak</string>
   <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">Feedback</string>
@@ -175,7 +175,7 @@
   <string name="ankiweb">AnkiWeb</string>
   <string name="usb">USB</string>
   <string name="_import">Importeren</string>
-  <string name="export">Export</string>
+  <string name="export">Exporteren</string>
   <string name="confirm">Bevestigen</string>
   <string name="internet">Internet</string>
   <string name="pc">PC</string>
