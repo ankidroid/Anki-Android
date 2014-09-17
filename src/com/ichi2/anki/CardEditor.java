@@ -33,6 +33,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.PopupMenu.OnMenuItemClickListener;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -46,6 +47,8 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -114,6 +117,7 @@ public class CardEditor extends AnkiActivity {
     private static final int DIALOG_TAGS_SELECT = 2;
     private static final int DIALOG_RESET_CARD = 3;
     private static final int DIALOG_INTENT_INFORMATION = 4;
+    private static final int DIALOG_RESCHEDULE_CARD = 5;
 
     private static final String ACTION_CREATE_FLASHCARD = "org.openintents.action.CREATE_FLASHCARD";
     private static final String ACTION_CREATE_FLASHCARD_SEND = "android.intent.action.SEND";
@@ -140,6 +144,8 @@ public class CardEditor extends AnkiActivity {
     public static final int REQUEST_MULTIMEDIA_EDIT = 2;
 
     private boolean mChanged = false;
+    private boolean mRescheduled = false;
+
 
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
@@ -704,6 +710,8 @@ public class CardEditor extends AnkiActivity {
             menu.findItem(R.id.action_add_card_from_card_editor).setVisible(true);
             menu.findItem(R.id.action_reset_card_progress).setVisible(true);
             menu.findItem(R.id.action_preview).setVisible(true);
+            menu.findItem(R.id.action_reschedule_card).setVisible(true);
+            menu.findItem(R.id.action_reset_card_progress).setVisible(true);
         }
         if (mEditFields != null) {
             for (int i = 0; i < mEditFields.size(); i++) {
@@ -761,6 +769,10 @@ public class CardEditor extends AnkiActivity {
                 showDialog(DIALOG_INTENT_INFORMATION);
                 return true;
 
+            case R.id.action_reschedule_card:
+                showDialog(DIALOG_RESCHEDULE_CARD);
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
 
@@ -803,6 +815,12 @@ public class CardEditor extends AnkiActivity {
             result = RESULT_OK;
         } else {
             result = RESULT_CANCELED;
+        }
+        if (mRescheduled) {
+            if (intent == null) {
+                intent = new Intent();
+            }
+            intent.putExtra("rescheduled", true);
         }
         closeCardEditor(result, intent);
     }
@@ -972,28 +990,47 @@ public class CardEditor extends AnkiActivity {
                 builder.setPositiveButton(res.getString(R.string.dialog_positive_reset), new OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // for (long cardId :
-                        // mDeck.getCardsFromFactId(mEditorNote.getId())) {
-                        // mDeck.cardFromId(cardId).resetCard();
-                        // }
-                        // mDeck.reset();
-                        // setResult(Reviewer.RESULT_EDIT_CARD_RESET);
-                        // mCardReset = true;
-                        // Themes.showThemedToast(CardEditor.this,
-                        // getResources().getString(
-                        // R.string.reset_card_dialog_acknowledge), true);
+                        getCol().getSched().forgetCards(new long[] { mCurrentEditedCard.getId() });
+                        getCol().reset();
+                        mRescheduled = true;
+                        Themes.showThemedToast(CardEditor.this,
+                                getResources().getString(R.string.reset_card_dialog_acknowledge), true);
                     }
                 });
                 builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
                 builder.setCancelable(true);
                 dialog = builder.create();
                 break;
-
+            case DIALOG_RESCHEDULE_CARD:
+                final EditText rescheduleEditText;
+                rescheduleEditText = (EditText) new EditText(this);
+                rescheduleEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
+                rescheduleEditText.setText("0");
+                rescheduleEditText.selectAll();
+                builder.setTitle(res.getString(R.string.reschedule_card_dialog_title));
+                builder.setMessage(res.getString(R.string.reschedule_card_dialog_message));
+                builder.setPositiveButton(res.getString(R.string.dialog_ok), new OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        int days = Integer.parseInt(((EditText) rescheduleEditText).getText().toString());
+                        getCol().getSched().reschedCards(new long[] { mCurrentEditedCard.getId() }, days, days);
+                        getCol().reset();
+                        mRescheduled = true;
+                        Themes.showThemedToast(CardEditor.this,
+                                getResources().getString(R.string.reschedule_card_dialog_acknowledge), true);
+                    }
+                });
+                builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
+                builder.setCancelable(true);
+                FrameLayout frame = new FrameLayout(this);
+                frame.addView(rescheduleEditText);
+                builder.setView(frame, false, true);
+                dialog = builder.create();
+                break;
             case DIALOG_INTENT_INFORMATION:
                 dialog = createDialogIntentInformation(builder, res);
                 break;
         }
-
         return dialog;
     }
 

@@ -1273,6 +1273,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             finishNoStorageAvailable();
         }
         if (requestCode == EDIT_CURRENT_CARD) {
+            // If the card was rescheduled, we need to remove it from the top of the queue as it is
+            // no longer positioned there. Use a "fake" answer for this by passing a null card.
+            if (data.hasExtra("rescheduled")) {
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(
+                        mSched, null, 0));
+            }
+            // Modification of the note is independent of rescheduling, so we still need to save it if it
+            // happened.
             if (resultCode != RESULT_CANCELED) {
                 Log.i(AnkiDroidApp.TAG, "Saving card...");
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler, new DeckTask.TaskData(
