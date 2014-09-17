@@ -38,6 +38,7 @@ import urllib
 import string
 import re
 import difflib
+import subprocess
 
 def replacechars(filename, fileExt, isCrowdin):
 	s = open(filename,"r+")
