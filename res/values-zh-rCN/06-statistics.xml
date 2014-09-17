@@ -42,41 +42,41 @@
   <string name="statistics_menu">统计信息</string>
   <string name="statistics_young">有待熟悉</string>
   <string name="statistics_mature">熟悉</string>
-  <string name="statistics_young_and_learn">Young+Learn</string>
-  <string name="statistics_unlearned">Unseen</string>
-  <string name="statistics_suspended">Suspended</string>
+  <string name="statistics_young_and_learn">有待熟悉+学习</string>
+  <string name="statistics_unlearned">未学习</string>
+  <string name="statistics_suspended">挂起</string>
   <string name="statistics_relearn">重新学习</string>
   <string name="statistics_learn">学习</string>
   <string name="statistics_cram">强记模式</string>
   <string name="statistics_type_title">统计信息</string>
   <string name="stats_cards">卡牌</string>
-  <string name="stats_cards_intervals">Cards with given Interval</string>
-  <string name="stats_cumulative_cards">Cumulative Cards</string>
-  <string name="stats_cumulative_answers">Cumulative Answers</string>
-  <string name="stats_cumulative_time_minutes">Cumulative Minutes</string>
-  <string name="stats_cumulative_time_hours">Cumulative Hours</string>
-  <string name="stats_cumulative">Cumulative</string>
-  <string name="stats_cumulative_percentage">Cumulative Percentage</string>
-  <string formatted="false" name="stats_cumulative_correct_percentage">Cumulative Correct %</string>
+  <string name="stats_cards_intervals">卡片间隔</string>
+  <string name="stats_cumulative_cards">累积卡片</string>
+  <string name="stats_cumulative_answers">累积回答</string>
+  <string name="stats_cumulative_time_minutes">累积分钟</string>
+  <string name="stats_cumulative_time_hours">累积小时</string>
+  <string name="stats_cumulative">累积</string>
+  <string name="stats_cumulative_percentage">累积百分比</string>
+  <string formatted="false" name="stats_cumulative_correct_percentage">累积正确 %</string>
   <string name="stats_answers">答案</string>
   <string name="stats_minutes">分钟</string>
   <string name="stats_hours">小时</string>
-  <string name="stats_percentage">Percentage</string>
-  <string name="stats_period_month">1 month</string>
-  <string name="stats_period_year">1 year</string>
-  <string name="stats_period_lifetime">deck life</string>
-  <string name="stats_deck_current">deck</string>
-  <string name="stats_deck_collection">collection</string>
-  <string name="stats_time_of_day">Time of Day</string>
-  <string name="stats_day_of_week">Day of Week</string>
-  <string formatted="false" name="stats_percentage_correct">% Correct</string>
-  <string name="stats_reviews">Reviews</string>
-  <string name="stats_answer_type">Answer Type</string>
-  <string name="stats_today_again_count">Again count: &lt;b&gt;%d&lt;/b&gt;</string>
-  <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; correct)</string>
-  <string name="stats_today_type_breakdown">Learn: &lt;b&gt;%1$s&lt;/b&gt;, Review: &lt;b&gt;%2$s&lt;/b&gt;, Relearn: &lt;b&gt;%3$s&lt;/b&gt;, Filtered: &lt;b&gt;%4$s&lt;/b&gt;</string>
-  <string name="stats_today_mature_cards">Correct answers on mature cards: %1$d/%2$d (%3$.1f%%)</string>
-  <string name="stats_today_no_mature_cards">No mature cards were studied today.</string>
+  <string name="stats_percentage">百分比</string>
+  <string name="stats_period_month">1 个月</string>
+  <string name="stats_period_year">1 年</string>
+  <string name="stats_period_lifetime">所有时间</string>
+  <string name="stats_deck_current">牌组</string>
+  <string name="stats_deck_collection">集合</string>
+  <string name="stats_time_of_day">时间</string>
+  <string name="stats_day_of_week">星期</string>
+  <string formatted="false" name="stats_percentage_correct">正确 %</string>
+  <string name="stats_reviews">复习</string>
+  <string name="stats_answer_type">回答类型</string>
+  <string name="stats_today_again_count">再来: &lt;b&gt;%d&lt;/b&gt;</string>
+  <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; 正确)</string>
+  <string name="stats_today_type_breakdown">学习：&lt;b&gt;%1$s&lt;/b&gt;，复习：&lt;b&gt;%2$s&lt;/b&gt;，重新学习：&lt;b&gt;%3$s&lt;/b&gt;, 过滤：&lt;b&gt;%4$s&lt;/b&gt;</string>
+  <string name="stats_today_mature_cards">熟悉卡牌回答正确率：%1$d/%2$d (%3$.1f%%)</string>
+  <string name="stats_today_no_mature_cards">今天未学习熟悉类型的卡牌</string>
   <string name="statistics_period_x_axis_minutes">分钟</string>
   <string name="statistics_new_cards">新卡牌</string>
   <string name="statistics_failed_cards">失败的卡牌</string>
@@ -107,8 +107,8 @@
   <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; 张卡牌/天</string>
   <string name="deck_summary_deck_age">牌组年龄： &lt;b&gt;%d&lt;/b&gt;天</string>
   <string name="deck_summary_all_decks">所有牌组</string>
-  <string name="stats_select_decks">Select deck</string>
-  <string name="stats_select_time_scale">Select timescale</string>
+  <string name="stats_select_decks">选择牌组</string>
+  <string name="stats_select_time_scale">选择时间段</string>
   <string-array name="next_review_in_s">
     <item>在 1 秒内</item>
     <item>在 1 分钟内</item>
@@ -119,7 +119,7 @@
   </string-array>
   <string-array name="next_review_in_p">
     <item>在%s秒内</item>
-    <item>在 %s 分钟内</item>
+    <item>在%s分钟内</item>
     <item>%s小时后</item>
     <item>%s天后</item>
     <item>%s个月后</item>
@@ -127,11 +127,11 @@
   </string-array>
   <string-array name="next_review_before_s">
     <item>1 秒前</item>
-    <item>1分钟前</item>
+    <item>1 分钟前</item>
     <item>1 小时前</item>
     <item>1 天前</item>
     <item>1 个月前</item>
-    <item>1年前</item>
+    <item>1 年前</item>
   </string-array>
   <string-array name="next_review_before_p">
     <item>%s 秒前</item>
@@ -146,15 +146,15 @@
     <item>周</item>
     <item>月</item>
   </string-array>
-  <string name="stats_today">Today</string>
+  <string name="stats_today">今天</string>
   <string name="stats_forecast">预测</string>
   <string name="stats_review_count">复习计数</string>
   <string name="stats_review_time">复习时间</string>
-  <string name="stats_review_intervals">Intervals</string>
-  <string name="stats_breakdown">Hourly Breakdown</string>
-  <string name="stats_weekly_breakdown">Weekly Breakdown</string>
-  <string name="stats_answer_buttons">Answer Buttons</string>
-  <string name="stats_cards_types">Cards Types</string>
+  <string name="stats_review_intervals">间隔</string>
+  <string name="stats_breakdown">按小时分类</string>
+  <string name="stats_weekly_breakdown">按周分类</string>
+  <string name="stats_answer_buttons">显示答案按钮</string>
+  <string name="stats_cards_types">卡牌类型</string>
   <string-array name="stats_period">
     <item>1个月</item>
     <item>1年</item>
@@ -165,20 +165,20 @@
     <item>当前牌组</item>
   </string-array>
   <string-array name="stats_day_time_strings">
-    <item>4AM</item>
-    <item>10AM</item>
-    <item>4PM</item>
-    <item>10PM</item>
-    <item>3AM</item>
+    <item>凌晨4点</item>
+    <item>早上10点</item>
+    <item>下午4点</item>
+    <item>晚上10点</item>
+    <item>凌晨3点</item>
   </string-array>
   <string-array name="stats_week_days">
-    <item>Sun</item>
-    <item>Mon</item>
-    <item>Tue</item>
-    <item>Wed</item>
-    <item>Thu</item>
-    <item>Fri</item>
-    <item>Sat</item>
+    <item>日</item>
+    <item>一</item>
+    <item>二</item>
+    <item>三</item>
+    <item>四</item>
+    <item>五</item>
+    <item>六</item>
   </string-array>
   <string-array name="stats_eases_ticks">
     <item>1</item>
@@ -194,11 +194,11 @@
     <item>4</item>
   </string-array>
   <plurals name="stats_today_cards">
-    <item quantity="one">Studied &lt;b&gt;%1$d card&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
-    <item quantity="other">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
+    <item quantity="one">今天学习了 &lt;b&gt;%1$d 张卡牌&lt;/b&gt;，花费 &lt;b&gt;%2$s&lt;/b&gt;</item>
+    <item quantity="other">今天学习了 &lt;b&gt;%1$d 张卡牌&lt;/b&gt;，花费 &lt;b&gt;%2$s&lt;/b&gt;</item>
   </plurals>
   <plurals name="stats_today_cards_not_bold">
-    <item quantity="one">Studied %1$d card in %2$s today.</item>
-    <item quantity="other">Studied %1$d cards in %2$s today.</item>
+    <item quantity="one">今天学习了%1$d张卡牌，花费%2$s</item>
+    <item quantity="other">今天学习了%1$d张卡牌，花费%2$s</item>
   </plurals>
 </resources>
