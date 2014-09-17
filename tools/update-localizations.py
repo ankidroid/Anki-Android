@@ -208,8 +208,8 @@ print "\nRemoving Crowdin file\n"
 os.remove(zipname)	
 
 print "Committing updates. Please add any fixes as another commit."
-subprocess.call("git add docs/marketing/localized_description res/values*")
-subprocess.call("git commit -m 'Updated strings from Crowdin'")
+subprocess.call("git add docs/marketing/localized_description res/values*", shell=True)
+subprocess.call("git commit -m 'Updated strings from Crowdin'", shell=True)
 
 print "Checking with Lint."
-subprocess.call("lint . --config lint.xml --nowarn --exitcode")
+subprocess.call("lint . --config lint.xml --nowarn --exitcode", shell=True)
