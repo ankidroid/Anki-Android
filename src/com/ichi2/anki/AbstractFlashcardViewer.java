@@ -1275,7 +1275,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (requestCode == EDIT_CURRENT_CARD) {
             // If the card was rescheduled, we need to remove it from the top of the queue as it is
             // no longer positioned there. Use a "fake" answer for this by passing a null card.
-            if (data.hasExtra("rescheduled")) {
+            if (data != null && data.hasExtra("rescheduled")) {
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(
                         mSched, null, 0));
             }
