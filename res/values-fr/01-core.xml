@@ -46,9 +46,9 @@
   <string name="studyoptions_deck_name">Nom du paquet</string>
   <string name="studyoptions_due_today">Prévues aujourd’hui :</string>
   <string name="studyoptions_new_total">Cartes inédites :</string>
-  <string name="studyoptions_total_cards">Cartes :</string>
+  <string name="studyoptions_total_cards">Total cartes :</string>
   <string name="studyoptions_eta">Temps estimé (min):</string>
-  <string name="studyoptions_start">Réviser maintenant</string>
+  <string name="studyoptions_start">Réviser</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d carte dûe (%2$s)</item>
     <item quantity="other">%1$d cartes dûes (%2$s)</item>
@@ -118,7 +118,7 @@
   <string name="create">Créer</string>
   <string name="new_dynamic_deck">Créer un jeu de cartes filtrées</string>
   <string name="studyoptions_feedback">Commentaires</string>
-  <string name="studyoptions_load_tutorial_deck">Créer un tutoriel</string>
+  <string name="studyoptions_load_tutorial_deck">Créer le tutoriel</string>
   <string name="night_mode">Mode nuit</string>
   <string-array name="next_review_s">
     <item>1 seconde</item>
@@ -147,7 +147,7 @@
 Veuillez patienter...</string>
   <string name="custom_study_deck_name">Session d\'étude personnalisée</string>
   <string name="custom_study_deck_exists">Merci de renommer d\'abord le paquet d\'étude personnalisée.</string>
-  <string name="studyoptions_congrats_finished">FÉLICITATIONS ! Vous avez terminé… pour l’instant !</string>
+  <string name="studyoptions_congrats_finished">Félicitations ! Vous avez terminé… pour l’instant !</string>
   <string name="studyoptions_congrats_more_rev">Vous avez atteint votre quota de révisions, mais il reste des cartes à reviser pour aujourd’hui. Pour une meilleure mémorisation, vous devriez peut-être augmenter le quota journalier dans les options.</string>
   <string name="studyoptions_congrats_more_new">Il reste des nouvelles cartes disponibles, mais la limite journalière a été atteinte. Vous pouvez augmenter cette limite dans les options, mais gardez à l\'esprit que cela augmentera votre charge de travail à court terme.</string>
   <string name="studyoptions_congrats_custom">Pour étudier en dehors des horaires normaux, cliquez sur le bouton d\'étude personnalisée ci-dessous.</string>
@@ -176,7 +176,7 @@ Veuillez patienter...</string>
   <string name="ankiweb">AnkiWeb</string>
   <string name="usb">USB</string>
   <string name="_import">Importer</string>
-  <string name="export">Export</string>
+  <string name="export">Exporter</string>
   <string name="confirm">Confirmer</string>
   <string name="internet">Internet</string>
   <string name="pc">PC</string>

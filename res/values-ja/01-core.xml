@@ -175,7 +175,7 @@
   <string name="ankiweb">AnkiWeb</string>
   <string name="usb">USB</string>
   <string name="_import">読み込み</string>
-  <string name="export">Export</string>
+  <string name="export">エクスポート(書き出し)</string>
   <string name="confirm">確認</string>
   <string name="internet">インターネット</string>
   <string name="pc">PC</string>

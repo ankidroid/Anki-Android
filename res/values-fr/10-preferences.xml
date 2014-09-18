@@ -40,9 +40,9 @@
 -->
 <resources>
   <string name="pref_cat_general">AnkiDroid</string>
-  <string name="pref_cat_general_summ">Paramètres général</string>
+  <string name="pref_cat_general_summ">Paramètres généraux</string>
   <string name="pref_cat_reviewing">Révision</string>
-  <string name="pref_cat_reviewing_summ">Paramètre des révisions indépendant du paquet</string>
+  <string name="pref_cat_reviewing_summ">Paramètres de révision indépendants du paquet</string>
   <string name="pref_cat_reviewer_behaviour">Comportement</string>
   <string name="pref_cat_flashcard">Afficher</string>
   <string name="pref_cat_whiteboard">Tableau blanc</string>
@@ -112,7 +112,7 @@
   <string name="sync_account_summ_logged_in">%s</string>
   <string name="fix_hebrew_text">Correctif pour les voyelles en Hébreu</string>
   <string name="fix_hebrew_text_summ">Solution de rechange pour afficher correctement les voyelles hébraïques.</string>
-  <string name="fix_hebrew_instructions">À cause de ce paramètre l’algorithme d’Android pour afficher du texte dans le sens hébreu fonctionne mal avec les voyelles.\n\nTéléchargez la police Tohu.ttf et la copier manuellement vers :\n%s/fonts/\n\nVous n\'aurez pas à modifier vos cartes.</string>
+  <string name="fix_hebrew_instructions">Ce paramètre contourne l\'algorithme RTL d’Android, pour afficher correctement les voyelles.\n\nPour que ça fonctionne, vous devez téléchargez la police Tohu.ttf et la copier manuellement vers :\n%s/fonts/\n\nVous n\'aurez pas à modifier vos cartes.</string>
   <string name="fix_hebrew_download_font">Télécharger la police</string>
   <string name="default_font">Police par défaut</string>
   <string name="default_font_summ">XXX</string>

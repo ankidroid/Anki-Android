@@ -121,7 +121,7 @@
   <string name="help_tutorial">チュートリアル単語帳の作成</string>
   <string name="tutorial_deck_name">チュートリアル単語帳</string>
   <string name="check_db">データベースの検査</string>
-  <string name="check_media">Check media</string>
+  <string name="check_media">メディアのチェック</string>
   <string name="check_db_message">データを確認中です\nしばらくお待ちください</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">空のカード。\"ツール &gt; 空のカード...\"をデスクトップ クライアントで実行。</string>
   <string name="unknown_type_field_warning">タイピングして答えを入力: 不明なフィールド %s</string>
@@ -154,9 +154,9 @@
   <string name="import_log_no_apkg">これは取り込み可能なapkgファイルではありません</string>
   <string name="import_importing">カード取得中です\nしばらくお待ちください</string>
   <string name="confirm_apkg_export">Export whole collection as apkg file? This may take a long time</string>
-  <string name="export_in_progress">Exporting apkg file&#8230;</string>
-  <string name="export_successful">\"Collection.apkg\" was exported to the AnkiDroid folder</string>
-  <string name="export_unsuccessful">Error exporting collection</string>
+  <string name="export_in_progress">Apkg ファイルをエクスポートしています.</string>
+  <string name="export_successful">Collection.apkgは、 AnkiDroid フォルダーにエクスポートされました。</string>
+  <string name="export_unsuccessful">コレクションのエクスポート エラー</string>
   <string name="import_hint">カードを取り込むためにapkg ファイルをフォルダに保管してください %s そしてＯＫボタンをクリックしてください</string>
   <string name="upgrade_import_no_file_found">読み込み可能な %1$s のファイルが見つかりません</string>
   <string name="study_options">単語帳オプション</string>
