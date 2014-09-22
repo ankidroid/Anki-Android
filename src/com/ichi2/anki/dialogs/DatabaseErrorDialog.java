@@ -257,7 +257,7 @@ public class DatabaseErrorDialog extends DialogFragment {
                     String[] dates = new String[mBackups.length];
                     for (int i = 0; i < mBackups.length; i++) {
                         dates[i] = mBackups[i].getName().replaceAll(
-                                ".*-(\\d{4}-\\d{2}-\\d{2})-(\\d{2})-(\\d{2}).anki2", "$1 ($2:$3 h)");
+                                ".*-(\\d{4}-\\d{2}-\\d{2})-(\\d{2})-(\\d{2}).apkg", "$1 ($2:$3 h)");
                     }
                     builder.setTitle(res.getString(R.string.backup_restore_select_title));
                     builder.setIcon(android.R.drawable.ic_input_get);

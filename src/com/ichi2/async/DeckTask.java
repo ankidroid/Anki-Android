@@ -48,6 +48,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -88,14 +89,12 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     public static final int TASK_TYPE_DISMISS_NOTE = 11;
     public static final int TASK_TYPE_CHECK_DATABASE = 14;
     public static final int TASK_TYPE_DELETE_BACKUPS = 16;
-    public static final int TASK_TYPE_RESTORE_DECK = 17;
     public static final int TASK_TYPE_UPDATE_CARD_BROWSER_LIST = 18;
     public static final int TASK_TYPE_LOAD_TUTORIAL = 19;
     public static final int TASK_TYPE_REPAIR_DECK = 20;
     public static final int TASK_TYPE_CLOSE_DECK = 21;
     public static final int TASK_TYPE_LOAD_DECK_COUNTS = 22;
     public static final int TASK_TYPE_UPDATE_VALUES_FROM_DECK = 23;
-    public static final int TASK_TYPE_RESTORE_IF_MISSING = 24;
     public static final int TASK_TYPE_DELETE_DECK = 25;
     public static final int TASK_TYPE_REBUILD_CRAM = 26;
     public static final int TASK_TYPE_EMPTY_CRAM = 27;
@@ -276,9 +275,6 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             case TASK_TYPE_DELETE_BACKUPS:
                 return doInBackgroundDeleteBackups();
 
-            case TASK_TYPE_RESTORE_DECK:
-                return doInBackgroundRestoreDeck(params);
-
             case TASK_TYPE_UPDATE_CARD_BROWSER_LIST:
                 return doInBackgroundUpdateCardBrowserList(params);
 
@@ -293,9 +289,6 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
             case TASK_TYPE_UPDATE_VALUES_FROM_DECK:
                 return doInBackgroundUpdateValuesFromDeck(params);
-
-            case TASK_TYPE_RESTORE_IF_MISSING:
-                return doInBackgroundRestoreIfMissing(params);
 
             case TASK_TYPE_DELETE_DECK:
                 return doInBackgroundDeleteDeck(params);
@@ -749,7 +742,6 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         return new TaskData(BackupManager.repairDeck(deckPath));
     }
 
-
     private TaskData doInBackgroundCloseCollection(TaskData... params) {
         Log.i(AnkiDroidApp.TAG, "doInBackgroundCloseCollection");
         Collection col = params[0].getCollection();
@@ -758,14 +750,13 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                 WidgetStatus.waitToFinish();
                 String path = col.getPath();
                 AnkiDroidApp.closeCollection(true);
-                BackupManager.performBackup(path);
+                BackupManager.performBackupInBackground(path);
             } catch (RuntimeException e) {
                 Log.i(AnkiDroidApp.TAG, "doInBackgroundCloseCollection: error occurred - collection not properly closed");
             }
         }
         return null;
     }
-
 
     private TaskData doInBackgroundUpdateValuesFromDeck(TaskData... params) {
         Log.i(AnkiDroidApp.TAG, "doInBackgroundUpdateValuesFromDeck");
@@ -794,13 +785,6 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         }
     }
 
-
-    private TaskData doInBackgroundRestoreIfMissing(TaskData... params) {
-        Log.i(AnkiDroidApp.TAG, "doInBackgroundRestoreIfMissing");
-        String path = params[0].getString();
-        BackupManager.restoreCollectionIfMissing(path);
-        return null;
-    }
 
 
     private TaskData doInBackgroundDeleteBackups() {
@@ -938,7 +922,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             // unload collection and trigger a backup
             colPath = col.getPath();
             AnkiDroidApp.closeCollection(true);
-            BackupManager.performBackup(colPath, true);
+            BackupManager.performBackupInBackground(colPath, true);
         }
         // overwrite collection
         colPath = AnkiDroidApp.getCollectionPath();
@@ -1029,7 +1013,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             }
 
             // export collection
-            ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(apkgPath));
+            ZipOutputStream zos = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(apkgPath)));
             BufferedInputStream bis = new BufferedInputStream(new FileInputStream(colPath), BUFFER_SIZE);
             ZipEntry ze = new ZipEntry("collection.anki2");
             zos.putNextEntry(ze);
@@ -1076,16 +1060,6 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             return new TaskData(false);
         }
         return new TaskData(true);
-    }
-
-
-    private TaskData doInBackgroundRestoreDeck(TaskData... params) {
-        Log.i(AnkiDroidApp.TAG, "doInBackgroundRestoreDeck");
-        Object[] data = params[0].getObjArray();
-        AnkiDroidApp.closeCollection(false);
-        int result = BackupManager.restoreBackup((String) data[1], (String) data[2]);
-        AnkiDroidApp.openCollection(AnkiDroidApp.getCollectionPath());
-        return new TaskData(result);
     }
 
 

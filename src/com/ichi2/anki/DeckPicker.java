@@ -779,6 +779,11 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
     protected void onCollectionLoaded(Collection col) {
         // keep reference to collection in parent
         super.onCollectionLoaded(col);
+        // create backup in background if needed
+        Boolean started = BackupManager.performBackupInBackground(col.getPath());
+        if (started) {
+            Themes.showThemedToast(this, getResources().getString(R.string.backup_collection), true);
+        }
         // select last loaded deck if any
         if (mFragmented) {
             long did = col.getDecks().selected();
@@ -1036,6 +1041,11 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
             preferences.edit().putBoolean("writeAnswersDisable", !preferences.getBoolean("writeAnswers", true))
                     .commit();
         }
+        // when upgrading from before 2.3alpha30
+        if (previousVersionCode < 20300130) {
+            // Increase default number of backups
+            preferences.edit().putInt("backupMax", 8).commit();
+        }
     }
 
 
@@ -1292,84 +1302,13 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
 
 
     public void handleDbError() {
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_RESTORE_IF_MISSING, new DeckTask.TaskListener() {
-            @Override
-            public void onPreExecute() {
-                mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "",
-                        getResources().getString(R.string.backup_restore_if_missing), true);
-            }
-
-
-            @Override
-            public void onPostExecute(TaskData result) {
-                if (mProgressDialog.isShowing()) {
-                    try {
-                        mProgressDialog.dismiss();
-                    } catch (Exception e) {
-                        Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
-                    }
-                }
-                onCollectionLoadError();
-            }
-
-
-            @Override
-            public void onProgressUpdate(TaskData... values) {
-            }
-
-
-            @Override
-            public void onCancelled() {
-            }
-        }, new DeckTask.TaskData(AnkiDroidApp.getCollectionPath()));
+        showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_LOAD_FAILED);
     }
 
 
     @Override
     public void restoreFromBackup(String path) {
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_RESTORE_DECK, new DeckTask.TaskListener() {
-
-            @Override
-            public void onPreExecute() {
-                mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "",
-                        getResources().getString(R.string.backup_restore_deck), true);
-            }
-
-
-            @Override
-            public void onPostExecute(DeckTask.TaskData result) {
-                switch (result.getInt()) {
-                    case BackupManager.RETURN_DECK_RESTORED:
-                        // Force full sync on next upload
-                        if (AnkiDroidApp.colIsOpen()) {
-                            AnkiDroidApp.getCol().modSchema(false);
-                        }
-                        startLoadingCollection();
-                        break;
-                    case BackupManager.RETURN_ERROR:
-                        Themes.showThemedToast(DeckPicker.this,
-                                getResources().getString(R.string.backup_restore_error), true);
-                        onCollectionLoadError();
-                        break;
-                    case BackupManager.RETURN_NOT_ENOUGH_SPACE:
-                        showLogDialog(getResources().getString(R.string.backup_deck_no_space_left), true);
-                        break;
-                }
-                if (mProgressDialog != null && mProgressDialog.isShowing()) {
-                    mProgressDialog.dismiss();
-                }
-            }
-
-
-            @Override
-            public void onProgressUpdate(TaskData... values) {
-            }
-
-
-            @Override
-            public void onCancelled() {
-            }
-        }, new DeckTask.TaskData(new Object[] { AnkiDroidApp.getCol(), AnkiDroidApp.getCollectionPath(), path }));
+        importReplace(path);
     }
 
 

@@ -373,7 +373,7 @@
                 android:summary="@string/pref_backup_summ"
                 android:title="@string/pref_backup" />
             <com.hlidskialf.android.preference.SeekBarPreference
-                android:defaultValue="3"
+                android:defaultValue="8"
                 android:dependency="useBackup"
                 android:key="backupMax"
                 android:max="10"
