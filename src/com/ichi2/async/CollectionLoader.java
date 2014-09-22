@@ -28,20 +28,12 @@ public class CollectionLoader extends AsyncTaskLoader<Collection> {
 
     @Override
     public Collection loadInBackground() {
-        // do a safety backup if last backup is too old --> addresses Android's delete db bug
+        // load collection
         Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
         String colPath = AnkiDroidApp.getCollectionPath();
-        if (BackupManager.safetyBackupNeeded(colPath)) {
-            setProgressMessage(res.getString(R.string.backup_collection));
-            BackupManager.performBackup(colPath);
-        }
-        setProgressMessage(res.getString(R.string.open_collection));
-
-        // load collection
         try {
             return AnkiDroidApp.openCollection(colPath);
         } catch (RuntimeException e) {
-            BackupManager.restoreCollectionIfMissing(colPath);
             Log.e(AnkiDroidApp.TAG, "doInBackgroundOpenCollection - RuntimeException on opening collection: " + e);
             AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundOpenCollection");
             return null;
