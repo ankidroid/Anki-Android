@@ -34,6 +34,7 @@ import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
 import android.database.SQLException;
 import android.graphics.PixelFormat;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -242,7 +243,10 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
             } else {
                 handleDbError();
             }
-            // reset import path so that it's not incorrectly imported next time Activity starts
+            // delete temp file if necessary and reset import path so that it's not incorrectly imported next time Activity starts
+            if (getIntent().getBooleanExtra("deleteTempFile", false)) {
+                new File(mImportPath).delete();
+            }
             mImportPath = null;
         }
 
@@ -288,7 +292,10 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
             } else {
                 showLogDialog(res.getString(R.string.import_log_no_apkg), true);
             }
-            // reset import path so that it's not incorrectly imported next time Activity starts
+            // delete temp file if necessary and reset import path so that it's not incorrectly imported next time Activity starts
+            if (getIntent().getBooleanExtra("deleteTempFile", false)) {
+                new File(mImportPath).delete();
+            }
             mImportPath = null;
         }
 
@@ -1662,10 +1669,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
 
 
     private void addSharedDeck() {
-        Intent intent = new Intent(DeckPicker.this, Info.class);
-        intent.putExtra(Info.TYPE_EXTRA, Info.TYPE_SHARED_DECKS);
-        startActivityForResultWithAnimation(intent, ADD_SHARED_DECKS, ActivityTransitionAnimation.RIGHT);
-        // Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(res.getString(R.string.shared_decks_url)));
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getResources().getString(R.string.shared_decks_url)));
         startActivityWithAnimation(intent, ActivityTransitionAnimation.RIGHT);
     }
 
