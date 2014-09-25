@@ -18,6 +18,7 @@ public class DeckPickerContextMenu extends DialogFragment {
     private static final int CONTEXT_MENU_RENAME_DECK = 1;
     private static final int CONTEXT_MENU_DECK_OPTIONS = 2;
     private static final int CONTEXT_MENU_DELETE_DECK = 3;
+    private static final int CONTEXT_MENU_EXPORT_DECK = 4;
 
 
     public static DeckPickerContextMenu newInstance(String dialogTitle, boolean isCollapsed) {
@@ -34,12 +35,13 @@ public class DeckPickerContextMenu extends DialogFragment {
     public StyledDialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         StyledDialog.Builder builder = new StyledDialog.Builder(getActivity());
-        String[] entries = new String[4];
+        String[] entries = new String[5];
         Resources res = getResources();
         entries[CONTEXT_MENU_COLLAPSE_DECK] = res.getString(R.string.contextmenu_deckpicker_collapse_deck);
         entries[CONTEXT_MENU_RENAME_DECK] = res.getString(R.string.contextmenu_deckpicker_rename_deck);
         entries[CONTEXT_MENU_DECK_OPTIONS] = res.getString(R.string.study_options);
         entries[CONTEXT_MENU_DELETE_DECK] = res.getString(R.string.contextmenu_deckpicker_delete_deck);
+        entries[CONTEXT_MENU_EXPORT_DECK] = res.getString(R.string.export);
         builder.setTitle("Context Menu");
         builder.setIcon(R.drawable.ic_menu_manage);
         builder.setItems(entries, mContextMenuListener);
@@ -74,6 +76,11 @@ public class DeckPickerContextMenu extends DialogFragment {
 
                 case CONTEXT_MENU_RENAME_DECK:
                     ((DeckPicker) getActivity()).renameContextMenuDeckDialog();
+                    return;
+
+                case CONTEXT_MENU_EXPORT_DECK:
+                    ((DeckPicker) getActivity()).showContextMenuExportDialog();
+                    return;
 
             }
         }
