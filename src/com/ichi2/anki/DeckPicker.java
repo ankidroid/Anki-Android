@@ -32,6 +32,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
+import android.content.res.Resources.NotFoundException;
 import android.database.SQLException;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
@@ -64,6 +65,7 @@ import com.ichi2.anki.dialogs.DeckPickerBackupNoSpaceLeftDialog;
 import com.ichi2.anki.dialogs.DeckPickerConfirmDeleteDeckDialog;
 import com.ichi2.anki.dialogs.DeckPickerContextMenu;
 import com.ichi2.anki.dialogs.DeckPickerNoSpaceLeftDialog;
+import com.ichi2.anki.dialogs.ExportDialog;
 import com.ichi2.anki.dialogs.ImportDialog;
 import com.ichi2.anki.dialogs.MediaCheckDialog;
 import com.ichi2.anki.dialogs.SyncErrorDialog;
@@ -95,7 +97,8 @@ import java.util.TreeSet;
 
 public class DeckPicker extends NavigationDrawerActivity implements StudyOptionsFragment.OnStudyOptionsReloadListener,
         DatabaseErrorDialog.DatabaseErrorDialogListener, SyncErrorDialog.SyncErrorDialogListener,
-        ImportDialog.ImportDialogListener, MediaCheckDialog.MediaCheckDialogListener {
+        ImportDialog.ImportDialogListener, MediaCheckDialog.MediaCheckDialogListener,
+        ExportDialog.ExportDialogListener {
 
     public static final int CRAM_DECK_FRAGMENT = -1;
 
@@ -328,8 +331,9 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
                 mProgressDialog.dismiss();
             }
-            if (result.getBoolean()) {
-                showLogDialog(getResources().getString(R.string.export_successful), true);
+            String exportPath = result.getString();
+            if (exportPath != null) {
+                showLogDialog(getResources().getString(R.string.export_successful, exportPath), true);
             } else {
                 Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.export_unsuccessful), true);
             }
@@ -589,23 +593,8 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                 return true;
 
             case R.id.action_export:
-                // Export APKG file
-                StyledDialog.Builder builder = new StyledDialog.Builder(this);
-                builder.setMessage(res.getString(R.string.confirm_apkg_export));
-                builder.setPositiveButton(res.getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        boolean exportMedia = false; // TODO : Ask the user if they want to export media
-                        Object[] inputArgs = new Object[3];
-                        inputArgs[0] = getCol().getPath();
-                        inputArgs[1] = getCol().getPath().replace(".anki2", ".apkg");
-                        inputArgs[2] = exportMedia;
-                        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_EXPORT_APKG, mExportListener,
-                                new TaskData(inputArgs));
-                    }
-                });
-                builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
-                builder.create().show();
+                String msg = getResources().getString(R.string.confirm_apkg_export);
+                showDialogFragment(ExportDialog.newInstance(msg));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -1596,6 +1585,41 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
 
 
     @Override
+    public void exportApkg (String filename, Long did, boolean includeSched, boolean includeMedia){
+        // get export path
+        File colPath = new File(getCol().getPath());
+        File exportDir = new File(colPath.getParentFile(),"export");
+        exportDir.mkdirs();
+        File exportPath;
+        if (filename != null) {
+            // filename has been explicitly specified
+            exportPath = new File(exportDir,filename);
+        } else if (did != null) {
+            // filename not explicitly specified, but a deck has been specified so use deck name
+            try {
+                exportPath = new File(exportDir, getCol().getDecks().get(did).getString("name")+".apkg");
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+        } else if (!includeSched) {
+            // full export without scheduling is assumed to be shared with someone else -- use "All Decks.apkg"
+            exportPath = new File(exportDir,"All Decks.apkg");
+        } else {
+            // full collection export -- use "collection.apkg"
+            exportPath = new File(exportDir,colPath.getName().replace(".anki2", ".apkg"));
+        }
+        // add input arguments to new generic structure
+        Object[] inputArgs = new Object[5];
+        inputArgs[0] = getCol();
+        inputArgs[1] = exportPath.getPath();
+        inputArgs[2] = did;
+        inputArgs[3] = includeSched;
+        inputArgs[4] = includeMedia;
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_EXPORT_APKG, mExportListener, new TaskData(inputArgs));
+    }
+
+
+    @Override
     public void loadStudyOptionsFragment() {
         loadStudyOptionsFragment(0, null);
     }
@@ -1895,6 +1919,19 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
             Intent i = new Intent(DeckPicker.this, DeckOptions.class);
             startActivityWithAnimation(i, ActivityTransitionAnimation.FADE);
         }
+    }
+
+
+    // Callback to show export dialog for currently selected deck
+    public void showContextMenuExportDialog() {
+        Long did = mContextMenuDid;
+        String msg;
+        try {
+            msg = getResources().getString(R.string.confirm_apkg_export_deck, getCol().getDecks().get(did).get("name"));
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        showDialogFragment(ExportDialog.newInstance(msg, did));
     }
 
 

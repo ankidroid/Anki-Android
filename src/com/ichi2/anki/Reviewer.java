@@ -76,8 +76,8 @@ public class Reviewer extends AbstractFlashcardViewer implements WhiteboardListe
             if (AnkiDroidApp.colIsOpen()) {
                 WidgetStatus.update(this, mSched.progressToday(null, mCurrentCard, true));
             }
-            UIUtils.saveCollectionInBackground();
         }
+        UIUtils.saveCollectionInBackground();
     }
 
 

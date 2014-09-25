@@ -21,18 +21,17 @@ package com.ichi2.async;
 import android.content.Context;
 import android.content.res.Resources;
 import android.database.SQLException;
-import android.database.sqlite.SQLiteDatabaseCorruptException;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.google.gson.stream.JsonReader;
-import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.CardBrowser;
 import com.ichi2.anki.R;
 import com.ichi2.anki.exception.APIVersionException;
+import com.ichi2.libanki.AnkiPackageExporter;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Note;
@@ -47,16 +46,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -70,9 +63,7 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
-import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-import java.util.zip.ZipOutputStream;
 
 /**
  * Loading in the background, so that AnkiDroid does not look like frozen.
@@ -994,72 +985,31 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
 
     private TaskData doInBackgroundExportApkg(TaskData... params) {
-        final int BUFFER_SIZE = 1024;
         Log.i(AnkiDroidApp.TAG, "doInBackgroundExportApkg");
         Object[] data = params[0].getObjArray();
-        String colPath = (String) data[0];
+        Collection col = (Collection) data[0];
         String apkgPath = (String) data[1];
-        boolean includeMedia = (Boolean) data[2];
+        Long did = (Long) data[2];
+        boolean includeSched = (Boolean) data[3];
+        boolean includeMedia = (Boolean) data[4];
         
-        byte[] buf = new byte[BUFFER_SIZE];
         try {
-            try {
-                AnkiDb d = AnkiDatabaseManager.getDatabase(colPath);
-            } catch (SQLiteDatabaseCorruptException e) {
-                // collection is invalid
-                return new TaskData(false);
-            } finally {
-                AnkiDatabaseManager.closeDatabase(colPath);
-            }
-
-            // export collection
-            ZipOutputStream zos = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(apkgPath)));
-            BufferedInputStream bis = new BufferedInputStream(new FileInputStream(colPath), BUFFER_SIZE);
-            ZipEntry ze = new ZipEntry("collection.anki2");
-            zos.putNextEntry(ze);
-            int len;
-            while ((len = bis.read(buf, 0, BUFFER_SIZE)) != -1) {
-                zos.write(buf, 0, len);
-            }
-            zos.closeEntry();
-            bis.close();
-
-            // export media
-            JSONObject media = new JSONObject();
-            if (includeMedia) {
-                File mediaDir = new File(AnkiDroidApp.getCol().getMedia().dir());
-                if (mediaDir.exists() && mediaDir.isDirectory()) {
-                    File[] mediaFiles = mediaDir.listFiles();
-                    int c = 0;
-                    for (File f : mediaFiles) {
-                        FileInputStream mediaFin = new FileInputStream(f);
-                        ze = new ZipEntry(Integer.toString(c));
-                        zos.putNextEntry(ze);
-                        while ((len = mediaFin.read(buf)) >= 0) {
-                            zos.write(buf, 0, len);
-                        }
-                        zos.closeEntry();
-                        mediaFin.close();
-                        media.put(Integer.toString(c), f.getName());
-                    }
-                }
-            }
-            ze = new ZipEntry("media");
-            zos.putNextEntry(ze);
-            InputStream mediaIn = new ByteArrayInputStream(Utils.jsonToString(media).getBytes("UTF-8"));
-            while ((len = mediaIn.read(buf)) >= 0) {
-                zos.write(buf, 0, len);
-            }
-            zos.closeEntry();
-            zos.close();
+            AnkiPackageExporter exporter = new AnkiPackageExporter(col);
+            exporter.setIncludeSched(includeSched);
+            exporter.setIncludeMedia(includeMedia);
+            exporter.setDid(did);
+            exporter.exportInto(apkgPath);
         } catch (FileNotFoundException e) {
+            Log.e(AnkiDroidApp.TAG, "FileNotFoundException in doInBackgroundExportApkg: ", e);
             return new TaskData(false);
         } catch (IOException e) {
+            Log.e(AnkiDroidApp.TAG, "IOException in doInBackgroundExportApkg: ", e);
             return new TaskData(false);
         } catch (JSONException e) {
+            Log.e(AnkiDroidApp.TAG, "JSOnException in doInBackgroundExportApkg: ", e);
             return new TaskData(false);
         }
-        return new TaskData(true);
+        return new TaskData(apkgPath);
     }
 
 
