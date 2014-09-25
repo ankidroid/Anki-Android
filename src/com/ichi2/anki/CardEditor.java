@@ -175,6 +175,7 @@ public class CardEditor extends AnkiActivity {
     private int mCaller;
 
     private LinkedList<FieldEditText> mEditFields;
+    private Pair<Integer, Integer> fieldSelectors = new Pair<Integer, Integer>(0, 0);
 
     private int mCardItemBackground;
     private final List<Map<String, String>> mIntentInformation = new ArrayList<Map<String, String>>();
@@ -1121,7 +1122,15 @@ public class CardEditor extends AnkiActivity {
                     IMultimediaEditableNote mNote = NoteService.createEmptyNote(mEditorNote.model());
                     NoteService.updateMultimediaNoteFromJsonNote(mEditorNote, mNote);
                     mNote.setField(index, field);
-                    mEditFields.get(index).setText(field.getFormattedValue());
+
+                    // Fix for issue #2224;
+                    // start/end handling will also deal with start > end cases, allegedly possible on older Androids
+                    FieldEditText textField = mEditFields.get(index);
+                    int start = Math.max(fieldSelectors.first, 0);
+                    int end = Math.max(fieldSelectors.second, 0);
+                    String textToInsert = field.getFormattedValue();
+                    textField.getText().replace(Math.min(start, end), Math.max(start, end), textToInsert, 0, textToInsert.length());
+
                     NoteService.saveMedia((MultimediaEditableNote) mNote);
                     mChanged = true;
                 }
@@ -1198,6 +1207,8 @@ public class CardEditor extends AnkiActivity {
                             IMultimediaEditableNote mNote = NoteService.createEmptyNote(mEditorNote.model());
                             NoteService.updateMultimediaNoteFromJsonNote(mEditorNote, mNote);
                             IField field = mNote.getField(index);
+                            FieldEditText textField = mEditFields.get(index);
+                            fieldSelectors = new Pair<Integer, Integer>(textField.getSelectionStart(), textField.getSelectionEnd());
                             switch (item.getItemId()) {
                                 case R.id.menu_multimedia_audio:
                                     field = new AudioField();
