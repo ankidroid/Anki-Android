@@ -69,8 +69,11 @@
   <string name="notification_message">Нова верзија Ankidroid-a je доступна у Android Market-у.\n\nЖелите ли да је инсталирате?</string>
   <string name="notification_stop">Не обавештавај ме поново о овом ажурирању</string>
   <string name="reset_card_dialog_title">Ресетовање прогреса учења карте</string>
-  <string name="reset_card_dialog_message">Уклањање прогреса учења за све карте за ову белешку (оне ће изгледати као нове).\nДа продужим?</string>
-  <string name="reset_card_dialog_acknowledge">Cards reset</string>
+  <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue.</string>
+  <string name="reset_card_dialog_acknowledge">Card reset</string>
+  <string name="reschedule_card_dialog_title">Reschedule card</string>
+  <string name="reschedule_card_dialog_message">Reschedule for review in x days:</string>
+  <string name="reschedule_card_dialog_acknowledge">Card rescheduled</string>
   <string name="answering_error_title">Грешка базе података</string>
   <string name="answering_error_message">Дошло је до грешке при запису у колекцију. Разлог може бити што је база раније оштећена или што је мало места на диску.\n\nАко се то често догађа, покушајте да проверите базу података, обновите колекцију или обновите из резервне копије. Кликните за то на \"Опције\".\n\nТакође, ствар може бити у грешци AnkiDroid. Молимо вас, известите нас о грешци, да бисмо могли то да проверимо.</string>
   <string name="answering_error_report">Извести о грешци</string>

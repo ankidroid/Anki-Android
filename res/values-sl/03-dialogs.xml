@@ -69,8 +69,11 @@
   <string name="notification_message">A new version of AnkiDroid is available at Google Play.\n\nWould you like to install it?</string>
   <string name="notification_stop">Don\'t notify me of this update again</string>
   <string name="reset_card_dialog_title">Reset card progress</string>
-  <string name="reset_card_dialog_message">All cards of this note will look like new cards.</string>
-  <string name="reset_card_dialog_acknowledge">Cards reset</string>
+  <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue.</string>
+  <string name="reset_card_dialog_acknowledge">Card reset</string>
+  <string name="reschedule_card_dialog_title">Reschedule card</string>
+  <string name="reschedule_card_dialog_message">Reschedule for review in x days:</string>
+  <string name="reschedule_card_dialog_acknowledge">Card rescheduled</string>
   <string name="answering_error_title">Database error</string>
   <string name="answering_error_message">Writing to the collection failed. The databese could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch \'options\' for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
   <string name="answering_error_report">Report error</string>

@@ -74,9 +74,9 @@
   <string name="stats_answer_type">回答の種類</string>
   <string name="stats_today_again_count">忘却回数: &lt;b&gt;%d&lt;/b&gt;</string>
   <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt;  正解)</string>
-  <string name="stats_today_type_breakdown">学習: &lt;b&gt;%1$s&lt;/b&gt;枚、復習: &lt;b&gt;%2$s&lt;/b&gt;枚、再学習: &lt;b&gt;%3$s&lt;/b&gt;枚、フィルター&lt;b&gt;%4$s&lt;/b&gt;枚</string>
-  <string name="stats_today_mature_cards">熟知なカードの正解: %1$d/%2$d (%3$.1f%%)</string>
-  <string name="stats_today_no_mature_cards">今日は熟知カードを学習しませんでした。</string>
+  <string name="stats_today_type_breakdown">学習: &lt;b&gt;%1$s&lt;/b&gt;枚、復習: &lt;b&gt;%2$s&lt;/b&gt;枚、再学習: &lt;b&gt;%3$s&lt;/b&gt;枚、フィルター: &lt;b&gt;%4$s&lt;/b&gt;枚</string>
+  <string name="stats_today_mature_cards">熟知カードの正解: %1$d/%2$d (%3$.1f%%)</string>
+  <string name="stats_today_no_mature_cards">熟知カードは学習していません。</string>
   <string name="statistics_period_x_axis_minutes">分</string>
   <string name="statistics_new_cards">新規カード</string>
   <string name="statistics_failed_cards">正解できなかったカード</string>
@@ -101,9 +101,9 @@
   <string name="deck_summary_average_total">今までの平均</string>
   <string name="deck_summary_forecast">予測</string>
   <string name="deck_summary_tomorrow_due">明日の期限切れカード: &lt;b&gt;%d&lt;/b&gt;枚</string>
-  <string name="deck_summary_tomorrow_new">明日の新しいカード: &lt;b&gt;%d&lt;/b&gt;枚</string>
+  <string name="deck_summary_tomorrow_new">明日の新規カード: &lt;b&gt;%d&lt;/b&gt;枚</string>
   <string name="deck_summary_tomorrow_time">明日の推定必要時間: &lt;b&gt;%d&lt;/b&gt; 分.</string>
-  <string name="deck_summary_finished_in">新しいカードの終了: &lt;b&gt;%d&lt;/b&gt; 日</string>
+  <string name="deck_summary_finished_in">新規カードの終了: &lt;b&gt;%d&lt;/b&gt; 日</string>
   <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; 枚/日</string>
   <string name="deck_summary_deck_age">単語帳作成日: &lt;b&gt;%d&lt;/b&gt; 日前</string>
   <string name="deck_summary_all_decks">すべての単語帳</string>
@@ -148,12 +148,12 @@
   </string-array>
   <string name="stats_today">今日</string>
   <string name="stats_forecast">予測</string>
-  <string name="stats_review_count">カード復習枚数</string>
-  <string name="stats_review_time">カード復習時間</string>
+  <string name="stats_review_count">履歴（枚数）</string>
+  <string name="stats_review_time">履歴（時間）</string>
   <string name="stats_review_intervals">間隔</string>
   <string name="stats_breakdown">時間ごとの分析</string>
-  <string name="stats_weekly_breakdown">曜日ごとの内訳</string>
-  <string name="stats_answer_buttons">答えたボタン</string>
+  <string name="stats_weekly_breakdown">曜日ごとの分析</string>
+  <string name="stats_answer_buttons">解答ボタン</string>
   <string name="stats_cards_types">カードの種類</string>
   <string-array name="stats_period">
     <item>1か月</item>

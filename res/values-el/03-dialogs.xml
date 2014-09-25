@@ -69,8 +69,11 @@
   <string name="notification_message">Μια νέα έκδοση του AnkiDroid είναι διαθέσιμη στο Android Market.\n\nΘα θέλατε να το εγκαταστήσετε;</string>
   <string name="notification_stop">Μην με ενημερώσετε ξανά για αυτή την ανανέωση</string>
   <string name="reset_card_dialog_title">Επαναφορά προόδου κάρτας</string>
-  <string name="reset_card_dialog_message">Αυτό επαναφέρει την πρόοδο μάθησης για όλες τις κάρτες αυτής της σημείωσης (θα μοιάζουν σαν νέες κάρτες).\nΕίστε βέβαιοι;</string>
-  <string name="reset_card_dialog_acknowledge">Cards reset</string>
+  <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue.</string>
+  <string name="reset_card_dialog_acknowledge">Card reset</string>
+  <string name="reschedule_card_dialog_title">Reschedule card</string>
+  <string name="reschedule_card_dialog_message">Reschedule for review in x days:</string>
+  <string name="reschedule_card_dialog_acknowledge">Card rescheduled</string>
   <string name="answering_error_title">Σφάλμα βάσης δεδομένων</string>
   <string name="answering_error_message">Παρουσιάστηκε σφάλμα κατά την εγγραφή στη συλλογή. Αυτό θα μπορεί να σχετίζεται με κατεστραμμένη βάση δεδομένων ή ανεπαρκή αποθηκευτικό χώρο.\n\nΑν συμβαίνει συχνά, προσπαθήστε να ελέγξετε τη βάση δεδομένων, να επιδιορθώσετε τη συλλογή ή να την επαναφέρετε από ένα αντίγραφο. Κάντε κλικ στις σχετικές «επιλογές».\n\nΕκτός αυτού, μπορεί να είναι και AnkiDroid· σφάλμα παρακαλούμε αναφέρετε το σφάλμα ώστε να το ελέγξουμε.</string>
   <string name="answering_error_report">Αναφορά σφάλματος</string>

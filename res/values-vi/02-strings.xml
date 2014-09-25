@@ -104,6 +104,7 @@
   <string name="card_editor_reset">Thiết lập lại</string>
   <string name="card_editor_copy_card">Sao chép thẻ</string>
   <string name="card_editor_reset_card">Thiết lập lại quá trình học</string>
+  <string name="card_editor_reschedule_card">Reschedule card</string>
   <string name="card_editor_preview_card">Xem lại</string>
   <string name="error_insufficient_memory">Không thể thao tác vì không đủ bộ nhớ trên thiết bị của bạn</string>
   <string name="tutorial_load">Đang tạo hướng dẫn Bài.\n Đợi chút nhé...</string>
@@ -153,9 +154,12 @@
   <string name="import_log_error">Nhập thất bại</string>
   <string name="import_log_no_apkg">Đây không phải tập tin apkg hợp lệ</string>
   <string name="import_importing">Đang nhập thẻ.\nXin chờ chút...</string>
-  <string name="confirm_apkg_export">Export whole collection as apkg file? This may take a long time</string>
+  <string name="export_include_schedule">Include scheduling</string>
+  <string name="export_include_media">Include media</string>
+  <string name="confirm_apkg_export">Export collection as apkg file?</string>
+  <string name="confirm_apkg_export_deck">Export \"%s\" as apkg file?</string>
   <string name="export_in_progress">Exporting apkg file&#8230;</string>
-  <string name="export_successful">\"Collection.apkg\" was exported to the AnkiDroid folder</string>
+  <string name="export_successful">File \"%s\" was exported</string>
   <string name="export_unsuccessful">Error exporting collection</string>
   <string name="import_hint">Để nhập thẻ, đặt tập tin apkg vào đường dẫn %s và bấm ok</string>
   <string name="upgrade_import_no_file_found">Không tìm thấy %1$s tập tin có thể nhập</string>

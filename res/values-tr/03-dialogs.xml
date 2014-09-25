@@ -69,8 +69,11 @@
   <string name="notification_message">AnkiDroid\'in yeni bir sürümü Android Market\'te mevcut.\n\nYüklemek ister misiniz?</string>
   <string name="notification_stop">Bu güncellemeyi bana bir daha hatırlatma</string>
   <string name="reset_card_dialog_title">Kart ilerlemesini sıfırla</string>
-  <string name="reset_card_dialog_message">Bu işlem, bu notun bütün kartlarının öğrenme gidişâtını sıfırlar (yeni kart gibi görünecekler).\n Gerçekten devam edilsin mi?</string>
-  <string name="reset_card_dialog_acknowledge">Kartlar sıfırlandı</string>
+  <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue.</string>
+  <string name="reset_card_dialog_acknowledge">Card reset</string>
+  <string name="reschedule_card_dialog_title">Reschedule card</string>
+  <string name="reschedule_card_dialog_message">Reschedule for review in x days:</string>
+  <string name="reschedule_card_dialog_acknowledge">Card rescheduled</string>
   <string name="answering_error_title">Veritabanı hatası</string>
   <string name="answering_error_message">Koleksiyon yazılırken bir hatâ meydana geldi. Bu bozuk bir veritabanıyla veya yetersiz disk alanıyla ilgili olabilir.\n\nEğer bu daha sık olmaya başlarsa, lütfen veritabanını kontrol etmeyi, koleksiyonu onarmayı veya bir yedekten geri yüklemeyi deneyin.\n\nTabii bu bir AnkiDroid sorunu da olabilir; lütfen hatâyı bildirin ki kontrol edebilelim.</string>
   <string name="answering_error_report">Hatayı bildir</string>

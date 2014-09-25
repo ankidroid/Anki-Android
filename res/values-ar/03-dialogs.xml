@@ -70,8 +70,11 @@
 هل ترغب في تثبيته؟</string>
   <string name="notification_stop">لا تنبهني بهذا التحديث بعد الآن</string>
   <string name="reset_card_dialog_title">أعد تعيين مستوى تقدم التعلم</string>
-  <string name="reset_card_dialog_message">هذا سيعيد تعيين كل التقدم التعليمي لكل البطاقات لهذه الملاحظة(ستبدو وكأنها بطاقات جديدة).\nهل تريد المتابعة؟</string>
-  <string name="reset_card_dialog_acknowledge">Cards reset</string>
+  <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue.</string>
+  <string name="reset_card_dialog_acknowledge">Card reset</string>
+  <string name="reschedule_card_dialog_title">Reschedule card</string>
+  <string name="reschedule_card_dialog_message">Reschedule for review in x days:</string>
+  <string name="reschedule_card_dialog_acknowledge">Card rescheduled</string>
   <string name="answering_error_title">خطأ قاعدة البيانات</string>
   <string name="answering_error_message">حدث خطأ أثناء الكتابة إلى المجموعة. يمكن أن هذا ذا علاقة بقاعدة بيانات معطوبة أو المساحة القرص غير الكافية.\n\nإذا حدث هذا بشكل متكرر، الرجاء حاول فحص قاعدة البيانات،أو إصلاح المجموعة أو استعادة النسخة الاحتياطية. انقر على \'خيارات\' لفعل ذلك.\n\nومع ذلك، يمكن أن تكون علة بأنكيدرويد؛ الرجاء إرسال تقرير الخطأ حتى يمكننا تحقق منها ذلك.</string>
   <string name="answering_error_report">خطأ التقرير</string>

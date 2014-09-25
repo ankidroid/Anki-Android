@@ -104,6 +104,7 @@
   <string name="card_editor_reset">재설정</string>
   <string name="card_editor_copy_card">카드 복사</string>
   <string name="card_editor_reset_card">학습 진도 재설정</string>
+  <string name="card_editor_reschedule_card">Reschedule card</string>
   <string name="card_editor_preview_card">미리보기</string>
   <string name="error_insufficient_memory">장치 메모리가 부족하여 작업을 더 이상 진행할 수 없습니다</string>
   <string name="tutorial_load">도움말 묶음 생성 중. \n 잠시 기다려주세요...</string>
@@ -153,9 +154,12 @@
   <string name="import_log_error">가져오기 실패</string>
   <string name="import_log_no_apkg">유효하지 않은 apkg 파일입니다</string>
   <string name="import_importing">카드를 가져오는중.\n잠시만 기다려 주세요...</string>
-  <string name="confirm_apkg_export">Export whole collection as apkg file? This may take a long time</string>
+  <string name="export_include_schedule">Include scheduling</string>
+  <string name="export_include_media">Include media</string>
+  <string name="confirm_apkg_export">Export collection as apkg file?</string>
+  <string name="confirm_apkg_export_deck">Export \"%s\" as apkg file?</string>
   <string name="export_in_progress">Exporting apkg file&#8230;</string>
-  <string name="export_successful">\"Collection.apkg\" was exported to the AnkiDroid folder</string>
+  <string name="export_successful">File \"%s\" was exported</string>
   <string name="export_unsuccessful">Error exporting collection</string>
   <string name="import_hint">카드를 가져오려면, %s 폴더로 apkg 파일을 옮긴 후 확인을 눌러주세요</string>
   <string name="upgrade_import_no_file_found">가져올 수 있는 %1$s 파일이 발견되지 않음</string>

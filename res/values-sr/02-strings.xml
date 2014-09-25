@@ -104,6 +104,7 @@
   <string name="card_editor_reset">Ресетуј</string>
   <string name="card_editor_copy_card">Копирај карту</string>
   <string name="card_editor_reset_card">Ресетуј прогрес</string>
+  <string name="card_editor_reschedule_card">Reschedule card</string>
   <string name="card_editor_preview_card">Preview</string>
   <string name="error_insufficient_memory">Операција је немогућа због недостатка меморије на вашем уређају</string>
   <string name="tutorial_load">Креирање шпила за обуку.\nМолим сачекајте...</string>
@@ -153,9 +154,12 @@
   <string name="import_log_error">Неуспешан увоз</string>
   <string name="import_log_no_apkg">Ово је неодговарајућа apkg датотека</string>
   <string name="import_importing">Увоз карата.\nМолим сачекајте...</string>
-  <string name="confirm_apkg_export">Export whole collection as apkg file? This may take a long time</string>
+  <string name="export_include_schedule">Include scheduling</string>
+  <string name="export_include_media">Include media</string>
+  <string name="confirm_apkg_export">Export collection as apkg file?</string>
+  <string name="confirm_apkg_export_deck">Export \"%s\" as apkg file?</string>
   <string name="export_in_progress">Exporting apkg file&#8230;</string>
-  <string name="export_successful">\"Collection.apkg\" was exported to the AnkiDroid folder</string>
+  <string name="export_successful">File \"%s\" was exported</string>
   <string name="export_unsuccessful">Error exporting collection</string>
   <string name="import_hint">Да бисте увезли карте, ставите датотеке apkg у фасциклу %s и кликните ОК</string>
   <string name="upgrade_import_no_file_found">Пронађена је неувезена датотека %1$s</string>

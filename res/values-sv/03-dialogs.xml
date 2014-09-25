@@ -69,8 +69,11 @@
   <string name="notification_message">En ny version av Ankidroid finns tillgänglig i Android Market.\n\nVill du installera den?</string>
   <string name="notification_stop">Meddela mig inte om denna uppdatering igen</string>
   <string name="reset_card_dialog_title">Nollställ inlärningsdata för kort</string>
-  <string name="reset_card_dialog_message">Detta nollställer inlärningsdata för alla kort tillhörandes denna not (de kommer fungera som nya kort).\nVill du verkligen fortsätta?</string>
-  <string name="reset_card_dialog_acknowledge">Kort nollställda</string>
+  <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue.</string>
+  <string name="reset_card_dialog_acknowledge">Card reset</string>
+  <string name="reschedule_card_dialog_title">Reschedule card</string>
+  <string name="reschedule_card_dialog_message">Reschedule for review in x days:</string>
+  <string name="reschedule_card_dialog_acknowledge">Card rescheduled</string>
   <string name="answering_error_title">Databasfel</string>
   <string name="answering_error_message">Ett fel uppstod när data skrevs till din samling. Detta kan bero på en korrupt databas eller otillräckligt diskutrymme.\n\nOm detta händer flera gånger, vänligen kontrollera databasen, reparera samlingen eller återställ från en säkerhetskopia. Klicka på \'alternativ\' för det.\n\nHur som helst kan detta också bero på en bug i AnkiDroid; vänligen rapportera felet så vi kan kontrollera detta.</string>
   <string name="answering_error_report">Rapportera fel</string>

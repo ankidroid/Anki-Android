@@ -107,8 +107,8 @@
     <item>Скрыть (показать позже)</item>
     <item>Приостановить карту</item>
     <item>Удалить карту</item>
-    <item>Play media</item>
-    <item>Abort learning</item>
+    <item>Воспроизвести медиа</item>
+    <item>Прервать обучение</item>
   </string-array>
   <string-array name="theme_labels">
     <item>Андроид Темный </item>

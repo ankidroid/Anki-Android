@@ -104,6 +104,7 @@
   <string name="card_editor_reset">リセット</string>
   <string name="card_editor_copy_card">カードをコピーする</string>
   <string name="card_editor_reset_card">初めから</string>
+  <string name="card_editor_reschedule_card">Reschedule card</string>
   <string name="card_editor_preview_card">プレビュー</string>
   <string name="error_insufficient_memory">メモリ不足のため操作できませんでした。</string>
   <string name="tutorial_load">練習用単語帳を作成中です\nしばらくお待ちください</string>
@@ -120,8 +121,8 @@
   <string name="help_faq">よくある質問</string>
   <string name="help_tutorial">チュートリアル単語帳の作成</string>
   <string name="tutorial_deck_name">チュートリアル単語帳</string>
-  <string name="check_db">データベースの検査</string>
-  <string name="check_media">メディアのチェック</string>
+  <string name="check_db">データベースをチェック</string>
+  <string name="check_media">メディアをチェック</string>
   <string name="check_db_message">データを確認中です\nしばらくお待ちください</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">空のカード。\"ツール &gt; 空のカード...\"をデスクトップ クライアントで実行。</string>
   <string name="unknown_type_field_warning">タイピングして答えを入力: 不明なフィールド %s</string>
@@ -148,14 +149,17 @@
   <string name="import_message_add">追加</string>
   <string name="import_message_replace">置換え</string>
   <string name="import_message_replace_confirm">このコレクションは削除され、ファイル中のデータに置き換えられます%s. よろしいでしょうか？</string>
-  <string name="import_message_add_confirm">Add \"%s\" to collection? This may take a long time</string>
+  <string name="import_message_add_confirm">\"%s\"をコレクションに追加しますか？長い時間が必要な場合があります。</string>
   <string name="import_log_success">正常に取得できたカードは %d　カードです</string>
   <string name="import_log_error">インポート失敗</string>
   <string name="import_log_no_apkg">これは取り込み可能なapkgファイルではありません</string>
   <string name="import_importing">カード取得中です\nしばらくお待ちください</string>
-  <string name="confirm_apkg_export">Export whole collection as apkg file? This may take a long time</string>
+  <string name="export_include_schedule">Include scheduling</string>
+  <string name="export_include_media">Include media</string>
+  <string name="confirm_apkg_export">Export collection as apkg file?</string>
+  <string name="confirm_apkg_export_deck">Export \"%s\" as apkg file?</string>
   <string name="export_in_progress">Apkg ファイルをエクスポートしています.</string>
-  <string name="export_successful">Collection.apkgは、 AnkiDroid フォルダーにエクスポートされました。</string>
+  <string name="export_successful">File \"%s\" was exported</string>
   <string name="export_unsuccessful">コレクションのエクスポート エラー</string>
   <string name="import_hint">カードを取り込むためにapkg ファイルをフォルダに保管してください %s そしてＯＫボタンをクリックしてください</string>
   <string name="upgrade_import_no_file_found">読み込み可能な %1$s のファイルが見つかりません</string>

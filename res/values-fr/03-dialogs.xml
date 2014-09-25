@@ -69,8 +69,11 @@
   <string name="notification_message">Une nouvelle version d’AnkiDroid est disponible sur Google Play.\n\nVoulez-vous l\'installer ?</string>
   <string name="notification_stop">Ne plus me prévenir pour cette mise à jour</string>
   <string name="reset_card_dialog_title">Réinitialiser les progrès de la carte</string>
-  <string name="reset_card_dialog_message">Ceci va remettre à zéro les progrès pour chaque carte issue de cette note (elles redeviendront inédites).\nContinuer ?</string>
-  <string name="reset_card_dialog_acknowledge">Cartes réinitialisées</string>
+  <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue.</string>
+  <string name="reset_card_dialog_acknowledge">Card reset</string>
+  <string name="reschedule_card_dialog_title">Reschedule card</string>
+  <string name="reschedule_card_dialog_message">Reschedule for review in x days:</string>
+  <string name="reschedule_card_dialog_acknowledge">Card rescheduled</string>
   <string name="answering_error_title">Erreur de la base de données</string>
   <string name="answering_error_message">Il s’est produit une erreur en écrivant dans la collection. Cela est peut-être lié à une base de données corrompue ou à un espace disque insuffisant.\n\nSi cela arrive souvent, vérifiez la base de données, réparez la collection ou restaurez-la à partir d’une sauvegarde, en allant dans les « options ».\n\nCependant, il peut s\'agir d\'un bug d’AnkiDroid. Signalez-le nous.</string>
   <string name="answering_error_report">Signaler les erreurs</string>

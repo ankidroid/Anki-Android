@@ -132,9 +132,9 @@
   <string name="sync_media_sanity_check">メディアの総数を確認しています</string>
   <string name="sync_media_no_changes">メディアファイルへの変更はありません</string>
   <string name="sync_media_success">メディアは正常に同期しました</string>
-  <string name="sync_media_changes_count">%d media changes to upload</string>
-  <string name="sync_media_downloaded_count">%d media files downloaded</string>
-  <string name="sync_sanity_failed">同期後にコレクションの不整合が発見されました。この問題を解決するためにコレクションの完全な同期が必要です。Ankiweb側か、AnkiDroid側のデータを保持するかを選択して同期するか、同期をキャンセルしてください。</string>
+  <string name="sync_media_changes_count">%d 個のメディアが変更されアップロードが必要です</string>
+  <string name="sync_media_downloaded_count">%d 個のメディアをダウンロードしました</string>
+  <string name="sync_sanity_failed">同期後にコレクションの不整合が発見されました。この問題を解決するためにコレクションの完全な同期が必要です。Ankiweb側（リモート）か、AnkiDroid側（ローカル）のデータを保持するかを選択して同期するか、同期をキャンセルしてください。</string>
   <string name="sync_media_sanity_failed">メディアの同期が完了しました。しかし、メディアの数がサーバー上のものと一致しません。次にメディアを同期するときには、すべてのエラーを修正するために完全同期を行います。</string>
   <string name="sync_media_error">メディアデータの同期中のエラー</string>
   <string name="sync_media_unsupported">Android 2.2 およびそれ以前のバージョンでは、複雑なメディア ファイル名はサポートされません。メディアの同期を無効にされています。</string>
@@ -151,7 +151,7 @@
   <string name="upgrade_decks_message">Anki 2.0 のコレクションがありません。しかし、いくつかの古いAnki 1.2 形式のものが見つかりました:%s新しいAnkiDroid で使用するために変換が必要ですので、単独のコレクション毎に新しい Anki-2.0形式に変換してください。変換には３種類の方法があります。</string>
   <string name="upgrade_decks_message_pos1">Anki Desktop 2.0を使えば、最初の操作で古い形式の単語帳は新しい形式の単語帳に変換できます。新しい単語帳をAnkiWeb へ同期させれば、Mobileでも使用できるようになります。まず、 Mobileの中のAnkiDroid フォルダー(%s)にあるファイルを、パソコンへコピーしてください。コピーするパソコン上のフォルダはAnki Desktop 1.2 フォルダです(コピーした後は同期操作はしないで下さい) そして、Anki Desktop 2.0をスタートさせてください。</string>
   <string name="upgrade_decks_message_pos2">AnkiWebですでに単語帳を同期している場合は、ここ %sにログオンする必要があります。使用している単語帳は新しい形式に変換されます。変換されたコレクションを使い簡単にMobileと同期することが可能になります。</string>
-  <string name="upgrade_decks_message_pos3">３番目の方法は、AnkiDroid とAnkiWebを使って単語帳を変換する方法です。下のアップグレードボタンをクリックすると、AnkiWebにアップロードされ新しい単語帳に変換されます。そして、自動的にダウンロードされて表示されます。特別な登録手続きは必要ありません。Mobile接続よりも、スムーズな接続を得るため、Wifi接続を使用することをお勧めします。もし、単語帳が50Mbを超える場合には、この方法は使えません。別の方法を選んでください。単語帳に使っているメディアファイルがDropboxフォルダーや、別のフォルダーにある場合には、新しい場所にコピーしておく必要があります。</string>
+  <string name="upgrade_decks_message_pos3">３番目の方法は、AnkiDroid とAnkiWebを使って単語帳を変換する方法です。下のアップグレードボタンをタップすると、AnkiWebにアップロードされ新しい単語帳に変換されます。そして、自動的にダウンロードされて表示されます。特別な登録手続きは必要ありません。Mobile接続よりも、スムーズな接続を得るため、Wifi接続を使用することをお勧めします。もし、単語帳が50Mbを超える場合には、この方法は使えません。別の方法を選んでください。単語帳に使っているメディアファイルがDropboxフォルダーや、別のフォルダーにある場合には、新しい場所にコピーしておく必要があります。</string>
   <string name="upgrade_decks_message_finish">古い単語帳には関係なく、新しいコレクションを作成することができます。</string>
   <string name="upgrade_required">AnkiWebにある単語帳は古いAnki 1.2 の形式です。%s にログインしてください。古い単語帳は自動的に新しい形式に変換されます。</string>
   <string name="upgrade_decks_button">アップグレード</string>

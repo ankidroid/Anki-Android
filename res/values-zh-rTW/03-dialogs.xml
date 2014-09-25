@@ -69,8 +69,11 @@
   <string name="notification_message">Market 中有更新版本的 Ankidroid。您要安裝嗎？</string>
   <string name="notification_stop">不要再提醒我更新</string>
   <string name="reset_card_dialog_title">重置卡片進度</string>
-  <string name="reset_card_dialog_message">這會重設此筆記的所有卡片(變得像新卡片一樣)。\n確定要繼續嗎？</string>
-  <string name="reset_card_dialog_acknowledge">Cards reset</string>
+  <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue.</string>
+  <string name="reset_card_dialog_acknowledge">Card reset</string>
+  <string name="reschedule_card_dialog_title">Reschedule card</string>
+  <string name="reschedule_card_dialog_message">Reschedule for review in x days:</string>
+  <string name="reschedule_card_dialog_acknowledge">Card rescheduled</string>
   <string name="answering_error_title">資料庫錯誤</string>
   <string name="answering_error_message">寫入資料庫時發生錯誤。可能是資料庫毀損或是記憶卡空間不足。\n\n如果這經常發生的話，請嘗試檢查資料庫，修復您的收藏或從備份中還原。當然這也可能是 AnkiDroid 的 bug ，請回報錯誤讓我們知道。</string>
   <string name="answering_error_report">回報錯誤</string>

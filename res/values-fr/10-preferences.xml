@@ -134,7 +134,7 @@
   <string name="timeout_question_seconds_summ">XXX s</string>
   <string name="select_locale_title">Sélectionnez la langue</string>
   <string name="safe_display">Mode d\'affichage protégé</string>
-  <string name="safe_display_summ">Désactiver toute les animations et utiliser le mode sécurisé pour afficher les cartes. L\'encre électronique et les anciens appareils qui utilisent des polices personnalisées peuvent nécessiter ceci.</string>
+  <string name="safe_display_summ">Désactiver toutes les animations et utiliser le mode sécurisé pour afficher les cartes. L\'encre électronique et les anciens appareils qui utilisent des polices personnalisées peuvent nécessiter ceci.</string>
   <string name="vertical_centering">Aligner au centre</string>
   <string name="vertical_centering_summ">Centrer verticalement le contenu des cartes</string>
   <string name="pref_cat_backup">Sauvegardes</string>
@@ -143,7 +143,7 @@
   <string name="pref_backup_max">Nombre de sauvegarde max</string>
   <string name="pref_backup_max_summ">XXX</string>
   <string name="pref_disable_backup_title">Désactiver les sauvegardes ?</string>
-  <string name="pref_disable_backup_warning">Ceci va supprimer toute les sauvegardes</string>
+  <string name="pref_disable_backup_warning">Ceci va supprimer toutes les sauvegardes</string>
   <string name="pref_intent_add_instant">Ajout instantané</string>
   <string name="pref_intent_add_instant_summ">Ajouter des nouvelles cartes à AnkiDroid depuis les dictionnaires sans ouvrir AnkiDroid. Vous les trouverez dans \"données sauvegardées\" dans l\'outil d\'ajout des cartes.</string>
   <string name="show_estimates">Afficher le temps</string>

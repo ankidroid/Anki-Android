@@ -69,8 +69,11 @@
   <string name="notification_message">V Android Market-e je k dispozícii nová verzia AnkiDroid.\n\nChceli by ste ju nainštalovať?</string>
   <string name="notification_stop">Nabudúce na túto aktualizáciu neupozorňovať</string>
   <string name="reset_card_dialog_title">Vynulovať pokrok karty</string>
-  <string name="reset_card_dialog_message">Týmto vynulujete pokrok všetkých kariet pre túto poznámku (budú sa javiť ako nové karty).\nSkutočne chcete pokračovať?</string>
-  <string name="reset_card_dialog_acknowledge">Obnoviť karty</string>
+  <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue.</string>
+  <string name="reset_card_dialog_acknowledge">Card reset</string>
+  <string name="reschedule_card_dialog_title">Reschedule card</string>
+  <string name="reschedule_card_dialog_message">Reschedule for review in x days:</string>
+  <string name="reschedule_card_dialog_acknowledge">Card rescheduled</string>
   <string name="answering_error_title">Chyba databázy</string>
   <string name="answering_error_message">Chyba pri zápise do zbierky. Môže to súvisieť s poškodenou databázou alebo nedostatkom miesta na disku.\n\nAk sa to stáva častejšie, skúste skontrolovať databázu, opraviť zbierku alebo obnoviť zo zálohy kliknutím na \"možnosti\".\n\nJednako to môže byť aj chyba AnkiDroid; prosím oznámte chybu, aby sme to mohli skontrolovať.</string>
   <string name="answering_error_report">Nahlásiť chybu</string>

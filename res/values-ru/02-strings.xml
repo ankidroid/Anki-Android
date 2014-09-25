@@ -39,8 +39,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-  <string name="drawer_open">Open Drawer</string>
-  <string name="drawer_close">Close Drawer</string>
+  <string name="drawer_open">Открыть ящик</string>
+  <string name="drawer_close">Закрыть ящик</string>
   <string name="CardEditorLaterMessage">Сохранённая информация</string>
   <string name="CardEditorCardDeck">Карта колоды: %s</string>
   <string name="CardEditorNoteDeck">Заметка колоды: %s</string>
@@ -51,8 +51,8 @@
   <string name="card_type">Тип карты</string>
   <string name="filter_tags">Отфильтровать метки</string>
   <string name="sdcard_missing_message">SD-карта недоступна, т.к. она (и ваш аппарат) используется как USB-хранилище. Отключите режим USB-хранилище вашего аппарата для доступа к колоде.</string>
-  <string name="enable_whiteboard">Enable whiteboard</string>
-  <string name="disable_whiteboard">Disable whiteboard</string>
+  <string name="enable_whiteboard">Включить доску</string>
+  <string name="disable_whiteboard">Отключить доску</string>
   <string name="show_whiteboard">Показать доску</string>
   <string name="hide_whiteboard">Скрыть доску</string>
   <string name="clear_whiteboard">Очистка доски</string>
@@ -104,6 +104,7 @@
   <string name="card_editor_reset">Сброс</string>
   <string name="card_editor_copy_card">Копировать карту</string>
   <string name="card_editor_reset_card">Сброс прогресса</string>
+  <string name="card_editor_reschedule_card">Reschedule card</string>
   <string name="card_editor_preview_card">Предпросмотр</string>
   <string name="error_insufficient_memory">Операция не возможна из-за недостатка памяти на Вашем устройстве</string>
   <string name="tutorial_load">Создание учебной колоды. \nПожалуйста подождите...</string>
@@ -121,7 +122,7 @@
   <string name="help_tutorial">Создать учебную колоду</string>
   <string name="tutorial_deck_name">Учебная колода</string>
   <string name="check_db">Проверка базы данных</string>
-  <string name="check_media">Check media</string>
+  <string name="check_media">Проверить медиа</string>
   <string name="check_db_message">Проверка базы данных. \nПожалуйста подождите...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Пустая карта. Запустите «Инструменты&gt;Пустые карты...» на настольном клиенте.</string>
   <string name="unknown_type_field_warning">Тип ответа: неизвестное поле %s</string>
@@ -137,26 +138,29 @@
     <item>Соответствующий порядок</item>
   </string-array>
   <string name="menu_cardbrowser">Редактор карт</string>
-  <string name="show_hint">Show %s</string>
+  <string name="show_hint">Показать %s</string>
   <string name="pref_lang_other">Языковые настройки</string>
   <string name="pref_font_UI">Шрифт пользовательского интерфейса</string>
   <string name="info_rate">Оценка AnkiDroid</string>
   <string name="col_load_failed">Сбой загрузки коллекции.\nНажмите кнопку назад, чтобы закрыть AnkiDroid.</string>
   <string name="import_title">Импорт карт</string>
-  <string name="import_select_title">Choose a file to import</string>
+  <string name="import_select_title">Выбрать файл для импорта</string>
   <string name="import_message">Вы хотите добавить данные файла %s в Вашу коллекцию, или заменить Вашу коллекции этими данными?</string>
   <string name="import_message_add">Добавить</string>
   <string name="import_message_replace">Заменить</string>
   <string name="import_message_replace_confirm">Удалить Вашу существующую коллекцию и заменить её данными файла %s. Вы уверены?</string>
-  <string name="import_message_add_confirm">Add \"%s\" to collection? This may take a long time</string>
+  <string name="import_message_add_confirm">Добавить \"%s\" в коллекция? Это может занять много времени</string>
   <string name="import_log_success">Успешно импортированы %d карты</string>
   <string name="import_log_error">Импорт не удался</string>
   <string name="import_log_no_apkg">Это негодный apkg-файл</string>
   <string name="import_importing">Импортирование карт.\nПожалуйста, подождите...</string>
-  <string name="confirm_apkg_export">Export whole collection as apkg file? This may take a long time</string>
-  <string name="export_in_progress">Exporting apkg file&#8230;</string>
-  <string name="export_successful">\"Collection.apkg\" was exported to the AnkiDroid folder</string>
-  <string name="export_unsuccessful">Error exporting collection</string>
+  <string name="export_include_schedule">Include scheduling</string>
+  <string name="export_include_media">Include media</string>
+  <string name="confirm_apkg_export">Export collection as apkg file?</string>
+  <string name="confirm_apkg_export_deck">Export \"%s\" as apkg file?</string>
+  <string name="export_in_progress">Экспортирую apkg файл&#8230;</string>
+  <string name="export_successful">File \"%s\" was exported</string>
+  <string name="export_unsuccessful">При экспорте вашей коллекции возникла ошибка</string>
   <string name="import_hint">Чтобы импортировать карты, поместите файл apkg в каталог %s и нажмите ОК</string>
   <string name="upgrade_import_no_file_found">Найден не импортируемый файл %1$s</string>
   <string name="study_options">Опции колоды</string>
@@ -174,5 +178,5 @@
   <string name="sched_has_buried">Некоторые связанные или скрытые карты были отложены до следующей сессии.</string>
   <string name="tag_editor_add_hint">Поставьте галочку справа, чтобы добавить новую метку</string>
   <string name="tag_editor_add_feedback">Нажмите кнопку «%2$s» для подтверждения добавления «%1$s»</string>
-  <string name="lookup_hint">After copying the text, tap anywhere on the flashcard to show the search icon</string>
+  <string name="lookup_hint">Скопировав текст, тапните где-либо по карте чтобы показать иконку ответа</string>
 </resources>

@@ -104,6 +104,7 @@
   <string name="card_editor_reset">Reimposta</string>
   <string name="card_editor_copy_card">Copia carta</string>
   <string name="card_editor_reset_card">Reimposta progresso</string>
+  <string name="card_editor_reschedule_card">Reschedule card</string>
   <string name="card_editor_preview_card">Anteprima</string>
   <string name="error_insufficient_memory">Operazione non possibile a causa di memoria insufficiente sul tuo dispositivo</string>
   <string name="tutorial_load">Creazione del mazzo d\'esercizio.\nAttendi...</string>
@@ -121,7 +122,7 @@
   <string name="help_tutorial">Crea mazzo d\'esercizio</string>
   <string name="tutorial_deck_name">Mazzo d\'esercizio</string>
   <string name="check_db">Controlla database</string>
-  <string name="check_media">Check media</string>
+  <string name="check_media">Controlla file multimediali</string>
   <string name="check_db_message">Controllo database.\nAttendi...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Carta vuota. Esegui \"Strumenti&gt;Carte vuote...\" con la versione desktop.</string>
   <string name="unknown_type_field_warning">Digita la risposta: campo sconosciuto %s</string>
@@ -148,15 +149,18 @@
   <string name="import_message_add">Aggiungi</string>
   <string name="import_message_replace">Sostituisci</string>
   <string name="import_message_replace_confirm">La tua collezione esistente verrà eliminata e sostituita con i dati del file %s. Sei sicuro?</string>
-  <string name="import_message_add_confirm">Add \"%s\" to collection? This may take a long time</string>
+  <string name="import_message_add_confirm">Aggiungere \"%s\" alla collezione? Può richiedere molto tempo</string>
   <string name="import_log_success">Importato %d carte con successo</string>
   <string name="import_log_error">Importazione fallita</string>
   <string name="import_log_no_apkg">Questo non è un file apkg valido</string>
   <string name="import_importing">Importazione carte.\nAttendi...</string>
-  <string name="confirm_apkg_export">Export whole collection as apkg file? This may take a long time</string>
-  <string name="export_in_progress">Exporting apkg file&#8230;</string>
-  <string name="export_successful">\"Collection.apkg\" was exported to the AnkiDroid folder</string>
-  <string name="export_unsuccessful">Error exporting collection</string>
+  <string name="export_include_schedule">Include scheduling</string>
+  <string name="export_include_media">Include media</string>
+  <string name="confirm_apkg_export">Export collection as apkg file?</string>
+  <string name="confirm_apkg_export_deck">Export \"%s\" as apkg file?</string>
+  <string name="export_in_progress">Esporto il file apkg&#8230;</string>
+  <string name="export_successful">File \"%s\" was exported</string>
+  <string name="export_unsuccessful">Errore nell\'esportazione della collezione</string>
   <string name="import_hint">Per importare carte, inserisci il file apkg nella cartella %s e premi ok</string>
   <string name="upgrade_import_no_file_found">Nessun file importabile %1$s trovato</string>
   <string name="study_options">Opzioni del mazzo</string>

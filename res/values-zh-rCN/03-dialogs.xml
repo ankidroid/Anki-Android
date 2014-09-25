@@ -69,8 +69,11 @@
   <string name="notification_message">Google Play中有新版本的Ankidroid。\n\n您要安装吗？</string>
   <string name="notification_stop">不再提示更新</string>
   <string name="reset_card_dialog_title">重置卡牌进度</string>
-  <string name="reset_card_dialog_message">此操作将重置使用此卡牌记录的所有卡牌的学习进度(恢复新卡牌状态)。\n你确定要继续吗？</string>
-  <string name="reset_card_dialog_acknowledge">重置卡片</string>
+  <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue.</string>
+  <string name="reset_card_dialog_acknowledge">Card reset</string>
+  <string name="reschedule_card_dialog_title">Reschedule card</string>
+  <string name="reschedule_card_dialog_message">Reschedule for review in x days:</string>
+  <string name="reschedule_card_dialog_acknowledge">Card rescheduled</string>
   <string name="answering_error_title">数据库错误</string>
   <string name="answering_error_message">写入集合时出错。可能是数据库损坏，或者磁盘空间不足。\n\n如果频繁发生此错误，请检查数据库，修复集合或从备份中恢复。点击\"选项\"按钮以执行上述操作。\n\n当然，也可能只是AnkiDroid的bug，请报告这个错误，我们会尽力解决。</string>
   <string name="answering_error_report">报告错误</string>

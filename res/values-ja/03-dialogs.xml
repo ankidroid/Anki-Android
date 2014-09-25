@@ -40,10 +40,10 @@
 -->
 <resources>
   <string name="welcome_message">AnkiDroidは、大量の語彙や他の覚えたい事を効率的に学ぶためのアプリです。AnkiDroid は、あなたが忘れてしまう前に繰り返し学習の機会を与えます\n\nまずは、さまざまな特長や使い方を知るために、チュートリアル単語帳を使ってみることを、お勧めします。「スタートレビュー」をクリックしてください。\n\nチュートリアル単語帳を作成しますか?</string>
-  <string name="check_db_title">データベースの検査</string>
+  <string name="check_db_title">データベースをチェックしますか？</string>
   <string name="check_db_warning">これには長い時間がかかることがあります。</string>
-  <string name="check_db_acknowledge">データベースのチェック</string>
-  <string name="check_db_acknowledge_shrunk">データベースをチェックし、最適化します。\n 最適化後 %d kB.</string>
+  <string name="check_db_acknowledge">データベースのチェックが完了しました</string>
+  <string name="check_db_acknowledge_shrunk">データベースがチェックされ、最適化されました。\n 最適化後 %d kB.</string>
   <string name="contextmenu_deckpicker_delete_deck">単語帳を削除</string>
   <string name="delete_deck_title">単語帳を削除</string>
   <string name="delete_deck_message">%s の中のすべてのカードを削除してもよろしいですか。</string>
@@ -54,11 +54,11 @@
   <string name="no_tts_available_message">テキスト読み上げ可能な言語がありません</string>
   <string name="tts_no_tts">音声なし</string>
   <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s:<br/>Android用のフラッシュカード</h2>AnkiDroidは、PCソフトウェア <a href=\"%2$s\">Anki</a>と完全互換のフラッシュカードアプリです。あなたは、AnkiDroid と Anki のどちらでも教材を作成、ダウンロード、学習し、また、簡単に双方の同期をとることができます。]]></item>
-    <item><![CDATA[AnkiDroid を良くするため、できるだけバグを <a href="%1$s"> ここ</a>に報告していただけると助かります。 新しい機能のアイデアも大歓迎 ！　<a href="%2$s"> wiki</a> を使用して、<a href="%3$s"> フォーラム</a>で意見交換してください。]]></item>
+    <item><![CDATA[<h2>%1$s:<br/>Android用のフラッシュカード</h2>AnkiDroidは、PCソフトウェア <a href=\"%2$s\">Anki</a> と完全互換のフラッシュカードアプリです。あなたは、AnkiDroid と Anki のどちらでも教材を作成、ダウンロード、学習し、また、簡単に双方の同期をとることができます。]]></item>
+    <item><![CDATA[AnkiDroid を改善するために、できるだけバグを <a href="%1$s">こちら</a>に報告していただければ幸いです。 新しい機能のアイデアも大歓迎いたします！　<a href="%2$s">Wiki </a> を使用して、<a href="%3$s">フォーラム</a>にご意見をお寄せください。]]></item>
     <item><![CDATA[AnkiDroid は、<a href="%1$s">オープン ソース ソフトウェア <a/>で、誰でも <a href="%3$s"> 貢献者</a> として <a href="%2$s"> 参加</a> することを歓迎します:-)　]]></item>
     <item><![CDATA[開発者でなくても、例えば AnkiDroid を<a href="%1$s"> 翻訳</a>したり、wikiやスクリーン ショットを更新したり、PC版の Anki に<a href="%2$s"> 寄付</a>をしたり、AnkiDroid についてのブログを書いたりして貢献できます！]]></item>
-    <item><![CDATA[AnkiDroid は、<a href="%1$s"> GNU GPL v3 ライセンス</a> の下でリリースされており、ソースコードは <a href="%2$s">ここ</a>です。]]></item>
+    <item><![CDATA[AnkiDroid は、<a href="%1$s">GNU GPL v3 ライセンス</a>の下でリリースされており、ソースコードは<a href="%2$s">こちら</a>です。]]></item>
   </string-array>
   <string name="dont_show_again">今後は表示しない</string>
   <string name="notify_ticker">アプリケーションの更新</string>
@@ -69,8 +69,11 @@
   <string name="notification_message">AnkiDroidの新しいバージョンがGoogle Playで入手可能です.\n\nインストールしますか?</string>
   <string name="notification_stop">更新の通知をしない</string>
   <string name="reset_card_dialog_title">カードの進行状況をリセット</string>
-  <string name="reset_card_dialog_message">この操作は、ノートの中のカードの学習状況をリセットします（新規に作成したときの状態になります）  \n処理を続けますか？</string>
-  <string name="reset_card_dialog_acknowledge">カードのリセット</string>
+  <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue.</string>
+  <string name="reset_card_dialog_acknowledge">Card reset</string>
+  <string name="reschedule_card_dialog_title">Reschedule card</string>
+  <string name="reschedule_card_dialog_message">Reschedule for review in x days:</string>
+  <string name="reschedule_card_dialog_acknowledge">Card rescheduled</string>
   <string name="answering_error_title">データベース エラー</string>
   <string name="answering_error_message">コレクションへの書き込み中にエラーが発生しました。これは、データの破損か、ディスクの容量の不足が原因と考えられます。\n\n繰り返しエラーが発生する場合には、データをチェックするか、バックアップからコレクションを修復してください。\n\nまた、AnkiDroidのバグかもしれませんので\'オプション\'をクリックして、エラーを報告してください。</string>
   <string name="answering_error_report">エラーを報告する</string>
@@ -79,14 +82,14 @@
   <string name="intent_add_clear_all">すべて消去</string>
   <string name="intent_aedict_empty">カテゴリー \'default\' が空です。</string>
   <string name="intent_aedict_category">AnkiDroidにカードを登録するため、すべてのNotepadカテゴリを削除するか追、\'default\' という名前のカテゴリを追加してください。</string>
-  <string name="custom_study_new_total_new">単語帳の中の新しいカード枚数: %s</string>
-  <string name="custom_study_rev_total_rev">復習期限がきた枚数: %s</string>
-  <string name="custom_study_new_extend">今日取り組む新規カードの枚数上限を上げる</string>
-  <string name="custom_study_rev_extend">今日の復習制限数を増加</string>
-  <string name="custom_study_forgotten">過去x 日間の忘却カード枚数:</string>
-  <string name="custom_study_ahead">x 日間分の先行学習:</string>
-  <string name="custom_study_random">単語帳からランダムに x枚のカードを選択</string>
-  <string name="custom_study_preview">過去 x 日間に追加されたカードをプレビュー:</string>
+  <string name="custom_study_new_total_new">単語帳の中の新規カードの枚数: %s</string>
+  <string name="custom_study_rev_total_rev">期限がきた復習カード数: %s</string>
+  <string name="custom_study_new_extend">取り組む新規カードの上限数</string>
+  <string name="custom_study_rev_extend">復習カードの上限数</string>
+  <string name="custom_study_forgotten">復習する忘却カードの指定日数</string>
+  <string name="custom_study_ahead">先行して復習する日数</string>
+  <string name="custom_study_random">単語帳からランダムに抽出するカードの枚数</string>
+  <string name="custom_study_preview">以前追加された新規カードをプレビュー（日数指定）</string>
   <string name="custom_study_tags">タグの入力</string>
   <string name="rebuild_custom_study_deck">カスタム単語帳を再構築します\nしばらくお待ちください</string>
   <string name="deck_upgrade_title">単語帳の更新</string>
@@ -104,7 +107,7 @@
   <string name="deck_upgrade_not_import_warning">実行しますか？古い単語帳のデータは読み込まれません</string>
   <string name="deck_upgrade_via_web"><![CDATA[<![CDATA[<b>コレクション（単語帳、音声、画像他のメディアファイル）全体の容量サイズが大きい場合は、この方法は推奨できません。</b><br><br>古いAnki 1の 単語帳は圧縮された後 AnkiWebへアップロードされ、変換されてからアンドロイド端末にダウンロードされます。<br><br>安定したインターネット接続が必要であり、容量も50Mb以下に制限されます。<br><br>既にAnki Desktopを使っている場合は、パソコンを使ったアップグレード方法を推奨します。<br><br>操作を続行しますか？]]]]><![CDATA[> ]]></string>
   <string name="deck_upgrade_via_anki_desktop"><![CDATA[<![CDATA[パソコン上の AnkiDesktopに、既に新しいバージョンへ更新されたコレクションがある場合には、更新されたコレクションをAnkiWeb経由でダウンロードできます。<br><br>あるいは、USBケーブルを使って、コレクションをパソコンへコピーした後、更新してから、AnkiDroid側へ書き戻すこともできます。]]]]><![CDATA[> ]]></string>
-  <string name="deck_upgrade_auto_upgrade"><![CDATA[<![CDATA[Anki Desktop（ver 2.0.4 以降）をインストールして起動させ、コレクションをAnkiWebと同期させるため、「ダウンロード」をクリックしてください。<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_2:_Using_AnkiWeb_sync"> AnkiWebを使ったアップグレード方法の詳細</a>]]]]><![CDATA[> ]]></string>
+  <string name="deck_upgrade_auto_upgrade"><![CDATA[<![CDATA[Anki Desktop（ver 2.0.4 以降）をインストールして起動させ、コレクションをAnkiWebと同期させるため、「ダウンロード」をタップしてください。<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_2:_Using_AnkiWeb_sync"> AnkiWebを使ったアップグレード方法の詳細</a>]]]]><![CDATA[> ]]></string>
   <string name="deck_upgrade_manual"><![CDATA[<![CDATA[ 全ての*.anki ファイルと *.media フォルダーを、端末の AnkiDroidフォルダーからパソコン側の Anki Desktopフォルダーへコピーしてください。Anki Desktop （ver 2.0.4以降）をインストール後、起動させコレクションをアップグレードしてください。<br><br>アップグレードが完了した後、Anki Desktop側から「書き出し」を実行して、コレクションファイル（*.apkg）を作成し、そのコレクションファイルを端末の AnkiDroidフォルダーへコピーしてから、下の「読み込み」をタップしてください。<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_1:_Using_USB_(recommended)">USB を使用してアップグレードする方法の詳細</a>]]]]><![CDATA[> ]]></string>
   <string name="upgrade_deck_cancelled_title">アップグレードのキャンセル</string>
   <string name="upgrade_deck_cancelled_description">アップグレードは途中でキャンセルされました。利用可能な方法でアップグレードを再開してください。</string>
@@ -152,13 +155,13 @@
   <string name="check_media_title">メディアをチェックしますか？</string>
   <string name="check_media_warning">大きなコレクションの場合は、長い時間がかかります</string>
   <string name="check_media_message">メディアをチェックしています.</string>
-  <string name="check_media_acknowledge">メディアをチェック</string>
+  <string name="check_media_acknowledge">メディアがチェックされました。</string>
   <string name="check_media_failed">メディアチェック時のエラー</string>
-  <string name="check_media_invalid">Files with invalid encoding: %d</string>
-  <string name="check_media_unused">Files in media folder but not used by any cards: %d</string>
-  <string name="check_media_nohave">Files used on cards but not in media folder: %d</string>
-  <string name="check_media_no_unused_missing">No unused or missing files found.</string>
-  <string name="check_media_db_updated">メディア ・ データベースの再構築</string>
-  <string name="check_media_delete_unused">Delete unused</string>
+  <string name="check_media_invalid">エンコーディングが無効なファイル数: %d</string>
+  <string name="check_media_unused">カードに使用されていないファイル（メディア ・ フォルダー内の数）: %d</string>
+  <string name="check_media_nohave">カードに使用されているが、メディア ・ フォルダー内に存在しないファイルの数: %d</string>
+  <string name="check_media_no_unused_missing">未使用のファイル、不足しているファイルが見つかりました</string>
+  <string name="check_media_db_updated">メディア ・ データベースが再構築されました。</string>
+  <string name="check_media_delete_unused">使用されていないファイルを削除する</string>
   <string name="check_media_deleted">削除されたファイル: %d</string>
 </resources>

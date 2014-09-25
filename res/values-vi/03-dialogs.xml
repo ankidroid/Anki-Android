@@ -69,8 +69,11 @@
   <string name="notification_message">Đã có phiên bản mới cho AnkiDroid trên Android Market.\n\n Bạn có muốn cài không?</string>
   <string name="notification_stop">Không thông báo bản tin cập nhật này nữa</string>
   <string name="reset_card_dialog_title">Đặt lại thẻ</string>
-  <string name="reset_card_dialog_message">Tất cả các thẻ của bản ghi chú này sẽ trông giống như thẻ mới.</string>
-  <string name="reset_card_dialog_acknowledge">Các thẻ đã được đặt lại</string>
+  <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue.</string>
+  <string name="reset_card_dialog_acknowledge">Card reset</string>
+  <string name="reschedule_card_dialog_title">Reschedule card</string>
+  <string name="reschedule_card_dialog_message">Reschedule for review in x days:</string>
+  <string name="reschedule_card_dialog_acknowledge">Card rescheduled</string>
   <string name="answering_error_title">Cơ sở dữ liệu bị lỗi</string>
   <string name="answering_error_message">Writing to the collection failed. The databese could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch \'options\' for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
   <string name="answering_error_report">Report error</string>

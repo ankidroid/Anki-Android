@@ -69,8 +69,11 @@
   <string name="notification_message">AnkiDroid új változata érhető el az Android Marketen.\n\nSzeretnéd telepíteni?</string>
   <string name="notification_stop">Nem kérek többször értesítést a frissítésről</string>
   <string name="reset_card_dialog_title">Kártya folyamatát alaphelyzetbe</string>
-  <string name="reset_card_dialog_message">Ez visszaállítja alapállapotba az összes, ehhez a jegyzethez tartozó kártyát (olyanok lesznek, mintha új kártyák lennének).\nTényleg folytatod?</string>
-  <string name="reset_card_dialog_acknowledge">Cards reset</string>
+  <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue.</string>
+  <string name="reset_card_dialog_acknowledge">Card reset</string>
+  <string name="reschedule_card_dialog_title">Reschedule card</string>
+  <string name="reschedule_card_dialog_message">Reschedule for review in x days:</string>
+  <string name="reschedule_card_dialog_acknowledge">Card rescheduled</string>
   <string name="answering_error_title">Adatbázishiba</string>
   <string name="answering_error_message">Hiba történet a gyűjteménybe írás közben. Ennek okozója lehet a sérült adatbázis, vagy a kevés a háttértáron.\n\nHa gyakran megtörténik, ellenőrizd az adatbázist, javítsd a gyűjteményt, vagy állítsd vissza biztonsági mentésből. Ehhez kattints a \'Beállítások\'-ra.\n\nAz is lehet, hogy az AnkiDroid-ban van a hiba, kérjük jelentsd nekünk a hibát!</string>
   <string name="answering_error_report">Hibák jelentése</string>

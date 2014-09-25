@@ -69,8 +69,11 @@
   <string name="notification_message">Una nueva versión de Ankidroid se encuentra disponible en el Android Market.\n\n¿Quieres instalarla?</string>
   <string name="notification_stop">No volver a notificarme acerca de esta actualización</string>
   <string name="reset_card_dialog_title">Resetear el progreso de la tarjeta</string>
-  <string name="reset_card_dialog_message">Esto resetea el progreso de aprendizaje para todas las tarjetas de esta nota (se verán como nuevas tarjetas).\n¿Deseas continuar?</string>
-  <string name="reset_card_dialog_acknowledge">Tarjetas restablecidas</string>
+  <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue.</string>
+  <string name="reset_card_dialog_acknowledge">Card reset</string>
+  <string name="reschedule_card_dialog_title">Reschedule card</string>
+  <string name="reschedule_card_dialog_message">Reschedule for review in x days:</string>
+  <string name="reschedule_card_dialog_acknowledge">Card rescheduled</string>
   <string name="answering_error_title">Error en la base de datos</string>
   <string name="answering_error_message">Se ha producido un error al escribir en la colección. Esto podría estar relacionado con una base de datos dañada o con un espacio en disco insuficiente.\n\nSi esto ocurre con más frecuencia, intenta verificar la base de datos, reparar la colección o restaurar desde una copia de seguridad. Para ello, haz clic en \"Opciones\".\n\nDe todos modos, podría ser un error de AnkiDroid; por favor, informa del error para que podamos comprobarlo.</string>
   <string name="answering_error_report">Reportar error</string>

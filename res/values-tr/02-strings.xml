@@ -104,6 +104,7 @@
   <string name="card_editor_reset">Sıfırla</string>
   <string name="card_editor_copy_card">Kartı kopyala</string>
   <string name="card_editor_reset_card">İlerlemeyi sıfırla</string>
+  <string name="card_editor_reschedule_card">Reschedule card</string>
   <string name="card_editor_preview_card">Önizle</string>
   <string name="error_insufficient_memory">Cihazda yetersiz bellek olması nedeniyle işlem gerçekleştirilemiyor</string>
   <string name="tutorial_load">Eğitim destesi oluşturuluyor.\nLütfen bekleyin...</string>
@@ -153,9 +154,12 @@
   <string name="import_log_error">Aktarma başarısız</string>
   <string name="import_log_no_apkg">Bu geçerli bir apkg dosyası değil</string>
   <string name="import_importing">Kartlar aktarılıyor.\nLütfen bekleyin...</string>
-  <string name="confirm_apkg_export">Export whole collection as apkg file? This may take a long time</string>
+  <string name="export_include_schedule">Include scheduling</string>
+  <string name="export_include_media">Include media</string>
+  <string name="confirm_apkg_export">Export collection as apkg file?</string>
+  <string name="confirm_apkg_export_deck">Export \"%s\" as apkg file?</string>
   <string name="export_in_progress">Exporting apkg file&#8230;</string>
-  <string name="export_successful">\"Collection.apkg\" was exported to the AnkiDroid folder</string>
+  <string name="export_successful">File \"%s\" was exported</string>
   <string name="export_unsuccessful">Error exporting collection</string>
   <string name="import_hint">İçeri kart aktarmak için, apkg dosyasını %s dizinine yerleştirip Tamam\'a basın</string>
   <string name="upgrade_import_no_file_found">İçeri aktarılabilir %1$s dosyası bulunmuyor</string>

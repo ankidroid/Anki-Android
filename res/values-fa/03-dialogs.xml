@@ -69,8 +69,11 @@
   <string name="notification_message">یک نسخه جدید از آنکی دروید در بازار اندروید موجود است.\n\nآیا می خواهید آن را نصب کنید؟</string>
   <string name="notification_stop">دوباره این به روز رسانی را به من اطلاع نده</string>
   <string name="reset_card_dialog_title">بازنشانی پیشرفت کارت</string>
-  <string name="reset_card_dialog_message">پیشرفت آموزش برای همه کارتهای این یادداشت بازنشانی می شود ( آن وقت بنظر می رسد که کارتها جدید است).\nواقعا ادامه می دهید؟</string>
-  <string name="reset_card_dialog_acknowledge">نوسازی کارتها</string>
+  <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue.</string>
+  <string name="reset_card_dialog_acknowledge">Card reset</string>
+  <string name="reschedule_card_dialog_title">Reschedule card</string>
+  <string name="reschedule_card_dialog_message">Reschedule for review in x days:</string>
+  <string name="reschedule_card_dialog_acknowledge">Card rescheduled</string>
   <string name="answering_error_title">خطای پایگاه داده</string>
   <string name="answering_error_message">یک خطا هنگام نوشتن مجموعه رخ داده است. که می تواند مربوط به پایگاه داده آسیب دیده و یا فضای ناکافی هارد باشد.\n\nاگر در اغلب موارد این حالت اتفاق می افتد, لطفا پایگاه داده را بررسی کنید, مجموعه را تعمیر کنید یا آن را از فایل پشتیبان بازگردانید.  به این منظور روی \'تنظیمات\' کلیک کنید .\n\nدر صورتی که درست نشد, احتمالا اشکال از برنامه آنکی دروید است; لطفا خطایی را که ما می توانیم آن را بررسی کنیم گزارش کنید.</string>
   <string name="answering_error_report">گزارش خطا</string>

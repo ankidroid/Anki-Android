@@ -69,8 +69,11 @@
   <string name="notification_message">Uusi versio Ankidroidista on saatavilla Android Marketista.\n\nHaluatko asentaa sen?</string>
   <string name="notification_stop">Älä ilmoita tästä päivityksestä uudelleen</string>
   <string name="reset_card_dialog_title">Nollaa kortin edistyminen</string>
-  <string name="reset_card_dialog_message">Tämä nollaa edistymistiedot kaikilta huomautuksen korteilta (jonka jälkeen ne näyttävät uusilta korteilta).\nHaluatko varmasti jatkaa?</string>
-  <string name="reset_card_dialog_acknowledge">Cards reset</string>
+  <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue.</string>
+  <string name="reset_card_dialog_acknowledge">Card reset</string>
+  <string name="reschedule_card_dialog_title">Reschedule card</string>
+  <string name="reschedule_card_dialog_message">Reschedule for review in x days:</string>
+  <string name="reschedule_card_dialog_acknowledge">Card rescheduled</string>
   <string name="answering_error_title">Tietokantavirhe</string>
   <string name="answering_error_message">Tapahtui virhe kirjoittaessa kokoelmaan. Tämä voi aiheutua korruptoituneesti tietokannasta tai liian vähäisestä levytilasta.\n\nJos tämä tapahtuu usein yritä tarkastaa tietokanta, korjata kokoelma tai palauttaa se varmuuskopioista. Käynnistä \"asetukset\" tehdäksesi tämän.\n\nKyseessä voi olla myös vika AnkiDroidissa, joten ilmoita tästä meille jotta voimme tarkastaa asian.</string>
   <string name="answering_error_report">Ilmoita viasta</string>

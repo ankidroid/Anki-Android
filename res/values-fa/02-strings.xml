@@ -104,6 +104,7 @@
   <string name="card_editor_reset">تنظیم مجدد</string>
   <string name="card_editor_copy_card">کپی کارت</string>
   <string name="card_editor_reset_card">تنظیم مجدد پیشرفت</string>
+  <string name="card_editor_reschedule_card">Reschedule card</string>
   <string name="card_editor_preview_card">پیش نمایش</string>
   <string name="error_insufficient_memory">به علت عدم وجود حافظه کافی در دستگاه شما عملیات امکان پذیر نیست</string>
   <string name="tutorial_load">در حال ساخت خودآموز دسته کارت.\nلطفا صبر کنید...</string>
@@ -153,9 +154,12 @@
   <string name="import_log_error">عدم موفقیت در وارد کردن</string>
   <string name="import_log_no_apkg">این فایل، یک فایل معتبر apkg نیست.</string>
   <string name="import_importing">وارد کردن کارت. \nPlease صبر کنید...</string>
-  <string name="confirm_apkg_export">Export whole collection as apkg file? This may take a long time</string>
+  <string name="export_include_schedule">Include scheduling</string>
+  <string name="export_include_media">Include media</string>
+  <string name="confirm_apkg_export">Export collection as apkg file?</string>
+  <string name="confirm_apkg_export_deck">Export \"%s\" as apkg file?</string>
   <string name="export_in_progress">Exporting apkg file&#8230;</string>
-  <string name="export_successful">\"Collection.apkg\" was exported to the AnkiDroid folder</string>
+  <string name="export_successful">File \"%s\" was exported</string>
   <string name="export_unsuccessful">Error exporting collection</string>
   <string name="import_hint">برای وارد کردن کارتها,  apkg فایلهای در پوشه %s قرار داده و دکمه خب را فشار دهید</string>
   <string name="upgrade_import_no_file_found">غیر وارد کردنی %1$s فایل یافت شد</string>

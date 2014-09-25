@@ -65,7 +65,7 @@
   <string name="card_browser_order_reverse">（反転）</string>
   <string name="card_details_question">質問</string>
   <string name="card_details_answer">解答</string>
-  <string name="card_details_due">期限</string>
+  <string name="card_details_due">期限切れ</string>
   <string name="card_details_last_due">前回の期限切れ</string>
   <string name="card_details_now">今</string>
   <string name="card_details_interval">間隔</string>

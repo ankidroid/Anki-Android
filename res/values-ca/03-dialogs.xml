@@ -69,8 +69,11 @@
   <string name="notification_message">Hi ha una nova versió d\'Ankidroid disponible al Mercat.\n\nLa voleu baixar?</string>
   <string name="notification_stop">No tornis a avisar-me d\'aquesta actualització</string>
   <string name="reset_card_dialog_title">Reinicia el progrés de les fitxes</string>
-  <string name="reset_card_dialog_message">Això reinicia el progrès d\'aprenentatge per a totes les fitxes d\'aquest paquet (es mostraran com a fitxes noves).\nSegur que voleu continuar?</string>
-  <string name="reset_card_dialog_acknowledge">Cards reset</string>
+  <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue.</string>
+  <string name="reset_card_dialog_acknowledge">Card reset</string>
+  <string name="reschedule_card_dialog_title">Reschedule card</string>
+  <string name="reschedule_card_dialog_message">Reschedule for review in x days:</string>
+  <string name="reschedule_card_dialog_acknowledge">Card rescheduled</string>
   <string name="answering_error_title">Error de la base de dades</string>
   <string name="answering_error_message">S\'ha produït un error en escriure a la col·lecció. Això podria estar relacionat amb una base de dades defectuosa o amb espai insuficient al disc.\n\nSi passa molt sovint, si us plau, intenteu comprovar la base de dades, reparar la col·lecció o restaurar-ho des d\'una còpia de seguretat. Feu clic a \"opcions\" per a fer-ho.\n\nTot i així, també podria ser un error d\'AnkiDroid; si us plau envieu l\'error i podrem comprovar-ho.</string>
   <string name="answering_error_report">Informa dels errors</string>

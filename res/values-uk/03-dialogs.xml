@@ -69,8 +69,11 @@
   <string name="notification_message">Нова версія AnkiDroid доступна в Google Play.\n\n Бажаєте її встановити?</string>
   <string name="notification_stop">Не повідомляти знову про це оновлення</string>
   <string name="reset_card_dialog_title">Скинути поступ картки</string>
-  <string name="reset_card_dialog_message">Це скидає навчальний процес для усіх карток цього запису (вони будуть виглядати як нові картки).\nДійсно продовжити?</string>
-  <string name="reset_card_dialog_acknowledge">Обнулити карти</string>
+  <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue.</string>
+  <string name="reset_card_dialog_acknowledge">Card reset</string>
+  <string name="reschedule_card_dialog_title">Reschedule card</string>
+  <string name="reschedule_card_dialog_message">Reschedule for review in x days:</string>
+  <string name="reschedule_card_dialog_acknowledge">Card rescheduled</string>
   <string name="answering_error_title">Помилка бази даних</string>
   <string name="answering_error_message">Під час запису в колекцію сталася помилка. Причиною може бути пошкоджена база даних або відсутність місця на диску.\n\nЯкщо це трапляється більш часто, будь ласка, спробуйте перевірити базу даних, відремонтувати колекцію, або відновити її з резервної копії. Для цього натисніть на \"опції\".\n\nОднак, це також може бути недолік AnkiDroid; будь ласка, надішліть звіт для перевірки цього.</string>
   <string name="answering_error_report">Доповісти про помилку</string>

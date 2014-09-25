@@ -50,8 +50,8 @@
   <string name="studyoptions_eta">推定時間 (分):</string>
   <string name="studyoptions_start">学習開始</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">学習期日に達しているカードが %1$d 枚あります。 (%2$s)</item>
-    <item quantity="other">学習期日に達しているカードが %1$d 枚あります。 (%2$s)</item>
+    <item quantity="one">%1$d 枚のカードが学習期日に達しています (%2$s)</item>
+    <item quantity="other">%1$d 枚のカードが学習期日に達しています (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">%d 分</item>
@@ -146,23 +146,23 @@
   <string name="empty_cram_deck">カードを元の単語帳へ戻します。</string>
   <string name="custom_study_deck_name">カスタム学習セッション</string>
   <string name="custom_study_deck_exists">最初に、既存のカスタム学習の単語帳の名称変更を行ってください。</string>
-  <string name="studyoptions_congrats_finished">おめでとうございます ！今日の目標を達成しました。</string>
-  <string name="studyoptions_congrats_more_rev">今日の復習目標を達成しました。まだ学習するカードは残っていますので、オプションの設定で制限を増やすことを検討してください。</string>
-  <string name="studyoptions_congrats_more_new">新しいカードの追加ができますが、毎日の制限に達しています。オプション設定で制限を増やすできますが、毎日の復習の負担が増加しますのでご注意ください。</string>
-  <string name="studyoptions_congrats_custom">通常のスケジュール以外で学習するには、下の「カスタム学習」ボタンをタップします。</string>
+  <string name="studyoptions_congrats_finished">おめでとうございます！　今日の目標を達成しました。</string>
+  <string name="studyoptions_congrats_more_rev">今日の復習目標を達成しました。学習するカードはまだ残っていますので、オプションの設定で制限を増やすことを検討してください。</string>
+  <string name="studyoptions_congrats_more_new">新規カードの追加ができますが、毎日の制限に達しています。オプション設定で制限を増やすできますが、毎日の復習の負担が増加しますのでご注意ください。</string>
+  <string name="studyoptions_congrats_custom">通常のスケジュール以外で学習するには、「カスタム学習」ボタンをタップしてください。</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">明日は %1$d 枚の復習カードがあります。%2$s.\n 必要な時間　%3$s</item>
     <item quantity="other">明日は %1$d 枚のカードがあります。そして復習カードは %2$s.\n 必要な時間は%3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">%1$d の新しいカード</item>
+    <item quantity="one">%1$d の新規カード</item>
     <item quantity="other">%1$d枚の新カード</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
     <item quantity="one">推定時間: %1$d 分</item>
     <item quantity="other">推定時間: %1$d 分</item>
   </plurals>
-  <string name="sd_card_not_mounted">外部SDカードが見つかりません\n\n内部メモリーにコレクションを格納できますが、簡単にアクセスできませんので、お勧めできません。内部メモリーは環境設定でアクティブにすることができます。(このテキストをクリックして環境設定を開きます)</string>
+  <string name="sd_card_not_mounted">外部SDカードが見つかりません\n\n内部メモリーにコレクションを格納できますが、簡単にアクセスできませんので、お勧めできません。内部メモリーは環境設定でアクティブにすることができます。(このテキストをタップして環境設定を開きます)</string>
   <string name="studyoptions_options">オプション</string>
   <string name="empty_cloze_warning">ノートを編集して「穴埋め問題」を追加してください。(%1$s)</string>
   <string name="help_cloze">ヘルプ</string>

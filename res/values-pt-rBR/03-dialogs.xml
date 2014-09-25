@@ -69,8 +69,11 @@
   <string name="notification_message">Uma nova versão do AnkiDroid está disponível no Android Market.\n\nVocê gostaria de instalá-lo?</string>
   <string name="notification_stop">Não me notificar novamente dessa atualização</string>
   <string name="reset_card_dialog_title">Redefinir progresso do cartão</string>
-  <string name="reset_card_dialog_message">Isso redefine o progresso de aprendizagem para todos os cartões desta nota (eles vão se parecer com cartões novos). \n Realmente continuar?</string>
-  <string name="reset_card_dialog_acknowledge">Cartões redefinidos</string>
+  <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue.</string>
+  <string name="reset_card_dialog_acknowledge">Card reset</string>
+  <string name="reschedule_card_dialog_title">Reschedule card</string>
+  <string name="reschedule_card_dialog_message">Reschedule for review in x days:</string>
+  <string name="reschedule_card_dialog_acknowledge">Card rescheduled</string>
   <string name="answering_error_title">Erro de banco de dados</string>
   <string name="answering_error_message">Ocorreu um erro ao gravar à coleção. Isso poderia estar relacionado com um banco de dados corrompido ou espaço insuficiente no disco.\n\nSe isso acontecer mais frequentemente, tente verificar o banco de dados, reparar a coleção ou restaurá-la de um backup. Clique em \'Opções\' para isso.\n\nEm todo caso, isso poderia ser um bug do AnkiDroid também; relate o erro para que possamos verificar isso.</string>
   <string name="answering_error_report">Reportar erro</string>

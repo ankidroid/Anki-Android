@@ -69,8 +69,11 @@
   <string name="notification_message">Eine neue Version von AnkiDroid ist bei Google Play verfügbar. \n\nMöchten Sie diese installieren?</string>
   <string name="notification_stop">Nicht erneut über Aktualisierung benachrichtigen</string>
   <string name="reset_card_dialog_title">Lernfortschritt zurücksetzen</string>
-  <string name="reset_card_dialog_message">Alle Karten dieser Notiz werden wie neue Karten aussehen.</string>
-  <string name="reset_card_dialog_acknowledge">Karten zurücksetzen</string>
+  <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue.</string>
+  <string name="reset_card_dialog_acknowledge">Card reset</string>
+  <string name="reschedule_card_dialog_title">Reschedule card</string>
+  <string name="reschedule_card_dialog_message">Reschedule for review in x days:</string>
+  <string name="reschedule_card_dialog_acknowledge">Card rescheduled</string>
   <string name="answering_error_title">Datenbankfehler</string>
   <string name="answering_error_message">Beim Zugriff auf die Datenbank ist ein Fehler aufgetreten. Dies kann entweder mit einer defekten Datenbank zusammenhängen oder an unzureichendem Speicherplatz liegen.\n\nWenn dies öfter vorkommt, versuchen Sie bitte, die Sammlung zu reparieren oder von einem Backup wiederherzustellen. Klicken Sie dafür auf \'Optionen\'.\n\nNichtsdestoweniger kann aber auch ein AnkiDroid-Fehler der Grund sein; bitte melden Sie den Fehler deshalb, damit wir das überprüfen können.</string>
   <string name="answering_error_report">Fehler melden</string>

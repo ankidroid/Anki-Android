@@ -44,7 +44,7 @@
     <item>フィードバックを送信</item>
   </string-array>
   <string-array name="newCardSchedulingLabels">
-    <item>復習中に新しいカードを混ぜる</item>
+    <item>復習中に新規カードを混ぜる</item>
     <item>復習の後で</item>
     <item>復習の前に</item>
   </string-array>
@@ -69,14 +69,14 @@
     <item>ランダムな順序で表示する</item>
   </string-array>
   <string-array name="studyoptions_more_new_card_order">
-    <item>新しいカードを無作為に選んで表示する</item>
-    <item>新しいカードを追加した順で表示する</item>
-    <item>新しいカードを追加の逆順で表示する</item>
+    <item>新規カードを無作為に選んで表示する</item>
+    <item>新規カードを追加した順で表示する</item>
+    <item>新規カードを追加の逆順で表示する</item>
   </string-array>
   <string-array name="studyoptions_more_new_card_schedule">
-    <item>復習中に新しいカードを混ぜる</item>
-    <item>新しいカードを復習の後に表示する</item>
-    <item>新しいカードを復習の前に表示する</item>
+    <item>復習中に新規カードを混ぜる</item>
+    <item>新規カードを復習の後に表示する</item>
+    <item>新規カードを復習の前に表示する</item>
   </string-array>
   <string-array name="studyoptions_more_rev_card_order">
     <item>間隔の一番長いカードから復習する</item>
@@ -121,8 +121,8 @@
     <item>タグを追加</item>
   </string-array>
   <string-array name="new_order_labels">
-    <item>ランダムに新しいカードを追加</item>
-    <item>追加順に新しいカードを追加</item>
+    <item>ランダムに新規カードを追加</item>
+    <item>追加順に新規カードを追加</item>
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
     <item>古いカードを先頭に</item>
@@ -136,12 +136,12 @@
   </string-array>
   <string-array name="custom_study_options_labels">
     <item>今日取り組む新規カードの枚数上限を上げる</item>
-    <item>今日取り組む復習カードの枚数上限を上げる</item>
-    <item>忘却したカードを復習する</item>
-    <item>復習の先行</item>
+    <item>復習カードの上限を増やす（今日分）</item>
+    <item>忘却カードの復習</item>
+    <item>指定日分の先行復習</item>
     <item>カードをランダムに学習する</item>
-    <item>新しいカードをプレビューする</item>
-    <item>特定のタグの制限</item>
+    <item>新規カードをプレビューする</item>
+    <item>特定のタグによる選択</item>
   </string-array>
   <string-array name="add_to_cur_labels">
     <item>開いている単語帳へ追加</item>
@@ -153,9 +153,9 @@
     <item>復習カードの前に新規カードを学習する</item>
   </string-array>
   <string-array name="cards_for_tag_filtered_deck_labels">
-    <item>すべてのカード</item>
-    <item>新規</item>
-    <item>期限</item>
+    <item>全カード</item>
+    <item>新規分</item>
+    <item>期限切れ</item>
   </string-array>
   <string-array name="override_font_labels">
     <item>フォントが指定されていない場合</item>
