@@ -59,7 +59,6 @@ import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.async.DeckTask;
 import com.ichi2.async.DeckTask.TaskData;
 import com.ichi2.libanki.Card;
-import com.ichi2.libanki.CardStats;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Utils;
@@ -732,15 +731,12 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         } else {
             JSONObject deck = mDropDownDecks.get(position - 1);
             String deckName;
-            Long deckId;
             try {
                 deckName = deck.getString("name");
-                deckId = deck.getLong("id");
             } catch (JSONException e) {
                 throw new RuntimeException();
             }
             mRestrictOnDeck = "deck:'" + deckName + "' ";
-            getCol().getDecks().select(deckId);
         }
         searchCards();
         return true;
