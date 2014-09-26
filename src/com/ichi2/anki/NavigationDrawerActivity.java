@@ -155,7 +155,7 @@ public class NavigationDrawerActivity extends AnkiActivity {
                 break;
             
             case DRAWER_HELP:
-                Intent helpIntent = new Intent("android.intent.action.VIEW", Uri.parse(getResources().getString(R.string.link_faq)));
+                Intent helpIntent = new Intent("android.intent.action.VIEW", Uri.parse(getResources().getString(R.string.link_manual)));
                 startActivityWithoutAnimation(helpIntent);
                 break;
                 
