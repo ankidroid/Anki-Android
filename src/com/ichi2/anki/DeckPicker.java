@@ -32,7 +32,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
-import android.content.res.Resources.NotFoundException;
 import android.database.SQLException;
 import android.graphics.PixelFormat;
 import android.net.Uri;
@@ -340,7 +339,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
             }
             String exportPath = result.getString();
             if (exportPath != null) {
-                showLogDialog(getResources().getString(R.string.export_successful, exportPath), true);
+                showExportCompleteDialog(exportPath);
             } else {
                 Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.export_unsuccessful), true);
             }
@@ -1120,6 +1119,31 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
     }
 
 
+    private void showExportCompleteDialog(final String path) {
+        // Since this is called from onPostExecute() of an AsyncTask, we can't use a DialogFragment
+        // as we can't make commits to the fragment manager while the Activity is closed
+        StyledDialog.Builder builder = new StyledDialog.Builder(this);
+        Resources res = getResources();
+        builder.setTitle(R.string.export_successful_title);
+        builder.setMessage(res.getString(R.string.export_successful,path));
+        builder.setIcon(R.drawable.ic_menu_send);
+        builder.setPositiveButton(res.getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dismissAllDialogFragments();
+                emailFile(path);
+            }
+        });
+        builder.setNegativeButton(res.getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dismissAllDialogFragments();
+            }
+        });
+        builder.create().show();
+    }
+
+
     @Override
     public void showImportDialog(int id) {
         showImportDialog(id, "");
@@ -1623,6 +1647,19 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
         inputArgs[3] = includeSched;
         inputArgs[4] = includeMedia;
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_EXPORT_APKG, mExportListener, new TaskData(inputArgs));
+    }
+
+
+    private void emailFile(String path) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("message/rfc822");
+        intent.putExtra(Intent.EXTRA_SUBJECT, "AnkiDroid Apkg");
+        File attachment = new File(path);
+        if (attachment.exists()) {
+            Uri uri = Uri.fromFile(attachment);
+            intent.putExtra(Intent.EXTRA_STREAM, uri);
+        }
+        startActivityWithoutAnimation(intent);
     }
 
 
