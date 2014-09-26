@@ -50,8 +50,8 @@
   <string name="studyoptions_eta">推定時間 (分):</string>
   <string name="studyoptions_start">学習開始</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%1$d 枚のカードが学習期日に達しています (%2$s)</item>
-    <item quantity="other">%1$d 枚のカードが学習期日に達しています (%2$s)</item>
+    <item quantity="one">%1$d 枚の期限カード (%2$s)</item>
+    <item quantity="other">%1$d 枚の期限カード (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">%d 分</item>
@@ -84,7 +84,7 @@
   <string name="undo_action_suspend_note">ノートの保留</string>
   <string name="undo_action_delete">ノートの削除</string>
   <string name="undo_action_mark">ノートにマークをつける</string>
-  <string name="unbury">延期解除</string>
+  <string name="unbury">延期を解除</string>
   <string name="finish_operation">以前の操作を継続します（バックアップ作成など）\n</string>
   <string name="contextmenu_deckpicker_download_missing_media">不足しているメディアをダウンロードします</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">言語設定のリセット</string>

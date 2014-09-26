@@ -174,7 +174,7 @@
   <string name="template_error_detail">このカードのテンプレートの中にエラーがあります</string>
   <string name="template_error_fix">このエラーを修正するために、PC上のAnkiDesktopでカードの編集をしてください</string>
   <string name="sched_end">（終了）</string>
-  <string name="sched_unbury_button">それらのカードを今すぐ表示するには、「延期解除」ボタンをタップしてください。</string>
+  <string name="sched_unbury_button">それらのカードを今すぐ表示するには、「延期を解除」ボタンをタップしてください。</string>
   <string name="sched_has_buried">関連カード、延期カードの学習は明日まで延期されます。</string>
   <string name="tag_editor_add_hint">右側のチェックマークを使って、新しいタグを追加する</string>
   <string name="tag_editor_add_feedback">\"%2$s\" ボタンを使って \"%1$s\" の追加を確認する</string>
