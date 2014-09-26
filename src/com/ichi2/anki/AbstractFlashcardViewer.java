@@ -1149,12 +1149,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             menu.findItem(R.id.action_hide_whiteboard).setVisible(true);
             menu.findItem(R.id.action_clear_whiteboard).setVisible(true);
             if (mShowWhiteboard) {
-                menu.findItem(R.id.action_clear_whiteboard).setIcon(R.drawable.ic_whiteboard_clear_enabled);
-                menu.findItem(R.id.action_hide_whiteboard).setIcon(R.drawable.ic_whiteboard_visibility_enabled);
+                //menu.findItem(R.id.action_clear_whiteboard).setIcon(R.drawable.ic_whiteboard_clear_enabled);
+                menu.findItem(R.id.action_hide_whiteboard).setIcon(R.drawable.ic_action_whiteboard_enable_light);
                 menu.findItem(R.id.action_hide_whiteboard).setTitle(R.string.hide_whiteboard);
             } else {
-                menu.findItem(R.id.action_clear_whiteboard).setIcon(R.drawable.ic_whiteboard_clear_disabled);
-                menu.findItem(R.id.action_hide_whiteboard).setIcon(R.drawable.ic_whiteboard_visibility_disabled);
+                //menu.findItem(R.id.action_clear_whiteboard).setIcon(R.drawable.ic_whiteboard_clear_disabled);
+                menu.findItem(R.id.action_hide_whiteboard).setIcon(R.drawable.ic_action_whiteboard_enable_light_disabled);
                 menu.findItem(R.id.action_hide_whiteboard).setTitle(R.string.show_whiteboard);
             }
         } else {
@@ -1167,6 +1167,44 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+
+
+
+    /*
+     * Modify the options menu.
+     * Pick the right icons for the whiteboard actions.
+
+     *
+     * @param menu The menu as is.
+     * @return The result of
+     */
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // On old Androids this gets called each time the menu is opend, on newer ones (=> 3.0) only after it has been
+        // invalidated. We do *that* on purpose when toggeling the night mode.
+        if (mPrefWhiteboard) {
+            if (mShowWhiteboard){
+                if (mNightMode) {
+                    menu.findItem(R.id.action_clear_whiteboard).setIcon(R.drawable.ic_action_cancel_dark);
+                    menu.findItem(R.id.action_hide_whiteboard).setIcon(R.drawable.ic_action_whiteboard_enable_dark);
+                } else {
+                    menu.findItem(R.id.action_clear_whiteboard).setIcon(R.drawable.ic_action_cancel);
+                    menu.findItem(R.id.action_hide_whiteboard).setIcon(R.drawable.ic_action_whiteboard_enable_light);
+
+                }
+            } else {
+                if (mNightMode) {
+                    menu.findItem(R.id.action_clear_whiteboard).setIcon(R.drawable.ic_action_cancel_dark);
+                    menu.findItem(R.id.action_hide_whiteboard).setIcon(R.drawable.ic_action_whiteboard_enable_dark_disabled);
+                } else {
+                    menu.findItem(R.id.action_clear_whiteboard).setIcon(R.drawable.ic_action_cancel);
+                    menu.findItem(R.id.action_hide_whiteboard).setIcon(R.drawable.ic_action_whiteboard_enable_light_disabled);
+                }
+            }
+        }
+
+        return super.onPrepareOptionsMenu(menu);
+    }
 
     @Override
     public boolean onMenuOpened(int feature, Menu menu) {
@@ -1737,6 +1775,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         Resources res = getResources();
 
         int[] colors = Themes.setNightMode(this, mMainLayout, invert);
+        refreshActionBar();
         mForegroundColor = colors[0];
         mNextTimeTextColor = mForegroundColor;
         mNextTimeTextRecomColor = colors[1];
