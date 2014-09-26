@@ -154,9 +154,6 @@ public class CardEditor extends AnkiActivity {
 
     private LinearLayout mFieldsLayoutContainer;
 
-    private Button mSave;
-    private Button mCancel;
-    private Button mLater;
     private TextView mTagsButton;
     private TextView mModelButton;
     private TextView mDeckButton;
@@ -346,9 +343,6 @@ public class CardEditor extends AnkiActivity {
 
         mFieldsLayoutContainer = (LinearLayout) findViewById(R.id.CardEditorEditFieldsLayout);
 
-        mSave = (Button) findViewById(R.id.CardEditorSaveButton);
-        mCancel = (Button) findViewById(R.id.CardEditorCancelButton);
-        mLater = (Button) findViewById(R.id.CardEditorLaterButton);
         mDeckButton = (TextView) findViewById(R.id.CardEditorDeckText);
         mModelButton = (TextView) findViewById(R.id.CardEditorModelText);
         mTagsButton = (TextView) findViewById(R.id.CardEditorTagText);
@@ -457,26 +451,6 @@ public class CardEditor extends AnkiActivity {
                 }
             });
             modelButton.setVisibility(View.VISIBLE);
-            mSave.setText(getResources().getString(R.string.add));
-            mCancel.setText(getResources().getString(R.string.close));
-
-            mLater.setVisibility(View.VISIBLE);
-            mLater.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String content = getFieldsText();
-                    if (content.length() > mEditFields.size() - 1) {
-                        MetaDB.saveIntentInformation(CardEditor.this, content);
-                        populateEditFields();
-                        mSourceText = null;
-                        Themes.showThemedToast(CardEditor.this,
-                                getResources().getString(R.string.CardEditorLaterMessage), false);
-                    }
-                    if (mCaller == CALLER_INDICLASH || mCaller == CALLER_CARDEDITOR_INTENT_ADD) {
-                        closeCardEditor();
-                    }
-                }
-            });
         } else {
             setTitle(R.string.cardeditor_title_edit_card);
         }
@@ -489,11 +463,6 @@ public class CardEditor extends AnkiActivity {
         });
 
         mPrefFixArabic = preferences.getBoolean("fixArabicText", false);
-        // if Arabic reshaping is enabled, disable the Save button to avoid
-        // saving the reshaped string to the deck
-        if (mPrefFixArabic && !mAddNote) {
-            mSave.setEnabled(false);
-        }
 
         ((LinearLayout) findViewById(R.id.CardEditorTagButton)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -502,22 +471,6 @@ public class CardEditor extends AnkiActivity {
             }
         });
 
-        mSave.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                saveNote();
-            }
-        });
-
-        mCancel.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                closeCardEditor();
-            }
-
-        });
         dismissOpeningCollectionDialog();
     }
 
@@ -706,12 +659,19 @@ public class CardEditor extends AnkiActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.card_editor, menu);
-        if (!mAddNote) {
+        if (mAddNote) {
+            menu.findItem(R.id.action_later).setVisible(true);
+        } else {
             menu.findItem(R.id.action_add_card_from_card_editor).setVisible(true);
             menu.findItem(R.id.action_reset_card_progress).setVisible(true);
             menu.findItem(R.id.action_preview).setVisible(true);
             menu.findItem(R.id.action_reschedule_card).setVisible(true);
             menu.findItem(R.id.action_reset_card_progress).setVisible(true);
+            // if Arabic reshaping is enabled, disable the Save button to avoid
+            // saving the reshaped string to the deck
+            if (mPrefFixArabic) {
+                menu.findItem(R.id.action_save).setEnabled(false);
+            }
         }
         if (mEditFields != null) {
             for (int i = 0; i < mEditFields.size(); i++) {
@@ -746,8 +706,30 @@ public class CardEditor extends AnkiActivity {
                 closeCardEditor(AnkiDroidApp.RESULT_TO_HOME);
                 return true;
 
+            case R.id.action_save:
+                saveNote();
+                return true;
+
             case R.id.action_preview:
                 openReviewer();
+                return true;
+
+            case R.id.action_close:
+                closeCardEditor();
+                return true;
+
+            case R.id.action_later:
+                String content = getFieldsText();
+                if (content.length() > mEditFields.size() - 1) {
+                    MetaDB.saveIntentInformation(CardEditor.this, content);
+                    populateEditFields();
+                    mSourceText = null;
+                    Themes.showThemedToast(CardEditor.this,
+                            getResources().getString(R.string.CardEditorLaterMessage), false);
+                }
+                if (mCaller == CALLER_INDICLASH || mCaller == CALLER_CARDEDITOR_INTENT_ADD) {
+                    closeCardEditor();
+                }
                 return true;
 
             case R.id.action_add_card_from_card_editor:

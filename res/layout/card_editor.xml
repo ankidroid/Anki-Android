@@ -19,45 +19,6 @@
             android:padding="4dip" />
 
         <LinearLayout
-            android:id="@+id/CardEditorButtons"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:orientation="horizontal" >
-
-            <Button
-                android:id="@+id/CardEditorSaveButton"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="0dip"
-                android:layout_height="fill_parent"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/dialog_positive_save" />
-
-            <Button
-                android:id="@+id/CardEditorCancelButton"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="0dip"
-                android:layout_height="fill_parent"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/dialog_cancel" />
-
-            <Button
-                android:id="@+id/CardEditorLaterButton"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="0dip"
-                android:layout_height="fill_parent"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/dialog_neutral_later"
-                android:visibility="gone" />
-        </LinearLayout>
-
-        <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
