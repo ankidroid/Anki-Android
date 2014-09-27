@@ -74,6 +74,7 @@
     <string name="cardeditor_title_add_note">Add note</string>
     <string name="cardeditor_title_edit_card">Edit note</string>
     <!-- <string name="factadder_title">Card adder</string> -->
+    <string name="discard_unsaved_changes">Close and lose current input?</string>
     <string name="factadder_saving_error">Error saving note</string>
     <string name="pref_lang_support">Language</string>
     <string name="saving_facts">Saving note</string>

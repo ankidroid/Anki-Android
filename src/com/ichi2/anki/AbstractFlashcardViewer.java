@@ -1223,7 +1223,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         switch (item.getItemId()) {
 
             case android.R.id.home:
-                closeReviewer(AnkiDroidApp.RESULT_TO_HOME, true);
+                closeReviewer(RESULT_OK, true);
                 break;
 
             case R.id.action_undo:
@@ -1305,9 +1305,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             closeReviewer(DeckPicker.RESULT_DB_ERROR, false);
         }
 
-        if (resultCode == AnkiDroidApp.RESULT_TO_HOME) {
-            closeReviewer(AnkiDroidApp.RESULT_TO_HOME, true);
-        } else if (resultCode == DeckPicker.RESULT_MEDIA_EJECTED) {
+        if (resultCode == DeckPicker.RESULT_MEDIA_EJECTED) {
             finishNoStorageAvailable();
         }
         if (requestCode == EDIT_CURRENT_CARD) {

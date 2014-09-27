@@ -46,7 +46,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -310,6 +309,7 @@ public class CardEditor extends AnkiActivity {
         }
 
         startLoadingCollection();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
 
@@ -564,6 +564,31 @@ public class CardEditor extends AnkiActivity {
     }
 
 
+    private boolean hasUnsavedChanges() {
+        // changed deck?
+        if (mCurrentEditedCard!= null && mCurrentEditedCard.getDid() != mCurrentDid) {
+            return true;
+        }
+        // changed fields?
+        for (FieldEditText f : mEditFields) {
+            if (fieldChanged(f)) {
+                return true;
+            }
+        }
+        // added tag?
+        for (String t : mSelectedTags) {
+            if (!mEditorNote.hasTag(t)) {
+                return true;
+            }
+        }
+        // removed tag?
+        if (mEditorNote.getTags().size() > mSelectedTags.size()) {
+            return true;
+        }
+        return false;
+    }
+
+
     private void saveNote() {
         if (mSelectedTags == null) {
             mSelectedTags = new ArrayList<String>();
@@ -628,7 +653,7 @@ public class CardEditor extends AnkiActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             Log.i(AnkiDroidApp.TAG, "CardEditor - onBackPressed()");
-            closeCardEditor();
+            closeCardEditorWithCheck();
             return true;
         }
 
@@ -703,7 +728,7 @@ public class CardEditor extends AnkiActivity {
         switch (item.getItemId()) {
 
             case android.R.id.home:
-                closeCardEditor(AnkiDroidApp.RESULT_TO_HOME);
+                closeCardEditorWithCheck();
                 return true;
 
             case R.id.action_save:
@@ -712,10 +737,6 @@ public class CardEditor extends AnkiActivity {
 
             case R.id.action_preview:
                 openReviewer();
-                return true;
-
-            case R.id.action_close:
-                closeCardEditor();
                 return true;
 
             case R.id.action_later:
@@ -783,6 +804,33 @@ public class CardEditor extends AnkiActivity {
             iFilter.addAction(SdCardReceiver.MEDIA_EJECT);
             registerReceiver(mUnmountReceiver, iFilter);
         }
+    }
+
+
+    private void closeCardEditorWithCheck() {
+        if (hasUnsavedChanges()) {
+           showDiscardChangesDialog();
+        } else {
+            closeCardEditor();
+        }
+    }
+
+
+    private void showDiscardChangesDialog() {
+        Dialog dialog;
+        Resources res = getResources();
+        StyledDialog.Builder builder = new StyledDialog.Builder(this);
+        builder.setMessage(R.string.discard_unsaved_changes);
+        builder.setPositiveButton(res.getString(R.string.dialog_ok),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        closeCardEditor();
+                    }
+                });
+        builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
+        dialog = builder.create();
+        dialog.show();
     }
 
 
@@ -1074,9 +1122,6 @@ public class CardEditor extends AnkiActivity {
             closeCardEditor(DeckPicker.RESULT_DB_ERROR);
         }
 
-        if (resultCode == AnkiDroidApp.RESULT_TO_HOME) {
-            closeCardEditor(AnkiDroidApp.RESULT_TO_HOME);
-        }
         switch (requestCode) {
             case REQUEST_INTENT_ADD:
                 if (resultCode != RESULT_CANCELED) {
@@ -1361,6 +1406,12 @@ public class CardEditor extends AnkiActivity {
         }
         mTagsButton.setText(getResources().getString(R.string.CardEditorTags,
                 getCol().getTags().join(getCol().getTags().canonify(mSelectedTags)).trim().replace(" ", ", ")));
+    }
+
+
+    private boolean fieldChanged(FieldEditText field) {
+        String newValue = field.getText().toString().replace(FieldEditText.NEW_LINE, "<br>");
+        return !mEditorNote.values()[field.getOrd()].equals(newValue);
     }
 
 

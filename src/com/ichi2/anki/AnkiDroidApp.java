@@ -61,7 +61,6 @@ public class AnkiDroidApp extends Application {
     public static final String DROPBOX_PUBLIC_DIR = "/dropbox/Public/Anki";
     public static final String APP_NAMESPACE = "http://schemas.android.com/apk/res/com.ichi2.anki";
 
-    public static final int RESULT_TO_HOME = 501;
 
     /**
      * Tag for logging messages.
