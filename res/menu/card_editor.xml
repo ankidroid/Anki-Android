@@ -8,6 +8,20 @@
         android:visible="false"
         ankidroid:showAsAction="ifRoom"/>
     <item
+        android:id="@+id/action_save"
+        android:icon="@drawable/abc_ic_cab_done_holo_light"
+        android:title="@string/add"
+        ankidroid:showAsAction="always"/>
+    <item
+        android:id="@+id/action_close"
+        android:title="@string/close"
+        ankidroid:showAsAction="never"/>
+    <item
+        android:id="@+id/action_later"
+        android:title="@string/later"
+        android:visible="false"
+        ankidroid:showAsAction="never"/>
+    <item
         android:id="@+id/action_add_card_from_card_editor"
         android:title="@string/card_editor_add_card"
         android:visible="false"/>
