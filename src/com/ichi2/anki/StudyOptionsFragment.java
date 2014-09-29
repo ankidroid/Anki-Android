@@ -1084,11 +1084,6 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
             closeStudyOptions(DeckPicker.RESULT_DB_ERROR);
         }
 
-        if (resultCode == AnkiDroidApp.RESULT_TO_HOME) {
-            closeStudyOptions();
-            return;
-        }
-
         // TODO: proper integration of big widget
         if (resultCode == DeckPicker.RESULT_MEDIA_EJECTED) {
             closeStudyOptions(DeckPicker.RESULT_MEDIA_EJECTED);

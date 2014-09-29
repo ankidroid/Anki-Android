@@ -26,7 +26,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.content.res.Resources.NotFoundException;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -46,13 +45,15 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
@@ -112,8 +113,8 @@ public class CardEditor extends AnkiActivity {
     public static final String EXTRA_FIELD = "multim.card.ed.extra.field";
     public static final String EXTRA_WHOLE_NOTE = "multim.card.ed.extra.whole.note";
 
-    private static final int DIALOG_DECK_SELECT = 0;
-    private static final int DIALOG_MODEL_SELECT = 1;
+    //private static final int DIALOG_DECK_SELECT = 0;
+    //private static final int DIALOG_MODEL_SELECT = 1;
     private static final int DIALOG_TAGS_SELECT = 2;
     private static final int DIALOG_RESET_CARD = 3;
     private static final int DIALOG_INTENT_INFORMATION = 4;
@@ -155,13 +156,14 @@ public class CardEditor extends AnkiActivity {
     private LinearLayout mFieldsLayoutContainer;
 
     private TextView mTagsButton;
-    private TextView mModelButton;
-    private TextView mDeckButton;
+    private Spinner mNoteTypeSpinner;
+    private Spinner mNoteDeckSpinner;
 
     private Note mEditorNote;
     public static Card mCurrentEditedCard;
     private List<String> mSelectedTags;
     private long mCurrentDid;
+    private ArrayList<Long> mAllDeckIds;
 
     /* indicates if a new fact is added or a card is edited */
     private boolean mAddNote;
@@ -310,6 +312,7 @@ public class CardEditor extends AnkiActivity {
         }
 
         startLoadingCollection();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
 
@@ -343,10 +346,112 @@ public class CardEditor extends AnkiActivity {
 
         mFieldsLayoutContainer = (LinearLayout) findViewById(R.id.CardEditorEditFieldsLayout);
 
-        mDeckButton = (TextView) findViewById(R.id.CardEditorDeckText);
-        mModelButton = (TextView) findViewById(R.id.CardEditorModelText);
         mTagsButton = (TextView) findViewById(R.id.CardEditorTagText);
 
+        // Note type Selector
+        mNoteTypeSpinner = (Spinner) findViewById(R.id.note_type_spinner);    
+        final ArrayList<Long> modelIds = new ArrayList<Long>();
+        final ArrayList<String> modelNames = new ArrayList<String>();
+        ArrayList<JSONObject> models = getCol().getModels().all();
+        Collections.sort(models, new JSONNameComparator());
+        for (JSONObject m : models) {
+            try {
+                modelNames.add(m.getString("name"));
+                modelIds.add(m.getLong("id"));
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        ArrayAdapter<String> noteTypeAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, modelNames);
+        mNoteTypeSpinner.setAdapter(noteTypeAdapter);
+        noteTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mNoteTypeSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                // If a new column was selected then change the key used to map from mCards to the column TextView
+                long oldModelId;
+                try {
+                    oldModelId = getCol().getModels().current().getLong("id");
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+                long newId = modelIds.get(pos);
+                if (oldModelId != newId) {
+                    JSONObject model = getCol().getModels().get(newId);
+                    getCol().getModels().setCurrent(model);
+                    JSONObject cdeck = getCol().getDecks().current();
+                    try {
+                        cdeck.put("mid", newId);
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                    getCol().getDecks().save(cdeck);
+                    // Update deck
+                    if (!getCol().getConf().optBoolean("addToCur", true)) {
+                        try {
+                            mCurrentDid = model.getLong("did");
+                            updateDeckPosition();
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                    // Reset edit fields
+                    int size = mEditFields.size();
+                    String[] oldValues = new String[size];
+                    for (int i = 0; i < size; i++) {
+                        oldValues[i] = mEditFields.get(i).getText().toString();
+                    }
+                    setNote();
+                    resetEditFields(oldValues);
+                    duplicateCheck();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Do Nothing
+            }
+        });
+
+
+        // Deck Selector
+        mNoteDeckSpinner = (Spinner) findViewById(R.id.note_deck_spinner);    
+        mAllDeckIds = new ArrayList<Long>();
+        final ArrayList<String> deckNames = new ArrayList<String>();
+
+        ArrayList<JSONObject> decks = getCol().getDecks().all();
+        Collections.sort(decks, new JSONNameComparator());
+        for (JSONObject d : decks) {
+            try {
+                if (d.getInt("dyn") == 0) {
+                    deckNames.add(d.getString("name"));
+                    mAllDeckIds.add(d.getLong("id"));
+                }
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        ArrayAdapter<String> noteDeckAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, deckNames);
+        mNoteDeckSpinner.setAdapter(noteDeckAdapter);
+        noteDeckAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mNoteDeckSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                long newId = mAllDeckIds.get(pos);
+                if (mCurrentDid != newId) {
+                    mCurrentDid = newId;
+                    updateDeckPosition();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Do Nothing
+            }
+        });
+        
         Preferences.COMING_FROM_ADD = false;
 
         mAedictIntent = false;
@@ -423,8 +528,18 @@ public class CardEditor extends AnkiActivity {
         }
 
         setNote(mEditorNote);
+        
+        // Set current note type and deck positions in spinners
+        int position;
+        try {
+            position = modelIds.indexOf(mEditorNote.model().getLong("id"));
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        mNoteTypeSpinner.setSelection(position);
 
         if (mAddNote) {
+            mNoteTypeSpinner.setEnabled(true);
             setTitle(R.string.cardeditor_title_add_note);
             // set information transferred by intent
             String contents = null;
@@ -442,25 +557,11 @@ public class CardEditor extends AnkiActivity {
             if (contents != null) {
                 setEditFieldTexts(contents);
             }
-
-            LinearLayout modelButton = ((LinearLayout) findViewById(R.id.CardEditorModelButton));
-            modelButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    showDialog(DIALOG_MODEL_SELECT);
-                }
-            });
-            modelButton.setVisibility(View.VISIBLE);
         } else {
+            mNoteTypeSpinner.setEnabled(false);
             setTitle(R.string.cardeditor_title_edit_card);
         }
 
-        ((LinearLayout) findViewById(R.id.CardEditorDeckButton)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDialog(DIALOG_DECK_SELECT);
-            }
-        });
 
         mPrefFixArabic = preferences.getBoolean("fixArabicText", false);
 
@@ -470,7 +571,8 @@ public class CardEditor extends AnkiActivity {
                 showDialogFragment(DIALOG_TAGS_SELECT);
             }
         });
-
+       
+        // Close collection opening dialog if needed
         dismissOpeningCollectionDialog();
     }
 
@@ -564,6 +666,31 @@ public class CardEditor extends AnkiActivity {
     }
 
 
+    private boolean hasUnsavedChanges() {
+        // changed deck?
+        if (mCurrentEditedCard!= null && mCurrentEditedCard.getDid() != mCurrentDid) {
+            return true;
+        }
+        // changed fields?
+        for (FieldEditText f : mEditFields) {
+            if (fieldChanged(f)) {
+                return true;
+            }
+        }
+        // added tag?
+        for (String t : mSelectedTags) {
+            if (!mEditorNote.hasTag(t)) {
+                return true;
+            }
+        }
+        // removed tag?
+        if (mEditorNote.getTags().size() > mSelectedTags.size()) {
+            return true;
+        }
+        return false;
+    }
+
+
     private void saveNote() {
         if (mSelectedTags == null) {
             mSelectedTags = new ArrayList<String>();
@@ -628,7 +755,7 @@ public class CardEditor extends AnkiActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             Log.i(AnkiDroidApp.TAG, "CardEditor - onBackPressed()");
-            closeCardEditor();
+            closeCardEditorWithCheck();
             return true;
         }
 
@@ -661,7 +788,9 @@ public class CardEditor extends AnkiActivity {
         getMenuInflater().inflate(R.menu.card_editor, menu);
         if (mAddNote) {
             menu.findItem(R.id.action_later).setVisible(true);
+            menu.findItem(R.id.action_copy_card).setVisible(false);
         } else {
+            menu.findItem(R.id.action_saved_notes).setVisible(false);
             menu.findItem(R.id.action_add_card_from_card_editor).setVisible(true);
             menu.findItem(R.id.action_reset_card_progress).setVisible(true);
             menu.findItem(R.id.action_preview).setVisible(true);
@@ -703,7 +832,7 @@ public class CardEditor extends AnkiActivity {
         switch (item.getItemId()) {
 
             case android.R.id.home:
-                closeCardEditor(AnkiDroidApp.RESULT_TO_HOME);
+                closeCardEditorWithCheck();
                 return true;
 
             case R.id.action_save:
@@ -712,10 +841,6 @@ public class CardEditor extends AnkiActivity {
 
             case R.id.action_preview:
                 openReviewer();
-                return true;
-
-            case R.id.action_close:
-                closeCardEditor();
                 return true;
 
             case R.id.action_later:
@@ -783,6 +908,33 @@ public class CardEditor extends AnkiActivity {
             iFilter.addAction(SdCardReceiver.MEDIA_EJECT);
             registerReceiver(mUnmountReceiver, iFilter);
         }
+    }
+
+
+    private void closeCardEditorWithCheck() {
+        if (hasUnsavedChanges()) {
+           showDiscardChangesDialog();
+        } else {
+            closeCardEditor();
+        }
+    }
+
+
+    private void showDiscardChangesDialog() {
+        Dialog dialog;
+        Resources res = getResources();
+        StyledDialog.Builder builder = new StyledDialog.Builder(this);
+        builder.setMessage(R.string.discard_unsaved_changes);
+        builder.setPositiveButton(res.getString(R.string.dialog_ok),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        closeCardEditor();
+                    }
+                });
+        builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
+        dialog = builder.create();
+        dialog.show();
     }
 
 
@@ -864,108 +1016,6 @@ public class CardEditor extends AnkiActivity {
         StyledDialog.Builder builder = new StyledDialog.Builder(this);
 
         switch (id) {
-            case DIALOG_DECK_SELECT:
-                ArrayList<CharSequence> dialogDeckItems = new ArrayList<CharSequence>();
-                // Use this array to know which ID is associated with each
-                // Item(name)
-                final ArrayList<Long> dialogDeckIds = new ArrayList<Long>();
-
-                ArrayList<JSONObject> decks = getCol().getDecks().all();
-                Collections.sort(decks, new JSONNameComparator());
-                builder.setTitle(R.string.deck);
-                for (JSONObject d : decks) {
-                    try {
-                        if (d.getInt("dyn") == 0) {
-                            dialogDeckItems.add(d.getString("name"));
-                            dialogDeckIds.add(d.getLong("id"));
-                        }
-                    } catch (JSONException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-                // Convert to Array
-                String[] items = new String[dialogDeckItems.size()];
-                dialogDeckItems.toArray(items);
-
-                builder.setItems(items, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int item) {
-                        long newId = dialogDeckIds.get(item);
-                        if (mCurrentDid != newId) {
-                            mCurrentDid = newId;
-                            updateDeck();
-                        }
-                    }
-                });
-
-                dialog = builder.create();
-                break;
-
-            case DIALOG_MODEL_SELECT:
-                ArrayList<CharSequence> dialogItems = new ArrayList<CharSequence>();
-                // Use this array to know which ID is associated with each
-                // Item(name)
-                final ArrayList<Long> dialogIds = new ArrayList<Long>();
-
-                ArrayList<JSONObject> models = getCol().getModels().all();
-                Collections.sort(models, new JSONNameComparator());
-                builder.setTitle(R.string.note_type);
-                for (JSONObject m : models) {
-                    try {
-                        dialogItems.add(m.getString("name"));
-                        dialogIds.add(m.getLong("id"));
-                    } catch (JSONException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-                // Convert to Array
-                String[] items2 = new String[dialogItems.size()];
-                dialogItems.toArray(items2);
-
-                builder.setItems(items2, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int item) {
-                        long oldModelId;
-                        try {
-                            oldModelId = getCol().getModels().current().getLong("id");
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
-                        }
-                        long newId = dialogIds.get(item);
-                        if (oldModelId != newId) {
-                            JSONObject model = getCol().getModels().get(newId);
-                            getCol().getModels().setCurrent(model);
-                            JSONObject cdeck = getCol().getDecks().current();
-                            try {
-                                cdeck.put("mid", newId);
-                            } catch (JSONException e) {
-                                throw new RuntimeException(e);
-                            }
-                            getCol().getDecks().save(cdeck);
-                            // Update deck
-                            if (!getCol().getConf().optBoolean("addToCur", true)) {
-                                try {
-                                    mCurrentDid = model.getLong("did");
-                                    updateDeck();
-                                } catch (JSONException e) {
-                                    throw new RuntimeException(e);
-                                }
-                            }
-                            // Reset edit fields
-                            int size = mEditFields.size();
-                            String[] oldValues = new String[size];
-                            for (int i = 0; i < size; i++) {
-                                oldValues[i] = mEditFields.get(i).getText().toString();
-                            }
-                            setNote();
-                            resetEditFields(oldValues);
-                            duplicateCheck();
-                        }
-                    }
-                });
-                dialog = builder.create();
-                break;
-
             case DIALOG_RESET_CARD:
                 builder.setTitle(res.getString(R.string.reset_card_dialog_title));
                 builder.setMessage(res.getString(R.string.reset_card_dialog_message));
@@ -1074,9 +1124,6 @@ public class CardEditor extends AnkiActivity {
             closeCardEditor(DeckPicker.RESULT_DB_ERROR);
         }
 
-        if (resultCode == AnkiDroidApp.RESULT_TO_HOME) {
-            closeCardEditor(AnkiDroidApp.RESULT_TO_HOME);
-        }
         switch (requestCode) {
             case REQUEST_INTENT_ADD:
                 if (resultCode != RESULT_CANCELED) {
@@ -1325,7 +1372,6 @@ public class CardEditor extends AnkiActivity {
                 }
                 mEditorNote = new Note(getCol(), model);
                 mEditorNote.model().put("did", mCurrentDid);
-                mModelButton.setText(getResources().getString(R.string.CardEditorModel, model.getString("name")));
             } else {
                 mEditorNote = note;
                 mCurrentDid = mCurrentEditedCard.getDid();
@@ -1336,22 +1382,17 @@ public class CardEditor extends AnkiActivity {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-        updateDeck();
+        updateDeckPosition();
         updateTags();
         populateEditFields();
     }
 
 
-    private void updateDeck() {
-        try {
-            mDeckButton.setText(getResources().getString(
-                    mAddNote ? R.string.CardEditorNoteDeck : R.string.CardEditorCardDeck,
-                    getCol().getDecks().get(mCurrentDid).getString("name")));
-        } catch (NotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+    private void updateDeckPosition() {
+        TextView deckTextView = (TextView) findViewById(R.id.CardEditorDeckText);
+        deckTextView.setText(getResources().getString(mAddNote ? R.string.CardEditorNoteDeck : R.string.CardEditorCardDeck));
+        int position = mAllDeckIds.indexOf(mCurrentDid);
+        mNoteDeckSpinner.setSelection(position);
     }
 
 
@@ -1361,6 +1402,12 @@ public class CardEditor extends AnkiActivity {
         }
         mTagsButton.setText(getResources().getString(R.string.CardEditorTags,
                 getCol().getTags().join(getCol().getTags().canonify(mSelectedTags)).trim().replace(" ", ", ")));
+    }
+
+
+    private boolean fieldChanged(FieldEditText field) {
+        String newValue = field.getText().toString().replace(FieldEditText.NEW_LINE, "<br>");
+        return !mEditorNote.values()[field.getOrd()].equals(newValue);
     }
 
 
