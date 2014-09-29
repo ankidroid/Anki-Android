@@ -159,7 +159,8 @@
   <string name="confirm_apkg_export">Export collection as apkg file?</string>
   <string name="confirm_apkg_export_deck">Export \"%s\" as apkg file?</string>
   <string name="export_in_progress">Exporting apkg file&#8230;</string>
-  <string name="export_successful">File \"%s\" was exported</string>
+  <string name="export_successful_title">Email apkg?</string>
+  <string name="export_successful">File \"%s\" was exported. Do you want to email it?</string>
   <string name="export_unsuccessful">Error exporting collection</string>
   <string name="import_hint">Per importar fitxes, poseu l\'arxiu apkg a la carpeta %s i premeu d\'acord</string>
   <string name="upgrade_import_no_file_found">No s\'ha trobat cap fitxer %1$s que es pugui importar</string>

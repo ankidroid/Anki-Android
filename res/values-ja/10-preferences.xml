@@ -207,7 +207,7 @@
   <string name="deck_conf_new_bury_summ">新規カードの復習は翌日まで延期します</string>
   <string name="deck_conf_rev_bury">復習の延期</string>
   <string name="deck_conf_rev_bury_summ">関連する類似カードの復習は次の日まで延期されます</string>
-  <string name="deck_conf_easy_bonus">「普通(Good)」から「簡単(Easy)」までの間隔</string>
+  <string name="deck_conf_easy_bonus">簡単と答えた時のボーナス</string>
   <string name="deck_conf_ivl_fct">間隔の変更割合</string>
   <string name="deck_conf_max_ivl">最大間隔</string>
   <string name="deck_conf_new_lps_ivl">新しい間隔</string>
@@ -247,7 +247,7 @@
   <string name="deck_conf_cram_search">フィルターの抽出条件</string>
   <string name="deck_conf_cram_limit">抽出件数の上限</string>
   <string name="deck_conf_cram_order">抽出されたカードの並べ方</string>
-  <string name="deck_conf_cram_reschedule">再スケジュール方法</string>
+  <string name="deck_conf_cram_reschedule">スケジュールを変更</string>
   <string name="deck_conf_cram_reschedule_summ">復習結果を単語帳のスケジュールへ反映する</string>
   <string name="deck_conf_cram_steps">カスタムステップ</string>
   <string name="deck_conf_cram_steps_summ">設定したカスタムステップを使用する</string>

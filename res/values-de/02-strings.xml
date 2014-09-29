@@ -104,7 +104,7 @@
   <string name="card_editor_reset">Zurücksetzen</string>
   <string name="card_editor_copy_card">Karte kopieren</string>
   <string name="card_editor_reset_card">Fortschritt zurücksetzen</string>
-  <string name="card_editor_reschedule_card">Reschedule card</string>
+  <string name="card_editor_reschedule_card">Verschieben der Karte</string>
   <string name="card_editor_preview_card">Vorschau</string>
   <string name="error_insufficient_memory">Vorgang wegen unzureichenden Gerätespeichers nicht möglich</string>
   <string name="tutorial_load">Erstelle Einführungsstapel&#8230;</string>
@@ -159,7 +159,8 @@
   <string name="confirm_apkg_export">Export collection as apkg file?</string>
   <string name="confirm_apkg_export_deck">Export \"%s\" as apkg file?</string>
   <string name="export_in_progress">Exportiere apkg-Datei&#8230;</string>
-  <string name="export_successful">File \"%s\" was exported</string>
+  <string name="export_successful_title">Email apkg?</string>
+  <string name="export_successful">File \"%s\" was exported. Do you want to email it?</string>
   <string name="export_unsuccessful">Fehler beim Exportieren der Sammlung</string>
   <string name="import_hint">Kopieren Sie die apkg-Datei ins Verzeichnis %s und berühren Sie OK um Karten zu importieren</string>
   <string name="upgrade_import_no_file_found">Keine importierbare Datei %1$s gefunden</string>

@@ -56,8 +56,8 @@
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Android用のフラッシュカード</h2>AnkiDroidは、PCソフトウェア <a href=\"%2$s\">Anki</a> と完全互換のフラッシュカードアプリです。あなたは、AnkiDroid と Anki のどちらでも教材を作成、ダウンロード、学習し、また、簡単に双方の同期をとることができます。]]></item>
     <item><![CDATA[AnkiDroid を改善するために、できるだけバグを <a href="%1$s">こちら</a>に報告していただければ幸いです。 新しい機能のアイデアも大歓迎いたします！　<a href="%2$s">Wiki </a> を使用して、<a href="%3$s">フォーラム</a>にご意見をお寄せください。]]></item>
-    <item><![CDATA[AnkiDroid は、<a href="%1$s">オープン ソース ソフトウェア <a/>で、誰でも <a href="%3$s"> 貢献者</a> として <a href="%2$s"> 参加</a> することを歓迎します:-)　]]></item>
-    <item><![CDATA[開発者でなくても、例えば AnkiDroid を<a href="%1$s"> 翻訳</a>したり、wikiやスクリーン ショットを更新したり、PC版の Anki に<a href="%2$s"> 寄付</a>をしたり、AnkiDroid についてのブログを書いたりして貢献できます！]]></item>
+    <item><![CDATA[AnkiDroid は、<a href="%1$s">オープン ソース ソフトウェア<a/>で、誰でも<a href="%3$s">貢献者</a> として<a href="%2$s">参加</a>することを歓迎します:-)　]]></item>
+    <item><![CDATA[開発者でなくても、例えば AnkiDroid を<a href="%1$s">翻訳</a>したり、Wikiやスクリーン ショットを更新したり、PC版の Anki に<a href="%2$s">寄付</a>をしたり、AnkiDroid についてのブログを書いたりして貢献できます！]]></item>
     <item><![CDATA[AnkiDroid は、<a href="%1$s">GNU GPL v3 ライセンス</a>の下でリリースされており、ソースコードは<a href="%2$s">こちら</a>です。]]></item>
   </string-array>
   <string name="dont_show_again">今後は表示しない</string>
@@ -69,11 +69,11 @@
   <string name="notification_message">AnkiDroidの新しいバージョンがGoogle Playで入手可能です.\n\nインストールしますか?</string>
   <string name="notification_stop">更新の通知をしない</string>
   <string name="reset_card_dialog_title">カードの進行状況をリセット</string>
-  <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue.</string>
-  <string name="reset_card_dialog_acknowledge">Card reset</string>
-  <string name="reschedule_card_dialog_title">Reschedule card</string>
-  <string name="reschedule_card_dialog_message">Reschedule for review in x days:</string>
-  <string name="reschedule_card_dialog_acknowledge">Card rescheduled</string>
+  <string name="reset_card_dialog_message">このカードは新規カードの最後に配置されます。</string>
+  <string name="reset_card_dialog_acknowledge">カードのリセット</string>
+  <string name="reschedule_card_dialog_title">スケジュールを変更</string>
+  <string name="reschedule_card_dialog_message">x日後に復習するようスケジュールを変更</string>
+  <string name="reschedule_card_dialog_acknowledge">カードのスケジュールが変更されました。</string>
   <string name="answering_error_title">データベース エラー</string>
   <string name="answering_error_message">コレクションへの書き込み中にエラーが発生しました。これは、データの破損か、ディスクの容量の不足が原因と考えられます。\n\n繰り返しエラーが発生する場合には、データをチェックするか、バックアップからコレクションを修復してください。\n\nまた、AnkiDroidのバグかもしれませんので\'オプション\'をクリックして、エラーを報告してください。</string>
   <string name="answering_error_report">エラーを報告する</string>

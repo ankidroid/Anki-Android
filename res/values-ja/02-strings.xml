@@ -104,7 +104,7 @@
   <string name="card_editor_reset">リセット</string>
   <string name="card_editor_copy_card">カードをコピーする</string>
   <string name="card_editor_reset_card">初めから</string>
-  <string name="card_editor_reschedule_card">Reschedule card</string>
+  <string name="card_editor_reschedule_card">スケジュールを変更</string>
   <string name="card_editor_preview_card">プレビュー</string>
   <string name="error_insufficient_memory">メモリ不足のため操作できませんでした。</string>
   <string name="tutorial_load">練習用単語帳を作成中です\nしばらくお待ちください</string>
@@ -154,12 +154,13 @@
   <string name="import_log_error">インポート失敗</string>
   <string name="import_log_no_apkg">これは取り込み可能なapkgファイルではありません</string>
   <string name="import_importing">カード取得中です\nしばらくお待ちください</string>
-  <string name="export_include_schedule">Include scheduling</string>
-  <string name="export_include_media">Include media</string>
-  <string name="confirm_apkg_export">Export collection as apkg file?</string>
-  <string name="confirm_apkg_export_deck">Export \"%s\" as apkg file?</string>
+  <string name="export_include_schedule">スケジュールを含める</string>
+  <string name="export_include_media">メディアを含める</string>
+  <string name="confirm_apkg_export">コレクションを apkg ファイルとしてエクスポートしますか？</string>
+  <string name="confirm_apkg_export_deck">\"%s\" を apkg ファイルとしてエクスポートしますか？</string>
   <string name="export_in_progress">Apkg ファイルをエクスポートしています.</string>
-  <string name="export_successful">File \"%s\" was exported</string>
+  <string name="export_successful_title">Email apkg?</string>
+  <string name="export_successful">File \"%s\" was exported. Do you want to email it?</string>
   <string name="export_unsuccessful">コレクションのエクスポート エラー</string>
   <string name="import_hint">カードを取り込むためにapkg ファイルをフォルダに保管してください %s そしてＯＫボタンをクリックしてください</string>
   <string name="upgrade_import_no_file_found">読み込み可能な %1$s のファイルが見つかりません</string>

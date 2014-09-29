@@ -159,7 +159,8 @@
   <string name="confirm_apkg_export">Export collection as apkg file?</string>
   <string name="confirm_apkg_export_deck">Export \"%s\" as apkg file?</string>
   <string name="export_in_progress">正在导出apkg文件&#8230;</string>
-  <string name="export_successful">File \"%s\" was exported</string>
+  <string name="export_successful_title">Email apkg?</string>
+  <string name="export_successful">File \"%s\" was exported. Do you want to email it?</string>
   <string name="export_unsuccessful">导出集合错误</string>
   <string name="import_hint">要导入卡牌，请把apkg文件放在%s目录中，然后按确定。</string>
   <string name="upgrade_import_no_file_found">没有找到可导入的 %1$s 文件</string>

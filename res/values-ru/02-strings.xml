@@ -159,7 +159,8 @@
   <string name="confirm_apkg_export">Export collection as apkg file?</string>
   <string name="confirm_apkg_export_deck">Export \"%s\" as apkg file?</string>
   <string name="export_in_progress">Экспортирую apkg файл&#8230;</string>
-  <string name="export_successful">File \"%s\" was exported</string>
+  <string name="export_successful_title">Email apkg?</string>
+  <string name="export_successful">File \"%s\" was exported. Do you want to email it?</string>
   <string name="export_unsuccessful">При экспорте вашей коллекции возникла ошибка</string>
   <string name="import_hint">Чтобы импортировать карты, поместите файл apkg в каталог %s и нажмите ОК</string>
   <string name="upgrade_import_no_file_found">Найден не импортируемый файл %1$s</string>

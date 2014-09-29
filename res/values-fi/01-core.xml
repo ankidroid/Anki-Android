@@ -54,7 +54,7 @@
     <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one">%d min.</item>
+    <item quantity="one">%d min</item>
     <item quantity="other">%d min</item>
   </plurals>
   <plurals name="deckpicker_due">
@@ -62,7 +62,7 @@
     <item quantity="other">%1$d / %2$d jäljellä</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%d minute left</item>
+    <item quantity="one">%d minuuttia jäljellä</item>
     <item quantity="other">%d minuuttia jäljellä</item>
   </plurals>
   <string name="type_answer_hint">Type answer</string>
@@ -94,7 +94,7 @@
   <string name="contextmenu_deckpicker_collapse_deck">Piilota alipakat</string>
   <string name="contextmenu_deckpicker_inflate_deck">Näytä alipakat</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Määritä käyttäjän sanasto</string>
-  <string name="menu_add">Add</string>
+  <string name="menu_add">Lisää</string>
   <string name="menu_add_note">Add note</string>
   <string name="menu_download_deck">Lataa pakka</string>
   <string name="menu_download_shared_deck">Jaettu pakka</string>
@@ -114,9 +114,9 @@
   <string name="menu_search">Haku %1$s</string>
   <string name="menu_mark_card">Merkitse kortti</string>
   <string name="menu_unmark_card">Poista kortin merkintä</string>
-  <string name="new_deck">Create deck</string>
+  <string name="new_deck">Uusi korttipakka</string>
   <string name="create">Luo</string>
-  <string name="new_dynamic_deck">Create filtered deck</string>
+  <string name="new_dynamic_deck">Uusi suodatettu korttipakka</string>
   <string name="studyoptions_feedback">Palaute</string>
   <string name="studyoptions_load_tutorial_deck">Luo opetusohjelma</string>
   <string name="night_mode">Yötila</string>

@@ -104,8 +104,8 @@
     <item>カードを編集する</item>
     <item>マークをつける</item>
     <item>検索式</item>
-    <item>カード非表示</item>
-    <item>カードを中止</item>
+    <item>カードを延期</item>
+    <item>カードを保留</item>
     <item>カードを削除</item>
     <item>メディアを再生</item>
     <item>学習を中断</item>
@@ -117,7 +117,7 @@
     <item>White</item>
   </string-array>
   <string-array name="leech_action_labels">
-    <item>非表示カードへ切替</item>
+    <item>カードの保留</item>
     <item>タグを追加</item>
   </string-array>
   <string-array name="new_order_labels">

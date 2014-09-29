@@ -81,7 +81,7 @@
   <string name="undo_action_edit">Редактировать запись</string>
   <string name="undo_action_bury">Скрыть запись</string>
   <string name="undo_action_suspend_card">Отложить карту</string>
-  <string name="undo_action_suspend_note">Отложить запись</string>
+  <string name="undo_action_suspend_note">отложить запись</string>
   <string name="undo_action_delete">Удалить запись</string>
   <string name="undo_action_mark">Отметить заметку</string>
   <string name="unbury">Отменить сдвиг</string>
@@ -101,7 +101,7 @@
   <string name="menu_my_account">Учётная запись синхронизации</string>
   <string name="menu_preferences">Настройки</string>
   <string name="menu_about">О программе</string>
-  <string name="menu_dismiss_note">Отклонить заметку...</string>
+  <string name="menu_dismiss_note">Отклонить карточку&#8230;</string>
   <string name="menu_bury_card">Сдвинуть карточку</string>
   <string name="menu_bury_note">Скрыть запись</string>
   <string name="menu_suspend_card">Отложить карту</string>
