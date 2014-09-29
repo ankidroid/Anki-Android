@@ -536,7 +536,8 @@ public class CardEditor extends AnkiActivity {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-        mNoteTypeSpinner.setSelection(position);
+        // set selection without firing selectionChanged event
+        mNoteTypeSpinner.setSelection(position, false);
 
         if (mAddNote) {
             mNoteTypeSpinner.setEnabled(true);
