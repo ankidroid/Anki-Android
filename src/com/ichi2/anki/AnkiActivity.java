@@ -257,6 +257,8 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
     // Restart the activity
     @SuppressLint("NewApi")
     protected void restartActivity() {
+        // update language
+        AnkiDroidApp.setLanguage(AnkiDroidApp.getSharedPrefs(getBaseContext()).getString(Preferences.LANGUAGE, ""));
         if (AnkiDroidApp.SDK_VERSION >= 11) {
             this.recreate();
         } else {
