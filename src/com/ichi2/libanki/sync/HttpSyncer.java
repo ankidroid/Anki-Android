@@ -221,7 +221,7 @@ public class HttpSyncer {
             throw new RuntimeException(e);
         } catch (IOException e) {
             Log.e(AnkiDroidApp.TAG, "BasicHttpSyncer.sync: IOException", e);
-            return null;
+            throw new RuntimeException(e);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         } finally {
