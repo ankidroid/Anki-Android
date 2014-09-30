@@ -16,9 +16,6 @@
             <item
                 android:id="@+id/action_new_deck"
                 android:title="@string/new_deck"/>
-            <item
-                android:id="@+id/action_import"
-                android:title="@string/menu_import"/>
         </menu>
     </item>
     <item
@@ -50,6 +47,9 @@
         android:id="@+id/action_restore_backup"
         android:menuCategory="secondary"
         android:title="@string/backup_restore"/>
+    <item
+        android:id="@+id/action_import"
+        android:title="@string/menu_import"/>
     <item
         android:id="@+id/action_export"
         android:menuCategory="secondary"
