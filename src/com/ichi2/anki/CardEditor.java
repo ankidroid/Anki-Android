@@ -366,10 +366,11 @@ public class CardEditor extends AnkiActivity {
         ArrayAdapter<String> noteTypeAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, modelNames);
         mNoteTypeSpinner.setAdapter(noteTypeAdapter);
         noteTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mNoteTypeSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+        OnItemSelectedListener noteTypeListener = new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 // If a new column was selected then change the key used to map from mCards to the column TextView
+                Log.w(AnkiDroidApp.TAG, "onItemSelected() fired on mNoteTypeSpinner");
                 long oldModelId;
                 try {
                     oldModelId = getCol().getModels().current().getLong("id");
@@ -412,7 +413,7 @@ public class CardEditor extends AnkiActivity {
             public void onNothingSelected(AdapterView<?> parent) {
                 // Do Nothing
             }
-        });
+        };
 
 
         // Deck Selector
@@ -537,9 +538,11 @@ public class CardEditor extends AnkiActivity {
             throw new RuntimeException(e);
         }
         // set selection without firing selectionChanged event
+        // nb: setOnItemSelectedListener needs to occur after this
         mNoteTypeSpinner.setSelection(position, false);
 
         if (mAddNote) {
+            mNoteTypeSpinner.setOnItemSelectedListener(noteTypeListener);
             mNoteTypeSpinner.setEnabled(true);
             setTitle(R.string.cardeditor_title_add_note);
             // set information transferred by intent
