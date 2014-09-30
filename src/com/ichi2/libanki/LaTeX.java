@@ -95,7 +95,7 @@ public class LaTeX {
     private static String _imgLink(Collection col, String latex) {
         String txt = _latexFromHtml(col, latex);
         String fname = "latex-" + Utils.checksum(txt) + ".png";
-        return "<img src=\"" + fname + "\">";
+        return "<img class=latex src=\"" + fname + "\">";
     }
 
 

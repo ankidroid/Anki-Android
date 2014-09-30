@@ -947,6 +947,14 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                 }
             }
             preferences.edit().putInt("lastUpgradeVersion", current).commit();
+            // Delete the media database made by any version before 2.3 beta due to upgrade errors.
+            // It is rebuilt on the next sync or media check
+            if (previous < 20300200) {
+                File mediaDb = new File(AnkiDroidApp.getCurrentAnkiDroidDirectory(), "collection.media.ad.db2");
+                if (mediaDb.exists()) {
+                    mediaDb.delete();
+                }
+            }
             // Check if preference upgrade or database check required, otherwise go to new feature screen
             if (previous < AnkiDroidApp.CHECK_DB_AT_VERSION || previous < AnkiDroidApp.CHECK_PREFERENCES_AT_VERSION) {
                 if (previous < AnkiDroidApp.CHECK_PREFERENCES_AT_VERSION) {
