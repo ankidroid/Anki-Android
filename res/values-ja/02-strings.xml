@@ -159,7 +159,7 @@
   <string name="confirm_apkg_export">コレクションを apkg ファイルとしてエクスポートしますか？</string>
   <string name="confirm_apkg_export_deck">\"%s\" を apkg ファイルとしてエクスポートしますか？</string>
   <string name="export_in_progress">Apkg ファイルをエクスポートしています.</string>
-  <string name="export_successful_title">Email apkg?</string>
+  <string name="export_successful_title">apkg ファイルをEメールで送信しますか？</string>
   <string name="export_successful">File \"%s\" was exported. Do you want to email it?</string>
   <string name="export_unsuccessful">コレクションのエクスポート エラー</string>
   <string name="import_hint">カードを取り込むためにapkg ファイルをフォルダに保管してください %s そしてＯＫボタンをクリックしてください</string>

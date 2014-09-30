@@ -58,7 +58,7 @@
   <string name="stats_cumulative">累積（右目盛）</string>
   <string name="stats_cumulative_percentage">累積パーセンテージ</string>
   <string formatted="false" name="stats_cumulative_correct_percentage">累積正解件数 %</string>
-  <string name="stats_answers">答え</string>
+  <string name="stats_answers">回答数（枚）</string>
   <string name="stats_minutes">分</string>
   <string name="stats_hours">時間</string>
   <string name="stats_percentage">パーセント</string>
@@ -69,7 +69,7 @@
   <string name="stats_deck_collection">すべての単語帳</string>
   <string name="stats_time_of_day">時刻</string>
   <string name="stats_day_of_week">曜日</string>
-  <string formatted="false" name="stats_percentage_correct">% 正解</string>
+  <string formatted="false" name="stats_percentage_correct">正解率(%)</string>
   <string name="stats_reviews">復習</string>
   <string name="stats_answer_type">回答の種類</string>
   <string name="stats_today_again_count">忘却回数: &lt;b&gt;%d&lt;/b&gt;</string>
