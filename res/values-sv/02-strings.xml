@@ -42,9 +42,9 @@
   <string name="drawer_open">Open Drawer</string>
   <string name="drawer_close">Close Drawer</string>
   <string name="CardEditorLaterMessage">Sparad information för senare</string>
-  <string name="CardEditorCardDeck">Kortlek: %s</string>
-  <string name="CardEditorNoteDeck">Notkortlek: %s</string>
-  <string name="CardEditorModel">Nottyp: %s</string>
+  <string name="CardEditorCardDeck">Card deck:</string>
+  <string name="CardEditorNoteDeck">Note deck:</string>
+  <string name="CardEditorModel">Note type:</string>
   <string name="CardEditorTags">Etiketter: %1$s</string>
   <string name="add_new_filter_tags">Lägg till/Filtrera etiketter</string>
   <string name="note_type">Nottyp</string>
@@ -77,6 +77,7 @@
   </string-array>
   <string name="cardeditor_title_add_note">Lägg till not</string>
   <string name="cardeditor_title_edit_card">Redigera not</string>
+  <string name="discard_unsaved_changes">Close and lose current input?</string>
   <string name="factadder_saving_error">Fel vid sparande av not</string>
   <string name="pref_lang_support">Språk</string>
   <string name="saving_facts">Sparar not</string>

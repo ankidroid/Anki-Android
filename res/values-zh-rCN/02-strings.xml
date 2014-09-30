@@ -42,9 +42,9 @@
   <string name="drawer_open">打开侧栏</string>
   <string name="drawer_close">关闭侧栏</string>
   <string name="CardEditorLaterMessage">保存的信息</string>
-  <string name="CardEditorCardDeck">卡牌所属牌组：%s</string>
-  <string name="CardEditorNoteDeck">卡牌记录所属牌组：%s</string>
-  <string name="CardEditorModel">卡牌记录类型：%s</string>
+  <string name="CardEditorCardDeck">Card deck:</string>
+  <string name="CardEditorNoteDeck">Note deck:</string>
+  <string name="CardEditorModel">Note type:</string>
   <string name="CardEditorTags">标签：%1$s</string>
   <string name="add_new_filter_tags">添加/过滤标签</string>
   <string name="note_type">卡牌记录类型</string>
@@ -77,6 +77,7 @@
   </string-array>
   <string name="cardeditor_title_add_note">增加条目注释</string>
   <string name="cardeditor_title_edit_card">编辑卡牌记录</string>
+  <string name="discard_unsaved_changes">Close and lose current input?</string>
   <string name="factadder_saving_error">保存条目注释时出现错误</string>
   <string name="pref_lang_support">语言</string>
   <string name="saving_facts">保存卡牌记录</string>

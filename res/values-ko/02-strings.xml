@@ -42,9 +42,9 @@
   <string name="drawer_open">Open Drawer</string>
   <string name="drawer_close">Close Drawer</string>
   <string name="CardEditorLaterMessage">나중을 위해 저장된 정보</string>
-  <string name="CardEditorCardDeck">카드 덱: %s</string>
-  <string name="CardEditorNoteDeck">노트 덱: %s</string>
-  <string name="CardEditorModel">노트 유형: %s</string>
+  <string name="CardEditorCardDeck">Card deck:</string>
+  <string name="CardEditorNoteDeck">Note deck:</string>
+  <string name="CardEditorModel">Note type:</string>
   <string name="CardEditorTags">태그: %1$s</string>
   <string name="add_new_filter_tags">Add/filter tags</string>
   <string name="note_type">노트 타입</string>
@@ -77,6 +77,7 @@
   </string-array>
   <string name="cardeditor_title_add_note">노트 추가하기</string>
   <string name="cardeditor_title_edit_card">노트 편집하기</string>
+  <string name="discard_unsaved_changes">Close and lose current input?</string>
   <string name="factadder_saving_error">노트 저장 중 오류</string>
   <string name="pref_lang_support">언어</string>
   <string name="saving_facts">노트 저장 중</string>

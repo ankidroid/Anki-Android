@@ -42,9 +42,9 @@
   <string name="drawer_open">Open Drawer</string>
   <string name="drawer_close">Close Drawer</string>
   <string name="CardEditorLaterMessage">Сачувана информација</string>
-  <string name="CardEditorCardDeck">Карта шпила: %s</string>
-  <string name="CardEditorNoteDeck">Белешка шпила: %s</string>
-  <string name="CardEditorModel">Тип белешке: %s</string>
+  <string name="CardEditorCardDeck">Card deck:</string>
+  <string name="CardEditorNoteDeck">Note deck:</string>
+  <string name="CardEditorModel">Note type:</string>
   <string name="CardEditorTags">Ознаке: %1$s</string>
   <string name="add_new_filter_tags">Add/filter tags</string>
   <string name="note_type">Тип белешке</string>
@@ -77,6 +77,7 @@
   </string-array>
   <string name="cardeditor_title_add_note">Додај белешку</string>
   <string name="cardeditor_title_edit_card">Уреди белешку</string>
+  <string name="discard_unsaved_changes">Close and lose current input?</string>
   <string name="factadder_saving_error">Грешка при чувању белешке</string>
   <string name="pref_lang_support">Језик</string>
   <string name="saving_facts">Сачуване белешке</string>

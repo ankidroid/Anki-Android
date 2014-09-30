@@ -42,9 +42,9 @@
   <string name="drawer_open">Open Drawer</string>
   <string name="drawer_close">Close Drawer</string>
   <string name="CardEditorLaterMessage">Αποθήκευση πληροφοριών για αργότερα</string>
-  <string name="CardEditorCardDeck">Τράπουλα κάρτας: %s</string>
-  <string name="CardEditorNoteDeck">Τράπουλα σημείωσης: %s</string>
-  <string name="CardEditorModel">Τύπος σημείωσης: %s</string>
+  <string name="CardEditorCardDeck">Card deck:</string>
+  <string name="CardEditorNoteDeck">Note deck:</string>
+  <string name="CardEditorModel">Note type:</string>
   <string name="CardEditorTags">Ετικέτες:%1$s</string>
   <string name="add_new_filter_tags">Add/filter tags</string>
   <string name="note_type">Τύπος σημείωσης</string>
@@ -77,6 +77,7 @@
   </string-array>
   <string name="cardeditor_title_add_note">Προσθήκη Σημείωσης</string>
   <string name="cardeditor_title_edit_card">Σύνταξη Σημείωσης</string>
+  <string name="discard_unsaved_changes">Close and lose current input?</string>
   <string name="factadder_saving_error">Σφάλμα κατά την αποθήκευση σημείωσης</string>
   <string name="pref_lang_support">Γλώσσα</string>
   <string name="saving_facts">Αποθήκευση σημείωσης</string>

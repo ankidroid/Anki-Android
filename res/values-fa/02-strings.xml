@@ -42,9 +42,9 @@
   <string name="drawer_open">Open Drawer</string>
   <string name="drawer_close">Close Drawer</string>
   <string name="CardEditorLaterMessage">اطلاعات برای بعد ذخیره شد</string>
-  <string name="CardEditorCardDeck">دسته کارت: %s</string>
-  <string name="CardEditorNoteDeck">دسته یادداشت: %s</string>
-  <string name="CardEditorModel">نوع یادداشت: %s</string>
+  <string name="CardEditorCardDeck">Card deck:</string>
+  <string name="CardEditorNoteDeck">Note deck:</string>
+  <string name="CardEditorModel">Note type:</string>
   <string name="CardEditorTags">برچسب ها: %1$s</string>
   <string name="add_new_filter_tags">افزودن/فیلترکردن برچسب ها</string>
   <string name="note_type">نوع یادداشت</string>
@@ -77,6 +77,7 @@
   </string-array>
   <string name="cardeditor_title_add_note">افزودن یادداشت</string>
   <string name="cardeditor_title_edit_card">ویرایش یادداشت</string>
+  <string name="discard_unsaved_changes">Close and lose current input?</string>
   <string name="factadder_saving_error">خطای ذخیره سازی یادداشت</string>
   <string name="pref_lang_support">زبان</string>
   <string name="saving_facts">ذخیره یادداشت</string>

@@ -42,9 +42,9 @@
   <string name="drawer_open">Open Drawer</string>
   <string name="drawer_close">Close Drawer</string>
   <string name="CardEditorLaterMessage">Saved information for later</string>
-  <string name="CardEditorCardDeck">Kortelės malka: %s</string>
-  <string name="CardEditorNoteDeck">Pastabos malka: %s</string>
-  <string name="CardEditorModel">Pastabos tipas: %s</string>
+  <string name="CardEditorCardDeck">Card deck:</string>
+  <string name="CardEditorNoteDeck">Note deck:</string>
+  <string name="CardEditorModel">Note type:</string>
   <string name="CardEditorTags">Žymos: %1$s</string>
   <string name="add_new_filter_tags">Add/filter tags</string>
   <string name="note_type">Pastabos tipas</string>
@@ -77,6 +77,7 @@
   </string-array>
   <string name="cardeditor_title_add_note">Pridėti pastabą</string>
   <string name="cardeditor_title_edit_card">Keisti pastabą</string>
+  <string name="discard_unsaved_changes">Close and lose current input?</string>
   <string name="factadder_saving_error">Error saving note</string>
   <string name="pref_lang_support">Kalba</string>
   <string name="saving_facts">Saving note</string>

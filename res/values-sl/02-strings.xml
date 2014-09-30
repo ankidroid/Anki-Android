@@ -42,9 +42,9 @@
   <string name="drawer_open">Open Drawer</string>
   <string name="drawer_close">Close Drawer</string>
   <string name="CardEditorLaterMessage">Informacija shranjena za pozneje</string>
-  <string name="CardEditorCardDeck">Komplet kartic: %s</string>
-  <string name="CardEditorNoteDeck">Komplet zapiskov: %s</string>
-  <string name="CardEditorModel">Vrsta zapiska: %s</string>
+  <string name="CardEditorCardDeck">Card deck:</string>
+  <string name="CardEditorNoteDeck">Note deck:</string>
+  <string name="CardEditorModel">Note type:</string>
   <string name="CardEditorTags">Oznake: %1$s</string>
   <string name="add_new_filter_tags">Add/filter tags</string>
   <string name="note_type">Vrsta zapiska</string>
@@ -77,6 +77,7 @@
   </string-array>
   <string name="cardeditor_title_add_note">Dodaj zapisek</string>
   <string name="cardeditor_title_edit_card">Uredi zapisek</string>
+  <string name="discard_unsaved_changes">Close and lose current input?</string>
   <string name="factadder_saving_error">Napaka pri shranjevanju zapiska</string>
   <string name="pref_lang_support">Jezik</string>
   <string name="saving_facts">Shranjujem zapisek</string>

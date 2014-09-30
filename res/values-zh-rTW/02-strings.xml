@@ -42,9 +42,9 @@
   <string name="drawer_open">Open Drawer</string>
   <string name="drawer_close">Close Drawer</string>
   <string name="CardEditorLaterMessage">封存的資訊</string>
-  <string name="CardEditorCardDeck">卡片牌組： %s</string>
-  <string name="CardEditorNoteDeck">筆記牌組： %s</string>
-  <string name="CardEditorModel">筆記類型： %s</string>
+  <string name="CardEditorCardDeck">Card deck:</string>
+  <string name="CardEditorNoteDeck">Note deck:</string>
+  <string name="CardEditorModel">Note type:</string>
   <string name="CardEditorTags">標籤: %1$s</string>
   <string name="add_new_filter_tags">Add/filter tags</string>
   <string name="note_type">筆記類型</string>
@@ -77,6 +77,7 @@
   </string-array>
   <string name="cardeditor_title_add_note">新增筆記</string>
   <string name="cardeditor_title_edit_card">編輯筆記</string>
+  <string name="discard_unsaved_changes">Close and lose current input?</string>
   <string name="factadder_saving_error">儲存筆記時發生錯誤</string>
   <string name="pref_lang_support">語言</string>
   <string name="saving_facts">儲存筆記中</string>

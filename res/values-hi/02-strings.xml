@@ -42,9 +42,9 @@
   <string name="drawer_open">Open Drawer</string>
   <string name="drawer_close">Close Drawer</string>
   <string name="CardEditorLaterMessage">जानकारी के लिए बाद में बचा लिया</string>
-  <string name="CardEditorCardDeck">कार्ड डेक: %s</string>
-  <string name="CardEditorNoteDeck">नोट डेक: %s</string>
-  <string name="CardEditorModel">नोट प्रकार: %s</string>
+  <string name="CardEditorCardDeck">Card deck:</string>
+  <string name="CardEditorNoteDeck">Note deck:</string>
+  <string name="CardEditorModel">Note type:</string>
   <string name="CardEditorTags">टैग: %1$s</string>
   <string name="add_new_filter_tags">Add/filter tags</string>
   <string name="note_type">नोट प्रकार</string>
@@ -77,6 +77,7 @@
   </string-array>
   <string name="cardeditor_title_add_note">नोट जोड़ें</string>
   <string name="cardeditor_title_edit_card">नोट संपादित करें</string>
+  <string name="discard_unsaved_changes">Close and lose current input?</string>
   <string name="factadder_saving_error">नोट सहेजने में त्रुटि</string>
   <string name="pref_lang_support">भाषा</string>
   <string name="saving_facts">नोट सहेजने</string>

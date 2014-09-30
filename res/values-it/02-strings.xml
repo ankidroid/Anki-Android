@@ -42,9 +42,9 @@
   <string name="drawer_open">Apri barra di navigazione</string>
   <string name="drawer_close">Chiudi barra di navigazione</string>
   <string name="CardEditorLaterMessage">Informazione salvata per più tardi</string>
-  <string name="CardEditorCardDeck">Mazzo carte: %s</string>
-  <string name="CardEditorNoteDeck">Mazzo nota: %s</string>
-  <string name="CardEditorModel">Tipo nota: %s</string>
+  <string name="CardEditorCardDeck">Card deck:</string>
+  <string name="CardEditorNoteDeck">Note deck:</string>
+  <string name="CardEditorModel">Note type:</string>
   <string name="CardEditorTags">Etichette: %1$s</string>
   <string name="add_new_filter_tags">Aggiungi/filtra etichette</string>
   <string name="note_type">Tipo di nota</string>
@@ -77,6 +77,7 @@
   </string-array>
   <string name="cardeditor_title_add_note">Aggiungi nota</string>
   <string name="cardeditor_title_edit_card">Modifica nota</string>
+  <string name="discard_unsaved_changes">Close and lose current input?</string>
   <string name="factadder_saving_error">Errore salvataggio nota</string>
   <string name="pref_lang_support">Lingua</string>
   <string name="saving_facts">Salvataggio nota</string>
