@@ -1494,7 +1494,14 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
                         if (data.data != null && data.data.length >= 1 && data.data[0] instanceof Integer) {
                             mSyncMediaUsn = (Integer) data.data[0];
                         }
-                        showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_CONFLICT_RESOLUTION);
+                        if (getCol().isEmpty()) {
+                            // don't prompt user to resolve sync conflict if local collection empty
+                            sync("download", mSyncMediaUsn);
+                            // TODO: Also do reverse check to see if AnkiWeb collection is empty if Anki Desktop implements it
+                        } else {
+                            // If can't be resolved then automatically then show conflict resolution dialog
+                            showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_CONFLICT_RESOLUTION);
+                        }
                     } else if (resultType.equals("dbError")) {
                         dialogMessage = res.getString(R.string.sync_corrupt_database, R.string.repair_deck);
                         showLogDialog(joinSyncMessages(dialogMessage, syncMessage));
