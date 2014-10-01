@@ -1455,8 +1455,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
 
     protected boolean editCard() {
-        Intent editCard = new Intent(AbstractFlashcardViewer.this, CardEditor.class);
-        editCard.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_REVIEWER);
+        Intent editCard = new Intent(AbstractFlashcardViewer.this, NoteEditor.class);
+        editCard.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER);
         sEditorCard = mCurrentCard;
         startActivityForResultWithAnimation(editCard, EDIT_CURRENT_CARD, ActivityTransitionAnimation.LEFT);
         return true;

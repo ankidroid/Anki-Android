@@ -856,8 +856,8 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
 
     private void addNote() {
         Preferences.COMING_FROM_ADD = true;
-        Intent intent = new Intent(DeckPicker.this, CardEditor.class);
-        intent.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_DECKPICKER);
+        Intent intent = new Intent(DeckPicker.this, NoteEditor.class);
+        intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER);
         startActivityForResultWithAnimation(intent, ADD_NOTE, ActivityTransitionAnimation.LEFT);
     }
 
