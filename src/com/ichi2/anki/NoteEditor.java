@@ -99,7 +99,7 @@ import java.util.Map;
  * 
  * @see http://ichi2.net/anki/wiki/KeyTermsAndConcepts#Cards
  */
-public class CardEditor extends AnkiActivity {
+public class NoteEditor extends AnkiActivity {
 
     public static final String SOURCE_LANGUAGE = "SOURCE_LANGUAGE";
     public static final String TARGET_LANGUAGE = "TARGET_LANGUAGE";
@@ -170,7 +170,7 @@ public class CardEditor extends AnkiActivity {
 
     private boolean mAedictIntent;
 
-    /* indicates which activity called card editor */
+    /* indicates which activity called Note Editor */
     private int mCaller;
 
     private LinkedList<FieldEditText> mEditFields;
@@ -196,7 +196,7 @@ public class CardEditor extends AnkiActivity {
         public void onPreExecute() {
             Resources res = getResources();
             mProgressDialog = StyledProgressDialog
-                    .show(CardEditor.this, "", res.getString(R.string.saving_facts), true);
+                    .show(NoteEditor.this, "", res.getString(R.string.saving_facts), true);
         }
 
 
@@ -226,10 +226,10 @@ public class CardEditor extends AnkiActivity {
                 } catch (JSONException e) {
                     throw new RuntimeException();
                 }
-                Themes.showThemedToast(CardEditor.this,
+                Themes.showThemedToast(NoteEditor.this,
                         getResources().getQuantityString(R.plurals.factadder_cards_added, count, count), true);
             } else {
-                Themes.showThemedToast(CardEditor.this, getResources().getString(R.string.factadder_saving_error), true);
+                Themes.showThemedToast(NoteEditor.this, getResources().getString(R.string.factadder_saving_error), true);
             }
             if (!mAddNote || mCaller == CALLER_CARDEDITOR || mCaller == CALLER_BIGWIDGET_EDIT || mAedictIntent) {
                 mChanged = true;
@@ -249,7 +249,7 @@ public class CardEditor extends AnkiActivity {
                     try {
                         mProgressDialog.dismiss();
                     } catch (IllegalArgumentException e) {
-                        Log.e(AnkiDroidApp.TAG, "Card Editor: Error on dismissing progress dialog: " + e);
+                        Log.e(AnkiDroidApp.TAG, "Note Editor: Error on dismissing progress dialog: " + e);
                     }
                 }
             }
@@ -263,7 +263,7 @@ public class CardEditor extends AnkiActivity {
                     try {
                         mProgressDialog.dismiss();
                     } catch (IllegalArgumentException e) {
-                        Log.e(AnkiDroidApp.TAG, "Card Editor: Error on dismissing progress dialog: " + e);
+                        Log.e(AnkiDroidApp.TAG, "Note Editor: Error on dismissing progress dialog: " + e);
                     }
                 }
                 if (mCloseAfter) {
@@ -328,10 +328,10 @@ public class CardEditor extends AnkiActivity {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
 
         if (mCaller == CALLER_INDICLASH && preferences.getBoolean("intentAdditionInstantAdd", false)) {
-            // save information without showing card editor
+            // save information without showing Note Editor
             fetchIntentInformation(intent);
-            MetaDB.saveIntentInformation(CardEditor.this, Utils.joinFields(mSourceText));
-            Themes.showThemedToast(CardEditor.this, getResources().getString(R.string.app_name) + ": "
+            MetaDB.saveIntentInformation(NoteEditor.this, Utils.joinFields(mSourceText));
+            Themes.showThemedToast(NoteEditor.this, getResources().getString(R.string.app_name) + ": "
                     + getResources().getString(R.string.CardEditorLaterMessage), false);
             finishWithoutAnimation();
             return;
@@ -627,7 +627,7 @@ public class CardEditor extends AnkiActivity {
 
 
     private void openReviewer() {
-        Intent reviewer = new Intent(CardEditor.this, Previewer.class);
+        Intent reviewer = new Intent(NoteEditor.this, Previewer.class);
         reviewer.putExtra("currentCardId", mCurrentEditedCard.getId());
         startActivityWithoutAnimation(reviewer);
     }
@@ -647,12 +647,12 @@ public class CardEditor extends AnkiActivity {
                             mSourceText[1] = entry_lines[0];
                             mAedictIntent = true;
                         } else {
-                            Themes.showThemedToast(CardEditor.this,
+                            Themes.showThemedToast(NoteEditor.this,
                                     getResources().getString(R.string.intent_aedict_empty), false);
                             return true;
                         }
                     } else {
-                        Themes.showThemedToast(CardEditor.this, getResources().getString(R.string.intent_aedict_empty),
+                        Themes.showThemedToast(NoteEditor.this, getResources().getString(R.string.intent_aedict_empty),
                                 false);
                         return true;
                     }
@@ -660,7 +660,7 @@ public class CardEditor extends AnkiActivity {
                 }
             }
         }
-        Themes.showThemedToast(CardEditor.this, getResources().getString(R.string.intent_aedict_category), false);
+        Themes.showThemedToast(NoteEditor.this, getResources().getString(R.string.intent_aedict_category), false);
         return true;
     }
 
@@ -852,10 +852,10 @@ public class CardEditor extends AnkiActivity {
             case R.id.action_later:
                 String content = getFieldsText();
                 if (content.length() > mEditFields.size() - 1) {
-                    MetaDB.saveIntentInformation(CardEditor.this, content);
+                    MetaDB.saveIntentInformation(NoteEditor.this, content);
                     populateEditFields();
                     mSourceText = null;
-                    Themes.showThemedToast(CardEditor.this,
+                    Themes.showThemedToast(NoteEditor.this,
                             getResources().getString(R.string.CardEditorLaterMessage), false);
                 }
                 if (mCaller == CALLER_INDICLASH || mCaller == CALLER_CARDEDITOR_INTENT_ADD) {
@@ -865,7 +865,7 @@ public class CardEditor extends AnkiActivity {
 
             case R.id.action_add_card_from_card_editor:
             case R.id.action_copy_card:
-                Intent intent = new Intent(CardEditor.this, CardEditor.class);
+                Intent intent = new Intent(NoteEditor.this, NoteEditor.class);
                 intent.putExtra(EXTRA_CALLER, CALLER_CARDEDITOR);
                 // intent.putExtra(EXTRA_DECKPATH, mDeckPath);
                 if (item.getItemId() == R.id.action_copy_card) {
@@ -1031,7 +1031,7 @@ public class CardEditor extends AnkiActivity {
                         getCol().getSched().forgetCards(new long[] { mCurrentEditedCard.getId() });
                         getCol().reset();
                         mRescheduled = true;
-                        Themes.showThemedToast(CardEditor.this,
+                        Themes.showThemedToast(NoteEditor.this,
                                 getResources().getString(R.string.reset_card_dialog_acknowledge), true);
                     }
                 });
@@ -1054,7 +1054,7 @@ public class CardEditor extends AnkiActivity {
                         getCol().getSched().reschedCards(new long[] { mCurrentEditedCard.getId() }, days, days);
                         getCol().reset();
                         mRescheduled = true;
-                        Themes.showThemedToast(CardEditor.this,
+                        Themes.showThemedToast(NoteEditor.this,
                                 getResources().getString(R.string.reschedule_card_dialog_acknowledge), true);
                     }
                 });
@@ -1083,7 +1083,7 @@ public class CardEditor extends AnkiActivity {
         listView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(CardEditor.this, CardEditor.class);
+                Intent intent = new Intent(NoteEditor.this, NoteEditor.class);
                 intent.putExtra(EXTRA_CALLER, CALLER_CARDEDITOR_INTENT_ADD);
                 Map<String, String> map = mIntentInformation.get(position);
                 intent.putExtra(EXTRA_CONTENTS, map.get("fields"));
@@ -1112,7 +1112,7 @@ public class CardEditor extends AnkiActivity {
         builder.setPositiveButton(res.getString(R.string.intent_add_clear_all), new OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int arg1) {
-                MetaDB.resetIntentInformation(CardEditor.this);
+                MetaDB.resetIntentInformation(NoteEditor.this);
                 updateIntentInformation();
                 dialog.dismiss();
             }
@@ -1135,7 +1135,7 @@ public class CardEditor extends AnkiActivity {
                 if (resultCode != RESULT_CANCELED) {
                     mChanged = true;
                     String id = data.getStringExtra(EXTRA_ID);
-                    if (id != null && MetaDB.removeIntentInformation(CardEditor.this, id)) {
+                    if (id != null && MetaDB.removeIntentInformation(NoteEditor.this, id)) {
                         updateIntentInformation();
                     }
                 }
@@ -1224,7 +1224,7 @@ public class CardEditor extends AnkiActivity {
                     startMultimediaFieldEditor(index, mNote, field);
                 } else {
                     // Otherwise we make a popup menu allowing the user to choose between audio/image/text field
-                    PopupMenuWithIcons popup = new PopupMenuWithIcons(CardEditor.this, v, true);
+                    PopupMenuWithIcons popup = new PopupMenuWithIcons(NoteEditor.this, v, true);
                     MenuInflater inflater = popup.getMenuInflater();
                     inflater.inflate(R.menu.popupmenu_multimedia_options, popup.getMenu());
                     popup.setOnMenuItemClickListener(new OnMenuItemClickListener() {
@@ -1260,7 +1260,7 @@ public class CardEditor extends AnkiActivity {
 
 
     private void startMultimediaFieldEditor(final int index, IMultimediaEditableNote mNote, IField field) {
-        Intent editCard = new Intent(CardEditor.this, EditFieldActivity.class);
+        Intent editCard = new Intent(NoteEditor.this, EditFieldActivity.class);
         editCard.putExtra(EditFieldActivity.EXTRA_FIELD_INDEX, index);
         editCard.putExtra(EditFieldActivity.EXTRA_FIELD, field);
         editCard.putExtra(EditFieldActivity.EXTRA_WHOLE_NOTE, mNote);

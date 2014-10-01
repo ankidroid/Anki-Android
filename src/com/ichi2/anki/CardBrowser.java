@@ -357,9 +357,9 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                 long cardId = Long.parseLong(mCards.get(mPositionInCardsList).get("id"));
                 sCardBrowserCard = getCol().getCard(cardId);
                 // start note editor using the card we just loaded
-                Intent editCard = new Intent(CardBrowser.this, CardEditor.class);
-                editCard.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_CARDBROWSER_EDIT);
-                editCard.putExtra(CardEditor.EXTRA_CARD_ID, sCardBrowserCard.getId());
+                Intent editCard = new Intent(CardBrowser.this, NoteEditor.class);
+                editCard.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_CARDBROWSER_EDIT);
+                editCard.putExtra(NoteEditor.EXTRA_CARD_ID, sCardBrowserCard.getId());
                 startActivityForResultWithAnimation(editCard, EDIT_CARD, ActivityTransitionAnimation.LEFT);
             }
         });
@@ -501,8 +501,8 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         switch (item.getItemId()) {
 
             case R.id.action_add_card_from_card_browser:
-                Intent intent = new Intent(CardBrowser.this, CardEditor.class);
-                intent.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_CARDBROWSER_ADD);
+                Intent intent = new Intent(CardBrowser.this, NoteEditor.class);
+                intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_CARDBROWSER_ADD);
                 startActivityForResultWithAnimation(intent, ADD_NOTE, ActivityTransitionAnimation.LEFT);
                 return true;
 

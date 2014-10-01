@@ -172,7 +172,7 @@
             android:configChanges="locale"
             android:label="@string/about_title" />
         <activity
-            android:name="com.ichi2.anki.CardEditor"
+            android:name="com.ichi2.anki.NoteEditor"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/fact_adder_intent_title" >
             <intent-filter>
