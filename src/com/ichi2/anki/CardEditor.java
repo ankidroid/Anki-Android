@@ -348,111 +348,6 @@ public class CardEditor extends AnkiActivity {
 
         mTagsButton = (TextView) findViewById(R.id.CardEditorTagText);
 
-        // Note type Selector
-        mNoteTypeSpinner = (Spinner) findViewById(R.id.note_type_spinner);    
-        final ArrayList<Long> modelIds = new ArrayList<Long>();
-        final ArrayList<String> modelNames = new ArrayList<String>();
-        ArrayList<JSONObject> models = getCol().getModels().all();
-        Collections.sort(models, new JSONNameComparator());
-        for (JSONObject m : models) {
-            try {
-                modelNames.add(m.getString("name"));
-                modelIds.add(m.getLong("id"));
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        ArrayAdapter<String> noteTypeAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, modelNames);
-        mNoteTypeSpinner.setAdapter(noteTypeAdapter);
-        noteTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        OnItemSelectedListener noteTypeListener = new OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                // If a new column was selected then change the key used to map from mCards to the column TextView
-                Log.w(AnkiDroidApp.TAG, "onItemSelected() fired on mNoteTypeSpinner");
-                long oldModelId;
-                try {
-                    oldModelId = getCol().getModels().current().getLong("id");
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
-                long newId = modelIds.get(pos);
-                if (oldModelId != newId) {
-                    JSONObject model = getCol().getModels().get(newId);
-                    getCol().getModels().setCurrent(model);
-                    JSONObject cdeck = getCol().getDecks().current();
-                    try {
-                        cdeck.put("mid", newId);
-                    } catch (JSONException e) {
-                        throw new RuntimeException(e);
-                    }
-                    getCol().getDecks().save(cdeck);
-                    // Update deck
-                    if (!getCol().getConf().optBoolean("addToCur", true)) {
-                        try {
-                            mCurrentDid = model.getLong("did");
-                            updateDeckPosition();
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-                    // Reset edit fields
-                    int size = mEditFields.size();
-                    String[] oldValues = new String[size];
-                    for (int i = 0; i < size; i++) {
-                        oldValues[i] = mEditFields.get(i).getText().toString();
-                    }
-                    setNote();
-                    resetEditFields(oldValues);
-                    duplicateCheck();
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // Do Nothing
-            }
-        };
-
-
-        // Deck Selector
-        mNoteDeckSpinner = (Spinner) findViewById(R.id.note_deck_spinner);    
-        mAllDeckIds = new ArrayList<Long>();
-        final ArrayList<String> deckNames = new ArrayList<String>();
-
-        ArrayList<JSONObject> decks = getCol().getDecks().all();
-        Collections.sort(decks, new JSONNameComparator());
-        for (JSONObject d : decks) {
-            try {
-                if (d.getInt("dyn") == 0) {
-                    deckNames.add(d.getString("name"));
-                    mAllDeckIds.add(d.getLong("id"));
-                }
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        ArrayAdapter<String> noteDeckAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, deckNames);
-        mNoteDeckSpinner.setAdapter(noteDeckAdapter);
-        noteDeckAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mNoteDeckSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                long newId = mAllDeckIds.get(pos);
-                if (mCurrentDid != newId) {
-                    mCurrentDid = newId;
-                    updateDeckPosition();
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // Do Nothing
-            }
-        });
-        
         Preferences.COMING_FROM_ADD = false;
 
         mAedictIntent = false;
@@ -527,6 +422,113 @@ public class CardEditor extends AnkiActivity {
                 mAddNote = true;
                 break;
         }
+
+        // Note type Selector
+        mNoteTypeSpinner = (Spinner) findViewById(R.id.note_type_spinner);    
+        final ArrayList<Long> modelIds = new ArrayList<Long>();
+        final ArrayList<String> modelNames = new ArrayList<String>();
+        ArrayList<JSONObject> models = getCol().getModels().all();
+        Collections.sort(models, new JSONNameComparator());
+        for (JSONObject m : models) {
+            try {
+                modelNames.add(m.getString("name"));
+                modelIds.add(m.getLong("id"));
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        ArrayAdapter<String> noteTypeAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, modelNames);
+        mNoteTypeSpinner.setAdapter(noteTypeAdapter);
+        noteTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        OnItemSelectedListener noteTypeListener = new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                // If a new column was selected then change the key used to map from mCards to the column TextView
+                //Log.i(AnkiDroidApp.TAG, "onItemSelected() fired on mNoteTypeSpinner");
+                long oldModelId;
+                try {
+                    oldModelId = getCol().getModels().current().getLong("id");
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+                long newId = modelIds.get(pos);
+                if (oldModelId != newId) {
+                    JSONObject model = getCol().getModels().get(newId);
+                    getCol().getModels().setCurrent(model);
+                    JSONObject cdeck = getCol().getDecks().current();
+                    try {
+                        cdeck.put("mid", newId);
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                    getCol().getDecks().save(cdeck);
+                    // Update deck
+                    if (!getCol().getConf().optBoolean("addToCur", true)) {
+                        try {
+                            mCurrentDid = model.getLong("did");
+                            updateDeckPosition();
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                    // Reset edit fields
+                    int size = mEditFields.size();
+                    String[] oldValues = new String[size];
+                    for (int i = 0; i < size; i++) {
+                        oldValues[i] = mEditFields.get(i).getText().toString();
+                    }
+                    setNote();
+                    resetEditFields(oldValues);
+                    duplicateCheck();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Do Nothing
+            }
+        };
+
+
+        // Deck Selector
+        TextView deckTextView = (TextView) findViewById(R.id.CardEditorDeckText);
+        deckTextView.setText(getResources().getString(mAddNote ? R.string.CardEditorNoteDeck : R.string.CardEditorCardDeck));
+        mNoteDeckSpinner = (Spinner) findViewById(R.id.note_deck_spinner);    
+        mAllDeckIds = new ArrayList<Long>();
+        final ArrayList<String> deckNames = new ArrayList<String>();
+
+        ArrayList<JSONObject> decks = getCol().getDecks().all();
+        Collections.sort(decks, new JSONNameComparator());
+        for (JSONObject d : decks) {
+            try {
+                // add current deck and all other non-filtered decks to deck list
+                long thisDid = d.getLong("id");
+                long currentDid = getCol().getDecks().current().getLong("id");
+                if (d.getInt("dyn") == 0 || (!mAddNote && thisDid == currentDid)) {
+                    deckNames.add(d.getString("name"));
+                    mAllDeckIds.add(thisDid);
+                }
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        ArrayAdapter<String> noteDeckAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, deckNames);
+        mNoteDeckSpinner.setAdapter(noteDeckAdapter);
+        noteDeckAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mNoteDeckSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                // Log.i(AnkiDroidApp.TAG, "onItemSelected() fired on mNoteDeckSpinner with pos = "+Integer.toString(pos)); 
+                mCurrentDid = mAllDeckIds.get(pos);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Do Nothing
+            }
+        });
 
         setNote(mEditorNote);
         
@@ -672,7 +674,7 @@ public class CardEditor extends AnkiActivity {
 
     private boolean hasUnsavedChanges() {
         // changed deck?
-        if (mCurrentEditedCard!= null && mCurrentEditedCard.getDid() != mCurrentDid) {
+        if (!mAddNote && mCurrentEditedCard!= null && mCurrentEditedCard.getDid() != mCurrentDid) {
             return true;
         }
         // changed fields?
@@ -1393,10 +1395,13 @@ public class CardEditor extends AnkiActivity {
 
 
     private void updateDeckPosition() {
-        TextView deckTextView = (TextView) findViewById(R.id.CardEditorDeckText);
-        deckTextView.setText(getResources().getString(mAddNote ? R.string.CardEditorNoteDeck : R.string.CardEditorCardDeck));
         int position = mAllDeckIds.indexOf(mCurrentDid);
-        mNoteDeckSpinner.setSelection(position);
+        if (position != -1) {
+            mNoteDeckSpinner.setSelection(position, false);
+        } else {
+            Log.e(AnkiDroidApp.TAG, "updateDeckPosition() :: mCurrentDid="+Long.toString(mCurrentDid)+", " +
+            		"position = "+Integer.toString(position));
+        }
     }
 
 

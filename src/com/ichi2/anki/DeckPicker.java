@@ -777,7 +777,7 @@ public class DeckPicker extends NavigationDrawerActivity implements StudyOptions
         // create backup in background if needed
         Boolean started = BackupManager.performBackupInBackground(col.getPath());
         if (started) {
-            Themes.showThemedToast(this, getResources().getString(R.string.backup_collection), true);
+            //Themes.showThemedToast(this, getResources().getString(R.string.backup_collection), true);
         }
         // select last loaded deck if any
         if (mFragmented) {
