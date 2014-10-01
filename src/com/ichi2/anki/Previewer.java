@@ -21,6 +21,7 @@ package com.ichi2.anki;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import com.ichi2.libanki.Collection;
 
@@ -51,6 +52,19 @@ public class Previewer extends AbstractFlashcardViewer {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                closeReviewer(RESULT_OK, true);
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
         return true;
     }
 

@@ -50,20 +50,16 @@ import android.text.TextUtils;
 import android.text.style.StrikethroughSpan;
 import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.Display;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewConfiguration;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -85,7 +81,6 @@ import com.ichi2.anim.ViewAnimation;
 import com.ichi2.anki.exception.APIVersionException;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.reviewer.ReviewerExtRegistry;
-import com.ichi2.anki.reviewer.WhiteboardListener;
 import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
@@ -207,11 +202,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private boolean mPrefFixArabic;
     // Android WebView
     private boolean mSpeakText;
-    private boolean mDisableClipboard = false;
+    protected boolean mDisableClipboard = false;
     protected boolean mInvertedColors = false;
+    protected boolean mNightMode = false;
     private int mCurrentBackgroundColor;
-    private boolean mBlackWhiteboard = true;
-    private boolean mNightMode = false;
     private boolean mPrefSafeDisplay;
     protected boolean mPrefUseTimer;
     private boolean mPrefCenterVertically;
@@ -276,9 +270,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     protected Card mCurrentCard;
     private int mCurrentEase;
-
-    private boolean mShowWhiteboard = true;
-    private WhiteboardListener mWhiteboardListener;
 
     private int mNextTimeTextColor;
     private int mNextTimeTextRecomColor;
@@ -537,7 +528,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
     };
 
-    private DeckTask.TaskListener mDismissCardHandler = new DeckTask.TaskListener() {
+    protected DeckTask.TaskListener mDismissCardHandler = new DeckTask.TaskListener() {
         @Override
         public void onPreExecute() {
         }
@@ -959,12 +950,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
 
         mUseQuickUpdate = shouldUseQuickUpdate();
-
-        mPrefWhiteboard = MetaDB.getWhiteboardState(this, getParentDid());
-        if (mPrefWhiteboard) {
-            setWhiteboardEnabledState(true);
-        }        
-        
+       
         initLayout();
 
         setTitle();
@@ -1082,7 +1068,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
 
     // These three methods use a deprecated API - they should be updated to possibly use its more modern version.
-    private boolean clipboardHasText() {
+    protected boolean clipboardHasText() {
         return mClipboard != null && mClipboard.hasText();
     }
 
@@ -1115,185 +1101,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     }
 
 
-    @SuppressLint("NewApi")
-	@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.reviewer, menu);
-        Resources res = getResources();
-        if (mCurrentCard != null && mCurrentCard.note().hasTag("marked")) {
-            menu.findItem(R.id.action_mark_card).setTitle(R.string.menu_unmark_card).setIcon(R.drawable.ic_menu_marked);
-        } else {
-            menu.findItem(R.id.action_mark_card).setTitle(R.string.menu_mark_card).setIcon(R.drawable.ic_menu_mark);
-        }
-        if (getCol() != null && getCol().undoAvailable()) {
-            menu.findItem(R.id.action_undo).setEnabled(true).setIcon(R.drawable.ic_menu_revert);
-        } else {
-            menu.findItem(R.id.action_undo).setEnabled(false).setIcon(R.drawable.ic_menu_revert_disabled);
-        }
-        if (mPrefWhiteboard) {
-            // Check if we can forceably squeeze in 3 items into the action bar, if not hide "show whiteboard"
-            if (AnkiDroidApp.SDK_VERSION >= 14 &&  !ViewConfiguration.get(this).hasPermanentMenuKey()) {
-                // Android 4.x device with overflow menu in the action bar and small screen can't
-                // support forcing 2 extra items into the action bar
-                Display display = getWindowManager().getDefaultDisplay();
-                DisplayMetrics outMetrics = new DisplayMetrics ();
-                display.getMetrics(outMetrics);
-                float density  = getResources().getDisplayMetrics().density;
-                float dpWidth  = outMetrics.widthPixels / density;
-                if (dpWidth < 360) {
-                    menu.findItem(R.id.action_hide_whiteboard).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-                }
-            }
-            // Configure the whiteboard related items in the action bar
-            menu.findItem(R.id.action_enable_whiteboard).setTitle(R.string.disable_whiteboard);
-            menu.findItem(R.id.action_hide_whiteboard).setVisible(true);
-            menu.findItem(R.id.action_clear_whiteboard).setVisible(true);
-            if (mShowWhiteboard) {
-                //menu.findItem(R.id.action_clear_whiteboard).setIcon(R.drawable.ic_whiteboard_clear_enabled);
-                menu.findItem(R.id.action_hide_whiteboard).setIcon(R.drawable.ic_action_whiteboard_enable_light);
-                menu.findItem(R.id.action_hide_whiteboard).setTitle(R.string.hide_whiteboard);
-            } else {
-                //menu.findItem(R.id.action_clear_whiteboard).setIcon(R.drawable.ic_whiteboard_clear_disabled);
-                menu.findItem(R.id.action_hide_whiteboard).setIcon(R.drawable.ic_action_whiteboard_enable_light_disabled);
-                menu.findItem(R.id.action_hide_whiteboard).setTitle(R.string.show_whiteboard);
-            }
-        } else {
-            menu.findItem(R.id.action_enable_whiteboard).setTitle(R.string.enable_whiteboard);
-        }
-        if (AnkiDroidApp.SDK_VERSION < 11 && !mDisableClipboard) {
-            menu.findItem(R.id.action_search_dictionary).setVisible(true).setEnabled(!mShowWhiteboard)
-                    .setTitle(clipboardHasText() ? Lookup.getSearchStringTitle() : res.getString(R.string.menu_select));
-        }
-        return super.onCreateOptionsMenu(menu);
-    }
-
-
-
-
-    /*
-     * Modify the options menu.
-     * Pick the right icons for the whiteboard actions.
-
-     *
-     * @param menu The menu as is.
-     * @return The result of
-     */
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        // On old Androids this gets called each time the menu is opend, on newer ones (=> 3.0) only after it has been
-        // invalidated. We do *that* on purpose when toggeling the night mode.
-        if (mPrefWhiteboard) {
-            if (mShowWhiteboard){
-                if (mNightMode) {
-                    menu.findItem(R.id.action_clear_whiteboard).setIcon(R.drawable.ic_action_cancel_dark);
-                    menu.findItem(R.id.action_hide_whiteboard).setIcon(R.drawable.ic_action_whiteboard_enable_dark);
-                } else {
-                    menu.findItem(R.id.action_clear_whiteboard).setIcon(R.drawable.ic_action_cancel);
-                    menu.findItem(R.id.action_hide_whiteboard).setIcon(R.drawable.ic_action_whiteboard_enable_light);
-
-                }
-            } else {
-                if (mNightMode) {
-                    menu.findItem(R.id.action_clear_whiteboard).setIcon(R.drawable.ic_action_cancel_dark);
-                    menu.findItem(R.id.action_hide_whiteboard).setIcon(R.drawable.ic_action_whiteboard_enable_dark_disabled);
-                } else {
-                    menu.findItem(R.id.action_clear_whiteboard).setIcon(R.drawable.ic_action_cancel);
-                    menu.findItem(R.id.action_hide_whiteboard).setIcon(R.drawable.ic_action_whiteboard_enable_light_disabled);
-                }
-            }
-        }
-
-        return super.onPrepareOptionsMenu(menu);
-    }
 
     @Override
     public boolean onMenuOpened(int feature, Menu menu) {
         AnkiDroidApp.getCompat().invalidateOptionsMenu(this);
         return super.onMenuOpened(feature, menu);
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // The action bar home/up action should open or close the drawer.
-        // ActionBarDrawerToggle will take care of this.
-        if (getDrawerToggle().onOptionsItemSelected(item)) {
-            return true;
-        }
-        switch (item.getItemId()) {
-
-            case android.R.id.home:
-                closeReviewer(RESULT_OK, true);
-                break;
-
-            case R.id.action_undo:
-                undo();
-                break;
-
-            case R.id.action_mark_card:
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, mMarkCardHandler, new DeckTask.TaskData(mSched,
-                        mCurrentCard, 0));
-                break;
-
-            case R.id.action_replay:
-                playSounds(true);
-                break;
-
-            case R.id.action_edit:
-                return editCard();
-
-            case R.id.action_bury_card:
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
-                        mSched, mCurrentCard, 4));
-                break;
-
-            case R.id.action_bury_note:
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
-                        mSched, mCurrentCard, 0));
-                break;
-
-            case R.id.action_suspend_card:
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
-                        mSched, mCurrentCard, 1));
-                break;
-
-            case R.id.action_suspend_note:
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
-                        mSched, mCurrentCard, 2));
-                break;
-
-            case R.id.action_delete:
-                showDeleteNoteDialog();
-                break;
-
-            case R.id.action_clear_whiteboard:
-                if (mWhiteboard != null) {
-                    mWhiteboard.clear();    
-                }
-                break;
-
-            case R.id.action_hide_whiteboard:
-                // toggle whiteboard visibility
-                setWhiteboardVisibility(!mShowWhiteboard);
-                refreshActionBar();
-                break;
-
-            case R.id.action_enable_whiteboard:
-                // toggle whiteboard enabled state (and show/hide whiteboard item in action bar)
-                mPrefWhiteboard = ! mPrefWhiteboard;
-                setWhiteboardEnabledState(mPrefWhiteboard);
-                setWhiteboardVisibility(mPrefWhiteboard);
-                refreshActionBar();
-                break;
-
-            case R.id.action_search_dictionary:
-                lookUpOrSelectText();
-                break;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-        return true;
     }
 
 
@@ -1336,7 +1148,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     // ----------------------------------------------------------------------------
 
     // Get the did of the parent deck (ignoring any subdecks)
-    private long getParentDid() {
+    protected long getParentDid() {
         long deckID;
         try {
             deckID = mSched.getCol().getDecks().current().getLong("id");
@@ -1347,50 +1159,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     }
 
 
-
-    private void setWhiteboardEnabledState(boolean state) {
-        mPrefWhiteboard = state;
-        MetaDB.storeWhiteboardState(this, getParentDid(), state);
-        if (state && mWhiteboard == null) {
-            createWhiteboard();
-        }
-    }
-
-    // Create the whiteboard
-    private void createWhiteboard() {
-        mWhiteboard = new Whiteboard(this, mInvertedColors, mBlackWhiteboard);
-        FrameLayout.LayoutParams lp2 = new FrameLayout.LayoutParams(
-                android.view.ViewGroup.LayoutParams.FILL_PARENT, android.view.ViewGroup.LayoutParams.FILL_PARENT);
-        mWhiteboard.setLayoutParams(lp2);
-        FrameLayout fl = (FrameLayout) findViewById(R.id.whiteboard);
-        fl.addView(mWhiteboard);
-
-        mWhiteboard.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (mShowWhiteboard) {
-                    return false;
-                }
-                return gestureDetector.onTouchEvent(event);
-            }
-        });  
-        mWhiteboard.setEnabled(true);
-    }
-
-    // Show or hide the whiteboard
-    private void setWhiteboardVisibility(boolean state) {
-        mShowWhiteboard = state;
-        if (state) {
-            mWhiteboard.setVisibility(View.VISIBLE);
-            if (mWhiteboardListener != null) {
-                mWhiteboardListener.onShowWhiteboard();
-            }
-        } else {
-            mWhiteboard.setVisibility(View.GONE);
-            if (mWhiteboardListener != null) {
-                mWhiteboardListener.onHideWhiteboard();
-            }
-        }
+    public GestureDetector getGestureDetector() {
+        return gestureDetector;
     }
 
 
@@ -1435,7 +1205,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     }
 
 
-    private void undo() {
+    protected void undo() {
         if (mSched.getCol().undoAvailable()) {
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
                 mProgressDialog.setMessage(getResources().getString(R.string.saving_changes));
@@ -1900,7 +1670,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     }
 
 
-    private void initControls() {
+    protected void initControls() {
         mCardFrame.setVisibility(View.VISIBLE);
         if (mShowRemainingCardCount) {
             mTextBarNew.setVisibility(View.VISIBLE);
@@ -1910,9 +1680,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mChosenAnswer.setVisibility(View.VISIBLE);
         mFlipCardLayout.setVisibility(View.VISIBLE);
 
-        if (mPrefWhiteboard) {
-            setWhiteboardVisibility(mShowWhiteboard);
-        }
         mAnswerField.setVisibility(typeAnswer() ? View.VISIBLE : View.GONE);
         mAnswerField.setOnEditorActionListener(new EditText.OnEditorActionListener() {
             @Override
@@ -1926,7 +1693,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     }
 
 
-    private SharedPreferences restorePreferences() {
+    protected SharedPreferences restorePreferences() {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         mPrefHideDueCount = preferences.getBoolean("hideDueCount", false);
         mPrefWriteAnswers = !preferences.getBoolean("writeAnswersDisable", false);
@@ -1935,7 +1702,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         // mDeckFilename = preferences.getString("deckFilename", "");
         mNightMode = preferences.getBoolean("invertedColors", false);
         mInvertedColors = mNightMode;
-        mBlackWhiteboard = preferences.getBoolean("blackWhiteboard", true);
         mPrefFullscreenReview = preferences.getBoolean("fullscreenReview", false);
         mDisplayFontSize = preferences.getInt("relativeDisplayFontSize", 100);// Card.DEFAULT_FONT_SIZE_RATIO);
         mRelativeImageSize = preferences.getInt("relativeImageSize", 100);
@@ -2592,9 +2358,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
         if (!sDisplayAnswer) {
             updateForNewCard();
-            if (mShowWhiteboard && mWhiteboard != null) {
-                mWhiteboard.clear();
-            }
         }
     }
 
@@ -2984,7 +2747,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     }
 
 
-    private void refreshActionBar() {
+    protected void refreshActionBar() {
         AnkiDroidApp.getCompat().invalidateOptionsMenu(AbstractFlashcardViewer.this);
     }
 
@@ -3221,12 +2984,5 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     private Spanned convertToSimple(String text) {
         return Html.fromHtml(text, mSimpleInterfaceImagegetter, mSimpleInterfaceTagHandler);
-    }
-
-
-    protected void setWhiteboardListener(WhiteboardListener listener) {
-        if (listener != null) {
-            mWhiteboardListener = listener;
-        }
     }
 }
