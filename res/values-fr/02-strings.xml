@@ -43,8 +43,8 @@
   <string name="drawer_close">Fermer la barre de navigation</string>
   <string name="CardEditorLaterMessage">Information sauvegardée pour plus tard</string>
   <string name="CardEditorCardDeck">Card deck:</string>
-  <string name="CardEditorNoteDeck">Note deck:</string>
-  <string name="CardEditorModel">Note type:</string>
+  <string name="CardEditorNoteDeck">Deck:</string>
+  <string name="CardEditorModel">Type:</string>
   <string name="CardEditorTags">Marqueurs : %1$s</string>
   <string name="add_new_filter_tags">Ajouter un tag filtré</string>
   <string name="note_type">Type de note</string>

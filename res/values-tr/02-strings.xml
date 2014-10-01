@@ -43,8 +43,8 @@
   <string name="drawer_close">Çekmeceyi Kapat</string>
   <string name="CardEditorLaterMessage">Bilgi daha sonrası için kaydedildi</string>
   <string name="CardEditorCardDeck">Card deck:</string>
-  <string name="CardEditorNoteDeck">Note deck:</string>
-  <string name="CardEditorModel">Note type:</string>
+  <string name="CardEditorNoteDeck">Deck:</string>
+  <string name="CardEditorModel">Type:</string>
   <string name="CardEditorTags">Etiketler: %1$s</string>
   <string name="add_new_filter_tags">Etiket ekle/filtrele</string>
   <string name="note_type">Not türü</string>

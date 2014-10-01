@@ -75,7 +75,7 @@
   <string name="card_unsuspended">Preklicano pridržanje kartice</string>
   <string name="card_suspended">Kartica ponovno pridržana</string>
   <string name="menu_rotate">Obrni</string>
-  <string name="menu_import">Import file</string>
+  <string name="menu_import">Import</string>
   <string name="undo">Razveljavi</string>
   <string name="undo_action_review">last review</string>
   <string name="undo_action_edit">uredi zapisek</string>

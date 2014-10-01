@@ -75,7 +75,7 @@
   <string name="card_unsuspended">Suspensión do cartón desfeita</string>
   <string name="card_suspended">Cartón suspendido de novo</string>
   <string name="menu_rotate">Virar</string>
-  <string name="menu_import">Import file</string>
+  <string name="menu_import">Import</string>
   <string name="undo">Desfacer</string>
   <string name="undo_action_review">last review</string>
   <string name="undo_action_edit">editar notación</string>

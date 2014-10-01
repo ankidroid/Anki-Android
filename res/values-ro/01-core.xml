@@ -75,7 +75,7 @@
   <string name="card_unsuspended">Suspendarea cardului anulată</string>
   <string name="card_suspended">Card resuspendat</string>
   <string name="menu_rotate">Rotește</string>
-  <string name="menu_import">Import file</string>
+  <string name="menu_import">Import</string>
   <string name="undo">Anulare</string>
   <string name="undo_action_review">last review</string>
   <string name="undo_action_edit">Editare notă</string>

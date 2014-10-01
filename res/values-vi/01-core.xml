@@ -75,7 +75,7 @@
   <string name="card_unsuspended">Đã hủy việc tạm dừng thẻ</string>
   <string name="card_suspended">Thẻ bị tạm dừng</string>
   <string name="menu_rotate">Xoay</string>
-  <string name="menu_import">Nhập dữ liệu</string>
+  <string name="menu_import">Import</string>
   <string name="undo">Hoàn tác</string>
   <string name="undo_action_review">last review</string>
   <string name="undo_action_edit">sửa ghi chú</string>

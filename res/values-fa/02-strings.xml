@@ -43,8 +43,8 @@
   <string name="drawer_close">Close Drawer</string>
   <string name="CardEditorLaterMessage">اطلاعات برای بعد ذخیره شد</string>
   <string name="CardEditorCardDeck">Card deck:</string>
-  <string name="CardEditorNoteDeck">Note deck:</string>
-  <string name="CardEditorModel">Note type:</string>
+  <string name="CardEditorNoteDeck">Deck:</string>
+  <string name="CardEditorModel">Type:</string>
   <string name="CardEditorTags">برچسب ها: %1$s</string>
   <string name="add_new_filter_tags">افزودن/فیلترکردن برچسب ها</string>
   <string name="note_type">نوع یادداشت</string>

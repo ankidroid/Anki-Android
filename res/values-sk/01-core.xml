@@ -75,7 +75,7 @@
   <string name="card_unsuspended">Odloženie karty bokom zrušené</string>
   <string name="card_suspended">Karta je znovu odložená bokom</string>
   <string name="menu_rotate">Otočiť</string>
-  <string name="menu_import">Importovať súbor</string>
+  <string name="menu_import">Import</string>
   <string name="undo">Späť</string>
   <string name="undo_action_review">posledné opakovanie</string>
   <string name="undo_action_edit">upraviť poznámku</string>

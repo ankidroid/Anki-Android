@@ -75,7 +75,7 @@
   <string name="card_unsuspended">Карта неће бити отказана</string>
   <string name="card_suspended">Карта је поново блокирана</string>
   <string name="menu_rotate">Окрени</string>
-  <string name="menu_import">Import file</string>
+  <string name="menu_import">Import</string>
   <string name="undo">Поништи</string>
   <string name="undo_action_review">last review</string>
   <string name="undo_action_edit">Уреди белешку</string>

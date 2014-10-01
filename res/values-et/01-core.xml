@@ -75,7 +75,7 @@
   <string name="card_unsuspended">Card suspension undone</string>
   <string name="card_suspended">Card resuspended</string>
   <string name="menu_rotate">Pööra</string>
-  <string name="menu_import">Impordi fail</string>
+  <string name="menu_import">Import</string>
   <string name="undo">Võta tagasi</string>
   <string name="undo_action_review">last review</string>
   <string name="undo_action_edit">edit note</string>

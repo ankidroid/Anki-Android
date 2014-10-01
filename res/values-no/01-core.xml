@@ -75,7 +75,7 @@
   <string name="card_unsuspended">Gjorde om suspendering av kort</string>
   <string name="card_suspended">Kort suspendert på nytt</string>
   <string name="menu_rotate">Roter</string>
-  <string name="menu_import">Import file</string>
+  <string name="menu_import">Import</string>
   <string name="undo">Angre</string>
   <string name="undo_action_review">last review</string>
   <string name="undo_action_edit">rediger notat</string>

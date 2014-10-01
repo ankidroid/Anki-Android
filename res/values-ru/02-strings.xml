@@ -43,8 +43,8 @@
   <string name="drawer_close">Закрыть ящик</string>
   <string name="CardEditorLaterMessage">Сохранённая информация</string>
   <string name="CardEditorCardDeck">Card deck:</string>
-  <string name="CardEditorNoteDeck">Note deck:</string>
-  <string name="CardEditorModel">Note type:</string>
+  <string name="CardEditorNoteDeck">Deck:</string>
+  <string name="CardEditorModel">Type:</string>
   <string name="CardEditorTags">Теги: %1$s</string>
   <string name="add_new_filter_tags">Добавить / Отфильтровать метки</string>
   <string name="note_type">Тип заметки</string>

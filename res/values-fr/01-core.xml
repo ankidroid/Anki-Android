@@ -75,7 +75,7 @@
   <string name="card_unsuspended">Suspension de la carte annulée</string>
   <string name="card_suspended">Carte re-suspendue</string>
   <string name="menu_rotate">Changer d\'orientation</string>
-  <string name="menu_import">Importer un fichier</string>
+  <string name="menu_import">Import</string>
   <string name="undo">Annuler</string>
   <string name="undo_action_review">Dernière révision</string>
   <string name="undo_action_edit">modifier la note</string>

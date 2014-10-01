@@ -75,7 +75,7 @@
   <string name="card_unsuspended">Kortin jäädytys poistettu</string>
   <string name="card_suspended">Kortti uudelleenjäädytetty</string>
   <string name="menu_rotate">Käännä</string>
-  <string name="menu_import">Import file</string>
+  <string name="menu_import">Import</string>
   <string name="undo">Kumoa</string>
   <string name="undo_action_review">last review</string>
   <string name="undo_action_edit">huomautuksen muokkaus</string>

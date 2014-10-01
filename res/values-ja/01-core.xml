@@ -75,7 +75,7 @@
   <string name="card_unsuspended">カードの保留を解除</string>
   <string name="card_suspended">カードが保留されました</string>
   <string name="menu_rotate">表示画面の回転</string>
-  <string name="menu_import">ファイルのインポート</string>
+  <string name="menu_import">Import</string>
   <string name="undo">元に戻す</string>
   <string name="undo_action_review">最後の復習</string>
   <string name="undo_action_edit">ノートの編集</string>

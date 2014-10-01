@@ -75,7 +75,7 @@
   <string name="card_unsuspended">Kort upplåst</string>
   <string name="card_suspended">Kort åter låst</string>
   <string name="menu_rotate">Rotera</string>
-  <string name="menu_import">Importera fil</string>
+  <string name="menu_import">Import</string>
   <string name="undo">Ångra</string>
   <string name="undo_action_review">senaste recension</string>
   <string name="undo_action_edit">redigera not</string>

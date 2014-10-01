@@ -75,7 +75,7 @@
   <string name="card_unsuspended">Askıya alma geri alındı</string>
   <string name="card_suspended">Kart yeniden askıya alındı</string>
   <string name="menu_rotate">Çevir</string>
-  <string name="menu_import">Dosya içeri aktar</string>
+  <string name="menu_import">Import</string>
   <string name="undo">Geri Al</string>
   <string name="undo_action_review">son çalışma</string>
   <string name="undo_action_edit">Not düzenleme</string>

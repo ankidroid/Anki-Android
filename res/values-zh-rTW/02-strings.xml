@@ -43,8 +43,8 @@
   <string name="drawer_close">Close Drawer</string>
   <string name="CardEditorLaterMessage">封存的資訊</string>
   <string name="CardEditorCardDeck">Card deck:</string>
-  <string name="CardEditorNoteDeck">Note deck:</string>
-  <string name="CardEditorModel">Note type:</string>
+  <string name="CardEditorNoteDeck">Deck:</string>
+  <string name="CardEditorModel">Type:</string>
   <string name="CardEditorTags">標籤: %1$s</string>
   <string name="add_new_filter_tags">Add/filter tags</string>
   <string name="note_type">筆記類型</string>

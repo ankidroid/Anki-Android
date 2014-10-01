@@ -24,8 +24,8 @@
     <item>Add new user manual</item>
     <item>Make statistics identical to Anki Desktop</item>
     <item>Fixes to media sync</item>
-    <item>Fix bug where images were not showing</item>
-    <item>Change layout of note editor</item>
+    <item>Fehler behoben, durch den Bilder nicht angezeigt wurden</item>
+    <item>Layout des Notizeditors geändert</item>
     <item>Add new disable whiteboard option to reviewer and update icons</item>
     <item>Add full support for APKG export and import</item>
     <item>Add feature to email exported APKG</item>

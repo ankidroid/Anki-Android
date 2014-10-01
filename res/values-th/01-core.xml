@@ -75,7 +75,7 @@
   <string name="card_unsuspended">ระงับการยกเลิกบัตร</string>
   <string name="card_suspended">ระงับการใช้บัตรซ้ำ</string>
   <string name="menu_rotate">หมุน</string>
-  <string name="menu_import">Import file</string>
+  <string name="menu_import">Import</string>
   <string name="undo">เรียกคืน</string>
   <string name="undo_action_review">last review</string>
   <string name="undo_action_edit">edit note</string>

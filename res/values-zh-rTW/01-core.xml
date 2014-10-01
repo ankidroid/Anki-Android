@@ -75,7 +75,7 @@
   <string name="card_unsuspended">復原擱置卡片</string>
   <string name="card_suspended">重新擱置卡片</string>
   <string name="menu_rotate">旋轉</string>
-  <string name="menu_import">Import file</string>
+  <string name="menu_import">Import</string>
   <string name="undo">復原</string>
   <string name="undo_action_review">last review</string>
   <string name="undo_action_edit">編輯筆記</string>

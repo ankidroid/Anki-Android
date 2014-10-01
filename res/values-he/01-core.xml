@@ -75,7 +75,7 @@
   <string name="card_unsuspended">השהית הכרטיס בוטלה</string>
   <string name="card_suspended">קלף הוחזר</string>
   <string name="menu_rotate">סבב</string>
-  <string name="menu_import">ייבא קובץ</string>
+  <string name="menu_import">Import</string>
   <string name="undo">בטל</string>
   <string name="undo_action_review">תירגול אחרון</string>
   <string name="undo_action_edit">ערוך הערה</string>

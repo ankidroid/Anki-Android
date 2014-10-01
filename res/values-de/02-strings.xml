@@ -42,9 +42,9 @@
   <string name="drawer_open">Navigationsleiste öffnen</string>
   <string name="drawer_close">Navigationsleiste schließen</string>
   <string name="CardEditorLaterMessage">Information für später gespeichert</string>
-  <string name="CardEditorCardDeck">Card deck:</string>
-  <string name="CardEditorNoteDeck">Note deck:</string>
-  <string name="CardEditorModel">Note type:</string>
+  <string name="CardEditorCardDeck">Kartenstapel:</string>
+  <string name="CardEditorNoteDeck">Deck:</string>
+  <string name="CardEditorModel">Type:</string>
   <string name="CardEditorTags">Schlagworte: %1$s</string>
   <string name="add_new_filter_tags">Schlagworte hinzfügen/filtern</string>
   <string name="note_type">Notiztyp</string>
@@ -77,7 +77,7 @@
   </string-array>
   <string name="cardeditor_title_add_note">Notiz hinzufügen</string>
   <string name="cardeditor_title_edit_card">Notiz bearbeiten</string>
-  <string name="discard_unsaved_changes">Close and lose current input?</string>
+  <string name="discard_unsaved_changes">Schließen und Eingaben verwerfen?</string>
   <string name="factadder_saving_error">Fehler beim Speichern der Notiz</string>
   <string name="pref_lang_support">Sprache</string>
   <string name="saving_facts">Notiz speichern</string>
@@ -155,13 +155,13 @@
   <string name="import_log_error">Import fehlgeschlagen</string>
   <string name="import_log_no_apkg">Dies ist keine gültige apgk-Datei</string>
   <string name="import_importing">Karten werden importiert&#8230;</string>
-  <string name="export_include_schedule">Include scheduling</string>
-  <string name="export_include_media">Include media</string>
-  <string name="confirm_apkg_export">Export collection as apkg file?</string>
-  <string name="confirm_apkg_export_deck">Export \"%s\" as apkg file?</string>
+  <string name="export_include_schedule">Zeitabstände einbeziehen</string>
+  <string name="export_include_media">Medien einbeziehen</string>
+  <string name="confirm_apkg_export">Sammulung als Apkg-Datei exportieren?</string>
+  <string name="confirm_apkg_export_deck">\"%s\" als Apkg-Datei exportieren?</string>
   <string name="export_in_progress">Exportiere apkg-Datei&#8230;</string>
-  <string name="export_successful_title">Email apkg?</string>
-  <string name="export_successful">File \"%s\" was exported. Do you want to email it?</string>
+  <string name="export_successful_title">Apkg e-mailen?</string>
+  <string name="export_successful">Datei \"%s\" wurde exportiert. Wollen Sie sie e-mailen?</string>
   <string name="export_unsuccessful">Fehler beim Exportieren der Sammlung</string>
   <string name="import_hint">Kopieren Sie die apkg-Datei ins Verzeichnis %s und berühren Sie OK um Karten zu importieren</string>
   <string name="upgrade_import_no_file_found">Keine importierbare Datei %1$s gefunden</string>

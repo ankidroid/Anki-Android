@@ -75,7 +75,7 @@
   <string name="card_unsuspended">Uitstellen kaart ongedaan gemaakt</string>
   <string name="card_suspended">Kaart opnieuw uitstellen</string>
   <string name="menu_rotate">Omkeren</string>
-  <string name="menu_import">Bestand importeren</string>
+  <string name="menu_import">Import</string>
   <string name="undo">Ongedaan maken</string>
   <string name="undo_action_review">last review</string>
   <string name="undo_action_edit">bewerk memo</string>

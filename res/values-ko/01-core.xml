@@ -75,7 +75,7 @@
   <string name="card_unsuspended">카드가 다시 활성화 됨</string>
   <string name="card_suspended">카드가 다시 비활성화됨</string>
   <string name="menu_rotate">화면 회전</string>
-  <string name="menu_import">파일 넣기</string>
+  <string name="menu_import">Import</string>
   <string name="undo">실행 취소</string>
   <string name="undo_action_review">last review</string>
   <string name="undo_action_edit">노트 편집</string>
