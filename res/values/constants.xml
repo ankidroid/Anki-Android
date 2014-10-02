@@ -84,7 +84,8 @@
         <item>4</item>
     </string-array>
 
-    <string name="link_anki">https://ankiweb.net</string>
+    <string name="link_anki">http://ankisrs.net</string>
+    <string name="link_ankiweb">https://ankiweb.net</string>
     <string name="link_ankidroid">http://code.google.com/p/ankidroid</string>
     <string name="link_forum">http://groups.google.com/group/anki-android</string>
     <string name="link_wiki">http://code.google.com/p/ankidroid/wiki/Index</string>
