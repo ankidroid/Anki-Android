@@ -297,8 +297,8 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
         //works best for updating all tabs
         @Override
         public int getItemPosition(Object object) {
-            if (object instanceof ChartFragment) {
-                ((ChartFragment) object).checkAndUpdate();
+            if (object instanceof StatisticFragment) {
+                ((StatisticFragment) object).checkAndUpdate();
             }
             //don't return POSITION_NONE, avoid fragment recreation.
             return super.getItemPosition(object);
