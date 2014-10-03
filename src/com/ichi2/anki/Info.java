@@ -616,7 +616,7 @@ public class Info extends ActionBarActivity {
                 break;
 
             case DIALOG_SYNC_UPGRADE_REQUIRED:
-                builder.setMessage(res.getString(R.string.upgrade_required, res.getString(R.string.link_anki)));
+                builder.setMessage(res.getString(R.string.upgrade_required, res.getString(R.string.link_ankiweb)));
                 builder.setPositiveButton(R.string.retry, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
