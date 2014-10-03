@@ -32,7 +32,7 @@ public class IntentHandler extends Activity {
         Intent reloadIntent = new Intent(this, DeckPicker.class);
         reloadIntent.setDataAndType(getIntent().getData(), getIntent().getType());
         String action = intent.getAction();
-        if (action.equals(Intent.ACTION_VIEW)) {
+        if (Intent.ACTION_VIEW.equals(action)) {
             // This intent is used for opening apkg package
             // We want to go immediately to DeckPicker, clearing any history in the process
             // TODO: Still one bug, where if AnkiDroid is launched via ACTION_VIEW,
