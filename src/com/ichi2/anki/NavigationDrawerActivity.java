@@ -47,7 +47,6 @@ public class NavigationDrawerActivity extends AnkiActivity {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
-    private CharSequence mDrawerTitle;
     private String[] mNavigationTitles;
     private TypedArray mNavigationImages;
     // Other members
@@ -69,7 +68,7 @@ public class NavigationDrawerActivity extends AnkiActivity {
         // Create inherited navigation drawer layout here so that it can be used by parent class
         mDrawerLayout = (DrawerLayout) mainView.findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) mainView.findViewById(R.id.left_drawer);
-        mTitle = mDrawerTitle = getTitle();
+        mTitle = getTitle();
         mNavigationTitles = getResources().getStringArray(R.array.navigation_titles);
         mNavigationImages = getResources().obtainTypedArray(R.array.drawer_images);
         // set a custom shadow that overlays the main content when the drawer opens
@@ -97,7 +96,7 @@ public class NavigationDrawerActivity extends AnkiActivity {
             }
 
             public void onDrawerOpened(View drawerView) {
-                getSupportActionBar().setTitle(mDrawerTitle);
+                getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
                 supportInvalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };
