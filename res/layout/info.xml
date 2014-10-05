@@ -72,14 +72,6 @@
         android:layout_height="wrap_content" >
 
         <Button
-            android:id="@+id/info_tutorial"
-            android:layout_width="0dip"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:text="@string/studyoptions_load_tutorial_deck"
-            android:visibility="gone" />
-
-        <Button
             android:id="@+id/info_later"
             android:layout_width="0dip"
             android:layout_height="fill_parent"

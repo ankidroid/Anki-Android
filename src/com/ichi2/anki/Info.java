@@ -94,7 +94,7 @@ public class Info extends ActionBarActivity {
     public static final String TYPE_ANIMATION_RIGHT = "animationToRight";
 
     public static final int TYPE_ABOUT = 0;
-    public static final int TYPE_WELCOME = 1;
+    //public static final int TYPE_WELCOME = 1;
     public static final int TYPE_NEW_VERSION = 2;
     public static final int TYPE_SHARED_DECKS = 3;
     public static final int TYPE_UPGRADE_DECKS = 4;
@@ -157,12 +157,6 @@ public class Info extends ActionBarActivity {
                 }
                 setResult(RESULT_OK);
                 switch (mType) {
-                    case TYPE_WELCOME:
-                        AnkiDroidApp.getSharedPrefs(Info.this.getBaseContext()).edit()
-                                .putLong("lastTimeOpened", System.currentTimeMillis()).commit();
-                        AnkiDroidApp.getSharedPrefs(Info.this.getBaseContext()).edit()
-                                .putString("lastVersion", AnkiDroidApp.getPkgVersionName()).commit();
-                        break;
                     case TYPE_NEW_VERSION:
                         AnkiDroidApp.getSharedPrefs(Info.this.getBaseContext()).edit()
                                 .putString("lastVersion", AnkiDroidApp.getPkgVersionName()).commit();
@@ -199,34 +193,6 @@ public class Info extends ActionBarActivity {
                 sb.append("</body></html>");
                 mWebView.loadDataWithBaseURL("", sb.toString(), "text/html", "utf-8", null);
                 ((Button) findViewById(R.id.info_continue)).setText(res.getString(R.string.info_rate));
-                break;
-
-            case TYPE_WELCOME:
-                // title
-                sb.append("<html><body text=\"#000000\" link=\"#E37068\" alink=\"#E37068\" vlink=\"#E37068\">");
-                sb.append("<big><b>");
-                sb.append(res.getString(R.string.studyoptions_welcome_title));
-                sb.append("</big></b><br><br>");
-                // message
-                sb.append(res.getString(R.string.welcome_message).replace("\n", "<br>"));
-                sb.append("</body></html>");
-                mWebView.loadDataWithBaseURL("", sb.toString(), "text/html", "utf-8", null);
-
-                // add tutorial button
-                Button tutBut = (Button) findViewById(R.id.info_tutorial);
-                tutBut.setVisibility(View.VISIBLE);
-                tutBut.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View arg0) {
-                        setResult(RESULT_OK);
-                        Editor edit = AnkiDroidApp.getSharedPrefs(Info.this.getBaseContext()).edit();
-                        edit.putLong("lastTimeOpened", System.currentTimeMillis());
-                        edit.putString("lastVersion", AnkiDroidApp.getPkgVersionName()).commit();
-                        edit.putBoolean("createTutorial", true);
-                        edit.commit();
-                        finishWithAnimation();
-                    }
-                });
                 break;
 
             case TYPE_NEW_VERSION:
