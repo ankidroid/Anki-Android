@@ -81,7 +81,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     public static final int TASK_TYPE_CHECK_DATABASE = 14;
     public static final int TASK_TYPE_DELETE_BACKUPS = 16;
     public static final int TASK_TYPE_UPDATE_CARD_BROWSER_LIST = 18;
-    public static final int TASK_TYPE_LOAD_TUTORIAL = 19;
+    //public static final int TASK_TYPE_LOAD_TUTORIAL = 19;
     public static final int TASK_TYPE_REPAIR_DECK = 20;
     public static final int TASK_TYPE_CLOSE_DECK = 21;
     public static final int TASK_TYPE_LOAD_DECK_COUNTS = 22;
@@ -268,9 +268,6 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
             case TASK_TYPE_UPDATE_CARD_BROWSER_LIST:
                 return doInBackgroundUpdateCardBrowserList(params);
-
-            case TASK_TYPE_LOAD_TUTORIAL:
-                return doInBackgroundLoadTutorial(params);
 
             case TASK_TYPE_REPAIR_DECK:
                 return doInBackgroundRepairDeck(params);
@@ -1036,90 +1033,6 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             }
         }
         return null;
-    }
-
-
-    private TaskData doInBackgroundLoadTutorial(TaskData... params) {
-        Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadTutorial");
-        Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
-        Collection col = params[0].getCollection();
-        col.getDb().getDatabase().beginTransaction();
-        String title = res.getString(R.string.tutorial_deck_name);
-        try {
-            // get deck or create it
-            long did = col.getDecks().id(title);
-            // reset todays counts
-            JSONObject d = col.getDecks().get(did);
-            for (String t : new String[] { "new", "rev", "lrn", "time" }) {
-                String k = t + "Today";
-                JSONArray ja = new JSONArray();
-                ja.put(col.getSched().getToday());
-                ja.put(0);
-                d.put(k, ja);
-            }
-            // save deck
-            col.getDecks().save(d);
-            if (col.getSched().cardCount("(" + did + ")") > 0) {
-                // deck does already exist. Remove all cards and recreate them
-                // to ensure the correct order
-                col.remCards(col.getDecks().cids(did));
-            }
-            JSONObject model = col.getModels().byName(title);
-            // TODO: check, if model is valid or delete and recreate it
-            // TODO: deactivated at the moment as if forces a schema change
-            // create model (remove old ones first)
-            // while (model != null) {
-            // JSONObject m = col.getModels().byName(title);
-            // // rename old tutorial model if there are some non tutorial cards
-            // in it
-            // if
-            // (col.getDb().queryScalar("SELECT id FROM cards WHERE nid IN (SELECT id FROM notes WHERE mid = "
-            // +
-            // m.getLong("id") + ")", false) == 0) {
-            // col.getModels().rem(m);
-            // } else {
-            // m.put("name", title + " (renamed)");
-            // col.getModels().save(m);
-            // }
-            // }
-            if (model == null) {
-                model = col.getModels().addBasicModel(col, title);
-            }
-            model.put("did", did);
-            String[] questions = res.getStringArray(R.array.tutorial_questions);
-            String[] answers = res.getStringArray(R.array.tutorial_answers);
-            String[] sampleQuestions = res.getStringArray(R.array.tutorial_capitals_questions);
-            String[] sampleAnswers = res.getStringArray(R.array.tutorial_capitals_answers);
-            int len = Math.min(questions.length, answers.length);
-            for (int i = 0; i < len + Math.min(sampleQuestions.length, sampleAnswers.length); i++) {
-                Note note = col.newNote(model);
-                if (note.values().length < 2) {
-                    return new TaskData(false);
-                }
-                note.values()[0] = (i < len) ? questions[i] : sampleQuestions[i - len];
-                note.values()[1] = (i < len) ? answers[i] : sampleAnswers[i - len];
-                col.addNote(note);
-            }
-            // deck.setSessionTimeLimit(0);
-            if (col.getSched().cardCount("(" + did + ")") == 0) {
-                // error, delete deck
-                col.getDecks().rem(did, true);
-                return new TaskData(false);
-            } else {
-                col.save();
-                col.getDecks().select(did);
-                col.getDb().getDatabase().setTransactionSuccessful();
-                return new TaskData(true);
-            }
-        } catch (SQLException e) {
-            AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundLoadTutorial");
-            return new DeckTask.TaskData(false);
-        } catch (JSONException e) {
-            AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundLoadTutorial");
-            return new DeckTask.TaskData(false);
-        } finally {
-            col.getDb().getDatabase().endTransaction();
-        }
     }
 
 
