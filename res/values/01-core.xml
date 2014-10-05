@@ -93,7 +93,7 @@
     <string name="menu_preferences">Preferences</string>
     <!-- <string name="menu_deck_properties">Deck properties</string> -->
     <string name="menu_about">About</string>
-    <string name="menu_dismiss_note">Dismiss note…</string>
+    <string name="menu_dismiss_note">Hide / Delete</string>
     <string name="menu_bury_card">Bury card</string>
     <string name="menu_bury_note">Bury note</string>
     <string name="menu_suspend_card">Suspend card</string>
