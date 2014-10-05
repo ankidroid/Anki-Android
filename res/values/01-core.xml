@@ -110,7 +110,6 @@
     <string name="create">Create</string>
     <string name="new_dynamic_deck">Create filtered deck</string>
     <string name="studyoptions_feedback">Feedback</string>
-    <string name="studyoptions_load_tutorial_deck">Create tutorial</string>
     <!-- <string name="studyoptions_load_sample_deck">Load sample deck</string> -->
     <string name="night_mode">Night mode</string>
 
