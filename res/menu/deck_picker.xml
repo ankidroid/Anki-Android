@@ -25,10 +25,6 @@
         android:title="@string/sync_title"
         ankidroid:showAsAction="always"/>
     <item
-        android:id="@+id/action_tutorial"
-        android:menuCategory="secondary"
-        android:title="@string/help_tutorial"/>
-    <item
         android:id="@+id/action_new_filtered_deck"
         android:enabled="false"
         android:menuCategory="secondary"

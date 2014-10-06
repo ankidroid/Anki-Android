@@ -603,10 +603,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 showMediaCheckDialog(MediaCheckDialog.DIALOG_CONFIRM_MEDIA_CHECK);
                 return true;
 
-            case R.id.action_tutorial:
-                createTutorialDeck();
-                return true;
-
             case R.id.action_restore_backup:
                 showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_CONFIRM_RESTORE_BACKUP);
                 return true;
@@ -933,16 +929,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
 
     private void showStartupScreensAndDialogs(SharedPreferences preferences, int skip) {
-        if (skip < 1 && preferences.getLong("lastTimeOpened", 0) == 0) {
-            // First time to install the app
-            Intent infoIntent = new Intent(this, Info.class);
-            infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_WELCOME);
-            if (skip != 0) {
-                startActivityForResultWithAnimation(infoIntent, SHOW_INFO_WELCOME, ActivityTransitionAnimation.LEFT);
-            } else {
-                startActivityForResultWithoutAnimation(infoIntent, SHOW_INFO_WELCOME);
-            }
-        } else if (!AnkiDroidApp.isSdCardMounted()) {
+        if (!AnkiDroidApp.isSdCardMounted()) {
             // SD Card mounted
             showSdCardNotMountedDialog();
         } else if (!BackupManager.enoughDiscSpace(mPrefDeckPath)) {
@@ -1872,47 +1859,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         long deckId = Long.parseLong(data.get("did"));
         getCol().getDecks().select(deckId);
         openStudyOptions(deckId);
-    }
-
-
-    private void createTutorialDeck() {
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_TUTORIAL, new DeckTask.TaskListener() {
-            @Override
-            public void onPreExecute() {
-                mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "",
-                        getResources().getString(R.string.tutorial_load), true);
-            }
-
-
-            @Override
-            public void onPostExecute(TaskData result) {
-                if (result.getBoolean()) {
-                    loadCounts();
-                    // TODO: This will crash if we're using fragmented layout and activity has been stopped
-                    openStudyOptions(getCol().getDecks().selected());
-                } else {
-                    Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.tutorial_loading_error),
-                            false);
-                }
-                if (mProgressDialog.isShowing()) {
-                    try {
-                        mProgressDialog.dismiss();
-                    } catch (Exception e) {
-                        Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
-                    }
-                }
-            }
-
-
-            @Override
-            public void onProgressUpdate(TaskData... values) {
-            }
-
-
-            @Override
-            public void onCancelled() {
-            }
-        }, new DeckTask.TaskData(getCol()));
     }
 
 

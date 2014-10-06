@@ -107,8 +107,6 @@
     <string name="card_editor_reschedule_card">Reschedule card</string>
     <string name="card_editor_preview_card">Preview</string>
     <string name="error_insufficient_memory">Operation not possible due to insufficient memory on your device</string>
-    <string name="tutorial_load">Creating tutorial deck…</string>
-    <string name="tutorial_loading_error">Tutorial deck could not be created</string>
     <string name="rename">Rename</string>
     <string name="rename_error">Deck %s could not be renamed</string>
     <string name="default_conf_delete_error">The default options group can\'t be removed</string>
@@ -121,8 +119,6 @@
     <string name="help_title">Help</string>
     <string name="help_online">Online help</string>
     <string name="help_faq">FAQ</string>
-    <string name="help_tutorial">Create tutorial deck</string>
-    <string name="tutorial_deck_name">Tutorial deck</string>
     <string name="check_db">Check database</string>
     <string name="check_media">Check media</string>
     <string name="check_db_message">Checking database…</string>
