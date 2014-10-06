@@ -19,8 +19,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-
-    <string name="welcome_message">With AnkiDroid, you can efficiently learn large amounts of vocabulary or any other material. AnkiDroid shows you the things to learn just before you forget them.\n\nTo get a first impression of how everything works, we recommend to start with a tutorial deck, which will give you some initial information, and try a bit out. Just touch \"Study\" after having opened it.\n\nCreate the tutorial deck now?</string>
     <string name="check_db_title">Check database?</string>
     <string name="check_db_warning">This may take a long time</string>
     <string name="check_db_acknowledge">Database checked</string>
