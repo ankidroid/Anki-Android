@@ -6,4 +6,5 @@
 #  - Have added android to the PATH system variable.
 
 android update lib-project -p deps/appcompat
+android update lib-project -p deps/showcaseview
 android update project -p . -n AnkiDroid -s
