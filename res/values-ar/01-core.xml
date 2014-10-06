@@ -101,7 +101,7 @@
   <string name="menu_my_account">حساب المزامنة</string>
   <string name="menu_preferences">تفضيلات</string>
   <string name="menu_about">حول</string>
-  <string name="menu_dismiss_note">ملاحظة الإبعاد...</string>
+  <string name="menu_dismiss_note">Hide / Delete</string>
   <string name="menu_bury_card">Bury card</string>
   <string name="menu_bury_note">أخف الملاحظة</string>
   <string name="menu_suspend_card">علق البطاقة</string>
@@ -118,7 +118,6 @@
   <string name="create">إنشاء</string>
   <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">مرئياتك</string>
-  <string name="studyoptions_load_tutorial_deck">إنشاء الرزمة التعليمية</string>
   <string name="night_mode">وضع ليلي</string>
   <string-array name="next_review_s">
     <item>ثانية واحدة</item>

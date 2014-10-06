@@ -42,9 +42,9 @@
   <string name="drawer_open">ドロワーを開く</string>
   <string name="drawer_close">ドロワーを閉じる</string>
   <string name="CardEditorLaterMessage">後日のために情報を保存</string>
-  <string name="CardEditorCardDeck">Card deck:</string>
-  <string name="CardEditorNoteDeck">Deck:</string>
-  <string name="CardEditorModel">Type:</string>
+  <string name="CardEditorCardDeck">単語帳:</string>
+  <string name="CardEditorNoteDeck">単語帳:</string>
+  <string name="CardEditorModel">ノート:</string>
   <string name="CardEditorTags">タグ: %1$s</string>
   <string name="add_new_filter_tags">フィルタータグの追加</string>
   <string name="note_type">ノートタイプ</string>
@@ -103,13 +103,11 @@
   <string name="deckpicker_select_dictionary_default">標準設定</string>
   <string name="card_editor_add_card">ノートの追加</string>
   <string name="card_editor_reset">リセット</string>
-  <string name="card_editor_copy_card">カードをコピーする</string>
+  <string name="card_editor_copy_card">カードをコピー</string>
   <string name="card_editor_reset_card">学習履歴のリセット</string>
   <string name="card_editor_reschedule_card">スケジュールを変更</string>
   <string name="card_editor_preview_card">プレビュー</string>
   <string name="error_insufficient_memory">メモリ不足のため操作できませんでした。</string>
-  <string name="tutorial_load">練習用単語帳を作成中です\nしばらくお待ちください</string>
-  <string name="tutorial_loading_error">チュートリアルの単語帳を作成できませんでした。</string>
   <string name="rename">名前変更</string>
   <string name="rename_error">単語帳 %s の名前を変更できません。</string>
   <string name="default_conf_delete_error">標準オプショングループを削除することはできません。</string>
@@ -120,8 +118,6 @@
   <string name="help_title">ヘルプ</string>
   <string name="help_online">オンラインヘルプ</string>
   <string name="help_faq">よくある質問</string>
-  <string name="help_tutorial">チュートリアル単語帳の作成</string>
-  <string name="tutorial_deck_name">チュートリアル単語帳</string>
   <string name="check_db">データベースをチェック</string>
   <string name="check_media">メディアをチェック</string>
   <string name="check_db_message">データを確認中です\nしばらくお待ちください</string>
@@ -181,4 +177,5 @@
   <string name="tag_editor_add_hint">右側のチェックマークを使って、新しいタグを追加する</string>
   <string name="tag_editor_add_feedback">\"%2$s\" ボタンを使って \"%1$s\" の追加を確認する</string>
   <string name="lookup_hint">テキストをコピーした後、検索アイコンを表示するために カードのどこかをタップしてください。</string>
+  <string name="add_content_showcase_text">To get started, tap the + button to add some new study material.\n\n Press \'Help\' to see the manual.</string>
 </resources>

@@ -101,7 +101,7 @@
   <string name="menu_my_account">同步帳號</string>
   <string name="menu_preferences">偏好設定</string>
   <string name="menu_about">關於</string>
-  <string name="menu_dismiss_note">取消筆記...</string>
+  <string name="menu_dismiss_note">Hide / Delete</string>
   <string name="menu_bury_card">Bury card</string>
   <string name="menu_bury_note">暫時隱藏筆記</string>
   <string name="menu_suspend_card">長久擱置卡片</string>
@@ -118,7 +118,6 @@
   <string name="create">建立</string>
   <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">回饋意見</string>
-  <string name="studyoptions_load_tutorial_deck">建立教學牌組</string>
   <string name="night_mode">夜間模式</string>
   <string-array name="next_review_s">
     <item>1秒</item>

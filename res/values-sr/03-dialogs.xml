@@ -39,7 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="welcome_message">Са AnkiDroid можете ефикасно да повећате фонд речи или да научите било које градиво. AnkiDroid понавља приказивање карата пре него што их заборавите.\n\nДа бисте упознали програм, препоручујемо да почнете од шпила за обуку, која ће вас упознати са основама, и испробајте сами. Једноставно кликните \"Почни преглед\" после отварања карте.\n\nКреирати шпил за обуку сада?</string>
   <string name="check_db_title">Провери базу података</string>
   <string name="check_db_warning">This may take a long time</string>
   <string name="check_db_acknowledge">Database checked</string>
@@ -56,7 +55,7 @@
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Flashcards за Android</h2>AnkiDroid је програм за изучавање обучавајућих карата и компатибилан је са десктоп верзијом <a href="%2$s">Anki</a>. Можете креирати, преузимати и проучавати информацију и у AnkiDroid и у Anki Desktop, синхронизујући их међусобно.]]></item>
     <item><![CDATA[Да бисмо побољшали AnkiDroid известите нас о грешкама <a href="%1$s">here</a>; предлозима за нове функције или идејама! Користите <a href="%2$s">wiki</a> и учествујте у <a href="%3$s">форуму</a>.]]></item>
-    <item><![CDATA[AnkiDroid је <a href="%1$s">софтвер отвореног кода<a/>, па свако може <a href="%2$s">постати</a>  <a href="%3$s">учесник</a>:-)]]></item>
+    <item><![CDATA[AnkiDroid is <a href=\"%1$s\">open source software<a/>, so everyone is encouraged to <a href=\"%2$s\">join</a> the <a href=\"%3$s\">contributors</a> :-)]]></item>
     <item><![CDATA[Не-програмери могу помоћи <a href="%1$s">преводећи</a> AnkiDroid, обнављајући wiki и скриншоте, <a href="%2$s">донирајући</a> за Anki Desktop, или написавши у блогу о AnkiDroid!]]></item>
     <item><![CDATA[AnkiDroid је публикован са  <a href="%1$s">GNU-GPL v3 лиценцом</a> и изворни код је доступан <a href="%2$s">овде</a>.]]></item>
   </string-array>

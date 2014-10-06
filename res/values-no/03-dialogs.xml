@@ -39,7 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="welcome_message">Med AnkiDroid kan du effektivt lære store mengder gloser eller annet materiale. AnkiDroid viser deg det du skal lære like før du glemmer det.\n\nFor å få et første inntrykk av hvordan det fungerer anbefaler vi at du starter med en innførings-kortstokk, som gir deg litt grunnleggende informasjon, og prøve systemet litt. Bare klikk på \"Begynn å se gjennom\" etter at du har åpnet stokken.\n\nLage innførings-kortstokk nå?</string>
   <string name="check_db_title">Kontroller database</string>
   <string name="check_db_warning">This may take a long time</string>
   <string name="check_db_acknowledge">Database checked</string>
@@ -56,7 +55,7 @@
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s: <br/>Spørrekort til Android</h2>AnkiDroid er et spørrekortprogram som er fullstendig kompatibetl med skrivebordsprogramvaren <a href="%2$s">Anki</a>. Du kan opprette, laste ned og lære nye ting på både AnkiDroid og Anki Desktop, og synkronisere mellom dem med letthet.]]></item>
     <item><![CDATA[For å hjelpe oss med å gjøre AnkiDroid bedre, vennligst rapporter alle feil <a href="%1$s">her</a>; ideer til nye funksjoner tas imot med takk! Vennligst bruk <a href="%2$s">wiki</a> og si Hei på <a href="%3$s">forumet</a>.]]></item>
-    <item><![CDATA[AnkiDroid er <a href="%1$s">åpen kilde-programvare<a/>, slik at alle oppfordres til å <a href="%2$s">delta som</a> <a href="%3$s"> bidragsytere</a>:-)]]></item>
+    <item><![CDATA[AnkiDroid is <a href=\"%1$s\">open source software<a/>, so everyone is encouraged to <a href=\"%2$s\">join</a> the <a href=\"%3$s\">contributors</a> :-)]]></item>
     <item><![CDATA[De som ikke er programmerere kan også hjelpe, for eksempel ved <a href="%1$s">å oversette</a> AnkiDroid, oppdatere wiki\'en og skjermbilder, <a href="%2$s">donere</a> til Anki Desktop eller ved å blogge om AnkiDroid!]]></item>
     <item><![CDATA[AnkiDroid er utgitt under <a href="%1$s"> GNU GPL v3-lisensen</a> og kildekoden er tilgjengelig <a href="%2$s"> her</a>.]]></item>
   </string-array>

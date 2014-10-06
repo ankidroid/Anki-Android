@@ -101,7 +101,7 @@
   <string name="menu_my_account">همگام سازی حساب</string>
   <string name="menu_preferences">تنظیمات</string>
   <string name="menu_about">درباره</string>
-  <string name="menu_dismiss_note">نادیده گرفتن یادداشت...</string>
+  <string name="menu_dismiss_note">Hide / Delete</string>
   <string name="menu_bury_card">مخفی کردن کارت</string>
   <string name="menu_bury_note">مخفی کردن یادداشت</string>
   <string name="menu_suspend_card">تعلیق کارت</string>
@@ -118,7 +118,6 @@
   <string name="create">ساختن</string>
   <string name="new_dynamic_deck">ایجاد دسته فیلتر شده</string>
   <string name="studyoptions_feedback">بازخورد</string>
-  <string name="studyoptions_load_tutorial_deck">ساختن خودآموز</string>
   <string name="night_mode">حالت شب</string>
   <string-array name="next_review_s">
     <item>1 ثانیه</item>

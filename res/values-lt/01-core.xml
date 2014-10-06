@@ -101,7 +101,7 @@
   <string name="menu_my_account">Sinchronizacijos paskyra</string>
   <string name="menu_preferences">Nustatymai</string>
   <string name="menu_about">Apie</string>
-  <string name="menu_dismiss_note">Atleisti pastabą...</string>
+  <string name="menu_dismiss_note">Hide / Delete</string>
   <string name="menu_bury_card">Nukišti kortelę</string>
   <string name="menu_bury_note">Paslėpti pastabą</string>
   <string name="menu_suspend_card">Sustabdyti kortelę</string>
@@ -118,7 +118,6 @@
   <string name="create">Sukurti</string>
   <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">Atsiliepimas</string>
-  <string name="studyoptions_load_tutorial_deck">Sukurti vadovėlį</string>
   <string name="night_mode">Naktinis režimas</string>
   <string-array name="next_review_s">
     <item>1 sekundė</item>

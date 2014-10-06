@@ -39,7 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="welcome_message">S AkniDroid se můžete efektivně naučit velké množství slovíček, nebo jiných vědomostí. AnkiDroid Vám ukáže věci k zopakování těsně před tím, než byste je zapomněli.\n\nPro získání obrázku o tom jak to funguje, doporučujeme začít s balíčkem tutoriálu, který Vám podá základní informace a program si trochu vyzkoušíte. Jenom ho otevřete a klikněte na \"Začít opakovat\".\n\nChcete nyní vytvořit balíček tutoriálu?</string>
   <string name="check_db_title">Zkontrolovat databázi</string>
   <string name="check_db_warning">Toto může trvat dlouhou dobu</string>
   <string name="check_db_acknowledge">Databáze zkontrolována</string>
@@ -56,7 +55,7 @@
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Flashcards pro Android</h2>AnkiDroid je flashcard aplikace, která je plně kompatibilní s programem pro pc  <a href="%2$s">Anki</a>. Můžete vytvářet, stahovat a učit se v obou, v AnkiDroid nebo Anki pro pc, a vše mezi nimi velmi jednoduše synchronizovat.]]></item>
     <item><![CDATA[Pomozte nám, prosím, zlepšit AnkiDroid a nahlašte nám chyby <a href="%1$s">zde</a>; nové nápady jsou vítany také! Prosím, využijte <a href="%2$s">wiki</a> a podělte se s námi o poznatky na <a href="%3$s">fóru</a>.]]></item>
-    <item><![CDATA[AnkiDroid je <a href="%1$s">open source program<a/>, tak se každý může <a href="%2$s">připojit</a> k <a href="%3$s">přispěvovatelům</a>:-)]]></item>
+    <item><![CDATA[AnkiDroid is <a href=\"%1$s\">open source software<a/>, so everyone is encouraged to <a href=\"%2$s\">join</a> the <a href=\"%3$s\">contributors</a> :-)]]></item>
     <item><![CDATA[Ne jen vývojáři mohou pomoci, např. můžete pomoci s <a href="%1$s">překladem</a> AnkiDroid, aktualizovat wiki dokumentaci a náhledy obrazovek, <a href="%2$s">finančně přispět</a> na program Anki, nebo psát do blogu o AnkiDroidu!]]></item>
     <item><![CDATA[AnkiDroid je publikován pod <a href="%1$s">GNU-GPL v3 licencí</a> a zdrojové kódy jsou dostupné <a href="%2$s">zde</a>.]]></item>
   </string-array>

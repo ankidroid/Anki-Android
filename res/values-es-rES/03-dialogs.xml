@@ -39,7 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="welcome_message">Con AnkiDroid, puedes aprender eficazmente grandes cantidades de vocabulario o cualquier otro material. AnkiDroid muestra las cosas que has de aprender justo antes de que las olvides.\n\nPara tener una primera impresión de cómo funciona todo, te recomendamos empezar con un mazo tutorial, que te proporcionará información inicial y la oportunidad de probar un poco. Simplemente haz clic en \"Empezar a Repasar\" después de haberlo abierto.\n\n¿Quieres crear el mazo tutorial ahora?</string>
   <string name="check_db_title">Comprobar base de datos</string>
   <string name="check_db_warning">Esto podría tomar mucho tiempo</string>
   <string name="check_db_acknowledge">Base de datos comprobada</string>
@@ -56,7 +55,7 @@
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Tarjetas de estudio para Android</h2>AnkiDroid es una aplicación de tarjetas de estudio que es totalmente compatible con el software de escritorio <a href="%2$s">Anki</a>. Puedes crear, descargar y estudiar contenidos en ambos, AnkiDroid o Anki Escritorio, y sincronizarlos muy fácilmente.]]></item>
     <item><![CDATA[Para ayudarnos a mejorar AnkiDroid, por favor, infórmanos de cualquier error <a href="%1$s">aquí</a>; ¡también apreciamos mucho las ideas sobre nuevas funciones! Por favor, usa la <a href="%2$s">wiki</a> y salúdanos en el <a href="%3$s">foro</a>.]]></item>
-    <item><![CDATA[AnkiDroid es un <a href="%1$s">software de código abierto<a/>, por lo que se anima a todo el mundo a <a href="%2$s">unirse</a> a los <a href="%3$s">colaboradores</a>:-)]]></item>
+    <item><![CDATA[AnkiDroid is <a href=\"%1$s\">open source software<a/>, so everyone is encouraged to <a href=\"%2$s\">join</a> the <a href=\"%3$s\">contributors</a> :-)]]></item>
     <item><![CDATA[Los que no sean desarrolladores también pueden ayudar, por ejemplo, <a href="%1$s">traduciendo</a> AnkiDroid, actualizando la wiki y las capturas de pantalla, <a href="%2$s">haciendo una donación</a> a Anki Escritorio, ¡o blogueando sobre AnkiDroid!]]></item>
     <item><![CDATA[AnkiDroid es distribuido bajo la <a href="%1$s">licencia GNU-GPL v3</a> y el código fuente está disponible <a href="%2$s">aquí</a>.]]></item>
   </string-array>

@@ -101,7 +101,7 @@
   <string name="menu_my_account">सिंक्रनाइज़ेशन खाता</string>
   <string name="menu_preferences">वरीयताएँ</string>
   <string name="menu_about">के बारे में</string>
-  <string name="menu_dismiss_note">नोट को खारिज...</string>
+  <string name="menu_dismiss_note">Hide / Delete</string>
   <string name="menu_bury_card">कार्ड दफनाना</string>
   <string name="menu_bury_note">नोट दफनाना</string>
   <string name="menu_suspend_card">कार्ड को निलंबित</string>
@@ -118,7 +118,6 @@
   <string name="create">बनाएँ</string>
   <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">आपके सुझाव</string>
-  <string name="studyoptions_load_tutorial_deck">ट्यूटोरियल बनाना</string>
   <string name="night_mode">रात मोड</string>
   <string-array name="next_review_s">
     <item>1 सेकंड</item>

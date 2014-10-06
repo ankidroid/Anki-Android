@@ -39,7 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="welcome_message">S AnkiDroid sa môžete efektívne naučiť veľké množstvá slovíčok alebo akéhokoľvek iného materiálu. AnkiDroid vám ukáže to, čo sa učíte, tesne predtým ako by ste to zabudli.\n\nAby ste si vyskúšali ako to funguje, odporúčame vám začať s úvodným balíčkom, ktorý vám poskytne základné informácie. Stačí kliknúť na \"Začať opakovať\" po tom, čo ho otvoríte.\n\nChcete teraz vytvoriť úvodný balíček?</string>
   <string name="check_db_title">Kontrola databázy</string>
   <string name="check_db_warning">Toto môže zabrať dlhší čas</string>
   <string name="check_db_acknowledge">Databáza skontrolovaná</string>
@@ -56,7 +55,7 @@
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s: <br/>Kartičky pre Android</h2>AnkiDroid je aplikácia, ktorá je plne kompatibilná s počítačovou verziou <a href="%2$s"> Anki</a>. Môžete vytvárať, sťahovať a učiť sa materiály na AnkiDroid alebo počítačovej verzii Anki, a veľmi ľahko medzi nimi synchronizovať.]]></item>
     <item><![CDATA[Aby ste nám pomohli vylepšiť AnkiDroid, prosím oznámte akúkoľvek chybu <a href="%1$s"> tu</a>; nápady na nové funkcie sú tiež veľmi vítané! Použite prosím <a href="%2$s"> wiki</a> a ozvite sa na <a href="%3$s"> fóre</a>.]]></item>
-    <item><![CDATA[AnkiDroid je <a href="%1$s"> open source softvér <a/>, takže každý je vítaný <a href="%2$s"> pripojiť</a>sa k <a href="%3$s"> prispievateľom</a> :-)]]></item>
+    <item><![CDATA[AnkiDroid is <a href=\"%1$s\">open source software<a/>, so everyone is encouraged to <a href=\"%2$s\">join</a> the <a href=\"%3$s\">contributors</a> :-)]]></item>
     <item><![CDATA[Nevývojári môžu tiež pomôcť, napríklad s <a href="%1$s"> prekladom</a> AnkiDroid, aktualizáciou wiki a screenshotmi, <a href="%2$s"> darovaním</a> počítačovej verzii Anki alebo blogovaním o AnkiDroid!]]></item>
     <item><![CDATA[AnkiDroid je vydané pod <a href="%1$s"> licenciou GNU GPL v3</a> a zdrojový kód je k dispozícii <a href="%2$s"> tu</a>.]]></item>
   </string-array>

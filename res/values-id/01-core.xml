@@ -101,7 +101,7 @@
   <string name="menu_my_account">Sync account</string>
   <string name="menu_preferences">Keutamaan</string>
   <string name="menu_about">Tentang</string>
-  <string name="menu_dismiss_note">Abaikan Catatan...</string>
+  <string name="menu_dismiss_note">Hide / Delete</string>
   <string name="menu_bury_card">Bury card</string>
   <string name="menu_bury_note">Bury note</string>
   <string name="menu_suspend_card">Gantung Kad</string>
@@ -118,7 +118,6 @@
   <string name="create">Membuat</string>
   <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">Maklum balas</string>
-  <string name="studyoptions_load_tutorial_deck">Membuat tutorial</string>
   <string name="night_mode">Mode malam</string>
   <string-array name="next_review_s">
     <item>1 saat</item>

@@ -101,7 +101,7 @@
   <string name="menu_my_account">Sincronizare cont</string>
   <string name="menu_preferences">Preferinţe</string>
   <string name="menu_about">Despre</string>
-  <string name="menu_dismiss_note">Renunta la notă...</string>
+  <string name="menu_dismiss_note">Hide / Delete</string>
   <string name="menu_bury_card">Îngroapă Card</string>
   <string name="menu_bury_note">Ingroapa notă</string>
   <string name="menu_suspend_card">Suspendă Card</string>
@@ -118,7 +118,6 @@
   <string name="create">Creare</string>
   <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">Feedback</string>
-  <string name="studyoptions_load_tutorial_deck">Creare tutorial</string>
   <string name="night_mode">Mod de noapte</string>
   <string-array name="next_review_s">
     <item>1 secundă</item>

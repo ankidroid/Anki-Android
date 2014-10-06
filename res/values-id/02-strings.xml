@@ -108,8 +108,6 @@
   <string name="card_editor_reschedule_card">Reschedule card</string>
   <string name="card_editor_preview_card">Preview</string>
   <string name="error_insufficient_memory">Operasi gagal kerana tahap memori pada peranti anda</string>
-  <string name="tutorial_load">Membuat dek tutorial.\nSilahkan tunggu...</string>
-  <string name="tutorial_loading_error">Dek tutorial tidak dapat dibuat</string>
   <string name="rename">Ubah nama</string>
   <string name="rename_error">Dek %s tidak dapat diganti namanya</string>
   <string name="default_conf_delete_error">Kelompok pilihan default tidak dapat dihapus</string>
@@ -120,8 +118,6 @@
   <string name="help_title">Bantuan</string>
   <string name="help_online">Bantuan online</string>
   <string name="help_faq">FAQ</string>
-  <string name="help_tutorial">Create tutorial deck</string>
-  <string name="tutorial_deck_name">Tutorial deck</string>
   <string name="check_db">Periksa database</string>
   <string name="check_media">Check media</string>
   <string name="check_db_message">Memeriksa database. \nSilahkan tunggu...</string>
@@ -181,4 +177,5 @@
   <string name="tag_editor_add_hint">Use tick mark on the right to add new tag</string>
   <string name="tag_editor_add_feedback">Press \"%2$s\" button to confirm adding \"%1$s\"</string>
   <string name="lookup_hint">After copying the text, tap anywhere on the flashcard to show the search icon</string>
+  <string name="add_content_showcase_text">To get started, tap the + button to add some new study material.\n\n Press \'Help\' to see the manual.</string>
 </resources>

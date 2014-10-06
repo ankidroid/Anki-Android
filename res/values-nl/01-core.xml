@@ -101,7 +101,7 @@
   <string name="menu_my_account">Account synchroniseren</string>
   <string name="menu_preferences">Voorkeuren</string>
   <string name="menu_about">Over</string>
-  <string name="menu_dismiss_note">Memo negeren...</string>
+  <string name="menu_dismiss_note">Hide / Delete</string>
   <string name="menu_bury_card">Kaart verbergen</string>
   <string name="menu_bury_note">Memo verbergen</string>
   <string name="menu_suspend_card">Blokkeer kaart</string>
@@ -118,7 +118,6 @@
   <string name="create">Maak</string>
   <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">Feedback</string>
-  <string name="studyoptions_load_tutorial_deck">Maak handleiding</string>
   <string name="night_mode">Nachtmodus</string>
   <string-array name="next_review_s">
     <item>1 seconde</item>

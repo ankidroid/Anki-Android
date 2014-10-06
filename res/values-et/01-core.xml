@@ -101,7 +101,7 @@
   <string name="menu_my_account">Sünkrooni konto</string>
   <string name="menu_preferences">Eelistused</string>
   <string name="menu_about">Lähemalt</string>
-  <string name="menu_dismiss_note">Dismiss note&#8230;</string>
+  <string name="menu_dismiss_note">Hide / Delete</string>
   <string name="menu_bury_card">Bury card</string>
   <string name="menu_bury_note">Bury note</string>
   <string name="menu_suspend_card">Peata kaart</string>
@@ -118,7 +118,6 @@
   <string name="create">Loo</string>
   <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">Tagasiside</string>
-  <string name="studyoptions_load_tutorial_deck">Loo õpetus</string>
   <string name="night_mode">Öörežiim</string>
   <string-array name="next_review_s">
     <item>1 sekund</item>

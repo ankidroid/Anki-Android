@@ -39,7 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="welcome_message">Com AnkiDroid Voce pode eficientemente aprender grandes quantidades de vocabulário ou de qualquer outro material. AnkiDroid lhe mostra as coisas a aprender justo antes que voce as esqueça.\n\nPara ter uma primeira impressão de como tudo funciona, nos recomendamos iniciar com um deck tutorial, o qual lhe dará alguma informação inicial, e tente um pouco. Basta clicar em \"Iniciar Revisão\' após te-lo aberto. \n\n Criar um deck tutorial agora?</string>
   <string name="check_db_title">Verificar banco de dados</string>
   <string name="check_db_warning">This may take a long time</string>
   <string name="check_db_acknowledge">Database checked</string>
@@ -56,7 +55,7 @@
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Cartões de estudo para Android</h2>AnkiDroid é a aplicação de cartões de estudo que é totalmente compatível com o software de desktop <a href="%2$s">Anki</a>. Você pode criar, baixar e aprender conteúdos em ambos,AnkiDroid ou Anki Desktop, e sincronizá-los facilmente.]]></item>
     <item><![CDATA[Para nos ajudar a fazer o AnkiDroid melhor, por favor reporte qualquer bug <a href="%1$s">aqui</a>; novas ideias são muito bem vindas também! Por favor use o <a href="%2$s">wiki</a> e diga Oi no <a href="%3$s">fórum</a>.]]></item>
-    <item><![CDATA[AnkiDroid é um <a href="%1$s">software open source<a/>, então todos são encorajados a <a href="%2$s">juntar-se</a> aos <a href="%3$s">colaboradores</a>:-)]]></item>
+    <item><![CDATA[AnkiDroid is <a href=\"%1$s\">open source software<a/>, so everyone is encouraged to <a href=\"%2$s\">join</a> the <a href=\"%3$s\">contributors</a> :-)]]></item>
     <item><![CDATA[Não-desenvolvedores podem ajudar também, por exemplo <a href="%1$s">traduzindo</a> AnkiDroid, atualizando o wiki e os screenshots, <a href="%2$s">doando</a> para o Anki Desktop, ou bloggando sobre AnkiDroid!]]></item>
     <item><![CDATA[AnkiDroid é publicado sobre a licensa<a href="%1$s">GNU-GPL v3 license</a> e o codigo-fonte está <a href="%2$s">aqui</a>.]]></item>
   </string-array>

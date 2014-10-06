@@ -39,7 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="welcome_message">Za pomocą AnkiDroida możesz efektywnie uczyć się dużych ilości słownictwa lub dowolnego innego materiału do nauki. AnkiDroid wyświetla Ci informacje tuż zanim je zapomnisz.\n\nAby zobaczyć, jak to działa, zalecamy rozpocząć od talii szkoleniowej, z której dowiesz się podstawowych informacji. Kliknij \"Rozpocznij powtórkę\" po otwarciu talii.\n\nCzy chcesz utworzyć teraz talię szkoleniową?</string>
   <string name="check_db_title">Sprawdź bazę danych</string>
   <string name="check_db_warning">To może zająć dużo czasu.</string>
   <string name="check_db_acknowledge">Database checked</string>
@@ -56,7 +55,7 @@
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Fiszki dla Androida</h2>AnkiDroid to programowy odpowiednik pudełka z fiszkami, w pełni kompatybilny z desktopową wersją programu <a href="%2$s">Anki</a>. Karty z materiałem do nauki można tworzyć lub pobierać za pomocą zarówno AnkiDroida jak i wersji desktopowej Anki, a następnie łatwo synchronizować je pomiędzy tymi programami.]]></item>
     <item><![CDATA[Aby pomóc nam w ulepszaniu AnkiDroida, prosimy zgłaszać błędy <a href="%1$s">tutaj</a>; nowe pomysły też są mile widziane! Skorzystaj z <a href="%2$s">wiki</a> i przywitaj się na <a href="%3$s">forum</a>.]]></item>
-    <item><![CDATA[AnkiDroid jest <a href="%1$s">programem open source<a/>, każdy może więc <a href="%2$s">przyłączyć się</a> do grona jego<a href="%3$s">współautorów</a>:-)]]></item>
+    <item><![CDATA[AnkiDroid is <a href=\"%1$s\">open source software<a/>, so everyone is encouraged to <a href=\"%2$s\">join</a> the <a href=\"%3$s\">contributors</a> :-)]]></item>
     <item><![CDATA[Nie-programiści też mogą pomóc, na przykład <a href="%1$s">tłumacząc</a> AnkiDroida, aktualizując wiki oraz zrzuty ekranu, poprzez <a href="%2$s">datki</a> dla desktopowej wersji Anki lub blogując o AnkiDroidzie!]]></item>
     <item><![CDATA[AnkiDroid udostępniany jest na <a href="%1$s">licencji GNU-GPL v3</a> a kod źródłowy znaleźć można <a href="%2$s">tutaj</a>.]]></item>
   </string-array>

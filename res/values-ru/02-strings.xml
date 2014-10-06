@@ -108,8 +108,6 @@
   <string name="card_editor_reschedule_card">Reschedule card</string>
   <string name="card_editor_preview_card">Предпросмотр</string>
   <string name="error_insufficient_memory">Операция не возможна из-за недостатка памяти на Вашем устройстве</string>
-  <string name="tutorial_load">Создание учебной колоды. \nПожалуйста подождите...</string>
-  <string name="tutorial_loading_error">Учебная колода не может быть создана</string>
   <string name="rename">Переименовать</string>
   <string name="rename_error">Колода %s не может быть переименована</string>
   <string name="default_conf_delete_error">Невозможно удалить параметры по умолчанию</string>
@@ -120,8 +118,6 @@
   <string name="help_title">Справка</string>
   <string name="help_online">Онлайн помощь</string>
   <string name="help_faq">Вопросы и ответы</string>
-  <string name="help_tutorial">Создать учебную колоду</string>
-  <string name="tutorial_deck_name">Учебная колода</string>
   <string name="check_db">Проверка базы данных</string>
   <string name="check_media">Проверить медиа</string>
   <string name="check_db_message">Проверка базы данных. \nПожалуйста подождите...</string>
@@ -181,4 +177,5 @@
   <string name="tag_editor_add_hint">Поставьте галочку справа, чтобы добавить новую метку</string>
   <string name="tag_editor_add_feedback">Нажмите кнопку «%2$s» для подтверждения добавления «%1$s»</string>
   <string name="lookup_hint">Скопировав текст, тапните где-либо по карте чтобы показать иконку ответа</string>
+  <string name="add_content_showcase_text">To get started, tap the + button to add some new study material.\n\n Press \'Help\' to see the manual.</string>
 </resources>

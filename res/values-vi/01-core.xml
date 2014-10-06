@@ -101,7 +101,7 @@
   <string name="menu_my_account">Tài khoản đồng bộ</string>
   <string name="menu_preferences">Tuỳ chọn</string>
   <string name="menu_about">Giới thiệu</string>
-  <string name="menu_dismiss_note">Loại bỏ ghi chú</string>
+  <string name="menu_dismiss_note">Hide / Delete</string>
   <string name="menu_bury_card">Ẩn Thẻ</string>
   <string name="menu_bury_note">Ẩn ghi chú</string>
   <string name="menu_suspend_card">Tạm dừng thẻ</string>
@@ -118,7 +118,6 @@
   <string name="create">Tạo</string>
   <string name="new_dynamic_deck">Tạo Bài chọn lọc</string>
   <string name="studyoptions_feedback">Phản hồi</string>
-  <string name="studyoptions_load_tutorial_deck">Tạo hướng dẫn</string>
   <string name="night_mode">Chế độ ban đêm</string>
   <string-array name="next_review_s">
     <item>1 giây</item>

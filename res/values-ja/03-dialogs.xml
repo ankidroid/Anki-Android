@@ -39,7 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="welcome_message">AnkiDroidは、大量の語彙や他の覚えたい事を効率的に学ぶためのアプリです。AnkiDroid は、あなたが忘れてしまう前に繰り返し学習の機会を与えます\n\nまずは、さまざまな特長や使い方を知るために、チュートリアル単語帳を使ってみることを、お勧めします。「スタートレビュー」をクリックしてください。\n\nチュートリアル単語帳を作成しますか?</string>
   <string name="check_db_title">データベースをチェックしますか？</string>
   <string name="check_db_warning">これには長い時間がかかることがあります。</string>
   <string name="check_db_acknowledge">データベースのチェックが完了しました</string>
@@ -56,7 +55,7 @@
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Android用のフラッシュカード</h2>AnkiDroidは、PCソフトウェア <a href=\"%2$s\">Anki</a> と完全互換のフラッシュカードアプリです。あなたは、AnkiDroid と Anki のどちらでも教材を作成、ダウンロード、学習し、また、簡単に双方の同期をとることができます。]]></item>
     <item><![CDATA[AnkiDroid を改善するために、できるだけバグを <a href="%1$s">こちら</a>に報告していただければ幸いです。 新しい機能のアイデアも大歓迎いたします！　<a href="%2$s">Wiki </a> を使用して、<a href="%3$s">フォーラム</a>にご意見をお寄せください。]]></item>
-    <item><![CDATA[AnkiDroid は、<a href="%1$s">オープン ソース ソフトウェア<a/>で、誰でも<a href="%3$s">貢献者</a> として<a href="%2$s">参加</a>することを歓迎します:-)　]]></item>
+    <item><![CDATA[AnkiDroid is <a href=\"%1$s\">open source software<a/>, so everyone is encouraged to <a href=\"%2$s\">join</a> the <a href=\"%3$s\">contributors</a> :-)]]></item>
     <item><![CDATA[開発者でなくても、例えば AnkiDroid を<a href="%1$s">翻訳</a>したり、Wikiやスクリーン ショットを更新したり、PC版の Anki に<a href="%2$s">寄付</a>をしたり、AnkiDroid についてのブログを書いたりして貢献できます！]]></item>
     <item><![CDATA[AnkiDroid は、<a href="%1$s">GNU GPL v3 ライセンス</a>の下でリリースされており、ソースコードは<a href="%2$s">こちら</a>です。]]></item>
   </string-array>

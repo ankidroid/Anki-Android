@@ -101,7 +101,7 @@
   <string name="menu_my_account">Synkroniser konto</string>
   <string name="menu_preferences">Innstillinger</string>
   <string name="menu_about">Om</string>
-  <string name="menu_dismiss_note">Ignorer notat...</string>
+  <string name="menu_dismiss_note">Hide / Delete</string>
   <string name="menu_bury_card">Bury card</string>
   <string name="menu_bury_note">Begrav notat</string>
   <string name="menu_suspend_card">Suspender kort</string>
@@ -118,7 +118,6 @@
   <string name="create">Opprett</string>
   <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">Tilbakemelding</string>
-  <string name="studyoptions_load_tutorial_deck">Lag veileder</string>
   <string name="night_mode">Nattmodus</string>
   <string-array name="next_review_s">
     <item>1 sekund</item>

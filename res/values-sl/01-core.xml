@@ -101,7 +101,7 @@
   <string name="menu_my_account">Sinhroniziraj račun</string>
   <string name="menu_preferences">Nastavitve</string>
   <string name="menu_about">O programu</string>
-  <string name="menu_dismiss_note">Opusti zapisek...</string>
+  <string name="menu_dismiss_note">Hide / Delete</string>
   <string name="menu_bury_card">Bury card</string>
   <string name="menu_bury_note">Prikrij zapisek</string>
   <string name="menu_suspend_card">Pridrži kartico</string>
@@ -118,7 +118,6 @@
   <string name="create">Ustvari</string>
   <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">Povratna informacija</string>
-  <string name="studyoptions_load_tutorial_deck">Ustvari učno vajo</string>
   <string name="night_mode">Nočni način</string>
   <string-array name="next_review_s">
     <item>1 sekunda</item>
