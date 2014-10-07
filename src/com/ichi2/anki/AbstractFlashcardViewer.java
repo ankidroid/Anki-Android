@@ -1328,6 +1328,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
         mIsSelecting = false;
         hideLookupButton();
+        // Detect invalid ease for current card (e.g. by using keyboard shortcut or gesture).
+        if (getCol().getSched().answerButtons(mCurrentCard) < ease) {
+            return;
+        }
         switch (ease) {
             case EASE_FAILED:
                 mChosenAnswer.setText("\u2022");
