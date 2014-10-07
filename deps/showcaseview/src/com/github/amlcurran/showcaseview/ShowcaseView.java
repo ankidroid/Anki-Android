@@ -24,6 +24,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.PorterDuff;
+import android.os.Build;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -299,13 +300,18 @@ public class ShowcaseView extends RelativeLayout
     }
 
     private void fadeOutShowcase() {
-        animationFactory.fadeOutView(this, fadeOutMillis, new AnimationEndListener() {
-            @Override
-            public void onAnimationEnd() {
-                setVisibility(View.GONE);
-                mEventListener.onShowcaseViewDidHide(ShowcaseView.this);
-            }
-        });
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            animationFactory.fadeOutView(this, fadeOutMillis, new AnimationEndListener() {
+                @Override
+                public void onAnimationEnd() {
+                    setVisibility(View.GONE);
+                    mEventListener.onShowcaseViewDidHide(ShowcaseView.this);
+                }
+            });
+        } else {
+            setVisibility(View.GONE);
+            mEventListener.onShowcaseViewDidHide(ShowcaseView.this);
+        }
     }
 
     public void show() {
@@ -314,14 +320,18 @@ public class ShowcaseView extends RelativeLayout
     }
 
     private void fadeInShowcase() {
-        animationFactory.fadeInView(this, fadeInMillis,
-                new AnimationStartListener() {
-                    @Override
-                    public void onAnimationStart() {
-                        setVisibility(View.VISIBLE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            animationFactory.fadeInView(this, fadeInMillis,
+                    new AnimationStartListener() {
+                        @Override
+                        public void onAnimationStart() {
+                            setVisibility(View.VISIBLE);
+                        }
                     }
-                }
-        );
+            );
+        } else {
+            setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
