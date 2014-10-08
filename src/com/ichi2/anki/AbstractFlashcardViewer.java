@@ -1067,6 +1067,18 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     }
 
 
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if (!sDisplayAnswer) {
+            if (keyCode == KeyEvent.KEYCODE_SPACE || keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER) {
+                displayCardAnswer();
+                return true;
+            }
+        }
+        return super.onKeyUp(keyCode, event);
+    }
+
+
     // These three methods use a deprecated API - they should be updated to possibly use its more modern version.
     protected boolean clipboardHasText() {
         return mClipboard != null && mClipboard.hasText();
@@ -1322,12 +1334,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     }
 
 
-    private void answerCard(int ease) {
+    protected void answerCard(int ease) {
         if (mInAnswer) {
             return;
         }
         mIsSelecting = false;
         hideLookupButton();
+        // Detect invalid ease for current card (e.g. by using keyboard shortcut or gesture).
+        if (getCol().getSched().answerButtons(mCurrentCard) < ease) {
+            return;
+        }
         switch (ease) {
             case EASE_FAILED:
                 mChosenAnswer.setText("\u2022");
