@@ -510,7 +510,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         menu.findItem(R.id.action_check_media).setEnabled(sdCardAvailable);
 
         // Show the welcome screen here if col empty to be sure that the action bar exists
-        if (mShowShowcaseView && getCol() != null && getCol().isEmpty()) {
+        if (mShowShowcaseView && getCol() != null && getCol().getDb()!=null && getCol().isEmpty()) {
             mShowShowcaseView = false;
             final Resources res = getResources();
             ActionItemTarget target = new ActionItemTarget(this, R.id.action_add_decks);
