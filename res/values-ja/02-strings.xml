@@ -177,5 +177,5 @@
   <string name="tag_editor_add_hint">右側のチェックマークを使って、新しいタグを追加する</string>
   <string name="tag_editor_add_feedback">\"%2$s\" ボタンを使って \"%1$s\" の追加を確認する</string>
   <string name="lookup_hint">テキストをコピーした後、検索アイコンを表示するために カードのどこかをタップしてください。</string>
-  <string name="add_content_showcase_text">To get started, tap the + button to add some new study material.\n\n Press \'Help\' to see the manual.</string>
+  <string name="add_content_showcase_text">開始する場合は、「＋」ボタンをタップして新しい学習データを追加してください。\n\n マニュアルを見る場合は、「ヘルプ」を押してください。</string>
 </resources>

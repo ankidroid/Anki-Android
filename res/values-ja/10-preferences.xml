@@ -157,7 +157,7 @@
   <string name="time_limit">タイム ボックス時間制限</string>
   <string name="time_limit_summ">XXX 分</string>
   <string name="day_offset">日付更新の時刻</string>
-  <string name="day_offset_summ">XXX 時 （24時間表記）</string>
+  <string name="day_offset_summ">XXX 時</string>
   <string name="input_workaround">回避方法を入力</string>
   <string name="input_workaround_summ">HTMLの入力ボックスへ、フォーカスが移動した時の問題を回避します。いくつかのデバイスで問題が発生しています。</string>
   <string name="pref_keep_screen_on">画面を保持</string>
@@ -204,7 +204,7 @@
   <string name="deck_conf_start_ease">開始時の難易度</string>
   <string name="deck_conf_max_rev">最大復習枚数／日</string>
   <string name="deck_conf_new_bury">新規の関連カードの学習を延期</string>
-  <string name="deck_conf_new_bury_summ">新規カードの復習は翌日まで延期します</string>
+  <string name="deck_conf_new_bury_summ">新規の関連カードの復習を翌日まで延期します</string>
   <string name="deck_conf_rev_bury">復習の延期</string>
   <string name="deck_conf_rev_bury_summ">関連カードの復習を翌日まで延期する</string>
   <string name="deck_conf_easy_bonus">簡単と答えた時のボーナス</string>

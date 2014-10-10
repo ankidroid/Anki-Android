@@ -75,7 +75,7 @@
   <string name="card_unsuspended">Приостановка карты была отменена</string>
   <string name="card_suspended">Карта снова заблокирована</string>
   <string name="menu_rotate">Повернуть</string>
-  <string name="menu_import">Import</string>
+  <string name="menu_import">Импорт</string>
   <string name="undo">Отменить</string>
   <string name="undo_action_review">Последнее повторение</string>
   <string name="undo_action_edit">Редактировать запись</string>
@@ -101,7 +101,7 @@
   <string name="menu_my_account">Учётная запись синхронизации</string>
   <string name="menu_preferences">Настройки</string>
   <string name="menu_about">О программе</string>
-  <string name="menu_dismiss_note">Hide / Delete</string>
+  <string name="menu_dismiss_note">Спрятать / Удалить</string>
   <string name="menu_bury_card">Сдвинуть карточку</string>
   <string name="menu_bury_note">Скрыть запись</string>
   <string name="menu_suspend_card">Отложить карту</string>
