@@ -108,8 +108,6 @@
   <string name="card_editor_reschedule_card">Reschedule card</string>
   <string name="card_editor_preview_card">Anteprima</string>
   <string name="error_insufficient_memory">Operazione non possibile a causa di memoria insufficiente sul tuo dispositivo</string>
-  <string name="tutorial_load">Creazione del mazzo d\'esercizio.\nAttendi...</string>
-  <string name="tutorial_loading_error">Il mazzo d\'esercizio non può essere creato</string>
   <string name="rename">Rinomina</string>
   <string name="rename_error">Mazzo %s potrebbe non essere rinominato</string>
   <string name="default_conf_delete_error">Il gruppo di opzioni predefinito non può essere rimosso</string>
@@ -120,8 +118,6 @@
   <string name="help_title">Aiuto</string>
   <string name="help_online">Aiuto online</string>
   <string name="help_faq">FAQ</string>
-  <string name="help_tutorial">Crea mazzo d\'esercizio</string>
-  <string name="tutorial_deck_name">Mazzo d\'esercizio</string>
   <string name="check_db">Controlla database</string>
   <string name="check_media">Controlla file multimediali</string>
   <string name="check_db_message">Controllo database.\nAttendi...</string>
@@ -181,4 +177,5 @@
   <string name="tag_editor_add_hint">Utilizza la casella sulla destra per aggiungere una nuova etichetta</string>
   <string name="tag_editor_add_feedback">Premi il pulsante \"%2$s\" per confermare l\'aggiunta di \"%1$s\"</string>
   <string name="lookup_hint">Dopo aver copiato il testo, tocca la carta in un punto qualsiasi per mostrare l\'icona di ricerca</string>
+  <string name="add_content_showcase_text">To get started, tap the + button to add some new study material.\n\n Press \'Help\' to see the manual.</string>
 </resources>

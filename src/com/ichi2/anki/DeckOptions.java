@@ -529,6 +529,8 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
             if (key.equals("deckConf")) {
                 String groupName = getOptionsGroupName();
                 int count = getOptionsGroupCount();
+                // Escape "%" in groupName as it's treated as a token
+                groupName = groupName.replaceAll("%", "%%");
                 pref.setSummary(res.getQuantityString(R.plurals.deck_conf_group_summ, count, groupName, count));
                 continue;
             }

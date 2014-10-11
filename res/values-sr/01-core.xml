@@ -101,7 +101,7 @@
   <string name="menu_my_account">Синхронизовање налога</string>
   <string name="menu_preferences">Поставке</string>
   <string name="menu_about">О програму</string>
-  <string name="menu_dismiss_note">Уклони напомену...</string>
+  <string name="menu_dismiss_note">Hide / Delete</string>
   <string name="menu_bury_card">Помери картицу</string>
   <string name="menu_bury_note">Сакриј белешку</string>
   <string name="menu_suspend_card">Обустави карту</string>
@@ -118,7 +118,6 @@
   <string name="create">Креирај</string>
   <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">Повратна веза</string>
-  <string name="studyoptions_load_tutorial_deck">Креирај упутство</string>
   <string name="night_mode">Ноћни режим</string>
   <string-array name="next_review_s">
     <item>1 секунда</item>

@@ -39,7 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="welcome_message">With AnkiDroid, you can efficiently learn large amounts of vocabulary or any other material. AnkiDroid shows you the things to learn just before you forget them.\n\nTo get a first impression of how everything works, we recommend to start with a tutorial deck, which will give you some initial information, and try a bit out. Just just click on \"Start Reviewing\" after having opened it.\n\nCreate the tutorial deck now?</string>
   <string name="check_db_title">Έλεγχος βάσης δεδομένων</string>
   <string name="check_db_warning">This may take a long time</string>
   <string name="check_db_acknowledge">Database checked</string>
@@ -56,7 +55,7 @@
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Κάρτες για το Android</h2>Το AnkiDroid είναι μία εφαρμογή καρτών που είναι πλήρως συμβατή με το λογισμικό <a href="%2$s">Anki</a>. Μπορείτε να δημιουργήσετε, να κατεβάσετε και να μάθετε κάρτες και στα δύο, AnkiDroid ή Anki και να συγχρονίζετε μεταξύ τους πολύ εύκολα.]]></item>
     <item><![CDATA[Για να μας βοηθήσετε να βελτιώσουμε το AnkiDroid, παρακαλούμε αναφέρετε τυχών σφάλματα <a href="%1$s">εδώ</a>. Ιδέες για νέα χαρακτηριστικά είναι ευπρόσδεκτες επίσης! Παρακαλούμε χρησιμοποιείστε το <a href="%2$s">wiki</a> και πείτε μας ένα Γεια στο <a href="%3$s">φόρουμ</a>.]]></item>
-    <item><![CDATA[Το AnkiDroid είναι <a href="%1$s">λογισμικό ανοικτού κώδικα<a/>, οπότε ο καθένας μπορεί να <a href="%2$s">συμμετάσχει</a> στους <a href="%3$s">συνησφέροντες</a>:-)]]></item>
+    <item><![CDATA[AnkiDroid is <a href=\"%1$s\">open source software<a/>, so everyone is encouraged to <a href=\"%2$s\">join</a> the <a href=\"%3$s\">contributors</a> :-)]]></item>
     <item><![CDATA[Μη-προγραμματιστές μπορούν να βοηθήσουν επίσης, για παράδειγμα με το να <a href="%1$s">μεταφράζουν</a> το AnkiDroid, να ενημερώνουν το wiki και τις εικόνες, να <a href="%2$s">δωρίζουν</a> στο Anki Desktop, ή να κάνουν blogging για το AnkiDroid!]]></item>
     <item><![CDATA[Το AnkiDroid δημοσιοποιείται υπό την άδεια <a href="%1$s">GNU-GPL v3</a> και ο κώδικάς του είναι διαθέσιμος <a href="%2$s">εδώ</a>.]]></item>
   </string-array>

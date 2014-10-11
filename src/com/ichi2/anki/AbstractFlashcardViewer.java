@@ -2154,12 +2154,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 // don't add answer sounds multiple times, such as when reshowing card after exiting editor
                 // additionally, this condition reduces computation time
                 if (!mAnswerSoundsAdded) {
-                    String afmt = getAnswerFormat();
-                    String answerSoundSource = content;
-                    if (afmt.contains("{{FrontSide}}")) { // don't grab front side audio
-                        String fromFrontSide = mCurrentCard._getQA(false).get("q");
-                        answerSoundSource = content.replace(fromFrontSide, "");
-                    }
+                    String answerSoundSource = removeFrontSideAudio(content);
                     Sound.addSounds(mBaseUrl, answerSoundSource, Sound.SOUNDS_ANSWER);
                     mAnswerSoundsAdded = true;
                 }
@@ -2691,6 +2686,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             case GESTURE_ANSWER_BETTER_THAN_RECOMMENDED:
                 if (sDisplayAnswer) {
                     answerCard(getRecommendedEase(true));
+                } else {
+                    displayCardAnswer();
                 }
                 break;
             case GESTURE_EXIT:
@@ -3000,5 +2997,24 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     private Spanned convertToSimple(String text) {
         return Html.fromHtml(text, mSimpleInterfaceImagegetter, mSimpleInterfaceTagHandler);
+    }
+
+
+    /**
+     * Removes first occurrence in answerContent of any audio that is present due to use of
+     * {{FrontSide}} on the answer. 
+     * @param answerContent     The content from which to remove front side audio.
+     * @return                  The content stripped of audio due to {{FrontSide}} inclusion.
+     */
+    private String removeFrontSideAudio(String answerContent) {
+        String answerFormat = getAnswerFormat();
+        if (answerFormat.contains("{{FrontSide}}")) { // possible audio removal necessary
+            String frontSideFormat = mCurrentCard._getQA(false).get("q");
+            Matcher audioReferences = Sound.sSoundPattern.matcher(frontSideFormat);
+            while (audioReferences.find()) {
+                answerContent = answerContent.replace(audioReferences.group(), "");
+            }
+        }
+        return answerContent;
     }
 }

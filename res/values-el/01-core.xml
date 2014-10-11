@@ -101,7 +101,7 @@
   <string name="menu_my_account">Συγχρονισμός λογαριασμού</string>
   <string name="menu_preferences">Προτιμήσεις</string>
   <string name="menu_about">Σχετικά</string>
-  <string name="menu_dismiss_note">Διώξιμο Σημείωσης...</string>
+  <string name="menu_dismiss_note">Hide / Delete</string>
   <string name="menu_bury_card">Bury card</string>
   <string name="menu_bury_note">Απόκρυψη Σημείωσης</string>
   <string name="menu_suspend_card">Αναστολή κάρτας</string>
@@ -118,7 +118,6 @@
   <string name="create">Δημιουργία</string>
   <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">Σχόλια</string>
-  <string name="studyoptions_load_tutorial_deck">Δημιουργία φροντιστηρίου</string>
   <string name="night_mode">Νυκτερινή λειτουργία</string>
   <string-array name="next_review_s">
     <item>1 δευτερόλεπτο</item>

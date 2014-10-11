@@ -39,7 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="welcome_message">Med AnkiDroid can du effektivt lära dig stora mängder vokabulär eller annat material. AnkiDroid visar dig saker du vill lära dig precis när du är på väg att glömma dem.\n\nFör ett första intryck av hur det fungerar rekommenderar vi att du övar med en exempelkortlek som ger dig mer information samtidigt som du får testa hur programmet fungerar. Klicka på \"Plugga nu\" efter att du öppnat det. \n\nVill du att AnkiDroid ska bygga exempelkortleken nu?</string>
   <string name="check_db_title">Kontrollera databas</string>
   <string name="check_db_warning">Det här kan ta lång tid</string>
   <string name="check_db_acknowledge">Databas kontrollerad</string>
@@ -56,7 +55,7 @@
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Flashcards till Android</h2>AnkiDroid är en flashcardapplikation som är fullt kompatibel med skrivbordsmjukvaran <a href="%2$s">Anki</a>. Du kan skapa, ladda ner och lära dig nya saker via både AnkiDroid och Anki Desktop, och därefter enkelt synkronisera dem.]]></item>
     <item><![CDATA[Hjälp gärna till att göra AnkiDroid ännu bättre genom att rapportera buggar <a href="%1$s">här</a>; Idéer på nya funktioner är också välkomna! Använd också <a href="%2$s">wikin</a> och säg Hej på <a href="%3$s">forumet</a>.]]></item>
-    <item><![CDATA[AnkiDroid är <a href="%1$s">öppen källkodsmjukvara<a/>, så alla uppmanas att <a href="%2$s">gå med</a> och <a href="%3$s">bidra</a>:-)]]></item>
+    <item><![CDATA[AnkiDroid is <a href=\"%1$s\">open source software<a/>, so everyone is encouraged to <a href=\"%2$s\">join</a> the <a href=\"%3$s\">contributors</a> :-)]]></item>
     <item><![CDATA[De som inte är utvecklare kan också hjälpa till, t.ex. genom att <a href="%1$s">översätta</a> AnkiDroid, uppdatera wikin och skärmdumpar, <a href="%2$s">donera</a> till Anki Desktop, eller blogga om AnkiDroid!]]></item>
     <item><![CDATA[AnkiDroid är släppt under licensen <a href="%1$s">GNU GPLv3</a> och källkoden finns <a href="%2$s">här</a>.]]></item>
   </string-array>

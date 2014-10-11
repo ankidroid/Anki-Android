@@ -101,7 +101,7 @@
   <string name="menu_my_account">Synkronisera konto</string>
   <string name="menu_preferences">Inställningar</string>
   <string name="menu_about">Om</string>
-  <string name="menu_dismiss_note">Avfärda not...</string>
+  <string name="menu_dismiss_note">Hide / Delete</string>
   <string name="menu_bury_card">Dölj kort</string>
   <string name="menu_bury_note">Dölj not</string>
   <string name="menu_suspend_card">Lås kort</string>
@@ -118,7 +118,6 @@
   <string name="create">Skapa</string>
   <string name="new_dynamic_deck">Skapa filtrerad kortlek</string>
   <string name="studyoptions_feedback">Feedback</string>
-  <string name="studyoptions_load_tutorial_deck">Skapa övningskortlek</string>
   <string name="night_mode">Nattläge</string>
   <string-array name="next_review_s">
     <item>1 sekund</item>

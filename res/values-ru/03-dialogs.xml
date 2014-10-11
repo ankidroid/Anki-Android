@@ -39,7 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="welcome_message">С AnkiDroid вы можете эффективно пополнить свой словарный запас или заучить любую другую информацию. AnkiDroid повторно показывает карточки по определенному алгоритму так, чтобы вы не успели их забыть.\n\nДля получения первых впечатлений о программе, мы рекомендуем начать с учебной колоды, которая познакомит вас с тем, как здесь все работает. Просто нажмите «Начать просмотр» после открытия колоды.\n\nСоздать учебную колоду сейчас?</string>
   <string name="check_db_title">Проверка базы данных</string>
   <string name="check_db_warning">Это может занят долгое время</string>
   <string name="check_db_acknowledge">База проверена</string>
@@ -56,7 +55,7 @@
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Flashcards для Android</h2>AnkiDroid - это приложение для изучения учебных карточек, полностью совместимо с настольной версией <a href="%2$s">Anki</a>. Вы можете создавать, скачивать и изучать информацию, и в AnkiDroid и Anki Desktop, синхронизируя их между собой.]]></item>
     <item><![CDATA[Чтобы сделать AnkiDroid лучше, пожалуйста, сообщайте нам о любых ошибках <a href="%1$s">здесь</a>; запрос новых функций или идеи также очень приветствуются! Пожалуйста используйте <a href="%2$s">wiki</a> и участвуйте в <a href="%3$s">форуме</a>.]]></item>
-    <item><![CDATA[AnkiDroid - <a href="%1$s">открытое программное обеспечение<a/>, любой может <a href="%2$s">стать</a> <a href="%3$s">участником</a>:-)]]></item>
+    <item><![CDATA[AnkiDroid - это  <a href=\"%1$s\"> программное обеспечение с исходным кодом<a/>, поэтому каждый желающий может <a href=\"%2$s\">присоединиться</a>и внести свой <a href=\"%3$s\">вклад</a> :-)]]></item>
     <item><![CDATA[Не-программисты также могут помочь: <a href="%1$s">переводя</a> AnkiDroid, обновляя Вики и скриншоты, <a href="%2$s"> оказывая денежную помощь</a> или написав в блогах о AnkiDroid!]]></item>
     <item><![CDATA[AnkiDroid выпускается под <a href="%1$s">GNU-GPL v3 лицензией</a> и исходный код доступен <a href="%2$s">здесь</a>.]]></item>
   </string-array>
@@ -69,11 +68,11 @@
   <string name="notification_message">Новая версия Ankidroid доступна на Android Market.\n\nУстановить?</string>
   <string name="notification_stop">Не уведомлять меня об этом обновлении снова</string>
   <string name="reset_card_dialog_title">Сброс учебного прогресса карты</string>
-  <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue.</string>
-  <string name="reset_card_dialog_acknowledge">Card reset</string>
-  <string name="reschedule_card_dialog_title">Reschedule card</string>
-  <string name="reschedule_card_dialog_message">Reschedule for review in x days:</string>
-  <string name="reschedule_card_dialog_acknowledge">Card rescheduled</string>
+  <string name="reset_card_dialog_message">Эта карта будет помещена в конец очереди новых карт.</string>
+  <string name="reset_card_dialog_acknowledge">Сброс карт</string>
+  <string name="reschedule_card_dialog_title">Изменить расписание карты</string>
+  <string name="reschedule_card_dialog_message">Изменить расписание для обзора через x дней:</string>
+  <string name="reschedule_card_dialog_acknowledge">Расписание карты изменено</string>
   <string name="answering_error_title">Ошибка базы данных</string>
   <string name="answering_error_message">Произошла ошибка при записи в коллекцию. Это может быть связано с тем, что база данных была ранее повреждена или что недостаточно места на диске.\n\nЕсли это случается часто, попробуйте проверить базу данных, восстановить коллекцию или восстановить из резервной копии. Нажмите для этого на «Настройки».\n\nОднако, дело может быть в ошибке  AnkiDroid; Пожалуйста, сообщите об ошибке, чтобы мы могли проверить это.</string>
   <string name="answering_error_report">Сообщить об ошибке</string>

@@ -108,8 +108,6 @@
   <string name="card_editor_reschedule_card">Reschedule card</string>
   <string name="card_editor_preview_card">Xem lại</string>
   <string name="error_insufficient_memory">Không thể thao tác vì không đủ bộ nhớ trên thiết bị của bạn</string>
-  <string name="tutorial_load">Đang tạo hướng dẫn Bài.\n Đợi chút nhé...</string>
-  <string name="tutorial_loading_error">Không thể tạo được tập thẻ hướng dẫn</string>
   <string name="rename">Đổi tên</string>
   <string name="rename_error">Không thể đổi tên tập thẻ %s</string>
   <string name="default_conf_delete_error">Nhóm tùy chọn mặc định không thể được gỡ bỏ</string>
@@ -120,8 +118,6 @@
   <string name="help_title">Trợ giúp</string>
   <string name="help_online">Trợ giúp trực tuyến</string>
   <string name="help_faq">CÂU HỎI THƯỜNG GẶP</string>
-  <string name="help_tutorial">Tạo hướng dẫn</string>
-  <string name="tutorial_deck_name">Bài hướng dẫn</string>
   <string name="check_db">Kiểm tra cơ sở dữ liệu</string>
   <string name="check_media">Check media</string>
   <string name="check_db_message">Đang kiểm tra cơ sở dữ liệu. \n Xin đợi chút...</string>
@@ -181,4 +177,5 @@
   <string name="tag_editor_add_hint">Use tick mark on the right to add new tag</string>
   <string name="tag_editor_add_feedback">Press \"%2$s\" button to confirm adding \"%1$s\"</string>
   <string name="lookup_hint">After copying the text, tap anywhere on the flashcard to show the search icon</string>
+  <string name="add_content_showcase_text">To get started, tap the + button to add some new study material.\n\n Press \'Help\' to see the manual.</string>
 </resources>

@@ -101,7 +101,7 @@
   <string name="menu_my_account">Sync account</string>
   <string name="menu_preferences">กำหนดลักษณะ</string>
   <string name="menu_about">เกี่ยวกับ</string>
-  <string name="menu_dismiss_note">Dismiss note&#8230;</string>
+  <string name="menu_dismiss_note">Hide / Delete</string>
   <string name="menu_bury_card">Bury card</string>
   <string name="menu_bury_note">Bury note</string>
   <string name="menu_suspend_card">ระงับบัตร</string>
@@ -118,7 +118,6 @@
   <string name="create">Create</string>
   <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">ความคิดเห็น</string>
-  <string name="studyoptions_load_tutorial_deck">Create tutorial</string>
   <string name="night_mode">Night mode</string>
   <string-array name="next_review_s">
     <item>1 วินาที</item>

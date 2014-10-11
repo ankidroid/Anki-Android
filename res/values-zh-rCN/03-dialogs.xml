@@ -39,7 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="welcome_message">通过使用 AnkiDroid, 你可以高效地学习大量词汇或其他任何材料。AnkiDroid在你即将忘记的时候，帮助你复习。\n\n 要了解如何使用，我们推荐你从教学牌组开始，这个牌组提供一些基本信息，并让你试一试。在创建教学牌组后，点击\"开始复习\"按钮。\n\n现在创建教学牌组吗？</string>
   <string name="check_db_title">检查数据库</string>
   <string name="check_db_warning">这可能需要很长时间</string>
   <string name="check_db_acknowledge">已检查数据库</string>
@@ -56,7 +55,7 @@
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>安卓上的快闪卡Flashcards</h2>AnkiDroid是一个快闪卡程序，与桌面客户端<a href="%2$s">Anki</a>完全兼容。在AnkiDroid和Anki桌面客户端上，你可以创建，下载并学习任意内容，轻松实现同步。]]></item>
     <item><![CDATA[帮助我们使AnkiDroid更好，请将bug报告到<a href="%1$s">这里</a>； 也欢迎关于软件特性的各种意见和建议！请使用<a href="%2$s">wiki</a>或者在<a href="%3$s">论坛</a>打招呼。]]></item>
-    <item><![CDATA[AnkiDroid 是 <a href="%1$s">开源软件<a/>, 鼓励人人<a href="%2$s">成为</a><a href="%3$s">贡献者</a>:-)]]></item>
+    <item><![CDATA[AnkiDroid is <a href=\"%1$s\">open source software<a/>, so everyone is encouraged to <a href=\"%2$s\">join</a> the <a href=\"%3$s\">contributors</a> :-)]]></item>
     <item><![CDATA[非开发人员也可以提供帮助，如<a href="%1$s">翻译</a> AnkiDroid,更新wiki和屏幕截图，<a href="%2$s">捐助</a> Anki的桌面客户端软件，或者在博客上写些关于AnkiDroid的内容！]]></item>
     <item><![CDATA[AnkiDroid 依据<a href="%1$s">GNU-GPL v3 许可</a>发布，源代码在<a href="%2$s">这里</a>提供。]]></item>
   </string-array>

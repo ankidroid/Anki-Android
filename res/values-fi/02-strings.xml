@@ -108,8 +108,6 @@
   <string name="card_editor_reschedule_card">Reschedule card</string>
   <string name="card_editor_preview_card">Preview</string>
   <string name="error_insufficient_memory">Operaatio ei ole mahdollista laitteesi vähäisen muistimäärän vuoksi</string>
-  <string name="tutorial_load">Luodaan ohjepakkaa.\nOdota...</string>
-  <string name="tutorial_loading_error">Ohjepakan luominen epäonnistui</string>
   <string name="rename">Nimeä uudelleen</string>
   <string name="rename_error">Pakkaa %s ei voitu nimetä uudelleen</string>
   <string name="default_conf_delete_error">Oletusasetusryhmää ei voi poistaa</string>
@@ -120,8 +118,6 @@
   <string name="help_title">Ohje</string>
   <string name="help_online">Verkko-ohje</string>
   <string name="help_faq">UKK (FAQ)</string>
-  <string name="help_tutorial">Create tutorial deck</string>
-  <string name="tutorial_deck_name">Tutorial deck</string>
   <string name="check_db">Tarkasta tietokanta</string>
   <string name="check_media">Check media</string>
   <string name="check_db_message">Tarkastetaan tietokantaa.\nOdota...</string>
@@ -181,4 +177,5 @@
   <string name="tag_editor_add_hint">Use tick mark on the right to add new tag</string>
   <string name="tag_editor_add_feedback">Press \"%2$s\" button to confirm adding \"%1$s\"</string>
   <string name="lookup_hint">After copying the text, tap anywhere on the flashcard to show the search icon</string>
+  <string name="add_content_showcase_text">To get started, tap the + button to add some new study material.\n\n Press \'Help\' to see the manual.</string>
 </resources>

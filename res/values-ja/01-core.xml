@@ -75,7 +75,7 @@
   <string name="card_unsuspended">カードの保留を解除</string>
   <string name="card_suspended">カードが保留されました</string>
   <string name="menu_rotate">表示画面の回転</string>
-  <string name="menu_import">Import</string>
+  <string name="menu_import">インポート</string>
   <string name="undo">元に戻す</string>
   <string name="undo_action_review">最後の復習</string>
   <string name="undo_action_edit">ノートの編集</string>
@@ -101,7 +101,7 @@
   <string name="menu_my_account">アカウントの設定と同期</string>
   <string name="menu_preferences">設定</string>
   <string name="menu_about">このプログラムについて</string>
-  <string name="menu_dismiss_note">延期、保留の操作</string>
+  <string name="menu_dismiss_note">非表示 / 削除</string>
   <string name="menu_bury_card">カードの延期</string>
   <string name="menu_bury_note">ノートの延期</string>
   <string name="menu_suspend_card">カードの保留</string>
@@ -118,7 +118,6 @@
   <string name="create">作成</string>
   <string name="new_dynamic_deck">フィルター単語帳の作成</string>
   <string name="studyoptions_feedback">フィードバック</string>
-  <string name="studyoptions_load_tutorial_deck">チュートリアル単語帳の作成</string>
   <string name="night_mode">夜間表示（反転）</string>
   <string-array name="next_review_s">
     <item>1秒</item>

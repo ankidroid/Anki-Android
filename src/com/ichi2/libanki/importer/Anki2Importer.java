@@ -424,7 +424,9 @@ public class Anki2Importer {
             long newid = mDst.getDecks().id(name);
             // pull conf over
             if (g.has("conf") && g.getLong("conf") != 1) {
-                mDst.getDecks().updateConf(mSrc.getDecks().getConf(g.getLong("conf")));
+                JSONObject conf = mSrc.getDecks().getConf(g.getLong("conf"));
+                mDst.getDecks().save(conf);
+                mDst.getDecks().updateConf(conf);
                 JSONObject g2 = mDst.getDecks().get(newid);
                 g2.put("conf", g.getLong("conf"));
                 mDst.getDecks().save(g2);

@@ -22,3 +22,7 @@ out/
 
 # Temporary file by update-localizations.py
 ankidroid.zip
+
+# Chrome
+*.crx
+*.crx.json

@@ -39,7 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="welcome_message">Con AnkiDroid usted puede aprender grandes cantidades de vocabulario o cualquier otro material. AnkiDroid le muestra los contenidos a aprender antes de que los olvide.\n\nPara tener una primera impresión de cómo funciona le recomendamos comenzar con un mazo tutorial que le brindará información inicial y le permitirá experimentar un poco. Sencillamente haga click en \"Comenzar a repasar\" luego de abrir el programa.\n\n¿Crear ahora el mazo tutorial?</string>
   <string name="check_db_title">Comprobar base de datos</string>
   <string name="check_db_warning">Esto podría tomar un largo tiempo</string>
   <string name="check_db_acknowledge">Base de datos comprobada</string>
@@ -56,7 +55,7 @@
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Tarjetas de aprendizaje para Android</h2>AnkiDroid es una aplicación de tarjetas de aprendizaje completamente compatible con el software de escritorio <a href="%2$s">Anki</a>. Puede crear, descargar y aprender contenidos en ambos, AnkiDroid o Anki Desktop, y sincronizarlos muy fácilmente.]]></item>
     <item><![CDATA[Para ayudarnos a mejorar AnkiDroid reporte cualquier error <a href="%1$s">aquí</a>; ¡nuevas ideas sobre características son también bienvenidas! Utilice por favor el <a href="%2$s">wiki</a> y diga Hola en el <a href="%3$s">foro</a>.]]></item>
-    <item><![CDATA[AnkiDroid es <a href="%1$s">software de código abierto<a/>, por lo cual todos están invitados a <a href="%2$s">unirse</a> a los <a href="%3$s">auxiliares</a>:-)]]></item>
+    <item><![CDATA[AnkiDroid is <a href=\"%1$s\">open source software<a/>, so everyone is encouraged to <a href=\"%2$s\">join</a> the <a href=\"%3$s\">contributors</a> :-)]]></item>
     <item><![CDATA[No desarrolladores también puede ayudar, por ejemplo <a href="%1$s">traduciendo</a> AnkiDroid, actualizando la wiki y las capturas de pantalla, <a href="%2$s">donando</a> a Anki Desktop, o bloggeando acerca de AnkiDroid!]]></item>
     <item><![CDATA[AnkiDroid es lanzado bajo la <a href="%1$s">licencia GNU-GPL v3</a> y el código fuente está disponible <a href="%2$s">aquí</a>.]]></item>
   </string-array>

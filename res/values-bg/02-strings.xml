@@ -108,8 +108,6 @@
   <string name="card_editor_reschedule_card">Reschedule card</string>
   <string name="card_editor_preview_card">Preview</string>
   <string name="error_insufficient_memory">Операцията е невъзможна поради недостатъчна памет на вашето устройство</string>
-  <string name="tutorial_load">Creating tutorial deck&#8230;</string>
-  <string name="tutorial_loading_error">Не можа да бъде създадена колода с инструкции</string>
   <string name="rename">Преименуване</string>
   <string name="rename_error">Колодата %s не можа да бъде преименувана</string>
   <string name="default_conf_delete_error">The default options group can\'t be removed</string>
@@ -120,8 +118,6 @@
   <string name="help_title">Помощ</string>
   <string name="help_online">Онлайн помощ</string>
   <string name="help_faq">ЧЗВ</string>
-  <string name="help_tutorial">Create tutorial deck</string>
-  <string name="tutorial_deck_name">Tutorial deck</string>
   <string name="check_db">Check database</string>
   <string name="check_media">Check media</string>
   <string name="check_db_message">Checking database&#8230;</string>
@@ -181,4 +177,5 @@
   <string name="tag_editor_add_hint">Use tick mark on the right to add new tag</string>
   <string name="tag_editor_add_feedback">Press \"%2$s\" button to confirm adding \"%1$s\"</string>
   <string name="lookup_hint">After copying the text, tap anywhere on the flashcard to show the search icon</string>
+  <string name="add_content_showcase_text">To get started, tap the + button to add some new study material.\n\n Press \'Help\' to see the manual.</string>
 </resources>

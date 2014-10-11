@@ -101,7 +101,7 @@
   <string name="menu_my_account">Synchronizacja konta</string>
   <string name="menu_preferences">Ustawienia</string>
   <string name="menu_about">O programie</string>
-  <string name="menu_dismiss_note">Odrzuć notatkę...</string>
+  <string name="menu_dismiss_note">Hide / Delete</string>
   <string name="menu_bury_card">Zakop kartę</string>
   <string name="menu_bury_note">Ukryj notatkę</string>
   <string name="menu_suspend_card">Zawieś kartę</string>
@@ -118,7 +118,6 @@
   <string name="create">Utwórz</string>
   <string name="new_dynamic_deck">Stwórz filtrowaną talię</string>
   <string name="studyoptions_feedback">Informacje zwrotne</string>
-  <string name="studyoptions_load_tutorial_deck">Utwórz samouczek</string>
   <string name="night_mode">Tryb nocny</string>
   <string-array name="next_review_s">
     <item>1 sekunda</item>

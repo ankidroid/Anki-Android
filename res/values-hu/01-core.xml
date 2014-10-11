@@ -101,7 +101,7 @@
   <string name="menu_my_account">Fiók szinkronizálása</string>
   <string name="menu_preferences">Beállítások</string>
   <string name="menu_about">Névjegy</string>
-  <string name="menu_dismiss_note">Jegyzet elvetése...</string>
+  <string name="menu_dismiss_note">Hide / Delete</string>
   <string name="menu_bury_card">Kártya félretétele</string>
   <string name="menu_bury_note">Jegyzet félretétele</string>
   <string name="menu_suspend_card">Kártya felfüggesztése</string>
@@ -118,7 +118,6 @@
   <string name="create">Létrehozás</string>
   <string name="new_dynamic_deck">Pakli szűrt elemekkel létrehozása</string>
   <string name="studyoptions_feedback">Visszajelzés</string>
-  <string name="studyoptions_load_tutorial_deck">Bemutató létrehozása</string>
   <string name="night_mode">Éjszakai mód</string>
   <string-array name="next_review_s">
     <item>1 másodperc</item>

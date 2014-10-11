@@ -108,8 +108,6 @@
   <string name="card_editor_reschedule_card">Reschedule card</string>
   <string name="card_editor_preview_card">Önizle</string>
   <string name="error_insufficient_memory">Cihazda yetersiz bellek olması nedeniyle işlem gerçekleştirilemiyor</string>
-  <string name="tutorial_load">Eğitim destesi oluşturuluyor.\nLütfen bekleyin...</string>
-  <string name="tutorial_loading_error">Eğitim destesi oluşturulamadı</string>
   <string name="rename">Adını değiştir</string>
   <string name="rename_error">%s destesinin adı değiştirilemedi</string>
   <string name="default_conf_delete_error">Varsayılan seçenekler grubu kaldırılamaz</string>
@@ -120,8 +118,6 @@
   <string name="help_title">Yardım</string>
   <string name="help_online">Online yardım</string>
   <string name="help_faq">SSS</string>
-  <string name="help_tutorial">Eğitim destesi oluştur</string>
-  <string name="tutorial_deck_name">Eğitim destesi</string>
   <string name="check_db">Veritabanını denetle</string>
   <string name="check_media">Check media</string>
   <string name="check_db_message">Veritabanı denetleniyor.\nLütfen bekleyin...</string>
@@ -181,4 +177,5 @@
   <string name="tag_editor_add_hint">Yeni etiket eklemek için için sağdaki tik işâretini kullanın</string>
   <string name="tag_editor_add_feedback">\"%1$s\" eklemeyi onaylamak için \"%2$s\" düğmesine basın</string>
   <string name="lookup_hint">After copying the text, tap anywhere on the flashcard to show the search icon</string>
+  <string name="add_content_showcase_text">To get started, tap the + button to add some new study material.\n\n Press \'Help\' to see the manual.</string>
 </resources>

@@ -109,8 +109,6 @@
   <string name="card_editor_reschedule_card">Reschedule card</string>
   <string name="card_editor_preview_card">Náhľad</string>
   <string name="error_insufficient_memory">Operáciu nie je možné vykonať pre nedostatok pamäte vo vašom prístroji</string>
-  <string name="tutorial_load">Vytváram úvodný balíček.\nProsím počkajte...</string>
-  <string name="tutorial_loading_error">Úvodný balíček sa nepodarilo vytvoriť</string>
   <string name="rename">Premenovať</string>
   <string name="rename_error">Balíček %s nebolo možné premenovať</string>
   <string name="default_conf_delete_error">Predvolenú skupinu nastavení nie je možné odstrániť</string>
@@ -121,8 +119,6 @@
   <string name="help_title">Pomocník</string>
   <string name="help_online">Pomocník online</string>
   <string name="help_faq">FAQ</string>
-  <string name="help_tutorial">Vytvoriť výukový balíček</string>
-  <string name="tutorial_deck_name">Výukový balíček</string>
   <string name="check_db">Kontrola databázy</string>
   <string name="check_media">Check media</string>
   <string name="check_db_message">Kontrolujem databázu.\nProsím počkajte...</string>
@@ -182,4 +178,5 @@
   <string name="tag_editor_add_hint">Použite fajfku napravo na pridanie nového štítku</string>
   <string name="tag_editor_add_feedback">Stlačte tlačidlo \"%2$s\" pre potvrdenie pridania \"%1$s\"</string>
   <string name="lookup_hint">After copying the text, tap anywhere on the flashcard to show the search icon</string>
+  <string name="add_content_showcase_text">To get started, tap the + button to add some new study material.\n\n Press \'Help\' to see the manual.</string>
 </resources>

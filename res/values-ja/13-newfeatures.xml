@@ -22,20 +22,20 @@
 <resources>
   <string-array name="new_version_features">
     <item>新しいユーザー マニュアルを追加</item>
-    <item>統計情報を Anki Desktop と一致させた</item>
-    <item>Fixes to media sync</item>
-    <item>Fix bug where images were not showing</item>
-    <item>Change layout of note editor</item>
-    <item>Add new disable whiteboard option to reviewer and update icons</item>
-    <item>Add full support for APKG export and import</item>
+    <item>統計情報を Anki Desktop と一致させました。</item>
+    <item>メディア同期時の問題点を修正</item>
+    <item>画像が表示されないバグを修正</item>
+    <item>ノート エディターのレイアウトを変更</item>
+    <item>復習時に、ホワイト ボードを無効化する オプションを追加し、アイコンを更新</item>
+    <item>apgkファイルのエクスポートとインポートをフルサポート</item>
     <item>Eメールへのコレクションファイル (*.apkg) エクスポート機能を追加</item>
-    <item>Increase default number of backups and use APKG</item>
-    <item>Make preview card accessible from card browser</item>
-    <item>Make shared decks download with Android browser</item>
-    <item>Add reset and reschedule feature in note editor</item>
-    <item>Disable opening navigation drawer from browser when swipe is used</item>
+    <item>バックアップの保管数の既定数を増し、apgkのファイルを使用します。</item>
+    <item>ブラウザーからプレビューカードの編集を可能にしました</item>
+    <item>Android のブラウザーで共有単語帳のダウンロードができます。</item>
+    <item>ノート エディターに学習履歴リセット機能と再スケジュール機能を追加</item>
+    <item>スワイプ操作が可能な時、ナビゲーションをドロワーの操作で開けないようにしました</item>
     <item>オーディオ録音の品質を向上</item>
-    <item>Support sticky fields when enabled in Anki Desktop</item>
+    <item>sticky fieldsをサポート（アンキ デスクトップで有効な場合）</item>
     <item>その他、多くのバグの修正</item>
   </string-array>
 </resources>

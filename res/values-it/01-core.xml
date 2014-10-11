@@ -101,7 +101,7 @@
   <string name="menu_my_account">Sincronizza account</string>
   <string name="menu_preferences">Preferenze</string>
   <string name="menu_about">Informazioni</string>
-  <string name="menu_dismiss_note">Ignora la nota...</string>
+  <string name="menu_dismiss_note">Hide / Delete</string>
   <string name="menu_bury_card">Seppellisci carta</string>
   <string name="menu_bury_note">Seppellisci nota</string>
   <string name="menu_suspend_card">Sospendi carta</string>
@@ -118,7 +118,6 @@
   <string name="create">Crea</string>
   <string name="new_dynamic_deck">Crea mazzo filtrato</string>
   <string name="studyoptions_feedback">Commenti e suggerimenti</string>
-  <string name="studyoptions_load_tutorial_deck">Crea mazzo d\'esercizio</string>
   <string name="night_mode">Modalità notturna</string>
   <string-array name="next_review_s">
     <item>1 secondo</item>

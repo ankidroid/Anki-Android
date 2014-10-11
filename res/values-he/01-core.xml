@@ -101,7 +101,7 @@
   <string name="menu_my_account">סינכרון חשבון</string>
   <string name="menu_preferences">העדפות</string>
   <string name="menu_about">אודות</string>
-  <string name="menu_dismiss_note">לבטל רשומה...</string>
+  <string name="menu_dismiss_note">Hide / Delete</string>
   <string name="menu_bury_card">לקבור קלף</string>
   <string name="menu_bury_note">לקבור הערה</string>
   <string name="menu_suspend_card">השהה כרטיס</string>
@@ -118,7 +118,6 @@
   <string name="create">צור</string>
   <string name="new_dynamic_deck">צור חפיסה מסוננת</string>
   <string name="studyoptions_feedback">משוב</string>
-  <string name="studyoptions_load_tutorial_deck">יצירת ערכת לימוד</string>
   <string name="night_mode">מצב לילה</string>
   <string-array name="next_review_s">
     <item>שנייה</item>
