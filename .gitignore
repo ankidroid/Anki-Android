@@ -24,5 +24,5 @@ out/
 ankidroid.zip
 
 # Chrome
-.crx
-.crx.json
+*.crx
+*.crx.json
