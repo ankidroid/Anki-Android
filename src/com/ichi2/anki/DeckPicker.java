@@ -63,7 +63,7 @@ import android.widget.TextView;
 
 import com.github.amlcurran.showcaseview.OnShowcaseEventListener;
 import com.github.amlcurran.showcaseview.ShowcaseView;
-import com.github.amlcurran.showcaseview.targets.ViewTarget;
+import com.github.amlcurran.showcaseview.targets.ActionItemTarget;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
 import com.ichi2.anki.dialogs.DeckPickerBackupNoSpaceLeftDialog;
@@ -175,6 +175,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
     boolean mCompletionBarRestrictToActive = false; // set this to true in order to calculate completion bar only for
                                                     // active cards
+    boolean mShowShowcaseView = false;
 
     // ----------------------------------------------------------------------------
     // LISTENERS
@@ -507,6 +508,26 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         menu.findItem(R.id.action_new_filtered_deck).setEnabled(sdCardAvailable);
         menu.findItem(R.id.action_check_database).setEnabled(sdCardAvailable);
         menu.findItem(R.id.action_check_media).setEnabled(sdCardAvailable);
+
+        // Show the welcome screen here if col empty to be sure that the action bar exists
+        if (mShowShowcaseView && getCol() != null && getCol().isEmpty()) {
+            mShowShowcaseView = false;
+            final Resources res = getResources();
+            ActionItemTarget target = new ActionItemTarget(this, R.id.action_add_decks);
+            mShowcaseDialog = new ShowcaseView.Builder(this).setTarget(target)
+                    .setContentTitle(res.getString(R.string.studyoptions_welcome_title))
+                    .setStyle(R.style.ShowcaseView_Light).setShowcaseEventListener(this)
+                    .setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mShowcaseDialog.hide();
+                            Intent helpIntent = new Intent("android.intent.action.VIEW", Uri.parse(res
+                                    .getString(R.string.link_manual_getting_started)));
+                            startActivityWithoutAnimation(helpIntent);
+                        }
+                    }).setContentText(res.getString(R.string.add_content_showcase_text)).hideOnTouchOutside().build();
+            mShowcaseDialog.setButtonText(getResources().getString(R.string.help_title));
+        }
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -805,26 +826,9 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 // Otherwise show confirmation dialog asking to confirm import with add
                 mHandler.sendEmptyMessage(MSG_SHOW_COLLECTION_IMPORT_ADD_DIALOG);
             }
-        } else if (col.isEmpty()) {
-            // Make sure optionsMenu has been created
-            AnkiDroidApp.getCompat().invalidateOptionsMenu(this);
-            // If no cards then make ShowcaseView dialog centered around add button
-            final Resources res = getResources();
-            ViewTarget target = new ViewTarget(R.id.action_add_decks, this);
-            mShowcaseDialog = new ShowcaseView.Builder(this).setTarget(target)
-                    .setContentTitle(res.getString(R.string.studyoptions_welcome_title))
-                    .setStyle(R.style.ShowcaseView_Light).setShowcaseEventListener(this)
-                    .setOnClickListener(new OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            mShowcaseDialog.hide();
-                            Intent helpIntent = new Intent("android.intent.action.VIEW", Uri.parse(res
-                                    .getString(R.string.link_manual_getting_started)));
-                            startActivityWithoutAnimation(helpIntent);
-                        }
-                    }).setContentText(res.getString(R.string.add_content_showcase_text)).hideOnTouchOutside().build();
-            mShowcaseDialog.setButtonText(getResources().getString(R.string.help_title));
         }
+        mShowShowcaseView = true;
+        AnkiDroidApp.getCompat().invalidateOptionsMenu(this);
         // prepare deck counts and mini-today-statistic
         loadCounts();
     }
