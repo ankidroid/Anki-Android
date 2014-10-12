@@ -93,7 +93,7 @@
     <string name="menu_preferences">Preferences</string>
     <!-- <string name="menu_deck_properties">Deck properties</string> -->
     <string name="menu_about">About</string>
-    <string name="menu_dismiss_note">Dismiss note…</string>
+    <string name="menu_dismiss_note">Hide / Delete</string>
     <string name="menu_bury_card">Bury card</string>
     <string name="menu_bury_note">Bury note</string>
     <string name="menu_suspend_card">Suspend card</string>
@@ -110,7 +110,6 @@
     <string name="create">Create</string>
     <string name="new_dynamic_deck">Create filtered deck</string>
     <string name="studyoptions_feedback">Feedback</string>
-    <string name="studyoptions_load_tutorial_deck">Create tutorial</string>
     <!-- <string name="studyoptions_load_sample_deck">Load sample deck</string> -->
     <string name="night_mode">Night mode</string>
 
