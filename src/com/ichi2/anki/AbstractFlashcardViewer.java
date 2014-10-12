@@ -2691,6 +2691,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             case GESTURE_ANSWER_BETTER_THAN_RECOMMENDED:
                 if (sDisplayAnswer) {
                     answerCard(getRecommendedEase(true));
+                } else {
+                    displayCardAnswer();
                 }
                 break;
             case GESTURE_EXIT:
