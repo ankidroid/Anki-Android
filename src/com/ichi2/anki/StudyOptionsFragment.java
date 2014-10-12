@@ -187,7 +187,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                     showDialog(DIALOG_CUSTOM_STUDY);
                     return;
                 case R.id.studyoptions_unbury:
-                    col.getSched().unburyCards();
+                    col.getSched().unburyCardsForDeck();
                     resetAndUpdateValuesFromDeck();
                     mButtonUnbury.setVisibility(View.GONE);
                     return;
@@ -1269,7 +1269,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                     ((DeckPicker) getActivity()).loadCounts();
                 }
             }
-
+            showCongratsIfNeeded();
             // for rebuilding cram decks
             dismissProgressDialog();
         }
