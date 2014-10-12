@@ -221,6 +221,7 @@ public class Syncer {
                 JSONObject c = sanityCheck();
                 JSONObject sanity = mServer.sanityCheck2(c);
                 if (sanity == null || !sanity.optString("status", "bad").equals("ok")) {
+                    mCol.log("sanity check failed", c, sanity);
                     return new Object[] { "sanityCheckError", null };
                 }
                 // finalize
