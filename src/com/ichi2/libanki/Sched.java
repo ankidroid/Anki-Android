@@ -18,6 +18,7 @@
 
 package com.ichi2.libanki;
 
+import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -36,6 +37,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.ref.WeakReference;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -93,6 +95,7 @@ public class Sched {
 
     // Not in libanki
     private HashMap<Long, Pair<String[], long[]>> mCachedDeckCounts;
+    private WeakReference<Activity> mContextReference;
 
     /**
      * queue types: 0=new/cram, 1=lrn, 2=rev, 3=day lrn, -1=suspended, -2=buried
@@ -1723,6 +1726,10 @@ public class Sched {
                     card.setODid(0);
                     card.setQueue(-1);
                 }
+                // notify UI
+                if (mContextReference != null) {
+                    AnkiDroidApp.getHooks().runHook("leech", card, mContextReference.get());
+                }
                 return true;
             }
         } catch (JSONException e) {
@@ -2684,5 +2691,10 @@ public class Sched {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
+    }
+
+
+    public void setContext(WeakReference<Activity> contextReference) {
+        mContextReference = contextReference;
     }
 }

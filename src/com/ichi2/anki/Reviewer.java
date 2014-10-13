@@ -19,6 +19,7 @@
 package com.ichi2.anki;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.util.DisplayMetrics;
@@ -36,6 +37,8 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.widget.WidgetStatus;
 
 import org.json.JSONException;
+
+import java.lang.ref.WeakReference;
 
 public class Reviewer extends AbstractFlashcardViewer {
     private boolean mHasDrawerSwipeConflicts = false;
@@ -74,6 +77,8 @@ public class Reviewer extends AbstractFlashcardViewer {
         // Since we aren't actually answering a card, decrement the rep count
         mSched.setReps(mSched.getReps() - 1);
         disableDrawerSwipeOnConflicts();
+        // Add a weak reference to current activity so that scheduler can talk to to Activity
+        mSched.setContext(new WeakReference<Activity>(this));
     }
 
 

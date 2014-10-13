@@ -651,18 +651,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 return;
             }
 
-            int leech = values[0].getInt();
-            // 0: normal; 1: leech; 2: leech & suspended
-            if (leech > 0) {
-                String leechMessage;
-                if (leech == 2) {
-                    leechMessage = res.getString(R.string.leech_suspend_notification);
-                } else {
-                    leechMessage = res.getString(R.string.leech_notification);
-                }
-                Themes.showThemedToast(AbstractFlashcardViewer.this, leechMessage, true);
-            }
-
             mCurrentCard = values[0].getCard();
             if (mCurrentCard == null) {
                 // If the card is null means that there are no more cards scheduled for review.
