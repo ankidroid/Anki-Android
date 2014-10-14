@@ -1185,6 +1185,12 @@ public class Collection {
     	switch ((Integer)data[0]) {
     	case UNDO_REVIEW:
             Card c = (Card) data[1];
+            // remove leech tag if it didn't have it before
+            Boolean wasLeech = (Boolean) data[2];
+            if (!wasLeech && c.note().hasTag("leech")) {
+                c.note().delTag("leech");
+                c.note().flush();
+            }
             // write old data
             c.flush(false);
             // and delete revlog entry
@@ -1268,7 +1274,7 @@ public class Collection {
     public void markUndo(int type, Object[] o) {
     	switch(type) {
     	case UNDO_REVIEW:
-    		mUndo.add(new Object[]{type, ((Card)o[0]).clone()});
+    		mUndo.add(new Object[]{type, ((Card)o[0]).clone(), o[1]});
     		break;
     	case UNDO_EDIT_NOTE:
     		mUndo.add(new Object[]{type, ((Note)o[0]).clone(), o[1], o[2]});
@@ -1299,7 +1305,7 @@ public class Collection {
 
 
     public void markReview(Card card) {
-        markUndo(UNDO_REVIEW, new Object[]{card});
+        markUndo(UNDO_REVIEW, new Object[]{card, card.note().hasTag("leech")});
     }
 
     /**

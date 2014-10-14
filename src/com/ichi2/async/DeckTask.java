@@ -429,9 +429,6 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         Card oldCard = params[0].getCard();
         int ease = params[0].getInt();
         Card newCard = null;
-        // TODO: proper leech handling
-        int oldCardLeech = 0;
-        // 0: normal; 1: leech; 2: leech & suspended
         try {
             AnkiDb ankiDB = sched.getCol().getDb();
             ankiDB.getDatabase().beginTransaction();
@@ -446,7 +443,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                     // render cards before locking database
                     newCard._getQA(true);
                 }
-                publishProgress(new TaskData(newCard, oldCardLeech));
+                publishProgress(new TaskData(newCard));
                 ankiDB.getDatabase().setTransactionSuccessful();
             } finally {
                 ankiDB.getDatabase().endTransaction();
