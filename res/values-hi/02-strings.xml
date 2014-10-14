@@ -63,7 +63,7 @@
   <string name="leech_notification">जोंक के रूप में के रूप में चिह्नित कार्ड</string>
   <string name="corrupt_font">दूषित फ़ॉन्ट फ़ाइल %s</string>
   <string-array name="browser_column1_headings">
-    <item>Search field</item>
+    <item>Sort field</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Answer</item>

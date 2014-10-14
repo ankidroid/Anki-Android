@@ -63,7 +63,7 @@
   <string name="leech_notification">البطاقة علمت كسَئُولة</string>
   <string name="corrupt_font">ملف خط معطوب %s</string>
   <string-array name="browser_column1_headings">
-    <item>Search field</item>
+    <item>Sort field</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>الجواب</item>

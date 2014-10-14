@@ -63,7 +63,7 @@
   <string name="leech_notification">Cartão marcado como sanguessuga</string>
   <string name="corrupt_font">Ficheiro de tipo de letra corrompido %s</string>
   <string-array name="browser_column1_headings">
-    <item>Search field</item>
+    <item>Sort field</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Answer</item>

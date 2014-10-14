@@ -63,7 +63,7 @@
   <string name="leech_notification">Bài được đánh dấu như đã tải về</string>
   <string name="corrupt_font">Lỗi font dữ liệu %s</string>
   <string-array name="browser_column1_headings">
-    <item>Trường tìm kiếm</item>
+    <item>Sort field</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Trả lời</item>

@@ -63,7 +63,7 @@
   <string name="leech_notification">Карта помечена как \"приставучая\"</string>
   <string name="corrupt_font">Повреждённый файл шрифта %s</string>
   <string-array name="browser_column1_headings">
-    <item>Поле поиска</item>
+    <item>Поле сортировки</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Ответ</item>
@@ -146,7 +146,7 @@
   <string name="import_message_add">Добавить</string>
   <string name="import_message_replace">Заменить</string>
   <string name="import_message_replace_confirm">Удалить Вашу существующую коллекцию и заменить её данными файла %s. Вы уверены?</string>
-  <string name="import_message_add_confirm">Добавить \"%s\" в коллекция? Это может занять много времени</string>
+  <string name="import_message_add_confirm">Добавить \"%s\" в коллекцию? Это может занять много времени</string>
   <string name="import_log_success">Успешно импортированы %d карты</string>
   <string name="import_log_error">Импорт не удался</string>
   <string name="import_log_no_apkg">Это негодный apkg-файл</string>

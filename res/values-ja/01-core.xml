@@ -101,7 +101,7 @@
   <string name="menu_my_account">アカウントの設定と同期</string>
   <string name="menu_preferences">設定</string>
   <string name="menu_about">このプログラムについて</string>
-  <string name="menu_dismiss_note">非表示 / 削除</string>
+  <string name="menu_dismiss_note">延期、保留、削除</string>
   <string name="menu_bury_card">カードの延期</string>
   <string name="menu_bury_note">ノートの延期</string>
   <string name="menu_suspend_card">カードの保留</string>

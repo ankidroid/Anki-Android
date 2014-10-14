@@ -135,8 +135,8 @@
     <item>最後の追加カードを先頭に</item>
   </string-array>
   <string-array name="custom_study_options_labels">
-    <item>今日取り組む新規カードの枚数上限を上げる</item>
-    <item>復習カードの上限を増やす（今日分）</item>
+    <item>今日の新規カードの上限を上げる</item>
+    <item>今日の復習カードの上限を上げる</item>
     <item>忘却カードの復習</item>
     <item>指定日分の先行復習</item>
     <item>カードをランダムに学習する</item>

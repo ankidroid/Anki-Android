@@ -63,7 +63,7 @@
   <string name="leech_notification">Kortti om merkitty takiaiseksi</string>
   <string name="corrupt_font">Korruptoitunut kirjasintiedosto %s</string>
   <string-array name="browser_column1_headings">
-    <item>Hakukenttä</item>
+    <item>Sort field</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Vastaus</item>

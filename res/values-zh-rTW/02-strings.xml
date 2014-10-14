@@ -63,7 +63,7 @@
   <string name="leech_notification">卡片標為榨時卡</string>
   <string name="corrupt_font">損壞的字型檔案 %s</string>
   <string-array name="browser_column1_headings">
-    <item>Search field</item>
+    <item>Sort field</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Answer</item>

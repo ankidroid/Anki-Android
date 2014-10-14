@@ -42,7 +42,7 @@
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">Общие установки</string>
   <string name="pref_cat_reviewing">Обучение</string>
-  <string name="pref_cat_reviewing_summ">Специальные настройки повторения, не относящиеся к колодам</string>
+  <string name="pref_cat_reviewing_summ">Специальные настройки обозревателя, не относящиеся к колодам</string>
   <string name="pref_cat_reviewer_behaviour">Поведение</string>
   <string name="pref_cat_flashcard">Экран</string>
   <string name="pref_cat_whiteboard">Доска</string>
@@ -55,7 +55,7 @@
   <string name="pref_cat_advanced">Продвинутый</string>
   <string name="pref_cat_advanced_summ">Оптимизация и экспериментальные функции</string>
   <string name="pref_cat_performance">Производительность</string>
-  <string name="pref_cat_workarounds">Заплатка</string>
+  <string name="pref_cat_workarounds">Заплатки</string>
   <string name="pref_cat_plugins">Плагины</string>
   <string name="about_title">О AnkiDroid</string>
   <string name="about_version">Версия: </string>
@@ -70,12 +70,12 @@
   <string name="dictionary">Посмотреть в словаре</string>
   <string name="dictionary_summ">XXX</string>
   <string name="reset_languages">Сбросить языки</string>
-  <string name="reset_languages_summ">Сброс языка (для преобразования текста в звук и словарей) для всех колод. Сброс для конкретных колод - в оглавлении колод</string>
+  <string name="reset_languages_summ">Сброс языка (для преобразования текста в речь и словарей) для всех колод. Сброс для конкретных колод - в оглавлении колод.</string>
   <string name="reset_languages_question">Сбросить все языковые настройки?</string>
-  <string name="reset_confirmation">Сбросить все состояния</string>
-  <string name="display_font_size">Просмотр измененного шрифта</string>
+  <string name="reset_confirmation">Все настройки сброшены</string>
+  <string name="display_font_size">Изменение размера шрифта обозревателя</string>
   <string name="display_font_size_summ">XXX %</string>
-  <string name="image_size">Просмотр измененного размера изображения</string>
+  <string name="image_size">Изменение размета изображений в обозревателе</string>
   <string name="image_size_summ">XXX %</string>
   <string name="button_size">Размер кнопки ответа</string>
   <string name="button_size_summ">XXX %</string>
@@ -86,7 +86,7 @@
   <string name="fullscreen_review">Полноэкранный режим</string>
   <string name="fullscreen_review_summ">Спрятать системную панель статуса</string>
   <string name="gestures">Разрешить жесты</string>
-  <string name="gestures_summ">Применить жесты к таким действиям, как ответ и редактирование карт.</string>
+  <string name="gestures_summ">Использовать жесты для таких действий, как ответ и редактирование карт.</string>
   <string name="gestures_swipe_up">Росчерк вверх</string>
   <string name="gestures_swipe_down">Росчерк вниз</string>
   <string name="gestures_swipe_left">Росчерк налево</string>
@@ -105,13 +105,13 @@
   <string name="swipe_sensitivity_summ">XXX</string>
   <string name="tts">Текст в речь</string>
   <string name="tts_summ">Читать вопрос/ответ, если нет прикреплённого звукового файла</string>
-  <string name="sync_fetch_missing_media">Доставлять медиа</string>
-  <string name="sync_fetch_missing_media_summ">Автоматически доставлять отсутствующие медиа-файлы при синхронизации.</string>
+  <string name="sync_fetch_missing_media">Загружать медиа</string>
+  <string name="sync_fetch_missing_media_summ">Автоматически загружать отсутствующие медиа-файлы при синхронизации.</string>
   <string name="sync_account">AnkiWeb аккаунт</string>
   <string name="sync_account_summ_logged_out">Не авторизованы</string>
   <string name="sync_account_summ_logged_in">%s</string>
   <string name="fix_hebrew_text">Исправление для гласных иврита</string>
-  <string name="fix_hebrew_text_summ">Трюк для правильной отрисовки гласных на иврите.</string>
+  <string name="fix_hebrew_text_summ">Позволяет правильно отрисовывать гласные на иврите.</string>
   <string name="fix_hebrew_instructions">Этот параметр обходит RTL алгоритм системы Android, чтобы показать правильно гласные в тексте на иврите.\n\nЧтобы это работало, вам нужно скачать шрифт Tohu.ttf и вручную скопировать в:\n%s/fonts/\n\nВам не нужно модифицировать ваши карты.</string>
   <string name="fix_hebrew_download_font">Скачать шрифт</string>
   <string name="default_font">Шрифт по умолчанию</string>
@@ -125,7 +125,7 @@
   <string name="notification_minimum_cards_due">Уведомлять когда более</string>
   <string name="notification_minimum_cards_due_summary">XXX карт из</string>
   <string name="notification_minimum_cards_due_vibrate">Вибрация</string>
-  <string name="notification_minimum_cards_due_blink">Моргание света</string>
+  <string name="notification_minimum_cards_due_blink">Мерцание светодиода</string>
   <string name="timeout_answer_text">Автоматически показывать ответ</string>
   <string name="timeout_answer_summ">Показать ответ автоматически без участия пользователя</string>
   <string name="timeout_answer_seconds">Время показа ответа</string>
@@ -133,7 +133,7 @@
   <string name="timeout_question_seconds">Время показа следующего вопроса</string>
   <string name="timeout_question_seconds_summ">XXX s</string>
   <string name="select_locale_title">Выберите язык</string>
-  <string name="safe_display">Режим сохранения экрана</string>
+  <string name="safe_display">Статический режим экрана</string>
   <string name="safe_display_summ">Отключить всю анимацию и использовать другие методы отрисовки карт. Может потребоваться для старых девацсов и устройств на E-ink.</string>
   <string name="vertical_centering">Выравнивание по центру</string>
   <string name="vertical_centering_summ">Центрировать содержимое карт вертикально</string>
@@ -157,7 +157,7 @@
   <string name="time_limit">Временное ограничение таймбокса</string>
   <string name="time_limit_summ">XXX мин</string>
   <string name="day_offset">Начало следующего дня</string>
-  <string name="day_offset_summ">XXX часов после полуночи</string>
+  <string name="day_offset_summ">XXX часов утра</string>
   <string name="input_workaround">Ввод исправлений</string>
   <string name="input_workaround_summ">Заплатка для проблем, касающихся блоков для ввода в HTML . Приводит к проблемам на некоторых устройствах.</string>
   <string name="pref_keep_screen_on">Держать экран включённым</string>

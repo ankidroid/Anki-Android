@@ -63,7 +63,7 @@
   <string name="leech_notification">카드가 거머리로 표시됨</string>
   <string name="corrupt_font">손상된 글꼴 파일 %s</string>
   <string-array name="browser_column1_headings">
-    <item>Search field</item>
+    <item>Sort field</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Answer</item>

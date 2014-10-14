@@ -63,7 +63,7 @@
   <string name="leech_notification">Tarjeta marcada como sanguijuela</string>
   <string name="corrupt_font">Archivo de fuentes corrupto %s</string>
   <string-array name="browser_column1_headings">
-    <item>Campo de búsqueda</item>
+    <item>Sort field</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Respuesta</item>

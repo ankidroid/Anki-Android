@@ -63,7 +63,7 @@
   <string name="leech_notification">کارت به عنوان مزاحم مشخص شده است</string>
   <string name="corrupt_font">فونت فایل خراب %s</string>
   <string-array name="browser_column1_headings">
-    <item>کادر جستجو</item>
+    <item>Sort field</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>پاسخ</item>

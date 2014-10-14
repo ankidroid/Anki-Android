@@ -63,7 +63,7 @@
   <string name="leech_notification">卡牌被标记为记忆难点</string>
   <string name="corrupt_font">字体文件 %s 已损坏</string>
   <string-array name="browser_column1_headings">
-    <item>搜索字段</item>
+    <item>Sort field</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>答案</item>

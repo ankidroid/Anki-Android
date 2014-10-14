@@ -63,7 +63,7 @@
   <string name="leech_notification">Carte marquée « encombrante »</string>
   <string name="corrupt_font">Fichier de police corrompu %s</string>
   <string-array name="browser_column1_headings">
-    <item>Champ de recherche</item>
+    <item>Sort field</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Réponse</item>

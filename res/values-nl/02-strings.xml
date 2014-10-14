@@ -63,7 +63,7 @@
   <string name="leech_notification">Kaart gemarkeerd als moeilijk</string>
   <string name="corrupt_font">Beschadigd lettertypebestand %s</string>
   <string-array name="browser_column1_headings">
-    <item>Search field</item>
+    <item>Sort field</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Antwoord</item>

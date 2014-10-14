@@ -63,7 +63,7 @@
   <string name="leech_notification">Card marcat ca Lipitoare</string>
   <string name="corrupt_font">Fişierul de Fonturi corupt %s</string>
   <string-array name="browser_column1_headings">
-    <item>Câmpul de căutare</item>
+    <item>Sort field</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Răspuns</item>

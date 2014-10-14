@@ -53,7 +53,7 @@
   <string name="card_browser_unmark_card">マーキング解除</string>
   <string name="delete_card_title">ノートの削除</string>
   <string name="delete_card_message">ノートと全てのカードを削除してもよろしいですか？\n検索フィールド: %s</string>
-  <string name="card_browser_show_marked">マークでの抽出</string>
+  <string name="card_browser_show_marked">マーク付きカードの抽出</string>
   <string name="card_browser_field">並び替えフィールドの変更</string>
   <string name="card_browser_field_title">並び替えフィールドの変更</string>
   <string name="card_browser_show_suspended">保留カードの抽出</string>

@@ -39,20 +39,20 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-  <string name="drawer_open">Open Drawer</string>
-  <string name="drawer_close">Close Drawer</string>
+  <string name="drawer_open">Öppna panel</string>
+  <string name="drawer_close">Stäng panel</string>
   <string name="CardEditorLaterMessage">Sparad information för senare</string>
-  <string name="CardEditorCardDeck">Card deck:</string>
-  <string name="CardEditorNoteDeck">Deck:</string>
-  <string name="CardEditorModel">Type:</string>
+  <string name="CardEditorCardDeck">Kortlek:</string>
+  <string name="CardEditorNoteDeck">Kortlek:</string>
+  <string name="CardEditorModel">Typ:</string>
   <string name="CardEditorTags">Etiketter: %1$s</string>
   <string name="add_new_filter_tags">Lägg till/Filtrera etiketter</string>
   <string name="note_type">Nottyp</string>
   <string name="card_type">Korttyp</string>
   <string name="filter_tags">Filtrera etiketter</string>
   <string name="sdcard_missing_message">SD-kortet är inte tillgängligt eftersom det används som USB-minne. Koppla ur USB:n för att komma åt din kortlek.</string>
-  <string name="enable_whiteboard">Enable whiteboard</string>
-  <string name="disable_whiteboard">Disable whiteboard</string>
+  <string name="enable_whiteboard">Aktivera whiteboard</string>
+  <string name="disable_whiteboard">Avaktivera whiteboard</string>
   <string name="show_whiteboard">Aktivera whiteboard</string>
   <string name="hide_whiteboard">Stäng av whiteboard</string>
   <string name="clear_whiteboard">Rensa whiteboard</string>
@@ -63,7 +63,7 @@
   <string name="leech_notification">Markerat som utsugarkort</string>
   <string name="corrupt_font">Felaktig teckensnittsfil %s</string>
   <string-array name="browser_column1_headings">
-    <item>Sökfält</item>
+    <item>Sortera fält</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Svar</item>
@@ -77,7 +77,7 @@
   </string-array>
   <string name="cardeditor_title_add_note">Lägg till not</string>
   <string name="cardeditor_title_edit_card">Redigera not</string>
-  <string name="discard_unsaved_changes">Close and lose current input?</string>
+  <string name="discard_unsaved_changes">Vill du stänga och förlora nuvarande inmatning?</string>
   <string name="factadder_saving_error">Fel vid sparande av not</string>
   <string name="pref_lang_support">Språk</string>
   <string name="saving_facts">Sparar not</string>
@@ -88,11 +88,11 @@
   <string name="saving_changes">Sparar ändringar...</string>
   <string name="reordering_cards">Omordnar kort...</string>
   <plurals name="timebox_reached">
-    <item quantity="one">%1$d card studied in %2$s</item>
+    <item quantity="one">%1$d kort studerade under %2$s</item>
     <item quantity="other">%1$d kort studerade i %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
-    <item quantity="one">%1$d minute</item>
+    <item quantity="one">%1$d minut</item>
     <item quantity="other">%1$d minuter</item>
   </plurals>
   <string name="studyoptions_welcome_title">Välkommen till AnkiDroid</string>
@@ -105,21 +105,21 @@
   <string name="card_editor_reset">Återställ</string>
   <string name="card_editor_copy_card">Kopiera kort</string>
   <string name="card_editor_reset_card">Nollställ kort</string>
-  <string name="card_editor_reschedule_card">Reschedule card</string>
+  <string name="card_editor_reschedule_card">Schemalägg kort på nytt</string>
   <string name="card_editor_preview_card">Förhandsgranska</string>
   <string name="error_insufficient_memory">Åtgärden är inte möjlig på grund av otillräckligt med minne på enheten.</string>
   <string name="rename">Byt namn</string>
   <string name="rename_error">Kortleken %s kunde inte byta namn</string>
   <string name="default_conf_delete_error">Standardkonfigurationsgruppen kan ej tas bort</string>
   <plurals name="factadder_cards_added">
-    <item quantity="one">%d card added</item>
+    <item quantity="one">%d kort tillagt</item>
     <item quantity="other">%d kort har lagts till</item>
   </plurals>
   <string name="help_title">Hjälp</string>
   <string name="help_online">Onlinehjälp</string>
   <string name="help_faq">FAQ</string>
   <string name="check_db">Kontrollera databas</string>
-  <string name="check_media">Check media</string>
+  <string name="check_media">Kontrollera media</string>
   <string name="check_db_message">Kontrollerar databasen. \nVänligen vänta...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Tomt kort. Kör \"Verktyg&gt;Tomma kort...\" i skrivbordsversionen av Anki.</string>
   <string name="unknown_type_field_warning">Skriv svar: okänt fält %s</string>
@@ -135,33 +135,33 @@
     <item>Efter förfallotid</item>
   </string-array>
   <string name="menu_cardbrowser">Kortutforskare</string>
-  <string name="show_hint">Show %s</string>
+  <string name="show_hint">Visa %s</string>
   <string name="pref_lang_other">Språkinställningar</string>
   <string name="pref_font_UI">Anpassat UI typsnitt</string>
   <string name="info_rate">Betygsätt AnkiDroid</string>
   <string name="col_load_failed">Fel vid inläsning av samling.\nTryck bakåt för att stänga AnkiDroid.</string>
   <string name="import_title">Importera kort</string>
-  <string name="import_select_title">Choose a file to import</string>
+  <string name="import_select_title">Välj fil att importera</string>
   <string name="import_message">Vill du lägga till innehållet i filen %s till din samling, eller ersätta din samling med den?</string>
   <string name="import_message_add">Lägg till</string>
   <string name="import_message_replace">Ersätt</string>
   <string name="import_message_replace_confirm">Detta kommer att ta bort din befintliga samling och ersätta den med datat i filen %s. Är du säker?</string>
-  <string name="import_message_add_confirm">Add \"%s\" to collection? This may take a long time</string>
+  <string name="import_message_add_confirm">Vill du lägga till \"%s\" till samling? Det här kan ta lång tid</string>
   <string name="import_log_success">Importerade %d kort</string>
   <string name="import_log_error">Importen misslyckades</string>
   <string name="import_log_no_apkg">Detta är inte en giltig apkg-fil</string>
   <string name="import_importing">Importerar kort.\nVar god vänta...</string>
-  <string name="export_include_schedule">Include scheduling</string>
-  <string name="export_include_media">Include media</string>
-  <string name="confirm_apkg_export">Export collection as apkg file?</string>
-  <string name="confirm_apkg_export_deck">Export \"%s\" as apkg file?</string>
-  <string name="export_in_progress">Exporting apkg file&#8230;</string>
-  <string name="export_successful_title">Email apkg?</string>
-  <string name="export_successful">File \"%s\" was exported. Do you want to email it?</string>
-  <string name="export_unsuccessful">Error exporting collection</string>
+  <string name="export_include_schedule">Inkludera schemaläggning</string>
+  <string name="export_include_media">Inkludera media</string>
+  <string name="confirm_apkg_export">Exportera samling som APKG-fil?</string>
+  <string name="confirm_apkg_export_deck">Exportera \"%s\" som APKG-fil?</string>
+  <string name="export_in_progress">Exporterar APKG-fil&#8230;</string>
+  <string name="export_successful_title">Vill du skicka APKG-filen med epost?</string>
+  <string name="export_successful">Fil \"%s\" exporterades. Vill du skicka den med epost?</string>
+  <string name="export_unsuccessful">Fel vid export av samling</string>
   <string name="import_hint">För att importera kort, placera apkg-filen i katalogen %s och tryck på ok</string>
   <string name="upgrade_import_no_file_found">Ingen importerbar %1$s fil hittad</string>
-  <string name="study_options">Deck options</string>
+  <string name="study_options">Kortleksalternativ</string>
   <string name="custom_study">Anpassade studier</string>
   <string name="dyn_deck_desc">Det här är en specialkortlek för studier utanför det normala schemat. Kort återförs automatiskt till sina ursprungliga kortlekar efter att du repeterat dem. Om du tar bort denna kortlek återförs alla återstående kort till sina ursprungliga kortlekar.</string>
   <string name="exit_wizard">Avsluta guide</string>
@@ -174,8 +174,8 @@
   <string name="sched_end">(slut)</string>
   <string name="sched_unbury_button">För att se dem nu, klicka på knappen \'\'Visa dolda kort\'\'.</string>
   <string name="sched_has_buried">En del relaterade eller dolda kort undanhålls till en senare session.</string>
-  <string name="tag_editor_add_hint">Use tick mark on the right to add new tag</string>
-  <string name="tag_editor_add_feedback">Press \"%2$s\" button to confirm adding \"%1$s\"</string>
-  <string name="lookup_hint">After copying the text, tap anywhere on the flashcard to show the search icon</string>
-  <string name="add_content_showcase_text">To get started, tap the + button to add some new study material.\n\n Press \'Help\' to see the manual.</string>
+  <string name="tag_editor_add_hint">Använd bocken till höger för att lägga till ny etikett</string>
+  <string name="tag_editor_add_feedback">Tryck på \"%2$s\"-knappen för att bekräfta att lägga till \"%1$s\"</string>
+  <string name="lookup_hint">Efter att ha kopierat texten, klicka var som helst på flashkortet för att visa sökikonen</string>
+  <string name="add_content_showcase_text">För att börja, klicka på +-knappen för att lägga till nytt studiematerial.\n\n Tryck \"Hjälp\" för att se manualen.</string>
 </resources>

@@ -151,7 +151,7 @@
   <string name="dialog_collection_path_text">Заданная папка не существует, создать?</string>
   <string name="dialog_collection_path_not_dir">Указанный путь не является допустимым каталогом</string>
   <string name="check_media_title">Проверить медиа?</string>
-  <string name="check_media_warning">Это может занять продолжительное время с большими медиа коллекциями</string>
+  <string name="check_media_warning">На это может потребоваться значительное время для больших коллекций</string>
   <string name="check_media_message">Проверка медиа&#8230;</string>
   <string name="check_media_acknowledge">Медиа проверено</string>
   <string name="check_media_failed">Ошибка проверки медиа</string>

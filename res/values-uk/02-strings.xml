@@ -63,7 +63,7 @@
   <string name="leech_notification">Картка позначена як липка</string>
   <string name="corrupt_font">Пошкоджений файл шрифтів %s</string>
   <string-array name="browser_column1_headings">
-    <item>Пошук поля</item>
+    <item>Sort field</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Відповідь</item>

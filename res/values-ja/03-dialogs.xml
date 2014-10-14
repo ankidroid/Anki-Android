@@ -65,7 +65,7 @@
   <string name="notify_message">新しいバージョンをダウンロード</string>
   <string name="notification_title">AnkiDroidのアップデートの確認</string>
   <string name="preview_title">プレビュー</string>
-  <string name="notification_message">AnkiDroidの新しいバージョンがGoogle Playで入手可能です.\n\nインストールしますか?</string>
+  <string name="notification_message">AnkiDroid の新しいバージョンが Google Play で入手可能です.\n\nインストールしますか？</string>
   <string name="notification_stop">更新の通知をしない</string>
   <string name="reset_card_dialog_title">カードの進行状況をリセット</string>
   <string name="reset_card_dialog_message">このカードは新規カードの最後に配置されます。</string>
@@ -152,7 +152,7 @@
   <string name="dialog_collection_path_text">指定したフォルダーは存在しません。作成しますか？</string>
   <string name="dialog_collection_path_not_dir">指定されたパスは有効なディレクトリではありませんでした</string>
   <string name="check_media_title">メディアをチェックしますか？</string>
-  <string name="check_media_warning">大きなコレクションの場合は、長い時間がかかります</string>
+  <string name="check_media_warning">大きなコレクションの場合は、長い時間がかかる場合があります。</string>
   <string name="check_media_message">メディアをチェックしています.</string>
   <string name="check_media_acknowledge">メディアがチェックされました。</string>
   <string name="check_media_failed">メディアチェック時のエラー</string>

@@ -63,7 +63,7 @@
   <string name="leech_notification">Kort merket som igle</string>
   <string name="corrupt_font">Ugyldig font-fil %s</string>
   <string-array name="browser_column1_headings">
-    <item>Search field</item>
+    <item>Sort field</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Answer</item>

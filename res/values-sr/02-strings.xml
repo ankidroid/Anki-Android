@@ -63,7 +63,7 @@
   <string name="leech_notification">Карта је означена као заразна</string>
   <string name="corrupt_font">Оштећена датотека фонта %s</string>
   <string-array name="browser_column1_headings">
-    <item>Претражи поље</item>
+    <item>Sort field</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Одговор</item>
