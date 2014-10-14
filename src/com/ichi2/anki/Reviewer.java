@@ -213,7 +213,7 @@ public class Reviewer extends AbstractFlashcardViewer {
             menu.findItem(R.id.action_enable_whiteboard).setTitle(R.string.enable_whiteboard);
         }
         if (AnkiDroidApp.SDK_VERSION < 11 && !mDisableClipboard) {
-            menu.findItem(R.id.action_search_dictionary).setVisible(true).setEnabled(!mShowWhiteboard)
+            menu.findItem(R.id.action_search_dictionary).setVisible(true).setEnabled(!(mPrefWhiteboard && mShowWhiteboard))
                     .setTitle(clipboardHasText() ? Lookup.getSearchStringTitle() : res.getString(R.string.menu_select));
         }
         return super.onCreateOptionsMenu(menu);
