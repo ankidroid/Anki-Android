@@ -46,6 +46,7 @@
   <string name="downloading">تنزيل...</string>
   <string name="paused">توقف مؤقت</string>
   <string name="downloaded">منزلة</string>
+  <string name="sync_error">Sync Error</string>
   <string name="vague_error">Error</string>
   <string name="cancelling">إلغاء...</string>
   <string name="connection_error_return_message">حدث خطأ في شبكة الاتصال. أعد المحاولة، أو ألغ وعد إلى الشاشة السابقة.</string>
@@ -66,6 +67,7 @@
   <string name="sync_log_db_error">حدث خطأ في قاعدة البيانات.</string>
   <string name="not_logged_in_title">Log in to AnkiWeb</string>
   <string name="login_create_account_message">You must log in to an AnkiWeb account. You can create one in the next step.</string>
+  <string name="no_email_client">No email client available</string>
   <string name="username">Email address</string>
   <string name="username_repeat">Repeat email address</string>
   <string name="password">كلمة المرور</string>

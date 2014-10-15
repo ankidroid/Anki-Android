@@ -46,6 +46,7 @@
   <string name="downloading">درحال بارگيري...</string>
   <string name="paused">توقف شده</string>
   <string name="downloaded">بارگيري شده</string>
+  <string name="sync_error">Sync Error</string>
   <string name="vague_error">Error</string>
   <string name="cancelling">درحال لغوكردن...</string>
   <string name="connection_error_return_message">خطاي شبكه رخ داده است. تلاش مجدد و يا لغو و بازگشت به صفحه قبلي.</string>
@@ -66,6 +67,7 @@
   <string name="sync_log_db_error">خطاي پايگاه داده رخ داده است.</string>
   <string name="not_logged_in_title">Log in to AnkiWeb</string>
   <string name="login_create_account_message">You must log in to an AnkiWeb account. You can create one in the next step.</string>
+  <string name="no_email_client">No email client available</string>
   <string name="username">نشانی پست الکترونیک</string>
   <string name="username_repeat">تکرار نشانی پست الکترونیک</string>
   <string name="password">رمزعبور</string>

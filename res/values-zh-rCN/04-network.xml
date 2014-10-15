@@ -46,6 +46,7 @@
   <string name="downloading">正在下载&#8230;</string>
   <string name="paused">已暂停</string>
   <string name="downloaded">已下载</string>
+  <string name="sync_error">Sync Error</string>
   <string name="vague_error">错误</string>
   <string name="cancelling">正在取消&#8230;</string>
   <string name="connection_error_return_message">出现网络错误。重试，或取消并返回上一个界面。</string>
@@ -67,6 +68,7 @@
   <string name="sync_log_db_error">发生数据库错误。</string>
   <string name="not_logged_in_title">登录到 AnkiWeb</string>
   <string name="login_create_account_message">您必须使用 AnkiWeb 帐户登录。您可以通过下一步创建一个新帐户。</string>
+  <string name="no_email_client">No email client available</string>
   <string name="username">电子邮件地址</string>
   <string name="username_repeat">重复电子邮件地址</string>
   <string name="password">密码</string>

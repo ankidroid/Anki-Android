@@ -46,6 +46,7 @@
   <string name="downloading">Hämtar...</string>
   <string name="paused">Pausad</string>
   <string name="downloaded">Nedladdade</string>
+  <string name="sync_error">Sync Error</string>
   <string name="vague_error">Fel</string>
   <string name="cancelling">Avbryter...</string>
   <string name="connection_error_return_message">Ett nätverksfel har uppstått. Försök igen eller avbryt och återgå till föregående skärm.</string>
@@ -66,6 +67,7 @@
   <string name="sync_log_db_error">Ett databasfel har inträffat.</string>
   <string name="not_logged_in_title">Logga in på AnkiWeb</string>
   <string name="login_create_account_message">Du måste logga in på ett AnkiWeb-konto. Du kan skapa ett i nästa steg.</string>
+  <string name="no_email_client">No email client available</string>
   <string name="username">E-postadress</string>
   <string name="username_repeat">Upprepa e-postadress</string>
   <string name="password">Lösenord</string>

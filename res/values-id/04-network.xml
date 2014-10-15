@@ -46,6 +46,7 @@
   <string name="downloading">Mengunduh &#8230;</string>
   <string name="paused">Dijeda</string>
   <string name="downloaded">Sudah muat turun</string>
+  <string name="sync_error">Sync Error</string>
   <string name="vague_error">Error</string>
   <string name="cancelling">Membatalkan&#8230;</string>
   <string name="connection_error_return_message">Telah terjadi ralat jaringan. Cuba lagi, atau batalkan dan kembali ke layar sebelumnya.</string>
@@ -66,6 +67,7 @@
   <string name="sync_log_db_error">Satu ralat database berlaku.</string>
   <string name="not_logged_in_title">Log in to AnkiWeb</string>
   <string name="login_create_account_message">You must log in to an AnkiWeb account. You can create one in the next step.</string>
+  <string name="no_email_client">No email client available</string>
   <string name="username">Alamat surel</string>
   <string name="username_repeat">Ulangi alamat surel</string>
   <string name="password">Kata laluan</string>

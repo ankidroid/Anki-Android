@@ -46,6 +46,7 @@
   <string name="downloading">Baixando...</string>
   <string name="paused">Em pausa</string>
   <string name="downloaded">Baixado</string>
+  <string name="sync_error">Sync Error</string>
   <string name="vague_error">Error</string>
   <string name="cancelling">Cancelando...</string>
   <string name="connection_error_return_message">Ocorreu um erro de rede. Tente novamente, ou cancele e retorne à tela anterior.</string>
@@ -66,6 +67,7 @@
   <string name="sync_log_db_error">Ocorreu um erro de banco de dados.</string>
   <string name="not_logged_in_title">Log in to AnkiWeb</string>
   <string name="login_create_account_message">You must log in to an AnkiWeb account. You can create one in the next step.</string>
+  <string name="no_email_client">No email client available</string>
   <string name="username">Endereço de email</string>
   <string name="username_repeat">Repita endereço de email</string>
   <string name="password">Senha</string>

@@ -46,6 +46,7 @@
   <string name="downloading">S\'està baixant...</string>
   <string name="paused">En pausa</string>
   <string name="downloaded">S\'ha baixat</string>
+  <string name="sync_error">Sync Error</string>
   <string name="vague_error">Error</string>
   <string name="cancelling">S\'està cancel·lant...</string>
   <string name="connection_error_return_message">Hi ha hagut un error de xarxa. Torneu-ho a provar, o cancel·leu i torneu a la pantalla anterior.</string>
@@ -66,6 +67,7 @@
   <string name="sync_log_db_error">S\'ha produït un error de la base de dades.</string>
   <string name="not_logged_in_title">Log in to AnkiWeb</string>
   <string name="login_create_account_message">You must log in to an AnkiWeb account. You can create one in the next step.</string>
+  <string name="no_email_client">No email client available</string>
   <string name="username">Adreça de correu electrònic</string>
   <string name="username_repeat">Repeteix l\'adreça de correu electrònic</string>
   <string name="password">Contrasenya</string>

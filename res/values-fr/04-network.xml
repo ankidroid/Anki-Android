@@ -46,6 +46,7 @@
   <string name="downloading">Téléchargement en cours...</string>
   <string name="paused">Arrêté</string>
   <string name="downloaded">Téléchargé</string>
+  <string name="sync_error">Sync Error</string>
   <string name="vague_error">Erreur</string>
   <string name="cancelling">Annulation...</string>
   <string name="connection_error_return_message">Une erreur réseau s\'est produite. Réessayer ou annuler et revenir à l\'écran précédent.</string>
@@ -66,6 +67,7 @@
   <string name="sync_log_db_error">Une erreur s\'est produite dans la base de données.</string>
   <string name="not_logged_in_title">Se connecter à AnkiWeb</string>
   <string name="login_create_account_message">Vous devez vous connecter à un compte AnkiDroid. Vous pourrez en créer un à la prochaine étape.</string>
+  <string name="no_email_client">No email client available</string>
   <string name="username">Adresse électronique</string>
   <string name="username_repeat">Confirmation de l\'adresse électronique</string>
   <string name="password">Mot de passe</string>

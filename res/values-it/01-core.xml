@@ -43,7 +43,7 @@
   <string name="app_name_anki">Anki</string>
   <string name="app_name_droid">Droid</string>
   <string name="studyoptions_title">Opzioni di studio</string>
-  <string name="studyoptions_deck_name">Nome del mazzo</string>
+  <string name="studyoptions_deck_name">Nome mazzo</string>
   <string name="studyoptions_due_today">Scadono oggi:</string>
   <string name="studyoptions_new_total">Totale carte nuove:</string>
   <string name="studyoptions_total_cards">Totale carte:</string>
@@ -75,7 +75,7 @@
   <string name="card_unsuspended">Annulla la sospensione della carta</string>
   <string name="card_suspended">Carta risospesa</string>
   <string name="menu_rotate">Ruota</string>
-  <string name="menu_import">Import</string>
+  <string name="menu_import">Importa</string>
   <string name="undo">Annulla</string>
   <string name="undo_action_review">ultima ripetizione</string>
   <string name="undo_action_edit">modifica nota</string>
@@ -101,7 +101,7 @@
   <string name="menu_my_account">Sincronizza account</string>
   <string name="menu_preferences">Preferenze</string>
   <string name="menu_about">Informazioni</string>
-  <string name="menu_dismiss_note">Hide / Delete</string>
+  <string name="menu_dismiss_note">Nascondi / Cancella</string>
   <string name="menu_bury_card">Seppellisci carta</string>
   <string name="menu_bury_note">Seppellisci nota</string>
   <string name="menu_suspend_card">Sospendi carta</string>
