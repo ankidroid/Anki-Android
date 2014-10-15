@@ -2,13 +2,21 @@
 package com.ichi2.anki;
 
 import android.annotation.SuppressLint;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
@@ -16,13 +24,26 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.animation.Animation;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.dialogs.AsyncDialogFragment;
+import com.ichi2.anki.dialogs.SimpleMessageDialog;
 import com.ichi2.async.CollectionLoader;
 import com.ichi2.libanki.Collection;
 import com.ichi2.themes.StyledOpenCollectionDialog;
 
-public class AnkiActivity extends ActionBarActivity implements LoaderManager.LoaderCallbacks<Collection> {
+public class AnkiActivity extends ActionBarActivity implements LoaderManager.LoaderCallbacks<Collection>,
+        SimpleMessageDialog.SimpleMessageDialogListener {
+
+    public final int SIMPLE_NOTIFICATION_ID = 0;
+
     private Collection mCollection;
     private StyledOpenCollectionDialog mOpenCollectionDialog;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE)).cancel(SIMPLE_NOTIFICATION_ID);
+    }
 
 
     // called when the CollectionLoader finishes... usually will be over-ridden
@@ -244,6 +265,113 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
     public void setOpeningCollectionDialogMessage(String message) {
         if (mOpenCollectionDialog != null && mOpenCollectionDialog.isShowing()) {
             mOpenCollectionDialog.setMessage(message);
+        }
+    }
+
+
+    /**
+     * Global method to show dialog fragment including adding it to back stack Note: DO NOT call this from an async
+     * task! If you need to show a dialog from an async task, use showAsyncDialogFragment()
+     * 
+     * @param newFragment  the DialogFragment you want to show
+     */
+    public void showDialogFragment(DialogFragment newFragment) {
+        // DialogFragment.show() will take care of adding the fragment
+        // in a transaction. We also want to remove any currently showing
+        // dialog, so make our own transaction and take care of that here.
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        Fragment prev = getSupportFragmentManager().findFragmentByTag("dialog");
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        // save transaction to the back stack
+        ft.addToBackStack("dialog");
+        newFragment.show(ft, "dialog");
+    }
+
+
+    /**
+     * Global method to show a dialog fragment including adding it to back stack and handling the case where the dialog
+     * is shown from an async task, by showing the message in the notification bar if the activity was stopped before the
+     * AsyncTask completed
+     * 
+     * @param newFragment  the AsyncDialogFragment you want to show
+     */
+    public void showAsyncDialogFragment(AsyncDialogFragment newFragment) {
+        try {
+            showDialogFragment(newFragment);
+        } catch (IllegalStateException e) {
+            String title = newFragment.getNotificationTitle();
+            String message = newFragment.getNotificationMessage();
+            Bundle intentExtras = newFragment.getNotificationIntentExtras();
+            showSimpleNotification(title, message, intentExtras);
+        }
+    }
+
+
+    /**
+     * Show a simple message dialog, dismissing the message without taking any further action when OK button is pressed.
+     * If a DialogFragment cannot be shown due to the Activity being stopped then the message is shown in the
+     * notification bar instead.
+     * 
+     * @param String message
+     */
+    protected void showSimpleMessageDialog(String message) {
+        showSimpleMessageDialog(message, false);
+    }
+
+
+    /**
+     * Show a simple message dialog, dismissing the message without taking any further action when OK button is pressed.
+     * If a DialogFragment cannot be shown due to the Activity being stopped then the message is shown in the
+     * notification bar instead.
+     * 
+     * @param message
+     * @param reload flag which forces app to be restarted when true
+     */
+    protected void showSimpleMessageDialog(String message, boolean reload) {
+        AsyncDialogFragment newFragment = SimpleMessageDialog.newInstance(message, reload);
+        showAsyncDialogFragment(newFragment);
+    }
+
+
+    protected void showSimpleNotification(String title, String message, Bundle extras) {
+        // Use the title as the ticker unless the title is simply "AnkiDroid"
+        String ticker = title;
+        if (title.equals(getResources().getString(R.string.app_name))) {
+            ticker = message;
+        }
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.drawable.ic_stat_notify).setContentTitle(title).setContentText(message)
+                .setTicker(ticker);
+        // Creates an explicit intent for an Activity in your app
+        Intent resultIntent = new Intent(this, DeckPicker.class);
+        resultIntent.putExtras(extras);
+        // The stack builder object will contain an artificial back stack for the
+        // started Activity.
+        // This ensures that navigating backward from the Activity leads out of
+        // your application to the Home screen.
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        // Adds the back stack for the Intent (but not the Intent itself)
+        stackBuilder.addParentStack(DeckPicker.class);
+        // Adds the Intent that starts the Activity to the top of the stack
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setContentIntent(resultPendingIntent);
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        // mId allows you to update the notification later on.
+        notificationManager.notify(SIMPLE_NOTIFICATION_ID, builder.build());
+    }
+
+
+    // Handle closing simple message dialog
+    @Override
+    public void dismissSimpleMessageDialog(boolean reload) {
+        dismissAllDialogFragments();
+        if (reload) {
+            Intent deckPicker = new Intent(this, DeckPicker.class);
+            deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivityWithAnimation(deckPicker, ActivityTransitionAnimation.LEFT);
         }
     }
 

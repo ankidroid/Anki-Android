@@ -2,9 +2,7 @@
 package com.ichi2.anki.dialogs;
 
 import android.content.DialogInterface;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 
 import com.ichi2.anki.R;
 import com.ichi2.themes.StyledDialog;
@@ -12,11 +10,10 @@ import com.ichi2.themes.StyledDialog;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MediaCheckDialog extends DialogFragment {
-    private int mType = 0;
-
+public class MediaCheckDialog extends AsyncDialogFragment {
     public static final int DIALOG_CONFIRM_MEDIA_CHECK = 0;
     public static final int DIALOG_MEDIA_CHECK_RESULTS = 1;
+    public static String CLASS_NAME_TAG = "MediaCheckDialog";
 
     public interface MediaCheckDialogListener {
         public void showMediaCheckDialog(int dialogType);
@@ -44,37 +41,41 @@ public class MediaCheckDialog extends DialogFragment {
     }
 
 
-    public static MediaCheckDialog newInstance(int dialogType, List<List<String>> checkList) {
+    public static MediaCheckDialog newInstance(int dialogType, ArrayList<String> nohave, ArrayList<String> unused,
+            ArrayList<String> invalid) {
         MediaCheckDialog f = new MediaCheckDialog();
         Bundle args = new Bundle();
+        args.putStringArrayList("nohave", nohave);
+        args.putStringArrayList("unused", unused);
+        args.putStringArrayList("invalid", invalid);
         args.putInt("dialogType", dialogType);
-        args.putStringArrayList("nohave", new ArrayList<String>(checkList.get(0)));
-        args.putStringArrayList("unused", new ArrayList<String>(checkList.get(1)));
-        args.putStringArrayList("invalid", new ArrayList<String>(checkList.get(2)));
-        f.setArguments(args);
         return f;
+    }
+
+
+    public static MediaCheckDialog newInstance(int dialogType, List<List<String>> checkList) {
+        return newInstance(dialogType, new ArrayList<String>(checkList.get(0)),
+                new ArrayList<String>(checkList.get(1)), new ArrayList<String>(checkList.get(2)));
     }
 
 
     @Override
     public StyledDialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mType = getArguments().getInt("dialogType");
         StyledDialog.Builder builder = new StyledDialog.Builder(getActivity());
-        Resources res = getResources();
 
-        switch (mType) {
+        switch (getArguments().getInt("dialogType")) {
             case DIALOG_CONFIRM_MEDIA_CHECK:
-                builder.setTitle(res.getString(R.string.check_media_title));
-                builder.setMessage(res.getString(R.string.check_media_warning));
-                builder.setPositiveButton(res.getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
+                builder.setTitle(getNotificationTitle());
+                builder.setMessage(getNotificationMessage());
+                builder.setPositiveButton(res().getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         ((MediaCheckDialogListener) getActivity()).mediaCheck();
                         ((MediaCheckDialogListener) getActivity()).dismissAllDialogFragments();
                     }
                 });
-                builder.setNegativeButton(res.getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(res().getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         ((MediaCheckDialogListener) getActivity()).dismissAllDialogFragments();
@@ -83,47 +84,47 @@ public class MediaCheckDialog extends DialogFragment {
                 setCancelable(true);
                 return builder.create();
             case DIALOG_MEDIA_CHECK_RESULTS:
-                builder.setTitle(res.getString(R.string.check_media_acknowledge));
+                builder.setTitle(getNotificationMessage());
                 final ArrayList<String> nohave = getArguments().getStringArrayList("nohave");
                 final ArrayList<String> unused = getArguments().getStringArrayList("unused");
                 final ArrayList<String> invalid = getArguments().getStringArrayList("invalid");
                 // Generate report
                 String report = "";
                 if (invalid.size() > 0) {
-                    report += String.format(res.getString(R.string.check_media_invalid), invalid.size());
+                    report += String.format(res().getString(R.string.check_media_invalid), invalid.size());
                 }
                 if (unused.size() > 0) {
                     if (report.length() > 0) {
                         report += "\n";
                     }
-                    report += String.format(res.getString(R.string.check_media_unused), unused.size());
+                    report += String.format(res().getString(R.string.check_media_unused), unused.size());
                 }
                 if (nohave.size() > 0) {
                     if (report.length() > 0) {
                         report += "\n";
                     }
-                    report += String.format(res.getString(R.string.check_media_nohave), nohave.size());
+                    report += String.format(res().getString(R.string.check_media_nohave), nohave.size());
                 }
 
                 if (report.length() == 0) {
-                    report = res.getString(R.string.check_media_no_unused_missing);
+                    report = res().getString(R.string.check_media_no_unused_missing);
                 }
 
                 // We also prefix the report with a message about the media db being rebuilt, since
                 // we do a full media scan and update the db on each media check on AnkiDroid.
-                report = res.getString(R.string.check_media_db_updated) + "\n\n" + report;
+                report = res().getString(R.string.check_media_db_updated) + "\n\n" + report;
 
                 // If we have unused files, show a dialog with a "delete" button. Otherwise, the user only
                 // needs to acknowledge the results, so show only an OK dialog.
                 if (unused.size() > 0) {
                     builder.setMessage(report);
-                    builder.setPositiveButton(res.getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
+                    builder.setPositiveButton(res().getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             ((MediaCheckDialogListener) getActivity()).dismissAllDialogFragments();
                         }
                     });
-                    builder.setNegativeButton(res.getString(R.string.check_media_delete_unused),
+                    builder.setNegativeButton(res().getString(R.string.check_media_delete_unused),
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
@@ -133,7 +134,7 @@ public class MediaCheckDialog extends DialogFragment {
                             });
                 } else {
                     builder.setMessage(report);
-                    builder.setPositiveButton(res.getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
+                    builder.setPositiveButton(res().getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             ((MediaCheckDialogListener) getActivity()).dismissAllDialogFragments();
@@ -150,5 +151,39 @@ public class MediaCheckDialog extends DialogFragment {
 
     public void dismissAllDialogFragments() {
         ((MediaCheckDialogListener) getActivity()).dismissAllDialogFragments();
+    }
+
+
+    @Override
+    public String getNotificationMessage() {
+        switch (getArguments().getInt("dialogType")) {
+            case DIALOG_CONFIRM_MEDIA_CHECK:
+                return res().getString(R.string.check_media_warning);
+            case DIALOG_MEDIA_CHECK_RESULTS:
+                return res().getString(R.string.check_media_acknowledge);
+            default:
+                return res().getString(R.string.app_name);
+        }
+    }
+
+
+    @Override
+    public String getNotificationTitle() {
+        switch (getArguments().getInt("dialogType")) {
+            case DIALOG_CONFIRM_MEDIA_CHECK:
+                return res().getString(R.string.check_media_title);
+            default:
+                return res().getString(R.string.app_name);
+        }
+    }
+
+
+    @Override
+    public Bundle getNotificationIntentExtras() {
+        Bundle b = new Bundle();
+        b.putAll(getArguments());
+        b.putBoolean("showAsyncDialogFragment", true);
+        b.putString("dialogClass", CLASS_NAME_TAG);
+        return b;
     }
 }
