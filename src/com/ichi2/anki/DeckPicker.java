@@ -234,7 +234,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
                 mProgressDialog.dismiss();
             }
-            if (result.getBoolean()) {
+            if (result != null && result.getBoolean()) {
                 Resources res = getResources();
                 int count = result.getInt();
                 if (count < 0) {
@@ -291,7 +291,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 mProgressDialog.dismiss();
             }
             Resources res = getResources();
-            if (result.getBoolean()) {
+            if (result != null && result.getBoolean()) {
                 int code = result.getInt();
                 if (code == -2) {
                     // not a valid apkg file
@@ -1236,7 +1236,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 if (mProgressDialog != null && mProgressDialog.isShowing()) {
                     mProgressDialog.dismiss();
                 }
-                if (result.getBoolean()) {
+                if (result != null && result.getBoolean()) {
                     startLoadingCollection();
                 } else {
                     Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.deck_repair_error), true);
@@ -1273,7 +1273,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 if (mProgressDialog.isShowing()) {
                     mProgressDialog.dismiss();
                 }
-                if (result.getBoolean()) {
+                if (result != null && result.getBoolean()) {
                     String msg = "";
                     double shrunk = Math.round(result.getLong() / 1024.0);
                     if (shrunk > 0.0) {
@@ -1317,7 +1317,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 if (mProgressDialog.isShowing()) {
                     mProgressDialog.dismiss();
                 }
-                if (result.getBoolean()) {
+                if (result != null && result.getBoolean()) {
                     @SuppressWarnings("unchecked")
                     List<List<String>> checkList = (List<List<String>>) result.getObjArray()[0];
                     showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, checkList);
