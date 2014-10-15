@@ -56,7 +56,7 @@ public class NotificationService extends Service {
         int dueCardsCount = WidgetStatus.fetchDue(context);
         if (dueCardsCount >= minimumCardsDueForNotification) {
             // Show a notification
-            int icon = R.drawable.anki;
+            int icon = R.drawable.ic_stat_notify;
             CharSequence tickerText = String.format(
                     getString(R.string.widget_minimum_cards_due_notification_ticker_text), dueCardsCount);
             long when = System.currentTimeMillis();

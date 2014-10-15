@@ -23,6 +23,7 @@ package com.ichi2.anki;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -65,10 +66,12 @@ import com.github.amlcurran.showcaseview.OnShowcaseEventListener;
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.ActionItemTarget;
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.dialogs.AsyncDialogFragment;
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
 import com.ichi2.anki.dialogs.DeckPickerBackupNoSpaceLeftDialog;
 import com.ichi2.anki.dialogs.DeckPickerConfirmDeleteDeckDialog;
 import com.ichi2.anki.dialogs.DeckPickerContextMenu;
+import com.ichi2.anki.dialogs.DeckPickerExportCompleteDialog;
 import com.ichi2.anki.dialogs.DeckPickerNoSpaceLeftDialog;
 import com.ichi2.anki.dialogs.ExportDialog;
 import com.ichi2.anki.dialogs.ImportDialog;
@@ -130,6 +133,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     private static final int MSG_SHOW_COLLECTION_LOADING_ERROR_DIALOG = 0;
     private static final int MSG_SHOW_COLLECTION_IMPORT_REPLACE_DIALOG = 1;
     private static final int MSG_SHOW_COLLECTION_IMPORT_ADD_DIALOG = 2;
+    private static final int MSG_SHOW_ASYNC_DIALOG = 3;
 
     /**
      * Available options performed by other activities
@@ -243,10 +247,10 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                     } else {
                         message = res.getString(R.string.import_log_error);
                     }
-                    showLogDialog(message, true);
+                    showSimpleMessageDialog(message, true);
                 } else {
                     message = res.getString(R.string.import_log_success, count);
-                    showLogDialog(message);
+                    showSimpleMessageDialog(message);
                     Object[] info = result.getObjArray();
                     updateDecksList((TreeSet<Object[]>) info[0], (Integer) info[1], (Integer) info[2]);
                 }
@@ -295,13 +299,13 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 int code = result.getInt();
                 if (code == -2) {
                     // not a valid apkg file
-                    showLogDialog(res.getString(R.string.import_log_no_apkg));
+                    showSimpleMessageDialog(res.getString(R.string.import_log_no_apkg));
                 }
                 Object[] info = result.getObjArray();
                 updateDecksList((TreeSet<Object[]>) info[0], (Integer) info[1], (Integer) info[2]);
                 dismissOpeningCollectionDialog();
             } else {
-                showLogDialog(res.getString(R.string.import_log_no_apkg), true);
+                showSimpleMessageDialog(res.getString(R.string.import_log_no_apkg), true);
             }
             // delete temp file if necessary and reset import path so that it's not incorrectly imported next time
             // Activity starts
@@ -349,7 +353,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             }
             String exportPath = result.getString();
             if (exportPath != null) {
-                showExportCompleteDialog(exportPath);
+                showAsyncDialogFragment(DeckPickerExportCompleteDialog.newInstance(exportPath));
             } else {
                 Themes.showThemedToast(DeckPicker.this, getResources().getString(R.string.export_unsuccessful), true);
             }
@@ -815,6 +819,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             selectDeck(did);
         }
         // Start import process if apkg file was opened via another app
+        Intent intent = getIntent();
         if (AnkiDroidApp.colIsOpen() && mImportPath != null) {
             if (mHandler == null) {
                 mHandler = new DialogHandler(this);
@@ -826,6 +831,11 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 // Otherwise show confirmation dialog asking to confirm import with add
                 mHandler.sendEmptyMessage(MSG_SHOW_COLLECTION_IMPORT_ADD_DIALOG);
             }
+        } else if (intent!= null && intent.getExtras()!= null && intent.getExtras().getBoolean("showAsyncDialogFragment")) {
+            Message m = Message.obtain();
+            m.what = MSG_SHOW_ASYNC_DIALOG;
+            m.setData(getIntent().getExtras());
+            mHandler.sendMessage(m);
         }
         mShowShowcaseView = true;
         AnkiDroidApp.getCompat().invalidateOptionsMenu(this);
@@ -865,12 +875,36 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == MSG_SHOW_COLLECTION_LOADING_ERROR_DIALOG) {
+                // Collection could not be opened
                 mActivity.get().showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_LOAD_FAILED);
             } else if (msg.what == MSG_SHOW_COLLECTION_IMPORT_REPLACE_DIALOG) {
+                // Handle import of collection package APKG
                 mActivity.get().showImportDialog(ImportDialog.DIALOG_IMPORT_REPLACE_CONFIRM,
                         mActivity.get().mImportPath);
             } else if (msg.what == MSG_SHOW_COLLECTION_IMPORT_ADD_DIALOG) {
+                // Handle import of deck package APKG
                 mActivity.get().showImportDialog(ImportDialog.DIALOG_IMPORT_ADD_CONFIRM, mActivity.get().mImportPath);
+            } else if (msg.what == MSG_SHOW_ASYNC_DIALOG) {
+                // Handle showing of AsyncDialogFragment which was not shown initially due to stopped activity
+                Bundle e = msg.getData();
+                String dialogClass = e.getString("dialogClass");
+                if (dialogClass.equals(SyncErrorDialog.CLASS_NAME_TAG)) {
+                    // Sync error
+                    int id = e.getInt("dialogType");
+                    String message = e.getString("dialogMessage");
+                    mActivity.get().showSyncErrorDialog(id, message);
+                } else if (dialogClass.equals(DeckPickerExportCompleteDialog.CLASS_NAME_TAG)) {
+                    // Export complete
+                    AsyncDialogFragment f = DeckPickerExportCompleteDialog.newInstance(e.getString("exportPath"));
+                    mActivity.get().showAsyncDialogFragment(f);
+                } else if (dialogClass.equals(MediaCheckDialog.CLASS_NAME_TAG)) {
+                    int id = e.getInt("dialogType");
+                    ArrayList<String> nohave = e.getStringArrayList("nohave");
+                    ArrayList<String> unused = e.getStringArrayList("unused");
+                    ArrayList<String> invalid = e.getStringArrayList("invalid");
+                    AsyncDialogFragment f = MediaCheckDialog.newInstance(id, nohave, unused, invalid);
+                    mActivity.get().showAsyncDialogFragment(f);
+                }
             }
         }
     }
@@ -1075,21 +1109,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     }
 
 
-    public void showDialogFragment(DialogFragment newFragment) {
-        // DialogFragment.show() will take care of adding the fragment
-        // in a transaction. We also want to remove any currently showing
-        // dialog, so make our own transaction and take care of that here.
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        Fragment prev = getSupportFragmentManager().findFragmentByTag("dialog");
-        if (prev != null) {
-            ft.remove(prev);
-        }
-        // save transaction to the back stack
-        ft.addToBackStack("dialog");
-        newFragment.show(ft, "dialog");
-    }
-
-
     // Show dialogs to deal with database loading issues etc
     @Override
     public void showDatabaseErrorDialog(int id) {
@@ -1100,15 +1119,13 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
     @Override
     public void showMediaCheckDialog(int id) {
-        DialogFragment newFragment = MediaCheckDialog.newInstance(id);
-        showDialogFragment(newFragment);
+        showAsyncDialogFragment(MediaCheckDialog.newInstance(id));
     }
 
 
     @Override
     public void showMediaCheckDialog(int id, List<List<String>> checkList) {
-        DialogFragment newFragment = MediaCheckDialog.newInstance(id, checkList);
-        showDialogFragment(newFragment);
+        showAsyncDialogFragment(MediaCheckDialog.newInstance(id, checkList));
     }
 
 
@@ -1121,58 +1138,8 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
     @Override
     public void showSyncErrorDialog(int id, String message) {
-        DialogFragment newFragment = SyncErrorDialog.newInstance(id, message);
-        showDialogFragment(newFragment);
-    }
-
-
-    private void showLogDialog(String message) {
-        showLogDialog(message, false);
-    }
-
-
-    private void showLogDialog(String message, final boolean reload) {
-        // Since this is called from onPostExecute() of an AsyncTask, we can't use a DialogFragment
-        // as we can't make commits to the fragment manager while the Activity is closed
-        StyledDialog.Builder builder = new StyledDialog.Builder(this);
-        builder.setMessage(message);
-        builder.setPositiveButton(getResources().getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dismissAllDialogFragments();
-                if (reload) {
-                    Intent deckPicker = new Intent(DeckPicker.this, DeckPicker.class);
-                    deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivityWithAnimation(deckPicker, ActivityTransitionAnimation.LEFT);
-                }
-            }
-        });
-        builder.create().show();
-    }
-
-
-    private void showExportCompleteDialog(final String path) {
-        // Since this is called from onPostExecute() of an AsyncTask, we can't use a DialogFragment
-        // as we can't make commits to the fragment manager while the Activity is closed
-        StyledDialog.Builder builder = new StyledDialog.Builder(this);
-        Resources res = getResources();
-        builder.setTitle(R.string.export_successful_title);
-        builder.setMessage(res.getString(R.string.export_successful, path));
-        builder.setIcon(R.drawable.ic_menu_send);
-        builder.setPositiveButton(res.getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dismissAllDialogFragments();
-                emailFile(path);
-            }
-        });
-        builder.setNegativeButton(res.getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dismissAllDialogFragments();
-            }
-        });
-        builder.create().show();
+        AsyncDialogFragment newFragment = SyncErrorDialog.newInstance(id, message);
+        showAsyncDialogFragment(newFragment);
     }
 
 
@@ -1283,7 +1250,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                         msg = getResources().getString(R.string.check_db_acknowledge);
                     }
                     // Show result of database check and restart the app
-                    showLogDialog(msg, true);
+                    showSimpleMessageDialog(msg, true);
                 } else {
                     handleDbError();
                 }
@@ -1322,7 +1289,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                     List<List<String>> checkList = (List<List<String>>) result.getObjArray()[0];
                     showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, checkList);
                 } else {
-                    showLogDialog(getResources().getString(R.string.check_media_failed));
+                    showSimpleMessageDialog(getResources().getString(R.string.check_media_failed));
                 }
             }
 
@@ -1345,7 +1312,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         for (String fname : unused) {
             m.deleteFile(fname);
         }
-        showLogDialog(String.format(getResources().getString(R.string.check_media_deleted), unused.size()));
+        showSimpleMessageDialog(String.format(getResources().getString(R.string.check_media_deleted), unused.size()));
     }
 
 
@@ -1422,7 +1389,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
         @Override
         public void onDisconnected() {
-            showSyncErrorDialog(SyncErrorDialog.DIALOG_NO_CONNECTION);
+            showSimpleMessageDialog(getResources().getString(R.string.youre_offline));
         }
 
 
@@ -1495,12 +1462,11 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                         editor.putString("username", "");
                         editor.putString("hkey", "");
                         editor.commit();
-                        // then show
-                        // TODO: This will cause a crash in the rare case the activity has been stopped
+                        // then show not logged in dialog
                         showSyncErrorDialog(SyncErrorDialog.DIALOG_USER_NOT_LOGGED_IN_SYNC);
                     } else if (resultType.equals("noChanges")) {
                         dialogMessage = res.getString(R.string.sync_no_changes_message);
-                        showLogDialog(joinSyncMessages(dialogMessage, syncMessage));
+                        showSimpleMessageDialog(joinSyncMessages(dialogMessage, syncMessage));
                     } else if (resultType.equals("clockOff")) {
                         long diff = (Long) result[1];
                         if (diff >= 86100) {
@@ -1515,7 +1481,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                         } else {
                             dialogMessage = res.getString(R.string.sync_log_clocks_unsynchronized, diff, "");
                         }
-                        showLogDialog(joinSyncMessages(dialogMessage, syncMessage));
+                        showSimpleMessageDialog(joinSyncMessages(dialogMessage, syncMessage));
                     } else if (resultType.equals("fullSync")) {
                         if (data.data != null && data.data.length >= 1 && data.data[0] instanceof Integer) {
                             mSyncMediaUsn = (Integer) data.data[0];
@@ -1531,38 +1497,37 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                         }
                     } else if (resultType.equals("dbError")) {
                         dialogMessage = res.getString(R.string.sync_corrupt_database, R.string.repair_deck);
-                        showLogDialog(joinSyncMessages(dialogMessage, syncMessage));
+                        showSimpleMessageDialog(joinSyncMessages(dialogMessage, syncMessage));
                     } else if (resultType.equals("overwriteError")) {
                         dialogMessage = res.getString(R.string.sync_overwrite_error);
-                        showLogDialog(joinSyncMessages(dialogMessage, syncMessage));
+                        showSimpleMessageDialog(joinSyncMessages(dialogMessage, syncMessage));
                     } else if (resultType.equals("remoteDbError")) {
                         dialogMessage = res.getString(R.string.sync_remote_db_error);
-                        showLogDialog(joinSyncMessages(dialogMessage, syncMessage));
+                        showSimpleMessageDialog(joinSyncMessages(dialogMessage, syncMessage));
                     } else if (resultType.equals("sdAccessError")) {
                         dialogMessage = res.getString(R.string.sync_write_access_error);
-                        showLogDialog(joinSyncMessages(dialogMessage, syncMessage));
+                        showSimpleMessageDialog(joinSyncMessages(dialogMessage, syncMessage));
                     } else if (resultType.equals("finishError")) {
                         dialogMessage = res.getString(R.string.sync_log_finish_error);
-                        showLogDialog(joinSyncMessages(dialogMessage, syncMessage));
+                        showSimpleMessageDialog(joinSyncMessages(dialogMessage, syncMessage));
                     } else if (resultType.equals("IOException")) {
                         handleDbError();
                     } else if (resultType.equals("genericError")) {
                         dialogMessage = res.getString(R.string.sync_generic_error);
-                        showLogDialog(joinSyncMessages(dialogMessage, syncMessage));
+                        showSimpleMessageDialog(joinSyncMessages(dialogMessage, syncMessage));
                     } else if (resultType.equals("OutOfMemoryError")) {
                         dialogMessage = res.getString(R.string.error_insufficient_memory);
-                        showLogDialog(joinSyncMessages(dialogMessage, syncMessage));
+                        showSimpleMessageDialog(joinSyncMessages(dialogMessage, syncMessage));
                     } else if (resultType.equals("sanityCheckError")) {
                         Collection col = getCol();
                         col.modSchema();
                         col.save();
                         dialogMessage = res.getString(R.string.sync_sanity_failed);
-                        // TODO: This will cause a crash in the rare case the activity has been stopped
                         showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_SANITY_ERROR,
                                 joinSyncMessages(dialogMessage, syncMessage));
                     } else if (resultType.equals("serverAbort")) {
                         // syncMsg has already been set above, no need to fetch it here.
-                        showLogDialog(joinSyncMessages(dialogMessage, syncMessage));
+                        showSimpleMessageDialog(joinSyncMessages(dialogMessage, syncMessage));
                     } else {
                         if (result.length > 1 && result[1] instanceof Integer) {
                             int type = (Integer) result[1];
@@ -1580,7 +1545,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                         } else {
                             dialogMessage = res.getString(R.string.sync_generic_error);
                         }
-                        showLogDialog(joinSyncMessages(dialogMessage, syncMessage));
+                        showSimpleMessageDialog(joinSyncMessages(dialogMessage, syncMessage));
                     }
                 }
             } else {
@@ -1605,7 +1570,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
                 // Synchronize the collection in AnkiActivity with the new one opened in AnkiDroidApp during the sync
                 startLoadingCollection();
-                showLogDialog(joinSyncMessages(dialogMessage, syncMessage));
+                showSimpleMessageDialog(joinSyncMessages(dialogMessage, syncMessage));
 
                 if (mFragmented) {
                     try {
@@ -1692,7 +1657,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     }
 
 
-    private void emailFile(String path) {
+    public void emailFile(String path) {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("message/rfc822");
         intent.putExtra(Intent.EXTRA_SUBJECT, "AnkiDroid Apkg");
@@ -1701,7 +1666,11 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             Uri uri = Uri.fromFile(attachment);
             intent.putExtra(Intent.EXTRA_STREAM, uri);
         }
-        startActivityWithoutAnimation(intent);
+        try {
+            startActivityWithoutAnimation(intent);
+        } catch (ActivityNotFoundException e) {
+            Themes.showThemedToast(this, getResources().getString(R.string.no_email_client), false);
+        }
     }
 
 
