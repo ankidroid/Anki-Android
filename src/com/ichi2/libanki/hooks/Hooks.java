@@ -37,6 +37,8 @@ public class Hooks {
         new FuriganaFilters().install(this);
         new HintFilter().install(this);
         new LaTeX().installHook(this);
+        new Leech().installHook(this);
+
         // Preferences activated hooks
         if (prefs.getBoolean("fixHebrewText", false)) {
             HebrewFixFilter.install(this);
