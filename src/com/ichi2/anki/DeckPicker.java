@@ -901,11 +901,10 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                     mActivity.get().showAsyncDialogFragment(f);
                 } else if (dialogClass.equals(MediaCheckDialog.CLASS_NAME_TAG)) {
                     int id = e.getInt("dialogType");
-                    ArrayList<String> nohave = e.getStringArrayList("nohave");
-                    ArrayList<String> unused = e.getStringArrayList("unused");
-                    ArrayList<String> invalid = e.getStringArrayList("invalid");
-                    AsyncDialogFragment f = MediaCheckDialog.newInstance(id, nohave, unused, invalid);
-                    mActivity.get().showAsyncDialogFragment(f);
+                    List<List<String>> checkList = AnkiDroidApp.getInstance().getStoredData();
+                    if (checkList != null || id==MediaCheckDialog.DIALOG_CONFIRM_MEDIA_CHECK) {
+                        mActivity.get().showMediaCheckDialog(id, checkList);
+                    }
                 }
             }
         }
@@ -1127,6 +1126,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
     @Override
     public void showMediaCheckDialog(int id, List<List<String>> checkList) {
+        AnkiDroidApp.getInstance().setStoredData(checkList);
         showAsyncDialogFragment(MediaCheckDialog.newInstance(id, checkList));
     }
 

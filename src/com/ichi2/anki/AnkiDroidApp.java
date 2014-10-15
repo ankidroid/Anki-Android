@@ -47,6 +47,7 @@ import com.ichi2.utils.LanguageUtil;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -76,6 +77,7 @@ public class AnkiDroidApp extends Application {
     private Collection mCurrentCollection;
     private int mAccessThreadCount = 0;
     private static final Lock mLock = new ReentrantLock();
+    private List<List<String>> mStoredData;
 
     /** Global hooks */
     private Hooks mHooks;
@@ -473,5 +475,14 @@ public class AnkiDroidApp extends Application {
         sInstance.mAccessThreadCount = 0;
         sInstance.mCurrentCollection = null;
         Log.i(AnkiDroidApp.TAG, "Access has been reset to 0");
+    }
+
+
+    public void setStoredData(List<List<String>> data) {
+        mStoredData = data;
+    }
+
+    public List<List<String>> getStoredData() {
+        return mStoredData;
     }
 }
