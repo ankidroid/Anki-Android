@@ -967,9 +967,11 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
     private DeckTask.TaskListener mSearchCardsHandler = new DeckTask.TaskListener() {
         @Override
         public void onProgressUpdate(TaskData... values) {
-            mCards.clear();
-            mCards.addAll(values[0].getCards());
-            updateList();
+            if (mCards != null && values[0]!= null) {
+                mCards.clear();
+                mCards.addAll(values[0].getCards());
+                updateList();
+            }
         }
 
 
