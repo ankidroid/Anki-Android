@@ -13,6 +13,7 @@ build.xml
 .build.xml
 local.properties
 proguard.cfg
+deps/showcaseview/proguard-project.txt
 coverage.em
 
 .idea/
