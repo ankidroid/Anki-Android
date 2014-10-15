@@ -531,6 +531,8 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                         }
                     }).setContentText(res.getString(R.string.add_content_showcase_text)).hideOnTouchOutside().build();
             mShowcaseDialog.setButtonText(getResources().getString(R.string.help_title));
+        } else if (mShowcaseDialog != null && getCol() != null && getCol().getDb()!=null && !getCol().isEmpty()) {
+            hideShowcaseView();
         }
         return super.onCreateOptionsMenu(menu);
     }
@@ -1895,6 +1897,8 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
         // update widget
         WidgetStatus.update(this, decks);
+        // update options menu and clear welcome screen
+        AnkiDroidApp.getCompat().invalidateOptionsMenu(this);
     }
 
 
