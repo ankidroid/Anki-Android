@@ -28,14 +28,14 @@
     <item>ノート エディターのレイアウトを変更</item>
     <item>復習時に、ホワイト ボードを無効化する オプションを追加し、アイコンを更新</item>
     <item>apgkファイルのエクスポートとインポートをフルサポート</item>
-    <item>Eメールへのコレクションファイル (*.apkg) エクスポート機能を追加</item>
+    <item>エクスポートした apkg ファイルをEメール送信する機能を追加</item>
     <item>バックアップの保管数の既定数を増し、apgkのファイルを使用します。</item>
     <item>ブラウザーからプレビューカードの編集を可能にしました</item>
     <item>Android のブラウザーで共有単語帳のダウンロードができます。</item>
     <item>ノート エディターに学習進行状況のリセット機能と再スケジュール機能を追加</item>
     <item>スワイプ操作が可能な時、ナビゲーションをドロワーの操作で開けないようにしました</item>
     <item>オーディオ録音の品質を向上</item>
-    <item>sticky fieldsをサポート（アンキ デスクトップで有効な場合）</item>
+    <item>sticky fields をサポート（Anki Desktpo で有効な場合）</item>
     <item>その他、多くのバグの修正</item>
   </string-array>
 </resources>
