@@ -24,6 +24,7 @@ import android.webkit.WebView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.Statistics;
 import com.ichi2.anki.R;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Stats;
@@ -386,7 +387,7 @@ public class AnkiStatsTaskHandler {
                 int chosen = todayStatString;
                 switch (chosen){
                     case 0:
-                        mViewPager.setCurrentItem(AnkiStatsActivity.FORECAST_TAB_POSITION);
+                        mViewPager.setCurrentItem(Statistics.FORECAST_TAB_POSITION);
                 }
             }
         }

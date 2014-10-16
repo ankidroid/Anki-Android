@@ -13,7 +13,7 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.ichi2.anki.stats;
+package com.ichi2.anki;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -28,6 +28,8 @@ import android.widget.*;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.NavigationDrawerActivity;
 import com.ichi2.anki.R;
+import com.ichi2.anki.stats.*;
+import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Stats;
 import org.json.JSONException;
 
@@ -36,7 +38,7 @@ import java.util.List;
 import java.util.Locale;
 
 
-public class AnkiStatsActivity extends NavigationDrawerActivity implements ActionBar.TabListener {
+public class Statistics extends NavigationDrawerActivity implements ActionBar.TabListener {
 
     public static final int TODAYS_STATS_TAB_POSITION = 0;
     public static final int FORECAST_TAB_POSITION = 1;
@@ -62,13 +64,17 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
         sIsWholeCollectionOnly = AnkiStatsTaskHandler.isWholeCollection();  //if it starts with true, do not let user select deck
         sIsSubtitle = true;
         super.onCreate(savedInstanceState);
-        mTaskHandler = new AnkiStatsTaskHandler();
-
 
         mMainLayout = getLayoutInflater().inflate(R.layout.activity_anki_stats, null);
         initNavigationDrawer(mMainLayout);
         setContentView(mMainLayout);
-
+        startLoadingCollection();
+    }
+    
+    @Override
+    protected void onCollectionLoaded(Collection col) {
+        // Setup Task Handler
+        mTaskHandler = new AnkiStatsTaskHandler();
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
         mActionBar = actionBar;
@@ -456,10 +462,10 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
             mChart.addFragment(this);
 
             mInstance = this;
-            mType = (((AnkiStatsActivity)getActivity()).getTaskHandler()).getStatType();
+            mType = (((Statistics)getActivity()).getTaskHandler()).getStatType();
             mIsCreated = true;
-            mActivityPager = ((AnkiStatsActivity)getActivity()).getViewPager();
-            mActivitySectionPagerAdapter = ((AnkiStatsActivity)getActivity()).getSectionsPagerAdapter();
+            mActivityPager = ((Statistics)getActivity()).getViewPager();
+            mActivitySectionPagerAdapter = ((Statistics)getActivity()).getSectionsPagerAdapter();
             mDeckId = AnkiDroidApp.getCol().getDecks().selected();
             mIsWholeCollection = AnkiStatsTaskHandler.isWholeCollection();
 
@@ -486,35 +492,35 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
 
             switch (mSectionNumber){
                 case FORECAST_TAB_POSITION:
-                    mCreateChartTask = (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(
+                    mCreateChartTask = (((Statistics)getActivity()).getTaskHandler()).createChart(
                             Stats.ChartType.FORECAST, mChart, mProgressBar);
                     break;
                 case REVIEW_COUNT_TAB_POSITION:
-                    mCreateChartTask = (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(
+                    mCreateChartTask = (((Statistics)getActivity()).getTaskHandler()).createChart(
                             Stats.ChartType.REVIEW_COUNT, mChart, mProgressBar);
                     break;
                 case REVIEW_TIME_TAB_POSITION:
-                    mCreateChartTask = (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(
+                    mCreateChartTask = (((Statistics)getActivity()).getTaskHandler()).createChart(
                             Stats.ChartType.REVIEW_TIME, mChart, mProgressBar);
                     break;
                 case INTERVALS_TAB_POSITION:
-                    mCreateChartTask = (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(
+                    mCreateChartTask = (((Statistics)getActivity()).getTaskHandler()).createChart(
                             Stats.ChartType.INTERVALS, mChart, mProgressBar);
                     break;
                 case HOURLY_BREAKDOWN_TAB_POSITION:
-                    mCreateChartTask = (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(
+                    mCreateChartTask = (((Statistics)getActivity()).getTaskHandler()).createChart(
                             Stats.ChartType.HOURLY_BREAKDOWN, mChart, mProgressBar);
                     break;
                 case WEEKLY_BREAKDOWN_TAB_POSITION:
-                    mCreateChartTask = (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(
+                    mCreateChartTask = (((Statistics)getActivity()).getTaskHandler()).createChart(
                             Stats.ChartType.WEEKLY_BREAKDOWN, mChart, mProgressBar);
                     break;
                 case ANSWER_BUTTONS_TAB_POSITION:
-                    mCreateChartTask = (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(
+                    mCreateChartTask = (((Statistics)getActivity()).getTaskHandler()).createChart(
                             Stats.ChartType.ANSWER_BUTTONS, mChart, mProgressBar);
                     break;
                 case CARDS_TYPES_TAB_POSITION:
-                    mCreateChartTask = (((AnkiStatsActivity)getActivity()).getTaskHandler()).createChart(
+                    mCreateChartTask = (((Statistics)getActivity()).getTaskHandler()).createChart(
                             Stats.ChartType.CARDS_TYPES, mChart, mProgressBar);
                     break;
 
@@ -534,12 +540,12 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
             //are height and width checks still necessary without bitmaps?
             if(height != 0 && width != 0){
                 if(mHeight != height || mWidth != width ||
-                        mType != (((AnkiStatsActivity)getActivity()).getTaskHandler()).getStatType() ||
+                        mType != (((Statistics)getActivity()).getTaskHandler()).getStatType() ||
                         mDeckId != AnkiDroidApp.getCol().getDecks().selected() ||
                         mIsWholeCollection != AnkiStatsTaskHandler.isWholeCollection()){
                     mHeight = height;
                     mWidth = width;
-                    mType = (((AnkiStatsActivity)getActivity()).getTaskHandler()).getStatType();
+                    mType = (((Statistics)getActivity()).getTaskHandler()).getStatType();
                     mProgressBar.setVisibility(View.VISIBLE);
                     mChart.setVisibility(View.GONE);
                     mDeckId = AnkiDroidApp.getCol().getDecks().selected();
@@ -617,10 +623,10 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
             mWidth = mWebView.getMeasuredWidth();
 
             mInstance = this;
-            mType = (((AnkiStatsActivity)getActivity()).getTaskHandler()).getStatType();
+            mType = (((Statistics)getActivity()).getTaskHandler()).getStatType();
             mIsCreated = true;
-            mActivityPager = ((AnkiStatsActivity)getActivity()).getViewPager();
-            mActivitySectionPagerAdapter = ((AnkiStatsActivity)getActivity()).getSectionsPagerAdapter();
+            mActivityPager = ((Statistics)getActivity()).getViewPager();
+            mActivitySectionPagerAdapter = ((Statistics)getActivity()).getSectionsPagerAdapter();
             mDeckId = AnkiDroidApp.getCol().getDecks().selected();
             mIsWholeCollection = AnkiStatsTaskHandler.isWholeCollection();
             if(!AnkiStatsTaskHandler.isWholeCollection()) {
@@ -643,7 +649,7 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
         }
 
         private void createStatisticOverview(){
-            mCreateStatisticsOverviewTask = (((AnkiStatsActivity)getActivity()).getTaskHandler()).createStatisticsOverview(
+            mCreateStatisticsOverviewTask = (((Statistics)getActivity()).getTaskHandler()).createStatisticsOverview(
                     mWebView, mProgressBar);
         }
 
@@ -659,12 +665,12 @@ public class AnkiStatsActivity extends NavigationDrawerActivity implements Actio
                 return;
             int height = mWebView.getMeasuredHeight();
             int width = mWebView.getMeasuredWidth();
-            if(mType != (((AnkiStatsActivity)getActivity()).getTaskHandler()).getStatType() ||
+            if(mType != (((Statistics)getActivity()).getTaskHandler()).getStatType() ||
                     mDeckId != AnkiDroidApp.getCol().getDecks().selected() ||
                     mIsWholeCollection != AnkiStatsTaskHandler.isWholeCollection()){
                 mHeight = height;
                 mWidth = width;
-                mType = (((AnkiStatsActivity)getActivity()).getTaskHandler()).getStatType();
+                mType = (((Statistics)getActivity()).getTaskHandler()).getStatType();
                 mProgressBar.setVisibility(View.VISIBLE);
                 mWebView.setVisibility(View.GONE);
                 mDeckId = AnkiDroidApp.getCol().getDecks().selected();
