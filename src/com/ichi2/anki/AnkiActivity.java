@@ -56,6 +56,10 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
         return mCollection;
     }
 
+    public boolean colOpen() {
+        return mCollection != null && mCollection.getDb()!=null;
+    }
+
 
     public boolean animationDisabled() {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);

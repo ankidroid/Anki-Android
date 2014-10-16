@@ -1013,7 +1013,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
 
 
     private void prepareCongratsView() {
-        if (getCol()!= null && getCol().getSched()!= null) {
+        if (colOpen()) {
             mCurrentContentView = CONTENT_CONGRATS;
             mDeckInfoLayout.setVisibility(View.GONE);
             mCongratsLayout.setVisibility(View.VISIBLE);
@@ -1339,7 +1339,11 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     private Collection getCol() {
         return mCollection;
     }
-    
+
+    private boolean colOpen() {
+        return getCol() != null && getCol().getDb() != null;
+    }
+
     // Method for loading the collection which is inherited by all AnkiActivitys
     protected void loadCollection() {        
         // Initialize the open collection loader

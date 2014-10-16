@@ -745,7 +745,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
 
     private void searchCards() {
         String searchText = mRestrictOnDeck + mSearchTerms;
-        if (getCol() != null) {
+        if (colOpen()) {
             // clear the existing card list
             mCards.clear();
             // Perform database query to get all card ids / sfld. Shows "filtering cards..." progress message
