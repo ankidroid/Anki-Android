@@ -1265,11 +1265,16 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                     mDeckCounts.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
                 }
 
-                if (mFragmented) {
-                    ((DeckPicker) getActivity()).loadCounts();
+
+                if (getActivity()!= null) {
+                    if (mFragmented) {
+                        ((DeckPicker) getActivity()).loadCounts();
+                    }
+                    showCongratsIfNeeded();
+                } else {
+                    Log.e(AnkiDroidApp.TAG, "StudyOptionsFragment.mUpdateValuesFromDeckListener :: getActivity()==null");
                 }
             }
-            showCongratsIfNeeded();
             // for rebuilding cram decks
             dismissProgressDialog();
         }
