@@ -41,22 +41,15 @@ public class MediaCheckDialog extends AsyncDialogFragment {
     }
 
 
-    public static MediaCheckDialog newInstance(int dialogType, ArrayList<String> nohave, ArrayList<String> unused,
-            ArrayList<String> invalid) {
+    public static MediaCheckDialog newInstance(int dialogType, List<List<String>> checkList) {
         MediaCheckDialog f = new MediaCheckDialog();
         Bundle args = new Bundle();
-        args.putStringArrayList("nohave", nohave);
-        args.putStringArrayList("unused", unused);
-        args.putStringArrayList("invalid", invalid);
+        args.putStringArrayList("nohave", new ArrayList<String>(checkList.get(0)));
+        args.putStringArrayList("unused", new ArrayList<String>(checkList.get(1)));
+        args.putStringArrayList("invalid", new ArrayList<String>(checkList.get(2)));
         args.putInt("dialogType", dialogType);
         f.setArguments(args);
         return f;
-    }
-
-
-    public static MediaCheckDialog newInstance(int dialogType, List<List<String>> checkList) {
-        return newInstance(dialogType, new ArrayList<String>(checkList.get(0)),
-                new ArrayList<String>(checkList.get(1)), new ArrayList<String>(checkList.get(2)));
     }
 
 
@@ -182,7 +175,12 @@ public class MediaCheckDialog extends AsyncDialogFragment {
     @Override
     public Bundle getNotificationIntentExtras() {
         Bundle b = new Bundle();
-        b.putAll(getArguments());
+        /* Avoid putting too much data into the notification extras bundle. 
+         * Store large data in the ApplicationContext instead
+         * b.putStringArrayList("nohave", getArguments().getStringArrayList("nohave"));
+         * b.putStringArrayList("unused", getArguments().getStringArrayList("unused"));
+         * b.putStringArrayList("invalid", getArguments().getStringArrayList("invalid")); */
+        b.putInt("dialogType", getArguments().getInt("dialogType"));
         b.putBoolean("showAsyncDialogFragment", true);
         b.putString("dialogClass", CLASS_NAME_TAG);
         return b;
