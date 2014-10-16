@@ -1014,11 +1014,13 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
 
 
     private void prepareCongratsView() {
-        mCurrentContentView = CONTENT_CONGRATS;
-        mDeckInfoLayout.setVisibility(View.GONE);
-        mCongratsLayout.setVisibility(View.VISIBLE);
-        mTextCongratsMessage.setText(getCol().getSched().finishedMsg(getActivity()));
-        mButtonStart.setVisibility(View.GONE);
+        if (getCol()!= null && getCol().getSched()!= null) {
+            mCurrentContentView = CONTENT_CONGRATS;
+            mDeckInfoLayout.setVisibility(View.GONE);
+            mCongratsLayout.setVisibility(View.VISIBLE);
+            mTextCongratsMessage.setText(getCol().getSched().finishedMsg(getActivity()));
+            mButtonStart.setVisibility(View.GONE);
+        }
     }
 
     @Override
