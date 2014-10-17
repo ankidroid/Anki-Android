@@ -24,15 +24,14 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.stats.AnkiStatsActivity;
-import com.ichi2.anki.stats.AnkiStatsTaskHandler;
+import com.ichi2.anki.Statistics;
 import com.wildplot.android.rendering.PlotSheet;
 import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap;
 import com.wildplot.android.rendering.graphics.wrapper.RectangleWrap;
 
 public class ChartView extends View{
 
-    private AnkiStatsActivity.ChartFragment mFragment;
+    private Statistics.ChartFragment mFragment;
     private RectangleWrap mRectangle;
     private PlotSheet mPlotSheet;
     private boolean mDataIsSet;
@@ -79,7 +78,7 @@ public class ChartView extends View{
 
     }
 
-    public void addFragment(AnkiStatsActivity.ChartFragment fragment){
+    public void addFragment(Statistics.ChartFragment fragment){
         mFragment = fragment;
     }
     public void setData(PlotSheet plotSheet){

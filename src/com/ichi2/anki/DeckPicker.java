@@ -206,7 +206,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             try {
                 // Ensure we have the correct deck selected in the deck list after we have updated it. Check first
                 // if the collection is open since it might have been closed before this task completes.
-                if (getCol() != null) {
+                if (colOpen()) {
                     setSelectedDeck(getCol().getDecks().current().getLong("id"));
                 }
             } catch (JSONException e) {
@@ -514,7 +514,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         menu.findItem(R.id.action_check_media).setEnabled(sdCardAvailable);
 
         // Show the welcome screen here if col empty to be sure that the action bar exists
-        if (mShowShowcaseView && getCol() != null && getCol().getDb()!=null && getCol().isEmpty()) {
+        if (mShowShowcaseView && colOpen() && getCol().isEmpty()) {
             mShowShowcaseView = false;
             final Resources res = getResources();
             ActionItemTarget target = new ActionItemTarget(this, R.id.action_add_decks);
@@ -531,7 +531,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                         }
                     }).setContentText(res.getString(R.string.add_content_showcase_text)).hideOnTouchOutside().build();
             mShowcaseDialog.setButtonText(getResources().getString(R.string.help_title));
-        } else if (mShowcaseDialog != null && getCol() != null && getCol().getDb()!=null && !getCol().isEmpty()) {
+        } else if (mShowcaseDialog != null && colOpen() && !getCol().isEmpty()) {
             hideShowcaseView();
         }
         return super.onCreateOptionsMenu(menu);
@@ -567,7 +567,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
             case R.id.action_shared_decks:
                 hideShowcaseView();
-                if (getCol() != null) {
+                if (colOpen()) {
                     addSharedDeck();
                 }
                 return true;
@@ -731,7 +731,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     protected void onResume() {
         Log.i(AnkiDroidApp.TAG, "DeckPicker - onResume");
         super.onResume();
-        if (getCol() != null) {
+        if (colOpen()) {
             if (Utils.now() > getCol().getSched().getDayCutoff() && AnkiDroidApp.isSdCardMounted()) {
                 loadCounts();
             }
