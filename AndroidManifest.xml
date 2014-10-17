@@ -193,7 +193,7 @@
             android:configChanges="locale"
             android:label="@string/feedback_title" />
         <activity
-            android:name="com.ichi2.anki.stats.AnkiStatsActivity"
+            android:name="com.ichi2.anki.Statistics"
             android:theme="@style/Theme_White_Statistics"
             android:configChanges="keyboardHidden|orientation|locale|screenSize" />
         <activity
