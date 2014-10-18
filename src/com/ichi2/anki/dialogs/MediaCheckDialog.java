@@ -49,6 +49,7 @@ public class MediaCheckDialog extends AsyncDialogFragment {
         args.putStringArrayList("unused", unused);
         args.putStringArrayList("invalid", invalid);
         args.putInt("dialogType", dialogType);
+        f.setArguments(args);
         return f;
     }
 
