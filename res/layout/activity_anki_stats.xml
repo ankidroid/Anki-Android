@@ -10,7 +10,7 @@
                                        android:id="@+id/pager"
                                        android:layout_width="match_parent"
                                        android:layout_height="match_parent"
-                                       tools:context=".AnkiStatsActivity" />
+                                       tools:context=".Statistics" />
 
 <include layout="@layout/navigation_drawer" />
 </android.support.v4.widget.DrawerLayout>

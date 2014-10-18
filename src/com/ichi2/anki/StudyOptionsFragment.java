@@ -49,7 +49,6 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
 import com.ichi2.anki.dialogs.TagsDialog;
 import com.ichi2.anki.dialogs.TagsDialog.TagsDialogListener;
-import com.ichi2.anki.stats.AnkiStatsActivity;
 import com.ichi2.anki.stats.AnkiStatsTaskHandler;
 import com.ichi2.anki.stats.ChartView;
 import com.ichi2.async.CollectionLoader;
@@ -795,12 +794,12 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         switch (id) {
             case DIALOG_STATISTIC_TYPE:
                 boolean selectAllDecksButton = false;
-                if(!(getActivity() instanceof AnkiStatsActivity)) {
+                if(!(getActivity() instanceof Statistics)) {
                     if ((getActivity() instanceof DeckPicker && !mFragmented)) {
                         selectAllDecksButton = true;
                     }
                     AnkiStatsTaskHandler.setIsWholeCollection(selectAllDecksButton);
-                    Intent intent = new Intent(getActivity(), AnkiStatsActivity.class);
+                    Intent intent = new Intent(getActivity(), Statistics.class);
                     startActivity(intent);
                 }
                 break;
@@ -1014,11 +1013,13 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
 
 
     private void prepareCongratsView() {
-        mCurrentContentView = CONTENT_CONGRATS;
-        mDeckInfoLayout.setVisibility(View.GONE);
-        mCongratsLayout.setVisibility(View.VISIBLE);
-        mTextCongratsMessage.setText(getCol().getSched().finishedMsg(getActivity()));
-        mButtonStart.setVisibility(View.GONE);
+        if (colOpen()) {
+            mCurrentContentView = CONTENT_CONGRATS;
+            mDeckInfoLayout.setVisibility(View.GONE);
+            mCongratsLayout.setVisibility(View.VISIBLE);
+            mTextCongratsMessage.setText(getCol().getSched().finishedMsg(getActivity()));
+            mButtonStart.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -1265,11 +1266,16 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                     mDeckCounts.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
                 }
 
-                if (mFragmented) {
-                    ((DeckPicker) getActivity()).loadCounts();
+
+                if (getActivity()!= null) {
+                    if (mFragmented) {
+                        ((DeckPicker) getActivity()).loadCounts();
+                    }
+                    showCongratsIfNeeded();
+                } else {
+                    Log.e(AnkiDroidApp.TAG, "StudyOptionsFragment.mUpdateValuesFromDeckListener :: getActivity()==null");
                 }
             }
-            showCongratsIfNeeded();
             // for rebuilding cram decks
             dismissProgressDialog();
         }
@@ -1333,7 +1339,11 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     private Collection getCol() {
         return mCollection;
     }
-    
+
+    private boolean colOpen() {
+        return getCol() != null && getCol().getDb() != null;
+    }
+
     // Method for loading the collection which is inherited by all AnkiActivitys
     protected void loadCollection() {        
         // Initialize the open collection loader
