@@ -140,7 +140,7 @@
   <string name="pref_cat_backup">バックアップ</string>
   <string name="pref_backup">自動バックアップ</string>
   <string name="pref_backup_summ">自動的にバックアップを作成（単語帳を開く前に1 日 1 回) </string>
-  <string name="pref_backup_max">バックアップの残存数</string>
+  <string name="pref_backup_max">保管するバックアップの世代数</string>
   <string name="pref_backup_max_summ">XXX</string>
   <string name="pref_disable_backup_title">バックアップを無効にしますか？</string>
   <string name="pref_disable_backup_warning">この操作は、すべてのバックアップ ファイルを削除します。</string>

@@ -39,9 +39,9 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="widget_minimum_cards_due_notification_ticker_title">Постоје карте за понављање</string>
-  <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid kartica za pregled</string>
-  <string name="widget_no_cards_due">Нема карата за понављање</string>
+  <string name="widget_minimum_cards_due_notification_ticker_title">Картице за преглед</string>
+  <string name="widget_minimum_cards_due_notification_ticker_text">%d АнкиДројд картица за преглед</string>
+  <string name="widget_no_cards_due">Нема картица за учење</string>
   <string name="widget_loading">Виџет се учитава...</string>
   <plurals name="widget_cards_in_decks_due">
     <item quantity="one">%1$d card due in %2$s</item>
@@ -51,14 +51,14 @@
     <item quantity="one">%1$d deck</item>
     <item quantity="other">%1$d шпилова</item>
   </plurals>
-  <string name="widget_medium">AnkiDroid Medium</string>
-  <string name="widget_small">AnkiDroid Small</string>
-  <string name="widget_big">AnkiDroid Big</string>
-  <string name="widget_big_restrictions_dialog">Због неких ограничења система Android, виџет може да приказује само текст, али не и слике/звуке итд.</string>
-  <string name="open_in_reviewer">Отвори шпил у AnkiDroid</string>
+  <string name="widget_medium">АнкиДројд средње</string>
+  <string name="widget_small">АнкиДројд мало</string>
+  <string name="widget_big">АнкиДројд велико</string>
+  <string name="widget_big_restrictions_dialog">Због неких ограничења система Андројд, виџет може да приказује само текст, али не и слике/звуке итд.</string>
+  <string name="open_in_reviewer">Отвори шпил у АнкиДројд</string>
   <plurals name="widget_big_eta">
     <item quantity="one">Estimated time: %d min.</item>
-    <item quantity="other">Предвиђено време: %d мин.</item>
+    <item quantity="other">Процењено време: %d мин.</item>
   </plurals>
   <string name="widget_big_tomorrow_due">Сутра ће бити:</string>
 </resources>
