@@ -39,7 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="welcome_message">AnkiDroid 可以讓您有效率的學習大量的字彙或是其他教材。 AnkiDroid 會在您快要忘記單字的意思前，讓卡片再次出現。\n\n想要對這個學習系統有個整體的觀念，我們建議您從教學用的牌組開始，裡面提供入門的基本資訊。打開牌組後，請按一下「開始複習」。\n\n現在要建立教學用的牌組嗎？</string>
   <string name="check_db_title">檢查資料庫</string>
   <string name="check_db_warning">This may take a long time</string>
   <string name="check_db_acknowledge">Database checked</string>
@@ -56,7 +55,7 @@
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s: <br/>Android 單字卡</h2>AnkiDroid 是一個單字卡應用程式，與電腦版的 <a href="%2$s">Anki</a> 完全相容。你可以在 AnkiDroid 或電腦版 Anki 上建立、 下載和學習教材，而且很容易就可以同步兩邊的內容。]]></item>
     <item><![CDATA[要幫助我們把 AnkiDroid 變得更好，請 <a href="%1$s"> 到這裡</a>回報您發生的任何 bug；新功能的想法也是很受歡迎！請使用 <a href="%2$s"> wiki</a> 並來 <a href="%3$s"> 論壇</a> 打個招呼。]]></item>
-    <item><![CDATA[AnkiDroid 是 <a href="%1$s"> 開放原始碼軟體 <a/>，鼓勵大家一起 <a href="%2$s"> 加入 </a> ，成為 <a href="%3$s">貢獻者</a>:-)]]></item>
+    <item><![CDATA[AnkiDroid is <a href=\"%1$s\">open source software<a/>, so everyone is encouraged to <a href=\"%2$s\">join</a> the <a href=\"%3$s\">contributors</a> :-)]]></item>
     <item><![CDATA[如果您不是開發人員也同樣可以幫忙，像是 <a href="%1$s"> 翻譯</a> AnkiDroid 介面、或是更新 wiki 和螢幕擷圖、 <a href="%2$s">捐款</a>給電腦版的 Anki，或是在部落格上撰寫關於 AnkiDroid 的文章!]]></item>
     <item><![CDATA[AnkiDroid 是在 <a href="%1$s"> GNU GPL v3 許可證</a> 下發布，程式原始碼可到 <a href="%2$s"> 這裡</a>取得。]]></item>
   </string-array>

@@ -101,7 +101,7 @@
   <string name="menu_my_account">Synchronisierungskonto</string>
   <string name="menu_preferences">Einstellungen</string>
   <string name="menu_about">Über</string>
-  <string name="menu_dismiss_note">Notiz verwerfen&#8230;</string>
+  <string name="menu_dismiss_note">Hide / Delete</string>
   <string name="menu_bury_card">Karte vorläufig aussetzen</string>
   <string name="menu_bury_note">Notiz vorläufig aussetzen</string>
   <string name="menu_suspend_card">Karte dauerhaft aussetzen</string>
@@ -118,7 +118,6 @@
   <string name="create">Erstellen</string>
   <string name="new_dynamic_deck">Gefilterten Stapel erstellen</string>
   <string name="studyoptions_feedback">Feedback</string>
-  <string name="studyoptions_load_tutorial_deck">Tutorial erstellen</string>
   <string name="night_mode">Nachtmodus</string>
   <string-array name="next_review_s">
     <item>1 Sekunde</item>

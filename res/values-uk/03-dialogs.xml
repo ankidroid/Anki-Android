@@ -39,7 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="welcome_message">З AnkiDroid Ви можете ефективно вчити велику кількість слів, або будь якого іншого матеріалу. AnkiDroid показує Вам те що потрібно вивчити якраз перед тим, як Ви це забули.\n\nДля перших вражень про роботу програми, ми рекомендуємо розпочати з навчальної  колоди, яка надасть Вам необхідну початкову інформацію. Просто натисніть \"Розпочати огляд\" після її відкриття.\n\nСтворити навчальну колоду зараз?</string>
   <string name="check_db_title">Перевірити базу даних</string>
   <string name="check_db_warning">Це може зайняти багато часу</string>
   <string name="check_db_acknowledge">База даних перевірена</string>
@@ -56,7 +55,7 @@
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Картки для Android</h2>AnkiDroid це додаток для карток повністю сумісний з програмою для ПК <a href="%2$s">Anki</a>. Ви можете створювати, завантажувати та вивчати вміст на AnkiDroid або Anki Desktop та з легкістю здійснювати синхронізацію.]]></item>
     <item><![CDATA[Щоб зробити AnkiDroid кращою, будь ласка, доповідайте про виявлені недоліки <a href="%1$s">here</a>; ідеї для нових властивостей програми також вітаються! Будь ласка, користуйтесь <a href="%2$s">wiki</a> та скажіть Привіт на  <a href="%3$s">форумі</a>.]]></item>
-    <item><![CDATA[AnkiDroid - <a href="%1$s">відкрите програмне забезпечення<a/>, тому запрошуємо всіх <a href="%2$s">долучитися</a> до <a href="%3$s">участі</a>:-)]]></item>
+    <item><![CDATA[AnkiDroid is <a href=\"%1$s\">open source software<a/>, so everyone is encouraged to <a href=\"%2$s\">join</a> the <a href=\"%3$s\">contributors</a> :-)]]></item>
     <item><![CDATA[Не-розробники також можуть допомогти, для прикладу <a href="%1$s">перекладом</a> AnkiDroid, оновленням wiki та знімків екрану, <a href="%2$s">пожертвою</a> для Anki Desktop, або статтею  про AnkiDroid у блозі!]]></item>
     <item><![CDATA[AnkiDroid випускається під <a href="%1$s">ліцензією GNU-GPL v3</a> і вихіний код доступний <a href="%2$s">тут</a>.]]></item>
   </string-array>

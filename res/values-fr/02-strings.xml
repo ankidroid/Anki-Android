@@ -63,7 +63,7 @@
   <string name="leech_notification">Carte marquée « encombrante »</string>
   <string name="corrupt_font">Fichier de police corrompu %s</string>
   <string-array name="browser_column1_headings">
-    <item>Champ de recherche</item>
+    <item>Sort field</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Réponse</item>
@@ -108,8 +108,6 @@
   <string name="card_editor_reschedule_card">Reschedule card</string>
   <string name="card_editor_preview_card">Aperçu</string>
   <string name="error_insufficient_memory">L’opération n\'a pas pu être accomplie car votre appareil manque de mémoire disponible</string>
-  <string name="tutorial_load">Mise en place du tutoriel.\nPatientez&#8230;</string>
-  <string name="tutorial_loading_error">Le paquet-tutoriel n\'a pas pu être créé</string>
   <string name="rename">Renommer</string>
   <string name="rename_error">Le paquet %s n\'a pas pu être renommé</string>
   <string name="default_conf_delete_error">Le groupe d\'option par défaut ne peut pas être supprimé</string>
@@ -120,8 +118,6 @@
   <string name="help_title">Aide</string>
   <string name="help_online">Aide en ligne</string>
   <string name="help_faq">FAQ</string>
-  <string name="help_tutorial">Créer un paquet tutoriel</string>
-  <string name="tutorial_deck_name">Paquet tutoriel</string>
   <string name="check_db">Vérification de la base de données</string>
   <string name="check_media">Check media</string>
   <string name="check_db_message">Vérification de la base de données. \nVeuillez patienter&#8230;</string>
@@ -181,4 +177,5 @@
   <string name="tag_editor_add_hint">Utiliser la coche sur la droite pour ajouter une nouvelle étiquette</string>
   <string name="tag_editor_add_feedback">Appuyer sur « %2$s » pour confirmer l\'ajout de « %1$s »</string>
   <string name="lookup_hint">Après avoir copié le texte, touchez la carte n\'importe où pour afficher l\'icône de recherche</string>
+  <string name="add_content_showcase_text">To get started, tap the + button to add some new study material.\n\n Press \'Help\' to see the manual.</string>
 </resources>

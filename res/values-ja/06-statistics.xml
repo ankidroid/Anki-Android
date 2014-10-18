@@ -57,8 +57,8 @@
   <string name="stats_cumulative_time_hours">累積時間</string>
   <string name="stats_cumulative">累積（右目盛）</string>
   <string name="stats_cumulative_percentage">累積パーセンテージ</string>
-  <string formatted="false" name="stats_cumulative_correct_percentage">累積正解件数 %</string>
-  <string name="stats_answers">回答数（枚）</string>
+  <string formatted="false" name="stats_cumulative_correct_percentage">累積正解率(%)</string>
+  <string name="stats_answers">回答数</string>
   <string name="stats_minutes">分</string>
   <string name="stats_hours">時間</string>
   <string name="stats_percentage">パーセント</string>

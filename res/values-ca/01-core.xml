@@ -101,7 +101,7 @@
   <string name="menu_my_account">Compte de sincronització</string>
   <string name="menu_preferences">Preferències</string>
   <string name="menu_about">Quant a</string>
-  <string name="menu_dismiss_note">Deixa nota...</string>
+  <string name="menu_dismiss_note">Hide / Delete</string>
   <string name="menu_bury_card">Bury card</string>
   <string name="menu_bury_note">Enterra la nota</string>
   <string name="menu_suspend_card">Suspèn la fitxa</string>
@@ -118,7 +118,6 @@
   <string name="create">Genera</string>
   <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">Comentaris</string>
-  <string name="studyoptions_load_tutorial_deck">Genera el tutorial</string>
   <string name="night_mode">Mode Nit</string>
   <string-array name="next_review_s">
     <item>1 segon</item>

@@ -39,7 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="welcome_message">With AnkiDroid, you can efficiently learn large amounts of vocabulary or any other material. AnkiDroid shows you the things to learn just before you forget them.\n\nTo get a first impression of how everything works, we recommend to start with a tutorial deck, which will give you some initial information, and try a bit out. Just touch \"Study\" after having opened it.\n\nCreate the tutorial deck now?</string>
   <string name="check_db_title">Check database?</string>
   <string name="check_db_warning">This may take a long time</string>
   <string name="check_db_acknowledge">Database checked</string>
@@ -56,7 +55,7 @@
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Flashcards за Андроид </h2> AnkiDroid е Флашкарт приложение, което е напълно съвместимо с десктоп софтуера <a href="%2$s"> Anki</a>. Можете да създавате, изтегляте и научавате съдържанието на двете, AnkiDroid или Anki десктоп и много лесно да ги синхронизирате.]]></item>
     <item><![CDATA[да ни помогнете  да направим AnkiDroid по-добре, Съобщете за всеки бъг <a href="%1$s"> тук</a>; нова функции и идеи, са  добре дошли! Моля, използвайте <a href="%2$s"> уики</a> и кажете Hi на <a href="%3$s"> форума</a>.]]></item>
-    <item><![CDATA[AnkiDroid e <a href="%1$s">софтуер с отворен код<a/>, така че всеки е препоръчително да <a href="%2$s">присъединяване към</a> <a href="%3$s">участници</a>:-)]]></item>
+    <item><![CDATA[AnkiDroid is <a href=\"%1$s\">open source software<a/>, so everyone is encouraged to <a href=\"%2$s\">join</a> the <a href=\"%3$s\">contributors</a> :-)]]></item>
     <item><![CDATA[не-разработчиците може да помогнат, например чрез <a href="%1$s"> преводи </a> AnkiDroid, актуализиране на уики и скрийншотовете, <a href="%2$s"> даряване</a> на Anki десктоп, или новини за AnkiDroid!]]></item>
     <item><![CDATA[AnkiDroid се освобождава от <a href="%1$s"> GNU GPL v3 лиценз</a> и кодът на източника е наличен <a href="%2$s"> тук</a>.]]></item>
   </string-array>

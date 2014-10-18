@@ -101,7 +101,7 @@
   <string name="menu_my_account">Compte de synchronisation</string>
   <string name="menu_preferences">Préférences</string>
   <string name="menu_about">À propos</string>
-  <string name="menu_dismiss_note">Écarter la note&#8230;</string>
+  <string name="menu_dismiss_note">Hide / Delete</string>
   <string name="menu_bury_card">Ecarter la carte</string>
   <string name="menu_bury_note">Enterrer la note</string>
   <string name="menu_suspend_card">Suspendre la carte</string>
@@ -118,7 +118,6 @@
   <string name="create">Créer</string>
   <string name="new_dynamic_deck">Créer un jeu de cartes filtrées</string>
   <string name="studyoptions_feedback">Commentaires</string>
-  <string name="studyoptions_load_tutorial_deck">Créer le tutoriel</string>
   <string name="night_mode">Mode nuit</string>
   <string-array name="next_review_s">
     <item>1 seconde</item>

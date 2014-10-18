@@ -42,7 +42,7 @@
   <string name="app_name">AnkiDroid</string>
   <string name="app_name_anki">Anki</string>
   <string name="app_name_droid">Droid</string>
-  <string name="studyoptions_title">Study Options</string>
+  <string name="studyoptions_title">Studiealternativ</string>
   <string name="studyoptions_deck_name">Kortleksnamn</string>
   <string name="studyoptions_due_today">Aktuella idag:</string>
   <string name="studyoptions_new_total">Nya kort totalt:</string>
@@ -50,19 +50,19 @@
   <string name="studyoptions_eta">Uppskattad tid (min):</string>
   <string name="studyoptions_start">Plugga nu</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%1$d card due (%2$s)</item>
-    <item quantity="other">%1$d cards due (%2$s)</item>
+    <item quantity="one">%1$d kort i kö (%2$s)</item>
+    <item quantity="other">%1$d kört i kö (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">%d min.</item>
     <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item quantity="one">%1$d of %2$d due</item>
+    <item quantity="one">%1$d av %2$d i kö</item>
     <item quantity="other">%1$d av %2$d i kö</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%d minute left</item>
+    <item quantity="one">%d minuter kvar</item>
     <item quantity="other">%d minuter kvar</item>
   </plurals>
   <string name="type_answer_hint">Skriv svar</string>
@@ -73,9 +73,9 @@
   <string name="ease3_learning">Lätt</string>
   <string name="studyoptions_congrats_undo">Ångra %s</string>
   <string name="card_unsuspended">Kort upplåst</string>
-  <string name="card_suspended">Kort åter låst</string>
+  <string name="card_suspended">Kort åsidosatt igen</string>
   <string name="menu_rotate">Rotera</string>
-  <string name="menu_import">Import</string>
+  <string name="menu_import">Importera</string>
   <string name="undo">Ångra</string>
   <string name="undo_action_review">senaste recension</string>
   <string name="undo_action_edit">redigera not</string>
@@ -101,12 +101,12 @@
   <string name="menu_my_account">Synkronisera konto</string>
   <string name="menu_preferences">Inställningar</string>
   <string name="menu_about">Om</string>
-  <string name="menu_dismiss_note">Avfärda not...</string>
+  <string name="menu_dismiss_note">Dölj / ta bort</string>
   <string name="menu_bury_card">Dölj kort</string>
   <string name="menu_bury_note">Dölj not</string>
   <string name="menu_suspend_card">Lås kort</string>
   <string name="menu_suspend_note">Lås not</string>
-  <string name="menu_save_note">Save note</string>
+  <string name="menu_save_note">Spara anteckning</string>
   <string name="menu_delete_note">Radera not</string>
   <string name="delete_note_message">Vill du verkligen ta bort den här noten och alla dess kort?\n%s</string>
   <string name="menu_edit_card">Redigera kort</string>
@@ -118,7 +118,6 @@
   <string name="create">Skapa</string>
   <string name="new_dynamic_deck">Skapa filtrerad kortlek</string>
   <string name="studyoptions_feedback">Feedback</string>
-  <string name="studyoptions_load_tutorial_deck">Skapa övningskortlek</string>
   <string name="night_mode">Nattläge</string>
   <string-array name="next_review_s">
     <item>1 sekund</item>
@@ -151,15 +150,15 @@
   <string name="studyoptions_congrats_more_new">Det finns fler nya kort, men den dagliga gränsen har uppnåtts. Du kan höja gränsen i inställningarna, men kom ihåg att detta också ökar antalet repetitioner på kort sikt.</string>
   <string name="studyoptions_congrats_custom">Välj knappen Anpassade studier nedan för att studera utanför det normala schemat.</string>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
+    <item quantity="one">I morgon finns det: %1$d kort att granska och %2$s.\n Beräknad tid: %3$s</item>
     <item quantity="other">I morgon kommer det finnas: %1$d kort att repetera och %2$s.\n Beräknad tid: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">%1$d new card</item>
+    <item quantity="one">%1$d nya kort</item>
     <item quantity="other">%1$d nya kort</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">Estimated time: %1$d min.</item>
+    <item quantity="one">Beräknad tid: %1$d min.</item>
     <item quantity="other">Beräknad tid: %1$d min.</item>
   </plurals>
   <string name="sd_card_not_mounted">SD-kort ej monterat.\n\nDu kan lagra din samling på det interna minnet också, men det är inte rekommenderat eftersom du inte kan komma åt filen så enkelt. Du kan aktivera detta i inställningarna (klicka på denna text för att öppna dem).</string>
@@ -175,7 +174,7 @@
   <string name="ankiweb">AnkiWeb</string>
   <string name="usb">USB</string>
   <string name="_import">Importera</string>
-  <string name="export">Export</string>
+  <string name="export">Exportera</string>
   <string name="confirm">Bekräfta</string>
   <string name="internet">Internet</string>
   <string name="pc">PC</string>

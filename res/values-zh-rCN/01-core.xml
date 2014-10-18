@@ -101,7 +101,7 @@
   <string name="menu_my_account">同步帐户</string>
   <string name="menu_preferences">偏好设置</string>
   <string name="menu_about">关于</string>
-  <string name="menu_dismiss_note">忽略卡牌记录...</string>
+  <string name="menu_dismiss_note">Hide / Delete</string>
   <string name="menu_bury_card">隐藏卡牌</string>
   <string name="menu_bury_note">隐藏卡牌记录</string>
   <string name="menu_suspend_card">暂停卡牌</string>
@@ -118,7 +118,6 @@
   <string name="create">创建</string>
   <string name="new_dynamic_deck">创建筛选过的牌组</string>
   <string name="studyoptions_feedback">反馈</string>
-  <string name="studyoptions_load_tutorial_deck">创建教程牌组</string>
   <string name="night_mode">夜间模式</string>
   <string-array name="next_review_s">
     <item>1秒</item>

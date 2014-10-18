@@ -101,7 +101,7 @@
   <string name="menu_my_account">계정 동기화</string>
   <string name="menu_preferences">환경 설정</string>
   <string name="menu_about">Ankidroid 정보</string>
-  <string name="menu_dismiss_note">노트 무시하기...</string>
+  <string name="menu_dismiss_note">Hide / Delete</string>
   <string name="menu_bury_card">Bury card</string>
   <string name="menu_bury_note">노트 나중에 보기</string>
   <string name="menu_suspend_card">카드 비활성화하기</string>
@@ -118,7 +118,6 @@
   <string name="create">만들기</string>
   <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">피드백</string>
-  <string name="studyoptions_load_tutorial_deck">도움말 만들기</string>
   <string name="night_mode">야간 모드</string>
   <string-array name="next_review_s">
     <item>1초</item>

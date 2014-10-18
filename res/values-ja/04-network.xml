@@ -86,7 +86,7 @@
   <string name="downloaddeck_search">検索</string>
   <string name="preferences_title">設定</string>
   <string name="deckpreferences_title">XXX のオプション</string>
-  <string name="sync_conflict_message">コレクションのファイルをAnkiwebへアップロードするか、Ankiwebからダウンロードする必要があります。いずれの場合も一方のファイルは上書きされます。</string>
+  <string name="sync_conflict_message">コレクションのファイルを AnkiWeb へアップロードするか、AnkiWeb からダウンロードする必要があります。いずれの場合も一方のファイルは上書きされます。</string>
   <string name="sync_conflict_local">アップロード</string>
   <string name="sync_conflict_remote">ダウンロード</string>
   <string name="sync_conflict_remote_confirm">サーバのコレクションをダウンロードしてもよろしいですか？コレクションは上書きされ、元に戻すことはできません。</string>
@@ -99,7 +99,7 @@
   <string name="sync_title">同期</string>
   <string name="sync_downloading_media">メディア %1$d/%2$d をダウンロード中...</string>
   <string name="sync_log_uploading_message">サーバ側への完全同期</string>
-  <string name="sync_log_downloading_message">サーバー側からの完全同期を完了</string>
+  <string name="sync_log_downloading_message">サーバーから端末への完全同期が完了</string>
   <string name="sync_log_clocks_unsynchronized">端末の時計が正しくありません（%1$d 秒 %2$s）；データ同期時のエラー発生を防止するため、時計を正しくセットしてください。日付、時刻、およびタイムゾーンが正しく設定した後、再び同期を開始してください。</string>
   <string name="sync_log_clocks_unsynchronized_tz">, 端末のタイムゾーンが間違っています</string>
   <string name="sync_log_clocks_unsynchronized_date">, 端末の日付が間違っています</string>

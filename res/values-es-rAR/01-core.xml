@@ -101,7 +101,7 @@
   <string name="menu_my_account">Sincronizar cuenta</string>
   <string name="menu_preferences">Preferencias</string>
   <string name="menu_about">Acerca de</string>
-  <string name="menu_dismiss_note">Deshechar nota...</string>
+  <string name="menu_dismiss_note">Hide / Delete</string>
   <string name="menu_bury_card">Enterrar tarjeta</string>
   <string name="menu_bury_note">Enterrar nota</string>
   <string name="menu_suspend_card">Suspender tarjeta</string>
@@ -118,7 +118,6 @@
   <string name="create">Crear</string>
   <string name="new_dynamic_deck">Crear mazo filtrado</string>
   <string name="studyoptions_feedback">Comentarios</string>
-  <string name="studyoptions_load_tutorial_deck">Crear tutorial</string>
   <string name="night_mode">Modo nocturno</string>
   <string-array name="next_review_s">
     <item>1 segundo</item>

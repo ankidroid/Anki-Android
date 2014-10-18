@@ -42,9 +42,9 @@
   <string name="drawer_open">ドロワーを開く</string>
   <string name="drawer_close">ドロワーを閉じる</string>
   <string name="CardEditorLaterMessage">後日のために情報を保存</string>
-  <string name="CardEditorCardDeck">Card deck:</string>
-  <string name="CardEditorNoteDeck">Deck:</string>
-  <string name="CardEditorModel">Type:</string>
+  <string name="CardEditorCardDeck">単語帳:</string>
+  <string name="CardEditorNoteDeck">単語帳:</string>
+  <string name="CardEditorModel">ノート:</string>
   <string name="CardEditorTags">タグ: %1$s</string>
   <string name="add_new_filter_tags">フィルタータグの追加</string>
   <string name="note_type">ノートタイプ</string>
@@ -56,14 +56,14 @@
   <string name="show_whiteboard">ホワイトボードを表示する</string>
   <string name="hide_whiteboard">ホワイトボードを隠す</string>
   <string name="clear_whiteboard">ホワイトボードの内容を全て消去</string>
-  <string name="replay_audio">再生</string>
+  <string name="replay_audio">音声の再生</string>
   <string name="cram_edit_warning">総復習中はカードの編集はできません</string>
   <string name="suspend_leeches">学習困難カードの非表示</string>
   <string name="leech_suspend_notification">このカードは学習困難カードとして登録されました</string>
   <string name="leech_notification">学習困難カードとして登録されました</string>
   <string name="corrupt_font">使用できないフォントファイル %s</string>
   <string-array name="browser_column1_headings">
-    <item>先頭のフィールド</item>
+    <item>ソートフィールド</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>回答</item>
@@ -103,13 +103,11 @@
   <string name="deckpicker_select_dictionary_default">標準設定</string>
   <string name="card_editor_add_card">ノートの追加</string>
   <string name="card_editor_reset">リセット</string>
-  <string name="card_editor_copy_card">カードをコピーする</string>
-  <string name="card_editor_reset_card">学習履歴のリセット</string>
+  <string name="card_editor_copy_card">カードをコピー</string>
+  <string name="card_editor_reset_card">学習進行状況をリセット</string>
   <string name="card_editor_reschedule_card">スケジュールを変更</string>
   <string name="card_editor_preview_card">プレビュー</string>
   <string name="error_insufficient_memory">メモリ不足のため操作できませんでした。</string>
-  <string name="tutorial_load">練習用単語帳を作成中です\nしばらくお待ちください</string>
-  <string name="tutorial_loading_error">チュートリアルの単語帳を作成できませんでした。</string>
   <string name="rename">名前変更</string>
   <string name="rename_error">単語帳 %s の名前を変更できません。</string>
   <string name="default_conf_delete_error">標準オプショングループを削除することはできません。</string>
@@ -120,8 +118,6 @@
   <string name="help_title">ヘルプ</string>
   <string name="help_online">オンラインヘルプ</string>
   <string name="help_faq">よくある質問</string>
-  <string name="help_tutorial">チュートリアル単語帳の作成</string>
-  <string name="tutorial_deck_name">チュートリアル単語帳</string>
   <string name="check_db">データベースをチェック</string>
   <string name="check_media">メディアをチェック</string>
   <string name="check_db_message">データを確認中です\nしばらくお待ちください</string>
@@ -150,7 +146,7 @@
   <string name="import_message_add">追加</string>
   <string name="import_message_replace">置換え</string>
   <string name="import_message_replace_confirm">このコレクションは削除され、ファイル中のデータに置き換えられます%s. よろしいでしょうか？</string>
-  <string name="import_message_add_confirm">\"%s\"をコレクションに追加しますか？長い時間が必要な場合があります。</string>
+  <string name="import_message_add_confirm">\"%s\" をコレクションに追加しますか？長い時間が必要な場合があります。</string>
   <string name="import_log_success">正常に取得できたカードは %d　カードです</string>
   <string name="import_log_error">インポート失敗</string>
   <string name="import_log_no_apkg">これは取り込み可能なapkgファイルではありません</string>
@@ -163,7 +159,7 @@
   <string name="export_successful_title">apkg ファイルをEメールで送信しますか？</string>
   <string name="export_successful">ファイル\"%s\"はエクスポートされました。メールで送信しますか？</string>
   <string name="export_unsuccessful">コレクションのエクスポート エラー</string>
-  <string name="import_hint">カードを取り込むためにapkg ファイルをフォルダに保管してください %s そしてＯＫボタンをクリックしてください</string>
+  <string name="import_hint">カードを取り込むために、 apkg ファイルをフォルダ %s 内に置き、「ＯＫ」ボタンをタップしてください。</string>
   <string name="upgrade_import_no_file_found">読み込み可能な %1$s のファイルが見つかりません</string>
   <string name="study_options">単語帳オプション</string>
   <string name="custom_study">カスタム学習</string>
@@ -181,4 +177,5 @@
   <string name="tag_editor_add_hint">右側のチェックマークを使って、新しいタグを追加する</string>
   <string name="tag_editor_add_feedback">\"%2$s\" ボタンを使って \"%1$s\" の追加を確認する</string>
   <string name="lookup_hint">テキストをコピーした後、検索アイコンを表示するために カードのどこかをタップしてください。</string>
+  <string name="add_content_showcase_text">開始する場合は、「＋」ボタンをタップして新しい学習データを追加してください。\n\n マニュアルを見る場合は、「ヘルプ」を押してください。</string>
 </resources>

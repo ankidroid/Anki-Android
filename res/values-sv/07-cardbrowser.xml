@@ -40,8 +40,8 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="one">%d card shown</item>
-    <item quantity="other">%d cards shown</item>
+    <item quantity="one">%d kort visas</item>
+    <item quantity="other">%d kort visas</item>
   </plurals>
   <string name="card_browser_all_decks">Alla kortlekar</string>
   <string name="card_browser_load">Laddar kort.\nVar god vänta...</string>
@@ -56,7 +56,7 @@
   <string name="card_browser_show_marked">Filtrera markerade</string>
   <string name="card_browser_field">Ändra CardBrowser-fält</string>
   <string name="card_browser_field_title">Ändrade fältet CardBrowser</string>
-  <string name="card_browser_show_suspended">Filter avbrutet</string>
+  <string name="card_browser_show_suspended">Filtrera åsidosatta</string>
   <string name="card_browser_search_by_tag">Filtrera efter etikett</string>
   <string name="card_browser_tags_shown">Etiketter: %1$s</string>
   <string name="card_browser_change_display_order">Ändra visningsordning</string>
@@ -79,7 +79,7 @@
   <string name="card_details_tags">Etiketter</string>
   <string name="card_details_model">Nottyp</string>
   <string name="card_browser_sorting_cards">Sorterar kort.\nVar god vänta...</string>
-  <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
+  <string name="card_browser_filtering_cards">Filtrerar kort&#8230; \nTryck på bakåtknappen för att avbryta</string>
   <string name="card_details_card_model">Kortmodell</string>
   <string-array name="card_browser_order_labels">
     <item>Ingen sortering (snabbare)</item>

@@ -21,6 +21,7 @@ ru: AnkiDroid флэш-карты
 sk: AnkiDroid kartičky
 sl: AnkiDroid pomnilne kartice
 sr: AnkiDroid флеш-карте
+sv-SE: AnkiDroid Flashkort
 th: บัตรคำ AnkiDroid
 tr: AnkiDroid Bilgi Kartları
 vi: Thẻ thông minh AnkiDroid

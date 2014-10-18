@@ -63,7 +63,7 @@
   <string name="leech_notification">Karta oznaczona jako pijawka</string>
   <string name="corrupt_font">Uszkodzony plik czcionki %s</string>
   <string-array name="browser_column1_headings">
-    <item>Search field</item>
+    <item>Sort field</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Answer</item>
@@ -108,8 +108,6 @@
   <string name="card_editor_reschedule_card">Reschedule card</string>
   <string name="card_editor_preview_card">Preview</string>
   <string name="error_insufficient_memory">Operacja nie może być wykonana z powodu niewystarczającej pamięci na urządzeniu</string>
-  <string name="tutorial_load">Tworzenie talii szkoleniowej.\nProszę czekać...</string>
-  <string name="tutorial_loading_error">Nie można utworzyć talii instruktażowej</string>
   <string name="rename">Zmień nazwę</string>
   <string name="rename_error">Nie można zmienić nazwy talii %s</string>
   <string name="default_conf_delete_error">Nie można usunąć domyślnej grupy ustawień</string>
@@ -120,8 +118,6 @@
   <string name="help_title">Pomoc</string>
   <string name="help_online">Pomoc online</string>
   <string name="help_faq">FAQ</string>
-  <string name="help_tutorial">Create tutorial deck</string>
-  <string name="tutorial_deck_name">Tutorial deck</string>
   <string name="check_db">Sprawdź bazę danych</string>
   <string name="check_media">Check media</string>
   <string name="check_db_message">Sprawdzanie bazy danych.\nProszę czekać...</string>
@@ -181,4 +177,5 @@
   <string name="tag_editor_add_hint">Use tick mark on the right to add new tag</string>
   <string name="tag_editor_add_feedback">Press \"%2$s\" button to confirm adding \"%1$s\"</string>
   <string name="lookup_hint">After copying the text, tap anywhere on the flashcard to show the search icon</string>
+  <string name="add_content_showcase_text">To get started, tap the + button to add some new study material.\n\n Press \'Help\' to see the manual.</string>
 </resources>

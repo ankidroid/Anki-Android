@@ -101,7 +101,7 @@
   <string name="menu_my_account">Synkronointiasetukset</string>
   <string name="menu_preferences">Asetukset</string>
   <string name="menu_about">Tietoja</string>
-  <string name="menu_dismiss_note">Ohita huomautus...</string>
+  <string name="menu_dismiss_note">Hide / Delete</string>
   <string name="menu_bury_card">Hautaa kortti</string>
   <string name="menu_bury_note">Hautaa Tieto</string>
   <string name="menu_suspend_card">Keskeytä kortti</string>
@@ -118,7 +118,6 @@
   <string name="create">Luo</string>
   <string name="new_dynamic_deck">Uusi suodatettu korttipakka</string>
   <string name="studyoptions_feedback">Palaute</string>
-  <string name="studyoptions_load_tutorial_deck">Luo opetusohjelma</string>
   <string name="night_mode">Yötila</string>
   <string-array name="next_review_s">
     <item>1 sekunti</item>

@@ -39,7 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="welcome_message">AnkiDroid\'le, büyük miktarlarda sözcük veya başka herhangi bir materyali etkili biçimde öğrenebilirsiniz. AnkiDroid öğrenilecek şeyleri size siz unutmadan hemen önce gösterir.\n\nNasıl çalıştığı hakkında bir önizlenim edinmek için, size bazı temel bilgiler verecek olan eğitim destesiyle başlayıp biraz denemenizi öneriyoruz. Yalnızca açtıktan sonra \"Çalışmaya Başla\"ya tıklayın.\n\nEğitim destesi şimdi oluşturulsun mu?</string>
   <string name="check_db_title">Veritabanını kontrol et</string>
   <string name="check_db_warning">Bu uzun sürebilir</string>
   <string name="check_db_acknowledge">Veritabanı kontrol edildi</string>
@@ -56,7 +55,7 @@
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Android için bilgi kartları</h2>AnkiDroid <a href="%2$s">Anki</a> masaüstü uygulamasıyla tamamen uyumlu bir bilgi kartı uygulamasıdır. İster AnkiDroid\'de ister Anki Masaüstünde içerikler oluşturabilir, indirebilir, öğrenebilir ve kolaylıkla senkronize edebilirsiniz.]]></item>
     <item><![CDATA[AnkiDroid\'i geliştirmemize yardımcı olmak için, lütfen karşılaştığınız sorunları <a href="%1$s">buradan</a> bildirin; yeni özellik fikirleri de çok iyi olur! Lütfen <a href="%2$s">vikiyi</a> kullanın ve <a href="%3$s">forumda</a> bir selam verin.]]></item>
-    <item><![CDATA[AnkiDroid <a href="%1$s">açık kaynaklı bir yazılımdır<a/>, bu yüzden herkesin <a href="%3$s">katkı yapanlar listesine</a> <a href="%2$s">katılmasını</a> dileriz. :-)]]></item>
+    <item><![CDATA[AnkiDroid is <a href=\"%1$s\">open source software<a/>, so everyone is encouraged to <a href=\"%2$s\">join</a> the <a href=\"%3$s\">contributors</a> :-)]]></item>
     <item><![CDATA[Programcı olmayanlar da örneğin AnkiDroid\'i <a href="%1$s">çevirerek</a>, vikiyi ve ekran görüntülerini güncelleyerek, Anki Masaüstüne <a href="%2$s">bağış yaparak</a>, veya AnkiDroid hakkında bloglayarak yardımcı olabilir!]]></item>
     <item><![CDATA[AnkiDroid <a href="%1$s">GNU-GPL 3 lisansı</a> altında yayınlanır ve kaynak kodu <a href="%2$s">burada</a> mevcuttur.]]></item>
   </string-array>

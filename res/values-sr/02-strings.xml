@@ -63,7 +63,7 @@
   <string name="leech_notification">Карта је означена као заразна</string>
   <string name="corrupt_font">Оштећена датотека фонта %s</string>
   <string-array name="browser_column1_headings">
-    <item>Претражи поље</item>
+    <item>Sort field</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Одговор</item>
@@ -108,8 +108,6 @@
   <string name="card_editor_reschedule_card">Reschedule card</string>
   <string name="card_editor_preview_card">Preview</string>
   <string name="error_insufficient_memory">Операција је немогућа због недостатка меморије на вашем уређају</string>
-  <string name="tutorial_load">Креирање шпила за обуку.\nМолим сачекајте...</string>
-  <string name="tutorial_loading_error">Шпил за обуку не може бити креиран</string>
   <string name="rename">Преименуј</string>
   <string name="rename_error">Шпил %s не може бити преименован</string>
   <string name="default_conf_delete_error">Подразумеване опције се не могу уклонити</string>
@@ -120,8 +118,6 @@
   <string name="help_title">Помоћ</string>
   <string name="help_online">Онлајн помоћ</string>
   <string name="help_faq">Питања и одговори</string>
-  <string name="help_tutorial">Create tutorial deck</string>
-  <string name="tutorial_deck_name">Tutorial deck</string>
   <string name="check_db">Провера базе података</string>
   <string name="check_media">Check media</string>
   <string name="check_db_message">Провера базе података.\nМолим сачекајте...</string>
@@ -181,4 +177,5 @@
   <string name="tag_editor_add_hint">Use tick mark on the right to add new tag</string>
   <string name="tag_editor_add_feedback">Press \"%2$s\" button to confirm adding \"%1$s\"</string>
   <string name="lookup_hint">After copying the text, tap anywhere on the flashcard to show the search icon</string>
+  <string name="add_content_showcase_text">To get started, tap the + button to add some new study material.\n\n Press \'Help\' to see the manual.</string>
 </resources>

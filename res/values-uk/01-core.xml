@@ -101,7 +101,7 @@
   <string name="menu_my_account">Змінити обліковий запис</string>
   <string name="menu_preferences">Налаштування</string>
   <string name="menu_about">Про програму</string>
-  <string name="menu_dismiss_note">Відхилити Примітку...</string>
+  <string name="menu_dismiss_note">Hide / Delete</string>
   <string name="menu_bury_card">Поховати картку</string>
   <string name="menu_bury_note">Сховати Примітку</string>
   <string name="menu_suspend_card">Відкласти картку</string>
@@ -118,7 +118,6 @@
   <string name="create">Створити</string>
   <string name="new_dynamic_deck">Створити фільтровану колоду</string>
   <string name="studyoptions_feedback">Відгук</string>
-  <string name="studyoptions_load_tutorial_deck">Створити підручник</string>
   <string name="night_mode">Нічний режим</string>
   <string-array name="next_review_s">
     <item>1 секунда</item>

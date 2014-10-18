@@ -101,7 +101,7 @@
   <string name="menu_my_account">Hesabı senkronize et</string>
   <string name="menu_preferences">Tercihler</string>
   <string name="menu_about">Hakkında</string>
-  <string name="menu_dismiss_note">Notu Yoksay...</string>
+  <string name="menu_dismiss_note">Hide / Delete</string>
   <string name="menu_bury_card">Kartı Gizle</string>
   <string name="menu_bury_note">Notu Gizle</string>
   <string name="menu_suspend_card">Kartı Askıya Al</string>
@@ -118,7 +118,6 @@
   <string name="create">Oluştur</string>
   <string name="new_dynamic_deck">Filtreli deste oluştur</string>
   <string name="studyoptions_feedback">Geribildirim</string>
-  <string name="studyoptions_load_tutorial_deck">Eğitime başla</string>
   <string name="night_mode">Gece modu</string>
   <string-array name="next_review_s">
     <item>1 saniye</item>

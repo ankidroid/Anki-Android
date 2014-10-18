@@ -44,11 +44,11 @@
   <string name="widget_no_cards_due">Inga kort i kö</string>
   <string name="widget_loading">Widget laddar...</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">%1$d card due in %2$s</item>
+    <item quantity="one">%1$d kort att göra inom %2$s</item>
     <item quantity="other">%1$d kort i kö om %2$s</item>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="one">%1$d deck</item>
+    <item quantity="one">%1$d kortlek</item>
     <item quantity="other">%1$d kortlekar</item>
   </plurals>
   <string name="widget_medium">AnkiDroid Medium</string>
@@ -57,7 +57,7 @@
   <string name="widget_big_restrictions_dialog">På grund av vissa begränsningar i widgetar för Android kan denna widget bara visa text men inga bilder/ljud m.m.</string>
   <string name="open_in_reviewer">Öppna kortlek i AnkiDroid</string>
   <plurals name="widget_big_eta">
-    <item quantity="one">Estimated time: %d min.</item>
+    <item quantity="one">Beräknad tid: %d min.</item>
     <item quantity="other">Beräknad tid: %d min.</item>
   </plurals>
   <string name="widget_big_tomorrow_due">Kort i kö imorgon:</string>

@@ -63,7 +63,7 @@
   <string name="leech_notification">کارت به عنوان مزاحم مشخص شده است</string>
   <string name="corrupt_font">فونت فایل خراب %s</string>
   <string-array name="browser_column1_headings">
-    <item>کادر جستجو</item>
+    <item>Sort field</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>پاسخ</item>
@@ -108,8 +108,6 @@
   <string name="card_editor_reschedule_card">Reschedule card</string>
   <string name="card_editor_preview_card">پیش نمایش</string>
   <string name="error_insufficient_memory">به علت عدم وجود حافظه کافی در دستگاه شما عملیات امکان پذیر نیست</string>
-  <string name="tutorial_load">در حال ساخت خودآموز دسته کارت.\nلطفا صبر کنید...</string>
-  <string name="tutorial_loading_error">ساختن دسته کارت خودآموز ممکن نشد</string>
   <string name="rename">تغییر نام</string>
   <string name="rename_error">نامگذاری مجدد دسته کارت %s ممکن نشد</string>
   <string name="default_conf_delete_error">امکان پاک کردن تنظیمات پیش فرض گروه نمی باشد</string>
@@ -120,8 +118,6 @@
   <string name="help_title">کمک</string>
   <string name="help_online">راهنمای آنلاین</string>
   <string name="help_faq">پرسش و پاسخ</string>
-  <string name="help_tutorial">Create tutorial deck</string>
-  <string name="tutorial_deck_name">Tutorial deck</string>
   <string name="check_db">بررسی پایگاه داده</string>
   <string name="check_media">Check media</string>
   <string name="check_db_message">بررسی پایگاه داده.\nلطفا صبر کنید...</string>
@@ -181,4 +177,5 @@
   <string name="tag_editor_add_hint">Use tick mark on the right to add new tag</string>
   <string name="tag_editor_add_feedback">Press \"%2$s\" button to confirm adding \"%1$s\"</string>
   <string name="lookup_hint">After copying the text, tap anywhere on the flashcard to show the search icon</string>
+  <string name="add_content_showcase_text">To get started, tap the + button to add some new study material.\n\n Press \'Help\' to see the manual.</string>
 </resources>

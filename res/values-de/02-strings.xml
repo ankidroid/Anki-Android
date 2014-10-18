@@ -43,8 +43,8 @@
   <string name="drawer_close">Navigationsleiste schließen</string>
   <string name="CardEditorLaterMessage">Information für später gespeichert</string>
   <string name="CardEditorCardDeck">Kartenstapel:</string>
-  <string name="CardEditorNoteDeck">Deck:</string>
-  <string name="CardEditorModel">Type:</string>
+  <string name="CardEditorNoteDeck">Stapel:</string>
+  <string name="CardEditorModel">Typ:</string>
   <string name="CardEditorTags">Schlagworte: %1$s</string>
   <string name="add_new_filter_tags">Schlagworte hinzfügen/filtern</string>
   <string name="note_type">Notiztyp</string>
@@ -63,7 +63,7 @@
   <string name="leech_notification">Karte als Lernbremse markiert</string>
   <string name="corrupt_font">Fehlerhafte Schriftartdatei %s</string>
   <string-array name="browser_column1_headings">
-    <item>Suchfeld</item>
+    <item>Sort field</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Antwort</item>
@@ -108,8 +108,6 @@
   <string name="card_editor_reschedule_card">Verschieben der Karte</string>
   <string name="card_editor_preview_card">Vorschau</string>
   <string name="error_insufficient_memory">Vorgang wegen unzureichenden Gerätespeichers nicht möglich</string>
-  <string name="tutorial_load">Erstelle Einführungsstapel&#8230;</string>
-  <string name="tutorial_loading_error">Einführungsstapel konnte nicht erstellt werden</string>
   <string name="rename">Umbenennen</string>
   <string name="rename_error">Stapel %s konnte nicht umbenannt werden</string>
   <string name="default_conf_delete_error">Die Standard-Optionengruppe kann nicht gelöscht werden</string>
@@ -120,8 +118,6 @@
   <string name="help_title">Hilfe</string>
   <string name="help_online">Onlinehilfe</string>
   <string name="help_faq">Häufig gestellte Fragen</string>
-  <string name="help_tutorial">Einführungsstapel erstellen</string>
-  <string name="tutorial_deck_name">Einführungsstapel</string>
   <string name="check_db">Datenbank überprüfen</string>
   <string name="check_media">Medien überprüfen</string>
   <string name="check_db_message">Prüfe Datenbank.\nBitte warten...</string>
@@ -181,4 +177,5 @@
   <string name="tag_editor_add_hint">Benutzen sie das Häkchen rechts, um neue Schlagworte hinzuzufügen</string>
   <string name="tag_editor_add_feedback">Berühren Sie den  \"%2$s\"-Knopf um das Hinzufügen von \"%1$s\" zu bestätigen</string>
   <string name="lookup_hint">Nach dem Kopieren der Texte, tippen irgendwo auf der Karteikarten um das Suchsymbol zu zeigen</string>
+  <string name="add_content_showcase_text">To get started, tap the + button to add some new study material.\n\n Press \'Help\' to see the manual.</string>
 </resources>

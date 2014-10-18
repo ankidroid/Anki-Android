@@ -101,7 +101,7 @@
   <string name="menu_my_account">Sinhronizēt kontu</string>
   <string name="menu_preferences">Iestatījumi</string>
   <string name="menu_about">Par</string>
-  <string name="menu_dismiss_note">Atcelt piezīmi...</string>
+  <string name="menu_dismiss_note">Hide / Delete</string>
   <string name="menu_bury_card">Bury card</string>
   <string name="menu_bury_note">Apglabāt piezīmi</string>
   <string name="menu_suspend_card">Apturēt kārti</string>
@@ -118,7 +118,6 @@
   <string name="create">Izveidot</string>
   <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">Atsauksmes</string>
-  <string name="studyoptions_load_tutorial_deck">Izveidot pamācību</string>
   <string name="night_mode">Nakts režīms</string>
   <string-array name="next_review_s">
     <item>1 sekunde</item>
