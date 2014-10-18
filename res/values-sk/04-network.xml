@@ -46,6 +46,7 @@
   <string name="downloading">Sťahujem ...</string>
   <string name="paused">Pozastavené</string>
   <string name="downloaded">Stiahnuté</string>
+  <string name="sync_error">Sync Error</string>
   <string name="vague_error">Chyba</string>
   <string name="cancelling">Zrušenie...</string>
   <string name="connection_error_return_message">Vyskytla sa chyba siete. Skúste znova, alebo postup zrušte a vráťte sa na predchádzajúcu obrazovku.</string>
@@ -66,6 +67,7 @@
   <string name="sync_log_db_error">Vyskytla sa chyba databázy.</string>
   <string name="not_logged_in_title">Prihlásiť sa do AnkiWeb</string>
   <string name="login_create_account_message">Musíte sa prihlásiť na účet AnkiWeb. Účet môžete vytvoriť v ďalšom kroku.</string>
+  <string name="no_email_client">No email client available</string>
   <string name="username">E-mailová adresa</string>
   <string name="username_repeat">Zopakovať e-mailovú adresu</string>
   <string name="password">Heslo</string>

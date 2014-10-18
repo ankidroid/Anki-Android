@@ -46,6 +46,7 @@
   <string name="downloading">İndiriliyor...</string>
   <string name="paused">Durduruldu</string>
   <string name="downloaded">İndirildi</string>
+  <string name="sync_error">Sync Error</string>
   <string name="vague_error">Hata</string>
   <string name="cancelling">İptâl ediliyor&#8230;</string>
   <string name="connection_error_return_message">Bir ağ hatası meydana geldi. Yeniden deneyin, veya iptâl edip önceki ekrana dönün.</string>
@@ -66,6 +67,7 @@
   <string name="sync_log_db_error">Bir veritabanı hatası meydana geldi.</string>
   <string name="not_logged_in_title">AnkiWeb\'e giriş yap</string>
   <string name="login_create_account_message">Bir AnkiWeb hesabına giriş yapmanız gerekiyor. Sonraki adımda bir tane oluşturabilirsiniz.</string>
+  <string name="no_email_client">No email client available</string>
   <string name="username">Eposta adresi</string>
   <string name="username_repeat">Tekrar eposta adresi</string>
   <string name="password">Şifre</string>

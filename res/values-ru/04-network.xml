@@ -46,6 +46,7 @@
   <string name="downloading">Скачивание...</string>
   <string name="paused">Приостановлено</string>
   <string name="downloaded">Загружено</string>
+  <string name="sync_error">Sync Error</string>
   <string name="vague_error">Ошибка</string>
   <string name="cancelling">Отмена...</string>
   <string name="connection_error_return_message">Ошибка сети. Повторите, отмените действие или возвратитесь на предыдущий экран.</string>
@@ -66,6 +67,7 @@
   <string name="sync_log_db_error">Произошла ошибка базы данных.</string>
   <string name="not_logged_in_title">Залогиниться в AnkiWeb</string>
   <string name="login_create_account_message">Нужно залогиниться в AnkiWeb аккаунт. Далее можно создать аккаунт.</string>
+  <string name="no_email_client">No email client available</string>
   <string name="username">Имейл</string>
   <string name="username_repeat">Повторите имейл</string>
   <string name="password">Пароль</string>

@@ -55,7 +55,7 @@
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Flashcard per Android</h2>AnkiDroid è un\'applicazione per flashcard pienamente compatibile con il software per desktop <a href="%2$s">Anki</a>. Puoi creare, scaricare e apprendere contenuti da entrambi, AnkiDroid o Anki Desktop, e sincronizzarli molto facilmente.]]></item>
     <item><![CDATA[Aiutaci a migliorare AnkiDroid: segnala per favore ogni problema <a href="%1$s">qui</a>; idee relative a nuove funzionalità sono benvenute! Usa il <a href="%2$s">wiki</a> e presentati sul <a href="%3$s">forum</a>.]]></item>
-    <item><![CDATA[AnkiDroid is <a href=\"%1$s\">open source software<a/>, so everyone is encouraged to <a href=\"%2$s\">join</a> the <a href=\"%3$s\">contributors</a> :-)]]></item>
+    <item><![CDATA[AnkiDroid è <a href=\"%1$s\">open source software<a/>, chiunque è incoraggiato a <a href=\"%2$s\">entrare nel gruppo</a> dei <a href=\"%3$s\">contributori</a> :-)]]></item>
     <item><![CDATA[Anche chi non è sviluppatore può aiutare, per esempio <a href="%1$s">traducendo</a> AnkiDroid, aggiornando le wiki e gli screenshot, <a href="%2$s">sostenendo</a> la versione per desktop di Anki, o scrivendo articoli sui blog a proposito di AnkiDroid!]]></item>
     <item><![CDATA[AnkiDroid è rilasciato sotto la <a href="%1$s"> licenza GNU-GPL v3</a> e il codice sorgente è disponibile <a href="%2$s">qui</a>.]]></item>
   </string-array>
@@ -68,11 +68,11 @@
   <string name="notification_message">Una nuova versione di AnkiDroid è disponibile in Android Market.\n\nVuoi installarla?</string>
   <string name="notification_stop">Non informarmi più di questo aggiornamento</string>
   <string name="reset_card_dialog_title">Reimposta progresso carta</string>
-  <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue.</string>
-  <string name="reset_card_dialog_acknowledge">Card reset</string>
-  <string name="reschedule_card_dialog_title">Reschedule card</string>
-  <string name="reschedule_card_dialog_message">Reschedule for review in x days:</string>
-  <string name="reschedule_card_dialog_acknowledge">Card rescheduled</string>
+  <string name="reset_card_dialog_message">Questa scheda sarà posizionata alla fine della \"coda\" delle schede nuove.</string>
+  <string name="reset_card_dialog_acknowledge">Resetta la scheda</string>
+  <string name="reschedule_card_dialog_title">Rischedula la scheda</string>
+  <string name="reschedule_card_dialog_message">Rischedula per review fra x giorni:</string>
+  <string name="reschedule_card_dialog_acknowledge">Scheda rischedulata</string>
   <string name="answering_error_title">Errore database</string>
   <string name="answering_error_message">Si è verificato un errore durante la scrittura della collezione. Potrebbe essere stato causato da un database danneggiato o da spazio su disco insufficiente.\n\nSe accade spesso, prova a controllare il database, riparare la collezione o ripristinare da un backup. Per fare questo clicca su \'opzioni\'.\n\nTuttavia, potrebbe anche trattarsi di un bug di AnkiDroid;per favore segnala l\'errore affinché possiamo verificare.</string>
   <string name="answering_error_report">Segnala errori</string>

@@ -46,6 +46,7 @@
   <string name="downloading">Завантаження...</string>
   <string name="paused">Призупинено</string>
   <string name="downloaded">Завантажено</string>
+  <string name="sync_error">Sync Error</string>
   <string name="vague_error">Помилка</string>
   <string name="cancelling">Відміна...</string>
   <string name="connection_error_return_message">Сталася помилка мережі. Повторіть спробу, або відмініть і поверніться до попереднього екрану.</string>
@@ -66,6 +67,7 @@
   <string name="sync_log_db_error">Виникла помилка бази даних.</string>
   <string name="not_logged_in_title">Увійдіть у AnkiWeb</string>
   <string name="login_create_account_message">Ви повинні увійти у профіль AnkiWeb. Ви можете створити його на наступному кроці.</string>
+  <string name="no_email_client">No email client available</string>
   <string name="username">Електронна адреса</string>
   <string name="username_repeat">Ще раз електронна адреса</string>
   <string name="password">Пароль</string>

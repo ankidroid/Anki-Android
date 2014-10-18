@@ -46,6 +46,7 @@
   <string name="downloading">ダウンロード中...</string>
   <string name="paused">一時停止中</string>
   <string name="downloaded">ダウンロードが完了しました</string>
+  <string name="sync_error">Sync Error</string>
   <string name="vague_error">エラー</string>
   <string name="cancelling">キャンセルしています&#8230;</string>
   <string name="connection_error_return_message">ネットワークエラーが発生しました. 再試行するか, キャンセルして前の画面に戻ります.</string>
@@ -66,6 +67,7 @@
   <string name="sync_log_db_error">データベース エラーが発生しました。</string>
   <string name="not_logged_in_title">AnkiWeb へのログイン</string>
   <string name="login_create_account_message">AnkiWebにログインする必要があります。次の手順でアカウントを作成できます。</string>
+  <string name="no_email_client">No email client available</string>
   <string name="username">メールアドレス</string>
   <string name="username_repeat">もう一度メールアドレスを入力</string>
   <string name="password">パスワード</string>

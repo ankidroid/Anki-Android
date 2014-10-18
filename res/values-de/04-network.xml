@@ -46,6 +46,7 @@
   <string name="downloading">Herunterladen...</string>
   <string name="paused">Pausiert</string>
   <string name="downloaded">Heruntergeladen</string>
+  <string name="sync_error">Sync Error</string>
   <string name="vague_error">Fehler</string>
   <string name="cancelling">Bricht ab&#8230;</string>
   <string name="connection_error_return_message">Ein Netzwerkfehler ist aufgetreten. Versuchen Sie es erneut oder brechen Sie ab und kehren zum vorherigen Fenster zurück.</string>
@@ -66,6 +67,7 @@
   <string name="sync_log_db_error">Ein Datenbankfehler ist aufgetreten.</string>
   <string name="not_logged_in_title">Bei AnkiWeb einloggen</string>
   <string name="login_create_account_message">Sie müssen sich bei einem AnkiWeb-Konto einloggen. Sie können im nächsten Schritt eines erstellen.</string>
+  <string name="no_email_client">No email client available</string>
   <string name="username">E-Mail-Adresse</string>
   <string name="username_repeat">E-Mail-Adresse wiederholen</string>
   <string name="password">Passwort</string>

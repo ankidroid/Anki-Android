@@ -46,6 +46,7 @@
   <string name="downloading">다운로드 중...</string>
   <string name="paused">일시 중지</string>
   <string name="downloaded">다운로드 완료</string>
+  <string name="sync_error">Sync Error</string>
   <string name="vague_error">Error</string>
   <string name="cancelling">취소 중...</string>
   <string name="connection_error_return_message">네트워크 오류가 발생 했습니다. 다시 시도 또는 취소 후 이전 화면으로 돌아갑니다.</string>
@@ -66,6 +67,7 @@
   <string name="sync_log_db_error">데이터베이스 오류가 발생했습니다.</string>
   <string name="not_logged_in_title">Log in to AnkiWeb</string>
   <string name="login_create_account_message">You must log in to an AnkiWeb account. You can create one in the next step.</string>
+  <string name="no_email_client">No email client available</string>
   <string name="username">이메일 주소</string>
   <string name="username_repeat">이메일 주소 다시 입력</string>
   <string name="password">비밀번호</string>
