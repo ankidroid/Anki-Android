@@ -40,7 +40,7 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="one">%d card shown</item>
+    <item quantity="one">%d карта приказана</item>
     <item quantity="other">%d cards shown</item>
   </plurals>
   <string name="card_browser_all_decks">Сви шпилови</string>

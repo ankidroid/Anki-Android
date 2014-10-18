@@ -101,7 +101,7 @@
   <string name="menu_my_account">Synchronisierungskonto</string>
   <string name="menu_preferences">Einstellungen</string>
   <string name="menu_about">Über</string>
-  <string name="menu_dismiss_note">Hide / Delete</string>
+  <string name="menu_dismiss_note">Aussetzen / Löschen</string>
   <string name="menu_bury_card">Karte vorläufig aussetzen</string>
   <string name="menu_bury_note">Notiz vorläufig aussetzen</string>
   <string name="menu_suspend_card">Karte dauerhaft aussetzen</string>

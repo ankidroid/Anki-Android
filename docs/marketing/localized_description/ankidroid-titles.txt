@@ -20,7 +20,7 @@ pl: AnkiDroid - Fiszki
 ru: AnkiDroid флэш-карты
 sk: AnkiDroid kartičky
 sl: AnkiDroid pomnilne kartice
-sr: AnkiDroid флеш-карте
+sr: AnkiDroid флеш-картице
 sv-SE: AnkiDroid Flashkort
 th: บัตรคำ AnkiDroid
 tr: AnkiDroid Bilgi Kartları

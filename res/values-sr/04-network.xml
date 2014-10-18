@@ -159,7 +159,7 @@
   <string name="upgrade_decks_button">Ажурирај</string>
   <string name="upgrade_decks_failed">Следећи шпилови нису били ажурирани:\n%sОтворите их у Anki Desktop и извршите проверу базе података. Затим можете да их увезете користећи Anki Desktop.</string>
   <string name="upgrade_decks_media_failed">Копирање медија датотека у нову фасциклу (%1$s) није успело за шпилове:\n%2$sПреместите медија датотеке ручно.</string>
-  <string name="download_deck">Учитавање шпила (%d kb).\nМолим сачекајте...</string>
+  <string name="download_deck">Учитавање шпила (%d kb).\n</string>
   <string name="sync_sanity_local">Локално</string>
-  <string name="sync_sanity_remote">Удаљено</string>
+  <string name="sync_sanity_remote">Удаљени приступ</string>
 </resources>

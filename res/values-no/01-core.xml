@@ -42,30 +42,30 @@
   <string name="app_name">AnkiDroid</string>
   <string name="app_name_anki">Anki</string>
   <string name="app_name_droid">Droid</string>
-  <string name="studyoptions_title">Study Options</string>
+  <string name="studyoptions_title">Innstillinger</string>
   <string name="studyoptions_deck_name">Navn på kortstokk</string>
   <string name="studyoptions_due_today">Forfaller i dag:</string>
   <string name="studyoptions_new_total">Totalt nye kort:</string>
   <string name="studyoptions_total_cards">Totalt antall kort:</string>
   <string name="studyoptions_eta">Tidsestimat (min.):</string>
-  <string name="studyoptions_start">Study</string>
+  <string name="studyoptions_start">Studer nå</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%1$d card due (%2$s)</item>
-    <item quantity="other">%1$d cards due (%2$s)</item>
+    <item quantity="one">%1$d kort i kø (%2$s)</item>
+    <item quantity="other">%1$d kort i kø (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">%d min.</item>
     <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item quantity="one">%1$d of %2$d due</item>
+    <item quantity="one">%1$d av %2$d i kø</item>
     <item quantity="other">%1$d av %2$d gjenstår</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%d minute left</item>
+    <item quantity="one">%d minutt igjen</item>
     <item quantity="other">%d minutter igjen</item>
   </plurals>
-  <string name="type_answer_hint">Type answer</string>
+  <string name="type_answer_hint">Skriv svar</string>
   <string name="show_answer">Vis svaret</string>
   <string name="ease1_successive">Igjen</string>
   <string name="ease2_successive">Vanskelig</string>
@@ -75,9 +75,9 @@
   <string name="card_unsuspended">Gjorde om suspendering av kort</string>
   <string name="card_suspended">Kort suspendert på nytt</string>
   <string name="menu_rotate">Roter</string>
-  <string name="menu_import">Import</string>
+  <string name="menu_import">Importer</string>
   <string name="undo">Angre</string>
-  <string name="undo_action_review">last review</string>
+  <string name="undo_action_review">siste gjennomgang</string>
   <string name="undo_action_edit">rediger notat</string>
   <string name="undo_action_bury">begrav notat</string>
   <string name="undo_action_suspend_card">suspender kort</string>
