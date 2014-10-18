@@ -68,6 +68,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         mPrefWhiteboard = MetaDB.getWhiteboardState(this, getParentDid());
         if (mPrefWhiteboard) {
             setWhiteboardEnabledState(true);
+            setWhiteboardVisibility(true);
         }
 
         col.getSched().reset();     // Reset schedule incase card had previous been loaded
