@@ -145,6 +145,7 @@ public class NoteEditor extends AnkiActivity {
     public static final int REQUEST_MULTIMEDIA_EDIT = 2;
 
     private boolean mChanged = false;
+    private boolean mFieldEdited = false;
     private boolean mRescheduled = false;
 
 
@@ -678,10 +679,8 @@ public class NoteEditor extends AnkiActivity {
             return true;
         }
         // changed fields?
-        for (FieldEditText f : mEditFields) {
-            if (fieldChanged(f)) {
-                return true;
-            }
+        if (mFieldEdited) {
+            return true;
         }
         // added tag?
         for (String t : mSelectedTags) {
@@ -1285,6 +1284,7 @@ public class NoteEditor extends AnkiActivity {
             editText.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void afterTextChanged(Editable arg0) {
+                    mFieldEdited = true;
                     duplicateCheck();
                 }
 
@@ -1411,12 +1411,6 @@ public class NoteEditor extends AnkiActivity {
         }
         mTagsButton.setText(getResources().getString(R.string.CardEditorTags,
                 getCol().getTags().join(getCol().getTags().canonify(mSelectedTags)).trim().replace(" ", ", ")));
-    }
-
-
-    private boolean fieldChanged(FieldEditText field) {
-        String newValue = field.getText().toString().replace(FieldEditText.NEW_LINE, "<br>");
-        return !mEditorNote.values()[field.getOrd()].equals(newValue);
     }
 
 
