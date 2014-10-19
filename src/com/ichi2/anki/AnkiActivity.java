@@ -325,6 +325,10 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
         showSimpleMessageDialog(message, false);
     }
 
+    protected void showSimpleMessageDialog(String title, String message){
+        showSimpleMessageDialog(title, message, false);
+    }
+
 
     /**
      * Show a simple message dialog, dismissing the message without taking any further action when OK button is pressed.
@@ -336,6 +340,11 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
      */
     protected void showSimpleMessageDialog(String message, boolean reload) {
         AsyncDialogFragment newFragment = SimpleMessageDialog.newInstance(message, reload);
+        showAsyncDialogFragment(newFragment);
+    }
+
+    protected void showSimpleMessageDialog(String title, String message, boolean reload) {
+        AsyncDialogFragment newFragment = SimpleMessageDialog.newInstance(title, message, reload);
         showAsyncDialogFragment(newFragment);
     }
 
