@@ -115,6 +115,8 @@
   <string name="sync_too_busy">Сервер перевантажений. Спробуйте знову пізніше.</string>
   <string name="sync_remote_db_error">Завантажена база даних була пошкоджена. Будь ласка, спробуйте знову.</string>
   <string name="sync_overwrite_error">Ваша поточна колекція не може бути заміщена завантаженим файлом.</string>
+  <string name="sync_connection_error">Connection timed out. Either your internet connection is experiencing problems, or you have a very large file in your media folder.</string>
+  <string name="sync_error_409">Only one client can access AnkiWeb at a time. If a previous sync failed, please try again in a few minutes.</string>
   <string name="sync_write_access_error">Не можливо зберегти завантажений файл на карту пам’яті. Вона встановлена лише для читання або на ній мало місця.</string>
   <string name="sync_deletions_message">Синхронізація видаленого...</string>
   <string name="sync_small_objects_message">Синхронізація малих об’єктів...</string>

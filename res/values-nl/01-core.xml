@@ -50,8 +50,8 @@
   <string name="studyoptions_eta">Geschatte tijd (min):</string>
   <string name="studyoptions_start">Studeer nu</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%1$d card due (%2$s)</item>
-    <item quantity="other">%1$d cards due (%2$s)</item>
+    <item quantity="one">%1$d kaart te doen (%2$s)</item>
+    <item quantity="other">%1$d kaarten te doen (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">%d min.</item>
@@ -75,15 +75,15 @@
   <string name="card_unsuspended">Uitstellen kaart ongedaan gemaakt</string>
   <string name="card_suspended">Kaart opnieuw uitstellen</string>
   <string name="menu_rotate">Omkeren</string>
-  <string name="menu_import">Import</string>
+  <string name="menu_import">Importeer</string>
   <string name="undo">Ongedaan maken</string>
-  <string name="undo_action_review">last review</string>
+  <string name="undo_action_review">laatste overhoring</string>
   <string name="undo_action_edit">bewerk memo</string>
-  <string name="undo_action_bury">verberg notitie</string>
+  <string name="undo_action_bury">verberg memo</string>
   <string name="undo_action_suspend_card">blokkeer kaart</string>
-  <string name="undo_action_suspend_note">blokkeer notitie</string>
+  <string name="undo_action_suspend_note">blokkeer memo</string>
   <string name="undo_action_delete">memo verwijderen</string>
-  <string name="undo_action_mark">markeer notitie</string>
+  <string name="undo_action_mark">markeer memo</string>
   <string name="unbury">Niet langer verbergen</string>
   <string name="finish_operation">Vorige operatie afmaken (meestal backup).\nGeduld aub...</string>
   <string name="contextmenu_deckpicker_download_missing_media">Download ontbrekende media</string>
@@ -95,18 +95,18 @@
   <string name="contextmenu_deckpicker_inflate_deck">Subsets tonen</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Instellen van de aangepaste woordenlijst</string>
   <string name="menu_add">Toevoegen</string>
-  <string name="menu_add_note">Kaart toevoegen</string>
+  <string name="menu_add_note">Memo toevoegen</string>
   <string name="menu_download_deck">Set downloaden</string>
   <string name="menu_download_shared_deck">Gedeelde set</string>
   <string name="menu_my_account">Account synchroniseren</string>
   <string name="menu_preferences">Voorkeuren</string>
   <string name="menu_about">Over</string>
-  <string name="menu_dismiss_note">Hide / Delete</string>
+  <string name="menu_dismiss_note">Verberg / Verwijder</string>
   <string name="menu_bury_card">Kaart verbergen</string>
   <string name="menu_bury_note">Memo verbergen</string>
   <string name="menu_suspend_card">Blokkeer kaart</string>
   <string name="menu_suspend_note">Memo opschorten</string>
-  <string name="menu_save_note">Save note</string>
+  <string name="menu_save_note">Memo opslaan</string>
   <string name="menu_delete_note">Memo verwijderen</string>
   <string name="delete_note_message">Deze memo en al zijn kaarten verwijderen?\n%s</string>
   <string name="menu_edit_card">Kaart bewerken</string>
@@ -116,7 +116,7 @@
   <string name="menu_unmark_card">Kaart demarkeren</string>
   <string name="new_deck">Maak set</string>
   <string name="create">Maak</string>
-  <string name="new_dynamic_deck">Create filtered deck</string>
+  <string name="new_dynamic_deck">Gefilterde set maken</string>
   <string name="studyoptions_feedback">Feedback</string>
   <string name="night_mode">Nachtmodus</string>
   <string-array name="next_review_s">
@@ -178,5 +178,5 @@
   <string name="confirm">Bevestigen</string>
   <string name="internet">Internet</string>
   <string name="pc">PC</string>
-  <string name="title_activity_graphical_activity">Statistical chart</string>
+  <string name="title_activity_graphical_activity">Statistische grafiek</string>
 </resources>

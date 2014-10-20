@@ -75,7 +75,7 @@
   <string name="card_unsuspended">Suspension de la carte annulée</string>
   <string name="card_suspended">Carte re-suspendue</string>
   <string name="menu_rotate">Changer d\'orientation</string>
-  <string name="menu_import">Import</string>
+  <string name="menu_import">Importer</string>
   <string name="undo">Annuler</string>
   <string name="undo_action_review">Dernière révision</string>
   <string name="undo_action_edit">modifier la note</string>
@@ -101,7 +101,7 @@
   <string name="menu_my_account">Compte de synchronisation</string>
   <string name="menu_preferences">Préférences</string>
   <string name="menu_about">À propos</string>
-  <string name="menu_dismiss_note">Hide / Delete</string>
+  <string name="menu_dismiss_note">Masquer / Supprimer</string>
   <string name="menu_bury_card">Ecarter la carte</string>
   <string name="menu_bury_note">Enterrer la note</string>
   <string name="menu_suspend_card">Suspendre la carte</string>

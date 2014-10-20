@@ -36,12 +36,12 @@
 -->
 <resources>
   <string-array name="navigation_titles">
-    <item>Decks</item>
-    <item>Card Browser</item>
-    <item>Statistics</item>
-    <item>Settings</item>
+    <item>Sets</item>
+    <item>Kaartbrowser</item>
+    <item>Statistieken</item>
+    <item>Instellingen</item>
     <item>Help</item>
-    <item>Send Feedback</item>
+    <item>Feedback versturen</item>
   </string-array>
   <string-array name="newCardSchedulingLabels">
     <item>Spreid uit over herhalingen</item>
@@ -61,7 +61,7 @@
     <item>100</item>
     <item>150</item>
     <item>200</item>
-    <item>Never notify</item>
+    <item>Nooit melden</item>
   </string-array>
   <string-array name="cram_review_order_labels">
     <item>laatst gewijzigde eerst tonen</item>
@@ -107,8 +107,8 @@
     <item>Kaart verbergen</item>
     <item>Kaart uitstellen</item>
     <item>Kaart verwijderen</item>
-    <item>Play media</item>
-    <item>Abort learning</item>
+    <item>Media afspelen</item>
+    <item>Leren afbreken</item>
   </string-array>
   <string-array name="theme_labels">
     <item>Android Donker</item>
@@ -159,6 +159,6 @@
   </string-array>
   <string-array name="override_font_labels">
     <item>When no font specified on flashcards</item>
-    <item>Always</item>
+    <item>Altijd</item>
   </string-array>
 </resources>
