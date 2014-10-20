@@ -30,6 +30,11 @@
         android:title="@string/menu_edit_card"
         ankidroid:showAsAction="ifRoom"/>
     <item
+        android:id="@+id/action_replay"
+        android:title="@string/replay_audio"
+        android:icon="@drawable/ic_action_replay"
+        ankidroid:showAsAction="ifRoom"/>
+    <item
         android:id="@+id/action_dismiss"
         android:title="@string/menu_dismiss_note">
         <menu>
@@ -50,9 +55,6 @@
                 android:title="@string/menu_delete_note"/>
         </menu>
     </item>
-    <item
-        android:id="@+id/action_replay"
-        android:title="@string/replay_audio"/>
     <item
         android:id="@+id/action_search_dictionary"
         android:title="@string/menu_select"

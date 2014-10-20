@@ -21,6 +21,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.net.Uri;
+import android.os.Build;
 import android.util.Log;
 
 import com.ichi2.anki.AnkiDroidApp;
@@ -172,11 +173,17 @@ public class Sound {
             // Construct the new content, appending the substring from the beginning of the content left until the
             // beginning of the sound marker
             // and then appending the html code to add the play button
+            String button;
+            if (AnkiDroidApp.SDK_VERSION >= Build.VERSION_CODES.GINGERBREAD_MR1) {
+                button = "<img src='file:///android_res/drawable/inline_play_button.png' width='32' height='32' />";
+            } else {
+                button = "<img src='file:///android_asset/media_playback_start2.png' />";
+            }
             String soundMarker = matcher.group();
             int markerStart = contentLeft.indexOf(soundMarker);
             stringBuilder.append(contentLeft.substring(0, markerStart));
             stringBuilder.append("<a class='replaybutton' href='playsound:" + soundPath + "'>"
-                        + "<span style='padding:5px;'><img src='file:///android_asset/media_playback_start2.png' />"
+                        + "<span style='padding:5px;'>"+ button
                         + "</span></a>");
             contentLeft = contentLeft.substring(markerStart + soundMarker.length());
             Log.i(AnkiDroidApp.TAG, "Content left = " + contentLeft);
