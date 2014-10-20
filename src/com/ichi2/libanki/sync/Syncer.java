@@ -519,7 +519,7 @@ public class Syncer {
         JSONObject buf = new JSONObject();
         try {
             buf.put("done", false);
-            int lim = 2500;
+            int lim = 250;
             List<Integer> colTypes = null;
             while (!mTablesLeft.isEmpty() && lim > 0) {
                 String curTable = mTablesLeft.getFirst();

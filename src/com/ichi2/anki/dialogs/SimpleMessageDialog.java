@@ -16,8 +16,14 @@ public class SimpleMessageDialog extends AsyncDialogFragment {
 
 
     public static SimpleMessageDialog newInstance(String message, boolean reload) {
+        return newInstance("" , message, reload);
+    }
+
+
+    public static SimpleMessageDialog newInstance(String title, String message, boolean reload) {
         SimpleMessageDialog f = new SimpleMessageDialog();
         Bundle args = new Bundle();
+        args.putString("title", title);
         args.putString("message", message);
         args.putBoolean("reload", reload);
         f.setArguments(args);
@@ -29,6 +35,10 @@ public class SimpleMessageDialog extends AsyncDialogFragment {
     public StyledDialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         StyledDialog.Builder builder = new StyledDialog.Builder(getActivity());
+        String title = getArguments().getString("title");
+        if (!title.equals("")) {
+            builder.setTitle(title);
+        }
         builder.setMessage(getArguments().getString("message"));
         builder.setPositiveButton(res().getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
             @Override
@@ -42,7 +52,12 @@ public class SimpleMessageDialog extends AsyncDialogFragment {
 
 
     public String getNotificationTitle() {
-        return AnkiDroidApp.getAppResources().getString(R.string.app_name);
+        String title = getArguments().getString("title");
+        if (!title.equals("")) {
+            return title;
+        } else {
+            return AnkiDroidApp.getAppResources().getString(R.string.app_name);
+        }
     }
 
 
