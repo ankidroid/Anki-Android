@@ -85,9 +85,9 @@ public class AnkiStatsTaskHandler {
         createChartTask.execute(views);
         return createChartTask;
     }
-    public static CreateSmallTodayOverview createSmallTodayOverview(View... views){
+    public static CreateSmallTodayOverview createSmallTodayOverview(Collection col, TextView view){
         CreateSmallTodayOverview createSmallTodayOverview = new CreateSmallTodayOverview();
-        createSmallTodayOverview.execute(views);
+        createSmallTodayOverview.execute(col, view);
         return createSmallTodayOverview;
     }
     public static CreateSmallDueChart createSmallDueChartChart(double[][] seriesList, View... views){
@@ -96,9 +96,9 @@ public class AnkiStatsTaskHandler {
         return createChartTask;
     }
 
-    public static CreateFirstStatisticChooserTask createFirstStatisticChooserTask(ViewPager viewPager){
+    public static CreateFirstStatisticChooserTask createFirstStatisticChooserTask(Collection col, ViewPager viewPager){
         CreateFirstStatisticChooserTask createFirstStatisticChooserTask = new CreateFirstStatisticChooserTask();
-        createFirstStatisticChooserTask.execute(viewPager);
+        createFirstStatisticChooserTask.execute(col, viewPager);
         return createFirstStatisticChooserTask;
     }
 
@@ -258,7 +258,7 @@ public class AnkiStatsTaskHandler {
 
     }
 
-    private static class CreateSmallTodayOverview extends AsyncTask<View, Void, String>{
+    private static class CreateSmallTodayOverview extends AsyncTask<Object, Void, String>{
         private TextView mTextView;
 
         private boolean mIsRunning = false;
@@ -269,7 +269,7 @@ public class AnkiStatsTaskHandler {
         }
 
         @Override
-        protected String doInBackground(View... params) {
+        protected String doInBackground(Object... params) {
             //make sure only one task of CreateChartTask is running, first to run should get sLock
             //only necessary on lower APIs because after honeycomb only one thread is used for all asynctasks
             sLock.lock();
@@ -279,8 +279,8 @@ public class AnkiStatsTaskHandler {
                     return null;
                 } else
                     Log.d(AnkiDroidApp.TAG, "starting CreateSmallTodayOverview" );
-                mTextView = (TextView) params[0];
-                Collection collection = AnkiDroidApp.getCol();
+                Collection collection = (Collection) params[0];
+                mTextView = (TextView) params[1];
 
                 //eventually put this in Stats (in desktop it is not though)
                 int cards, thetime;
@@ -325,7 +325,7 @@ public class AnkiStatsTaskHandler {
 
     }
 
-    private static class CreateFirstStatisticChooserTask extends AsyncTask<ViewPager, Void, Integer>{
+    private static class CreateFirstStatisticChooserTask extends AsyncTask<Object, Void, Integer>{
         private ViewPager mViewPager;
 
         private boolean mIsRunning = false;
@@ -336,7 +336,7 @@ public class AnkiStatsTaskHandler {
         }
 
         @Override
-        protected Integer doInBackground(ViewPager... params) {
+        protected Integer doInBackground(Object... params) {
             //make sure only one task of CreateChartTask is running, first to run should get sLock
             //only necessary on lower APIs because after honeycomb only one thread is used for all asynctasks
             sLock.lock();
@@ -346,8 +346,8 @@ public class AnkiStatsTaskHandler {
                     return null;
                 } else
                     Log.d(AnkiDroidApp.TAG, "starting CreateTodayLearnCountOnly" );
-                mViewPager = (ViewPager) params[0];
-                Collection collection = AnkiDroidApp.getCol();
+                Collection collection = (Collection) params[0];
+                mViewPager = (ViewPager) params[1];
 
                 //eventually put this in Stats (in desktop it is not though)
                 int cards;

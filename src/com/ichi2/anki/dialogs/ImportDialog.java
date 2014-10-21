@@ -81,7 +81,7 @@ public class ImportDialog extends DialogFragment {
                 List<File> fileList = Utils.getImportableDecks();
                 if (fileList.size() == 0) {
                     Themes.showThemedToast(getActivity(),
-                            getResources().getString(R.string.upgrade_import_no_file_found), false);
+                            getResources().getString(R.string.upgrade_import_no_file_found, "'.apkg'"), false);
                 }
                 dialog.setEnabled(fileList.size() != 0);
                 // Make arrays for the filenames and the full absolute paths of all importable APKGs

@@ -907,10 +907,10 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
     // Load deck counts, and update the today overview
     private void loadCounts() {
-        if (AnkiDroidApp.colIsOpen()) {
+        if (colOpen()) {
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK_COUNTS, mLoadCountsHandler, new TaskData(getCol()));
             mTodayTextView.setVisibility(View.GONE);
-            AnkiStatsTaskHandler.createSmallTodayOverview(mTodayTextView);
+            AnkiStatsTaskHandler.createSmallTodayOverview(getCol(), mTodayTextView);
         }
     }
 
