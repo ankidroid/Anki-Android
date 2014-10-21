@@ -154,7 +154,7 @@
   <string name="check_media_warning">对于大媒体集合这可能会需要一些时间</string>
   <string name="check_media_message">正在检查媒体&#8230;</string>
   <string name="check_media_acknowledge">媒体检查完毕</string>
-  <string name="check_media_failed">媒体检查失败</string>
+  <string name="check_media_failed">Media check failed</string>
   <string name="check_media_invalid">无效编码的文件： %d</string>
   <string name="check_media_unused">存在于文件夹中但未被任何卡牌使用的文件： %d</string>
   <string name="check_media_nohave">有被卡牌使用但不存在与文件夹中的文件： %d</string>

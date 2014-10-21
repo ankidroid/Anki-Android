@@ -22,20 +22,20 @@
 <resources>
   <string-array name="new_version_features">
     <item>Neues Benutzerhandbuch hinzugefügt</item>
-    <item>Gleiche Statistiken, wie bei Anki Desktop</item>
-    <item>Fehlerbehebungen in der Mediensynchronisation</item>
+    <item>Gleiche Statistiken wie bei Anki Desktop</item>
+    <item>Fehlerbehebungen in der Mediensynchronisierung</item>
     <item>Fehler behoben, durch den Bilder nicht angezeigt wurden</item>
     <item>Layout des Notizeditors geändert</item>
-    <item>Add new disable whiteboard option to reviewer and update icons</item>
+    <item>Neue Option um das Whiteboard auszuschalten zu den Lernicons hinzugefügt</item>
     <item>Komplette Unterstützung für den APKG Export und Import hinzugefügt</item>
-    <item>Verschicken der exportierten APKG per E-Mail hinzugefügt</item>
-    <item>Der Standardwert für die Anzahl der erstellten Backups wurde erhöht und es werden jetzt APKG-Dateien verwendet</item>
+    <item>Funktion zum Verschicken der exportierten APKG per E-Mail hinzugefügt</item>
+    <item>Der Standardwert für die Anzahl der erstellten Sicherungskopien wurde erhöht und es werden jetzt APKG-Dateien verwendet</item>
     <item>Vorschau aus Kartenübersicht zugänglich gemacht</item>
     <item>Geteilte Stapel können jetzt mit dem Androidbrowser heruntergeladen werden</item>
-    <item>Add reset and reschedule feature in note editor</item>
-    <item>Disable opening navigation drawer from browser when swipe is used</item>
+    <item>Neue Funktionen zum Zurücksetzen und Verschieben zum Notizeditor hinzugefügt</item>
+    <item>Navigationsleiste in der Kartenübersicht deaktiviert wenn Wischgesten benutzt werden</item>
     <item>Verbesserung der Audioaufnahmequalität</item>
-    <item>Support sticky fields when enabled in Anki Desktop</item>
+    <item>\"Klebefelder\" werden unterstützt wenn aktiviert in Anki Desktop</item>
     <item>Viele andere Fehlerbehebungen</item>
   </string-array>
 </resources>

@@ -154,7 +154,7 @@
   <string name="check_media_warning">На это может потребоваться значительное время для больших коллекций</string>
   <string name="check_media_message">Проверка медиа&#8230;</string>
   <string name="check_media_acknowledge">Медиа проверено</string>
-  <string name="check_media_failed">Ошибка проверки медиа</string>
+  <string name="check_media_failed">Media check failed</string>
   <string name="check_media_invalid">Файлы с недопустимой кодировкой: %d</string>
   <string name="check_media_unused">Файлы находятся в каталоге с медиа, но не используются ни в одной карте: %d</string>
   <string name="check_media_nohave">Файлы используются в картах, но отсутствуют в каталоге с медиа: %d</string>

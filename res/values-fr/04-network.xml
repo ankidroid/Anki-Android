@@ -46,7 +46,7 @@
   <string name="downloading">Téléchargement en cours...</string>
   <string name="paused">Arrêté</string>
   <string name="downloaded">Téléchargé</string>
-  <string name="sync_error">Sync Error</string>
+  <string name="sync_error">Erreur de synchronisation</string>
   <string name="vague_error">Erreur</string>
   <string name="cancelling">Annulation...</string>
   <string name="connection_error_return_message">Une erreur réseau s\'est produite. Réessayer ou annuler et revenir à l\'écran précédent.</string>
@@ -67,7 +67,7 @@
   <string name="sync_log_db_error">Une erreur s\'est produite dans la base de données.</string>
   <string name="not_logged_in_title">Se connecter à AnkiWeb</string>
   <string name="login_create_account_message">Vous devez vous connecter à un compte AnkiDroid. Vous pourrez en créer un à la prochaine étape.</string>
-  <string name="no_email_client">No email client available</string>
+  <string name="no_email_client">Aucun client de messagerie disponible</string>
   <string name="username">Adresse électronique</string>
   <string name="username_repeat">Confirmation de l\'adresse électronique</string>
   <string name="password">Mot de passe</string>
@@ -115,8 +115,8 @@
   <string name="sync_too_busy">Serveur trop occupé. Réessayez plus tard.</string>
   <string name="sync_remote_db_error">La base de données téléchargée est corrompue. Merci d\'essayer de nouveau.</string>
   <string name="sync_overwrite_error">Votre collection actuelle ne peut pas être écrasée par le fichier téléchargé.</string>
-  <string name="sync_connection_error">Connection timed out. Either your internet connection is experiencing problems, or you have a very large file in your media folder.</string>
-  <string name="sync_error_409">Only one client can access AnkiWeb at a time. If a previous sync failed, please try again in a few minutes.</string>
+  <string name="sync_connection_error">La connexion a expiré. Vérifiez votre connexion internet, ou peut-être avez-vous un très gros fichier dans votre dossier de médias ?</string>
+  <string name="sync_error_409">Seulement un client peut accéder à AnkiWeb à la fois. Si une précédente synchronisation a échoué, veuillez réessayer dans quelques minutes.</string>
   <string name="sync_write_access_error">Le fichier téléchargé n\'a pas pu être sauvegardé sur la carte sd. Soit votre carte sd est montée en lecture seule soit il n\'y a pas assez d\'espace libre dessus.</string>
   <string name="sync_deletions_message">Synchronisation des suppressions...</string>
   <string name="sync_small_objects_message">Synchronisation des petits objets...</string>
@@ -137,7 +137,7 @@
   <string name="sync_media_no_changes">Pas de changements des fichiers medias.</string>
   <string name="sync_media_success">Médias synchronisés avec succès.</string>
   <string name="sync_media_changes_count">%d modifications de médias à envoyer</string>
-  <string name="sync_media_downloaded_count">%d media files downloaded</string>
+  <string name="sync_media_downloaded_count">%d médias téléchargés</string>
   <string name="sync_sanity_failed">Après la synchronisation, la collection s\'est retrouvée dans un état incohérent. Pour résoudre ce problème, AnkiDroid va forcer une synchronisation complète. Veuillez choisir avec quelle version vous voulez continuer, ou annulez si vous voulez synchroniser plus tard.</string>
   <string name="sync_media_sanity_failed">La synchronisation des médias est achevée mais le nombre de média ne correspond pas à celui de serveur. La prochaine synchronisation des médias sera complète afin de corriger des erreurs éventuelles.</string>
   <string name="sync_media_error">Erreur pendant la synchronisation des médias.</string>

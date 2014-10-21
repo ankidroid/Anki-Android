@@ -55,7 +55,7 @@
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Karteikarten für Android</h2>AnkiDroid ist eine Karteikarten-Anwendung, die voll kompatibel ist mit der Desktop-Software <a href="%2$s">Anki</a>. Sie können mit beiden Programmen Inhalte erstellen, herunterladen und lernen und sie sehr einfach synchronisieren.]]></item>
     <item><![CDATA[Helfen Sie uns, AnkiDroid besser zu machen und melden alle Fehler <a href="%1$s">hier</a>; Ideen für neue Funktionen sind ebenfalls willkommen! Benutzen Sie das <a href="%2$s">Wiki</a> und sagen im <a href="%3$s">Forum</a> Hallo.]]></item>
-    <item><![CDATA[AnkiDroid is <a href=\"%1$s\">open source software<a/>, so everyone is encouraged to <a href=\"%2$s\">join</a> the <a href=\"%3$s\">contributors</a> :-)]]></item>
+    <item><![CDATA[AnkiDroid ist <a href=\"%1$s\">Open-Source Software<a/>, deshalb ist jeder ermutigt, sich den <a href=\"%3$s\">Mitwirkenden</a> <a href=\"%2$s\">anzuschließen</a>  :-)]]></item>
     <item><![CDATA[Auch Nicht-Entwickler können helfen; zum Beispiel, indem sie AnkiDroid <a href="%1$s">übersetzen</a>, das Wiki aktualisieren und Bildschirmfotos erstellen, für Anki Desktop <a href="%2$s">spenden</a> oder über AnkiDroid bloggen!]]></item>
     <item><![CDATA[AnkiDroid ist unter der <a href="%1$s">GNU-GPL-v3-Lizenz</a> veröffentlicht; der Quellcode ist <a href="%2$s">hier</a> verfügbar.]]></item>
   </string-array>
@@ -68,7 +68,7 @@
   <string name="notification_message">Eine neue Version von AnkiDroid ist bei Google Play verfügbar. \n\nMöchten Sie diese installieren?</string>
   <string name="notification_stop">Nicht erneut über Aktualisierung benachrichtigen</string>
   <string name="reset_card_dialog_title">Lernfortschritt zurücksetzen</string>
-  <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue.</string>
+  <string name="reset_card_dialog_message">Diese Karte wird am Ende der Reihe neuer Karten platziert.</string>
   <string name="reset_card_dialog_acknowledge">Karte zurücksetzen</string>
   <string name="reschedule_card_dialog_title">Karte verschieben</string>
   <string name="reschedule_card_dialog_message">Verschoben zum Lernen in x Tagen:</string>
@@ -154,7 +154,7 @@
   <string name="check_media_warning">Bei großen Mediensammlungen kann dies lange dauern</string>
   <string name="check_media_message">Überprüfe Medien&#8230;</string>
   <string name="check_media_acknowledge">Meden überprüft</string>
-  <string name="check_media_failed">Überprüfen der Medien gescheitert</string>
+  <string name="check_media_failed">Medienüberprüfung fehlgeschlagen</string>
   <string name="check_media_invalid">Dateien mit ungültiger Codierung: %d</string>
   <string name="check_media_unused">Dateien im Medien-Ordner, die von keiner Karte benutzt werden: %d</string>
   <string name="check_media_nohave">Dateien, die von Karten benutzt werden, aber im Medien-Ordner fehlen: %d</string>

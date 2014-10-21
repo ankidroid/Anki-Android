@@ -154,7 +154,7 @@
   <string name="check_media_warning">Det här kan ta lång tid för stora mediasamlingar</string>
   <string name="check_media_message">Kontrollerar media&#8230;</string>
   <string name="check_media_acknowledge">Media kontrollerat</string>
-  <string name="check_media_failed">Mediakontroll misslyckades</string>
+  <string name="check_media_failed">Media check failed</string>
   <string name="check_media_invalid">Filer med ogiltig kodning: %d</string>
   <string name="check_media_unused">Filer i mediamapp som inte används i kort: %d</string>
   <string name="check_media_nohave">Filer som används på kort med saknas i mediamapp: %d</string>
