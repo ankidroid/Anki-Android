@@ -273,6 +273,9 @@ public class NoteEditor extends AnkiActivity {
                     } else {
                         closeCardEditor();
                     }
+                } else {
+                    // Reset check for changes to fields
+                    mFieldEdited = false;
                 }
             } else {
                 // RuntimeException occured on adding note
