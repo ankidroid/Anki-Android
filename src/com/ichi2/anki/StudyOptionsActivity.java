@@ -27,7 +27,6 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.receiver.SdCardReceiver;
@@ -170,16 +169,6 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
         super.onDestroy();
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver);
-        }
-    }
-
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (mCurrentFragment != null) {
-            return mCurrentFragment.onTouchEvent(event);
-        } else {
-            return false;
         }
     }
 
