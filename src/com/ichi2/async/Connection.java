@@ -590,7 +590,6 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     private Payload doInBackgroundSync(Payload data) {
         // for for doInBackgroundLoadDeckCounts if any
         DeckTask.waitToFinish();
-
         String hkey = (String) data.data[0];
         boolean media = (Boolean) data.data[1];
         String conflictResolution = (String) data.data[2];
@@ -608,138 +607,154 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             }
         }
         String path = AnkiDroidApp.getCollectionPath();
+        try {
+            HttpSyncer server = new RemoteServer(this, hkey);
+            Syncer client = new Syncer(col, server);
 
-        HttpSyncer server = new RemoteServer(this, hkey);
-        Syncer client = new Syncer(col, server);
-
-        // run sync and check state
-        boolean noChanges = false;
-        if (conflictResolution == null) {
-            Log.i(AnkiDroidApp.TAG, "Sync - starting sync");
-            publishProgress(R.string.sync_prepare_syncing);
-            Object[] ret = client.sync(this);
-            data.message = client.getSyncMsg();
-            mediaUsn = client.getmMediaUsn();
-            if (ret == null) {
-                data.success = false;
-                data.result = new Object[] { "genericError" };
-                return data;
-            }
-            String retCode = (String) ret[0];
-            if (!retCode.equals("noChanges") && !retCode.equals("success")) {
-                data.success = false;
-                data.result = ret;
-                // note mediaUSN for later
-                data.data = new Object[] { mediaUsn };
-                return data;
-            }
-            // save and note success state
-            if (retCode.equals("noChanges")) {
-                // publishProgress(R.string.sync_no_changes_message);
-                noChanges = true;
-            } else {
-                // publishProgress(R.string.sync_database_acknowledge);
-            }
-        } else {
-            try {
-                server = new FullSyncer(col, hkey, this);
-                if (conflictResolution.equals("upload")) {
-                    Log.i(AnkiDroidApp.TAG, "Sync - fullsync - upload collection");
-                    publishProgress(R.string.sync_preparing_full_sync_message);
-                    Object[] ret = server.upload();
-                    if (ret == null) {
-                        data.success = false;
-                        data.result = new Object[] { "genericError" };
-                        AnkiDroidApp.openCollection(path);
-                        return data;
-                    }
-                    if (!ret[0].equals(HttpSyncer.ANKIWEB_STATUS_OK)) {
-                        data.success = false;
-                        data.result = ret;
-                        AnkiDroidApp.openCollection(path);
-                        return data;
-                    }
-                } else if (conflictResolution.equals("download")) {
-                    Log.i(AnkiDroidApp.TAG, "Sync - fullsync - download collection");
-                    publishProgress(R.string.sync_downloading_message);
-                    Object[] ret = server.download();
-                    if (ret == null) {
-                        data.success = false;
-                        data.result = new Object[] { "genericError" };
-                        AnkiDroidApp.openCollection(path);
-                        return data;
-                    }
-                    if (!ret[0].equals("success")) {
-                        data.success = false;
-                        data.result = ret;
-                        if (!colCorruptFullSync) {
-                            AnkiDroidApp.openCollection(path);
-                        }
-                        return data;
-                    }
-                }
-                col = AnkiDroidApp.openCollection(path);
-            } catch (OutOfMemoryError e) {
-                AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync-fullSync");
-                data.success = false;
-                data.result = new Object[] { "OutOfMemoryError" };
-                data.data = new Object[] { mediaUsn };
-                return data;
-            } catch (RuntimeException e) {
-                AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync-fullSync");
-                data.success = false;
-                data.result = new Object[] { "IOException" };
-                data.data = new Object[] { mediaUsn };
-                return data;
-            }
-        }
-
-        // clear undo to avoid non syncing orphans (because undo resets usn too
-        if (!noChanges) {
-            col.clearUndo();
-        }
-
-        // then move on to media sync
-        boolean noMediaChanges = false;
-        String mediaError = null;
-        if (media) {
-            server = new RemoteMediaServer(col, hkey, this);
-            MediaSyncer mediaClient = new MediaSyncer(col, (RemoteMediaServer) server, this);
-            String ret;
-            try {
-                ret = mediaClient.sync();
+            // run sync and check state
+            boolean noChanges = false;
+            if (conflictResolution == null) {
+                Log.i(AnkiDroidApp.TAG, "Sync - starting sync");
+                publishProgress(R.string.sync_prepare_syncing);
+                Object[] ret = client.sync(this);
+                data.message = client.getSyncMsg();
+                mediaUsn = client.getmMediaUsn();
                 if (ret == null) {
-                    mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_error);
-                } else {
-                    if (ret.equals("noChanges")) {
-                        publishProgress(R.string.sync_media_no_changes);
-                        noMediaChanges = true;
-                    }
-                    if (ret.equals("sanityFailed")) {
-                        mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_sanity_failed);
-                    } else {
-                        publishProgress(R.string.sync_media_success);
-                    }
+                    data.success = false;
+                    data.result = new Object[] { "genericError" };
+                    return data;
                 }
-            } catch (UnsupportedSyncException e) {
-                mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_unsupported);
-                AnkiDroidApp.getSharedPrefs(sContext).edit().putBoolean("syncFetchesMedia", false).commit();
-                AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync-mediaSync");
-            } catch (RuntimeException e) {
-                AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync-mediaSync");
-                mediaError = e.getLocalizedMessage();
+                String retCode = (String) ret[0];
+                if (!retCode.equals("noChanges") && !retCode.equals("success")) {
+                    data.success = false;
+                    data.result = ret;
+                    // note mediaUSN for later
+                    data.data = new Object[] { mediaUsn };
+                    return data;
+                }
+                // save and note success state
+                if (retCode.equals("noChanges")) {
+                    // publishProgress(R.string.sync_no_changes_message);
+                    noChanges = true;
+                } else {
+                    // publishProgress(R.string.sync_database_acknowledge);
+                }
+            } else {
+                try {
+                    server = new FullSyncer(col, hkey, this);
+                    if (conflictResolution.equals("upload")) {
+                        Log.i(AnkiDroidApp.TAG, "Sync - fullsync - upload collection");
+                        publishProgress(R.string.sync_preparing_full_sync_message);
+                        Object[] ret = server.upload();
+                        if (ret == null) {
+                            data.success = false;
+                            data.result = new Object[] { "genericError" };
+                            AnkiDroidApp.openCollection(path);
+                            return data;
+                        }
+                        if (!ret[0].equals(HttpSyncer.ANKIWEB_STATUS_OK)) {
+                            data.success = false;
+                            data.result = ret;
+                            AnkiDroidApp.openCollection(path);
+                            return data;
+                        }
+                    } else if (conflictResolution.equals("download")) {
+                        Log.i(AnkiDroidApp.TAG, "Sync - fullsync - download collection");
+                        publishProgress(R.string.sync_downloading_message);
+                        Object[] ret = server.download();
+                        if (ret == null) {
+                            data.success = false;
+                            data.result = new Object[] { "genericError" };
+                            AnkiDroidApp.openCollection(path);
+                            return data;
+                        }
+                        if (!ret[0].equals("success")) {
+                            data.success = false;
+                            data.result = ret;
+                            if (!colCorruptFullSync) {
+                                AnkiDroidApp.openCollection(path);
+                            }
+                            return data;
+                        }
+                    }
+                    col = AnkiDroidApp.openCollection(path);
+                } catch (OutOfMemoryError e) {
+                    AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync-fullSync");
+                    data.success = false;
+                    data.result = new Object[] { "OutOfMemoryError" };
+                    data.data = new Object[] { mediaUsn };
+                    return data;
+                } catch (RuntimeException e) {
+                    AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync-fullSync");
+                    data.success = false;
+                    data.result = new Object[] { "IOException" };
+                    data.data = new Object[] { mediaUsn };
+                    return data;
+                }
             }
-        }
-        if (noChanges && noMediaChanges) {
+
+            // clear undo to avoid non syncing orphans (because undo resets usn too
+            if (!noChanges) {
+                col.clearUndo();
+            }
+            // then move on to media sync
+            boolean noMediaChanges = false;
+            String mediaError = null;
+            if (media) {
+                server = new RemoteMediaServer(col, hkey, this);
+                MediaSyncer mediaClient = new MediaSyncer(col, (RemoteMediaServer) server, this);
+                String ret;
+                try {
+                    ret = mediaClient.sync();
+                    if (ret == null) {
+                        mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_error);
+                    } else {
+                        if (ret.equals("noChanges")) {
+                            publishProgress(R.string.sync_media_no_changes);
+                            noMediaChanges = true;
+                        }
+                        if (ret.equals("sanityFailed")) {
+                            mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_sanity_failed);
+                        } else {
+                            publishProgress(R.string.sync_media_success);
+                        }
+                    }
+                } catch (UnsupportedSyncException e) {
+                    mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_unsupported);
+                    AnkiDroidApp.getSharedPrefs(sContext).edit().putBoolean("syncFetchesMedia", false).commit();
+                    AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync-mediaSync");
+                } catch (RuntimeException e) {
+                    AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync-mediaSync");
+                    mediaError = e.getLocalizedMessage();
+                }
+            }
+            if (noChanges && noMediaChanges) {
+                data.success = false;
+                data.result = new Object[] { "noChanges" };
+                return data;
+            } else {
+                data.success = true;
+                Object[] dc = col.getSched().deckCounts();
+                data.result = dc[0];
+                data.data = new Object[] { conflictResolution, col, dc[1], dc[2], mediaError };
+                return data;
+            }
+        } catch (Exception e) {
+            // Global error catcher.
+            // Try to give a human readable error, otherwise print the raw error message
+            Log.e(AnkiDroidApp.TAG, "doInBackgroundSync error");
+            e.printStackTrace();
             data.success = false;
-            data.result = new Object[] { "noChanges" };
+            String msg = e.getMessage();
+            if (msg.contains("UnknownHostException") || msg.contains("HttpHostConnectException")) {
+                data.result = new Object[] {"connectionError" };
+            } else {
+                AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync");
+                data.result = new Object[] {e.getLocalizedMessage()};
+            }
             return data;
-        } else {
-            data.success = true;
-            Object[] dc = col.getSched().deckCounts();
-            data.result = dc[0];
-            data.data = new Object[] { conflictResolution, col, dc[1], dc[2], mediaError };
-            return data;
+        } finally {
+            col.close(false);
         }
     }
 
