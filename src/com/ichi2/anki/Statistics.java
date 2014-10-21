@@ -88,7 +88,7 @@ public class Statistics extends NavigationDrawerActivity implements ActionBar.Ta
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setOffscreenPageLimit(8);
-        AnkiStatsTaskHandler.createFirstStatisticChooserTask(mViewPager);
+        AnkiStatsTaskHandler.createFirstStatisticChooserTask(col, mViewPager);
 
         // When swiping between different sections, select the corresponding
         // tab. We can also use ActionBar.Tab#select() to do this if we have
