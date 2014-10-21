@@ -418,11 +418,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         if (savedInstanceState == null) {
             selectNavigationItem(DRAWER_DECK_PICKER);
         }
-        // open the drawer on startup if it's never been opened voluntarily by the user (as per Android guidelines)
-        if (!intent.getBooleanExtra("viaNavigationDrawer", false)
-                && !preferences.getBoolean("navDrawerHasBeenOpened", false)) {
-            getDrawerLayout().openDrawer(Gravity.LEFT);
-        }
 
         mDeckList = new ArrayList<HashMap<String, String>>();
         mDeckListView = (ListView) findViewById(R.id.files);
