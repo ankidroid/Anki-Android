@@ -20,4 +20,4 @@ cat tmp-list.txt |  sort
 echo "\nBy rate:"
 cat tmp-list.txt | sed -e "s/\(.*\) \([0-9]*\)%/\2% \1/g" | sort -nr
 
-#rm -f tmp-translations-page.html tmp-list.txt
+rm -f tmp-translations-page.html tmp-list.txt
