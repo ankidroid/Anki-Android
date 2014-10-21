@@ -1262,10 +1262,10 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 }
                 if (result != null && result.getBoolean()) {
                     String msg = "";
-                    double shrunk = Math.round(result.getLong() / 1024.0);
+                    long shrunk = Math.round(result.getLong() / 1024.0);
                     if (shrunk > 0.0) {
                         msg = String.format(Locale.getDefault(),
-                                getResources().getString(R.string.check_db_acknowledge_shrunk), shrunk);
+                                getResources().getString(R.string.check_db_acknowledge_shrunk), (int) shrunk);
                     } else {
                         msg = getResources().getString(R.string.check_db_acknowledge);
                     }
