@@ -1,6 +1,7 @@
 /***************************************************************************************
  * Copyright (c) 2012 Norbert Nagold <norbert.nagold@gmail.com>                         *
  * Copyright (c) 2012 Kostas Spyropoulos <inigo.aldana@gmail.com>                       *
+ * Copyright (c) 2014 Timothy Rae <perceptualchaos2@gmail.com>
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -20,6 +21,7 @@ package com.ichi2.libanki.sync;
 import android.util.Log;
 
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.exception.UnknownHttpResponseException;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Utils;
@@ -103,33 +105,46 @@ public class HttpSyncer {
     }
 
 
-    public HttpResponse req(String method) {
+    public void assertOk(HttpResponse resp) throws UnknownHttpResponseException {
+        // Throw RuntimeException if HTTP error
+        if (resp == null) {
+            throw new UnknownHttpResponseException("Null HttpResponse", -2);
+        }
+        int resultCode = resp.getStatusLine().getStatusCode();
+        if (!(resultCode == 200 || resultCode == 403)) {
+            String reason = resp.getStatusLine().getReasonPhrase();
+            throw new UnknownHttpResponseException(reason, resultCode);
+        }
+    }
+
+
+    public HttpResponse req(String method) throws UnknownHttpResponseException {
         return req(method, null);
     }
 
 
-    public HttpResponse req(String method, InputStream fobj) {
+    public HttpResponse req(String method, InputStream fobj) throws UnknownHttpResponseException {
         return req(method, fobj, 6);
     }
 
 
-    public HttpResponse req(String method, int comp, InputStream fobj) {
+    public HttpResponse req(String method, int comp, InputStream fobj) throws UnknownHttpResponseException {
         return req(method, fobj, comp);
     }
 
 
-    public HttpResponse req(String method, InputStream fobj, int comp) {
+    public HttpResponse req(String method, InputStream fobj, int comp) throws UnknownHttpResponseException {
         return req(method, fobj, comp, null);
     }
 
 
-    public HttpResponse req(String method, InputStream fobj, int comp, JSONObject registerData) {
-        return req(method, fobj, comp, registerData, null);
+    public HttpResponse req(String method, InputStream fobj, int comp, JSONObject registerData) throws UnknownHttpResponseException {
+        return req(method, fobj, comp, registerData, null) ;
     }
 
 
     public HttpResponse req(String method, InputStream fobj, int comp, JSONObject registerData,
-            Connection.CancelCallback cancelCallback) {
+            Connection.CancelCallback cancelCallback) throws UnknownHttpResponseException {
         File tmpFileBuffer = null;
         try {
             String bdry = "--" + BOUNDARY;
@@ -212,10 +227,14 @@ public class HttpSyncer {
 
             try {
                 HttpClient httpClient = new DefaultHttpClient(cm, params);
-                return httpClient.execute(httpPost);
+                HttpResponse httpResponse = httpClient.execute(httpPost);
+                // we assume badAuthRaises flag from Anki Desktop always False
+                // so just throw new RuntimeException if response code not 200 or 403
+                assertOk(httpResponse);
+                return httpResponse;
             } catch (SSLException e) {
                 Log.e(AnkiDroidApp.TAG, "SSLException while building HttpClient", e);
-                return null;
+                throw new RuntimeException("SSLException while building HttpClient");
             }
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
@@ -300,57 +319,57 @@ public class HttpSyncer {
     }
 
 
-    public HttpResponse hostKey(String arg1, String arg2) {
+    public HttpResponse hostKey(String arg1, String arg2) throws UnknownHttpResponseException {
         return null;
     }
 
 
-    public JSONObject applyChanges(JSONObject kw) {
+    public JSONObject applyChanges(JSONObject kw) throws UnknownHttpResponseException {
         return null;
     }
 
 
-    public JSONObject start(JSONObject kw) {
+    public JSONObject start(JSONObject kw) throws UnknownHttpResponseException {
         return null;
     }
 
 
-    public JSONObject chunk(JSONObject kw) {
+    public JSONObject chunk(JSONObject kw) throws UnknownHttpResponseException {
         return null;
     }
 
 
-    public JSONObject chunk() {
+    public JSONObject chunk() throws UnknownHttpResponseException {
         return null;
     }
 
 
-    public long finish() {
+    public long finish() throws UnknownHttpResponseException {
         return 0;
     }
 
 
-    public HttpResponse meta() {
+    public HttpResponse meta() throws UnknownHttpResponseException {
         return null;
     }
 
 
-    public Object[] download() {
+    public Object[] download() throws UnknownHttpResponseException {
         return null;
     }
 
 
-    public Object[] upload() {
+    public Object[] upload() throws UnknownHttpResponseException {
         return null;
     }
 
 
-    public JSONObject sanityCheck2(JSONObject client) {
+    public JSONObject sanityCheck2(JSONObject client) throws UnknownHttpResponseException {
         return null;
     }
 
 
-    public void applyChunk(JSONObject sech) {
+    public void applyChunk(JSONObject sech) throws UnknownHttpResponseException {
     }
 
     public class ProgressByteEntity extends AbstractHttpEntity {
@@ -422,7 +441,7 @@ public class HttpSyncer {
     }
 
 
-    public HttpResponse register(String user, String pw) {
+    public HttpResponse register(String user, String pw) throws UnknownHttpResponseException {
         return null;
     }
 
@@ -431,3 +450,5 @@ public class HttpSyncer {
         return Consts.SYNC_BASE + "sync/";
     }
 }
+
+
