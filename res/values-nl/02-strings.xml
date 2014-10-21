@@ -56,7 +56,7 @@
   <string name="show_whiteboard">Toon het schrijfbord</string>
   <string name="hide_whiteboard">Verberg het schrijfbord</string>
   <string name="clear_whiteboard">Schrijfbord schoonvegen</string>
-  <string name="replay_audio">Replay audio</string>
+  <string name="replay_audio">Audio herhalen</string>
   <string name="cram_edit_warning">Het bewerken van kaarten is niet toegestaan tijdens stampen</string>
   <string name="suspend_leeches">Moeilijke kaarten blokkeren</string>
   <string name="leech_suspend_notification">Kaart gemarkeerd als moeilijk en uitgesteld</string>
@@ -72,7 +72,7 @@
     <item>Opmerking</item>
     <item>Vraag</item>
     <item>Labels</item>
-    <item>Lapses</item>
+    <item>Missers</item>
     <item>Overhoringen</item>
   </string-array>
   <string name="cardeditor_title_add_note">Kaart toevoegen</string>
@@ -105,7 +105,7 @@
   <string name="card_editor_reset">Resetten</string>
   <string name="card_editor_copy_card">Kopieer kaart</string>
   <string name="card_editor_reset_card">Vooruitgang resetten</string>
-  <string name="card_editor_reschedule_card">Reschedule card</string>
+  <string name="card_editor_reschedule_card">Kaart herplannen</string>
   <string name="card_editor_preview_card">Voorbeeld</string>
   <string name="error_insufficient_memory">Werking verhinderd vanwege onvoldoende beschikbaar geheugen op uw toestel</string>
   <string name="rename">Naam wijzigen</string>
@@ -119,7 +119,7 @@
   <string name="help_online">Online help</string>
   <string name="help_faq">Veelgestelde vragen</string>
   <string name="check_db">Controleer database</string>
-  <string name="check_media">Check media</string>
+  <string name="check_media">Media controleren</string>
   <string name="check_db_message">De databank wordt gecontroleerd.\nEven geduld alstublieft...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
   <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
@@ -141,7 +141,7 @@
   <string name="info_rate">Beoordeel AnkiDroid</string>
   <string name="col_load_failed">Laden van collectie mislukt.\nKlik \'terug\' om AnkiDroid te sluiten.</string>
   <string name="import_title">Importeer kaarten</string>
-  <string name="import_select_title">Choose a file to import</string>
+  <string name="import_select_title">Kies een bestand om te importeren</string>
   <string name="import_message">Wilt u de inhoud van bestand %s aan uw collectie toevoegen, of wilt u dat de inhoud uw collectie vervangt?</string>
   <string name="import_message_add">Toevoegen</string>
   <string name="import_message_replace">Vervangen</string>
@@ -152,13 +152,13 @@
   <string name="import_log_no_apkg">Dit is geen geldig apkg-bestand</string>
   <string name="import_importing">Kaarten importeren.\n Even geduld alstublieft...</string>
   <string name="export_include_schedule">Include scheduling</string>
-  <string name="export_include_media">Include media</string>
-  <string name="confirm_apkg_export">Export collection as apkg file?</string>
-  <string name="confirm_apkg_export_deck">Export \"%s\" as apkg file?</string>
-  <string name="export_in_progress">Exporting apkg file&#8230;</string>
+  <string name="export_include_media">Media opnemen</string>
+  <string name="confirm_apkg_export">Verzameling exporteren als apkg-bestand?</string>
+  <string name="confirm_apkg_export_deck">\"%s\" als apkg-bestand exporteren?</string>
+  <string name="export_in_progress">Apkg-bestand exporteren&#8230;</string>
   <string name="export_successful_title">E-mail apkg?</string>
   <string name="export_successful">File \"%s\" was exported. Do you want to email it?</string>
-  <string name="export_unsuccessful">Error exporting collection</string>
+  <string name="export_unsuccessful">Exporteren verzameling mislukt</string>
   <string name="import_hint">Om kaarten te importeren, plaats het apkg-bestand in map %s en klik ok</string>
   <string name="upgrade_import_no_file_found">Geen %1$s bestand gevonden om te importeren</string>
   <string name="study_options">Set opties</string>

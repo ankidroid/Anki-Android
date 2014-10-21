@@ -115,8 +115,8 @@
   <string name="sync_too_busy">Server overbezet. Probeer het later opnieuw.</string>
   <string name="sync_remote_db_error">De gedownloade database was corrupt. Probeer het opnieuw.</string>
   <string name="sync_overwrite_error">Je huidige collectie kan niet worden overschreven door het gedownloade bestand.</string>
-  <string name="sync_connection_error">Connection timed out. Either your internet connection is experiencing problems, or you have a very large file in your media folder.</string>
-  <string name="sync_error_409">Only one client can access AnkiWeb at a time. If a previous sync failed, please try again in a few minutes.</string>
+  <string name="sync_connection_error">Verbinding time-out. Je internetverbinding ondervindt problemen of je hebt een erg groot bestand in je mediamap.</string>
+  <string name="sync_error_409">Slechts één client kan AnkiWeb tegelijk gebruiken. Als een vorige synchronisatie mislukt is, probeer het dan over een paar minuten opnieuw.</string>
   <string name="sync_write_access_error">Het gedownloade bestand kon niet worden opgeslagen op de sd-kaart. Ofwel de sd-kaart is als alleen-lezen aangesloten of er is onvoldoende ruimte.</string>
   <string name="sync_deletions_message">Verwijderde objecten synchroniseren...</string>
   <string name="sync_small_objects_message">Kleine objecten synchroniseren...</string>
@@ -136,12 +136,12 @@
   <string name="sync_media_sanity_check">Bezig met het nagaan van de media-aantallen...</string>
   <string name="sync_media_no_changes">Mediabestanden bleven ongewijzigd.</string>
   <string name="sync_media_success">Media met succes gesynchroniseerd.</string>
-  <string name="sync_media_changes_count">%d media changes to upload</string>
-  <string name="sync_media_downloaded_count">%d media files downloaded</string>
+  <string name="sync_media_changes_count">%d mediawijzigingen te uploaden</string>
+  <string name="sync_media_downloaded_count">%d mediabestanden gedownload</string>
   <string name="sync_sanity_failed">Na synchronisatie was de collectie in een inconsistente staat. Om dit probleem op te lossen zal AnkiDroid een volledige synchronisatie uitvoeren. Gelieve te kiezen welke zijde u wenst te behouden, of de operatie te onderbreken indien u liever later synchroniseert.</string>
   <string name="sync_media_sanity_failed">Synchronisatie van de media voltooid, maar het aantal mediabestanden komt niet overeen met dat op de server. De volgende keer zal een volledige synchronisatie van de media worden uitgevoerd om fouten te corrigeren.</string>
   <string name="sync_media_error">Fout tijdens het synchroniseren van mediagegevens.</string>
-  <string name="sync_media_unsupported">Complex media file names are not supported on Android 2.2 and below. Media syncing has been disabled.</string>
+  <string name="sync_media_unsupported">Complexe mediabestandsnamen worden niet ondersteund op Android 2.2 en lager. Het synchroniseren van media is uitgeschakeld.</string>
   <string name="register_error">Er is een fout opgetreden. Gelieve later opnieuw te proberen.</string>
   <string name="register_title">Account registreren</string>
   <string name="register_mismatch">De herhaalde gebruikersnaam/paswoord-combinatie komt niet overeen met het origineel of is leeg. Gelieve opnieuw in te geven.</string>

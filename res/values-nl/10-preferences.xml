@@ -67,7 +67,7 @@
   <string name="write_answers_disable_summ">Prevents keyboard from appearing on cards containing \'type in the answer\' fields</string>
   <string name="text_selection_click">Long press workaround</string>
   <string name="text_selection_click_summ">Zet dit aan als tekstselectie via met een lange klik niet werkt</string>
-  <string name="dictionary">Lookup dictionary</string>
+  <string name="dictionary">Opzoeken in woordenlijst</string>
   <string name="dictionary_summ">XXX</string>
   <string name="reset_languages">Reset talen</string>
   <string name="reset_languages_summ">Reset taalopdrachten (voor tekst-naar-spraak en woordenboeken) voor alle leersets. Reset specifieke leerset-opdrachten op het leerset uitkiezer</string>
@@ -83,9 +83,9 @@
   <string name="card_browser_font_size_summ">XXX %</string>
   <string name="col_path">Pad van collecties</string>
   <string name="col_path_summ">XXX</string>
-  <string name="fullscreen_review">Fullscreen mode</string>
+  <string name="fullscreen_review">Volledig schermmodus</string>
   <string name="fullscreen_review_summ">Hide the system status bar</string>
-  <string name="gestures">Enable gestures</string>
+  <string name="gestures">Bewegingen inschakelen</string>
   <string name="gestures_summ">Assign gestures to actions such as answering and editing cards.</string>
   <string name="gestures_swipe_up">Omhoog vegen</string>
   <string name="gestures_swipe_down">Omlaag vegen</string>
@@ -101,9 +101,9 @@
   <string name="more_scrolling_buttons_summ">Also use kanji/katakana, emoji/kao-moji buttons for scrolling</string>
   <string name="double_scrolling_gap">Sneller scrollen</string>
   <string name="double_scrolling_gap_summ">Double the scroll gap with eReader</string>
-  <string name="swipe_sensitivity">Swipe sensitivity</string>
+  <string name="swipe_sensitivity">Veeggevoeligheid</string>
   <string name="swipe_sensitivity_summ">XXX</string>
-  <string name="tts">Text to speech</string>
+  <string name="tts">Tekst-naar-spraak</string>
   <string name="tts_summ">Vraag en antwoord oplezen als geen geluidsbestand is opgenomen</string>
   <string name="sync_fetch_missing_media">Media downloaden</string>
   <string name="sync_fetch_missing_media_summ">Haal automatisch ontbrekende media op tijdens synchronisatie.</string>
@@ -123,7 +123,7 @@
   <string name="language_system">Systeemtaal</string>
   <string name="notification_pref">Meldingen</string>
   <string name="notification_minimum_cards_due">Notify when more than</string>
-  <string name="notification_minimum_cards_due_summary">XXX cards due</string>
+  <string name="notification_minimum_cards_due_summary">XXX kaarten te doen</string>
   <string name="notification_minimum_cards_due_vibrate">Trillen</string>
   <string name="notification_minimum_cards_due_blink">Blink light</string>
   <string name="timeout_answer_text">Vanzelf antwoord tonen</string>
@@ -162,10 +162,10 @@
   <string name="input_workaround_summ">Workaround for focusing problems on HTML input boxes. Causes problems on several devices.</string>
   <string name="pref_keep_screen_on">Keep screen on</string>
   <string name="pref_keep_screen_on_summ">Disable screen timeout</string>
-  <string name="pref_simple_interface">Simple interface</string>
+  <string name="pref_simple_interface">Eenvoudige interface</string>
   <string name="pref_simple_interface_summ">Versnelt de weergave van de kaart maar biedt beperkte ondersteuning voor html</string>
   <string name="pref_simple_interface_exclude_tags">Tags to exclude</string>
-  <string name="pref_simple_interface_exclude_tags_summ">Geen sobere weergave bij deze kenmerken: XXX</string>
+  <string name="pref_simple_interface_exclude_tags_summ">De eenvoudige interface niet gebruiken voor deze tags: XXX</string>
   <string name="write_answers_message">You should define for every deck a field to compare the written answer with. You can do this via Anki Desktop (deck properties -&gt; edit model -&gt; card layout).\n\nIf no compare field is set, your written answer will always be compared with the whole card answer</string>
   <string name="fix_arabic_text">Betere Arabische weergave</string>
   <string name="fix_arabic_text_summ">Partial workaround for limited support of Arabic by Android platform. When activated it is not possible to modify cards.</string>
@@ -186,7 +186,7 @@
   <string name="studyoptions_max_fail_card">Max mislukte kaarten</string>
   <string name="deck_conf_deck_name">Setnaam</string>
   <string name="deck_conf_deck_description">Omschrijving van de leerset</string>
-  <string name="deck_conf_group">Options group</string>
+  <string name="deck_conf_group">Optiesgroep</string>
   <plurals name="deck_conf_group_summ">
     <item quantity="one">%1$s\n%2$d deck uses this group</item>
     <item quantity="other">%1$s\n%2$d sets gebruikt in deze groep</item>
