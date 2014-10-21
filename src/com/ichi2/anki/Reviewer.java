@@ -255,6 +255,9 @@ public class Reviewer extends AbstractFlashcardViewer {
                 }
             }
         }
+        if (mNightMode) {
+            menu.findItem(R.id.action_replay).setIcon(R.drawable.ic_action_replay_dark);
+        }
 
         return super.onPrepareOptionsMenu(menu);
     }
