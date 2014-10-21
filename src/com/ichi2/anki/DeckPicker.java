@@ -85,7 +85,6 @@ import com.ichi2.async.Connection.Payload;
 import com.ichi2.async.DeckTask;
 import com.ichi2.async.DeckTask.TaskData;
 import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.StyledProgressDialog;
@@ -207,7 +206,11 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 // Ensure we have the correct deck selected in the deck list after we have updated it. Check first
                 // if the collection is open since it might have been closed before this task completes.
                 if (colOpen()) {
-                    setSelectedDeck(getCol().getDecks().current().getLong("id"));
+                    Long did = getCol().getDecks().current().getLong("id");
+                    setSelectedDeck(did);
+                    if (mFragmented) {
+                        loadStudyOptionsFragment(did, null);
+                    }
                 }
             } catch (JSONException e) {
                 throw new RuntimeException();
@@ -724,10 +727,8 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     protected void onResume() {
         Log.i(AnkiDroidApp.TAG, "DeckPicker - onResume");
         super.onResume();
-        if (colOpen()) {
-            if (Utils.now() > getCol().getSched().getDayCutoff() && AnkiDroidApp.isSdCardMounted()) {
-                loadCounts();
-            }
+        if (colOpen() && AnkiDroidApp.isSdCardMounted()) {
+            loadCounts();
         }
         selectNavigationItem(DRAWER_DECK_PICKER);
     }
@@ -905,7 +906,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
 
     // Load deck counts, and update the today overview
-    public void loadCounts() {
+    private void loadCounts() {
         if (AnkiDroidApp.colIsOpen()) {
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK_COUNTS, mLoadCountsHandler, new TaskData(getCol()));
         }

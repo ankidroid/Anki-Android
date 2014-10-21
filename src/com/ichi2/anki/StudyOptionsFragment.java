@@ -31,13 +31,10 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.text.Html;
 import android.util.Log;
-import android.view.GestureDetector;
-import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -112,7 +109,6 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     /**
      * Preferences
      */
-    private boolean mSwipeEnabled;
     private int mCurrentContentView = CONTENT_STUDY_OPTIONS;
     boolean mInvertedColors = false;
 
@@ -155,12 +151,6 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     private EditText mCustomStudyEditText;
 
     private String mSearchTerms;
-
-    /**
-     * Swipe Detection
-     */
-    private GestureDetector gestureDetector;
-    View.OnTouchListener gestureListener;
 
     public Bundle mCramInitialConfig = null;
 
@@ -277,19 +267,10 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     }
     
     // Called when the collection loader has finished
-    // NOTE: Fragment transactions are NOT allowed to be called from here on
+    // NOTE: Fragment transactions are NOT allowed to be called from here onwards
     private void onCollectionLoaded(Collection col) {
         mCollection = col;
         initAllContentViews();
-
-        if (mSwipeEnabled) {
-            gestureDetector = new GestureDetector(new MyGestureDetector());
-            gestureListener = new View.OnTouchListener() {
-                public boolean onTouch(View v, MotionEvent event) {
-                    return gestureDetector.onTouchEvent(event);
-                }
-            };
-        }
 
         if (noDeckCounts()) {
             prepareCongratsView();
@@ -1155,8 +1136,6 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
 
     public SharedPreferences restorePreferences() {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getActivity().getBaseContext());
-
-        mSwipeEnabled = AnkiDroidApp.initiateGestures(getActivity(), preferences);
         return preferences;
     }
 
@@ -1268,9 +1247,6 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
 
 
                 if (getActivity()!= null) {
-                    if (mFragmented) {
-                        ((DeckPicker) getActivity()).loadCounts();
-                    }
                     showCongratsIfNeeded();
                 } else {
                     Log.e(AnkiDroidApp.TAG, "StudyOptionsFragment.mUpdateValuesFromDeckListener :: getActivity()==null");
@@ -1295,41 +1271,6 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         public void onCancelled() {
         }
     };
-
-    class MyGestureDetector extends SimpleOnGestureListener {
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            if (mSwipeEnabled) {
-                try {
-                    if (e1.getX() - e2.getX() > AnkiDroidApp.sSwipeMinDistance
-                            && Math.abs(velocityX) > AnkiDroidApp.sSwipeThresholdVelocity
-                            && Math.abs(e1.getY() - e2.getY()) < AnkiDroidApp.sSwipeMaxOffPath) {
-                        // left
-                        openReviewer();
-                    } else if (e2.getX() - e1.getX() > AnkiDroidApp.sSwipeMinDistance
-                            && Math.abs(velocityX) > AnkiDroidApp.sSwipeThresholdVelocity
-                            && Math.abs(e1.getY() - e2.getY()) < AnkiDroidApp.sSwipeMaxOffPath) {
-                        // right
-                        closeStudyOptions();
-                    } else if (e1.getY() - e2.getY() > AnkiDroidApp.sSwipeMinDistance
-                            && Math.abs(velocityY) > AnkiDroidApp.sSwipeThresholdVelocity
-                            && Math.abs(e1.getX() - e2.getX()) < AnkiDroidApp.sSwipeMaxOffPath) {
-                        // up
-                        addNote();
-                    }
-
-                } catch (Exception e) {
-                    Log.e(AnkiDroidApp.TAG, "onFling Exception = " + e.getMessage());
-                }
-            }
-            return false;
-        }
-    }
-
-
-    public boolean onTouchEvent(MotionEvent event) {
-        return mSwipeEnabled && gestureDetector.onTouchEvent(event);
-    }
 
 
     public boolean dbSaveNecessary() {
