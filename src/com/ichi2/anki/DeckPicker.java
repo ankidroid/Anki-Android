@@ -539,13 +539,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
 
     @Override
-    public boolean onMenuOpened(int feature, Menu menu) {
-        AnkiDroidApp.getCompat().invalidateOptionsMenu(this);
-        return super.onMenuOpened(feature, menu);
-    }
-
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // The action bar home/up action should open or close the drawer.
         // ActionBarDrawerToggle will take care of this.
@@ -1411,6 +1404,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         String currentMessage;
         long countUp;
         long countDown;
+        long currDid;
         boolean colIsEmpty;
 
 
@@ -1433,11 +1427,18 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             }
             // Collection is closed at end of each sync to roll back any sync failures. 
             // We may need to reload synchronously here, for example if there was a sync conflict
+            Collection col;
             if (!colOpen()) {
-                Collection col = AnkiDroidApp.openCollection(AnkiDroidApp.getCollectionPath());
-                colIsEmpty = col.isEmpty();
+                col = AnkiDroidApp.openCollection(AnkiDroidApp.getCollectionPath());
             } else {
-                colIsEmpty = getCol().isEmpty();
+                col = getCol();
+            }
+            colIsEmpty = col.isEmpty();
+            // store current did so we can reselect deck properly after sync
+            try {
+                currDid = col.getDecks().current().getLong("id");
+            } catch (JSONException e) {
+                throw new RuntimeException();
             }
         }
 
@@ -1557,9 +1558,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                         dialogMessage = res.getString(R.string.error_insufficient_memory);
                         showSyncLogDialog(joinSyncMessages(dialogMessage, syncMessage));
                     } else if (resultType.equals("sanityCheckError")) {
-                        Collection col = getCol();
-                        col.modSchema();
-                        col.save();
                         dialogMessage = res.getString(R.string.sync_sanity_failed);
                         showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_SANITY_ERROR,
                                 joinSyncMessages(dialogMessage, syncMessage));
@@ -1612,13 +1610,8 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 showSyncLogDialog(joinSyncMessages(dialogMessage, syncMessage), false);
 
                 if (mFragmented) {
-                    try {
-                        // Pick the correct deck after sync. Updates the values in the fragment if same deck.
-                        long did = getCol().getDecks().current().getLong("id");
-                        selectDeck(did);
-                    } catch (JSONException e) {
-                        throw new RuntimeException();
-                    }
+                    // Pick the correct deck after sync. Updates the values in the fragment if same deck.
+                    selectDeck(currDid);
                 }
             }
         }
