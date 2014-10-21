@@ -39,7 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="check_db_title">Vérifier la base de données</string>
+  <string name="check_db_title">Vérifier la base de données ?</string>
   <string name="check_db_warning">Cela peut prendre du temps</string>
   <string name="check_db_acknowledge">Base de données vérifiée</string>
   <string name="check_db_acknowledge_shrunk">Base de données vérifiée et optimisée.\nRéduite de %d Ko.</string>
@@ -55,7 +55,7 @@
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Cartes à mémoriser pour Android</h2>AnkiDroid est une application de gestion de cartes à mémoriser (ou encore fiches-mémoire) qui est entièrement compatible avec le logiciel de bureau <a href="%2$s">Anki</a>. Vous pouvez créer, télécharger et apprendre du contenu sur à la fois Ankidroid et Anki, et les synchroniser très facilement.]]></item>
     <item><![CDATA[Pour nous aider à améliorer AnkiDroid, veuillez nous signaler tout bogue <a href="%1$s">ici</a> ; les suggestions sont également les bienvenues ! Veuillez utiliser notre <a href="%2$s">wiki</a> et nous dire bonjour sur le <a href="%3$s">forum</a>.]]></item>
-    <item><![CDATA[AnkiDroid is <a href=\"%1$s\">open source software<a/>, so everyone is encouraged to <a href=\"%2$s\">join</a> the <a href=\"%3$s\">contributors</a> :-)]]></item>
+    <item><![CDATA[AnkiDroid est un <a href=\"%1$s\">logiciel libre<a/>, tout le monde est encouragé à <a href=\"%2$s\">se joindre</a> aux <a href=\"%3$s\">contributeurs</a> :-)]]></item>
     <item><![CDATA[Les non-développeurs peuvent également aider, par exemple en <a href="%1$s">traduisant</a> AnkiDroid, en mettant à jour le wiki et les copies d’écran, <a href="%2$s">en faisant un don</a>, ou en bloguant à propos d\'AnkiDroid !]]></item>
     <item><![CDATA[AnkiDroid est mis à disposition sous la licence <a href="%1$s">GNU-GPL v3</a> et son code source est disponible <a href="%2$s">ici</a>.]]></item>
   </string-array>
@@ -68,11 +68,11 @@
   <string name="notification_message">Une nouvelle version d’AnkiDroid est disponible sur Google Play.\n\nVoulez-vous l\'installer ?</string>
   <string name="notification_stop">Ne plus me prévenir pour cette mise à jour</string>
   <string name="reset_card_dialog_title">Réinitialiser les progrès de la carte</string>
-  <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue.</string>
-  <string name="reset_card_dialog_acknowledge">Card reset</string>
-  <string name="reschedule_card_dialog_title">Reschedule card</string>
-  <string name="reschedule_card_dialog_message">Reschedule for review in x days:</string>
-  <string name="reschedule_card_dialog_acknowledge">Card rescheduled</string>
+  <string name="reset_card_dialog_message">Cette carte sera placée à la fin de la nouvelle file de cartes.</string>
+  <string name="reset_card_dialog_acknowledge">Carte réinitialisée</string>
+  <string name="reschedule_card_dialog_title">Replanifier la carte</string>
+  <string name="reschedule_card_dialog_message">Replanifier pour révision dans x jours :</string>
+  <string name="reschedule_card_dialog_acknowledge">Carte replanifiée</string>
   <string name="answering_error_title">Erreur de la base de données</string>
   <string name="answering_error_message">Il s’est produit une erreur en écrivant dans la collection. Cela est peut-être lié à une base de données corrompue ou à un espace disque insuffisant.\n\nSi cela arrive souvent, vérifiez la base de données, réparez la collection ou restaurez-la à partir d’une sauvegarde, en allant dans les « options ».\n\nCependant, il peut s\'agir d\'un bug d’AnkiDroid. Signalez-le nous.</string>
   <string name="answering_error_report">Signaler les erreurs</string>
@@ -150,16 +150,16 @@
   <string name="dialog_collection_path_title">Le dossier n\'existe pas</string>
   <string name="dialog_collection_path_text">Le dossier spécifié n\'existe pas, souhaitez-vous le créer ?</string>
   <string name="dialog_collection_path_not_dir">Le chemin indiqué ne mène pas à un répertoire valide</string>
-  <string name="check_media_title">Check media?</string>
-  <string name="check_media_warning">This may take a long time with large media collections</string>
-  <string name="check_media_message">Checking media&#8230;</string>
-  <string name="check_media_acknowledge">Media checked</string>
-  <string name="check_media_failed">Media checked failed</string>
-  <string name="check_media_invalid">Files with invalid encoding: %d</string>
-  <string name="check_media_unused">Files in media folder but not used by any cards: %d</string>
-  <string name="check_media_nohave">Files used on cards but not in media folder: %d</string>
-  <string name="check_media_no_unused_missing">No unused or missing files found.</string>
-  <string name="check_media_db_updated">Media database rebuilt.</string>
-  <string name="check_media_delete_unused">Delete unused</string>
-  <string name="check_media_deleted">Files deleted: %d</string>
+  <string name="check_media_title">Vérifier les médias ?</string>
+  <string name="check_media_warning">Cela peut prendre longtemps avec les grandes collections de médias</string>
+  <string name="check_media_message">Vérification des médias&#8230;</string>
+  <string name="check_media_acknowledge">Média vérifié</string>
+  <string name="check_media_failed">Echec de la vérification des médias</string>
+  <string name="check_media_invalid">Fichiers avec un codage non valide : %d</string>
+  <string name="check_media_unused">Fichiers dans le dossier de médias, mais utilisés par aucune carte : %d</string>
+  <string name="check_media_nohave">Fichiers utilisés par une carte, mais pas présents dans le dossier de médias : %d</string>
+  <string name="check_media_no_unused_missing">Aucun fichier inutilisé ou manquant.</string>
+  <string name="check_media_db_updated">Base de données de médias reconstruite.</string>
+  <string name="check_media_delete_unused">Supprimer les médias inutiles</string>
+  <string name="check_media_deleted">Fichiers supprimés : %d</string>
 </resources>

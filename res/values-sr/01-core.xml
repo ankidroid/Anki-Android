@@ -39,8 +39,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="app_name">АнкиДројд</string>
-  <string name="app_name_anki">Анки</string>
+  <string name="app_name">AnkiDroid</string>
+  <string name="app_name_anki">Anki</string>
   <string name="app_name_droid">Дројд</string>
   <string name="studyoptions_title">Опције за проучавање</string>
   <string name="studyoptions_deck_name">Назив шпила</string>
@@ -171,7 +171,7 @@
   <string name="more_options">Више опција</string>
   <string name="now">Сада</string>
   <string name="back">Назад</string>
-  <string name="ankiweb">АнкиВеб</string>
+  <string name="ankiweb">AnkiWeb</string>
   <string name="usb">УСБ</string>
   <string name="_import">Увези</string>
   <string name="export">Извози</string>

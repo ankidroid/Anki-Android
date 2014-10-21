@@ -67,7 +67,7 @@
   <string name="sync_log_db_error">Ein Datenbankfehler ist aufgetreten.</string>
   <string name="not_logged_in_title">Bei AnkiWeb einloggen</string>
   <string name="login_create_account_message">Sie müssen sich bei einem AnkiWeb-Konto einloggen. Sie können im nächsten Schritt eines erstellen.</string>
-  <string name="no_email_client">No email client available</string>
+  <string name="no_email_client">Kein Email-Client verfügbar</string>
   <string name="username">E-Mail-Adresse</string>
   <string name="username_repeat">E-Mail-Adresse wiederholen</string>
   <string name="password">Passwort</string>
@@ -115,8 +115,8 @@
   <string name="sync_too_busy">Server überlastet. Versuchen Sie es später erneut.</string>
   <string name="sync_remote_db_error">Die heruntergeladene Datenbank war fehlerhaft. Bitte versuchen Sie es erneut.</string>
   <string name="sync_overwrite_error">Ihre aktuelle Sammlung konnte nicht durch die heruntergeladenen Datei überschrieben werden.</string>
-  <string name="sync_connection_error">Connection timed out. Either your internet connection is experiencing problems, or you have a very large file in your media folder.</string>
-  <string name="sync_error_409">Only one client can access AnkiWeb at a time. If a previous sync failed, please try again in a few minutes.</string>
+  <string name="sync_connection_error">Verbindung nach Wartezeit abgebrochen. Entweder gibt es Probleme mit Ihrer Internetverbindung oder Sie haben eine sehr große Datei in Ihrem Medien-Ordner.</string>
+  <string name="sync_error_409">Es kann immer nur ein Klient gleichzeitig auf AnkiWeb zugreifen. Wenn eine vorherige Synchronisierung fehlgeschlagen ist, probieren Sie es bitte in einigen Minuten noch einmal.</string>
   <string name="sync_write_access_error">Die heruntergeladene Datei konnte nicht auf der SD-Karte gespeichert werden. Entweder ist diese schreibgeschützt eingehängt oder weist nicht genug Platz auf.</string>
   <string name="sync_deletions_message">Synchronisiere Löschungen&#8230;</string>
   <string name="sync_small_objects_message">Synchronisiere kleine Objekte&#8230;</string>
