@@ -1558,7 +1558,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                     } else if (resultType.equals("OutOfMemoryError")) {
                         dialogMessage = res.getString(R.string.error_insufficient_memory);
                         showSyncLogDialog(joinSyncMessages(dialogMessage, syncMessage));
-                    } else if (resultType.equals("sanityCheckError")) {
+                    } else if (resultType.equals("sanityCheckError") || resultType.equals("basicCheckFailed")) {
                         dialogMessage = res.getString(R.string.sync_sanity_failed);
                         showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_SANITY_ERROR,
                                 joinSyncMessages(dialogMessage, syncMessage));

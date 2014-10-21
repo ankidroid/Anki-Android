@@ -32,6 +32,7 @@ import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.Feedback;
 import com.ichi2.anki.R;
+import com.ichi2.anki.exception.UnknownHttpResponseException;
 import com.ichi2.anki.exception.UnsupportedSyncException;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
@@ -286,7 +287,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 return doInBackgroundDownloadMissingMedia(data);
 
             case TASK_TYPE_UPGRADE_DECKS:
-                return doInBackgroundUpgradeDecks(data);
+                throw new RuntimeException("Upgrade decks no longer supported");
 
             case TASK_TYPE_DOWNLOAD_SHARED_DECK:
                 return doInBackgroundDownloadSharedDeck(data);
@@ -301,7 +302,14 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         String username = (String) data.data[0];
         String password = (String) data.data[1];
         HttpSyncer server = new RemoteServer(this, null);
-        HttpResponse ret = server.hostKey(username, password);
+        HttpResponse ret;
+        try {
+            ret = server.hostKey(username, password);
+        } catch (UnknownHttpResponseException e) {
+            data.success = false;
+            data.result = new Object[] { "error", e.getResponseCode(), e.getMessage() };
+            return data;
+        }
         String hostkey = null;
         boolean valid = false;
         if (ret != null) {
@@ -333,227 +341,18 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     }
 
 
-    private Payload doInBackgroundUpgradeDecks(Payload data) {
-        // Enable http request canceller
-        mCancelCallback = new CancelCallback();
-
-        String path = (String) data.data[0];
-        File ankiDir = new File(path);
-        if (!ankiDir.isDirectory()) {
-            data.success = false;
-            data.data = new Object[] { "wrong anki directory" };
-            return data;
-        }
-
-        // step 1: gather all .anki files into a zip, without media.
-        // we must store them as 1.anki, 2.anki and provide a map so we don't run into
-        // encoding issues with the zip file.
-        File[] fileList = ankiDir.listFiles(new OldAnkiDeckFilter());
-        List<String> corruptFiles = new ArrayList<String>();
-        JSONObject map = new JSONObject();
-        byte[] buf = new byte[1024];
-        String zipFilename = path + "/upload.zip";
-        String colFilename = path + AnkiDroidApp.COLLECTION_PATH;
-        try {
-            ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(zipFilename));
-            int n = 1;
-            for (File f : fileList) {
-                String deckPath = f.getAbsolutePath();
-                // set journal mode to delete
-                try {
-                    AnkiDb d = AnkiDatabaseManager.getDatabase(deckPath);
-                } catch (SQLiteDatabaseCorruptException e) {
-                    // ignore invalid .anki files
-                    corruptFiles.add(f.getName());
-                    continue;
-                } finally {
-                    AnkiDatabaseManager.closeDatabase(deckPath);
-                }
-                // zip file
-                String tmpName = n + ".anki";
-                FileInputStream in = new FileInputStream(deckPath);
-                ZipEntry ze = new ZipEntry(tmpName);
-                zos.putNextEntry(ze);
-                int len;
-                while ((len = in.read(buf)) >= 0) {
-                    zos.write(buf, 0, len);
-                }
-                zos.closeEntry();
-                map.put(tmpName, f.getName());
-                n++;
-            }
-            // if all .anki files were found corrupted, abort
-            if (fileList.length == corruptFiles.size()) {
-                data.success = false;
-                data.data = new Object[] { sContext.getString(R.string.upgrade_deck_web_upgrade_failed) };
-                return data;
-            }
-            ZipEntry ze = new ZipEntry("map.json");
-            zos.putNextEntry(ze);
-            InputStream in = new ByteArrayInputStream(Utils.jsonToString(map).getBytes("UTF-8"));
-            int len;
-            while ((len = in.read(buf)) >= 0) {
-                zos.write(buf, 0, len);
-            }
-            zos.closeEntry();
-            zos.close();
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-        File zipFile = new File(zipFilename);
-        // step 1.1: if it's over 50MB compressed, it must be upgraded by the user
-        if (zipFile.length() > 50 * 1024 * 1024) {
-            data.success = false;
-            data.data = new Object[] { sContext.getString(R.string.upgrade_deck_web_upgrade_exceeds) };
-            return data;
-        }
-        // step 2: upload zip file to upgrade service and get token
-        HttpSyncer h = new HttpSyncer(null, null);
-        // note: server doesn't expect it to be gzip compressed, because the zip file is compressed
-        // enable cancelling
-        publishProgress(R.string.upgrade_decks_upload, null, true);
-        try {
-            HttpResponse resp = h.req("upgrade/upload", new FileInputStream(zipFile), 0, null, mCancelCallback);
-            if (resp == null && !isCancelled()) {
-                data.success = false;
-                data.data = new Object[] { sContext.getString(R.string.upgrade_deck_web_upgrade_failed) };
-                return data;
-            }
-            String result;
-            String key = null;
-            if (!isCancelled()) {
-                result = h.stream2String(resp.getEntity().getContent());
-                if (result != null && result.startsWith("ok:")) {
-                    key = result.split(":")[1];
-                } else {
-                    data.success = false;
-                    data.data = new Object[] { sContext.getString(R.string.upgrade_deck_web_upgrade_failed) };
-                    return data;
-                }
-            }
-            while (!isCancelled()) {
-                result = h.stream2String(h.req("upgrade/status?key=" + key).getEntity().getContent());
-                if (result.equals("error")) {
-                    data.success = false;
-                    data.data = new Object[] { "error" };
-                    return data;
-                } else if (result.startsWith("waiting:")) {
-                    publishProgress(R.string.upgrade_decks_upload, result.split(":")[1]);
-                } else if (result.equals("upgrading")) {
-                    publishProgress(new Object[] { R.string.upgrade_decks_upgrade_started });
-                } else if (result.equals("ready")) {
-                    break;
-                } else {
-                    data.success = false;
-                    data.data = new Object[] { sContext.getString(R.string.upgrade_deck_web_upgrade_failed) };
-                    return data;
-                }
-                Thread.sleep(1000);
-            }
-            // step 4: fetch upgraded file. this will return the .anki2 file directly, with
-            // gzip compression if the client says it can handle it
-            if (!isCancelled()) {
-                publishProgress(new Object[] { R.string.upgrade_decks_downloading });
-                resp = h.req("upgrade/download?key=" + key, null, 6, null, mCancelCallback);
-                // uploads/downloads have finished so disable cancelling
-            }
-            publishProgress(R.string.upgrade_decks_downloading, null, false);
-            if (isCancelled()) {
-                return null;
-            }
-            if (resp == null) {
-                data.success = false;
-                data.data = new Object[] { sContext.getString(R.string.upgrade_deck_web_upgrade_failed) };
-                return data;
-            }
-            // step 5: check the received file is valid
-            InputStream cont = resp.getEntity().getContent();
-            if (!h.writeToFile(cont, colFilename)) {
-                data.success = false;
-                data.data = new Object[] { sContext.getString(R.string.upgrade_deck_web_upgrade_sdcard, new File(
-                        colFilename).length() / 1048576 + 1) };
-                (new File(colFilename)).delete();
-                return data;
-            }
-            // check the received file is ok
-            publishProgress(new Object[] { R.string.sync_check_download_file });
-            publishProgress(R.string.sync_check_download_file);
-            try {
-                AnkiDb d = AnkiDatabaseManager.getDatabase(colFilename);
-                if (!d.queryString("PRAGMA integrity_check").equalsIgnoreCase("ok")) {
-                    data.success = false;
-                    data.data = new Object[] { sContext.getResources() };
-                    return data;
-                }
-            } finally {
-                AnkiDatabaseManager.closeDatabase(colFilename);
-            }
-            Collection col = AnkiDroidApp.openCollection(colFilename);
-            ArrayList<String> decks = col.getDecks().allNames(false);
-            ArrayList<String> failed = new ArrayList<String>();
-            ArrayList<File> mediaDirs = new ArrayList<File>();
-            for (File f : fileList) {
-                String name = f.getName().replaceFirst("\\.anki$", "");
-                if (!decks.contains(name)) {
-                    failed.add(name);
-                } else {
-                    mediaDirs.add(new File(f.getAbsolutePath().replaceFirst("\\.anki$", ".media")));
-                }
-            }
-            File newMediaDir = new File(col.getMedia().dir());
-
-            // step 6. move media files to new media directory
-            publishProgress(new Object[] { R.string.upgrade_decks_media });
-            ArrayList<String> failedMedia = new ArrayList<String>();
-            File curMediaDir = null;
-            for (File mediaDir : mediaDirs) {
-                curMediaDir = mediaDir;
-                // Check if media directory exists and is local
-                if (!curMediaDir.exists() || !curMediaDir.isDirectory()) {
-                    // If not try finding it in dropbox 1.2.x
-                    curMediaDir = new File(AnkiDroidApp.getDropboxDir(), mediaDir.getName());
-                    if (!curMediaDir.exists() || !curMediaDir.isDirectory()) {
-                        // No media for this deck
-                        continue;
-                    }
-                }
-                // Found media dir, copy files
-                for (File m : curMediaDir.listFiles()) {
-                    try {
-                        Utils.copyFile(m, new File(newMediaDir, m.getName()));
-                    } catch (IOException e) {
-                        failedMedia.add(curMediaDir.getName().replaceFirst("\\.media$", ".anki"));
-                        break;
-                    }
-                }
-            }
-
-            data.data = new Object[] { failed, failedMedia, newMediaDir.getAbsolutePath() };
-            data.success = true;
-            return data;
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalStateException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } finally {
-            (new File(zipFilename)).delete();
-        }
-    }
-
-
     private Payload doInBackgroundRegister(Payload data) {
         String username = (String) data.data[0];
         String password = (String) data.data[1];
         HttpSyncer server = new RemoteServer(this, null);
-        HttpResponse ret = server.register(username, password);
+        HttpResponse ret;
+        try {
+            ret = server.register(username, password);
+        } catch (UnknownHttpResponseException e) {
+            data.success = false;
+            data.result = new Object[] { "error", e.getResponseCode(), e.getMessage() };
+            return data;
+        }
         String hostkey = null;
         boolean valid = false;
         String status = null;
@@ -744,6 +543,15 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 data.data = new Object[] { conflictResolution, col, dc[1], dc[2], mediaError };
                 return data;
             }
+        } catch (UnknownHttpResponseException e) {
+            Log.e(AnkiDroidApp.TAG, "doInBackgroundSync -- unknown response code error");
+            e.printStackTrace();
+            data.success = false;
+            Integer code = e.getResponseCode();
+            String msg = e.getLocalizedMessage();
+            data.result = new Object[] { "error", code , msg };
+            data.data = new Object[] { mediaUsn };
+            return data;
         } catch (Exception e) {
             // Global error catcher.
             // Try to give a human readable error, otherwise print the raw error message
