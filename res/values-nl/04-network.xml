@@ -46,7 +46,7 @@
   <string name="downloading">Downloaden...</string>
   <string name="paused">Onderbroken</string>
   <string name="downloaded">Gedownload</string>
-  <string name="sync_error">Sync Error</string>
+  <string name="sync_error">Syncronisatiefout</string>
   <string name="vague_error">Error</string>
   <string name="cancelling">Annuleren...</string>
   <string name="connection_error_return_message">Een netwerkfout is opgetreden. Probeer nogmaals, of annuleer en keer terug naar het vorige scherm.</string>
@@ -66,8 +66,8 @@
   <string name="connection_error_message">Een netwerkfout is opgetreden.</string>
   <string name="sync_log_db_error">Er deed zich een probleem met de database voor.</string>
   <string name="not_logged_in_title">Log in op AnkiWeb</string>
-  <string name="login_create_account_message">You must log in to an AnkiWeb account. You can create one in the next step.</string>
-  <string name="no_email_client">No email client available</string>
+  <string name="login_create_account_message">Je moet inloggen op een AnkiWeb-account. Je kan er een maken in de volgende stap.</string>
+  <string name="no_email_client">Geen e-mailclient beschikbaar</string>
   <string name="username">E-mailadres</string>
   <string name="username_repeat">Herhaal e-mailadres</string>
   <string name="password">Wachtwoord</string>
@@ -115,6 +115,8 @@
   <string name="sync_too_busy">Server overbezet. Probeer het later opnieuw.</string>
   <string name="sync_remote_db_error">De gedownloade database was corrupt. Probeer het opnieuw.</string>
   <string name="sync_overwrite_error">Je huidige collectie kan niet worden overschreven door het gedownloade bestand.</string>
+  <string name="sync_connection_error">Connection timed out. Either your internet connection is experiencing problems, or you have a very large file in your media folder.</string>
+  <string name="sync_error_409">Only one client can access AnkiWeb at a time. If a previous sync failed, please try again in a few minutes.</string>
   <string name="sync_write_access_error">Het gedownloade bestand kon niet worden opgeslagen op de sd-kaart. Ofwel de sd-kaart is als alleen-lezen aangesloten of er is onvoldoende ruimte.</string>
   <string name="sync_deletions_message">Verwijderde objecten synchroniseren...</string>
   <string name="sync_small_objects_message">Kleine objecten synchroniseren...</string>

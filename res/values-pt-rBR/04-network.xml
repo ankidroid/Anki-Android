@@ -115,6 +115,8 @@
   <string name="sync_too_busy">Servidor ocupado. Tente novamente mais tarde.</string>
   <string name="sync_remote_db_error">O banco de dados baixado estava corrompido. Por favor, tente novamente.</string>
   <string name="sync_overwrite_error">Sua coleção atual não pôde ser substituída pelo arquivo baixado.</string>
+  <string name="sync_connection_error">Connection timed out. Either your internet connection is experiencing problems, or you have a very large file in your media folder.</string>
+  <string name="sync_error_409">Only one client can access AnkiWeb at a time. If a previous sync failed, please try again in a few minutes.</string>
   <string name="sync_write_access_error">O arquivo baixado não pôde ser salvo para o cartão SD. Ou o Cartão SD está montado em somente leitura ou não há espaço suficiente.</string>
   <string name="sync_deletions_message">Sincronizando deleções...</string>
   <string name="sync_small_objects_message">Sincronizando objetos pequenos...</string>

@@ -55,7 +55,7 @@
   <string name="pref_cat_advanced">Geadvanceerd</string>
   <string name="pref_cat_advanced_summ">Optimization and experimental features</string>
   <string name="pref_cat_performance">Prestaties</string>
-  <string name="pref_cat_workarounds">Workarounds</string>
+  <string name="pref_cat_workarounds">Tijdelijke oplossingen</string>
   <string name="pref_cat_plugins">Plugins</string>
   <string name="about_title">Over AnkiDroid</string>
   <string name="about_version">Versie: </string>
@@ -69,7 +69,7 @@
   <string name="text_selection_click_summ">Zet dit aan als tekstselectie via met een lange klik niet werkt</string>
   <string name="dictionary">Lookup dictionary</string>
   <string name="dictionary_summ">XXX</string>
-  <string name="reset_languages">Reset languages</string>
+  <string name="reset_languages">Reset talen</string>
   <string name="reset_languages_summ">Reset taalopdrachten (voor tekst-naar-spraak en woordenboeken) voor alle leersets. Reset specifieke leerset-opdrachten op het leerset uitkiezer</string>
   <string name="reset_languages_question">Alle taalopdrachten terugzetten?</string>
   <string name="reset_confirmation">All states reset</string>
@@ -124,7 +124,7 @@
   <string name="notification_pref">Meldingen</string>
   <string name="notification_minimum_cards_due">Notify when more than</string>
   <string name="notification_minimum_cards_due_summary">XXX cards due</string>
-  <string name="notification_minimum_cards_due_vibrate">Vibrate</string>
+  <string name="notification_minimum_cards_due_vibrate">Trillen</string>
   <string name="notification_minimum_cards_due_blink">Blink light</string>
   <string name="timeout_answer_text">Vanzelf antwoord tonen</string>
   <string name="timeout_answer_summ">Show answer automatically without user input</string>

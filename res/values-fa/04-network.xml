@@ -115,6 +115,8 @@
   <string name="sync_too_busy">سرويس دهنده بسيار مشغول است. مجددا امتحان كنيد.</string>
   <string name="sync_remote_db_error">بانک اطلاعات دریافت شده خراب شده بود. لطفا مجددا امتحان نمایید.</string>
   <string name="sync_overwrite_error">مجموعه فعلی شما با فایل دانلود شده نمی تواند رونویسی شود.</string>
+  <string name="sync_connection_error">Connection timed out. Either your internet connection is experiencing problems, or you have a very large file in your media folder.</string>
+  <string name="sync_error_409">Only one client can access AnkiWeb at a time. If a previous sync failed, please try again in a few minutes.</string>
   <string name="sync_write_access_error">فایل دانلود شده نمی تواند بر روی کارت حافظه ذخیره شود. یا کارت حافظه شما بصورت فقط خواندنی نصب شده و یا فضای کافی وجود ندارد.</string>
   <string name="sync_deletions_message">حذف همگام سازی...</string>
   <string name="sync_small_objects_message">همگام سازی اشیاء کوچک...</string>

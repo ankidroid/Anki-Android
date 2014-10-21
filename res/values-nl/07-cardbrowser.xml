@@ -40,8 +40,8 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="one">%d card shown</item>
-    <item quantity="other">%d cards shown</item>
+    <item quantity="one">%d kaart weergegeven</item>
+    <item quantity="other">%d kaarten weergegeven</item>
   </plurals>
   <string name="card_browser_all_decks">Alle leersets</string>
   <string name="card_browser_load">Kaarten laden.\nEven geduld alstublieft...</string>
@@ -79,7 +79,7 @@
   <string name="card_details_tags">Labels</string>
   <string name="card_details_model">Soort memo</string>
   <string name="card_browser_sorting_cards">Kaarten sorteren.\nEven geduld alstublieft...</string>
-  <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
+  <string name="card_browser_filtering_cards">Kaarten filteren&#8230; \nDruk op de terugknop om te annuleren</string>
   <string name="card_details_card_model">Kaartmodel</string>
   <string-array name="card_browser_order_labels">
     <item>Niet sorteren (sneller)</item>
