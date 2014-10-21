@@ -632,6 +632,11 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     data.data = new Object[] { mediaUsn };
                     return data;
                 }
+                if (retCode.equals("sanityCheckError")) {
+                    // Force full sync next time
+                    col.modSchema();
+                    col.save();
+                }
                 // save and note success state
                 if (retCode.equals("noChanges")) {
                     // publishProgress(R.string.sync_no_changes_message);

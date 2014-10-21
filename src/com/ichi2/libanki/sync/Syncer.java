@@ -217,7 +217,7 @@ public class Syncer {
                         break;
                     }
                 }
-                // step 5: sanity check during beta testing
+                // step 5: sanity check
                 JSONObject c = sanityCheck();
                 JSONObject sanity = mServer.sanityCheck2(c);
                 if (sanity == null || !sanity.optString("status", "bad").equals("ok")) {

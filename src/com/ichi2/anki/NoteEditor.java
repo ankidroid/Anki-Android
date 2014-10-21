@@ -826,13 +826,6 @@ public class NoteEditor extends AnkiActivity {
 
 
     @Override
-    public boolean onMenuOpened(int feature, Menu menu) {
-        AnkiDroidApp.getCompat().invalidateOptionsMenu(this);
-        return super.onMenuOpened(feature, menu);
-    }
-
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
 
