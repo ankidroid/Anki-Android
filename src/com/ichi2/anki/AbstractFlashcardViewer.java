@@ -1101,14 +1101,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     }
 
 
-
-    @Override
-    public boolean onMenuOpened(int feature, Menu menu) {
-        AnkiDroidApp.getCompat().invalidateOptionsMenu(this);
-        return super.onMenuOpened(feature, menu);
-    }
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

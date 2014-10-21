@@ -539,13 +539,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
 
     @Override
-    public boolean onMenuOpened(int feature, Menu menu) {
-        AnkiDroidApp.getCompat().invalidateOptionsMenu(this);
-        return super.onMenuOpened(feature, menu);
-    }
-
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // The action bar home/up action should open or close the drawer.
         // ActionBarDrawerToggle will take care of this.
