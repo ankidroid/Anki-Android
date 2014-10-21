@@ -274,12 +274,12 @@ public class AnkiStatsTaskHandler {
             //only necessary on lower APIs because after honeycomb only one thread is used for all asynctasks
             sLock.lock();
             try {
-                if (!mIsRunning) {
+                Collection collection = (Collection) params[0];
+                if (!mIsRunning || collection == null || collection.getDb() == null) {
                     Log.d(AnkiDroidApp.TAG, "quiting CreateSmallTodayOverview before execution");
                     return null;
                 } else
                     Log.d(AnkiDroidApp.TAG, "starting CreateSmallTodayOverview" );
-                Collection collection = (Collection) params[0];
                 mTextView = (TextView) params[1];
 
                 //eventually put this in Stats (in desktop it is not though)
@@ -341,12 +341,12 @@ public class AnkiStatsTaskHandler {
             //only necessary on lower APIs because after honeycomb only one thread is used for all asynctasks
             sLock.lock();
             try {
-                if (!mIsRunning) {
+                Collection collection = (Collection) params[0];
+                if (!mIsRunning || collection == null || collection.getDb() == null) {
                     Log.d(AnkiDroidApp.TAG, "quiting CreateTodayLearnCountOnly before execution");
                     return null;
                 } else
                     Log.d(AnkiDroidApp.TAG, "starting CreateTodayLearnCountOnly" );
-                Collection collection = (Collection) params[0];
                 mViewPager = (ViewPager) params[1];
 
                 //eventually put this in Stats (in desktop it is not though)
