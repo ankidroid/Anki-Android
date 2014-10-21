@@ -21,6 +21,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.exception.UnknownHttpResponseException;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
@@ -56,7 +57,7 @@ public class RemoteMediaServer extends HttpSyncer {
     }
 
 
-    public JSONObject begin() {
+    public JSONObject begin() throws UnknownHttpResponseException {
         try {
             mPostVars = new HashMap<String, Object>();
             mPostVars.put("k", mHKey);
@@ -77,7 +78,7 @@ public class RemoteMediaServer extends HttpSyncer {
 
 
     // args: lastUsn
-    public JSONArray mediaChanges(int lastUsn) {
+    public JSONArray mediaChanges(int lastUsn) throws UnknownHttpResponseException {
         try {
             mPostVars = new HashMap<String, Object>();
             mPostVars.put("sk", mSKey);
@@ -95,7 +96,7 @@ public class RemoteMediaServer extends HttpSyncer {
 
 
     // args: files
-    public ZipFile downloadFiles(List<String> top) {
+    public ZipFile downloadFiles(List<String> top) throws UnknownHttpResponseException {
         try {
             HttpResponse resp;
             resp = super.req("downloadFiles",
@@ -113,7 +114,7 @@ public class RemoteMediaServer extends HttpSyncer {
     }
 
 
-    public JSONArray uploadChanges(File zip) {
+    public JSONArray uploadChanges(File zip) throws UnknownHttpResponseException {
         try {
             // no compression, as we compress the zip file instead
             HttpResponse resp = super.req("uploadChanges", new FileInputStream(zip), 0);
@@ -128,7 +129,7 @@ public class RemoteMediaServer extends HttpSyncer {
 
 
     // args: local
-    public String mediaSanity(int lcnt) {
+    public String mediaSanity(int lcnt) throws UnknownHttpResponseException {
         try {
             HttpResponse resp = super.req("mediaSanity",
                     super.getInputStream(Utils.jsonToString(new JSONObject().put("local", lcnt))));
