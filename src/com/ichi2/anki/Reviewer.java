@@ -266,21 +266,23 @@ public class Reviewer extends AbstractFlashcardViewer {
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         char keyPressed = (char) event.getUnicodeChar();
-        if (keyPressed == '1') {
-            answerCard(EASE_FAILED);
-            return true;
-        }
-        if (keyPressed == '2') {
-            answerCard(EASE_HARD);
-            return true;
-        }
-        if (keyPressed == '3') {
-            answerCard(EASE_MID);
-            return true;
-        }
-        if (keyPressed == '4') {
-            answerCard(EASE_EASY);
-            return true;
+        if (sDisplayAnswer) {
+            if (keyPressed == '1') {
+                answerCard(EASE_FAILED);
+                return true;
+            }
+            if (keyPressed == '2') {
+                answerCard(EASE_HARD);
+                return true;
+            }
+            if (keyPressed == '3') {
+                answerCard(EASE_MID);
+                return true;
+            }
+            if (keyPressed == '4') {
+                answerCard(EASE_EASY);
+                return true;
+            }
         }
         if (keyPressed == 'e') {
             editCard();
