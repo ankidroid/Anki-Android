@@ -828,7 +828,10 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             m.setData(getIntent().getExtras());
             mHandler.sendMessage(m);
         }
-        mShowShowcaseView = true;
+        if (!mFragmented) {
+            // Show the showcase view here if normal view, otherwise wait for  fragment to finish loading first
+            mShowShowcaseView = true;
+        }
         AnkiDroidApp.getCompat().invalidateOptionsMenu(this);
         // prepare deck counts and mini-today-statistic
         loadCounts();
@@ -2146,5 +2149,12 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         if (mShowcaseDialog != null) {
             mShowcaseDialog.hide();
         }
+    }
+
+
+    public void reloadShowcaseView() {
+        hideShowcaseView();
+        mShowShowcaseView = true;
+        supportInvalidateOptionsMenu();
     }
 }
