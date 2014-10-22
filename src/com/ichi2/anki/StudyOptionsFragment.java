@@ -288,7 +288,10 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         // Show the congratulations message if there are no cards scheduled
         showCongratsIfNeeded();
         dismissCollectionLoadingDialog();
-        
+        // rebuild action bar so that Showcase works correctly
+        if (mFragmented) {
+            ((DeckPicker) getActivity()).reloadShowcaseView();
+        }
     }
 
     private void showCongratsIfNeeded() {
