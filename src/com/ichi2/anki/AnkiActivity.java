@@ -398,15 +398,12 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
     // Restart the activity
     @SuppressLint("NewApi")
     protected void restartActivity() {
+        Log.i(AnkiDroidApp.TAG, "AnkiActivity -- restartActivity()");
         // update language
         AnkiDroidApp.setLanguage(AnkiDroidApp.getSharedPrefs(getBaseContext()).getString(Preferences.LANGUAGE, ""));
-        if (AnkiDroidApp.SDK_VERSION >= 11) {
-            this.recreate();
-        } else {
-            Intent intent = new Intent();
-            intent.setClass(this, this.getClass());
-            this.startActivity(intent);
-            this.finishWithoutAnimation();
-        }
+        Intent intent = new Intent();
+        intent.setClass(this, this.getClass());
+        this.startActivityWithoutAnimation(intent);
+        this.finishWithoutAnimation();
     }
 }
