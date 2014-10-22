@@ -20,11 +20,12 @@ import android.os.Bundle;
 
 import android.support.v4.app.*;
 import android.support.v4.view.*;
-import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.*;
 import android.webkit.WebView;
 import android.widget.*;
+
+import com.example.android.common.view.SlidingTabLayout;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.NavigationDrawerActivity;
 import com.ichi2.anki.R;
@@ -38,7 +39,7 @@ import java.util.List;
 import java.util.Locale;
 
 
-public class Statistics extends NavigationDrawerActivity implements ActionBar.TabListener {
+public class Statistics extends NavigationDrawerActivity {
 
     public static final int TODAYS_STATS_TAB_POSITION = 0;
     public static final int FORECAST_TAB_POSITION = 1;
@@ -53,14 +54,15 @@ public class Statistics extends NavigationDrawerActivity implements ActionBar.Ta
     private Menu mMenu;
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
+    private SlidingTabLayout mSlidingTabLayout;
     private AnkiStatsTaskHandler mTaskHandler = null;
-    private ActionBar mActionBar;
     private View mMainLayout;
     private static boolean sIsSubtitle;
     private static boolean sIsWholeCollectionOnly;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.i(AnkiDroidApp.TAG, "Statistics -- onCreate()");
         sIsWholeCollectionOnly = AnkiStatsTaskHandler.isWholeCollection();  //if it starts with true, do not let user select deck
         sIsSubtitle = true;
         super.onCreate(savedInstanceState);
@@ -73,12 +75,9 @@ public class Statistics extends NavigationDrawerActivity implements ActionBar.Ta
     
     @Override
     protected void onCollectionLoaded(Collection col) {
+        Log.i(AnkiDroidApp.TAG, "Statistics -- onCollectionLoaded()");
         // Setup Task Handler
         mTaskHandler = new AnkiStatsTaskHandler();
-        // Set up the action bar.
-        final ActionBar actionBar = getSupportActionBar();
-        mActionBar = actionBar;
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -88,47 +87,27 @@ public class Statistics extends NavigationDrawerActivity implements ActionBar.Ta
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setOffscreenPageLimit(8);
+        mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
+        mSlidingTabLayout.setViewPager(mViewPager);
         AnkiStatsTaskHandler.createFirstStatisticChooserTask(col, mViewPager);
 
-        // When swiping between different sections, select the corresponding
-        // tab. We can also use ActionBar.Tab#select() to do this if we have
-        // a reference to the Tab.
-        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-                actionBar.setSelectedNavigationItem(position);
-            }
-        });
-
-        // For each of the sections in the app, add a tab to the action bar.
-        for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
-            // Create a tab with text corresponding to the page title defined by
-            // the adapter. Also specify this Activity object, which implements
-            // the TabListener interface, as the callback (listener) for when
-            // this tab is selected.
-            actionBar.addTab(
-                    actionBar.newTab()
-                            .setText(mSectionsPagerAdapter.getPageTitle(i))
-                            .setTabListener(this));
-        }
-
-
-        //Dirty way to get text size from a TextView with current style, change if possible
+        // Dirty way to get text size from a TextView with current style, change if possible
         float size = new TextView(this).getTextSize();
         mTaskHandler.setmStandardTextSize(size);
+        // Prepare options menu only after loading everything
+        supportInvalidateOptionsMenu();
+        mSectionsPagerAdapter.notifyDataSetChanged();
     }
 
     @Override
     protected void onResume() {
+        Log.i(AnkiDroidApp.TAG, "Statistics -- onResume()");
         super.onResume();
         selectNavigationItem(NavigationDrawerActivity.DRAWER_STATISTICS);
     }
+
     @Override
     public void onDestroy() {
-        if(mActionBar != null) {
-            mActionBar.removeAllTabs();
-            mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-        }
         super.onDestroy();
     }
 
@@ -145,8 +124,11 @@ public class Statistics extends NavigationDrawerActivity implements ActionBar.Ta
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
+        // exit if mTaskHandler not initialized yet
+        if (mTaskHandler == null) {
+            return true;
+        }
         //hide deck/collection selector when comming from deck picker without a selected deck
-
         switch (mTaskHandler.getStatType()){
             case Stats.TYPE_MONTH:
                 MenuItem monthItem = menu.findItem(R.id.item_time_month);
@@ -265,30 +247,6 @@ public class Statistics extends NavigationDrawerActivity implements ActionBar.Ta
     }
 
 
-
-    @Override
-    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-        // When the given tab is selected, switch to the corresponding page in
-        // the ViewPager.
-        mViewPager.setCurrentItem(tab.getPosition());
-        StatisticFragment currentFragment = (StatisticFragment) mSectionsPagerAdapter.getItem(tab.getPosition());
-        currentFragment.checkAndUpdate();
-        if (android.os.Build.VERSION.SDK_INT <= android.os.Build.VERSION_CODES.GINGERBREAD) {
-            currentFragment.invalidateView();
-        }
-        //System.err.println("!!!!!<<<<onTabSelected" + tab.getPosition());
-    }
-
-    @Override
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-    }
-
-    @Override
-    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-        StatisticFragment currentFragment = (StatisticFragment) mSectionsPagerAdapter.getItem(tab.getPosition());
-        currentFragment.checkAndUpdate();
-    }
-
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
@@ -312,7 +270,9 @@ public class Statistics extends NavigationDrawerActivity implements ActionBar.Ta
 
         @Override
         public Fragment getItem(int position) {
-            return StatisticFragment.newInstance(position);
+            Fragment item = StatisticFragment.newInstance(position);
+            ((StatisticFragment) item).checkAndUpdate();
+            return item;
         }
 
         @Override
@@ -421,7 +381,6 @@ public class Statistics extends NavigationDrawerActivity implements ActionBar.Ta
         private ProgressBar mProgressBar;
         private int mHeight = 0;
         private int mWidth = 0;
-        private ChartFragment mInstance = null;
         private int mSectionNumber;
 
         private int mType  = Stats.TYPE_MONTH;
@@ -461,7 +420,6 @@ public class Statistics extends NavigationDrawerActivity implements ActionBar.Ta
             mWidth = mChart.getMeasuredWidth();
             mChart.addFragment(this);
 
-            mInstance = this;
             mType = (((Statistics)getActivity()).getTaskHandler()).getStatType();
             mIsCreated = true;
             mActivityPager = ((Statistics)getActivity()).getViewPager();
@@ -583,10 +541,6 @@ public class Statistics extends NavigationDrawerActivity implements ActionBar.Ta
 
         private WebView mWebView;
         private ProgressBar mProgressBar;
-        private int mHeight = 0;
-        private int mWidth = 0;
-        private OverviewStatisticsFragment mInstance = null;
-        private int mSectionNumber;
         private int mType  = Stats.TYPE_MONTH;
         private boolean mIsCreated = false;
         private AsyncTask mCreateStatisticsOverviewTask;
@@ -601,10 +555,6 @@ public class Statistics extends NavigationDrawerActivity implements ActionBar.Ta
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             setHasOptionsMenu(true);
-            Bundle bundle = getArguments();
-            mSectionNumber = bundle.getInt(ARG_SECTION_NUMBER);
-            //int sectionNumber = 0;
-            //System.err.println("sectionNumber: " + mSectionNumber);
             View rootView = inflater.inflate(R.layout.fragment_anki_stats_overview, container, false);
             mWebView = (WebView) rootView.findViewById(R.id.web_view_stats);
             if(mWebView == null)
@@ -619,10 +569,6 @@ public class Statistics extends NavigationDrawerActivity implements ActionBar.Ta
             mProgressBar.setVisibility(View.VISIBLE);
             //mChart.setVisibility(View.GONE);
             createStatisticOverview();
-            mHeight = mWebView.getMeasuredHeight();
-            mWidth = mWebView.getMeasuredWidth();
-
-            mInstance = this;
             mType = (((Statistics)getActivity()).getTaskHandler()).getStatType();
             mIsCreated = true;
             mActivityPager = ((Statistics)getActivity()).getViewPager();
@@ -663,13 +609,9 @@ public class Statistics extends NavigationDrawerActivity implements ActionBar.Ta
         public void checkAndUpdate() {
             if(!mIsCreated)
                 return;
-            int height = mWebView.getMeasuredHeight();
-            int width = mWebView.getMeasuredWidth();
             if(mType != (((Statistics)getActivity()).getTaskHandler()).getStatType() ||
                     mDeckId != AnkiDroidApp.getCol().getDecks().selected() ||
                     mIsWholeCollection != AnkiStatsTaskHandler.isWholeCollection()){
-                mHeight = height;
-                mWidth = width;
                 mType = (((Statistics)getActivity()).getTaskHandler()).getStatType();
                 mProgressBar.setVisibility(View.VISIBLE);
                 mWebView.setVisibility(View.GONE);
