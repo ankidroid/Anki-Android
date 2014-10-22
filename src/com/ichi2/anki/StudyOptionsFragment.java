@@ -362,14 +362,14 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     @Override
     public void onResume() {
         super.onResume();
-        if (AnkiDroidApp.colIsOpen()) {
+        if (colOpen()) {
             if (Utils.now() > getCol().getSched().getDayCutoff()) {
                 updateValuesFromDeck(true);
             } else {
                 updateValuesFromDeck();
             }
+            showOrHideUnburyButton();
         }
-        showOrHideUnburyButton();
     }
 
 
@@ -596,7 +596,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                 styledDialog.setTitle(res.getStringArray(R.array.custom_study_options_labels)[mCustomDialogChoice]);
                 switch (mCustomDialogChoice + 1) {
                     case CUSTOM_STUDY_NEW:
-                        if (AnkiDroidApp.colIsOpen()) {
+                        if (colOpen()) {
                             Collection col = getCol();
                             mCustomStudyTextView1.setText(res.getString(R.string.custom_study_new_total_new, col
                                     .getSched().totalNewForCurrentDeck()));
@@ -608,7 +608,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        if (AnkiDroidApp.colIsOpen()) {
+                                        if (colOpen()) {
                                             try {
                                                 int n = Integer.parseInt(mCustomStudyEditText.getText().toString());
                                                 AnkiDroidApp.getSharedPrefs(getActivity()).edit()
@@ -633,7 +633,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                         break;
 
                     case CUSTOM_STUDY_REV:
-                        if (AnkiDroidApp.colIsOpen()) {
+                        if (colOpen()) {
                             Collection col = getCol();
                             mCustomStudyTextView1.setText(res.getString(R.string.custom_study_rev_total_rev, col
                                     .getSched().totalRevForCurrentDeck()));
@@ -645,7 +645,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        if (AnkiDroidApp.colIsOpen()) {
+                                        if (colOpen()) {
                                             try {
                                                 int n = Integer.parseInt(mCustomStudyEditText.getText().toString());
                                                 AnkiDroidApp.getSharedPrefs(getActivity()).edit()
@@ -832,7 +832,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
 
     private void createFilteredDeck(JSONArray delays, Object[] terms, Boolean resched) {
         JSONObject dyn;
-        if (AnkiDroidApp.colIsOpen()) {
+        if (colOpen()) {
             Collection col = getCol();
             try {
                 String deckName = col.getDecks().current().getString("name");
@@ -904,7 +904,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
 
     private void updateValuesFromDeck(boolean reset) {
         String fullName;
-        if (!AnkiDroidApp.colIsOpen()) {
+        if (!colOpen()) {
             return;
         }
         JSONObject deck = getCol().getDecks().current();
@@ -1028,7 +1028,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_undo:
-                if (AnkiDroidApp.colIsOpen()) {
+                if (colOpen()) {
                     getCol().undo();
                     resetAndUpdateValuesFromDeck();
                     finishCongrats();
@@ -1070,7 +1070,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         if (resultCode == DeckPicker.RESULT_MEDIA_EJECTED) {
             closeStudyOptions(DeckPicker.RESULT_MEDIA_EJECTED);
         } else {
-            if (!AnkiDroidApp.colIsOpen()) {
+            if (!colOpen()) {
                 ((AnkiActivity) getActivity()).startLoadingCollection();
                 mDontSaveOnStop = false;
                 return;
