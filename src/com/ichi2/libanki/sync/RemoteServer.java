@@ -139,7 +139,11 @@ public class RemoteServer extends HttpSyncer {
         HttpResponse ret = super.req(cmd, super.getInputStream(Utils.jsonToString(data)));
         try {
             String s = super.stream2String(ret.getEntity().getContent());
-            return new JSONObject(s);
+            if (!s.equalsIgnoreCase("null") && s.length() != 0) {
+                return new JSONObject(s);
+            } else {
+                return new JSONObject();
+            }
         } catch (IllegalStateException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
