@@ -1607,11 +1607,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 }
 
                 showSyncLogDialog(joinSyncMessages(dialogMessage, syncMessage), false);
-
-                if (mFragmented) {
-                    // Pick the correct deck after sync. Updates the values in the fragment if same deck.
-                    selectDeck(currDid);
-                }
             }
         }
     };
@@ -1851,10 +1846,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
 
     private void handleDeckSelection(int id) {
-        if (!AnkiDroidApp.colIsOpen()) {
-            startLoadingCollection();
-        }
-
         String deckFilename = null;
 
         @SuppressWarnings("unchecked")
