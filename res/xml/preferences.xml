@@ -456,6 +456,10 @@
                 android:summary="@string/double_scrolling_gap_summ"
                 android:title="@string/double_scrolling_gap" />
         </PreferenceCategory>
+	    <Preference 
+	        android:key="force_full_sync"
+	        android:title="@string/force_full_sync_title"
+	        android:summary="@string/force_full_sync_summary" />
     </PreferenceScreen>
     <Preference 
         android:key="about_dialog_preference"
