@@ -155,7 +155,7 @@
   <string name="check_media_warning">大きなコレクションの場合は、長い時間がかかる場合があります。</string>
   <string name="check_media_message">メディアをチェックしています.</string>
   <string name="check_media_acknowledge">メディアがチェックされました。</string>
-  <string name="check_media_failed">Media check failed</string>
+  <string name="check_media_failed">メディアのチェック時にエラーが発生しました</string>
   <string name="check_media_invalid">エンコーディングが無効なファイル数: %d</string>
   <string name="check_media_unused">カードに使用されていないファイル（メディア ・ フォルダー内の数）: %d</string>
   <string name="check_media_nohave">カードに使用されているが、メディア ・ フォルダー内に存在しないファイルの数: %d</string>

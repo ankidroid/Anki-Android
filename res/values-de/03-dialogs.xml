@@ -154,7 +154,7 @@
   <string name="check_media_warning">Bei großen Mediensammlungen kann dies lange dauern</string>
   <string name="check_media_message">Überprüfe Medien&#8230;</string>
   <string name="check_media_acknowledge">Meden überprüft</string>
-  <string name="check_media_failed">Medienüberprüfung fehlgeschlagen</string>
+  <string name="check_media_failed">Überprüfen der Medien gescheitert</string>
   <string name="check_media_invalid">Dateien mit ungültiger Codierung: %d</string>
   <string name="check_media_unused">Dateien im Medien-Ordner, die von keiner Karte benutzt werden: %d</string>
   <string name="check_media_nohave">Dateien, die von Karten benutzt werden, aber im Medien-Ordner fehlen: %d</string>

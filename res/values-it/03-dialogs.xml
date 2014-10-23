@@ -154,7 +154,7 @@
   <string name="check_media_warning">Ciò può richiedere molto tempo con le collezioni multimediali di grandi dimensioni</string>
   <string name="check_media_message">Controllo i media&#8230;</string>
   <string name="check_media_acknowledge">Media controllati</string>
-  <string name="check_media_failed">Media check failed</string>
+  <string name="check_media_failed">Controllo dei media fallito</string>
   <string name="check_media_invalid">File con codifica non valida: %d</string>
   <string name="check_media_unused">File nella cartella media ma non utilizzati da nessuna carta: %d</string>
   <string name="check_media_nohave">File utilizzati sulle carte, ma non nella cartella media: %d</string>

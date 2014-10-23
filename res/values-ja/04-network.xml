@@ -115,8 +115,8 @@
   <string name="sync_too_busy">サーバが混雑しています。後でやり直してください。</string>
   <string name="sync_remote_db_error">ダウンロードしたデータベースが壊れています。もう一度試してください。</string>
   <string name="sync_overwrite_error">ダウンロードしたファイルで、使用中のコレクションを上書きすることができませんでした。</string>
-  <string name="sync_connection_error">Connection timed out. Either your internet connection is experiencing problems, or you have a very large file in your media folder.</string>
-  <string name="sync_error_409">Only one client can access AnkiWeb at a time. If a previous sync failed, please try again in a few minutes.</string>
+  <string name="sync_connection_error">接続がタイムアウトしました。インターネット接続に問題があるか、メディア ・ フォルダーに非常に大きなファイルがあります。</string>
+  <string name="sync_error_409">AnkiWebとの間の同期は、同時に複数の端末で実行できません。時間を置いて再度、実行してください。</string>
   <string name="sync_write_access_error">SDカードにダウンロードしたファイルを保存できませんでした。SDカードは読み取り専用か、または、十分な空き容量がありません。</string>
   <string name="sync_deletions_message">削除の反映（同期）</string>
   <string name="sync_small_objects_message">小さなオブジェクトを同期.</string>

@@ -39,20 +39,20 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-  <string name="drawer_open">Open Drawer</string>
-  <string name="drawer_close">Close Drawer</string>
+  <string name="drawer_open">Abrir Gaveta</string>
+  <string name="drawer_close">Fechar gaveta</string>
   <string name="CardEditorLaterMessage">Informação salva para mais tarde</string>
-  <string name="CardEditorCardDeck">Card deck:</string>
+  <string name="CardEditorCardDeck">Deck:</string>
   <string name="CardEditorNoteDeck">Deck:</string>
-  <string name="CardEditorModel">Type:</string>
+  <string name="CardEditorModel">Tipo:</string>
   <string name="CardEditorTags">Tags: %1$s</string>
   <string name="add_new_filter_tags">Adicionar/Filtrar tags</string>
   <string name="note_type">Tipo de nota</string>
   <string name="card_type">Tipo do cartão</string>
   <string name="filter_tags">Filtrar tags</string>
   <string name="sdcard_missing_message">Cartão SD não está disponível porque ele está sendo usado em armazenamento USB. Desconecte o USB para acessar seus decks.</string>
-  <string name="enable_whiteboard">Enable whiteboard</string>
-  <string name="disable_whiteboard">Disable whiteboard</string>
+  <string name="enable_whiteboard">Habilitar whiteboard</string>
+  <string name="disable_whiteboard">Desativar whiteboard</string>
   <string name="show_whiteboard">Mostrar Quadro</string>
   <string name="hide_whiteboard">Esconder Quadro</string>
   <string name="clear_whiteboard">Limpar Quadro</string>
@@ -63,7 +63,7 @@
   <string name="leech_notification">Cartão marcado como sanguessuga</string>
   <string name="corrupt_font">Arquivo de fonte %s danificado</string>
   <string-array name="browser_column1_headings">
-    <item>Sort field</item>
+    <item>Classificar campos</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Resposta</item>
@@ -77,7 +77,7 @@
   </string-array>
   <string name="cardeditor_title_add_note">Adicionar Nota</string>
   <string name="cardeditor_title_edit_card">Editar Nota</string>
-  <string name="discard_unsaved_changes">Close and lose current input?</string>
+  <string name="discard_unsaved_changes">Fechar e perder a entrada atual?</string>
   <string name="factadder_saving_error">Erro ao salvar nota</string>
   <string name="pref_lang_support">Idioma</string>
   <string name="saving_facts">Salvando nota</string>
@@ -88,11 +88,11 @@
   <string name="saving_changes">Salvando alterações...</string>
   <string name="reordering_cards">Reordenando cartões...</string>
   <plurals name="timebox_reached">
-    <item quantity="one">%1$d card studied in %2$s</item>
+    <item quantity="one">%1$d carta estudada em %2$s</item>
     <item quantity="other">%1$d cartões estudados em %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
-    <item quantity="one">%1$d minute</item>
+    <item quantity="one">%1$d minuto</item>
     <item quantity="other">%1$d minutos</item>
   </plurals>
   <string name="studyoptions_welcome_title">Bem-vindo ao AnkiDroid</string>
@@ -105,21 +105,21 @@
   <string name="card_editor_reset">Redefinir</string>
   <string name="card_editor_copy_card">Copiar cartão</string>
   <string name="card_editor_reset_card">Redefinir progresso</string>
-  <string name="card_editor_reschedule_card">Reschedule card</string>
+  <string name="card_editor_reschedule_card">Reagendar carta</string>
   <string name="card_editor_preview_card">Pré-visualização</string>
   <string name="error_insufficient_memory">Operação impossível devido a memória insuficiente no dispositivo</string>
   <string name="rename">Renomear</string>
   <string name="rename_error">Deck %s não pôde ser renomeado</string>
   <string name="default_conf_delete_error">O grupo de opções padrão não pode ser removido</string>
   <plurals name="factadder_cards_added">
-    <item quantity="one">%d card added</item>
+    <item quantity="one">%d Cartas adicionadas</item>
     <item quantity="other">%d cartões adicionados</item>
   </plurals>
   <string name="help_title">Ajuda</string>
   <string name="help_online">Ajuda Online</string>
   <string name="help_faq">FAQ</string>
   <string name="check_db">Verificar banco de dados</string>
-  <string name="check_media">Check media</string>
+  <string name="check_media">Ver média</string>
   <string name="check_db_message">Verificando banco de dados.\nPor favor Aguarde...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Cartão vazio. Rode \"Ferramentas&gt;Cartões vazios...\" no cliente para desktop.</string>
   <string name="unknown_type_field_warning">Digite a resposta: campo desconhecido %s</string>
@@ -135,33 +135,33 @@
     <item>Ordem de revisão</item>
   </string-array>
   <string name="menu_cardbrowser">Navegador de cartões</string>
-  <string name="show_hint">Show %s</string>
+  <string name="show_hint">Mostrar %s</string>
   <string name="pref_lang_other">Preferências de Idioma</string>
   <string name="pref_font_UI">Fonte de IU Personalizada</string>
   <string name="info_rate">Qualifique o AnkiDroid</string>
   <string name="col_load_failed">Carregamento da coleção falhou.\nPressione voltar para fechar AnkiDroid.</string>
   <string name="import_title">Importar Cartões</string>
-  <string name="import_select_title">Choose a file to import</string>
+  <string name="import_select_title">Selecione um arquivo para importar</string>
   <string name="import_message">Você gostaria de adicionar o conteúdo do arquivo %s para a sua coleção, ou substituir a sua coleção por ele?</string>
   <string name="import_message_add">Adicionar</string>
   <string name="import_message_replace">Substituir</string>
   <string name="import_message_replace_confirm">Isto irá apagar a sua coleção atual e substituí-la pelo conteúdo do arquivo %s. Você tem certeza?</string>
-  <string name="import_message_add_confirm">Add \"%s\" to collection? This may take a long time</string>
+  <string name="import_message_add_confirm">Adicionar \"%s\" a coleção? Isto pode levar um bom tempo</string>
   <string name="import_log_success">%d cartões importados com êxito</string>
   <string name="import_log_error">Importação falhou</string>
   <string name="import_log_no_apkg">Este não é um arquivo apkg válido</string>
   <string name="import_importing">Importando cartões.\nPor favor aguardar...</string>
-  <string name="export_include_schedule">Include scheduling</string>
-  <string name="export_include_media">Include media</string>
-  <string name="confirm_apkg_export">Export collection as apkg file?</string>
-  <string name="confirm_apkg_export_deck">Export \"%s\" as apkg file?</string>
-  <string name="export_in_progress">Exporting apkg file&#8230;</string>
-  <string name="export_successful_title">Email apkg?</string>
-  <string name="export_successful">File \"%s\" was exported. Do you want to email it?</string>
-  <string name="export_unsuccessful">Error exporting collection</string>
+  <string name="export_include_schedule">Incluir agendamento</string>
+  <string name="export_include_media">Incluir a média</string>
+  <string name="confirm_apkg_export">Exportar a coleção como arquivo apkg?</string>
+  <string name="confirm_apkg_export_deck">Exportar \"%s\" como apkg?</string>
+  <string name="export_in_progress">Exportando arquivo apkg...</string>
+  <string name="export_successful_title">E-mail apkg?</string>
+  <string name="export_successful">Arquivo \"%s\" foi exportado. Você quer enviar um e-mail?</string>
+  <string name="export_unsuccessful">Erro exportando coleção</string>
   <string name="import_hint">Para importar cartões, coloque o arquivo apkg no diretório %s e pressione ok</string>
   <string name="upgrade_import_no_file_found">Nenhum arquivo %1$s importável encontrado</string>
-  <string name="study_options">Deck options</string>
+  <string name="study_options">Opções de Deck</string>
   <string name="custom_study">Estudo personalizado</string>
   <string name="dyn_deck_desc">Esse é um deck especial para estudar fora do planejamento normal. Os cartões serão retornados automaticamente para os decks originais após revisá-los. Ao apagar esse deck da lista de decks os cartões restantes serão retornados para os decks originais.</string>
   <string name="exit_wizard">Sair do assistente</string>
@@ -174,8 +174,8 @@
   <string name="sched_end">(fim)</string>
   <string name="sched_unbury_button">Para vê-los agora, toque no botão de Desenterrar.</string>
   <string name="sched_has_buried">Alguns cartões relacionados ou enterrados foram adiados para uma sessão posterior.</string>
-  <string name="tag_editor_add_hint">Use tick mark on the right to add new tag</string>
-  <string name="tag_editor_add_feedback">Press \"%2$s\" button to confirm adding \"%1$s\"</string>
-  <string name="lookup_hint">After copying the text, tap anywhere on the flashcard to show the search icon</string>
-  <string name="add_content_showcase_text">To get started, tap the + button to add some new study material.\n\n Press \'Help\' to see the manual.</string>
+  <string name="tag_editor_add_hint">Use a marca na direita para adicionar uma nova tag</string>
+  <string name="tag_editor_add_feedback">Pressione \"%2$s\" o botão para confirmar a adição de \"%1$s\"</string>
+  <string name="lookup_hint">Após copiar o texto, toque em qualquer lugar sobre o flashcard para mostrar o ícone de pesquisa</string>
+  <string name="add_content_showcase_text">Para começar, toque o botão + para adicionar um novo material de estudo.\n\n Pressione \'Ajuda\' para ver o manual.</string>
 </resources>
