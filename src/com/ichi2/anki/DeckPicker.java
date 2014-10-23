@@ -209,7 +209,12 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                     Long did = getCol().getDecks().current().getLong("id");
                     setSelectedDeck(did);
                     if (mFragmented) {
-                        loadStudyOptionsFragment(did, null);
+                        try {
+                            loadStudyOptionsFragment(did, null);
+                        } catch (IllegalStateException e) {
+                            // If activity has been stopped then just ignore the updated counts
+                            Log.e(AnkiDroidApp.TAG, "DeckPicker mLoadCountsHandler -- could not update StudyOptionsFragment");
+                        }
                     }
                 }
             } catch (JSONException e) {
