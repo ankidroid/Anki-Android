@@ -356,7 +356,10 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
             ticker = message;
         }
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.ic_stat_notify).setContentTitle(title).setContentText(message)
+                .setSmallIcon(R.drawable.ic_stat_notify)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
                 .setTicker(ticker);
         // Creates an explicit intent for an Activity in your app
         Intent resultIntent = new Intent(this, DeckPicker.class);
