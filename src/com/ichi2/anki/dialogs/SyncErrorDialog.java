@@ -173,14 +173,8 @@ public class SyncErrorDialog extends AsyncDialogFragment {
                         new Dialog.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                SyncErrorDialogListener activity = (SyncErrorDialogListener) getActivity();
-                                Collection col = activity.getCol();
-                                if (col != null) {
-                                    col.modSchema(true);
-                                    col.setMod();
-                                    activity.sync("upload", 0);
-                                    dismissAllDialogFragments();
-                                }
+                                ((SyncErrorDialogListener) getActivity()).sync("upload", 0);
+                                dismissAllDialogFragments();
                             }
                         });
                 builder.setNegativeButton(res().getString(R.string.dialog_cancel), null);
@@ -192,14 +186,8 @@ public class SyncErrorDialog extends AsyncDialogFragment {
                         new Dialog.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                SyncErrorDialogListener activity = (SyncErrorDialogListener) getActivity();
-                                Collection col = activity.getCol();
-                                if (col != null) {
-                                    col.modSchema(true);
-                                    col.setMod();
-                                    activity.sync("download", 0);
-                                    dismissAllDialogFragments();
-                                }
+                                ((SyncErrorDialogListener) getActivity()).sync("download", 0);
+                                dismissAllDialogFragments();
                             }
                         });
                 builder.setNegativeButton(res().getString(R.string.dialog_cancel), null);
