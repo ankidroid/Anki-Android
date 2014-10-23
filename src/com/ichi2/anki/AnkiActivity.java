@@ -403,6 +403,7 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
         AnkiDroidApp.setLanguage(AnkiDroidApp.getSharedPrefs(getBaseContext()).getString(Preferences.LANGUAGE, ""));
         Intent intent = new Intent();
         intent.setClass(this, this.getClass());
+        intent.putExtras(this.getIntent().getExtras());
         this.startActivityWithoutAnimation(intent);
         this.finishWithoutAnimation();
     }
