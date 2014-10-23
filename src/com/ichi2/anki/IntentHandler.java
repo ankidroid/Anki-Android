@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.OpenableColumns;
+import android.support.v4.content.IntentCompat;
 
 import com.ichi2.themes.Themes;
 
@@ -93,7 +94,7 @@ public class IntentHandler extends Activity {
             // otherwise go to previous task
             reloadIntent.setAction(Intent.ACTION_MAIN);
             reloadIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-            reloadIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            reloadIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
             startActivityIfNeeded(reloadIntent, 0);
             finish();
         }
