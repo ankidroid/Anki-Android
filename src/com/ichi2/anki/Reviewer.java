@@ -266,21 +266,27 @@ public class Reviewer extends AbstractFlashcardViewer {
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         char keyPressed = (char) event.getUnicodeChar();
-        if (keyPressed == '1') {
-            answerCard(EASE_FAILED);
-            return true;
-        }
-        if (keyPressed == '2') {
-            answerCard(EASE_HARD);
-            return true;
-        }
-        if (keyPressed == '3') {
-            answerCard(EASE_MID);
-            return true;
-        }
-        if (keyPressed == '4') {
-            answerCard(EASE_EASY);
-            return true;
+        if (sDisplayAnswer) {
+            if (keyPressed == '1') {
+                answerCard(EASE_FAILED);
+                return true;
+            }
+            if (keyPressed == '2') {
+                answerCard(EASE_HARD);
+                return true;
+            }
+            if (keyPressed == '3') {
+                answerCard(EASE_MID);
+                return true;
+            }
+            if (keyPressed == '4') {
+                answerCard(EASE_EASY);
+                return true;
+            }
+            if (keyCode == KeyEvent.KEYCODE_SPACE || keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER) {
+                answerCard(getDefaultEase());
+                return true;
+            }
         }
         if (keyPressed == 'e') {
             editCard();
@@ -309,6 +315,10 @@ public class Reviewer extends AbstractFlashcardViewer {
         if (keyPressed == '!') {
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
                     mSched, mCurrentCard, 2));
+            return true;
+        }
+        if (keyPressed == 'r' || keyCode == KeyEvent.KEYCODE_F5) {
+            playSounds(true);
             return true;
         }
         return super.onKeyUp(keyCode, event);
