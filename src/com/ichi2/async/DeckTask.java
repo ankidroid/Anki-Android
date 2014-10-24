@@ -469,7 +469,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     private TaskData doInBackgroundLoadDeckCounts(TaskData... params) {
         Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadDeckCounts");
         Collection col = params[0].getCollection();
-        if (col == null) {
+        if (col == null || col.getDb() == null) {
             return null;
         }
         try {

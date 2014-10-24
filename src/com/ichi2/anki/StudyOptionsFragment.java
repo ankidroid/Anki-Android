@@ -365,13 +365,17 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     @Override
     public void onResume() {
         super.onResume();
-        if (colOpen()) {
+        if (colOpen() && !mFragmented) {
+            Log.i(AnkiDroidApp.TAG, "StudyOptionsFragment.onResume() -- updating deck counts");
+            // If not in tablet mode then reload deck counts (reload is taken care of by DeckPicker when mFragmented)
             if (Utils.now() > getCol().getSched().getDayCutoff()) {
                 updateValuesFromDeck(true);
             } else {
                 updateValuesFromDeck();
             }
             showOrHideUnburyButton();
+        } else {
+            Log.i(AnkiDroidApp.TAG, "StudyOptionsFragment.onResume() -- skipping updating of deck counts");
         }
     }
 
@@ -1291,6 +1295,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     // Method for loading the collection which is inherited by all AnkiActivitys
     protected void loadCollection() {        
         // Initialize the open collection loader
+        Log.i(AnkiDroidApp.TAG, "StudyOptionsFragment.loadCollection()");
         if (AnkiDroidApp.getCol() == null) {
             showCollectionLoadingDialog();
         }
