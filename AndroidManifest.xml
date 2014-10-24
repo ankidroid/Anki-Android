@@ -21,8 +21,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ichi2.anki"
     android:installLocation="auto"
-    android:versionCode="20300240"
-    android:versionName="2.3beta40" >
+    android:versionCode="20300241"
+    android:versionName="2.3beta41" >
 
     <!--
         The version number is of the form:
