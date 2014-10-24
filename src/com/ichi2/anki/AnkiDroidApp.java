@@ -74,6 +74,7 @@ public class AnkiDroidApp extends Application {
      * Singleton instance of this class.
      */
     private static AnkiDroidApp sInstance;
+    private static boolean sSyncInProgress = false;
     private Collection mCurrentCollection;
     private int mAccessThreadCount = 0;
     private static final Lock mLock = new ReentrantLock();
@@ -484,5 +485,13 @@ public class AnkiDroidApp extends Application {
 
     public List<List<String>> getStoredData() {
         return mStoredData;
+    }
+
+    public static void setSyncInProgress(boolean value) {
+        sSyncInProgress = value;
+    }
+
+    public static boolean getSyncInProgress() {
+        return sSyncInProgress;
     }
 }

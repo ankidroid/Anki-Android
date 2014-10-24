@@ -205,6 +205,7 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
     // Method for loading the collection which is inherited by all AnkiActivitys
     public void startLoadingCollection() {
         // Initialize the open collection loader
+        Log.i(AnkiDroidApp.TAG, "AnkiActivity.startLoadingCollection()");
         if (!AnkiDroidApp.colIsOpen()) {
             showOpeningCollectionDialog();
         }
