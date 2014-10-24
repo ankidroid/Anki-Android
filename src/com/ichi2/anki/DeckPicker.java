@@ -45,7 +45,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -103,7 +102,7 @@ import java.util.Locale;
 import java.util.TreeSet;
 
 public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEventListener,
-        StudyOptionsFragment.OnStudyOptionsReloadListener, DatabaseErrorDialog.DatabaseErrorDialogListener,
+        DatabaseErrorDialog.DatabaseErrorDialogListener,
         SyncErrorDialog.SyncErrorDialogListener, ImportDialog.ImportDialogListener,
         MediaCheckDialog.MediaCheckDialogListener, ExportDialog.ExportDialogListener {
 
@@ -767,6 +766,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         Log.i(AnkiDroidApp.TAG, "DeckPicker - onStop");
         super.onStop();
         if (colOpen()) {
+            WidgetStatus.update(this);
             UIUtils.saveCollectionInBackground();
         }
     }
@@ -1708,19 +1708,26 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     }
 
 
-    @Override
     public void loadStudyOptionsFragment() {
         loadStudyOptionsFragment(0, null);
     }
 
 
-    @Override
     public void loadStudyOptionsFragment(long deckId, Bundle cramConfig) {
         StudyOptionsFragment details = StudyOptionsFragment.newInstance(deckId, cramConfig);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
         ft.replace(R.id.studyoptions_fragment, details);
         ft.commit();
+    }
+
+
+    /** Callback from StudyOptionsFragment via OnStudyOptionsReloadListener
+     * This allows us to update the deck list and reload the StudyOptionsFragment
+     * when in tablet mode
+     */
+    public void refreshMainInterface() {
+        loadCounts();
     }
 
 
