@@ -164,4 +164,6 @@
   <string name="download_deck">덱 다운로드 중 (%d kb).\n잠시만 기다려 주세요...</string>
   <string name="sync_sanity_local">장치</string>
   <string name="sync_sanity_remote">서버</string>
+  <string name="force_full_sync_title">Force full sync</string>
+  <string name="force_full_sync_summary">On next sync, force changes in one direction</string>
 </resources>

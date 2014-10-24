@@ -164,4 +164,6 @@
   <string name="download_deck">Учитавање шпила (%d kb).\n</string>
   <string name="sync_sanity_local">Локално</string>
   <string name="sync_sanity_remote">Удаљени приступ</string>
+  <string name="force_full_sync_title">Force full sync</string>
+  <string name="force_full_sync_summary">On next sync, force changes in one direction</string>
 </resources>

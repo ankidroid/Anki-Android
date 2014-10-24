@@ -164,4 +164,6 @@
   <string name="download_deck">Завантаження колоди (%d Кб).\nБудь-ласка, зачекайте...</string>
   <string name="sync_sanity_local">Локально</string>
   <string name="sync_sanity_remote">Віддалено</string>
+  <string name="force_full_sync_title">Force full sync</string>
+  <string name="force_full_sync_summary">On next sync, force changes in one direction</string>
 </resources>
