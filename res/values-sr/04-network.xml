@@ -40,14 +40,14 @@
 
 -->
 <resources>
-  <string name="youre_offline">You are offline</string>
+  <string name="youre_offline">Ниси на мрежи</string>
   <string name="currently_downloading">Тренутно се преузима</string>
   <string name="starting_download">Преузимање почиње...</string>
   <string name="downloading">Преузимање у току...</string>
   <string name="paused">Паузирано</string>
   <string name="downloaded">Преузето</string>
-  <string name="sync_error">Sync Error</string>
-  <string name="vague_error">Error</string>
+  <string name="sync_error">Грешка синхронизације</string>
+  <string name="vague_error">Грешка</string>
   <string name="cancelling">Отказује се...</string>
   <string name="connection_error_return_message">Дошло је до грешке. Покушајте поново, или откажите и вратите се на претходни екран.</string>
   <string name="retry">Понови</string>
@@ -65,9 +65,9 @@
   <string name="download_button_return">Повратак</string>
   <string name="connection_error_message">Грешка у мрежи.</string>
   <string name="sync_log_db_error">Дошло је до грешке у бази података.</string>
-  <string name="not_logged_in_title">Log in to AnkiWeb</string>
-  <string name="login_create_account_message">You must log in to an AnkiWeb account. You can create one in the next step.</string>
-  <string name="no_email_client">No email client available</string>
+  <string name="not_logged_in_title">Прикључите се на AnkiWeb</string>
+  <string name="login_create_account_message">Морате да се прикључите на AnkiWeb. Можете направите налог у слећем кораку.</string>
+  <string name="no_email_client">Немате површину за е-пошту</string>
   <string name="username">Адреса е-поште</string>
   <string name="username_repeat">Поновите адресу е-поште</string>
   <string name="password">Lozinka</string>
@@ -81,13 +81,13 @@
   <string name="alert_logging_message">Prijavljivanje u toku, molimo da sačekate...</string>
   <string name="invalid_username_password">Пограшна адреса е-поште или лозинка.</string>
   <string name="login_generic_error">Неуспело прикључивање на сервер.</string>
-  <string name="reset_password">Reset password</string>
+  <string name="reset_password">Ресетујте лозинку</string>
   <string name="download_finished">Preuzimanje gotovo</string>
   <string name="personaldeckpicker_title">Otvori Internet Špil</string>
   <string name="shareddeckpicker_title">Izaberite špil koji želite skinuti</string>
   <string name="downloaddeck_search">Traži</string>
   <string name="preferences_title">Postavke</string>
-  <string name="deckpreferences_title">Options for XXX</string>
+  <string name="deckpreferences_title">Опције за XXX</string>
   <string name="sync_conflict_message">Ваши шпилови овде и на AnkiWeb се разликују и не могу бити обједињени, јер је неопходно попуно презаписати један шпил другим.\n\nЖелите ли да учитате шпил одавде или да преузмете шпил са AnkiWeb овамо?</string>
   <string name="sync_conflict_local">Учитавање</string>
   <string name="sync_conflict_remote">Преузми</string>
@@ -108,16 +108,16 @@
   <string name="sync_log_old_version">Протокол синхронизације је промењен, молимо да инсталирате најновију верзију AnkiDroid-a. Погледајте %s</string>
   <string name="sync_conflict_title">Конфликт у синхронизацији</string>
   <string name="sync_no_changes_message">Нема промена.</string>
-  <string name="sync_database_acknowledge">Collection synchronized</string>
+  <string name="sync_database_acknowledge">Колекција синхронизована</string>
   <string name="sync_log_error_fix">Грешка синхронизације%s.\n\nПокушајте да урадите потпуну синхронизацију ради исправљања те грешке. То ће презаписати или локалну колекцију или колекцију на серверу AnkiWeb.\nЗа потпуну синхронизацију изаберите учитавање ваше личне колекције на сервер или преузимање колекције са сервера.</string>
   <string name="sync_log_error_specific">Грешка синхронизације, тип: %1$s, порука: %2$s</string>
   <string name="sync_corrupt_database">Ваша база података је оштећена. Исправите оштећења пре него што поновите покушај синхронизације.\n\nПогледајте %s о обнављању базе података.</string>
   <string name="sync_too_busy">Сервер је преоптерећен. Покушајте касније.</string>
   <string name="sync_remote_db_error">Преузета база података је оштећена. Покушајте касније.</string>
   <string name="sync_overwrite_error">Текућа колекција не може да се презапише учитаном датотеком.</string>
-  <string name="sync_connection_error">Connection timed out. Either your internet connection is experiencing problems, or you have a very large file in your media folder.</string>
-  <string name="sync_error_409">Only one client can access AnkiWeb at a time. If a previous sync failed, please try again in a few minutes.</string>
-  <string name="sync_write_access_error">Учитана датотека не може бити сачувана на sd карту. Или је ваша sd карта у режиму само за читање или нема довољно места.</string>
+  <string name="sync_connection_error">Веза је истекла. Проблем је или до ваше мреже, или до великог датотеке у вашој фасцикли за медије.</string>
+  <string name="sync_error_409">Само једна површина може да приступи AnkiWeb-u. Ако је претходна синхронизација била неуспешна, пробајте опет за неколико минута.</string>
+  <string name="sync_write_access_error">Учитана датотека не може бити сачувана на sd карту. Или је ваша SD картица у режиму само за читање или нема довољно места.</string>
   <string name="sync_deletions_message">Синхронизација брисања...</string>
   <string name="sync_small_objects_message">Синхронизација малих објеката...</string>
   <string name="sync_finish_message">Завршетак синхронизације...</string>
@@ -136,12 +136,12 @@
   <string name="sync_media_sanity_check">Провера броја медија датотека...</string>
   <string name="sync_media_no_changes">Медија датотеке нису промењене.</string>
   <string name="sync_media_success">Медија датотеке су успешно синхронизоване.</string>
-  <string name="sync_media_changes_count">%d media changes to upload</string>
-  <string name="sync_media_downloaded_count">%d media files downloaded</string>
+  <string name="sync_media_changes_count">%d медијске промене за отпремање</string>
+  <string name="sync_media_downloaded_count">%d медијске промене за преузимање</string>
   <string name="sync_sanity_failed">После синхронизације, неки подаци из ваше колекције су противречни. Да би уклонио тај проблем AnkiDroid ће извршити потпуну синхронизацију. Изаберите коју верзију желите да оставите, или откажите, ако желите да синхронизујете касније.</string>
   <string name="sync_media_sanity_failed">Синхронизација медија датотека је завршена, али број медија датотека на вашем мобилном уређају се не слаже са бројем на серверу. При следећој синхронизацији ће бити уклоњене све грешке.</string>
   <string name="sync_media_error">Грешка у синхронизацији медија података.</string>
-  <string name="sync_media_unsupported">Complex media file names are not supported on Android 2.2 and below. Media syncing has been disabled.</string>
+  <string name="sync_media_unsupported">Сложена имена за медијске датотеке нису подржане на Android 2.2 и старије верзије. Синхронизацијa са медијским датотекама је онемогућен.</string>
   <string name="register_error">Дошло је до грешке. Покушајте касније.</string>
   <string name="register_title">Регистровати</string>
   <string name="register_mismatch">Име и/или лозинка не одговарају или су празни. Унесите их поново.</string>

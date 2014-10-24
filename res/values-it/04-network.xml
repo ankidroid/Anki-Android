@@ -46,7 +46,7 @@
   <string name="downloading">Scarico...</string>
   <string name="paused">In pausa</string>
   <string name="downloaded">Scaricato</string>
-  <string name="sync_error">Sync Error</string>
+  <string name="sync_error">Errore di sincronizzazione</string>
   <string name="vague_error">Errore</string>
   <string name="cancelling">Annullamento in corso...</string>
   <string name="connection_error_return_message">Si è verificato è un errore di rete. Riprovare, oppure Annulla e ritorna alla schermata precedente.</string>
@@ -67,7 +67,7 @@
   <string name="sync_log_db_error">Si è verificato un errore nel database.</string>
   <string name="not_logged_in_title">Accedi a AnkiWeb</string>
   <string name="login_create_account_message">Devi accedere a un account AnkiWeb. Puoi crearne uno nel passaggio successivo.</string>
-  <string name="no_email_client">No email client available</string>
+  <string name="no_email_client">Nessun client di posta elettronica disponibile</string>
   <string name="username">Indirizzo e-mail</string>
   <string name="username_repeat">Ripeti indirizzo e-mail</string>
   <string name="password">Password</string>
@@ -115,8 +115,8 @@
   <string name="sync_too_busy">Server sovraccarico. Prova più tardi.</string>
   <string name="sync_remote_db_error">Il database scaricato è corrotto. Riprova.</string>
   <string name="sync_overwrite_error">La tua collezione corrente non ha potuto essere sovrascritta con il file scaricato.</string>
-  <string name="sync_connection_error">Connection timed out. Either your internet connection is experiencing problems, or you have a very large file in your media folder.</string>
-  <string name="sync_error_409">Only one client can access AnkiWeb at a time. If a previous sync failed, please try again in a few minutes.</string>
+  <string name="sync_connection_error">Connessione scaduta. Ci sono problemi con la connessione internet oppure hai un file molto grande nella tua cartella dei media.</string>
+  <string name="sync_error_409">Solo un client alla volta può accedere ad AnkiWeb. Se una precedente sincronizzazione è fallita, riprova nuovamente tra pochi minuti.</string>
   <string name="sync_write_access_error">Il file scaricato non ha potuto essere salvato sulla scheda SD. O la tua scheda SD è montata in sola lettura, o non c\'è spazio sufficiente.</string>
   <string name="sync_deletions_message">Sincronizzazione eliminazioni...</string>
   <string name="sync_small_objects_message">Sincronizzazione piccoli oggetti...</string>
