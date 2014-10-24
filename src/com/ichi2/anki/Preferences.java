@@ -228,6 +228,17 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             });
         dialogPreference.setSummary(getResources().getString(R.string.about_version) + " " + AnkiDroidApp.getPkgVersionName());
 
+        // Force full sync option
+        Preference fullSyncPreference = (Preference) getPreferenceScreen().findPreference("force_full_sync");
+        fullSyncPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+                public boolean onPreferenceClick(Preference preference) {
+                    mCol.modSchema(true);
+                    mCol.setMod();
+                    Toast.makeText(getApplicationContext(), R.string.ok , Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+            });
+
         if (mCol != null) {
             // For collection preferences, we need to fetch the correct values from the collection
             mStartDate = GregorianCalendar.getInstance();
