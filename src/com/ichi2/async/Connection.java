@@ -407,6 +407,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         }
         String path = AnkiDroidApp.getCollectionPath();
         try {
+            AnkiDroidApp.setSyncInProgress(true);
             HttpSyncer server = new RemoteServer(this, hkey);
             Syncer client = new Syncer(col, server);
 
@@ -567,7 +568,9 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             }
             return data;
         } finally {
+            Log.i(AnkiDroidApp.TAG, "doInBackgroundSync -- closing collection on outer finally statement");
             col.close(false);
+            AnkiDroidApp.setSyncInProgress(false);
         }
     }
 

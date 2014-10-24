@@ -766,7 +766,9 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     protected void onStop() {
         Log.i(AnkiDroidApp.TAG, "DeckPicker - onStop");
         super.onStop();
-        UIUtils.saveCollectionInBackground();
+        if (colOpen()) {
+            UIUtils.saveCollectionInBackground();
+        }
     }
 
 
