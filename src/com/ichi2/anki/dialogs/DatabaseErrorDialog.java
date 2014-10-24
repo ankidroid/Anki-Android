@@ -303,6 +303,7 @@ public class DatabaseErrorDialog extends DialogFragment {
                                     ((DatabaseErrorDialogListener) getActivity())
                                             .showDatabaseErrorDialog(DIALOG_ERROR_HANDLING);
                                 }
+                                dismissAllDialogFragments();
                             }
                         });
                 builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
