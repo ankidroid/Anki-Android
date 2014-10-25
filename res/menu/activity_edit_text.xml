@@ -20,7 +20,7 @@
         android:title="@string/multimedia_editor_field_editing_audio"/>
     <item
         android:id="@+id/multimedia_edit_field_done"
-        android:icon="@drawable/navigation_accept"
+        android:icon="@drawable/ic_action_accept"
         android:orderInCategory="100"
         android:showAsAction="always"
         android:title="@string/multimedia_editor_field_editing_done"/>

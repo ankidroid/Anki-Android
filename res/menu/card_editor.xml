@@ -9,7 +9,7 @@
         ankidroid:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_save"
-        android:icon="@drawable/abc_ic_cab_done_holo_light"
+        android:icon="@drawable/ic_action_accept"
         android:title="@string/add"
         ankidroid:showAsAction="always"/>
     <item
