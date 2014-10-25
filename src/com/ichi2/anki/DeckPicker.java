@@ -386,16 +386,16 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     @Override
     protected void onCreate(Bundle savedInstanceState) throws SQLException {
         Log.i(AnkiDroidApp.TAG, "DeckPicker - onCreate");
-        // Get the path to the apkg file if started via VIEW intent
         Intent intent = getIntent();
+        // Show splashscreen if app first starting
+        if (intent.getCategories()!= null || !AnkiDroidApp.colIsOpen()) {
+            showOpeningCollectionDialog();
+        }
+        // Get the path to the apkg file if started via VIEW intent
         if (intent.getData() != null) {
             mImportPath = getIntent().getData().getEncodedPath();
         }
         mHandler = new DialogHandler(this);
-        // need to start this here in order to avoid showing deckpicker before splashscreen
-        if (!AnkiDroidApp.colIsOpen()) {
-            showOpeningCollectionDialog();
-        }
 
         Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
