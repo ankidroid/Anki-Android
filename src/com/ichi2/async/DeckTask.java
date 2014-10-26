@@ -912,10 +912,14 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         // overwrite collection
         colPath = AnkiDroidApp.getCollectionPath();
         File f = new File(colFile);
-        f.renameTo(new File(colPath));
+        if (!f.renameTo(new File(colPath))) {
+            // Exit early if this didn't work
+            return new TaskData(-2, null, false);
+        }
         int addedCount = -1;
         try {
-            col = AnkiDroidApp.openCollection(colPath);
+            // open using force close of old collection, as background loader may have reopened the col
+            col = AnkiDroidApp.openCollection(colPath, true);
 
             // because users don't have a backup of media, it's safer to import new
             // data and rely on them running a media db check to get rid of any
