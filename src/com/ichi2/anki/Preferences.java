@@ -232,9 +232,13 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         Preference fullSyncPreference = (Preference) getPreferenceScreen().findPreference("force_full_sync");
         fullSyncPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
                 public boolean onPreferenceClick(Preference preference) {
-                    mCol.modSchema(true);
-                    mCol.setMod();
-                    Toast.makeText(getApplicationContext(), R.string.ok , Toast.LENGTH_SHORT).show();
+                    if (mCol != null && mCol.getDb()!= null) {
+                        mCol.modSchema(true);
+                        mCol.setMod();
+                        Toast.makeText(getApplicationContext(), R.string.ok , Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), R.string.vague_error , Toast.LENGTH_SHORT).show();
+                    }
                     return true;
                 }
             });
