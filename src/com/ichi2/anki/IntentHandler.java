@@ -55,12 +55,12 @@ public class IntentHandler extends Activity {
                 }
                 // Copy to temp file
                 if (filename != null && filename.endsWith(".apkg")) {
-                    File tempImportPath = new File(getCacheDir(), filename);
+                    Uri importUri = Uri.fromFile(new File(getCacheDir(), filename));
                     try {
                         // Get an input stream to the data in ContentProvider
                         InputStream in = getContentResolver().openInputStream(intent.getData());
                         // Create new output stream in temporary path
-                        OutputStream out = new FileOutputStream(tempImportPath);
+                        OutputStream out = new FileOutputStream(importUri.getEncodedPath());
                         // Copy the input stream to temporary file
                         byte[] buf = new byte[1024];
                         int len;
@@ -75,7 +75,7 @@ public class IntentHandler extends Activity {
                         e2.printStackTrace();
                     }
                     // Replace the intent URI with the URI to temporary file
-                    reloadIntent.setData(Uri.fromFile(tempImportPath));
+                    reloadIntent.setData(importUri);
                     reloadIntent.putExtra("deleteTempFile", true);
                 } else {
                     // Don't import the file if it didn't load properly or doesn't have apkg extension

@@ -819,15 +819,19 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         // Start import process if apkg file was opened via another app
         Intent intent = getIntent();
         if (AnkiDroidApp.colIsOpen() && mImportPath != null) {
-            if (mHandler == null) {
-                mHandler = new DialogHandler(this);
-            }
-            if (mImportPath.split("/")[mImportPath.split("/").length - 1].equals("collection.apkg")) {
-                // Show confirmation dialog asking to confirm import with replace when file called "collection.apkg"
-                mHandler.sendEmptyMessage(MSG_SHOW_COLLECTION_IMPORT_REPLACE_DIALOG);
+            if ((new File(mImportPath)).exists()) {
+                if (mHandler == null) {
+                    mHandler = new DialogHandler(this);
+                }
+                if (mImportPath.split("/")[mImportPath.split("/").length - 1].equals("collection.apkg")) {
+                    // Show confirmation dialog asking to confirm import with replace when file called "collection.apkg"
+                    mHandler.sendEmptyMessage(MSG_SHOW_COLLECTION_IMPORT_REPLACE_DIALOG);
+                } else {
+                    // Otherwise show confirmation dialog asking to confirm import with add
+                    mHandler.sendEmptyMessage(MSG_SHOW_COLLECTION_IMPORT_ADD_DIALOG);
+                }
             } else {
-                // Otherwise show confirmation dialog asking to confirm import with add
-                mHandler.sendEmptyMessage(MSG_SHOW_COLLECTION_IMPORT_ADD_DIALOG);
+                Themes.showThemedToast(this, getResources().getString(R.string.import_log_no_apkg), true);
             }
         } else if (intent!= null && intent.getExtras()!= null && intent.getExtras().getBoolean("showAsyncDialogFragment")) {
             Message m = Message.obtain();
