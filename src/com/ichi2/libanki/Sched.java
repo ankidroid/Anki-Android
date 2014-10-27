@@ -1847,39 +1847,13 @@ public class Sched {
 
     public void _updateCutoff() {
         int oldToday = mToday;
-        // calculate days since col created and store in mToday
-        mToday = 0;
-        Calendar crt = GregorianCalendar.getInstance();
-        crt.setTimeInMillis(mCol.getCrt()*1000); // creation time (from crt as stored in database)
-        Calendar fromNow = GregorianCalendar.getInstance(); // decremented towards crt
-
-        // code to avoid counting years worth of days
-        int yearSpan = fromNow.get(Calendar.YEAR) - crt.get(Calendar.YEAR);
-        if (yearSpan > 1) { // at least one full year has definitely lapsed since creation
-            int toJump = 365 * (yearSpan - 1);
-            fromNow.add(Calendar.YEAR, -toJump);
-            if (fromNow.compareTo(crt) < 0) { // went too far, reset and do full count
-                fromNow = GregorianCalendar.getInstance();
-            } else {
-                mToday += toJump;
-            }
-        }
-
-        // count days backwards
-        while (fromNow.compareTo(crt) > 0) {
-            fromNow.add(Calendar.DAY_OF_MONTH, -1);
-            if (fromNow.compareTo(crt) >= 0) {
-                mToday++;
-            }
-        }
-
-        // set end of day cutoff
-        crt.add(Calendar.DAY_OF_YEAR, mToday + 1);
-        mDayCutoff = crt.getTimeInMillis() / 1000;
+        // days since col created
+        mToday = (int) ((Utils.now() - mCol.getCrt()) / 86400);
+        // end of day cutoff
+        mDayCutoff = mCol.getCrt() + ((mToday + 1) * 86400);
         if (oldToday != mToday) {
             mCol.log(mToday, mDayCutoff);
         }
-        
         // update all daily counts, but don't save decks to prevent needless conflicts. we'll save on card answer
         // instead
         for (JSONObject deck : mCol.getDecks().all()) {
