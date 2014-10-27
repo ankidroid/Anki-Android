@@ -134,8 +134,7 @@ public class TagsDialog extends DialogFragment implements OnDismissListener, OnC
         builder.setPositiveButton(res.getString(R.string.select), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                mCurrentTags.addAll(mStyledDialog.getCheckedItems());
-                mTagsDialogListener.onPositive(new ArrayList<String>(mCurrentTags), mSelectedOption);
+                mTagsDialogListener.onPositive(new ArrayList<String>(mStyledDialog.getCheckedItems()), mSelectedOption);
             }
         });
         builder.setNegativeButton(res.getString(R.string.cancel), mNegativeButtonListener);

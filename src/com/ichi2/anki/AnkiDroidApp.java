@@ -417,10 +417,14 @@ public class AnkiDroidApp extends Application {
 
 
     public static synchronized Collection openCollection(String path) {
+        return openCollection(path, false);
+    }
+
+    public static synchronized Collection openCollection(String path, boolean force) {
         mLock.lock();
         Log.i(AnkiDroidApp.TAG, "openCollection: " + path);
         try {
-            if (!colIsOpen() || !sInstance.mCurrentCollection.getPath().equals(path)) {
+            if (!colIsOpen() || !sInstance.mCurrentCollection.getPath().equals(path) || force) {
                 if (colIsOpen()) {
                     // close old collection prior to opening new one
                     sInstance.mCurrentCollection.close();

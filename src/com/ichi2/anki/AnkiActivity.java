@@ -41,8 +41,8 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onResume() {
+        super.onResume();
         ((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE)).cancel(SIMPLE_NOTIFICATION_ID);
     }
 
