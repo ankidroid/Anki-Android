@@ -164,6 +164,6 @@
   <string name="download_deck">Scarico mazzo (%d kb).\nAttendi...</string>
   <string name="sync_sanity_local">Locale</string>
   <string name="sync_sanity_remote">Remoto</string>
-  <string name="force_full_sync_title">Force full sync</string>
-  <string name="force_full_sync_summary">On next sync, force changes in one direction</string>
+  <string name="force_full_sync_title">Forza sincronizzazione completa</string>
+  <string name="force_full_sync_summary">Alla prossima sincronizzazione, forza le modifiche in una direzione</string>
 </resources>

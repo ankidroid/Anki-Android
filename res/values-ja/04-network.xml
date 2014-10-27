@@ -150,7 +150,7 @@
   <string name="upgrade_decks_upload">圧縮された単語帳をアップロードしています。\nキャンセルすることができます。\nしばらくお待ちください。</string>
   <string name="upgrade_decks_waiting">処理中です%s\nしばらくお待ちください</string>
   <string name="upgrade_decks_upgrade_started">アップグレードを開始しました。\nしばらくお待ちください。</string>
-  <string name="upgrade_decks_downloading">アップグレードしたコレクションをダウンロードしています。\nキャンセルすることができます。\nしばらくお待ちください。</string>
+  <string name="upgrade_decks_downloading">アップグレードしたコレクションをダウンロードしています。\nキャンセルする場合はバックボタンを押してください。\n</string>
   <string name="upgrade_decks_media">古いメディアファイルを新しい場所へコピーしています\nしばらくお待ちください</string>
   <string name="upgrade_decks_message">Anki 2.0 のコレクションがありません。しかし、いくつかの古いAnki 1.2 形式のものが見つかりました:%s新しいAnkiDroid で使用するために変換が必要ですので、単独のコレクション毎に新しい Anki-2.0形式に変換してください。変換には３種類の方法があります。</string>
   <string name="upgrade_decks_message_pos1">Anki Desktop 2.0を使えば、最初の操作で古い形式の単語帳は新しい形式の単語帳に変換できます。新しい単語帳をAnkiWeb へ同期させれば、Mobileでも使用できるようになります。まず、 Mobileの中のAnkiDroid フォルダー(%s)にあるファイルを、パソコンへコピーしてください。コピーするパソコン上のフォルダはAnki Desktop 1.2 フォルダです(コピーした後は同期操作はしないで下さい) そして、Anki Desktop 2.0をスタートさせてください。</string>

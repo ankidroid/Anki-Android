@@ -43,7 +43,7 @@
   <string name="youre_offline">Sie sind offline</string>
   <string name="currently_downloading">Wird gerade heruntergeladen</string>
   <string name="starting_download">Starte Herunterladen...</string>
-  <string name="downloading">Herunterladen...</string>
+  <string name="downloading">Herunterladen&#8230;</string>
   <string name="paused">Pausiert</string>
   <string name="downloaded">Heruntergeladen</string>
   <string name="sync_error">Synchronisierungsfehler</string>
@@ -164,6 +164,6 @@
   <string name="download_deck">Stapel wird heruntergeladen&#8230; (%d kB)</string>
   <string name="sync_sanity_local">Lokal</string>
   <string name="sync_sanity_remote">Entfernt</string>
-  <string name="force_full_sync_title">Force full sync</string>
-  <string name="force_full_sync_summary">On next sync, force changes in one direction</string>
+  <string name="force_full_sync_title">Vollsynchronisation erzwingen</string>
+  <string name="force_full_sync_summary">Bei nächster Synchronisation Änderungen in eine Richtung übertragen</string>
 </resources>

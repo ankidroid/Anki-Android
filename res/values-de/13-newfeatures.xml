@@ -35,7 +35,7 @@
     <item>Neue Funktionen zum Zurücksetzen und Verschieben zum Notizeditor hinzugefügt</item>
     <item>Navigationsleiste beim Lernen deaktiviert wenn Wischgesten benutzt werden</item>
     <item>Verbesserung der Audioaufnahmequalität</item>
-    <item>\"Klebefelder\" werden unterstützt wenn aktiviert in Anki Desktop</item>
+    <item>\"Eingegebenen Text behalten\" wird unterstützt, wenn in  in Anki Desktop aktiviert</item>
     <item>Viele andere Fehlerbehebungen</item>
   </string-array>
 </resources>

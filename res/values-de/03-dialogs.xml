@@ -44,7 +44,7 @@
   <string name="check_db_acknowledge">Datenbank überprüft</string>
   <string name="check_db_acknowledge_shrunk">Datenbank überprüft und optimiert.\nUm %d kB verkleinert.</string>
   <string name="contextmenu_deckpicker_delete_deck">Stapel löschen</string>
-  <string name="delete_deck_title">Stapel löschen</string>
+  <string name="delete_deck_title">Stapel löschen?</string>
   <string name="delete_deck_message">Sind Sie sicher, dass Sie alle Karten in %s löschen wollen?</string>
   <string name="delete_cram_deck_message">Sind Sie sicher, dass Sie alle Karten aus %s wieder in ihren ursprünglichen Stapel einsortieren möchten?</string>
   <string name="delete_deck_confirm">Löschen</string>
