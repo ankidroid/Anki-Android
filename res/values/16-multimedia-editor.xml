@@ -22,13 +22,12 @@
     <string name="multimedia_editor_languages_russian">Russian</string>
     <string name="multimedia_editor_languages_german">German</string>
     <string name="multimedia_editor_languages_slovak">Slovak</string>
-    <string name="multimedia_editor_languages_portuguese">Portuguese</string>    
+    <string name="multimedia_editor_languages_portuguese">Portuguese</string>
     <string name="multimedia_editor_languages_french">French</string>
     <string name="multimedia_editor_languages_hindi">Hindi</string>
     <string name="multimedia_editor_languages_arabic">Arabic</string>
     <string name="multimedia_editor_languages_japaneese">Japaneese</string>
-    
-    
+
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">Add image</string>
     <string name="multimedia_editor_popup_audio">Record audio</string>

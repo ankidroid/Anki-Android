@@ -45,30 +45,28 @@ public class LanguagesListerGlosbe extends LanguageListerBase {
         addLanguage(context.getString(R.string.multimedia_editor_languages_hindi), "hin");
         addLanguage(context.getString(R.string.multimedia_editor_languages_arabic), "ar");
         addLanguage(context.getString(R.string.multimedia_editor_languages_japaneese), "jpn");
-
     }
 
-    private static HashMap<String, String> glosbe_code_map = null;
-    
-    public static String requestToResponseLangCode(String req){
-    	
-    	if(glosbe_code_map == null){
-    		glosbe_code_map = new HashMap<String, String>();
-        	
-    		glosbe_code_map.put("cmn", "cmn");
-    		glosbe_code_map.put("spa", "es");
-    		glosbe_code_map.put("eng", "en");
-    		glosbe_code_map.put("rus", "ru");
-    		glosbe_code_map.put("deu", "de");
-    		glosbe_code_map.put("slk", "sk");    		
-    		glosbe_code_map.put("por", "pt");    		
-    		glosbe_code_map.put("fra", "fr");
-    		glosbe_code_map.put("hin", "hi");
-    		glosbe_code_map.put("ar", "ar");
-    		glosbe_code_map.put("jpn", "ja");
-    		
-    	}
-      	
-    	return glosbe_code_map.get(req);
-    }
+	private static HashMap<String, String> glosbe_code_map = null;
+
+	public static String requestToResponseLangCode(String req) {
+
+		if (glosbe_code_map == null) {
+			glosbe_code_map = new HashMap<String, String>();
+
+			glosbe_code_map.put("cmn", "cmn");
+			glosbe_code_map.put("spa", "es");
+			glosbe_code_map.put("eng", "en");
+			glosbe_code_map.put("rus", "ru");
+			glosbe_code_map.put("deu", "de");
+			glosbe_code_map.put("slk", "sk");
+			glosbe_code_map.put("por", "pt");
+			glosbe_code_map.put("fra", "fr");
+			glosbe_code_map.put("hin", "hi");
+			glosbe_code_map.put("ar", "ar");
+			glosbe_code_map.put("jpn", "ja");
+		}
+
+		return glosbe_code_map.get(req);
+	}
 }
