@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.provider.OpenableColumns;
 import android.support.v4.content.IntentCompat;
 
+import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.themes.Themes;
 
 import java.io.File;
@@ -29,6 +30,7 @@ public class IntentHandler extends Activity {
     @Override 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.styled_open_collection_dialog);
         Intent intent = getIntent();
         Intent reloadIntent = new Intent(this, DeckPicker.class);
         reloadIntent.setDataAndType(getIntent().getData(), getIntent().getType());
@@ -80,7 +82,7 @@ public class IntentHandler extends Activity {
                 } else {
                     // Don't import the file if it didn't load properly or doesn't have apkg extension
                     Themes.showThemedToast(this, getResources().getString(R.string.import_log_no_apkg), true);
-                    finish();
+                    finishWithFade();
                     return;
                 }
             }
@@ -88,7 +90,7 @@ public class IntentHandler extends Activity {
             reloadIntent.setAction(action);
             reloadIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(reloadIntent);
-            finish();
+            finishWithFade();
         } else {
             // Launcher intents should start DeckPicker if no other task exists,
             // otherwise go to previous task
@@ -96,7 +98,13 @@ public class IntentHandler extends Activity {
             reloadIntent.addCategory(Intent.CATEGORY_LAUNCHER);
             reloadIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
             startActivityIfNeeded(reloadIntent, 0);
-            finish();
+            finishWithFade();
         }
+    }
+
+    /** Finish Activity using FADE animation **/
+    private void finishWithFade() {
+    	finish();
+    	ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
     }
 }

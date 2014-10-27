@@ -142,7 +142,7 @@ public class NavigationDrawerActivity extends AnkiActivity {
                     }
                     AnkiStatsTaskHandler.setIsWholeCollection(selectAllDecksButton);
                     Intent intent = new Intent(this, Statistics.class);
-                    startActivityWithAnimation(intent, ActivityTransitionAnimation.DOWN);
+                    startActivityWithAnimation(intent, ActivityTransitionAnimation.LEFT);
                 }
 
                 break;
