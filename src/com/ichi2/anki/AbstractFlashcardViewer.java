@@ -1955,6 +1955,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         } else {
             question = mCurrentCard.q();
         }
+        question = getCol().getMedia().escapeImages(question);
         question = typeAnsQuestionFilter(question);
 
         if (mPrefFixArabic) {
@@ -2057,7 +2058,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         } else {
             answer = mCurrentCard.a();
         }
-
         String displayString = "";
 
         if (mCurrentSimpleInterface) {
@@ -2070,7 +2070,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             }
         } else {
             Sound.stopSounds();
-
+            answer = getCol().getMedia().escapeImages(answer);
             if (mPrefFixArabic) {
                 // reshape
                 answer = ArabicUtilities.reshapeSentence(answer, true);

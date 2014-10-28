@@ -385,9 +385,9 @@ public class Media {
                     string = tag;
                 } else {
                     if (unescape) {
-                        string = tag.replace(fname, Uri.decode(fname));
+                        string = string.replace(tag,tag.replace(fname, Uri.decode(fname)));
                     } else {
-                        string = tag.replace(fname, Uri.encode(fname));
+                        string = string.replace(tag,tag.replace(fname, Uri.encode(fname)));
                     }
                 }
             }
