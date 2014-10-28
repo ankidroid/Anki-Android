@@ -186,15 +186,15 @@ public class Anki2Importer {
             long id = mDst.getDecks().id(mDeckPrefix);
             mDst.getDecks().select(id);
         }
-        Log.i(AnkiDroidApp.TAG, "Import - preparing");
+        // Log.i(AnkiDroidApp.TAG, "Import - preparing");
         _prepareTS();
         _prepareModels();
-        Log.i(AnkiDroidApp.TAG, "Import - importing notes");
+        // Log.i(AnkiDroidApp.TAG, "Import - importing notes");
         _importNotes();
-        Log.i(AnkiDroidApp.TAG, "Import - importing cards");
+        // Log.i(AnkiDroidApp.TAG, "Import - importing cards");
         int cnt = _importCards();
         // _importMedia();
-        Log.i(AnkiDroidApp.TAG, "Import - finishing");
+        // Log.i(AnkiDroidApp.TAG, "Import - finishing");
         publishProgress(true, 100, 100, false);
         _postImport();
         // LIBANKI: vacuum and analyze is done in DeckTask
@@ -424,7 +424,9 @@ public class Anki2Importer {
             long newid = mDst.getDecks().id(name);
             // pull conf over
             if (g.has("conf") && g.getLong("conf") != 1) {
-                mDst.getDecks().updateConf(mSrc.getDecks().getConf(g.getLong("conf")));
+                JSONObject conf = mSrc.getDecks().getConf(g.getLong("conf"));
+                mDst.getDecks().save(conf);
+                mDst.getDecks().updateConf(conf);
                 JSONObject g2 = mDst.getDecks().get(newid);
                 g2.put("conf", g.getLong("conf"));
                 mDst.getDecks().save(g2);
@@ -710,6 +712,8 @@ public class Anki2Importer {
     private void _writeDstMedia(String fname, BufferedInputStream is) {
         try {
             Utils.writeToFile(is, mDstMediaDir + fname);
+            // Also mark file addition to media db
+            mDst.getMedia().markFileAdd(fname);
         } catch (IOException e) {
             // the user likely used subdirectories
             Log.e(AnkiDroidApp.TAG, String.format(Locale.US,

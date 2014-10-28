@@ -9,7 +9,7 @@ cat tmp-translations-page.html |
  sed -e "s/.*project-language-name//g" |
  sed -e "s/<\/div>//g" |
  grep "translated:" |
- sed -e "s/<\/h5>.*translated://g" |
+ sed -e "s/<\/strong>.*translated://g" |
  sed -e "s/<\/ins>.*//g" |
  sed -e 's/[[:space:]]*$//g' |
  grep -v " 0%" > tmp-list.txt

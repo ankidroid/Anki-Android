@@ -2,9 +2,9 @@
 package com.ichi2.filters;
 
 import android.content.Context;
+import android.util.Pair;
 
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.Pair;
 
 import java.util.ArrayList;
 import java.util.List;

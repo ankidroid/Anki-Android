@@ -16,6 +16,8 @@
 
 package com.ichi2.utils;
 
+import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.BackupManager;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Storage;
 
@@ -27,12 +29,24 @@ import java.io.IOException;
  */
 public class Shared {
 
-    public Collection getEmptyDeck() throws IOException {
+    public static Collection getEmptyCol() throws IOException {
         File f = File.createTempFile("test", ".anki2");
         // Provide a string instead of an actual File. Storage.Collection won't populate the DB
         // if the file already exists (it assumes it's an existing DB).
         String path = f.getAbsolutePath();
         f.delete();
         return Storage.Collection(path);
+    }
+
+    
+    /**
+     * @return A File object pointing to a directory in which temporary test files can be placed. The directory is
+     *         emptied on every invocation of this method so it is suitable to use at the start of each test.
+     */
+    public static File getTestDir() {
+        File dir = new File(AnkiDroidApp.getCurrentAnkiDroidDirectory(), "testfiles");
+        BackupManager.removeDir(dir);
+        dir.mkdirs();
+        return dir;
     }
 }

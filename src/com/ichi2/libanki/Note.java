@@ -19,9 +19,9 @@ package com.ichi2.libanki;
 
 import android.database.Cursor;
 import android.util.Log;
+import android.util.Pair;
 
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.Pair;
 
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -47,6 +47,7 @@ import com.ichi2.utils.LanguageUtil;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -61,7 +62,6 @@ public class AnkiDroidApp extends Application {
     public static final String DROPBOX_PUBLIC_DIR = "/dropbox/Public/Anki";
     public static final String APP_NAMESPACE = "http://schemas.android.com/apk/res/com.ichi2.anki";
 
-    public static final int RESULT_TO_HOME = 501;
 
     /**
      * Tag for logging messages.
@@ -74,9 +74,11 @@ public class AnkiDroidApp extends Application {
      * Singleton instance of this class.
      */
     private static AnkiDroidApp sInstance;
+    private static boolean sSyncInProgress = false;
     private Collection mCurrentCollection;
     private int mAccessThreadCount = 0;
     private static final Lock mLock = new ReentrantLock();
+    private List<List<String>> mStoredData;
 
     /** Global hooks */
     private Hooks mHooks;
@@ -222,11 +224,6 @@ public class AnkiDroidApp extends Application {
     public static String getCurrentAnkiDroidDirectory() {
         SharedPreferences prefs = getSharedPrefs(sInstance.getApplicationContext());
         return prefs.getString("deckPath", AnkiDroidApp.getDefaultAnkiDroidDirectory());
-    }
-
-
-    public static String getCurrentAnkiDroidMediaDir() {
-        return getCurrentAnkiDroidDirectory() + File.separator + "collection.media";
     }
 
 
@@ -420,22 +417,25 @@ public class AnkiDroidApp extends Application {
 
 
     public static synchronized Collection openCollection(String path) {
+        return openCollection(path, false);
+    }
+
+    public static synchronized Collection openCollection(String path, boolean force) {
         mLock.lock();
-        Log.i(AnkiDroidApp.TAG, "openCollection: " + path);
+        // Log.i(AnkiDroidApp.TAG, "openCollection: " + path);
         try {
-            if (!colIsOpen() || !sInstance.mCurrentCollection.getPath().equals(path)) {
+            if (!colIsOpen() || !sInstance.mCurrentCollection.getPath().equals(path) || force) {
                 if (colIsOpen()) {
                     // close old collection prior to opening new one
                     sInstance.mCurrentCollection.close();
                     sInstance.mAccessThreadCount = 0;
                 }
-                sInstance.mCurrentCollection = Storage.Collection(path);
+                sInstance.mCurrentCollection = Storage.Collection(path, false, true);
                 sInstance.mAccessThreadCount++;
-                Log.i(AnkiDroidApp.TAG, "Access to collection is requested: collection has been opened");
+                // Log.i(AnkiDroidApp.TAG, "Access to collection is requested: collection has been opened");
             } else {
                 sInstance.mAccessThreadCount++;
-                Log.i(AnkiDroidApp.TAG, "Access to collection is requested: collection has not been reopened (count: "
-                        + sInstance.mAccessThreadCount + ")");
+                // Log.i(AnkiDroidApp.TAG, "Access to collection is requested: collection has not been reopened (count: " + sInstance.mAccessThreadCount + ")");
             }
             return sInstance.mCurrentCollection;
         } finally {
@@ -451,13 +451,12 @@ public class AnkiDroidApp extends Application {
 
     public static void closeCollection(boolean save) {
         mLock.lock();
-        Log.i(AnkiDroidApp.TAG, "closeCollection");
+        // Log.i(AnkiDroidApp.TAG, "closeCollection");
         try {
             if (sInstance.mAccessThreadCount > 0) {
                 sInstance.mAccessThreadCount--;
             }
-            Log.i(AnkiDroidApp.TAG, "Access to collection has been closed: (count: " + sInstance.mAccessThreadCount
-                    + ")");
+            // Log.i(AnkiDroidApp.TAG, "Access to collection has been closed: (count: " + sInstance.mAccessThreadCount + ")");
             if (sInstance.mAccessThreadCount == 0 && sInstance.mCurrentCollection != null) {
                 Collection col = sInstance.mCurrentCollection;
                 sInstance.mCurrentCollection = null;
@@ -480,6 +479,23 @@ public class AnkiDroidApp extends Application {
     public static void resetAccessThreadCount() {
         sInstance.mAccessThreadCount = 0;
         sInstance.mCurrentCollection = null;
-        Log.i(AnkiDroidApp.TAG, "Access has been reset to 0");
+        // Log.i(AnkiDroidApp.TAG, "Access has been reset to 0");
+    }
+
+
+    public void setStoredData(List<List<String>> data) {
+        mStoredData = data;
+    }
+
+    public List<List<String>> getStoredData() {
+        return mStoredData;
+    }
+
+    public static void setSyncInProgress(boolean value) {
+        sSyncInProgress = value;
+    }
+
+    public static boolean getSyncInProgress() {
+        return sSyncInProgress;
     }
 }

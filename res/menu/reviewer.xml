@@ -3,8 +3,14 @@
 
     <item
         android:id="@+id/action_clear_whiteboard"
-        android:icon="@drawable/ic_menu_clear_playlist"
         android:title="@string/clear_whiteboard"
+        android:icon="@drawable/ic_action_cancel"
+        android:visible="false"
+        ankidroid:showAsAction="always"/>
+    <item
+        android:id="@+id/action_hide_whiteboard"
+        android:title="@string/hide_whiteboard"
+        android:icon="@drawable/ic_action_whiteboard_enable_light"
         android:visible="false"
         ankidroid:showAsAction="always"/>
     <item
@@ -22,6 +28,11 @@
         android:id="@+id/action_edit"
         android:icon="@drawable/ic_menu_edit"
         android:title="@string/menu_edit_card"
+        ankidroid:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/action_replay"
+        android:title="@string/replay_audio"
+        android:icon="@drawable/ic_action_replay"
         ankidroid:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_dismiss"
@@ -45,15 +56,10 @@
         </menu>
     </item>
     <item
-        android:id="@+id/action_replay"
-        android:title="@string/replay_audio"/>
-    <item
-        android:id="@+id/action_whiteboard"
-        android:title="@string/hide_whiteboard"
-        android:visible="false"/>
-    <item
         android:id="@+id/action_search_dictionary"
         android:title="@string/menu_select"
         android:visible="false"/>
-
+    <item
+        android:id="@+id/action_enable_whiteboard"
+        android:title="@string/enable_whiteboard" />
 </menu>

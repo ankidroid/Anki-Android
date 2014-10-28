@@ -21,29 +21,26 @@ package com.ichi2.anki;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-
 import com.ichi2.libanki.Collection;
 
 public class Previewer extends AbstractFlashcardViewer {
+    Long mCurrentCardId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.i(AnkiDroidApp.TAG, "PreviewClass - onCreate");
+        // Log.i(AnkiDroidApp.TAG, "PreviewClass - onCreate");
+        mCurrentCardId=getIntent().getLongExtra("currentCardId", -1);
     }
 
 
     @Override
-    protected void initActivity(Collection col) {
-        super.initActivity(col);
-
-        mCurrentCard = CardEditor.mCurrentEditedCard;
-
-        Previewer.this.displayCardQuestion();
-        Previewer.this.displayCardAnswer();
-
-        hideEaseButtons();
+    protected void onCollectionLoaded(Collection col) {
+        super.onCollectionLoaded(col);
+        mCurrentCard = col.getCard(mCurrentCardId);
+        displayCardQuestion();
     }
 
 
@@ -60,18 +57,32 @@ public class Previewer extends AbstractFlashcardViewer {
 
 
     @Override
-    protected void initLayout() {
-        super.initLayout();
-        mDrawerToggle.setDrawerIndicatorEnabled(false);
-        findViewById(R.id.answer_options_layout).setVisibility(View.GONE);
-        mTopBarLayout.setVisibility(View.GONE);
-        mFlipCardLayout.setVisibility(View.GONE);
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                closeReviewer(RESULT_OK, true);
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return true;
     }
 
 
     @Override
+    protected void initLayout() {
+        super.initLayout();
+        getDrawerToggle().setDrawerIndicatorEnabled(false);
+        mTopBarLayout.setVisibility(View.GONE);
+    }
+
+
+    // Called via mFlipCardListener in parent class when answer button pressed
+    @Override
     protected void displayCardAnswer() {
         super.displayCardAnswer();
+        findViewById(R.id.answer_options_layout).setVisibility(View.GONE);
+        mFlipCardLayout.setVisibility(View.GONE);
         hideEaseButtons();
     }
 

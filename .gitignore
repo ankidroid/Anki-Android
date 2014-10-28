@@ -13,6 +13,7 @@ build.xml
 .build.xml
 local.properties
 proguard.cfg
+deps/showcaseview/proguard-project.txt
 coverage.em
 
 .idea/
@@ -22,3 +23,7 @@ out/
 
 # Temporary file by update-localizations.py
 ankidroid.zip
+
+# Chrome
+*.crx
+*.crx.json

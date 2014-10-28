@@ -1,0 +1,395 @@
+/****************************************************************************************
+ * Copyright (c) 2014 Timothy Rae   <perceptualchaos2@gmail.com>                        *
+ *                                                                                      *
+ * This program is free software; you can redistribute it and/or modify it under        *
+ * the terms of the GNU General Public License as published by the Free Software        *
+ * Foundation; either version 3 of the License, or (at your option) any later           *
+ * version.                                                                             *
+ *                                                                                      *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
+ *                                                                                      *
+ * You should have received a copy of the GNU General Public License along with         *
+ * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
+ ****************************************************************************************/
+
+package com.ichi2.libanki;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
+
+class Exporter {
+    Collection mCol;
+    Long mDid;
+
+
+    public Exporter(Collection col) {
+        mCol = col;
+        mDid = null;
+    }
+
+
+    public Exporter(Collection col, Long did) {
+        mCol = col;
+        mDid = did;
+    }
+}
+
+
+
+class AnkiExporter extends Exporter {
+    boolean mIncludeSched;
+    boolean mIncludeMedia;
+    Collection mSrc;
+    String mMediaDir;
+    int mCount;
+    ArrayList<String> mMediaFiles = new ArrayList<String>();
+
+
+    public AnkiExporter(Collection col) {
+        super(col);
+        mIncludeSched = false;
+        mIncludeMedia = true;
+    }
+
+
+    /**
+     * Export source database into new destination database Note: The following python syntax isn't supported in
+     * Android: for row in mSrc.db.execute("select * from cards where id in "+ids2str(cids)): therefore we use a
+     * different method for copying tables
+     * 
+     * @param path String path to destination database
+     * @throws JSONException
+     * @throws IOException
+     */
+
+    public void exportInto(String path) throws JSONException, IOException {
+        // create a new collection at the target
+        new File(path).delete();
+        Collection dst = Storage.Collection(path);
+        mSrc = mCol;
+        // find cards
+        long[] cids;
+        if (mDid == null) {
+            cids = Utils.arrayList2array(mSrc.getDb().queryColumn(Long.class, "SELECT id FROM cards", 0));
+        } else {
+            cids = mSrc.getDecks().cids(mDid, true);
+        }
+        // attach dst to src so we can copy data between them. This isn't done in original libanki as Python more
+        // flexible
+        dst.close();
+        mSrc.getDb().getDatabase().execSQL("ATTACH '" + path + "' AS DST_DB");
+        // copy cards, noting used nids (as unique set)
+        mSrc.getDb().getDatabase()
+                .execSQL("INSERT INTO DST_DB.cards select * from cards where id in " + Utils.ids2str(cids));
+        Set<Long> nids = new HashSet<Long>(mSrc.getDb().queryColumn(Long.class,
+                "select nid from cards where id in " + Utils.ids2str(cids), 0));
+        // notes
+        String strnids = Utils.ids2str(new ArrayList<Long>(nids));
+        mSrc.getDb().getDatabase().execSQL("INSERT INTO DST_DB.notes select * from notes where id in " + strnids);
+        // remove system tags if not exporting scheduling info
+        if (!mIncludeSched) {
+            ArrayList<String> srcTags = mSrc.getDb().queryColumn(String.class,
+                    "select tags from notes where id in " + strnids, 0);
+            ArrayList<Object[]> dstTags = new ArrayList<Object[]>();
+            for (int row = 0; row < srcTags.size(); row++) {
+                dstTags.add(new Object[] { removeSystemTags(srcTags.get(row)) });
+            }
+            mSrc.getDb().executeMany("UPDATE DST_DB.notes set tags=? where id in " + strnids, dstTags);
+        }
+        // models used by the notes
+        ArrayList<Long> mids = mSrc.getDb().queryColumn(Long.class,
+                "select distinct mid from DST_DB.notes where id in " + strnids, 0);
+        // card history and revlog
+        if (mIncludeSched) {
+            mSrc.getDb().getDatabase()
+                    .execSQL("insert into DST_DB.revlog select * from revlog where cid in " + Utils.ids2str(cids));
+            // reopen collection to destination database (different from original python code)
+            mSrc.getDb().getDatabase().execSQL("DETACH DST_DB");
+            dst.reopen();
+        } else {
+            // first reopen collection to destination database (different from original python code)
+            mSrc.getDb().getDatabase().execSQL("DETACH DST_DB");
+            dst.reopen();
+            // then need to reset card state
+            dst.getSched().resetCards(cids);
+        }
+        // models - start with zero
+        for (JSONObject m : mSrc.getModels().all()) {
+            if (mids.contains(m.getLong("id"))) {
+                dst.getModels().update(m);
+            }
+        }
+        // decks
+        ArrayList<Long> dids = new ArrayList<Long>();
+        if (mDid != null) {
+            dids.add(mDid);
+            for (Long x : mSrc.getDecks().children(mDid).values()) {
+                dids.add(x);
+            }
+        }
+        JSONObject dconfs = new JSONObject();
+        for (JSONObject d : mSrc.getDecks().all()) {
+            if (d.getString("id").equals("1")) {
+                continue;
+            }
+            if (mDid != null && !dids.contains(d.getLong("id"))) {
+                continue;
+            }
+            if (d.getInt("dyn") != 1 && d.getInt("conf") != 1) {
+                if (mIncludeSched) {
+                    dconfs.put(Integer.toString(d.getInt("conf")), true);
+                }
+            }
+            if (!mIncludeSched) {
+                // scheduling not included, so reset deck settings to default
+                d.put("conf", 1);
+            }
+            dst.getDecks().update(d);
+        }
+        // copy used deck confs
+        for (JSONObject dc : mSrc.getDecks().allConf()) {
+            if (dconfs.has(dc.getString("id"))) {
+                dst.getDecks().updateConf(dc);
+            }
+        }
+        // find used media
+        JSONObject media = new JSONObject();
+        mMediaDir = mSrc.getMedia().dir();
+        if (mIncludeMedia) {
+            ArrayList<Long> mid = mSrc.getDb().queryColumn(Long.class, "select mid from notes where id in " + strnids,
+                    0);
+            ArrayList<String> flds = mSrc.getDb().queryColumn(String.class,
+                    "select flds from notes where id in " + strnids, 0);
+            for (int idx = 0; idx < mid.size(); idx++) {
+                for (String file : mSrc.getMedia().filesInStr(mid.get(idx), flds.get(idx))) {
+                    media.put(file, true);
+                }
+            }
+            if (mMediaDir != null) {
+                for (File f : new File(mMediaDir).listFiles()) {
+                    String fname = f.getName();
+                    if (fname.startsWith("_")) {
+                        media.put(fname, true);
+                    }
+                }
+            }
+        }
+        JSONArray keys = media.names();
+        if (keys != null) {
+            for (int i = 0; i < keys.length(); i++) {
+                mMediaFiles.add(keys.getString(i));
+            }
+        }
+        dst.setCrt(mSrc.getCrt());
+        // todo: tags?
+        mCount = dst.cardCount();
+        dst.setMod();
+        postExport();
+        dst.close();
+    }
+
+
+    /**
+     * overwrite to apply customizations to the deck before it's closed, such as update the deck description
+     */
+    protected void postExport() {
+    }
+
+
+    private String removeSystemTags(String tags) {
+        return mSrc.getTags().remFromStr("marked leech", tags);
+    }
+
+
+    public void setIncludeSched(boolean includeSched) {
+        mIncludeSched = includeSched;
+    }
+
+
+    public void setIncludeMedia(boolean includeMedia) {
+        mIncludeMedia = includeMedia;
+    }
+
+
+    public void setDid(Long did) {
+        mDid = did;
+    }
+}
+
+
+
+public final class AnkiPackageExporter extends AnkiExporter {
+
+    public AnkiPackageExporter(Collection col) {
+        super(col);
+    }
+
+
+    @Override
+    public void exportInto(String path) throws IOException, JSONException {
+        // open a zip file
+        ZipFile z = new ZipFile(path);
+        // if all decks and scheduling included, full export
+        JSONObject media;
+        if (mIncludeSched && mDid == null) {
+            media = exportVerbatim(z);
+        } else {
+            // otherwise, filter
+            media = exportFiltered(z, path);
+        }
+        // media map
+        z.writeStr("media", Utils.jsonToString(media));
+        z.close();
+    }
+
+
+    private JSONObject exportVerbatim(ZipFile z) throws IOException {
+        // close our deck & write it into the zip file, and reopen
+        mCount = mCol.cardCount();
+        mCol.close();
+        z.write(mCol.getPath(), "collection.anki2");
+        mCol.reopen();
+        // copy all media
+        JSONObject media = new JSONObject();
+        if (!mIncludeMedia) {
+            return media;
+        }
+        File mdir = new File(mCol.getMedia().dir());
+        if (mdir.exists() && mdir.isDirectory()) {
+            File[] mediaFiles = mdir.listFiles();
+            int c = 0;
+            for (File f : mediaFiles) {
+                z.write(f.getPath(), Integer.toString(c));
+                try {
+                    media.put(Integer.toString(c), f.getName());
+                    c++;
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return media;
+    }
+
+
+    private JSONObject exportFiltered(ZipFile z, String path) throws IOException, JSONException {
+        // export into the anki2 file
+        String colfile = path.replace(".apkg", ".anki2");
+        super.exportInto(colfile);
+        z.write(colfile, "collection.anki2");
+        // and media
+        prepareMedia();
+        JSONObject media = new JSONObject();
+        File mdir = new File(mCol.getMedia().dir());
+        if (mdir.exists() && mdir.isDirectory()) {
+            int c = 0;
+            for (String file : mMediaFiles) {
+                File mpath = new File(mdir,file);
+                if (mpath.exists()) {
+                    z.write(mpath.getPath(), Integer.toString(c));
+                }
+                try {
+                    media.put(Integer.toString(c), file);
+                    c++;
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        // tidy up intermediate files
+        new File(colfile).delete();
+        String p = path.replace(".apkg", ".media.db2");
+        if (new File(p).exists()) {
+            new File(p).delete();
+        }
+        String tempPath = path.replace(".apkg", ".media");
+        File file = new File(mMediaDir, tempPath);
+        if (file.exists()) {
+            String deleteCmd = "rm -r " + tempPath;
+            Runtime runtime = Runtime.getRuntime();
+            try {
+                runtime.exec(deleteCmd);
+            } catch (IOException e) {
+            }
+        }
+        return media;
+    }
+
+
+    protected void prepareMedia() {
+        // chance to move each file in self.mediaFiles into place before media
+        // is zipped up
+    }
+}
+
+
+
+/**
+ * Wrapper around standard Python zip class used in this module for exporting to APKG
+ * 
+ * @author Tim
+ */
+class ZipFile {
+    final int BUFFER_SIZE = 1024;
+    private ZipOutputStream mZos;
+
+
+    public ZipFile(String path) throws FileNotFoundException {
+        mZos = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(path)));
+    }
+
+
+    public void write(String path, String entry) throws IOException {
+        BufferedInputStream bis = new BufferedInputStream(new FileInputStream(path), BUFFER_SIZE);
+        ZipEntry ze = new ZipEntry(entry);
+        writeEntry(bis, ze);
+    }
+
+
+    public void writeStr(String entry, String value) throws IOException {
+        // TODO: Does this work with abnormal characters?
+        InputStream is = new ByteArrayInputStream(value.getBytes());
+        BufferedInputStream bis = new BufferedInputStream(is, BUFFER_SIZE);
+        ZipEntry ze = new ZipEntry(entry);
+        writeEntry(bis, ze);
+    }
+
+
+    private void writeEntry(BufferedInputStream bis, ZipEntry ze) throws IOException {
+        byte[] buf = new byte[BUFFER_SIZE];
+        mZos.putNextEntry(ze);
+        int len;
+        while ((len = bis.read(buf, 0, BUFFER_SIZE)) != -1) {
+            mZos.write(buf, 0, len);
+        }
+        mZos.closeEntry();
+        bis.close();
+    }
+
+
+    public void close() {
+        try {
+            mZos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}

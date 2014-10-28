@@ -153,15 +153,8 @@
                 android:title="@string/show_progress" />
         </PreferenceCategory>
         <PreferenceCategory android:title="@string/pref_cat_whiteboard" >
-            <CheckBoxPreference
-                android:defaultValue="false"
-                android:disableDependentsState="false"
-                android:key="whiteboard"
-                android:summary="@string/show_whiteboard_summ"
-                android:title="@string/enable_whiteboard" />
             <com.hlidskialf.android.preference.SeekBarPreference
                 android:defaultValue="6"
-                android:dependency="whiteboard"
                 android:key="whiteBoardStrokeWidth"
                 android:max="30"
                 android:summary="@string/whiteboard_stroke_width_summ"
@@ -169,7 +162,6 @@
                 android:title="@string/whiteboard_stroke_width" />
             <CheckBoxPreference
                 android:defaultValue="true"
-                android:dependency="whiteboard"
                 android:key="blackWhiteboard"
                 android:summary="@string/whiteboard_black_summ"
                 android:title="@string/whiteboard_black" />
@@ -356,6 +348,10 @@
     <!-- Advanced Preferences -->
     <PreferenceScreen android:title="@string/pref_cat_advanced"
         android:summary="@string/pref_cat_advanced_summ" >
+	    <Preference 
+	        android:key="force_full_sync"
+	        android:title="@string/force_full_sync_title"
+	        android:summary="@string/force_full_sync_summary" />
         <PreferenceCategory android:title="@string/pref_cat_performance" >
             <CheckBoxPreference
                 android:defaultValue="false"
@@ -381,7 +377,7 @@
                 android:summary="@string/pref_backup_summ"
                 android:title="@string/pref_backup" />
             <com.hlidskialf.android.preference.SeekBarPreference
-                android:defaultValue="3"
+                android:defaultValue="8"
                 android:dependency="useBackup"
                 android:key="backupMax"
                 android:max="10"

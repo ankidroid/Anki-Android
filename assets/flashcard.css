@@ -50,6 +50,10 @@ body.night_mode {
   background-color: #905050;
 }
 
+.replaybutton {
+  text-decoration: none;
+}
+
 
 /*
 Use hard-coded max dimensions if using Chrome back-end. Chrome is able to

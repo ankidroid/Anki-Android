@@ -29,7 +29,7 @@ přidání/ editace karet
 • přidání kartiček pomocí intent z jiných aplikací, např. slovníků
 • podpora vlastního fontu písma
 • kompletní záložní systém
-• navigation by swipe, tap
+• ovládání pomocí dotyků a gest
 • přizpůsobitelné
 • dynamicky přizpůsobitelné balíčky
 • noční režim

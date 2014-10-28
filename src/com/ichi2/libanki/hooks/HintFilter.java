@@ -37,8 +37,8 @@ public class HintFilter {
             String domid = "hint" + txt.hashCode();
             return "<a class=hint href=\"#\" onclick=\"this.style.display='none';document.getElementById('" +
                     domid + "').style.display='block';return false;\">" +
-                    res.getString(R.string.show_hint) + "</a><div id=\"" +
-            		domid + "\" class=hint style=\"display: none\">" + txt + "</div>";
+                    res.getString(R.string.show_hint, (String) args[2]) + "</a><div id=\"" +
+                    domid + "\" class=hint style=\"display: none\">" + txt + "</div>";
         }
     }
 }

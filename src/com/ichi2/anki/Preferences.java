@@ -42,6 +42,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.WindowManager.BadTokenException;
+import android.widget.Toast;
 
 import com.hlidskialf.android.preference.SeekBarPreference;
 import com.ichi2.anim.ActivityTransitionAnimation;
@@ -183,8 +184,8 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         // Check that input is valid when changing the collection path
         collectionPathPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
             public boolean onPreferenceChange(Preference preference, final Object newValue) {
-                File collectionDirectory = new File((String) newValue);
-                if (!collectionDirectory.exists()) {
+                File collectionPath = new File((String) newValue);
+                if (!collectionPath.exists()) {
                     Dialog pathCheckDialog = new AlertDialog.Builder(Preferences.this)
                     .setTitle(R.string.dialog_collection_path_title)
                     .setMessage(R.string.dialog_collection_path_text)
@@ -193,7 +194,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                         @Override
                         public void onClick(DialogInterface dialog, int which)
                         {
-                            AnkiDroidApp.getSharedPrefs(getBaseContext()).edit().putString("deckPath", (String) newValue).commit();
+                            collectionPathPreference.setText((String) newValue);
                             updateEditTextPreference("deckPath");
                             
                         }
@@ -206,6 +207,9 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                     })
                     .create();
                     pathCheckDialog.show();
+                    return false;
+                } else if (collectionPath.exists() && !collectionPath.isDirectory()) {
+                    Toast.makeText(getApplicationContext(), R.string.dialog_collection_path_not_dir , Toast.LENGTH_LONG).show();
                     return false;
                 } else {
                     return true;
@@ -223,6 +227,21 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 }
             });
         dialogPreference.setSummary(getResources().getString(R.string.about_version) + " " + AnkiDroidApp.getPkgVersionName());
+
+        // Force full sync option
+        Preference fullSyncPreference = (Preference) getPreferenceScreen().findPreference("force_full_sync");
+        fullSyncPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+                public boolean onPreferenceClick(Preference preference) {
+                    if (mCol != null && mCol.getDb()!= null) {
+                        mCol.modSchema(true);
+                        mCol.setMod();
+                        Toast.makeText(getApplicationContext(), R.string.ok , Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), R.string.vague_error , Toast.LENGTH_SHORT).show();
+                    }
+                    return true;
+                }
+            });
 
         if (mCol != null) {
             // For collection preferences, we need to fetch the correct values from the collection
@@ -544,18 +563,18 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private String[] getCustomFonts(String defaultValue, boolean useFullPath) {
         List<AnkiFont> mFonts = Utils.getCustomFonts(this);
         int count = mFonts.size();
-        Log.d(AnkiDroidApp.TAG, "There are " + count + " custom fonts");
+        // Log.d(AnkiDroidApp.TAG, "There are " + count + " custom fonts");
         String[] names = new String[count + 1];
         names[0] = defaultValue;
         if (useFullPath) {
             for (int index = 1; index < count + 1; ++index) {
                 names[index] = mFonts.get(index - 1).getPath();
-                Log.d(AnkiDroidApp.TAG, "Adding custom font: " + names[index]);
+                // Log.d(AnkiDroidApp.TAG, "Adding custom font: " + names[index]);
             }
         } else {
             for (int index = 1; index < count + 1; ++index) {
                 names[index] = mFonts.get(index - 1).getName();
-                Log.d(AnkiDroidApp.TAG, "Adding custom font: " + names[index]);
+                // Log.d(AnkiDroidApp.TAG, "Adding custom font: " + names[index]);
             }
         }
         return names;
@@ -565,7 +584,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            Log.i(AnkiDroidApp.TAG, "DeckOptions - onBackPressed()");
+            // Log.i(AnkiDroidApp.TAG, "DeckOptions - onBackPressed()");
             closePreferences();
             return true;
         }

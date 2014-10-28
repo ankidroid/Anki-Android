@@ -23,28 +23,23 @@ import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.widget.EditText;
-import android.widget.ListView;
-
+import android.view.View;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
 
-public class StudyOptionsActivity extends NavigationDrawerActivity implements StudyOptionsFragment.OnStudyOptionsReloadListener {
+public class StudyOptionsActivity extends NavigationDrawerActivity {
 
     private StudyOptionsFragment mCurrentFragment;
 
     private BroadcastReceiver mUnmountReceiver = null;
     private StyledOpenCollectionDialog mNotMountedDialog;
-    private EditText mDialogEditText = null;
 
 
     @Override
@@ -54,16 +49,16 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
         // The empty frame layout is a workaround for fragments not showing when they are added
         // to android.R.id.content when an action bar is used in Android 2.1 (and potentially
         // higher) with the appcompat package.
-        setContentView(R.layout.studyoptions);
+        View mainView = getLayoutInflater().inflate(R.layout.studyoptions, null);
+        setContentView(mainView);
         // create inherited navigation drawer layout here so that it can be used by parent class
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.studyoptions_drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.studyoptions_left_drawer);
-        initNavigationDrawer();
+        initNavigationDrawer(mainView);
         if (savedInstanceState == null) {
             loadStudyOptionsFragment();
         }
         registerExternalStorageListener();
     }
+
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu){
@@ -75,12 +70,12 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
         return true;
     }
 
-    public void loadStudyOptionsFragment() {
+    private void loadStudyOptionsFragment() {
         loadStudyOptionsFragment(0, null);
     }
 
 
-    public void loadStudyOptionsFragment(long deckId, Bundle cramConfig) {
+    private void loadStudyOptionsFragment(long deckId, Bundle cramConfig) {
         mCurrentFragment = StudyOptionsFragment.newInstance(deckId, null);
         Bundle args = getIntent().getExtras();
 
@@ -90,13 +85,12 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
         mCurrentFragment.setArguments(args);
         getSupportFragmentManager().beginTransaction().replace(R.id.studyoptions_frame, mCurrentFragment).commit();
     }
-    
+
+
     @Override
     protected void onResume() {
         super.onResume();
-        for (int i=0; i< mDrawerList.getCount(); i++) {
-            mDrawerList.setItemChecked(i, false);
-        }
+        deselectAllNavigationItems();
     }    
 
 
@@ -106,7 +100,7 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
     public boolean onOptionsItemSelected(MenuItem item) {
         // The action bar home/up action should open or close the drawer.
         // ActionBarDrawerToggle will take care of this.
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
+        if (getDrawerToggle().onOptionsItemSelected(item)) {
             return true;
         }
         
@@ -126,7 +120,7 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
-        Log.i(AnkiDroidApp.TAG, "StudyOptionsActivity: onActivityResult");
+        // Log.i(AnkiDroidApp.TAG, "StudyOptionsActivity: onActivityResult");
 
         String newLanguage = AnkiDroidApp.getSharedPrefs(this).getString(Preferences.LANGUAGE, "");
         if (AnkiDroidApp.setLanguage(newLanguage)) {
@@ -153,7 +147,7 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            Log.i(AnkiDroidApp.TAG, "StudyOptions - onBackPressed()");
+            // Log.i(AnkiDroidApp.TAG, "StudyOptions - onBackPressed()");
             closeStudyOptions();
             return true;
         }
@@ -164,7 +158,7 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
     @Override
     public void onStop() {
         super.onStop();
-        if (!isFinishing() && mCurrentFragment != null && mCurrentFragment.dbSaveNecessary()) {
+        if (colOpen()) {
             WidgetStatus.update(this);
             UIUtils.saveCollectionInBackground();
         }
@@ -176,16 +170,6 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
         super.onDestroy();
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver);
-        }
-    }
-
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (mCurrentFragment != null) {
-            return mCurrentFragment.onTouchEvent(event);
-        } else {
-            return false;
         }
     }
 
@@ -204,14 +188,14 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
 
                             @Override
                             public void onCancel(DialogInterface arg0) {
-                                finish();
+                                finishWithoutAnimation();
                             }
                         });
                     } else if (intent.getAction().equals(SdCardReceiver.MEDIA_MOUNT)) {
                         if (mNotMountedDialog != null && mNotMountedDialog.isShowing()) {
                             mNotMountedDialog.dismiss();
                         }
-                        mCurrentFragment.reloadCollection();
+                        startLoadingCollection();
                     }
                 }
             };

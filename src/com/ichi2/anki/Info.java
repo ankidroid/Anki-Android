@@ -94,7 +94,7 @@ public class Info extends ActionBarActivity {
     public static final String TYPE_ANIMATION_RIGHT = "animationToRight";
 
     public static final int TYPE_ABOUT = 0;
-    public static final int TYPE_WELCOME = 1;
+    //public static final int TYPE_WELCOME = 1;
     public static final int TYPE_NEW_VERSION = 2;
     public static final int TYPE_SHARED_DECKS = 3;
     public static final int TYPE_UPGRADE_DECKS = 4;
@@ -128,7 +128,7 @@ public class Info extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.i(AnkiDroidApp.TAG, "Info - onCreate()");
+        // Log.i(AnkiDroidApp.TAG, "Info - onCreate()");
         Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
 
@@ -157,12 +157,6 @@ public class Info extends ActionBarActivity {
                 }
                 setResult(RESULT_OK);
                 switch (mType) {
-                    case TYPE_WELCOME:
-                        AnkiDroidApp.getSharedPrefs(Info.this.getBaseContext()).edit()
-                                .putLong("lastTimeOpened", System.currentTimeMillis()).commit();
-                        AnkiDroidApp.getSharedPrefs(Info.this.getBaseContext()).edit()
-                                .putString("lastVersion", AnkiDroidApp.getPkgVersionName()).commit();
-                        break;
                     case TYPE_NEW_VERSION:
                         AnkiDroidApp.getSharedPrefs(Info.this.getBaseContext()).edit()
                                 .putString("lastVersion", AnkiDroidApp.getPkgVersionName()).commit();
@@ -199,34 +193,6 @@ public class Info extends ActionBarActivity {
                 sb.append("</body></html>");
                 mWebView.loadDataWithBaseURL("", sb.toString(), "text/html", "utf-8", null);
                 ((Button) findViewById(R.id.info_continue)).setText(res.getString(R.string.info_rate));
-                break;
-
-            case TYPE_WELCOME:
-                // title
-                sb.append("<html><body text=\"#000000\" link=\"#E37068\" alink=\"#E37068\" vlink=\"#E37068\">");
-                sb.append("<big><b>");
-                sb.append(res.getString(R.string.studyoptions_welcome_title));
-                sb.append("</big></b><br><br>");
-                // message
-                sb.append(res.getString(R.string.welcome_message).replace("\n", "<br>"));
-                sb.append("</body></html>");
-                mWebView.loadDataWithBaseURL("", sb.toString(), "text/html", "utf-8", null);
-
-                // add tutorial button
-                Button tutBut = (Button) findViewById(R.id.info_tutorial);
-                tutBut.setVisibility(View.VISIBLE);
-                tutBut.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View arg0) {
-                        setResult(RESULT_OK);
-                        Editor edit = AnkiDroidApp.getSharedPrefs(Info.this.getBaseContext()).edit();
-                        edit.putLong("lastTimeOpened", System.currentTimeMillis());
-                        edit.putString("lastVersion", AnkiDroidApp.getPkgVersionName()).commit();
-                        edit.putBoolean("createTutorial", true);
-                        edit.commit();
-                        finishWithAnimation();
-                    }
-                });
                 break;
 
             case TYPE_NEW_VERSION:
@@ -616,7 +582,7 @@ public class Info extends ActionBarActivity {
                 break;
 
             case DIALOG_SYNC_UPGRADE_REQUIRED:
-                builder.setMessage(res.getString(R.string.upgrade_required, res.getString(R.string.link_anki)));
+                builder.setMessage(res.getString(R.string.upgrade_required, res.getString(R.string.link_ankiweb)));
                 builder.setPositiveButton(R.string.retry, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -702,7 +668,7 @@ public class Info extends ActionBarActivity {
                 setResult(RESULT_OK, result);
                 finishWithAnimation(false);
             } else {
-                Log.i(AnkiDroidApp.TAG, "Info - onBackPressed()");
+                // Log.i(AnkiDroidApp.TAG, "Info - onBackPressed()");
                 setResult(RESULT_CANCELED);
                 finishWithAnimation();
             }
@@ -727,7 +693,7 @@ public class Info extends ActionBarActivity {
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            Log.i(AnkiDroidApp.TAG, "LoadSharedDecks: loading: " + url);
+            // Log.i(AnkiDroidApp.TAG, "LoadSharedDecks: loading: " + url);
             view.loadUrl(url);
             return true;
         }
@@ -752,7 +718,7 @@ public class Info extends ActionBarActivity {
             @Override
             protected String doInBackground(String... params) {
                 super.doInBackground(params);
-                Log.i(AnkiDroidApp.TAG, "Info.ParseSharedDecks.doInBackground()");
+                // Log.i(AnkiDroidApp.TAG, "Info.ParseSharedDecks.doInBackground()");
                 HttpGet pageGet = new HttpGet(params[0]);
                 HostnameVerifier hostnameVerifier = org.apache.http.conn.ssl.SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER;
 
@@ -832,7 +798,7 @@ public class Info extends ActionBarActivity {
             @Override
             protected void onPostExecute(String html) {
                 super.onPostExecute(html);
-                Log.d(AnkiDroidApp.TAG, "Info.ParseSharedDecks.onPostExecute()");
+                // Log.d(AnkiDroidApp.TAG, "Info.ParseSharedDecks.onPostExecute()");
                 if (mWebView != null && mUrl != null & html != null) {
                     mWebView.loadDataWithBaseURL(mUrl, html, null, "utf-8", mUrl);
                     mLoadingLayer.setVisibility(View.INVISIBLE);
@@ -865,7 +831,7 @@ public class Info extends ActionBarActivity {
 
         @Override
         public void onPreExecute() {
-            Log.i(AnkiDroidApp.TAG, "Info: UpgradeDecks - onPreExcecute");
+            // Log.i(AnkiDroidApp.TAG, "Info: UpgradeDecks - onPreExcecute");
             if (mProgressDialog == null || !mProgressDialog.isShowing()) {
                 mProgressDialog = StyledProgressDialog.show(Info.this, "",
                         getResources().getString(R.string.upgrade_decks_zipping), true, false,
@@ -881,7 +847,7 @@ public class Info extends ActionBarActivity {
 
         @Override
         public void onPostExecute(Payload data) {
-            Log.i(AnkiDroidApp.TAG, "Info: UpgradeDecks - onPostExecute, success = " + data.success);
+            // Log.i(AnkiDroidApp.TAG, "Info: UpgradeDecks - onPostExecute, success = " + data.success);
             Resources res = getResources();
             try {
                 if (mProgressDialog != null && mProgressDialog.isShowing()) {
@@ -1019,7 +985,7 @@ public class Info extends ActionBarActivity {
 
         @Override
         public void onPreExecute() {
-            Log.i(AnkiDroidApp.TAG, "Info: mDownloadDeckListener - onPreExcecute");
+            // Log.i(AnkiDroidApp.TAG, "Info: mDownloadDeckListener - onPreExcecute");
             if (mProgressDialog == null || !mProgressDialog.isShowing()) {
                 mProgressDialog = StyledProgressDialog.show(Info.this, "",
                         getResources().getString(R.string.download_deck, countDown / 1024), true);
@@ -1029,7 +995,7 @@ public class Info extends ActionBarActivity {
 
         @Override
         public void onPostExecute(Payload data) {
-            Log.i(AnkiDroidApp.TAG, "Info: mDownloadDeckListener - onPostExecute, success = " + data.success);
+            // Log.i(AnkiDroidApp.TAG, "Info: mDownloadDeckListener - onPostExecute, success = " + data.success);
             Resources res = getResources();
             try {
                 if (mProgressDialog != null && mProgressDialog.isShowing()) {
@@ -1122,7 +1088,7 @@ public class Info extends ActionBarActivity {
 
         @Override
         public void onPostExecute(Payload data) {
-            Log.i(AnkiDroidApp.TAG, "onPostExecute");
+            // Log.i(AnkiDroidApp.TAG, "onPostExecute");
             Resources res = Info.this.getResources();
             if (mProgressDialog != null) {
                 mProgressDialog.dismiss();

@@ -23,7 +23,6 @@ import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -32,7 +31,6 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
@@ -57,17 +55,14 @@ import android.widget.TextView;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.TagsDialog;
 import com.ichi2.anki.dialogs.TagsDialog.TagsDialogListener;
-import com.ichi2.anki.multimediacard.activity.MultimediaCardEditorActivity;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.async.DeckTask;
 import com.ichi2.async.DeckTask.TaskData;
 import com.ichi2.libanki.Card;
-import com.ichi2.libanki.CardStats;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledDialog;
-import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.upgrade.Upgrade;
@@ -99,8 +94,6 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
     private String mRestrictOnDeck;
 
     private StyledProgressDialog mProgressDialog;
-    private StyledOpenCollectionDialog mOpenCollectionDialog;
-    
     public static Card sCardBrowserCard;
     public static boolean sSearchCancelled = false;
 
@@ -109,7 +102,6 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
     private int mOrder;
     private boolean mOrderAsc;
     private int mColumn2Index;
-    private int mTotalCount;
 
     private static final int CONTEXT_MENU_MARK = 0;
     private static final int CONTEXT_MENU_SUSPEND = 1;
@@ -118,7 +110,6 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
 
     private static final int DIALOG_ORDER = 0;
     private static final int DIALOG_CONTEXT_MENU = 1;
-    private static final int DIALOG_RELOAD_CARDS = 2;
     private static final int DIALOG_TAGS = 3;
 
     private static final int BACKGROUND_NORMAL = 0;
@@ -168,14 +159,10 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
     private ActionBar mActionBar;
     private DeckDropDownAdapter mDropDownAdapter;
 
-    private String[] allTags;
-    private String[] mColumn2Indexs;
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
      */
     private BroadcastReceiver mUnmountReceiver = null;
-
-    private Collection mCol;
 
     private DialogInterface.OnClickListener mContextMenuListener = new DialogInterface.OnClickListener() {
 
@@ -185,7 +172,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                 case CONTEXT_MENU_MARK:
                     DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD,
                             mUpdateCardHandler,
-                            new DeckTask.TaskData(mCol.getSched(), mCol.getCard(Long.parseLong(mCards.get(
+                            new DeckTask.TaskData(getCol().getSched(), getCol().getCard(Long.parseLong(mCards.get(
                                     mPositionInCardsList).get("id"))), 0));
                     return;
 
@@ -193,7 +180,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                     DeckTask.launchDeckTask(
                             DeckTask.TASK_TYPE_DISMISS_NOTE,
                             mSuspendCardHandler,
-                            new DeckTask.TaskData(mCol.getSched(), mCol.getCard(Long.parseLong(mCards.get(
+                            new DeckTask.TaskData(getCol().getSched(), getCol().getCard(Long.parseLong(mCards.get(
                                     mPositionInCardsList).get("id"))), 1));
                     return;
 
@@ -208,10 +195,10 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    Card card = mCol.getCard(Long.parseLong(mCards.get(mPositionInCardsList).get("id")));
+                                    Card card = getCol().getCard(Long.parseLong(mCards.get(mPositionInCardsList).get("id")));
                                     deleteNote(card);
                                     DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDeleteNoteHandler,
-                                                            new DeckTask.TaskData(mCol.getSched(), card, 3));
+                                                            new DeckTask.TaskData(getCol().getSched(), card, 3));
                                 }
                             });
                     builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
@@ -219,11 +206,10 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                     return;
 
                 case CONTEXT_MENU_DETAILS:
-                    Card tempCard = mCol.getCard(Long.parseLong(mCards.get(mPositionInCardsList).get("id")));
-                    Themes.htmlOkDialog(
-                            CardBrowser.this,
-                            getResources().getString(R.string.card_browser_card_details),
-                            CardStats.report(CardBrowser.this, tempCard, mCol)).show();
+                    Long cardId = Long.parseLong(mCards.get(mPositionInCardsList).get("id"));
+                    Intent previewer = new Intent(CardBrowser.this, Previewer.class);
+                    previewer.putExtra("currentCardId", cardId);
+                    startActivityWithoutAnimation(previewer);
                     return;
             }
         }
@@ -249,31 +235,21 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         setContentView(mainView);
         Themes.setContentStyle(mainView, Themes.CALLER_CARDBROWSER);
         
-        // Create inherited navigation drawer layout here so that it can be used by parent class
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.browser_drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.browser_left_drawer);
-        initNavigationDrawer();
+        initNavigationDrawer(mainView);
         selectNavigationItem(DRAWER_BROWSER);
         
-        // Try to load the collection
-        mCol = AnkiDroidApp.getCol();
-        if (mCol == null) {
-            // Reload the collection asynchronously, let onPostExecute method call initActivity()
-            reloadCollection();
-            return;
-        } else {
-            // If collection was not null then we can safely call initActivity() directly
-            initActivity(mCol);
-        }
+        startLoadingCollection();
     }
 
 
     // Finish initializing the activity after the collection has been correctly loaded
-    private void initActivity(Collection col) {
-        Log.i(AnkiDroidApp.TAG, "Card Browser - initActivity()");
+    @Override
+    protected void onCollectionLoaded(Collection col) {
+        super.onCollectionLoaded(col);
+        // Log.i(AnkiDroidApp.TAG, "Card Browser - initActivity()");
         mDeckNames = new HashMap<String, String>();
-        for (long did : mCol.getDecks().allIds()) {
-            mDeckNames.put(String.valueOf(did), mCol.getDecks().name(did));
+        for (long did : getCol().getDecks().allIds()) {
+            mDeckNames.put(String.valueOf(did), getCol().getDecks().name(did));
         }
         registerExternalStorageListener();
 
@@ -286,7 +262,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         Resources res = getResources();
 
         // Add drop-down menu to select deck to action bar.
-        mDropDownDecks = mCol.getDecks().allSorted();
+        mDropDownDecks = getCol().getDecks().allSorted();
         mDropDownAdapter = new DeckDropDownAdapter(this, mDropDownDecks);
         mActionBar = getSupportActionBar();
         mActionBar.setDisplayShowTitleEnabled(false);
@@ -296,7 +272,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         mOrderByFields = res.getStringArray(R.array.card_browser_order_labels);
         try {
             mOrder = CARD_ORDER_NONE;
-            String colOrder = mCol.getConf().getString("sortType");
+            String colOrder = getCol().getConf().getString("sortType");
             for (int c = 0; c < fSortTypes.length; ++c) {
                 if (fSortTypes[c].equals(colOrder)) {
                     mOrder = c;
@@ -306,7 +282,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
             if (mOrder == 1 && preferences.getBoolean("cardBrowserNoSorting", false)) {
                 mOrder = 0;
             }
-            mOrderAsc = Upgrade.upgradeJSONIfNecessary(mCol, mCol.getConf(), "sortBackwards", false);
+            mOrderAsc = Upgrade.upgradeJSONIfNecessary(getCol(), getCol().getConf(), "sortBackwards", false);
             // default to descending for non-text fields
             if (fSortTypes[mOrder].equals("noteFld")) {
                 mOrderAsc = !mOrderAsc;
@@ -379,13 +355,12 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                 // load up the card selected on the list
                 mPositionInCardsList = position;
                 long cardId = Long.parseLong(mCards.get(mPositionInCardsList).get("id"));
-                sCardBrowserCard = mCol.getCard(cardId);
+                sCardBrowserCard = getCol().getCard(cardId);
                 // start note editor using the card we just loaded
-                Intent editCard = new Intent(CardBrowser.this, CardEditor.class);
-                editCard.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_CARDBROWSER_EDIT);
-                editCard.putExtra(CardEditor.EXTRA_CARD_ID, sCardBrowserCard.getId());
-                startActivityForResult(editCard, EDIT_CARD);
-                ActivityTransitionAnimation.slide(CardBrowser.this, ActivityTransitionAnimation.LEFT);
+                Intent editCard = new Intent(CardBrowser.this, NoteEditor.class);
+                editCard.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_CARDBROWSER_EDIT);
+                editCard.putExtra(NoteEditor.EXTRA_CARD_ID, sCardBrowserCard.getId());
+                startActivityForResultWithAnimation(editCard, EDIT_CARD, ActivityTransitionAnimation.LEFT);
             }
         });
         mCardsListView.setOnItemLongClickListener(new OnItemLongClickListener() {
@@ -406,7 +381,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         if (!mWholeCollection) {
             String currentDeckName;
             try {
-                currentDeckName = mCol.getDecks().current().getString("name");
+                currentDeckName = getCol().getDecks().current().getString("name");
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
@@ -424,13 +399,13 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                 }
             }
         }
-
+        dismissOpeningCollectionDialog();
     }
 
 
     @Override
     protected void onStop() {
-        Log.i(AnkiDroidApp.TAG, "CardBrowser - onStop()");
+        // Log.i(AnkiDroidApp.TAG, "CardBrowser - onStop()");
         super.onStop();
         if (!isFinishing()) {
             WidgetStatus.update(this);
@@ -441,7 +416,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
 
     @Override
     protected void onDestroy() {
-        Log.i(AnkiDroidApp.TAG, "CardBrowser - onDestroy()");
+        // Log.i(AnkiDroidApp.TAG, "CardBrowser - onDestroy()");
         // cancel rendering the question and answer, which has shared access to mCards
         DeckTask.cancelTask(DeckTask.TASK_TYPE_RENDER_BROWSER_QA);
         super.onDestroy();
@@ -454,7 +429,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            Log.i(AnkiDroidApp.TAG, "CardBrowser - onBackPressed()");
+            // Log.i(AnkiDroidApp.TAG, "CardBrowser - onBackPressed()");
             closeCardBrowser(Activity.RESULT_OK);
             return true;
         }
@@ -500,6 +475,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
             @Override
             public boolean onQueryTextSubmit(String query) {
                 onSearch();
+                mSearchView.clearFocus();
                 return true;
             }
         });
@@ -518,17 +494,16 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
     public boolean onOptionsItemSelected(MenuItem item) {
         // The action bar home/up action should open or close the drawer.
         // ActionBarDrawerToggle will take care of this.
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
+        if (getDrawerToggle().onOptionsItemSelected(item)) {
             return true;
         }    	
     	
         switch (item.getItemId()) {
 
             case R.id.action_add_card_from_card_browser:
-                Intent intent = new Intent(CardBrowser.this, CardEditor.class);
-                intent.putExtra(CardEditor.EXTRA_CALLER, CardEditor.CALLER_CARDBROWSER_ADD);
-                startActivityForResult(intent, ADD_NOTE);
-                ActivityTransitionAnimation.slide(CardBrowser.this, ActivityTransitionAnimation.LEFT);
+                Intent intent = new Intent(CardBrowser.this, NoteEditor.class);
+                intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_CARDBROWSER_ADD);
+                startActivityForResultWithAnimation(intent, ADD_NOTE, ActivityTransitionAnimation.LEFT);
                 return true;
 
             case R.id.action_sort_by_size:
@@ -563,24 +538,17 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // FIXME:
-        Log.i(AnkiDroidApp.TAG, "CardBrowser - onActivityResult()");
+        // Log.i(AnkiDroidApp.TAG, "CardBrowser - onActivityResult()");
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == DeckPicker.RESULT_DB_ERROR) {
             closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
         }
 
-        // TODO(flerda): Currently we are using the regular card editor and
-        // delete is not possible. We should probably update this went
-        // switching back to the multimedia card editor.
-        if (requestCode == EDIT_CARD && resultCode == MultimediaCardEditorActivity.RESULT_DELETED) {
-            deleteNote(sCardBrowserCard);
-            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDeleteNoteHandler,
-                    new DeckTask.TaskData(mCol.getSched(), sCardBrowserCard, 3));
-        } else if (requestCode == EDIT_CARD && resultCode != RESULT_CANCELED) {
-            Log.i(AnkiDroidApp.TAG, "CardBrowser: Saving card...");
+        if (requestCode == EDIT_CARD && resultCode != RESULT_CANCELED) {
+            // Log.i(AnkiDroidApp.TAG, "CardBrowser: Saving card...");
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler,
-                    new DeckTask.TaskData(mCol.getSched(), sCardBrowserCard, false));
+                    new DeckTask.TaskData(getCol().getSched(), sCardBrowserCard, false));
         } else if (requestCode == ADD_NOTE && resultCode == RESULT_OK) {
             mSearchTerms = mSearchView.getQuery().toString();
             // Both toLowerCase(Locale.US) and toLowerCase(Locale.getDefault()) would be wrong here. Keywords are pulled
@@ -594,10 +562,8 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         String tag = null;
         switch(id) {
             case DIALOG_TAGS:
-                allTags = mCol.getTags().all().toArray(new String[0]);
-
                 TagsDialog dialog = com.ichi2.anki.dialogs.TagsDialog.newInstance(
-                    TagsDialog.TYPE_FILTER_BY_TAG, new ArrayList<String>(), new ArrayList<String>(mCol.getTags().all()));
+                    TagsDialog.TYPE_FILTER_BY_TAG, new ArrayList<String>(), new ArrayList<String>(getCol().getTags().all()));
                 dialog.setTagsDialogListener(new TagsDialogListener() {                    
                     @Override
                     public void onPositive(List<String> selectedTags, int option) {
@@ -665,11 +631,11 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                                     mOrderAsc = false;
                                     try {
                                         if (mOrder == 0) {
-                                            mCol.getConf().put("sortType", fSortTypes[1]);
+                                            getCol().getConf().put("sortType", fSortTypes[1]);
                                             AnkiDroidApp.getSharedPrefs(getBaseContext()).edit()
                                                     .putBoolean("cardBrowserNoSorting", true).commit();
                                         } else {
-                                            mCol.getConf().put("sortType", fSortTypes[mOrder]);
+                                            getCol().getConf().put("sortType", fSortTypes[mOrder]);
                                             AnkiDroidApp.getSharedPrefs(getBaseContext()).edit()
                                                     .putBoolean("cardBrowserNoSorting", false).commit();
                                         }
@@ -677,7 +643,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                                         if (fSortTypes[mOrder].equals("noteFld")) {
                                             mOrderAsc = true;
                                         }
-                                        mCol.getConf().put("sortBackwards", mOrderAsc);
+                                        getCol().getConf().put("sortBackwards", mOrderAsc);
                                     } catch (JSONException e) {
                                         throw new RuntimeException(e);
                                     }
@@ -685,7 +651,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                                 } else if (which != CARD_ORDER_NONE) {
                                     mOrderAsc = !mOrderAsc;
                                     try {
-                                        mCol.getConf().put("sortBackwards", mOrderAsc);
+                                        getCol().getConf().put("sortBackwards", mOrderAsc);
                                     } catch (JSONException e) {
                                         throw new RuntimeException(e);
                                     }
@@ -705,7 +671,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                 entries[CONTEXT_MENU_MARK] = res.getString(R.string.card_browser_mark_card);
                 entries[CONTEXT_MENU_SUSPEND] = res.getString(R.string.card_browser_suspend_card);
                 entries[CONTEXT_MENU_DELETE] = res.getString(R.string.card_browser_delete_card);
-                entries[CONTEXT_MENU_DETAILS] = res.getString(R.string.card_browser_card_details);
+                entries[CONTEXT_MENU_DETAILS] = res.getString(R.string.card_editor_preview_card);
                 builder.setTitle("contextmenu");
                 builder.setIcon(R.drawable.ic_menu_manage);
                 builder.setItems(entries, mContextMenuListener);
@@ -739,13 +705,13 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                 int flags = Integer.parseInt(card.get("flags"));
                 if (flags == 2 || flags == 3) {
                     ad.changeListItem(CONTEXT_MENU_MARK, res.getString(R.string.card_browser_unmark_card));
-                    Log.d(AnkiDroidApp.TAG, "Selected Card is currently marked");
+                    // Log.d(AnkiDroidApp.TAG, "Selected Card is currently marked");
                 } else {
                     ad.changeListItem(CONTEXT_MENU_MARK, res.getString(R.string.card_browser_mark_card));
                 }
                 if (flags == 1 || flags == 3) {
                     ad.changeListItem(CONTEXT_MENU_SUSPEND, res.getString(R.string.card_browser_unsuspend_card));
-                    Log.d(AnkiDroidApp.TAG, "Selected Card is currently suspended");
+                    // Log.d(AnkiDroidApp.TAG, "Selected Card is currently suspended");
                 } else {
                     ad.changeListItem(CONTEXT_MENU_SUSPEND, res.getString(R.string.card_browser_suspend_card));
                 }
@@ -765,15 +731,12 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         } else {
             JSONObject deck = mDropDownDecks.get(position - 1);
             String deckName;
-            Long deckId;
             try {
                 deckName = deck.getString("name");
-                deckId = deck.getLong("id");
             } catch (JSONException e) {
                 throw new RuntimeException();
             }
             mRestrictOnDeck = "deck:'" + deckName + "' ";
-            AnkiDroidApp.getCol().getDecks().select(deckId);
         }
         searchCards();
         return true;
@@ -782,60 +745,13 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
 
     private void searchCards() {
         String searchText = mRestrictOnDeck + mSearchTerms;
-        if (mCol != null) {
+        if (colOpen()) {
             // clear the existing card list
             mCards.clear();
             // Perform database query to get all card ids / sfld. Shows "filtering cards..." progress message
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SEARCH_CARDS, mSearchCardsHandler, new DeckTask.TaskData(
-                    new Object[] { mCol, mDeckNames, searchText, ((mOrder == CARD_ORDER_NONE) ? false : true) }));
+                    new Object[] { getCol(), mDeckNames, searchText, ((mOrder == CARD_ORDER_NONE) ? false : true) }));
         }
-    }
-
-
-    private void reloadCollection() {
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_OPEN_COLLECTION, new DeckTask.TaskListener() {
-
-            @Override
-            public void onPostExecute(DeckTask.TaskData result) {
-                if (mOpenCollectionDialog.isShowing()) {
-                    try {
-                        mOpenCollectionDialog.dismiss();
-                    } catch (Exception e) {
-                        Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
-                    }
-                }
-                mCol = result.getCollection();
-                if (mCol == null) {
-                    finish();
-                } else {
-                    initActivity(AnkiDroidApp.getCol());
-                }
-            }
-
-
-            @Override
-            public void onPreExecute() {
-                mOpenCollectionDialog = StyledOpenCollectionDialog.show(CardBrowser.this,
-                        getResources().getString(R.string.open_collection), new OnCancelListener() {
-                            @Override
-                            public void onCancel(DialogInterface arg0) {
-                                finish();
-                            }
-                        });
-            }
-
-
-            @Override
-            public void onProgressUpdate(DeckTask.TaskData... values) {
-            }
-
-
-            @Override
-            public void onCancelled() {
-                // TODO Auto-generated method stub
-                
-            }
-        }, new DeckTask.TaskData(AnkiDroidApp.getCurrentAnkiDroidDirectory() + AnkiDroidApp.COLLECTION_PATH));
     }
 
 
@@ -879,7 +795,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
             // update deck
             String deckName;
             try {
-                deckName = mCol.getDecks().get(card.getDid()).getString("name");
+                deckName = getCol().getDecks().get(card.getDid()).getString("name");
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
@@ -973,7 +889,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
-            Log.i(AnkiDroidApp.TAG, "Card Browser - mUpdateCardHandler.onPostExecute()");
+            // Log.i(AnkiDroidApp.TAG, "Card Browser - mUpdateCardHandler.onPostExecute()");
             if (!result.getBoolean()) {
                 closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
             }
@@ -984,8 +900,6 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
 
         @Override
         public void onCancelled() {
-            // TODO Auto-generated method stub
-            
         }
     };
 
@@ -1010,7 +924,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                 // if (fSearchSuspendedPattern.matcher(mSearchTerms).find()) {
                 // updateCardsList();
                 // }
-                updateCardInList(mCol.getCard(Long.parseLong(mCards.get(mPositionInCardsList).get("id"))), null);
+                updateCardInList(getCol().getCard(Long.parseLong(mCards.get(mPositionInCardsList).get("id"))), null);
             } else {
                 closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
             }
@@ -1021,8 +935,6 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
 
         @Override
         public void onCancelled() {
-            // TODO Auto-generated method stub
-            
         }
     };
 
@@ -1049,17 +961,17 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
 
         @Override
         public void onCancelled() {
-            // TODO Auto-generated method stub
-            
         }
     };
 
     private DeckTask.TaskListener mSearchCardsHandler = new DeckTask.TaskListener() {
         @Override
         public void onProgressUpdate(TaskData... values) {
-            mCards.clear();
-            mCards.addAll(values[0].getCards());
-            updateList();
+            if (mCards != null && values[0]!= null) {
+                mCards.clear();
+                mCards.addAll(values[0].getCards());
+                updateList();
+            }
         }
 
 
@@ -1072,7 +984,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                         new DialogInterface.OnCancelListener(){
                             @Override
                             public void onCancel(DialogInterface dialog){
-                                Log.i(AnkiDroidApp.TAG, "Search cards dialog dismissed");
+                                // Log.i(AnkiDroidApp.TAG, "Search cards dialog dismissed");
                                 DeckTask.cancelTask(DeckTask.TASK_TYPE_SEARCH_CARDS);
                                 sSearchCancelled = true;
                             }
@@ -1088,18 +1000,17 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         @Override
         public void onPostExecute(TaskData result) {            
             if (result != null) {
-                Log.i(AnkiDroidApp.TAG, "Completed doInBackgroundSearchCards Successfuly");
-                mTotalCount = result.getInt();
+                // Log.i(AnkiDroidApp.TAG, "Completed doInBackgroundSearchCards Successfuly");
                 updateList();
                 if (mProgressDialog != null && mProgressDialog.isShowing()) {
                     mProgressDialog.dismiss();
                 }
                 // After the initial searchCards query, start rendering the question and answer in the background
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_RENDER_BROWSER_QA, mRenderQAHandler, new DeckTask.TaskData(
-                        new Object[] { mCol, mCards }));
+                        new Object[] { getCol(), mCards }));
             } else {
                 // this is a hack -- see DeckTask.launchDeckTask for more info
-                Log.i(AnkiDroidApp.TAG, "doInBackgroundSearchCards onPostExecute() called but result was null");
+                // Log.i(AnkiDroidApp.TAG, "doInBackgroundSearchCards onPostExecute() called but result was null");
                 sSearchCancelled = false;
             }
         }
@@ -1107,7 +1018,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         @Override
         public void onCancelled(){
             // reset the hacky static variable which Finder is listening to check if main thread has requested cancellation
-            Log.i(AnkiDroidApp.TAG, "doInBackgroundSearchCards onCancelled() called");
+            // Log.i(AnkiDroidApp.TAG, "doInBackgroundSearchCards onCancelled() called");
             sSearchCancelled = false;
         }
     };
@@ -1127,7 +1038,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         @Override
         public void onPostExecute(TaskData result) {
             if (result != null) {
-                Log.i(AnkiDroidApp.TAG, "Completed doInBackgroundRenderBrowserQA Successfuly");
+                // Log.i(AnkiDroidApp.TAG, "Completed doInBackgroundRenderBrowserQA Successfuly");
             } else {
                 // Might want to do something more proactive here like show a message box?
                 Log.e(AnkiDroidApp.TAG, "doInBackgroundRenderBrowserQA was not successful... continuing anyway");
@@ -1137,86 +1048,8 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
 
         @Override
         public void onCancelled() {
-            // TODO Auto-generated method stub
-            
         }
     };
-
-    private DeckTask.TaskListener mReloadCardsHandler = new DeckTask.TaskListener() {
-        @Override
-        public void onProgressUpdate(TaskData... values) {
-        }
-
-
-        @Override
-        public void onPreExecute() {
-            Resources res = getResources();
-            if (mProgressDialog != null && mProgressDialog.isShowing()) {
-                mProgressDialog.setMessage(res.getString(R.string.card_browser_load));
-            } else {
-                mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "",
-                        res.getString(R.string.card_browser_load), true);
-            }
-        }
-
-
-        @Override
-        public void onPostExecute(TaskData result) {
-            if (mProgressDialog != null && mProgressDialog.isShowing()) {
-                mProgressDialog.dismiss();
-            }
-            mCards.clear();
-            mCards.addAll(result.getCards());
-            updateList();
-        }
-
-
-        @Override
-        public void onCancelled() {
-            // TODO Auto-generated method stub
-            
-        }
-    };
-
-    private DeckTask.TaskListener mSortCardsHandler = new DeckTask.TaskListener() {
-        @Override
-        public void onPreExecute() {
-            Resources res = getResources();
-            if (mProgressDialog != null && mProgressDialog.isShowing()) {
-                mProgressDialog.setMessage(res.getString(R.string.card_browser_sorting_cards));
-            } else {
-                mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "",
-                        res.getString(R.string.card_browser_sorting_cards), true);
-            }
-        }
-
-
-        @Override
-        public void onProgressUpdate(DeckTask.TaskData... values) {
-        }
-
-
-        @Override
-        public void onPostExecute(DeckTask.TaskData result) {
-            // FIXME:
-            searchCards();
-            if (mProgressDialog != null && mProgressDialog.isShowing()) {
-                mProgressDialog.dismiss();
-            }
-        }
-
-
-        @Override
-        public void onCancelled() {
-            // TODO Auto-generated method stub
-            
-        }
-    };
-
-
-    private void closeCardBrowser() {
-        closeCardBrowser(RESULT_CANCELED);
-    }
 
 
     private void closeCardBrowser(int result) {
@@ -1463,7 +1296,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                 @Override
                 public void onReceive(Context context, Intent intent) {
                     if (intent.getAction().equals(SdCardReceiver.MEDIA_EJECT)) {
-                        finish();
+                        finishWithoutAnimation();
                     }
                 }
             };

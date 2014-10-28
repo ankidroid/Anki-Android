@@ -23,14 +23,14 @@ Voeg materiaal toe via de desktopapplicatie Anki of rechtstreeks via AnkiDroid. 
 • whiteboard
 • kaarten bewerken/toevoegen
 • kaartenbrowser
-• opmaak voor tablet
+• tablet lay-out
 • importeren van bestaande verzameling bestanden (via Anki Desktop)
 • Woordenboekintegratie (ColorDict, GoldenDict, Leo.org, Aedict, diverse online woordenboeken)
 • kaarten via het intent-protocol toevoegen vanuit andere toepassingen zoals woordenboeken
 • ondersteuning voor aangepaste lettertypes
 • volledig backupsysteem
-• navigation by swipe, tap
-• customisable
+• navigatie door vegen en tikken
+• aanpasbaar
 • dynamisch sorteren van sets
 • nachtmodus
 • 27 talen

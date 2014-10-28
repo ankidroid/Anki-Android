@@ -72,7 +72,7 @@
         <item>12</item>
         <item>13</item>
         <item>14</item>
-        <item>15</item>
+        <!--15 reserved for clear whiteboard action-->
         <item>16</item>
         <item>17</item>
     </string-array>
@@ -84,7 +84,8 @@
         <item>4</item>
     </string-array>
 
-    <string name="link_anki">https://ankiweb.net</string>
+    <string name="link_anki">http://ankisrs.net</string>
+    <string name="link_ankiweb">https://ankiweb.net</string>
     <string name="link_ankidroid">http://code.google.com/p/ankidroid</string>
     <string name="link_forum">http://groups.google.com/group/anki-android</string>
     <string name="link_wiki">http://code.google.com/p/ankidroid/wiki/Index</string>
@@ -96,8 +97,9 @@
     <string name="link_wikipedia_open_source">http://en.wikipedia.org/wiki/Open_source_software</string>
     <string name="link_contribution">http://code.google.com/p/ankidroid/wiki/Contribution</string>
     <string name="link_contribution_contributors">http://code.google.com/p/ankidroid/wiki/Contribution</string>
-    <string name="link_help">http://code.google.com/p/ankidroid/wiki/Help</string>
-    <string name="link_faq">https://code.google.com/p/ankidroid/wiki/FAQ</string>
+    <string name="link_help">http://ankidroid.org/help.html</string>
+    <string name="link_manual">http://ankidroid.org/manual.html</string>
+    <string name="link_manual_getting_started">http://ankidroid.org/manual.html#gettingStarted</string>
     <string name="link_hebrew_font">http://code.google.com/p/ankidroid/downloads/detail?name=Tohu.ttf</string>
     <string name="error_email">ankidroid@gmail.com</string>
     <string name="error_post_url">http://ankidroid-triage.appspot.com/crash_receiver</string>
@@ -107,26 +109,6 @@
     <string name="repair_deck">http://ankisrs.net/docs/DeckErrors.html</string>
     <string name="resetpw_url">http://ankiweb.net/account/resetpw</string>
 
-    <string-array name="tutorial_capitals_questions">
-        <item>Cambodia</item>
-        <item>Chile</item>
-        <item>Egypt</item>
-        <item>Estonia</item>
-        <item>Iceland</item>
-        <item>Nigeria</item>
-        <item>Mali</item>
-        <item>Seychelles</item>
-    </string-array>
-    <string-array name="tutorial_capitals_answers">
-        <item>Phnom Penh</item>
-        <item>Santiago</item>
-        <item>Cairo</item>
-        <item>Tallinn</item>
-        <item>Reykjavík</item>
-        <item>Abuja</item>
-        <item>Bamako</item>
-        <item>Victoria</item>
-    </string-array>
     <string-array name="leech_action_values">
         <item>0</item>
         <item>1</item>

@@ -22,9 +22,9 @@ package com.ichi2.libanki;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.util.Log;
+import android.util.Pair;
 
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.Pair;
 import com.samskivert.mustache.Mustache;
 import com.samskivert.mustache.Template;
 
@@ -648,12 +648,12 @@ public class Models {
     public void renameField(JSONObject m, JSONObject field, String newName) {
         mCol.modSchema();
         try {
-            String pat = String.format("\\{\\{([:#^/]|[^:#/^}][^:}]*?:|)%s\\}\\}",
+            String pat = String.format("\\{\\{(.*)([:#^/]|[^:#/^}][^:}]*?:|)%s\\}\\}",
                     Pattern.quote(field.getString("name")));
             if (newName == null) {
                 newName = "";
             }
-            String repl = "{{$1" + newName + "}}";
+            String repl = "{{$1$2" + newName + "}}";
 
             JSONArray tmpls = m.getJSONArray("tmpls");
             for (int i = 0; i < tmpls.length(); ++i) {
@@ -930,7 +930,7 @@ public class Models {
 
             txt = _fields.get(tag);
 
-            Log.d(AnkiDroidApp.TAG, "Processing field modifier " + mod + ": extra = " + extra + ", field " + tag + " = " + txt);
+            // Log.d(AnkiDroidApp.TAG, "Processing field modifier " + mod + ": extra = " + extra + ", field " + tag + " = " + txt);
 
             // built-in modifiers
             if (mod.equals("text")) {

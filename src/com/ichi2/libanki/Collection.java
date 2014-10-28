@@ -21,12 +21,13 @@ import android.content.ContentValues;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.text.TextUtils;
 import android.util.Log;
+import android.util.Pair;
 
 import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.Pair;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.samskivert.mustache.MustacheException;
@@ -35,7 +36,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -84,6 +89,8 @@ public class Collection {
     private LinkedList<Object[]> mUndo;
 
     private String mPath;
+    private boolean mDebugLog;
+    private PrintWriter mLogHnd;
 
     // Cloze regex
     private static final Pattern fClozePattern = Pattern.compile("\\{\\{cloze:");
@@ -123,13 +130,19 @@ public class Collection {
         this(db, path, false);
     }
 
-
     public Collection(AnkiDb db, String path, boolean server) {
+        this(db, path, false, false);
+    }
+
+    public Collection(AnkiDb db, String path, boolean server, boolean log) {
+        mDebugLog = log;
         mDb = db;
+        mPath = path;
+        _openLog();
+        log(path, AnkiDroidApp.getPkgVersionName());
         mServer = server;
         mLastSave = Utils.now();
         clearUndo();
-        mPath = path;
         mMedia = new Media(this, server);
         mModels = new Models(this);
         mDecks = new Decks(this);
@@ -210,7 +223,7 @@ public class Collection {
      * Flush state to DB, updating mod time.
      */
     public void flush(long mod) {
-        Log.i(AnkiDroidApp.TAG, "flush - Saving information to DB...");
+        // Log.i(AnkiDroidApp.TAG, "flush - Saving information to DB...");
         mMod = (mod == 0 ? Utils.intNow(1000) : mod);
         ContentValues values = new ContentValues();
         values.put("crt", mCrt);
@@ -304,12 +317,13 @@ public class Collection {
                     lock();
                 }
             } catch (RuntimeException e) {
-    			AnkiDroidApp.saveExceptionReportFile(e, "closeDB");
+                AnkiDroidApp.saveExceptionReportFile(e, "closeDB");
             }
             AnkiDatabaseManager.closeDatabase(mPath);
             mDb = null;
             mMedia.close();
-            Log.i(AnkiDroidApp.TAG, "Collection closed");
+            _closeLog();
+            // Log.i(AnkiDroidApp.TAG, "Collection closed");
         }
     }
 
@@ -318,6 +332,7 @@ public class Collection {
         if (mDb == null) {
             mDb = AnkiDatabaseManager.getDatabase(mPath);
             mMedia.connect();
+            _openLog();
         }
     }
 
@@ -908,6 +923,7 @@ public class Collection {
         String[] flist = Utils.splitFields((String) data[6]);
         Map<String, String> fields = new HashMap<String, String>();
         long modelId = (Long) data[2];
+        int cardNum = ((Integer) data[4]) + 1;
         JSONObject model = mModels.get(modelId);
         Map<String, Pair<Integer, JSONObject>> fmap = mModels.fieldMap(model);
         for (String fname : fmap.keySet()) {
@@ -924,7 +940,7 @@ public class Collection {
                 template = model.getJSONArray("tmpls").getJSONObject(0);
             }
             fields.put("Card", template.getString("name"));
-            fields.put("c" + (((Integer) data[4]) + 1), "1");
+            fields.put("c" + cardNum, "1");
 
             // render q & a
             HashMap<String, String> d = new HashMap<String, String>();
@@ -938,9 +954,9 @@ public class Collection {
                 // runFilter mungeFields for type "q"
                 Models.fieldParser fparser = new Models.fieldParser(fields);
                 Matcher m = fClozePattern.matcher(qfmt);
-                format = m.replaceFirst(String.format(Locale.US, "{{cq:%d:", ((Integer) data[4]) + 1));
+                format = m.replaceAll(String.format(Locale.US, "{{cq:%d:", cardNum));
                 m = fAltClozePattern.matcher(format);
-                format = m.replaceFirst(String.format(Locale.US, "<%%cq:%d:",((Integer) data[4]) + 1));
+                format = m.replaceAll(String.format(Locale.US, "<%%cq:%d:", cardNum));
                 html = mModels.getCmpldTemplate(format).execute(fparser);
                 html = (String) AnkiDroidApp.getHooks().runFilter("mungeQA", html, "q", fields, model, data, this);
                 d.put("q", html);
@@ -959,9 +975,9 @@ public class Collection {
                 // runFilter mungeFields for type "a"
                 fparser = new Models.fieldParser(fields);
                 m = fClozePattern.matcher(afmt);
-                format = m.replaceFirst(String.format(Locale.US, "{{ca:%d:", ((Integer) data[4]) + 1));
+                format = m.replaceAll(String.format(Locale.US, "{{ca:%d:", cardNum));
                 m = fAltClozePattern.matcher(format);
-                format = m.replaceFirst(String.format(Locale.US, "<%%ca:%d:", ((Integer) data[4]) + 1));
+                format = m.replaceAll(String.format(Locale.US, "<%%ca:%d:", cardNum));
                 html = mModels.getCmpldTemplate(format).execute(fparser);
                 html = (String) AnkiDroidApp.getHooks().runFilter("mungeQA", html, "a", fields, model, data, this);
                 d.put("a", html);
@@ -1169,6 +1185,12 @@ public class Collection {
     	switch ((Integer)data[0]) {
     	case UNDO_REVIEW:
             Card c = (Card) data[1];
+            // remove leech tag if it didn't have it before
+            Boolean wasLeech = (Boolean) data[2];
+            if (!wasLeech && c.note().hasTag("leech")) {
+                c.note().delTag("leech");
+                c.note().flush();
+            }
             // write old data
             c.flush(false);
             // and delete revlog entry
@@ -1252,7 +1274,7 @@ public class Collection {
     public void markUndo(int type, Object[] o) {
     	switch(type) {
     	case UNDO_REVIEW:
-    		mUndo.add(new Object[]{type, ((Card)o[0]).clone()});
+    		mUndo.add(new Object[]{type, ((Card)o[0]).clone(), o[1]});
     		break;
     	case UNDO_EDIT_NOTE:
     		mUndo.add(new Object[]{type, ((Note)o[0]).clone(), o[1], o[2]});
@@ -1283,7 +1305,7 @@ public class Collection {
 
 
     public void markReview(Card card) {
-        markUndo(UNDO_REVIEW, new Object[]{card});
+        markUndo(UNDO_REVIEW, new Object[]{card, card.note().hasTag("leech")});
     }
 
     /**
@@ -1482,12 +1504,58 @@ public class Collection {
 
 
     public void optimize() {
-        Log.i(AnkiDroidApp.TAG, "executing VACUUM statement");
+        // Log.i(AnkiDroidApp.TAG, "executing VACUUM statement");
         mDb.execute("VACUUM");
-        Log.i(AnkiDroidApp.TAG, "executing ANALYZE statement");
+        // Log.i(AnkiDroidApp.TAG, "executing ANALYZE statement");
         mDb.execute("ANALYZE");
     }
 
+
+    /**
+     * Logging
+     * ***********************************************************
+     */
+
+    public void log(Object... args) {
+        if (!mDebugLog) {
+            return;
+        }
+        StackTraceElement trace = Thread.currentThread().getStackTrace()[3];
+        String s = String.format("[%s] %s:%s(): %s", Utils.intNow(), trace.getFileName(), trace.getMethodName(),
+                TextUtils.join(",  ", args));
+        mLogHnd.println(s);
+        // Log.d(AnkiDroidApp.TAG, s);
+    }
+
+
+    private void _openLog() {
+        if (!mDebugLog) {
+            return;
+        }
+        try {
+            File lpath = new File(mPath.replaceFirst("\\.anki2$", ".log"));
+            if (lpath.exists() && lpath.length() > 10*1024*1024) {
+                File lpath2 = new File(lpath + ".old");
+                if (lpath2.exists()) {
+                    lpath2.delete();
+                }
+                lpath.renameTo(lpath2);
+            }
+            mLogHnd = new PrintWriter(new BufferedWriter(new FileWriter(lpath, true)), true);
+        } catch (IOException e) {
+            // turn off logging if we can't open the log file
+            Log.e(AnkiDroidApp.TAG, "Failed to open collection.log file - disabling logging");
+            mDebugLog = false;
+        }
+    }
+
+
+    private void _closeLog() {
+        if (mLogHnd != null) {
+            mLogHnd.close();
+            mLogHnd = null;
+        }
+    }
 
     /**
      * Getters/Setters ********************************************************** *************************************

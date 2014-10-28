@@ -27,11 +27,10 @@ languages = ['ar', 'bg', 'ca', 'cs', 'de', 'el', 'es-AR', 'es-ES', 'et', 'fa', '
 # languages which are localized for more than one region
 localizedRegions = ['es', 'pt', 'zh']
 
-fileNames = ['01-core', '02-strings', '03-dialogs', '04-network', '05-feedback', '06-statistics', '07-cardbrowser', '08-widget', '09-backup', '10-preferences', '11-arrays', '12-tutorial', '13-newfeatures', '14-marketdescription', '15-markettitle']
+fileNames = ['01-core', '02-strings', '03-dialogs', '04-network', '05-feedback', '06-statistics', '07-cardbrowser', '08-widget', '09-backup', '10-preferences', '11-arrays', '13-newfeatures', '14-marketdescription', '15-markettitle']
 anyError = False
 titleFile = 'docs/marketing/localized_description/ankidroid-titles.txt'
 titleString = 'AnkiDroid Flashcards'
-
 
 import os
 import zipfile
@@ -39,6 +38,7 @@ import urllib
 import string
 import re
 import difflib
+import subprocess
 
 def replacechars(filename, fileExt, isCrowdin):
 	s = open(filename,"r+")
@@ -99,13 +99,11 @@ def replacechars(filename, fileExt, isCrowdin):
 		print 'Error in file ' + filename
 		return False
 	else:
-		print 'File ' + filename + ' successfully copied'
+		# print 'File ' + filename + ' successfully copied' # Disabled, makes output too large.
 		return True
 
 def fileExtFor(f):
-	if f == '12-tutorial':
-		return '.csv'
-	elif f == '14-marketdescription':
+	if f == '14-marketdescription':
 		return '.txt'
 	elif f == '15-markettitle':
 		return '.txt'
@@ -147,6 +145,19 @@ def update(valuesDirectory, f, source, fileExt, isCrowdin, language=''):
 		file(newfile, 'w').write(source)
 		return replacechars(newfile, fileExt, isCrowdin)
 
+def build():
+	try:
+		c = open("tools/crowdin_key.txt","r+")
+		CROWDIN_KEY = c.readline();
+		c.close()
+		print "Building ZIP on server..."
+		urllib.urlopen('https://api.crowdin.com/api/project/ankidroid/export?key=' + CROWDIN_KEY)
+		print "Built."
+	except IOError as e:
+		print "No crowdin_key.txt file, skipping build."
+
+build()
+
 zipname = 'ankidroid.zip'
 
 print "Downloading Crowdin file"
@@ -180,18 +191,12 @@ for language in languages:
 		print "At least one file of the last handled language contains an error."
 		anyError = False
 
-# Special case: English tutorial.
-valuesDirectory = "res/values/"
-createIfNotExisting(valuesDirectory)
-f = '12-tutorial'
-fileExt = fileExtFor(f)
-source = open("assets/" + 'tutorial' + fileExt)
-#Note: the original tutorial.csv has less columns, therefore we have special
-#support for its syntax.
-print
-update(valuesDirectory, f, source.read(), fileExt, False)
-
 print "\nRemoving Crowdin file\n"
 os.remove(zipname)	
 
+print "Committing updates. Please add any fixes as another commit."
+subprocess.call("git add docs/marketing/localized_description res/values*", shell=True)
+subprocess.call("git commit -m 'Updated strings from Crowdin'", shell=True)
 
+print "Checking with Lint."
+subprocess.call("lint . --config lint.xml --nowarn --exitcode", shell=True)

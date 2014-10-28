@@ -23,6 +23,7 @@ import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
+import com.ichi2.anki.exception.UnknownHttpResponseException;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
@@ -38,7 +39,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Locale;
 
-public class FullSyncer extends BasicHttpSyncer {
+public class FullSyncer extends HttpSyncer {
 
     Collection mCol;
     Connection mCon;
@@ -62,7 +63,7 @@ public class FullSyncer extends BasicHttpSyncer {
 
 
     @Override
-    public Object[] download() {
+    public Object[] download() throws UnknownHttpResponseException {
         InputStream cont;
         try {
             HttpResponse ret = super.req("download");
@@ -118,7 +119,7 @@ public class FullSyncer extends BasicHttpSyncer {
 
 
     @Override
-    public Object[] upload() {
+    public Object[] upload() throws UnknownHttpResponseException {
         // make sure it's ok before we try to upload
         mCon.publishProgress(R.string.sync_check_upload_file);
         if (!mCol.getDb().queryString("PRAGMA integrity_check").equalsIgnoreCase("ok")) {

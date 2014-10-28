@@ -1,5 +1,6 @@
 /***************************************************************************************
  * Copyright (c) 2012 Norbert Nagold <norbert.nagold@gmail.com>                         *
+ * Copyright (c) 2014 Timothy Rae <perceptualchaos2@gmail.com>                          *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -17,6 +18,7 @@
 package com.ichi2.libanki.sync;
 
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.exception.UnknownHttpResponseException;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Utils;
@@ -31,16 +33,17 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Locale;
 
-public class RemoteServer extends BasicHttpSyncer {
+public class RemoteServer extends HttpSyncer {
 
     public RemoteServer(Connection con, String hkey) {
         super(hkey, con);
     }
 
 
-    /** Returns hkey or none if user/pw incorrect. */
+    /** Returns hkey or none if user/pw incorrect. 
+     * @throws UnknownHttpResponseException */
     @Override
-    public HttpResponse hostKey(String user, String pw) {
+    public HttpResponse hostKey(String user, String pw) throws UnknownHttpResponseException {
         try {
             mPostVars = new HashMap<String, Object>();
             JSONObject jo = new JSONObject();
@@ -54,7 +57,7 @@ public class RemoteServer extends BasicHttpSyncer {
 
 
     @Override
-    public HttpResponse register(String user, String pw) {
+    public HttpResponse register(String user, String pw) throws UnknownHttpResponseException {
         try {
             JSONObject jo = new JSONObject();
             jo.put("u", URLEncoder.encode(user, "UTF-8"));
@@ -69,7 +72,7 @@ public class RemoteServer extends BasicHttpSyncer {
 
 
     @Override
-    public HttpResponse meta() {
+    public HttpResponse meta() throws UnknownHttpResponseException {
         try {
             mPostVars = new HashMap<String, Object>();
             mPostVars.put("k", mHKey);
@@ -86,43 +89,40 @@ public class RemoteServer extends BasicHttpSyncer {
 
 
     @Override
-    public JSONObject applyChanges(JSONObject kw) {
+    public JSONObject applyChanges(JSONObject kw) throws UnknownHttpResponseException {
         return _run("applyChanges", kw);
     }
 
 
     @Override
-    public JSONObject start(JSONObject kw) {
+    public JSONObject start(JSONObject kw) throws UnknownHttpResponseException {
         return _run("start", kw);
     }
 
 
     @Override
-    public JSONObject chunk() {
+    public JSONObject chunk() throws UnknownHttpResponseException {
         JSONObject co = new JSONObject();
         return _run("chunk", co);
     }
 
 
     @Override
-    public void applyChunk(JSONObject sech) {
+    public void applyChunk(JSONObject sech) throws UnknownHttpResponseException {
         _run("applyChunk", sech);
     }
 
 
     @Override
-    public JSONObject sanityCheck2(JSONObject client) {
+    public JSONObject sanityCheck2(JSONObject client) throws UnknownHttpResponseException {
         return _run("sanityCheck2", client);
     }
 
 
     @Override
-    public long finish() {
+    public long finish() throws UnknownHttpResponseException {
         try {
             HttpResponse ret = super.req("finish", super.getInputStream("{}"));
-            if (ret == null) {
-                return 0;
-            }
             String s = super.stream2String(ret.getEntity().getContent());
             return Long.parseLong(s);
         } catch (NumberFormatException e) {
@@ -135,24 +135,15 @@ public class RemoteServer extends BasicHttpSyncer {
     }
 
 
-    private JSONObject _run(String cmd, JSONObject data) {
+    private JSONObject _run(String cmd, JSONObject data) throws UnknownHttpResponseException {
         HttpResponse ret = super.req(cmd, super.getInputStream(Utils.jsonToString(data)));
-        if (ret == null) {
-            return null;
-        }
-        String s = "";
         try {
-            int resultType = ret.getStatusLine().getStatusCode();
-            if (resultType == 200) {
-                s = super.stream2String(ret.getEntity().getContent());
-                if (!s.equalsIgnoreCase("null") && s.length() != 0) {
-                    return new JSONObject(s);
-                }
+            String s = super.stream2String(ret.getEntity().getContent());
+            if (!s.equalsIgnoreCase("null") && s.length() != 0) {
+                return new JSONObject(s);
+            } else {
+                return new JSONObject();
             }
-            JSONObject o = new JSONObject();
-            o.put("errorType", resultType);
-            o.put("errorReason", s.equals("null") ? "null result (" + cmd + ")" : ret.getStatusLine().getReasonPhrase());
-            return o;
         } catch (IllegalStateException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
