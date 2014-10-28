@@ -160,8 +160,8 @@
   <string name="day_offset_summ">XXX uur na middernacht</string>
   <string name="input_workaround">Input workaround</string>
   <string name="input_workaround_summ">Workaround for focusing problems on HTML input boxes. Causes problems on several devices.</string>
-  <string name="pref_keep_screen_on">Keep screen on</string>
-  <string name="pref_keep_screen_on_summ">Disable screen timeout</string>
+  <string name="pref_keep_screen_on">Scherm aanlaten</string>
+  <string name="pref_keep_screen_on_summ">Schermtimeout uitschakelen</string>
   <string name="pref_simple_interface">Eenvoudige interface</string>
   <string name="pref_simple_interface_summ">Versnelt de weergave van de kaart maar biedt beperkte ondersteuning voor html</string>
   <string name="pref_simple_interface_exclude_tags">Tags to exclude</string>
@@ -239,7 +239,7 @@
   </plurals>
   <string name="deck_conf_set_subdecks_title">Instellen voor alle subsets</string>
   <string name="deck_conf_set_subdecks_message">Huidige set aan instellingen laten gelden voor alle subsets van deze set?</string>
-  <string name="pref_browser_editor_font">Browser and editor font</string>
+  <string name="pref_browser_editor_font">Letter browser/bewerker</string>
   <string name="pref_browser_editor_font_summ">XXX</string>
   <string name="deck_conf_cram_filter">Filter</string>
   <string name="deck_conf_cram_options">Opties</string>
