@@ -205,7 +205,7 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
     // Method for loading the collection which is inherited by all AnkiActivitys
     public void startLoadingCollection() {
         // Initialize the open collection loader
-        Log.i(AnkiDroidApp.TAG, "AnkiActivity.startLoadingCollection()");
+        // Log.i(AnkiDroidApp.TAG, "AnkiActivity.startLoadingCollection()");
         if (!AnkiDroidApp.colIsOpen()) {
             showOpeningCollectionDialog();
         }
@@ -402,7 +402,7 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
     // Restart the activity
     @SuppressLint("NewApi")
     protected void restartActivity() {
-        Log.i(AnkiDroidApp.TAG, "AnkiActivity -- restartActivity()");
+        // Log.i(AnkiDroidApp.TAG, "AnkiActivity -- restartActivity()");
         // update language
         AnkiDroidApp.setLanguage(AnkiDroidApp.getSharedPrefs(getBaseContext()).getString(Preferences.LANGUAGE, ""));
         Intent intent = new Intent();

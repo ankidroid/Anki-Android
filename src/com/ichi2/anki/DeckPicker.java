@@ -385,7 +385,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     /** Called when the activity is first created. */
     @Override
     protected void onCreate(Bundle savedInstanceState) throws SQLException {
-        Log.i(AnkiDroidApp.TAG, "DeckPicker - onCreate");
+        // Log.i(AnkiDroidApp.TAG, "DeckPicker - onCreate");
         Intent intent = getIntent();
         // Show splashscreen if app first starting
         if (intent.getCategories()!= null || !AnkiDroidApp.colIsOpen()) {
@@ -579,7 +579,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                     public void onClick(DialogInterface dialog, int which) {
                         String deckName = mDialogEditText.getText().toString()
                                 .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
-                        Log.i(AnkiDroidApp.TAG, "Creating deck: " + deckName);
+                        // Log.i(AnkiDroidApp.TAG, "Creating deck: " + deckName);
                         getCol().getDecks().id(deckName, true);
                         loadCounts();
                     }
@@ -705,7 +705,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 mImportPath = null;
             }
         } else if (requestCode == REQUEST_REVIEW) {
-            Log.i(AnkiDroidApp.TAG, "Result code = " + resultCode);
+            // Log.i(AnkiDroidApp.TAG, "Result code = " + resultCode);
             switch (resultCode) {
                 default:
                     // do not reload counts, if activity is created anew because it has been before destroyed by android
@@ -724,7 +724,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
     @Override
     protected void onResume() {
-        Log.i(AnkiDroidApp.TAG, "DeckPicker - onResume");
+        // Log.i(AnkiDroidApp.TAG, "DeckPicker - onResume");
         super.onResume();
         if (colOpen() && AnkiDroidApp.isSdCardMounted()) {
             loadCounts();
@@ -755,7 +755,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
     @Override
     protected void onPause() {
-        Log.i(AnkiDroidApp.TAG, "DeckPicker - onPause");
+        // Log.i(AnkiDroidApp.TAG, "DeckPicker - onPause");
 
         super.onPause();
     }
@@ -763,7 +763,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
     @Override
     protected void onStop() {
-        Log.i(AnkiDroidApp.TAG, "DeckPicker - onStop");
+        // Log.i(AnkiDroidApp.TAG, "DeckPicker - onStop");
         super.onStop();
         if (colOpen()) {
             WidgetStatus.update(this);
@@ -778,14 +778,14 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver);
         }
-        Log.i(AnkiDroidApp.TAG, "DeckPicker - onDestroy()");
+        // Log.i(AnkiDroidApp.TAG, "DeckPicker - onDestroy()");
     }
 
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            Log.i(AnkiDroidApp.TAG, "DeckPicker - onBackPressed()");
+            // Log.i(AnkiDroidApp.TAG, "DeckPicker - onBackPressed()");
             finishWithAnimation();
             return true;
         }
@@ -1484,7 +1484,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         public void onPostExecute(Payload data) {
             String dialogMessage = "";
             String syncMessage = "";
-            Log.i(AnkiDroidApp.TAG, "onPostExecute");
+            // Log.i(AnkiDroidApp.TAG, "onPostExecute");
             Resources res = getResources();
             if (mProgressDialog != null) {
                 mProgressDialog.dismiss();
@@ -1808,7 +1808,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
      * @param did The deck ID of the deck to select.
      */
     private void selectDeck(long did) {
-        Log.i(AnkiDroidApp.TAG, "Selected deck with ID " + did);
+        // Log.i(AnkiDroidApp.TAG, "Selected deck with ID " + did);
         for (int i = 0; i < mDeckList.size(); i++) {
             if (Long.parseLong(mDeckList.get(i).get("did")) == did) {
                 final int lastPosition = i;
@@ -1862,7 +1862,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
         @SuppressWarnings("unchecked")
         HashMap<String, String> data = (HashMap<String, String>) mDeckListAdapter.getItem(id);
-        Log.i(AnkiDroidApp.TAG, "Selected " + deckFilename);
+        // Log.i(AnkiDroidApp.TAG, "Selected " + deckFilename);
         long deckId = Long.parseLong(data.get("did"));
         getCol().getDecks().select(deckId);
         openStudyOptions(deckId);

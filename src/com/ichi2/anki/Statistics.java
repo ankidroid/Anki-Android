@@ -62,7 +62,7 @@ public class Statistics extends NavigationDrawerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.i(AnkiDroidApp.TAG, "Statistics -- onCreate()");
+        // Log.i(AnkiDroidApp.TAG, "Statistics -- onCreate()");
         sIsWholeCollectionOnly = AnkiStatsTaskHandler.isWholeCollection();  //if it starts with true, do not let user select deck
         sIsSubtitle = true;
         super.onCreate(savedInstanceState);
@@ -75,7 +75,7 @@ public class Statistics extends NavigationDrawerActivity {
     
     @Override
     protected void onCollectionLoaded(Collection col) {
-        Log.i(AnkiDroidApp.TAG, "Statistics -- onCollectionLoaded()");
+        // Log.i(AnkiDroidApp.TAG, "Statistics -- onCollectionLoaded()");
         // Setup Task Handler
         mTaskHandler = new AnkiStatsTaskHandler();
 
@@ -101,7 +101,7 @@ public class Statistics extends NavigationDrawerActivity {
 
     @Override
     protected void onResume() {
-        Log.i(AnkiDroidApp.TAG, "Statistics -- onResume()");
+        // Log.i(AnkiDroidApp.TAG, "Statistics -- onResume()");
         super.onResume();
         selectNavigationItem(NavigationDrawerActivity.DRAWER_STATISTICS);
     }
@@ -404,11 +404,11 @@ public class Statistics extends NavigationDrawerActivity {
             //System.err.println("sectionNumber: " + mSectionNumber);
             View rootView = inflater.inflate(R.layout.fragment_anki_stats, container, false);
             mChart = (ChartView) rootView.findViewById(R.id.image_view_chart);
-            if(mChart == null)
-                Log.d(AnkiDroidApp.TAG, "mChart null!!!");
-            else
-                Log.d(AnkiDroidApp.TAG, "mChart is not null!");
-
+            if(mChart == null) {
+                // Log.d(AnkiDroidApp.TAG, "mChart null!!!");
+            } else {
+                // Log.d(AnkiDroidApp.TAG, "mChart is not null!");
+            }
             //mChart.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
             mProgressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar_stats);
@@ -557,11 +557,11 @@ public class Statistics extends NavigationDrawerActivity {
             setHasOptionsMenu(true);
             View rootView = inflater.inflate(R.layout.fragment_anki_stats_overview, container, false);
             mWebView = (WebView) rootView.findViewById(R.id.web_view_stats);
-            if(mWebView == null)
-                Log.d(AnkiDroidApp.TAG, "mChart null!!!");
-            else
-                Log.d(AnkiDroidApp.TAG, "mChart is not null!");
-
+            if(mWebView == null) {
+                // Log.d(AnkiDroidApp.TAG, "mChart null!!!");
+            } else {
+                // Log.d(AnkiDroidApp.TAG, "mChart is not null!");
+            }
             //mChart.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
             mProgressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar_stats_overview);

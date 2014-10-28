@@ -246,7 +246,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
 
 
     protected View createView(LayoutInflater inflater, Bundle savedInstanceState) {
-        Log.i(AnkiDroidApp.TAG, "StudyOptions - createView()");
+        // Log.i(AnkiDroidApp.TAG, "StudyOptions - createView()");
         restorePreferences();
         mStudyOptionsView = inflater.inflate(R.layout.studyoptions_fragment, null);
         mCustomStudyDetailsView = inflater.inflate(R.layout.styled_custom_study_details_dialog, null);
@@ -277,7 +277,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         if (mFullNewCountThread != null) {
             mFullNewCountThread.interrupt();
         }
-        Log.i(AnkiDroidApp.TAG, "StudyOptions - onDestroy()");
+        // Log.i(AnkiDroidApp.TAG, "StudyOptions - onDestroy()");
     }
 
 
@@ -285,7 +285,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     public void onResume() {
         super.onResume();
         if (colOpen() && !mFragmented) {
-            Log.i(AnkiDroidApp.TAG, "StudyOptionsFragment.onResume() -- refreshing interface");
+            // Log.i(AnkiDroidApp.TAG, "StudyOptionsFragment.onResume() -- refreshing interface");
             // If not in tablet mode then reload deck counts (reload is taken care of by DeckPicker when mFragmented)
             if (Utils.now() > getCol().getSched().getDayCutoff()) {
                 resetAndRefreshInterface(false);
@@ -293,7 +293,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                 refreshInterface();
             }
         } else {
-            Log.i(AnkiDroidApp.TAG, "StudyOptionsFragment.onResume() -- skipping refresh of interface");
+            // Log.i(AnkiDroidApp.TAG, "StudyOptionsFragment.onResume() -- skipping refresh of interface");
         }
     }
 
@@ -873,7 +873,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
-        Log.i(AnkiDroidApp.TAG, "StudyOptionsFragment: onActivityResult");
+        // Log.i(AnkiDroidApp.TAG, "StudyOptionsFragment: onActivityResult");
         getActivity().supportInvalidateOptionsMenu();
         if (resultCode == DeckPicker.RESULT_DB_ERROR) {
             closeStudyOptions(DeckPicker.RESULT_DB_ERROR);
@@ -906,7 +906,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
             } else if (requestCode == ADD_NOTE && resultCode != Activity.RESULT_CANCELED) {
                 resetAndRefreshInterface();
             } else if (requestCode == REQUEST_REVIEW) {
-                Log.i(AnkiDroidApp.TAG, "Result code = " + resultCode);
+                // Log.i(AnkiDroidApp.TAG, "Result code = " + resultCode);
                 resetAndRefreshInterface();
             } else if (requestCode == BROWSE_CARDS
                     && (resultCode == Activity.RESULT_OK || resultCode == Activity.RESULT_CANCELED)) {
@@ -1158,7 +1158,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     // Method for loading the collection which is inherited by all AnkiActivitys
     protected void startLoadingCollection() {
         // Initialize the open collection loader
-        Log.i(AnkiDroidApp.TAG, "StudyOptionsFragment.loadCollection()");
+        // Log.i(AnkiDroidApp.TAG, "StudyOptionsFragment.loadCollection()");
         if (AnkiDroidApp.getCol() == null) {
             showCollectionLoadingDialog();
         }

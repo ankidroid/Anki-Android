@@ -425,7 +425,7 @@ public class PlotSheet implements Drawable {
             float currentPixelWidth = xPointer;
 
             int legendCnt = 0;
-            Log.d(AnkiDroidApp.TAG, "should draw legend now, number of legend entries: " + mLegendMap.size());
+            // Log.d(AnkiDroidApp.TAG, "should draw legend now, number of legend entries: " + mLegendMap.size());
             for(String legendName : keySet){
 
                 float stringWidth = fm.stringWidth(" : "+legendName);
@@ -442,7 +442,7 @@ public class PlotSheet implements Drawable {
                 g.setColor(ColorWrap.BLACK);
                 g.drawString(" : "+legendName, xPointer + rectangleSize , ySpacer+rectangleSize);
                 xPointer += rectangleSize*1.3f + stringWidth;
-                Log.d(AnkiDroidApp.TAG, "drawing a legend Item: (" + legendName + ") " + (legendCnt -1) + ", x: " + (xPointer + rectangleSize) + ", y: " + (ySpacer+rectangleSize));
+                // Log.d(AnkiDroidApp.TAG, "drawing a legend Item: (" + legendName + ") " + (legendCnt -1) + ", x: " + (xPointer + rectangleSize) + ", y: " + (ySpacer+rectangleSize));
 
             }
             g.setFontSize(oldFontSize);
@@ -650,7 +650,7 @@ public class PlotSheet implements Drawable {
 		while((deltaRange/(tics))/2 >= ticlimit) {
 			tics *= 2.0;
 		}
-        Log.d(AnkiDroidApp.TAG, "PlotSheet ticksCalcY: pixelDistance: " + pixelDistance + ", ticks: " + tics);
+        // Log.d(AnkiDroidApp.TAG, "PlotSheet ticksCalcY: pixelDistance: " + pixelDistance + ", ticks: " + tics);
 		return tics;
 	}
 	
