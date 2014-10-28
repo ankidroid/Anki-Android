@@ -21,9 +21,11 @@ import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.ichi2.themes.StyledDialog;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
@@ -32,7 +34,7 @@ public class ReadText {
     private static TextToSpeech mTts;
     private static ArrayList<String[]> availableTtsLocales = new ArrayList<String[]>();
     private static String mTextToSpeak;
-    private static Context mReviewer;
+    private static WeakReference<Context> mReviewer;
     private static long mDid;
     private static int mOrd;
     private static int mQuestionAnswer;
@@ -49,8 +51,10 @@ public class ReadText {
             Log.e(AnkiDroidApp.TAG, "Error loading locale " + loc);
         } else {
             if (mTts.isSpeaking()) {
+                Log.v(AnkiDroidApp.TAG, "tts text '" + text + "' added to queue");
                 sTextQueue.add(new String[] { text, loc });
             } else {
+                Log.v(AnkiDroidApp.TAG, "tts text '" + text + "' to be played");
                 mTts.speak(mTextToSpeak, TextToSpeech.QUEUE_FLUSH, mTtsParams);
             }
         }
@@ -58,7 +62,7 @@ public class ReadText {
 
 
     public static String getLanguage(long did, int ord, int qa) {
-        return MetaDB.getLanguage(mReviewer, did, ord, qa);
+        return MetaDB.getLanguage(mReviewer.get(), did, ord, qa);
     }
 
 
@@ -89,8 +93,8 @@ public class ReadText {
         }
 
         // Otherwise ask
-        Resources res = mReviewer.getResources();
-        StyledDialog.Builder builder = new StyledDialog.Builder(mReviewer);
+        Resources res = mReviewer.get().getResources();
+        StyledDialog.Builder builder = new StyledDialog.Builder(mReviewer.get());
         if (availableTtsLocales.size() == 0) {
             // builder.setTitle(res.getString(R.string.no_tts_available_title));
             builder.setMessage(res.getString(R.string.no_tts_available_message));
@@ -113,7 +117,7 @@ public class ReadText {
             builder.setItems(items, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    MetaDB.storeLanguage(mReviewer, mDid, mOrd, mQuestionAnswer, dialogIds.get(which));
+                    MetaDB.storeLanguage(mReviewer.get(), mDid, mOrd, mQuestionAnswer, dialogIds.get(which));
                     speak(mTextToSpeak, dialogIds.get(which));
                 }
             });
@@ -123,25 +127,32 @@ public class ReadText {
 
 
     public static void initializeTts(Context context) {
-        mReviewer = context;
+        // Store weak reference to Activity to prevent memory leak
+        mReviewer = new WeakReference<Context>(context);
+        // Create new TTS object and setup its onInit Listener
         mTts = new TextToSpeech(context, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
-                // TODO: check if properly initialized (does not work yet)
-                if (status != TextToSpeech.SUCCESS) {
+                if (status == TextToSpeech.SUCCESS) {
                     int result = mTts.setLanguage(Locale.US);
                     if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
                     } else {
-                        Log.e(AnkiDroidApp.TAG, "TTS initialized and set to US");
+                        // clear the play queue so that we can play immediately
+                        mTts.stop();
+                        // notify the reviewer that TTS has been initialized
+                        ((AbstractFlashcardViewer) mReviewer.get()).ttsInitialized();
+                        Log.i(AnkiDroidApp.TAG, "TTS initialized and set to US");
                     }
                 } else {
-                    Log.e(AnkiDroidApp.TAG, "Initialization of TTS failed");
+                    Toast.makeText(mReviewer.get(), mReviewer.get().getString(R.string.no_tts_available_message), Toast.LENGTH_LONG).show();
                 }
                 AnkiDroidApp.getCompat().setTtsOnUtteranceProgressListener(mTts);
             }
         });
         mTtsParams = new HashMap<String, String>();
         mTtsParams.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "stringId");
+        // Show toast that it's getting initialized, as it can take a while before the sound plays the first time
+        Toast.makeText(context, context.getString(R.string.initializing_tts), Toast.LENGTH_LONG).show();
     }
 
 
