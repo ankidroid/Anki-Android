@@ -20,6 +20,7 @@
 package com.ichi2.anki;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -56,7 +57,6 @@ import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.Gravity;
 import android.view.KeyEvent;
-import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -104,6 +104,7 @@ import org.xml.sax.XMLReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -905,7 +906,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         View mainView = getLayoutInflater().inflate(R.layout.flashcard, null);
         setContentView(mainView);
         initNavigationDrawer(mainView);
-
         // The hardware buttons should control the music volume while reviewing.
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
         // Load the collection
@@ -2245,13 +2245,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (autoPlayEnabled || doAudioReplay) {
             // We need to play the sounds from the proper side of the card
             if (!mSpeakText) { // Text to speech not in effect here
+                WeakReference<Activity> contextRef = new WeakReference<Activity>(this);
                 if (doAudioReplay && replayQuestion && sDisplayAnswer) {
                     // only when all of the above are true will question be played with answer, to match desktop
-                    Sound.playSounds(Sound.SOUNDS_QUESTION_AND_ANSWER);
+                    Sound.playSounds(Sound.SOUNDS_QUESTION_AND_ANSWER, contextRef);
                 } else if (sDisplayAnswer) {
-                    Sound.playSounds(Sound.SOUNDS_ANSWER);
+                    Sound.playSounds(Sound.SOUNDS_ANSWER, contextRef);
                 } else { // question is displayed
-                    Sound.playSounds(Sound.SOUNDS_QUESTION);
+                    Sound.playSounds(Sound.SOUNDS_QUESTION, contextRef);
                 }
             } else { // Text to speech is in affect here
                 // If the question is displayed or if the question should be replayed, read the question
@@ -3004,5 +3005,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             }
         }
         return answerContent;
+    }
+
+    /**
+     * Public method to start new video player activity
+     */
+    public void playVideo(String path) {
+        Intent videoPlayer = new Intent(this, VideoPlayer.class);
+        videoPlayer.putExtra("path", path);
+        startActivityWithoutAnimation(videoPlayer);
     }
 }
