@@ -4,12 +4,13 @@ package com.ichi2.anki.dialogs;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.Message;
+
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
 import com.ichi2.themes.StyledDialog;
 
 public class DeckPickerExportCompleteDialog extends AsyncDialogFragment {
-    public static String CLASS_NAME_TAG = "ExportCompleteDialog";
     
     public static DeckPickerExportCompleteDialog newInstance(String exportPath) {
         DeckPickerExportCompleteDialog f = new DeckPickerExportCompleteDialog();
@@ -56,11 +57,12 @@ public class DeckPickerExportCompleteDialog extends AsyncDialogFragment {
 
 
     @Override
-    public Bundle getNotificationIntentExtras() {
+    public Message getDialogHandlerMessage() {
+        Message msg = Message.obtain();
+        msg.what = DialogHandler.MSG_SHOW_EXPORT_COMPLETE_DIALOG;
         Bundle b = new Bundle();
-        b.putBoolean("showAsyncDialogFragment", true);
-        b.putString("dialogClass", CLASS_NAME_TAG);
         b.putString("exportPath", getArguments().getString("exportPath"));
-        return b;
+        msg.setData(b);
+        return msg;
     } 
 }

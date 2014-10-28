@@ -6,8 +6,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
-
+import android.os.Message;
 import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.BackupManager;
@@ -17,7 +16,7 @@ import com.ichi2.themes.StyledDialog;
 import java.io.File;
 import java.util.ArrayList;
 
-public class DatabaseErrorDialog extends DialogFragment {
+public class DatabaseErrorDialog extends AsyncDialogFragment {
     private int mType = 0;
     private int[] mRepairValues;
     private File[] mBackups;
@@ -88,15 +87,14 @@ public class DatabaseErrorDialog extends DialogFragment {
         Resources res = getResources();
         StyledDialog.Builder builder = new StyledDialog.Builder(getActivity());
         setCancelable(true);
+        builder.setTitle(getTitle());
 
         switch (mType) {
             case DIALOG_LOAD_FAILED:
                 // Collection failed to load; give user the option of either choosing from repair options, or closing
                 // the activity
                 setCancelable(false);
-                builder.setMessage(res.getString(R.string.open_collection_failed_message,
-                        BackupManager.BROKEN_DECKS_SUFFIX, res.getString(R.string.repair_deck)));
-                builder.setTitle(R.string.open_collection_failed_title);
+                builder.setMessage(getMessage());
                 builder.setIcon(R.drawable.ic_dialog_alert);
                 builder.setPositiveButton(res.getString(R.string.error_handling_options),
                         new DialogInterface.OnClickListener() {
@@ -118,8 +116,7 @@ public class DatabaseErrorDialog extends DialogFragment {
                 // Database Check failed to execute successfully; give user the option of either choosing from repair
                 // options, submitting an error report, or closing the activity
                 setCancelable(false);
-                builder.setMessage(R.string.answering_error_message);
-                builder.setTitle(R.string.answering_error_title);
+                builder.setMessage(getMessage());
                 builder.setIcon(R.drawable.ic_dialog_alert);
                 builder.setPositiveButton(res.getString(R.string.error_handling_options),
                         new DialogInterface.OnClickListener() {
@@ -152,7 +149,6 @@ public class DatabaseErrorDialog extends DialogFragment {
             case DIALOG_ERROR_HANDLING:
                 // The user has asked to see repair options; allow them to choose one of the repair options or go back
                 // to the previous dialog
-                builder.setTitle(res.getString(R.string.error_handling_title));
                 builder.setIcon(R.drawable.ic_dialog_alert);
                 builder.setSingleChoiceItems(new String[] { "1" }, 0, null);
                 builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
@@ -222,8 +218,7 @@ public class DatabaseErrorDialog extends DialogFragment {
 
             case DIALOG_REPAIR_COLLECTION:
                 // Allow user to run BackupManager.repairDeck()
-                builder.setTitle(res.getString(R.string.backup_repair_deck));
-                builder.setMessage(res.getString(R.string.repair_deck_dialog, BackupManager.BROKEN_DECKS_SUFFIX));
+                builder.setMessage(getMessage());
                 builder.setIcon(R.drawable.ic_dialog_alert);
                 builder.setPositiveButton(res.getString(R.string.dialog_positive_repair),
                         new DialogInterface.OnClickListener() {
@@ -245,7 +240,7 @@ public class DatabaseErrorDialog extends DialogFragment {
                 }
                 if (mBackups.length == 0) {
                     builder.setTitle(getResources().getString(R.string.backup_restore));
-                    builder.setMessage(res.getString(R.string.backup_restore_no_backups));
+                    builder.setMessage(getMessage());
                     builder.setPositiveButton(res.getString(R.string.dialog_ok), new Dialog.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -288,8 +283,7 @@ public class DatabaseErrorDialog extends DialogFragment {
 
             case DIALOG_NEW_COLLECTION:
                 // Allow user to create a new empty collection
-                builder.setTitle(res.getString(R.string.backup_new_collection));
-                builder.setMessage(res.getString(R.string.backup_del_collection_question));
+                builder.setMessage(getMessage());
                 builder.setPositiveButton(res.getString(R.string.dialog_positive_create),
                         new DialogInterface.OnClickListener() {
                             @Override
@@ -311,8 +305,7 @@ public class DatabaseErrorDialog extends DialogFragment {
 
             case DIALOG_CONFIRM_DATABASE_CHECK:
                 // Confirmation dialog for database check
-                builder.setTitle(res.getString(R.string.check_db_title));
-                builder.setMessage(res.getString(R.string.check_db_warning));
+                builder.setMessage(getMessage());
                 builder.setPositiveButton(res.getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -325,8 +318,7 @@ public class DatabaseErrorDialog extends DialogFragment {
 
             case DIALOG_CONFIRM_RESTORE_BACKUP:
                 // Confirmation dialog for backup restore
-                builder.setTitle(res.getString(R.string.restore_backup_title));
-                builder.setMessage(res.getString(R.string.restore_backup));
+                builder.setMessage(getMessage());
                 builder.setPositiveButton(res.getString(R.string.dialog_continue),
                         new DialogInterface.OnClickListener() {
                             @Override
@@ -340,8 +332,7 @@ public class DatabaseErrorDialog extends DialogFragment {
 
             case DIALOG_FULL_SYNC_FROM_SERVER:
                 // Allow user to do a full-sync from the server
-                builder.setTitle(res.getString(R.string.backup_full_sync_from_server));
-                builder.setMessage(res.getString(R.string.backup_full_sync_from_server_question));
+                builder.setMessage(getMessage());
                 builder.setPositiveButton(res.getString(R.string.dialog_positive_overwrite),
                         new DialogInterface.OnClickListener() {
                             @Override
@@ -360,6 +351,85 @@ public class DatabaseErrorDialog extends DialogFragment {
     }
 
 
+    private String getMessage() {
+        switch (getArguments().getInt("dialogType")) {
+            case DIALOG_LOAD_FAILED:
+                return res().getString(R.string.open_collection_failed_message,
+                        BackupManager.BROKEN_DECKS_SUFFIX, res().getString(R.string.repair_deck));
+            case DIALOG_DB_ERROR:
+                return res().getString(R.string.answering_error_message);
+            case DIALOG_REPAIR_COLLECTION:
+                return res().getString(R.string.repair_deck_dialog, BackupManager.BROKEN_DECKS_SUFFIX);
+            case DIALOG_RESTORE_BACKUP:
+                return res().getString(R.string.backup_restore_no_backups);
+            case DIALOG_NEW_COLLECTION:
+                return res().getString(R.string.backup_del_collection_question);
+            case DIALOG_CONFIRM_DATABASE_CHECK:
+                return res().getString(R.string.check_db_warning);
+            case DIALOG_CONFIRM_RESTORE_BACKUP:
+                return res().getString(R.string.restore_backup);
+            case DIALOG_FULL_SYNC_FROM_SERVER:
+                return res().getString(R.string.backup_full_sync_from_server_question);
+            default:
+                return getArguments().getString("dialogMessage");
+        }
+    }
+
+    private String getTitle() {
+        switch (getArguments().getInt("dialogType")) {
+            case DIALOG_LOAD_FAILED:
+                return res().getString(R.string.open_collection_failed_title);
+            case DIALOG_DB_ERROR:
+                return res().getString(R.string.answering_error_title);
+            case DIALOG_ERROR_HANDLING:
+                return res().getString(R.string.error_handling_title);
+            case DIALOG_REPAIR_COLLECTION:
+                return res().getString(R.string.backup_repair_deck);
+            case DIALOG_RESTORE_BACKUP:
+                return res().getString(R.string.backup_restore);
+            case DIALOG_NEW_COLLECTION:
+                return res().getString(R.string.backup_new_collection);
+            case DIALOG_CONFIRM_DATABASE_CHECK:
+                return res().getString(R.string.check_db_title);
+            case DIALOG_CONFIRM_RESTORE_BACKUP:
+                return res().getString(R.string.restore_backup_title);
+            case DIALOG_FULL_SYNC_FROM_SERVER:
+                return res().getString(R.string.backup_full_sync_from_server);
+            default:
+                return res().getString(R.string.answering_error_title);
+        }        
+    }
+
+
+    @Override
+    public String getNotificationMessage() {
+        switch (getArguments().getInt("dialogType")) {
+            default:
+                return getMessage();
+        }
+    }
+
+
+    @Override
+    public String getNotificationTitle() {
+        switch (getArguments().getInt("dialogType")) {
+            default:
+                return res().getString(R.string.answering_error_title);
+        }
+    }
+
+
+    @Override
+    public Message getDialogHandlerMessage() {
+        Message msg = Message.obtain();
+        msg.what = DialogHandler.MSG_SHOW_DATABASE_ERROR_DIALOG;
+        Bundle b = new Bundle();
+        b.putInt("dialogType", getArguments().getInt("dialogType"));
+        msg.setData(b);
+        return msg;
+    }
+    
+    
     public void dismissAllDialogFragments() {
         ((DatabaseErrorDialogListener) getActivity()).dismissAllDialogFragments();
     }
