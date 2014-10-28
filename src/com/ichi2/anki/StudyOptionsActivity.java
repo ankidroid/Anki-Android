@@ -34,7 +34,7 @@ import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
 
-public class StudyOptionsActivity extends NavigationDrawerActivity implements StudyOptionsFragment.OnStudyOptionsReloadListener {
+public class StudyOptionsActivity extends NavigationDrawerActivity {
 
     private StudyOptionsFragment mCurrentFragment;
 
@@ -70,12 +70,12 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
         return true;
     }
 
-    public void loadStudyOptionsFragment() {
+    private void loadStudyOptionsFragment() {
         loadStudyOptionsFragment(0, null);
     }
 
 
-    public void loadStudyOptionsFragment(long deckId, Bundle cramConfig) {
+    private void loadStudyOptionsFragment(long deckId, Bundle cramConfig) {
         mCurrentFragment = StudyOptionsFragment.newInstance(deckId, null);
         Bundle args = getIntent().getExtras();
 
@@ -85,7 +85,8 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
         mCurrentFragment.setArguments(args);
         getSupportFragmentManager().beginTransaction().replace(R.id.studyoptions_frame, mCurrentFragment).commit();
     }
-    
+
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -157,7 +158,7 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
     @Override
     public void onStop() {
         super.onStop();
-        if (!isFinishing() && mCurrentFragment != null && mCurrentFragment.dbSaveNecessary()) {
+        if (colOpen()) {
             WidgetStatus.update(this);
             UIUtils.saveCollectionInBackground();
         }

@@ -54,7 +54,7 @@
 	                    android:layout_marginRight="3dip"
 	                    android:gravity="center"
 	                    android:orientation="vertical"
-	                    android:visibility="invisible" >
+	                    android:visibility="visible" >
 	
 	                    <TableLayout
 	                        android:layout_width="fill_parent"

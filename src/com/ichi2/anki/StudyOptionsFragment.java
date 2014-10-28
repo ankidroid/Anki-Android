@@ -21,7 +21,6 @@ import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -68,11 +67,6 @@ import java.util.*;
 
 public class StudyOptionsFragment extends Fragment implements LoaderManager.LoaderCallbacks<Collection> {
 
-    // Container Activity must implement this interface
-    public interface OnStudyOptionsReloadListener {
-        public void loadStudyOptionsFragment(long deckId, Bundle cramConfig);
-        public void loadStudyOptionsFragment();
-    }
 
     /**
      * Available options performed by other activities
@@ -102,6 +96,9 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     private static final int DIALOG_CUSTOM_STUDY_DETAILS = 2;
     private static final int DIALOG_CUSTOM_STUDY_TAGS = 3;
 
+    // Threshold at which the total number of new cards is truncated by libanki
+    private static final int NEW_CARD_COUNT_TRUNCATE_THRESHOLD = 1000;
+
     private int mCustomDialogChoice;
 
     private HashMap<Integer, StyledDialog> mDialogs = new HashMap<Integer, StyledDialog>();
@@ -111,8 +108,6 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
      */
     private int mCurrentContentView = CONTENT_STUDY_OPTIONS;
     boolean mInvertedColors = false;
-
-    private boolean mDontSaveOnStop = false;
 
     /** Alerts to inform the user about different situations */
     private StyledProgressDialog mProgressDialog;
@@ -125,9 +120,6 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     private Button mButtonStart;
     private Button mButtonCustomStudy;
     private Button mButtonUnbury;
-    // private Button mButtonUp;
-    // private Button mButtonDown;
-    // private ToggleButton mToggleLimitToggle;
     private TextView mTextDeckName;
     private TextView mTextDeckDescription;
     private TextView mTextTodayNew;
@@ -177,8 +169,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                     return;
                 case R.id.studyoptions_unbury:
                     col.getSched().unburyCardsForDeck();
-                    resetAndUpdateValuesFromDeck();
-                    mButtonUnbury.setVisibility(View.GONE);
+                    resetAndRefreshInterface();
                     return;
                 case R.id.studyoptions_options_cram:
                     openCramDeckOptions();
@@ -190,14 +181,12 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                     return;
                 case R.id.studyoptions_rebuild_cram:
                     rebuildCramDeck();
-                    showCongratsIfNeeded();
                     return;
                 case R.id.studyoptions_empty_cram:
                     mProgressDialog = StyledProgressDialog.show(getActivity(), "",
                             getResources().getString(R.string.empty_cram_deck), true);
-                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_EMPTY_CRAM, mUpdateValuesFromDeckListener,
+                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_EMPTY_CRAM, getDeckTaskListener(true),
                             new DeckTask.TaskData(col, col.getDecks().selected(), mFragmented));
-                    showCongratsIfNeeded();
                     return;
                 default:
                     return;
@@ -222,7 +211,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     private void rebuildCramDeck() {
         mProgressDialog = StyledProgressDialog.show(getActivity(), "",
                 getResources().getString(R.string.rebuild_cram_deck), true);
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REBUILD_CRAM, mUpdateValuesFromDeckListener, new DeckTask.TaskData(
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REBUILD_CRAM, getDeckTaskListener(true), new DeckTask.TaskData(
                 getCol(), getCol().getDecks().selected(), mFragmented));
     }
 
@@ -262,7 +251,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         mStudyOptionsView = inflater.inflate(R.layout.studyoptions_fragment, null);
         mCustomStudyDetailsView = inflater.inflate(R.layout.styled_custom_study_details_dialog, null);
         mFragmented = getActivity().getClass() != StudyOptionsActivity.class;
-        loadCollection();
+        startLoadingCollection();
         return mStudyOptionsView;
     }
     
@@ -271,75 +260,14 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     private void onCollectionLoaded(Collection col) {
         mCollection = col;
         initAllContentViews();
-
-        if (noDeckCounts()) {
-            prepareCongratsView();
-        } else {
-            // clear undo if new deck is opened (do not clear if only congrats msg is shown)
-            getCol().clearUndo();
-        }
-
         mCramInitialConfig = getArguments().getBundle("cramInitialConfig");
-
-        resetAndUpdateValuesFromDeck();
-
+        resetAndRefreshInterface(false);
         setHasOptionsMenu(true);
-
-        // Show the congratulations message if there are no cards scheduled
-        showCongratsIfNeeded();
         dismissCollectionLoadingDialog();
         // rebuild action bar so that Showcase works correctly
         if (mFragmented) {
             ((DeckPicker) getActivity()).reloadShowcaseView();
         }
-    }
-
-    private void showCongratsIfNeeded() {
-        if (noDeckCounts()) {
-            prepareCongratsView();
-        } else {
-            finishCongrats();
-        }
-    }
-
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        Log.i(AnkiDroidApp.TAG, "onConfigurationChanged");
-        if (mTextDeckName == null) {
-            // layout not yet initialized
-            return;
-        }
-        mDontSaveOnStop = true;
-        CharSequence title = mTextDeckName.getText();
-        CharSequence desc = mTextDeckDescription.getText();
-        int descVisibility = mTextDeckDescription.getVisibility();
-        CharSequence newToday = mTextTodayNew.getText();
-        CharSequence lrnToday = mTextTodayLrn.getText();
-        CharSequence revToday = mTextTodayRev.getText();
-        CharSequence newTotal = mTextNewTotal.getText();
-        CharSequence total = mTextTotal.getText();
-        CharSequence eta = mTextETA.getText();
-        // long timelimit = mCol.getTimeLimit() / 60;
-        super.onConfigurationChanged(newConfig);
-        mDontSaveOnStop = false;
-        // initAllContentViews();
-        mTextDeckName.setText(title);
-        mTextDeckName.setVisibility(View.VISIBLE);
-        mTextDeckDescription.setText(desc);
-        mTextDeckDescription.setVisibility(descVisibility);
-        mDeckCounts.setVisibility(View.VISIBLE);
-        mTextTodayNew.setText(newToday);
-        mTextTodayLrn.setText(lrnToday);
-        mTextTodayRev.setText(revToday);
-        mTextNewTotal.setText(newTotal);
-        mTextTotal.setText(total);
-        mTextETA.setText(eta);
-
-        // mToggleLimitToggle.setChecked(timelimit > 0 ? true : false);
-        // if (timelimit > 0) {
-        // mToggleLimitToggle.setText(String.valueOf(timelimit));
-        // }
     }
 
 
@@ -350,15 +278,6 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
             mFullNewCountThread.interrupt();
         }
         Log.i(AnkiDroidApp.TAG, "StudyOptions - onDestroy()");
-        // if (mUnmountReceiver != null) {
-        // unregisterReceiver(mUnmountReceiver);
-        // }
-    }
-
-
-    @Override
-    public void onPause() {
-        super.onPause();
     }
 
 
@@ -366,22 +285,16 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     public void onResume() {
         super.onResume();
         if (colOpen() && !mFragmented) {
-            Log.i(AnkiDroidApp.TAG, "StudyOptionsFragment.onResume() -- updating deck counts");
+            Log.i(AnkiDroidApp.TAG, "StudyOptionsFragment.onResume() -- refreshing interface");
             // If not in tablet mode then reload deck counts (reload is taken care of by DeckPicker when mFragmented)
             if (Utils.now() > getCol().getSched().getDayCutoff()) {
-                updateValuesFromDeck(true);
+                resetAndRefreshInterface(false);
             } else {
-                updateValuesFromDeck();
+                refreshInterface();
             }
-            showOrHideUnburyButton();
         } else {
-            Log.i(AnkiDroidApp.TAG, "StudyOptionsFragment.onResume() -- skipping updating of deck counts");
+            Log.i(AnkiDroidApp.TAG, "StudyOptionsFragment.onResume() -- skipping refresh of interface");
         }
-    }
-
-
-    private void closeStudyOptions() {
-        closeStudyOptions(Activity.RESULT_OK);
     }
 
 
@@ -398,20 +311,8 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         }
     }
 
-    private void reloadStudyOptions() {
-        Activity a = getActivity();
-        if (a != null) {
-            ((OnStudyOptionsReloadListener) a).loadStudyOptionsFragment();
-        } else {
-            // getActivity() can return null if reference to fragment lingers after parent activity has been closed,
-            // which is particularly relevant when using AsyncTasks.
-            Log.e(AnkiDroidApp.TAG, "reloadStudyOptions() failed due to getActivity() returning null");
-        }
-    }
-
 
     private void openReviewer() {
-        mDontSaveOnStop = true;
         Intent reviewer = new Intent(getActivity(), Reviewer.class);
         startActivityForResult(reviewer, REQUEST_REVIEW);
         animateLeft();
@@ -430,17 +331,6 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
 
     private void animateLeft() {
         ActivityTransitionAnimation.slide(getActivity(), ActivityTransitionAnimation.LEFT);
-    }
-
-
-    private void showOrHideUnburyButton() {
-        if (mButtonUnbury != null) {
-            if (getCol().getSched().haveBuried()) {
-                mButtonUnbury.setVisibility(View.VISIBLE);
-            } else {
-                mButtonUnbury.setVisibility(View.GONE);
-            }
-        }
     }
 
 
@@ -470,7 +360,6 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         // Show the unbury button if there are cards to unbury
         mButtonUnbury = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_unbury);
         mButtonUnbury.setOnClickListener(mButtonClickListener);
-        showOrHideUnburyButton();
 
         // Code common to both fragmented and non-fragmented view
         mTextTodayNew = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_new);
@@ -488,12 +377,6 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         mButtonCustomStudy.setOnClickListener(mButtonClickListener);
         mDeckOptions.setOnClickListener(mButtonClickListener);
         mCramOptions.setOnClickListener(mButtonClickListener);
-        // mButtonUp.setOnClickListener(mButtonClickListener);
-        // mButtonDown.setOnClickListener(mButtonClickListener);
-        // mToggleLimitToggle.setOnClickListener(mButtonClickListener);
-        // mToggleCram.setOnClickListener(mButtonClickListener);
-        // mToggleNight.setOnClickListener(mButtonClickListener);
-
 
         // The view that shows the learn more options
         mCustomStudyTextView1 = (TextView) mCustomStudyDetailsView.findViewById(R.id.custom_study_details_text1);
@@ -516,17 +399,6 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         mDialogs.get(id).show();
     }
 
-    private boolean noDeckCounts() {
-        // Check if there are any reviews due in current deck
-        DeckTask.waitToFinish();
-        int[] counts = getCol().getSched().counts();
-        if (counts[0]+counts[1]+counts[2]==0) {
-            return true;
-        } else {
-            return false;
-        }
-
-    }
 
     private DialogFragment showDialogFragment(int id) {
 
@@ -625,8 +497,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                                                 deck.put("extendNew", n);
                                                 col.getDecks().save(deck);
                                                 col.getSched().extendLimits(n, 0);
-                                                resetAndUpdateValuesFromDeck();
-                                                finishCongrats();
+                                                resetAndRefreshInterface();
                                             } catch (NumberFormatException e) {
                                                 // ignore non numerical values
                                                 Themes.showThemedToast(getActivity().getBaseContext(), getResources()
@@ -662,8 +533,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                                                 deck.put("extendRev", n);
                                                 col.getDecks().save(deck);
                                                 col.getSched().extendLimits(0, n);
-                                                resetAndUpdateValuesFromDeck();
-                                                finishCongrats();
+                                                resetAndRefreshInterface();
                                             } catch (NumberFormatException e) {
                                                 // ignore non numerical values
                                                 Themes.showThemedToast(getActivity().getBaseContext(), getResources()
@@ -882,7 +752,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                 // Initial rebuild
                 mProgressDialog = StyledProgressDialog.show(getActivity(), "",
                         getResources().getString(R.string.rebuild_custom_study_deck), true);
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REBUILD_CRAM, mRebuildCustomStudyListener,
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REBUILD_CRAM, getDeckTaskListener(true),
                         new DeckTask.TaskData(getCol(), getCol().getDecks().selected(),
                                 mFragmented));
             } catch (JSONException e) {
@@ -899,80 +769,35 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     }
 
 
-    public void resetAndUpdateValuesFromDeck() {
-        updateValuesFromDeck(true);
+    private void resetAndRefreshInterface() {
+        refreshInterface(true, true);
     }
 
 
-    private void updateValuesFromDeck() {
-        updateValuesFromDeck(false);
+    private void resetAndRefreshInterface(boolean updateDeckList) {
+        refreshInterface(true, updateDeckList);
     }
 
 
-    private void updateValuesFromDeck(boolean reset) {
-        String fullName;
+    private void refreshInterface() {
+        refreshInterface(false, true);
+    }
+
+
+    private void refreshInterface(boolean reset, boolean updateDeckList) {
+        // Exit if collection not open
         if (!colOpen()) {
+            Log.e(AnkiDroidApp.TAG, "StudyOptionsFragment.refreshInterface failed due to Collection being closed");
             return;
         }
-        JSONObject deck = getCol().getDecks().current();
-        try {
-            // Workaround for issue 2166; probably there's a cleaner solution
-            if (mTextDeckName == null) {
-                initAllContentViews();
-                resetAndUpdateValuesFromDeck();
-                return;
-            }
-
-            fullName = deck.getString("name");
-            String[] name = fullName.split("::");
-            StringBuilder nameBuilder = new StringBuilder();
-            if (name.length > 0) {
-                nameBuilder.append(name[0]);
-            }
-            if (name.length > 1) {
-                nameBuilder.append("\n").append(name[1]);
-            }
-            if (name.length > 3) {
-                nameBuilder.append("...");
-            }
-            if (name.length > 2) {
-                nameBuilder.append("\n").append(name[name.length - 1]);
-            }
-            mTextDeckName.setText(nameBuilder.toString());
-
-            // open cram deck option if deck is opened for the first time
-            if (mCramInitialConfig != null) {
-                openCramDeckOptions(mCramInitialConfig);
-                return;
-            }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        // Initialize the Views in the fragment if they haven't already been initialized (See issue 2166)
+        if (mTextDeckName == null) {
+            initAllContentViews();
+            resetAndRefreshInterface(updateDeckList);
+            return;
         }
-
-        if (!mFragmented) {
-            getActivity().setTitle(getResources().getString(R.string.studyoptions_title));
-            List<String> parts = Arrays.asList(fullName.split("::"));
-            AnkiDroidApp.getCompat().setSubtitle(getActivity(), parts.get(parts.size() - 1));
-        }
-
-        String desc;
-        try {
-            if (deck.getInt("dyn") == 0) {
-                desc = getCol().getDecks().getActualDescription();
-            } else {
-                desc = getResources().getString(R.string.dyn_deck_desc);
-            }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-        if (desc.length() > 0) {
-            mTextDeckDescription.setText(Html.fromHtml(desc));
-            mTextDeckDescription.setVisibility(View.VISIBLE);
-        } else {
-            mTextDeckDescription.setVisibility(View.GONE);
-        }
-
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_VALUES_FROM_DECK, mUpdateValuesFromDeckListener,
+        // Load the deck counts for the deck from Collection asynchronously
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_VALUES_FROM_DECK, getDeckTaskListener(updateDeckList),
                 new DeckTask.TaskData(getCol(), new Object[] { reset, mSmallChart != null }));
     }
 
@@ -991,24 +816,6 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         }
     }
 
-
-    public void finishCongrats() {
-        mCurrentContentView = CONTENT_STUDY_OPTIONS;
-        mDeckInfoLayout.setVisibility(View.VISIBLE);
-        mCongratsLayout.setVisibility(View.GONE);
-        mButtonStart.setVisibility(View.VISIBLE);
-    }
-
-
-    private void prepareCongratsView() {
-        if (colOpen()) {
-            mCurrentContentView = CONTENT_CONGRATS;
-            mDeckInfoLayout.setVisibility(View.GONE);
-            mCongratsLayout.setVisibility(View.VISIBLE);
-            mTextCongratsMessage.setText(getCol().getSched().finishedMsg(getActivity()));
-            mButtonStart.setVisibility(View.GONE);
-        }
-    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -1037,8 +844,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
             case R.id.action_undo:
                 if (colOpen()) {
                     getCol().undo();
-                    resetAndUpdateValuesFromDeck();
-                    finishCongrats();
+                    resetAndRefreshInterface();
                     getActivity().supportInvalidateOptionsMenu();
                 }
                 return true;
@@ -1078,8 +884,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
             closeStudyOptions(DeckPicker.RESULT_MEDIA_EJECTED);
         } else {
             if (!colOpen()) {
-                ((AnkiActivity) getActivity()).startLoadingCollection();
-                mDontSaveOnStop = false;
+                startLoadingCollection();
                 return;
             }
             if (requestCode == DECK_OPTIONS) {
@@ -1096,33 +901,18 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                     rebuildCramDeck();
                 } else {
                     DeckTask.waitToFinish();
-                    resetAndUpdateValuesFromDeck();
+                    resetAndRefreshInterface();
                 }
-                // Show the congratulations message if there are no cards scheduled
-                showCongratsIfNeeded();
             } else if (requestCode == ADD_NOTE && resultCode != Activity.RESULT_CANCELED) {
-                resetAndUpdateValuesFromDeck();
+                resetAndRefreshInterface();
             } else if (requestCode == REQUEST_REVIEW) {
                 Log.i(AnkiDroidApp.TAG, "Result code = " + resultCode);
-                // TODO: Return to standard scheduler
-                // TODO: handle big widget
-                switch (resultCode) {
-                    default:
-                        // do not reload counts, if activity is created anew because it has been before destroyed by
-                        // android
-                        resetAndUpdateValuesFromDeck();
-                        break;
-                    case Reviewer.RESULT_NO_MORE_CARDS:
-                        prepareCongratsView();
-                        break;
-                }
-                mDontSaveOnStop = false;
+                resetAndRefreshInterface();
             } else if (requestCode == BROWSE_CARDS
                     && (resultCode == Activity.RESULT_OK || resultCode == Activity.RESULT_CANCELED)) {
-                mDontSaveOnStop = false;
-                resetAndUpdateValuesFromDeck();
+                resetAndRefreshInterface();
             } else if (requestCode == STATISTICS && mCurrentContentView == CONTENT_CONGRATS) {
-                resetAndUpdateValuesFromDeck();
+                resetAndRefreshInterface();
                 mCurrentContentView = CONTENT_STUDY_OPTIONS;
                 setFragmentContentView(mStudyOptionsView);
             }
@@ -1146,33 +936,48 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         return preferences;
     }
 
-    DeckTask.TaskListener mRebuildCustomStudyListener = new DeckTask.TaskListener() {
+
+    private DeckTask.TaskListener getDeckTaskListener(boolean updateDeckList) {
+        if (mFragmented && updateDeckList) {
+            return mRefreshWholeInterfaceListener;
+        } else {
+            return mRefreshFragmentListener;
+        }
+    }
+
+
+    /** This listener does full refresh of the interface, which includes updating deck list 
+     * when in tablet mode
+     */
+    DeckTask.TaskListener mRefreshWholeInterfaceListener = new DeckTask.TaskListener() {
         @Override
         public void onPostExecute(TaskData result) {
             dismissProgressDialog();
-            reloadStudyOptions();
+            ((DeckPicker) getActivity()).refreshMainInterface();
         }
-
 
         @Override
         public void onPreExecute() {
         }
 
-
         @Override
         public void onProgressUpdate(TaskData... values) {
         }
-
 
         @Override
         public void onCancelled() {
         }
     };
 
-    DeckTask.TaskListener mUpdateValuesFromDeckListener = new DeckTask.TaskListener() {
+    /** This is the main code which sets all the elements in the Fragment.
+     * It can be used by any async task which returns the parameters necessary
+     * for rebuilding the interface
+     */
+    DeckTask.TaskListener mRefreshFragmentListener = new DeckTask.TaskListener() {
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
             if (result != null) {
+                // Get the return values back from the AsyncTask
                 Object[] obj = result.getObjArray();
                 int newCards = (Integer) obj[0];
                 int lrnCards = (Integer) obj[1];
@@ -1182,35 +987,99 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                 int eta = (Integer) obj[7];
                 double[][] serieslist = (double[][]) obj[8];
 
+                // Don't do anything if the fragment is no longer attached to it's Activity or col has been closed
+                if (getActivity() == null || !colOpen()) {
+                    Log.e(AnkiDroidApp.TAG, "StudyOptionsFragment.mUpdateValuesFromDeckListener -- returning without updating");
+                    return;
+                }
+
+                // Set the deck name
+                String fullName;
+                JSONObject deck = getCol().getDecks().current();
+                try {
+                    // Main deck name
+                    fullName = deck.getString("name");
+                    String[] name = fullName.split("::");
+                    StringBuilder nameBuilder = new StringBuilder();
+                    if (name.length > 0) {
+                        nameBuilder.append(name[0]);
+                    }
+                    if (name.length > 1) {
+                        nameBuilder.append("\n").append(name[1]);
+                    }
+                    if (name.length > 3) {
+                        nameBuilder.append("...");
+                    }
+                    if (name.length > 2) {
+                        nameBuilder.append("\n").append(name[name.length - 1]);
+                    }
+                    mTextDeckName.setText(nameBuilder.toString());
+                    // Also set deck name in activity title in action bar if not tablet mode
+                    if (!mFragmented) {
+                        getActivity().setTitle(getResources().getString(R.string.studyoptions_title));
+                        List<String> parts = Arrays.asList(fullName.split("::"));
+                        AnkiDroidApp.getCompat().setSubtitle(getActivity(), parts.get(parts.size() - 1));
+                    }
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+
+                // open cram deck option if deck is opened for the first time
+                if (mCramInitialConfig != null) {
+                    openCramDeckOptions(mCramInitialConfig);
+                    return;
+                }
+
+                // Switch between the ordinary view and "congratulations" view 
+                if (newCards + lrnCards + revCards == 0) {
+                    mCurrentContentView = CONTENT_CONGRATS;
+                    mDeckInfoLayout.setVisibility(View.GONE);
+                    mCongratsLayout.setVisibility(View.VISIBLE);
+                    mTextCongratsMessage.setText(getCol().getSched().finishedMsg(getActivity()));
+                    mButtonStart.setVisibility(View.GONE);
+                } else {
+                    mDeckCounts.setVisibility(View.VISIBLE); // not working without this... why?
+                    mCurrentContentView = CONTENT_STUDY_OPTIONS;
+                    mDeckInfoLayout.setVisibility(View.VISIBLE);
+                    mCongratsLayout.setVisibility(View.GONE);
+                    mButtonStart.setVisibility(View.VISIBLE);
+                }
+
+                // Set deck description
+                String desc;
+                try {
+                    if (deck.getInt("dyn") == 0) {
+                        desc = getCol().getDecks().getActualDescription();
+                    } else {
+                        desc = getResources().getString(R.string.dyn_deck_desc);
+                    }
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+                if (desc.length() > 0) {
+                    mTextDeckDescription.setText(Html.fromHtml(desc));
+                    mTextDeckDescription.setVisibility(View.VISIBLE);
+                } else {
+                    mTextDeckDescription.setVisibility(View.GONE);
+                }
+
+                // Update the chart (for tablet view)
                 updateChart(serieslist);
 
-                // JSONObject conf = mCol.getConf();
-                // long timeLimit = 0;
-                // try {
-                // timeLimit = (conf.getLong("timeLim") / 60);
-                // } catch (JSONException e) {
-                // throw new RuntimeException(e);
-                // }
-                // mToggleLimitToggle.setChecked(timeLimit > 0 ? true : false);
-                // mToggleLimitToggle.setText(String.valueOf(timeLimit));
-
-                // Activity act = getActivity();
-                // if (act != null) {
-                // SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(act.getBaseContext());
-                // mPrefHideDueCount = preferences.getBoolean("hideDueCount", true);
-                // }
+                // Set new/learn/review card counts
                 mTextTodayNew.setText(String.valueOf(newCards));
                 mTextTodayLrn.setText(String.valueOf(lrnCards));
-                // if (mPrefHideDueCount) {
-                // mTextTodayRev.setText("???");
-                // } else {
                 mTextTodayRev.setText(String.valueOf(revCards));
-                // }
 
-                if (totalNew == 1000) { // TODO do not hardcode this number defined in Sched
-                    // there may be >1000, let's make a thread to allow them to load
+                // Set the total number of new cards in deck
+                if (totalNew < NEW_CARD_COUNT_TRUNCATE_THRESHOLD) {
+                    // if it hasn't been truncated by libanki then just set it usually
+                    mTextNewTotal.setText(String.valueOf(totalNew));
+                } else {
+                    // if truncated then make a thread to allow full count to load
                     mTextNewTotal.setText(">1000");
-                    if (mFullNewCountThread != null) { // a thread was previously made -- interrupt it
+                    if (mFullNewCountThread != null) { 
+                        // a thread was previously made -- interrupt it
                         mFullNewCountThread.interrupt();
                     }
                     mFullNewCountThread = new Thread(new Runnable() {
@@ -1237,26 +1106,24 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                         }
                     });
                     mFullNewCountThread.start();
-                } else {
-                    mTextNewTotal.setText(String.valueOf(totalNew));
                 }
+
+                // Set total number of cards
                 mTextTotal.setText(String.valueOf(totalCards));
+                // Set estimated time remaining
                 if (eta != -1) {
                     mTextETA.setText(Integer.toString(eta));
                 } else {
                     mTextETA.setText("-");
                 }
 
-                if (mDeckCounts.getVisibility() == View.INVISIBLE) {
-                    mDeckCounts.setVisibility(View.VISIBLE);
-                    mDeckCounts.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
-                }
-
-
-                if (getActivity()!= null) {
-                    showCongratsIfNeeded();
-                } else {
-                    Log.e(AnkiDroidApp.TAG, "StudyOptionsFragment.mUpdateValuesFromDeckListener :: getActivity()==null");
+                // Show unbury button if necessary
+                if (mButtonUnbury != null) {
+                    if (getCol().getSched().haveBuried()) {
+                        mButtonUnbury.setVisibility(View.VISIBLE);
+                    } else {
+                        mButtonUnbury.setVisibility(View.GONE);
+                    }
                 }
             }
             // for rebuilding cram decks
@@ -1280,10 +1147,6 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     };
 
 
-    public boolean dbSaveNecessary() {
-        return !mDontSaveOnStop;
-    }
-
     private Collection getCol() {
         return mCollection;
     }
@@ -1293,7 +1156,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     }
 
     // Method for loading the collection which is inherited by all AnkiActivitys
-    protected void loadCollection() {        
+    protected void startLoadingCollection() {
         // Initialize the open collection loader
         Log.i(AnkiDroidApp.TAG, "StudyOptionsFragment.loadCollection()");
         if (AnkiDroidApp.getCol() == null) {
@@ -1301,7 +1164,8 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         }
         getLoaderManager().initLoader(0, null, this);  
     }
-    
+
+
     // CollectionLoader Listener callbacks
     @Override
     public Loader<Collection> onCreateLoader(int id, Bundle args) {
