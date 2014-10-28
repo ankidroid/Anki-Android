@@ -165,4 +165,6 @@
   <string name="download_deck">下载卡牌组(%d kb).\n 请等待...</string>
   <string name="sync_sanity_local">本地</string>
   <string name="sync_sanity_remote">远程</string>
+  <string name="force_full_sync_title">Force full sync</string>
+  <string name="force_full_sync_summary">On next sync, force changes in one direction</string>
 </resources>

@@ -164,4 +164,6 @@
   <string name="download_deck">Downloading deck&#8230; (%d kB)</string>
   <string name="sync_sanity_local">Helyi</string>
   <string name="sync_sanity_remote">Távoli</string>
+  <string name="force_full_sync_title">Force full sync</string>
+  <string name="force_full_sync_summary">On next sync, force changes in one direction</string>
 </resources>
