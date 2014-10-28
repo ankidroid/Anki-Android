@@ -1410,7 +1410,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         String currentMessage;
         long countUp;
         long countDown;
-        long currDid;
         boolean colIsEmpty;
 
 
@@ -1440,12 +1439,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 col = getCol();
             }
             colIsEmpty = col.isEmpty();
-            // store current did so we can reselect deck properly after sync
-            try {
-                currDid = col.getDecks().current().getLong("id");
-            } catch (JSONException e) {
-                throw new RuntimeException();
-            }
         }
 
 
