@@ -29,8 +29,8 @@ Lisää materiaalia työpöytäsovelluksen (Anki) kautta tai suoraan AnkiDroidis
 • lisää kortteja (Intent) muista sovelluksissa kuten sanakirjoista
 • tuki omien kirjasinten käyttöön
 • tuki varmuuskopioille
-• navigation by swipe, tap
-• customisable
+• siirtyminen pyyhkäisemällä tai napauttamalla
+• muokattava
 • tuki dynaamisille pakoille
 • yötila
 • saatavilla 27 kielellä

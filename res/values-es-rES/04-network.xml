@@ -115,8 +115,8 @@
   <string name="sync_too_busy">Servidor demasiado ocupado. Inténtelo de nuevo más tarde.</string>
   <string name="sync_remote_db_error">La base de datos descargada estaba dañada. Por favor, inténtalo de nuevo.</string>
   <string name="sync_overwrite_error">Tu colección actual no pudo ser sobrescrita por el archivo descargado.</string>
-  <string name="sync_connection_error">Connection timed out. Either your internet connection is experiencing problems, or you have a very large file in your media folder.</string>
-  <string name="sync_error_409">Only one client can access AnkiWeb at a time. If a previous sync failed, please try again in a few minutes.</string>
+  <string name="sync_connection_error">La conexión ha expirado. O bien hay problemas con su conexión a internet  o bien el fichero es demasiado grande.</string>
+  <string name="sync_error_409">Sólo un cliente puede acceder AnkiWeb al mismo tiempo. Si una sincronización anterior falló, por favor, vuelve a intentarlo pasados unos minutos.</string>
   <string name="sync_write_access_error">No se pudo guardar el archivo descargado en la tarjeta sd. O bien la tarjeta sd está montada como de sólo lectura, o bien no hay suficiente espacio.</string>
   <string name="sync_deletions_message">Sincronizando elementos eliminados...</string>
   <string name="sync_small_objects_message">Sincronizando objetos pequeños ...</string>
@@ -165,5 +165,5 @@
   <string name="sync_sanity_local">Local</string>
   <string name="sync_sanity_remote">Remoto</string>
   <string name="force_full_sync_title">Force full sync</string>
-  <string name="force_full_sync_summary">On next sync, force changes in one direction</string>
+  <string name="force_full_sync_summary">Forzar cambios en una dirección en la próxima sincronización</string>
 </resources>
