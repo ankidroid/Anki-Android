@@ -120,7 +120,7 @@ public class StudyOptionsActivity extends NavigationDrawerActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
-        Log.i(AnkiDroidApp.TAG, "StudyOptionsActivity: onActivityResult");
+        // Log.i(AnkiDroidApp.TAG, "StudyOptionsActivity: onActivityResult");
 
         String newLanguage = AnkiDroidApp.getSharedPrefs(this).getString(Preferences.LANGUAGE, "");
         if (AnkiDroidApp.setLanguage(newLanguage)) {
@@ -147,7 +147,7 @@ public class StudyOptionsActivity extends NavigationDrawerActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            Log.i(AnkiDroidApp.TAG, "StudyOptions - onBackPressed()");
+            // Log.i(AnkiDroidApp.TAG, "StudyOptions - onBackPressed()");
             closeStudyOptions();
             return true;
         }

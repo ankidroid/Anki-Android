@@ -58,17 +58,17 @@ public class CollectionLoader extends AsyncTaskLoader<Collection> {
     protected void onStartLoading() {
         // Don't touch collection if sync in progress
         if (AnkiDroidApp.getSyncInProgress()) {
-            Log.i(AnkiDroidApp.TAG, "CollectionLoader.onStartLoading() -- sync in progress; don't load collection");
+            // Log.i(AnkiDroidApp.TAG, "CollectionLoader.onStartLoading() -- sync in progress; don't load collection");
             return;
         }
         String colPath = AnkiDroidApp.getCollectionPath();
         if (AnkiDroidApp.colIsOpen() && AnkiDroidApp.getCol() != null && AnkiDroidApp.getCol().getPath().equals(colPath)) {
             // deliver current path if open and valid
-            Log.i(AnkiDroidApp.TAG, "CollectionLoader.onStartLoading() -- deliverResult as col already open");
+            // Log.i(AnkiDroidApp.TAG, "CollectionLoader.onStartLoading() -- deliverResult as col already open");
             deliverResult(AnkiDroidApp.getCol());
         } else {
             // otherwise reload the collection
-            Log.i(AnkiDroidApp.TAG, "CollectionLoader.onStartLoading() -- force load collection");
+            // Log.i(AnkiDroidApp.TAG, "CollectionLoader.onStartLoading() -- force load collection");
             forceLoad();
         }        
     }

@@ -54,7 +54,7 @@ public class ChartView extends View{
 
     @Override
     public void onDraw(Canvas canvas) {
-        //Log.d(AnkiDroidApp.TAG, "drawing chart");
+        //// Log.d(AnkiDroidApp.TAG, "drawing chart");
         if(mDataIsSet){
             //Paint paint = new Paint(Paint.LINEAR_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
             Paint paint = new Paint(Paint.LINEAR_TEXT_FLAG);
@@ -89,7 +89,7 @@ public class ChartView extends View{
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        Log.d(AnkiDroidApp.TAG, "ChartView sizeChange!");
+        // Log.d(AnkiDroidApp.TAG, "ChartView sizeChange!");
         if(mFragment != null)
             mFragment.checkAndUpdate();
     }

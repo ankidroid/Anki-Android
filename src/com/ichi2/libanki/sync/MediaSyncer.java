@@ -96,11 +96,11 @@ public class MediaSyncer {
             // loop through and process changes from server
             mCol.log("last local usn is " + lastUsn);
             mDownloadCount = 0;
-            Log.i(AnkiDroidApp.TAG, "MediaSyncer: Last local usn is: " + lastUsn);
+            // Log.i(AnkiDroidApp.TAG, "MediaSyncer: Last local usn is: " + lastUsn);
             while (true) {
                 JSONArray data = mServer.mediaChanges(lastUsn);
                 mCol.log("mediaChanges resp count: " + data.length());
-                Log.i(AnkiDroidApp.TAG, "MediaSyncer: mediaChanges resp count: " + data.length());
+                // Log.i(AnkiDroidApp.TAG, "MediaSyncer: mediaChanges resp count: " + data.length());
                 if (data.length() == 0) {
                     break;
                 }

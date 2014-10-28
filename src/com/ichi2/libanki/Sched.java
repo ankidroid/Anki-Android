@@ -146,7 +146,7 @@ public class Sched {
 
     public void answerCard(Card card, int ease) {
         mCol.log();
-        Log.i(AnkiDroidApp.TAG, "answerCard - ease:" + ease);
+        // Log.i(AnkiDroidApp.TAG, "answerCard - ease:" + ease);
         mCol.markReview(card);
         if (mBurySiblingsOnAnswer) {
             _burySiblings(card);

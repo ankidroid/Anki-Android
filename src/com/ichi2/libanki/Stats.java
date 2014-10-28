@@ -136,7 +136,7 @@ public class Stats {
                 "sum(case when type = 2 then 1 else 0 end), "+ /* relearn */
                 "sum(case when type = 3 then 1 else 0 end) "+ /* filter */
                 "from revlog where id > " + ((mCol.getSched().getDayCutoff()-86400)*1000) + " " +  lim;
-        Log.d(AnkiDroidApp.TAG, "todays statistics query: " + query);
+        // Log.d(AnkiDroidApp.TAG, "todays statistics query: " + query);
 
         int cards, thetime, failed, lrn, rev, relrn, filt;
         try {
@@ -162,7 +162,7 @@ public class Stats {
         }
         query = "select count(), sum(case when ease = 1 then 0 else 1 end) from revlog " +
         "where lastIvl >= 21 and id > " + ((mCol.getSched().getDayCutoff()-86400)*1000) + " " +  lim;
-        Log.d(AnkiDroidApp.TAG, "todays statistics query 2: " + query);
+        // Log.d(AnkiDroidApp.TAG, "todays statistics query 2: " + query);
 
         int mcnt, msum;
         try {
@@ -227,7 +227,7 @@ public class Stats {
                     + "sum(CASE WHEN ivl >= 21 THEN 1 ELSE 0 END) " // mature cards
                     + "FROM cards WHERE did IN " + _limit() + " AND queue IN (2,3)" + lim
                     + " GROUP BY day ORDER BY day";
-            Log.d(AnkiDroidApp.TAG, "Forecast query: " + query);
+            // Log.d(AnkiDroidApp.TAG, "Forecast query: " + query);
             cur = mCol
                     .getDb()
                     .getDatabase()
@@ -418,7 +418,7 @@ public class Stats {
                 + "sum(CASE WHEN type = 3 THEN " + ti + " ELSE 0 END)" + tf // cram
                 + " FROM revlog " + lim + " GROUP BY day ORDER BY day";
 
-        Log.d(AnkiDroidApp.TAG, "ReviewCount query: " + query);
+        // Log.d(AnkiDroidApp.TAG, "ReviewCount query: " + query);
 
         try {
             cur = mCol
@@ -696,7 +696,7 @@ public class Stats {
                 "count() " +
                 "from revlog where type in (0,1,2) " + lim +" " +
                 "group by hour having count() > 30 order by hour";
-        Log.d(AnkiDroidApp.TAG, sd.get(Calendar.HOUR_OF_DAY) + " : " +cutoff + " breakdown query: " + query);
+        // Log.d(AnkiDroidApp.TAG, sd.get(Calendar.HOUR_OF_DAY) + " : " +cutoff + " breakdown query: " + query);
         try {
             cur = mCol.getDb()
                     .getDatabase()
@@ -840,7 +840,7 @@ public class Stats {
                 "where type in (0,1,2) " + lim +" " +
                 "group by wd " +
                 "order by wd";
-        Log.d(AnkiDroidApp.TAG, sd.get(Calendar.HOUR_OF_DAY) + " : " +cutoff + " weekly breakdown query: " + query);
+        // Log.d(AnkiDroidApp.TAG, sd.get(Calendar.HOUR_OF_DAY) + " : " +cutoff + " weekly breakdown query: " + query);
         try {
             cur = mCol.getDb()
                     .getDatabase()
@@ -971,7 +971,7 @@ public class Stats {
                 "        (case when type in (0,2) and ease = 4 then 3 else ease end), count() from revlog " + lim + " "+
                 "        group by thetype, ease " +
                 "        order by thetype, ease";
-        Log.d(AnkiDroidApp.TAG, "AnswerButtons query: " + query);
+        // Log.d(AnkiDroidApp.TAG, "AnswerButtons query: " + query);
 
         try {
             cur = mCol.getDb()
@@ -1081,7 +1081,7 @@ public class Stats {
                 "sum(case when queue=0 then 1 else 0 end), -- new\n" +
                 "sum(case when queue<0 then 1 else 0 end) -- susp\n" +
                 "from cards where did in " + _limit();
-        Log.d(AnkiDroidApp.TAG, "CardsTypes query: " + query);
+        // Log.d(AnkiDroidApp.TAG, "CardsTypes query: " + query);
 
         try {
             cur = mCol.getDb()

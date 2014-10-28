@@ -246,7 +246,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
     @Override
     protected void onCollectionLoaded(Collection col) {
         super.onCollectionLoaded(col);
-        Log.i(AnkiDroidApp.TAG, "Card Browser - initActivity()");
+        // Log.i(AnkiDroidApp.TAG, "Card Browser - initActivity()");
         mDeckNames = new HashMap<String, String>();
         for (long did : getCol().getDecks().allIds()) {
             mDeckNames.put(String.valueOf(did), getCol().getDecks().name(did));
@@ -405,7 +405,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
 
     @Override
     protected void onStop() {
-        Log.i(AnkiDroidApp.TAG, "CardBrowser - onStop()");
+        // Log.i(AnkiDroidApp.TAG, "CardBrowser - onStop()");
         super.onStop();
         if (!isFinishing()) {
             WidgetStatus.update(this);
@@ -416,7 +416,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
 
     @Override
     protected void onDestroy() {
-        Log.i(AnkiDroidApp.TAG, "CardBrowser - onDestroy()");
+        // Log.i(AnkiDroidApp.TAG, "CardBrowser - onDestroy()");
         // cancel rendering the question and answer, which has shared access to mCards
         DeckTask.cancelTask(DeckTask.TASK_TYPE_RENDER_BROWSER_QA);
         super.onDestroy();
@@ -429,7 +429,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            Log.i(AnkiDroidApp.TAG, "CardBrowser - onBackPressed()");
+            // Log.i(AnkiDroidApp.TAG, "CardBrowser - onBackPressed()");
             closeCardBrowser(Activity.RESULT_OK);
             return true;
         }
@@ -538,7 +538,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // FIXME:
-        Log.i(AnkiDroidApp.TAG, "CardBrowser - onActivityResult()");
+        // Log.i(AnkiDroidApp.TAG, "CardBrowser - onActivityResult()");
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == DeckPicker.RESULT_DB_ERROR) {
@@ -546,7 +546,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         }
 
         if (requestCode == EDIT_CARD && resultCode != RESULT_CANCELED) {
-            Log.i(AnkiDroidApp.TAG, "CardBrowser: Saving card...");
+            // Log.i(AnkiDroidApp.TAG, "CardBrowser: Saving card...");
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler,
                     new DeckTask.TaskData(getCol().getSched(), sCardBrowserCard, false));
         } else if (requestCode == ADD_NOTE && resultCode == RESULT_OK) {
@@ -705,13 +705,13 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                 int flags = Integer.parseInt(card.get("flags"));
                 if (flags == 2 || flags == 3) {
                     ad.changeListItem(CONTEXT_MENU_MARK, res.getString(R.string.card_browser_unmark_card));
-                    Log.d(AnkiDroidApp.TAG, "Selected Card is currently marked");
+                    // Log.d(AnkiDroidApp.TAG, "Selected Card is currently marked");
                 } else {
                     ad.changeListItem(CONTEXT_MENU_MARK, res.getString(R.string.card_browser_mark_card));
                 }
                 if (flags == 1 || flags == 3) {
                     ad.changeListItem(CONTEXT_MENU_SUSPEND, res.getString(R.string.card_browser_unsuspend_card));
-                    Log.d(AnkiDroidApp.TAG, "Selected Card is currently suspended");
+                    // Log.d(AnkiDroidApp.TAG, "Selected Card is currently suspended");
                 } else {
                     ad.changeListItem(CONTEXT_MENU_SUSPEND, res.getString(R.string.card_browser_suspend_card));
                 }
@@ -889,7 +889,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
-            Log.i(AnkiDroidApp.TAG, "Card Browser - mUpdateCardHandler.onPostExecute()");
+            // Log.i(AnkiDroidApp.TAG, "Card Browser - mUpdateCardHandler.onPostExecute()");
             if (!result.getBoolean()) {
                 closeCardBrowser(DeckPicker.RESULT_DB_ERROR);
             }
@@ -984,7 +984,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                         new DialogInterface.OnCancelListener(){
                             @Override
                             public void onCancel(DialogInterface dialog){
-                                Log.i(AnkiDroidApp.TAG, "Search cards dialog dismissed");
+                                // Log.i(AnkiDroidApp.TAG, "Search cards dialog dismissed");
                                 DeckTask.cancelTask(DeckTask.TASK_TYPE_SEARCH_CARDS);
                                 sSearchCancelled = true;
                             }
@@ -1000,7 +1000,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         @Override
         public void onPostExecute(TaskData result) {            
             if (result != null) {
-                Log.i(AnkiDroidApp.TAG, "Completed doInBackgroundSearchCards Successfuly");
+                // Log.i(AnkiDroidApp.TAG, "Completed doInBackgroundSearchCards Successfuly");
                 updateList();
                 if (mProgressDialog != null && mProgressDialog.isShowing()) {
                     mProgressDialog.dismiss();
@@ -1010,7 +1010,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                         new Object[] { getCol(), mCards }));
             } else {
                 // this is a hack -- see DeckTask.launchDeckTask for more info
-                Log.i(AnkiDroidApp.TAG, "doInBackgroundSearchCards onPostExecute() called but result was null");
+                // Log.i(AnkiDroidApp.TAG, "doInBackgroundSearchCards onPostExecute() called but result was null");
                 sSearchCancelled = false;
             }
         }
@@ -1018,7 +1018,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         @Override
         public void onCancelled(){
             // reset the hacky static variable which Finder is listening to check if main thread has requested cancellation
-            Log.i(AnkiDroidApp.TAG, "doInBackgroundSearchCards onCancelled() called");
+            // Log.i(AnkiDroidApp.TAG, "doInBackgroundSearchCards onCancelled() called");
             sSearchCancelled = false;
         }
     };
@@ -1038,7 +1038,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         @Override
         public void onPostExecute(TaskData result) {
             if (result != null) {
-                Log.i(AnkiDroidApp.TAG, "Completed doInBackgroundRenderBrowserQA Successfuly");
+                // Log.i(AnkiDroidApp.TAG, "Completed doInBackgroundRenderBrowserQA Successfuly");
             } else {
                 // Might want to do something more proactive here like show a message box?
                 Log.e(AnkiDroidApp.TAG, "doInBackgroundRenderBrowserQA was not successful... continuing anyway");

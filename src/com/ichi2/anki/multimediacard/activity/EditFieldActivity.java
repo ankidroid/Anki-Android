@@ -107,7 +107,7 @@ public class EditFieldActivity extends FragmentActivity {
         mFieldController = controllerFactory.createControllerForField(mField);
 
         if (mFieldController == null) {
-            Log.d(AnkiDroidApp.TAG, "Field controller creation failed");
+            // Log.d(AnkiDroidApp.TAG, "Field controller creation failed");
             return;
         }
 
