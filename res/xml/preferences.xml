@@ -69,8 +69,7 @@
                 android:entries="@array/notification_minimum_cards_due_labels"
                 android:entryValues="@array/notification_minimum_cards_due_values"
                 android:key="minimumCardsDueForNotification"
-                android:summary="@string/notification_minimum_cards_due_summary"
-                android:title="@string/notification_minimum_cards_due" />
+                android:title="@string/notification_pref_title" />
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="widgetVibrate"

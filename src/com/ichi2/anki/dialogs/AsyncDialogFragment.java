@@ -1,6 +1,6 @@
 package com.ichi2.anki.dialogs;
 import android.content.res.Resources;
-import android.os.Bundle;
+import android.os.Message;
 import android.support.v4.app.DialogFragment;
 
 import com.ichi2.anki.AnkiDroidApp;
@@ -14,8 +14,8 @@ public abstract class AsyncDialogFragment extends DialogFragment {
     public abstract String getNotificationMessage();
     public abstract String getNotificationTitle();
 
-    public Bundle getNotificationIntentExtras() {
-        return new Bundle();
+    public Message getDialogHandlerMessage() {
+        return null;
     }
 
     protected Resources res() {

@@ -3,6 +3,7 @@ package com.ichi2.anki.dialogs;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Message;
 
 import com.ichi2.anki.R;
 import com.ichi2.themes.StyledDialog;
@@ -13,7 +14,6 @@ import java.util.List;
 public class MediaCheckDialog extends AsyncDialogFragment {
     public static final int DIALOG_CONFIRM_MEDIA_CHECK = 0;
     public static final int DIALOG_MEDIA_CHECK_RESULTS = 1;
-    public static String CLASS_NAME_TAG = "MediaCheckDialog";
 
     public interface MediaCheckDialogListener {
         public void showMediaCheckDialog(int dialogType);
@@ -173,16 +173,15 @@ public class MediaCheckDialog extends AsyncDialogFragment {
 
 
     @Override
-    public Bundle getNotificationIntentExtras() {
+    public Message getDialogHandlerMessage() {
+        Message msg = Message.obtain();
+        msg.what = DialogHandler.MSG_SHOW_MEDIA_CHECK_COMPLETE_DIALOG;
         Bundle b = new Bundle();
-        /* Avoid putting too much data into the notification extras bundle. 
-         * Store large data in the ApplicationContext instead
-         * b.putStringArrayList("nohave", getArguments().getStringArrayList("nohave"));
-         * b.putStringArrayList("unused", getArguments().getStringArrayList("unused"));
-         * b.putStringArrayList("invalid", getArguments().getStringArrayList("invalid")); */
+        b.putStringArrayList("nohave", getArguments().getStringArrayList("nohave"));
+        b.putStringArrayList("unused", getArguments().getStringArrayList("unused"));
+        b.putStringArrayList("invalid", getArguments().getStringArrayList("invalid"));
         b.putInt("dialogType", getArguments().getInt("dialogType"));
-        b.putBoolean("showAsyncDialogFragment", true);
-        b.putString("dialogClass", CLASS_NAME_TAG);
-        return b;
+        msg.setData(b);
+        return msg;
     }
 }

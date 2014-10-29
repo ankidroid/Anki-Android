@@ -9,7 +9,9 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -26,6 +28,7 @@ import android.view.animation.Animation;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.AsyncDialogFragment;
+import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.anki.dialogs.SimpleMessageDialog;
 import com.ichi2.async.CollectionLoader;
 import com.ichi2.libanki.Collection;
@@ -38,12 +41,19 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
 
     private Collection mCollection;
     private StyledOpenCollectionDialog mOpenCollectionDialog;
-
+    private DialogHandler mHandler = new DialogHandler(this);
 
     @Override
     protected void onResume() {
         super.onResume();
         ((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE)).cancel(SIMPLE_NOTIFICATION_ID);
+        // Show any pending dialogs
+        Message handlerMsg = AnkiDroidApp.getStoredDialogHandlerMessage();
+        if (handlerMsg != null) {
+            // TODO: Confirm whether or not it's ok to send the message without checking if the collection is open.
+            mHandler.sendMessage(handlerMsg);
+            AnkiDroidApp.setStoredDialogHandlerMessage(null);
+        }
     }
 
 
@@ -309,8 +319,8 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
         } catch (IllegalStateException e) {
             String title = newFragment.getNotificationTitle();
             String message = newFragment.getNotificationMessage();
-            Bundle intentExtras = newFragment.getNotificationIntentExtras();
-            showSimpleNotification(title, message, intentExtras);
+            AnkiDroidApp.setStoredDialogHandlerMessage(newFragment.getDialogHandlerMessage());
+            showSimpleNotification(title, message);
         }
     }
 
@@ -350,36 +360,51 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
     }
 
 
-    protected void showSimpleNotification(String title, String message, Bundle extras) {
-        // Use the title as the ticker unless the title is simply "AnkiDroid"
-        String ticker = title;
-        if (title.equals(getResources().getString(R.string.app_name))) {
-            ticker = message;
+    protected void showSimpleNotification(String title, String message) {
+        SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(this);
+        // Don't show notification if disabled in preferences
+        if (Integer.parseInt(prefs.getString("minimumCardsDueForNotification", "0")) <= 1000000) {
+            // Use the title as the ticker unless the title is simply "AnkiDroid"
+            String ticker = title;
+            if (title.equals(getResources().getString(R.string.app_name))) {
+                ticker = message;
+            }
+            // Build basic notification
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                    .setSmallIcon(R.drawable.ic_stat_notify)
+                    .setContentTitle(title)
+                    .setContentText(message)
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
+                    .setTicker(ticker);
+            // Enable vibrate and blink if set in preferences
+            if (prefs.getBoolean("widgetVibrate", false)) {
+                builder.setVibrate(new long[] { 1000, 1000, 1000});
+            }
+            if (prefs.getBoolean("widgetBlink", false)) {
+                builder.setLights(Color.BLUE, 1000, 1000);
+            }
+            // Creates an explicit intent for an Activity in your app
+            Intent resultIntent = new Intent(this, DeckPicker.class);
+            resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
+            PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            if (resultPendingIntent == null) {
+                // PendingIntent could not be created... probably something wrong with the extras
+                // try again without the extras, though the original dialog will not be shown when app started
+                Log.e(AnkiDroidApp.TAG, "AnkiActivity.showSimpleNotification() failed due to null PendingIntent");
+                resultIntent = new Intent(this, DeckPicker.class);
+                resultPendingIntent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            }
+            builder.setContentIntent(resultPendingIntent);
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            // mId allows you to update the notification later on.
+            notificationManager.notify(SIMPLE_NOTIFICATION_ID, builder.build());
         }
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.ic_stat_notify)
-                .setContentTitle(title)
-                .setContentText(message)
-                .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
-                .setTicker(ticker);
-        // Creates an explicit intent for an Activity in your app
-        Intent resultIntent = new Intent(this, DeckPicker.class);
-        resultIntent.putExtras(extras);
-        resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        if (resultPendingIntent == null) {
-            // PendingIntent could not be created... probably something wrong with the extras
-            // try again without the extras, though the original dialog will not be shown when app started
-            Log.e(AnkiDroidApp.TAG, "AnkiActivity.showSimpleNotification() failed due to null PendingIntent");
-            resultIntent = new Intent(this, DeckPicker.class);
-            resultPendingIntent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        }
-        builder.setContentIntent(resultPendingIntent);
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        // mId allows you to update the notification later on.
-        notificationManager.notify(SIMPLE_NOTIFICATION_ID, builder.build());
+
     }
 
+    public DialogHandler getDialogHandler() {
+        return mHandler;
+    }
 
     // Handle closing simple message dialog
     @Override
