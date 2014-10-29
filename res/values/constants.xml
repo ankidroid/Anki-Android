@@ -46,7 +46,21 @@
         <item>1</item>
         <item>2</item>
     </string-array>
+    <string-array name="notification_minimum_cards_due_labels">
+        <item>@string/never_notify</item>
+        <item>@string/notify_when_pending</item>
+        <item>@string/notification_minimum_cards_due</item>
+        <item>@string/notification_minimum_cards_due</item>
+        <item>@string/notification_minimum_cards_due</item>
+        <item>@string/notification_minimum_cards_due</item>
+        <item>@string/notification_minimum_cards_due</item>
+        <item>@string/notification_minimum_cards_due</item>
+        <item>@string/notification_minimum_cards_due</item>
+        <item>@string/notification_minimum_cards_due</item>
+    </string-array>
     <string-array name="notification_minimum_cards_due_values">
+        <item>2000000</item>
+        <item>1000000</item>
         <item>10</item>
         <item>25</item>
         <item>50</item>
@@ -54,7 +68,7 @@
         <item>100</item>
         <item>150</item>
         <item>200</item>
-        <item>1000000</item>
+        <item>500</item>
     </string-array>
     <string-array name="gestures_values">
         <item>0</item>
