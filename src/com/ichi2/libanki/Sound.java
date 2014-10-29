@@ -1,5 +1,6 @@
 /****************************************************************************************
  * Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
+ * Copyright (c) 2014 Timothy rae <perceptualchaos2@gmail.com>                          *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -16,17 +17,27 @@
 
 package com.ichi2.libanki;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Build;
+import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Display;
+import android.view.WindowManager;
+import android.widget.VideoView;
 
+import com.ichi2.anki.AbstractFlashcardViewer;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.ReadText;
-
+import java.io.File;
+import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -52,10 +63,20 @@ public class Sound {
      */
     private static MediaPlayer sMediaPlayer;
 
-	/**
-	 * AudioManager to request/release audio focus
-	 */
-	private static AudioManager sAudioManager;
+    /**
+     * AudioManager to request/release audio focus
+     */
+    private static AudioManager sAudioManager;
+
+    /**
+     * OnCompletionListener so that external video player can notify to play next sound
+     */
+    private static OnCompletionListener sPlayAllListener;
+
+    /**
+     * Weak reference to the activity which is attempting to play the sound
+     */
+    private static WeakReference<Activity> sCallingActivity;
 
     /**
      * Subset Flags: Flags that indicate the subset of sounds to involve
@@ -202,7 +223,8 @@ public class Sound {
      * Plays the sounds for the indicated sides
      * @param qa -- One of Sound.SOUNDS_QUESTION, Sound.SOUNDS_ANSWER, or Sound.SOUNDS_QUESTION_AND_ANSWER
      */
-    public static void playSounds(int qa) {
+    public static void playSounds(int qa, WeakReference<Activity> activityRef) {
+        sCallingActivity = activityRef;
         // If there are sounds to play for the current card, start with the first one
         if (sSoundPaths != null && sSoundPaths.containsKey(qa)) {
             playSound(sSoundPaths.get(qa).get(0), new PlayAllCompletionListener(qa));
@@ -214,9 +236,23 @@ public class Sound {
     }
 
     /**
-     * Plays the given sound, sets playAllListener if available on media player to start next sound
+     * Plays the given sound or video and sets playAllListener if available on media player to start next media
+     * @param soundPath
+     * @param playAllListener
      */
     public static void playSound(String soundPath, OnCompletionListener playAllListener) {
+        playSound(soundPath, playAllListener, null);
+    }
+
+    /**
+     * Plays the given sound or video and sets playAllListener if available on media player to start next media.
+     * If videoView is null and the media is a video, then a request is sent to start the VideoPlayer Activity
+     * @param soundPath
+     * @param playAllListener
+     * @param videoView
+     */
+    @SuppressLint("NewApi")
+    public static void playSound(String soundPath, OnCompletionListener playAllListener, final VideoView videoView) {
         Log.i(AnkiDroidApp.TAG, "Playing " + soundPath + " has listener? " + Boolean.toString(playAllListener != null));
 
         if (soundPath.substring(0, 3).equals("tts")) {
@@ -224,17 +260,49 @@ public class Sound {
 //            ReadText.textToSpeech(soundPath.substring(4, soundPath.length()),
 //                    Integer.parseInt(soundPath.substring(3, 4)));
         } else {
-            if (sMediaPlayer == null) {
-                sMediaPlayer = new MediaPlayer();
+            // Check if file is video
+            final boolean isVideo;
+            if (AnkiDroidApp.SDK_VERSION > 7){
+                String realPath;
+                try {
+                    realPath = (new File(soundPath.replace("file:///",""))).getCanonicalPath();
+                } catch (IOException e1) {
+                    realPath = soundPath;
+                }
+                isVideo = ThumbnailUtils.createVideoThumbnail(realPath, MediaStore.Images.Thumbnails.MINI_KIND) != null;
             } else {
-                sMediaPlayer.reset();
+                // Don't bother supporting video on Android 2.1
+                isVideo = false;
             }
-
-			if (sAudioManager == null) {
-                sAudioManager = (AudioManager) AnkiDroidApp.getInstance().getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+            // If video file but no SurfaceHolder provided then ask 
+            // AbstractFlashcardViewer to provide a VideoView holder
+            if (isVideo && videoView == null && sCallingActivity.get() != null) {
+                sPlayAllListener = playAllListener;
+                ((AbstractFlashcardViewer) sCallingActivity.get()).playVideo(soundPath);
+                return;
             }
-
+            // Play media
             try {
+                // Create media player
+                if (sMediaPlayer == null) {
+                    sMediaPlayer = new MediaPlayer();
+                } else {
+                    sMediaPlayer.reset();
+                }
+                if (sAudioManager == null) {
+                    sAudioManager = (AudioManager) AnkiDroidApp.getInstance().getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+                }
+                // Provide a VideoView to the MediaPlayer if valid video file
+                if (isVideo && videoView != null) {
+                    sMediaPlayer.setDisplay(videoView.getHolder());
+                    sMediaPlayer.setOnVideoSizeChangedListener(new MediaPlayer.OnVideoSizeChangedListener() {
+                        @Override
+                        public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
+                            configureVideo(videoView, width, height);
+                        }
+                    });
+                }
+                // Setup the MediaPlayer
                 Uri soundUri = Uri.parse(soundPath);
                 sMediaPlayer.setDataSource(AnkiDroidApp.getInstance().getApplicationContext(),
                                            soundUri);
@@ -248,7 +316,6 @@ public class Sound {
                 if (playAllListener != null) {
                     sMediaPlayer.setOnCompletionListener(playAllListener);
                 }
-
                 sMediaPlayer.prepareAsync();
                 AnkiDroidApp.getCompat().requestAudioFocus(sAudioManager);
             } catch (Exception e) {
@@ -256,6 +323,32 @@ public class Sound {
                 releaseSound();
             }
         }
+    }
+
+    private static void configureVideo(VideoView videoView, int videoWidth, int videoHeight) {
+        // get the display
+        Context context = AnkiDroidApp.getInstance().getApplicationContext();
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        // adjust the size of the video so it fits on the screen
+        float videoProportion = (float) videoWidth / (float) videoHeight;
+        int screenWidth = display.getWidth();
+        int screenHeight = display.getHeight();
+        float screenProportion = (float) screenWidth / (float) screenHeight;
+        android.view.ViewGroup.LayoutParams lp = videoView.getLayoutParams();
+
+        if (videoProportion > screenProportion) {
+            lp.width = screenWidth;
+            lp.height = (int) ((float) screenWidth / videoProportion);
+        } else {
+            lp.width = (int) (videoProportion * (float) screenHeight);
+            lp.height = screenHeight;
+        }
+        videoView.setLayoutParams(lp);
+    }
+
+    public static void notifyConfigurationChanged(VideoView videoView) {
+        configureVideo(videoView, sMediaPlayer.getVideoWidth(), sMediaPlayer.getVideoHeight());
     }
 
     /**
@@ -334,5 +427,9 @@ public class Sound {
     private static boolean hasURIScheme(String path) {
         Matcher uriMatcher = sUriPattern.matcher(path.trim());
         return uriMatcher.matches() && uriMatcher.group(2) != null;
+    }
+
+    public static OnCompletionListener getMediaCompletionListener() {
+        return sPlayAllListener;
     }
 }

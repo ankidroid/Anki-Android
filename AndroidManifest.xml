@@ -160,6 +160,10 @@
             android:name="com.ichi2.anki.Reviewer"
             android:configChanges="keyboardHidden|orientation|locale|screenSize" />
         <activity
+            android:name="com.ichi2.anki.VideoPlayer"
+            android:configChanges="keyboardHidden|orientation|locale|screenSize"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+        <activity
             android:name="com.ichi2.anki.MyAccount"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/menu_my_account" />
