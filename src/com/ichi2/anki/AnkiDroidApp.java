@@ -185,6 +185,11 @@ public class AnkiDroidApp extends Application {
     }
 
 
+    public static boolean isChromebook() {
+        return android.os.Build.BRAND.equalsIgnoreCase("chromium") || android.os.Build.MANUFACTURER.equalsIgnoreCase("chromium");
+    }
+
+
     /**
      * Convenience method for accessing Shared preferences
      * 
