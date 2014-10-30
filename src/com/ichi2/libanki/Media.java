@@ -839,7 +839,10 @@ public class Media {
             z.close();
             return new Pair<File, List<String>>(f, fnames);
         } catch (IOException e) {
+            // Probably a file was manually deleted from the media folder
             Log.e(AnkiDroidApp.TAG, "Failed to create media changes zip", e);
+            // mark the media db as new so that next sync the media database is rebuilt
+            mCol.getMedia().getDb().execute("update meta set dirmod=0");
             throw new RuntimeException(e);
         } finally {
             if (cur != null) {
