@@ -39,26 +39,26 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="widget_minimum_cards_due_notification_ticker_title">Kortien määrä</string>
+  <string name="widget_minimum_cards_due_notification_ticker_title">Korttien määrä</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">%d AnkiDroid korttien määrä</string>
   <string name="widget_no_cards_due">Ei ole tiedossa korttien määrää</string>
   <string name="widget_loading">Ladataan widgettiä...</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">%1$d card due in %2$s</item>
+    <item quantity="one">%1$d kortti opeteltavana %2$s kuluttua</item>
     <item quantity="other">%1$d korttia %2$s kortista</item>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="one">%1$d deck</item>
+    <item quantity="one">%1$d pakka</item>
     <item quantity="other">%1$d korttipakkaa</item>
   </plurals>
-  <string name="widget_medium">AnkiDroid medium</string>
-  <string name="widget_small">AnkiDroid small</string>
-  <string name="widget_big">AnkiDroid big</string>
-  <string name="widget_big_restrictions_dialog">Due to some restrictions of Android\'s widget framework this widget can only show text but no images/sounds etc.</string>
-  <string name="open_in_reviewer">Open deck in AnkiDroid</string>
+  <string name="widget_medium">Android normaali</string>
+  <string name="widget_small">Android pieni</string>
+  <string name="widget_big">Android suuri</string>
+  <string name="widget_big_restrictions_dialog">Android-ympäristön rajoitusten vuoksi tämä elementti voi näyttää vain tekstiä, ei kuviä, ääntä ym.</string>
+  <string name="open_in_reviewer">Avaa pakka AnkiDroidissa</string>
   <plurals name="widget_big_eta">
-    <item quantity="one">Estimated time: %d min.</item>
-    <item quantity="other">Estimated time: %d min.</item>
+    <item quantity="one">Arvioitu kesto: %d min.</item>
+    <item quantity="other">Arvioitu kesto: %d min.</item>
   </plurals>
-  <string name="widget_big_tomorrow_due">Tomorrow due:</string>
+  <string name="widget_big_tomorrow_due">Huomenna opiskeltava:</string>
 </resources>
