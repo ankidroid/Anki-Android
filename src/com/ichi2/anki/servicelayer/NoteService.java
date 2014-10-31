@@ -177,7 +177,7 @@ public class NoteService {
                     Collection col = AnkiDroidApp.getCol();
                     String fname = col.getMedia().addFile(inFile);
                     File outFile = new File(col.getMedia().dir(), fname);
-                    if (field.hasTemporaryMedia()) {
+                    if (field.hasTemporaryMedia() && !outFile.getAbsolutePath().equals(tmpMediaPath)) {
                         // Delete original
                         inFile.delete();
                     }
