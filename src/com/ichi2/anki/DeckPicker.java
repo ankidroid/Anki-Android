@@ -1063,20 +1063,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     }
 
 
-    /**
-     * @return true if the device is a Nook
-     */
-    private boolean isNookDevice() {
-        for (String s : new String[] { "nook" }) {
-            if (android.os.Build.DEVICE.toLowerCase(Locale.US).contains(s)
-                    || android.os.Build.MODEL.toLowerCase(Locale.US).contains(s)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-
     private void upgradePreferences(int previousVersionCode) {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         // when upgrading from before 2.1alpha08
@@ -1090,7 +1076,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             preferences.edit().putInt("swipeSensitivity", preferences.getInt("swipeSensibility", 100)).commit();
             preferences.edit().putBoolean("gestures", preferences.getBoolean("swipe", false)).commit();
             // set new safeDisplayMode preference based on old behavior
-            boolean safeDisplayMode = preferences.getBoolean("eInkDisplay", false) || isNookDevice()
+            boolean safeDisplayMode = preferences.getBoolean("eInkDisplay", false) || AnkiDroidApp.isNook()
                     || !preferences.getBoolean("forceQuickUpdate", false);
             preferences.edit().putBoolean("safeDisplay", safeDisplayMode).commit();
             // set overrideFontBehavior based on old overrideFont settings

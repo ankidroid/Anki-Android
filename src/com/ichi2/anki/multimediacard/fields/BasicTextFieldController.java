@@ -34,6 +34,7 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.multimediacard.activity.LoadPronounciationActivity;
 import com.ichi2.anki.multimediacard.activity.PickStringDialogFragment;
@@ -196,18 +197,22 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
                 // Pick from two translation sources
                 PickStringDialogFragment fragment = new PickStringDialogFragment();
 
-                ArrayList<String> translationSources = new ArrayList<String>();
+                final ArrayList<String> translationSources = new ArrayList<String>();
                 translationSources.add("Glosbe.com");
-                translationSources.add("ColorDict");
+                // Chromebooks do not support dependent apps yet.
+                if (!AnkiDroidApp.isChromebook()) {
+                    translationSources.add("ColorDict");
+                }
 
                 fragment.setChoices(translationSources);
                 fragment.setOnclickListener(new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if (which == 0) {
+                        String translationSource = translationSources.get(which);
+                        if (translationSource.equals("Glosbe.com")) {
                             startTranslationWithGlosbe();
-                        } else if (which == 1) {
+                        } else if (translationSource.equals("ColorDict")) {
                             startTranslationWithColorDict();
                         }
                     }

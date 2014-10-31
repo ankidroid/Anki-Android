@@ -174,14 +174,19 @@ public class AnkiDroidApp extends Application {
     }
 
 
-    private boolean isNookHdPlus() {
+    public static boolean isNookHdPlus() {
         return android.os.Build.BRAND.equals("NOOK") && android.os.Build.PRODUCT.equals("HDplus")
                 && android.os.Build.DEVICE.equals("ovation");
     }
 
 
-    private boolean isNook() {
+    public static boolean isNook() {
         return android.os.Build.MODEL.equalsIgnoreCase("nook") || android.os.Build.DEVICE.equalsIgnoreCase("nook");
+    }
+
+
+    public static boolean isChromebook() {
+        return android.os.Build.BRAND.equalsIgnoreCase("chromium") || android.os.Build.MANUFACTURER.equalsIgnoreCase("chromium");
     }
 
 
