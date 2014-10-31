@@ -113,8 +113,8 @@ public class NoteEditor extends AnkiActivity {
     public static final String EXTRA_FIELD = "multim.card.ed.extra.field";
     public static final String EXTRA_WHOLE_NOTE = "multim.card.ed.extra.whole.note";
 
-    //private static final int DIALOG_DECK_SELECT = 0;
-    //private static final int DIALOG_MODEL_SELECT = 1;
+    // private static final int DIALOG_DECK_SELECT = 0;
+    // private static final int DIALOG_MODEL_SELECT = 1;
     private static final int DIALOG_TAGS_SELECT = 2;
     private static final int DIALOG_RESET_CARD = 3;
     private static final int DIALOG_INTENT_INFORMATION = 4;
@@ -147,7 +147,6 @@ public class NoteEditor extends AnkiActivity {
     private boolean mChanged = false;
     private boolean mFieldEdited = false;
     private boolean mRescheduled = false;
-
 
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
@@ -184,7 +183,6 @@ public class NoteEditor extends AnkiActivity {
     private StyledProgressDialog mProgressDialog;
 
     private String[] mSourceText;
-
 
     private boolean mPrefFixArabic;
 
@@ -428,7 +426,7 @@ public class NoteEditor extends AnkiActivity {
         }
 
         // Note type Selector
-        mNoteTypeSpinner = (Spinner) findViewById(R.id.note_type_spinner);    
+        mNoteTypeSpinner = (Spinner) findViewById(R.id.note_type_spinner);
         final ArrayList<Long> modelIds = new ArrayList<Long>();
         final ArrayList<String> modelNames = new ArrayList<String>();
         ArrayList<JSONObject> models = getCol().getModels().all();
@@ -442,14 +440,15 @@ public class NoteEditor extends AnkiActivity {
             }
         }
 
-        ArrayAdapter<String> noteTypeAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, modelNames);
+        ArrayAdapter<String> noteTypeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,
+                modelNames);
         mNoteTypeSpinner.setAdapter(noteTypeAdapter);
         noteTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         OnItemSelectedListener noteTypeListener = new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 // If a new column was selected then change the key used to map from mCards to the column TextView
-                //Log.i(AnkiDroidApp.TAG, "onItemSelected() fired on mNoteTypeSpinner");
+                // Log.i(AnkiDroidApp.TAG, "onItemSelected() fired on mNoteTypeSpinner");
                 long oldModelId;
                 try {
                     oldModelId = getCol().getModels().current().getLong("id");
@@ -488,17 +487,18 @@ public class NoteEditor extends AnkiActivity {
                 }
             }
 
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 // Do Nothing
             }
         };
 
-
         // Deck Selector
         TextView deckTextView = (TextView) findViewById(R.id.CardEditorDeckText);
-        deckTextView.setText(getResources().getString(mAddNote ? R.string.CardEditorNoteDeck : R.string.CardEditorCardDeck));
-        mNoteDeckSpinner = (Spinner) findViewById(R.id.note_deck_spinner);    
+        deckTextView.setText(getResources().getString(
+                mAddNote ? R.string.CardEditorNoteDeck : R.string.CardEditorCardDeck));
+        mNoteDeckSpinner = (Spinner) findViewById(R.id.note_deck_spinner);
         mAllDeckIds = new ArrayList<Long>();
         final ArrayList<String> deckNames = new ArrayList<String>();
 
@@ -518,15 +518,18 @@ public class NoteEditor extends AnkiActivity {
             }
         }
 
-        ArrayAdapter<String> noteDeckAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, deckNames);
+        ArrayAdapter<String> noteDeckAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,
+                deckNames);
         mNoteDeckSpinner.setAdapter(noteDeckAdapter);
         noteDeckAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mNoteDeckSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                // Log.i(AnkiDroidApp.TAG, "onItemSelected() fired on mNoteDeckSpinner with pos = "+Integer.toString(pos)); 
+                // Log.i(AnkiDroidApp.TAG,
+                // "onItemSelected() fired on mNoteDeckSpinner with pos = "+Integer.toString(pos));
                 mCurrentDid = mAllDeckIds.get(pos);
             }
+
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -535,7 +538,7 @@ public class NoteEditor extends AnkiActivity {
         });
 
         setNote(mEditorNote);
-        
+
         // Set current note type and deck positions in spinners
         int position;
         try {
@@ -572,7 +575,6 @@ public class NoteEditor extends AnkiActivity {
             setTitle(R.string.cardeditor_title_edit_card);
         }
 
-
         mPrefFixArabic = preferences.getBoolean("fixArabicText", false);
 
         ((LinearLayout) findViewById(R.id.CardEditorTagButton)).setOnClickListener(new View.OnClickListener() {
@@ -581,7 +583,7 @@ public class NoteEditor extends AnkiActivity {
                 showDialogFragment(DIALOG_TAGS_SELECT);
             }
         });
-       
+
         // Close collection opening dialog if needed
         dismissOpeningCollectionDialog();
     }
@@ -678,7 +680,7 @@ public class NoteEditor extends AnkiActivity {
 
     private boolean hasUnsavedChanges() {
         // changed deck?
-        if (!mAddNote && mCurrentEditedCard!= null && mCurrentEditedCard.getDid() != mCurrentDid) {
+        if (!mAddNote && mCurrentEditedCard != null && mCurrentEditedCard.getDid() != mCurrentDid) {
             return true;
         }
         // changed fields?
@@ -706,9 +708,7 @@ public class NoteEditor extends AnkiActivity {
         // treat add new note and edit existing note independently
         if (mAddNote) {
             // load all of the fields into the note
-            for (FieldEditText f : mEditFields) {
-                updateField(f);
-            }
+            updateAllFields();
             try {
                 // Save deck to model
                 mEditorNote.model().put("did", mCurrentDid);
@@ -755,6 +755,13 @@ public class NoteEditor extends AnkiActivity {
                 mChanged = true;
             }
             closeCardEditor();
+        }
+    }
+
+
+    private void updateAllFields() {
+        for (FieldEditText f : mEditFields) {
+            updateField(f);
         }
     }
 
@@ -850,8 +857,8 @@ public class NoteEditor extends AnkiActivity {
                     MetaDB.saveIntentInformation(NoteEditor.this, content);
                     populateEditFields();
                     mSourceText = null;
-                    Themes.showThemedToast(NoteEditor.this,
-                            getResources().getString(R.string.CardEditorLaterMessage), false);
+                    Themes.showThemedToast(NoteEditor.this, getResources().getString(R.string.CardEditorLaterMessage),
+                            false);
                 }
                 if (mCaller == CALLER_INDICLASH || mCaller == CALLER_CARDEDITOR_INTENT_ADD) {
                     closeCardEditor();
@@ -914,7 +921,7 @@ public class NoteEditor extends AnkiActivity {
 
     private void closeCardEditorWithCheck() {
         if (hasUnsavedChanges()) {
-           showDiscardChangesDialog();
+            showDiscardChangesDialog();
         } else {
             closeCardEditor();
         }
@@ -926,13 +933,12 @@ public class NoteEditor extends AnkiActivity {
         Resources res = getResources();
         StyledDialog.Builder builder = new StyledDialog.Builder(this);
         builder.setMessage(R.string.discard_unsaved_changes);
-        builder.setPositiveButton(res.getString(R.string.dialog_ok),
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        closeCardEditor();
-                    }
-                });
+        builder.setPositiveButton(res.getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                closeCardEditor();
+            }
+        });
         builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
         dialog = builder.create();
         dialog.show();
@@ -1205,18 +1211,33 @@ public class NoteEditor extends AnkiActivity {
         }
     }
 
+    class MMEditorStartupInfo {
+        public IField field;
+        public IMultimediaEditableNote note;
+    }
+
+
+    private MMEditorStartupInfo prepareMMEditorStartup(final int index) {
+        updateAllFields();
+        IMultimediaEditableNote theNote = NoteService.createEmptyNote(mEditorNote.model());
+        NoteService.updateMultimediaNoteFromJsonNote(mEditorNote, theNote);
+        IField field = theNote.getField(index);
+
+        MMEditorStartupInfo i = new MMEditorStartupInfo();
+        i.field = field;
+        i.note = theNote;
+
+        return i;
+    }
+
 
     private void setMMButtonListener(ImageButton mediaButton, final int index) {
         mediaButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mEditorNote.items()[index][1].length() > 0) {
-                    // If the field already exists then we start the field editor, which figures out the type
-                    // automatically
-                    IMultimediaEditableNote mNote = NoteService.createEmptyNote(mEditorNote.model());
-                    NoteService.updateMultimediaNoteFromJsonNote(mEditorNote, mNote);
-                    IField field = mNote.getField(index);
-                    startMultimediaFieldEditor(index, mNote, field);
+                    MMEditorStartupInfo info = prepareMMEditorStartup(index);
+                    startMultimediaFieldEditor(index, info.note, info.field);
                 } else {
                     // Otherwise we make a popup menu allowing the user to choose between audio/image/text field
                     PopupMenuWithIcons popup = new PopupMenuWithIcons(NoteEditor.this, v, true);
@@ -1225,22 +1246,21 @@ public class NoteEditor extends AnkiActivity {
                     popup.setOnMenuItemClickListener(new OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
-                            IMultimediaEditableNote mNote = NoteService.createEmptyNote(mEditorNote.model());
-                            NoteService.updateMultimediaNoteFromJsonNote(mEditorNote, mNote);
-                            IField field = mNote.getField(index);
+                            MMEditorStartupInfo info = prepareMMEditorStartup(index);
+
                             switch (item.getItemId()) {
                                 case R.id.menu_multimedia_audio:
-                                    field = new AudioField();
-                                    mNote.setField(index, field);
-                                    startMultimediaFieldEditor(index, mNote, field);
+                                    info.field = new AudioField();
+                                    info.note.setField(index, info.field);
+                                    startMultimediaFieldEditor(index, info.note, info.field);
                                     return true;
                                 case R.id.menu_multimedia_photo:
-                                    field = new ImageField();
-                                    mNote.setField(index, field);
-                                    startMultimediaFieldEditor(index, mNote, field);
+                                    info.field = new ImageField();
+                                    info.note.setField(index, info.field);
+                                    startMultimediaFieldEditor(index, info.note, info.field);
                                     return true;
                                 case R.id.menu_multimedia_text:
-                                    startMultimediaFieldEditor(index, mNote, field);
+                                    startMultimediaFieldEditor(index, info.note, info.field);
                                     return true;
                                 default:
                                     return false;
@@ -1395,8 +1415,8 @@ public class NoteEditor extends AnkiActivity {
         if (position != -1) {
             mNoteDeckSpinner.setSelection(position, false);
         } else {
-            Log.e(AnkiDroidApp.TAG, "updateDeckPosition() :: mCurrentDid="+Long.toString(mCurrentDid)+", " +
-            		"position = "+Integer.toString(position));
+            Log.e(AnkiDroidApp.TAG, "updateDeckPosition() :: mCurrentDid=" + Long.toString(mCurrentDid) + ", "
+                    + "position = " + Integer.toString(position));
         }
     }
 
