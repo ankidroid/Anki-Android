@@ -167,4 +167,6 @@ public class CompatV7 implements Compat {
     public int parentLayoutSize() {
         return LayoutParams.FILL_PARENT;
     }
+    
+    public void enableFileSchemeCookies() { }
 }

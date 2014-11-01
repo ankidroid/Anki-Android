@@ -8,7 +8,7 @@ import com.ichi2.anki.ReadText;
 
 /** Implementation of {@link Compat} for SDK level 15 */
 @TargetApi(15)
-public class CompatV15 extends CompatV9 implements Compat {
+public class CompatV15 extends CompatV12 implements Compat {
 
     @Override
     public void setTtsOnUtteranceProgressListener(TextToSpeech tts) {
