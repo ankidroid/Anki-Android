@@ -324,7 +324,7 @@ public class Models {
     /** Delete model, and all its cards/notes. 
      * @throws ConfirmModSchemaException */
     public void rem(JSONObject m) throws ConfirmModSchemaException {
-        mCol.modSchema();
+        mCol.modSchema(true);
         try {
             long id = m.getLong("id");
             boolean current = current().getLong("id") == id;
@@ -512,7 +512,7 @@ public class Models {
         // only mod schema if model isn't new
         try {
             if (m.getLong("id") != 0) {
-                mCol.modSchema();
+                mCol.modSchema(true);
             }
             JSONArray ja = m.getJSONArray("flds");
             ja.put(field);
@@ -538,7 +538,7 @@ public class Models {
 
 
     public void remField(JSONObject m, JSONObject field) throws ConfirmModSchemaException {
-        mCol.modSchema();
+        mCol.modSchema(true);
         try {
             JSONArray ja = m.getJSONArray("flds");
             JSONArray ja2 = new JSONArray();
@@ -587,7 +587,7 @@ public class Models {
 
 
     public void moveField(JSONObject m, JSONObject field, int idx) throws ConfirmModSchemaException {
-        mCol.modSchema();
+        mCol.modSchema(true);
         try {
             JSONArray ja = m.getJSONArray("flds");
             ArrayList<JSONObject> l = new ArrayList<JSONObject>();
@@ -648,7 +648,7 @@ public class Models {
 
 
     public void renameField(JSONObject m, JSONObject field, String newName) throws ConfirmModSchemaException {
-        mCol.modSchema();
+        mCol.modSchema(true);
         try {
             String pat = String.format("\\{\\{(.*)([:#^/]|[^:#/^}][^:}]*?:|)%s\\}\\}",
                     Pattern.quote(field.getString("name")));
@@ -744,7 +744,7 @@ public class Models {
     public void addTemplate(JSONObject m, JSONObject template) throws ConfirmModSchemaException {
         try {
             if (m.getLong("id") != 0) {
-                mCol.modSchema();
+                mCol.modSchema(true);
             }
             JSONArray ja = m.getJSONArray("tmpls");
             ja.put(template);
@@ -785,7 +785,7 @@ public class Models {
                 return false;
             }
             // ok to proceed; remove cards
-            mCol.modSchema();
+            mCol.modSchema(true);
             mCol.remCards(cids);
             // shift ordinals
             mCol.getDb()
@@ -1014,7 +1014,7 @@ public class Models {
      * @throws ConfirmModSchemaException 
      */
     public void change(JSONObject m, long[] nids, JSONObject newModel, Map<Integer, Integer> fmap, Map<Integer, Integer> cmap) throws ConfirmModSchemaException {
-        mCol.modSchema();
+        mCol.modSchema(true);
         try {
             assert (newModel.getLong("id") == m.getLong("id")) || (fmap != null && cmap != null);
         } catch (JSONException e) {

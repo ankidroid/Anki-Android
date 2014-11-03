@@ -351,15 +351,6 @@ public class Collection {
         }
     }
 
-    /** Mark schema modified to force a full sync.
-     * ConfirmModSchemaException will be thrown if the user needs to be prompted to confirm the action.
-     * If the user chooses to confirm then modSchema(false) should be called, after which the exception can
-     * be safely ignored, and the outer code called again.
-     *
-     * @throws ConfirmModSchemaException */
-    public void modSchema() throws ConfirmModSchemaException {
-        modSchema(true);
-    }
 
     /** Mark schema modified to force a full sync.
      * If check==true and the schema has not already been marked modified then ConfirmModSchemaException will be thrown.
