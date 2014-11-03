@@ -32,6 +32,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.PopupMenu.OnMenuItemClickListener;
 import android.text.Editable;
+import android.text.Html;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -157,6 +158,7 @@ public class NoteEditor extends AnkiActivity {
     private LinearLayout mFieldsLayoutContainer;
 
     private TextView mTagsButton;
+    private TextView mCardsButton;
     private Spinner mNoteTypeSpinner;
     private Spinner mNoteDeckSpinner;
 
@@ -343,7 +345,7 @@ public class NoteEditor extends AnkiActivity {
 
         registerExternalStorageListener();
 
-        View mainView = getLayoutInflater().inflate(R.layout.card_editor, null);
+        View mainView = getLayoutInflater().inflate(R.layout.note_editor, null);
         setContentView(mainView);
         Themes.setWallpaper(mainView);
         Themes.setContentStyle(mainView, Themes.CALLER_CARD_EDITOR);
@@ -351,6 +353,7 @@ public class NoteEditor extends AnkiActivity {
         mFieldsLayoutContainer = (LinearLayout) findViewById(R.id.CardEditorEditFieldsLayout);
 
         mTagsButton = (TextView) findViewById(R.id.CardEditorTagText);
+        mCardsButton = (TextView) findViewById(R.id.CardEditorCardsText);
 
         Preferences.COMING_FROM_ADD = false;
 
@@ -497,7 +500,14 @@ public class NoteEditor extends AnkiActivity {
 
         // Deck Selector
         TextView deckTextView = (TextView) findViewById(R.id.CardEditorDeckText);
-        deckTextView.setText(getResources().getString(mAddNote ? R.string.CardEditorNoteDeck : R.string.CardEditorCardDeck));
+        // If edit mode and more than one card template distinguish between "Deck" and "Card deck"
+        try {
+            if (!mAddNote && mEditorNote.model().getJSONArray("tmpls").length()>1) {
+                deckTextView.setText(R.string.CardEditorCardDeck);
+            }
+        } catch (JSONException e1) {
+            throw new RuntimeException();
+        }
         mNoteDeckSpinner = (Spinner) findViewById(R.id.note_deck_spinner);    
         mAllDeckIds = new ArrayList<Long>();
         final ArrayList<String> deckNames = new ArrayList<String>();
@@ -1386,6 +1396,7 @@ public class NoteEditor extends AnkiActivity {
         }
         updateDeckPosition();
         updateTags();
+        updateCards();
         populateEditFields();
     }
 
@@ -1407,6 +1418,28 @@ public class NoteEditor extends AnkiActivity {
         }
         mTagsButton.setText(getResources().getString(R.string.CardEditorTags,
                 getCol().getTags().join(getCol().getTags().canonify(mSelectedTags)).trim().replace(" ", ", ")));
+    }
+
+
+    /** Update the list of card templates for current note type */
+    private void updateCards() {
+        try {
+            JSONArray tmpls = mEditorNote.model().getJSONArray("tmpls");
+            String cardsList = "";
+            // Build comma separated list of card names
+            for (int i = 0; i < tmpls.length(); i++) {
+                String name = tmpls.getJSONObject(i).optString("name");
+                // Make currently selected card underlined if more than one card
+                if (!mAddNote && tmpls.length() > 1 && mCurrentEditedCard.template().optString("name").equals(name)) {
+                    name = "<u>" + name + "</u>";
+                }
+                cardsList += name + ", ";
+            }
+            cardsList = cardsList.substring(0, cardsList.length()-2);
+            mCardsButton.setText(Html.fromHtml(getResources().getString(R.string.CardEditorCards, cardsList)));
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
