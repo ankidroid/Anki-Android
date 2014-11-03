@@ -130,6 +130,10 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
                 }
             }
         });
+        // Chromebooks do not support camera capture yet.
+        if (AnkiDroidApp.isChromebook()) {
+            mBtnCamera.setVisibility(View.INVISIBLE);
+        }
 
         layout.addView(mImagePreview, android.view.ViewGroup.LayoutParams.FILL_PARENT, p);
         layout.addView(mBtnGallery, android.view.ViewGroup.LayoutParams.FILL_PARENT);
