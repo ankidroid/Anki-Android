@@ -22,6 +22,7 @@ import android.database.SQLException;
 import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.exception.ConfirmModSchemaException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -66,11 +67,16 @@ public class Storage {
         if (ver < Consts.SCHEMA_VERSION) {
             _upgrade(col, ver);
         } else if (create) {
-            // add in reverse order so basic is default
-            Models.addClozeModel(col);
-            Models.addForwardOptionalReverse(col);
-            Models.addForwardReverse(col);
-            Models.addBasicModel(col);
+            try {
+                // add in reverse order so basic is default
+                Models.addClozeModel(col);
+                Models.addForwardOptionalReverse(col);
+                Models.addForwardReverse(col);
+                Models.addBasicModel(col);
+            } catch (ConfirmModSchemaException e) {
+                // This should never reached as we've just created a new database 
+                throw new RuntimeException(e);
+            }
             col.save();
         }
         return col;
@@ -116,7 +122,7 @@ public class Storage {
                 }
             }
             if (ver < 4) {
-                col.modSchema();
+                col.modSchemaNoCheck();
                 ArrayList<JSONObject> clozes = new ArrayList<JSONObject>();
                 for (JSONObject m : col.getModels().all()) {
                     if (!m.getJSONArray("tmpls").getJSONObject(0).getString("qfmt").contains("{{cloze:")) {
@@ -126,7 +132,12 @@ public class Storage {
                     }
                 }
                 for (JSONObject m : clozes) {
-                    _upgradeClozeModel(col, m);
+                    try {
+                        _upgradeClozeModel(col, m);
+                    } catch (ConfirmModSchemaException e) {
+                        // Will never be reached as we already set modSchemaNoCheck()
+                        throw new RuntimeException(e);
+                    }
                 }
                 col.getDb().execute("UPDATE col SET ver = 4");
             }
@@ -135,7 +146,7 @@ public class Storage {
                 col.getDb().execute("UPDATE col SET ver = 5");
             }
             if (ver < 6) {
-                col.modSchema();
+                col.modSchemaNoCheck();
                 for (JSONObject m : col.getModels().all()) {
                     m.put("css", new JSONObject(Models.defaultModel).getString("css"));
                     JSONArray ar = m.getJSONArray("tmpls");
@@ -154,12 +165,12 @@ public class Storage {
                 col.getDb().execute("UPDATE col SET ver = 6");
             }
             if (ver < 7) {
-                col.modSchema();
+                col.modSchemaNoCheck();
                 col.getDb().execute("UPDATE cards SET odue = 0 WHERE (type = 1 OR queue = 2) AND NOT odid");
                 col.getDb().execute("UPDATE col SET ver = 7");
             }
             if (ver < 8) {
-                col.modSchema();
+                col.modSchemaNoCheck();
                 col.getDb().execute("UPDATE cards SET due = due / 1000 WHERE due > 4294967296");
                 col.getDb().execute("UPDATE col SET ver = 8");
             }
@@ -171,7 +182,7 @@ public class Storage {
                 col.getDb().execute("UPDATE col SET ver = 10");
             }
             if (ver < 11) {
-                col.modSchema();
+                col.modSchemaNoCheck();
                 for (JSONObject d : col.getDecks().all()) {
                     if (d.getInt("dyn") != 0) {
                         int order = d.getInt("order");
@@ -222,7 +233,7 @@ public class Storage {
     }
 
 
-    private static void _upgradeClozeModel(Collection col, JSONObject m) {
+    private static void _upgradeClozeModel(Collection col, JSONObject m) throws ConfirmModSchemaException {
         try {
             m.put("type", Consts.MODEL_CLOZE);
             // convert first template
@@ -241,7 +252,6 @@ public class Storage {
                 }
             }
             for (JSONObject r : rem) {
-                // TODO: write remtemplate
                 col.getModels().remTemplate(m, r);
             }
             JSONArray newArray = new JSONArray();

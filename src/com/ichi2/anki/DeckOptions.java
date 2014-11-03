@@ -21,6 +21,7 @@ package com.ichi2.anki;
 import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -36,10 +37,12 @@ import android.util.Log;
 import android.view.KeyEvent;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Collection;
 import com.ichi2.preferences.StepsPreference;
+import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 
@@ -239,12 +242,33 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
                             }
                         } else if (key.equals("confRemove")) {
                             if (mOptions.getLong("id") == 1) {
+                                // Don't remove the options group if it's the default group
                                 Themes.showThemedToast(DeckOptions.this,
                                         getResources().getString(R.string.default_conf_delete_error), false);
                             } else {
-                                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CONF_REMOVE, mConfChangeHandler,
-                                        new DeckTask.TaskData(new Object[] { mCol, mOptions }));
-                                mDeck.put("conf", 1);
+                                // Remove options group, handling the case where the user needs to confirm full sync
+                                try {
+                                    remConf();
+                                } catch (ConfirmModSchemaException e) {
+                                    // Libanki determined that a full sync will be required, so confirm with the user before proceeding
+                                    // TODO : Use ConfirmationDialog DialogFragment -- not compatible with PreferenceActivity
+                                    StyledDialog.Builder builder = new StyledDialog.Builder(DeckOptions.this);
+                                    builder.setMessage(R.string.full_sync_confirmation);
+                                    builder.setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            mCol.modSchemaNoCheck();
+                                            try {
+                                                remConf();
+                                            } catch (ConfirmModSchemaException e) {
+                                                // This should never be reached as we just forced modSchema
+                                                throw new RuntimeException(e);
+                                            }
+                                        }
+                                    });
+                                    builder.setNegativeButton(R.string.dialog_cancel, null);
+                                    builder.create().show();
+                                }
                             }
                         } else if (key.equals("confSetSubdecks")) {
                             if ((Boolean) value) {
@@ -364,6 +388,23 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
                     
                 }
             };
+
+            /**
+             * Remove the currently selected options group
+             * @throws ConfirmModSchemaException
+             */
+            private void remConf() throws ConfirmModSchemaException {
+                try {
+                    // Remove options group, asking user to confirm full sync if necessary
+                    mCol.getDecks().remConf(mOptions.getLong("id"));
+                    // Run the CPU intensive re-sort operation in a background thread
+                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CONF_REMOVE, mConfChangeHandler,
+                            new DeckTask.TaskData(new Object[] { mCol, mOptions }));
+                    mDeck.put("conf", 1);
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         }
 
 
@@ -652,6 +693,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
         }
     }
 
+
     public class JSONNameComparator implements Comparator<JSONObject> {
         @Override
         public int compare(JSONObject lhs, JSONObject rhs) {
@@ -701,5 +743,4 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
             // nothing
         }
     }
-
 }

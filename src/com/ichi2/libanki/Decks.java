@@ -21,6 +21,8 @@ package com.ichi2.libanki;
 
 import android.content.ContentValues;
 
+import com.ichi2.anki.exception.ConfirmModSchemaException;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -548,8 +550,10 @@ public class Decks {
 
     /**
      * Remove a configuration and update all decks using it.
+     * @throws ConfirmModSchemaException 
      */
-    public void remConf(long id) {
+    public void remConf(long id) throws ConfirmModSchemaException {
+        assert id != 1;
         mCol.modSchema();
         mDconf.remove(Long.valueOf(id));
         for (JSONObject g : all()) {

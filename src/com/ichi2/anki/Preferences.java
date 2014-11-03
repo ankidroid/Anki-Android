@@ -233,7 +233,8 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         fullSyncPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
                 public boolean onPreferenceClick(Preference preference) {
                     if (mCol != null && mCol.getDb()!= null) {
-                        mCol.modSchema(true);
+                        // TODO: Could be useful to show the full confirmation dialog
+                        mCol.modSchemaNoCheck();
                         mCol.setMod();
                         Toast.makeText(getApplicationContext(), R.string.ok , Toast.LENGTH_SHORT).show();
                     } else {
