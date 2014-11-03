@@ -203,6 +203,8 @@ public class SyncErrorDialog extends AsyncDialogFragment {
         switch (getArguments().getInt("dialogType")) {
             case DIALOG_USER_NOT_LOGGED_IN_SYNC:
                 return res().getString(R.string.not_logged_in_title);
+            case DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_LOCAL:
+            case DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_REMOTE:
             case DIALOG_SYNC_CONFLICT_RESOLUTION:
                 return res().getString(R.string.sync_conflict_title);
             default:
