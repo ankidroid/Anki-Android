@@ -25,6 +25,7 @@ import android.util.Log;
 import android.util.Pair;
 
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.samskivert.mustache.Mustache;
 import com.samskivert.mustache.Template;
 
@@ -320,9 +321,10 @@ public class Models {
     }
 
 
-    /** Delete model, and all its cards/notes. */
-    public void rem(JSONObject m) {
-        mCol.modSchema();
+    /** Delete model, and all its cards/notes. 
+     * @throws ConfirmModSchemaException */
+    public void rem(JSONObject m) throws ConfirmModSchemaException {
+        mCol.modSchema(true);
         try {
             long id = m.getLong("id");
             boolean current = current().getLong("id") == id;
@@ -506,11 +508,11 @@ public class Models {
     // }
     // }
 
-    public void addField(JSONObject m, JSONObject field) {
+    public void addField(JSONObject m, JSONObject field) throws ConfirmModSchemaException {
         // only mod schema if model isn't new
         try {
             if (m.getLong("id") != 0) {
-                mCol.modSchema();
+                mCol.modSchema(true);
             }
             JSONArray ja = m.getJSONArray("flds");
             ja.put(field);
@@ -535,8 +537,8 @@ public class Models {
     }
 
 
-    public void remField(JSONObject m, JSONObject field) {
-        mCol.modSchema();
+    public void remField(JSONObject m, JSONObject field) throws ConfirmModSchemaException {
+        mCol.modSchema(true);
         try {
             JSONArray ja = m.getJSONArray("flds");
             JSONArray ja2 = new JSONArray();
@@ -584,8 +586,8 @@ public class Models {
     }
 
 
-    public void moveField(JSONObject m, JSONObject field, int idx) {
-        mCol.modSchema();
+    public void moveField(JSONObject m, JSONObject field, int idx) throws ConfirmModSchemaException {
+        mCol.modSchema(true);
         try {
             JSONArray ja = m.getJSONArray("flds");
             ArrayList<JSONObject> l = new ArrayList<JSONObject>();
@@ -645,8 +647,8 @@ public class Models {
     }
 
 
-    public void renameField(JSONObject m, JSONObject field, String newName) {
-        mCol.modSchema();
+    public void renameField(JSONObject m, JSONObject field, String newName) throws ConfirmModSchemaException {
+        mCol.modSchema(true);
         try {
             String pat = String.format("\\{\\{(.*)([:#^/]|[^:#/^}][^:}]*?:|)%s\\}\\}",
                     Pattern.quote(field.getString("name")));
@@ -737,11 +739,12 @@ public class Models {
     }
 
 
-    /** Note: should col.genCards() afterwards. */
-    public void addTemplate(JSONObject m, JSONObject template) {
+    /** Note: should col.genCards() afterwards. 
+     * @throws ConfirmModSchemaException */
+    public void addTemplate(JSONObject m, JSONObject template) throws ConfirmModSchemaException {
         try {
             if (m.getLong("id") != 0) {
-                mCol.modSchema();
+                mCol.modSchema(true);
             }
             JSONArray ja = m.getJSONArray("tmpls");
             ja.put(template);
@@ -758,8 +761,9 @@ public class Models {
      * Removing a template
      *
      * @return False if removing template would leave orphan notes.
+     * @throws ConfirmModSchemaException 
      */
-    public boolean remTemplate(JSONObject m, JSONObject template) {
+    public boolean remTemplate(JSONObject m, JSONObject template) throws ConfirmModSchemaException {
         try {
             assert (m.getJSONArray("tmpls").length() > 1);
             // find cards using this template
@@ -781,7 +785,7 @@ public class Models {
                 return false;
             }
             // ok to proceed; remove cards
-            mCol.modSchema();
+            mCol.modSchema(true);
             mCol.remCards(cids);
             // shift ordinals
             mCol.getDb()
@@ -1007,9 +1011,10 @@ public class Models {
      * @param newModel For replacing the old model with another one. Should be self if the model is not changing
      * @param fmap Field map for switching fields. This is ord->ord and there should not be duplicate targets
      * @param cmap Field map for switching fields. This is ord->ord and there should not be duplicate targets
+     * @throws ConfirmModSchemaException 
      */
-    public void change(JSONObject m, long[] nids, JSONObject newModel, Map<Integer, Integer> fmap, Map<Integer, Integer> cmap) {
-        mCol.modSchema();
+    public void change(JSONObject m, long[] nids, JSONObject newModel, Map<Integer, Integer> fmap, Map<Integer, Integer> cmap) throws ConfirmModSchemaException {
+        mCol.modSchema(true);
         try {
             assert (newModel.getLong("id") == m.getLong("id")) || (fmap != null && cmap != null);
         } catch (JSONException e) {
@@ -1350,15 +1355,16 @@ public class Models {
 
     /**
      * Routines from Stdmodels.py
-     * ***********************************************************************************************
+     * *
+     * @throws ConfirmModSchemaException **********************************************************************************************
      */
 
-    public static JSONObject addBasicModel(Collection col) {
+    public static JSONObject addBasicModel(Collection col) throws ConfirmModSchemaException {
         return addBasicModel(col, "Basic");
     }
 
 
-    public static JSONObject addBasicModel(Collection col, String name) {
+    public static JSONObject addBasicModel(Collection col, String name) throws ConfirmModSchemaException {
         Models mm = col.getModels();
         JSONObject m = mm.newModel(name);
         JSONObject fm = mm.newField("Front");
@@ -1379,7 +1385,7 @@ public class Models {
 
     /* Forward & Reverse */
 
-    public static JSONObject addForwardReverse(Collection col) {
+    public static JSONObject addForwardReverse(Collection col) throws ConfirmModSchemaException {
     	String name = "Basic (and reversed card)";
         Models mm = col.getModels();
         JSONObject m = addBasicModel(col);
@@ -1398,7 +1404,7 @@ public class Models {
 
     /* Forward & Optional Reverse */
 
-    public static JSONObject addForwardOptionalReverse(Collection col) {
+    public static JSONObject addForwardOptionalReverse(Collection col) throws ConfirmModSchemaException {
     	String name = "Basic (optional reversed card)";
         Models mm = col.getModels();
         JSONObject m = addBasicModel(col);
@@ -1417,7 +1423,7 @@ public class Models {
     }
 
 
-    public static JSONObject addClozeModel(Collection col) {
+    public static JSONObject addClozeModel(Collection col) throws ConfirmModSchemaException {
         Models mm = col.getModels();
         JSONObject m = mm.newModel("Cloze");
         try {

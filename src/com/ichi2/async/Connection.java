@@ -434,7 +434,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 }
                 if (retCode.equals("sanityCheckError")) {
                     // Force full sync next time
-                    col.modSchema();
+                    col.modSchemaNoCheck();
                     col.save();
                 }
                 // save and note success state

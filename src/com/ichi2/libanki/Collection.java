@@ -30,6 +30,7 @@ import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
+import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.samskivert.mustache.MustacheException;
 
 import org.json.JSONArray;
@@ -337,16 +338,36 @@ public class Collection {
     }
 
 
-    /** Mark schema modified. Call this first so user can abort if necessary. */
-    public void modSchema() {
-        modSchema(true);
+    /** Note: not in libanki.
+     * Mark schema modified to force a full sync, but with the confirmation checking function disabled
+     * This is a convenience method which doesn't throw ConfirmModSchemaException
+     */
+    public void modSchemaNoCheck() {
+        try {
+            modSchema(false);
+        } catch (ConfirmModSchemaException e) {
+            // This will never be reached as we disable confirmation via the "false" argument
+            throw new RuntimeException(e);
+        }
     }
 
 
-    public void modSchema(boolean check) {
+    /** Mark schema modified to force a full sync.
+     * If check==true and the schema has not already been marked modified then ConfirmModSchemaException will be thrown.
+     * If the user chooses to confirm then modSchema(false) should be called, after which the exception can
+     * be safely ignored, and the outer code called again.
+     *
+     * @param check
+     * @throws ConfirmModSchemaException
+     */
+    public void modSchema(boolean check) throws ConfirmModSchemaException {
         if (!schemaChanged()) {
             if (check) {
-                // TODO: ask user
+                /* In Android we can't show a dialog which blocks the main UI thread
+                 Therefore we can't wait for the user to confirm if they want to do
+                 a full sync here, and we instead throw an exception asking the outer
+                 code to handle the user's choice */
+                throw new ConfirmModSchemaException();
             }
         }
         mScm = Utils.intNow(1000);
@@ -381,7 +402,7 @@ public class Collection {
         mModels.beforeUpload();
         mTags.beforeUpload();
         mDecks.beforeUpload();
-        modSchema();
+        modSchemaNoCheck();
         mLs = mScm;
         // ensure db is compacted before upload
         mDb.execute("vacuum");
@@ -1496,7 +1517,7 @@ public class Collection {
         long newSize = file.length();
         // if any problems were found, force a full sync
         if (problems.size() > 0) {
-        	modSchema(false);
+            modSchemaNoCheck();
         }
         // TODO: report problems
         return (long) ((oldSize - newSize) / 1024);
