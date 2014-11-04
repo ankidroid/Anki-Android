@@ -6,6 +6,7 @@ import android.os.Message;
 
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.DeckPicker;
+import com.ichi2.anki.dialogs.ConfirmationDialog.ConfirmationDialogListener;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ public class DialogHandler extends Handler {
     public static final int MSG_SHOW_EXPORT_COMPLETE_DIALOG = 4;
     public static final int MSG_SHOW_MEDIA_CHECK_COMPLETE_DIALOG = 5;
     public static final int MSG_SHOW_DATABASE_ERROR_DIALOG = 6;
+    public static final int MSG_SHOW_FORCE_FULL_SYNC_DIALOG = 7;
 
 
     WeakReference<AnkiActivity> mActivity;
@@ -72,7 +74,25 @@ public class DialogHandler extends Handler {
                 ((DeckPicker) mActivity.get()).showMediaCheckDialog(id, checkList);
             }
         } else if (msg.what == MSG_SHOW_DATABASE_ERROR_DIALOG) {
+            // Database error dialog
             ((DeckPicker) mActivity.get()).showDatabaseErrorDialog(msgData.getInt("dialogType"));
+        } else if (msg.what == MSG_SHOW_FORCE_FULL_SYNC_DIALOG) {
+            // Confirmation dialog for forcing full sync
+            final AnkiActivity activity = ((AnkiActivity) mActivity.get());
+            String message = msgData.getString("message");
+            ConfirmationDialog dialog = ConfirmationDialog.newInstance(message);
+            dialog.setListener(new ConfirmationDialogListener() {
+                @Override
+                public void confirm() {
+                    // Bypass the check once the user confirms
+                    activity.getCol().modSchemaNoCheck();
+                }
+                @Override
+                public void cancel() {
+                    // Take no action
+                }
+            });
+            activity.showDialogFragment(dialog);
         }
     }
 }
