@@ -163,7 +163,7 @@
   </plurals>
   <string name="sd_card_not_mounted">SD-korttia ei löydy.\n\nVoit tallentaa kokoelmasi myös sisäiseen muistiin, mutta se ei ole suositeltavaa, koska et pääse käsiksi kokoelmatiedostoon niin helposti. Voit aktivoida sisäisen muistin asetuksista, joihin pääset tätä tekstiä napauttamalla.</string>
   <string name="studyoptions_options">Asetukset</string>
-  <string name="empty_cloze_warning">Muokkaa tätä huomautusta ja lisää puuttuvat kohdat. (%1$s)</string>
+  <string name="empty_cloze_warning">Muokkaa tätä merkintää ja lisää täydennystehtäviä. (%1$s)</string>
   <string name="help_cloze">ohje</string>
   <string name="button_sync">Synkronoi</string>
   <string name="restart">Käynnistä uudelleen</string>
