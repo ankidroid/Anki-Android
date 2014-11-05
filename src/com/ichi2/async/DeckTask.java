@@ -825,7 +825,10 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             ankiDB.getDatabase().beginTransaction();
             try {
                 addedCount = imp.run();
-                ankiDB.getDatabase().setTransactionSuccessful();
+                // Rollback db transaction if an error occured (TODO: doesn't appear to be working)
+                if (addedCount >= 0) {
+                    ankiDB.getDatabase().setTransactionSuccessful();
+                }
             } finally {
                 ankiDB.getDatabase().endTransaction();
                 if (sharedDeckImport) {
