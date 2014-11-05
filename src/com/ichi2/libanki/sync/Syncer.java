@@ -503,11 +503,12 @@ public class Syncer {
                 String curTable = mTablesLeft.getFirst();
                 if (mCursor == null) {
                     mCursor = cursorForTable(curTable);
-                    colTypes = columnTypesForQuery(curTable);
                 }
+                colTypes = columnTypesForQuery(curTable);
                 JSONArray rows = new JSONArray();
                 int count = mCursor.getColumnCount();
-                while (mCursor.moveToNext() && mCursor.getPosition() <= lim) {
+                int fetched = 0;
+                while (mCursor.moveToNext()) {
                     JSONArray r = new JSONArray();
                     for (int i = 0; i < count; i++) {
                         switch (colTypes.get(i)) {
@@ -523,8 +524,10 @@ public class Syncer {
                         }
                     }
                     rows.put(r);
+                    if (++fetched == lim) {
+                        break;
+                    }
                 }
-                int fetched = rows.length();
                 if (fetched != lim) {
                     // table is empty
                     mTablesLeft.removeFirst();
