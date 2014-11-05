@@ -38,6 +38,7 @@ import android.graphics.PixelFormat;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -65,6 +66,8 @@ import com.github.amlcurran.showcaseview.targets.ActionItemTarget;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener;
 import com.ichi2.anki.dialogs.AsyncDialogFragment;
+import com.ichi2.anki.dialogs.ConfirmationDialog;
+import com.ichi2.anki.dialogs.ConfirmationDialog.ConfirmationDialogListener;
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
 import com.ichi2.anki.dialogs.DeckPickerBackupNoSpaceLeftDialog;
 import com.ichi2.anki.dialogs.DeckPickerConfirmDeleteDeckDialog;
@@ -76,6 +79,7 @@ import com.ichi2.anki.dialogs.ExportDialog;
 import com.ichi2.anki.dialogs.ImportDialog;
 import com.ichi2.anki.dialogs.MediaCheckDialog;
 import com.ichi2.anki.dialogs.SyncErrorDialog;
+import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.stats.AnkiStatsTaskHandler;
 import com.ichi2.async.Connection;
@@ -170,6 +174,8 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     boolean mCompletionBarRestrictToActive = false; // set this to true in order to calculate completion bar only for
                                                     // active cards
     boolean mShowShowcaseView = false;
+    // flag asking user to do a full sync which is used in upgrade path
+    boolean mRecommendFullSync = false;
 
     // ----------------------------------------------------------------------------
     // LISTENERS
@@ -808,6 +814,24 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             mShowShowcaseView = true;
         }
         AnkiDroidApp.getCompat().invalidateOptionsMenu(this);
+        // Force a full sync if flag was set in upgrade path, asking the user to confirm if necessary
+        if (mRecommendFullSync) {
+            mRecommendFullSync = false;
+            try {
+                col.modSchema();
+            } catch (ConfirmModSchemaException e) {
+                // If libanki determines it's necessary to confirm the full sync then show a confirmation dialog
+                // We have to show the dialog via the DialogHandler since this method is called via a Loader
+                Resources res = getResources();
+                Message handlerMessage = Message.obtain();
+                handlerMessage.what = DialogHandler.MSG_SHOW_FORCE_FULL_SYNC_DIALOG;
+                Bundle handlerMessageData = new Bundle();
+                handlerMessageData.putString("message", res.getString(R.string.full_sync_confirmation_upgrade) + 
+                        "\n\n" + res.getString(R.string.full_sync_confirmation));
+                handlerMessage.setData(handlerMessageData);
+                getDialogHandler().sendMessage(handlerMessage);
+            }
+        }
         // prepare deck counts and mini-today-statistic
         loadCounts();
     }
@@ -922,6 +946,10 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 if (mediaDb.exists()) {
                     mediaDb.delete();
                 }
+            }
+            // Recommend the user to do a full-sync if they're upgrading from before 2.3.1beta8
+            if (previous < 20301208) {
+                mRecommendFullSync = true;
             }
             // Check if preference upgrade or database check required, otherwise go to new feature screen
             if (previous < AnkiDroidApp.CHECK_DB_AT_VERSION || previous < AnkiDroidApp.CHECK_PREFERENCES_AT_VERSION) {
