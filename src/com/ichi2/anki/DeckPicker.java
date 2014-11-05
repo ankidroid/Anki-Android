@@ -1259,7 +1259,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     public void deleteUnused(List<String> unused) {
         com.ichi2.libanki.Media m = getCol().getMedia();
         for (String fname : unused) {
-            m.deleteFile(fname);
+            m.removeFile(fname);
         }
         showSimpleMessageDialog(String.format(getResources().getString(R.string.check_media_deleted), unused.size()));
     }
