@@ -30,8 +30,7 @@
             <Spinner
                 android:id="@+id/note_type_spinner"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:enabled="false" />
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
         <LinearLayout
