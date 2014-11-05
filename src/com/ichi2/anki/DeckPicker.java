@@ -1492,6 +1492,9 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                         if (result.length > 1 && result[1] instanceof Integer) {
                             int type = (Integer) result[1];
                             switch (type) {
+                                case 501:
+                                    dialogMessage = res.getString(R.string.sync_error_501_upgrade_required);
+                                    break;
                                 case 503:
                                     dialogMessage = res.getString(R.string.sync_too_busy);
                                     break;
