@@ -457,10 +457,10 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
 
             @Override
             public boolean onMenuItemActionCollapse(MenuItem item) {
-                // SearchView doesn't support empty queries
-                if (mSearchView.getQuery().length() == 0) {
-                    onSearch();
-                }
+                // SearchView doesn't support empty queries so we always reset the search when collapsing
+                mSearchTerms = "";
+                mSearchView.setQuery(mSearchTerms, false);
+                searchCards();
                 return true;
             }
         });
