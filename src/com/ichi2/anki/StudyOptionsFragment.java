@@ -382,12 +382,6 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         mCustomStudyTextView1 = (TextView) mCustomStudyDetailsView.findViewById(R.id.custom_study_details_text1);
         mCustomStudyTextView2 = (TextView) mCustomStudyDetailsView.findViewById(R.id.custom_study_details_text2);
         mCustomStudyEditText = (EditText) mCustomStudyDetailsView.findViewById(R.id.custom_study_details_edittext2);
-
-        /*
-         * When creating a new filtered deck after reviewing, there are several options. For selecting several tags, we
-         * need a new, different dialog, that allows to select a list of tags:
-         */
-
     }
 
 
@@ -790,12 +784,6 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
             Log.e(AnkiDroidApp.TAG, "StudyOptionsFragment.refreshInterface failed due to Collection being closed");
             return;
         }
-        // Initialize the Views in the fragment if they haven't already been initialized (See issue 2166)
-        if (mTextDeckName == null) {
-            initAllContentViews();
-            resetAndRefreshInterface(updateDeckList);
-            return;
-        }
         // Load the deck counts for the deck from Collection asynchronously
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_VALUES_FROM_DECK, getDeckTaskListener(updateDeckList),
                 new DeckTask.TaskData(getCol(), new Object[] { reset, mSmallChart != null }));
@@ -989,10 +977,11 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
 
                 // Don't do anything if the fragment is no longer attached to it's Activity or col has been closed
                 if (getActivity() == null || !colOpen()) {
-                    Log.e(AnkiDroidApp.TAG, "StudyOptionsFragment.mUpdateValuesFromDeckListener -- returning without updating");
+                    Log.e(AnkiDroidApp.TAG, "StudyOptionsFragment.mRefreshFragmentListener :: can't refresh");
                     return;
                 }
-
+                // Reinitialize controls incase changed to filtered deck
+                initAllContentViews();
                 // Set the deck name
                 String fullName;
                 JSONObject deck = getCol().getDecks().current();
