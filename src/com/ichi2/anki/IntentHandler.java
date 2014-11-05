@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Message;
 import android.provider.OpenableColumns;
 import android.support.v4.content.IntentCompat;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.themes.Themes;
 
 import java.io.File;
@@ -76,9 +78,20 @@ public class IntentHandler extends Activity {
                     } catch (IOException e2) {
                         e2.printStackTrace();
                     }
-                    // Replace the intent URI with the URI to temporary file
-                    reloadIntent.setData(importUri);
-                    reloadIntent.putExtra("deleteTempFile", true);
+                    // Create a new message for DialogHandler so that we see the appropriate import dialog in DeckPicker
+                    Message handlerMessage = Message.obtain();
+                    Bundle msgData = new Bundle();
+                    msgData.putString("importPath", importUri.getEncodedPath());
+                    handlerMessage.setData(msgData);
+                    if (filename.equals("collection.apkg")) {
+                        // Show confirmation dialog asking to confirm import with replace when file called "collection.apkg"
+                        handlerMessage.what = DialogHandler.MSG_SHOW_COLLECTION_IMPORT_REPLACE_DIALOG;
+                    } else {
+                        // Otherwise show confirmation dialog asking to confirm import with add
+                        handlerMessage.what = DialogHandler.MSG_SHOW_COLLECTION_IMPORT_ADD_DIALOG;
+                    }
+                    // Store the message in AnkiDroidApp message holder
+                    AnkiDroidApp.setStoredDialogHandlerMessage(handlerMessage);
                 } else {
                     // Don't import the file if it didn't load properly or doesn't have apkg extension
                     Themes.showThemedToast(this, getResources().getString(R.string.import_log_no_apkg), true);

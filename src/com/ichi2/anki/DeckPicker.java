@@ -38,8 +38,6 @@ import android.graphics.PixelFormat;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -72,6 +70,7 @@ import com.ichi2.anki.dialogs.DeckPickerConfirmDeleteDeckDialog;
 import com.ichi2.anki.dialogs.DeckPickerContextMenu;
 import com.ichi2.anki.dialogs.DeckPickerExportCompleteDialog;
 import com.ichi2.anki.dialogs.DeckPickerNoSpaceLeftDialog;
+import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.anki.dialogs.ExportDialog;
 import com.ichi2.anki.dialogs.ImportDialog;
 import com.ichi2.anki.dialogs.MediaCheckDialog;
@@ -94,7 +93,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -112,7 +110,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     public static final String IMPORT_REPLACE_COLLECTION_NAME = "collection.apkg";
 
     private String mImportPath;
-    private DialogHandler mHandler;
 
     public static final String EXTRA_START = "start";
     public static final String EXTRA_DECK_ID = "deckId";
@@ -125,13 +122,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     public static final int RESULT_DB_ERROR = 203;
     public static final int RESULT_RESTART = 204;
 
-    /**
-     * Handler messages
-     */
-    private static final int MSG_SHOW_COLLECTION_LOADING_ERROR_DIALOG = 0;
-    private static final int MSG_SHOW_COLLECTION_IMPORT_REPLACE_DIALOG = 1;
-    private static final int MSG_SHOW_COLLECTION_IMPORT_ADD_DIALOG = 2;
-    private static final int MSG_SHOW_ASYNC_DIALOG = 3;
 
     /**
      * Available options performed by other activities
@@ -391,11 +381,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         if (intent.getCategories()!= null || !AnkiDroidApp.colIsOpen()) {
             showOpeningCollectionDialog();
         }
-        // Get the path to the apkg file if started via VIEW intent
-        if (intent.getData() != null) {
-            mImportPath = getIntent().getData().getEncodedPath();
-        }
-        mHandler = new DialogHandler(this);
 
         Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
@@ -816,31 +801,8 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             long did = col.getDecks().selected();
             selectDeck(did);
         }
-        // Start import process if apkg file was opened via another app
-        Intent intent = getIntent();
-        if (AnkiDroidApp.colIsOpen() && mImportPath != null) {
-            if ((new File(mImportPath)).exists()) {
-                if (mHandler == null) {
-                    mHandler = new DialogHandler(this);
-                }
-                if (mImportPath.split("/")[mImportPath.split("/").length - 1].equals("collection.apkg")) {
-                    // Show confirmation dialog asking to confirm import with replace when file called "collection.apkg"
-                    mHandler.sendEmptyMessage(MSG_SHOW_COLLECTION_IMPORT_REPLACE_DIALOG);
-                } else {
-                    // Otherwise show confirmation dialog asking to confirm import with add
-                    mHandler.sendEmptyMessage(MSG_SHOW_COLLECTION_IMPORT_ADD_DIALOG);
-                }
-            } else {
-                Themes.showThemedToast(this, getResources().getString(R.string.import_log_no_apkg), true);
-            }
-        } else if (intent!= null && intent.getExtras()!= null && intent.getExtras().getBoolean("showAsyncDialogFragment")) {
-            Message m = Message.obtain();
-            m.what = MSG_SHOW_ASYNC_DIALOG;
-            m.setData(getIntent().getExtras());
-            mHandler.sendMessage(m);
-        }
+        // Set flag to show the showcase view if no fragments need to finish adding items to action bar
         if (!mFragmented) {
-            // Show the showcase view here if normal view, otherwise wait for  fragment to finish loading first
             mShowShowcaseView = true;
         }
         AnkiDroidApp.getCompat().invalidateOptionsMenu(this);
@@ -853,64 +815,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     protected void onCollectionLoadError() {
         // Show dialogs for handling collection load error
         setOpeningCollectionDialogMessage(getResources().getString(R.string.col_load_failed));
-        if (mHandler == null) {
-            mHandler = new DialogHandler(this);
-        }
-        mHandler.sendEmptyMessage(MSG_SHOW_COLLECTION_LOADING_ERROR_DIALOG);
-    }
-
-    /**
-     * We're not allowed to commit fragment transactions from Loader.onLoadCompleted() so we work around this by using a
-     * handler to show the error dialog:
-     * http://stackoverflow.com/questions/7746140/android-problems-using-fragmentactivity
-     * -loader-to-update-fragmentstatepagera
-     * 
-     * @param DeckPicker activity the main activity
-     */
-    static class DialogHandler extends Handler {
-        private final WeakReference<DeckPicker> mActivity;
-
-
-        DialogHandler(DeckPicker activity) {
-            // Use weak reference to main activity to prevent leaking the activity when it's closed
-            mActivity = new WeakReference<DeckPicker>(activity);
-        }
-
-
-        @Override
-        public void handleMessage(Message msg) {
-            if (msg.what == MSG_SHOW_COLLECTION_LOADING_ERROR_DIALOG) {
-                // Collection could not be opened
-                mActivity.get().showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_LOAD_FAILED);
-            } else if (msg.what == MSG_SHOW_COLLECTION_IMPORT_REPLACE_DIALOG) {
-                // Handle import of collection package APKG
-                mActivity.get().showImportDialog(ImportDialog.DIALOG_IMPORT_REPLACE_CONFIRM,
-                        mActivity.get().mImportPath);
-            } else if (msg.what == MSG_SHOW_COLLECTION_IMPORT_ADD_DIALOG) {
-                // Handle import of deck package APKG
-                mActivity.get().showImportDialog(ImportDialog.DIALOG_IMPORT_ADD_CONFIRM, mActivity.get().mImportPath);
-            } else if (msg.what == MSG_SHOW_ASYNC_DIALOG) {
-                // Handle showing of AsyncDialogFragment which was not shown initially due to stopped activity
-                Bundle e = msg.getData();
-                String dialogClass = e.getString("dialogClass");
-                if (dialogClass.equals(SyncErrorDialog.CLASS_NAME_TAG)) {
-                    // Sync error
-                    int id = e.getInt("dialogType");
-                    String message = e.getString("dialogMessage");
-                    mActivity.get().showSyncErrorDialog(id, message);
-                } else if (dialogClass.equals(DeckPickerExportCompleteDialog.CLASS_NAME_TAG)) {
-                    // Export complete
-                    AsyncDialogFragment f = DeckPickerExportCompleteDialog.newInstance(e.getString("exportPath"));
-                    mActivity.get().showAsyncDialogFragment(f);
-                } else if (dialogClass.equals(MediaCheckDialog.CLASS_NAME_TAG)) {
-                    int id = e.getInt("dialogType");
-                    List<List<String>> checkList = AnkiDroidApp.getInstance().getStoredData();
-                    if (checkList != null || id==MediaCheckDialog.DIALOG_CONFIRM_MEDIA_CHECK) {
-                        mActivity.get().showMediaCheckDialog(id, checkList);
-                    }
-                }
-            }
-        }
+        getDialogHandler().sendEmptyMessage(DialogHandler.MSG_SHOW_COLLECTION_LOADING_ERROR_DIALOG);
     }
 
 
@@ -1102,8 +1007,8 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     // Show dialogs to deal with database loading issues etc
     @Override
     public void showDatabaseErrorDialog(int id) {
-        DialogFragment newFragment = DatabaseErrorDialog.newInstance(id);
-        showDialogFragment(newFragment);
+        AsyncDialogFragment newFragment = DatabaseErrorDialog.newInstance(id);
+        showAsyncDialogFragment(newFragment);
     }
 
 
@@ -1115,7 +1020,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
     @Override
     public void showMediaCheckDialog(int id, List<List<String>> checkList) {
-        AnkiDroidApp.getInstance().setStoredData(checkList);
         showAsyncDialogFragment(MediaCheckDialog.newInstance(id, checkList));
     }
 
