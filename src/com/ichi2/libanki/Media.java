@@ -382,7 +382,7 @@ public class Media {
                 String tag = m.group(0);
                 String fname = m.group(fnameIdx);
                 if (fRemotePattern.matcher(fname).find()) {
-                    string = tag;
+                    //dont't do any escaping if remote image
                 } else {
                     if (unescape) {
                         string = string.replace(tag,tag.replace(fname, Uri.decode(fname)));
