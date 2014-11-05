@@ -51,6 +51,7 @@
   <string name="new_version_message">Noves funcions:</string>
   <string name="no_tts_available_title">Síntesi de veu</string>
   <string name="no_tts_available_message">No hi ha idiomes de síntesi de veu disponibles</string>
+  <string name="initializing_tts">Initializing TTS&#8230;</string>
   <string name="tts_no_tts">No parlis</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s: <br/> Fitxes per memoritzar per Android </h2> AnkiDroid és una aplicació de gestió de fitxes per memoritzar, totalment compatible amb el programari d\'escriptori <a href="%2$s">Anki</a>. Podeu generar, descarregar i aprendre els continguts als dos programaris, a l\'Escriptori i a AnkiDroid Anki, i sincronitzar-los amb molta facilitat.]]></item>

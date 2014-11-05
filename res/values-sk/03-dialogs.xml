@@ -51,6 +51,7 @@
   <string name="new_version_message">Nové funkcie:</string>
   <string name="no_tts_available_title">Prevod textu na reč (TTS)</string>
   <string name="no_tts_available_message">Žiaden TTS jazyk nie je k dispozícii</string>
+  <string name="initializing_tts">Initializing TTS&#8230;</string>
   <string name="tts_no_tts">Nehovoriť</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s: <br/>Kartičky pre Android</h2>AnkiDroid je aplikácia, ktorá je plne kompatibilná s počítačovou verziou <a href="%2$s"> Anki</a>. Môžete vytvárať, sťahovať a učiť sa materiály na AnkiDroid alebo počítačovej verzii Anki, a veľmi ľahko medzi nimi synchronizovať.]]></item>

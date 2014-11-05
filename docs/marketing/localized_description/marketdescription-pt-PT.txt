@@ -1,37 +1,37 @@
-Memorize qualquer coisa com AnkiDroid!
+Memorize qualquer coisa com o AnkiDroid!
 
-AnkiDroid lhe permite aprender cartões de pergunta eficientemente ao mostrá-los antes que você os esqueça. Ele é totalmente compatível com o software de repetição espaçada Anki (inclusive sincronização), que está disponível para Windows, Linux e MacOS.
+AnkiDroid permite-lhe memorizar fichas de pergunta/resposta eficientemente ao mostrá-las antes que você as esqueça. É totalmente compatível com o software de repetição espaçada Anki (incluindo sincronização), que está disponível para Windows, Linux e MacOS.
 
-Estude todos os tipos de coisas, onde e quando quiser. Faça bom uso do tempo ocioso em viagens de ônibus, em filas de supermercado ou qualquer outra situação de espera!
+Estude todo o tipo de coisas, onde e quando quiser. Faça bom uso do tempo livre em viagens de comboio, em filas de supermercado ou em qualquer outra situação!
 
-Crie seus próprios decks de cartões de perguntas ou baixe gratuitamente decks compilados para vários idiomas e tópicos (mais de 6000 disponíveis).
+Crie os seus próprios baralhos de fichas de perguntas ou faça download gratuitamente de baralhos compilados para várias línguas e tópicos (mais de 6000 disponíveis).
 
-Adicione material por meio do aplicativo de desktop do Anki ou diretamente por meio de AnkiDroid. O aplicativo suporta até mesmo adicionar material automaticamente a partir de um dicionário!
+Adicione material através da aplicação para PC do Anki ou diretamente atravs do AnkiDroid. A aplicação suporta até mesmo adicionar material automaticamente a partir de um dicionário!
 
 ★ Características principais:
-• conteúdo suportado de cartões de pergunta: texto, imagens, sons, LaTeX
+• conteúdo suportado nas fichas de pergunta: texto, imagens, sons, LaTeX
 • repetição espaçada (algoritmo de supermemo 2)
 • integração texto-para-fala
-• mais de 6000 decks pré-prontos
-• progress widget
+• mais de 6000 baralhos já criados
+• widget mostrando o progresso
 • estatísticas detalhadas
-• sincronização com AnkiWeb
-• open source
+• sincronização com o AnkiWeb
+• código aberto (open source)
 
 ★ Características adicionais:
 • grave respostas (opcional)
-• whiteboard
-• editor/adicionador de cartão
-• navegador de cartão
-• tablet layout
+• quadro para escrever/desenhar
+• editor/adicionador de fichas
+• navegador de fichas
+• layout compatível com tablets
 • importar arquivos de coleção existentes (via Anki Desktop)
 • integração de dicionário (ColorDict, GoldenDict, Leo.org, Aedict, diversos dicionários da web)
-• Adicionar cartões pela interação de outros aplicativos como dicionários
-• suporte a fonte personalizada
-• sistema de backup completo
-• navigation by swipe, tap
-• customisable
-• dynamic deck handling
+• Adicionar fichas a partir de outras apps tais como dicionários
+• suporte a tipo de letra personalizado
+• sistema completo de cópia de segurança
+• navegação por gestos
+• personalizável
+• gestão dinâmica de baralhos
 • modo noturno
 • 27 traduções
-• Todas as versões anteriores do AnkiDroid podem ser baixadas do site
+• Todas as versões anteriores do AnkiDroid disponíveis para download no site

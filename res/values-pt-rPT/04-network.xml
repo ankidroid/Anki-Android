@@ -166,4 +166,6 @@
   <string name="sync_sanity_remote">Remota</string>
   <string name="force_full_sync_title">Forçar sincronização integral</string>
   <string name="force_full_sync_summary">Na próxima vez, força a sincronização numa direção</string>
+  <string name="full_sync_confirmation">A alteração solicitada requer um upload completo da base de dados na próxima vez que sincronizar a coleção. Se tiver revisões ou outras alterações pendentes noutro dispositivo que ainda não tenham sido sincronizadas, elas serão perdidas. Deseja continuar?</string>
+  <string name="full_sync_confirmation_upgrade">Devido a um erro na versão anterior do AnkiDroid, é recomendado fazer uma sincronização integral.</string>
 </resources>

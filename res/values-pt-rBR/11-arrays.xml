@@ -36,12 +36,12 @@
 -->
 <resources>
   <string-array name="navigation_titles">
-    <item>Decks</item>
-    <item>Card Browser</item>
-    <item>Statistics</item>
-    <item>Settings</item>
-    <item>Help</item>
-    <item>Send Feedback</item>
+    <item>Baralhos</item>
+    <item>Navegador de fichas</item>
+    <item>Estatísticas</item>
+    <item>Configurações</item>
+    <item>Ajuda</item>
+    <item>Enviar Comentários</item>
   </string-array>
   <string-array name="newCardSchedulingLabels">
     <item>Espalhar entre as revisões</item>
@@ -52,16 +52,6 @@
     <item>Sempre reportar</item>
     <item>Nunca reportar</item>
     <item>Pergunte-me</item>
-  </string-array>
-  <string-array name="notification_minimum_cards_due_labels">
-    <item>10</item>
-    <item>25</item>
-    <item>50</item>
-    <item>75</item>
-    <item>100</item>
-    <item>150</item>
-    <item>200</item>
-    <item>Nunca notificar</item>
   </string-array>
   <string-array name="cram_review_order_labels">
     <item>Mostrar com modificações mais antigas primeiro</item>
@@ -107,8 +97,8 @@
     <item>Enterrar cartão</item>
     <item>Suspender cartão</item>
     <item>Apagar cartão</item>
-    <item>Play media</item>
-    <item>Abort learning</item>
+    <item>Reproduzir multimédia</item>
+    <item>Abortar a aprendizagem</item>
   </string-array>
   <string-array name="theme_labels">
     <item>Android Dark</item>

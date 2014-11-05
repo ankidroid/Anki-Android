@@ -122,8 +122,10 @@
   <string name="language_summ">XXX</string>
   <string name="language_system">Järjestelmän kieli</string>
   <string name="notification_pref">Ilmoitukset</string>
-  <string name="notification_minimum_cards_due">Ilmoita, kun enemmän kuin</string>
-  <string name="notification_minimum_cards_due_summary">XXX korttia kerrattavana</string>
+  <string name="notification_pref_title">Notify when</string>
+  <string name="never_notify">Never notify</string>
+  <string name="notify_when_pending">Pending messages available</string>
+  <string name="notification_minimum_cards_due">More than %d cards due</string>
   <string name="notification_minimum_cards_due_vibrate">Värinä</string>
   <string name="notification_minimum_cards_due_blink">Vilkkuvalo</string>
   <string name="timeout_answer_text">Näytä vastaukset automaattisesti</string>

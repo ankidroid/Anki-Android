@@ -98,15 +98,15 @@
   <string name="deck_summary_average_week">Média de vistas na semana passada</string>
   <string name="deck_summary_average_month">Média de vistas no mês passado</string>
   <string name="deck_summary_average_year">Média de vistas no ano passado</string>
-  <string name="deck_summary_average_total">Média de vistos sempre</string>
+  <string name="deck_summary_average_total">Média de vistas total</string>
   <string name="deck_summary_forecast">Previsão</string>
-  <string name="deck_summary_tomorrow_due">Programados Amanhã: &lt;b&gt;%d&lt;/b&gt; cartões</string>
-  <string name="deck_summary_tomorrow_new">Novos amanhã: &lt;b&gt;%d&lt;/b&gt; cartões</string>
-  <string name="deck_summary_tomorrow_time">Tempo para amanhã: &lt;b&gt;%d&lt;/b&gt; min.</string>
-  <string name="deck_summary_finished_in">Cartões novos terminam em: &lt;b&gt;%d&lt;/b&gt; dias</string>
-  <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; cartões/dia</string>
-  <string name="deck_summary_deck_age">Idade do deck: &lt;b&gt;%d&lt;/b&gt; dias</string>
-  <string name="deck_summary_all_decks">Todos decks</string>
+  <string name="deck_summary_tomorrow_due">Agendadas para amanhã: &lt;b&gt;%d&lt;/b&gt; fichas</string>
+  <string name="deck_summary_tomorrow_new">Novas amanhã: &lt;b&gt;%d&lt;/b&gt; fichas</string>
+  <string name="deck_summary_tomorrow_time">Duração estimada para amanhã: &lt;b&gt;%d&lt;/b&gt; min.</string>
+  <string name="deck_summary_finished_in">Fichas novas terminam em: &lt;b&gt;%d&lt;/b&gt; dias</string>
+  <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; fichas/dia</string>
+  <string name="deck_summary_deck_age">Idade do baralho: &lt;b&gt;%d&lt;/b&gt; dias</string>
+  <string name="deck_summary_all_decks">Todos os baralhos</string>
   <string name="stats_select_decks">Selecionar baralho</string>
   <string name="stats_select_time_scale">Selecionar escala de tempo</string>
   <string-array name="next_review_in_s">
@@ -162,7 +162,7 @@
   </string-array>
   <string-array name="stats_range">
     <item>coleção</item>
-    <item>deque atual</item>
+    <item>baralho atual</item>
   </string-array>
   <string-array name="stats_day_time_strings">
     <item>4:00</item>

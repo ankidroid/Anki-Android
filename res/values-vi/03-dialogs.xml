@@ -51,6 +51,7 @@
   <string name="new_version_message">Tính năng mới:</string>
   <string name="no_tts_available_title">Chữ - thành - lời loại</string>
   <string name="no_tts_available_message">Không có chức năng chuyển chữ - thành - lời thoại</string>
+  <string name="initializing_tts">Initializing TTS&#8230;</string>
   <string name="tts_no_tts">Không phát âm</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s: <br/>Flashcards cho Android</h2>AnkiDroid là một ứng dụng flashcard hoàn toàn tương thích với phần mềm máy tính để bàn <a href="%2$s"> Anki</a>. Bạn có thể tạo, tải về và học các nội dung trên cả hai, AnkiDroid hoặc Anki Desktop, và đồng bộ hoá chúng rất dễ dàng.]]></item>

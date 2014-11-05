@@ -39,19 +39,20 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="check_db_title">Check database?</string>
-  <string name="check_db_warning">This may take a long time</string>
-  <string name="check_db_acknowledge">Database checked</string>
-  <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d kB.</string>
-  <string name="contextmenu_deckpicker_delete_deck">Delete deck</string>
-  <string name="delete_deck_title">Delete deck?</string>
-  <string name="delete_deck_message">Delete all cards in %s?</string>
-  <string name="delete_cram_deck_message">Send all cards in %s back to their original decks?</string>
-  <string name="delete_deck_confirm">Delete it</string>
-  <string name="new_version_message">New features:</string>
-  <string name="no_tts_available_title">Text-to-speech</string>
-  <string name="no_tts_available_message">No text-to-speech language available</string>
-  <string name="tts_no_tts">Don\'t speak</string>
+  <string name="check_db_title">בדוק מסד נתונים?‏</string>
+  <string name="check_db_warning">פעולה זאת עלולה להמשיך זמן רב. להמשיך?</string>
+  <string name="check_db_acknowledge">מסד הנתונים עבר בדיקה.‏</string>
+  <string name="check_db_acknowledge_shrunk">מסד הנתונים בדוק ושופר.\nהוקתן ב־ %d ק\"ב.‏</string>
+  <string name="contextmenu_deckpicker_delete_deck">מחק חפיסה</string>
+  <string name="delete_deck_title">למחוק את החפיסה?‏</string>
+  <string name="delete_deck_message">מחוק כל הקלפים ב־ %s?‏</string>
+  <string name="delete_cram_deck_message">שלח כל הקלפים ב־ %s חזרה לחפיסות המקוריות?‏</string>
+  <string name="delete_deck_confirm">מחק אותו</string>
+  <string name="new_version_message">תכונות חדשות:‏</string>
+  <string name="no_tts_available_title">כתוב-אל-דיבור</string>
+  <string name="no_tts_available_message">אין שום שפת לכתוב-אל-דיבור זמין</string>
+  <string name="initializing_tts">מאתחל מנוע כתוב-אל-דיבור...‏</string>
+  <string name="tts_no_tts">אל תדבר.‏</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Flashcards for Android</h2>AnkiDroid is a flashcard application which is fully compatible with the desktop software <a href=\"%2$s\">Anki</a>. You can create, download and learn contents on both, AnkiDroid or Anki Desktop, and synchronize them very easily.]]></item>
     <item><![CDATA[To help us make AnkiDroid better, please report any bug <a href=\"%1$s\">here</a>; new feature ideas are very welcome too! Use the <a href=\"%2$s\">wiki</a> and say Hi on the <a href=\"%3$s\">forum</a>.]]></item>
@@ -59,29 +60,29 @@
     <item><![CDATA[Non-developers can also help, for instance by <a href=\"%1$s\">translating</a> AnkiDroid, updating the wiki and screenshots, <a href=\"%2$s\">donating</a> to Anki Desktop, or blogging about AnkiDroid!]]></item>
     <item><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GNU-GPL v3 license</a> and the source code is available <a href=\"%2$s\">here</a>.]]></item>
   </string-array>
-  <string name="dont_show_again">Don\'t show again</string>
-  <string name="notify_ticker">Application update</string>
-  <string name="notify_title">AnkiDroid updated</string>
-  <string name="notify_message">Download a new version</string>
-  <string name="notification_title">Confirm AnkiDroid update</string>
-  <string name="preview_title">Preview</string>
+  <string name="dont_show_again">אל תציג שוב</string>
+  <string name="notify_ticker">עדכון יישום</string>
+  <string name="notify_title">אנקידרויד עודכן</string>
+  <string name="notify_message">להוריד גרסה חדשה</string>
+  <string name="notification_title">לאשר עדכון אנקידריוד</string>
+  <string name="preview_title">תצוגה מקדימה</string>
   <string name="notification_message">A new version of AnkiDroid is available at Google Play.\n\nWould you like to install it?</string>
   <string name="notification_stop">Don\'t notify me of this update again</string>
-  <string name="reset_card_dialog_title">Reset card progress</string>
-  <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue.</string>
-  <string name="reset_card_dialog_acknowledge">Card reset</string>
-  <string name="reschedule_card_dialog_title">Reschedule card</string>
+  <string name="reset_card_dialog_title">איפוס התקדמות הקלף</string>
+  <string name="reset_card_dialog_message">קלף זה יוצב בסוף תור של הקלפים החדשים.</string>
+  <string name="reset_card_dialog_acknowledge">איפוס קלף</string>
+  <string name="reschedule_card_dialog_title">תזמן קלף מחדש</string>
   <string name="reschedule_card_dialog_message">Reschedule for review in x days:</string>
-  <string name="reschedule_card_dialog_acknowledge">Card rescheduled</string>
-  <string name="answering_error_title">Database error</string>
+  <string name="reschedule_card_dialog_acknowledge">קבע קלף למועד אחר</string>
+  <string name="answering_error_title">שגיאת מסד נתונים</string>
   <string name="answering_error_message">Writing to the collection failed. The databese could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch \'options\' for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
-  <string name="answering_error_report">Report error</string>
+  <string name="answering_error_report">דווח שגיאה</string>
   <string name="repair_deck_dialog">Do you really want to try to repair the database?\n\nBefore starting the attempt, a copy will be created in subfolder \'%s\'.</string>
-  <string name="intent_add_saved_information">Saved data</string>
-  <string name="intent_add_clear_all">Clear all</string>
-  <string name="intent_aedict_empty">Category \'default\' is empty</string>
+  <string name="intent_add_saved_information">נתונים נשמרו</string>
+  <string name="intent_add_clear_all">נקה הכל</string>
+  <string name="intent_aedict_empty">הקטגוריה \'ברירת מחדל\' ריקה</string>
   <string name="intent_aedict_category">To add cards to AnkiDroid remove all Notepad categories or add one named \'default\'</string>
-  <string name="custom_study_new_total_new">New cards in deck: %s</string>
+  <string name="custom_study_new_total_new">קלפים החדשים בחפיסה: %s</string>
   <string name="custom_study_rev_total_rev">Reviews due in deck: %s</string>
   <string name="custom_study_new_extend">Increase today\'s new card limit by</string>
   <string name="custom_study_rev_extend">Increase today\'s review limit by</string>

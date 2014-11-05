@@ -50,15 +50,15 @@
   <string name="studyoptions_eta">Tempo estimado (min):</string>
   <string name="studyoptions_start">Estudar</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%1$d ficha para hoje (%2$s)</item>
-    <item quantity="other">%1$d fichas para hoje (%2$s)</item>
+    <item quantity="one">%1$d ficha pendente (%2$s)</item>
+    <item quantity="other">%1$d fichas pendentes (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">%d min.</item>
     <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item quantity="one">%1$d de %2$d para hoje</item>
+    <item quantity="one">%1$d de %2$d pendente</item>
     <item quantity="other">%1$d de %2$d devido</item>
   </plurals>
   <plurals name="reviewer_window_title">
@@ -85,14 +85,14 @@
   <string name="undo_action_delete">Apagar nota</string>
   <string name="undo_action_mark">Marcar nota</string>
   <string name="unbury">Desenterrar</string>
-  <string name="finish_operation">Terminando a operação anterior (provavelmente criação de backup). \nPor favor aguarde...</string>
-  <string name="contextmenu_deckpicker_download_missing_media">Fazer download de multimédia ausente</string>
+  <string name="finish_operation">Terminando a operação anterior (provavelmente criação de cópia de segurança).\nPor favor aguarde&#8230;</string>
+  <string name="contextmenu_deckpicker_download_missing_media">Fazer download de multimédia em falta</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Redefinir Atribuições de Idioma</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Redefinir idioma</string>
   <string name="contextmenu_deckpicker_optimize_deck">Otimizar base de dados</string>
   <string name="contextmenu_deckpicker_rename_deck">Renomear baralho</string>
-  <string name="contextmenu_deckpicker_collapse_deck">Esconder sub-maços</string>
-  <string name="contextmenu_deckpicker_inflate_deck">Mostrar sub-maços</string>
+  <string name="contextmenu_deckpicker_collapse_deck">Esconder sub-baralhos</string>
+  <string name="contextmenu_deckpicker_inflate_deck">Mostrar sub-baralhos</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Definir dicionário personalizado</string>
   <string name="menu_add">Adicionar</string>
   <string name="menu_add_note">Adicionar nota</string>

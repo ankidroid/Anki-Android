@@ -51,6 +51,7 @@
   <string name="new_version_message">新功能：</string>
   <string name="no_tts_available_title">朗讀</string>
   <string name="no_tts_available_message">沒有可用的朗讀語言</string>
+  <string name="initializing_tts">Initializing TTS&#8230;</string>
   <string name="tts_no_tts">不要發音</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s: <br/>Android 單字卡</h2>AnkiDroid 是一個單字卡應用程式，與電腦版的 <a href="%2$s">Anki</a> 完全相容。你可以在 AnkiDroid 或電腦版 Anki 上建立、 下載和學習教材，而且很容易就可以同步兩邊的內容。]]></item>

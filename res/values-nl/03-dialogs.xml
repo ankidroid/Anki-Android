@@ -51,6 +51,7 @@
   <string name="new_version_message">Nieuwe functies:</string>
   <string name="no_tts_available_title">Tekst-naar-Spraak</string>
   <string name="no_tts_available_message">Geen tekst-naar-spraak taal beschikbaar</string>
+  <string name="initializing_tts">Initializing TTS&#8230;</string>
   <string name="tts_no_tts">Niet spreken</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Flitskaarten voor Android</h2>AnkiDroid is een flitskaartprogramma dat volledig samenwerkt met de desktop programma <a href="%2$s">Anki</a>. Je kan content downloaden en leren op zowel AnkiDroid als Anki Desktop, en eenvoudig synchroniseren tussen beide.]]></item>

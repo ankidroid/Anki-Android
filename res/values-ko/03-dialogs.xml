@@ -51,6 +51,7 @@
   <string name="new_version_message">새로운 특징:</string>
   <string name="no_tts_available_title">문장 읽어주기 기능</string>
   <string name="no_tts_available_message">문장 읽어주기 기능을 사용할 수 없음</string>
+  <string name="initializing_tts">Initializing TTS&#8230;</string>
   <string name="tts_no_tts">말하지 마십시오</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>안드로이드용 플래시카드 암기 프로그램</h2>AnkiDroid는 데스크탑 버전<a href="%2$s">Anki</a>와 완벽하게 호환되는 플래시카드 어플리케이션입니다. AnkiDroid와 데스크탑용 Anki 모두에서 카드를 생성, 학습, 다운로드할 수 있으며 쉽게 동기화할 수 있습니다.]]></item>

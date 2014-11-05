@@ -53,16 +53,6 @@
     <item>Älä raportoi koskaan</item>
     <item>Kysy</item>
   </string-array>
-  <string-array name="notification_minimum_cards_due_labels">
-    <item>10</item>
-    <item>25</item>
-    <item>50</item>
-    <item>75</item>
-    <item>100</item>
-    <item>150</item>
-    <item>200</item>
-    <item>Älä huomauta koskaan</item>
-  </string-array>
   <string-array name="cram_review_order_labels">
     <item>Näytä vanhin muutettu ensimmäisenä</item>
     <item>Näytä lisätyt järjestyksessä</item>

@@ -53,16 +53,6 @@
     <item>Nikdy neodosielať</item>
     <item>Spýtať sa</item>
   </string-array>
-  <string-array name="notification_minimum_cards_due_labels">
-    <item>10</item>
-    <item>25</item>
-    <item>50</item>
-    <item>75</item>
-    <item>100</item>
-    <item>150</item>
-    <item>200</item>
-    <item>Nikdy neupozorňovať</item>
-  </string-array>
   <string-array name="cram_review_order_labels">
     <item>Od najdávnejšie upravených</item>
     <item>Zobraziť v poradí, v akom boli pridané</item>
