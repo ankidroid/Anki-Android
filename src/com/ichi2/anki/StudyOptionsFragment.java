@@ -15,7 +15,6 @@
 package com.ichi2.anki;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
@@ -37,12 +36,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
+import com.ichi2.anki.dialogs.CustomStudyDialog;
 import com.ichi2.anki.dialogs.TagsDialog;
 import com.ichi2.anki.dialogs.TagsDialog.TagsDialogListener;
 import com.ichi2.anki.stats.AnkiStatsTaskHandler;
@@ -78,30 +77,14 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     private static final int STATISTICS = 4;
     private static final int DECK_OPTIONS = 5;
 
-    public static final int CUSTOM_STUDY_NEW = 1;
-    public static final int CUSTOM_STUDY_REV = 2;
-    public static final int CUSTOM_STUDY_FORGOT = 3;
-    public static final int CUSTOM_STUDY_AHEAD = 4;
-    public static final int CUSTOM_STUDY_RANDOM = 5;
-    public static final int CUSTOM_STUDY_PREVIEW = 6;
-    public static final int CUSTOM_STUDY_TAGS = 7;
     /**
      * Constants for selecting which content view to display
      */
     public static final int CONTENT_STUDY_OPTIONS = 0;
     public static final int CONTENT_CONGRATS = 1;
 
-    private static final int DIALOG_STATISTIC_TYPE = 0;
-    private static final int DIALOG_CUSTOM_STUDY = 1;
-    private static final int DIALOG_CUSTOM_STUDY_DETAILS = 2;
-    private static final int DIALOG_CUSTOM_STUDY_TAGS = 3;
-
     // Threshold at which the total number of new cards is truncated by libanki
     private static final int NEW_CARD_COUNT_TRUNCATE_THRESHOLD = 1000;
-
-    private int mCustomDialogChoice;
-
-    private HashMap<Integer, StyledDialog> mDialogs = new HashMap<Integer, StyledDialog>();
 
     /**
      * Preferences
@@ -136,12 +119,6 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     private TextView mTextCongratsMessage;
     private View mCongratsLayout;
 
-
-    private View mCustomStudyDetailsView;
-    private TextView mCustomStudyTextView1;
-    private TextView mCustomStudyTextView2;
-    private EditText mCustomStudyEditText;
-
     private String mSearchTerms;
 
     public Bundle mCramInitialConfig = null;
@@ -151,6 +128,11 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     private StyledOpenCollectionDialog mOpenCollectionDialog;
 
     private Thread mFullNewCountThread = null;
+
+    public interface StudyOptionsListener {
+        public void refreshMainInterface();
+        public void createFilteredDeck(JSONArray delays, Object[] terms, Boolean resched);
+    }
 
     /**
      * Callbacks for UI events
@@ -165,7 +147,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                     openReviewer();
                     return;
                 case R.id.studyoptions_custom:
-                    showDialog(DIALOG_CUSTOM_STUDY);
+                    showCustomStudyContextMenu();
                     return;
                 case R.id.studyoptions_unbury:
                     col.getSched().unburyCardsForDeck();
@@ -240,16 +222,8 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
             // Currently in a layout without a container, so no reason to create our view.
             return null;
         }
-
-        return createView(inflater, savedInstanceState);
-    }
-
-
-    protected View createView(LayoutInflater inflater, Bundle savedInstanceState) {
-        Log.i(AnkiDroidApp.TAG, "StudyOptions - createView()");
         restorePreferences();
-        mStudyOptionsView = inflater.inflate(R.layout.studyoptions_fragment, null);
-        mCustomStudyDetailsView = inflater.inflate(R.layout.styled_custom_study_details_dialog, null);
+        mStudyOptionsView = inflater.inflate(R.layout.studyoptions_fragment, container, false);
         mFragmented = getActivity().getClass() != StudyOptionsActivity.class;
         startLoadingCollection();
         return mStudyOptionsView;
@@ -377,331 +351,86 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         mButtonCustomStudy.setOnClickListener(mButtonClickListener);
         mDeckOptions.setOnClickListener(mButtonClickListener);
         mCramOptions.setOnClickListener(mButtonClickListener);
-
-        // The view that shows the learn more options
-        mCustomStudyTextView1 = (TextView) mCustomStudyDetailsView.findViewById(R.id.custom_study_details_text1);
-        mCustomStudyTextView2 = (TextView) mCustomStudyDetailsView.findViewById(R.id.custom_study_details_text2);
-        mCustomStudyEditText = (EditText) mCustomStudyDetailsView.findViewById(R.id.custom_study_details_edittext2);
     }
 
 
-    private void showDialog(int id) {
-        if (!mDialogs.containsKey(id)) {
-            mDialogs.put(id, onCreateDialog(id));
-        }
-        onPrepareDialog(id, mDialogs.get(id));
-        mDialogs.get(id).show();
-    }
-
-
-    private DialogFragment showDialogFragment(int id) {
-
-        DialogFragment dialogFragment = null;
-        String tag = null;
-        switch(id) {
-            case DIALOG_CUSTOM_STUDY_TAGS:
-                /*
-                 * This handles the case where we want to create a Custom Study Deck using tags. This dialog needs to be
-                 * different from the normal Custom Study dialogs, because more information is required: --List of Tags
-                 * to select. --Which cards to select --(New cards, Due cards, or all cards, as in the desktop version)
-                 */
-
-                TagsDialog dialog = com.ichi2.anki.dialogs.TagsDialog.newInstance(
-                    TagsDialog.TYPE_CUSTOM_STUDY_TAGS, new ArrayList<String>(),
-                    new ArrayList<String>(getCol().getTags().all()));
-
-                dialog.setTagsDialogListener(new TagsDialogListener() {
-                    @Override
-                    public void onPositive(List<String> selectedTags, int option) {
-                        /*
-                         * Here's the method that gathers the final selection of tags, type of cards and generates the search
-                         * screen for the custom study deck.
-                         */
-                        mCustomStudyEditText.setText("");
-                        String tags = selectedTags.toString();
-                        mCustomStudyEditText.setHint(getResources().getString(R.string.card_browser_tags_shown,
-                                tags.substring(1, tags.length() - 1)));
-                        StringBuilder sb = new StringBuilder();
-                        switch (option) {
-                            case 1:
-                                sb.append("is:new ");
-                                break;
-                            case 2:
-                                sb.append("is:due ");
-                                break;
-                            default:
-                                // Logging here might be appropriate : )
-                                break;
-                        }
-                        int i = 0;
-                        for (String tag : selectedTags) {
-                            if (i != 0) {
-                                sb.append("or ");
-                            } else {
-                                sb.append("("); // Only if we really have selected tags
-                            }
-                            sb.append("tag:").append(tag).append(" ");
-                            i++;
-                        }
-                        if (i > 0) {
-                            sb.append(")"); // Only if we added anything to the tag list
-                        }
-                        mSearchTerms = sb.toString();
-                        createFilteredDeck(new JSONArray(), new Object[] { mSearchTerms, Consts.DYN_MAX_SIZE,
-                                Consts.DYN_RANDOM }, false);
-                    }
-                });
-
-                dialogFragment = dialog;
-                break;
-            default:
-                break;
-        }
-
-        dialogFragment.show(getFragmentManager(), tag);
-        return dialogFragment;
-    }
-
-    private void onPrepareDialog(int id, StyledDialog styledDialog) {
-        Resources res = getResources();
-        switch (id) {
-            case DIALOG_CUSTOM_STUDY_DETAILS:
-                styledDialog.setTitle(res.getStringArray(R.array.custom_study_options_labels)[mCustomDialogChoice]);
-                switch (mCustomDialogChoice + 1) {
-                    case CUSTOM_STUDY_NEW:
-                        if (colOpen()) {
-                            Collection col = getCol();
-                            mCustomStudyTextView1.setText(res.getString(R.string.custom_study_new_total_new, col
-                                    .getSched().totalNewForCurrentDeck()));
-                        }
-                        mCustomStudyTextView2.setText(res.getString(R.string.custom_study_new_extend));
-                        mCustomStudyEditText.setText(Integer.toString(AnkiDroidApp.getSharedPrefs(getActivity())
-                                .getInt("extendNew", 10)));
-                        styledDialog.setButtonOnClickListener(Dialog.BUTTON_POSITIVE,
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        if (colOpen()) {
-                                            try {
-                                                int n = Integer.parseInt(mCustomStudyEditText.getText().toString());
-                                                AnkiDroidApp.getSharedPrefs(getActivity()).edit()
-                                                        .putInt("extendNew", n).commit();
-                                                Collection col = getCol();
-                                                JSONObject deck = col.getDecks().current();
-                                                deck.put("extendNew", n);
-                                                col.getDecks().save(deck);
-                                                col.getSched().extendLimits(n, 0);
-                                                resetAndRefreshInterface();
-                                            } catch (NumberFormatException e) {
-                                                // ignore non numerical values
-                                                Themes.showThemedToast(getActivity().getBaseContext(), getResources()
-                                                        .getString(R.string.custom_study_invalid_number), false);
-                                            } catch (JSONException e) {
-                                                throw new RuntimeException(e);
-                                            }
-                                        }
-                                    }
-                                });
-                        break;
-
-                    case CUSTOM_STUDY_REV:
-                        if (colOpen()) {
-                            Collection col = getCol();
-                            mCustomStudyTextView1.setText(res.getString(R.string.custom_study_rev_total_rev, col
-                                    .getSched().totalRevForCurrentDeck()));
-                        }
-                        mCustomStudyTextView2.setText(res.getString(R.string.custom_study_rev_extend));
-                        mCustomStudyEditText.setText(Integer.toString(AnkiDroidApp.getSharedPrefs(getActivity())
-                                .getInt("extendRev", 10)));
-                        styledDialog.setButtonOnClickListener(Dialog.BUTTON_POSITIVE,
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        if (colOpen()) {
-                                            try {
-                                                int n = Integer.parseInt(mCustomStudyEditText.getText().toString());
-                                                AnkiDroidApp.getSharedPrefs(getActivity()).edit()
-                                                        .putInt("extendRev", n).commit();
-                                                Collection col = getCol();
-                                                JSONObject deck = col.getDecks().current();
-                                                deck.put("extendRev", n);
-                                                col.getDecks().save(deck);
-                                                col.getSched().extendLimits(0, n);
-                                                resetAndRefreshInterface();
-                                            } catch (NumberFormatException e) {
-                                                // ignore non numerical values
-                                                Themes.showThemedToast(getActivity().getBaseContext(), getResources()
-                                                        .getString(R.string.custom_study_invalid_number), false);
-                                            } catch (JSONException e) {
-                                                throw new RuntimeException(e);
-                                            }
-                                        }
-                                    }
-                                });
-                        break;
-
-                    case CUSTOM_STUDY_FORGOT:
-                        mCustomStudyTextView1.setText("");
-                        mCustomStudyTextView2.setText(res.getString(R.string.custom_study_forgotten));
-                        mCustomStudyEditText.setText(Integer.toString(AnkiDroidApp.getSharedPrefs(getActivity())
-                                .getInt("forgottenDays", 2)));
-                        styledDialog.setButtonOnClickListener(Dialog.BUTTON_POSITIVE,
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        JSONArray ar = new JSONArray();
-                                        try {
-                                            int forgottenDays = Integer.parseInt(((EditText) mCustomStudyEditText)
-                                                    .getText().toString());
-                                            ar.put(0, 1);
-                                            createFilteredDeck(
-                                                    ar,
-                                                    new Object[] {
-                                                            String.format(Locale.US, "rated:%d:1", forgottenDays),
-                                                            Consts.DYN_MAX_SIZE, Consts.DYN_RANDOM }, false);
-                                        } catch (NumberFormatException e) {
-                                            // ignore non numerical values
-                                            Themes.showThemedToast(getActivity().getBaseContext(), getResources()
-                                                    .getString(R.string.custom_study_invalid_number), false);
-                                        } catch (JSONException e) {
-                                            throw new RuntimeException(e);
-                                        }
-                                    }
-                                });
-                        break;
-
-                    case CUSTOM_STUDY_AHEAD:
-                        mCustomStudyTextView1.setText("");
-                        mCustomStudyTextView2.setText(res.getString(R.string.custom_study_ahead));
-                        mCustomStudyEditText.setText(Integer.toString(AnkiDroidApp.getSharedPrefs(getActivity())
-                                .getInt("aheadDays", 1)));
-                        styledDialog.setButtonOnClickListener(Dialog.BUTTON_POSITIVE,
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        try {
-                                            int days = Integer.parseInt(((EditText) mCustomStudyEditText).getText()
-                                                    .toString());
-                                            createFilteredDeck(new JSONArray(),
-                                                    new Object[] { String.format(Locale.US, "prop:due<=%d", days),
-                                                            Consts.DYN_MAX_SIZE, Consts.DYN_DUE }, true);
-                                        } catch (NumberFormatException e) {
-                                            // ignore non numerical values
-                                            Themes.showThemedToast(getActivity().getBaseContext(), getResources()
-                                                    .getString(R.string.custom_study_invalid_number), false);
-                                        }
-                                    }
-                                });
-                        break;
-
-                    case CUSTOM_STUDY_RANDOM:
-                        mCustomStudyTextView1.setText("");
-                        mCustomStudyTextView2.setText(res.getString(R.string.custom_study_random));
-                        mCustomStudyEditText.setText(Integer.toString(AnkiDroidApp.getSharedPrefs(getActivity())
-                                .getInt("randomCards", 100)));
-                        styledDialog.setButtonOnClickListener(Dialog.BUTTON_POSITIVE,
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        try {
-                                            int randomCards = Integer.parseInt(((EditText) mCustomStudyEditText)
-                                                    .getText().toString());
-                                            createFilteredDeck(new JSONArray(), new Object[] { "", randomCards,
-                                                    Consts.DYN_RANDOM }, true);
-                                        } catch (NumberFormatException e) {
-                                            // ignore non numerical values
-                                            Themes.showThemedToast(getActivity().getBaseContext(), getResources()
-                                                    .getString(R.string.custom_study_invalid_number), false);
-                                        }
-                                    }
-                                });
-                        break;
-
-                    case CUSTOM_STUDY_PREVIEW:
-                        mCustomStudyTextView1.setText("");
-                        mCustomStudyTextView2.setText(res.getString(R.string.custom_study_preview));
-                        mCustomStudyEditText.setText(Integer.toString(AnkiDroidApp.getSharedPrefs(getActivity())
-                                .getInt("previewDays", 1)));
-                        styledDialog.setButtonOnClickListener(Dialog.BUTTON_POSITIVE,
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        String previewDays = ((EditText) mCustomStudyEditText).getText().toString();
-                                        createFilteredDeck(new JSONArray(),
-                                                new Object[] { "is:new added:" + previewDays, Consts.DYN_MAX_SIZE,
-                                                        Consts.DYN_OLDEST }, false);
-                                    }
-                                });
-                        break;
-                }
-        }
-    }
-
-
-    protected StyledDialog onCreateDialog(int id) {
+    /**
+     * Special method to show the context menu for the custom study options
+     * TODO: Turn this into a DialogFragment
+     */
+    private void showCustomStudyContextMenu() {
         StyledDialog dialog = null;
         Resources res = getResources();
         StyledDialog.Builder builder1 = new StyledDialog.Builder(this.getActivity());
+        builder1.setTitle(res.getString(R.string.custom_study));
+        builder1.setIcon(android.R.drawable.ic_menu_sort_by_size);
+        builder1.setItems(res.getStringArray(R.array.custom_study_options_labels),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        DialogFragment dialogFragment;
+                        if (which == CustomStudyDialog.CUSTOM_STUDY_TAGS) {
+                            /*
+                             * This is a special Dialog for CUSTOM STUDY, where instead of only collecting a
+                             * number, it is necessary to collect a list of tags. This case handles the creation
+                             * of that Dialog. 
+                             */
+                            dialogFragment = com.ichi2.anki.dialogs.TagsDialog.newInstance(
+                                    TagsDialog.TYPE_CUSTOM_STUDY_TAGS, new ArrayList<String>(),
+                                    new ArrayList<String>(getCol().getTags().all()));
 
-        switch (id) {
-            case DIALOG_STATISTIC_TYPE:
-                boolean selectAllDecksButton = false;
-                if(!(getActivity() instanceof Statistics)) {
-                    if ((getActivity() instanceof DeckPicker && !mFragmented)) {
-                        selectAllDecksButton = true;
-                    }
-                    AnkiStatsTaskHandler.setIsWholeCollection(selectAllDecksButton);
-                    Intent intent = new Intent(getActivity(), Statistics.class);
-                    startActivity(intent);
-                }
-                break;
-
-            case DIALOG_CUSTOM_STUDY:
-                builder1.setTitle(res.getString(R.string.custom_study));
-                builder1.setIcon(android.R.drawable.ic_menu_sort_by_size);
-                builder1.setItems(res.getStringArray(R.array.custom_study_options_labels),
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                mCustomDialogChoice = which;
-                                if (which == CUSTOM_STUDY_TAGS - 1) {
+                            ((TagsDialog)dialogFragment).setTagsDialogListener(new TagsDialogListener() {
+                                @Override
+                                public void onPositive(List<String> selectedTags, int option) {
                                     /*
-                                     * There is a special Dialog for CUSTOM STUDY, where instead of only collecting a
-                                     * number, it is necessary to collect a list of tags. This case handles the creation
-                                     * of that Dialog.
+                                     * Here's the method that gathers the final selection of tags, type of cards and generates the search
+                                     * screen for the custom study deck.
                                      */
-                                    showDialogFragment(DIALOG_CUSTOM_STUDY_TAGS);
-                                    return;
+                                    StringBuilder sb = new StringBuilder();
+                                    switch (option) {
+                                        case 1:
+                                            sb.append("is:new ");
+                                            break;
+                                        case 2:
+                                            sb.append("is:due ");
+                                            break;
+                                        default:
+                                            // Logging here might be appropriate : )
+                                            break;
+                                    }
+                                    int i = 0;
+                                    for (String tag : selectedTags) {
+                                        if (i != 0) {
+                                            sb.append("or ");
+                                        } else {
+                                            sb.append("("); // Only if we really have selected tags
+                                        }
+                                        sb.append("tag:").append(tag).append(" ");
+                                        i++;
+                                    }
+                                    if (i > 0) {
+                                        sb.append(")"); // Only if we added anything to the tag list
+                                    }
+                                    mSearchTerms = sb.toString();
+                                    createFilteredDeck(new JSONArray(), new Object[] { mSearchTerms, Consts.DYN_MAX_SIZE,
+                                            Consts.DYN_RANDOM }, false);
                                 }
-                                showDialog(DIALOG_CUSTOM_STUDY_DETAILS);
-                            }
-                        });
-                builder1.setCancelable(true);
-                dialog = builder1.create();
-                break;
-
-            case DIALOG_CUSTOM_STUDY_DETAILS:
-                /*
-                 * This is the normal case for creating a custom study deck, where the dialog requires only a numeric
-                 * input.
-                 */
-                builder1.setContentView(mCustomStudyDetailsView);
-                builder1.setCancelable(true);
-                builder1.setNegativeButton(R.string.dialog_cancel, null);
-                builder1.setPositiveButton(R.string.dialog_ok, null);
-                dialog = builder1.create();
-                break;
-
-            default:
-                dialog = null;
-                break;
-        }
-
+                            });
+                        } else {
+                            // Show CustomStudyDialog for all options other than the tags dialog
+                            dialogFragment = CustomStudyDialog.newInstance(which);
+                        }
+                        // Show the DialogFragment via Activity
+                        ((AnkiActivity) getActivity()).showDialogFragment(dialogFragment);
+                    }
+                });
+        builder1.setCancelable(true);
+        dialog = builder1.create();
         dialog.setOwnerActivity(getActivity());
-        return dialog;
+        dialog.show();
     }
 
-    private void createFilteredDeck(JSONArray delays, Object[] terms, Boolean resched) {
+    public void createFilteredDeck(JSONArray delays, Object[] terms, Boolean resched) {
         JSONObject dyn;
         if (colOpen()) {
             Collection col = getCol();
@@ -763,7 +492,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     }
 
 
-    private void resetAndRefreshInterface() {
+    public void resetAndRefreshInterface() {
         refreshInterface(true, true);
     }
 

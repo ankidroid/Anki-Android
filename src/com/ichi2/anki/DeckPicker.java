@@ -63,6 +63,7 @@ import com.github.amlcurran.showcaseview.OnShowcaseEventListener;
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.ActionItemTarget;
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener;
 import com.ichi2.anki.dialogs.AsyncDialogFragment;
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
 import com.ichi2.anki.dialogs.DeckPickerBackupNoSpaceLeftDialog;
@@ -89,6 +90,7 @@ import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -100,7 +102,7 @@ import java.util.Locale;
 import java.util.TreeSet;
 
 public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEventListener,
-        DatabaseErrorDialog.DatabaseErrorDialogListener,
+        StudyOptionsListener, DatabaseErrorDialog.DatabaseErrorDialogListener,
         SyncErrorDialog.SyncErrorDialogListener, ImportDialog.ImportDialogListener,
         MediaCheckDialog.MediaCheckDialogListener, ExportDialog.ExportDialogListener {
 
@@ -2049,5 +2051,11 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         hideShowcaseView();
         mShowShowcaseView = true;
         supportInvalidateOptionsMenu();
+    }
+
+
+    @Override
+    public void createFilteredDeck(JSONArray delays, Object[] terms, Boolean resched) {
+        getFragment().createFilteredDeck(delays, terms, resched);
     }
 }
