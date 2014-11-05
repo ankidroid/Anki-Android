@@ -153,9 +153,9 @@ class AnkiExporter extends Exporter {
             if (mDid != null && !dids.contains(d.getLong("id"))) {
                 continue;
             }
-            if (d.getInt("dyn") != 1 && d.getInt("conf") != 1) {
+            if (d.getInt("dyn") != 1 && d.getLong("conf") != 1L) {
                 if (mIncludeSched) {
-                    dconfs.put(Integer.toString(d.getInt("conf")), true);
+                    dconfs.put(Long.toString(d.getLong("conf")), true);
                 }
             }
             if (!mIncludeSched) {
@@ -316,12 +316,12 @@ public final class AnkiPackageExporter extends AnkiExporter {
         }
         // tidy up intermediate files
         new File(colfile).delete();
-        String p = path.replace(".apkg", ".media.db2");
+        String p = path.replace(".apkg", ".media.ad.db2");
         if (new File(p).exists()) {
             new File(p).delete();
         }
         String tempPath = path.replace(".apkg", ".media");
-        File file = new File(mMediaDir, tempPath);
+        File file = new File(tempPath);
         if (file.exists()) {
             String deleteCmd = "rm -r " + tempPath;
             Runtime runtime = Runtime.getRuntime();
