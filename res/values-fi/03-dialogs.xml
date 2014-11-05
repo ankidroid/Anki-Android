@@ -39,18 +39,18 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="check_db_title">Tarkasta tietokanta</string>
+  <string name="check_db_title">Tarkista tietokanta?</string>
   <string name="check_db_warning">Tähän voi mennä vähän aikaa</string>
   <string name="check_db_acknowledge">Tietokanta tarkistettu</string>
   <string name="check_db_acknowledge_shrunk">Tietokanta tarkistettu ja optimoitu.\nKoko pieneni %d kB.</string>
   <string name="contextmenu_deckpicker_delete_deck">Poista korttipakka</string>
-  <string name="delete_deck_title">Poista korttipakka</string>
+  <string name="delete_deck_title">Poista korttipakka?</string>
   <string name="delete_deck_message">Haluatko varmasti poistaa kaikki kortit pakasta %s?</string>
   <string name="delete_cram_deck_message">Haluatko varmasti lähettää kaikki pakan %s kortit niiden alkuperäisiin pakkoihin?</string>
   <string name="delete_deck_confirm">Poista se</string>
-  <string name="new_version_message">Uudet ominaisuudet:</string>
-  <string name="no_tts_available_title">Teksti puheeksi</string>
-  <string name="no_tts_available_message">Teksti puheeksi kieli ei ole käytettävissä</string>
+  <string name="new_version_message">Uusia ominaisuuksia:</string>
+  <string name="no_tts_available_title">Puhesyntetisaattori</string>
+  <string name="no_tts_available_message">Yhtään puhesyntetisaattorin tukemaa kieltä ei ole käytettävissä</string>
   <string name="tts_no_tts">Älä puhu</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Android-opiskelukorttiohjelma</h2>AnkiDroid on opiskelukorttisovellus, joka täysin yhteensopiva <a href=\"%2$s\">Anki</a> työpöytäsovelluksen kanssa. Voit luoda kortteja, ladata niitä ja oppia asioita molemmilla, ja synkronoida ne helposti toistensa kanssa.]]></item>
@@ -65,7 +65,7 @@
   <string name="notify_message">Lataa uusin versio</string>
   <string name="notification_title">Vahvista AnkiDroid-päivitys</string>
   <string name="preview_title">Esikatselu</string>
-  <string name="notification_message">Uusi versio Ankidroidista on saatavilla Android Marketista.\n\nHaluatko asentaa sen?</string>
+  <string name="notification_message">Uusi versio Ankidroidista on saatavilla Google Playssä.\n\nHaluatko asentaa sen?</string>
   <string name="notification_stop">Älä ilmoita tästä päivityksestä uudelleen</string>
   <string name="reset_card_dialog_title">Nollaa kortin edistyminen</string>
   <string name="reset_card_dialog_message">Tämä kortti laitetaan uusien korttien jonon viimeiseksi.</string>
@@ -74,23 +74,23 @@
   <string name="reschedule_card_dialog_message">Toista uudestaan x päivän päästä:</string>
   <string name="reschedule_card_dialog_acknowledge">Kortti on ajoitettu uudelleen</string>
   <string name="answering_error_title">Tietokantavirhe</string>
-  <string name="answering_error_message">Tapahtui virhe kirjoittaessa kokoelmaan. Tämä voi aiheutua korruptoituneesti tietokannasta tai liian vähäisestä levytilasta.\n\nJos tämä tapahtuu usein yritä tarkastaa tietokanta, korjata kokoelma tai palauttaa se varmuuskopioista. Käynnistä \"asetukset\" tehdäksesi tämän.\n\nKyseessä voi olla myös vika AnkiDroidissa, joten ilmoita tästä meille jotta voimme tarkastaa asian.</string>
+  <string name="answering_error_message">Kokoelmaan kirjoittaminen epäonnistui. Tämä voi aiheutua viallisesta tietokannasta tai liian vähäisestä levytilasta.\n\nJos tämä tapahtuu usein, yritä tarkistaa tietokanta, korjata kokoelma tai palauttaa se varmuuskopioista. Voit tehdä tämän napauttamalla \"Asetukset\"-painiketta.\n\nKyseessä voi olla myös vika AnkiDroidissa, joten ilmoita tästä meille jotta voimme tarkastaa asian.</string>
   <string name="answering_error_report">Ilmoita viasta</string>
-  <string name="repair_deck_dialog">Haluatko varmasti yrittää korjata tietokannan?\n\nEnnen yritystä kopioi tietokannasta luodaan alikansioon \"%s\".</string>
+  <string name="repair_deck_dialog">Haluatko varmasti yrittää korjata tietokannan?\n\nEnnen yritystä kopio tietokannasta luodaan alihakemistoon \"%s\".</string>
   <string name="intent_add_saved_information">Tallennetut tiedot</string>
   <string name="intent_add_clear_all">Tyhjennä kaikki</string>
-  <string name="intent_aedict_empty">Kategoria \"default\" on tyhjä</string>
+  <string name="intent_aedict_empty">Luokka \"oletus\" on tyhjä</string>
   <string name="intent_aedict_category">Lisätäksesi kortteja AnkiDroidiin poista kaikki Notepad-kategoriat tai lisää uusi nimellä \"default\"</string>
   <string name="custom_study_new_total_new">Uusia kortteja pakassa: %s</string>
-  <string name="custom_study_rev_total_rev">Arvioita tehtävänä pakassa: %s</string>
+  <string name="custom_study_rev_total_rev">Opiskeltavia kortteja pakassa: %s</string>
   <string name="custom_study_new_extend">Lisää tämän päivän uusien korttien rajoitusta</string>
-  <string name="custom_study_rev_extend">Kasvata tämän päivän tarkastelujen määrää</string>
-  <string name="custom_study_forgotten">Tarkastelukortteja unohdettu edellisinä x päivänä:</string>
+  <string name="custom_study_rev_extend">Kasvata tämän päivän kertausten määrää</string>
+  <string name="custom_study_forgotten">Kortteja unohdettu edellisenä x päivänä:</string>
   <string name="custom_study_ahead">Kertaa etukäteen x päivää:</string>
   <string name="custom_study_random">Valitse x korttia satunnaisesti pakasta:</string>
   <string name="custom_study_preview">Esikatsele viimeisinä x päivänä lisättyjä kortteja:</string>
   <string name="custom_study_tags">Syötä tunnisteet:</string>
-  <string name="rebuild_custom_study_deck">Uudelleenrakennetaan mukautettua pakkaa.\nOdota...</string>
+  <string name="rebuild_custom_study_deck">Kasataan mukautettua pakkaa&#8230;</string>
   <string name="deck_upgrade_title">Pakan päivitys</string>
   <string name="deck_upgrade_rename_warning">Huomaa, että tämä vie nykyisen kokoelmasi tiedostoon \'%1$s\' ja luo uuden vanhan anki 1.x tiedostoista. Halutessasi voit manuaalisesti tuoda uudelleen edellä mainitun apkg-tiedoston ohjatun toiminnon suorittamisen jälkeen. Haluatko varmasti jatkaa?</string>
   <string name="deck_upgrade_major_warning"><![CDATA[Tämä on merkittävä päivitys Ankidroidiin ja kestää vähintään 10-20 minuuttia. <br><br>Haluat jatkaa nyt tai myöhemmin? <br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=fi">Lisätietoja</a>]]></string>
@@ -114,15 +114,15 @@
   <string name="upgrade_deck_web_upgrade_sdcard">Päivitys valmistui, mutta sen tuottaman kokoelman purkaminen epäonnistui. Varmista, että tarpeellinen määrä tallennustilaa on saatavilla (tarvitaan %1$d Mt) ja kokeile uudestaan. Voit myös kokeilla toista päivitysmenetelmää.</string>
   <string name="export_progress_title">Kokoelman vienti</string>
   <string name="export_progress_exporting">Viedään kokoelmaa, odota&#8230;</string>
-  <string name="upgrade_deck_export_successful">Vanhan kokoelman vienti onnistui, jatketaan päivitysprosessia.</string>
-  <string name="upgrade_deck_export_error">Virhe vietäessä vanhaa kokoelmaa. Haluatko silti jatkaa päivitysprosessia (vanha kokoelma menetetään)?</string>
+  <string name="upgrade_deck_export_successful">Vanhan kokoelman tallennus onnistui, jatketaan päivitystä.</string>
+  <string name="upgrade_deck_export_error">Virhe tallennettaessa vanhaa kokoelmaa. Haluatko silti jatkaa päivitystä? Vanha kokoelma menetetään.</string>
   <string name="upgrade_deck_sync_from_ankiweb">Synkronoi AnkiWebistä</string>
   <string name="upgrade_deck_have_you_synced">Oletko varma, että päivitit kokoelman Anki Desktop 2:lla ja synkronoit AnkiWebiin?</string>
   <string name="upgrade_deck_dont_upgrade">Älä päivitä</string>
   <string name="import_unpacking">Puretaan arkistoa.\nOdota&#8230;</string>
   <string name="importing_collection">Tuodaan kokoelmaa.\nOdota&#8230;</string>
   <string name="import_media_count">Tuodaan mediatiedostoja %1$d%%\nOdota&#8230;</string>
-  <string name="import_update_counts">Päivitetään pakkojen määriä.\nPlease odottaa&#8230;</string>
+  <string name="import_update_counts">Päivitetään pakkojen lukumääriä&#8230;</string>
   <string name="import_add_progress">• Puretaan arkistoa %1$s\n• Merkintöjen tuonti %2$d%%\n• Korttien tuonti %3$d%%\n• Siistiminen %4$s</string>
   <string name="sd_card_full_title">SD-kortti on täysi</string>
   <string name="sd_card_almost_full_title">SD-kortti on lähes täysi</string>
@@ -154,7 +154,7 @@
   <string name="check_media_warning">Jos sinulla on suuri mediakokoelma, tämä voi kestää pitkään</string>
   <string name="check_media_message">Tarkistetaan mediaa&#8230;</string>
   <string name="check_media_acknowledge">Media tarkistettu</string>
-  <string name="check_media_failed">Median tarkastaminen epäonnistui</string>
+  <string name="check_media_failed">Median tarkistaminen epäonnistui</string>
   <string name="check_media_invalid">%d tiedostoa virheellisellä koodauksella</string>
   <string name="check_media_unused">%d käyttämätöntä tiedostoa mediakansiossa</string>
   <string name="check_media_nohave">%d tiedostoa, joita käytetään korteissa, mutta jotka eivät ole mediakansiossa</string>

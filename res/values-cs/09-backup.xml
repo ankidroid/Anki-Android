@@ -61,7 +61,7 @@
   <string name="backup_error">Chyba</string>
   <string name="backup_restore_error">Kolekci nelze obnovit</string>
   <string name="backup_invalid_file_error">Vybraný záložní soubor je neplatný</string>
-  <string name="backup_restore_if_missing">Obnovení sbírky, pokud chybí...</string>
+  <string name="backup_restore_if_missing">Obnovení kolekce, pokud chybí&#8230;</string>
   <string name="backup_restore_deck">Oprava kolekce. \nProsím čekejte...</string>
   <string name="backup_restore_select_title">Vyberte zálohu pro obnovení</string>
   <string name="backup_restore_no_backups">Žádné zálohy pro tento balíček nejsou k dispozici. Máte-li zálohu na stolním počítači, zkopírujte jí ručně do složky AnkiDroid</string>

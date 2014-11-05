@@ -50,18 +50,18 @@
   <string name="note_type">Merkinnän tyyppi</string>
   <string name="card_type">Korttityyppi</string>
   <string name="filter_tags">Suodata tunnisteita</string>
-  <string name="sdcard_missing_message">SD-kortti ei ole käytettävissä, koska se on kytketty USB-tilassa. Irrota USB käyttääksesi korttipakkojasi.</string>
+  <string name="sdcard_missing_message">SD-kortti ei ole käytettävissä, koska sitä käytetään USB-liitännän kautta. Irrota USB käyttääksesi korttipakkojasi</string>
   <string name="enable_whiteboard">Ota kirjoitustaulu käyttöön</string>
   <string name="disable_whiteboard">Poista kirjoitustaulu käytöstä</string>
   <string name="show_whiteboard">Näytä kirjoitustaulu</string>
   <string name="hide_whiteboard">Piilota kirjoitustaulu</string>
   <string name="clear_whiteboard">Tyhjennä kirjoitustaulu</string>
   <string name="replay_audio">Toista ääni</string>
-  <string name="cram_edit_warning">Kortin muokkaaminen ei ole pänttäämisen aikana</string>
-  <string name="suspend_leeches">Keskeyttää takiaiset</string>
-  <string name="leech_suspend_notification">Kortti om merkitty takiaiseksi ja keskeytettiin</string>
-  <string name="leech_notification">Kortti om merkitty takiaiseksi</string>
-  <string name="corrupt_font">Korruptoitunut kirjasintiedosto %s</string>
+  <string name="cram_edit_warning">Kortin muokkaaminen ei ole sallittua pänttäämisen aikana</string>
+  <string name="suspend_leeches">Jäädytä vaikeat kortit</string>
+  <string name="leech_suspend_notification">Kortti on merkitty vaikeaksi ja jäädytetty</string>
+  <string name="leech_notification">Kortti on merkitty vaikeaksi</string>
+  <string name="corrupt_font">Vioittunut kirjasintiedosto %s</string>
   <string-array name="browser_column1_headings">
     <item>Lajittelukenttä</item>
   </string-array>
@@ -75,33 +75,33 @@
     <item>Virheet</item>
     <item>Kertaukset</item>
   </string-array>
-  <string name="cardeditor_title_add_note">Lisää huomautus</string>
-  <string name="cardeditor_title_edit_card">Muokkaa huomautusta</string>
+  <string name="cardeditor_title_add_note">Lisää merkintä</string>
+  <string name="cardeditor_title_edit_card">Muokkaa merkintää</string>
   <string name="discard_unsaved_changes">Sulje ja menetä muutokset?</string>
-  <string name="factadder_saving_error">Virhe tallennettaessa huomautusta</string>
+  <string name="factadder_saving_error">Virhe tallennettaessa merkintää</string>
   <string name="pref_lang_support">Kieli</string>
-  <string name="saving_facts">Tallennetaan huomautusta</string>
+  <string name="saving_facts">Tallennetaan merkintää</string>
   <string name="deck">Pakka</string>
   <string name="add">Lisää</string>
   <string name="close">Sulje</string>
   <string name="select">Valitse</string>
-  <string name="saving_changes">Tallennetaan muutokset ...</string>
+  <string name="saving_changes">Tallennetaan muutoksia&#8230;</string>
   <string name="reordering_cards">Uudelleenjärjestetään kortteja...</string>
   <plurals name="timebox_reached">
-    <item quantity="one">%1$d kortti opiskeltu %2$s</item>
-    <item quantity="other">%1$d korttia opiskeltu %2$s</item>
+    <item quantity="one">%1$d kortti opiskeltu ajassa %2$s</item>
+    <item quantity="other">%1$d korttia opiskeltu ajassa %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
     <item quantity="one">%1$d minuutti</item>
     <item quantity="other">%1$d minuuttia</item>
   </plurals>
   <string name="studyoptions_welcome_title">Tervetuloa AnkiDroidiin</string>
-  <string name="studyoptions_no_external_storage_title">Ulkoista Muistia Ei Ole Saatavilla</string>
-  <string name="studyoptions_no_external_storage_message">Ulkoista muistia ei ole tällä hetkellä saatavilla. AnkiDroid tarvitsee saada käyttöönsä SD-korttikortti voidaksesi lukea ja ladata Anki-korttipakkoja. Tarkista, että SD-kortti on asennettu ja yritä uudelleen.</string>
+  <string name="studyoptions_no_external_storage_title">Ulkoinen tallennustila ei ole saatavilla</string>
+  <string name="studyoptions_no_external_storage_message">Ulkoinen tallennustila ei ole tällä hetkellä saatavilla. AnkiDroid tarvitsee käyttöönsä SD-kortin voidakseen lukea ja ladata Anki-korttipakkoja. Tarkista, että SD-kortti on asennettu ja yritä uudelleen.</string>
   <string name="fact_adder_intent_title">AnkiDroid-kortti</string>
   <string name="deckpicker_select_dictionary_title">Valitse sanakirja</string>
   <string name="deckpicker_select_dictionary_default">Oletus</string>
-  <string name="card_editor_add_card">Lisää huomautus</string>
+  <string name="card_editor_add_card">Lisää merkintä</string>
   <string name="card_editor_reset">Tyhjennä</string>
   <string name="card_editor_copy_card">Kopioi kortti</string>
   <string name="card_editor_reset_card">Tyhjennä edistyminen</string>
@@ -120,37 +120,37 @@
   <string name="help_faq">UKK (FAQ)</string>
   <string name="check_db">Tarkasta tietokanta</string>
   <string name="check_media">Tarkista media</string>
-  <string name="check_db_message">Tarkastetaan tietokantaa.\nOdota...</string>
+  <string name="check_db_message">Tarkistetaan tietokantaa&#8230;</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Tyhjä kortti. Aja \"Työkalut&gt;Tyhjät kortit\" työpöytäsovelluksessa.</string>
   <string name="unknown_type_field_warning">Kirjoita vastaus: tuntematon kenttä %s</string>
   <string name="simple_interface_hint">Tyhjä %s. Muista että yksinkertainen käyttöliittymä ei näytä kuvia/ääniä jne.</string>
-  <string name="delete_deck">Poistetaan pakkaa...\nOdota.</string>
+  <string name="delete_deck">Poistetaan pakkaa&#8230;</string>
   <string-array name="dynOrderLabels">
     <item>Vanhin ensin</item>
     <item>Satunnainen</item>
-    <item>kasvavin välein</item>
-    <item>vähentyvin välein</item>
+    <item>Kasvavin välein</item>
+    <item>Vähentyvin välein</item>
     <item>Eniten virheitä</item>
     <item>Lisäysjärjestyksessä</item>
-    <item>Näyttöjärjestyksessä</item>
+    <item>Näytä kertausjärjestyksessä</item>
   </string-array>
   <string name="menu_cardbrowser">Korttiselain</string>
   <string name="show_hint">Näytä %s</string>
   <string name="pref_lang_other">Kieliasetukset</string>
   <string name="pref_font_UI">Mukautettu käyttöliittymäkirjasin</string>
   <string name="info_rate">Arvostele AnkiDroid</string>
-  <string name="col_load_failed">Kokoelman lataus epäonnistui.\nPaina takaisin-painiketta sulkeaksi AnkiDroidin.</string>
+  <string name="col_load_failed">Kokoelman lataaminen epäonnistui.\nPaina Takaisin-painiketta sulkeaksesi AnkiDroidin.</string>
   <string name="import_title">Tuo kortteja</string>
   <string name="import_select_title">Valitse tuotava tiedosto</string>
   <string name="import_message">Haluatko lisätä tiedoston %s sisällön kokoelmaasi, vai korvata kokoelmasi sillä?</string>
   <string name="import_message_add">Lisää</string>
   <string name="import_message_replace">Korvaa</string>
-  <string name="import_message_replace_confirm">Tämä poistaa nykyisen kokoelman ja korvaa sen tiedoston %s tiedoilla. Haluatko varmasti jatkaa?</string>
+  <string name="import_message_replace_confirm">Poistetaan nykyinen kokoelma ja korvataan se tiedoston %s tiedoilla. Haluatko varmasti jatkaa?</string>
   <string name="import_message_add_confirm">Lisää \"%s\" kokoelmaan? Se voi kestää pitkään</string>
   <string name="import_log_success">Tuotiin %d korttia onnistuneesti</string>
   <string name="import_log_error">Tuonti epäonnistui</string>
   <string name="import_log_no_apkg">Tämä ei ole validi apkg-tiedosto</string>
-  <string name="import_importing">Tuodaan kortteja.\nOdota...</string>
+  <string name="import_importing">Tuodaan kortteja&#8230;</string>
   <string name="export_include_schedule">Myös ajoitukset</string>
   <string name="export_include_media">Myös media</string>
   <string name="confirm_apkg_export">Tallenna kokoelma apkg-tiedostona?</string>
@@ -158,19 +158,19 @@
   <string name="export_in_progress">Tallennetaan apkg-tiedostoa&#8230;</string>
   <string name="export_successful_title">Lähetä apkg sähköpostissa?</string>
   <string name="export_successful">Tiedosto \"%s\" tallennettiin. Haluatko lähettää sen sähköpostissa?</string>
-  <string name="export_unsuccessful">Virhe kokoelmaa vietäessä</string>
+  <string name="export_unsuccessful">Virhe kokoelmaa tallennettaessa</string>
   <string name="import_hint">Tuodaksesi kortteja aseta apkg-tiedosto hakemistoon %s ja paina Ok-painiketta</string>
   <string name="upgrade_import_no_file_found">Tuotavaa tiedostoa %1$s ei löytynyt</string>
   <string name="study_options">Pakan asetukset</string>
   <string name="custom_study">Mukautettu opiskelu</string>
-  <string name="dyn_deck_desc">Tämä on erityispakka normaalin aikataulun ulkopuolella opiskeluun. Kortit palautetaan automaattisesti niiden alkuperäisiin pakkoihin läpikäynnin jälkeen. Tämän pakan poistaminen palauttaa kaikki sen sisältämät kortit alkuperäispakkoihin.</string>
+  <string name="dyn_deck_desc">Tämä on erityispakka normaalin aikataulun ulkopuolella tapahtuvaan opiskeluun. Kortit palautetaan automaattisesti alkuperäisiin pakkoihinsa läpikäynnin jälkeen. Tämän pakan poistaminen palauttaa kaikki sen sisältämät kortit alkuperäisiin pakkoihin.</string>
   <string name="exit_wizard">Lopeta ohjattu toiminto</string>
-  <string name="steps_error">Askelten on oltava numero suurempi kuin 0</string>
-  <string name="steps_min_error">Vähintään yksi askel on pakollinen</string>
+  <string name="steps_error">Vaiheiden on oltava numeroita, jotka ovat suurempia kuin 0</string>
+  <string name="steps_min_error">Vähintään yksi vaihe on pakollinen</string>
   <string name="custom_study_invalid_number">Virheellinen numero</string>
-  <string name="template_error">Mallin virhe:</string>
-  <string name="template_error_detail">Tämän kortin mallissa on virhe.</string>
-  <string name="template_error_fix">Käytä työpöytäsovelluksen kortinmuokkausohjelmaa korjataksesi virheen.</string>
+  <string name="template_error">Virhe mallissa</string>
+  <string name="template_error_detail">Korttimallissa on virhe</string>
+  <string name="template_error_fix">Korjaa virhe työpöytäsovelluksen kortinmuokkausohjelmalla.</string>
   <string name="sched_end">(loppu)</string>
   <string name="sched_unbury_button">Nähdäksesi ne nyt, napauta Paljasta-nappia.</string>
   <string name="sched_has_buried">Liittyviä tai piilotettuja kortteja on viivästetty myöhempään istuntoon.</string>

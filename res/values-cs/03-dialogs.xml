@@ -54,7 +54,7 @@
   <string name="tts_no_tts">Nemluv</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Flashcards pro Android</h2>AnkiDroid je flashcard aplikace, která je plně kompatibilní s programem pro pc  <a href="%2$s">Anki</a>. Můžete vytvářet, stahovat a učit se v obou, v AnkiDroid nebo Anki pro pc, a vše mezi nimi velmi jednoduše synchronizovat.]]></item>
-    <item><![CDATA[Pomozte nám, prosím, zlepšit AnkiDroid a nahlašte nám chyby <a href="%1$s">zde</a>; nové nápady jsou vítany také! Prosím, využijte <a href="%2$s">wiki</a> a podělte se s námi o poznatky na <a href="%3$s">fóru</a>.]]></item>
+    <item><![CDATA[Pomozte nám, prosím, zlepšit AnkiDroid a nahlaste nám chyby <a href=\"%1$s\">zde</a>; nové nápady jsou vítány také! Prosím, využijte <a href=\"%2$s\">wiki</a> a podělte se s námi o poznatky na <a href=\"%3$s\">fóru</a>.]]></item>
     <item><![CDATA[AnkiDroid is <a href=\"%1$s\">open source software<a/>, so everyone is encouraged to <a href=\"%2$s\">join</a> the <a href=\"%3$s\">contributors</a> :-)]]></item>
     <item><![CDATA[Ne jen vývojáři mohou pomoci, např. můžete pomoci s <a href="%1$s">překladem</a> AnkiDroid, aktualizovat wiki dokumentaci a náhledy obrazovek, <a href="%2$s">finančně přispět</a> na program Anki, nebo psát do blogu o AnkiDroidu!]]></item>
     <item><![CDATA[AnkiDroid je publikován pod <a href="%1$s">GNU-GPL v3 licencí</a> a zdrojové kódy jsou dostupné <a href="%2$s">zde</a>.]]></item>
@@ -114,7 +114,7 @@
   <string name="upgrade_deck_web_upgrade_sdcard">Upgrade byl dokončen, ale došlo k chybě při rozbalování kolekce, ujistěte se, že máte na disku dostatek volného místa (potřeba %1$d mb) a zkuste to znovu, nebo zkuste provést upgrade jinou metodou.</string>
   <string name="export_progress_title">Export kolekce</string>
   <string name="export_progress_exporting">Export kolekce, prosím čekejte&#8230;</string>
-  <string name="upgrade_deck_export_successful">Vaše stará kolekce byla úspěšně exportována, pokračuji v upgradačním procesu.</string>
+  <string name="upgrade_deck_export_successful">Vaše stará kolekce byla úspěšně exportována, pokračuji v procesu upgradu.</string>
   <string name="upgrade_deck_export_error">Chyba během exportu do vaší staré kolekce. Chcete přesto pokračovat s upgradačním procesem (vaše stará kolekce bude ztracena)?</string>
   <string name="upgrade_deck_sync_from_ankiweb">Synchronizace z AnkiWeb</string>
   <string name="upgrade_deck_have_you_synced">Jste si jist, že máte aktualizovanou vaší kolekci včetně Anki Desktop 2 a synchronizovanou s AnkiWebem?</string>
@@ -149,7 +149,7 @@
   <string name="statistics_button_content">Statistiky</string>
   <string name="dialog_collection_path_title">Složka neexistuje</string>
   <string name="dialog_collection_path_text">Zadaná složka neexistuje, chcete ji vytvořit?</string>
-  <string name="dialog_collection_path_not_dir">The path specified was not a valid directory</string>
+  <string name="dialog_collection_path_not_dir">Zadaná cesta není platný adresář</string>
   <string name="check_media_title">Check media?</string>
   <string name="check_media_warning">This may take a long time with large media collections</string>
   <string name="check_media_message">Checking media&#8230;</string>

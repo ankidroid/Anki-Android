@@ -42,7 +42,7 @@
   <string name="app_name">AnkiDroid</string>
   <string name="app_name_anki">Anki</string>
   <string name="app_name_droid">Droid</string>
-  <string name="studyoptions_title">Study Options</string>
+  <string name="studyoptions_title">Možnosti studia</string>
   <string name="studyoptions_deck_name">Jméno balíčku</string>
   <string name="studyoptions_due_today">Dnes k zopakování:</string>
   <string name="studyoptions_new_total">Celkem nových karet:</string>
@@ -101,7 +101,7 @@
   <string name="menu_my_account">Synchronizovat účet</string>
   <string name="menu_preferences">Nastavení</string>
   <string name="menu_about">O aplikaci</string>
-  <string name="menu_dismiss_note">Hide / Delete</string>
+  <string name="menu_dismiss_note">Skrýt / Vymazat</string>
   <string name="menu_bury_card">Přeskočit kartu</string>
   <string name="menu_bury_note">Přeskočit poznámku</string>
   <string name="menu_suspend_card">Pozastavit kartu</string>
@@ -164,7 +164,7 @@
   <string name="sd_card_not_mounted">Paměťová karta není vložena.\n\n Svou kolekci si přesto můžete uložit do interní paměti, avšak toto není doporučeno, protože dostupnost tohoto souboru není tak snadná. Tuto volbu aktivujete v nastavení (které otevřete kliknutím na tento text).</string>
   <string name="studyoptions_options">Možnosti</string>
   <string name="empty_cloze_warning">Prosím upravte tuto poznámku a přidejte nějaké doplňovačky.(%1$s)</string>
-  <string name="help_cloze">Pomoc</string>
+  <string name="help_cloze">Nápověda</string>
   <string name="button_sync">Synchronizovat</string>
   <string name="restart">Restartovat</string>
   <string name="do_nothing">Nedělat nic</string>
