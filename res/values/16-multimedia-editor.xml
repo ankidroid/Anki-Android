@@ -26,7 +26,7 @@
     <string name="multimedia_editor_languages_french">French</string>
     <string name="multimedia_editor_languages_hindi">Hindi</string>
     <string name="multimedia_editor_languages_arabic">Arabic</string>
-    <string name="multimedia_editor_languages_japaneese">Japaneese</string>
+    <string name="multimedia_editor_languages_japaneese">Japanese</string>
 
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">Add image</string>
