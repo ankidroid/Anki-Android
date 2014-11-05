@@ -53,7 +53,7 @@
   <string name="no_tts_available_message">Yhtään puhesyntetisaattorin tukemaa kieltä ei ole käytettävissä</string>
   <string name="tts_no_tts">Älä puhu</string>
   <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s:<br/>Android-opiskelukorttiohjelma</h2>AnkiDroid on opiskelukorttisovellus, joka täysin yhteensopiva <a href=\"%2$s\">Anki</a> työpöytäsovelluksen kanssa. Voit luoda kortteja, ladata niitä ja oppia asioita molemmilla, ja synkronoida ne helposti toistensa kanssa.]]></item>
+    <item><![CDATA[<h2>%1$s:<br/>Kääntökorttisovellus Androidille</h2>AnkiDroid on ohjelma opiskeluun kääntökorttien (flashcard) avulla. Se on täysin yhteensopiva <a href=\"%2$s\">Anki</a> työpöytäsovelluksen kanssa. Voit luoda kortteja, ladata niitä ja opiskella sekä AnkiDroidilla, että Ankilla ja synkronoida ne helposti toistensa kanssa.]]></item>
     <item><![CDATA[Auta tekemään AnkiDroidista parempi, raportoi löytämäsi virheet <a href=\"%1$s\">täällä</a>. Ideoita uusiksi ominaisuuksiksi otetaan myös vastaan, käytä <a href=\"%2$s\">wikiä</a> ja käy <a href=\"%3$s\">foorumilla</a>.]]></item>
     <item><![CDATA[AnkiDroid on <a href=\"%1$s\">avoimen lähdekoodin ohjelmisto<a/>, kaikki voivat <a href=\"%2$s\">auttaa</a> ohjelman <a href=\"%3$s\">kehittäjiä</a> :-)]]></item>
     <item><![CDATA[Ohjelmointitaidottomat voivat myös auttaa, esimerkiksi tekemällä<a href=\"%1$s\">käännöksiä</a>, päivittämällä wikiä ja ruutukaappauksia, <a href=\"%2$s\">lahjoittamalla rahaa</a> Anki-työpöytäsovelluksen kehittäjille tai bloggaamalla AnkiDroidista!]]></item>
