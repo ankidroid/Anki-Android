@@ -614,7 +614,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private void closePreferences() {
         finish();
         ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
-        if (mCol != null) {
+        if (mCol != null && mCol.getDb()!= null) {
             mCol.save();
         }
     }
