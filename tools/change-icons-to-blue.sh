@@ -1,37 +1,21 @@
-# Inspired from commit https://github.com/ankidroid/Anki-Android/commit/2474645ac31ff0e2a6e4bf8efa0a0fc56516490d
+#!/bin/bash
 
-# App icon
-wget -O res/drawable/anki.png \
-https://github.com/ankidroid/Anki-Android/raw/1faa5059f12dc3df89ac25550565b3cfda91a6a2/res/drawable/anki.png
+pushd res
+pushd ../docs/marketing/icons/blue
 
-wget -O res/drawable-ldpi/anki.png \
-https://github.com/ankidroid/Anki-Android/raw/1faa5059f12dc3df89ac25550565b3cfda91a6a2/res/drawable-ldpi/anki.png
+/bin/cp drawable/anki.png ~1/drawable/
 
-wget -O res/drawable-mdpi/anki.png \
-https://github.com/ankidroid/Anki-Android/raw/1faa5059f12dc3df89ac25550565b3cfda91a6a2/res/drawable-mdpi/anki.png
+/bin/cp drawable-ldpi/anki.png ~1/drawable-ldpi/
 
-wget -O res/drawable-hdpi/anki.png \
-https://raw.github.com/ankidroid/Anki-Android/1faa5059f12dc3df89ac25550565b3cfda91a6a2/res/drawable-hdpi/anki.png
+/bin/cp drawable-mdpi/anki.png ~1/drawable-mdpi/
+/bin/cp drawable-mdpi/widget_bg_small.png ~1/drawable-mdpi/
+/bin/cp drawable-mdpi/widget_bg_small_finish.png ~1/drawable-mdpi/
+/bin/cp drawable-hdpi/anki.png ~1/drawable-hdpi/
+/bin/cp drawable-hdpi/widget_bg_small.png ~1/drawable-hdpi/
+/bin/cp drawable-hdpi/widget_bg_small_finish.png ~1/drawable-hdpi/
+/bin/cp drawable-xhdpi/anki.png ~1/drawable-xhdpi/
+/bin/cp drawable-xhdpi/widget_bg_small.png ~1/drawable-xhdpi/
+/bin/cp drawable-xhdpi/widget_bg_small_finish.png ~1/drawable-xhdpi/
 
-wget -O res/drawable-xhdpi/anki.png \
-https://github.com/ankidroid/Anki-Android/raw/1faa5059f12dc3df89ac25550565b3cfda91a6a2/res/drawable-xhdpi/anki.png
-
-# Widget background
-wget -O res/drawable-mdpi/widget_bg_small.png \
-https://github.com/ankidroid/Anki-Android/raw/1faa5059f12dc3df89ac25550565b3cfda91a6a2/res/drawable-mdpi/widget_bg_small.png
-
-wget -O res/drawable-hdpi/widget_bg_small.png \
-https://raw.github.com/ankidroid/Anki-Android/1faa5059f12dc3df89ac25550565b3cfda91a6a2/res/drawable-hdpi/widget_bg_small.png
-
-wget -O res/drawable-xhdpi/widget_bg_small.png \
-https://github.com/ankidroid/Anki-Android/raw/1faa5059f12dc3df89ac25550565b3cfda91a6a2/res/drawable-xhdpi/widget_bg_small.png
-
-# Widget background when reviews are finished (at that time it turns red)
-wget -O res/drawable-mdpi/widget_bg_small_finish.png \
-https://github.com/ankidroid/Anki-Android/raw/1faa5059f12dc3df89ac25550565b3cfda91a6a2/res/drawable-mdpi/widget_bg_small_finish.png
-
-wget -O res/drawable-hdpi/widget_bg_small_finish.png \
-https://github.com/ankidroid/Anki-Android/raw/1faa5059f12dc3df89ac25550565b3cfda91a6a2/res/drawable-hdpi/widget_bg_small_finish.png
-
-wget -O res/drawable-xhdpi/widget_bg_small_finish.png \
-https://github.com/ankidroid/Anki-Android/raw/1faa5059f12dc3df89ac25550565b3cfda91a6a2/res/drawable-xhdpi/widget_bg_small_finish.png
+popd
+popd
