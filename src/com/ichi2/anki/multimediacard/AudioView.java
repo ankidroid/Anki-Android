@@ -365,8 +365,8 @@ public class AudioView extends LinearLayout {
                     case IDLE: // If not already recorded or not already played
                     case STOPPED: // if already recorded or played
                         boolean highSampling = false;
-
-                        int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+                        // TODO : this doesn't appear to be working reliably
+                        /*int currentapiVersion = android.os.Build.VERSION.SDK_INT;
                         if (currentapiVersion >= android.os.Build.VERSION_CODES.GINGERBREAD_MR1) {
                             try {
                                 // try high sampling rate first
@@ -382,7 +382,7 @@ public class AudioView extends LinearLayout {
 
                             } catch (Exception e) {
                             }
-                        }
+                        }*/
 
                         if (!highSampling) {
                             // fall back on default
@@ -394,7 +394,7 @@ public class AudioView extends LinearLayout {
                                 mRecorder.start();
 
                             } catch (Exception e) {
-                                Log.e("AudioView", e.getMessage());
+                                Log.e("AudioView", "RecordButton.onClick() :: error recording to " + mAudioPath + "\n" +e.getMessage());
                                 showToast(gtxt(R.string.multimedia_editor_audio_view_recording_failed));
                                 mStatus = Status.STOPPED;
                                 break;
