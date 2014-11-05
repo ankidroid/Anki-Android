@@ -437,12 +437,13 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     data.result = ret;
                     // note mediaUSN for later
                     data.data = new Object[] { mediaUsn };
+                    // Check if there was a sanity check error
+                    if (retCode.equals("sanityCheckError")) {
+                        // Force full sync next time
+                        col.modSchemaNoCheck();
+                        col.save();
+                    }
                     return data;
-                }
-                if (retCode.equals("sanityCheckError")) {
-                    // Force full sync next time
-                    col.modSchemaNoCheck();
-                    col.save();
                 }
                 // save and note success state
                 if (retCode.equals("noChanges")) {
