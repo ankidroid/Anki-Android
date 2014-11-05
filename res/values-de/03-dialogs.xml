@@ -51,6 +51,7 @@
   <string name="new_version_message">Neue Funktionen:</string>
   <string name="no_tts_available_title">Vorlesen</string>
   <string name="no_tts_available_message">Keine Vorlesesprache verfügbar</string>
+  <string name="initializing_tts">Initialisiere Vorlesen&#8230;</string>
   <string name="tts_no_tts">Nicht vorlesen</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Karteikarten für Android</h2>AnkiDroid ist eine Karteikarten-Anwendung, die voll kompatibel ist mit der Desktop-Software <a href="%2$s">Anki</a>. Sie können mit beiden Programmen Inhalte erstellen, herunterladen und lernen und sie sehr einfach synchronisieren.]]></item>

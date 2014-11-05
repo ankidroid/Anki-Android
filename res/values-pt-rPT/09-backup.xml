@@ -39,33 +39,33 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="backup_collection">Criando backup. \nPor favor espere...</string>
-  <string name="backup_deck_no_space_left">Última ação de backup não pode ser executada devido à falta de espaço no seu cartão sd.\n\nLibere algum espaço ou diminua a profundidade do backup.</string>
-  <string name="sd_space_warning">Menos de %d mb de espaço livres no seu cartão sd. \nLibere algum espaço para evitar perda de dados.</string>
-  <string name="backup_deck_success">Backup criado com sucesso</string>
-  <string name="backup_manager_title">Gerenciador de backup</string>
-  <string name="backup_delete">Apagando backups. \nPor favor espere...</string>
-  <string name="contextmenu_deckpicker_remove_backups">Remover backups</string>
-  <string name="backup_restore">Restaurar do backup</string>
+  <string name="backup_collection">Criando cópia de segurança.\nPor favor aguarde&#8230;</string>
+  <string name="backup_deck_no_space_left">Cópia de segurança não pôde ser gravada por falta de espaço no cartão SD. Por favor, diminua a profundidade da cópia de segurança ou liberte espaço no cartão.</string>
+  <string name="sd_space_warning">Menos de %d MB de espaço livre no seu cartão SD.\nLiberte algum espaço para evitar perda de dados.</string>
+  <string name="backup_deck_success">Cópia de segurança criada com sucesso</string>
+  <string name="backup_manager_title">Gestor de cópias de segurança</string>
+  <string name="backup_delete">Apagando cópias de segurança.\nPor favor aguarde&#8230;</string>
+  <string name="contextmenu_deckpicker_remove_backups">Remover cópias de segurança</string>
+  <string name="backup_restore">Restaurar a partir de cópia de segurança</string>
   <string name="backup_new_collection">Nova coleção</string>
-  <string name="backup_del_collection">Deletar coleção e cria uma nova</string>
-  <string name="backup_del_collection_question">Deseja deletar a coleção e criar uma nova? Isso vai apagar todo o seu progresso de aprendizado e deletar todos os cartões!</string>
+  <string name="backup_del_collection">Apagar coleção e cria uma nova</string>
+  <string name="backup_del_collection_question">Deseja apagar a coleção e criar uma nova? Isso vai apagar todo o seu progresso de aprendizagem e eliminar todas as fichas!</string>
   <string name="backup_full_sync_from_server">Sincronização completa do servidor</string>
-  <string name="backup_full_sync_from_server_question">Deseja mesmo substituir sua coleção pela da AnkiWeb? Isso vai apagar todo o seu progreso de aprendizado e informações adicionadas desde sua ultima sincronização!</string>
+  <string name="backup_full_sync_from_server_question">Deseja mesmo substituir a sua coleção pela da AnkiWeb? Isso vai apagar todo o seu progresso de aprendizagem e informações adicionadas desde a última sincronização!</string>
   <string name="error_handling_title">Tratamento de erros</string>
   <string name="error_handling_options">Opções</string>
   <string name="backup_retry_opening">Tentar abrir novamente</string>
-  <string name="backup_error_menu_repair">Consertar banco de dados</string>
-  <string name="backup_repair_deck">Consertar</string>
-  <string name="backup_repair_deck_progress">Consertando banco de dados.\nPor favor aguarde...</string>
-  <string name="backup_error">Error</string>
-  <string name="backup_restore_error">Coleção não pôde ser restaurada</string>
-  <string name="backup_invalid_file_error">The selected backup file was invalid</string>
-  <string name="backup_restore_if_missing">Restaurando coleção caso esteja faltando...</string>
-  <string name="backup_restore_deck">Restaurando coleção. \n Por favor aguarde...</string>
-  <string name="backup_restore_select_title">Selecione o backup para restaurar</string>
-  <string name="backup_restore_no_backups">Sem backups disponíveis para esta coleção neste aparelho Se você tiver backups em seu computador, favor copia-los manualmente para a pasta do AnkiDroid</string>
+  <string name="backup_error_menu_repair">Reparar a base de dados</string>
+  <string name="backup_repair_deck">Reparar</string>
+  <string name="backup_repair_deck_progress">A reparar a base de dados.\nPor favor aguarde&#8230;</string>
+  <string name="backup_error">Erro</string>
+  <string name="backup_restore_error">A coleção não pôde ser restaurada</string>
+  <string name="backup_invalid_file_error">O ficheiro de cópia de segurança selecionado é inválido</string>
+  <string name="backup_restore_if_missing">Restaurando coleção caso esteja em falta&#8230;</string>
+  <string name="backup_restore_deck">Restaurando coleção.\n Por favor aguarde&#8230;</string>
+  <string name="backup_restore_select_title">Selecione a cópia de segurança para restaurar</string>
+  <string name="backup_restore_no_backups">Sem cópias de segurança disponíveis neste aparelho para esta coleção. Se você tiver cópias de segurança no seu PC, por favor copie-os manualmente para a pasta do AnkiDroid.</string>
   <string name="open_collection_failed_title">Coleção não aberta</string>
-  <string name="open_collection_failed_message">Banco de dados não pode ser aberto. Ou ele não é um banco de dados anki, ou foi corrompido.\n\nVocê pode tentar consertar a coleção ou restaurá-la de um backup (em ambos os casos, a cópia do deque corrompido será movida para o subdiretório \'%1$s\'). Clique em \'opções\' para isso.\n\nMais informações sobre recuperação de deques corrompidos: %2$s.</string>
+  <string name="open_collection_failed_message">Base de dados não pôde ser aberta. Ou não é uma base de dados Anki, ou foi corrompida.\n\nVocê pode tentar reparar a coleção ou restaurá-la de uma cópia de segurança (em ambos os casos, a cópia do baralho corrompido será movida para o subdiretório \'%1$s\'). Carregue em \'opções\' para escolher a ação a tomar.\n\nMais informações sobre recuperação de baralhos corrompidos: %2$s.</string>
   <string name="deck_repair_error">Coleção não pôde ser reparada</string>
 </resources>

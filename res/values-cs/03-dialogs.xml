@@ -51,6 +51,7 @@
   <string name="new_version_message">Nové funkce:</string>
   <string name="no_tts_available_title">Předčítání</string>
   <string name="no_tts_available_message">Žádný jazyk k předčítání není k dispozici</string>
+  <string name="initializing_tts">Initializing TTS&#8230;</string>
   <string name="tts_no_tts">Nemluv</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Flashcards pro Android</h2>AnkiDroid je flashcard aplikace, která je plně kompatibilní s programem pro pc  <a href="%2$s">Anki</a>. Můžete vytvářet, stahovat a učit se v obou, v AnkiDroid nebo Anki pro pc, a vše mezi nimi velmi jednoduše synchronizovat.]]></item>

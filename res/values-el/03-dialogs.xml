@@ -51,6 +51,7 @@
   <string name="new_version_message">Νέες δυνατότητες:</string>
   <string name="no_tts_available_title">Μετατροπή κειμένου σε ομιλία</string>
   <string name="no_tts_available_message">Δεν είναι διαθέσιμη η μετατροπής κειμένου σε ομιλία</string>
+  <string name="initializing_tts">Initializing TTS&#8230;</string>
   <string name="tts_no_tts">Σίγαση</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Κάρτες για το Android</h2>Το AnkiDroid είναι μία εφαρμογή καρτών που είναι πλήρως συμβατή με το λογισμικό <a href="%2$s">Anki</a>. Μπορείτε να δημιουργήσετε, να κατεβάσετε και να μάθετε κάρτες και στα δύο, AnkiDroid ή Anki και να συγχρονίζετε μεταξύ τους πολύ εύκολα.]]></item>

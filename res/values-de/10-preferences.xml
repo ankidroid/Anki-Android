@@ -122,8 +122,10 @@
   <string name="language_summ">XXX</string>
   <string name="language_system">System-Sprache</string>
   <string name="notification_pref">Benachrichtigungen</string>
-  <string name="notification_minimum_cards_due">Benachrichtigen, wenn mehr als</string>
-  <string name="notification_minimum_cards_due_summary">XXX Karten fällig</string>
+  <string name="notification_pref_title">Benachrichtigen wenn</string>
+  <string name="never_notify">Nie benachrichtigen</string>
+  <string name="notify_when_pending">Nachrichten verfügbar</string>
+  <string name="notification_minimum_cards_due">Mehr als %d Karten fällig</string>
   <string name="notification_minimum_cards_due_vibrate">Vibrieren</string>
   <string name="notification_minimum_cards_due_blink">Blinken</string>
   <string name="timeout_answer_text">Antwort zeigen</string>

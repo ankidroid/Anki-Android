@@ -166,4 +166,6 @@
   <string name="sync_sanity_remote">Vzdálený</string>
   <string name="force_full_sync_title">Vynutit úplnou synchronizaci</string>
   <string name="force_full_sync_summary">Při příští synchronizaci vynutit změny v jednom směru</string>
+  <string name="full_sync_confirmation">Požadovaná změna způsobí kompletní nahrání databáze na server při příští synchronizaci Vaší sbírky. Máte-li změny nebo naplánované zkoušení na jiném zařízení, které ještě nebyly synchronizovány, budou ztraceny. Chcete pokračovat?</string>
+  <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it\'s recommended to force a full sync.</string>
 </resources>

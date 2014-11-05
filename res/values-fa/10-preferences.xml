@@ -122,8 +122,10 @@
   <string name="language_summ">XXX</string>
   <string name="language_system">زبان دستگاه</string>
   <string name="notification_pref">اعلان‌ها</string>
-  <string name="notification_minimum_cards_due">اطلاع بده وقتی بیشتر است از</string>
-  <string name="notification_minimum_cards_due_summary">XXX سررسید کارت‌ها</string>
+  <string name="notification_pref_title">Notify when</string>
+  <string name="never_notify">Never notify</string>
+  <string name="notify_when_pending">Pending messages available</string>
+  <string name="notification_minimum_cards_due">More than %d cards due</string>
   <string name="notification_minimum_cards_due_vibrate">لرزش</string>
   <string name="notification_minimum_cards_due_blink">چشمک زدن نور</string>
   <string name="timeout_answer_text">نمایش پاسخ بصورت خودکار</string>

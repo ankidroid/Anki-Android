@@ -51,6 +51,7 @@
   <string name="new_version_message">Fitur baru:</string>
   <string name="no_tts_available_title">Text-ke-Suara</string>
   <string name="no_tts_available_message">Tiada teks-kepada-bahasa tersedia</string>
+  <string name="initializing_tts">Initializing TTS&#8230;</string>
   <string name="tts_no_tts">Jangan sebut</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Kad imbas untuk Android</h2>AnkiDroid ialah kad imbas yang juga serasi dengan perisian destop <a href="%2$s">Anki</a>. Anda boleh reka, muat turun dan belajar di antara dua perisian ini.]]></item>

@@ -51,6 +51,7 @@
   <string name="new_version_message">Uusia ominaisuuksia:</string>
   <string name="no_tts_available_title">Puhesyntetisaattori</string>
   <string name="no_tts_available_message">Yhtään puhesyntetisaattorin tukemaa kieltä ei ole käytettävissä</string>
+  <string name="initializing_tts">Initializing TTS&#8230;</string>
   <string name="tts_no_tts">Älä puhu</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Kääntökorttisovellus Androidille</h2>AnkiDroid on ohjelma opiskeluun kääntökorttien (flashcard) avulla. Se on täysin yhteensopiva <a href=\"%2$s\">Anki</a> työpöytäsovelluksen kanssa. Voit luoda kortteja, ladata niitä ja opiskella sekä AnkiDroidilla, että Ankilla ja synkronoida ne helposti toistensa kanssa.]]></item>

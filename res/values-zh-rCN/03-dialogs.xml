@@ -51,6 +51,7 @@
   <string name="new_version_message">新特性：</string>
   <string name="no_tts_available_title">文字转语音(TTS)</string>
   <string name="no_tts_available_message">没有可用的文字转语音（TTS）语言</string>
+  <string name="initializing_tts">Initializing TTS&#8230;</string>
   <string name="tts_no_tts">不要发音</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>安卓上的快闪卡Flashcards</h2>AnkiDroid是一个快闪卡程序，与桌面客户端<a href="%2$s">Anki</a>完全兼容。在AnkiDroid和Anki桌面客户端上，你可以创建，下载并学习任意内容，轻松实现同步。]]></item>

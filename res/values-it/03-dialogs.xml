@@ -51,6 +51,7 @@
   <string name="new_version_message">Nuove funzionalità:</string>
   <string name="no_tts_available_title">Sintesi vocale</string>
   <string name="no_tts_available_message">Nessuna lingua per la sintesi vocale disponibile</string>
+  <string name="initializing_tts">Initializing TTS&#8230;</string>
   <string name="tts_no_tts">Non parlare</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Flashcard per Android</h2>AnkiDroid è un\'applicazione per flashcard pienamente compatibile con il software per desktop <a href="%2$s">Anki</a>. Puoi creare, scaricare e apprendere contenuti da entrambi, AnkiDroid o Anki Desktop, e sincronizzarli molto facilmente.]]></item>

@@ -51,6 +51,7 @@
   <string name="new_version_message">Nya funktioner:</string>
   <string name="no_tts_available_title">Text-till-tal</string>
   <string name="no_tts_available_message">Det finns inget språk för text-till-tal</string>
+  <string name="initializing_tts">Initierar TTS&#8230;</string>
   <string name="tts_no_tts">Inget tal</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Flashkort till Android</h2>AnkiDroid är ett flashkortsprogram som är helt kompatibelt med skrivbordsversionen <a href=\"%2$s\">Anki</a>. Du kan skapa, ladda ner och lära dig nya saker via både AnkiDroid och skrivbordsversionen av Anki, samt enkelt synkronisera dem.]]></item>

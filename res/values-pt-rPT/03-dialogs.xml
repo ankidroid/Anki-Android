@@ -51,6 +51,7 @@
   <string name="new_version_message">Novas funcionalidades:</string>
   <string name="no_tts_available_title">Sintetização de voz</string>
   <string name="no_tts_available_message">Nenhum idioma para sintetização de voz disponível</string>
+  <string name="initializing_tts">Inicializando o sintetizador de voz&#8230;</string>
   <string name="tts_no_tts">Não fale</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Fichas de estudo para Android</h2>AnkiDroid é uma aplicação de fichas de estudo que é totalmente compatível com o software de PC <a href=\"%2$s\">Anki</a>. Você pode criar, descarregar e aprender conteúdos em ambos, AnkiDroid ou Anki Desktop, e sincronizá-los facilmente.]]></item>
@@ -82,7 +83,7 @@
   <string name="intent_aedict_empty">Categoria \'padrão\' está vazia</string>
   <string name="intent_aedict_category">Para adicionar fichas ao AnkiDroid remova todas as categorias de notas ou adicione uma com o nome \'default\'</string>
   <string name="custom_study_new_total_new">Novas fichas no baralho: %s</string>
-  <string name="custom_study_rev_total_rev">Revisões a fazer no baralho: %s</string>
+  <string name="custom_study_rev_total_rev">Revisões pendentes no baralho: %s</string>
   <string name="custom_study_new_extend">Aumentar o limite de fichas de hoje em</string>
   <string name="custom_study_rev_extend">Aumentar o limite de revisões de hoje em</string>
   <string name="custom_study_forgotten">Rever fichas esquecidas nos últimos x dias:</string>

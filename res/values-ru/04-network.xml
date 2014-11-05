@@ -166,4 +166,6 @@
   <string name="sync_sanity_remote">Удалённую</string>
   <string name="force_full_sync_title">Force full sync</string>
   <string name="force_full_sync_summary">При следующей синхронизации, перезаписать в одном направлении</string>
+  <string name="full_sync_confirmation">Запрощеннок действие произведет полную загрузку данных следующий раз вы синхронизируете вашу коллекцию. Просмотры и другие изменения на ваших устройствах, которые не были синхронизированны, будут потерянны. Продолжить?</string>
+  <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it\'s recommended to force a full sync.</string>
 </resources>

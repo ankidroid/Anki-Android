@@ -51,6 +51,7 @@
   <string name="new_version_message">Nye funksjoner:</string>
   <string name="no_tts_available_title">Tekst til tale</string>
   <string name="no_tts_available_message">Ingen \"tekst til tale\"-språk tilgjengelige</string>
+  <string name="initializing_tts">Initializing TTS&#8230;</string>
   <string name="tts_no_tts">Ikke snakk</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s: <br/>Spørrekort til Android</h2>AnkiDroid er et spørrekortprogram som er fullstendig kompatibetl med skrivebordsprogramvaren <a href="%2$s">Anki</a>. Du kan opprette, laste ned og lære nye ting på både AnkiDroid og Anki Desktop, og synkronisere mellom dem med letthet.]]></item>

@@ -40,7 +40,7 @@
 -->
 <resources>
   <string name="check_db_title">Проверка базы данных</string>
-  <string name="check_db_warning">Это может занят долгое время</string>
+  <string name="check_db_warning">Это может занять долгое время</string>
   <string name="check_db_acknowledge">База проверена</string>
   <string name="check_db_acknowledge_shrunk">База проверена и оптимизирована.\nСжато на %d кБ.</string>
   <string name="contextmenu_deckpicker_delete_deck">Удалить колоду</string>
@@ -51,6 +51,7 @@
   <string name="new_version_message">Новые возможности:</string>
   <string name="no_tts_available_title">Преобразование текста в речь</string>
   <string name="no_tts_available_message">Функция преобразования текста в речь не доступна</string>
+  <string name="initializing_tts">Initializing TTS&#8230;</string>
   <string name="tts_no_tts">Не произносить</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Flashcards для Android</h2>AnkiDroid - это приложение для изучения учебных карточек, полностью совместимо с настольной версией <a href="%2$s">Anki</a>. Вы можете создавать, скачивать и изучать информацию, и в AnkiDroid и Anki Desktop, синхронизируя их между собой.]]></item>

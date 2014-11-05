@@ -122,8 +122,10 @@
   <string name="language_summ">XXX</string>
   <string name="language_system">Systeemtaal</string>
   <string name="notification_pref">Meldingen</string>
-  <string name="notification_minimum_cards_due">Notify when more than</string>
-  <string name="notification_minimum_cards_due_summary">XXX kaarten te doen</string>
+  <string name="notification_pref_title">Notify when</string>
+  <string name="never_notify">Never notify</string>
+  <string name="notify_when_pending">Pending messages available</string>
+  <string name="notification_minimum_cards_due">More than %d cards due</string>
   <string name="notification_minimum_cards_due_vibrate">Trillen</string>
   <string name="notification_minimum_cards_due_blink">Blink light</string>
   <string name="timeout_answer_text">Vanzelf antwoord tonen</string>

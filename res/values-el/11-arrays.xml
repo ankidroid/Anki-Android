@@ -53,16 +53,6 @@
     <item>Μη στέλνεις αναφορά</item>
     <item>Ρώτα με</item>
   </string-array>
-  <string-array name="notification_minimum_cards_due_labels">
-    <item>10</item>
-    <item>25</item>
-    <item>50</item>
-    <item>75</item>
-    <item>100</item>
-    <item>150</item>
-    <item>200</item>
-    <item>Never notify</item>
-  </string-array>
   <string-array name="cram_review_order_labels">
     <item>Εμφάνιση παλαιότερα τροποποιημένων πρώτα</item>
     <item>Εμφάνιση σε σειρά προσθήκης</item>

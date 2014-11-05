@@ -166,4 +166,6 @@
   <string name="sync_sanity_remote">リモート</string>
   <string name="force_full_sync_title">完全同期を強制する</string>
   <string name="force_full_sync_summary">次回の同期は、一方向に変更を強制実行する</string>
+  <string name="full_sync_confirmation">要求した変更を行うには、次回のコレクションの同期の際にデータベースの完全なアップロードが必要です。他の端末で復習やその他の変更を行ってまだ同期が済んでいない場合、これらの変更は失われます。処理を続けますか。</string>
+  <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it\'s recommended to force a full sync.</string>
 </resources>

@@ -51,6 +51,7 @@
   <string name="new_version_message">Нови функции:</string>
   <string name="no_tts_available_title">Синтез на реч</string>
   <string name="no_tts_available_message">Няма наличен синтез за език</string>
+  <string name="initializing_tts">Initializing TTS&#8230;</string>
   <string name="tts_no_tts">Не говори</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Flashcards за Андроид </h2> AnkiDroid е Флашкарт приложение, което е напълно съвместимо с десктоп софтуера <a href="%2$s"> Anki</a>. Можете да създавате, изтегляте и научавате съдържанието на двете, AnkiDroid или Anki десктоп и много лесно да ги синхронизирате.]]></item>
