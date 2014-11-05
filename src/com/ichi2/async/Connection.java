@@ -21,14 +21,11 @@ package com.ichi2.async;
 import android.app.Application;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabaseCorruptException;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.ichi2.anki.AnkiDatabaseManager;
-import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.Feedback;
 import com.ichi2.anki.R;
@@ -52,11 +49,8 @@ import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileFilter;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -73,10 +67,6 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
-
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
@@ -309,6 +299,14 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             data.success = false;
             data.result = new Object[] { "error", e.getResponseCode(), e.getMessage() };
             return data;
+        } catch (Exception e2) {
+            // Ask user to report all bugs which aren't timeout errors
+            if (!timeoutOccured(e2)) {
+                AnkiDroidApp.saveExceptionReportFile(e2, "doInBackgroundLogin");
+            }
+            data.success = false;
+            data.result = new Object[] {"connectionError" };
+            return data;
         }
         String hostkey = null;
         boolean valid = false;
@@ -383,6 +381,15 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     R.string.connection_error_message) };
         }
         return data;
+    }
+
+
+    private boolean timeoutOccured(Exception e) {
+        String msg = e.getMessage();
+        return msg.contains("UnknownHostException") ||
+                msg.contains("HttpHostConnectException") ||
+                msg.contains("SSLException while building HttpClient") ||
+                msg.contains("SocketTimeoutException");
     }
 
 
@@ -559,8 +566,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             Log.e(AnkiDroidApp.TAG, "doInBackgroundSync error");
             e.printStackTrace();
             data.success = false;
-            String msg = e.getMessage();
-            if (msg.contains("UnknownHostException") || msg.contains("HttpHostConnectException")) {
+            if (timeoutOccured(e)) {
                 data.result = new Object[] {"connectionError" };
             } else {
                 AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync");
