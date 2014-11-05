@@ -175,6 +175,7 @@
     <string name="confirm">Confirm</string>
     <string name="internet">Internet</string>
     <string name="pc">PC</string>
+    <string name="nothing">Nothing</string>
 
     <string name="title_activity_graphical_activity">Statistical chart</string>
 </resources>

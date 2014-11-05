@@ -1009,8 +1009,8 @@ public class Models {
      * @param m The model to change.
      * @param nids The list of notes that the change applies to.
      * @param newModel For replacing the old model with another one. Should be self if the model is not changing
-     * @param fmap Field map for switching fields. This is ord->ord and there should not be duplicate targets
-     * @param cmap Field map for switching fields. This is ord->ord and there should not be duplicate targets
+     * @param fmap Map for switching fields. This is ord->ord and there should not be duplicate targets
+     * @param cmap Map for switching cards. This is ord->ord and there should not be duplicate targets
      * @throws ConfirmModSchemaException 
      */
     public void change(JSONObject m, long[] nids, JSONObject newModel, Map<Integer, Integer> fmap, Map<Integer, Integer> cmap) throws ConfirmModSchemaException {

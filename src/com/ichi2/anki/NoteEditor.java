@@ -1,6 +1,7 @@
 /***************************************************************************************
  *                                                                                      *
  * Copyright (c) 2012 Norbert Nagold <norbert.nagold@gmail.com>                         *
+ * Copyright (c) 2014 Timothy Rae <perceptualchaos2@gmail.com>                          *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -30,8 +31,10 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.PopupMenu.OnMenuItemClickListener;
 import android.text.Editable;
+import android.text.Html;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -57,8 +60,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.dialogs.ConfirmationDialog;
+import com.ichi2.anki.dialogs.ConfirmationDialog.ConfirmationDialogListener;
 import com.ichi2.anki.dialogs.TagsDialog;
 import com.ichi2.anki.dialogs.TagsDialog.TagsDialogListener;
+import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
 import com.ichi2.anki.multimediacard.activity.EditFieldActivity;
 import com.ichi2.anki.multimediacard.fields.AudioField;
@@ -88,9 +94,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * Allows the user to edit a fact, for instance if there is a typo. A card is a presentation of a fact, and has two
@@ -115,7 +123,7 @@ public class NoteEditor extends AnkiActivity {
 
     //private static final int DIALOG_DECK_SELECT = 0;
     //private static final int DIALOG_MODEL_SELECT = 1;
-    private static final int DIALOG_TAGS_SELECT = 2;
+    //private static final int DIALOG_TAGS_SELECT = 2;
     private static final int DIALOG_RESET_CARD = 3;
     private static final int DIALOG_INTENT_INFORMATION = 4;
     private static final int DIALOG_RESCHEDULE_CARD = 5;
@@ -157,6 +165,7 @@ public class NoteEditor extends AnkiActivity {
     private LinearLayout mFieldsLayoutContainer;
 
     private TextView mTagsButton;
+    private TextView mCardsButton;
     private Spinner mNoteTypeSpinner;
     private Spinner mNoteDeckSpinner;
 
@@ -165,6 +174,9 @@ public class NoteEditor extends AnkiActivity {
     private List<String> mSelectedTags;
     private long mCurrentDid;
     private ArrayList<Long> mAllDeckIds;
+    private ArrayList<Long> mAllModelIds;
+    private Map<Integer, Integer> mModelChangeFieldMap;
+    private Map<Integer, Integer> mModelChangeCardMap;
 
     /* indicates if a new fact is added or a card is edited */
     private boolean mAddNote;
@@ -269,9 +281,9 @@ public class NoteEditor extends AnkiActivity {
                 }
                 if (mCloseAfter) {
                     if (mIntent != null) {
-                        closeCardEditor(mIntent);
+                        closeNoteEditor(mIntent);
                     } else {
-                        closeCardEditor();
+                        closeNoteEditor();
                     }
                 } else {
                     // Reset check for changes to fields
@@ -342,8 +354,7 @@ public class NoteEditor extends AnkiActivity {
         }
 
         registerExternalStorageListener();
-
-        View mainView = getLayoutInflater().inflate(R.layout.card_editor, null);
+        View mainView = getLayoutInflater().inflate(R.layout.note_editor, null);
         setContentView(mainView);
         Themes.setWallpaper(mainView);
         Themes.setContentStyle(mainView, Themes.CALLER_CARD_EDITOR);
@@ -351,6 +362,7 @@ public class NoteEditor extends AnkiActivity {
         mFieldsLayoutContainer = (LinearLayout) findViewById(R.id.CardEditorEditFieldsLayout);
 
         mTagsButton = (TextView) findViewById(R.id.CardEditorTagText);
+        mCardsButton = (TextView) findViewById(R.id.CardEditorCardsText);
 
         Preferences.COMING_FROM_ADD = false;
 
@@ -429,14 +441,14 @@ public class NoteEditor extends AnkiActivity {
 
         // Note type Selector
         mNoteTypeSpinner = (Spinner) findViewById(R.id.note_type_spinner);    
-        final ArrayList<Long> modelIds = new ArrayList<Long>();
+        mAllModelIds = new ArrayList<Long>();
         final ArrayList<String> modelNames = new ArrayList<String>();
         ArrayList<JSONObject> models = getCol().getModels().all();
         Collections.sort(models, new JSONNameComparator());
         for (JSONObject m : models) {
             try {
                 modelNames.add(m.getString("name"));
-                modelIds.add(m.getLong("id"));
+                mAllModelIds.add(m.getLong("id"));
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
@@ -445,59 +457,18 @@ public class NoteEditor extends AnkiActivity {
         ArrayAdapter<String> noteTypeAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, modelNames);
         mNoteTypeSpinner.setAdapter(noteTypeAdapter);
         noteTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        OnItemSelectedListener noteTypeListener = new OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                // If a new column was selected then change the key used to map from mCards to the column TextView
-                //Log.i(AnkiDroidApp.TAG, "onItemSelected() fired on mNoteTypeSpinner");
-                long oldModelId;
-                try {
-                    oldModelId = getCol().getModels().current().getLong("id");
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
-                long newId = modelIds.get(pos);
-                if (oldModelId != newId) {
-                    JSONObject model = getCol().getModels().get(newId);
-                    getCol().getModels().setCurrent(model);
-                    JSONObject cdeck = getCol().getDecks().current();
-                    try {
-                        cdeck.put("mid", newId);
-                    } catch (JSONException e) {
-                        throw new RuntimeException(e);
-                    }
-                    getCol().getDecks().save(cdeck);
-                    // Update deck
-                    if (!getCol().getConf().optBoolean("addToCur", true)) {
-                        try {
-                            mCurrentDid = model.getLong("did");
-                            updateDeckPosition();
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-                    // Reset edit fields
-                    int size = mEditFields.size();
-                    String[] oldValues = new String[size];
-                    for (int i = 0; i < size; i++) {
-                        oldValues[i] = mEditFields.get(i).getText().toString();
-                    }
-                    setNote();
-                    resetEditFields(oldValues);
-                    duplicateCheck();
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // Do Nothing
-            }
-        };
 
 
         // Deck Selector
         TextView deckTextView = (TextView) findViewById(R.id.CardEditorDeckText);
-        deckTextView.setText(getResources().getString(mAddNote ? R.string.CardEditorNoteDeck : R.string.CardEditorCardDeck));
+        // If edit mode and more than one card template distinguish between "Deck" and "Card deck"
+        try {
+            if (!mAddNote && mEditorNote.model().getJSONArray("tmpls").length()>1) {
+                deckTextView.setText(R.string.CardEditorCardDeck);
+            }
+        } catch (JSONException e1) {
+            throw new RuntimeException();
+        }
         mNoteDeckSpinner = (Spinner) findViewById(R.id.note_deck_spinner);    
         mAllDeckIds = new ArrayList<Long>();
         final ArrayList<String> deckNames = new ArrayList<String>();
@@ -539,7 +510,7 @@ public class NoteEditor extends AnkiActivity {
         // Set current note type and deck positions in spinners
         int position;
         try {
-            position = modelIds.indexOf(mEditorNote.model().getLong("id"));
+            position = mAllModelIds.indexOf(mEditorNote.model().getLong("id"));
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -548,8 +519,7 @@ public class NoteEditor extends AnkiActivity {
         mNoteTypeSpinner.setSelection(position, false);
 
         if (mAddNote) {
-            mNoteTypeSpinner.setOnItemSelectedListener(noteTypeListener);
-            mNoteTypeSpinner.setEnabled(true);
+            mNoteTypeSpinner.setOnItemSelectedListener(new SetNoteTypeListener());
             setTitle(R.string.cardeditor_title_add_note);
             // set information transferred by intent
             String contents = null;
@@ -568,7 +538,7 @@ public class NoteEditor extends AnkiActivity {
                 setEditFieldTexts(contents);
             }
         } else {
-            mNoteTypeSpinner.setEnabled(false);
+            mNoteTypeSpinner.setOnItemSelectedListener(new EditNoteTypeListener());
             setTitle(R.string.cardeditor_title_edit_card);
         }
 
@@ -578,7 +548,7 @@ public class NoteEditor extends AnkiActivity {
         ((LinearLayout) findViewById(R.id.CardEditorTagButton)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDialogFragment(DIALOG_TAGS_SELECT);
+                showTagsDialog();
             }
         });
        
@@ -677,6 +647,12 @@ public class NoteEditor extends AnkiActivity {
 
 
     private boolean hasUnsavedChanges() {
+        // changed note type?
+        final JSONObject newModel = getCol().getModels().get(mAllModelIds.get(mNoteTypeSpinner.getSelectedItemPosition()));
+        final JSONObject oldModel = mCurrentEditedCard.model();
+        if (oldModel != null && !newModel.equals(oldModel)) {
+            return true;
+        }
         // changed deck?
         if (!mAddNote && mCurrentEditedCard!= null && mCurrentEditedCard.getDid() != mCurrentDid) {
             return true;
@@ -700,6 +676,7 @@ public class NoteEditor extends AnkiActivity {
 
 
     private void saveNote() {
+        final Resources res = getResources();
         if (mSelectedTags == null) {
             mSelectedTags = new ArrayList<String>();
         }
@@ -725,6 +702,31 @@ public class NoteEditor extends AnkiActivity {
             }
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ADD_FACT, mSaveFactHandler, new DeckTask.TaskData(mEditorNote));
         } else {
+            // Check whether note type has been changed
+            final JSONObject newModel = getCol().getModels().get(mAllModelIds.get(mNoteTypeSpinner.getSelectedItemPosition()));
+            final JSONObject oldModel = mCurrentEditedCard.model();
+            if (!newModel.equals(oldModel)) {
+                if (mModelChangeCardMap.size() < mEditorNote.cards().size() || mModelChangeCardMap.containsKey(null)) {
+                    // If cards will be lost via the new mapping then show a confirmation dialog before proceeding with the change
+                    ConfirmationDialog dialog = ConfirmationDialog.newInstance(res.getString(R.string.confirm_map_cards_to_nothing));
+                    dialog.setListener(new ConfirmationDialogListener() {
+                        @Override
+                        public void confirm() {
+                            changeNoteTypeWithErrorHandling(oldModel, newModel);
+                        }
+                        @Override
+                        public void cancel() {
+                            // Take no action
+                        }
+                    });
+                    showDialogFragment(dialog);                    
+                } else {
+                    // Otherwise go straight to changing note type
+                    changeNoteTypeWithErrorHandling(oldModel, newModel);
+                }
+                return;
+            }
+            // Regular changes in note content
             boolean modified = false;
             // changed did? this has to be done first as remFromDyn() involves a direct write to the database
             if (mCurrentEditedCard.getDid() != mCurrentDid) {
@@ -754,8 +756,57 @@ public class NoteEditor extends AnkiActivity {
                 // CardBrowser
                 mChanged = true;
             }
-            closeCardEditor();
+            closeNoteEditor();
         }
+    }
+
+    /**
+     * Change the note type from oldModel to newModel, handling the case where a full sync will be required
+     * @param oldModel
+     * @param newModel
+     */
+    private void changeNoteTypeWithErrorHandling(final JSONObject oldModel, final JSONObject newModel) {
+        Resources res = getResources();
+        try {
+            changeNoteType(oldModel, newModel);
+        } catch (ConfirmModSchemaException e) {
+            // Libanki has determined we should ask the user to confirm first
+            ConfirmationDialog dialog = ConfirmationDialog.newInstance(res.getString(R.string.full_sync_confirmation));
+            dialog.setListener(new ConfirmationDialogListener() {
+                @Override
+                public void confirm() {
+                    // Bypass the check once the user confirms
+                    getCol().modSchemaNoCheck();
+                    try {
+                        changeNoteType(oldModel, newModel);
+                    } catch (ConfirmModSchemaException e2) {
+                        // This should never be reached as we explicitly called modSchemaNoCheck()
+                        throw new RuntimeException(e2);
+                    }
+                }
+                @Override
+                public void cancel() {
+                    // Take no action
+                }
+            });
+            showDialogFragment(dialog);
+        }
+    }
+
+    /**
+     * Change the note type from oldModel to newModel, throwing ConfirmModSchemaException if a full sync will be required
+     * @param oldModel
+     * @param newModel
+     * @throws ConfirmModSchemaException
+     */
+    private void changeNoteType(JSONObject oldModel, JSONObject newModel) throws ConfirmModSchemaException {
+        final long [] nids = {mEditorNote.getId()};
+        getCol().getModels().change(oldModel, nids, newModel, mModelChangeFieldMap, mModelChangeCardMap);
+        // refresh the note & card objects to reflect the database changes
+        mCurrentEditedCard.load();
+        mEditorNote = mCurrentEditedCard.note();
+        // close note editor
+        closeNoteEditor();
     }
 
 
@@ -854,7 +905,7 @@ public class NoteEditor extends AnkiActivity {
                             getResources().getString(R.string.CardEditorLaterMessage), false);
                 }
                 if (mCaller == CALLER_INDICLASH || mCaller == CALLER_CARDEDITOR_INTENT_ADD) {
-                    closeCardEditor();
+                    closeNoteEditor();
                 }
                 return true;
 
@@ -916,7 +967,7 @@ public class NoteEditor extends AnkiActivity {
         if (hasUnsavedChanges()) {
            showDiscardChangesDialog();
         } else {
-            closeCardEditor();
+            closeNoteEditor();
         }
     }
 
@@ -930,7 +981,7 @@ public class NoteEditor extends AnkiActivity {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        closeCardEditor();
+                        closeNoteEditor();
                     }
                 });
         builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
@@ -939,12 +990,12 @@ public class NoteEditor extends AnkiActivity {
     }
 
 
-    private void closeCardEditor() {
-        closeCardEditor(null);
+    private void closeNoteEditor() {
+        closeNoteEditor(null);
     }
 
 
-    private void closeCardEditor(Intent intent) {
+    private void closeNoteEditor(Intent intent) {
         int result;
         if (mChanged) {
             result = RESULT_OK;
@@ -957,16 +1008,16 @@ public class NoteEditor extends AnkiActivity {
             }
             intent.putExtra("rescheduled", true);
         }
-        closeCardEditor(result, intent);
+        closeNoteEditor(result, intent);
     }
 
 
     private void closeCardEditor(int result) {
-        closeCardEditor(result, null);
+        closeNoteEditor(result, null);
     }
 
 
-    private void closeCardEditor(int result, Intent intent) {
+    private void closeNoteEditor(int result, Intent intent) {
         if (intent != null) {
             setResult(result, intent);
         } else {
@@ -984,29 +1035,22 @@ public class NoteEditor extends AnkiActivity {
     }
 
 
-    private DialogFragment showDialogFragment(int id) {
-        DialogFragment dialogFragment = null;
-        String tag = null;
-        switch (id) {
-            case DIALOG_TAGS_SELECT:
-                if (mSelectedTags == null) {
-                    mSelectedTags = new ArrayList<String>();
-                }
-                ArrayList<String> tags = new ArrayList<String>(getCol().getTags().all());
-                ArrayList<String> selTags = new ArrayList<String>(mSelectedTags);
-                TagsDialog dialog = com.ichi2.anki.dialogs.TagsDialog.newInstance(TagsDialog.TYPE_ADD_TAG, selTags,
-                        tags);
-                dialog.setTagsDialogListener(new TagsDialogListener() {
-                    @Override
-                    public void onPositive(List<String> selectedTags, int option) {
-                        mSelectedTags = selectedTags;
-                        updateTags();
-                    }
-                });
-                dialogFragment = dialog;
+    private void showTagsDialog() {
+        if (mSelectedTags == null) {
+            mSelectedTags = new ArrayList<String>();
         }
-        dialogFragment.show(getSupportFragmentManager(), tag);
-        return dialogFragment;
+        ArrayList<String> tags = new ArrayList<String>(getCol().getTags().all());
+        ArrayList<String> selTags = new ArrayList<String>(mSelectedTags);
+        TagsDialog dialog = com.ichi2.anki.dialogs.TagsDialog.newInstance(TagsDialog.TYPE_ADD_TAG, selTags,
+                tags);
+        dialog.setTagsDialogListener(new TagsDialogListener() {
+            @Override
+            public void onPositive(List<String> selectedTags, int option) {
+                mSelectedTags = selectedTags;
+                updateTags();
+            }
+        });
+        showDialogFragment(dialog);
     }
 
 
@@ -1172,11 +1216,14 @@ public class NoteEditor extends AnkiActivity {
         }
     }
 
-
     private void populateEditFields() {
+        String[][] fields = mEditorNote.items();
+        populateEditFields(fields, false);
+    }
+
+    private void populateEditFields(String[][] fields, boolean editModelMode) {
         mFieldsLayoutContainer.removeAllViews();
         mEditFields = new LinkedList<FieldEditText>();
-        String[][] fields = mEditorNote.items();
 
         // Use custom font if selected from preferences
         Typeface mCustomTypeface = null;
@@ -1190,7 +1237,7 @@ public class NoteEditor extends AnkiActivity {
             View editline_view = getLayoutInflater().inflate(R.layout.card_multimedia_editline, null);
             FieldEditText newTextbox = (FieldEditText) editline_view.findViewById(R.id.id_note_editText);
 
-            initFieldEditText(newTextbox, i, fields[i], mCustomTypeface);
+            initFieldEditText(newTextbox, i, fields[i], mCustomTypeface, !editModelMode);
 
             TextView label = newTextbox.getLabel();
             label.setTextColor(Color.BLACK);
@@ -1198,8 +1245,16 @@ public class NoteEditor extends AnkiActivity {
             mEditFields.add(newTextbox);
 
             ImageButton mediaButton = (ImageButton) editline_view.findViewById(R.id.id_media_button);
-            setMMButtonListener(mediaButton, i);
-
+            // Make the icon change between media icon and switch field icon depending on whether editing note type
+            if (editModelMode) {
+                // Use change note mapping button
+                mediaButton.setBackgroundResource(R.drawable.ic_action_import_export);
+                setRemapButtonListener(mediaButton, i);
+            } else {
+                // Use media editor button
+                mediaButton.setBackgroundResource(R.drawable.ic_media);
+                setMMButtonListener(mediaButton, i);
+            }
             mFieldsLayoutContainer.addView(label);
             mFieldsLayoutContainer.addView(editline_view);
         }
@@ -1254,6 +1309,53 @@ public class NoteEditor extends AnkiActivity {
     }
 
 
+    private void setRemapButtonListener(ImageButton remapButton, final int newFieldIndex) {
+        remapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Show list of fields from the original note which we can map to
+                PopupMenu popup = new PopupMenu(NoteEditor.this, v);
+                final String [][] items = mEditorNote.items();
+                for (int i = 0; i < items.length; i++) {
+                    popup.getMenu().add(Menu.NONE, i, Menu.NONE, items[i][0]);
+                }
+                // Add "nothing" at the end of the list
+                popup.getMenu().add(Menu.NONE, items.length, Menu.NONE, R.string.nothing);
+                popup.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        // Get menu item id
+                        Integer idx = item.getItemId();
+                        // Retrieve any existing mappings between newFieldIndex and idx
+                        Integer previousMapping = getKeyByValue(mModelChangeFieldMap, newFieldIndex);
+                        Integer mappingConflict = mModelChangeFieldMap.get(idx);
+                        // Update the mapping depending on any conflicts
+                        if (idx == items.length && previousMapping != null) {
+                            // Remove the previous mapping if None selected
+                            mModelChangeFieldMap.remove(previousMapping);
+                        } else if (idx < items.length && mappingConflict != null && previousMapping != null && newFieldIndex != mappingConflict) {
+                            // Swap the two mappings if there was a conflict and previous mapping
+                            mModelChangeFieldMap.put(previousMapping, mappingConflict);
+                            mModelChangeFieldMap.put(idx, newFieldIndex);
+                        } else if (idx < items.length && mappingConflict != null) {
+                            // Set the conflicting field to None if no previous mapping to swap into it
+                            mModelChangeFieldMap.remove(previousMapping);
+                            mModelChangeFieldMap.put(idx, newFieldIndex);
+                        } else if (idx < items.length) {
+                            // Can simply set the new mapping if no conflicts
+                            mModelChangeFieldMap.put(idx, newFieldIndex);
+                        }
+                        // Reload the fields                     
+                        updateFieldsFromMap(getCol().getModels().get(mAllModelIds.get(mNoteTypeSpinner.getSelectedItemPosition())));
+                        return true;
+                    }
+                });
+                popup.show();
+            }
+        });
+    }
+
+
     private void startMultimediaFieldEditor(final int index, IMultimediaEditableNote mNote, IField field) {
         Intent editCard = new Intent(NoteEditor.this, EditFieldActivity.class);
         editCard.putExtra(EditFieldActivity.EXTRA_FIELD_INDEX, index);
@@ -1263,7 +1365,7 @@ public class NoteEditor extends AnkiActivity {
     }
 
 
-    private void initFieldEditText(FieldEditText editText, int index, String[] values, Typeface customTypeface) {
+    private void initFieldEditText(FieldEditText editText, final int index, String[] values, Typeface customTypeface, boolean enabled) {
         String name = values[0];
         String content = values[1];
         if (mPrefFixArabic) {
@@ -1276,25 +1378,26 @@ public class NoteEditor extends AnkiActivity {
         }
 
         // Listen for changes in the first field so we can re-check duplicate status.
-        if (index == 0) {
-            editText.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void afterTextChanged(Editable arg0) {
-                    mFieldEdited = true;
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable arg0) {
+                mFieldEdited = true;
+                if (index == 0) {
                     duplicateCheck();
                 }
+            }
 
 
-                @Override
-                public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-                }
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+            }
 
 
-                @Override
-                public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-                }
-            });
-        }
+            @Override
+            public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+            }
+        });
+        editText.setEnabled(enabled);
     }
 
 
@@ -1386,6 +1489,7 @@ public class NoteEditor extends AnkiActivity {
         }
         updateDeckPosition();
         updateTags();
+        updateCards(mEditorNote.model());
         populateEditFields();
     }
 
@@ -1410,6 +1514,35 @@ public class NoteEditor extends AnkiActivity {
     }
 
 
+    /** Update the list of card templates for current note type */
+    private void updateCards(JSONObject model) {
+        try {
+            JSONArray tmpls = model.getJSONArray("tmpls");
+            String cardsList = "";
+            // Build comma separated list of card names
+            for (int i = 0; i < tmpls.length(); i++) {
+                String name = tmpls.getJSONObject(i).optString("name");
+                // If more than one card then make currently selected card underlined
+                if (!mAddNote && tmpls.length() > 1 && model == mEditorNote.model() &&
+                        mCurrentEditedCard.template().optString("name").equals(name)) {
+                    name = "<u>" + name + "</u>";
+                }
+                cardsList += name;
+                if (i < tmpls.length()-1) {
+                    cardsList += ", ";
+                }
+            }
+            // Make cards list red if the number of cards is being reduced
+            if (!mAddNote && tmpls.length() < mEditorNote.model().getJSONArray("tmpls").length()) {
+                cardsList = "<font color='red'>" + cardsList + "</font>";
+            }
+            mCardsButton.setText(Html.fromHtml(getResources().getString(R.string.CardEditorCards, cardsList)));
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
     private boolean updateField(FieldEditText field) {
         String newValue = field.getText().toString().replace(FieldEditText.NEW_LINE, "<br>");
         if (!mEditorNote.values()[field.getOrd()].equals(newValue)) {
@@ -1422,6 +1555,51 @@ public class NoteEditor extends AnkiActivity {
 
     private String tagsAsString(List<String> tags) {
         return TextUtils.join(" ", tags);
+    }
+
+    /**
+     * Convenience method for getting the corresponding key given the value in a 1-to-1 map
+     * @param map
+     * @param value
+     * @return
+     */
+    private <T, E> T getKeyByValue(Map<T, E> map, E value) {
+        for (Entry<T, E> entry : map.entrySet()) {
+            if (value.equals(entry.getValue())) {
+                return entry.getKey();
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Update all the field EditText views based on the currently selected note type and the mModelChangeFieldMap
+     */
+    private void updateFieldsFromMap(JSONObject newModel) {
+        // Get the field map for new model and old fields list
+        String [][] oldFields = mEditorNote.items();
+        Map<String, Pair<Integer, JSONObject>> fMapNew = getCol().getModels().fieldMap(newModel);
+        // Build array of label/values to provide to field EditText views
+        String[][] fields = new String[fMapNew.size()][2];
+        for (String fname : fMapNew.keySet()) {
+            // Field index of new note type
+            Integer i = fMapNew.get(fname).first;
+            // Add values from old note type if they exist in map, otherwise make the new field empty
+            if (mModelChangeFieldMap.containsValue(i)) {
+                // Get index of field from old note type given the field index of new note type
+                Integer j = getKeyByValue(mModelChangeFieldMap, i);
+                // Set the new field label text
+                fields[i][0] = String.format(getResources().getString(R.string.field_remapping), fname, oldFields[j][0]);
+                // Set the new field label value
+                fields[i][1] = oldFields[j][1];
+            } else {
+                // No values from old note type exist in the mapping
+                fields[i][0] = fname;
+                fields[i][1] = "";
+            }
+        }
+        populateEditFields(fields, true);
+        updateCards(newModel);
     }
 
     // ----------------------------------------------------------------------------
@@ -1452,6 +1630,116 @@ public class NoteEditor extends AnkiActivity {
             } else {
                 return 0;
             }
+        }
+    }
+
+
+    private class SetNoteTypeListener implements OnItemSelectedListener {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+            // If a new column was selected then change the key used to map from mCards to the column TextView
+            //Log.i(AnkiDroidApp.TAG, "onItemSelected() fired on mNoteTypeSpinner");
+            long oldModelId;
+            try {
+                oldModelId = getCol().getModels().current().getLong("id");
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+            long newId = mAllModelIds.get(pos);
+            if (oldModelId != newId) {
+                JSONObject model = getCol().getModels().get(newId);
+                getCol().getModels().setCurrent(model);
+                JSONObject cdeck = getCol().getDecks().current();
+                try {
+                    cdeck.put("mid", newId);
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+                getCol().getDecks().save(cdeck);
+                // Update deck
+                if (!getCol().getConf().optBoolean("addToCur", true)) {
+                    try {
+                        mCurrentDid = model.getLong("did");
+                        updateDeckPosition();
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                // Reset edit fields
+                int size = mEditFields.size();
+                String[] oldValues = new String[size];
+                for (int i = 0; i < size; i++) {
+                    oldValues[i] = mEditFields.get(i).getText().toString();
+                }
+                setNote();
+                resetEditFields(oldValues);
+                duplicateCheck();
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+            // Do Nothing
+        }
+    }
+
+
+    private class EditNoteTypeListener implements OnItemSelectedListener {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+            // Get the current model
+            long noteModelId;
+            try {
+                noteModelId = mCurrentEditedCard.model().getLong("id");
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+            // Get new model
+            JSONObject newModel = getCol().getModels().get(mAllModelIds.get(pos));            
+            // Configure the interface according to whether note type is getting changed or not
+            if (mAllModelIds.get(pos) != noteModelId) {
+                // Initialize mapping between fields of old model -> new model
+                mModelChangeFieldMap = new HashMap<Integer, Integer>();
+                for (int i=0; i < mEditorNote.items().length; i++) {
+                    mModelChangeFieldMap.put(i, i);
+                }
+                // Initialize mapping between cards new model -> old model
+                mModelChangeCardMap = new HashMap<Integer, Integer>();
+                try {
+                    for (int i=0; i < newModel.getJSONArray("tmpls").length() ; i++) {
+                        if (i < mEditorNote.cards().size()) {
+                            mModelChangeCardMap.put(i, i);
+                        } else {
+                            mModelChangeCardMap.put(i, null);
+                        }
+                    }
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+                // Update the field text edits based on the default mapping just assigned
+                updateFieldsFromMap(newModel);
+                // Don't let the user change any other values at the same time as changing note type
+                mSelectedTags = mEditorNote.getTags();
+                updateTags();
+                ((LinearLayout) findViewById(R.id.CardEditorTagButton)).setEnabled(false);
+                //((LinearLayout) findViewById(R.id.CardEditorCardsButton)).setEnabled(false);
+                mNoteDeckSpinner.setEnabled(false);
+                int position = mAllDeckIds.indexOf(mCurrentEditedCard.getDid());
+                if (position != -1) {
+                    mNoteDeckSpinner.setSelection(position, false);
+                }
+            } else {
+                populateEditFields();
+                updateCards(mCurrentEditedCard.model());
+                ((LinearLayout) findViewById(R.id.CardEditorTagButton)).setEnabled(true);
+                //((LinearLayout) findViewById(R.id.CardEditorCardsButton)).setEnabled(false);
+                mNoteDeckSpinner.setEnabled(true);
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+            // Do Nothing
         }
     }
 }
