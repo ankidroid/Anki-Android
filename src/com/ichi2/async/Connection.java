@@ -389,7 +389,8 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         return msg.contains("UnknownHostException") ||
                 msg.contains("HttpHostConnectException") ||
                 msg.contains("SSLException while building HttpClient") ||
-                msg.contains("SocketTimeoutException");
+                msg.contains("SocketTimeoutException") ||
+                msg.contains("ClientProtocolException");
     }
 
 
@@ -498,9 +499,13 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     data.data = new Object[] { mediaUsn };
                     return data;
                 } catch (RuntimeException e) {
-                    AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync-fullSync");
+                    if (timeoutOccured(e)) {
+                        data.result = new Object[] {"connectionError" };
+                    } else {
+                        AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync-fullSync");
+                        data.result = new Object[] { "IOException" };
+                    }
                     data.success = false;
-                    data.result = new Object[] { "IOException" };
                     data.data = new Object[] { mediaUsn };
                     return data;
                 }
@@ -537,7 +542,11 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     AnkiDroidApp.getSharedPrefs(sContext).edit().putBoolean("syncFetchesMedia", false).commit();
                     AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync-mediaSync");
                 } catch (RuntimeException e) {
-                    AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync-mediaSync");
+                    if (timeoutOccured(e)) {
+                        data.result = new Object[] {"connectionError" };
+                    } else {
+                        AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync-mediaSync");
+                    }
                     mediaError = e.getLocalizedMessage();
                 }
             }
