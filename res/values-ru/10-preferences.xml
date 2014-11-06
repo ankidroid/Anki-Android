@@ -199,7 +199,7 @@
   <string name="deck_conf_general">Общие</string>
   <string name="deck_conf_steps">Шаги (в минутах)</string>
   <string name="deck_conf_order">Очерёдность</string>
-  <string name="deck_conf_new_cards_day">Новые карты/день</string>
+  <string name="deck_conf_new_cards_day">Новых карт в день</string>
   <string name="deck_conf_graduating_ivl">Интервал окончания</string>
   <string name="deck_conf_days">XXX дней</string>
   <string name="deck_conf_easy_ivl">Легкий интервал</string>
