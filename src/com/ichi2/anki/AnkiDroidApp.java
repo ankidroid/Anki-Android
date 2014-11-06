@@ -36,7 +36,7 @@ import com.ichi2.anki.exception.AnkiDroidErrorReportException;
 import com.ichi2.async.Connection;
 import com.ichi2.compat.Compat;
 import com.ichi2.compat.CompatV15;
-import com.ichi2.compat.CompatV15NookHdPlus;
+import com.ichi2.compat.CompatV15NookHdOrHdPlus;
 import com.ichi2.compat.CompatV16;
 import com.ichi2.compat.CompatV7;
 import com.ichi2.compat.CompatV7Nook;
@@ -123,8 +123,8 @@ public class AnkiDroidApp extends Application {
     public void onCreate() {
         super.onCreate();
 
-        if (isNookHdPlus() && AnkiDroidApp.SDK_VERSION == 15) {
-            mCompat = new CompatV15NookHdPlus();
+        if (isNookHdOrHdPlus() && AnkiDroidApp.SDK_VERSION == 15) {
+            mCompat = new CompatV15NookHdOrHdPlus();
         } else if (AnkiDroidApp.SDK_VERSION >= 16) {
             mCompat = new CompatV16();
         } else if (AnkiDroidApp.SDK_VERSION >= 15) {
@@ -175,9 +175,17 @@ public class AnkiDroidApp extends Application {
     }
 
 
+    private boolean isNookHdOrHdPlus() {
+        return isNookHd() || isNookHdPlus();
+    }
+    
     private boolean isNookHdPlus() {
         return android.os.Build.BRAND.equals("NOOK") && android.os.Build.PRODUCT.equals("HDplus")
                 && android.os.Build.DEVICE.equals("ovation");
+    }
+    
+    private boolean isNookHd () {
+        return android.os.Build.MODEL.equalsIgnoreCase("bntv400") && android.os.Build.BRAND.equals("NOOK");
     }
 
 
