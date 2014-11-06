@@ -55,28 +55,30 @@ public class IntentHandler extends Activity {
                     if (cursor != null)
                         cursor.close();
                 }
-                Uri importUri = Uri.fromFile(new File(getCacheDir(), filename));
-                // Copy to temp file
-                try {
-                    // Get an input stream to the data in ContentProvider
-                    InputStream in = getContentResolver().openInputStream(intent.getData());
-                    // Create new output stream in temporary path
-                    OutputStream out = new FileOutputStream(importUri.getEncodedPath());
-                    // Copy the input stream to temporary file
-                    byte[] buf = new byte[1024];
-                    int len;
-                    while ((len = in.read(buf)) > 0) {
-                        out.write(buf, 0, len);
+                if (filename != null) {
+                    Uri importUri = Uri.fromFile(new File(getCacheDir(), filename));
+                    // Copy to temp file
+                    try {
+                        // Get an input stream to the data in ContentProvider
+                        InputStream in = getContentResolver().openInputStream(intent.getData());
+                        // Create new output stream in temporary path
+                        OutputStream out = new FileOutputStream(importUri.getEncodedPath());
+                        // Copy the input stream to temporary file
+                        byte[] buf = new byte[1024];
+                        int len;
+                        while ((len = in.read(buf)) > 0) {
+                            out.write(buf, 0, len);
+                        }
+                        in.close();
+                        out.close();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e2) {
+                        e2.printStackTrace();
                     }
-                    in.close();
-                    out.close();
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e2) {
-                    e2.printStackTrace();
+                    // Show import dialog
+                    successful = sendShowImportFileDialogMsg(importUri.getEncodedPath());
                 }
-                // Show import dialog
-                successful = sendShowImportFileDialogMsg(importUri.getEncodedPath());
             } else if (intent.getData().getScheme().equals("file")) {
                 // When the VIEW intent is sent as a file, we can open it directly without copying from content provider                
                 successful = sendShowImportFileDialogMsg(intent.getData().getPath());
