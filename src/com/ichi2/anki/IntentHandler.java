@@ -38,12 +38,10 @@ public class IntentHandler extends Activity {
         reloadIntent.setDataAndType(getIntent().getData(), getIntent().getType());
         String action = intent.getAction();
         if (Intent.ACTION_VIEW.equals(action)) {
-            // This intent is used for opening apkg package
+            // This intent is used for opening apkg package files
             // We want to go immediately to DeckPicker, clearing any history in the process
-            // TODO: Still one bug, where if AnkiDroid is launched via ACTION_VIEW,
-            // then subsequent ACTION_VIEW events bypass IntentHandler. Prob need to do something onResume() of AnkiActivity
-
-            /* When a VIEW intent is sent with a content provider URI, we copy to a temporary file that we can read directly */
+            boolean successful = false;
+            // If the file is being sent from a content provider we need to read the content before we can open the file
             if (intent.getData().getScheme().equals("content")) {
                 // Get the original filename from the content provider URI and save to temporary cache dir
                 String filename = null;
@@ -57,53 +55,44 @@ public class IntentHandler extends Activity {
                     if (cursor != null)
                         cursor.close();
                 }
+                Uri importUri = Uri.fromFile(new File(getCacheDir(), filename));
                 // Copy to temp file
-                if (filename != null && filename.endsWith(".apkg")) {
-                    Uri importUri = Uri.fromFile(new File(getCacheDir(), filename));
-                    try {
-                        // Get an input stream to the data in ContentProvider
-                        InputStream in = getContentResolver().openInputStream(intent.getData());
-                        // Create new output stream in temporary path
-                        OutputStream out = new FileOutputStream(importUri.getEncodedPath());
-                        // Copy the input stream to temporary file
-                        byte[] buf = new byte[1024];
-                        int len;
-                        while ((len = in.read(buf)) > 0) {
-                            out.write(buf, 0, len);
-                        }
-                        in.close();
-                        out.close();
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    } catch (IOException e2) {
-                        e2.printStackTrace();
+                try {
+                    // Get an input stream to the data in ContentProvider
+                    InputStream in = getContentResolver().openInputStream(intent.getData());
+                    // Create new output stream in temporary path
+                    OutputStream out = new FileOutputStream(importUri.getEncodedPath());
+                    // Copy the input stream to temporary file
+                    byte[] buf = new byte[1024];
+                    int len;
+                    while ((len = in.read(buf)) > 0) {
+                        out.write(buf, 0, len);
                     }
-                    // Create a new message for DialogHandler so that we see the appropriate import dialog in DeckPicker
-                    Message handlerMessage = Message.obtain();
-                    Bundle msgData = new Bundle();
-                    msgData.putString("importPath", importUri.getEncodedPath());
-                    handlerMessage.setData(msgData);
-                    if (filename.equals("collection.apkg")) {
-                        // Show confirmation dialog asking to confirm import with replace when file called "collection.apkg"
-                        handlerMessage.what = DialogHandler.MSG_SHOW_COLLECTION_IMPORT_REPLACE_DIALOG;
-                    } else {
-                        // Otherwise show confirmation dialog asking to confirm import with add
-                        handlerMessage.what = DialogHandler.MSG_SHOW_COLLECTION_IMPORT_ADD_DIALOG;
-                    }
-                    // Store the message in AnkiDroidApp message holder
-                    AnkiDroidApp.setStoredDialogHandlerMessage(handlerMessage);
-                } else {
-                    // Don't import the file if it didn't load properly or doesn't have apkg extension
-                    Themes.showThemedToast(this, getResources().getString(R.string.import_log_no_apkg), true);
-                    finishWithFade();
-                    return;
+                    in.close();
+                    out.close();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e2) {
+                    e2.printStackTrace();
                 }
+                // Show import dialog
+                successful = sendShowImportFileDialogMsg(importUri.getEncodedPath());
+            } else if (intent.getData().getScheme().equals("file")) {
+                // When the VIEW intent is sent as a file, we can open it directly without copying from content provider                
+                successful = sendShowImportFileDialogMsg(intent.getData().getPath());
             }
-
-            reloadIntent.setAction(action);
-            reloadIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(reloadIntent);
-            finishWithFade();
+            // Start DeckPicker if we correctly processed ACTION_VIEW
+            if (successful) {
+                reloadIntent.setAction(action);
+                reloadIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(reloadIntent);
+                finishWithFade();
+            } else {
+                // Don't import the file if it didn't load properly or doesn't have apkg extension
+                Themes.showThemedToast(this, getResources().getString(R.string.import_log_no_apkg), true);
+                finishWithFade();
+                return;
+            }
         } else {
             // Launcher intents should start DeckPicker if no other task exists,
             // otherwise go to previous task
@@ -112,6 +101,36 @@ public class IntentHandler extends Activity {
             reloadIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
             startActivityIfNeeded(reloadIntent, 0);
             finishWithFade();
+        }
+    }
+
+
+    /**
+     * Send a Message to AnkiDroidApp so that the DialogMessageHandler shows the Import apkg dialog.
+     * @param path
+     */
+    private boolean sendShowImportFileDialogMsg(String path) {
+        // Get the filename from the path
+        File f = new File(path);
+        String filename = f.getName();
+        if (filename != null && filename.endsWith(".apkg")) {
+            // Create a new message for DialogHandler so that we see the appropriate import dialog in DeckPicker
+            Message handlerMessage = Message.obtain();
+            Bundle msgData = new Bundle();
+            msgData.putString("importPath", path);
+            handlerMessage.setData(msgData);
+            if (filename.equals("collection.apkg")) {
+                // Show confirmation dialog asking to confirm import with replace when file called "collection.apkg"
+                handlerMessage.what = DialogHandler.MSG_SHOW_COLLECTION_IMPORT_REPLACE_DIALOG;
+            } else {
+                // Otherwise show confirmation dialog asking to confirm import with add
+                handlerMessage.what = DialogHandler.MSG_SHOW_COLLECTION_IMPORT_ADD_DIALOG;
+            }
+            // Store the message in AnkiDroidApp message holder, which is loaded later in AnkiActivity.onResume
+            AnkiDroidApp.setStoredDialogHandlerMessage(handlerMessage);
+            return true;
+        } else {
+            return false;
         }
     }
 
