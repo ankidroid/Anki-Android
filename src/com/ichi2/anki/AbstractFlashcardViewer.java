@@ -255,7 +255,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private TextView mNext3;
     private TextView mNext4;
     private Button mFlipCard;
-    private EditText mAnswerField;
+    protected EditText mAnswerField;
     private Button mEase1;
     private Button mEase2;
     private Button mEase3;
@@ -1068,11 +1068,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (!sDisplayAnswer) {
-            if (keyCode == KeyEvent.KEYCODE_SPACE || keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER) {
-                displayCardAnswer();
-                return true;
-            }
+        if (!mAnswerField.isFocused()) {
+	        if (!sDisplayAnswer) {
+	            if (keyCode == KeyEvent.KEYCODE_SPACE || keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER) {
+	                displayCardAnswer();
+	                return true;
+	            }
+	        }
         }
         return super.onKeyUp(keyCode, event);
     }
