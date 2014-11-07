@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteDatabase;
  * device.
  */
 @TargetApi(16)
-public class CompatV15NookHdPlus extends CompatV15 implements Compat {
+public class CompatV15NookHdOrHdPlus extends CompatV15 implements Compat {
 
     @Override
     public void disableDatabaseWriteAheadLogging(SQLiteDatabase db) {
