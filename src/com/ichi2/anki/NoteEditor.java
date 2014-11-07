@@ -648,10 +648,12 @@ public class NoteEditor extends AnkiActivity {
 
     private boolean hasUnsavedChanges() {
         // changed note type?
-        final JSONObject newModel = getCol().getModels().get(mAllModelIds.get(mNoteTypeSpinner.getSelectedItemPosition()));
-        final JSONObject oldModel = mCurrentEditedCard.model();
-        if (oldModel != null && !newModel.equals(oldModel)) {
-            return true;
+        if (!mAddNote) {
+            final JSONObject newModel = getCol().getModels().get(mAllModelIds.get(mNoteTypeSpinner.getSelectedItemPosition()));
+            final JSONObject oldModel = mCurrentEditedCard.model();
+            if (!newModel.equals(oldModel)) {
+                return true;
+            }
         }
         // changed deck?
         if (!mAddNote && mCurrentEditedCard!= null && mCurrentEditedCard.getDid() != mCurrentDid) {
