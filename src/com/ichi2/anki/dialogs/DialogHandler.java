@@ -6,8 +6,6 @@ import android.os.Message;
 
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.DeckPicker;
-import com.ichi2.anki.dialogs.ConfirmationDialog.ConfirmationDialogListener;
-
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
@@ -78,21 +76,15 @@ public class DialogHandler extends Handler {
             ((DeckPicker) mActivity.get()).showDatabaseErrorDialog(msgData.getInt("dialogType"));
         } else if (msg.what == MSG_SHOW_FORCE_FULL_SYNC_DIALOG) {
             // Confirmation dialog for forcing full sync
-            final AnkiActivity activity = ((AnkiActivity) mActivity.get());
-            String message = msgData.getString("message");
-            ConfirmationDialog dialog = ConfirmationDialog.newInstance(message);
-            dialog.setListener(new ConfirmationDialogListener() {
+            ConfirmationDialog dialog = new ConfirmationDialog () {
                 @Override
                 public void confirm() {
                     // Bypass the check once the user confirms
-                    activity.getCol().modSchemaNoCheck();
+                    ((AnkiActivity) getActivity()).getCol().modSchemaNoCheck();
                 }
-                @Override
-                public void cancel() {
-                    // Take no action
-                }
-            });
-            activity.showDialogFragment(dialog);
+            };
+            dialog.setArgs(msgData.getString("message"));
+            ((AnkiActivity) mActivity.get()).showDialogFragment(dialog);
         }
     }
 }

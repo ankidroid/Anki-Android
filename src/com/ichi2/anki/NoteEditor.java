@@ -30,7 +30,6 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.PopupMenu.OnMenuItemClickListener;
 import android.text.Editable;
@@ -61,7 +60,6 @@ import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
-import com.ichi2.anki.dialogs.ConfirmationDialog.ConfirmationDialogListener;
 import com.ichi2.anki.dialogs.TagsDialog;
 import com.ichi2.anki.dialogs.TagsDialog.TagsDialogListener;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
@@ -710,17 +708,14 @@ public class NoteEditor extends AnkiActivity {
             if (!newModel.equals(oldModel)) {
                 if (mModelChangeCardMap.size() < mEditorNote.cards().size() || mModelChangeCardMap.containsKey(null)) {
                     // If cards will be lost via the new mapping then show a confirmation dialog before proceeding with the change
-                    ConfirmationDialog dialog = ConfirmationDialog.newInstance(res.getString(R.string.confirm_map_cards_to_nothing));
-                    dialog.setListener(new ConfirmationDialogListener() {
+                    ConfirmationDialog dialog = new ConfirmationDialog () {
                         @Override
                         public void confirm() {
+                            // Bypass the check once the user confirms
                             changeNoteTypeWithErrorHandling(oldModel, newModel);
                         }
-                        @Override
-                        public void cancel() {
-                            // Take no action
-                        }
-                    });
+                    };
+                    dialog.setArgs(res.getString(R.string.confirm_map_cards_to_nothing));
                     showDialogFragment(dialog);                    
                 } else {
                     // Otherwise go straight to changing note type
@@ -773,8 +768,7 @@ public class NoteEditor extends AnkiActivity {
             changeNoteType(oldModel, newModel);
         } catch (ConfirmModSchemaException e) {
             // Libanki has determined we should ask the user to confirm first
-            ConfirmationDialog dialog = ConfirmationDialog.newInstance(res.getString(R.string.full_sync_confirmation));
-            dialog.setListener(new ConfirmationDialogListener() {
+            ConfirmationDialog dialog = new ConfirmationDialog() {
                 @Override
                 public void confirm() {
                     // Bypass the check once the user confirms
@@ -786,11 +780,8 @@ public class NoteEditor extends AnkiActivity {
                         throw new RuntimeException(e2);
                     }
                 }
-                @Override
-                public void cancel() {
-                    // Take no action
-                }
-            });
+            };
+            dialog.setArgs(res.getString(R.string.full_sync_confirmation));
             showDialogFragment(dialog);
         }
     }
