@@ -100,13 +100,6 @@ public class Syncer {
                 Log.i(AnkiDroidApp.TAG, "Sync: getting meta data from server");
                 JSONObject rMeta = new JSONObject(mServer.stream2String(ret.getEntity().getContent()));
                 mCol.log("rmeta", rMeta);
-                long rscm = rMeta.getLong("scm");
-                int rts = rMeta.getInt("ts");
-                mRMod = rMeta.getLong("mod");
-                mMaxUsn = rMeta.getInt("usn");
-                mMediaUsn = rMeta.getInt("musn");
-                mSyncMsg = rMeta.getString("msg");
-                // skip uname, AnkiDroid already stores and shows it
                 if (!rMeta.getBoolean("cont")) {
                     // Don't add syncMsg; it can be fetched by UI code using the accessor
                     return new Object[] { "serverAbort" };
@@ -114,6 +107,14 @@ public class Syncer {
                     // don't abort, but ui should show messages after sync finishes
                     // and require confirmation if it's non-empty
                 }
+
+                long rscm = rMeta.getLong("scm");
+                int rts = rMeta.getInt("ts");
+                mRMod = rMeta.getLong("mod");
+                mMaxUsn = rMeta.getInt("usn");
+                mMediaUsn = rMeta.getInt("musn");
+                mSyncMsg = rMeta.getString("msg");
+                // skip uname, AnkiDroid already stores and shows it
                 Log.i(AnkiDroidApp.TAG, "Sync: building local meta data");
                 JSONObject lMeta = meta();
                 mCol.log("lmeta", lMeta);
