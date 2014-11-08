@@ -66,8 +66,6 @@ import com.github.amlcurran.showcaseview.targets.ActionItemTarget;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener;
 import com.ichi2.anki.dialogs.AsyncDialogFragment;
-import com.ichi2.anki.dialogs.ConfirmationDialog;
-import com.ichi2.anki.dialogs.ConfirmationDialog.ConfirmationDialogListener;
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
 import com.ichi2.anki.dialogs.DeckPickerBackupNoSpaceLeftDialog;
 import com.ichi2.anki.dialogs.DeckPickerConfirmDeleteDeckDialog;
