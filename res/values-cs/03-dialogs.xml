@@ -51,7 +51,7 @@
   <string name="new_version_message">Nové funkce:</string>
   <string name="no_tts_available_title">Předčítání</string>
   <string name="no_tts_available_message">Žádný jazyk k předčítání není k dispozici</string>
-  <string name="initializing_tts">Initializing TTS&#8230;</string>
+  <string name="initializing_tts">Inicializuji TTS&#8230;</string>
   <string name="tts_no_tts">Nemluv</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Flashcards pro Android</h2>AnkiDroid je flashcard aplikace, která je plně kompatibilní s programem pro pc  <a href="%2$s">Anki</a>. Můžete vytvářet, stahovat a učit se v obou, v AnkiDroid nebo Anki pro pc, a vše mezi nimi velmi jednoduše synchronizovat.]]></item>
@@ -69,9 +69,9 @@
   <string name="notification_message">Nová verze Ankidroidu je k dispozici v Android Marketu.\n\nChcete ji nainstalovat?</string>
   <string name="notification_stop">Již mě na tuto aktualizaci neupozorňujte</string>
   <string name="reset_card_dialog_title">Obnovit pokrok v učení</string>
-  <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue.</string>
+  <string name="reset_card_dialog_message">Tato karta bude umístěna na konec fronty s novými kartami.</string>
   <string name="reset_card_dialog_acknowledge">Card reset</string>
-  <string name="reschedule_card_dialog_title">Reschedule card</string>
+  <string name="reschedule_card_dialog_title">Přeplánovat kartu</string>
   <string name="reschedule_card_dialog_message">Reschedule for review in x days:</string>
   <string name="reschedule_card_dialog_acknowledge">Card rescheduled</string>
   <string name="answering_error_title">Chyba databáze</string>
@@ -104,7 +104,7 @@
   <string name="deck_upgrade_create_new_collection_title">Vytvořit novou kolekci</string>
   <string name="deck_upgrade_create_new_collection_button">Nová kolekce</string>
   <string name="deck_upgrade_not_import_warning">Opravdu toto chcete provést? Stará data nebudou importovány.</string>
-  <string name="deck_upgrade_via_web"><![CDATA[<b> Tato upgradová metoda se nedoporučuje pokud jste použili multimediální soubory, nebo pokud máte velkou kolekci! </b><br><br>Vaše Anki1 balíčky budou zazipovány a nahrány na AnkiWeb. Převedená kolekce bude poté stažena.<br><br>Berte prosím na vědomí, že je vyžadováno stabilní připojení k internetu, a že limit pro soubory je 50MB.<br><br> Uživatelům Anki Desktop se se silně doporučuje použít upgradovací metodu na PC.<br><br>Stále ještě chcete pokračovat?]]></string>
+  <string name="deck_upgrade_via_web"><![CDATA[<b> Tato upgradovací metoda se nedoporučuje pokud jste použili multimediální soubory, nebo pokud máte velkou kolekci! </b><br><br>Vaše Anki1 balíčky budou zazipovány a nahrány na AnkiWeb. Převedená kolekce bude poté stažena.<br><br>Berte prosím na vědomí, že je vyžadováno stabilní připojení k internetu a že limit pro soubory je 50MB.<br><br> Uživatelům Anki Desktop se se silně doporučuje použít upgradovací metodu na PC.<br><br>Stále ještě chcete pokračovat?]]></string>
   <string name="deck_upgrade_via_anki_desktop"><![CDATA[Pokud v současné době máte aktuální verzi vašich AnkiDroid kolekcí v softwaru Anki desktop, můžete upgradovat tam a pak stáhnout aktualizovanou kolekci pomocí synchronizace s AnkiWeb.<br><br>Případně můžete zkopírovat AnkiDroid kolekci do PC pomocí USB. Na PC proveďte upgrade kolekce a zkopírujte ji zpět do AnkiDroid.]]></string>
   <string name="deck_upgrade_auto_upgrade"><![CDATA[Prosím nainstalujte si a spusťte Anki Desktop ve verzi 2.0.4 nebo vyšší pro upgrade vaší kolekce, poté synchronizujte upgradovanou kolekci s AnkiWebem a stiskněte tlačítko "Stáhnout".<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_2:_Using_AnkiWeb_sync">Více podrobností o upgradu naleznete na AnkiWebu</a>]]></string>
   <string name="deck_upgrade_manual"><![CDATA[Prosím překopírujte všechny vaše *.anki soubory (a všechny složky *.media) z AnkiDroid složky do vaší Anki Desktop složky, poté nainstalujte a spusťte Anki Desktop ve verzi 2.0.4 nebo vyšší pro upgrade kolekce.<br><br>Po dokončení upgradu, exportujte prosím kolekci "collection.apkg" z Anki2 do složky AnkiDroid a stiskněte dole tlačítko pro import.<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_1:_Using_USB_(recommended)">Pro více informací o upgradu použijte USB.</a>]]></string>
@@ -122,7 +122,7 @@
   <string name="upgrade_deck_dont_upgrade">Neprovádět Upgrade</string>
   <string name="import_unpacking">Rozbalování archivu.\nProsím čekejte&#8230;</string>
   <string name="importing_collection">Importování kolekce.\nProsím čekejte&#8230;</string>
-  <string name="import_media_count">Import mediálních souborů %1$d%%\nProsím čekejte&#8230;</string>
+  <string name="import_media_count">Import multimediálních souborů %1$d%%\nProsím čekejte&#8230;</string>
   <string name="import_update_counts">Aktualizace počtu balíčků. \nProsím čekejte&#8230;</string>
   <string name="import_add_progress">Rozbalování archivu %1$s\n• Import poznámek %2$d%%\n• Import karet %3$d%%\n• Čištění %4$s</string>
   <string name="sd_card_full_title">SD karta je plná</string>
@@ -151,16 +151,16 @@
   <string name="dialog_collection_path_title">Složka neexistuje</string>
   <string name="dialog_collection_path_text">Zadaná složka neexistuje, chcete ji vytvořit?</string>
   <string name="dialog_collection_path_not_dir">Zadaná cesta není platný adresář</string>
-  <string name="check_media_title">Check media?</string>
-  <string name="check_media_warning">This may take a long time with large media collections</string>
-  <string name="check_media_message">Checking media&#8230;</string>
-  <string name="check_media_acknowledge">Media checked</string>
-  <string name="check_media_failed">Media check failed</string>
-  <string name="check_media_invalid">Files with invalid encoding: %d</string>
-  <string name="check_media_unused">Files in media folder but not used by any cards: %d</string>
-  <string name="check_media_nohave">Files used on cards but not in media folder: %d</string>
-  <string name="check_media_no_unused_missing">No unused or missing files found.</string>
-  <string name="check_media_db_updated">Media database rebuilt.</string>
-  <string name="check_media_delete_unused">Delete unused</string>
-  <string name="check_media_deleted">Files deleted: %d</string>
+  <string name="check_media_title">Zkontrolovat multimédia?</string>
+  <string name="check_media_warning">Toto může trvat dlouhou dobu u velké sbírky multimedií</string>
+  <string name="check_media_message">Kontroluji multimédia&#8230;</string>
+  <string name="check_media_acknowledge">Multimédia zkontrolována</string>
+  <string name="check_media_failed">Kontrola multimédií se nezdařila</string>
+  <string name="check_media_invalid">Soubory s neplatným kódováním: %d</string>
+  <string name="check_media_unused">Existují soubory ve složce s multimédii, ale nejsou používány na žádné kartě: %d</string>
+  <string name="check_media_nohave">Soubory jsou používané na kartách, ale nejsou ve složce s multimédii: %d</string>
+  <string name="check_media_no_unused_missing">Žádné nevyužité nebo chybějící soubory.</string>
+  <string name="check_media_db_updated">Multimediální databáze opravena.</string>
+  <string name="check_media_delete_unused">Odstranit nepoužité</string>
+  <string name="check_media_deleted">Odstraněny soubory: %d</string>
 </resources>

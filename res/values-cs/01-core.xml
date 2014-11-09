@@ -86,7 +86,7 @@
   <string name="undo_action_mark">označit poznámku</string>
   <string name="unbury">Zruš odložení</string>
   <string name="finish_operation">Dokončování předchozí operace (nejpravděpodobněji vytváření zálohy). \nProsím čekejte...</string>
-  <string name="contextmenu_deckpicker_download_missing_media">Stáhnout chybějící média</string>
+  <string name="contextmenu_deckpicker_download_missing_media">Stáhnout chybějící multimédia</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Obnovit přiřazení jazyka</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Obnovení jazyka</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optimalizovat databázi</string>

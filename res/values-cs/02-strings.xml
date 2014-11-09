@@ -119,7 +119,7 @@
   <string name="help_online">Online nápověda</string>
   <string name="help_faq">Nejčastější dotazy</string>
   <string name="check_db">Zkontrolovat databázi</string>
-  <string name="check_media">Zkontrolovat média</string>
+  <string name="check_media">Zkontrolovat multimédia</string>
   <string name="check_db_message">Kontrola databáze.\nProsím čekejte...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Prázdná karta. Spusťte \"Nástroje&gt;Prázdné karty...\" v klientovi pro PC.</string>
   <string name="unknown_type_field_warning">Zápis odpovědi: neznámé pole %s</string>
@@ -152,7 +152,7 @@
   <string name="import_log_no_apkg">Toto není platný apkg soubor</string>
   <string name="import_importing">Import karet.\nProsím čekejte...</string>
   <string name="export_include_schedule">Zahrnout plánování</string>
-  <string name="export_include_media">Zahrnout média</string>
+  <string name="export_include_media">Zahrnout multimédia</string>
   <string name="confirm_apkg_export">Export kolekce jako apkg soubor?</string>
   <string name="confirm_apkg_export_deck">Export \"%s\" jako apkg soubor?</string>
   <string name="export_in_progress">Exportuji soubor apkg&#8230;</string>

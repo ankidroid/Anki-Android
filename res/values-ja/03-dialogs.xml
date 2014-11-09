@@ -70,7 +70,7 @@
   <string name="notification_stop">更新の通知をしない</string>
   <string name="reset_card_dialog_title">カードの進行状況をリセット</string>
   <string name="reset_card_dialog_message">このカードは新規カードの最後に配置されます。</string>
-  <string name="reset_card_dialog_acknowledge">カードのリセット</string>
+  <string name="reset_card_dialog_acknowledge">カードがリセットされました</string>
   <string name="reschedule_card_dialog_title">スケジュールを変更</string>
   <string name="reschedule_card_dialog_message">x日後に復習</string>
   <string name="reschedule_card_dialog_acknowledge">カードのスケジュールが変更されました。</string>

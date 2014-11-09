@@ -105,8 +105,8 @@
   <string name="swipe_sensitivity_summ">XXX</string>
   <string name="tts">Převod textu na řeč</string>
   <string name="tts_summ">Přečte otázku a odpověď, pokud není připojen žádný zvukový soubor</string>
-  <string name="sync_fetch_missing_media">Stáhnout média při synchronizaci</string>
-  <string name="sync_fetch_missing_media_summ">Automaticky stáhnout chybějící média při synchronizaci.</string>
+  <string name="sync_fetch_missing_media">Stáhnout multimédia při synchronizaci</string>
+  <string name="sync_fetch_missing_media_summ">Automaticky stáhnout chybějící multimédia při synchronizaci.</string>
   <string name="sync_account">AnkiWeb účet</string>
   <string name="sync_account_summ_logged_out">Nejste přihlášen</string>
   <string name="sync_account_summ_logged_in">%s</string>
@@ -125,7 +125,7 @@
   <string name="notification_pref_title">Notify when</string>
   <string name="never_notify">Never notify</string>
   <string name="notify_when_pending">Pending messages available</string>
-  <string name="notification_minimum_cards_due">More than %d cards due</string>
+  <string name="notification_minimum_cards_due">Více než %d karet ke zkoušení</string>
   <string name="notification_minimum_cards_due_vibrate">Vibrace</string>
   <string name="notification_minimum_cards_due_blink">Blikající světlo</string>
   <string name="timeout_answer_text">Automatické zobrazení odpovědi</string>

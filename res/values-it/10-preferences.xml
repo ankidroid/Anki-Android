@@ -122,10 +122,10 @@
   <string name="language_summ">XXX</string>
   <string name="language_system">Lingua del sistema</string>
   <string name="notification_pref">Notifiche</string>
-  <string name="notification_pref_title">Notify when</string>
-  <string name="never_notify">Never notify</string>
-  <string name="notify_when_pending">Pending messages available</string>
-  <string name="notification_minimum_cards_due">More than %d cards due</string>
+  <string name="notification_pref_title">Notifica quando</string>
+  <string name="never_notify">Non notificare mai</string>
+  <string name="notify_when_pending">Messaggi in sospeso disponibili</string>
+  <string name="notification_minimum_cards_due">Più di %d carte scadute</string>
   <string name="notification_minimum_cards_due_vibrate">Vibra</string>
   <string name="notification_minimum_cards_due_blink">Lampeggia</string>
   <string name="timeout_answer_text">Mostra automaticamente la risposta</string>
