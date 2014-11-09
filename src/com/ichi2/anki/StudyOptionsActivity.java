@@ -39,8 +39,6 @@ import org.json.JSONArray;
 
 public class StudyOptionsActivity extends NavigationDrawerActivity implements StudyOptionsListener {
 
-    private StudyOptionsFragment mCurrentFragment;
-
     private BroadcastReceiver mUnmountReceiver = null;
     private StyledOpenCollectionDialog mNotMountedDialog;
 
@@ -79,14 +77,19 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
 
 
     private void loadStudyOptionsFragment(long deckId, Bundle cramConfig) {
-        mCurrentFragment = StudyOptionsFragment.newInstance(deckId, null);
+        StudyOptionsFragment currentFragment = StudyOptionsFragment.newInstance(deckId, null);
         Bundle args = getIntent().getExtras();
 
         if (cramConfig != null) {
             args.putBundle("cramInitialConfig", cramConfig);
         }
-        mCurrentFragment.setArguments(args);
-        getSupportFragmentManager().beginTransaction().replace(R.id.studyoptions_frame, mCurrentFragment).commit();
+        currentFragment.setArguments(args);
+        getSupportFragmentManager().beginTransaction().replace(R.id.studyoptions_frame, currentFragment).commit();
+    }
+
+
+    private StudyOptionsFragment getCurrentFragment() {
+        return (StudyOptionsFragment) getSupportFragmentManager().findFragmentById(R.id.studyoptions_frame);
     }
 
 
@@ -96,8 +99,6 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
         deselectAllNavigationItems();
     }    
 
-
-    // TODO: onpause, onstop
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -129,9 +130,7 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
         if (AnkiDroidApp.setLanguage(newLanguage)) {
             AnkiDroidApp.getCompat().invalidateOptionsMenu(this);
         }
-        if (mCurrentFragment != null) {
-            mCurrentFragment.restorePreferences();
-        }
+        getCurrentFragment().restorePreferences();
     }
 
 
@@ -212,12 +211,12 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
 
     @Override
     public void refreshMainInterface() {
-        mCurrentFragment.resetAndRefreshInterface();
+        getCurrentFragment().resetAndRefreshInterface();
     }
 
 
     @Override
     public void createFilteredDeck(JSONArray delays, Object[] terms, Boolean resched) {
-        mCurrentFragment.createFilteredDeck(delays, terms, resched);
+        getCurrentFragment().createFilteredDeck(delays, terms, resched);
     }
 }
