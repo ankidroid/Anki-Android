@@ -1,5 +1,6 @@
 ShowcaseView
 ====
+Note: this is an edited version of the main repository, which supports down to API 7
 
 The ShowcaseView (SCV) library is designed to highlight and showcase specific parts of apps to the user with a distinctive and attractive overlay. This library is great for pointing out points of interest for users, gestures, or obscure but useful items.
 
