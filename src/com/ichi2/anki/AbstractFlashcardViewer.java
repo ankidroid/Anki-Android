@@ -409,10 +409,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         public void onClick(View view) {
             Log.i(AnkiDroidApp.TAG, "Flip card changed:");
             mTimeoutHandler.removeCallbacks(mShowAnswerTask);
-            // Explicitly hide the soft keyboard. It *should* be hiding itself automatically, but sometimes failed to do
-            // so.
-            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            inputMethodManager.hideSoftInputFromWindow(mAnswerField.getWindowToken(), 0);
             displayCardAnswer();
         }
     };
@@ -1656,12 +1652,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mEase2Layout.setVisibility(View.GONE);
         mEase3Layout.setVisibility(View.GONE);
         mEase4Layout.setVisibility(View.GONE);
-
-        if (mFlipCardLayout.getVisibility() != View.VISIBLE) {
-            mFlipCardLayout.setVisibility(View.VISIBLE);
-            mFlipCardLayout.requestFocus();
-        } else if (typeAnswer()) {
+        mFlipCardLayout.setVisibility(View.VISIBLE);
+        if (typeAnswer()) {
             mAnswerField.requestFocus();
+        } else {
+            mFlipCardLayout.requestFocus();
         }
     }
 
@@ -1694,9 +1689,20 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    mFlipCardLayout.performClick();
+                    displayCardAnswer();
+                    return true;
                 }
-                return false; // We don't handle this. Let Android hide the input method.
+                return false;
+            }
+        });
+        mAnswerField.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_UP && (keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER)) {
+                    displayCardAnswer();
+                    return true;
+                }
+                return false;
             }
         });
     }
@@ -2053,6 +2059,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         // prevent answering (by e.g. gestures) before card is loaded
         if (mCurrentCard == null) {
             return;
+        }
+
+        // Explicitly hide the soft keyboard. It *should* be hiding itself automatically,
+        // but sometimes failed to do so (e.g. if an OnKeyListener is attached).
+        if (typeAnswer()) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(mAnswerField.getWindowToken(), 0);
         }
 
         sDisplayAnswer = true;

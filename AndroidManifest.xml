@@ -158,7 +158,8 @@
             android:label="Card Browser" />
         <activity
             android:name="com.ichi2.anki.Reviewer"
-            android:configChanges="keyboardHidden|orientation|locale|screenSize" />
+            android:configChanges="keyboardHidden|orientation|locale|screenSize"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="com.ichi2.anki.VideoPlayer"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
