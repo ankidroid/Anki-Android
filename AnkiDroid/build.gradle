@@ -1,0 +1,37 @@
+apply plugin: 'com.android.application'
+def homePath = System.properties['user.home']
+android {
+    compileSdkVersion 19
+    buildToolsVersion "19.1"
+
+    defaultConfig {
+        applicationId "com.ichi2.anki"
+        minSdkVersion 7
+        targetSdkVersion 19
+    }
+    signingConfigs {
+      release {
+        storeFile file("${homePath}/src/android-keystore")
+        keyAlias "nrkeystorealias"
+        storePassword System.getenv("KSTOREPWD")
+        keyPassword System.getenv("KEYPWD")
+      }
+    }
+    buildTypes {
+        release {
+            runProguard true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }   
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:19.1.0'
+    compile 'com.google.code.gson:gson:2.3'
+    compile project(":ShowcaseView:library")
+}
