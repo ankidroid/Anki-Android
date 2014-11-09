@@ -60,7 +60,13 @@ fi
 # Detect problems in code (Lint must run AFTER compilation)
 lint . --config lint.xml --nowarn --exitcode
 if [ $? -ne 0 ]; then
-  exit
+	echo "Lint errors were found; do you still wish to continue?"
+	select yn in "Yes" "No"; do
+	    case $yn in
+		Yes ) break;;
+		No ) exit;;
+	    esac
+	done
 fi
 
 # Upload APK to Google Project's downloads section
@@ -90,7 +96,7 @@ else
   PRE_RELEASE="--pre-release"
 fi
 
-~/p/github-release release --tag v$VERSION --name "AnkiDroid $VERSION" $PRE_RELEASE
-~/p/github-release upload --tag v$VERSION --name AnkiDroid-$VERSION.apk --file AnkiDroid-$VERSION.apk
+github-release release --tag v$VERSION --name "AnkiDroid $VERSION" $PRE_RELEASE
+github-release upload --tag v$VERSION --name AnkiDroid-$VERSION.apk --file AnkiDroid-$VERSION.apk
 
 # TODO: Push to Google Play
