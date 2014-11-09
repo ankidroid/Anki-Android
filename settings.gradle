@@ -1,0 +1,2 @@
+include ':ShowcaseView:library'
+include ':AnkiDroid'
