@@ -8,6 +8,7 @@ android {
         applicationId "com.ichi2.anki"
         minSdkVersion 7
         targetSdkVersion 19
+        testApplicationId "com.ichi2.anki.tests"
     }
     signingConfigs {
       release {

@@ -13,8 +13,7 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-
-package com.ichi2.utils;
+package com.ichi2.anki.tests;
 
 import android.test.AndroidTestCase;
 import android.test.suitebuilder.annotation.Suppress;
@@ -23,12 +22,15 @@ import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.exception.APIVersionException;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Note;
-
+import com.ichi2.libanki.Media;
+import com.ichi2.anki.tests.Shared;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import com.ichi2.utils.*;
+
 
 /**
  * Unit tests for {@link Media}.
