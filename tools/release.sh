@@ -60,7 +60,7 @@ read -sp "Enter key password: " KEYPWD; echo
 export KSTOREPWD
 export KEYPWD
 # Build signed APK using Gradle
-CMD="./gradlew assembleRelease"
+CMD="./gradlew clean assembleRelease"
 ${CMD}
 if [ $? -ne 0 ]; then
   # APK contains problems, abort release
