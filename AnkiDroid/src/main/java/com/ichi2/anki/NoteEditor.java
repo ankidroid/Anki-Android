@@ -103,7 +103,7 @@ import java.util.Map.Entry;
  * sides: a question and an answer. Any number of fields can appear on each side. When you add a fact to Anki, cards
  * which show that fact are generated. Some models generate one card, others generate more than one.
  * 
- * @see http://ichi2.net/anki/wiki/KeyTermsAndConcepts#Cards
+ * @see <a href="http://ankisrs.net/docs/manual.html#cards">the Anki Desktop manual</a>
  */
 public class NoteEditor extends AnkiActivity {
 
@@ -361,6 +361,12 @@ public class NoteEditor extends AnkiActivity {
 
         mTagsButton = (TextView) findViewById(R.id.CardEditorTagText);
         mCardsButton = (TextView) findViewById(R.id.CardEditorCardsText);
+        mCardsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showCardTemplateEditor();
+            }
+        });
 
         Preferences.COMING_FROM_ADD = false;
 
@@ -647,7 +653,7 @@ public class NoteEditor extends AnkiActivity {
     private boolean hasUnsavedChanges() {
         // changed note type?
         if (!mAddNote) {
-            final JSONObject newModel = getCol().getModels().get(mAllModelIds.get(mNoteTypeSpinner.getSelectedItemPosition()));
+            final JSONObject newModel = getCurrentlySelectedModel();
             final JSONObject oldModel = mCurrentEditedCard.model();
             if (!newModel.equals(oldModel)) {
                 return true;
@@ -703,7 +709,7 @@ public class NoteEditor extends AnkiActivity {
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ADD_FACT, mSaveFactHandler, new DeckTask.TaskData(mEditorNote));
         } else {
             // Check whether note type has been changed
-            final JSONObject newModel = getCol().getModels().get(mAllModelIds.get(mNoteTypeSpinner.getSelectedItemPosition()));
+            final JSONObject newModel = getCurrentlySelectedModel();
             final JSONObject oldModel = mCurrentEditedCard.model();
             if (!newModel.equals(oldModel)) {
                 if (mModelChangeCardMap.size() < mEditorNote.cards().size() || mModelChangeCardMap.containsKey(null)) {
@@ -1046,6 +1052,15 @@ public class NoteEditor extends AnkiActivity {
         showDialogFragment(dialog);
     }
 
+    private void showCardTemplateEditor() {
+        Intent intent = new Intent(this, CardTemplateEditor.class);
+        intent.putExtra("noteType", getCurrentlySelectedModel().toString());
+        if (!mAddNote) {
+            intent.putExtra("cardId", mCurrentEditedCard.getId());
+        }
+        startActivityWithAnimation(intent,  ActivityTransitionAnimation.LEFT);
+    }
+
 
     @Override
     protected Dialog onCreateDialog(int id) {
@@ -1339,7 +1354,7 @@ public class NoteEditor extends AnkiActivity {
                             mModelChangeFieldMap.put(idx, newFieldIndex);
                         }
                         // Reload the fields                     
-                        updateFieldsFromMap(getCol().getModels().get(mAllModelIds.get(mNoteTypeSpinner.getSelectedItemPosition())));
+                        updateFieldsFromMap(getCurrentlySelectedModel());
                         return true;
                     }
                 });
@@ -1548,6 +1563,10 @@ public class NoteEditor extends AnkiActivity {
 
     private String tagsAsString(List<String> tags) {
         return TextUtils.join(" ", tags);
+    }
+
+    private JSONObject getCurrentlySelectedModel() {
+        return getCol().getModels().get(mAllModelIds.get(mNoteTypeSpinner.getSelectedItemPosition()));
     }
 
     /**
