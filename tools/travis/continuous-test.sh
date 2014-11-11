@@ -57,10 +57,9 @@ function main() {
   which emulator || (echo "adb not found"; return 1)
 
   start_emulator
-  cd tests
-  ant clean debug
+  ./gradlew assembleDebug
   wait_for_emulator
-  ant installd test
+  ./gradlew connectedCheck
   pkill emulator
 }
 

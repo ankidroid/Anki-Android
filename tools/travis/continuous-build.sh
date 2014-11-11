@@ -11,8 +11,7 @@ function main() {
   fi
   export ANDROID_HOME="$(cd ../android; /bin/pwd)"
   export PATH="$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$PATH"
-  ./create-build-files.sh
-  ant clean debug
+  ./gradlew clean assembleDebug
 }
 
 set -e
