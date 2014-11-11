@@ -52,8 +52,6 @@ function main() {
   fi
   export ANDROID_HOME="$(cd ../android; /bin/pwd)"
   export PATH="$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$PATH"
-  echo $ANDROID_HOME
-  echo $PATH
 
   which adb || (echo "adb not found"; return 1)
   which emulator || (echo "adb not found"; return 1)
