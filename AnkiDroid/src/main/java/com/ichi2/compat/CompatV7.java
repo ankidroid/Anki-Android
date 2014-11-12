@@ -167,4 +167,7 @@ public class CompatV7 implements Compat {
     public int parentLayoutSize() {
         return LayoutParams.FILL_PARENT;
     }
+	
+    // Below API level 12, file scheme pages are not restricted, so no adjustment is needed.
+    public void enableCookiesForFileSchemePages() { }
 }
