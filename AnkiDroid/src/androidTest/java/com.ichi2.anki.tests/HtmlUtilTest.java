@@ -14,9 +14,10 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.utils;
+package com.ichi2.anki.tests;
 
 import android.test.AndroidTestCase;
+import com.ichi2.utils.*;
 
 /**
  * Unit tests for {@link HtmlUtil}.

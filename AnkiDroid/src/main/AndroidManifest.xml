@@ -21,8 +21,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ichi2.anki"
     android:installLocation="auto"
-    android:versionCode="20400106"
-    android:versionName="2.4alpha6" >
+    android:versionCode="20400108"
+    android:versionName="2.4alpha8" >
 
     <!--
         The version number is of the form:
@@ -47,12 +47,6 @@
         This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
         needed for upgrades to be offered correctly.
     -->
-
-    <instrumentation
-        android:name="android.test.InstrumentationTestRunner"
-        android:targetPackage="com.ichi2.anki" >
-    </instrumentation>
-
     <uses-sdk
         android:minSdkVersion="7"
         android:targetSdkVersion="19" />
@@ -297,6 +291,13 @@
             android:name="com.ichi2.anki.multimediacard.activity.SearchImageActivity"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/title_activity_search_image" >
+        </activity>
+        <activity
+            android:name="com.ichi2.anki.CardTemplateEditor"
+            android:parentActivityName="com.ichi2.anki.NoteEditor"
+            android:configChanges="keyboardHidden|orientation|locale|screenSize"
+            android:label="@string/title_activity_template_editor"
+            android:windowSoftInputMode="stateAlwaysHidden" >
         </activity>
         <!-- stuff for Samsung Multi-Window -->
         <uses-library
