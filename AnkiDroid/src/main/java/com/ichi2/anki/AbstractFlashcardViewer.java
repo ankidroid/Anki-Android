@@ -2494,7 +2494,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      * Calculates a dynamic font size depending on the length of the contents taking into account that the input string
      * contains html-tags, which will not be displayed and therefore should not be taken into account.
      * 
-     * @param htmlContents
+     * @param htmlContent
      * @return font size respecting MIN_DYNAMIC_FONT_SIZE and MAX_DYNAMIC_FONT_SIZE
      */
     private static int calculateDynamicFontSize(String htmlContent) {
