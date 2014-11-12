@@ -53,12 +53,13 @@ public class ReadText {
             Log.e(AnkiDroidApp.TAG, "Error loading locale " + loc);
         } else {
             if (mTts.isSpeaking()) {
-                Log.v(AnkiDroidApp.TAG, "tts text '" + text + "' added to queue");
-                sTextQueue.add(new String[] { text, loc });
-            } else {
-                Log.v(AnkiDroidApp.TAG, "tts text '" + text + "' to be played");
-                mTts.speak(mTextToSpeak, TextToSpeech.QUEUE_FLUSH, mTtsParams);
+                Log.v(AnkiDroidApp.TAG, "tts engine appears to be busy... clearing queue");
+                stopTts();
+                //Log.v(AnkiDroidApp.TAG, "tts text '" + text + "' added to queue for locale ("+loc+")");
+                //sTextQueue.add(new String[] { text, loc });
             }
+            Log.v(AnkiDroidApp.TAG, "tts text '" + text + "' to be played for locale ("+loc+")");
+            mTts.speak(mTextToSpeak, TextToSpeech.QUEUE_FLUSH, mTtsParams);
         }
     }
 
@@ -73,10 +74,10 @@ public class ReadText {
         mQuestionAnswer = qa;
         mDid = did;
         mOrd = ord;
-
+        Log.v(AnkiDroidApp.TAG, "ReadText.textToSpeech() method started for string '" + text + "'");
         // get the user's existing language preference
         String language = getLanguage(mDid, mOrd, mQuestionAnswer);
-
+        Log.v(AnkiDroidApp.TAG, "ReadText.textToSpeech() method found language choice '" + language + "'");
         // rebuild the language list if it's empty
         if (availableTtsLocales.isEmpty()) {
             buildAvailableLanguages();
@@ -98,6 +99,7 @@ public class ReadText {
         StyledDialog.Builder builder = new StyledDialog.Builder(mReviewer.get());
         if (availableTtsLocales.size() == 0) {
             // builder.setTitle(res.getString(R.string.no_tts_available_title));
+            Log.e(AnkiDroidApp.TAG, "ReadText.textToSpeech() no TTS languages available");
             builder.setMessage(res.getString(R.string.no_tts_available_message));
             builder.setIcon(R.drawable.ic_dialog_alert);
             builder.setPositiveButton(res.getString(R.string.dialog_ok), null);
@@ -118,8 +120,10 @@ public class ReadText {
             builder.setItems(items, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    MetaDB.storeLanguage(mReviewer.get(), mDid, mOrd, mQuestionAnswer, dialogIds.get(which));
-                    speak(mTextToSpeak, dialogIds.get(which));
+                    String locale = dialogIds.get(which);
+                    Log.v(AnkiDroidApp.TAG, "ReadText.textToSpeech() user chose locale '" + locale + "'");
+                    MetaDB.storeLanguage(mReviewer.get(), mDid, mOrd, mQuestionAnswer, locale);
+                    speak(mTextToSpeak, locale);
                 }
             });
         }
