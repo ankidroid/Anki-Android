@@ -178,4 +178,9 @@
     <string name="nothing">Nothing</string>
 
     <string name="title_activity_graphical_activity">Statistical chart</string>
+    <!-- Card Editor -->
+    <string name="title_activity_template_editor">Card Types for %s</string>
+    <string name="card_template_editor_front">Front Template</string>
+    <string name="card_template_editor_back">Back Template</string>
+    <string name="card_template_editor_styling">Styling (shared between cards)</string>
 </resources>

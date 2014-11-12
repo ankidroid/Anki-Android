@@ -292,6 +292,13 @@
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/title_activity_search_image" >
         </activity>
+        <activity
+            android:name="com.ichi2.anki.CardTemplateEditor"
+            android:parentActivityName="com.ichi2.anki.NoteEditor"
+            android:configChanges="keyboardHidden|orientation|locale|screenSize"
+            android:label="@string/title_activity_template_editor"
+            android:windowSoftInputMode="stateAlwaysHidden" >
+        </activity>
         <!-- stuff for Samsung Multi-Window -->
         <uses-library
             android:name="com.sec.android.app.multiwindow"
