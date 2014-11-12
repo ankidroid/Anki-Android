@@ -35,6 +35,7 @@ import android.view.WindowManager;
 import com.ichi2.anki.exception.AnkiDroidErrorReportException;
 import com.ichi2.async.Connection;
 import com.ichi2.compat.Compat;
+import com.ichi2.compat.CompatV12;
 import com.ichi2.compat.CompatV15;
 import com.ichi2.compat.CompatV15NookHdOrHdPlus;
 import com.ichi2.compat.CompatV16;
@@ -129,6 +130,8 @@ public class AnkiDroidApp extends Application {
             mCompat = new CompatV16();
         } else if (AnkiDroidApp.SDK_VERSION >= 15) {
             mCompat = new CompatV15();
+        } else if (AnkiDroidApp.SDK_VERSION >= 12) {
+            mCompat = new CompatV12();
         } else if (AnkiDroidApp.SDK_VERSION >= 9) {
             mCompat = new CompatV9();
         } else if (AnkiDroidApp.SDK_VERSION >= 8) {
@@ -148,6 +151,9 @@ public class AnkiDroidApp extends Application {
         customExceptionHandler.init(sInstance.getApplicationContext());
         Thread.setDefaultUncaughtExceptionHandler(customExceptionHandler);
 
+		// Configure WebView to allow file scheme pages to access cookies.
+		mCompat.enableCookiesForFileSchemePages();
+		
         SharedPreferences preferences = getSharedPrefs(this);
         sInstance.mHooks = new Hooks(preferences);
         setLanguage(preferences.getString(Preferences.LANGUAGE, ""));
