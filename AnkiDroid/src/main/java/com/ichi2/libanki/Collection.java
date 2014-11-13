@@ -963,6 +963,8 @@ public class Collection {
         try {
             fields.put("Type", (String) model.get("name"));
             fields.put("Deck", mDecks.name((Long) data[3]));
+            String[] parents = fields.get("Deck").split("::");
+            fields.put("Subdeck", parents[parents.length-1]);
             JSONObject template;
             if (model.getInt("type") == Consts.MODEL_STD) {
                 template = model.getJSONArray("tmpls").getJSONObject((Integer) data[4]);
