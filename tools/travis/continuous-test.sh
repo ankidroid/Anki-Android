@@ -59,7 +59,7 @@ function main() {
   start_emulator
   ./gradlew assembleDebug
   wait_for_emulator
-  ./gradlew connectedCheck
+  ./gradlew :AnkiDroid:connectedCheck
   pkill emulator
 }
 
