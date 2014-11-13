@@ -167,10 +167,11 @@ public class ReadText {
         Locale[] systemLocales = Locale.getAvailableLocales();
         for (Locale loc : systemLocales) {
             try {
-                if (mTts.isLanguageAvailable(loc) == TextToSpeech.LANG_COUNTRY_AVAILABLE) {
+                int retCode = mTts.isLanguageAvailable(loc);
+                if (retCode >= TextToSpeech.LANG_COUNTRY_AVAILABLE) {
                     availableTtsLocales.add(loc);
                 } else {
-                    Log.v(AnkiDroidApp.TAG, "ReadText.buildAvailableLanguages() :: " + loc.getDisplayName() + " not available");
+                    Log.v(AnkiDroidApp.TAG, "ReadText.buildAvailableLanguages() :: " + loc.getDisplayName() + " not available (error code "+Integer.toString(retCode)+")");
                 }
             } catch (IllegalArgumentException e) {
                 Log.e(AnkiDroidApp.TAG, "Error checking if language " + loc.getDisplayName() + " available");
