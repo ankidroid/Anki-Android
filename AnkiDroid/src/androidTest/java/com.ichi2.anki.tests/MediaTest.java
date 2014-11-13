@@ -36,7 +36,7 @@ import com.ichi2.utils.*;
  * Unit tests for {@link Media}.
  */
 public class MediaTest extends AndroidTestCase {
-
+    @Suppress
     public void testAdd() throws IOException, APIVersionException {
         Collection d = Shared.getEmptyCol();
         File dir = Shared.getTestDir();
@@ -114,7 +114,7 @@ public class MediaTest extends AndroidTestCase {
         assertEquals("<img src=\"foo%20bar.jpg\">", d.getMedia().escapeImages("<img src=\"foo bar.jpg\">"));
     }
 
-
+    @Suppress
     public void testDeckIntegration() throws IOException, APIVersionException {
         Collection d = Shared.getEmptyCol();
         // create a media dir
@@ -163,7 +163,7 @@ public class MediaTest extends AndroidTestCase {
         return d.getMedia().getDb().queryColumn(String.class, "select fname from media where csum is null", 0);
     }
 
-
+    @Suppress
     public void testChanges() throws IOException, APIVersionException {
         Collection d = Shared.getEmptyCol();
         assertTrue(d.getMedia()._changed() != null);
