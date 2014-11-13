@@ -16,6 +16,8 @@
 
 package com.ichi2.anki.tests;
 
+import android.content.Context;
+
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.BackupManager;
 import com.ichi2.libanki.Collection;
@@ -42,11 +44,14 @@ public class Shared {
     /**
      * @return A File object pointing to a directory in which temporary test files can be placed. The directory is
      *         emptied on every invocation of this method so it is suitable to use at the start of each test.
+     *         Only add files (and not subdirectories) to this directory.
      */
-    public static File getTestDir() {
-        File dir = new File(AnkiDroidApp.getCurrentAnkiDroidDirectory(), "testfiles");
-        BackupManager.removeDir(dir);
-        dir.mkdirs();
+    public static File getTestDir(Context context) {
+        File dir = new File(context.getCacheDir(), "testfiles");
+        dir.mkdir();
+        for (File f : dir.listFiles()) {
+            f.delete();
+        }
         return dir;
     }
 }

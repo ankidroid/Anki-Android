@@ -36,10 +36,9 @@ import com.ichi2.utils.*;
  * Unit tests for {@link Media}.
  */
 public class MediaTest extends AndroidTestCase {
-    @Suppress
     public void testAdd() throws IOException, APIVersionException {
         Collection d = Shared.getEmptyCol();
-        File dir = Shared.getTestDir();
+        File dir = Shared.getTestDir(mContext);
         BackupManager.removeDir(dir);
         dir.mkdirs();
         File path = new File(dir, "foo.jpg");
@@ -114,13 +113,12 @@ public class MediaTest extends AndroidTestCase {
         assertEquals("<img src=\"foo%20bar.jpg\">", d.getMedia().escapeImages("<img src=\"foo bar.jpg\">"));
     }
 
-    @Suppress
     public void testDeckIntegration() throws IOException, APIVersionException {
         Collection d = Shared.getEmptyCol();
         // create a media dir
         d.getMedia().dir();
         // Put a file into it
-        File file = new File(Shared.getTestDir(), "fake.png");
+        File file = new File(Shared.getTestDir(mContext), "fake.png");
         file.createNewFile();
         d.getMedia().addFile(file);
         // add a note which references it
@@ -163,14 +161,13 @@ public class MediaTest extends AndroidTestCase {
         return d.getMedia().getDb().queryColumn(String.class, "select fname from media where csum is null", 0);
     }
 
-    @Suppress
     public void testChanges() throws IOException, APIVersionException {
         Collection d = Shared.getEmptyCol();
         assertTrue(d.getMedia()._changed() != null);
         assertTrue(added(d).size() == 0);
         assertTrue(removed(d).size() == 0);
         // add a file
-        File dir = Shared.getTestDir();
+        File dir = Shared.getTestDir(mContext);
         File path = new File(dir, "foo.jpg");
         FileOutputStream os;
         os = new FileOutputStream(path, false);
