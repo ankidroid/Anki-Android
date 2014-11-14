@@ -345,7 +345,7 @@ public class Media {
             strings.add(s);
         }
         strings.add(string.replaceAll(String.format(Locale.US, clozeReg, ".+?"), "$1"));
-        return new ArrayList<String>();
+        return strings;
     }
 
 
