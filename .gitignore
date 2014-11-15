@@ -35,10 +35,6 @@ proguard/
 # Windows clutter
 Thumbs.db
 
-# Chrome
-*.crx
-*.crx.json
-
 # Intellij IDEA (see https://intellij-support.jetbrains.com/entries/23393067)
 .idea/workspace.xml
 .idea/tasks.xml
