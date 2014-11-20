@@ -28,6 +28,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -313,6 +314,8 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         mDeckInfoLayout = mStudyOptionsView.findViewById(R.id.studyoptions_deckinformation);
         mTextDeckName = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_deck_name);
         mTextDeckDescription = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_deck_description);
+        // make links clickable
+        mTextDeckDescription.setMovementMethod(LinkMovementMethod.getInstance());
         mButtonStart = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_start);
         mButtonCustomStudy = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_custom);
         mDeckOptions = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_options);
