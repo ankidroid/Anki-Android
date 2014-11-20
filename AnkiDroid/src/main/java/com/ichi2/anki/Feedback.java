@@ -505,7 +505,16 @@ public class Feedback extends AnkiActivity {
 
         String reportsentutc = String.format("%s", df1.format(ts));
         String reportsenttzoffset = String.format("%s", df2.format(ts));
-        String reportsenttz = String.format("%s", localTz.getID());
+        String reportsenttz;
+        if (AnkiDroidApp.isChromebook()) {
+            // Chrome creates timezone strings such as GMT+5, which are not supported
+            // by ankidroid-triage (pytz) and result in a 500 error. This is something that
+            // should be fixed on the server-side. In the meantime, I would much rather have
+            // issue reports in the wrong timezone than no issue reports at all.
+            reportsenttz = "GMT";
+        } else {
+            reportsenttz = String.format("%s", localTz.getID());
+        }
 
         pairs.add(new BasicNameValuePair("reportsentutc", reportsentutc));
         pairs.add(new BasicNameValuePair("reportsenttzoffset", reportsenttzoffset));
