@@ -19,6 +19,7 @@ package com.ichi2.anki;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
+import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.widget.Toast;
@@ -82,7 +83,6 @@ public class ReadText {
         if (availableTtsLocales.isEmpty()) {
             buildAvailableLanguages();
         }
-
         // Check, if stored language is available
         for (int i = 0; i < availableTtsLocales.size(); i++) {
             if (language.equals(NO_TTS)) {
@@ -96,7 +96,7 @@ public class ReadText {
 
         // Otherwise ask the user what language they want to use
         Resources res = mReviewer.get().getResources();
-        StyledDialog.Builder builder = new StyledDialog.Builder(mReviewer.get());
+        final StyledDialog.Builder builder = new StyledDialog.Builder(mReviewer.get());
         if (availableTtsLocales.size() == 0) {
             // builder.setTitle(res.getString(R.string.no_tts_available_title));
             Log.e(AnkiDroidApp.TAG, "ReadText.textToSpeech() no TTS languages available");
@@ -122,12 +122,22 @@ public class ReadText {
                 public void onClick(DialogInterface dialog, int which) {
                     String locale = dialogIds.get(which);
                     Log.v(AnkiDroidApp.TAG, "ReadText.textToSpeech() user chose locale '" + locale + "'");
-                    speak(mTextToSpeak, locale);
+                    if (!locale.equals(NO_TTS)) {
+                        speak(mTextToSpeak, locale);
+                    }
                     MetaDB.storeLanguage(mReviewer.get(), mDid, mOrd, mQuestionAnswer, locale);
                 }
             });
         }
-        builder.create().show();
+        // Show the dialog after short delay so that user gets a chance to preview the card
+        final Handler handler = new Handler();
+        final int delay = 500;
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                builder.create().show();
+            }
+        }, delay);
     }
 
 
@@ -143,7 +153,6 @@ public class ReadText {
                     buildAvailableLanguages();
                     if (availableTtsLocales.size() > 0) {
                         // notify the reviewer that TTS has been initialized
-                        Toast.makeText(mReviewer.get(), R.string.ok, Toast.LENGTH_SHORT).show();
                         Log.v(AnkiDroidApp.TAG, "TTS initialized and available languages found");
                         ((AbstractFlashcardViewer) mReviewer.get()).ttsInitialized();
                     } else {
