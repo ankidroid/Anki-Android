@@ -15,7 +15,7 @@
    id="svg3141"
    version="1.1"
    inkscape:version="0.48.5 r10040"
-   sodipodi:docname="feature-graphic.svg"
+   sodipodi:docname="small-tile.svg"
    inkscape:export-filename="/home/nico/src/log/docs/android_market/feature-graphic.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
@@ -609,7 +609,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -699,19 +699,19 @@
     <flowRoot
        xml:space="preserve"
        id="flowRoot3280"
-       style="font-size:80px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       transform="matrix(0.41417554,0,0,0.41161625,73.892219,784.60425)"><flowRegion
+       style="font-size:96.87718201px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       transform="matrix(0.41417554,0,0,0.41161625,77.892219,790.60425)"><flowRegion
          id="flowRegion3282"><rect
            id="rect3284"
            width="538.75"
            height="268.75"
            x="415"
            y="98.75"
-           style="font-size:80px;text-align:center;text-anchor:middle" /></flowRegion><flowPara
+           style="font-size:96.87718201px;text-align:center;text-anchor:middle" /></flowRegion><flowPara
          id="flowPara3288"
-         style="font-size:89.61139679000000058px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;text-anchor:middle;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans;line-height:140%">AnkiDroid</flowPara><flowPara
-         style="font-size:89.61139679000000058px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;text-anchor:middle;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans;line-height:140%"
-         id="flowPara3110">Flashcards</flowPara></flowRoot>    <path
+         style="font-size:96.87718201px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;text-anchor:start;font-family:Sawasdee;-inkscape-font-specification:Sawasdee">AnkiDroid</flowPara><flowPara
+         style="font-size:96.87718201px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;text-anchor:start;font-family:Sawasdee;-inkscape-font-specification:Sawasdee"
+         id="flowPara3110">  Flashcards</flowPara></flowRoot>    <path
        sodipodi:type="star"
        style="fill:url(#linearGradient3413);fill-opacity:1;stroke:#ffffff;stroke-width:15.98369503;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
        id="path4879-5-2"
