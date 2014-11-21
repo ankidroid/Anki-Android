@@ -529,6 +529,15 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         } else if (mShowcaseDialog != null && colOpen() && !getCol().isEmpty()) {
             hideShowcaseView();
         }
+
+        // Hide import, export, and restore backup on ChromeOS as users
+        // don't have access to the file system.
+        if (AnkiDroidApp.isChromebook()) {
+            menu.findItem(R.id.action_restore_backup).setVisible(false);
+            menu.findItem(R.id.action_import).setVisible(false);
+            menu.findItem(R.id.action_export).setVisible(false);
+        }
+
         return super.onCreateOptionsMenu(menu);
     }
 
