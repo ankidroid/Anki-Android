@@ -37,6 +37,9 @@ do
     fi
 done
 
+# Work around intent filter restriction to support APKG file handler
+echo `jq 'del(.file_handlers.any.types) | .file_handlers.any.extensions = ["apkg"]' < cws/unpacked/manifest.json` > cws/unpacked/manifest.json
+
 # Prepare release package
 cd cws/unpacked
 zip -q -r -o ../../cws/release.zip *
