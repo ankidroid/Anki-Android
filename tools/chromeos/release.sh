@@ -31,9 +31,9 @@ for LANG in $LANGS
 do
     if [ -f $SOURCE_PATH/docs/marketing/localized_description/marketdescription-$LANG.txt ]
     then
-        NAME=`cat $SOURCE_PATH/docs/marketing/localized_description/ankidroid-titles.txt | grep "^$LANG:" | sed 's/.*\: //'`
+        NAME=`grep "^$LANG:" $SOURCE_PATH/docs/marketing/localized_description/ankidroid-titles.txt | sed 's/.*\: //'`
         DESC=`head -n 1 $SOURCE_PATH/docs/marketing/localized_description/marketdescription-$LANG.txt`
-        echo "`jq '.appName.message = $appName | .appDesc.message = $appDesc' --arg appName "${NAME-AnkiDroid Flashcards}" --arg appDesc "${DESC-Memorize anything with AnkiDroid!}" cws/unpacked/_locales/$LANG/messages.json`" > cws/unpacked/_locales/$LANG/messages.json
+        echo "`jq '.appName.message = $appName | .appDesc.message = $appDesc' --arg appName "${NAME:-AnkiDroid Flashcards}" --arg appDesc "${DESC-Memorize anything with AnkiDroid!}" cws/unpacked/_locales/$LANG/messages.json`" > cws/unpacked/_locales/$LANG/messages.json
     fi
 done
 
