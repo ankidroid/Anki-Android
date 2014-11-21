@@ -238,7 +238,7 @@ public class AudioView extends LinearLayout {
                         } catch (Exception e) {
                             Log.e("AudioView", e.getMessage());
                             showToast(gtxt(R.string.multimedia_editor_audio_view_playing_failed));
-                            mStatus = Status.STOPPED;
+                            mStatus = Status.IDLE;
                         }
                         break;
 
