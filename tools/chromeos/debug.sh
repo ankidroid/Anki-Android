@@ -6,5 +6,7 @@ if [ $# -lt 2 ]; then
 fi
 
 SCRIPT_PATH=`dirname $0`
+APK_BASENAME=`basename $2`
+OUTPUT_PATH=${APK_BASENAME%apk}crx
 
-python $1 --metadata $SCRIPT_PATH/debug.crx.json --destructive --crx $2
+python $1 --metadata $SCRIPT_PATH/debug.crx.json --crx --output $PWD/$OUTPUT_PATH --destructive $2
