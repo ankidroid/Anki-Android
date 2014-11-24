@@ -736,7 +736,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
             } catch (JSONException e) {
                 throw new RuntimeException();
             }
-            mRestrictOnDeck = "deck:'" + deckName + "' ";
+            mRestrictOnDeck = "deck:\"" + deckName + "\" ";
         }
         searchCards();
         return true;
