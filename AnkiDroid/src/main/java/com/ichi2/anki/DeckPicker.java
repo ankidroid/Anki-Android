@@ -1869,7 +1869,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String newName = mDialogEditText.getText().toString().replaceAll("['\"]", "");
+                String newName = mDialogEditText.getText().toString().replaceAll("\"", "");
                 Collection col = getCol();
                 if (col != null) {
                     if (col.getDecks().rename(col.getDecks().get(mContextMenuDid), newName)) {
