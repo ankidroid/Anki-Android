@@ -1020,12 +1020,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
 
     @Override
+    public void onBackPressed() {
+        Log.i(AnkiDroidApp.TAG, "AbstractReviewer - onBackPressed()");
+        closeReviewer(RESULT_DEFAULT, false);
+    }
+
+    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            Log.i(AnkiDroidApp.TAG, "AbstractReviewer - onBackPressed()");
-            closeReviewer(RESULT_DEFAULT, false);
-            return true;
-        }
         /** Enhancement 722: Hardware buttons for scrolling, I.Z. */
         if (!mCurrentSimpleInterface) {
             if (keyCode == 92) {

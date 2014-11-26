@@ -42,6 +42,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -230,7 +231,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
     protected void onCreate(Bundle savedInstanceState) {
         Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
-
+        Log.v(AnkiDroidApp.TAG, "CardBrowser onCreate()");
         View mainView = getLayoutInflater().inflate(R.layout.card_browser, null);
         setContentView(mainView);
         Themes.setContentStyle(mainView, Themes.CALLER_CARDBROWSER);
@@ -246,7 +247,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
     @Override
     protected void onCollectionLoaded(Collection col) {
         super.onCollectionLoaded(col);
-        Log.i(AnkiDroidApp.TAG, "Card Browser - initActivity()");
+        Log.v(AnkiDroidApp.TAG, "Card Browser onCollectionLoaded()");
         mDeckNames = new HashMap<String, String>();
         for (long did : getCol().getDecks().allIds()) {
             mDeckNames.put(String.valueOf(did), getCol().getDecks().name(did));
@@ -345,6 +346,8 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                 sflCustomFont);
         // link the adapter to the main mCardsListView
         mCardsListView.setAdapter(mCardsAdapter);
+        // make the second column load dynamically when scrolling
+        mCardsListView.setOnScrollListener(new RenderOnScroll());
         // set the spinner index
         mCardsColumn2Spinner.setSelection(mColumn2Index);
 
@@ -406,6 +409,8 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
     @Override
     protected void onStop() {
         Log.i(AnkiDroidApp.TAG, "CardBrowser - onStop()");
+        // cancel rendering the question and answer, which has shared access to mCards
+        DeckTask.cancelTask(DeckTask.TASK_TYPE_RENDER_BROWSER_QA);
         super.onStop();
         if (!isFinishing()) {
             WidgetStatus.update(this);
@@ -417,8 +422,6 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
     @Override
     protected void onDestroy() {
         Log.i(AnkiDroidApp.TAG, "CardBrowser - onDestroy()");
-        // cancel rendering the question and answer, which has shared access to mCards
-        DeckTask.cancelTask(DeckTask.TASK_TYPE_RENDER_BROWSER_QA);
         super.onDestroy();
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver);
@@ -439,6 +442,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
     
     @Override
     protected void onResume() {
+        Log.v(AnkiDroidApp.TAG, "CardBrowser onResume()");
         super.onResume();
         selectNavigationItem(DRAWER_BROWSER);
     }
@@ -811,6 +815,10 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
     public static void updateSearchItemQA(HashMap<String, String> item, Card c) {
         // render question and answer
         HashMap<String, String> qa = c._getQA(true, true);
+        // Render full answer if the bafmt (i.e. "browser appearance") setting forced blank result
+        if (qa.get("a").equals("")) {
+            qa = c._getQA(true, false);
+        }
         // update the original hash map to include rendered question & answer
         String q = qa.get("q");
         String a = qa.get("a");
@@ -1007,7 +1015,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                 }
                 // After the initial searchCards query, start rendering the question and answer in the background
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_RENDER_BROWSER_QA, mRenderQAHandler, new DeckTask.TaskData(
-                        new Object[] { getCol(), mCards }));
+                        new Object[] { getCol(), mCards, 0, 100 }));
             } else {
                 // this is a hack -- see DeckTask.launchDeckTask for more info
                 Log.i(AnkiDroidApp.TAG, "doInBackgroundSearchCards onPostExecute() called but result was null");
@@ -1038,6 +1046,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         @Override
         public void onPostExecute(TaskData result) {
             if (result != null) {
+                mCardsAdapter.notifyDataSetChanged();
                 Log.i(AnkiDroidApp.TAG, "Completed doInBackgroundRenderBrowserQA Successfuly");
             } else {
                 // Might want to do something more proactive here like show a message box?
@@ -1055,6 +1064,30 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
     private void closeCardBrowser(int result) {
         setResult(result);
         finishWithAnimation(ActivityTransitionAnimation.RIGHT);
+    }
+
+    /**
+     * Render the second column whenever the user stops scrolling
+     */
+    private final class RenderOnScroll implements AbsListView.OnScrollListener {
+        @Override
+        public void onScroll(AbsListView view, int firstVisibleItem,
+                             int visibleItemCount, int totalItemCount) {
+        }
+
+        @Override
+        public void onScrollStateChanged(AbsListView listView, int scrollState) {
+            // Cancel any rendering so that scrolling occurs as fluidly as possible
+            Log.v(AnkiDroidApp.TAG, "Scroll state changed to "+Integer.toString(scrollState));
+            DeckTask.cancelTask(DeckTask.TASK_TYPE_RENDER_BROWSER_QA);
+            // Resume rendering once the scrolling has finished
+            if (scrollState == SCROLL_STATE_IDLE) {
+                int startIdx = listView.getFirstVisiblePosition();
+                int numVisible = listView.getLastVisiblePosition() - startIdx;
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_RENDER_BROWSER_QA, mRenderQAHandler, new DeckTask.TaskData(
+                        new Object[] { getCol(), mCards, startIdx-5 , startIdx+2*numVisible}));
+            }
+        }
     }
 
     private final class MultiColumnListAdapter extends BaseAdapter {

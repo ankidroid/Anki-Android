@@ -810,16 +810,10 @@ public class NoteEditor extends AnkiActivity {
 
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            Log.i(AnkiDroidApp.TAG, "CardEditor - onBackPressed()");
-            closeCardEditorWithCheck();
-            return true;
-        }
-
-        return super.onKeyDown(keyCode, event);
+    public void onBackPressed() {
+        Log.i(AnkiDroidApp.TAG, "CardEditor - onBackPressed()");
+        closeCardEditorWithCheck();
     }
-
 
     @Override
     protected void onDestroy() {
