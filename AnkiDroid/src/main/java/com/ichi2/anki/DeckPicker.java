@@ -146,7 +146,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     private static final int ADD_SHARED_DECKS = 15;
     private static final int LOG_IN_FOR_SHARED_DECK = 16;
     private static final int ADD_CRAM_DECK = 17;
-    private static final int SHOW_INFO_UPGRADE_DECKS = 18;
+    //private static final int SHOW_INFO_UPGRADE_DECKS = 18;
     private static final int REQUEST_REVIEW = 19;
 
     private StyledProgressDialog mProgressDialog;
@@ -663,26 +663,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             loadCounts();
         } else if (requestCode == REPORT_ERROR) {
             showStartupScreensAndDialogs(AnkiDroidApp.getSharedPrefs(getBaseContext()), 4);
-        } else if (requestCode == SHOW_INFO_UPGRADE_DECKS) {
-            if (intent != null && intent.hasExtra(Info.TYPE_UPGRADE_STAGE)) {
-                int type = intent.getIntExtra(Info.TYPE_UPGRADE_STAGE, Info.UPGRADE_SCREEN_BASIC1);
-                if (type == Info.UPGRADE_CONTINUE) {
-                    showStartupScreensAndDialogs(AnkiDroidApp.getSharedPrefs(getBaseContext()), 3);
-                } else {
-                    showUpgradeScreen(true, type, !intent.hasExtra(Info.TYPE_ANIMATION_RIGHT));
-                }
-            } else {
-                if (resultCode == RESULT_OK) {
-                    dismissOpeningCollectionDialog();
-                    if (AnkiDroidApp.colIsOpen()) {
-                        AnkiDroidApp.closeCollection(true);
-                    }
-                    AnkiDroidApp.openCollection(AnkiDroidApp.getCollectionPath());
-                    loadCounts();
-                } else {
-                    finishWithAnimation();
-                }
-            }
         } else if (requestCode == SHOW_INFO_WELCOME || requestCode == SHOW_INFO_NEW_VERSION) {
             if (resultCode == RESULT_OK) {
                 showStartupScreensAndDialogs(AnkiDroidApp.getSharedPrefs(getBaseContext()),
@@ -869,38 +849,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         startActivityForResultWithAnimation(intent, ADD_NOTE, ActivityTransitionAnimation.LEFT);
     }
 
-
-    private void showUpgradeScreen(boolean animation, int stage) {
-        showUpgradeScreen(animation, stage, true);
-    }
-
-
-    private void showUpgradeScreen(boolean animation, int stage, boolean left) {
-        Intent upgradeIntent = new Intent(this, Info.class);
-        upgradeIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_UPGRADE_DECKS);
-        upgradeIntent.putExtra(Info.TYPE_UPGRADE_STAGE, stage);
-        startActivityForResultWithAnimation(upgradeIntent, SHOW_INFO_UPGRADE_DECKS,
-                left ? ActivityTransitionAnimation.LEFT : ActivityTransitionAnimation.RIGHT);
-    }
-
-
-    private boolean upgradeNeeded() {
-        if (!AnkiDroidApp.isSdCardMounted()) {
-            showSdCardNotMountedDialog();
-            return false;
-        }
-        File dir = new File(AnkiDroidApp.getCurrentAnkiDroidDirectory());
-        if (!dir.isDirectory()) {
-            dir.mkdirs();
-        }
-        if ((new File(AnkiDroidApp.getCollectionPath())).exists()) {
-            // collection file exists
-            return false;
-        }
-        return dir.listFiles(new OldAnkiDeckFilter()).length > 0;
-    }
-
-
     private SharedPreferences restorePreferences() {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         mPrefDeckPath = AnkiDroidApp.getCurrentAnkiDroidDirectory();
@@ -984,12 +932,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                     startActivityForResultWithoutAnimation(infoIntent, SHOW_INFO_NEW_VERSION);
                 }
             }
-        } else if (skip < 3 && upgradeNeeded()) {
-            // Note that the "upgrade needed" refers to upgrading Anki 1.x decks, not to newer
-            // versions of AnkiDroid.
-            AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit()
-                    .putInt("lastUpgradeVersion", AnkiDroidApp.getPkgVersionCode()).commit();
-            showUpgradeScreen(skip != 0, Info.UPGRADE_SCREEN_BASIC1);
         } else if (skip < 4 && hasErrorFiles()) {
             // Need to submit error reports
             Intent i = new Intent(this, Feedback.class);
