@@ -188,7 +188,7 @@ public class Decks {
 
 
     public long id(String name, boolean create, String type) {
-        name = name.replace("\'", "").replace("\"", "");
+        name = name.replace("\"", "");
         for (Map.Entry<Long, JSONObject> g : mDecks.entrySet()) {
             try {
                 if (g.getValue().getString("name").equalsIgnoreCase(name)) {
