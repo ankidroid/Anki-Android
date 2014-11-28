@@ -604,13 +604,6 @@ public class NoteEditor extends AnkiActivity {
     }
 
 
-    private void openReviewer() {
-        Intent reviewer = new Intent(NoteEditor.this, Previewer.class);
-        reviewer.putExtra("currentCardId", mCurrentEditedCard.getId());
-        startActivityWithoutAnimation(reviewer);
-    }
-
-
     private boolean addFromAedict(String extra_text) {
         String category = "";
         String[] notepad_lines = extra_text.split("\n");
@@ -845,7 +838,6 @@ public class NoteEditor extends AnkiActivity {
             menu.findItem(R.id.action_saved_notes).setVisible(false);
             menu.findItem(R.id.action_add_card_from_card_editor).setVisible(true);
             menu.findItem(R.id.action_reset_card_progress).setVisible(true);
-            menu.findItem(R.id.action_preview).setVisible(true);
             menu.findItem(R.id.action_reschedule_card).setVisible(true);
             menu.findItem(R.id.action_reset_card_progress).setVisible(true);
             // if Arabic reshaping is enabled, disable the Save button to avoid
@@ -882,10 +874,6 @@ public class NoteEditor extends AnkiActivity {
 
             case R.id.action_save:
                 saveNote();
-                return true;
-
-            case R.id.action_preview:
-                openReviewer();
                 return true;
 
             case R.id.action_later:
@@ -1248,12 +1236,14 @@ public class NoteEditor extends AnkiActivity {
 
             ImageButton mediaButton = (ImageButton) editline_view.findViewById(R.id.id_media_button);
             // Make the icon change between media icon and switch field icon depending on whether editing note type
-            if (editModelMode) {
-                // Use change note mapping button
+            if (editModelMode && allowFieldRemapping()) {
+                // Allow remapping if originally more than two fields
                 mediaButton.setBackgroundResource(R.drawable.ic_action_import_export);
                 setRemapButtonListener(mediaButton, i);
+            } else if (editModelMode && !allowFieldRemapping()) {
+                mediaButton.setBackgroundResource(0);
             } else {
-                // Use media editor button
+                // Use media editor button if not changing note type
                 mediaButton.setBackgroundResource(R.drawable.ic_media);
                 setMMButtonListener(mediaButton, i);
             }
@@ -1595,7 +1585,13 @@ public class NoteEditor extends AnkiActivity {
                 // Get index of field from old note type given the field index of new note type
                 Integer j = getKeyByValue(mModelChangeFieldMap, i);
                 // Set the new field label text
-                fields[i][0] = String.format(getResources().getString(R.string.field_remapping), fname, oldFields[j][0]);
+                if (allowFieldRemapping()) {
+                    // Show the content of old field if remapping is enabled
+                    fields[i][0] = String.format(getResources().getString(R.string.field_remapping), fname, oldFields[j][0]);
+                } else {
+                    fields[i][0] = fname;
+                }
+
                 // Set the new field label value
                 fields[i][1] = oldFields[j][1];
             } else {
@@ -1606,6 +1602,15 @@ public class NoteEditor extends AnkiActivity {
         }
         populateEditFields(fields, true);
         updateCards(newModel);
+    }
+
+    /**
+     *
+     * @return whether or not to allow remapping of fields for current model
+     */
+    private boolean allowFieldRemapping() {
+        // Map<String, Pair<Integer, JSONObject>> fMapNew = getCol().getModels().fieldMap(getCurrentlySelectedModel())
+        return mEditorNote.items().length > 2;
     }
 
     // ----------------------------------------------------------------------------
