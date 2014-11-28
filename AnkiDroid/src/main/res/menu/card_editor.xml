@@ -2,12 +2,6 @@
     xmlns:ankidroid="http://schemas.android.com/apk/res-auto" >
 
     <item
-        android:id="@+id/action_preview"
-        android:icon="@drawable/ic_menu_view"
-        android:title="@string/card_editor_preview_card"
-        android:visible="false"
-        ankidroid:showAsAction="ifRoom"/>
-    <item
         android:id="@+id/action_save"
         android:icon="@drawable/ic_action_accept"
         android:title="@string/add"

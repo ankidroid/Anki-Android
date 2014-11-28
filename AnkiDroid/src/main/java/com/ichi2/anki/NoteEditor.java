@@ -604,13 +604,6 @@ public class NoteEditor extends AnkiActivity {
     }
 
 
-    private void openReviewer() {
-        Intent reviewer = new Intent(NoteEditor.this, Previewer.class);
-        reviewer.putExtra("currentCardId", mCurrentEditedCard.getId());
-        startActivityWithoutAnimation(reviewer);
-    }
-
-
     private boolean addFromAedict(String extra_text) {
         String category = "";
         String[] notepad_lines = extra_text.split("\n");
@@ -845,7 +838,6 @@ public class NoteEditor extends AnkiActivity {
             menu.findItem(R.id.action_saved_notes).setVisible(false);
             menu.findItem(R.id.action_add_card_from_card_editor).setVisible(true);
             menu.findItem(R.id.action_reset_card_progress).setVisible(true);
-            menu.findItem(R.id.action_preview).setVisible(true);
             menu.findItem(R.id.action_reschedule_card).setVisible(true);
             menu.findItem(R.id.action_reset_card_progress).setVisible(true);
             // if Arabic reshaping is enabled, disable the Save button to avoid
@@ -882,10 +874,6 @@ public class NoteEditor extends AnkiActivity {
 
             case R.id.action_save:
                 saveNote();
-                return true;
-
-            case R.id.action_preview:
-                openReviewer();
                 return true;
 
             case R.id.action_later:
