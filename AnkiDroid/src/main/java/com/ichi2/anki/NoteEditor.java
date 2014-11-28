@@ -1248,12 +1248,14 @@ public class NoteEditor extends AnkiActivity {
 
             ImageButton mediaButton = (ImageButton) editline_view.findViewById(R.id.id_media_button);
             // Make the icon change between media icon and switch field icon depending on whether editing note type
-            if (editModelMode) {
-                // Use change note mapping button
+            if (editModelMode && allowFieldRemapping()) {
+                // Allow remapping if originally more than two fields
                 mediaButton.setBackgroundResource(R.drawable.ic_action_import_export);
                 setRemapButtonListener(mediaButton, i);
+            } else if (editModelMode && !allowFieldRemapping()) {
+                mediaButton.setBackgroundResource(0);
             } else {
-                // Use media editor button
+                // Use media editor button if not changing note type
                 mediaButton.setBackgroundResource(R.drawable.ic_media);
                 setMMButtonListener(mediaButton, i);
             }
@@ -1595,7 +1597,13 @@ public class NoteEditor extends AnkiActivity {
                 // Get index of field from old note type given the field index of new note type
                 Integer j = getKeyByValue(mModelChangeFieldMap, i);
                 // Set the new field label text
-                fields[i][0] = String.format(getResources().getString(R.string.field_remapping), fname, oldFields[j][0]);
+                if (allowFieldRemapping()) {
+                    // Show the content of old field if remapping is enabled
+                    fields[i][0] = String.format(getResources().getString(R.string.field_remapping), fname, oldFields[j][0]);
+                } else {
+                    fields[i][0] = fname;
+                }
+
                 // Set the new field label value
                 fields[i][1] = oldFields[j][1];
             } else {
@@ -1606,6 +1614,15 @@ public class NoteEditor extends AnkiActivity {
         }
         populateEditFields(fields, true);
         updateCards(newModel);
+    }
+
+    /**
+     *
+     * @return whether or not to allow remapping of fields for current model
+     */
+    private boolean allowFieldRemapping() {
+        // Map<String, Pair<Integer, JSONObject>> fMapNew = getCol().getModels().fieldMap(getCurrentlySelectedModel())
+        return mEditorNote.items().length > 2;
     }
 
     // ----------------------------------------------------------------------------
