@@ -1283,8 +1283,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         String currentMessage;
         long countUp;
         long countDown;
-        boolean colIsEmpty;
-
 
         @Override
         public void onDisconnected() {
@@ -1299,19 +1297,10 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             if (mProgressDialog == null || !mProgressDialog.isShowing()) {
                 mProgressDialog = StyledProgressDialog
                         .show(DeckPicker.this, getResources().getString(R.string.sync_title),
-                                getResources().getString(R.string.sync_prepare_syncing) + "\n"
+                                getResources().getString(R.string.sync_title) + "\n"
                                         + getResources().getString(R.string.sync_up_down_size, countUp, countDown),
                                 true, false);
             }
-            // Collection is closed at end of each sync to roll back any sync failures. 
-            // We may need to reload synchronously here, for example if there was a sync conflict
-            Collection col;
-            if (!colOpen()) {
-                col = AnkiDroidApp.openCollection(AnkiDroidApp.getCollectionPath());
-            } else {
-                col = getCol();
-            }
-            colIsEmpty = col.isEmpty();
         }
 
 
@@ -1353,7 +1342,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         public void onPostExecute(Payload data) {
             String dialogMessage = "";
             String syncMessage = "";
-            Log.i(AnkiDroidApp.TAG, "onPostExecute");
+            Log.i(AnkiDroidApp.TAG, "Sync Listener onPostExecute");
             Resources res = getResources();
             if (mProgressDialog != null) {
                 mProgressDialog.dismiss();
@@ -1395,7 +1384,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                         if (data.data != null && data.data.length >= 1 && data.data[0] instanceof Integer) {
                             mSyncMediaUsn = (Integer) data.data[0];
                         }
-                        if (colIsEmpty) {
+                        if (getCol().isEmpty()) {
                             // don't prompt user to resolve sync conflict if local collection empty
                             sync("download", mSyncMediaUsn);
                             // TODO: Also do reverse check to see if AnkiWeb collection is empty if Anki Desktop

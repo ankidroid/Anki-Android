@@ -61,6 +61,7 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 import java.util.zip.ZipFile;
 
 /**
@@ -132,15 +133,18 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
     /**
      * Block the current thread until the currently running DeckTask instance (if any) has finished.
+     * @return whether whether it was successful or not
      */
-    public static void waitToFinish() {
+    public static boolean waitToFinish() {
         try {
             if ((sLatestInstance != null) && (sLatestInstance.getStatus() != AsyncTask.Status.FINISHED)) {
-                Log.i(AnkiDroidApp.TAG, "DeckTask: wait to finish");
-                sLatestInstance.get();
+                Log.i(AnkiDroidApp.TAG, "DeckTask: waiting for task " + sLatestInstance.mType + " to finish...");
+                sLatestInstance.get(60, TimeUnit.SECONDS);
             }
+            return true;
         } catch (Exception e) {
-            return;
+            Log.i(AnkiDroidApp.TAG, "Exception waiting for task to finish \n" + e.getMessage());
+            return false;
         }
     }
 
