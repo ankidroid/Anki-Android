@@ -396,7 +396,10 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
 
     private Payload doInBackgroundSync(Payload data) {
         // for for doInBackgroundLoadDeckCounts if any
-        DeckTask.waitToFinish();
+        Log.v(AnkiDroidApp.TAG, "doInBackgroundSync()");
+        //TODO: Is this really necessary?
+        boolean ok = DeckTask.waitToFinish();
+
         String hkey = (String) data.data[0];
         boolean media = (Boolean) data.data[1];
         String conflictResolution = (String) data.data[2];
@@ -404,7 +407,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
 
         boolean colCorruptFullSync = false;
         Collection col = AnkiDroidApp.getCol();
-        if (!AnkiDroidApp.colIsOpen()) {
+        if (!AnkiDroidApp.colIsOpen() || !ok) {
             if (conflictResolution != null && conflictResolution.equals("download")) {
                 colCorruptFullSync = true;
             } else {
@@ -584,6 +587,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             }
             return data;
         } finally {
+            // Close collection to roll back any sync failures and
             Log.i(AnkiDroidApp.TAG, "doInBackgroundSync -- closing collection on outer finally statement");
             col.close(false);
             AnkiDroidApp.setSyncInProgress(false);
