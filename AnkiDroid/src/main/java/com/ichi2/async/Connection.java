@@ -587,7 +587,10 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             Log.i(AnkiDroidApp.TAG, "doInBackgroundSync -- closing collection on outer finally statement");
             col.close(false);
             AnkiDroidApp.setSyncInProgress(false);
+            Log.i(AnkiDroidApp.TAG, "doInBackgroundSync -- reopening collection on outer finally statement");
+            AnkiDroidApp.openCollection(AnkiDroidApp.getCollectionPath());
         }
+
     }
 
 
