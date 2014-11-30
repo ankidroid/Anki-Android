@@ -101,9 +101,9 @@ public class CardTemplateEditor extends AnkiActivity {
                 finishWithAnimation(ActivityTransitionAnimation.RIGHT);
                 return true;
 
-            case R.id.action_preview:
+            /*case R.id.action_preview:
                 //openReviewer();
-                return true;
+                return true;*/
 
             default:
                 return super.onOptionsItemSelected(item);
