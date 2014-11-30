@@ -30,9 +30,11 @@ import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.CardBrowser;
 import com.ichi2.anki.R;
 import com.ichi2.anki.exception.APIVersionException;
+import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.libanki.AnkiPackageExporter;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Sched;
 import com.ichi2.libanki.Stats;
@@ -99,6 +101,8 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     public static final int TASK_TYPE_CONF_SET_SUBDECKS = 36;
     public static final int TASK_TYPE_RENDER_BROWSER_QA = 37;
     public static final int TASK_TYPE_CHECK_MEDIA = 38;
+    public static final int TASK_TYPE_ADD_TEMPLATE = 39;
+    public static final int TASK_TYPE_REMOVE_TEMPLATE = 40;
 
     /**
      * The most recently started {@link DeckTask} instance.
@@ -308,6 +312,12 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
             case TASK_TYPE_CHECK_MEDIA:
                 return doInBackgroundCheckMedia(params);
+
+            case TASK_TYPE_ADD_TEMPLATE:
+                return doInBackgroundAddTemplate(params);
+
+            case TASK_TYPE_REMOVE_TEMPLATE:
+                return doInBackgroundRemoveTemplate(params);
 
             default:
                 Log.e(AnkiDroidApp.TAG, "unknown task type: " + mType);
@@ -1137,6 +1147,50 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         }
     }
 
+    /**
+     * Add a new card template
+     * @param params
+     * @return
+     */
+    private TaskData doInBackgroundAddTemplate(TaskData... params) {
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundAddTemplate");
+        Object [] args = params[0].getObjArray();
+        Collection col = (Collection ) args[0];
+        JSONObject model = (JSONObject) args[1];
+        JSONObject template = (JSONObject) args[2];
+        // add the new template
+        try {
+            col.getModels().addTemplate(model, template);
+        } catch (ConfirmModSchemaException e) {
+            Log.e(AnkiDroidApp.TAG, "doInBackgroundAddTemplate :: ConfirmModSchemaException");
+            return new TaskData(false);
+        }
+        return new TaskData(true);
+    }
+
+    /**
+     * Add a new card template
+     * @param params
+     * @return
+     */
+    private TaskData doInBackgroundRemoveTemplate(TaskData... params) {
+        Log.i(AnkiDroidApp.TAG, "doInBackgroundRemoveTemplate");
+        Object [] args = params[0].getObjArray();
+        Collection col = (Collection ) args[0];
+        JSONObject model = (JSONObject) args[1];
+        JSONObject template = (JSONObject) args[2];
+        // add the new template
+        try {
+            boolean success = col.getModels().remTemplate(model, template);
+            if (! success) {
+                return new TaskData(col, "removeTemplateFailed", false);
+            }
+        } catch (ConfirmModSchemaException e) {
+            Log.e(AnkiDroidApp.TAG, "doInBackgroundRemoveTemplate :: ConfirmModSchemaException");
+            return new TaskData(false);
+        }
+        return new TaskData(true);
+    }
 
     /**
      * Listener for the status and result of a {@link DeckTask}.
