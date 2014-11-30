@@ -79,6 +79,7 @@
     <string name="factadder_saving_error">Error saving note</string>
     <string name="pref_lang_support">Language</string>
     <string name="saving_facts">Saving note</string>
+    <string name="saving_model">Saving model</string>
     <string name="deck">Deck</string>
     <string name="add">Add</string>
     <string name="close">Close</string>

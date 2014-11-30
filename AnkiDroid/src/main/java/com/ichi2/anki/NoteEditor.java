@@ -149,6 +149,7 @@ public class NoteEditor extends AnkiActivity {
     public static final int REQUEST_ADD = 0;
     public static final int REQUEST_INTENT_ADD = 1;
     public static final int REQUEST_MULTIMEDIA_EDIT = 2;
+    public static final int REQUEST_TEMPLATE_EDIT = 3;
 
     private boolean mChanged = false;
     private boolean mFieldEdited = false;
@@ -289,7 +290,7 @@ public class NoteEditor extends AnkiActivity {
                 }
             } else {
                 // RuntimeException occured on adding note
-                closeCardEditor(DeckPicker.RESULT_DB_ERROR);
+                closeNoteEditor(DeckPicker.RESULT_DB_ERROR);
             }
         }
 
@@ -830,7 +831,7 @@ public class NoteEditor extends AnkiActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.card_editor, menu);
+        getMenuInflater().inflate(R.menu.note_editor, menu);
         if (mAddNote) {
             menu.findItem(R.id.action_later).setVisible(true);
             menu.findItem(R.id.action_copy_card).setVisible(false);
@@ -993,7 +994,7 @@ public class NoteEditor extends AnkiActivity {
     }
 
 
-    private void closeCardEditor(int result) {
+    private void closeNoteEditor(int result) {
         closeNoteEditor(result, null);
     }
 
@@ -1036,11 +1037,17 @@ public class NoteEditor extends AnkiActivity {
 
     private void showCardTemplateEditor() {
         Intent intent = new Intent(this, CardTemplateEditor.class);
-        intent.putExtra("noteType", getCurrentlySelectedModel().toString());
+        // Pass the model ID
+        try {
+            intent.putExtra("modelId", getCurrentlySelectedModel().getLong("id"));
+        } catch (JSONException e) {
+           throw new RuntimeException(e);
+        }
+        // Also pass the card ID if not adding new note
         if (!mAddNote) {
             intent.putExtra("cardId", mCurrentEditedCard.getId());
         }
-        startActivityWithAnimation(intent,  ActivityTransitionAnimation.LEFT);
+        startActivityForResultWithAnimation(intent, REQUEST_TEMPLATE_EDIT, ActivityTransitionAnimation.LEFT);
     }
 
 
@@ -1156,7 +1163,7 @@ public class NoteEditor extends AnkiActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == DeckPicker.RESULT_DB_ERROR) {
-            closeCardEditor(DeckPicker.RESULT_DB_ERROR);
+            closeNoteEditor(DeckPicker.RESULT_DB_ERROR);
         }
 
         switch (requestCode) {
@@ -1190,6 +1197,8 @@ public class NoteEditor extends AnkiActivity {
                     mChanged = true;
                 }
                 break;
+            case REQUEST_TEMPLATE_EDIT:
+                updateCards(mEditorNote.model());
         }
     }
 
