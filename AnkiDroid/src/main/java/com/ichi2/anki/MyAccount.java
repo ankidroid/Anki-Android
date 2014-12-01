@@ -20,6 +20,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
+import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
@@ -153,7 +154,12 @@ public class MyAccount extends AnkiActivity {
         editor.putString("hkey", "");
         editor.commit();
         //  force media resync on deauth
-        AnkiDroidApp.getCol().getMedia().forceResync();
+        try {
+            AnkiDroidApp.getCol().getMedia().forceResync();
+        } catch (SQLiteException e) {
+            Log.e(AnkiDroidApp.TAG, "MyAccount.logout()  reinitializing media db due to sqlite error");
+            AnkiDroidApp.getCol().getMedia()._initDB();
+        }
         setContentView(mLoginToMyAccountView);
     }
 
