@@ -603,7 +603,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            Log.i(AnkiDroidApp.TAG, "DeckOptions - onBackPressed()");
+            Log.i(AnkiDroidApp.TAG, "Preferences - onBackPressed()");
             closePreferences();
             return true;
         }
