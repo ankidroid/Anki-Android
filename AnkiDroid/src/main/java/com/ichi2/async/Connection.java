@@ -397,8 +397,8 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     private Payload doInBackgroundSync(Payload data) {
         // for for doInBackgroundLoadDeckCounts if any
         Log.v(AnkiDroidApp.TAG, "doInBackgroundSync()");
-        //TODO: Is this really necessary?
-        boolean ok = DeckTask.waitToFinish();
+        // Block execution until any previous background task finishes, or timeout after 5s
+        boolean ok = DeckTask.waitToFinish(5);
 
         String hkey = (String) data.data[0];
         boolean media = (Boolean) data.data[1];

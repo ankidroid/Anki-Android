@@ -137,13 +137,26 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
     /**
      * Block the current thread until the currently running DeckTask instance (if any) has finished.
-     * @return whether whether it was successful or not
      */
-    public static boolean waitToFinish() {
+    public static void waitToFinish() {
+        waitToFinish(null);
+    }
+
+    /**
+     * Block the current thread until the currently running DeckTask instance (if any) has finished.
+     * @param timeout timeout in seconds
+     * @return whether or not the previous task was successful or not
+     */
+    public static boolean waitToFinish(Integer timeout) {
         try {
             if ((sLatestInstance != null) && (sLatestInstance.getStatus() != AsyncTask.Status.FINISHED)) {
                 Log.i(AnkiDroidApp.TAG, "DeckTask: waiting for task " + sLatestInstance.mType + " to finish...");
-                sLatestInstance.get(60, TimeUnit.SECONDS);
+                if (timeout != null) {
+                    sLatestInstance.get(timeout, TimeUnit.SECONDS);
+                } else {
+                    sLatestInstance.get();
+                }
+
             }
             return true;
         } catch (Exception e) {
