@@ -39,7 +39,6 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
 
     public final int SIMPLE_NOTIFICATION_ID = 0;
 
-    private Collection mCollection;
     private StyledOpenCollectionDialog mOpenCollectionDialog;
     private DialogHandler mHandler = new DialogHandler(this);
 
@@ -63,11 +62,11 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
 
 
     public Collection getCol() {
-        return mCollection;
+        return AnkiDroidApp.getCol();
     }
 
     public boolean colOpen() {
-        return mCollection != null && mCollection.getDb()!=null;
+        return AnkiDroidApp.colIsOpen();
     }
 
 
@@ -242,7 +241,6 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(Loader<Collection> loader, Collection col) {
-        mCollection = col;
         if (col != null && AnkiDroidApp.colIsOpen()) {
             onCollectionLoaded(col);
         } else {
