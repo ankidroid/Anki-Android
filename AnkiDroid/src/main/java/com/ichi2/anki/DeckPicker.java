@@ -192,8 +192,10 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
             if (result == null) {
+                Log.i(AnkiDroidApp.TAG, "loadCounts() onPostExecute :: result = null");
                 return;
             }
+            Log.i(AnkiDroidApp.TAG, "loadCounts() onPostExecute :: result = "+result.getObjArray().toString());
             Object[] res = result.getObjArray();
             updateDecksList((TreeSet<Object[]>) res[0], (Integer) res[1], (Integer) res[2]);
             dismissOpeningCollectionDialog();
@@ -230,6 +232,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
         @Override
         public void onCancelled() {
+            Log.v(AnkiDroidApp.TAG, "loadCounts onCancelled()");
         }
     };
 
