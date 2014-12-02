@@ -92,8 +92,8 @@
     <item quantity="other">%1$d cards studied in %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
-    <item quantity="one">%1$d minute</item>
-    <item quantity="other">%1$d minutes</item>
+    <item quantity="one">%1$d 分鐘</item>
+    <item quantity="other">%1$d 分鐘</item>
   </plurals>
   <string name="studyoptions_welcome_title">歡迎使用 AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">沒有可用的外部記憶卡</string>
@@ -141,7 +141,7 @@
   <string name="info_rate">評價AnkiDroid</string>
   <string name="col_load_failed">載入收藏時發生錯誤。\n按返回鍵來關閉 AnkiDroid</string>
   <string name="import_title">匯入卡片</string>
-  <string name="import_select_title">Choose a file to import</string>
+  <string name="import_select_title">選擇要導入的檔案</string>
   <string name="import_message">將 %s 的內容加入你的收藏，還是完全取代你的收藏？</string>
   <string name="import_message_add">新增</string>
   <string name="import_message_replace">取代</string>
