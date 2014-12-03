@@ -1,6 +1,7 @@
 package com.ichi2.anki;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -11,6 +12,7 @@ import android.support.v4.content.IntentCompat;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.DialogHandler;
+import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.Themes;
 
 import java.io.File;
@@ -41,6 +43,7 @@ public class IntentHandler extends Activity {
             // This intent is used for opening apkg package files
             // We want to go immediately to DeckPicker, clearing any history in the process
             boolean successful = false;
+            String errorMessage =getResources().getString(R.string.import_log_no_apkg);
             // If the file is being sent from a content provider we need to read the content before we can open the file
             if (intent.getData().getScheme().equals("content")) {
                 // Get the original filename from the content provider URI and save to temporary cache dir
@@ -55,7 +58,7 @@ public class IntentHandler extends Activity {
                     if (cursor != null)
                         cursor.close();
                 }
-                if (filename != null) {
+                if (filename != null && filename.endsWith(".apkg")) {
                     Uri importUri = Uri.fromFile(new File(getCacheDir(), filename));
                     // Copy to temp file
                     try {
@@ -72,12 +75,20 @@ public class IntentHandler extends Activity {
                         in.close();
                         out.close();
                     } catch (FileNotFoundException e) {
+                        errorMessage=e.getLocalizedMessage();
                         e.printStackTrace();
                     } catch (IOException e2) {
+                        errorMessage=e2.getLocalizedMessage();
                         e2.printStackTrace();
                     }
                     // Show import dialog
                     successful = sendShowImportFileDialogMsg(importUri.getEncodedPath());
+                } else {
+                    if (filename == null) {
+                        errorMessage = "Could not retrieve filename from content resolver; try opening the apkg file with a file explorer";
+                    } else {
+                        errorMessage = "Filename " + filename + " does not have .apkg extension";
+                    }
                 }
             } else if (intent.getData().getScheme().equals("file")) {
                 // When the VIEW intent is sent as a file, we can open it directly without copying from content provider                
@@ -91,8 +102,18 @@ public class IntentHandler extends Activity {
                 finishWithFade();
             } else {
                 // Don't import the file if it didn't load properly or doesn't have apkg extension
-                Themes.showThemedToast(this, getResources().getString(R.string.import_log_no_apkg), true);
-                finishWithFade();
+                //Themes.showThemedToast(this, getResources().getString(R.string.import_log_no_apkg), true);
+                String title = getResources().getString(R.string.import_log_no_apkg);
+                StyledDialog.Builder builder = new StyledDialog.Builder(this);
+                builder.setTitle(title);
+                builder.setMessage(errorMessage);
+                builder.setPositiveButton(getResources().getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finishWithFade();
+                    }
+                });
+                builder.create().show();
                 return;
             }
         } else {
