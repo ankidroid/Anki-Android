@@ -18,6 +18,7 @@ package com.ichi2.anki;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
@@ -295,12 +296,20 @@ public class NavigationDrawerActivity extends AnkiActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
+        // Update language
+        AnkiDroidApp.setLanguage(preferences.getString(Preferences.LANGUAGE, ""));
         // Restart the activity on preference change
         if (requestCode == REQUEST_PREFERENCES_UPDATE) {
-            String newPath = AnkiDroidApp.getSharedPrefs(this).getString("deckPath", "");
-            if (mOldColPath!=null && newPath.equals(mOldColPath)) {
+            if (mOldColPath!=null && preferences.getString("deckPath", "").equals(mOldColPath)) {
                 // collection path hasn't been changed so just restart the current activity
-                restartActivity();
+                if ((this instanceof Reviewer) && preferences.getBoolean("tts", false)) {
+                    // Workaround to kick user back to StudyOptions after opening settings from Reviewer
+                    // because onDestroy() of old Activity interferes with TTS in new Activity
+                    finishWithoutAnimation();
+                } else {
+                    restartActivity();
+                }
             } else {
                 // collection path has changed so kick the user back to the DeckPicker
                 AnkiDroidApp.closeCollection(true);

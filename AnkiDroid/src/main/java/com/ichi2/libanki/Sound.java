@@ -432,4 +432,11 @@ public class Sound {
     public static OnCompletionListener getMediaCompletionListener() {
         return sPlayAllListener;
     }
+
+    public static boolean hasQuestion() {
+        return sSoundPaths.containsKey(Sound.SOUNDS_QUESTION);
+    }
+    public static boolean hasAnswer() {
+        return sSoundPaths.containsKey(Sound.SOUNDS_ANSWER);
+    }
 }

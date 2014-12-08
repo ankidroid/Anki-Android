@@ -2262,8 +2262,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             throw new RuntimeException(e);
         }
         if (autoPlayEnabled || doAudioReplay) {
+            // Use TTS if TTS preference enabled and no other sound source
+            boolean useTTS = mSpeakText &&
+                    !(sDisplayAnswer && Sound.hasAnswer()) && !(!sDisplayAnswer && Sound.hasQuestion());
             // We need to play the sounds from the proper side of the card
-            if (!mSpeakText) { // Text to speech not in effect here
+            if (!useTTS) { // Text to speech not in effect here
                 WeakReference<Activity> contextRef = new WeakReference<Activity>(this);
                 if (doAudioReplay && replayQuestion && sDisplayAnswer) {
                     // only when all of the above are true will question be played with answer, to match desktop
@@ -2273,7 +2276,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 } else { // question is displayed
                     Sound.playSounds(Sound.SOUNDS_QUESTION, contextRef);
                 }
-            } else { // Text to speech is in affect here
+            } else { // Text to speech is in effect here
                 // If the question is displayed or if the question should be replayed, read the question
                 if (mTtsInitialized) {
                     if (!sDisplayAnswer || doAudioReplay && replayQuestion) {
