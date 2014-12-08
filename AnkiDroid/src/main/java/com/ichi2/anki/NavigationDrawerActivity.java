@@ -304,6 +304,7 @@ public class NavigationDrawerActivity extends AnkiActivity {
             } else {
                 // collection path has changed so kick the user back to the DeckPicker
                 AnkiDroidApp.closeCollection(true);
+                finishWithoutAnimation();
                 Intent deckPicker = new Intent(this, DeckPicker.class);
                 deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivityWithoutAnimation(deckPicker);
