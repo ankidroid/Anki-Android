@@ -1172,7 +1172,9 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
 
         private int getColor(String flag) {
             int which = BACKGROUND_NORMAL;
-            if (flag.equals("1")) {
+            if (flag == null) {
+                // use BACKGROUND_NORMAL
+            } else if (flag.equals("1")) {
                 which = BACKGROUND_SUSPENDED;
             } else if (flag.equals("2")) {
                 which = BACKGROUND_MARKED;
