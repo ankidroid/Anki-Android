@@ -595,8 +595,14 @@ public class Statistics extends NavigationDrawerActivity {
         }
 
         private void createStatisticOverview(){
-            mCreateStatisticsOverviewTask = (((Statistics)getActivity()).getTaskHandler()).createStatisticsOverview(
-                    mWebView, mProgressBar);
+            AnkiStatsTaskHandler handler = (((Statistics)getActivity()).getTaskHandler());
+            // Workaround for issue 2406.
+            // TODO: Implementing loader for Collection in Fragment itself would be a better solution.
+            if (handler != null) {
+                mCreateStatisticsOverviewTask = handler.createStatisticsOverview(mWebView, mProgressBar);
+            } else {
+                Log.e(AnkiDroidApp.TAG, "Statistics.createStatisticsOverview() TaskHandler not found");
+            }
         }
 
         @Override
