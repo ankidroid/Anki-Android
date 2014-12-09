@@ -71,6 +71,7 @@ public class IntentHandler extends Activity {
                 }
                 if (filename != null && filename.endsWith(".apkg")) {
                     Uri importUri = Uri.fromFile(new File(getCacheDir(), filename));
+                    Log.v(AnkiDroidApp.TAG, "IntentHandler copying apkg file to " + importUri.getEncodedPath());
                     // Copy to temp file
                     try {
                         // Get an input stream to the data in ContentProvider
@@ -85,6 +86,8 @@ public class IntentHandler extends Activity {
                         }
                         in.close();
                         out.close();
+                        // Show import dialog
+                        successful = sendShowImportFileDialogMsg(importUri.getEncodedPath());
                     } catch (FileNotFoundException e) {
                         errorMessage=e.getLocalizedMessage();
                         e.printStackTrace();
@@ -92,8 +95,6 @@ public class IntentHandler extends Activity {
                         errorMessage=e2.getLocalizedMessage();
                         e2.printStackTrace();
                     }
-                    // Show import dialog
-                    successful = sendShowImportFileDialogMsg(importUri.getEncodedPath());
                 } else {
                     if (filename == null) {
                         errorMessage = "Could not retrieve filename from content resolver; try opening the apkg file with a file explorer";
