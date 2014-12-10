@@ -24,8 +24,8 @@ unzip -q cws/ankidroid.zip -d cws/unpacked
 # Optimize image for CWS
 cp $SOURCE_PATH/docs/marketing/chrome-web-store/icon.png cws/unpacked/
 
-# Add description placeholder to manifest
-echo "`jq '.description = "__MSG_extDesc__"' cws/unpacked/manifest.json`" > cws/unpacked/manifest.json
+# Add short name and description placeholder to manifest
+echo "`jq '.short_name = "AnkiDroid" | .description = "__MSG_extDesc__"' cws/unpacked/manifest.json`" > cws/unpacked/manifest.json
 
 # Extract name and description from ankidroid-titles.txt and marketdescription-XY.txt and
 # inject them into extName and extDesc of messages.json in _locales/XY
