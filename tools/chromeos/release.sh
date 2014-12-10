@@ -30,13 +30,17 @@ echo "`jq '.description = "__MSG_extDesc__"' cws/unpacked/manifest.json`" > cws/
 # Extract name and description from ankidroid-titles.txt and marketdescription-XY.txt and
 # inject them into extName and extDesc of messages.json in _locales/XY
 LANGS=`ls cws/unpacked/_locales`
+DEFAULT_NAME='AnkiDroid Flashcards'
+DEFAULT_DESC='Memorize anything with AnkiDroid!'
 for LANG in $LANGS
 do
     if [ -f $SOURCE_PATH/docs/marketing/localized_description/marketdescription-$LANG.txt ]
     then
         NAME=`grep "^$LANG:" $SOURCE_PATH/docs/marketing/localized_description/ankidroid-titles.txt | sed 's/.*\: //'`
         DESC=`head -n 1 $SOURCE_PATH/docs/marketing/localized_description/marketdescription-$LANG.txt`
-        echo "`jq '.extName.message = $extName | .extDesc.message = $extDesc' --arg extName "${NAME:-AnkiDroid Flashcards}" --arg extDesc "${DESC-Memorize anything with AnkiDroid!}" cws/unpacked/_locales/$LANG/messages.json`" > cws/unpacked/_locales/$LANG/messages.json
+        echo "`jq '.extName.message = $extName | .extDesc.message = $extDesc' --arg extName "${NAME:-DEFAULT_NAME}" --arg extDesc "${DESC-DEFAULT_DESC}" cws/unpacked/_locales/$LANG/messages.json`" > cws/unpacked/_locales/$LANG/messages.json
+    else
+        echo "`jq '.extName.message = $extName | .extDesc.message = $extDesc' --arg extName "$DEFAULT_NAME" --arg extDesc "$DEFAULT_DESC" cws/unpacked/_locales/$LANG/messages.json`" > cws/unpacked/_locales/$LANG/messages.json
     fi
 done
 
