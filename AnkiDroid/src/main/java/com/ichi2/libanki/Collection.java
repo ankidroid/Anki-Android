@@ -440,7 +440,7 @@ public class Collection {
      */
 
     public int nextID(String type) {
-        type = "next" + type.toUpperCase(Locale.US);
+        type = "next" + Character.toUpperCase(type.charAt(0)) + type.substring(1);
         int id;
         try {
             id = mConf.getInt(type);
