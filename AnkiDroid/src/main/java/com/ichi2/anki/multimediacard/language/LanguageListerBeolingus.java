@@ -22,6 +22,7 @@ package com.ichi2.anki.multimediacard.language;
 import android.content.Context;
 
 import com.ichi2.anki.R;
+import java.util.Locale;
 
 /**
  * This one listers services in beolingus.
@@ -33,9 +34,9 @@ public class LanguageListerBeolingus extends LanguageListerBase {
     public LanguageListerBeolingus(Context context) {
         super();
 
-        addLanguage(context.getString(R.string.multimedia_editor_languages_english), "en-de");
-        addLanguage(context.getString(R.string.multimedia_editor_languages_german), "deen");
-        addLanguage(context.getString(R.string.multimedia_editor_languages_spanish), "es-de");
+        addLanguage((new Locale("eng")).getDisplayLanguage() , "en-de");
+        addLanguage((new Locale("deu")).getDisplayLanguage(), "deen");
+        addLanguage((new Locale("spa")).getDisplayLanguage(), "es-de");
         // Seems to have no pronunciation yet
         // addLanguage(context.getString(R.string.multimedia_editor_languages_portuguese), "pt-de");
     }
