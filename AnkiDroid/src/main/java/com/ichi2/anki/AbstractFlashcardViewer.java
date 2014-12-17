@@ -2833,28 +2833,35 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             if (mGesturesEnabled) {
                 try {
-                    if (e2.getY() - e1.getY() > AnkiDroidApp.sSwipeMinDistance
-                            && Math.abs(velocityY) > AnkiDroidApp.sSwipeThresholdVelocity
-                            && Math.abs(e1.getX() - e2.getX()) < AnkiDroidApp.sSwipeMaxOffPath && !mIsYScrolling) {
-                        // down
-                        executeCommand(mGestureSwipeDown);
-                    } else if (e1.getY() - e2.getY() > AnkiDroidApp.sSwipeMinDistance
-                            && Math.abs(velocityY) > AnkiDroidApp.sSwipeThresholdVelocity
-                            && Math.abs(e1.getX() - e2.getX()) < AnkiDroidApp.sSwipeMaxOffPath && !mIsYScrolling) {
-                        // up
-                        executeCommand(mGestureSwipeUp);
-                    } else if (e2.getX() - e1.getX() > AnkiDroidApp.sSwipeMinDistance
-                            && Math.abs(velocityX) > AnkiDroidApp.sSwipeThresholdVelocity
-                            && Math.abs(e1.getY() - e2.getY()) < AnkiDroidApp.sSwipeMaxOffPath && !mIsXScrolling
-                            && !mIsSelecting) {
-                        // right
-                        executeCommand(mGestureSwipeRight);
-                    } else if (e1.getX() - e2.getX() > AnkiDroidApp.sSwipeMinDistance
-                            && Math.abs(velocityX) > AnkiDroidApp.sSwipeThresholdVelocity
-                            && Math.abs(e1.getY() - e2.getY()) < AnkiDroidApp.sSwipeMaxOffPath && !mIsXScrolling
-                            && !mIsSelecting) {
-                        // left
-                        executeCommand(mGestureSwipeLeft);
+                    float dy = e2.getY() - e1.getY();
+                    float dx = e2.getX() - e1.getX();
+
+                    if (Math.abs(dx) > Math.abs(dy)) {
+                        // horizontal swipe if moved further in x direction than y direction
+                        if (dx > AnkiDroidApp.sSwipeMinDistance
+                                && Math.abs(velocityX) > AnkiDroidApp.sSwipeThresholdVelocity
+                                && !mIsXScrolling && !mIsSelecting) {
+                            // right
+                            executeCommand(mGestureSwipeRight);
+                        } else if (dx < -AnkiDroidApp.sSwipeMinDistance
+                                && Math.abs(velocityX) > AnkiDroidApp.sSwipeThresholdVelocity
+                                && !mIsXScrolling && !mIsSelecting) {
+                            // left
+                            executeCommand(mGestureSwipeLeft);
+                        }
+                    } else {
+                        // otherwise vertical swipe
+                        if (dy > AnkiDroidApp.sSwipeMinDistance
+                                && Math.abs(velocityY) > AnkiDroidApp.sSwipeThresholdVelocity
+                                && !mIsYScrolling) {
+                            // down
+                            executeCommand(mGestureSwipeDown);
+                        } else if (dy < -AnkiDroidApp.sSwipeMinDistance
+                                && Math.abs(velocityY) > AnkiDroidApp.sSwipeThresholdVelocity
+                                && !mIsYScrolling) {
+                            // up
+                            executeCommand(mGestureSwipeUp);
+                        }
                     }
                 } catch (Exception e) {
                     Log.e(AnkiDroidApp.TAG, "onFling Exception = " + e.getMessage());

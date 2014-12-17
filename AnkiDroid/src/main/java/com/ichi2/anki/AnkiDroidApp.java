@@ -18,6 +18,7 @@
 
 package com.ichi2.anki;
 
+import android.annotation.TargetApi;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -26,10 +27,12 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Environment;
 import android.os.Message;
 import android.util.Log;
 import android.view.Display;
+import android.view.ViewConfiguration;
 import android.view.WindowManager;
 
 import com.ichi2.anki.exception.AnkiDroidErrorReportException;
@@ -97,11 +100,9 @@ public class AnkiDroidApp extends Application {
     private static boolean mGesturesEnabled;
     public static int sSwipeMinDistance = -1;
     public static int sSwipeThresholdVelocity = -1;
-    public static int sSwipeMaxOffPath = -1;
 
-    private static final int SWIPE_MIN_DISTANCE_DIP = 65;
-    private static final int SWIPE_MAX_OFF_PATH_DIP = 120;
-    private static final int SWIPE_THRESHOLD_VELOCITY_DIP = 120;
+    private static int DEFAULT_SWIPE_MIN_DISTANCE;
+    private static int DEFAULT_SWIPE_THRESHOLD_VELOCITY;
 
     /**
      * The latest package version number that included important changes to the database integrity check routine. All
@@ -120,6 +121,7 @@ public class AnkiDroidApp extends Application {
     /**
      * On application creation.
      */
+    @TargetApi(Build.VERSION_CODES.FROYO)
     @Override
     public void onCreate() {
         super.onCreate();
@@ -170,6 +172,14 @@ public class AnkiDroidApp extends Application {
             // Reason: apply() not available on Android 1.5
             editor.commit();
         }
+        // Get good default values for swipe detection
+        final ViewConfiguration vc = ViewConfiguration.get(this);
+        if (AnkiDroidApp.SDK_VERSION >= 8) {
+            DEFAULT_SWIPE_MIN_DISTANCE = vc.getScaledPagingTouchSlop();
+        } else {
+            DEFAULT_SWIPE_MIN_DISTANCE = vc.getScaledTouchSlop()*2;
+        }
+        DEFAULT_SWIPE_THRESHOLD_VELOCITY = vc.getScaledMinimumFlingVelocity();
     }
 
 
@@ -412,19 +422,16 @@ public class AnkiDroidApp extends Application {
 
     public static boolean initiateGestures(Context context, SharedPreferences preferences) {
         mGesturesEnabled = preferences.getBoolean("gestures", false);
-        if (mGesturesEnabled && sSwipeMinDistance == -1) {
-            // Convert dip to pixel, code in parts from http://code.google.com/p/k9mail/
-            final float gestureScale = context.getResources().getDisplayMetrics().density;
+
+        if (mGesturesEnabled) {
             int sensitivity = preferences.getInt("swipeSensitivity", 100);
             if (sensitivity != 100) {
-                float sens = (200 - sensitivity) / 100.0f;
-                sSwipeMinDistance = (int) (SWIPE_MIN_DISTANCE_DIP * sens * gestureScale + 0.5f);
-                sSwipeThresholdVelocity = (int) (SWIPE_THRESHOLD_VELOCITY_DIP * sens * gestureScale + 0.5f);
-                sSwipeMaxOffPath = (int) (SWIPE_MAX_OFF_PATH_DIP * Math.sqrt(sens) * gestureScale + 0.5f);
+                float sens = 100.0f/sensitivity;
+                sSwipeMinDistance = (int) (DEFAULT_SWIPE_MIN_DISTANCE * sens + 0.5f);
+                sSwipeThresholdVelocity = (int) (DEFAULT_SWIPE_THRESHOLD_VELOCITY * sens  + 0.5f);
             } else {
-                sSwipeMinDistance = (int) (SWIPE_MIN_DISTANCE_DIP * gestureScale + 0.5f);
-                sSwipeThresholdVelocity = (int) (SWIPE_THRESHOLD_VELOCITY_DIP * gestureScale + 0.5f);
-                sSwipeMaxOffPath = (int) (SWIPE_MAX_OFF_PATH_DIP * gestureScale + 0.5f);
+                sSwipeMinDistance = DEFAULT_SWIPE_MIN_DISTANCE;
+                sSwipeThresholdVelocity = DEFAULT_SWIPE_THRESHOLD_VELOCITY;
             }
         }
         return mGesturesEnabled;
