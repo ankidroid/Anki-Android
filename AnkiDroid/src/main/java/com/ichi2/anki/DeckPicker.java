@@ -983,6 +983,11 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             // Increase default number of backups
             preferences.edit().putInt("backupMax", 8).commit();
         }
+        // when upgrading from before 2.4alpha38
+        if (previousVersionCode < 20400138) {
+            // Reset the swipe sensitivity to 100% as the algorithm was changed
+            preferences.edit().putInt("swipeSensitivity", 100).commit();
+        }
     }
 
 
