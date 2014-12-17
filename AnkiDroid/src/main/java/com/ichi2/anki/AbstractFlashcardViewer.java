@@ -3027,7 +3027,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             String frontSideFormat = mCurrentCard._getQA(false).get("q");
             Matcher audioReferences = Sound.sSoundPattern.matcher(frontSideFormat);
             // remove the first instance of audio contained in "{{FrontSide}}"
-            if (audioReferences.find()) {
+            while (audioReferences.find()) {
                 answerContent = answerContent.replaceFirst(audioReferences.group(), "");
             }
         }
