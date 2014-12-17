@@ -23,6 +23,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -37,6 +38,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.multimediacard.glosbe.json.Meaning;
 import com.ichi2.anki.multimediacard.glosbe.json.Phrase;
@@ -137,11 +139,25 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
         mSpinnerTo.setAdapter(adapterTo);
         linearLayout.addView(mSpinnerTo);
 
+        final SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+
+        // Try to set spinner value to last selected position
+        String fromLang = preferences.getString("translatorLastLanguageFrom", "");
+        String toLang = preferences.getString("translatorLastLanguageTo", "");
+        mSpinnerFrom.setSelection(getSpinnerIndex(mSpinnerFrom, fromLang));
+        mSpinnerTo.setSelection(getSpinnerIndex(mSpinnerTo, toLang));
+        // Setup button
         Button btnDone = new Button(this);
         btnDone.setText(getText(R.string.multimedia_editor_trans_translate));
         btnDone.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Remember currently selected language
+                String fromLang = mSpinnerFrom.getSelectedItem().toString();
+                String toLang = mSpinnerTo.getSelectedItem().toString();
+                preferences.edit().putString("translatorLastLanguageFrom", fromLang).commit();
+                preferences.edit().putString("translatorLastLanguageTo", toLang).commit();
+                // Get translation
                 translate();
             }
         });
@@ -405,4 +421,15 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
         }
     }
 
+    private int getSpinnerIndex(Spinner spinner, String myString){
+
+        int index = 0;
+
+        for (int i=0;i<spinner.getCount();i++){
+            if (spinner.getItemAtPosition(i).equals(myString)){
+                index = i;
+            }
+        }
+        return index;
+    }
 }

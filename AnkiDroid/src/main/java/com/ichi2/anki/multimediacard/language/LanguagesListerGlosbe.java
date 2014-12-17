@@ -3,6 +3,7 @@
  * Copyright (c) 2013 Zaur Molotnikov <qutorial@gmail.com>                              *
  * Copyright (c) 2013 Nicolas Raoul <nicolas.raoul@gmail.com>                           *
  * Copyright (c) 2013 Flavio Lerda <flerda@gmail.com>                                   *
+ * Copyright (c) 2014 Timothy Rae <perceptualchaos2@gmail.com>                          *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -20,6 +21,7 @@
 package com.ichi2.anki.multimediacard.language;
 
 import java.util.HashMap;
+import java.util.Locale;
 
 import android.content.Context;
 
@@ -28,46 +30,39 @@ import com.ichi2.anki.R;
 /**
  * This language lister is used to call glosbe.com translation services.
  * <p>
- * Encodings of languages here correspond to the ISO 693-3 codes.
+ * Glosbe expects the languages to follow the ISO 639-3 codes.
  * <p>
  * It can be extended freely here, to support more languages.
  */
 public class LanguagesListerGlosbe extends LanguageListerBase {
     public LanguagesListerGlosbe(Context context) {
-        addLanguage(context.getString(R.string.multimedia_editor_languages_mandarin), "cmn");
-        addLanguage(context.getString(R.string.multimedia_editor_languages_spanish), "spa");
-        addLanguage(context.getString(R.string.multimedia_editor_languages_english), "eng");
-        addLanguage(context.getString(R.string.multimedia_editor_languages_russian), "rus");
-        addLanguage(context.getString(R.string.multimedia_editor_languages_german), "deu");
-        addLanguage(context.getString(R.string.multimedia_editor_languages_slovak), "slk");
-        addLanguage(context.getString(R.string.multimedia_editor_languages_portuguese), "por");
-        addLanguage(context.getString(R.string.multimedia_editor_languages_french), "fra");
-        addLanguage(context.getString(R.string.multimedia_editor_languages_hindi), "hin");
-        addLanguage(context.getString(R.string.multimedia_editor_languages_arabic), "ar");
-        addLanguage(context.getString(R.string.multimedia_editor_languages_japaneese), "jpn");
+        final String [] languages ={"eng", "deu", "jpn", "fra", "spa", "pol", "ita", "rus",
+            "ces", "zho", "nld", "por", "swe", "hrv", "hin", "hun", "vie", "ara", "tur"};
+        // Java Locale uses ISO 639-2 rather than 639-3 so we currently only support the subset of
+        // the languages on Glosbe which are in ISO 639-2. "Chinese Mandarin" ("cmn") for example
+        // is not supported, but "Chinese" ("zho") is.
+        for (String l : languages) {
+            Locale locale = new Locale(l);
+            addLanguage(locale.getDisplayLanguage(), locale.getISO3Language());
+        }
     }
 
-    private static HashMap<String, String> glosbe_code_map = null;
+    private static HashMap<String, Locale> locale_map = null;
 
-
+    /**
+     * Convert from 3 letter ISO 639-2 language code to ISO 639-1
+     * @param req 3 letter language code
+     * @return 2 letter language code
+     */
     public static String requestToResponseLangCode(String req) {
-
-        if (glosbe_code_map == null) {
-            glosbe_code_map = new HashMap<String, String>();
-
-            glosbe_code_map.put("cmn", "cmn");
-            glosbe_code_map.put("spa", "es");
-            glosbe_code_map.put("eng", "en");
-            glosbe_code_map.put("rus", "ru");
-            glosbe_code_map.put("deu", "de");
-            glosbe_code_map.put("slk", "sk");
-            glosbe_code_map.put("por", "pt");
-            glosbe_code_map.put("fra", "fr");
-            glosbe_code_map.put("hin", "hi");
-            glosbe_code_map.put("ar", "ar");
-            glosbe_code_map.put("jpn", "ja");
+        if (locale_map == null) {
+            String[] languages = Locale.getISOLanguages();
+            locale_map = new HashMap<String, Locale>(languages.length);
+            for (String language : languages) {
+                Locale locale = new Locale(language);
+                locale_map.put(locale.getISO3Language(), locale);
+            }
         }
-
-        return glosbe_code_map.get(req);
+        return locale_map.get(req).getLanguage();
     }
 }
