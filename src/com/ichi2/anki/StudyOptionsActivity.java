@@ -29,12 +29,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
 
-public class StudyOptionsActivity extends NavigationDrawerActivity {
+import org.json.JSONArray;
+
+public class StudyOptionsActivity extends NavigationDrawerActivity implements StudyOptionsListener {
 
     private StudyOptionsFragment mCurrentFragment;
 
@@ -204,5 +207,17 @@ public class StudyOptionsActivity extends NavigationDrawerActivity {
             iFilter.addAction(SdCardReceiver.MEDIA_MOUNT);
             registerReceiver(mUnmountReceiver, iFilter);
         }
+    }
+
+
+    @Override
+    public void refreshMainInterface() {
+        mCurrentFragment.resetAndRefreshInterface();
+    }
+
+
+    @Override
+    public void createFilteredDeck(JSONArray delays, Object[] terms, Boolean resched) {
+        mCurrentFragment.createFilteredDeck(delays, terms, resched);
     }
 }

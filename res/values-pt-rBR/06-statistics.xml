@@ -42,41 +42,41 @@
   <string name="statistics_menu">Estatísticas</string>
   <string name="statistics_young">Jovem</string>
   <string name="statistics_mature">Maduro</string>
-  <string name="statistics_young_and_learn">Young+Learn</string>
-  <string name="statistics_unlearned">Unseen</string>
-  <string name="statistics_suspended">Suspended</string>
+  <string name="statistics_young_and_learn">Jovem+Aprender</string>
+  <string name="statistics_unlearned">Não vistos</string>
+  <string name="statistics_suspended">Suspenso</string>
   <string name="statistics_relearn">Reaprender</string>
   <string name="statistics_learn">Aprender</string>
   <string name="statistics_cram">Cursinho</string>
   <string name="statistics_type_title">Estatísticas</string>
   <string name="stats_cards">Cartões</string>
-  <string name="stats_cards_intervals">Cards with given Interval</string>
-  <string name="stats_cumulative_cards">Cumulative Cards</string>
-  <string name="stats_cumulative_answers">Cumulative Answers</string>
-  <string name="stats_cumulative_time_minutes">Cumulative Minutes</string>
-  <string name="stats_cumulative_time_hours">Cumulative Hours</string>
-  <string name="stats_cumulative">Cumulative</string>
-  <string name="stats_cumulative_percentage">Cumulative Percentage</string>
-  <string formatted="false" name="stats_cumulative_correct_percentage">Cumulative Correct %</string>
+  <string name="stats_cards_intervals">Cartões com determinado intervalo</string>
+  <string name="stats_cumulative_cards">Cartões Cumulativos</string>
+  <string name="stats_cumulative_answers">Respostas Cumulativas</string>
+  <string name="stats_cumulative_time_minutes">Minutos Cumulativos</string>
+  <string name="stats_cumulative_time_hours">Horas Cumulativas</string>
+  <string name="stats_cumulative">Cumulativo</string>
+  <string name="stats_cumulative_percentage">Porcentagem Cumulativa</string>
+  <string formatted="false" name="stats_cumulative_correct_percentage">% Correto Cumulativo</string>
   <string name="stats_answers">Respostas</string>
   <string name="stats_minutes">Minutos</string>
   <string name="stats_hours">Horas</string>
-  <string name="stats_percentage">Percentage</string>
-  <string name="stats_period_month">1 month</string>
-  <string name="stats_period_year">1 year</string>
-  <string name="stats_period_lifetime">deck life</string>
+  <string name="stats_percentage">Porcentagem</string>
+  <string name="stats_period_month">1 mês</string>
+  <string name="stats_period_year">1 ano</string>
+  <string name="stats_period_lifetime">Toda a vida do deck</string>
   <string name="stats_deck_current">deck</string>
-  <string name="stats_deck_collection">collection</string>
-  <string name="stats_time_of_day">Time of Day</string>
-  <string name="stats_day_of_week">Day of Week</string>
-  <string formatted="false" name="stats_percentage_correct">% Correct</string>
-  <string name="stats_reviews">Reviews</string>
-  <string name="stats_answer_type">Answer Type</string>
-  <string name="stats_today_again_count">Again count: &lt;b&gt;%d&lt;/b&gt;</string>
-  <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; correct)</string>
-  <string name="stats_today_type_breakdown">Learn: &lt;b&gt;%1$s&lt;/b&gt;, Review: &lt;b&gt;%2$s&lt;/b&gt;, Relearn: &lt;b&gt;%3$s&lt;/b&gt;, Filtered: &lt;b&gt;%4$s&lt;/b&gt;</string>
-  <string name="stats_today_mature_cards">Correct answers on mature cards: %1$d/%2$d (%3$.1f%%)</string>
-  <string name="stats_today_no_mature_cards">No mature cards were studied today.</string>
+  <string name="stats_deck_collection">coleção</string>
+  <string name="stats_time_of_day">Hora do Dia</string>
+  <string name="stats_day_of_week">Dia da Semana</string>
+  <string formatted="false" name="stats_percentage_correct">% Correto</string>
+  <string name="stats_reviews">Revisões</string>
+  <string name="stats_answer_type">Tipo de resposta</string>
+  <string name="stats_today_again_count">Número de repetições: &lt;b&gt;%d&lt;/b&gt;</string>
+  <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; corretas)</string>
+  <string name="stats_today_type_breakdown">Aprender: &lt;b&gt;%1$s&lt;/b&gt;, Revisar: &lt;b&gt;%2$s&lt;/b&gt;, Reaprender: &lt;b&gt;%3$s&lt;/b&gt;, Filtradas: &lt;b&gt;%4$s&lt;/b&gt;</string>
+  <string name="stats_today_mature_cards">Respostas corretas em cartões maduros: %1$d/%2$d (%3$.1f%%)</string>
+  <string name="stats_today_no_mature_cards">Nenhum cartão maduro foi estudado hoje.</string>
   <string name="statistics_period_x_axis_minutes">Minutos</string>
   <string name="statistics_new_cards">Novos cartões</string>
   <string name="statistics_failed_cards">Cartões falhados</string>
@@ -107,8 +107,8 @@
   <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; cartões/dia</string>
   <string name="deck_summary_deck_age">Idade do deck: &lt;b&gt;%d&lt;/b&gt; dias</string>
   <string name="deck_summary_all_decks">Todos decks</string>
-  <string name="stats_select_decks">Select deck</string>
-  <string name="stats_select_time_scale">Select timescale</string>
+  <string name="stats_select_decks">Selecionar deck</string>
+  <string name="stats_select_time_scale">Selecione a escala de tempo</string>
   <string-array name="next_review_in_s">
     <item>em 1 segundo</item>
     <item>em 1 minuto</item>
@@ -146,15 +146,15 @@
     <item>Semanas</item>
     <item>Meses</item>
   </string-array>
-  <string name="stats_today">Today</string>
+  <string name="stats_today">Hoje</string>
   <string name="stats_forecast">Previsão</string>
   <string name="stats_review_count">Contagem de revisões</string>
   <string name="stats_review_time">Tempo de revisão</string>
-  <string name="stats_review_intervals">Intervals</string>
-  <string name="stats_breakdown">Hourly Breakdown</string>
-  <string name="stats_weekly_breakdown">Weekly Breakdown</string>
-  <string name="stats_answer_buttons">Answer Buttons</string>
-  <string name="stats_cards_types">Cards Types</string>
+  <string name="stats_review_intervals">Intervalos</string>
+  <string name="stats_breakdown">Por Hora</string>
+  <string name="stats_weekly_breakdown">Por Semanas</string>
+  <string name="stats_answer_buttons">Botões de Resposta</string>
+  <string name="stats_cards_types">Tipos de Cartões</string>
   <string-array name="stats_period">
     <item>1 mês</item>
     <item>1 ano</item>
@@ -165,20 +165,20 @@
     <item>deque atual</item>
   </string-array>
   <string-array name="stats_day_time_strings">
-    <item>4AM</item>
-    <item>10AM</item>
-    <item>4PM</item>
-    <item>10PM</item>
-    <item>3AM</item>
+    <item>04:00</item>
+    <item>10:00</item>
+    <item>16:00</item>
+    <item>22:00</item>
+    <item>03:00</item>
   </string-array>
   <string-array name="stats_week_days">
-    <item>Sun</item>
-    <item>Mon</item>
-    <item>Tue</item>
-    <item>Wed</item>
-    <item>Thu</item>
-    <item>Fri</item>
-    <item>Sat</item>
+    <item>Dom</item>
+    <item>Seg</item>
+    <item>Ter</item>
+    <item>Qua</item>
+    <item>Qui</item>
+    <item>Sex</item>
+    <item>Sáb</item>
   </string-array>
   <string-array name="stats_eases_ticks">
     <item>1</item>
@@ -194,11 +194,11 @@
     <item>4</item>
   </string-array>
   <plurals name="stats_today_cards">
-    <item quantity="one">Studied &lt;b&gt;%1$d card&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
-    <item quantity="other">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
+    <item quantity="one">Estudou &lt;b&gt;%1$d cartão&lt;/b&gt; em &lt;b&gt;%2$s&lt;/b&gt; hoje.</item>
+    <item quantity="other">Estudou &lt;b&gt;%1$d cartões&lt;/b&gt; em &lt;b&gt;%2$s&lt;/b&gt; hoje.</item>
   </plurals>
   <plurals name="stats_today_cards_not_bold">
-    <item quantity="one">Studied %1$d card in %2$s today.</item>
-    <item quantity="other">Studied %1$d cards in %2$s today.</item>
+    <item quantity="one">Estudou %1$d cartões em %2$s hoje.</item>
+    <item quantity="other">Estudou %1$d cartões em %2$s hoje.</item>
   </plurals>
 </resources>

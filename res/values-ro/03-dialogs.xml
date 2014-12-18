@@ -51,6 +51,7 @@
   <string name="new_version_message">Noile caracteristici:</string>
   <string name="no_tts_available_title">Text-în-Vorbire</string>
   <string name="no_tts_available_message">No text-to-speech language available</string>
+  <string name="initializing_tts">Initializing TTS&#8230;</string>
   <string name="tts_no_tts">Nu vorbi</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Flashcards for Android</h2>AnkiDroid is a flashcard application which is fully compatible with the desktop software <a href=\"%2$s\">Anki</a>. You can create, download and learn contents on both, AnkiDroid or Anki Desktop, and synchronize them very easily.]]></item>

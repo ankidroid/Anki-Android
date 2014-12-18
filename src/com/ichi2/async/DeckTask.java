@@ -20,7 +20,6 @@ package com.ichi2.async;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.database.SQLException;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -42,7 +41,6 @@ import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.importer.Anki2Importer;
 import com.ichi2.widget.WidgetStatus;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -827,7 +825,10 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             ankiDB.getDatabase().beginTransaction();
             try {
                 addedCount = imp.run();
-                ankiDB.getDatabase().setTransactionSuccessful();
+                // Rollback db transaction if an error occured (TODO: doesn't appear to be working)
+                if (addedCount >= 0) {
+                    ankiDB.getDatabase().setTransactionSuccessful();
+                }
             } finally {
                 ankiDB.getDatabase().endTransaction();
                 if (sharedDeckImport) {
@@ -1092,6 +1093,9 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         Collection col = (Collection) data[0];
         JSONObject conf = (JSONObject) data[1];
         try {
+            // Note: We do the actual removing of the options group in the main thread so that we 
+            // can ask the user to confirm if they're happy to do a full sync, and just do the resorting here
+
             // When a conf is deleted, all decks using it revert to the default conf.
             // Cards must be reordered according to the default conf.
             int order = conf.getJSONObject("new").getInt("order");
@@ -1100,7 +1104,6 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                 conf.getJSONObject("new").put("order", defaultOrder);
                 col.getSched().resortConf(conf);
             }
-            col.getDecks().remConf(conf.getLong("id"));
             return new TaskData(true);
         } catch (JSONException e) {
             return new TaskData(false);

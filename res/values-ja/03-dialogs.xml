@@ -51,6 +51,7 @@
   <string name="new_version_message">新機能:</string>
   <string name="no_tts_available_title">テキスト読み上げ</string>
   <string name="no_tts_available_message">テキスト読み上げ可能な言語がありません</string>
+  <string name="initializing_tts">Initializing TTS&#8230;</string>
   <string name="tts_no_tts">音声なし</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Android用のフラッシュカード</h2>AnkiDroidは、PCソフトウェア <a href=\"%2$s\">Anki</a> と完全互換のフラッシュカードアプリです。あなたは、AnkiDroid と Anki のどちらでも教材を作成、ダウンロード、学習し、また、簡単に双方の同期をとることができます。]]></item>

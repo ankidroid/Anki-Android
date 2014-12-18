@@ -39,25 +39,26 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="check_db_title">Tarkasta tietokanta</string>
-  <string name="check_db_warning">This may take a long time</string>
-  <string name="check_db_acknowledge">Database checked</string>
-  <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d kB.</string>
+  <string name="check_db_title">Tarkista tietokanta?</string>
+  <string name="check_db_warning">Tähän voi mennä vähän aikaa</string>
+  <string name="check_db_acknowledge">Tietokanta tarkistettu</string>
+  <string name="check_db_acknowledge_shrunk">Tietokanta tarkistettu ja optimoitu.\nKoko pieneni %d kB.</string>
   <string name="contextmenu_deckpicker_delete_deck">Poista korttipakka</string>
-  <string name="delete_deck_title">Poista korttipakka</string>
+  <string name="delete_deck_title">Poista korttipakka?</string>
   <string name="delete_deck_message">Haluatko varmasti poistaa kaikki kortit pakasta %s?</string>
   <string name="delete_cram_deck_message">Haluatko varmasti lähettää kaikki pakan %s kortit niiden alkuperäisiin pakkoihin?</string>
   <string name="delete_deck_confirm">Poista se</string>
-  <string name="new_version_message">Uudet ominaisuudet:</string>
-  <string name="no_tts_available_title">Teksti puheeksi</string>
-  <string name="no_tts_available_message">Teksti puheeksi kieli ei ole käytettävissä</string>
+  <string name="new_version_message">Uusia ominaisuuksia:</string>
+  <string name="no_tts_available_title">Puhesyntetisaattori</string>
+  <string name="no_tts_available_message">Yhtään puhesyntetisaattorin tukemaa kieltä ei ole käytettävissä</string>
+  <string name="initializing_tts">Initializing TTS&#8230;</string>
   <string name="tts_no_tts">Älä puhu</string>
   <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s:<br/>Flashcards for Android</h2>AnkiDroid is a flashcard application which is fully compatible with the desktop software <a href=\"%2$s\">Anki</a>. You can create, download and learn contents on both, AnkiDroid or Anki Desktop, and synchronize them very easily.]]></item>
-    <item><![CDATA[To help us make AnkiDroid better, please report any bug <a href=\"%1$s\">here</a>; new feature ideas are very welcome too! Use the <a href=\"%2$s\">wiki</a> and say Hi on the <a href=\"%3$s\">forum</a>.]]></item>
-    <item><![CDATA[AnkiDroid is <a href=\"%1$s\">open source software<a/>, so everyone is encouraged to <a href=\"%2$s\">join</a> the <a href=\"%3$s\">contributors</a> :-)]]></item>
-    <item><![CDATA[Non-developers can also help, for instance by <a href=\"%1$s\">translating</a> AnkiDroid, updating the wiki and screenshots, <a href=\"%2$s\">donating</a> to Anki Desktop, or blogging about AnkiDroid!]]></item>
-    <item><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GNU-GPL v3 license</a> and the source code is available <a href=\"%2$s\">here</a>.]]></item>
+    <item><![CDATA[<h2>%1$s:<br/>Kääntökorttisovellus Androidille</h2>AnkiDroid on ohjelma opiskeluun kääntökorttien (flashcard) avulla. Se on täysin yhteensopiva <a href=\"%2$s\">Anki</a> työpöytäsovelluksen kanssa. Voit luoda kortteja, ladata niitä ja opiskella sekä AnkiDroidilla, että Ankilla ja synkronoida ne helposti toistensa kanssa.]]></item>
+    <item><![CDATA[Auta tekemään AnkiDroidista parempi, raportoi löytämäsi virheet <a href=\"%1$s\">täällä</a>. Ideoita uusiksi ominaisuuksiksi otetaan myös vastaan, käytä <a href=\"%2$s\">wikiä</a> ja käy <a href=\"%3$s\">foorumilla</a>.]]></item>
+    <item><![CDATA[AnkiDroid on <a href=\"%1$s\">avoimen lähdekoodin ohjelmisto<a/>, kaikki voivat <a href=\"%2$s\">auttaa</a> ohjelman <a href=\"%3$s\">kehittäjiä</a> :-)]]></item>
+    <item><![CDATA[Ohjelmointitaidottomat voivat myös auttaa, esimerkiksi tekemällä<a href=\"%1$s\">käännöksiä</a>, päivittämällä wikiä ja ruutukaappauksia, <a href=\"%2$s\">lahjoittamalla rahaa</a> Anki-työpöytäsovelluksen kehittäjille tai bloggaamalla AnkiDroidista!]]></item>
+    <item><![CDATA[AnkiDroid on lisensoitu <a href=\"%1$s\">GNU GPL v3-lisenssillä</a> ja lähdekoodi on saatavilla <a href=\"%2$s\">täällä</a>.]]></item>
   </string-array>
   <string name="dont_show_again">Älä näytä uudelleen</string>
   <string name="notify_ticker">Sovelluksen päivitys</string>
@@ -65,32 +66,32 @@
   <string name="notify_message">Lataa uusin versio</string>
   <string name="notification_title">Vahvista AnkiDroid-päivitys</string>
   <string name="preview_title">Esikatselu</string>
-  <string name="notification_message">Uusi versio Ankidroidista on saatavilla Android Marketista.\n\nHaluatko asentaa sen?</string>
+  <string name="notification_message">Uusi versio Ankidroidista on saatavilla Google Playssä.\n\nHaluatko asentaa sen?</string>
   <string name="notification_stop">Älä ilmoita tästä päivityksestä uudelleen</string>
   <string name="reset_card_dialog_title">Nollaa kortin edistyminen</string>
-  <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue.</string>
-  <string name="reset_card_dialog_acknowledge">Card reset</string>
-  <string name="reschedule_card_dialog_title">Reschedule card</string>
-  <string name="reschedule_card_dialog_message">Reschedule for review in x days:</string>
-  <string name="reschedule_card_dialog_acknowledge">Card rescheduled</string>
+  <string name="reset_card_dialog_message">Tämä kortti laitetaan uusien korttien jonon viimeiseksi.</string>
+  <string name="reset_card_dialog_acknowledge">Resetoi kortti</string>
+  <string name="reschedule_card_dialog_title">Toista kortti</string>
+  <string name="reschedule_card_dialog_message">Toista uudestaan x päivän päästä:</string>
+  <string name="reschedule_card_dialog_acknowledge">Kortti on ajoitettu uudelleen</string>
   <string name="answering_error_title">Tietokantavirhe</string>
-  <string name="answering_error_message">Tapahtui virhe kirjoittaessa kokoelmaan. Tämä voi aiheutua korruptoituneesti tietokannasta tai liian vähäisestä levytilasta.\n\nJos tämä tapahtuu usein yritä tarkastaa tietokanta, korjata kokoelma tai palauttaa se varmuuskopioista. Käynnistä \"asetukset\" tehdäksesi tämän.\n\nKyseessä voi olla myös vika AnkiDroidissa, joten ilmoita tästä meille jotta voimme tarkastaa asian.</string>
+  <string name="answering_error_message">Kokoelmaan kirjoittaminen epäonnistui. Tämä voi aiheutua viallisesta tietokannasta tai liian vähäisestä levytilasta.\n\nJos tämä tapahtuu usein, yritä tarkistaa tietokanta, korjata kokoelma tai palauttaa se varmuuskopioista. Voit tehdä tämän napauttamalla \"Asetukset\"-painiketta.\n\nKyseessä voi olla myös vika AnkiDroidissa, joten ilmoita tästä meille jotta voimme tarkastaa asian.</string>
   <string name="answering_error_report">Ilmoita viasta</string>
-  <string name="repair_deck_dialog">Haluatko varmasti yrittää korjata tietokannan?\n\nEnnen yritystä kopioi tietokannasta luodaan alikansioon \"%s\".</string>
+  <string name="repair_deck_dialog">Haluatko varmasti yrittää korjata tietokannan?\n\nEnnen yritystä kopio tietokannasta luodaan alihakemistoon \"%s\".</string>
   <string name="intent_add_saved_information">Tallennetut tiedot</string>
   <string name="intent_add_clear_all">Tyhjennä kaikki</string>
-  <string name="intent_aedict_empty">Kategoria \"default\" on tyhjä</string>
+  <string name="intent_aedict_empty">Luokka \"oletus\" on tyhjä</string>
   <string name="intent_aedict_category">Lisätäksesi kortteja AnkiDroidiin poista kaikki Notepad-kategoriat tai lisää uusi nimellä \"default\"</string>
   <string name="custom_study_new_total_new">Uusia kortteja pakassa: %s</string>
-  <string name="custom_study_rev_total_rev">Arvioita tehtävänä pakassa: %s</string>
+  <string name="custom_study_rev_total_rev">Opiskeltavia kortteja pakassa: %s</string>
   <string name="custom_study_new_extend">Lisää tämän päivän uusien korttien rajoitusta</string>
-  <string name="custom_study_rev_extend">Kasvata tämän päivän tarkastelujen määrää</string>
-  <string name="custom_study_forgotten">Tarkastelukortteja unohdettu edellisinä x päivänä:</string>
+  <string name="custom_study_rev_extend">Kasvata tämän päivän kertausten määrää</string>
+  <string name="custom_study_forgotten">Kortteja unohdettu edellisenä x päivänä:</string>
   <string name="custom_study_ahead">Kertaa etukäteen x päivää:</string>
   <string name="custom_study_random">Valitse x korttia satunnaisesti pakasta:</string>
   <string name="custom_study_preview">Esikatsele viimeisinä x päivänä lisättyjä kortteja:</string>
   <string name="custom_study_tags">Syötä tunnisteet:</string>
-  <string name="rebuild_custom_study_deck">Uudelleenrakennetaan mukautettua pakkaa.\nOdota...</string>
+  <string name="rebuild_custom_study_deck">Kasataan mukautettua pakkaa&#8230;</string>
   <string name="deck_upgrade_title">Pakan päivitys</string>
   <string name="deck_upgrade_rename_warning">Huomaa, että tämä vie nykyisen kokoelmasi tiedostoon \'%1$s\' ja luo uuden vanhan anki 1.x tiedostoista. Halutessasi voit manuaalisesti tuoda uudelleen edellä mainitun apkg-tiedoston ohjatun toiminnon suorittamisen jälkeen. Haluatko varmasti jatkaa?</string>
   <string name="deck_upgrade_major_warning"><![CDATA[Tämä on merkittävä päivitys Ankidroidiin ja kestää vähintään 10-20 minuuttia. <br><br>Haluat jatkaa nyt tai myöhemmin? <br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=fi">Lisätietoja</a>]]></string>
@@ -101,65 +102,65 @@
   <string name="deck_upgrade_more_options_downgrade"><![CDATA[<br><br>Jos haluat palata vanhaan versioon AnkiDroid 1 niin lue <a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Continuing_to_use_AnkiDroid_1.1.3"> nämä ohjeet</a>]]></string>
   <string name="deck_upgrade_create_new_collection">Luo uusi kokoelma</string>
   <string name="deck_upgrade_create_new_collection_title">Luo Uusi Kokoelma</string>
-  <string name="deck_upgrade_create_new_collection_button">New collection</string>
+  <string name="deck_upgrade_create_new_collection_button">Uusi kokoelma</string>
   <string name="deck_upgrade_not_import_warning">Oletko varma, että haluat tehdä tämän? Vanhoja tietoja ei tuoda.</string>
   <string name="deck_upgrade_via_web"><![CDATA[<b>Tämän päivitysmenetelmä ei ole suositeltava, jos olet käyttänyt mediatiedostoja tai sinulla on iso kokoelma!</b><br><br>Sinun Anki1 pakkasi tullaan pakkaamaan ja ladataan AnkiWebiin, jos muunnettu kokoelmasi sitten ladataan.<br><br>Huomaa että tämä tarvitsee luotettavan internet-yhteyden ja että 50MB on suurin mahdollinen tiedoston koko.<br><br>Anki työpöytäversioiden käyttäjiä kehotetaan käyttämään PC-pohjaista päivitysmenetelmää. <br><br>Haluatko yhä jatkaa?]]></string>
   <string name="deck_upgrade_via_anki_desktop"><![CDATA[Jos AnkiDroid-kokoelmasta on ajantasainen versio Anki-työpöytäohjelmistossa, voit päivittää siellä ja lataa päivitetyn kokoelman synkronoimalla AnkiWebin kanssa.<br><br>Vaihtoehtoisesti voit kopioida AnkiDroid-kokoelman tietokoneeseen USB-väylän kautta, päivittää kokoelman siellä ja kopioida takaisin AnkiDroidiin.]]></string>
   <string name="deck_upgrade_auto_upgrade"><![CDATA[<![CDATA[Asenna ja käynnistä Anki Desktop 2.0.4 tai uudempi päivittääksesi kokoelman, synkronoi päivitetty kokoelmaasi AnkiWebin kanssa ja paina "Lataa"-painiketta. <br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=fi#Option_2:_Using_AnkiWeb_sync">Lisää tietoja päivittämisestä  AnkiWebin kanssa</a>]] >]]></string>
-  <string name="deck_upgrade_manual"><![CDATA[Please copy all of your *.anki files (and any *.media folders) from your AnkiDroid folder to your Anki Desktop folder, and then install and start Anki Desktop version 2.0.4 or greater to upgrade your collection.<br><br>When the upgrade is completed, export your collection from Anki2 and copy the collection.apkg file to your AnkiDroid folder and press the Import button below.<br><br><a href=\"http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_1:_Using_USB_(recommended)\">More detailed information on upgrading using USB.</a>]]></string>
+  <string name="deck_upgrade_manual"><![CDATA[Kopioi kaikki *.anki -tiedostot (ja kaikki *.media -hakemistot) AnkiDroid hakemistosta Anki-työpöytäsovelluksen hakemistoon ja asenna ja käynnistä Anki versio 2.0.4 tai uudempi päivittääksesi kokoelmasi.<br><br>Kun päivitys on valmis, tallenna kokoelma Ankissa ja kopioi kokoelma.apkg -tiedosto AnkiDroid hakemistoosi ja paina alempana olevaa \'Tuo\'-painiketta. <br><br><a href=\"http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_1:_Using_USB_(recommended)\">Lisätietoja päivittämisestä USB-liitännän avulla.</a>]]></string>
   <string name="upgrade_deck_cancelled_title">Päivitys peruutettu</string>
-  <string name="upgrade_deck_cancelled_description">The upgrade attempt was cancelled</string>
-  <string name="upgrade_deck_web_upgrade_failed">The upgrade process was unsuccessful</string>
-  <string name="upgrade_deck_web_upgrade_exceeds">The size of your Anki1 decks exceeds the 50 MB limit of the server. Try upgrading with a different method.</string>
-  <string name="upgrade_deck_web_upgrade_sdcard">The upgrade was completed, but there was an error while unpacking the resulting collection. Make sure that you have enough available disk (%1$d MB needed) and try again, or try upgrading with a different method.</string>
+  <string name="upgrade_deck_cancelled_description">Päivitysyritys peruttiin</string>
+  <string name="upgrade_deck_web_upgrade_failed">Päivitys ei onnistunut</string>
+  <string name="upgrade_deck_web_upgrade_exceeds">Anki1-pakkojesi koko on suurempi kuin palvelimen 50 Mt yläraja. Kokeile toista päivitysmenetelmää.</string>
+  <string name="upgrade_deck_web_upgrade_sdcard">Päivitys valmistui, mutta sen tuottaman kokoelman purkaminen epäonnistui. Varmista, että tarpeellinen määrä tallennustilaa on saatavilla (tarvitaan %1$d Mt) ja kokeile uudestaan. Voit myös kokeilla toista päivitysmenetelmää.</string>
   <string name="export_progress_title">Kokoelman vienti</string>
   <string name="export_progress_exporting">Viedään kokoelmaa, odota&#8230;</string>
-  <string name="upgrade_deck_export_successful">Vanhan kokoelman vienti onnistui, jatketaan päivitysprosessia.</string>
-  <string name="upgrade_deck_export_error">Virhe vietäessä vanhaa kokoelmaa. Haluatko silti jatkaa päivitysprosessia (vanha kokoelma menetetään)?</string>
+  <string name="upgrade_deck_export_successful">Vanhan kokoelman tallennus onnistui, jatketaan päivitystä.</string>
+  <string name="upgrade_deck_export_error">Virhe tallennettaessa vanhaa kokoelmaa. Haluatko silti jatkaa päivitystä? Vanha kokoelma menetetään.</string>
   <string name="upgrade_deck_sync_from_ankiweb">Synkronoi AnkiWebistä</string>
   <string name="upgrade_deck_have_you_synced">Oletko varma, että päivitit kokoelman Anki Desktop 2:lla ja synkronoit AnkiWebiin?</string>
   <string name="upgrade_deck_dont_upgrade">Älä päivitä</string>
   <string name="import_unpacking">Puretaan arkistoa.\nOdota&#8230;</string>
   <string name="importing_collection">Tuodaan kokoelmaa.\nOdota&#8230;</string>
   <string name="import_media_count">Tuodaan mediatiedostoja %1$d%%\nOdota&#8230;</string>
-  <string name="import_update_counts">Päivitetään pakkojen määriä.\nPlease odottaa&#8230;</string>
+  <string name="import_update_counts">Päivitetään pakkojen lukumääriä&#8230;</string>
   <string name="import_add_progress">• Puretaan arkistoa %1$s\n• Merkintöjen tuonti %2$d%%\n• Korttien tuonti %3$d%%\n• Siistiminen %4$s</string>
-  <string name="sd_card_full_title">SD card full</string>
-  <string name="sd_card_almost_full_title">SD card almost full</string>
-  <string name="restore_backup_title">Restore backup?</string>
-  <string name="restore_backup">Your collection will be replaced with an older copy. Any unsaved progress will be lost.</string>
-  <string name="dialog_cancel">Cancel</string>
+  <string name="sd_card_full_title">SD-kortti on täysi</string>
+  <string name="sd_card_almost_full_title">SD-kortti on lähes täysi</string>
+  <string name="restore_backup_title">Palauta varmuuskopio?</string>
+  <string name="restore_backup">Kokoelmasi korvataan vanhemmalla kopiolla. Mahdolliset tallentamattomat tiedot menetetään.</string>
+  <string name="dialog_cancel">Peruuta</string>
   <string name="dialog_ok">OK</string>
-  <string name="dialog_continue">Continue</string>
-  <string name="dialog_neutral_later">Later</string>
-  <string name="dialog_positive_create">Create</string>
-  <string name="dialog_positive_delete">Delete</string>
-  <string name="dialog_positive_disable">Disable</string>
-  <string name="dialog_positive_overwrite">Overwrite</string>
-  <string name="dialog_positive_remove">Remove</string>
-  <string name="dialog_positive_repair">Repair</string>
-  <string name="dialog_positive_replace">Replace</string>
-  <string name="dialog_positive_reset">Reset</string>
-  <string name="dialog_positive_restore">Restore</string>
-  <string name="dialog_positive_save">Save</string>
-  <string name="dialog_positive_set">Set</string>
-  <string name="add_button_content">Add&#8230;</string>
-  <string name="card_browser_button_content">Card browser</string>
-  <string name="lookup_button_content">Look up</string>
-  <string name="statistics_button_content">Statistics</string>
-  <string name="dialog_collection_path_title">Folder does not exit</string>
-  <string name="dialog_collection_path_text">The folder you specified does not exist, would you like to create it?</string>
-  <string name="dialog_collection_path_not_dir">The path specified was not a valid directory</string>
-  <string name="check_media_title">Check media?</string>
-  <string name="check_media_warning">This may take a long time with large media collections</string>
-  <string name="check_media_message">Checking media&#8230;</string>
-  <string name="check_media_acknowledge">Media checked</string>
-  <string name="check_media_failed">Media check failed</string>
-  <string name="check_media_invalid">Files with invalid encoding: %d</string>
-  <string name="check_media_unused">Files in media folder but not used by any cards: %d</string>
-  <string name="check_media_nohave">Files used on cards but not in media folder: %d</string>
-  <string name="check_media_no_unused_missing">No unused or missing files found.</string>
-  <string name="check_media_db_updated">Media database rebuilt.</string>
-  <string name="check_media_delete_unused">Delete unused</string>
-  <string name="check_media_deleted">Files deleted: %d</string>
+  <string name="dialog_continue">Jatka</string>
+  <string name="dialog_neutral_later">Myöhemmin</string>
+  <string name="dialog_positive_create">Luo</string>
+  <string name="dialog_positive_delete">Poista</string>
+  <string name="dialog_positive_disable">Poista käytöstä</string>
+  <string name="dialog_positive_overwrite">Korvaa</string>
+  <string name="dialog_positive_remove">Poista</string>
+  <string name="dialog_positive_repair">Korjaa</string>
+  <string name="dialog_positive_replace">Korvaa</string>
+  <string name="dialog_positive_reset">Tyhjennä</string>
+  <string name="dialog_positive_restore">Palauta</string>
+  <string name="dialog_positive_save">Tallenna</string>
+  <string name="dialog_positive_set">Aseta</string>
+  <string name="add_button_content">Lisää&#8230;</string>
+  <string name="card_browser_button_content">Selaa kortteja</string>
+  <string name="lookup_button_content">Etsi</string>
+  <string name="statistics_button_content">Tilastot</string>
+  <string name="dialog_collection_path_title">Hakemistoa ei ole olemassa</string>
+  <string name="dialog_collection_path_text">Hakemistoa ei ole olemassa, haluatko luoda sen?</string>
+  <string name="dialog_collection_path_not_dir">Annettu hakemistopolku ei ole pätevä</string>
+  <string name="check_media_title">Tarkista media?</string>
+  <string name="check_media_warning">Jos sinulla on suuri mediakokoelma, tämä voi kestää pitkään</string>
+  <string name="check_media_message">Tarkistetaan mediaa&#8230;</string>
+  <string name="check_media_acknowledge">Media tarkistettu</string>
+  <string name="check_media_failed">Median tarkistaminen epäonnistui</string>
+  <string name="check_media_invalid">%d tiedostoa virheellisellä koodauksella</string>
+  <string name="check_media_unused">%d käyttämätöntä tiedostoa mediakansiossa</string>
+  <string name="check_media_nohave">%d tiedostoa, joita käytetään korteissa, mutta jotka eivät ole mediakansiossa</string>
+  <string name="check_media_no_unused_missing">Käyttämättömiä tai puuttuvia tiedostoja ei löytynyt.</string>
+  <string name="check_media_db_updated">Mediatietokanta rakennettiin uudelleen.</string>
+  <string name="check_media_delete_unused">Poista käyttämättömät</string>
+  <string name="check_media_deleted">%d tiedostoa poistettiin</string>
 </resources>

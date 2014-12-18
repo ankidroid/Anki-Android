@@ -365,21 +365,18 @@ public class AudioView extends LinearLayout {
                     case IDLE: // If not already recorded or not already played
                     case STOPPED: // if already recorded or played
                         boolean highSampling = false;
-
                         int currentapiVersion = android.os.Build.VERSION.SDK_INT;
                         if (currentapiVersion >= android.os.Build.VERSION_CODES.GINGERBREAD_MR1) {
                             try {
-                                // try high sampling rate first
+                                // try high quality AAC @ 44.1kHz / 192kbps first
                                 mRecorder = initMediaRecorder();
-                                mRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_WB); // sampling rate 16kHz
+                                mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
                                 mRecorder.setAudioChannels(2);
-                                mRecorder.setAudioEncodingBitRate(44100);
-
+                                mRecorder.setAudioSamplingRate(44100);
+                                mRecorder.setAudioEncodingBitRate(192000);
                                 mRecorder.prepare();
                                 mRecorder.start();
-
                                 highSampling = true;
-
                             } catch (Exception e) {
                             }
                         }
@@ -394,7 +391,7 @@ public class AudioView extends LinearLayout {
                                 mRecorder.start();
 
                             } catch (Exception e) {
-                                Log.e("AudioView", e.getMessage());
+                                Log.e("AudioView", "RecordButton.onClick() :: error recording to " + mAudioPath + "\n" +e.getMessage());
                                 showToast(gtxt(R.string.multimedia_editor_audio_view_recording_failed));
                                 mStatus = Status.STOPPED;
                                 break;

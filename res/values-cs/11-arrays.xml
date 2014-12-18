@@ -40,7 +40,7 @@
     <item>Prohlížení karet</item>
     <item>Statistiky</item>
     <item>Nastavení</item>
-    <item>Pomoc</item>
+    <item>Nápověda</item>
     <item>Odeslat názor</item>
   </string-array>
   <string-array name="newCardSchedulingLabels">
@@ -52,16 +52,6 @@
     <item>Vždy hlásit</item>
     <item>Nikdy nehlásit</item>
     <item>Zeptat se mě</item>
-  </string-array>
-  <string-array name="notification_minimum_cards_due_labels">
-    <item>10</item>
-    <item>25</item>
-    <item>50</item>
-    <item>75</item>
-    <item>100</item>
-    <item>150</item>
-    <item>200</item>
-    <item>Nikdy neupozorňovat</item>
   </string-array>
   <string-array name="cram_review_order_labels">
     <item>Zobrazit poslední upravenou nejdříve</item>
@@ -107,8 +97,8 @@
     <item>Přeskočit kartu</item>
     <item>Odložit kartu</item>
     <item>Smazat kartu</item>
-    <item>Play media</item>
-    <item>Abort learning</item>
+    <item>Přehrát média</item>
+    <item>Přerušit učení</item>
   </string-array>
   <string-array name="theme_labels">
     <item>Android Tmavé</item>

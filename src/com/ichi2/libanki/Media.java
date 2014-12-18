@@ -37,6 +37,7 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -382,7 +383,7 @@ public class Media {
                 String tag = m.group(0);
                 String fname = m.group(fnameIdx);
                 if (fRemotePattern.matcher(fname).find()) {
-                    string = tag;
+                    //dont't do any escaping if remote image
                 } else {
                     if (unescape) {
                         string = string.replace(tag,tag.replace(fname, Uri.decode(fname)));
@@ -781,10 +782,20 @@ public class Media {
 
     /**
      * Unlike python, our temp zip file will be on disk instead of in memory. This might be slower (not tested) but
-     * avoids storing potentially large files in memory, which may not be desirable on a mobile device. <br>
-     * Note: the maximum size of the file is decided by the constant SYNC_ZIP_SIZE. If a file exceeds this limit, only
-     * that file (in full) will be sent to the server. This method will be repeatedly called until there are no more
-     * files (marked "dirty" in the DB) to send. <br>
+     * avoids storing potentially large files in memory, which may not be desirable on a mobile device.
+     * <p>
+     * Notes:
+     * <p>
+     * - The maximum size of the changes zip is decided by the constant SYNC_ZIP_SIZE. If a media file exceeds this
+     * limit, only that file (in full) will be zipped to be sent to the server.
+     * <p>
+     * - This method will be repeatedly called from MediaSyncer until there are no more files (marked "dirty" in the DB)
+     * to send.
+     * <p>
+     * - Since AnkiDroid avoids scanning the media folder on every sync, it is possible for a file to be marked as a
+     * new addition but actually have been deleted (e.g., with a file manager). In this case we skip over the file
+     * and mark it as removed in the database. (This behaviour differs from the desktop client).
+     * <p>
      * TODO: Investigate performance impact of in-memory zip file.
      */
     public Pair<File, List<String>> mediaChangesZip() throws APIVersionException {
@@ -812,18 +823,24 @@ public class Media {
                 String normname = AnkiDroidApp.getCompat().nfcNormalized(fname);
 
                 if (!TextUtils.isEmpty(csum)) {
-                    mCol.log("+media zip " + fname);
-                    File file = new File(dir(), fname);
-                    BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file), 2048);
-                    z.putNextEntry(new ZipEntry(Integer.toString(c)));
-                    int count = 0;
-                    while ((count = bis.read(buffer, 0, 2048)) != -1) {
-                        z.write(buffer, 0, count);
+                    try {
+                        mCol.log("+media zip " + fname);
+                        File file = new File(dir(), fname);
+                        BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file), 2048);
+                        z.putNextEntry(new ZipEntry(Integer.toString(c)));
+                        int count = 0;
+                        while ((count = bis.read(buffer, 0, 2048)) != -1) {
+                            z.write(buffer, 0, count);
+                        }
+                        z.closeEntry();
+                        bis.close();
+                        meta.put(new JSONArray().put(normname).put(Integer.toString(c)));
+                        sz += file.length();
+                    } catch (FileNotFoundException e) {
+                        // A file has been marked as added but no longer exists in the media directory.
+                        // Skip over it and mark it as removed in the db.
+                        removeFile(fname);
                     }
-                    z.closeEntry();
-                    bis.close();
-                    meta.put(new JSONArray().put(normname).put(Integer.toString(c)));
-                    sz += file.length();
                 } else {
                     mCol.log("-media zip " + fname);
                     meta.put(new JSONArray().put(normname).put(""));
@@ -929,10 +946,11 @@ public class Media {
                 new Object[] { fname, _checksum(path), _mtime(path), 1 });
     }
 
+
     /**
-     * Remove a file from the media directory and mark it in the media database as removed.
+     * Remove a file from the media directory if it exists and mark it as removed in the media database.
      */
-    public void deleteFile(String fname) {
+    public void removeFile(String fname) {
         File f = new File(dir(), fname);
         if (f.exists()) {
             f.delete();

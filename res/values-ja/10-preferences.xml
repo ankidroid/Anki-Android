@@ -122,8 +122,10 @@
   <string name="language_summ">XXX</string>
   <string name="language_system">システム言語</string>
   <string name="notification_pref">通知</string>
-  <string name="notification_minimum_cards_due">期限カードが増えた時の警告</string>
-  <string name="notification_minimum_cards_due_summary">XXX の期限カード</string>
+  <string name="notification_pref_title">Notify when</string>
+  <string name="never_notify">Never notify</string>
+  <string name="notify_when_pending">Pending messages available</string>
+  <string name="notification_minimum_cards_due">More than %d cards due</string>
   <string name="notification_minimum_cards_due_vibrate">振動で通知</string>
   <string name="notification_minimum_cards_due_blink">ライト点滅で通知</string>
   <string name="timeout_answer_text">答えを自動的に表示</string>

@@ -31,6 +31,7 @@
     <string name="new_version_message">New features:</string>
     <string name="no_tts_available_title">Text-to-speech</string>
     <string name="no_tts_available_message">No text-to-speech language available</string>
+    <string name="initializing_tts">Initializing TTS…</string>
     <string name="tts_no_tts">Don\'t speak</string>
 
     <string-array name="about_content">

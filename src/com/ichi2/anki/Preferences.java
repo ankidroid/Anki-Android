@@ -96,7 +96,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private EditTextPreference collectionPathPreference;
     private Preference syncAccount;
     private static String[] sShowValueInSummList = { LANGUAGE, "dictionary", "reportErrorMode",
-            "minimumCardsDueForNotification", "gestureSwipeUp", "gestureSwipeDown", "gestureSwipeLeft",
+            "gestureSwipeUp", "gestureSwipeDown", "gestureSwipeLeft",
             "gestureSwipeRight", "gestureDoubleTap", "gestureTapTop", "gestureTapBottom", "gestureTapRight",
             "gestureLongclick", "gestureTapLeft", "newSpread", "useCurrent", "defaultFont", "overrideFontBehavior", "browserEditorFont" };
     private static String[] sListNumericCheck = {"minimumCardsDueForNotification"};
@@ -233,7 +233,8 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         fullSyncPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
                 public boolean onPreferenceClick(Preference preference) {
                     if (mCol != null && mCol.getDb()!= null) {
-                        mCol.modSchema(true);
+                        // TODO: Could be useful to show the full confirmation dialog
+                        mCol.modSchemaNoCheck();
                         mCol.setMod();
                         Toast.makeText(getApplicationContext(), R.string.ok , Toast.LENGTH_SHORT).show();
                     } else {
@@ -291,10 +292,25 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         for (String key : sShowValueInSummNumRange) {
             updateNumberRangePreference(key);
         }
-
+        // Handle notification preference separately
+        updateNotificationPreference();
     }
 
 
+    private void updateNotificationPreference() {
+        ListPreference listpref = (ListPreference) getPreferenceScreen().findPreference("minimumCardsDueForNotification");
+        CharSequence [] entries = listpref.getEntries();
+        CharSequence [] values = listpref.getEntryValues();
+        for (int i=0; i < entries.length; i++) {
+            int value = Integer.parseInt(values[i].toString());
+            if (entries[i].toString().contains("%d")) {
+                entries[i]=String.format(entries[i].toString(), value);
+            }
+        }
+        listpref.setEntries(entries);
+        listpref.setSummary(listpref.getEntry().toString());
+    }
+    
     private void updateListPreference(String key, final boolean numericCheck) {
         ListPreference listpref = (ListPreference) getPreferenceScreen().findPreference(key);
         String entry;
@@ -530,7 +546,10 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 date.set(Calendar.HOUR_OF_DAY, hours);
                 mCol.setCrt(date.getTimeInMillis() / 1000);
                 mCol.setMod();
+            } else if (key.equals("minimumCardsDueForNotification")) {
+                updateNotificationPreference();
             }
+            
             if (Arrays.asList(sShowValueInSummList).contains(key)) {
                 if (Arrays.asList(sListNumericCheck).contains(key)) {
                     updateListPreference(key, true);
@@ -595,7 +614,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private void closePreferences() {
         finish();
         ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
-        if (mCol != null) {
+        if (mCol != null && mCol.getDb()!= null) {
             mCol.save();
         }
     }

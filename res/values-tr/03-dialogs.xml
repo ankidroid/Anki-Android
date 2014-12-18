@@ -51,6 +51,7 @@
   <string name="new_version_message">Yeni Özellikler:</string>
   <string name="no_tts_available_title">Metin Okuma</string>
   <string name="no_tts_available_message">Mevcut metin okuma dili yok</string>
+  <string name="initializing_tts">Initializing TTS&#8230;</string>
   <string name="tts_no_tts">Konuşma</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Android için bilgi kartları</h2>AnkiDroid <a href="%2$s">Anki</a> masaüstü uygulamasıyla tamamen uyumlu bir bilgi kartı uygulamasıdır. İster AnkiDroid\'de ister Anki Masaüstünde içerikler oluşturabilir, indirebilir, öğrenebilir ve kolaylıkla senkronize edebilirsiniz.]]></item>

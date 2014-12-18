@@ -4,6 +4,7 @@ package com.ichi2.anki.dialogs;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Message;
 
 import com.ichi2.anki.R;
 import com.ichi2.libanki.Collection;
@@ -18,7 +19,6 @@ public class SyncErrorDialog extends AsyncDialogFragment {
     public static final int DIALOG_SYNC_SANITY_ERROR = 6;
     public static final int DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_LOCAL = 7;
     public static final int DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_REMOTE = 8;
-    public static String CLASS_NAME_TAG = "SyncErrorDialog";
 
     public interface SyncErrorDialogListener {
         public void showSyncErrorDialog(int dialogType);
@@ -203,6 +203,8 @@ public class SyncErrorDialog extends AsyncDialogFragment {
         switch (getArguments().getInt("dialogType")) {
             case DIALOG_USER_NOT_LOGGED_IN_SYNC:
                 return res().getString(R.string.not_logged_in_title);
+            case DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_LOCAL:
+            case DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_REMOTE:
             case DIALOG_SYNC_CONFLICT_RESOLUTION:
                 return res().getString(R.string.sync_conflict_title);
             default:
@@ -264,16 +266,17 @@ public class SyncErrorDialog extends AsyncDialogFragment {
         }
     }
 
-
     @Override
-    public Bundle getNotificationIntentExtras() {
+    public Message getDialogHandlerMessage() {
+        Message msg = Message.obtain();
+        msg.what = DialogHandler.MSG_SHOW_SYNC_ERROR_DIALOG;
         Bundle b = new Bundle();
-        b.putBoolean("showAsyncDialogFragment", true);
-        b.putString("dialogClass", CLASS_NAME_TAG);
         b.putInt("dialogType", getArguments().getInt("dialogType"));
         b.putString("dialogMessage", getArguments().getString("dialogMessage"));
-        return b;
+        msg.setData(b);
+        return msg;
     }
+
 
     // Listener for cancel button which clears ALL previous dialogs on the back stack
     // Supply null instead of this listener in cases where we prefer to go back to last dialog

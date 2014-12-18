@@ -122,8 +122,10 @@
   <string name="language_summ">XXX</string>
   <string name="language_system">Systemspråk</string>
   <string name="notification_pref">Notifikationer</string>
-  <string name="notification_minimum_cards_due">Notifiera när fler än</string>
-  <string name="notification_minimum_cards_due_summary">XXX kort i kö</string>
+  <string name="notification_pref_title">Meddela när</string>
+  <string name="never_notify">Meddela aldrig</string>
+  <string name="notify_when_pending">Ej lästa meddelanden finns</string>
+  <string name="notification_minimum_cards_due">Mer än %d kort kvar</string>
   <string name="notification_minimum_cards_due_vibrate">Vibrera</string>
   <string name="notification_minimum_cards_due_blink">Blinka</string>
   <string name="timeout_answer_text">Visa svar automatiskt</string>

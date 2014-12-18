@@ -293,6 +293,8 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
             return res;
         }
 
+        String desiredLang = LanguagesListerGlosbe.requestToResponseLangCode(languageCodeTo);
+
         for (Tuc tuc : tucs) {
             if (tuc == null) {
                 continue;
@@ -306,7 +308,7 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
                     if (meaning.getLanguage() == null) {
                         continue;
                     }
-                    if (meaning.getLanguage().contentEquals(languageCodeTo)) {
+                    if (meaning.getLanguage().contentEquals(desiredLang)) {
                         String unescappedString = HtmlUtil.unescape(meaning.getText());
                         res.add(unescappedString);
                     }
@@ -315,10 +317,10 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
 
             Phrase phrase = tuc.getPhrase();
             if (phrase != null) {
-                if (phrase.getLanguageCode() == null) {
+                if (phrase.getLanguage() == null) {
                     continue;
                 }
-                if (phrase.getLanguageCode().contentEquals(languageCodeTo)) {
+                if (phrase.getLanguage().contentEquals(desiredLang)) {
                     String unescappedString = HtmlUtil.unescape(phrase.getText());
                     res.add(unescappedString);
                 }

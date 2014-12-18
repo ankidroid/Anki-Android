@@ -36,12 +36,12 @@
 -->
 <resources>
   <string-array name="navigation_titles">
-    <item>Decks</item>
-    <item>Card Browser</item>
-    <item>Statistics</item>
-    <item>Settings</item>
-    <item>Help</item>
-    <item>Send Feedback</item>
+    <item>Pakat</item>
+    <item>Selaa kortteja</item>
+    <item>Tilastot</item>
+    <item>Asetukset</item>
+    <item>Ohje</item>
+    <item>Anna palautetta</item>
   </string-array>
   <string-array name="newCardSchedulingLabels">
     <item>Jaa kertauksien kesken</item>
@@ -52,16 +52,6 @@
     <item>Raportoi aina</item>
     <item>Älä raportoi koskaan</item>
     <item>Kysy</item>
-  </string-array>
-  <string-array name="notification_minimum_cards_due_labels">
-    <item>10</item>
-    <item>25</item>
-    <item>50</item>
-    <item>75</item>
-    <item>100</item>
-    <item>150</item>
-    <item>200</item>
-    <item>Never notify</item>
   </string-array>
   <string-array name="cram_review_order_labels">
     <item>Näytä vanhin muutettu ensimmäisenä</item>
@@ -107,8 +97,8 @@
     <item>Piilota kortti</item>
     <item>Keskeytä kortti</item>
     <item>Poista kortti</item>
-    <item>Play media</item>
-    <item>Abort learning</item>
+    <item>Toista media</item>
+    <item>Keskeytä oppiminen</item>
   </string-array>
   <string-array name="theme_labels">
     <item>Android tumma</item>
@@ -158,7 +148,7 @@
     <item>Erääntynyt</item>
   </string-array>
   <string-array name="override_font_labels">
-    <item>When no font specified on flashcards</item>
-    <item>Always</item>
+    <item>Kun korteille ei ole määritelty kirjasintyyppiä</item>
+    <item>Aina</item>
   </string-array>
 </resources>

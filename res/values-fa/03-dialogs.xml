@@ -51,6 +51,7 @@
   <string name="new_version_message">ویژگی های جدید:</string>
   <string name="no_tts_available_title">متن به گفتار</string>
   <string name="no_tts_available_message">زبان متن به گفتار در دسترس نیست</string>
+  <string name="initializing_tts">Initializing TTS&#8230;</string>
   <string name="tts_no_tts">حرف نزن</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>فلش کارتها برای اندروید</h2>آنکی دروید یک برنامه فلش کارت کاملا سازگار با نرم افزار کامپیوتراست <a href="%2$s">Anki</a>. شما می توانید  بسازید, دانلود کنید و یاد بگیرید  هر دوی آنکی دروید یا آنکی دسکتاپ (نرم افزار کامپیوتر) را و آنها به سادگی با یکدیگر همگامسازی می شوند,.]]></item>

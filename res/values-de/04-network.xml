@@ -166,4 +166,6 @@
   <string name="sync_sanity_remote">Entfernt</string>
   <string name="force_full_sync_title">Vollsynchronisation erzwingen</string>
   <string name="force_full_sync_summary">Bei nächster Synchronisation Änderungen in eine Richtung übertragen</string>
+  <string name="full_sync_confirmation">Nach dieser Änderung müssen Sie die gesamte Sammlung hochladen. Lernfortschritt  und Änderungen auf anderen Geräten, die noch nicht auf dieses Gerät synchronisiert wurden,  gehen verloren. Fortfahren?</string>
+  <string name="full_sync_confirmation_upgrade">Wegen eines Fehlers in einer früheren Version von AnkiDroid sollten Sie eine Vollsynchronisation erzwingen.</string>
 </resources>

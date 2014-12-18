@@ -155,4 +155,6 @@
     <string name="sync_sanity_remote">Remote</string>
     <string name="force_full_sync_title">Force full sync</string>
     <string name="force_full_sync_summary">On next sync, force changes in one direction</string>
+    <string name="full_sync_confirmation">The requested change will require a full upload of the database when you next synchronize your collection. If you have reviews or other changes waiting on another device that haven\'t been synchronized here yet, they will be lost. Continue?</string>
+    <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it\'s recommended to force a full sync.</string>
 </resources>

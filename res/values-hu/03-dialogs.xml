@@ -51,6 +51,7 @@
   <string name="new_version_message">Új funkciók:</string>
   <string name="no_tts_available_title">Szövegfelolvasás</string>
   <string name="no_tts_available_message">Nincs rendelkezésre álló szövegfelolvasási nyelv</string>
+  <string name="initializing_tts">Initializing TTS&#8230;</string>
   <string name="tts_no_tts">Ne beszélj</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Tanulókártyák Androidra</h2>Az AnkiDroid egy tanulókártya kezelő program, ami teljesen kompatibilis az <a href="%2$s">Anki</a> asztali programmal. Segítségükkel létrehozhatsz, letölthetsz és tanulhatsz különböző tartalmakat, mind az AnkiDroiddal, mind pedig az asztali Anki-val, pakliaidat szinkronizálhatod közöttük.]]></item>

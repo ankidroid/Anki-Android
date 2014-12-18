@@ -168,6 +168,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     protected static boolean sDisplayAnswer = false;
 
+    private boolean mTtsInitialized = false;
+    private boolean mReplayOnTtsInit = false;
+
     /** The percentage of the absolute font size specified in the deck. */
     private int mDisplayFontSize = 100;
 
@@ -251,7 +254,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private TextView mNext3;
     private TextView mNext4;
     private Button mFlipCard;
-    private EditText mAnswerField;
+    protected EditText mAnswerField;
     private Button mEase1;
     private Button mEase2;
     private Button mEase3;
@@ -1065,11 +1068,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (!sDisplayAnswer) {
-            if (keyCode == KeyEvent.KEYCODE_SPACE || keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER) {
-                displayCardAnswer();
-                return true;
-            }
+        if (!mAnswerField.isFocused()) {
+	        if (!sDisplayAnswer) {
+	            if (keyCode == KeyEvent.KEYCODE_SPACE || keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER) {
+	                displayCardAnswer();
+	                return true;
+	            }
+	        }
         }
         return super.onKeyUp(keyCode, event);
     }
@@ -2252,11 +2257,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 }
             } else { // Text to speech is in affect here
                 // If the question is displayed or if the question should be replayed, read the question
-                if (!sDisplayAnswer || doAudioReplay && replayQuestion) {
-                    readCardText(mCurrentCard, Sound.SOUNDS_QUESTION);
-                }
-                if (sDisplayAnswer) {
-                    readCardText(mCurrentCard, Sound.SOUNDS_ANSWER);
+                if (mTtsInitialized) {
+                    if (!sDisplayAnswer || doAudioReplay && replayQuestion) {
+                        readCardText(mCurrentCard, Sound.SOUNDS_QUESTION);
+                    }
+                    if (sDisplayAnswer) {
+                        readCardText(mCurrentCard, Sound.SOUNDS_ANSWER);
+                    }
+                } else {
+                    mReplayOnTtsInit = true;
                 }
             }
         }
@@ -3001,5 +3010,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             }
         }
         return answerContent;
+    }
+
+    /**
+     * Callback for when TTS has been initialized.
+     */
+    public void ttsInitialized() {
+        mTtsInitialized = true;
+        if (mReplayOnTtsInit) {
+            playSounds(true);
+        }
     }
 }

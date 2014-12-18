@@ -51,6 +51,7 @@
   <string name="new_version_message">الميزات الجديدة:</string>
   <string name="no_tts_available_title">نطق النصوص</string>
   <string name="no_tts_available_message">لا تتوفر  لغة لنطق النصوص</string>
+  <string name="initializing_tts">Initializing TTS&#8230;</string>
   <string name="tts_no_tts">لا تنطق</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>البطاقات التعليمية لأندرويد</h2>آنكيدرويد تطبيق للبطاقات التعليمية متكامل بشكل كامل مع نسخة سطح المكتب <a href="%2$s">Anki</a>. يمكنك إنشاء و تحميل و تعلم المحتوى في كلاهما، آنكيدرويد و آنكي و المزامنة بينهما بكل سهولة.]]></item>

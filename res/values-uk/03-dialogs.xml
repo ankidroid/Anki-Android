@@ -51,6 +51,7 @@
   <string name="new_version_message">Нові особливості:</string>
   <string name="no_tts_available_title">Текст-в-мовлення</string>
   <string name="no_tts_available_message">Відсутня мова для перетворення тексту в мовлення</string>
+  <string name="initializing_tts">Initializing TTS&#8230;</string>
   <string name="tts_no_tts">Не говорити</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Картки для Android</h2>AnkiDroid це додаток для карток повністю сумісний з програмою для ПК <a href="%2$s">Anki</a>. Ви можете створювати, завантажувати та вивчати вміст на AnkiDroid або Anki Desktop та з легкістю здійснювати синхронізацію.]]></item>

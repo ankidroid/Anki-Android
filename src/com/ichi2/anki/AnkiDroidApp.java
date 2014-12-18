@@ -1,6 +1,7 @@
 /****************************************************************************************
  * Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
  * Copyright (c) 2009 Casey Link <unnamedrambler@gmail.com>                             *
+ * Copyright (c) 2014 Timothy Rae <perceptualchaos2@gmail.com>                          *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -26,6 +27,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Environment;
+import android.os.Message;
 import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
@@ -34,7 +36,7 @@ import com.ichi2.anki.exception.AnkiDroidErrorReportException;
 import com.ichi2.async.Connection;
 import com.ichi2.compat.Compat;
 import com.ichi2.compat.CompatV15;
-import com.ichi2.compat.CompatV15NookHdPlus;
+import com.ichi2.compat.CompatV15NookHdOrHdPlus;
 import com.ichi2.compat.CompatV16;
 import com.ichi2.compat.CompatV7;
 import com.ichi2.compat.CompatV7Nook;
@@ -47,7 +49,6 @@ import com.ichi2.utils.LanguageUtil;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -78,7 +79,7 @@ public class AnkiDroidApp extends Application {
     private Collection mCurrentCollection;
     private int mAccessThreadCount = 0;
     private static final Lock mLock = new ReentrantLock();
-    private List<List<String>> mStoredData;
+    private static Message sStoredDialogHandlerMessage;
 
     /** Global hooks */
     private Hooks mHooks;
@@ -122,8 +123,8 @@ public class AnkiDroidApp extends Application {
     public void onCreate() {
         super.onCreate();
 
-        if (isNookHdPlus() && AnkiDroidApp.SDK_VERSION == 15) {
-            mCompat = new CompatV15NookHdPlus();
+        if (isNookHdOrHdPlus() && AnkiDroidApp.SDK_VERSION == 15) {
+            mCompat = new CompatV15NookHdOrHdPlus();
         } else if (AnkiDroidApp.SDK_VERSION >= 16) {
             mCompat = new CompatV16();
         } else if (AnkiDroidApp.SDK_VERSION >= 15) {
@@ -174,9 +175,17 @@ public class AnkiDroidApp extends Application {
     }
 
 
+    private boolean isNookHdOrHdPlus() {
+        return isNookHd() || isNookHdPlus();
+    }
+    
     private boolean isNookHdPlus() {
         return android.os.Build.BRAND.equals("NOOK") && android.os.Build.PRODUCT.equals("HDplus")
                 && android.os.Build.DEVICE.equals("ovation");
+    }
+    
+    private boolean isNookHd () {
+        return android.os.Build.MODEL.equalsIgnoreCase("bntv400") && android.os.Build.BRAND.equals("NOOK");
     }
 
 
@@ -482,13 +491,12 @@ public class AnkiDroidApp extends Application {
         // Log.i(AnkiDroidApp.TAG, "Access has been reset to 0");
     }
 
-
-    public void setStoredData(List<List<String>> data) {
-        mStoredData = data;
+    public static void setStoredDialogHandlerMessage(Message msg) {
+        sStoredDialogHandlerMessage = msg;
     }
 
-    public List<List<String>> getStoredData() {
-        return mStoredData;
+    public static Message getStoredDialogHandlerMessage() {
+        return sStoredDialogHandlerMessage;
     }
 
     public static void setSyncInProgress(boolean value) {

@@ -111,7 +111,7 @@
   <string name="sync_account_summ_logged_out">Не авторизованы</string>
   <string name="sync_account_summ_logged_in">%s</string>
   <string name="fix_hebrew_text">Исправление для гласных иврита</string>
-  <string name="fix_hebrew_text_summ">Позволяет правильно отрисовывать гласные на иврите.</string>
+  <string name="fix_hebrew_text_summ">Позволяет правильно отображать гласные на иврите.</string>
   <string name="fix_hebrew_instructions">Этот параметр обходит RTL алгоритм системы Android, чтобы показать правильно гласные в тексте на иврите.\n\nЧтобы это работало, вам нужно скачать шрифт Tohu.ttf и вручную скопировать в:\n%s/fonts/\n\nВам не нужно модифицировать ваши карты.</string>
   <string name="fix_hebrew_download_font">Скачать шрифт</string>
   <string name="default_font">Шрифт по умолчанию</string>
@@ -122,8 +122,10 @@
   <string name="language_summ">XXX</string>
   <string name="language_system">Системный язык</string>
   <string name="notification_pref">Уведомления</string>
-  <string name="notification_minimum_cards_due">Уведомлять когда более</string>
-  <string name="notification_minimum_cards_due_summary">XXX карт из</string>
+  <string name="notification_pref_title">Notify when</string>
+  <string name="never_notify">Never notify</string>
+  <string name="notify_when_pending">Pending messages available</string>
+  <string name="notification_minimum_cards_due">More than %d cards due</string>
   <string name="notification_minimum_cards_due_vibrate">Вибрация</string>
   <string name="notification_minimum_cards_due_blink">Мерцание светодиода</string>
   <string name="timeout_answer_text">Автоматически показывать ответ</string>
@@ -134,7 +136,7 @@
   <string name="timeout_question_seconds_summ">XXX s</string>
   <string name="select_locale_title">Выберите язык</string>
   <string name="safe_display">Статический режим экрана</string>
-  <string name="safe_display_summ">Отключить всю анимацию и использовать другие методы отрисовки карт. Может потребоваться для старых девацсов и устройств на E-ink.</string>
+  <string name="safe_display_summ">Отключить всю анимацию и использовать другие методы отрисовки карт. Может потребоваться для старых устройств и устройств на E-ink.</string>
   <string name="vertical_centering">Выравнивание по центру</string>
   <string name="vertical_centering_summ">Центрировать содержимое карт вертикально</string>
   <string name="pref_cat_backup">Резервные копии</string>
@@ -143,7 +145,7 @@
   <string name="pref_backup_max">Максимальное число резервных копий</string>
   <string name="pref_backup_max_summ">XXX</string>
   <string name="pref_disable_backup_title">Отключить резервные копии?</string>
-  <string name="pref_disable_backup_warning">Это действие удалить все файлы резервных копий</string>
+  <string name="pref_disable_backup_warning">Это действие удалит все файлы резервных копий</string>
   <string name="pref_intent_add_instant">Мгновенное добавление</string>
   <string name="pref_intent_add_instant_summ">Добавлять новые карты из словарей не открывая AnkiDroid. Вы можете найти их под \"сохраненные данные\" при добавлении карт.</string>
   <string name="show_estimates">Показать кнопку времени</string>
@@ -160,7 +162,7 @@
   <string name="day_offset_summ">XXX часов утра</string>
   <string name="input_workaround">Ввод исправлений</string>
   <string name="input_workaround_summ">Заплатка для проблем, касающихся блоков для ввода в HTML . Приводит к проблемам на некоторых устройствах.</string>
-  <string name="pref_keep_screen_on">Держать экран включённым</string>
+  <string name="pref_keep_screen_on">Не выключать экран</string>
   <string name="pref_keep_screen_on_summ">Отключить таймаут экрана</string>
   <string name="pref_simple_interface">Простой интерфейс</string>
   <string name="pref_simple_interface_summ">Ускоряет показ карты, но не поддерживает все возможности html</string>
@@ -171,7 +173,7 @@
   <string name="fix_arabic_text_summ">Частичная заплатка для неполной поддержки Арабского для платформы Андроид. Когда активирована, невозможно изменять карты.</string>
   <string name="convert_fen_text">Поддержка шахматной нотации</string>
   <string name="filter_google_translate">Из Google-Переводчика</string>
-  <string name="filter_google_translate_summ">Просто сохранение исходного слова и перевода</string>
+  <string name="filter_google_translate_summ">Сохранить только исходное слово и перевод</string>
   <string name="convert_fen_text_summ">Нарисовать шахматную доску из Нотации Форсайта — Эдвардса. Нотация должна быть заключена в [fen][/fen] теги.</string>
   <string name="studyoptions_limit_select_tags">Выберите теги</string>
   <string name="studyoptions_limit_tags_active">С: %1$s</string>
@@ -197,7 +199,7 @@
   <string name="deck_conf_general">Общие</string>
   <string name="deck_conf_steps">Шаги (в минутах)</string>
   <string name="deck_conf_order">Очерёдность</string>
-  <string name="deck_conf_new_cards_day">Новые карты/день</string>
+  <string name="deck_conf_new_cards_day">Новых карт в день</string>
   <string name="deck_conf_graduating_ivl">Интервал окончания</string>
   <string name="deck_conf_days">XXX дней</string>
   <string name="deck_conf_easy_ivl">Легкий интервал</string>
@@ -221,7 +223,7 @@
   <string name="deck_conf_autoplay">Автоматически проигрывать аудио</string>
   <string name="deck_conf_replayq">Воспроизведение вопроса</string>
   <string name="deck_conf_replayq_summ">При показе ответа, воспроизводить аудио и вопроса, и ответа</string>
-  <string name="deck_conf_manage">Группы</string>
+  <string name="deck_conf_manage">Управление группами</string>
   <string name="deck_conf_current_group">Текущая группа</string>
   <string name="deck_conf_rename">Переименовать</string>
   <string name="deck_conf_reset">Сбросить настройки</string>

@@ -40,13 +40,13 @@
 
 -->
 <resources>
-  <string name="youre_offline">Вы не в сети</string>
+  <string name="youre_offline">Вы не подключены к сети</string>
   <string name="currently_downloading">Загружается</string>
   <string name="starting_download">Начинаю скачивать...</string>
   <string name="downloading">Скачивание...</string>
   <string name="paused">Приостановлено</string>
   <string name="downloaded">Загружено</string>
-  <string name="sync_error">Sync Error</string>
+  <string name="sync_error">Ошибки синхронизации</string>
   <string name="vague_error">Ошибка</string>
   <string name="cancelling">Отмена...</string>
   <string name="connection_error_return_message">Ошибка сети. Повторите, отмените действие или возвратитесь на предыдущий экран.</string>
@@ -67,7 +67,7 @@
   <string name="sync_log_db_error">Произошла ошибка базы данных.</string>
   <string name="not_logged_in_title">Залогиниться в AnkiWeb</string>
   <string name="login_create_account_message">Нужно залогиниться в AnkiWeb аккаунт. Далее можно создать аккаунт.</string>
-  <string name="no_email_client">No email client available</string>
+  <string name="no_email_client">Не клиент электронной почты</string>
   <string name="username">Имейл</string>
   <string name="username_repeat">Повторите имейл</string>
   <string name="password">Пароль</string>
@@ -115,8 +115,8 @@
   <string name="sync_too_busy">Сервер перегружен. Попробуйте еще раз позже.</string>
   <string name="sync_remote_db_error">Скачанная база данных была повреждена. Пожалуйста, попробуйте еще раз.</string>
   <string name="sync_overwrite_error">Текущая коллекция не может быть перезаписана загруженным файлом.</string>
-  <string name="sync_connection_error">Connection timed out. Either your internet connection is experiencing problems, or you have a very large file in your media folder.</string>
-  <string name="sync_error_409">Only one client can access AnkiWeb at a time. If a previous sync failed, please try again in a few minutes.</string>
+  <string name="sync_connection_error">Превышено время ожидания подключения. Либо у вас проблемы с интернет соединением, либо в медиа-папке есть очень большой файл.</string>
+  <string name="sync_error_409">К AnkiWeb может подключаться только один клиент одновременно.  Если недавняя синхронизация была неудачной, подождите, пожалуйста, несколько минут.</string>
   <string name="sync_write_access_error">Загруженный файл не может быть сохранен на SD карту. Либо ваш SD карта установлена в режиме только для чтения или не хватает места.</string>
   <string name="sync_deletions_message">Синхронизация удаления...</string>
   <string name="sync_small_objects_message">Синхронизация небольших объектов...</string>
@@ -165,5 +165,7 @@
   <string name="sync_sanity_local">Локальную</string>
   <string name="sync_sanity_remote">Удалённую</string>
   <string name="force_full_sync_title">Force full sync</string>
-  <string name="force_full_sync_summary">On next sync, force changes in one direction</string>
+  <string name="force_full_sync_summary">При следующей синхронизации, перезаписать в одном направлении</string>
+  <string name="full_sync_confirmation">Запрощеннок действие произведет полную загрузку данных следующий раз вы синхронизируете вашу коллекцию. Просмотры и другие изменения на ваших устройствах, которые не были синхронизированны, будут потерянны. Продолжить?</string>
+  <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it\'s recommended to force a full sync.</string>
 </resources>

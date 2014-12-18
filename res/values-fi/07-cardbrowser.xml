@@ -40,8 +40,8 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="one">%d card shown</item>
-    <item quantity="other">%d cards shown</item>
+    <item quantity="one">%d kortti näytetään</item>
+    <item quantity="other">%d korttia näytetään</item>
   </plurals>
   <string name="card_browser_all_decks">Kaikki pakat</string>
   <string name="card_browser_load">Ladataan kortteja.\nOdota...</string>
@@ -79,7 +79,7 @@
   <string name="card_details_tags">Tunnisteet</string>
   <string name="card_details_model">Merkinnän tyyppi</string>
   <string name="card_browser_sorting_cards">Lajitellaan kortteja.\nOdota...</string>
-  <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
+  <string name="card_browser_filtering_cards">Suodatetaan kortteja&#8230;\nPeruuta painamalla Takaisin-painiketta</string>
   <string name="card_details_card_model">Korttimalli</string>
   <string-array name="card_browser_order_labels">
     <item>Ei lajittelua (nopeampi)</item>

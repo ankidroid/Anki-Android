@@ -166,4 +166,6 @@
   <string name="sync_sanity_remote">遠端</string>
   <string name="force_full_sync_title">Force full sync</string>
   <string name="force_full_sync_summary">On next sync, force changes in one direction</string>
+  <string name="full_sync_confirmation">此變動會使您下一次同步您的收藏時，需要完整上傳您的資料庫。如果同步的話，您其他的裝置上尚未同步的複習卡片或其他變動的部分將會遺失，您是否要繼續？</string>
+  <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it\'s recommended to force a full sync.</string>
 </resources>

@@ -51,6 +51,7 @@
   <string name="new_version_message">Nuevas funciones:</string>
   <string name="no_tts_available_title">Texto-a-Voz</string>
   <string name="no_tts_available_message">No hay idiomas de texto-a-voz disponibles</string>
+  <string name="initializing_tts">Initializing TTS&#8230;</string>
   <string name="tts_no_tts">No hablar</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Tarjetas de estudio para Android</h2>AnkiDroid es una aplicación de tarjetas de estudio que es totalmente compatible con el software de escritorio <a href="%2$s">Anki</a>. Puedes crear, descargar y estudiar contenidos en ambos, AnkiDroid o Anki Escritorio, y sincronizarlos muy fácilmente.]]></item>

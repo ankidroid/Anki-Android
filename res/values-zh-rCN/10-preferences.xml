@@ -122,8 +122,10 @@
   <string name="language_summ">XXX</string>
   <string name="language_system">系统语言</string>
   <string name="notification_pref">通知</string>
-  <string name="notification_minimum_cards_due">提醒我，当超过</string>
-  <string name="notification_minimum_cards_due_summary">XXX 张卡牌需要复习</string>
+  <string name="notification_pref_title">Notify when</string>
+  <string name="never_notify">Never notify</string>
+  <string name="notify_when_pending">Pending messages available</string>
+  <string name="notification_minimum_cards_due">More than %d cards due</string>
   <string name="notification_minimum_cards_due_vibrate">振动</string>
   <string name="notification_minimum_cards_due_blink">闪烁灯</string>
   <string name="timeout_answer_text">自动显示答案</string>
