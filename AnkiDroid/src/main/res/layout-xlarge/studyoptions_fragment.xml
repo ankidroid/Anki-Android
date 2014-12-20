@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/studyoptions_main"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
@@ -193,7 +195,8 @@
 		            android:layout_width="fill_parent"
 		            android:layout_height="wrap_content"
 		            android:orientation="horizontal"
-		            android:visibility="invisible" >
+		            android:visibility="invisible"
+		            tools:ignore="InconsistentLayout" >
 		
 		            <LinearLayout
 		                android:layout_width="0dip"
