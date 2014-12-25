@@ -301,7 +301,9 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             return data;
         } catch (Exception e2) {
             // Ask user to report all bugs which aren't timeout errors
-            if (!timeoutOccured(e2)) {
+            if (timeoutOccured(e2)) {
+                AnkiDroidApp.saveExceptionReportFile(e2, "doInBackgroundLogin", "syncTimeout");
+            } else {
                 AnkiDroidApp.saveExceptionReportFile(e2, "doInBackgroundLogin");
             }
             data.success = false;
@@ -503,6 +505,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     return data;
                 } catch (RuntimeException e) {
                     if (timeoutOccured(e)) {
+                        AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync-fullSync", "syncTimeout");
                         data.result = new Object[] {"connectionError" };
                     } else {
                         AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync-fullSync");
@@ -546,6 +549,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync-mediaSync");
                 } catch (RuntimeException e) {
                     if (timeoutOccured(e)) {
+                        AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync-mediaSync", "syncTimeout");
                         data.result = new Object[] {"connectionError" };
                     } else {
                         AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync-mediaSync");
@@ -580,6 +584,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             e.printStackTrace();
             data.success = false;
             if (timeoutOccured(e)) {
+                AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync", "syncTimeout");
                 data.result = new Object[] {"connectionError" };
             } else {
                 AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync");
