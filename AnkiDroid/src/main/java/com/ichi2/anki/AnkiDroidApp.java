@@ -397,7 +397,10 @@ public class AnkiDroidApp extends Application {
     
     
     public static void saveExceptionReportFile(Throwable e, String origin, String additionalInfo) {
-        CustomExceptionHandler.getInstance().uncaughtException(null, e, origin, additionalInfo);
+        //CustomExceptionHandler.getInstance().uncaughtException(null, e, origin, additionalInfo);
+        Crashlytics.setString("origin", origin);
+        Crashlytics.setString("additionalInfo", additionalInfo);
+        Crashlytics.logException(e);
     }
 
 
