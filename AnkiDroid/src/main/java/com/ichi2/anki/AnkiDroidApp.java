@@ -56,6 +56,7 @@ import io.fabric.sdk.android.Fabric;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
+import java.util.UUID;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -176,6 +177,17 @@ public class AnkiDroidApp extends Application {
             // Reason: apply() not available on Android 1.5
             editor.commit();
         }
+        // Add a unique user identifier for the purpose of identifying reported crashes
+        String id;
+        if (!preferences.contains("uuid")) {
+            Editor editor = preferences.edit();
+            id = UUID.randomUUID().toString();
+            editor.putString("uuid", id);
+            editor.commit();
+        } else {
+            id = preferences.getString("uuid","");
+        }
+        Crashlytics.setUserIdentifier(id);
         // Get good default values for swipe detection
         final ViewConfiguration vc = ViewConfiguration.get(this);
         if (AnkiDroidApp.SDK_VERSION >= 8) {

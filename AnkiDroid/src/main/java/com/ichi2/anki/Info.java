@@ -171,6 +171,7 @@ public class Info extends ActionBarActivity {
         StringBuilder sb = new StringBuilder();
         switch (mType) {
             case TYPE_ABOUT:
+                String id = AnkiDroidApp.getSharedPrefs(this).getString("uuid","");
                 String[] content = res.getStringArray(R.array.about_content);
                 sb.append("<html><body text=\"#000000\" link=\"#E37068\" alink=\"#E37068\" vlink=\"#E37068\">");
                 sb.append(
@@ -190,6 +191,7 @@ public class Info extends ActionBarActivity {
                 sb.append(
                         String.format(content[4], res.getString(R.string.licence_wiki),
                                 res.getString(R.string.link_source))).append("<br/><br/>");
+                sb.append("UUID: "+ id).append("<br/><br/>");
                 sb.append("</body></html>");
                 mWebView.loadDataWithBaseURL("", sb.toString(), "text/html", "utf-8", null);
                 ((Button) findViewById(R.id.info_continue)).setText(res.getString(R.string.info_rate));
