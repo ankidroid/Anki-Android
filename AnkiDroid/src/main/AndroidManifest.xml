@@ -48,7 +48,7 @@
         needed for upgrades to be offered correctly.
     -->
     <uses-sdk
-        android:minSdkVersion="7"
+        android:minSdkVersion="8"
         android:targetSdkVersion="19" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -313,6 +313,7 @@
         <meta-data
             android:name="com.sec.minimode.icon.landscape.normal"
             android:resource="@drawable/anki" />
+        <meta-data android:name="com.crashlytics.ApiKey" android:value="7a1e357c170eeafb5de74f4d49eb1e21f094d074"/>
     </application>
 
 </manifest>

@@ -35,6 +35,7 @@ import android.view.Display;
 import android.view.ViewConfiguration;
 import android.view.WindowManager;
 
+import com.crashlytics.android.Crashlytics;
 import com.ichi2.anki.exception.AnkiDroidErrorReportException;
 import com.ichi2.async.Connection;
 import com.ichi2.compat.Compat;
@@ -51,6 +52,7 @@ import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.hooks.Hooks;
 import com.ichi2.utils.LanguageUtil;
 
+import io.fabric.sdk.android.Fabric;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
@@ -72,6 +74,7 @@ public class AnkiDroidApp extends Application {
      * Tag for logging messages.
      */
     public static final String TAG = "AnkiDroid";
+    public static final Boolean LOGGING_ENABLED = true;
 
     public static final String COLLECTION_PATH = "/collection.anki2";
 
@@ -125,6 +128,7 @@ public class AnkiDroidApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
 
         if (isNookHdOrHdPlus() && AnkiDroidApp.SDK_VERSION == 15) {
             mCompat = new CompatV15NookHdOrHdPlus();
@@ -149,9 +153,9 @@ public class AnkiDroidApp extends Application {
         Connection.setContext(getApplicationContext());
 
         // Error Reporter
-        CustomExceptionHandler customExceptionHandler = CustomExceptionHandler.getInstance();
+        /*CustomExceptionHandler customExceptionHandler = CustomExceptionHandler.getInstance();
         customExceptionHandler.init(sInstance.getApplicationContext());
-        Thread.setDefaultUncaughtExceptionHandler(customExceptionHandler);
+        Thread.setDefaultUncaughtExceptionHandler(customExceptionHandler);*/
 
 		// Configure WebView to allow file scheme pages to access cookies.
 		mCompat.enableCookiesForFileSchemePages();
@@ -180,6 +184,7 @@ public class AnkiDroidApp extends Application {
             DEFAULT_SWIPE_MIN_DISTANCE = vc.getScaledTouchSlop()*2;
         }
         DEFAULT_SWIPE_THRESHOLD_VELOCITY = vc.getScaledMinimumFlingVelocity();
+
     }
 
 
@@ -264,7 +269,7 @@ public class AnkiDroidApp extends Application {
         try {
             new File(decksDirectory.getAbsolutePath() + "/.nomedia").createNewFile();
         } catch (IOException e) {
-            Log.e(AnkiDroidApp.TAG, "Nomedia file could not be created");
+            AnkiDroidApp.Log(Log.ERROR, AnkiDroidApp.TAG, "Nomedia file could not be created");
         }
         createNoMediaFileIfMissing(decksDirectory);
     }
@@ -276,7 +281,7 @@ public class AnkiDroidApp extends Application {
             try {
                 mediaFile.createNewFile();
             } catch (IOException e) {
-                Log.e(AnkiDroidApp.TAG, "Nomedia file could not be created in path " + decksDirectory.getAbsolutePath());
+                AnkiDroidApp.Log(Log.ERROR, AnkiDroidApp.TAG, "Nomedia file could not be created in path " + decksDirectory.getAbsolutePath());
             }
         }
     }
@@ -319,7 +324,7 @@ public class AnkiDroidApp extends Application {
             PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
             pkgName = context.getString(pInfo.applicationInfo.labelRes);
         } catch (PackageManager.NameNotFoundException e) {
-            Log.e(TAG, "Couldn't find package named " + context.getPackageName(), e);
+            Log(Log.ERROR, TAG, "Couldn't find package named " + context.getPackageName(), e);
         }
 
         return pkgName;
@@ -339,7 +344,7 @@ public class AnkiDroidApp extends Application {
             PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
             pkgVersion = pInfo.versionName;
         } catch (PackageManager.NameNotFoundException e) {
-            Log.e(TAG, "Couldn't find package named " + context.getPackageName(), e);
+            AnkiDroidApp.Log(Log.ERROR, TAG, "Couldn't find package named " + context.getPackageName(), e);
         }
 
         return pkgVersion;
@@ -357,7 +362,7 @@ public class AnkiDroidApp extends Application {
             PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
             return pInfo.versionCode;
         } catch (PackageManager.NameNotFoundException e) {
-            Log.e(TAG, "Couldn't find package named " + context.getPackageName(), e);
+            AnkiDroidApp.Log(Log.ERROR, TAG, "Couldn't find package named " + context.getPackageName(), e);
         }
         return 0;
     }
@@ -511,6 +516,16 @@ public class AnkiDroidApp extends Application {
 
     public static void setStoredDialogHandlerMessage(Message msg) {
         sStoredDialogHandlerMessage = msg;
+    }
+
+    public static void Log(int priority, String tag, String msg, Exception e) {
+        Log(priority, tag, msg + "\n" + e.getMessage());
+    }
+
+    public static void Log(int priority, String tag, String msg) {
+        if (LOGGING_ENABLED) {
+            Crashlytics.log(priority, tag, msg);
+        }
     }
 
     public static Message getStoredDialogHandlerMessage() {
