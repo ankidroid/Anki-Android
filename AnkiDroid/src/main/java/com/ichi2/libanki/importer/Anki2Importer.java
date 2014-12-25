@@ -164,10 +164,10 @@ public class Anki2Importer {
             publishProgress(true, 100, 100, true);
             return cnt;
         } catch (RuntimeException e) {
-            Log.e(AnkiDroidApp.TAG, "RuntimeException while importing ", e);
+            AnkiDroidApp.Log(Log.ERROR, "RuntimeException while importing ", e);
             return -1;
         } catch (IOException e) {
-            Log.e(AnkiDroidApp.TAG, "IOException while importing ", e);
+            AnkiDroidApp.Log(Log.ERROR, "IOException while importing ", e);
             return -1;
         }
     }
@@ -186,15 +186,15 @@ public class Anki2Importer {
             long id = mDst.getDecks().id(mDeckPrefix);
             mDst.getDecks().select(id);
         }
-        Log.i(AnkiDroidApp.TAG, "Import - preparing");
+        AnkiDroidApp.Log(Log.INFO, "Import - preparing");
         _prepareTS();
         _prepareModels();
-        Log.i(AnkiDroidApp.TAG, "Import - importing notes");
+        AnkiDroidApp.Log(Log.INFO, "Import - importing notes");
         _importNotes();
-        Log.i(AnkiDroidApp.TAG, "Import - importing cards");
+        AnkiDroidApp.Log(Log.INFO, "Import - importing cards");
         int cnt = _importCards();
         // _importMedia();
-        Log.i(AnkiDroidApp.TAG, "Import - finishing");
+        AnkiDroidApp.Log(Log.INFO, "Import - finishing");
         publishProgress(true, 100, 100, false);
         _postImport();
         // LIBANKI: vacuum and analyze is done in DeckTask
@@ -692,7 +692,7 @@ public class Anki2Importer {
             try {
                 return new BufferedInputStream(mZip.getInputStream(mZip.getEntry(nameToNum.get(fname))));
             } catch (IOException e) {
-                Log.e(AnkiDroidApp.TAG, "Could not extract media file " + fname + "from mZip file.");
+                AnkiDroidApp.Log(Log.ERROR, "Could not extract media file " + fname + "from mZip file.");
             }
         }
         return null;
@@ -716,7 +716,7 @@ public class Anki2Importer {
             mDst.getMedia().markFileAdd(fname);
         } catch (IOException e) {
             // the user likely used subdirectories
-            Log.e(AnkiDroidApp.TAG, String.format(Locale.US,
+            AnkiDroidApp.Log(Log.ERROR, String.format(Locale.US,
                     "Anki2Importer._writeDstMedia: error copying file to %s (%s), ignoring and continuing.", fname,
                     e.getMessage()));
         }

@@ -224,7 +224,7 @@ public class Collection {
      * Flush state to DB, updating mod time.
      */
     public void flush(long mod) {
-        Log.i(AnkiDroidApp.TAG, "flush - Saving information to DB...");
+        AnkiDroidApp.Log(Log.INFO, "flush - Saving information to DB...");
         mMod = (mod == 0 ? Utils.intNow(1000) : mod);
         ContentValues values = new ContentValues();
         values.put("crt", mCrt);
@@ -324,7 +324,7 @@ public class Collection {
             mDb = null;
             mMedia.close();
             _closeLog();
-            Log.i(AnkiDroidApp.TAG, "Collection closed");
+            AnkiDroidApp.Log(Log.INFO, "Collection closed");
         }
     }
 
@@ -1518,7 +1518,7 @@ public class Collection {
                 mDb.getDatabase().endTransaction();
             }
         } catch (RuntimeException e) {
-            Log.e(AnkiDroidApp.TAG, "doInBackgroundCheckDatabase - RuntimeException on marking card: " + e);
+            AnkiDroidApp.Log(Log.ERROR, "doInBackgroundCheckDatabase - RuntimeException on marking card: " + e);
             AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundCheckDatabase");
             return -1;
         }
@@ -1536,9 +1536,9 @@ public class Collection {
 
 
     public void optimize() {
-        Log.i(AnkiDroidApp.TAG, "executing VACUUM statement");
+        AnkiDroidApp.Log(Log.INFO, "executing VACUUM statement");
         mDb.execute("VACUUM");
-        Log.i(AnkiDroidApp.TAG, "executing ANALYZE statement");
+        AnkiDroidApp.Log(Log.INFO, "executing ANALYZE statement");
         mDb.execute("ANALYZE");
     }
 
@@ -1556,7 +1556,7 @@ public class Collection {
         String s = String.format("[%s] %s:%s(): %s", Utils.intNow(), trace.getFileName(), trace.getMethodName(),
                 TextUtils.join(",  ", args));
         mLogHnd.println(s);
-        Log.d(AnkiDroidApp.TAG, s);
+        AnkiDroidApp.Log(Log.DEBUG, s);
     }
 
 
@@ -1576,7 +1576,7 @@ public class Collection {
             mLogHnd = new PrintWriter(new BufferedWriter(new FileWriter(lpath, true)), true);
         } catch (IOException e) {
             // turn off logging if we can't open the log file
-            Log.e(AnkiDroidApp.TAG, "Failed to open collection.log file - disabling logging");
+            AnkiDroidApp.Log(Log.ERROR, "Failed to open collection.log file - disabling logging");
             mDebugLog = false;
         }
     }

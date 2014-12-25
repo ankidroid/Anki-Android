@@ -96,11 +96,11 @@ public class MediaSyncer {
             // loop through and process changes from server
             mCol.log("last local usn is " + lastUsn);
             mDownloadCount = 0;
-            Log.i(AnkiDroidApp.TAG, "MediaSyncer: Last local usn is: " + lastUsn);
+            AnkiDroidApp.Log(Log.INFO, "MediaSyncer: Last local usn is: " + lastUsn);
             while (true) {
                 JSONArray data = mServer.mediaChanges(lastUsn);
                 mCol.log("mediaChanges resp count: " + data.length());
-                Log.i(AnkiDroidApp.TAG, "MediaSyncer: mediaChanges resp count: " + data.length());
+                AnkiDroidApp.Log(Log.INFO, "MediaSyncer: mediaChanges resp count: " + data.length());
                 if (data.length() == 0) {
                     break;
                 }
@@ -203,10 +203,10 @@ public class MediaSyncer {
             throw new RuntimeException(e);
         } catch (APIVersionException e) {
             UnsupportedSyncException ee = new UnsupportedSyncException("Cannot sync media on this version of Android");
-            Log.e(AnkiDroidApp.TAG, e.getMessage());
+            AnkiDroidApp.Log(Log.ERROR, e.getMessage());
             throw ee;
         } catch (Exception e) {
-            Log.e(AnkiDroidApp.TAG, "Syncing error: ", e);
+            AnkiDroidApp.Log(Log.ERROR, "Syncing error: ", e);
             throw new RuntimeException(e);
         }
     }
@@ -235,7 +235,7 @@ public class MediaSyncer {
                 mCon.publishProgress(String.format(
                         AnkiDroidApp.getAppResources().getString(R.string.sync_media_downloaded_count), mDownloadCount));
             } catch (Exception e) {
-                Log.e(AnkiDroidApp.TAG, "Error downloading media files", e);
+                AnkiDroidApp.Log(Log.ERROR, "Error downloading media files", e);
                 throw new RuntimeException(e);
             }
         }

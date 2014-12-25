@@ -1,4 +1,19 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
+
 def homePath = System.properties['user.home']
 android {
     compileSdkVersion 19
@@ -6,7 +21,7 @@ android {
 
     defaultConfig {
         applicationId "com.ichi2.anki"
-        minSdkVersion 7
+        minSdkVersion 8
         targetSdkVersion 19
         testApplicationId "com.ichi2.anki.tests"
     }
@@ -35,4 +50,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:19.1.0'
     compile 'com.google.code.gson:gson:2.3'
     compile project(":ShowcaseView:library")
+    compile('com.crashlytics.sdk.android:crashlytics:2.2.0@aar') {
+        transitive = true;
+    }
 }

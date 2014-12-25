@@ -114,7 +114,7 @@ public class ChartBuilder {
         int height = mChartView.getMeasuredHeight();
         int width = mChartView.getMeasuredWidth();
 
-        Log.d(AnkiDroidApp.TAG, "heigth: " + height + ", width: " + width + ", " + mChartView.getWidth());
+        AnkiDroidApp.Log(Log.DEBUG, "heigth: " + height + ", width: " + width + ", " + mChartView.getWidth());
 
         if(height <=0 || width <= 0){
             return null;
@@ -348,7 +348,7 @@ public class ChartBuilder {
     public PlotSheet createSmallDueChart(double[][] serieslist){
         int height = mChartView.getMeasuredHeight();
         int width = mChartView.getMeasuredWidth();
-        Log.d(AnkiDroidApp.TAG, "SmallDueChart: heigth: " + height + ", width: " + width);
+        AnkiDroidApp.Log(Log.DEBUG, "SmallDueChart: heigth: " + height + ", width: " + width);
         Paint paint = new Paint(Paint.LINEAR_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.STROKE);
 
@@ -440,7 +440,7 @@ public class ChartBuilder {
         while((deltaRange/(tics))/2 >= ticlimit) {
             tics *= 2.0;
         }
-        Log.d(AnkiDroidApp.TAG, "ChartBuilder ticksCalcY: pixelDistance: " + pixelDistance + ", ticks: " + tics);
+        AnkiDroidApp.Log(Log.DEBUG, "ChartBuilder ticksCalcY: pixelDistance: " + pixelDistance + ", ticks: " + tics);
         return tics;
     }
 

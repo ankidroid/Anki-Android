@@ -83,7 +83,7 @@ public class Template
             ctx = ctx.parent;
         }
         // Graceful failing, no need to throw exception
-        Log.e(AnkiDroidApp.TAG, "Could not retrieve from context name '" + name + "' on line " + line);
+        AnkiDroidApp.Log(Log.ERROR, "Could not retrieve from context name '" + name + "' on line " + line);
         return defaultValue;
     }
 

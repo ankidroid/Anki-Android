@@ -49,7 +49,7 @@ public class StyledProgressDialog extends Dialog {
             setCanceledOnTouchOutside(false);
             super.show();
         } catch (BadTokenException e) {
-            Log.e(AnkiDroidApp.TAG, "Could not show dialog: " + e);
+            AnkiDroidApp.Log(Log.ERROR, "Could not show dialog: " + e);
         }
     }
 
@@ -105,7 +105,7 @@ public class StyledProgressDialog extends Dialog {
         try {
             Themes.setStyledProgressDialogDialogBackgrounds(layout);
         } catch (OutOfMemoryError e) {
-            Log.e(AnkiDroidApp.TAG, "StyledDialog - Dialog could not be created: " + e);
+            AnkiDroidApp.Log(Log.ERROR, "StyledDialog - Dialog could not be created: " + e);
             Themes.showThemedToast(context, context.getResources().getString(R.string.error_insufficient_memory), false);
             return null;
         }

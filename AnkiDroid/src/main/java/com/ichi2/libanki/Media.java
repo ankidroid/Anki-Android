@@ -123,7 +123,7 @@ public class Media {
         File fd = new File(mDir);
         if (!fd.exists()) {
             if (!fd.mkdir()) {
-                Log.e(AnkiDroidApp.TAG, "Cannot create media directory: " + mDir);
+                AnkiDroidApp.Log(Log.ERROR, "Cannot create media directory: " + mDir);
             }
         }
         // change database
@@ -856,7 +856,7 @@ public class Media {
             z.close();
             return new Pair<File, List<String>>(f, fnames);
         } catch (IOException e) {
-            Log.e(AnkiDroidApp.TAG, "Failed to create media changes zip", e);
+            AnkiDroidApp.Log(Log.ERROR, "Failed to create media changes zip", e);
             throw new RuntimeException(e);
         } finally {
             if (cur != null) {
@@ -940,7 +940,7 @@ public class Media {
      * if it already exists.
      */
     public void markFileAdd(String fname) {
-        Log.i(AnkiDroidApp.TAG, "Marking media file addition in media db: " + fname);
+        AnkiDroidApp.Log(Log.INFO, "Marking media file addition in media db: " + fname);
         String path = new File(dir(), fname).getAbsolutePath();
         mDb.execute("insert or replace into media values (?,?,?,?)",
                 new Object[] { fname, _checksum(path), _mtime(path), 1 });
@@ -955,7 +955,7 @@ public class Media {
         if (f.exists()) {
             f.delete();
         }
-        Log.i(AnkiDroidApp.TAG, "Marking media file removal in media db: " + fname);
+        AnkiDroidApp.Log(Log.INFO, "Marking media file removal in media db: " + fname);
         mDb.execute("insert or replace into media values (?,?,?,?)",
                 new Object[] { fname, null, 0, 1 });
     }

@@ -252,7 +252,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         if (mFullNewCountThread != null) {
             mFullNewCountThread.interrupt();
         }
-        Log.i(AnkiDroidApp.TAG, "StudyOptions - onDestroy()");
+        AnkiDroidApp.Log(Log.INFO, "StudyOptions - onDestroy()");
     }
 
 
@@ -260,7 +260,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     public void onResume() {
         super.onResume();
         if (colOpen() && !mFragmented) {
-            Log.i(AnkiDroidApp.TAG, "StudyOptionsFragment.onResume() -- refreshing interface");
+            AnkiDroidApp.Log(Log.INFO, "StudyOptionsFragment.onResume() -- refreshing interface");
             // If not in tablet mode then reload deck counts (reload is taken care of by DeckPicker when mFragmented)
             if (Utils.now() > getCol().getSched().getDayCutoff()) {
                 resetAndRefreshInterface(false);
@@ -268,7 +268,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                 refreshInterface();
             }
         } else {
-            Log.i(AnkiDroidApp.TAG, "StudyOptionsFragment.onResume() -- skipping refresh of interface");
+            AnkiDroidApp.Log(Log.INFO, "StudyOptionsFragment.onResume() -- skipping refresh of interface");
         }
     }
 
@@ -282,7 +282,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         } else if (a == null) {
             // getActivity() can return null if reference to fragment lingers after parent activity has been closed,
             // which is particularly relevant when using AsyncTasks.
-            Log.e(AnkiDroidApp.TAG, "closeStudyOptions() failed due to getActivity() returning null");
+            AnkiDroidApp.Log(Log.ERROR, "closeStudyOptions() failed due to getActivity() returning null");
         }
     }
 
@@ -513,7 +513,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     private void refreshInterface(boolean reset, boolean updateDeckList) {
         // Exit if collection not open
         if (!colOpen()) {
-            Log.e(AnkiDroidApp.TAG, "StudyOptionsFragment.refreshInterface failed due to Collection being closed");
+            AnkiDroidApp.Log(Log.ERROR, "StudyOptionsFragment.refreshInterface failed due to Collection being closed");
             return;
         }
         // Load the deck counts for the deck from Collection asynchronously
@@ -593,7 +593,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
-        Log.i(AnkiDroidApp.TAG, "StudyOptionsFragment: onActivityResult");
+        AnkiDroidApp.Log(Log.INFO, "StudyOptionsFragment: onActivityResult");
         getActivity().supportInvalidateOptionsMenu();
         if (resultCode == DeckPicker.RESULT_DB_ERROR) {
             closeStudyOptions(DeckPicker.RESULT_DB_ERROR);
@@ -626,7 +626,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
             } else if (requestCode == ADD_NOTE && resultCode != Activity.RESULT_CANCELED) {
                 resetAndRefreshInterface();
             } else if (requestCode == REQUEST_REVIEW) {
-                Log.i(AnkiDroidApp.TAG, "Result code = " + resultCode);
+                AnkiDroidApp.Log(Log.INFO, "Result code = " + resultCode);
                 resetAndRefreshInterface();
             } else if (requestCode == BROWSE_CARDS
                     && (resultCode == Activity.RESULT_OK || resultCode == Activity.RESULT_CANCELED)) {
@@ -645,7 +645,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
             try {
                 mProgressDialog.dismiss();
             } catch (Exception e) {
-                Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
+                AnkiDroidApp.Log(Log.ERROR, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
             }
         }
     }
@@ -709,7 +709,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
 
                 // Don't do anything if the fragment is no longer attached to it's Activity or col has been closed
                 if (getActivity() == null || !colOpen()) {
-                    Log.e(AnkiDroidApp.TAG, "StudyOptionsFragment.mRefreshFragmentListener :: can't refresh");
+                    AnkiDroidApp.Log(Log.ERROR, "StudyOptionsFragment.mRefreshFragmentListener :: can't refresh");
                     return;
                 }
                 // Reinitialize controls incase changed to filtered deck
@@ -879,7 +879,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     // Method for loading the collection which is inherited by all AnkiActivitys
     protected void startLoadingCollection() {
         // Initialize the open collection loader
-        Log.i(AnkiDroidApp.TAG, "StudyOptionsFragment.loadCollection()");
+        AnkiDroidApp.Log(Log.INFO, "StudyOptionsFragment.loadCollection()");
         if (AnkiDroidApp.getCol() == null) {
             showCollectionLoadingDialog();
         }

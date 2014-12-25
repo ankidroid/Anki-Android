@@ -150,7 +150,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     public static boolean waitToFinish(Integer timeout) {
         try {
             if ((sLatestInstance != null) && (sLatestInstance.getStatus() != AsyncTask.Status.FINISHED)) {
-                Log.i(AnkiDroidApp.TAG, "DeckTask: waiting for task " + sLatestInstance.mType + " to finish...");
+                AnkiDroidApp.Log(Log.INFO, "DeckTask: waiting for task " + sLatestInstance.mType + " to finish...");
                 if (timeout != null) {
                     sLatestInstance.get(timeout, TimeUnit.SECONDS);
                 } else {
@@ -160,7 +160,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             }
             return true;
         } catch (Exception e) {
-            Log.i(AnkiDroidApp.TAG, "Exception waiting for task to finish \n" + e.getMessage());
+            AnkiDroidApp.Log(Log.INFO, "Exception waiting for task to finish \n" + e.getMessage());
             return false;
         }
     }
@@ -171,7 +171,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         try {
             if ((sLatestInstance != null) && (sLatestInstance.getStatus() != AsyncTask.Status.FINISHED)) {
                 sLatestInstance.cancel(true);
-                Log.i(AnkiDroidApp.TAG, "Cancelled task " + sLatestInstance.mType);
+                AnkiDroidApp.Log(Log.INFO, "Cancelled task " + sLatestInstance.mType);
             }
         } catch (Exception e) {
             return;
@@ -216,7 +216,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         super.doInBackground(params);
         // Wait for previous thread (if any) to finish before continuing
         if (mPreviousTask != null && mPreviousTask.getStatus() != AsyncTask.Status.FINISHED) {
-            Log.i(AnkiDroidApp.TAG, "Waiting for " + mPreviousTask.mType + " to finish before starting " + mType);
+            AnkiDroidApp.Log(Log.INFO, "Waiting for " + mPreviousTask.mType + " to finish before starting " + mType);
 
             // Let user know if the last deck close is still performing a backup.
             if (mType == TASK_TYPE_OPEN_COLLECTION && mPreviousTask.mType == TASK_TYPE_CLOSE_DECK) {
@@ -225,18 +225,18 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             }
             try {
                 mPreviousTask.get();
-                Log.i(AnkiDroidApp.TAG, "Finished waiting for " + mPreviousTask.mType + " to finish. Status= " + mPreviousTask.getStatus());
+                AnkiDroidApp.Log(Log.INFO, "Finished waiting for " + mPreviousTask.mType + " to finish. Status= " + mPreviousTask.getStatus());
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 // We have been interrupted, return immediately.
-                Log.e(AnkiDroidApp.TAG, "interrupted while waiting for previous task: " + mPreviousTask.mType, e);
+                AnkiDroidApp.Log(Log.ERROR, "interrupted while waiting for previous task: " + mPreviousTask.mType, e);
                 return null;
             } catch (ExecutionException e) {
                 // Ignore failures in the previous task.
-                Log.e(AnkiDroidApp.TAG, "previously running task failed with exception: " + mPreviousTask.mType, e);
+                AnkiDroidApp.Log(Log.ERROR, "previously running task failed with exception: " + mPreviousTask.mType, e);
             } catch (CancellationException e) {
                 // Ignore cancellation of previous task
-                Log.e(AnkiDroidApp.TAG, "previously running task was cancelled: " + mPreviousTask.mType, e);
+                AnkiDroidApp.Log(Log.ERROR, "previously running task was cancelled: " + mPreviousTask.mType, e);
             }
         }
 
@@ -333,7 +333,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                 return doInBackgroundRemoveTemplate(params);
 
             default:
-                Log.e(AnkiDroidApp.TAG, "unknown task type: " + mType);
+                AnkiDroidApp.Log(Log.ERROR, "unknown task type: " + mType);
                 return null;
         }
     }
@@ -360,7 +360,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     protected void onPostExecute(TaskData result) {
         super.onPostExecute(result);
         mListener.onPostExecute(this, result);
-        Log.i(AnkiDroidApp.TAG, "enabling garbage collection of mPreviousTask...");
+        AnkiDroidApp.Log(Log.INFO, "enabling garbage collection of mPreviousTask...");
         mPreviousTask = null;
     }
 
@@ -370,7 +370,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     }
 
     private TaskData doInBackgroundAddNote(TaskData[] params) {
-        Log.i(AnkiDroidApp.TAG, "doInBackgroundAddNote");
+        AnkiDroidApp.Log(Log.INFO, "doInBackgroundAddNote");
         Note note = params[0].getNote();
         Collection col = note.getCol();
 
@@ -384,7 +384,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                 ankiDB.getDatabase().endTransaction();
             }
         } catch (RuntimeException e) {
-            Log.e(AnkiDroidApp.TAG, "doInBackgroundAddNote - RuntimeException on adding fact: " + e);
+            AnkiDroidApp.Log(Log.ERROR, "doInBackgroundAddNote - RuntimeException on adding fact: " + e);
             AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundAddNote");
             return new TaskData(false);
         }
@@ -393,7 +393,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
 
     private TaskData doInBackgroundUpdateNote(TaskData[] params) {
-        Log.i(AnkiDroidApp.TAG, "doInBackgroundUpdateNote");
+        AnkiDroidApp.Log(Log.INFO, "doInBackgroundUpdateNote");
         // Save the note
         Sched sched = params[0].getSched();
         Collection col = sched.getCol();
@@ -431,7 +431,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                 col.getDb().getDatabase().endTransaction();
             }
         } catch (RuntimeException e) {
-            Log.e(AnkiDroidApp.TAG, "doInBackgroundUpdateNote - RuntimeException on updating fact: " + e);
+            AnkiDroidApp.Log(Log.ERROR, "doInBackgroundUpdateNote - RuntimeException on updating fact: " + e);
             AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundUpdateNote");
             return new TaskData(false);
         }
@@ -464,7 +464,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                 ankiDB.getDatabase().endTransaction();
             }
         } catch (RuntimeException e) {
-            Log.e(AnkiDroidApp.TAG, "doInBackgroundAnswerCard - RuntimeException on answering card: " + e);
+            AnkiDroidApp.Log(Log.ERROR, "doInBackgroundAnswerCard - RuntimeException on answering card: " + e);
             AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundAnswerCard");
             return new TaskData(false);
         }
@@ -482,7 +482,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
 
     private TaskData doInBackgroundLoadDeckCounts(TaskData... params) {
-        Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadDeckCounts");
+        AnkiDroidApp.Log(Log.INFO, "doInBackgroundLoadDeckCounts");
         Collection col = params[0].getCollection();
         if (col == null || col.getDb() == null) {
             return null;
@@ -490,20 +490,20 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         try {
             return new TaskData(col.getSched().deckCounts());
         } catch (RuntimeException e) {
-            Log.e(AnkiDroidApp.TAG, "doInBackgroundLoadDeckCounts - error: " + e);
+            AnkiDroidApp.Log(Log.ERROR, "doInBackgroundLoadDeckCounts - error: " + e);
             return null;
         }
     }
 
 
     private TaskData doInBackgroundSaveCollection(TaskData... params) {
-        Log.i(AnkiDroidApp.TAG, "doInBackgroundSaveCollection");
+        AnkiDroidApp.Log(Log.INFO, "doInBackgroundSaveCollection");
         Collection col = params[0].getCollection();
         if (col != null) {
             try {
                 col.save();
             } catch (RuntimeException e) {
-                Log.e(AnkiDroidApp.TAG, "Error on saving deck in background: " + e);
+                AnkiDroidApp.Log(Log.ERROR, "Error on saving deck in background: " + e);
             }
         }
         return null;
@@ -578,7 +578,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                 col.getDb().getDatabase().endTransaction();
             }
         } catch (RuntimeException e) {
-            Log.e(AnkiDroidApp.TAG, "doInBackgroundSuspendCard - RuntimeException on suspending card: " + e);
+            AnkiDroidApp.Log(Log.ERROR, "doInBackgroundSuspendCard - RuntimeException on suspending card: " + e);
             AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSuspendCard");
             return new TaskData(false);
         }
@@ -610,7 +610,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                 ankiDB.getDatabase().endTransaction();
             }
         } catch (RuntimeException e) {
-            Log.e(AnkiDroidApp.TAG, "doInBackgroundMarkCard - RuntimeException on marking card: " + e);
+            AnkiDroidApp.Log(Log.ERROR, "doInBackgroundMarkCard - RuntimeException on marking card: " + e);
             AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundMarkCard");
             return new TaskData(false);
         }
@@ -645,7 +645,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                 col.getDb().getDatabase().endTransaction();
             }
         } catch (RuntimeException e) {
-            Log.e(AnkiDroidApp.TAG, "doInBackgroundUndo - RuntimeException on undoing: " + e);
+            AnkiDroidApp.Log(Log.ERROR, "doInBackgroundUndo - RuntimeException on undoing: " + e);
             AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundUndo");
             return new TaskData(false);
         }
@@ -654,14 +654,14 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
 
     private TaskData doInBackgroundSearchCards(TaskData... params) {
-        Log.i(AnkiDroidApp.TAG, "doInBackgroundSearchCards");
+        AnkiDroidApp.Log(Log.INFO, "doInBackgroundSearchCards");
         Collection col = (Collection) params[0].getObjArray()[0];
         HashMap<String, String> deckNames = (HashMap<String, String>) params[0].getObjArray()[1];
         String query = (String) params[0].getObjArray()[2];
         Boolean order = (Boolean) params[0].getObjArray()[3];
         ArrayList<HashMap<String,String>> searchResult = col.findCardsForCardBrowser(query, order, deckNames);
         if (isCancelled() || CardBrowser.sSearchCancelled) {
-            Log.i(AnkiDroidApp.TAG, "doInBackgroundSearchCards was cancelled so return null");
+            AnkiDroidApp.Log(Log.INFO, "doInBackgroundSearchCards was cancelled so return null");
             return null;
         } else {
             publishProgress(new TaskData(searchResult));
@@ -671,7 +671,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
 
     private TaskData doInBackgroundRenderBrowserQA(TaskData... params) {
-        Log.i(AnkiDroidApp.TAG, "doInBackgroundRenderBrowserQA");
+        AnkiDroidApp.Log(Log.INFO, "doInBackgroundRenderBrowserQA");
         Collection col = (Collection) params[0].getObjArray()[0];
         ArrayList<HashMap<String, String>> items = (ArrayList<HashMap<String, String>>) params[0].getObjArray()[1];
         Integer startPos = (Integer) params[0].getObjArray()[2];
@@ -698,15 +698,15 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
 
     private TaskData doInBackgroundCheckDatabase(TaskData... params) {
-        Log.i(AnkiDroidApp.TAG, "doInBackgroundCheckDatabase");
+        AnkiDroidApp.Log(Log.INFO, "doInBackgroundCheckDatabase");
         Collection col = params[0].getCollection();
         // Try to reopen the collection if it's null
         if (!AnkiDroidApp.colIsOpen()) {
-            Log.e(AnkiDroidApp.TAG, "doInBackgroundCheckDatabase :: collection not open, trying to reload");
+            AnkiDroidApp.Log(Log.ERROR, "doInBackgroundCheckDatabase :: collection not open, trying to reload");
             AnkiDroidApp.openCollection(AnkiDroidApp.COLLECTION_PATH);
             col = AnkiDroidApp.getCol();
             if (col == null) {
-                Log.e(AnkiDroidApp.TAG, "doInBackgroundCheckDatabase :: collection reload failed");
+                AnkiDroidApp.Log(Log.ERROR, "doInBackgroundCheckDatabase :: collection reload failed");
                 return new TaskData(false);
             }
         }
@@ -723,7 +723,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
 
     private TaskData doInBackgroundRepairDeck(TaskData... params) {
-        Log.i(AnkiDroidApp.TAG, "doInBackgroundRepairDeck");
+        AnkiDroidApp.Log(Log.INFO, "doInBackgroundRepairDeck");
         String deckPath = params[0].getString();
         Collection col = params[0].getCollection();
         if (col != null) {
@@ -733,7 +733,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     }
 
     private TaskData doInBackgroundCloseCollection(TaskData... params) {
-        Log.i(AnkiDroidApp.TAG, "doInBackgroundCloseCollection");
+        AnkiDroidApp.Log(Log.INFO, "doInBackgroundCloseCollection");
         Collection col = params[0].getCollection();
         if (col != null) {
             try {
@@ -742,14 +742,14 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                 AnkiDroidApp.closeCollection(true);
                 BackupManager.performBackupInBackground(path);
             } catch (RuntimeException e) {
-                Log.i(AnkiDroidApp.TAG, "doInBackgroundCloseCollection: error occurred - collection not properly closed");
+                AnkiDroidApp.Log(Log.INFO, "doInBackgroundCloseCollection: error occurred - collection not properly closed");
             }
         }
         return null;
     }
 
     private TaskData doInBackgroundUpdateValuesFromDeck(TaskData... params) {
-        Log.i(AnkiDroidApp.TAG, "doInBackgroundUpdateValuesFromDeck");
+        AnkiDroidApp.Log(Log.INFO, "doInBackgroundUpdateValuesFromDeck");
         try {
             Sched sched = params[0].getCollection().getSched();
             Object[] obj = params[0].getObjArray();
@@ -770,7 +770,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             return new TaskData(new Object[] { counts[0], counts[1], counts[2], totalNewCount, totalCount,
                     progressMature, progressAll, sched.eta(counts), serieslist });
         } catch (RuntimeException e) {
-            Log.e(AnkiDroidApp.TAG, "doInBackgroundUpdateValuesFromDeck - an error occurred: " + e);
+            AnkiDroidApp.Log(Log.ERROR, "doInBackgroundUpdateValuesFromDeck - an error occurred: " + e);
             return null;
         }
     }
@@ -778,13 +778,13 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
 
     private TaskData doInBackgroundDeleteBackups() {
-        Log.i(AnkiDroidApp.TAG, "doInBackgroundDeleteBackups");
+        AnkiDroidApp.Log(Log.INFO, "doInBackgroundDeleteBackups");
         return null;// ew TaskData(BackupManager.deleteAllBackups());
     }
 
 
     private TaskData doInBackgroundDeleteDeck(TaskData... params) {
-        Log.i(AnkiDroidApp.TAG, "doInBackgroundDeleteDeck");
+        AnkiDroidApp.Log(Log.INFO, "doInBackgroundDeleteDeck");
         Collection col = params[0].getCollection();
         long did = params[0].getLong();
         col.getDecks().rem(did, true);
@@ -793,7 +793,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
 
     private TaskData doInBackgroundRebuildCram(TaskData... params) {
-        Log.i(AnkiDroidApp.TAG, "doInBackgroundRebuildCram");
+        AnkiDroidApp.Log(Log.INFO, "doInBackgroundRebuildCram");
         Collection col = params[0].getCollection();
         boolean fragmented = params[0].getBoolean();
         long did = params[0].getLong();
@@ -803,7 +803,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
 
     private TaskData doInBackgroundEmptyCram(TaskData... params) {
-        Log.i(AnkiDroidApp.TAG, "doInBackgroundEmptyCram");
+        AnkiDroidApp.Log(Log.INFO, "doInBackgroundEmptyCram");
         Collection col = params[0].getCollection();
         boolean fragmented = params[0].getBoolean();
         long did = params[0].getLong();
@@ -813,7 +813,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
 
     private TaskData doInBackgroundImportAdd(TaskData... params) {
-        Log.i(AnkiDroidApp.TAG, "doInBackgroundImportAdd");
+        AnkiDroidApp.Log(Log.INFO, "doInBackgroundImportAdd");
         Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
         Collection col = params[0].getCollection();
         String path = params[0].getString();
@@ -856,11 +856,11 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             }
             return new TaskData(addedCount, result.getObjArray(), true);
         } catch (RuntimeException e) {
-            Log.e(AnkiDroidApp.TAG, "doInBackgroundImportAdd - RuntimeException on importing cards: ", e);
+            AnkiDroidApp.Log(Log.ERROR, "doInBackgroundImportAdd - RuntimeException on importing cards: ", e);
             AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundImportAdd");
             return new TaskData(false);
         } catch (IOException e) {
-            Log.e(AnkiDroidApp.TAG, "doInBackgroundImportAdd - IOException on importing cards: ", e);
+            AnkiDroidApp.Log(Log.ERROR, "doInBackgroundImportAdd - IOException on importing cards: ", e);
             AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundImportAdd");
             return new TaskData(false);
         }
@@ -868,7 +868,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
 
     private TaskData doInBackgroundImportReplace(TaskData... params) {
-        Log.i(AnkiDroidApp.TAG, "doInBackgroundImportReplace");
+        AnkiDroidApp.Log(Log.INFO, "doInBackgroundImportReplace");
         Collection col = params[0].getCollection();
         String path = params[0].getString();
         Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
@@ -887,7 +887,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         try {
             zip = new ZipFile(new File(path), ZipFile.OPEN_READ);
         } catch (IOException e) {
-            Log.e(AnkiDroidApp.TAG, "doInBackgroundImportReplace - Error while unzipping: ", e);
+            AnkiDroidApp.Log(Log.ERROR, "doInBackgroundImportReplace - Error while unzipping: ", e);
             AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundImportReplace0");
             return new TaskData(false);
         }
@@ -975,15 +975,15 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             }
             return new TaskData(addedCount, result.getObjArray(), true);
         } catch (RuntimeException e) {
-            Log.e(AnkiDroidApp.TAG, "doInBackgroundImportReplace - RuntimeException: ", e);
+            AnkiDroidApp.Log(Log.ERROR, "doInBackgroundImportReplace - RuntimeException: ", e);
             AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundImportReplace1");
             return new TaskData(false);
         } catch (FileNotFoundException e) {
-            Log.e(AnkiDroidApp.TAG, "doInBackgroundImportReplace - FileNotFoundException: ", e);
+            AnkiDroidApp.Log(Log.ERROR, "doInBackgroundImportReplace - FileNotFoundException: ", e);
             AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundImportReplace2");
             return new TaskData(false);
         } catch (IOException e) {
-            Log.e(AnkiDroidApp.TAG, "doInBackgroundImportReplace - IOException: ", e);
+            AnkiDroidApp.Log(Log.ERROR, "doInBackgroundImportReplace - IOException: ", e);
             AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundImportReplace3");
             return new TaskData(false);
         }
@@ -991,7 +991,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
 
     private TaskData doInBackgroundExportApkg(TaskData... params) {
-        Log.i(AnkiDroidApp.TAG, "doInBackgroundExportApkg");
+        AnkiDroidApp.Log(Log.INFO, "doInBackgroundExportApkg");
         Object[] data = params[0].getObjArray();
         Collection col = (Collection) data[0];
         String apkgPath = (String) data[1];
@@ -1006,13 +1006,13 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             exporter.setDid(did);
             exporter.exportInto(apkgPath);
         } catch (FileNotFoundException e) {
-            Log.e(AnkiDroidApp.TAG, "FileNotFoundException in doInBackgroundExportApkg: ", e);
+            AnkiDroidApp.Log(Log.ERROR, "FileNotFoundException in doInBackgroundExportApkg: ", e);
             return new TaskData(false);
         } catch (IOException e) {
-            Log.e(AnkiDroidApp.TAG, "IOException in doInBackgroundExportApkg: ", e);
+            AnkiDroidApp.Log(Log.ERROR, "IOException in doInBackgroundExportApkg: ", e);
             return new TaskData(false);
         } catch (JSONException e) {
-            Log.e(AnkiDroidApp.TAG, "JSOnException in doInBackgroundExportApkg: ", e);
+            AnkiDroidApp.Log(Log.ERROR, "JSOnException in doInBackgroundExportApkg: ", e);
             return new TaskData(false);
         }
         return new TaskData(apkgPath);
@@ -1020,7 +1020,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
 
     private TaskData doInBackgroundUpdateCardBrowserList(TaskData... params) {
-        Log.i(AnkiDroidApp.TAG, "doInBackgroundSortCards");
+        AnkiDroidApp.Log(Log.INFO, "doInBackgroundSortCards");
         if (params.length == 1) {
             Comparator comparator = params[0].getComparator();
             ArrayList<HashMap<String, String>> card = params[0].getCards();
@@ -1046,7 +1046,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
 
     private TaskData doInBackgroundReorder(TaskData... params) {
-        Log.i(AnkiDroidApp.TAG, "doInBackgroundReorder");
+        AnkiDroidApp.Log(Log.INFO, "doInBackgroundReorder");
         Object[] data = params[0].getObjArray();
         Collection col = (Collection) data[0];
         JSONObject conf = (JSONObject) data[1];
@@ -1056,7 +1056,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
 
     private TaskData doInBackgroundConfChange(TaskData... params) {
-        Log.i(AnkiDroidApp.TAG, "doInBackgroundConfChange");
+        AnkiDroidApp.Log(Log.INFO, "doInBackgroundConfChange");
         Object[] data = params[0].getObjArray();
         Collection col = (Collection) data[0];
         JSONObject deck = (JSONObject) data[1];
@@ -1085,7 +1085,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
 
     private TaskData doInBackgroundConfReset(TaskData... params) {
-        Log.i(AnkiDroidApp.TAG, "doInBackgroundConfReset");
+        AnkiDroidApp.Log(Log.INFO, "doInBackgroundConfReset");
         Object[] data = params[0].getObjArray();
         Collection col = (Collection) data[0];
         JSONObject conf = (JSONObject) data[1];
@@ -1095,7 +1095,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
 
     private TaskData doInBackgroundConfRemove(TaskData... params) {
-        Log.i(AnkiDroidApp.TAG, "doInBackgroundConfRemove");
+        AnkiDroidApp.Log(Log.INFO, "doInBackgroundConfRemove");
         Object[] data = params[0].getObjArray();
         Collection col = (Collection) data[0];
         JSONObject conf = (JSONObject) data[1];
@@ -1119,7 +1119,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
 
     private TaskData doInBackgroundConfSetSubdecks(TaskData... params) {
-        Log.i(AnkiDroidApp.TAG, "doInBackgroundConfSetSubdecks");
+        AnkiDroidApp.Log(Log.INFO, "doInBackgroundConfSetSubdecks");
         Object[] data = params[0].getObjArray();
         Collection col = (Collection) data[0];
         JSONObject deck = (JSONObject) data[1];
@@ -1148,7 +1148,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
      * @return The results list from the check, or false if any errors.
      */
     private TaskData doInBackgroundCheckMedia(TaskData... params) {
-        Log.i(AnkiDroidApp.TAG, "doInBackgroundCheckMedia");
+        AnkiDroidApp.Log(Log.INFO, "doInBackgroundCheckMedia");
         try {
             // A media check on AnkiDroid will also update the media db
             AnkiDroidApp.getCol().getMedia().findChanges(true);
@@ -1166,7 +1166,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
      * @return
      */
     private TaskData doInBackgroundAddTemplate(TaskData... params) {
-        Log.i(AnkiDroidApp.TAG, "doInBackgroundAddTemplate");
+        AnkiDroidApp.Log(Log.INFO, "doInBackgroundAddTemplate");
         Object [] args = params[0].getObjArray();
         Collection col = (Collection ) args[0];
         JSONObject model = (JSONObject) args[1];
@@ -1175,7 +1175,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         try {
             col.getModels().addTemplate(model, template);
         } catch (ConfirmModSchemaException e) {
-            Log.e(AnkiDroidApp.TAG, "doInBackgroundAddTemplate :: ConfirmModSchemaException");
+            AnkiDroidApp.Log(Log.ERROR, "doInBackgroundAddTemplate :: ConfirmModSchemaException");
             return new TaskData(false);
         }
         return new TaskData(true);
@@ -1187,7 +1187,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
      * @return
      */
     private TaskData doInBackgroundRemoveTemplate(TaskData... params) {
-        Log.i(AnkiDroidApp.TAG, "doInBackgroundRemoveTemplate");
+        AnkiDroidApp.Log(Log.INFO, "doInBackgroundRemoveTemplate");
         Object [] args = params[0].getObjArray();
         Collection col = (Collection ) args[0];
         JSONObject model = (JSONObject) args[1];
@@ -1199,7 +1199,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                 return new TaskData(col, "removeTemplateFailed", false);
             }
         } catch (ConfirmModSchemaException e) {
-            Log.e(AnkiDroidApp.TAG, "doInBackgroundRemoveTemplate :: ConfirmModSchemaException");
+            AnkiDroidApp.Log(Log.ERROR, "doInBackgroundRemoveTemplate :: ConfirmModSchemaException");
             return new TaskData(false);
         }
         return new TaskData(true);

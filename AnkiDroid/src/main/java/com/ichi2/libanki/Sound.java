@@ -180,7 +180,7 @@ public class Sound {
         StringBuilder stringBuilder = new StringBuilder();
         String contentLeft = content;
 
-        Log.i(AnkiDroidApp.TAG, "expandSounds");
+        AnkiDroidApp.Log(Log.INFO, "expandSounds");
 
         Matcher matcher = sSoundPattern.matcher(content);
         // While there is matches of the pattern for sound markers
@@ -207,7 +207,7 @@ public class Sound {
                         + "<span style='padding:5px;'>"+ button
                         + "</span></a>");
             contentLeft = contentLeft.substring(markerStart + soundMarker.length());
-            Log.i(AnkiDroidApp.TAG, "Content left = " + contentLeft);
+            AnkiDroidApp.Log(Log.INFO, "Content left = " + contentLeft);
         }
 
         // unused code related to tts support taken out after v2.2alpha55
@@ -253,7 +253,7 @@ public class Sound {
      */
     @SuppressLint("NewApi")
     public static void playSound(String soundPath, OnCompletionListener playAllListener, final VideoView videoView) {
-        Log.i(AnkiDroidApp.TAG, "Playing " + soundPath + " has listener? " + Boolean.toString(playAllListener != null));
+        AnkiDroidApp.Log(Log.INFO, "Playing " + soundPath + " has listener? " + Boolean.toString(playAllListener != null));
 
         if (soundPath.substring(0, 3).equals("tts")) {
             // TODO: give information about did
@@ -319,7 +319,7 @@ public class Sound {
                 sMediaPlayer.prepareAsync();
                 AnkiDroidApp.getCompat().requestAudioFocus(sAudioManager);
             } catch (Exception e) {
-                Log.e(AnkiDroidApp.TAG, "playSounds - Error reproducing sound " + soundPath + " = " + e.getMessage());
+                AnkiDroidApp.Log(Log.ERROR, "playSounds - Error reproducing sound " + soundPath + " = " + e.getMessage());
                 releaseSound();
             }
         }

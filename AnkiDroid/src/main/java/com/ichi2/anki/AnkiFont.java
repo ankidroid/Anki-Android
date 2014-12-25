@@ -127,7 +127,7 @@ public class AnkiFont {
                     sb.deleteCharAt(sb.length() - 1);
                     sb.append(" !important;");
                 } else {
-                    Log.d(AnkiDroidApp.TAG, "AnkiFont.getCSS() - unable to set a font attribute important while override is set.");
+                    AnkiDroidApp.Log(Log.DEBUG, "AnkiFont.getCSS() - unable to set a font attribute important while override is set.");
                 }
             }
         }
@@ -153,7 +153,7 @@ public class AnkiFont {
                 return Typeface.createFromFile(path);
             }
         } catch (RuntimeException e) {
-            Log.w(AnkiDroidApp.TAG, "AnkiFont.getTypeface: " + e.getMessage() + " - File: " + path);
+            AnkiDroidApp.Log(Log.WARN, "AnkiFont.getTypeface: " + e.getMessage() + " - File: " + path);
             if (!corruptFonts.contains(path)) {
                 // Show warning toast
                 String name = new File(path).getName();

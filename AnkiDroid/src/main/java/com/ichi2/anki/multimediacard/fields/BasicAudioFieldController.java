@@ -64,7 +64,7 @@ public class BasicAudioFieldController extends FieldControllerBase implements IF
                 file = File.createTempFile("ankidroid_audiorec", ".3gp", DiskUtil.getStoringDirectory());
                 tempAudioPath = file.getAbsolutePath();
             } catch (IOException e) {
-                Log.e(AnkiDroidApp.TAG, "Could not create temporary audio file. " + e.getMessage());
+                AnkiDroidApp.Log(Log.ERROR, "Could not create temporary audio file. " + e.getMessage());
                 tempAudioPath = null;
             }
         }

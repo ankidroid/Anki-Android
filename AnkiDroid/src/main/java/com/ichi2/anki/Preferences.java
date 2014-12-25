@@ -317,7 +317,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         try {
             entry = listpref.getEntry().toString();
         } catch (NullPointerException e) {
-            Log.e(AnkiDroidApp.TAG, "Error getting set preference value of " + key + ": " + e);
+            AnkiDroidApp.Log(Log.ERROR, "Error getting set preference value of " + key + ": " + e);
             entry = "?";
         }
         if (mListsToUpdate.containsKey(key)) {
@@ -353,7 +353,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         try {
             entry = pref.getText();
         } catch (NullPointerException e) {
-            Log.e(AnkiDroidApp.TAG, "Error getting set preference value of " + key + ": " + e);
+            AnkiDroidApp.Log(Log.ERROR, "Error getting set preference value of " + key + ": " + e);
             entry = "?";
         }
         if (mListsToUpdate.containsKey(key)) {
@@ -385,7 +385,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 }
             }
         } catch (NullPointerException e) {
-            Log.e(AnkiDroidApp.TAG, "Exception when updating seekbar preference: " + e);
+            AnkiDroidApp.Log(Log.ERROR, "Exception when updating seekbar preference: " + e);
         }
     }
 
@@ -406,7 +406,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 }
             }
         } catch (NullPointerException e) {
-            Log.e(AnkiDroidApp.TAG, "Exception when updating NumberRangePreference: " + e);
+            AnkiDroidApp.Log(Log.ERROR, "Exception when updating NumberRangePreference: " + e);
         }
     }
 
@@ -564,7 +564,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 updateNumberRangePreference(key);
             }
         } catch (BadTokenException e) {
-            Log.e(AnkiDroidApp.TAG, "Preferences: BadTokenException on showDialog: " + e);
+            AnkiDroidApp.Log(Log.ERROR, "Preferences: BadTokenException on showDialog: " + e);
         } catch (NumberFormatException e) {
             throw new RuntimeException();
         } catch (JSONException e) {
@@ -582,18 +582,18 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private String[] getCustomFonts(String defaultValue, boolean useFullPath) {
         List<AnkiFont> mFonts = Utils.getCustomFonts(this);
         int count = mFonts.size();
-        Log.d(AnkiDroidApp.TAG, "There are " + count + " custom fonts");
+        AnkiDroidApp.Log(Log.DEBUG, "There are " + count + " custom fonts");
         String[] names = new String[count + 1];
         names[0] = defaultValue;
         if (useFullPath) {
             for (int index = 1; index < count + 1; ++index) {
                 names[index] = mFonts.get(index - 1).getPath();
-                Log.d(AnkiDroidApp.TAG, "Adding custom font: " + names[index]);
+                AnkiDroidApp.Log(Log.DEBUG, "Adding custom font: " + names[index]);
             }
         } else {
             for (int index = 1; index < count + 1; ++index) {
                 names[index] = mFonts.get(index - 1).getName();
-                Log.d(AnkiDroidApp.TAG, "Adding custom font: " + names[index]);
+                AnkiDroidApp.Log(Log.DEBUG, "Adding custom font: " + names[index]);
             }
         }
         return names;
@@ -603,7 +603,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            Log.i(AnkiDroidApp.TAG, "Preferences - onBackPressed()");
+            AnkiDroidApp.Log(Log.INFO, "Preferences - onBackPressed()");
             closePreferences();
             return true;
         }

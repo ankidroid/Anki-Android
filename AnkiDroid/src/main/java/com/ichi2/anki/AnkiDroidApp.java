@@ -35,6 +35,7 @@ import android.view.Display;
 import android.view.ViewConfiguration;
 import android.view.WindowManager;
 
+import com.crashlytics.android.Crashlytics;
 import com.ichi2.anki.exception.AnkiDroidErrorReportException;
 import com.ichi2.async.Connection;
 import com.ichi2.compat.Compat;
@@ -51,9 +52,11 @@ import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.hooks.Hooks;
 import com.ichi2.utils.LanguageUtil;
 
+import io.fabric.sdk.android.Fabric;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
+import java.util.UUID;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -72,6 +75,7 @@ public class AnkiDroidApp extends Application {
      * Tag for logging messages.
      */
     public static final String TAG = "AnkiDroid";
+    public static final Boolean LOGGING_ENABLED = true;
 
     public static final String COLLECTION_PATH = "/collection.anki2";
 
@@ -125,6 +129,7 @@ public class AnkiDroidApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
 
         if (isNookHdOrHdPlus() && AnkiDroidApp.SDK_VERSION == 15) {
             mCompat = new CompatV15NookHdOrHdPlus();
@@ -149,9 +154,9 @@ public class AnkiDroidApp extends Application {
         Connection.setContext(getApplicationContext());
 
         // Error Reporter
-        CustomExceptionHandler customExceptionHandler = CustomExceptionHandler.getInstance();
+        /*CustomExceptionHandler customExceptionHandler = CustomExceptionHandler.getInstance();
         customExceptionHandler.init(sInstance.getApplicationContext());
-        Thread.setDefaultUncaughtExceptionHandler(customExceptionHandler);
+        Thread.setDefaultUncaughtExceptionHandler(customExceptionHandler);*/
 
 		// Configure WebView to allow file scheme pages to access cookies.
 		mCompat.enableCookiesForFileSchemePages();
@@ -172,6 +177,17 @@ public class AnkiDroidApp extends Application {
             // Reason: apply() not available on Android 1.5
             editor.commit();
         }
+        // Add a unique user identifier for the purpose of identifying reported crashes
+        String id;
+        if (!preferences.contains("uuid")) {
+            Editor editor = preferences.edit();
+            id = UUID.randomUUID().toString();
+            editor.putString("uuid", id);
+            editor.commit();
+        } else {
+            id = preferences.getString("uuid","");
+        }
+        Crashlytics.setUserIdentifier(id);
         // Get good default values for swipe detection
         final ViewConfiguration vc = ViewConfiguration.get(this);
         if (AnkiDroidApp.SDK_VERSION >= 8) {
@@ -180,6 +196,7 @@ public class AnkiDroidApp extends Application {
             DEFAULT_SWIPE_MIN_DISTANCE = vc.getScaledTouchSlop()*2;
         }
         DEFAULT_SWIPE_THRESHOLD_VELOCITY = vc.getScaledMinimumFlingVelocity();
+
     }
 
 
@@ -264,7 +281,7 @@ public class AnkiDroidApp extends Application {
         try {
             new File(decksDirectory.getAbsolutePath() + "/.nomedia").createNewFile();
         } catch (IOException e) {
-            Log.e(AnkiDroidApp.TAG, "Nomedia file could not be created");
+            AnkiDroidApp.Log(Log.ERROR, "Nomedia file could not be created");
         }
         createNoMediaFileIfMissing(decksDirectory);
     }
@@ -276,7 +293,7 @@ public class AnkiDroidApp extends Application {
             try {
                 mediaFile.createNewFile();
             } catch (IOException e) {
-                Log.e(AnkiDroidApp.TAG, "Nomedia file could not be created in path " + decksDirectory.getAbsolutePath());
+                AnkiDroidApp.Log(Log.ERROR, "Nomedia file could not be created in path " + decksDirectory.getAbsolutePath());
             }
         }
     }
@@ -319,7 +336,7 @@ public class AnkiDroidApp extends Application {
             PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
             pkgName = context.getString(pInfo.applicationInfo.labelRes);
         } catch (PackageManager.NameNotFoundException e) {
-            Log.e(TAG, "Couldn't find package named " + context.getPackageName(), e);
+            Log(Log.ERROR, "Couldn't find package named " + context.getPackageName(), e);
         }
 
         return pkgName;
@@ -339,7 +356,7 @@ public class AnkiDroidApp extends Application {
             PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
             pkgVersion = pInfo.versionName;
         } catch (PackageManager.NameNotFoundException e) {
-            Log.e(TAG, "Couldn't find package named " + context.getPackageName(), e);
+            AnkiDroidApp.Log(Log.ERROR, "Couldn't find package named " + context.getPackageName(), e);
         }
 
         return pkgVersion;
@@ -357,7 +374,7 @@ public class AnkiDroidApp extends Application {
             PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
             return pInfo.versionCode;
         } catch (PackageManager.NameNotFoundException e) {
-            Log.e(TAG, "Couldn't find package named " + context.getPackageName(), e);
+            AnkiDroidApp.Log(Log.ERROR, "Couldn't find package named " + context.getPackageName(), e);
         }
         return 0;
     }
@@ -392,7 +409,10 @@ public class AnkiDroidApp extends Application {
     
     
     public static void saveExceptionReportFile(Throwable e, String origin, String additionalInfo) {
-        CustomExceptionHandler.getInstance().uncaughtException(null, e, origin, additionalInfo);
+        //CustomExceptionHandler.getInstance().uncaughtException(null, e, origin, additionalInfo);
+        Crashlytics.setString("origin", origin);
+        Crashlytics.setString("additionalInfo", additionalInfo);
+        Crashlytics.logException(e);
     }
 
 
@@ -449,7 +469,7 @@ public class AnkiDroidApp extends Application {
 
     public static synchronized Collection openCollection(String path, boolean force) {
         mLock.lock();
-        Log.i(AnkiDroidApp.TAG, "openCollection: " + path);
+        AnkiDroidApp.Log(Log.INFO, "openCollection: " + path);
         try {
             if (!colIsOpen() || !sInstance.mCurrentCollection.getPath().equals(path) || force) {
                 if (colIsOpen()) {
@@ -459,10 +479,10 @@ public class AnkiDroidApp extends Application {
                 }
                 sInstance.mCurrentCollection = Storage.Collection(path, false, true);
                 sInstance.mAccessThreadCount++;
-                Log.i(AnkiDroidApp.TAG, "Access to collection is requested: collection has been opened");
+                AnkiDroidApp.Log(Log.INFO, "Access to collection is requested: collection has been opened");
             } else {
                 sInstance.mAccessThreadCount++;
-                Log.i(AnkiDroidApp.TAG, "Access to collection is requested: collection has not been reopened (count: " + sInstance.mAccessThreadCount + ")");
+                AnkiDroidApp.Log(Log.INFO, "Access to collection is requested: collection has not been reopened (count: " + sInstance.mAccessThreadCount + ")");
             }
             return sInstance.mCurrentCollection;
         } finally {
@@ -478,12 +498,12 @@ public class AnkiDroidApp extends Application {
 
     public static void closeCollection(boolean save) {
         mLock.lock();
-        Log.i(AnkiDroidApp.TAG, "closeCollection");
+        AnkiDroidApp.Log(Log.INFO, "closeCollection");
         try {
             if (sInstance.mAccessThreadCount > 0) {
                 sInstance.mAccessThreadCount--;
             }
-            Log.i(AnkiDroidApp.TAG, "Access to collection has been closed: (count: " + sInstance.mAccessThreadCount + ")");
+            AnkiDroidApp.Log(Log.INFO, "Access to collection has been closed: (count: " + sInstance.mAccessThreadCount + ")");
             if (sInstance.mAccessThreadCount == 0 && sInstance.mCurrentCollection != null) {
                 Collection col = sInstance.mCurrentCollection;
                 sInstance.mCurrentCollection = null;
@@ -506,11 +526,21 @@ public class AnkiDroidApp extends Application {
     public static void resetAccessThreadCount() {
         sInstance.mAccessThreadCount = 0;
         sInstance.mCurrentCollection = null;
-        Log.i(AnkiDroidApp.TAG, "Access has been reset to 0");
+        AnkiDroidApp.Log(Log.INFO, "Access has been reset to 0");
     }
 
     public static void setStoredDialogHandlerMessage(Message msg) {
         sStoredDialogHandlerMessage = msg;
+    }
+
+    public static void Log(int priority, String msg, Exception e) {
+        Log(priority, msg + "\n" + e.getMessage());
+    }
+
+    public static void Log(int priority, String msg) {
+        if (LOGGING_ENABLED) {
+            Crashlytics.log(priority, TAG, msg);
+        }
     }
 
     public static Message getStoredDialogHandlerMessage() {

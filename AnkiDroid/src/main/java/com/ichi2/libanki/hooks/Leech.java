@@ -50,7 +50,7 @@ public class Leech {
                 });
 
             } else {
-                Log.e(AnkiDroidApp.TAG, "LeechHook :: could not show leech toast as activity was null");
+                AnkiDroidApp.Log(Log.ERROR, "LeechHook :: could not show leech toast as activity was null");
             }
         }
     }

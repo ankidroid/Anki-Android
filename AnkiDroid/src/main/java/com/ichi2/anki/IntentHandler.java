@@ -37,7 +37,7 @@ public class IntentHandler extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.styled_open_collection_dialog);
         Intent intent = getIntent();
-        Log.v(AnkiDroidApp.TAG, intent.toString());
+        AnkiDroidApp.Log(Log.VERBOSE, intent.toString());
         Intent reloadIntent = new Intent(this, DeckPicker.class);
         reloadIntent.setDataAndType(getIntent().getData(), getIntent().getType());
         String action = intent.getAction();
@@ -64,14 +64,14 @@ public class IntentHandler extends Activity {
                    If the data type is apkg then we can assume that it's a shared deck from AnkiWeb
                    so we give it a dummy filename*/
                 if (filename == null) {
-                    Log.e(AnkiDroidApp.TAG, "Could not get filename from Content Provider. cursor = " + cursor);
+                    AnkiDroidApp.Log(Log.ERROR, "Could not get filename from Content Provider. cursor = " + cursor);
                     if (intent.getType().equals("application/apkg")) {
                         filename = "unknown_filename.apkg";
                     }
                 }
                 if (filename != null && filename.endsWith(".apkg")) {
                     Uri importUri = Uri.fromFile(new File(getCacheDir(), filename));
-                    Log.v(AnkiDroidApp.TAG, "IntentHandler copying apkg file to " + importUri.getEncodedPath());
+                    AnkiDroidApp.Log(Log.VERBOSE, "IntentHandler copying apkg file to " + importUri.getEncodedPath());
                     // Copy to temp file
                     try {
                         // Get an input stream to the data in ContentProvider

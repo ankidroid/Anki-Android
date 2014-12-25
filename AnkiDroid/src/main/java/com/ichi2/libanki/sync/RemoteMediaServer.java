@@ -108,7 +108,7 @@ public class RemoteMediaServer extends HttpSyncer {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
-            Log.e(AnkiDroidApp.TAG, "Failed to create temp media sync zip file", e);
+            AnkiDroidApp.Log(Log.ERROR, "Failed to create temp media sync zip file", e);
             throw new RuntimeException(e);
         }
     }

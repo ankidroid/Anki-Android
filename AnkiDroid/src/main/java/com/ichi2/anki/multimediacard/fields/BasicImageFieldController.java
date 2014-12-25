@@ -202,7 +202,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             f.delete();
             return outPath;
         } catch (FileNotFoundException e) {
-            Log.e(AnkiDroidApp.TAG, "Error in BasicImageFieldController.rotateAndCompress() : " + e.getMessage());
+            AnkiDroidApp.Log(Log.ERROR, "Error in BasicImageFieldController.rotateAndCompress() : " + e.getMessage());
             return inPath;
         } finally {
             try {

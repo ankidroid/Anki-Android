@@ -31,6 +31,8 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 
 // Not designed for visual editing
@@ -139,7 +141,7 @@ public class AudioView extends LinearLayout {
     // }
     // else
     // {
-    // Log.e("Audio View",
+    // AnkiDroidApp.Log(Log.ERROR, "Audio View",
     // "Cannot set audio path after it has been initialized");
     // }
     // }
@@ -236,7 +238,7 @@ public class AudioView extends LinearLayout {
                             mStatus = Status.PLAYING;
                             notifyPlay();
                         } catch (Exception e) {
-                            Log.e("AudioView", e.getMessage());
+                            AnkiDroidApp.Log(Log.ERROR, "AudioView", e);
                             showToast(gtxt(R.string.multimedia_editor_audio_view_playing_failed));
                             mStatus = Status.IDLE;
                         }
@@ -258,7 +260,7 @@ public class AudioView extends LinearLayout {
                             mPlayer.prepare();
                             mPlayer.seekTo(0);
                         } catch (Exception e) {
-                            Log.e("AudioView", e.getMessage());
+                            AnkiDroidApp.Log(Log.ERROR, "AudioView", e);
                         }
                         mPlayer.start();
                         notifyPlay();
@@ -391,7 +393,7 @@ public class AudioView extends LinearLayout {
                                 mRecorder.start();
 
                             } catch (Exception e) {
-                                Log.e("AudioView", "RecordButton.onClick() :: error recording to " + mAudioPath + "\n" +e.getMessage());
+                                AnkiDroidApp.Log(Log.ERROR, "AudioView.RecordButton.onClick() :: error recording to " + mAudioPath + "\n" +e.getMessage());
                                 showToast(gtxt(R.string.multimedia_editor_audio_view_recording_failed));
                                 mStatus = Status.STOPPED;
                                 break;

@@ -58,7 +58,7 @@
 //
 //        @Override
 //        public void onServiceConnected(ComponentName className, IBinder binder) {
-//            Log.i(AnkiDroidApp.TAG, "binding content service - success");
+//            AnkiDroidApp.Log(Log.INFO, "binding content service - success");
 //            contentServiceBinder = (WidgetContentService.WidgetContentBinder) binder;
 //            contentService = contentServiceBinder.getService();
 //            // check, if card is still the same after reloading the deck. If not, show question instead of answering
@@ -83,7 +83,7 @@
 //
 //    @Override
 //    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-//        Log.i(AnkiDroidApp.TAG, "BigWidget: onUpdate");
+//        AnkiDroidApp.Log(Log.INFO, "BigWidget: onUpdate");
 //        WidgetStatus.update(context);
 //    }
 //
@@ -91,7 +91,7 @@
 //    @Override
 //    public void onEnabled(Context context) {
 //        super.onEnabled(context);
-//        Log.i(AnkiDroidApp.TAG, "BigWidget: Widget enabled");
+//        AnkiDroidApp.Log(Log.INFO, "BigWidget: Widget enabled");
 //        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
 //        if (!preferences.getBoolean("widgetBigEnabled", false)) {
 //            // show info dialog
@@ -118,7 +118,7 @@
 //    @Override
 //    public void onDisabled(Context context) {
 //        super.onDisabled(context);
-//        Log.i(AnkiDroidApp.TAG, "BigWidget: Widget disabled");
+//        AnkiDroidApp.Log(Log.INFO, "BigWidget: Widget disabled");
 //        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
 //        preferences.edit().putBoolean("widgetBigEnabled", false).commit();
 //    }
@@ -431,12 +431,12 @@
 //
 //        @Override
 //        public void onStart(Intent intent, int startId) {
-//            Log.i(AnkiDroidApp.TAG, "BigWidget: OnStart");
+//            AnkiDroidApp.Log(Log.INFO, "BigWidget: OnStart");
 //
 //            if (intent == null) {
 //                // do nothing
 //            } else if (contentService == null) {
-//                Log.i(AnkiDroidApp.TAG, "binding content service");
+//                AnkiDroidApp.Log(Log.INFO, "binding content service");
 //                updateViews();
 //                tempIntent = intent;
 //                sContext = this;
@@ -607,7 +607,7 @@
 //
 //
 //        private void showProgressDialog() {
-//            Log.i(AnkiDroidApp.TAG, "BigWidget: show progress dialog");
+//            AnkiDroidApp.Log(Log.INFO, "BigWidget: show progress dialog");
 //            contentService.mBigShowProgressDialog = true;
 //            updateViews();
 //        }
@@ -644,7 +644,7 @@
 //                contentService.mBigCurrentView = VIEW_DECKS;
 //            }
 //
-//            Log.i(AnkiDroidApp.TAG, "BigWidget: buildUpdate (" + contentService.mBigCurrentView + ")");
+//            AnkiDroidApp.Log(Log.INFO, "BigWidget: buildUpdate (" + contentService.mBigCurrentView + ")");
 //
 //            if (contentService.mBigCurrentView == VIEW_DECKS || contentService.mBigCurrentView == VIEW_SHOW_HELP
 //                    || contentService.mBigCurrentView == VIEW_CONGRATS) {
@@ -1080,7 +1080,7 @@
 //
 //        @Override
 //        public IBinder onBind(Intent arg0) {
-//            Log.i(AnkiDroidApp.TAG, "onBind");
+//            AnkiDroidApp.Log(Log.INFO, "onBind");
 //            return null;
 //        }
 //
@@ -1088,7 +1088,7 @@
 //
 //            @Override
 //            protected DeckStatus[] doInBackground(String... params) {
-//                Log.i(AnkiDroidApp.TAG, "doInBackgroundGetTomorrowDue");
+//                AnkiDroidApp.Log(Log.INFO, "doInBackgroundGetTomorrowDue");
 //                //
 //                // File dir = new File(params[0]);
 //                // File[] fileList = dir.listFiles(new WidgetStatus.AnkiFileFilter());
@@ -1109,7 +1109,7 @@
 //                // }
 //                // DeckManager.closeDeck(s.mDeckPath, DeckManager.REQUESTING_ACTIVITY_BIGWIDGET);
 //                // } catch (RuntimeException e) {
-//                // Log.e(AnkiDroidApp.TAG, "doInBackgroundGetTomorrowDue: an error occurred: " + e);
+//                // AnkiDroidApp.Log(Log.ERROR, "doInBackgroundGetTomorrowDue: an error occurred: " + e);
 //                // }
 //                // }
 //                // return decks.toArray(new DeckStatus[0]);
@@ -1119,7 +1119,7 @@
 //
 //            @Override
 //            protected void onPostExecute(DeckStatus[] status) {
-//                Log.d(AnkiDroidApp.TAG, "DeckManager.CloseDeckAsyncTask.onPostExecute()");
+//                AnkiDroidApp.Log(Log.DEBUG, "DeckManager.CloseDeckAsyncTask.onPostExecute()");
 //                contentService.mCol = null;
 //                contentService.mCurrentCard = null;
 //                contentService.mBigCurrentMessage = null;

@@ -34,7 +34,7 @@ public class CollectionLoader extends AsyncTaskLoader<Collection> {
         try {
             return AnkiDroidApp.openCollection(colPath);
         } catch (RuntimeException e) {
-            Log.e(AnkiDroidApp.TAG, "doInBackgroundOpenCollection - RuntimeException on opening collection: " + e);
+            AnkiDroidApp.Log(Log.ERROR, "doInBackgroundOpenCollection - RuntimeException on opening collection: " + e);
             AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundOpenCollection");
             return null;
         }
@@ -42,7 +42,7 @@ public class CollectionLoader extends AsyncTaskLoader<Collection> {
     
     @Override
     public void deliverResult(Collection col) {
-        Log.v(AnkiDroidApp.TAG, "CollectionLoader.deliverResult()");
+        AnkiDroidApp.Log(Log.VERBOSE, "CollectionLoader.deliverResult()");
         // Loader has been reset so don't forward data to listener
         if (isReset()) {
             if (col != null) {
@@ -59,17 +59,17 @@ public class CollectionLoader extends AsyncTaskLoader<Collection> {
     protected void onStartLoading() {
         // Don't touch collection if sync in progress
         if (AnkiDroidApp.getSyncInProgress()) {
-            Log.v(AnkiDroidApp.TAG, "CollectionLoader.onStartLoading() -- sync in progress; don't load collection");
+            AnkiDroidApp.Log(Log.VERBOSE, "CollectionLoader.onStartLoading() -- sync in progress; don't load collection");
             return;
         }
         String colPath = AnkiDroidApp.getCollectionPath();
         if (AnkiDroidApp.colIsOpen() && AnkiDroidApp.getCol() != null && AnkiDroidApp.getCol().getPath().equals(colPath)) {
             // deliver current path if open and valid
-            Log.v(AnkiDroidApp.TAG, "CollectionLoader.onStartLoading() -- deliverResult as col already open");
+            AnkiDroidApp.Log(Log.VERBOSE, "CollectionLoader.onStartLoading() -- deliverResult as col already open");
             deliverResult(AnkiDroidApp.getCol());
         } else {
             // otherwise reload the collection
-            Log.v(AnkiDroidApp.TAG, "CollectionLoader.onStartLoading() -- force load collection");
+            AnkiDroidApp.Log(Log.VERBOSE, "CollectionLoader.onStartLoading() -- force load collection");
             forceLoad();
         }        
     }
@@ -77,14 +77,14 @@ public class CollectionLoader extends AsyncTaskLoader<Collection> {
     @Override
     protected void onStopLoading() {
         // The Loader has been put in a stopped state, so we should attempt to cancel the current load (if there is one).
-        Log.v(AnkiDroidApp.TAG, "CollectionLoader.onStopLoading()");
+        AnkiDroidApp.Log(Log.VERBOSE, "CollectionLoader.onStopLoading()");
         cancelLoad();
     }
     
     @Override
     protected void onReset() {
         // Ensure the loader is stopped.
-        Log.v(AnkiDroidApp.TAG, "CollectionLoader.onReset()");
+        AnkiDroidApp.Log(Log.VERBOSE, "CollectionLoader.onReset()");
         onStopLoading();
     }
     

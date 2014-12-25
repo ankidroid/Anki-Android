@@ -106,7 +106,7 @@ public class Hooks {
                     func.runHook(args);
                 }
             } catch (Exception e) {
-                Log.e(AnkiDroidApp.TAG, "Exception while running hook " +
+                AnkiDroidApp.Log(Log.ERROR, "Exception while running hook " +
                         hook + ":" + funcName, e);
                 return;
             }
@@ -131,7 +131,7 @@ public class Hooks {
                     arg = func.runFilter(arg, args);
                 }
             } catch (Exception e) {
-                Log.e(AnkiDroidApp.TAG, "Exception while running hook " +
+                AnkiDroidApp.Log(Log.ERROR, "Exception while running hook " +
                         hook + ":" + funcName, e);
                 return "Error in filter " + hook + ":" + funcName;
             }
