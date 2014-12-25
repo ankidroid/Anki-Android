@@ -207,7 +207,7 @@ public class Mustache
             accum.addTextSegment(text);
             break;
         case TAG:
-            Log.e(AnkiDroidApp.TAG, "Template ended while parsing a tag [line=" + line + ", tag="+ text + "]");
+            AnkiDroidApp.Log(Log.ERROR, "Template ended while parsing a tag [line=" + line + ", tag="+ text + "]");
             text.append(end1);
             accum.addTextSegment(text);
             break;
@@ -223,7 +223,7 @@ public class Mustache
         for (int ii = 0, ll = accum.length(); ii < ll; ii++) {
             if (accum.charAt(ii) == start1) {
                 if (start2 == -1 || (ii < ll-1 && accum.charAt(ii+1) == start2)) {
-                    Log.e(AnkiDroidApp.TAG, "Tag contains start tag delimiter, probably missing close delimiter " +
+                    AnkiDroidApp.Log(Log.ERROR, "Tag contains start tag delimiter, probably missing close delimiter " +
                             "[line=" + line + ", tag=" + accum + "]");
                     return false;
                 }

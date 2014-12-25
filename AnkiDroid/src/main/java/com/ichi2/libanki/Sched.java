@@ -146,7 +146,7 @@ public class Sched {
 
     public void answerCard(Card card, int ease) {
         mCol.log();
-        Log.i(AnkiDroidApp.TAG, "answerCard - ease:" + ease);
+        AnkiDroidApp.Log(Log.INFO, "answerCard - ease:" + ease);
         mCol.markReview(card);
         if (mBurySiblingsOnAnswer) {
             _burySiblings(card);
@@ -1544,7 +1544,7 @@ public class Sched {
         JSONObject deck = mCol.getDecks().get(did);
         try {
             if (deck.getInt("dyn") == 0) {
-                Log.e(AnkiDroidApp.TAG, "error: deck is not a filtered deck");
+                AnkiDroidApp.Log(Log.ERROR, "error: deck is not a filtered deck");
                 return null;
             }
         } catch (JSONException e1) {
@@ -1680,7 +1680,7 @@ public class Sched {
 
     private int _dynIvlBoost(Card card) {
         if (card.getODid() == 0 || card.getType() != 2 || card.getFactor() == 0) {
-            Log.e(AnkiDroidApp.TAG, "error: deck is not a filtered deck");
+            AnkiDroidApp.Log(Log.ERROR, "error: deck is not a filtered deck");
             return 0;
         }
         long elapsed = card.getIvl() - (card.getODue() - mToday);

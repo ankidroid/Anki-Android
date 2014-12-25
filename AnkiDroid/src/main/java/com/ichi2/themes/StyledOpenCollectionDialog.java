@@ -49,7 +49,7 @@ public class StyledOpenCollectionDialog extends Dialog {
             setCanceledOnTouchOutside(false);
             super.show();
         } catch (BadTokenException e) {
-            Log.e(AnkiDroidApp.TAG, "Could not show dialog: " + e);
+            AnkiDroidApp.Log(Log.ERROR, "Could not show dialog: " + e);
         }
     }
 
@@ -59,7 +59,7 @@ public class StyledOpenCollectionDialog extends Dialog {
         try {
             super.dismiss();
         } catch (BadTokenException e) {
-            Log.e(AnkiDroidApp.TAG, "Could not dismiss dialog: " + e);
+            AnkiDroidApp.Log(Log.ERROR, "Could not dismiss dialog: " + e);
         }
     }
 

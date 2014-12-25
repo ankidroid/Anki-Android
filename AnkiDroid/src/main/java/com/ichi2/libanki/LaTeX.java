@@ -135,7 +135,7 @@ public class LaTeX {
     // String latex;
     //
     // //First pass, grab everything that the standard pattern gets
-    // Log.i(AnkiDroidApp.TAG, "parseLaTeX");
+    // AnkiDroidApp.Log(Log.INFO, "parseLaTeX");
     // Matcher matcher = sStandardPattern.matcher(contentLeft);
     // while (matcher.find()) {
     // latex = matcher.group(1);

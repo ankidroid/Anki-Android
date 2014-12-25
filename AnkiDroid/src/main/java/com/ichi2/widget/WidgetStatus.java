@@ -90,11 +90,11 @@ public final class WidgetStatus {
                 && sDeckStatus == null;
         if ((mediumWidget || smallWidget || bigWidget || notification)
                 && ((sUpdateDeckStatusAsyncTask == null) || (sUpdateDeckStatusAsyncTask.getStatus() == AsyncTask.Status.FINISHED))) {
-            Log.d(AnkiDroidApp.TAG, "WidgetStatus.update(): updating");
+            AnkiDroidApp.Log(Log.DEBUG, "WidgetStatus.update(): updating");
             sUpdateDeckStatusAsyncTask = new UpdateDeckStatusAsyncTask();
             sUpdateDeckStatusAsyncTask.execute(context);
         } else {
-            Log.d(AnkiDroidApp.TAG, "WidgetStatus.update(): already running or not enabled");
+            AnkiDroidApp.Log(Log.DEBUG, "WidgetStatus.update(): already running or not enabled");
         }
     }
 
@@ -103,7 +103,7 @@ public final class WidgetStatus {
         try {
             if ((sUpdateDeckStatusAsyncTask != null)
                     && (sUpdateDeckStatusAsyncTask.getStatus() != AsyncTask.Status.FINISHED)) {
-                Log.i(AnkiDroidApp.TAG, "WidgetStatus: wait to finish");
+                AnkiDroidApp.Log(Log.INFO, "WidgetStatus: wait to finish");
                 sUpdateDeckStatusAsyncTask.get();
             }
         } catch (Exception e) {
@@ -160,7 +160,7 @@ public final class WidgetStatus {
         @Override
         protected Context doInBackground(Context... params) {
             super.doInBackground(params);
-            Log.d(AnkiDroidApp.TAG, "WidgetStatus.UpdateDeckStatusAsyncTask.doInBackground()");
+            AnkiDroidApp.Log(Log.DEBUG, "WidgetStatus.UpdateDeckStatusAsyncTask.doInBackground()");
             Context context = params[0];
 
             if (!AnkiDroidApp.isSdCardMounted()) {
@@ -175,12 +175,12 @@ public final class WidgetStatus {
             // int dues = 0;
             // for (DeckStatus m : mDecks) {
             // if (m.mDeckId == sDeckStatus.mDeckId) {
-            // Log.i(AnkiDroidApp.TAG, "UpdateWidget - update information for deck " + sDeckStatus.mDeckName);
+            // AnkiDroidApp.Log(Log.INFO, "UpdateWidget - update information for deck " + sDeckStatus.mDeckName);
             // sDeckStatus.mDeckName = m.mDeckName;
             // sDeckStatus.mDepth = m.mDepth;
             // decks.add(sDeckStatus);
             // } else {
-            // Log.i(AnkiDroidApp.TAG, "UpdateWidget - copy information for deck " + m.mDeckName);
+            // AnkiDroidApp.Log(Log.INFO, "UpdateWidget - copy information for deck " + m.mDeckName);
             // decks.add(m);
             // }
             // }
@@ -217,7 +217,7 @@ public final class WidgetStatus {
                 // (Integer) d[4], (int) (progress * 100), eta));
                 // }
             } catch (SQLException e) {
-                Log.i(AnkiDroidApp.TAG, "Widget: Problems on retrieving deck information");
+                AnkiDroidApp.Log(Log.INFO, "Widget: Problems on retrieving deck information");
             }
             // }
             //
@@ -229,7 +229,7 @@ public final class WidgetStatus {
         @Override
         protected void onPostExecute(Context context) {
             super.onPostExecute(context);
-            Log.d(AnkiDroidApp.TAG, "WidgetStatus.UpdateDeckStatusAsyncTask.onPostExecute()");
+            AnkiDroidApp.Log(Log.DEBUG, "WidgetStatus.UpdateDeckStatusAsyncTask.onPostExecute()");
             MetaDB.storeSmallWidgetStatus(context, mSmallWidgetStatus);
             // MetaDB.storeWidgetStatus(context, mDecks);
             // if (mediumWidget) {

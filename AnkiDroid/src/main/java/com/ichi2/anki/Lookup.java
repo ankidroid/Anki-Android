@@ -70,7 +70,7 @@ public class Lookup {
                 mIsDictionaryAvailable = false;
                 break;
         }
-        Log.i(AnkiDroidApp.TAG, "Is intent available = " + mIsDictionaryAvailable);
+        AnkiDroidApp.Log(Log.INFO, "Is intent available = " + mIsDictionaryAvailable);
         return mIsDictionaryAvailable;
     }
 

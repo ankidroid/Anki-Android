@@ -99,11 +99,11 @@ public class FullSyncer extends HttpSyncer {
         try {
             AnkiDb d = AnkiDatabaseManager.getDatabase(tpath);
             if (!d.queryString("PRAGMA integrity_check").equalsIgnoreCase("ok")) {
-                Log.e(AnkiDroidApp.TAG, "Full sync - downloaded file corrupt");
+                AnkiDroidApp.Log(Log.ERROR, "Full sync - downloaded file corrupt");
                 return new Object[] { "remoteDbError" };
             }
         } catch (SQLiteDatabaseCorruptException e) {
-            Log.e(AnkiDroidApp.TAG, "Full sync - downloaded file corrupt");
+            AnkiDroidApp.Log(Log.ERROR, "Full sync - downloaded file corrupt");
             return new Object[] { "remoteDbError" };
         } finally {
             AnkiDatabaseManager.closeDatabase(tpath);

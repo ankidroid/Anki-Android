@@ -141,7 +141,7 @@ public class Card implements Cloneable {
         try {
             cursor = mCol.getDb().getDatabase().rawQuery("SELECT * FROM cards WHERE id = " + mId, null);
             if (!cursor.moveToFirst()) {
-                Log.w(AnkiDroidApp.TAG, "Card.load: No card with id " + mId);
+                AnkiDroidApp.Log(Log.WARN, "Card.load: No card with id " + mId);
                 return;
             }
             mId = cursor.getLong(0);
@@ -428,7 +428,7 @@ public class Card implements Cloneable {
             mTimerStarted += Utils.now() - mTimerStopped;
             mTimerStopped = Double.NaN;
         } else {
-            Log.i(AnkiDroidApp.TAG, "Card Timer: nothing to resume");
+            AnkiDroidApp.Log(Log.INFO, "Card Timer: nothing to resume");
         }
     }
 

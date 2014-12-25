@@ -50,7 +50,7 @@ public class AnkiDroidWidgetMedium extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        Log.i(AnkiDroidApp.TAG, "MediumWidget: onUpdate");
+        AnkiDroidApp.Log(Log.INFO, "MediumWidget: onUpdate");
         WidgetStatus.update(context);
     }
 
@@ -58,7 +58,7 @@ public class AnkiDroidWidgetMedium extends AppWidgetProvider {
     @Override
     public void onEnabled(Context context) {
         super.onEnabled(context);
-        Log.i(AnkiDroidApp.TAG, "MediumWidget: Widget enabled");
+        AnkiDroidApp.Log(Log.INFO, "MediumWidget: Widget enabled");
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
         preferences.edit().putBoolean("widgetMediumEnabled", true).commit();
     }
@@ -67,7 +67,7 @@ public class AnkiDroidWidgetMedium extends AppWidgetProvider {
     @Override
     public void onDisabled(Context context) {
         super.onDisabled(context);
-        Log.i(AnkiDroidApp.TAG, "MediumWidget: Widget disabled");
+        AnkiDroidApp.Log(Log.INFO, "MediumWidget: Widget disabled");
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
         preferences.edit().putBoolean("widgetMediumEnabled", false).commit();
     }
@@ -137,7 +137,7 @@ public class AnkiDroidWidgetMedium extends AppWidgetProvider {
 
         @Override
         public void onStart(Intent intent, int startId) {
-            Log.i(AnkiDroidApp.TAG, "MediumWidget: OnStart");
+            AnkiDroidApp.Log(Log.INFO, "MediumWidget: OnStart");
 
             boolean updateDueDecksNow = true;
             if (intent != null) {
@@ -159,7 +159,7 @@ public class AnkiDroidWidgetMedium extends AppWidgetProvider {
                     updateDueDecksNow = false;
                 } else if (ACTION_UPDATE.equals(intent.getAction())) {
                     // Updating the widget is done below for all actions.
-                    Log.d(AnkiDroidApp.TAG, "AnkiDroidWidget.UpdateService: UPDATE");
+                    AnkiDroidApp.Log(Log.DEBUG, "AnkiDroidWidget.UpdateService: UPDATE");
                 }
             }
             RemoteViews updateViews = buildUpdate(this, updateDueDecksNow);
@@ -171,7 +171,7 @@ public class AnkiDroidWidgetMedium extends AppWidgetProvider {
 
 
         private RemoteViews buildUpdate(Context context, boolean updateDueDecksNow) {
-            Log.i(AnkiDroidApp.TAG, "MediumWidget: buildUpdate");
+            AnkiDroidApp.Log(Log.INFO, "MediumWidget: buildUpdate");
 
             // Resources res = context.getResources();
             RemoteViews updateViews = new RemoteViews(context.getPackageName(), R.layout.widget);
@@ -194,7 +194,7 @@ public class AnkiDroidWidgetMedium extends AppWidgetProvider {
                         public void onReceive(Context context, Intent intent) {
                             String action = intent.getAction();
                             if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
-                                Log.i(AnkiDroidApp.TAG, "mMountReceiver - Action = Media Mounted");
+                                AnkiDroidApp.Log(Log.INFO, "mMountReceiver - Action = Media Mounted");
                                 if (remounted) {
                                     WidgetStatus.update(getBaseContext());
                                     remounted = false;
@@ -336,7 +336,7 @@ public class AnkiDroidWidgetMedium extends AppWidgetProvider {
 
         @Override
         public IBinder onBind(Intent arg0) {
-            Log.i(AnkiDroidApp.TAG, "onBind");
+            AnkiDroidApp.Log(Log.INFO, "onBind");
             return null;
         }
     }

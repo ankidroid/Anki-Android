@@ -69,7 +69,7 @@ public class AnkiDb {
             // set journal mode again to delete in order to make the db accessible for anki desktop and for full upload
             setDeleteJournalMode();
             mDatabase.close();
-            Log.i(AnkiDroidApp.TAG, "AnkiDb - closeDatabase, database " + mDatabase.getPath() + " closed = " + !mDatabase.isOpen());
+            AnkiDroidApp.Log(Log.INFO, "AnkiDb - closeDatabase, database " + mDatabase.getPath() + " closed = " + !mDatabase.isOpen());
             mDatabase = null;
         }
     }
@@ -235,13 +235,13 @@ public class AnkiDb {
                     sb.append("Exception due to null. Query: " + query);
                     sb.append(" Null occurrences during this query: " + nullExceptionCount);
                     AnkiDroidApp.saveExceptionReportFile(nullException, "queryColumn_encounteredNull", sb.toString());
-                    Log.w(AnkiDroidApp.TAG, sb.toString());
+                    AnkiDroidApp.Log(Log.WARN, sb.toString());
                 } else { // nullException not properly initialized
                     StringBuilder sb = new StringBuilder();
                     sb.append("AnkiDb.queryColumn(): Critical error -- ");
                     sb.append("unable to pass in the actual exception to error reporting.");
                     AnkiDroidApp.saveExceptionReportFile("queryColumn_encounteredNull", sb.toString());
-                    Log.e(AnkiDroidApp.TAG, sb.toString());
+                    AnkiDroidApp.Log(Log.ERROR, sb.toString());
                 }
             }
         }

@@ -40,13 +40,13 @@ public class UIUtils {
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CLOSE_DECK, new DeckTask.TaskListener() {
                 @Override
                 public void onPreExecute() {
-                    Log.i(AnkiDroidApp.TAG, "closeCollectionInBackground: start");
+                    AnkiDroidApp.Log(Log.INFO, "closeCollectionInBackground: start");
                 }
 
 
                 @Override
                 public void onPostExecute(TaskData result) {
-                    Log.i(AnkiDroidApp.TAG, "closesCollectionInBackground: finished");
+                    AnkiDroidApp.Log(Log.INFO, "closesCollectionInBackground: finished");
                 }
 
 
@@ -68,13 +68,13 @@ public class UIUtils {
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_COLLECTION, new DeckTask.TaskListener() {
                 @Override
                 public void onPreExecute() {
-                    Log.i(AnkiDroidApp.TAG, "saveCollectionInBackground: start");
+                    AnkiDroidApp.Log(Log.INFO, "saveCollectionInBackground: start");
                 }
 
 
                 @Override
                 public void onPostExecute(TaskData result) {
-                    Log.i(AnkiDroidApp.TAG, "saveCollectionInBackground: finished");
+                    AnkiDroidApp.Log(Log.INFO, "saveCollectionInBackground: finished");
                 }
 
 

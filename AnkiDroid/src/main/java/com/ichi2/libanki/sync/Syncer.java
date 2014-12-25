@@ -97,7 +97,7 @@ public class Syncer {
         try {
             mCol.getDb().getDatabase().beginTransaction();
             try {
-                Log.i(AnkiDroidApp.TAG, "Sync: getting meta data from server");
+                AnkiDroidApp.Log(Log.INFO, "Sync: getting meta data from server");
                 JSONObject rMeta = new JSONObject(mServer.stream2String(ret.getEntity().getContent()));
                 mCol.log("rmeta", rMeta);
                 if (!rMeta.getBoolean("cont")) {
@@ -115,7 +115,7 @@ public class Syncer {
                 mMediaUsn = rMeta.getInt("musn");
                 mSyncMsg = rMeta.getString("msg");
                 // skip uname, AnkiDroid already stores and shows it
-                Log.i(AnkiDroidApp.TAG, "Sync: building local meta data");
+                AnkiDroidApp.Log(Log.INFO, "Sync: building local meta data");
                 JSONObject lMeta = meta();
                 mCol.log("lmeta", lMeta);
                 mLMod = lMeta.getLong("mod");
@@ -129,11 +129,11 @@ public class Syncer {
                     return new Object[] { "clockOff", diff };
                 }
                 if (mLMod == mRMod) {
-                    Log.i(AnkiDroidApp.TAG, "Sync: no changes - returning");
+                    AnkiDroidApp.Log(Log.INFO, "Sync: no changes - returning");
                     mCol.log("no changes");
                     return new Object[] { "noChanges" };
                 } else if (lscm != rscm) {
-                    Log.i(AnkiDroidApp.TAG, "Sync: full sync necessary - returning");
+                    AnkiDroidApp.Log(Log.INFO, "Sync: full sync necessary - returning");
                     mCol.log("schema diff");
                     return new Object[] { "fullSync" };
                 }
@@ -146,37 +146,37 @@ public class Syncer {
                 // step 2: deletions
                 publishProgress(con, R.string.sync_deletions_message);
 
-                Log.i(AnkiDroidApp.TAG, "Sync: collection removed data");
+                AnkiDroidApp.Log(Log.INFO, "Sync: collection removed data");
                 JSONObject lrem = removed();
                 JSONObject o = new JSONObject();
                 o.put("minUsn", mMinUsn);
                 o.put("lnewer", mLNewer);
                 o.put("graves", lrem);
 
-                Log.i(AnkiDroidApp.TAG, "Sync: sending and receiving removed data");
+                AnkiDroidApp.Log(Log.INFO, "Sync: sending and receiving removed data");
                 JSONObject rrem = mServer.start(o);
-                Log.i(AnkiDroidApp.TAG, "Sync: applying removed data");
+                AnkiDroidApp.Log(Log.INFO, "Sync: applying removed data");
                 remove(rrem);
                 // ... and small objects
                 publishProgress(con, R.string.sync_small_objects_message);
 
-                Log.i(AnkiDroidApp.TAG, "Sync: collection small changes");
+                AnkiDroidApp.Log(Log.INFO, "Sync: collection small changes");
                 JSONObject lchg = changes();
                 JSONObject sch = new JSONObject();
                 sch.put("changes", lchg);
 
-                Log.i(AnkiDroidApp.TAG, "Sync: sending and receiving small changes");
+                AnkiDroidApp.Log(Log.INFO, "Sync: sending and receiving small changes");
                 JSONObject rchg = mServer.applyChanges(sch);
 
-                Log.i(AnkiDroidApp.TAG, "Sync: merging small changes");
+                AnkiDroidApp.Log(Log.INFO, "Sync: merging small changes");
                 mergeChanges(lchg, rchg);
                 // step 3: stream large tables from server
                 publishProgress(con, R.string.sync_download_chunk);
                 while (true) {
-                    Log.i(AnkiDroidApp.TAG, "Sync: downloading chunked data");
+                    AnkiDroidApp.Log(Log.INFO, "Sync: downloading chunked data");
                     JSONObject chunk = mServer.chunk();
                     mCol.log("server chunk", chunk);
-                    Log.i(AnkiDroidApp.TAG, "Sync: applying chunked data");
+                    AnkiDroidApp.Log(Log.INFO, "Sync: applying chunked data");
                     applyChunk(chunk);
                     if (chunk.getBoolean("done")) {
                         break;
@@ -185,12 +185,12 @@ public class Syncer {
                 // step 4: stream to server
                 publishProgress(con, R.string.sync_upload_chunk);
                 while (true) {
-                    Log.i(AnkiDroidApp.TAG, "Sync: collecting chunked data");
+                    AnkiDroidApp.Log(Log.INFO, "Sync: collecting chunked data");
                     JSONObject chunk = chunk();
                     mCol.log("client chunk", chunk);
                     JSONObject sech = new JSONObject();
                     sech.put("chunk", chunk);
-                    Log.i(AnkiDroidApp.TAG, "Sync: sending chunked data");
+                    AnkiDroidApp.Log(Log.INFO, "Sync: sending chunked data");
                     mServer.applyChunk(sech);
                     if (chunk.getBoolean("done")) {
                         break;
@@ -205,12 +205,12 @@ public class Syncer {
                 }
                 // finalize
                 publishProgress(con, R.string.sync_finish_message);
-                Log.i(AnkiDroidApp.TAG, "Sync: sending finish command");
+                AnkiDroidApp.Log(Log.INFO, "Sync: sending finish command");
                 long mod = mServer.finish();
                 if (mod == 0) {
                     return new Object[] { "finishError" };
                 }
-                Log.i(AnkiDroidApp.TAG, "Sync: finishing");
+                AnkiDroidApp.Log(Log.INFO, "Sync: finishing");
                 finish(mod);
 
                 publishProgress(con, R.string.sync_writing_db);
@@ -304,46 +304,46 @@ public class Syncer {
         JSONObject result = new JSONObject();
         try {
             if (mCol.getDb().queryScalar("SELECT count() FROM cards WHERE nid NOT IN (SELECT id FROM notes)", false) != 0) {
-                Log.e(AnkiDroidApp.TAG, "Sync - SanityCheck: there are cards without mother notes");
+                AnkiDroidApp.Log(Log.ERROR, "Sync - SanityCheck: there are cards without mother notes");
                 result.put("client", "missing notes");
                 return result;
             }
             if (mCol.getDb().queryScalar("SELECT count() FROM notes WHERE id NOT IN (SELECT DISTINCT nid FROM cards)",
                     false) != 0) {
-                Log.e(AnkiDroidApp.TAG, "Sync - SanityCheck: there are notes without cards");
+                AnkiDroidApp.Log(Log.ERROR, "Sync - SanityCheck: there are notes without cards");
                 result.put("client", "missing cards");
                 return result;
             }
             if (mCol.getDb().queryScalar("SELECT count() FROM cards WHERE usn = -1", false) != 0) {
-                Log.e(AnkiDroidApp.TAG, "Sync - SanityCheck: there are unsynced cards");
+                AnkiDroidApp.Log(Log.ERROR, "Sync - SanityCheck: there are unsynced cards");
                 result.put("client", "cards had usn = -1");
                 return result;
             }
             if (mCol.getDb().queryScalar("SELECT count() FROM notes WHERE usn = -1", false) != 0) {
-                Log.e(AnkiDroidApp.TAG, "Sync - SanityCheck: there are unsynced notes");
+                AnkiDroidApp.Log(Log.ERROR, "Sync - SanityCheck: there are unsynced notes");
                 result.put("client", "notes had usn = -1");
                 return result;
             }
             if (mCol.getDb().queryScalar("SELECT count() FROM revlog WHERE usn = -1", false) != 0) {
-                Log.e(AnkiDroidApp.TAG, "Sync - SanityCheck: there are unsynced revlogs");
+                AnkiDroidApp.Log(Log.ERROR, "Sync - SanityCheck: there are unsynced revlogs");
                 result.put("client", "revlog had usn = -1");
                 return result;
             }
             if (mCol.getDb().queryScalar("SELECT count() FROM graves WHERE usn = -1", false) != 0) {
-                Log.e(AnkiDroidApp.TAG, "Sync - SanityCheck: there are unsynced graves");
+                AnkiDroidApp.Log(Log.ERROR, "Sync - SanityCheck: there are unsynced graves");
                 result.put("client", "graves had usn = -1");
                 return result;
             }
             for (JSONObject g : mCol.getDecks().all()) {
                 if (g.getInt("usn") == -1) {
-                    Log.e(AnkiDroidApp.TAG, "Sync - SanityCheck: unsynced deck: " + g.getString("name"));
+                    AnkiDroidApp.Log(Log.ERROR, "Sync - SanityCheck: unsynced deck: " + g.getString("name"));
                     result.put("client", "deck had usn = -1");
                     return result;
                 }
             }
             for (Map.Entry<String, Integer> tag : mCol.getTags().allItems()) {
                 if (tag.getValue() == -1) {
-                    Log.e(AnkiDroidApp.TAG, "Sync - SanityCheck: there are unsynced tags");
+                    AnkiDroidApp.Log(Log.ERROR, "Sync - SanityCheck: there are unsynced tags");
                     result.put("client", "tag had usn = -1");
                     return result;
                 }
@@ -358,7 +358,7 @@ public class Syncer {
                     }
                 } else {
                     if (m.getInt("usn") == -1) {
-                        Log.e(AnkiDroidApp.TAG, "Sync - SanityCheck: unsynced model: " + m.getString("name"));
+                        AnkiDroidApp.Log(Log.ERROR, "Sync - SanityCheck: unsynced model: " + m.getString("name"));
                         result.put("client", "model had usn = -1");
                         return result;
                     }
@@ -387,7 +387,7 @@ public class Syncer {
             result.put("client", ja);
             return result;
         } catch (JSONException e) {
-            Log.e(AnkiDroidApp.TAG, "Syncer.sanityCheck(): ", e);
+            AnkiDroidApp.Log(Log.ERROR, "Syncer.sanityCheck(): ", e);
             throw new RuntimeException(e);
         }
     }

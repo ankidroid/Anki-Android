@@ -85,7 +85,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
 
 
         protected void cacheValues() {
-            Log.i(AnkiDroidApp.TAG, "DeckOptions - CacheValues");
+            AnkiDroidApp.Log(Log.INFO, "DeckOptions - CacheValues");
 
             try {
                 mOptions = mCol.getDecks().confForDid(mDeck.getLong("id"));
@@ -136,7 +136,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
 
             @Override
             public SharedPreferences.Editor clear() {
-                Log.d(AnkiDroidApp.TAG, "clear()");
+                AnkiDroidApp.Log(Log.DEBUG, "clear()");
                 mUpdate = new ContentValues();
                 return this;
             }
@@ -144,13 +144,13 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
 
             @Override
             public boolean commit() {
-                Log.d(AnkiDroidApp.TAG, "DeckOptions - commit() changes back to database");
+                AnkiDroidApp.Log(Log.DEBUG, "DeckOptions - commit() changes back to database");
 
                 try {
                     for (Entry<String, Object> entry : mUpdate.valueSet()) {
                         String key = entry.getKey();
                         Object value = entry.getValue();
-                        Log.i(AnkiDroidApp.TAG, "Change value for key '" + key + "': " + value);
+                        AnkiDroidApp.Log(Log.INFO, "Change value for key '" + key + "': " + value);
 
                         if (key.equals("maxAnswerTime")) {
                             mOptions.put("maxTaken", (Integer) value);
@@ -285,7 +285,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
                 try {
                     mCol.getDecks().save(mOptions);
                 } catch (RuntimeException e) {
-                    Log.e(AnkiDroidApp.TAG, "DeckOptions - RuntimeException on saving conf: " + e);
+                    AnkiDroidApp.Log(Log.ERROR, "DeckOptions - RuntimeException on saving conf: " + e);
                     AnkiDroidApp.saveExceptionReportFile(e, "DeckOptionsSaveConf");
                     setResult(DeckPicker.RESULT_DB_ERROR);
                     finish();
@@ -510,7 +510,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
         registerExternalStorageListener();
 
         if (mCol == null) {
-            Log.i(AnkiDroidApp.TAG, "DeckOptions - No Collection loaded");
+            AnkiDroidApp.Log(Log.INFO, "DeckOptions - No Collection loaded");
             finish();
             return;
         } else {
@@ -544,7 +544,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            Log.i(AnkiDroidApp.TAG, "DeckOptions - onBackPressed()");
+            AnkiDroidApp.Log(Log.INFO, "DeckOptions - onBackPressed()");
             finish();
             ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
             return true;

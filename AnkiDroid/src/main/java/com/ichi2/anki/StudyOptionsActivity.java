@@ -124,7 +124,7 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
-        Log.i(AnkiDroidApp.TAG, "StudyOptionsActivity: onActivityResult");
+        AnkiDroidApp.Log(Log.INFO, "StudyOptionsActivity: onActivityResult");
 
         String newLanguage = AnkiDroidApp.getSharedPrefs(this).getString(Preferences.LANGUAGE, "");
         if (AnkiDroidApp.setLanguage(newLanguage)) {
@@ -149,7 +149,7 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            Log.i(AnkiDroidApp.TAG, "StudyOptions - onBackPressed()");
+            AnkiDroidApp.Log(Log.INFO, "StudyOptions - onBackPressed()");
             closeStudyOptions();
             return true;
         }

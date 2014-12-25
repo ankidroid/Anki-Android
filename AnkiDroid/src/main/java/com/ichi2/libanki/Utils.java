@@ -414,7 +414,7 @@ public class Utils {
                         str.append(ids.get(i)).append(",");
                     }
                 } catch (JSONException e) {
-                    Log.e(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
+                    AnkiDroidApp.Log(Log.ERROR, "JSONException = " + e.getMessage());
                 }
             }
         }
@@ -577,10 +577,10 @@ public class Utils {
                 md = MessageDigest.getInstance("SHA1");
                 digest = md.digest(data.getBytes("UTF-8"));
             } catch (NoSuchAlgorithmException e) {
-                Log.e(AnkiDroidApp.TAG, "Utils.checksum: No such algorithm. " + e.getMessage());
+                AnkiDroidApp.Log(Log.ERROR, "Utils.checksum: No such algorithm. " + e.getMessage());
                 throw new RuntimeException(e);
             } catch (UnsupportedEncodingException e) {
-                Log.e(AnkiDroidApp.TAG, "Utils.checksum: " + e.getMessage());
+                AnkiDroidApp.Log(Log.ERROR, "Utils.checksum: " + e.getMessage());
                 e.printStackTrace();
             }
             BigInteger biginteger = new BigInteger(1, digest);
@@ -628,11 +628,11 @@ public class Utils {
             fis.close();
             digest = md.digest();
         } catch (FileNotFoundException e) {
-            Log.e(AnkiDroidApp.TAG, "Utils.fileChecksum: File not found.", e);
+            AnkiDroidApp.Log(Log.ERROR, "Utils.fileChecksum: File not found.", e);
         } catch (NoSuchAlgorithmException e) {
-            Log.e(AnkiDroidApp.TAG, "Utils.fileChecksum: No such algorithm.", e);
+            AnkiDroidApp.Log(Log.ERROR, "Utils.fileChecksum: No such algorithm.", e);
         } catch (IOException e) {
-            Log.e(AnkiDroidApp.TAG, "Utils.fileChecksum: IO exception.", e);
+            AnkiDroidApp.Log(Log.ERROR, "Utils.fileChecksum: IO exception.", e);
         }
         BigInteger biginteger = new BigInteger(1, digest);
         String result = biginteger.toString(16);
@@ -672,12 +672,12 @@ public class Utils {
 //                fin.read(bytes);
 //            }
 //        } catch (FileNotFoundException e) {
-//            Log.e(AnkiDroidApp.TAG, "Can't find file " + path + " to calculate its checksum");
+//            AnkiDroidApp.Log(Log.ERROR, "Can't find file " + path + " to calculate its checksum");
 //        } catch (IOException e) {
-//            Log.e(AnkiDroidApp.TAG, "Can't read file " + path + " to calculate its checksum");
+//            AnkiDroidApp.Log(Log.ERROR, "Can't read file " + path + " to calculate its checksum");
 //        }
 //        if (bytes == null) {
-//            Log.w(AnkiDroidApp.TAG, "File " + path + " appears to be empty");
+//            AnkiDroidApp.Log(Log.WARN, "File " + path + " appears to be empty");
 //            return "";
 //        }
 //        MessageDigest md = null;
@@ -686,7 +686,7 @@ public class Utils {
 //            md = MessageDigest.getInstance("MD5");
 //            digest = md.digest(bytes);
 //        } catch (NoSuchAlgorithmException e) {
-//            Log.e(AnkiDroidApp.TAG, "Utils.checksum: No such algorithm. " + e.getMessage());
+//            AnkiDroidApp.Log(Log.ERROR, "Utils.checksum: No such algorithm. " + e.getMessage());
 //            throw new RuntimeException(e);
 //        }
 //        BigInteger biginteger = new BigInteger(1, digest);
@@ -734,7 +734,7 @@ public class Utils {
         byte[] buf = new byte[FILE_COPY_BUFFER_SIZE];
         File dir = new File(targetDirectory);
         if (!dir.exists() && !dir.mkdirs()) {
-            Log.e(AnkiDroidApp.TAG, "Utils.unzipFiles: Could not create target directory: " + targetDirectory);
+            AnkiDroidApp.Log(Log.ERROR, "Utils.unzipFiles: Could not create target directory: " + targetDirectory);
             return false;
         }
         if (zipEntryToFilenameMap == null) {
@@ -756,7 +756,7 @@ public class Utils {
                         return false;
                     }
                     if (!ze.isDirectory()) {
-                        Log.i(AnkiDroidApp.TAG, "uncompress " + name);
+                        AnkiDroidApp.Log(Log.INFO, "uncompress " + name);
                         zis = new BufferedInputStream(zipFile.getInputStream(ze));
                         bos = new BufferedOutputStream(new FileOutputStream(destFile), FILE_COPY_BUFFER_SIZE);
                         int n;
@@ -770,7 +770,7 @@ public class Utils {
                 }
             }
         } catch (IOException e) {
-            Log.e(AnkiDroidApp.TAG, "Utils.unzipFiles: Error while unzipping archive.", e);
+            AnkiDroidApp.Log(Log.ERROR, "Utils.unzipFiles: Error while unzipping archive.", e);
             return false;
         } finally {
             try {
@@ -778,14 +778,14 @@ public class Utils {
                     bos.close();
                 }
             } catch (IOException e) {
-                Log.e(AnkiDroidApp.TAG, "Utils.unzipFiles: Error while closing output stream.", e);
+                AnkiDroidApp.Log(Log.ERROR, "Utils.unzipFiles: Error while closing output stream.", e);
             }
             try {
                 if (zis != null) {
                     zis.close();
                 }
             } catch (IOException e) {
-                Log.e(AnkiDroidApp.TAG, "Utils.unzipFiles: Error while closing zip input stream.", e);
+                AnkiDroidApp.Log(Log.ERROR, "Utils.unzipFiles: Error while closing zip input stream.", e);
             }
         }
         return true;
@@ -828,7 +828,7 @@ public class Utils {
      * @throws IOException
      */
     public static void writeToFile(InputStream source, String destination) throws IOException {
-        Log.i(AnkiDroidApp.TAG, "Creating new file... = " + destination);
+        AnkiDroidApp.Log(Log.INFO, "Creating new file... = " + destination);
         new File(destination).createNewFile();
 
         long startTimeMillis = System.currentTimeMillis();
@@ -839,7 +839,7 @@ public class Utils {
         long sizeBytes = 0;
         int len;
         if (source == null) {
-            Log.e(AnkiDroidApp.TAG, "source is null!");
+            AnkiDroidApp.Log(Log.ERROR, "source is null!");
         }
         while ((len = source.read(buf)) >= 0) {
             output.write(buf, 0, len);
@@ -847,14 +847,14 @@ public class Utils {
         }
         long endTimeMillis = System.currentTimeMillis();
 
-        Log.i(AnkiDroidApp.TAG, "Finished writing!");
+        AnkiDroidApp.Log(Log.INFO, "Finished writing!");
         long durationSeconds = (endTimeMillis - startTimeMillis) / 1000;
         long sizeKb = sizeBytes / 1024;
         long speedKbSec = 0;
         if (endTimeMillis != startTimeMillis) {
             speedKbSec = sizeKb * 1000 / (endTimeMillis - startTimeMillis);
         }
-        Log.d(AnkiDroidApp.TAG, "Utils.writeToFile: " + "Size: " + sizeKb + "Kb, " + "Duration: " + durationSeconds + "s, " + "Speed: " + speedKbSec + "Kb/s");
+        AnkiDroidApp.Log(Log.DEBUG, "Utils.writeToFile: " + "Size: " + sizeKb + "Kb, " + "Duration: " + durationSeconds + "s, " + "Speed: " + speedKbSec + "Kb/s");
         output.close();
     }
 
@@ -878,7 +878,7 @@ public class Utils {
                 }
             }
         } catch (IOException ioe) {
-            Log.e(AnkiDroidApp.TAG, "IOException = " + ioe.getMessage());
+            AnkiDroidApp.Log(Log.ERROR, "IOException = " + ioe.getMessage());
         }
     }
 
@@ -902,28 +902,28 @@ public class Utils {
                             buff.write(indentation + " " + key + " : ");
                             buff.newLine();
                         }
-                        Log.i(AnkiDroidApp.TAG, "	" + indentation + key + " : ");
+                        AnkiDroidApp.Log(Log.INFO, "	" + indentation + key + " : ");
                         printJSONObject((JSONObject) value, indentation + "-", buff);
                     } else {
                         if (buff != null) {
                             buff.write(indentation + " " + key + " = " + jsonObject.get(key).toString());
                             buff.newLine();
                         }
-                        Log.i(AnkiDroidApp.TAG, "	" + indentation + key + " = " + jsonObject.get(key).toString());
+                        AnkiDroidApp.Log(Log.INFO, "	" + indentation + key + " = " + jsonObject.get(key).toString());
                     }
                 } catch (JSONException e) {
-                    Log.e(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
+                    AnkiDroidApp.Log(Log.ERROR, "JSONException = " + e.getMessage());
                 }
             }
         } catch (IOException e1) {
-            Log.e(AnkiDroidApp.TAG, "IOException = " + e1.getMessage());
+            AnkiDroidApp.Log(Log.ERROR, "IOException = " + e1.getMessage());
         }
     }
 
 
     /*
     public static void saveJSONObject(JSONObject jsonObject) throws IOException {
-        Log.i(AnkiDroidApp.TAG, "saveJSONObject");
+        AnkiDroidApp.Log(Log.INFO, "saveJSONObject");
         BufferedWriter buff = new BufferedWriter(new FileWriter("/sdcard/jsonObjectAndroid.txt", true));
         buff.write(jsonObject.toString());
         buff.close();
@@ -967,7 +967,7 @@ public class Utils {
     	df.setTimeZone(TimeZone.getTimeZone("GMT"));
     	Calendar cal = new GregorianCalendar(TimeZone.getTimeZone("GMT"));
     	cal.setTimeInMillis((long)date * 1000);
-    	Log.d(AnkiDroidApp.TAG, "Value of " + name + ": " + cal.getTime().toGMTString());
+    	AnkiDroidApp.Log(Log.DEBUG, "Value of " + name + ": " + cal.getTime().toGMTString());
 	}
 
 
@@ -1123,7 +1123,7 @@ public class Utils {
 		try {
 			ankiDroidFonts = context.getAssets().list("fonts");
 		} catch (IOException e) {
-			Log.e(AnkiDroidApp.TAG, "Error on retrieving ankidroid fonts: " + e);
+			AnkiDroidApp.Log(Log.ERROR, "Error on retrieving ankidroid fonts: " + e);
 		}
         List<AnkiFont> fonts = new ArrayList<AnkiFont>();
         for (int i = 0; i < fontsCount; i++) {

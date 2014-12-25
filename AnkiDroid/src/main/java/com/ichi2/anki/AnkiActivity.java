@@ -214,7 +214,7 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
     // Method for loading the collection which is inherited by all AnkiActivitys
     public void startLoadingCollection() {
         // Initialize the open collection loader
-        Log.i(AnkiDroidApp.TAG, "AnkiActivity.startLoadingCollection()");
+        AnkiDroidApp.Log(Log.INFO, "AnkiActivity.startLoadingCollection()");
         if (!AnkiDroidApp.colIsOpen()) {
             showOpeningCollectionDialog();
         }
@@ -388,7 +388,7 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
             if (resultPendingIntent == null) {
                 // PendingIntent could not be created... probably something wrong with the extras
                 // try again without the extras, though the original dialog will not be shown when app started
-                Log.e(AnkiDroidApp.TAG, "AnkiActivity.showSimpleNotification() failed due to null PendingIntent");
+                AnkiDroidApp.Log(Log.ERROR, "AnkiActivity.showSimpleNotification() failed due to null PendingIntent");
                 resultIntent = new Intent(this, DeckPicker.class);
                 resultPendingIntent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             }
@@ -425,7 +425,7 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
     // Restart the activity
     @SuppressLint("NewApi")
     protected void restartActivity() {
-        Log.i(AnkiDroidApp.TAG, "AnkiActivity -- restartActivity()");
+        AnkiDroidApp.Log(Log.INFO, "AnkiActivity -- restartActivity()");
         Intent intent = new Intent();
         intent.setClass(this, this.getClass());
         intent.putExtras(new Bundle());

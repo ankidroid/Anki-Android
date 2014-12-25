@@ -27,19 +27,19 @@ public class HttpUtility {
 
             switch (response.getStatusLine().getStatusCode()) {
                 case 200:
-                    Log.e(AnkiDroidApp.TAG, String.format("feedback report posted to %s", url));
+                    AnkiDroidApp.Log(Log.ERROR, String.format("feedback report posted to %s", url));
                     return true;
 
                 default:
-                    Log.e(AnkiDroidApp.TAG, String.format("feedback report posted to %s message", url));
-                    Log.e(AnkiDroidApp.TAG, String.format("%d: %s", response.getStatusLine().getStatusCode(), response
+                    AnkiDroidApp.Log(Log.ERROR, String.format("feedback report posted to %s message", url));
+                    AnkiDroidApp.Log(Log.ERROR, String.format("%d: %s", response.getStatusLine().getStatusCode(), response
                             .getStatusLine().getReasonPhrase()));
                     break;
             }
         } catch (ClientProtocolException ex) {
-            Log.e(AnkiDroidApp.TAG, ex.toString());
+            AnkiDroidApp.Log(Log.ERROR, ex.toString());
         } catch (IOException ex) {
-            Log.e(AnkiDroidApp.TAG, ex.toString());
+            AnkiDroidApp.Log(Log.ERROR, ex.toString());
         }
 
         return false;

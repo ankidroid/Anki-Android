@@ -94,7 +94,7 @@ public class Note implements Cloneable {
             cursor = mCol.getDb().getDatabase()
                     .rawQuery("SELECT guid, mid, mod, usn, tags, flds, flags, data FROM notes WHERE id = " + mId, null);
             if (!cursor.moveToFirst()) {
-                Log.w(AnkiDroidApp.TAG, "Notes.load(): No result from query.");
+                AnkiDroidApp.Log(Log.WARN, "Notes.load(): No result from query.");
                 return;
             }
             mGuId = cursor.getString(0);

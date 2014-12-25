@@ -100,9 +100,9 @@ public class MethodLogger {
         String callerClass = caller.getClassName();
         String callerMethod = caller.getMethodName();
         if (TextUtils.isEmpty(message)) {
-            Log.d(AnkiDroidApp.TAG, String.format("called: %s.%s()", callerClass, callerMethod));
+            AnkiDroidApp.Log(Log.DEBUG, String.format("called: %s.%s()", callerClass, callerMethod));
         } else {
-            Log.d(AnkiDroidApp.TAG, String.format("called: %s.%s(): %s", callerClass, callerMethod, message));
+            AnkiDroidApp.Log(Log.DEBUG, String.format("called: %s.%s(): %s", callerClass, callerMethod, message));
         }
     }
 

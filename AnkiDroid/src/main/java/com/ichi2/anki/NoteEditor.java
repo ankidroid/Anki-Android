@@ -261,7 +261,7 @@ public class NoteEditor extends AnkiActivity {
                     try {
                         mProgressDialog.dismiss();
                     } catch (IllegalArgumentException e) {
-                        Log.e(AnkiDroidApp.TAG, "Note Editor: Error on dismissing progress dialog: " + e);
+                        AnkiDroidApp.Log(Log.ERROR, "Note Editor: Error on dismissing progress dialog: " + e);
                     }
                 }
             }
@@ -275,7 +275,7 @@ public class NoteEditor extends AnkiActivity {
                     try {
                         mProgressDialog.dismiss();
                     } catch (IllegalArgumentException e) {
-                        Log.e(AnkiDroidApp.TAG, "Note Editor: Error on dismissing progress dialog: " + e);
+                        AnkiDroidApp.Log(Log.ERROR, "Note Editor: Error on dismissing progress dialog: " + e);
                     }
                 }
                 if (mCloseAfter) {
@@ -307,7 +307,7 @@ public class NoteEditor extends AnkiActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.i(AnkiDroidApp.TAG, "CardEditor: onCreate");
+        AnkiDroidApp.Log(Log.INFO, "CardEditor: onCreate");
         Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
 
@@ -338,7 +338,7 @@ public class NoteEditor extends AnkiActivity {
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         Intent intent = getIntent();
-        Log.i(AnkiDroidApp.TAG, "CardEditor: caller: " + mCaller);
+        AnkiDroidApp.Log(Log.INFO, "CardEditor: caller: " + mCaller);
 
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
 
@@ -375,7 +375,7 @@ public class NoteEditor extends AnkiActivity {
 
         switch (mCaller) {
             case CALLER_NOCALLER:
-                Log.i(AnkiDroidApp.TAG, "CardEditor: no caller could be identified, closing");
+                AnkiDroidApp.Log(Log.INFO, "CardEditor: no caller could be identified, closing");
                 finishWithoutAnimation();
                 return;
 
@@ -500,7 +500,7 @@ public class NoteEditor extends AnkiActivity {
         mNoteDeckSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                // Log.i(AnkiDroidApp.TAG, "onItemSelected() fired on mNoteDeckSpinner with pos = "+Integer.toString(pos)); 
+                // AnkiDroidApp.Log(Log.INFO, "onItemSelected() fired on mNoteDeckSpinner with pos = "+Integer.toString(pos)); 
                 mCurrentDid = mAllDeckIds.get(pos);
             }
 
@@ -805,7 +805,7 @@ public class NoteEditor extends AnkiActivity {
 
     @Override
     public void onBackPressed() {
-        Log.i(AnkiDroidApp.TAG, "CardEditor - onBackPressed()");
+        AnkiDroidApp.Log(Log.INFO, "CardEditor - onBackPressed()");
         closeCardEditorWithCheck();
     }
 
@@ -821,11 +821,11 @@ public class NoteEditor extends AnkiActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         // TODO
-        // Log.i(AnkiDroidApp.TAG, "onSaveInstanceState: " + path);
+        // AnkiDroidApp.Log(Log.INFO, "onSaveInstanceState: " + path);
         // outState.putString("deckFilename", path);
         outState.putBoolean("addFact", mAddNote);
         outState.putInt("caller", mCaller);
-        Log.i(AnkiDroidApp.TAG, "onSaveInstanceState - Ending");
+        AnkiDroidApp.Log(Log.INFO, "onSaveInstanceState - Ending");
     }
 
 
@@ -1209,7 +1209,7 @@ public class NoteEditor extends AnkiActivity {
     private void updateIntentInformation() {
         mIntentInformation.clear();
         mIntentInformation.addAll(MetaDB.getIntentInformation(this));
-        Log.d(AnkiDroidApp.TAG, "Saved data list size: " + mIntentInformation.size());
+        AnkiDroidApp.Log(Log.DEBUG, "Saved data list size: " + mIntentInformation.size());
         if (mIntentInformationAdapter != null) {
             mIntentInformationAdapter.notifyDataSetChanged();
         }
@@ -1500,7 +1500,7 @@ public class NoteEditor extends AnkiActivity {
         if (position != -1) {
             mNoteDeckSpinner.setSelection(position, false);
         } else {
-            Log.e(AnkiDroidApp.TAG, "updateDeckPosition() :: mCurrentDid="+Long.toString(mCurrentDid)+", " +
+            AnkiDroidApp.Log(Log.ERROR, "updateDeckPosition() :: mCurrentDid="+Long.toString(mCurrentDid)+", " +
             		"position = "+Integer.toString(position));
         }
     }
@@ -1658,7 +1658,7 @@ public class NoteEditor extends AnkiActivity {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
             // If a new column was selected then change the key used to map from mCards to the column TextView
-            //Log.i(AnkiDroidApp.TAG, "onItemSelected() fired on mNoteTypeSpinner");
+            //AnkiDroidApp.Log(Log.INFO, "onItemSelected() fired on mNoteTypeSpinner");
             long oldModelId;
             try {
                 oldModelId = getCol().getModels().current().getLong("id");

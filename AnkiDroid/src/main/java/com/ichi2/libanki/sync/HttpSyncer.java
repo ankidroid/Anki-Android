@@ -233,13 +233,13 @@ public class HttpSyncer {
                 assertOk(httpResponse);
                 return httpResponse;
             } catch (SSLException e) {
-                Log.e(AnkiDroidApp.TAG, "SSLException while building HttpClient", e);
+                AnkiDroidApp.Log(Log.ERROR, "SSLException while building HttpClient", e);
                 throw new RuntimeException("SSLException while building HttpClient");
             }
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
-            Log.e(AnkiDroidApp.TAG, "BasicHttpSyncer.sync: IOException", e);
+            AnkiDroidApp.Log(Log.ERROR, "BasicHttpSyncer.sync: IOException", e);
             throw new RuntimeException(e);
         } catch (JSONException e) {
             throw new RuntimeException(e);
@@ -435,7 +435,7 @@ public class HttpSyncer {
         try {
             return new ByteArrayInputStream(string.getBytes("UTF-8"));
         } catch (UnsupportedEncodingException e) {
-            Log.e(AnkiDroidApp.TAG, "HttpSyncer: error on getting bytes from string: " + e);
+            AnkiDroidApp.Log(Log.ERROR, "HttpSyncer: error on getting bytes from string: " + e);
             return null;
         }
     }

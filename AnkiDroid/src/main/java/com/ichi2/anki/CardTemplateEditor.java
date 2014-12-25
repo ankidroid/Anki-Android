@@ -89,7 +89,7 @@ public class CardTemplateEditor extends AnkiActivity {
                 try {
                     mProgressDialog.dismiss();
                 } catch (IllegalArgumentException e) {
-                    Log.e(AnkiDroidApp.TAG, "Card Template Editor: Error on dismissing progress dialog: " + e);
+                    AnkiDroidApp.Log(Log.ERROR, "Card Template Editor: Error on dismissing progress dialog: " + e);
                 }
             }
             if (result.getBoolean()) {
@@ -122,14 +122,14 @@ public class CardTemplateEditor extends AnkiActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.v(AnkiDroidApp.TAG, "CardTemplateEditor:: onCreate");
+        AnkiDroidApp.Log(Log.VERBOSE, "CardTemplateEditor:: onCreate");
         Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.card_template_editor_activity);
         // get id for currently edited card (optional)
         mModelId = getIntent().getLongExtra("modelId", -1L);
         if (mModelId == -1) {
-            Log.e(AnkiDroidApp.TAG, "CardTemplateEditor :: no model ID was provided");
+            AnkiDroidApp.Log(Log.ERROR, "CardTemplateEditor :: no model ID was provided");
             finishWithoutAnimation();
             return;
         }

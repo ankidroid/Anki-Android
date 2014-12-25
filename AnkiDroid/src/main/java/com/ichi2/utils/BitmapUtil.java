@@ -26,6 +26,8 @@ import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.widget.ImageView;
 
+import com.ichi2.anki.AnkiDroidApp;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -84,7 +86,7 @@ public class BitmapUtil {
                 }
             }
         } catch (Exception e) {
-            Log.e("free image view", e.getMessage());
+            AnkiDroidApp.Log(Log.ERROR, "free image view", e);
         }
     }
 

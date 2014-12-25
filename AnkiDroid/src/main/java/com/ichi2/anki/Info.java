@@ -128,7 +128,7 @@ public class Info extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.i(AnkiDroidApp.TAG, "Info - onCreate()");
+        AnkiDroidApp.Log(Log.INFO, "Info - onCreate()");
         Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
 
@@ -668,7 +668,7 @@ public class Info extends ActionBarActivity {
                 setResult(RESULT_OK, result);
                 finishWithAnimation(false);
             } else {
-                Log.i(AnkiDroidApp.TAG, "Info - onBackPressed()");
+                AnkiDroidApp.Log(Log.INFO, "Info - onBackPressed()");
                 setResult(RESULT_CANCELED);
                 finishWithAnimation();
             }
@@ -693,7 +693,7 @@ public class Info extends ActionBarActivity {
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            Log.i(AnkiDroidApp.TAG, "LoadSharedDecks: loading: " + url);
+            AnkiDroidApp.Log(Log.INFO, "LoadSharedDecks: loading: " + url);
             view.loadUrl(url);
             return true;
         }
@@ -718,7 +718,7 @@ public class Info extends ActionBarActivity {
             @Override
             protected String doInBackground(String... params) {
                 super.doInBackground(params);
-                Log.i(AnkiDroidApp.TAG, "Info.ParseSharedDecks.doInBackground()");
+                AnkiDroidApp.Log(Log.INFO, "Info.ParseSharedDecks.doInBackground()");
                 HttpGet pageGet = new HttpGet(params[0]);
                 HostnameVerifier hostnameVerifier = org.apache.http.conn.ssl.SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER;
 
@@ -798,7 +798,7 @@ public class Info extends ActionBarActivity {
             @Override
             protected void onPostExecute(String html) {
                 super.onPostExecute(html);
-                Log.d(AnkiDroidApp.TAG, "Info.ParseSharedDecks.onPostExecute()");
+                AnkiDroidApp.Log(Log.DEBUG, "Info.ParseSharedDecks.onPostExecute()");
                 if (mWebView != null && mUrl != null & html != null) {
                     mWebView.loadDataWithBaseURL(mUrl, html, null, "utf-8", mUrl);
                     mLoadingLayer.setVisibility(View.INVISIBLE);
@@ -831,7 +831,7 @@ public class Info extends ActionBarActivity {
 
         @Override
         public void onPreExecute() {
-            Log.i(AnkiDroidApp.TAG, "Info: UpgradeDecks - onPreExcecute");
+            AnkiDroidApp.Log(Log.INFO, "Info: UpgradeDecks - onPreExcecute");
             if (mProgressDialog == null || !mProgressDialog.isShowing()) {
                 mProgressDialog = StyledProgressDialog.show(Info.this, "",
                         getResources().getString(R.string.upgrade_decks_zipping), true, false,
@@ -847,14 +847,14 @@ public class Info extends ActionBarActivity {
 
         @Override
         public void onPostExecute(Payload data) {
-            Log.i(AnkiDroidApp.TAG, "Info: UpgradeDecks - onPostExecute, success = " + data.success);
+            AnkiDroidApp.Log(Log.INFO, "Info: UpgradeDecks - onPostExecute, success = " + data.success);
             Resources res = getResources();
             try {
                 if (mProgressDialog != null && mProgressDialog.isShowing()) {
                     mProgressDialog.dismiss();
                 }
             } catch (IllegalArgumentException e) {
-                Log.e(AnkiDroidApp.TAG, "Info - IllegalArgumentException: " + e);
+                AnkiDroidApp.Log(Log.ERROR, "Info - IllegalArgumentException: " + e);
             }
 
             if (data.success) {
@@ -985,7 +985,7 @@ public class Info extends ActionBarActivity {
 
         @Override
         public void onPreExecute() {
-            Log.i(AnkiDroidApp.TAG, "Info: mDownloadDeckListener - onPreExcecute");
+            AnkiDroidApp.Log(Log.INFO, "Info: mDownloadDeckListener - onPreExcecute");
             if (mProgressDialog == null || !mProgressDialog.isShowing()) {
                 mProgressDialog = StyledProgressDialog.show(Info.this, "",
                         getResources().getString(R.string.download_deck, countDown / 1024), true);
@@ -995,14 +995,14 @@ public class Info extends ActionBarActivity {
 
         @Override
         public void onPostExecute(Payload data) {
-            Log.i(AnkiDroidApp.TAG, "Info: mDownloadDeckListener - onPostExecute, success = " + data.success);
+            AnkiDroidApp.Log(Log.INFO, "Info: mDownloadDeckListener - onPostExecute, success = " + data.success);
             Resources res = getResources();
             try {
                 if (mProgressDialog != null && mProgressDialog.isShowing()) {
                     mProgressDialog.dismiss();
                 }
             } catch (IllegalArgumentException e) {
-                Log.e(AnkiDroidApp.TAG, "Info - IllegalArgumentException: " + e);
+                AnkiDroidApp.Log(Log.ERROR, "Info - IllegalArgumentException: " + e);
             }
 
             if (data.success) {
@@ -1088,7 +1088,7 @@ public class Info extends ActionBarActivity {
 
         @Override
         public void onPostExecute(Payload data) {
-            Log.i(AnkiDroidApp.TAG, "onPostExecute");
+            AnkiDroidApp.Log(Log.INFO, "onPostExecute");
             Resources res = Info.this.getResources();
             if (mProgressDialog != null) {
                 mProgressDialog.dismiss();

@@ -86,7 +86,7 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
 
 
         protected void cacheValues() {
-            Log.i(AnkiDroidApp.TAG, "CramDeckOptions - CacheValues");
+            AnkiDroidApp.Log(Log.INFO, "CramDeckOptions - CacheValues");
 
             try {
                 JSONArray ar = mDeck.getJSONArray("terms").getJSONArray(0);
@@ -113,7 +113,7 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
 
             @Override
             public SharedPreferences.Editor clear() {
-                Log.d(AnkiDroidApp.TAG, "clear()");
+                AnkiDroidApp.Log(Log.DEBUG, "clear()");
                 mUpdate = new ContentValues();
                 return this;
             }
@@ -121,11 +121,11 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
 
             @Override
             public boolean commit() {
-                Log.d(AnkiDroidApp.TAG, "CramDeckOptions - commit() changes back to database");
+                AnkiDroidApp.Log(Log.DEBUG, "CramDeckOptions - commit() changes back to database");
 
                 try {
                     for (Entry<String, Object> entry : mUpdate.valueSet()) {
-                        Log.i(AnkiDroidApp.TAG, "Change value for key '" + entry.getKey() + "': " + entry.getValue());
+                        AnkiDroidApp.Log(Log.INFO, "Change value for key '" + entry.getKey() + "': " + entry.getValue());
                         if (entry.getKey().equals("search")) {
                             JSONArray ar = mDeck.getJSONArray("terms");
                             ar.getJSONArray(0).put(0, (String) entry.getValue());
@@ -189,7 +189,7 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
                 try {
                     mCol.getDecks().save(mDeck);
                 } catch (RuntimeException e) {
-                    Log.e(AnkiDroidApp.TAG, "CramDeckOptions - RuntimeException on saving deck: " + e);
+                    AnkiDroidApp.Log(Log.ERROR, "CramDeckOptions - RuntimeException on saving deck: " + e);
                     AnkiDroidApp.saveExceptionReportFile(e, "CramDeckOptionsSaveDeck");
                     setResult(DeckPicker.RESULT_DB_ERROR);
                     finish();
@@ -380,7 +380,7 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
 
         try {
             if (mCol == null || mDeck.getInt("dyn") != 1) {
-                Log.w(AnkiDroidApp.TAG, "CramDeckOptions - No Collection loaded or deck is not a dyn deck");
+                AnkiDroidApp.Log(Log.WARN, "CramDeckOptions - No Collection loaded or deck is not a dyn deck");
                 finish();
                 return;
             } else {
@@ -418,7 +418,7 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            Log.i(AnkiDroidApp.TAG, "DeckOptions - onBackPressed()");
+            AnkiDroidApp.Log(Log.INFO, "DeckOptions - onBackPressed()");
             finish();
             ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
             return true;
