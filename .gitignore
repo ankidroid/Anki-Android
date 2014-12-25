@@ -49,3 +49,7 @@ Thumbs.db
 # Crowdin files
 ankidroid.zip
 tools/crowdin_key.txt
+
+# Crashlytics files
+AnkiDroid/crashlytics.properties
+AnkiDroid/src/main/assets/crashlytics-build.properties
