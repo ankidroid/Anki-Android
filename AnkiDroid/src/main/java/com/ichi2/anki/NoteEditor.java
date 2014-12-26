@@ -593,6 +593,12 @@ public class NoteEditor extends AnkiActivity {
             } else {
                 second = "";
             }
+            // Some users add cards via SEND intent from clipboard. In this case SUBJECT is empty
+            if (first.equals("")) {
+                // Assume that if only one field was sent then it should be the front
+                first = second;
+                second = "";
+            }
             Pair<String, String> messages = new Pair<String, String>(first, second);
 
             /* Filter garbage information */
