@@ -173,7 +173,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                 case CONTEXT_MENU_MARK:
                     DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD,
                             mUpdateCardHandler,
-                            new DeckTask.TaskData(getCol().getSched(), getCol().getCard(Long.parseLong(mCards.get(
+                            new DeckTask.TaskData(getCol().getSched(), getCol().getCard(Long.parseLong(getCards().get(
                                     mPositionInCardsList).get("id"))), 0));
                     return;
 
@@ -181,7 +181,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                     DeckTask.launchDeckTask(
                             DeckTask.TASK_TYPE_DISMISS_NOTE,
                             mSuspendCardHandler,
-                            new DeckTask.TaskData(getCol().getSched(), getCol().getCard(Long.parseLong(mCards.get(
+                            new DeckTask.TaskData(getCol().getSched(), getCol().getCard(Long.parseLong(getCards().get(
                                     mPositionInCardsList).get("id"))), 1));
                     return;
 
@@ -190,13 +190,13 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                     StyledDialog.Builder builder = new StyledDialog.Builder(CardBrowser.this);
                     builder.setTitle(res.getString(R.string.delete_card_title));
                     builder.setIcon(R.drawable.ic_dialog_alert);
-                    builder.setMessage(res.getString(R.string.delete_card_message, mCards.get(mPositionInCardsList)
+                    builder.setMessage(res.getString(R.string.delete_card_message, getCards().get(mPositionInCardsList)
                             .get("sfld")));
                     builder.setPositiveButton(res.getString(R.string.dialog_positive_delete),
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    Card card = getCol().getCard(Long.parseLong(mCards.get(mPositionInCardsList).get("id")));
+                                    Card card = getCol().getCard(Long.parseLong(getCards().get(mPositionInCardsList).get("id")));
                                     deleteNote(card);
                                     DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDeleteNoteHandler,
                                                             new DeckTask.TaskData(getCol().getSched(), card, 3));
@@ -207,7 +207,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                     return;
 
                 case CONTEXT_MENU_DETAILS:
-                    Long cardId = Long.parseLong(mCards.get(mPositionInCardsList).get("id"));
+                    Long cardId = Long.parseLong(getCards().get(mPositionInCardsList).get("id"));
                     Intent previewer = new Intent(CardBrowser.this, Previewer.class);
                     previewer.putExtra("currentCardId", cardId);
                     startActivityWithoutAnimation(previewer);
@@ -659,7 +659,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                                     } catch (JSONException e) {
                                         throw new RuntimeException(e);
                                     }
-                                    Collections.reverse(mCards);
+                                    Collections.reverse(getCards());
                                     updateList();
                                 }
                             }
@@ -705,7 +705,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                 }
                 break;
             case DIALOG_CONTEXT_MENU:
-                HashMap<String, String> card = mCards.get(mPositionInCardsList);
+                HashMap<String, String> card = getCards().get(mPositionInCardsList);
                 int flags = Integer.parseInt(card.get("flags"));
                 if (flags == 2 || flags == 3) {
                     ad.changeListItem(CONTEXT_MENU_MARK, res.getString(R.string.card_browser_unmark_card));
@@ -751,7 +751,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         String searchText = mRestrictOnDeck + mSearchTerms;
         if (colOpen()) {
             // clear the existing card list
-            mCards.clear();
+            getCards().clear();
             // Perform database query to get all card ids / sfld. Shows "filtering cards..." progress message
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SEARCH_CARDS, mSearchCardsHandler, new DeckTask.TaskData(
                     new Object[] { getCol(), mDeckNames, searchText, ((mOrder == CARD_ORDER_NONE) ? false : true) }));
@@ -761,7 +761,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
 
     private void updateList() {
         mCardsAdapter.notifyDataSetChanged();
-        int count = mCards.size();
+        int count = getCards().size();
         mDropDownAdapter.setCardCount(count);
         mDropDownAdapter.notifyDataSetChanged();
     }
@@ -783,19 +783,19 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         int pos;
         for (Card c : note.cards()) {
             // get position in the mCards search results HashMap
-            pos = getPosition(mCards, c.getId());
-            if (pos < 0 || pos >= mCards.size()) {
+            pos = getPosition(getCards(), c.getId());
+            if (pos < 0 || pos >= getCards().size()) {
                 continue;
             }
             // update tags
             if (updatedCardTags != null) {
-                mCards.get(pos).put("tags", updatedCardTags);
+                getCards().get(pos).put("tags", updatedCardTags);
             }
             // update sfld
             String sfld = note.getSFld();
-            mCards.get(pos).put("sfld", sfld);
+            getCards().get(pos).put("sfld", sfld);
             // update Q & A etc
-            updateSearchItemQA(mCards.get(pos), c);
+            updateSearchItemQA(getCards().get(pos), c);
             // update deck
             String deckName;
             try {
@@ -803,10 +803,10 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
-            mCards.get(pos).put("deck", deckName);
+            getCards().get(pos).put("deck", deckName);
             // update flags (marked / suspended / etc) which determine color
             String flags = Integer.toString((c.getQueue() == -1 ? 1 : 0) + (note.hasTag("marked") ? 2 : 0));
-            mCards.get(pos).put("flags", flags);
+            getCards().get(pos).put("flags", flags);
         }
         updateList();
     }
@@ -861,15 +861,15 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         ArrayList<Card> cards = card.note().cards();
         int pos;
         for (Card c : cards) {
-            pos = getPosition(mCards, c.getId());
-            if (pos >= 0 && pos < mCards.size()) {
-                mCards.remove(pos);
+            pos = getPosition(getCards(), c.getId());
+            if (pos >= 0 && pos < getCards().size()) {
+                getCards().remove(pos);
             }
         }
         // Delete itself if not deleted
-        pos = getPosition(mCards, card.getId());
-        if (pos >= 0 && pos < mCards.size()) {
-            mCards.remove(pos);
+        pos = getPosition(getCards(), card.getId());
+        if (pos >= 0 && pos < getCards().size()) {
+            getCards().remove(pos);
         }
         updateList();
     }
@@ -927,7 +927,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
 
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
-            if (result.getBoolean()) {
+            if (result.getBoolean() && mCards != null) {
                 // // Update list if search on suspended
                 // if (fSearchSuspendedPattern.matcher(mSearchTerms).find()) {
                 // updateCardsList();
@@ -1007,7 +1007,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
 
         @Override
         public void onPostExecute(TaskData result) {            
-            if (result != null) {
+            if (result != null && mCards != null) {
                 Log.i(AnkiDroidApp.TAG, "Completed doInBackgroundSearchCards Successfuly");
                 updateList();
                 if (mProgressDialog != null && mProgressDialog.isShowing()) {
@@ -1085,7 +1085,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                 int startIdx = listView.getFirstVisiblePosition();
                 int numVisible = listView.getLastVisiblePosition() - startIdx;
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_RENDER_BROWSER_QA, mRenderQAHandler, new DeckTask.TaskData(
-                        new Object[] { getCol(), mCards, startIdx-5 , startIdx+2*numVisible}));
+                        new Object[] { getCol(), getCards(), startIdx-5 , startIdx+2*numVisible}));
             }
         }
     }
@@ -1319,6 +1319,13 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
             this.count = count;
         }
 
+    }
+
+    private ArrayList<HashMap<String, String>> getCards() {
+        if (mCards == null) {
+            mCards = new ArrayList<HashMap<String, String>>();
+        }
+        return mCards;
     }
 
 
