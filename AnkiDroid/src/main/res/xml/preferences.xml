@@ -30,6 +30,11 @@
             android:key="deckPath"
             android:summary="@string/col_path_summ"
             android:title="@string/col_path" />
+        <EditTextPreference
+            android:defaultValue="https://ankiweb.net/"
+            android:key="syncBaseUrl"
+            android:summary="@string/sync_base_url_summ"
+            android:title="@string/sync_base_url" />
         <Preference
             android:dialogTitle="@string/sync_account"
             android:key="syncAccount"

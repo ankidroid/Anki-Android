@@ -23,7 +23,6 @@ import android.util.Log;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.exception.UnknownHttpResponseException;
 import com.ichi2.async.Connection;
-import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Utils;
 
 import org.apache.commons.httpclient.contrib.ssl.EasySSLSocketFactory;
@@ -191,7 +190,7 @@ public class HttpSyncer {
             bos.flush();
             bos.close();
             // connection headers
-            String url = Consts.SYNC_BASE;
+            String url = syncBase();
             if (method.equals("register")) {
                 url = url + "account/signup" + "?username=" + registerData.getString("u") + "&password="
                         + registerData.getString("p");
@@ -445,9 +444,12 @@ public class HttpSyncer {
         return null;
     }
 
+    public String syncBase() {
+        return AnkiDroidApp.getApplicationPrefs().getString("syncBaseUrl", "https://ankiweb.net/");
+    }
 
     public String syncURL() {
-        return Consts.SYNC_BASE + "sync/";
+        return syncBase() + "sync/";
     }
 }
 
