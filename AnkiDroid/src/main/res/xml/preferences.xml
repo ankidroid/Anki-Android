@@ -339,6 +339,11 @@
     <!-- Advanced Preferences -->
     <PreferenceScreen android:title="@string/pref_cat_advanced"
         android:summary="@string/pref_cat_advanced_summ" >
+        <EditTextPreference
+            android:defaultValue="https://ankiweb.net/"
+            android:key="syncBaseUrl"
+            android:summary="@string/sync_base_url_summ"
+            android:title="@string/sync_base_url" />
 	    <Preference 
 	        android:key="force_full_sync"
 	        android:title="@string/force_full_sync_title"

@@ -26,7 +26,6 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.exception.UnknownHttpResponseException;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Utils;
 
 import org.apache.http.HttpResponse;
@@ -60,7 +59,7 @@ public class FullSyncer extends HttpSyncer {
 
     @Override
     public String syncURL() {
-        return Consts.SYNC_BASE + "sync/";
+        return syncBase() + "sync/";
     }
 
 

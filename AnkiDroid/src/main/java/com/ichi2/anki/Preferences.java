@@ -104,7 +104,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private static String[] sShowValueInSummSeek = { "relativeDisplayFontSize", "relativeCardBrowserFontSize",
             "relativeImageSize", "answerButtonSize", "whiteBoardStrokeWidth", "swipeSensitivity",
             "timeoutAnswerSeconds", "timeoutQuestionSeconds", "backupMax", "dayOffset" };
-    private static String[] sShowValueInSummEditText = { "simpleInterfaceExcludeTags", "deckPath" };
+    private static String[] sShowValueInSummEditText = { "simpleInterfaceExcludeTags", "deckPath", "syncBaseUrl" };
     private static String[] sShowValueInSummNumRange = { "timeLimit", "learnCutoff" };
     private TreeMap<String, String> mListsToUpdate = new TreeMap<String, String>();
     private StyledProgressDialog mProgressDialog;

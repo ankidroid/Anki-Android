@@ -193,7 +193,7 @@ public class HttpSyncer {
             bos.flush();
             bos.close();
             // connection headers
-            String url = Consts.SYNC_BASE;
+            String url = syncBase();
             if (method.equals("register")) {
                 url = url + "account/signup" + "?username=" + registerData.getString("u") + "&password="
                         + registerData.getString("p");
@@ -447,9 +447,12 @@ public class HttpSyncer {
         return null;
     }
 
+    public String syncBase() {
+        return AnkiDroidApp.getApplicationPrefs().getString("syncBaseUrl", Consts.SYNC_BASE);
+    }
 
     public String syncURL() {
-        return Consts.SYNC_BASE + "sync/";
+        return syncBase() + "sync/";
     }
 }
 
