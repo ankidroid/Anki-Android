@@ -276,7 +276,7 @@ public class Sound {
             }
             // If video file but no SurfaceHolder provided then ask 
             // AbstractFlashcardViewer to provide a VideoView holder
-            if (isVideo && videoView == null && sCallingActivity.get() != null) {
+            if (isVideo && videoView == null && sCallingActivity != null && sCallingActivity.get() != null) {
                 sPlayAllListener = playAllListener;
                 ((AbstractFlashcardViewer) sCallingActivity.get()).playVideo(soundPath);
                 return;
