@@ -548,6 +548,9 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 mCol.setMod();
             } else if (key.equals("minimumCardsDueForNotification")) {
                 updateNotificationPreference();
+            } else if (key.equals("reportErrorMode")) {
+                String value = sharedPreferences.getString("reportErrorMode", "");
+                AnkiDroidApp.getInstance().setAcraReportingMode(value);
             }
             
             if (Arrays.asList(sShowValueInSummList).contains(key)) {

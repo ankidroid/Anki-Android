@@ -286,7 +286,7 @@
                 android:summary=""
                 android:title="@string/gestures_swipe_left" />
             <ListPreference
-                android:defaultValue="0"
+                android:defaultValue="2"
                 android:dependency="gestures"
                 android:entries="@array/gestures_labels"
                 android:entryValues="@array/gestures_values"
