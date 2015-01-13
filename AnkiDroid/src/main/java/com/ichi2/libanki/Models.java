@@ -665,7 +665,7 @@ public class Models {
     public void renameField(JSONObject m, JSONObject field, String newName) throws ConfirmModSchemaException {
         mCol.modSchema(true);
         try {
-            String pat = String.format("\\{\\{(.*)([:#^/]|[^:#/^}][^:}]*?:|)%s\\}\\}",
+            String pat = String.format("\\{\\{([^{}]*)([:#^/]|[^:#/^}][^:}]*?:|)%s\\}\\}",
                     Pattern.quote(field.getString("name")));
             if (newName == null) {
                 newName = "";
