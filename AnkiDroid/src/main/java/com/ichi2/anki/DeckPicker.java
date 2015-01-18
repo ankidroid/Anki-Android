@@ -575,6 +575,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 StyledDialog.Builder builder2 = new StyledDialog.Builder(DeckPicker.this);
                 builder2.setTitle(res.getString(R.string.new_deck));
                 mDialogEditText = new EditText(DeckPicker.this);
+                mDialogEditText.setSingleLine(true);
                 // mDialogEditText.setFilters(new InputFilter[] { mDeckNameFilter });
                 builder2.setView(mDialogEditText, false, false);
                 builder2.setPositiveButton(res.getString(R.string.create), new DialogInterface.OnClickListener() {
