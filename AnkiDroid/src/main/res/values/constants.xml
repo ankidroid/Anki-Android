@@ -111,9 +111,9 @@
     <string name="link_wikipedia_open_source">http://en.wikipedia.org/wiki/Open_source_software</string>
     <string name="link_contribution">http://code.google.com/p/ankidroid/wiki/Contribution</string>
     <string name="link_contribution_contributors">http://code.google.com/p/ankidroid/wiki/Contribution</string>
-    <string name="link_help">http://ankidroid.org/help.html</string>
-    <string name="link_manual">http://ankidroid.org/manual.html</string>
-    <string name="link_manual_getting_started">http://ankidroid.org/manual.html#gettingStarted</string>
+    <string name="link_help">https://ankidroid.org/docs/help.html</string>
+    <string name="link_manual">https://ankidroid.org/docs/manual.html</string>
+    <string name="link_manual_getting_started">https://ankidroid.org/docs/manual.html#gettingStarted</string>
     <string name="link_hebrew_font">http://code.google.com/p/ankidroid/downloads/detail?name=Tohu.ttf</string>
     <string name="error_email">ankidroid@gmail.com</string>
     <string name="error_post_url">http://ankidroid-triage.appspot.com/crash_receiver</string>
