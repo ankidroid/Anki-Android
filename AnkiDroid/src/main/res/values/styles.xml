@@ -184,6 +184,8 @@
         <item name="android:typeface">monospace</item>
         <item name="android:textSize">30sp</item>
     </style>
+    
+    <style name="Theme.CrashReportDialog" parent="@android:style/Theme.Dialog" />
 
     <style name="White.Spinner">
         <item name="android:indeterminate">true</item>
