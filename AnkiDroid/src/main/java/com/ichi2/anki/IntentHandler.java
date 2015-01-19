@@ -14,7 +14,6 @@ import android.util.Log;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.themes.StyledDialog;
-import com.ichi2.themes.Themes;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -90,16 +89,17 @@ public class IntentHandler extends Activity {
                         successful = sendShowImportFileDialogMsg(importUri.getEncodedPath());
                     } catch (FileNotFoundException e) {
                         errorMessage=e.getLocalizedMessage();
-                        e.printStackTrace();
+                        AnkiDroidApp.saveExceptionReportFile(e, "IntentHandler.java", "apkg import failed: " + filename);
                     } catch (IOException e2) {
                         errorMessage=e2.getLocalizedMessage();
-                        e2.printStackTrace();
+                        AnkiDroidApp.saveExceptionReportFile(e2, "IntentHandler.java", "apkg import failed" + filename);
                     }
                 } else {
                     if (filename == null) {
                         errorMessage = "Could not retrieve filename from content resolver; try opening the apkg file with a file explorer";
+                        AnkiDroidApp.saveExceptionReportFile("IntentHandler.java", "apkg import failed (filename null, no MIME type provided)");
                     } else {
-                        errorMessage = "Filename " + filename + " does not have .apkg extension";
+                        errorMessage = getResources().getString(R.string.import_error_not_apkg_extension, filename);
                     }
                 }
             } else if (intent.getData().getScheme().equals("file")) {
