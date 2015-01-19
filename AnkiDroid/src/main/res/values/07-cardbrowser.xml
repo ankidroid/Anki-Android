@@ -67,7 +67,7 @@
 
     <string-array name="card_browser_order_labels">
         <item>No sorting (faster)</item>
-        <item>By search field</item>
+        <item>By sort field</item>
         <item>By created time</item>
         <item>By edited time</item>
         <item>By changed time</item>
