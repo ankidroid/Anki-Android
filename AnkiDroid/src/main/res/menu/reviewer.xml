@@ -27,7 +27,7 @@
     <item
         android:id="@+id/action_edit"
         android:icon="@drawable/ic_menu_edit"
-        android:title="@string/menu_edit_card"
+        android:title="@string/cardeditor_title_edit_card"
         ankidroid:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_replay"
