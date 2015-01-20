@@ -113,6 +113,8 @@
     <string name="link_contribution_contributors">http://code.google.com/p/ankidroid/wiki/Contribution</string>
     <string name="link_help">https://ankidroid.org/docs/help.html</string>
     <string name="link_manual">https://ankidroid.org/docs/manual.html</string>
+    <string name="link_help_ja">https://ankidroid.org/docs/help-ja.html</string>
+    <string name="link_manual_ja">https://ankidroid.org/docs/manual-ja.html</string>
     <string name="link_manual_getting_started">https://ankidroid.org/docs/manual.html#gettingStarted</string>
     <string name="link_hebrew_font">http://code.google.com/p/ankidroid/downloads/detail?name=Tohu.ttf</string>
     <string name="error_email">ankidroid@gmail.com</string>

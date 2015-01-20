@@ -153,17 +153,45 @@ public class NavigationDrawerActivity extends AnkiActivity {
                 break;
             
             case DRAWER_HELP:
-                Intent helpIntent = new Intent("android.intent.action.VIEW", Uri.parse(getResources().getString(R.string.link_manual)));
+                Intent helpIntent = new Intent("android.intent.action.VIEW", Uri.parse(getManualUrl()));
                 startActivityWithoutAnimation(helpIntent);
                 break;
                 
             case DRAWER_FEEDBACK:
-                Intent feedbackIntent = new Intent("android.intent.action.VIEW", Uri.parse(getResources().getString(R.string.link_help)));
+                Intent feedbackIntent = new Intent("android.intent.action.VIEW", Uri.parse(getFeedbackUrl()));
                 startActivityWithoutAnimation(feedbackIntent);
                 break;
             
             default:
                 break;
+        }
+    }
+
+    /**
+     * Get the url for the feedback page
+     * @return
+     */
+    private String getFeedbackUrl() {
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
+        String locale = preferences.getString(Preferences.LANGUAGE, "");
+        if (locale.equals("ja")) {
+            return getResources().getString(R.string.link_help_ja);
+        } else {
+            return getResources().getString(R.string.link_help);
+        }
+    }
+
+    /**
+     * Get the url for the manual
+     * @return
+     */
+    private String getManualUrl() {
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
+        String locale = preferences.getString(Preferences.LANGUAGE, "");
+        if (locale.equals("ja")) {
+            return getResources().getString(R.string.link_manual_ja);
+        } else {
+            return getResources().getString(R.string.link_manual);
         }
     }
     
