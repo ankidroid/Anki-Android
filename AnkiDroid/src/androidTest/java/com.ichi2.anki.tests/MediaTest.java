@@ -18,6 +18,7 @@ package com.ichi2.anki.tests;
 import android.test.AndroidTestCase;
 import android.test.suitebuilder.annotation.Suppress;
 
+import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.exception.APIVersionException;
 import com.ichi2.libanki.Collection;
@@ -37,6 +38,14 @@ import com.ichi2.utils.*;
  */
 public class MediaTest extends AndroidTestCase {
     public void testAdd() throws IOException, APIVersionException {
+        // Hack to wait for the main application to be initialized since it runs in a different thread
+        while (AnkiDroidApp.getInstance() == null || AnkiDroidApp.getHooks() == null) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                // do nothing
+            }
+        }
         Collection d = Shared.getEmptyCol();
         File dir = Shared.getTestDir(mContext);
         BackupManager.removeDir(dir);
