@@ -27,7 +27,7 @@ import os
 CROWDIN_KEY = ''
 PROJECT_IDENTIFIER = 'ankidroid'
 
-path = '../res/values/'
+path = '../AnkiDroid/src/main/res/values/'
 
 files = ['01-core', '02-strings', '03-dialogs', '04-network', '05-feedback', '06-statistics', '07-cardbrowser', '08-widget', '09-backup', '10-preferences', '11-arrays', '13-newfeatures', '14-marketdescription']
 alllang = ['ar', 'ca', 'cs', 'de', 'el', 'es-AR', 'es-ES', 'fa', 'fi', 'fr', 'hu', 'id', 'it', 'ja', 'ko', 'nl', 'pl', 'pt-PT', 'pt-BR', 'ro', 'ru', 'sr', 'sv-SE', 'th', 'tr', 'vi', 'zh-CN', 'zh-TW']
@@ -64,14 +64,12 @@ def uploadtranslation(language, filename, sourcefile):
 		else:
 			print 'no language code entered'
 
-def updateMasterFile(selu):
-	if selu == '12':
-		return
-	elif selu == '13': # Minus one for 12-tutorial which was removed
+def updateMasterFile(fn):
+	if fn == '14-marketdescription':
 		targetName = '14-marketdescription.txt'
 		sourceName = '../docs/marketing/localized_description/marketdescription.txt'
 	else:
-		targetName = files[int(selu)-1] + '.xml'
+		targetName = fn + '.xml'
 		sourceName = path + targetName
 	if targetName:	
 		print 'Update of Master File ' + targetName
@@ -97,12 +95,12 @@ sel = raw_input("update (m)aster file, update (t)ranslation or (r)efresh builds?
 
 if sel == 'm':
 	# Update Master Files:
-	selu = raw_input("update 0(1)-core, 0(2)-strings, 0(3)-dialogs, 0(4)-network, 0(5)-feedback, 0(6)-statistics, 0(7)-cardbrowser, 0(8)-widget, 0(9)-backup, (10)-preferences, (11)-arrays, (13)-newfeatures, (14)-marketdescription, (all)?")
-	if selu == 'all':
-		for n in range(1, len(files) + 1):
-			updateMasterFile(str(n))
+	fn = raw_input("update " + ', '.join([str(x) for x in files]) + ", (all)?")
+	if fn == 'all':
+		for n in range(0, len(files)):
+			updateMasterFile(files[n])
 	else:
-		updateMasterFile(selu)
+		updateMasterFile(fn)
 
 elif sel == 't':
 	# Update Translations:

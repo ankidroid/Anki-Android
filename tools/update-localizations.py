@@ -33,6 +33,7 @@ titleFile = 'docs/marketing/localized_description/ankidroid-titles.txt'
 titleString = 'AnkiDroid Flashcards'
 
 import os
+import shutil
 import zipfile
 import urllib
 import string
@@ -93,7 +94,7 @@ def replacechars(filename, fileExt, isCrowdin):
 		fin.write(" </string-array>\n</resources>");
 	s.close()
 	fin.close()
-	os.rename(newfilename, filename)
+	shutil.move(newfilename,filename)
 	if errorOccured:
 		#os.remove(filename)
 		print 'Error in file ' + filename
@@ -161,9 +162,7 @@ build()
 zipname = 'ankidroid.zip'
 
 print "Downloading Crowdin file"
-req = urllib.urlopen('http://crowdin.net/download/project/ankidroid.zip')
-file(zipname, 'w').write(req.read())
-req.close()
+urllib.urlretrieve('http://crowdin.net/download/project/ankidroid.zip',zipname)
 
 zip = zipfile.ZipFile(zipname, "r")
 
@@ -179,7 +178,7 @@ for language in languages:
 		androidLanguage = language[:2] # Example: es-ES becomes es
 
 	print "\nCopying language files for: " + androidLanguage
-	valuesDirectory = "res/values-" + androidLanguage + "/"
+	valuesDirectory = "AnkiDroid/src/main/res/values-" + androidLanguage + "/"
 	createIfNotExisting(valuesDirectory)
 
 	# Copy localization files, mask chars and append gnu/gpl licence
@@ -192,10 +191,11 @@ for language in languages:
 		anyError = False
 
 print "\nRemoving Crowdin file\n"
-os.remove(zipname)	
+zip.close()
+os.remove(zipname)
 
 print "Committing updates. Please add any fixes as another commit."
-subprocess.call("git add docs/marketing/localized_description res/values*", shell=True)
+subprocess.call("git add docs/marketing/localized_description AnkiDroid/src/main/res/values*", shell=True)
 subprocess.call("git commit -m 'Updated strings from Crowdin'", shell=True)
 
 print "Checking with Lint."
