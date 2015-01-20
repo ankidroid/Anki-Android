@@ -556,6 +556,14 @@ public class Statistics extends NavigationDrawerActivity {
                                  Bundle savedInstanceState) {
             setHasOptionsMenu(true);
             View rootView = inflater.inflate(R.layout.fragment_anki_stats_overview, container, false);
+            AnkiStatsTaskHandler handler = (((Statistics)getActivity()).getTaskHandler());
+            // Workaround for issue 2406 -- crash when resuming after app is purged from RAM
+            // TODO: Implementing loader for Collection in Fragment itself would be a better solution.
+            if (handler == null) {
+                Log.e(AnkiDroidApp.TAG, "Statistics.createStatisticsOverview() TaskHandler not found");
+                getActivity().finish();
+                return rootView;
+            }
             mWebView = (WebView) rootView.findViewById(R.id.web_view_stats);
             if(mWebView == null)
                 Log.d(AnkiDroidApp.TAG, "mChart null!!!");
@@ -569,7 +577,7 @@ public class Statistics extends NavigationDrawerActivity {
             mProgressBar.setVisibility(View.VISIBLE);
             //mChart.setVisibility(View.GONE);
             createStatisticOverview();
-            mType = (((Statistics)getActivity()).getTaskHandler()).getStatType();
+            mType = handler.getStatType();
             mIsCreated = true;
             mActivityPager = ((Statistics)getActivity()).getViewPager();
             mActivitySectionPagerAdapter = ((Statistics)getActivity()).getSectionsPagerAdapter();
@@ -596,13 +604,7 @@ public class Statistics extends NavigationDrawerActivity {
 
         private void createStatisticOverview(){
             AnkiStatsTaskHandler handler = (((Statistics)getActivity()).getTaskHandler());
-            // Workaround for issue 2406.
-            // TODO: Implementing loader for Collection in Fragment itself would be a better solution.
-            if (handler != null) {
-                mCreateStatisticsOverviewTask = handler.createStatisticsOverview(mWebView, mProgressBar);
-            } else {
-                Log.e(AnkiDroidApp.TAG, "Statistics.createStatisticsOverview() TaskHandler not found");
-            }
+            mCreateStatisticsOverviewTask = handler.createStatisticsOverview(mWebView, mProgressBar);
         }
 
         @Override
