@@ -96,7 +96,6 @@
   <string name="gestures_tap_bottom">Presione abajo</string>
   <string name="gestures_tap_left">Presione izquierda</string>
   <string name="gestures_tap_right">Presione derecha</string>
-  <string name="gestures_longclick">Click largo</string>
   <string name="more_scrolling_buttons">Lector electrónico</string>
   <string name="more_scrolling_buttons_summ">Utilizar también los botones Kanji/Katakana, Emoji/Kao-moji para desplazar</string>
   <string name="double_scrolling_gap">Doble desplazamiento</string>
@@ -122,10 +121,10 @@
   <string name="language_summ">XXX</string>
   <string name="language_system">Idioma del sistema</string>
   <string name="notification_pref">Notificaciones</string>
-  <string name="notification_pref_title">Notify when</string>
-  <string name="never_notify">Never notify</string>
-  <string name="notify_when_pending">Pending messages available</string>
-  <string name="notification_minimum_cards_due">More than %d cards due</string>
+  <string name="notification_pref_title">Notificar al</string>
+  <string name="never_notify">Nunca notificar</string>
+  <string name="notify_when_pending">Mensajes pendientes disponibles</string>
+  <string name="notification_minimum_cards_due">Más de %d tarjeta programada</string>
   <string name="notification_minimum_cards_due_vibrate">Vibrar</string>
   <string name="notification_minimum_cards_due_blink">Luz parpadeante</string>
   <string name="timeout_answer_text">Mostrar automáticamente la respuesta</string>

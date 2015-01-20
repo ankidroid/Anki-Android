@@ -54,8 +54,8 @@
   <string name="delete_card_title">Radera not</string>
   <string name="delete_card_message">Vill du verkligen radera samtliga kort från denna not?\nSökfält: %s</string>
   <string name="card_browser_show_marked">Filtrera markerade</string>
-  <string name="card_browser_field">Ändra CardBrowser-fält</string>
-  <string name="card_browser_field_title">Ändrade fältet CardBrowser</string>
+  <string name="card_browser_field">Ändra kortbläddrar-fält</string>
+  <string name="card_browser_field_title">Ändra kortbläddrar-fält</string>
   <string name="card_browser_show_suspended">Filtrera åsidosatta</string>
   <string name="card_browser_search_by_tag">Filtrera efter etikett</string>
   <string name="card_browser_tags_shown">Etiketter: %1$s</string>

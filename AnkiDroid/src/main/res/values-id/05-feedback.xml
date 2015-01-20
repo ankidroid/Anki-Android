@@ -43,7 +43,7 @@
   <string name="error_cancel">Jangan melaporkan ralat</string>
   <string name="error_reporting_choice">Mod melapor ralat</string>
   <string name="error_reporting_choice_summary">Ralat boleh dilaporkan secara automatik, jangan dilapor, atau anda mahu ditanya dulu</string>
-  <string name="feedback_disclaimer">Penafian: Kami tidak mengumpulkan informasi peribadi seperti alamat email, nombor telefon, alamat IP atau IMEI telefon anda. Kami mengumpulkan beberapa informasi tentang peranti anda seperti model, pengeluar dan versi Android, serta ciri ralat yang dilaporkan.</string>
+  <string name="feedback_disclaimer">Disclaimer: We don\'t collect any personal information such as your email address, phone number, or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves and the steps which led up to them occuring.</string>
   <string name="feedback_title">Maklum balas</string>
   <string name="feedback_send_feedback">Kirim maklum balas</string>
   <string name="feedback_send_feedback_and_errors">Kirim ralat dan maklum balas</string>
@@ -60,4 +60,8 @@
   <string name="feedback_error_reply_issue_fixed_prod">Isu %1$d, dibetulkan dalam versi terbaru</string>
   <string name="feedback_error_reply_malformed">Bug difail, tidak ada respon</string>
   <string name="feedback_error_reply_failed">Gagal mengirim</string>
+  <string name="feedback_auto_toast_text">AnkiDroid has encountered a problem; a report is being sent to the developers&#8230;</string>
+  <string name="feedback_manual_toast_text">AnkiDroid has encountered a problem; a report is being generated&#8230;</string>
+  <string name="feedback_copy_debug">Copy debug info</string>
+  <string name="feedback_report">Report</string>
 </resources>

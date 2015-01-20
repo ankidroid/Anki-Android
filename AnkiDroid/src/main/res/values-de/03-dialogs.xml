@@ -45,8 +45,8 @@
   <string name="check_db_acknowledge_shrunk">Datenbank überprüft und optimiert.\nUm %d kB verkleinert.</string>
   <string name="contextmenu_deckpicker_delete_deck">Stapel löschen</string>
   <string name="delete_deck_title">Stapel löschen?</string>
-  <string name="delete_deck_message">Sind Sie sicher, dass Sie alle Karten in %s löschen wollen?</string>
-  <string name="delete_cram_deck_message">Sind Sie sicher, dass Sie alle Karten aus %s wieder in ihren ursprünglichen Stapel einsortieren möchten?</string>
+  <string name="delete_deck_message">Alle Karten in %s löschen?</string>
+  <string name="delete_cram_deck_message">Alle Karten aus %s wieder in ihren ursprünglichen Stapel einsortieren?</string>
   <string name="delete_deck_confirm">Löschen</string>
   <string name="new_version_message">Neue Funktionen:</string>
   <string name="no_tts_available_title">Vorlesen</string>
@@ -54,10 +54,10 @@
   <string name="initializing_tts">Initialisiere Vorlesen&#8230;</string>
   <string name="tts_no_tts">Nicht vorlesen</string>
   <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s:<br/>Karteikarten für Android</h2>AnkiDroid ist eine Karteikarten-Anwendung, die voll kompatibel ist mit der Desktop-Software <a href="%2$s">Anki</a>. Sie können mit beiden Programmen Inhalte erstellen, herunterladen und lernen und sie sehr einfach synchronisieren.]]></item>
-    <item><![CDATA[Helfen Sie uns, AnkiDroid besser zu machen und melden alle Fehler <a href="%1$s">hier</a>; Ideen für neue Funktionen sind ebenfalls willkommen! Benutzen Sie das <a href="%2$s">Wiki</a> und sagen im <a href="%3$s">Forum</a> Hallo.]]></item>
+    <item><![CDATA[<h2>%1$s:<br/>Karteikarten für Android</h2>AnkiDroid ist eine Karteikarten-Anwendung, die voll kompatibel ist mit der Desktop-Software  <a href=\"%2$s\">Anki</a>. Sie können mit beiden Programmen Inhalte erstellen, herunterladen und lernen. Die Synchronisierung dabei ist ganz leicht.]]></item>
+    <item><![CDATA[Um uns zu helfen, AnkiDroid zu verbessern, melden Sie eventuelle Fehler <a href=\"%1$s\">hier</a>; Ideen für neue Funktionen sind ebenfalls willkommen! Benutzen Sie das <a href=\"%2$s\">Wiki</a> und schauen Sie im <a href=\"%3$s\">Forum</a> vorbei.]]></item>
     <item><![CDATA[AnkiDroid ist <a href=\"%1$s\">Open-Source Software<a/>, deshalb ist jeder ermutigt, sich den <a href=\"%3$s\">Mitwirkenden</a> <a href=\"%2$s\">anzuschließen</a>  :-)]]></item>
-    <item><![CDATA[Auch Nicht-Entwickler können helfen; zum Beispiel, indem sie AnkiDroid <a href="%1$s">übersetzen</a>, das Wiki aktualisieren und Bildschirmfotos erstellen, für Anki Desktop <a href="%2$s">spenden</a> oder über AnkiDroid bloggen!]]></item>
+    <item><![CDATA[Auch Nicht-Entwickler können helfen; zum Beispiel, indem sie AnkiDroid <a href=\"%1$s\">übersetzen</a>, das Wiki aktualisieren und Screenshots erstellen, für Anki Desktop <a href=\"%2$s\">spenden</a> oder über AnkiDroid bloggen!]]></item>
     <item><![CDATA[AnkiDroid ist unter der <a href="%1$s">GNU-GPL-v3-Lizenz</a> veröffentlicht; der Quellcode ist <a href="%2$s">hier</a> verfügbar.]]></item>
   </string-array>
   <string name="dont_show_again">Nicht mehr anzeigen</string>

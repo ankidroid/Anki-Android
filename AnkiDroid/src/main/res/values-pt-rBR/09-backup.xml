@@ -60,7 +60,7 @@
   <string name="backup_repair_deck_progress">Consertando banco de dados.\nPor favor aguarde...</string>
   <string name="backup_error">Erro</string>
   <string name="backup_restore_error">Coleção não pôde ser restaurada</string>
-  <string name="backup_invalid_file_error">O ficheiro de cópia de segurança selecionado é inválido</string>
+  <string name="backup_invalid_file_error">O arquivo de backup selecionado era inválido</string>
   <string name="backup_restore_if_missing">Restaurando coleção caso esteja faltando...</string>
   <string name="backup_restore_deck">Restaurando coleção. \n Por favor aguarde...</string>
   <string name="backup_restore_select_title">Selecione o backup para restaurar</string>

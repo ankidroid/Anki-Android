@@ -96,7 +96,6 @@
   <string name="gestures_tap_bottom">Касание внизу</string>
   <string name="gestures_tap_left">Касание слева</string>
   <string name="gestures_tap_right">Касание справа</string>
-  <string name="gestures_longclick">Длинное нажатие</string>
   <string name="more_scrolling_buttons">eReader</string>
   <string name="more_scrolling_buttons_summ">Также использовать клавиши kanji/katakana, emoji/kao-moji для прокрутки</string>
   <string name="double_scrolling_gap">Двойной скроллинг</string>
@@ -122,10 +121,10 @@
   <string name="language_summ">XXX</string>
   <string name="language_system">Системный язык</string>
   <string name="notification_pref">Уведомления</string>
-  <string name="notification_pref_title">Notify when</string>
-  <string name="never_notify">Never notify</string>
-  <string name="notify_when_pending">Pending messages available</string>
-  <string name="notification_minimum_cards_due">More than %d cards due</string>
+  <string name="notification_pref_title">Показывать при</string>
+  <string name="never_notify">Никогда</string>
+  <string name="notify_when_pending">Доступные сообщения в очереди</string>
+  <string name="notification_minimum_cards_due">Более %d карт в ожидании</string>
   <string name="notification_minimum_cards_due_vibrate">Вибрация</string>
   <string name="notification_minimum_cards_due_blink">Мерцание светодиода</string>
   <string name="timeout_answer_text">Автоматически показывать ответ</string>

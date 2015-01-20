@@ -40,14 +40,14 @@
 
 -->
 <resources>
-  <string name="youre_offline">You are offline</string>
+  <string name="youre_offline">Offline vagy</string>
   <string name="currently_downloading">Letöltések folyamatban</string>
   <string name="starting_download">Letöltés indítása...</string>
   <string name="downloading">Letöltés...</string>
   <string name="paused">Felfüggesztve</string>
   <string name="downloaded">Letöltve</string>
-  <string name="sync_error">Sync Error</string>
-  <string name="vague_error">Error</string>
+  <string name="sync_error">Szinkronizálási hiba</string>
+  <string name="vague_error">Hiba</string>
   <string name="cancelling">Megszakítás...</string>
   <string name="connection_error_return_message">Hálózati hiba történt. Ismételd meg, vagy megszakítás után menj az előző képernyőre.</string>
   <string name="retry">Újra</string>
@@ -56,7 +56,7 @@
   <string name="download_cancel">Letöltés megszakítása</string>
   <string name="shared_decks">Megosztott paklik</string>
   <string name="loading_shared_decks">Elérhető megosztott paklik betöltése...</string>
-  <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Terms and conditions</a></string>
+  <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Feltételek és kikötések</a></string>
   <string name="cancel_download">Letöltés megszakítása</string>
   <string name="resume_download">Letöltés folytatása</string>
   <string name="pause_download">Letöltés szüneteltetése</string>
@@ -65,9 +65,9 @@
   <string name="download_button_return">Visszatérés</string>
   <string name="connection_error_message">Hálózati hiba történt.</string>
   <string name="sync_log_db_error">Adatbázishiba történt.</string>
-  <string name="not_logged_in_title">Log in to AnkiWeb</string>
-  <string name="login_create_account_message">You must log in to an AnkiWeb account. You can create one in the next step.</string>
-  <string name="no_email_client">No email client available</string>
+  <string name="not_logged_in_title">Bejelentkezés az AnkiWebre</string>
+  <string name="login_create_account_message">Be kell jelentkezned egy AnkiWeb fiókba. A következő lépésben létrehozhatsz egyet.</string>
+  <string name="no_email_client">Nincs rendelkezésre álló email kliens</string>
   <string name="username">Email cím</string>
   <string name="username_repeat">Ismételje meg az e-mail címet</string>
   <string name="password">Jelszó</string>
@@ -75,24 +75,24 @@
   <string name="log_in">Bejelentkezés</string>
   <string name="sign_up_description">Nincs AnkiWeb fiókod? Ingyenes, meg minden!</string>
   <string name="sign_up">Regisztráció</string>
-  <string name="sign_up_terms">By touching <i>Sign up</i>, you confirm that you have read and agree to our <a href="https://ankiweb.net/account/terms">terms of use</a>.</string>
+  <string name="sign_up_terms">A <i>Feliratkozás</i> megérintésével megerősíted, hogy elolvastad és elfogadod a <a href="https://ankiweb.net/account/terms">felhasználási feltételeinket</a>.</string>
   <string name="logged_as">Bejelentkezve mint</string>
   <string name="log_out">Kijelentkezés</string>
   <string name="alert_logging_message">Bejelentkezés, kérem várjon...</string>
   <string name="invalid_username_password">Érvénytelen e-mail cím vagy jelszót.</string>
   <string name="login_generic_error">Nem sikerült bejelentkezni.</string>
-  <string name="reset_password">Reset password</string>
+  <string name="reset_password">Jelszó visszaállítása</string>
   <string name="download_finished">Letöltés kész</string>
   <string name="personaldeckpicker_title">Online pakli megnyitása</string>
   <string name="shareddeckpicker_title">Válszd ki a letölteni kívánt paklit</string>
   <string name="downloaddeck_search">Keresés</string>
   <string name="preferences_title">Beállítások</string>
-  <string name="deckpreferences_title">Options for XXX</string>
+  <string name="deckpreferences_title">XXX lehetőségei</string>
   <string name="sync_conflict_message">Az itteni és az AnkiWeb-es paklik között olyan a különbség, hogy nem lehet őket egybegyúrni, ezért szükséges felülirni az egyik helyen lévő paklit a másik helyen lévővel.\n\nSzeretnéd feltölteni innen a paklikat, vagy letöltöd őket az AnkiWeb-ről?</string>
   <string name="sync_conflict_local">Feltöltés</string>
   <string name="sync_conflict_remote">Letöltés</string>
   <string name="sync_conflict_remote_confirm">Biztos, hogy le akarja tölteni a szerveren lévő gyűjteményt? Vigyázat, ez felül fogja írni a helyi gyűjteményt.</string>
-  <string name="sync_conflict_local_confirm">Overwrite your collection on the server?</string>
+  <string name="sync_conflict_local_confirm">Írja felül a gyűjteményed a szerveren?</string>
   <string name="sync_prepare_syncing">Felkészülés a szinkronizálásra...</string>
   <string name="sync_preparing_full_sync_message">Teljes szinkronizálásra való felkészülés...</string>
   <string name="sync_uploading_message">Feltöltés...</string>
@@ -102,21 +102,21 @@
   <string name="sync_downloading_media">Média letöltése %1$d/%2$d...</string>
   <string name="sync_log_uploading_message">Teljes szinkronizáció helyből</string>
   <string name="sync_log_downloading_message">Teljes szinkronizáció a kiszolgálóról</string>
-  <string name="sync_log_clocks_unsynchronized">Your clock\'s off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</string>
+  <string name="sync_log_clocks_unsynchronized">Az órád pontatlan %1$d másodperccel %2$s. Győződj meg arról, hogy a dátum, idő és időzóna a telefonon helyes, majd szinkronizálj újra.</string>
   <string name="sync_log_clocks_unsynchronized_tz">, lehetséges, hogy az eszköz időzóna beállítása rossz</string>
   <string name="sync_log_clocks_unsynchronized_date">, lehetséges, hogy az eszköz dátumbeállítása rossz</string>
   <string name="sync_log_old_version">A szinkronizációs protokoll megváltozott, kérlek frissítsd az AnkiDroidot. Nézd meg itt: %s</string>
   <string name="sync_conflict_title">Szinkronizálási ütközés</string>
   <string name="sync_no_changes_message">Nem találtam változtatást.</string>
-  <string name="sync_database_acknowledge">Collection synchronized</string>
-  <string name="sync_log_error_fix">A syncing error occurred%s.\n\nIf this happens consistently, you can do a full sync, which will probably fix the problem. Be aware that it will overwrite either your local collection or the one on AnkiWeb.\nIf you really want to do full sync, please choose if you want to upload your local collection or to download from the server.</string>
+  <string name="sync_database_acknowledge">Gyűjtemény szinkronizálva</string>
+  <string name="sync_log_error_fix">Szinkronizálási hiba történt%s.\n\nHa többször is megtörténik, futtathatsz egy teljes szinkronizálást, amely talán kijavítja a problémát. Ügyelj arra, hogy ez vagy a helyi, vagy az AnkiWebes gyűjteményt felülírja.\nHa biztosan teljes szinkront szeretnél, kérlek válaszd ki, hogy a helyi gyűjteményt, vagy a letölthetőt tartsuk meg.</string>
   <string name="sync_log_error_specific">Szinkronizációs hiba, típus: %1$s, üzenet: %2$s</string>
   <string name="sync_corrupt_database">Az adatbázis sérült. Próbáld meg javítani szinkronizálás előtt!\n\nLásd a %s több információért.</string>
   <string name="sync_too_busy">A kiszolgáló elfoglalt. Próbáld meg később.</string>
   <string name="sync_remote_db_error">A letöltött adatbázis sérült volt. Kérlek, próbáld újra.</string>
   <string name="sync_overwrite_error">A jelenlegi gyűjteményt nem lehetett felülírni a letöltött fájllal.</string>
-  <string name="sync_connection_error">Connection timed out. Either your internet connection is experiencing problems, or you have a very large file in your media folder.</string>
-  <string name="sync_error_409">Only one client can access AnkiWeb at a time. If a previous sync failed, please try again in a few minutes.</string>
+  <string name="sync_connection_error">A kapcsolat túllépte az időkeretet. Vagy az internet-kapcsolattal van probléma, vagy nagy fájl van a média mappában.</string>
+  <string name="sync_error_409">Egyszerre csak egy kliens férhet hozzá az AnkiWebhez. Ha a korábbi szinkron nem sikerült, kérlek próbáld újra pár perc múlva.</string>
   <string name="sync_write_access_error">A letöltött fájlt nem sikerült menteni a sd kártya. Az sd kártya vagy írásvédett, vagy nincs rajta elég hely.</string>
   <string name="sync_deletions_message">Törlések szinkronizálása...</string>
   <string name="sync_small_objects_message">Kis méretű objektumok szinkronizálása...</string>
@@ -129,15 +129,15 @@
   <string name="sync_generic_error">Hiba történt. Próbálkozz újra később.</string>
   <string name="sync_check_upload_file">Fájl ellenőrzése feltöltés előtt...</string>
   <string name="sync_check_download_file">A letöltött fájl ellenőrzése...</string>
-  <string name="sync_media_find">Finding changed media&#8230;</string>
-  <string name="sync_media_remove">Handling deleted media&#8230;</string>
+  <string name="sync_media_find">Médiaváltozás keresése&#8230;</string>
+  <string name="sync_media_remove">Törölt média kezelése&#8230;</string>
   <string name="sync_media_from_server">Befogadó média szerver...</string>
   <string name="sync_media_to_server">Küldés média szerver...</string>
-  <string name="sync_media_sanity_check">Checking media counts&#8230;</string>
+  <string name="sync_media_sanity_check">Médiaszám ellenőrzése&#8230;</string>
   <string name="sync_media_no_changes">Nincs változás a média fájlokban.</string>
   <string name="sync_media_success">Média szinkronizál sikeresen.</string>
-  <string name="sync_media_changes_count">%d media changes to upload</string>
-  <string name="sync_media_downloaded_count">%d media files downloaded</string>
+  <string name="sync_media_changes_count">%d médiaváltozás feltöltése</string>
+  <string name="sync_media_downloaded_count">%d médiafájl letöltve</string>
   <string name="sync_sanity_failed">After syncing, the collection was in an inconsistent state. To fix this problem, AnkiDroid will force a full sync. Choose which side you would like to keep.</string>
   <string name="sync_media_sanity_failed">Media sync completed, but the media count doesn\'t agree with the server. The next media sync will be full to correct any error.</string>
   <string name="sync_media_error">Hiba a szinkronizálásnál média adatok.</string>
@@ -161,11 +161,12 @@
   <string name="upgrade_decks_button">Frissítés</string>
   <string name="upgrade_decks_failed">These decks couldn\'t be upgraded: Open them in Anki Desktop and do a database check. Afterwards you can import them via Anki Desktop.</string>
   <string name="upgrade_decks_media_failed">Copying the media files to the new media folder (%1$s) has failed for these decks:\n%2$sPlease move the media files manually.</string>
-  <string name="download_deck">Downloading deck&#8230; (%d kB)</string>
+  <string name="download_deck">Pakli letöltése&#8230; (%d kB)</string>
   <string name="sync_sanity_local">Helyi</string>
   <string name="sync_sanity_remote">Távoli</string>
-  <string name="force_full_sync_title">Force full sync</string>
+  <string name="force_full_sync_title">Teljes szinkronizáció erőltetése</string>
   <string name="force_full_sync_summary">On next sync, force changes in one direction</string>
   <string name="full_sync_confirmation">The requested change will require a full upload of the database when you next synchronize your collection. If you have reviews or other changes waiting on another device that haven\'t been synchronized here yet, they will be lost. Continue?</string>
   <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it\'s recommended to force a full sync.</string>
+  <string name="sync_error_501_upgrade_required">Please upgrade to the latest version of AnkiDroid</string>
 </resources>

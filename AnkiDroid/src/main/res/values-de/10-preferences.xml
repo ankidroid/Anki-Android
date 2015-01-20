@@ -96,7 +96,6 @@
   <string name="gestures_tap_bottom">Unten antippen</string>
   <string name="gestures_tap_left">Links antippen</string>
   <string name="gestures_tap_right">Rechts antippen</string>
-  <string name="gestures_longclick">Langklick</string>
   <string name="more_scrolling_buttons">eReader</string>
   <string name="more_scrolling_buttons_summ">Auch mit Kanji/Katakana-, Emoji/Kao-mojitasten scrollen</string>
   <string name="double_scrolling_gap">Doppeltes scrollen</string>

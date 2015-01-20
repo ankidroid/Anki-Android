@@ -26,4 +26,4 @@ th: บัตรคำ AnkiDroid
 tr: AnkiDroid Bilgi Kartları
 vi: Thẻ thông minh AnkiDroid
 zh-CN: AnkiDroid 记忆卡片
-zh-TW: AnkiDroid 單字卡
+zh-TW: AnkiDroid 抽認卡

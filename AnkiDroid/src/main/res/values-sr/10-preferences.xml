@@ -96,7 +96,6 @@
   <string name="gestures_tap_bottom">Куцкање доле</string>
   <string name="gestures_tap_left">Куцкање лево</string>
   <string name="gestures_tap_right">Куцкање десно</string>
-  <string name="gestures_longclick">Дуготрајни притисак</string>
   <string name="more_scrolling_buttons">eReader</string>
   <string name="more_scrolling_buttons_summ">Користи Канџи/Катакана, Емоџи/Као-моџи јапанску дугмад за проклизавање</string>
   <string name="double_scrolling_gap">Дупло проклизавање</string>

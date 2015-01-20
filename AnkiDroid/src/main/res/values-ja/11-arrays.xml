@@ -84,10 +84,10 @@
   <string-array name="gestures_labels">
     <item>何もしない</item>
     <item>答えの表示</item>
-    <item>解答ボタン１</item>
-    <item>解答ボタン２</item>
-    <item>解答ボタン３</item>
-    <item>解答ボタン４</item>
+    <item>回答ボタン１</item>
+    <item>回答ボタン２</item>
+    <item>回答ボタン３</item>
+    <item>回答ボタン４</item>
     <item>推奨する答え（緑色）</item>
     <item>推奨された答えよりも良い答え</item>
     <item>戻す</item>
@@ -111,8 +111,8 @@
     <item>タグを追加</item>
   </string-array>
   <string-array name="new_order_labels">
-    <item>ランダムに新規カードを追加</item>
-    <item>追加順に新規カードを追加</item>
+    <item>新規カードを無作為に選んで表示する</item>
+    <item>新規カードを追加順に表示する</item>
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
     <item>古いカードを先頭に</item>

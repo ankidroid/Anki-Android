@@ -96,7 +96,6 @@
   <string name="gestures_tap_bottom">Klepnutí dolů</string>
   <string name="gestures_tap_left">Klepnutí vlevo</string>
   <string name="gestures_tap_right">Klepnutí vpravo</string>
-  <string name="gestures_longclick">Dlouhý klik</string>
   <string name="more_scrolling_buttons">eReader</string>
   <string name="more_scrolling_buttons_summ">Použít také kanji/katakana, emoji/kao-moji tlačítka pro posouvání</string>
   <string name="double_scrolling_gap">Dvojitý posun</string>
@@ -122,9 +121,9 @@
   <string name="language_summ">XXX</string>
   <string name="language_system">Jazyk systému</string>
   <string name="notification_pref">Oznámení</string>
-  <string name="notification_pref_title">Notify when</string>
-  <string name="never_notify">Never notify</string>
-  <string name="notify_when_pending">Pending messages available</string>
+  <string name="notification_pref_title">Upozornit když</string>
+  <string name="never_notify">Nikdy neupozorňovat</string>
+  <string name="notify_when_pending">Jsou k dispozici zprávy</string>
   <string name="notification_minimum_cards_due">Více než %d karet ke zkoušení</string>
   <string name="notification_minimum_cards_due_vibrate">Vibrace</string>
   <string name="notification_minimum_cards_due_blink">Blikající světlo</string>

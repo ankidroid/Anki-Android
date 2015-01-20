@@ -40,8 +40,8 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="one">%d card shown</item>
-    <item quantity="other">%d cards shown</item>
+    <item quantity="one">%d karta pokazana</item>
+    <item quantity="other">%d kart pokazanych</item>
   </plurals>
   <string name="card_browser_all_decks">Wszystkie talie</string>
   <string name="card_browser_load">Ładowanie kart.\nProszę czekać...</string>
@@ -79,7 +79,7 @@
   <string name="card_details_tags">Etykiety</string>
   <string name="card_details_model">Typ notatki</string>
   <string name="card_browser_sorting_cards">Sortowanie kart.\nProszę czekać...</string>
-  <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
+  <string name="card_browser_filtering_cards">Filtrowanie kart&#8230; \nAby przerwać, wciśnij przycisk powrotu</string>
   <string name="card_details_card_model">Model karty</string>
   <string-array name="card_browser_order_labels">
     <item>Bez sortowania (szybciej)</item>

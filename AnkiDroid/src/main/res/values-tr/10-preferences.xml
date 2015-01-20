@@ -96,7 +96,6 @@
   <string name="gestures_tap_bottom">Aşağıya dokunma</string>
   <string name="gestures_tap_left">Sola dokunma</string>
   <string name="gestures_tap_right">Sağa dokunma</string>
-  <string name="gestures_longclick">Basılı tutma</string>
   <string name="more_scrolling_buttons">eOkuyucu</string>
   <string name="more_scrolling_buttons_summ">Kaydırma için Kanji/Katakana, Emoji/Kao-moji düğmelerini de kullan</string>
   <string name="double_scrolling_gap">Hızlı kaydırma</string>
@@ -249,8 +248,8 @@
   <string name="deck_conf_cram_search">Arama</string>
   <string name="deck_conf_cram_limit">Sınırla:</string>
   <string name="deck_conf_cram_order">kart seçme ölçütü:</string>
-  <string name="deck_conf_cram_reschedule">Yeniden zamanla</string>
-  <string name="deck_conf_cram_reschedule_summ">Bu destedeki yanıtlarıma göre kartları yeniden zamanla</string>
+  <string name="deck_conf_cram_reschedule">Zamanını değiştir</string>
+  <string name="deck_conf_cram_reschedule_summ">Bu destede yanıtlarıma göre kartların zamanını değiştir</string>
   <string name="deck_conf_cram_steps">Kişisel adımlar</string>
   <string name="deck_conf_cram_steps_summ">Kendi adımlarınızı tanımlayın</string>
 </resources>

@@ -43,7 +43,7 @@
   <string name="error_cancel">Ne pas signaler les erreurs</string>
   <string name="error_reporting_choice">Mode de rapport d\'erreur</string>
   <string name="error_reporting_choice_summary">Les erreurs peuvent être signalées automatiquement, non signalées, ou requérir une confirmation de votre part</string>
-  <string name="feedback_disclaimer">Avertissement : Nous ne recueillons pas des renseignements personnels tels que votre adresse de courriel, numéro de téléphone, adresse IP ou IMEI de votre téléphone. Nous recueillons des informations sur votre appareil, comme le fabricant, modèle et la version d\'Android, ainsi que la nature des erreurs signalées elles-mêmes.</string>
+  <string name="feedback_disclaimer">Disclaimer: We don\'t collect any personal information such as your email address, phone number, or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves and the steps which led up to them occuring.</string>
   <string name="feedback_title">Commentaires</string>
   <string name="feedback_send_feedback">Envoyez-nous votre feedback</string>
   <string name="feedback_send_feedback_and_errors">Envoyer les erreurs et votre feedback</string>
@@ -60,4 +60,8 @@
   <string name="feedback_error_reply_issue_fixed_prod">Problème %1$d, corrigé dans la version la plus récente</string>
   <string name="feedback_error_reply_malformed">Bug envoyé, aucune réponse</string>
   <string name="feedback_error_reply_failed">Échec de l\'envoi</string>
+  <string name="feedback_auto_toast_text">AnkiDroid has encountered a problem; a report is being sent to the developers&#8230;</string>
+  <string name="feedback_manual_toast_text">AnkiDroid has encountered a problem; a report is being generated&#8230;</string>
+  <string name="feedback_copy_debug">Copy debug info</string>
+  <string name="feedback_report">Report</string>
 </resources>

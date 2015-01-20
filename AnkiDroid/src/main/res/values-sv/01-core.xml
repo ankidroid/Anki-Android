@@ -51,7 +51,7 @@
   <string name="studyoptions_start">Plugga nu</string>
   <plurals name="deckpicker_title">
     <item quantity="one">%1$d kort i kö (%2$s)</item>
-    <item quantity="other">%1$d kört i kö (%2$s)</item>
+    <item quantity="other">%1$d kort i kö (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">%d min.</item>
@@ -77,23 +77,23 @@
   <string name="menu_rotate">Rotera</string>
   <string name="menu_import">Importera</string>
   <string name="undo">Ångra</string>
-  <string name="undo_action_review">senaste recension</string>
+  <string name="undo_action_review">senaste repetition</string>
   <string name="undo_action_edit">redigera not</string>
   <string name="undo_action_bury">dölj not</string>
-  <string name="undo_action_suspend_card">lås kort</string>
+  <string name="undo_action_suspend_card">åsidosätt kort</string>
   <string name="undo_action_suspend_note">lås not</string>
-  <string name="undo_action_delete">radera not</string>
+  <string name="undo_action_delete">ta bort not</string>
   <string name="undo_action_mark">markera not</string>
   <string name="unbury">Sluta dölja</string>
   <string name="finish_operation">Slutför föregående operation (troligen en säkerhetskopiering).\nVar god vänta...</string>
-  <string name="contextmenu_deckpicker_download_missing_media">Hämta saknande media</string>
+  <string name="contextmenu_deckpicker_download_missing_media">Hämta saknade media</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Återställ språktilldelningar</string>
   <string name="contextmenu_deckpicker_reset_reset_message">Språkåterställning</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optimera databas</string>
   <string name="contextmenu_deckpicker_rename_deck">Byt namn på kortlek</string>
   <string name="contextmenu_deckpicker_collapse_deck">Dölj underkortlekar</string>
   <string name="contextmenu_deckpicker_inflate_deck">Visa underkortlekar</string>
-  <string name="contextmenu_deckpicker_set_custom_dictionary">Ange egen ordbok</string>
+  <string name="contextmenu_deckpicker_set_custom_dictionary">Ange egen ordlista</string>
   <string name="menu_add">Lägg till</string>
   <string name="menu_add_note">Lägg till not</string>
   <string name="menu_download_deck">Hämta kortlek</string>
@@ -106,12 +106,12 @@
   <string name="menu_bury_note">Dölj not</string>
   <string name="menu_suspend_card">Lås kort</string>
   <string name="menu_suspend_note">Lås not</string>
-  <string name="menu_save_note">Spara anteckning</string>
-  <string name="menu_delete_note">Radera not</string>
+  <string name="menu_save_note">Spara not</string>
+  <string name="menu_delete_note">Ta bort not</string>
   <string name="delete_note_message">Vill du verkligen ta bort den här noten och alla dess kort?\n%s</string>
   <string name="menu_edit_card">Redigera kort</string>
   <string name="menu_select">Markera text</string>
-  <string name="menu_search">Kolla upp i %1$s</string>
+  <string name="menu_search">Sökning i %1$s</string>
   <string name="menu_mark_card">Markera kort</string>
   <string name="menu_unmark_card">Avmarkera kort</string>
   <string name="new_deck">Skapa kortlek</string>
@@ -139,8 +139,8 @@
   <string name="later">Senare</string>
   <string name="download">Hämta</string>
   <string name="open_collection">Öppnar samling.\nVar god vänta...</string>
-  <string name="rebuild_cram_deck">Bygger om kortlek för råplugg.\nVänligen vänta...</string>
-  <string name="rebuild_cram_label">Återuppbygg</string>
+  <string name="rebuild_cram_deck">Återskapar kortlek för råplugg.\nVänligen vänta...</string>
+  <string name="rebuild_cram_label">Återskapa</string>
   <string name="empty_cram_label">Töm</string>
   <string name="empty_cram_deck">Tömmer kortleken för råplugg.\nVar god vänta...</string>
   <string name="custom_study_deck_name">Anpassad studiesession</string>
@@ -150,7 +150,7 @@
   <string name="studyoptions_congrats_more_new">Det finns fler nya kort, men den dagliga gränsen har uppnåtts. Du kan höja gränsen i inställningarna, men kom ihåg att detta också ökar antalet repetitioner på kort sikt.</string>
   <string name="studyoptions_congrats_custom">Välj knappen Anpassade studier nedan för att studera utanför det normala schemat.</string>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">I morgon finns det: %1$d kort att granska och %2$s.\n Beräknad tid: %3$s</item>
+    <item quantity="one">I morgon finns det: %1$d kort att repetera och %2$s.\n Beräknad tid: %3$s</item>
     <item quantity="other">I morgon kommer det finnas: %1$d kort att repetera och %2$s.\n Beräknad tid: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
@@ -178,5 +178,19 @@
   <string name="confirm">Bekräfta</string>
   <string name="internet">Internet</string>
   <string name="pc">PC</string>
-  <string name="title_activity_graphical_activity">Statistiskdiagram</string>
+  <string name="nothing">Nothing</string>
+  <string name="title_activity_graphical_activity">Statistikdiagram</string>
+  <string name="title_activity_template_editor">Card Types for %s</string>
+  <string name="card_template_editor_front">Front Template</string>
+  <string name="card_template_editor_back">Back Template</string>
+  <string name="card_template_editor_styling">Styling</string>
+  <string name="card_template_editor_menu_add_reverse">Add reverse</string>
+  <string name="card_template_editor_menu_delete">Delete</string>
+  <string name="card_template_editor_cant_delete">At least one card type is required.</string>
+  <plurals name="card_template_editor_confirm_delete">
+    <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
+    <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
+  </plurals>
+  <string name="card_template_editor_would_delete_note"> Removing this card type would cause one or
+        more notes to be deleted. Please create a new card type first.</string>
 </resources>

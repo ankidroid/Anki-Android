@@ -57,7 +57,7 @@
   <string name="widget_big_restrictions_dialog">Az Android widget framework-je miatt ez a widget csak szöveget tud megjeleníteni, képet vagy hangot nem.</string>
   <string name="open_in_reviewer">Pakli megnyitása AnkiDroidban</string>
   <plurals name="widget_big_eta">
-    <item quantity="one">Estimated time: %d min.</item>
+    <item quantity="one">Becsült idő: %d perc.</item>
     <item quantity="other">Becsült idő: %d perc</item>
   </plurals>
   <string name="widget_big_tomorrow_due">Holnap esedékes:</string>

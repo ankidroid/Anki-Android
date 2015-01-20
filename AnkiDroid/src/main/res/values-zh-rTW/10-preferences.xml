@@ -96,7 +96,6 @@
   <string name="gestures_tap_bottom">輕觸底部</string>
   <string name="gestures_tap_left">輕觸左邊</string>
   <string name="gestures_tap_right">輕觸右邊</string>
-  <string name="gestures_longclick">長按</string>
   <string name="more_scrolling_buttons">電子書閱讀器</string>
   <string name="more_scrolling_buttons_summ">Also use kanji/katakana, emoji/kao-moji buttons for scrolling</string>
   <string name="double_scrolling_gap">加速捲動</string>

@@ -62,8 +62,8 @@
   <string name="stats_minutes">Minutos</string>
   <string name="stats_hours">Horas</string>
   <string name="stats_percentage">Percentage</string>
-  <string name="stats_period_month">1 month</string>
-  <string name="stats_period_year">1 year</string>
+  <string name="stats_period_month">1 mes</string>
+  <string name="stats_period_year">1 año</string>
   <string name="stats_period_lifetime">deck life</string>
   <string name="stats_deck_current">deck</string>
   <string name="stats_deck_collection">collection</string>

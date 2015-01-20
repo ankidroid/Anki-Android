@@ -42,10 +42,11 @@
   <string name="drawer_open">Otevřít zásuvku</string>
   <string name="drawer_close">Zavřít zásuvku</string>
   <string name="CardEditorLaterMessage">Uložené informace na později</string>
-  <string name="CardEditorCardDeck">Card deck:</string>
+  <string name="CardEditorCardDeck">Balíček karty:</string>
   <string name="CardEditorNoteDeck">Balíček:</string>
-  <string name="CardEditorModel">Type:</string>
+  <string name="CardEditorModel">Typ poznámky:</string>
   <string name="CardEditorTags">Štítky: %1$s</string>
+  <string name="CardEditorCards">Cards: %1$s</string>
   <string name="add_new_filter_tags">Přidat/Filtrovat štítky</string>
   <string name="note_type">Typ poznámky</string>
   <string name="card_type">Typ karty</string>
@@ -81,12 +82,15 @@
   <string name="factadder_saving_error">Chyba při ukládání poznámky</string>
   <string name="pref_lang_support">Jazyk</string>
   <string name="saving_facts">Ukládání poznámky</string>
+  <string name="saving_model">Saving model</string>
   <string name="deck">Balíček</string>
   <string name="add">Přidat</string>
   <string name="close">Zavřít</string>
   <string name="select">Vybrat</string>
   <string name="saving_changes">Ukládání změn ...</string>
   <string name="reordering_cards">Změnit pořadí karet...</string>
+  <string name="field_remapping">%1$s (from \'%2$s\')</string>
+  <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
   <plurals name="timebox_reached">
     <item quantity="one">%1$d karta studována v %2$s</item>
     <item quantity="other">%1$d karet studováno v %2$s</item>
@@ -150,6 +154,7 @@
   <string name="import_log_success">Importováno %d karet</string>
   <string name="import_log_error">Import se nezdařil</string>
   <string name="import_log_no_apkg">Toto není platný apkg soubor</string>
+  <string name="import_error_not_apkg_extension">Filename %s does not have .apkg extension</string>
   <string name="import_importing">Import karet.\nProsím čekejte...</string>
   <string name="export_include_schedule">Zahrnout plánování</string>
   <string name="export_include_media">Zahrnout multimédia</string>

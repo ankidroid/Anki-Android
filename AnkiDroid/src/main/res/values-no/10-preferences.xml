@@ -96,7 +96,6 @@
   <string name="gestures_tap_bottom">Klikk bunn</string>
   <string name="gestures_tap_left">Klikk venstre</string>
   <string name="gestures_tap_right">Klikk høyre</string>
-  <string name="gestures_longclick">Klikk lenge</string>
   <string name="more_scrolling_buttons">eLeser</string>
   <string name="more_scrolling_buttons_summ">Also use kanji/katakana, emoji/kao-moji buttons for scrolling</string>
   <string name="double_scrolling_gap">Dobbelskrolling</string>

@@ -43,7 +43,7 @@
   <string name="error_cancel">Не доповідати про помилки</string>
   <string name="error_reporting_choice">Режим повідомлення про помилку</string>
   <string name="error_reporting_choice_summary">Помилки можуть бути повідомлені автоматично, не повідомлені, або вам буде запропоновано повідомити</string>
-  <string name="feedback_disclaimer">Застереження: Ми не збираємо жодної особистої інформації як то адреса електронної пошти, номер телефону, ІР адреса чи ІМЕІ вашого телефону. Ми збираємо інформацію про ваш пристрій, таку як виробник, модель та версія Android, а також безпосередньо про природу повідомлених помилок.</string>
+  <string name="feedback_disclaimer">Disclaimer: We don\'t collect any personal information such as your email address, phone number, or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves and the steps which led up to them occuring.</string>
   <string name="feedback_title">Відгук</string>
   <string name="feedback_send_feedback">Надішліть нам свій відгук</string>
   <string name="feedback_send_feedback_and_errors">Надіслати помилки та ваш відгук</string>
@@ -60,4 +60,8 @@
   <string name="feedback_error_reply_issue_fixed_prod">Проблема %1$d виправлена в найновішій версії</string>
   <string name="feedback_error_reply_malformed">Заповнено недолік, жодного відгуку</string>
   <string name="feedback_error_reply_failed">Надіслати не вдалося</string>
+  <string name="feedback_auto_toast_text">AnkiDroid has encountered a problem; a report is being sent to the developers&#8230;</string>
+  <string name="feedback_manual_toast_text">AnkiDroid has encountered a problem; a report is being generated&#8230;</string>
+  <string name="feedback_copy_debug">Copy debug info</string>
+  <string name="feedback_report">Report</string>
 </resources>

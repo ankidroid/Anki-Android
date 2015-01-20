@@ -46,6 +46,7 @@
   <string name="CardEditorNoteDeck">Deck:</string>
   <string name="CardEditorModel">Type:</string>
   <string name="CardEditorTags">标签：%1$s</string>
+  <string name="CardEditorCards">Cards: %1$s</string>
   <string name="add_new_filter_tags">添加/过滤标签</string>
   <string name="note_type">卡牌记录类型</string>
   <string name="card_type">卡牌类型</string>
@@ -77,16 +78,19 @@
   </string-array>
   <string name="cardeditor_title_add_note">增加条目注释</string>
   <string name="cardeditor_title_edit_card">编辑卡牌记录</string>
-  <string name="discard_unsaved_changes">Close and lose current input?</string>
+  <string name="discard_unsaved_changes">直接关闭吗？您将丢失所有已输入的内容。</string>
   <string name="factadder_saving_error">保存条目注释时出现错误</string>
   <string name="pref_lang_support">语言</string>
   <string name="saving_facts">保存卡牌记录</string>
+  <string name="saving_model">Saving model</string>
   <string name="deck">牌组</string>
   <string name="add">添加</string>
   <string name="close">关闭</string>
   <string name="select">选择</string>
   <string name="saving_changes">正在保存设置&#8230;</string>
   <string name="reordering_cards">重新排列卡片中...</string>
+  <string name="field_remapping">%1$s (from \'%2$s\')</string>
+  <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
   <plurals name="timebox_reached">
     <item quantity="one">在%2$s中学习了%1$d个卡牌</item>
     <item quantity="other">在%2$s中学习了%1$d个卡牌</item>
@@ -150,14 +154,15 @@
   <string name="import_log_success">成功导入 %d 张卡牌</string>
   <string name="import_log_error">导入失败</string>
   <string name="import_log_no_apkg">这不是一个正确的 apkg 文件</string>
+  <string name="import_error_not_apkg_extension">Filename %s does not have .apkg extension</string>
   <string name="import_importing">导入卡牌。\n请稍后...</string>
   <string name="export_include_schedule">Include scheduling</string>
-  <string name="export_include_media">包括媒体</string>
+  <string name="export_include_media">Include media</string>
   <string name="confirm_apkg_export">Export collection as apkg file?</string>
   <string name="confirm_apkg_export_deck">Export \"%s\" as apkg file?</string>
   <string name="export_in_progress">正在导出apkg文件&#8230;</string>
   <string name="export_successful_title">Email apkg?</string>
-  <string name="export_successful">File \"%s\" was exported. Do you want to email it?</string>
+  <string name="export_successful">文件“%s”导出完毕，您想将其用电子邮件发出吗？</string>
   <string name="export_unsuccessful">导出集合错误</string>
   <string name="import_hint">要导入卡牌，请把apkg文件放在%s目录中，然后按确定。</string>
   <string name="upgrade_import_no_file_found">没有找到可导入的 %1$s 文件</string>

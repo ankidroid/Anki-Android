@@ -96,7 +96,6 @@
   <string name="gestures_tap_bottom">Kliknutie v dolnej časti</string>
   <string name="gestures_tap_left">Kliknutie vľavo</string>
   <string name="gestures_tap_right">Kliknutie vpravo</string>
-  <string name="gestures_longclick">Dlhé kliknutie</string>
   <string name="more_scrolling_buttons">Čítačka e-kníh</string>
   <string name="more_scrolling_buttons_summ">Also use kanji/katakana, emoji/kao-moji buttons for scrolling</string>
   <string name="double_scrolling_gap">Dvojitý posun</string>

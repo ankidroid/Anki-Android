@@ -42,7 +42,7 @@
   <string name="app_name">AnkiDroid</string>
   <string name="app_name_anki">Anki</string>
   <string name="app_name_droid">Droid</string>
-  <string name="studyoptions_title">Study Options</string>
+  <string name="studyoptions_title">Çalışma Seçenekleri</string>
   <string name="studyoptions_deck_name">Deste adı</string>
   <string name="studyoptions_due_today">Bugün çıkacak:</string>
   <string name="studyoptions_new_total">Toplam yeni kart:</string>
@@ -75,7 +75,7 @@
   <string name="card_unsuspended">Askıya alma geri alındı</string>
   <string name="card_suspended">Kart yeniden askıya alındı</string>
   <string name="menu_rotate">Çevir</string>
-  <string name="menu_import">Import</string>
+  <string name="menu_import">İçeri aktar</string>
   <string name="undo">Geri Al</string>
   <string name="undo_action_review">son çalışma</string>
   <string name="undo_action_edit">Not düzenleme</string>
@@ -101,7 +101,7 @@
   <string name="menu_my_account">Hesabı senkronize et</string>
   <string name="menu_preferences">Tercihler</string>
   <string name="menu_about">Hakkında</string>
-  <string name="menu_dismiss_note">Hide / Delete</string>
+  <string name="menu_dismiss_note">Gizle / Sil</string>
   <string name="menu_bury_card">Kartı Gizle</string>
   <string name="menu_bury_note">Notu Gizle</string>
   <string name="menu_suspend_card">Kartı Askıya Al</string>
@@ -174,9 +174,23 @@
   <string name="ankiweb">AnkiWeb</string>
   <string name="usb">USB</string>
   <string name="_import">İçeri aktar</string>
-  <string name="export">Export</string>
+  <string name="export">Dışarı aktar</string>
   <string name="confirm">Onayla</string>
   <string name="internet">İnternet</string>
   <string name="pc">PC</string>
+  <string name="nothing">Nothing</string>
   <string name="title_activity_graphical_activity">İstatistik grafiği</string>
+  <string name="title_activity_template_editor">Card Types for %s</string>
+  <string name="card_template_editor_front">Front Template</string>
+  <string name="card_template_editor_back">Back Template</string>
+  <string name="card_template_editor_styling">Styling</string>
+  <string name="card_template_editor_menu_add_reverse">Add reverse</string>
+  <string name="card_template_editor_menu_delete">Delete</string>
+  <string name="card_template_editor_cant_delete">At least one card type is required.</string>
+  <plurals name="card_template_editor_confirm_delete">
+    <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
+    <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
+  </plurals>
+  <string name="card_template_editor_would_delete_note"> Removing this card type would cause one or
+        more notes to be deleted. Please create a new card type first.</string>
 </resources>

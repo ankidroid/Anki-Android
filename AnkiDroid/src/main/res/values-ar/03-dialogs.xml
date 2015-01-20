@@ -40,7 +40,7 @@
 -->
 <resources>
   <string name="check_db_title">افحص قاعدة البيانات</string>
-  <string name="check_db_warning">This may take a long time</string>
+  <string name="check_db_warning">هذا قد يستغرق وقتا طويلا</string>
   <string name="check_db_acknowledge">Database checked</string>
   <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d kB.</string>
   <string name="contextmenu_deckpicker_delete_deck">احذف الرزمة</string>

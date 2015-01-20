@@ -43,7 +43,7 @@
   <string name="error_cancel">Nu raporta erorile</string>
   <string name="error_reporting_choice">Error reporting mode</string>
   <string name="error_reporting_choice_summary">Errors can be reported automatically, never reported, or you can be prompted</string>
-  <string name="feedback_disclaimer">Disclaimer: We don\'t collect any personal information such as your email address, phone number, IP address or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves.</string>
+  <string name="feedback_disclaimer">Disclaimer: We don\'t collect any personal information such as your email address, phone number, or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves and the steps which led up to them occuring.</string>
   <string name="feedback_title">Feedback</string>
   <string name="feedback_send_feedback">Send us your feedback</string>
   <string name="feedback_send_feedback_and_errors">Send errors and your feedback</string>
@@ -60,4 +60,8 @@
   <string name="feedback_error_reply_issue_fixed_prod">Issue %1$d, fixed in the latest version</string>
   <string name="feedback_error_reply_malformed">Filed bug, no response</string>
   <string name="feedback_error_reply_failed">Failed to send</string>
+  <string name="feedback_auto_toast_text">AnkiDroid has encountered a problem; a report is being sent to the developers&#8230;</string>
+  <string name="feedback_manual_toast_text">AnkiDroid has encountered a problem; a report is being generated&#8230;</string>
+  <string name="feedback_copy_debug">Copy debug info</string>
+  <string name="feedback_report">Report</string>
 </resources>

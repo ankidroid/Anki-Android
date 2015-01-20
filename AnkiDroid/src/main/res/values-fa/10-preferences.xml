@@ -96,7 +96,6 @@
   <string name="gestures_tap_bottom">به پایین ضربه بزنید</string>
   <string name="gestures_tap_left">به چپ ضربه بزنیدضربه چپ</string>
   <string name="gestures_tap_right">به راست ضربه بزنید</string>
-  <string name="gestures_longclick">کلیک طولانی کنید</string>
   <string name="more_scrolling_buttons">خبرخوان</string>
   <string name="more_scrolling_buttons_summ">از دکمه‌های Kanji/Katakana, Emoji/Kao-moji هم برای پیمایش استفاده کن</string>
   <string name="double_scrolling_gap">پیمایش دو برابری</string>

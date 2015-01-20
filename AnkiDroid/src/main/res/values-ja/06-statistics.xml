@@ -42,14 +42,14 @@
   <string name="statistics_menu">統計情報</string>
   <string name="statistics_young">未熟カード</string>
   <string name="statistics_mature">熟知カード</string>
-  <string name="statistics_young_and_learn">未熟カード＋熟知カード</string>
+  <string name="statistics_young_and_learn">学習中カード＋未熟カード</string>
   <string name="statistics_unlearned">新規カード</string>
   <string name="statistics_suspended">保留カード</string>
   <string name="statistics_relearn">再学習</string>
-  <string name="statistics_learn">学習</string>
+  <string name="statistics_learn">学習中カード</string>
   <string name="statistics_cram">詰め込み学習</string>
   <string name="statistics_type_title">統計情報</string>
-  <string name="stats_cards">カード枚数</string>
+  <string name="stats_cards">枚数</string>
   <string name="stats_cards_intervals">間隔を与えられたカード</string>
   <string name="stats_cumulative_cards">累積枚数</string>
   <string name="stats_cumulative_answers">累積回答数</string>
@@ -153,7 +153,7 @@
   <string name="stats_review_intervals">間隔</string>
   <string name="stats_breakdown">時間ごとの分析</string>
   <string name="stats_weekly_breakdown">曜日ごとの分析</string>
-  <string name="stats_answer_buttons">解答ボタン</string>
+  <string name="stats_answer_buttons">回答ボタン</string>
   <string name="stats_cards_types">カードの種類</string>
   <string-array name="stats_period">
     <item>1か月</item>

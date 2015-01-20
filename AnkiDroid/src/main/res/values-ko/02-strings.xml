@@ -46,6 +46,7 @@
   <string name="CardEditorNoteDeck">Deck:</string>
   <string name="CardEditorModel">Type:</string>
   <string name="CardEditorTags">태그: %1$s</string>
+  <string name="CardEditorCards">Cards: %1$s</string>
   <string name="add_new_filter_tags">Add/filter tags</string>
   <string name="note_type">노트 타입</string>
   <string name="card_type">Card type</string>
@@ -81,12 +82,15 @@
   <string name="factadder_saving_error">노트 저장 중 오류</string>
   <string name="pref_lang_support">언어</string>
   <string name="saving_facts">노트 저장 중</string>
+  <string name="saving_model">Saving model</string>
   <string name="deck">덱</string>
   <string name="add">추가하기</string>
   <string name="close">닫기</string>
   <string name="select">선택하기</string>
   <string name="saving_changes">변경 내용 저장 중...</string>
   <string name="reordering_cards">Reordering cards&#8230;</string>
+  <string name="field_remapping">%1$s (from \'%2$s\')</string>
+  <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
   <plurals name="timebox_reached">
     <item quantity="one">%1$d card studied in %2$s</item>
     <item quantity="other">%1$d cards studied in %2$s</item>
@@ -150,6 +154,7 @@
   <string name="import_log_success">%d개의 카드를 성공적으로 가져옴</string>
   <string name="import_log_error">가져오기 실패</string>
   <string name="import_log_no_apkg">유효하지 않은 apkg 파일입니다</string>
+  <string name="import_error_not_apkg_extension">Filename %s does not have .apkg extension</string>
   <string name="import_importing">카드를 가져오는중.\n잠시만 기다려 주세요...</string>
   <string name="export_include_schedule">Include scheduling</string>
   <string name="export_include_media">Include media</string>

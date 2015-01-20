@@ -46,6 +46,7 @@
   <string name="CardEditorNoteDeck">Deck:</string>
   <string name="CardEditorModel">Type:</string>
   <string name="CardEditorTags">Tags: %1$s</string>
+  <string name="CardEditorCards">Cards: %1$s</string>
   <string name="add_new_filter_tags">Add/filter tags</string>
   <string name="note_type">Note type</string>
   <string name="card_type">Card type</string>
@@ -81,12 +82,15 @@
   <string name="factadder_saving_error">Error saving note</string>
   <string name="pref_lang_support">Language</string>
   <string name="saving_facts">Saving note</string>
+  <string name="saving_model">Saving model</string>
   <string name="deck">Deck</string>
   <string name="add">Add</string>
   <string name="close">Close</string>
   <string name="select">Select</string>
   <string name="saving_changes">Saving changes&#8230;</string>
   <string name="reordering_cards">Reordering cards&#8230;</string>
+  <string name="field_remapping">%1$s (from \'%2$s\')</string>
+  <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
   <plurals name="timebox_reached">
     <item quantity="one">%1$d card studied in %2$s</item>
     <item quantity="other">%1$d cards studied in %2$s</item>
@@ -150,6 +154,7 @@
   <string name="import_log_success">Imported %d cards</string>
   <string name="import_log_error">Import failed</string>
   <string name="import_log_no_apkg">This is not a valid apkg file</string>
+  <string name="import_error_not_apkg_extension">Filename %s does not have .apkg extension</string>
   <string name="import_importing">Importing cards&#8230;</string>
   <string name="export_include_schedule">Include scheduling</string>
   <string name="export_include_media">Include media</string>

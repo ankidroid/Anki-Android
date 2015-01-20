@@ -96,7 +96,6 @@
   <string name="gestures_tap_bottom">Дотик внизу</string>
   <string name="gestures_tap_left">Дотик ліворуч</string>
   <string name="gestures_tap_right">Дотик праворуч</string>
-  <string name="gestures_longclick">Тривале натиснення</string>
   <string name="more_scrolling_buttons">eReader</string>
   <string name="more_scrolling_buttons_summ">Also use kanji/katakana, emoji/kao-moji buttons for scrolling</string>
   <string name="double_scrolling_gap">Подвійне прокручування</string>

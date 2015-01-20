@@ -36,12 +36,12 @@
 -->
 <resources>
   <string-array name="navigation_titles">
-    <item>Decks</item>
-    <item>Card Browser</item>
-    <item>Statistics</item>
-    <item>Settings</item>
-    <item>Help</item>
-    <item>Send Feedback</item>
+    <item>Talie</item>
+    <item>Przeglądanie kart</item>
+    <item>Statystyki</item>
+    <item>Ustawienia</item>
+    <item>Pomoc</item>
+    <item>Prześlij opinię</item>
   </string-array>
   <string-array name="newCardSchedulingLabels">
     <item>Rozprosz pomiędzy powtórkami</item>
@@ -97,8 +97,8 @@
     <item>Ukryj kartę</item>
     <item>Wstrzymaj kartę</item>
     <item>Usuń kartę</item>
-    <item>Play media</item>
-    <item>Abort learning</item>
+    <item>Odtwórz plik multimedialny</item>
+    <item>Przerwij naukę</item>
   </string-array>
   <string-array name="theme_labels">
     <item>Android Ciemny</item>
@@ -148,7 +148,7 @@
     <item>Do przejrzenia</item>
   </string-array>
   <string-array name="override_font_labels">
-    <item>When no font specified on flashcards</item>
-    <item>Always</item>
+    <item>Kiedy żaden font nie jest wybrany dla danych kart</item>
+    <item>Zawsze</item>
   </string-array>
 </resources>

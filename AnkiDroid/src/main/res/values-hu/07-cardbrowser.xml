@@ -40,8 +40,8 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="one">%d card shown</item>
-    <item quantity="other">%d cards shown</item>
+    <item quantity="one">%d kártyát mutat</item>
+    <item quantity="other">%d kártyát mutat</item>
   </plurals>
   <string name="card_browser_all_decks">Minden pakli</string>
   <string name="card_browser_load">Kártyák betöltése.\nKérlek, várj...</string>
@@ -79,7 +79,7 @@
   <string name="card_details_tags">Címkék</string>
   <string name="card_details_model">Jegyzet típus</string>
   <string name="card_browser_sorting_cards">Kártyák rendezése\nKérlek, várj...</string>
-  <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
+  <string name="card_browser_filtering_cards">Kártyák szűrése&#8230;\nNyomd meg a vissza gombot a megszüntetéshez</string>
   <string name="card_details_card_model">Kártya modell</string>
   <string-array name="card_browser_order_labels">
     <item>Rendezés nélkül (gyorsabb)</item>

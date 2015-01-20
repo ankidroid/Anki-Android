@@ -43,7 +43,7 @@
   <string name="error_cancel">오류를 보고 하지 않습니다</string>
   <string name="error_reporting_choice">오류 보고 모드</string>
   <string name="error_reporting_choice_summary">오류 보고는 자동 보고, 보고하지 않기, 보고 하기 전 묻기 등 세가지 방식이 있습니다</string>
-  <string name="feedback_disclaimer">면책 조항: 귀하의 이메일 주소, 전화 번호, IP 주소 또는 휴대 전화 IMEI와 같은 개인 정보는 수집되지 않습니다. 단지 사용기기에 대한 제조업체, 안드로이드 운영체제 버전과 오류 자체에 관한 사항만을 수집합니다.</string>
+  <string name="feedback_disclaimer">Disclaimer: We don\'t collect any personal information such as your email address, phone number, or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves and the steps which led up to them occuring.</string>
   <string name="feedback_title">피드백</string>
   <string name="feedback_send_feedback">피드백 보내기</string>
   <string name="feedback_send_feedback_and_errors">오류 및 피드백 보내기</string>
@@ -60,4 +60,8 @@
   <string name="feedback_error_reply_issue_fixed_prod">%1$d 오류, 최신 Ankidroid 버전에서 수정됨</string>
   <string name="feedback_error_reply_malformed">오류 발생, 응답 없음</string>
   <string name="feedback_error_reply_failed">전송 실패</string>
+  <string name="feedback_auto_toast_text">AnkiDroid has encountered a problem; a report is being sent to the developers&#8230;</string>
+  <string name="feedback_manual_toast_text">AnkiDroid has encountered a problem; a report is being generated&#8230;</string>
+  <string name="feedback_copy_debug">Copy debug info</string>
+  <string name="feedback_report">Report</string>
 </resources>

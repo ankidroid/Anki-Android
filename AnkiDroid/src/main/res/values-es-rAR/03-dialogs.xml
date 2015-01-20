@@ -51,12 +51,12 @@
   <string name="new_version_message">Nuevas características:</string>
   <string name="no_tts_available_title">Texto-a-Voz</string>
   <string name="no_tts_available_message">No hay un idioma de texto-a-voz disponible</string>
-  <string name="initializing_tts">Initializing TTS&#8230;</string>
+  <string name="initializing_tts">Inicializando TTS&#8230;</string>
   <string name="tts_no_tts">No hable</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Tarjetas de aprendizaje para Android</h2>AnkiDroid es una aplicación de tarjetas de aprendizaje completamente compatible con el software de escritorio <a href="%2$s">Anki</a>. Puede crear, descargar y aprender contenidos en ambos, AnkiDroid o Anki Desktop, y sincronizarlos muy fácilmente.]]></item>
     <item><![CDATA[Para ayudarnos a mejorar AnkiDroid reporte cualquier error <a href="%1$s">aquí</a>; ¡nuevas ideas sobre características son también bienvenidas! Utilice por favor el <a href="%2$s">wiki</a> y diga Hola en el <a href="%3$s">foro</a>.]]></item>
-    <item><![CDATA[AnkiDroid is <a href=\"%1$s\">open source software<a/>, so everyone is encouraged to <a href=\"%2$s\">join</a> the <a href=\"%3$s\">contributors</a> :-)]]></item>
+    <item><![CDATA[AnkiDroid es <a href=\"%1$s\">software de código libre<a/>, así que todos están invitados a <a href=\"%2$s\">unirse</a> a los <a href=\"%3$s\">colaboradores</a> :-)]]></item>
     <item><![CDATA[No desarrolladores también puede ayudar, por ejemplo <a href="%1$s">traduciendo</a> AnkiDroid, actualizando la wiki y las capturas de pantalla, <a href="%2$s">donando</a> a Anki Desktop, o bloggeando acerca de AnkiDroid!]]></item>
     <item><![CDATA[AnkiDroid es lanzado bajo la <a href="%1$s">licencia GNU-GPL v3</a> y el código fuente está disponible <a href="%2$s">aquí</a>.]]></item>
   </string-array>
@@ -69,11 +69,11 @@
   <string name="notification_message">Una nueva versión de AnkiDroid está disponible en Android Market.\n\n¿Desea instalarla?</string>
   <string name="notification_stop">No me notifique nuevamente de esta actualización</string>
   <string name="reset_card_dialog_title">Resetear el progreso de las tarjetas</string>
-  <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue.</string>
-  <string name="reset_card_dialog_acknowledge">Card reset</string>
-  <string name="reschedule_card_dialog_title">Reschedule card</string>
-  <string name="reschedule_card_dialog_message">Reschedule for review in x days:</string>
-  <string name="reschedule_card_dialog_acknowledge">Card rescheduled</string>
+  <string name="reset_card_dialog_message">Esta tarjeta será colocada al final de la cola de tarjetas nuevas.</string>
+  <string name="reset_card_dialog_acknowledge">Resetear tarjeta</string>
+  <string name="reschedule_card_dialog_title">Reprogramar tarjeta</string>
+  <string name="reschedule_card_dialog_message">Reprogramar para repaso en x días:</string>
+  <string name="reschedule_card_dialog_acknowledge">Tarjeta reprogramada</string>
   <string name="answering_error_title">Error en base de datos</string>
   <string name="answering_error_message">Ocurrió un error mientras se escribía en la colección. Esto puede deberse a una base de datos corrupta o a insuficiente espacio en disco.\n\nSi sucede más a menudo intente chequear la base de datos, reparar la colección o restaurarla desde una copia de seguridad. Cliquee en \'opciones\' para ello.\n\n\Sin embargo, puede tratarse también de un error de AnkiDroid. Por favor reporte el error para que podamos comprobarlo.</string>
   <string name="answering_error_report">Reportar un error</string>
@@ -150,17 +150,17 @@
   <string name="statistics_button_content">Estadísticas</string>
   <string name="dialog_collection_path_title">La carpeta no existe</string>
   <string name="dialog_collection_path_text">La carpeta que ha especificado no existe, ¿desea crearla?</string>
-  <string name="dialog_collection_path_not_dir">The path specified was not a valid directory</string>
-  <string name="check_media_title">Check media?</string>
-  <string name="check_media_warning">This may take a long time with large media collections</string>
-  <string name="check_media_message">Checking media&#8230;</string>
-  <string name="check_media_acknowledge">Media checked</string>
-  <string name="check_media_failed">Media check failed</string>
-  <string name="check_media_invalid">Files with invalid encoding: %d</string>
-  <string name="check_media_unused">Files in media folder but not used by any cards: %d</string>
-  <string name="check_media_nohave">Files used on cards but not in media folder: %d</string>
-  <string name="check_media_no_unused_missing">No unused or missing files found.</string>
-  <string name="check_media_db_updated">Media database rebuilt.</string>
-  <string name="check_media_delete_unused">Delete unused</string>
-  <string name="check_media_deleted">Files deleted: %d</string>
+  <string name="dialog_collection_path_not_dir">La ruta especificada no es un directorio válido</string>
+  <string name="check_media_title">¿Comprobar archivos multimedia?</string>
+  <string name="check_media_warning">Esto podría tardar mucho tiempo con colecciones de grandes archivos multimedia</string>
+  <string name="check_media_message">Comprobando archivos multimedia&#8230;</string>
+  <string name="check_media_acknowledge">Archivos multimedia comprobados</string>
+  <string name="check_media_failed">La comprobación de archivos multimedia falló</string>
+  <string name="check_media_invalid">Archivos con codificación inválida: %d</string>
+  <string name="check_media_unused">Archivos en la carpeta de multimedia pero no utilizados en ninguna tarjeta: %d</string>
+  <string name="check_media_nohave">Archivos utilizados en tarjetas pero no en la carpeta de multimedia: %d</string>
+  <string name="check_media_no_unused_missing">No se halló archivos sin utilizar o perdidos.</string>
+  <string name="check_media_db_updated">Base de datos de archivos multimedia reconstruida.</string>
+  <string name="check_media_delete_unused">Eliminar no utilizado</string>
+  <string name="check_media_deleted">Archivos eliminados: %d</string>
 </resources>

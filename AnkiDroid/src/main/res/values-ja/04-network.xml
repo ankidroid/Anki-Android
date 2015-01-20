@@ -91,8 +91,8 @@
   <string name="sync_conflict_message">コレクションのファイルを AnkiWeb へアップロードするか、AnkiWeb からダウンロードする必要があります。いずれの場合も一方のファイルは上書きされます。</string>
   <string name="sync_conflict_local">アップロード</string>
   <string name="sync_conflict_remote">ダウンロード</string>
-  <string name="sync_conflict_remote_confirm">サーバのコレクションをダウンロードしてもよろしいですか？コレクションは上書きされ、元に戻すことはできません。</string>
-  <string name="sync_conflict_local_confirm">コレクションをアップロードしてもよろしいですか？サーバのコレクションは上書きされ、元に戻すことはできません。</string>
+  <string name="sync_conflict_remote_confirm">AnkiWeb のコレクションをダウンロードしてもよろしいですか？　この端末のコレクションは上書きされ、元に戻すことはできません。</string>
+  <string name="sync_conflict_local_confirm">AnkiWeb へコレクションをアップロードしてもよろしいですか？　AnkiWeb のコレクションは上書きされ、元に戻すことはできません。</string>
   <string name="sync_prepare_syncing">同期の準備中...</string>
   <string name="sync_preparing_full_sync_message">完全同期を準備しています&#8230;</string>
   <string name="sync_uploading_message">アップロード中...</string>
@@ -106,8 +106,8 @@
   <string name="sync_log_clocks_unsynchronized_tz">, 端末のタイムゾーンが間違っています</string>
   <string name="sync_log_clocks_unsynchronized_date">, 端末の日付が間違っています</string>
   <string name="sync_log_old_version">同期プロトコルに変更がありました。%sを参照し、最新のAnkiDroidにアップグレードしてください。</string>
-  <string name="sync_conflict_title">同期失敗</string>
-  <string name="sync_no_changes_message">変更はありません。</string>
+  <string name="sync_conflict_title">同期の競合</string>
+  <string name="sync_no_changes_message">変更はありません</string>
   <string name="sync_database_acknowledge">コレクションの同期が完了しました</string>
   <string name="sync_log_error_fix">同期中にエラーが発生しました%s.\n\n繰り返しエラーが発生する場合には、完全同期を実施してください。問題が解消する場合があります。ただし、ダウンロードする場合にはローカルのデータが、アップロードする場合にはAnkiWeb上のデータが上書きされます。\n完全同期を実施する場合には、AnkiWebへのアップロードか、AnkiWebからのダウンロードか、どちらかを選択してください。</string>
   <string name="sync_log_error_specific">同期エラーです 形式: %1$s, メッセージ: %2$s</string>
@@ -139,7 +139,7 @@
   <string name="sync_media_changes_count">%d 個のメディアが変更されアップロードが必要です</string>
   <string name="sync_media_downloaded_count">%d 個のメディアをダウンロードしました</string>
   <string name="sync_sanity_failed">同期後にコレクションの不整合が発見されました。この問題を解決するためにコレクションの完全な同期が必要です。Ankiweb側（リモート）か、AnkiDroid側（ローカル）のデータを保持するかを選択して同期するか、同期をキャンセルしてください。</string>
-  <string name="sync_media_sanity_failed">メディアの同期が完了しました。しかし、メディアの数がサーバー上のものと一致しません。次にメディアを同期するときには、すべてのエラーを修正するために完全同期を行います。</string>
+  <string name="sync_media_sanity_failed">メディアの同期が完了しました。しかし、メディアの数が AnkiWeb 上のものと一致しません。次にメディアを同期するときには、エラーを修正するために完全同期を行います。</string>
   <string name="sync_media_error">メディアデータの同期中のエラー</string>
   <string name="sync_media_unsupported">Android 2.2 およびそれ以前のバージョンでは、複雑なメディア ファイル名はサポートされません。メディアの同期を無効にされています。</string>
   <string name="register_error">エラーが発生しました。後でもう一度実行してください。</string>
@@ -167,5 +167,6 @@
   <string name="force_full_sync_title">完全同期を強制する</string>
   <string name="force_full_sync_summary">次回の同期は、一方向に変更を強制実行する</string>
   <string name="full_sync_confirmation">要求した変更を行うには、次回のコレクションの同期の際にデータベースの完全なアップロードが必要です。他の端末で復習やその他の変更を行ってまだ同期が済んでいない場合、これらの変更は失われます。処理を続けますか。</string>
-  <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it\'s recommended to force a full sync.</string>
+  <string name="full_sync_confirmation_upgrade">以前のバージョンのバグの修正を反映させるため、完全な同期をお勧めします。</string>
+  <string name="sync_error_501_upgrade_required">Please upgrade to the latest version of AnkiDroid</string>
 </resources>

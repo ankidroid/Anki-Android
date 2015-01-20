@@ -40,20 +40,20 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="one">%d ficha mostrada</item>
-    <item quantity="other">%d fichas mostradas</item>
+    <item quantity="one">%d cartão exibido</item>
+    <item quantity="other">%d cartões exibidos</item>
   </plurals>
-  <string name="card_browser_all_decks">Todos decks</string>
-  <string name="card_browser_load">Carregando cartões. \nPor favor aguarde...</string>
-  <string name="card_browser_cardloading_error">Erro no carregamento de cartões. Isso provavelmente esta relacionado a restrições de memória do seu dispositivo. Tente novamente com um deck de menor</string>
-  <string name="card_browser_delete_card">Deletar Nota</string>
+  <string name="card_browser_all_decks">Todos os decks</string>
+  <string name="card_browser_load">Carregando cartões&#8230;</string>
+  <string name="card_browser_cardloading_error">Erro ao carregar cartões. Isso provavelmente está relacionado a restrições de memória do seu dispositivo. Tente novamente com um deck menor.</string>
+  <string name="card_browser_delete_card">Excluir nota</string>
   <string name="card_browser_suspend_card">Suspender cartão</string>
   <string name="card_browser_unsuspend_card">Cancelar suspensão</string>
   <string name="card_browser_mark_card">Marcar nota</string>
   <string name="card_browser_unmark_card">Desmarcar nota</string>
-  <string name="delete_card_title">Deletar Nota</string>
-  <string name="delete_card_message">Realmente excluir todos os cartões desta nota? \nCampo de busca: %s</string>
-  <string name="card_browser_show_marked">Filtro marcado</string>
+  <string name="delete_card_title">Excluir nota?</string>
+  <string name="delete_card_message">Realmente excluir todos os cartões desta nota?\nCampo de busca: %s</string>
+  <string name="card_browser_show_marked">Filtrar marcadas</string>
   <string name="card_browser_field">Alterar campo de Pesquisador de Cartão</string>
   <string name="card_browser_field_title">Alterar campo de Pesquisador de Cartão</string>
   <string name="card_browser_show_suspended">Filtro suspenso</string>
@@ -79,7 +79,7 @@
   <string name="card_details_tags">Tags</string>
   <string name="card_details_model">Tipo de nota</string>
   <string name="card_browser_sorting_cards">Selecionando cartões. \nPor favor espere...</string>
-  <string name="card_browser_filtering_cards">A filtrar fichas&#8230;\nPrima voltar para cancelar</string>
+  <string name="card_browser_filtering_cards">Filtrando cartões&#8230;\nPressione o botão voltar para cancelar</string>
   <string name="card_details_card_model">Modelo do cartão</string>
   <string-array name="card_browser_order_labels">
     <item>Nenhuma distribuição(mais rápido)</item>

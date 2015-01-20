@@ -51,7 +51,7 @@
   <string name="new_version_message">Новые возможности:</string>
   <string name="no_tts_available_title">Преобразование текста в речь</string>
   <string name="no_tts_available_message">Функция преобразования текста в речь не доступна</string>
-  <string name="initializing_tts">Initializing TTS&#8230;</string>
+  <string name="initializing_tts">Инициализация синтеза речи...</string>
   <string name="tts_no_tts">Не произносить</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Flashcards для Android</h2>AnkiDroid - это приложение для изучения учебных карточек, полностью совместимо с настольной версией <a href="%2$s">Anki</a>. Вы можете создавать, скачивать и изучать информацию, и в AnkiDroid и Anki Desktop, синхронизируя их между собой.]]></item>
