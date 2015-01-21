@@ -19,10 +19,13 @@
 
 package com.ichi2.anki;
 
+import android.annotation.TargetApi;
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.DatabaseErrorHandler;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -48,16 +51,37 @@ public class AnkiDb {
     /**
      * Open a database connection to an ".anki" SQLite file.
      */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public AnkiDb(String ankiFilename) {
-        mDatabase = SQLiteDatabase.openDatabase(ankiFilename, null,
-                (SQLiteDatabase.OPEN_READWRITE + SQLiteDatabase.CREATE_IF_NECESSARY)
-                        | SQLiteDatabase.NO_LOCALIZED_COLLATORS);
+        // Since API 11 we can provide a custom error handler which doesn't delete the database on corruption
+        if (AnkiDroidApp.SDK_VERSION >=  Build.VERSION_CODES.HONEYCOMB) {
+            mDatabase = SQLiteDatabase.openDatabase(ankiFilename, null,
+                    (SQLiteDatabase.OPEN_READWRITE + SQLiteDatabase.CREATE_IF_NECESSARY)
+                            | SQLiteDatabase.NO_LOCALIZED_COLLATORS, new MyDbErrorHandler());
+        } else {
+            mDatabase = SQLiteDatabase.openDatabase(ankiFilename, null,
+                    (SQLiteDatabase.OPEN_READWRITE + SQLiteDatabase.CREATE_IF_NECESSARY)
+                            | SQLiteDatabase.NO_LOCALIZED_COLLATORS);
+        }
+
         if (mDatabase != null) {
             setWalJournalMode();
             mDatabase.rawQuery("PRAGMA synchronous = 2", null);
         }
         // getDatabase().beginTransactionNonExclusive();
         mMod = false;
+    }
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public class MyDbErrorHandler implements DatabaseErrorHandler {
+        @Override
+        public void onCorruption(SQLiteDatabase db) {
+            Log.e(AnkiDroidApp.TAG, "The database has been corrupted... attempting to repair");
+            BackupManager.repairDeck(AnkiDroidApp.COLLECTION_PATH);
+            AnkiDroidApp.openCollection(AnkiDroidApp.COLLECTION_PATH);
+            Log.i(AnkiDroidApp.TAG, "The database seems to have been successfully repaired");
+            AnkiDroidApp.saveExceptionReportFile("AnkiDb.MyDbErrorHandler.onCorruption", "Db successfully repaired");
+        }
     }
 
 
