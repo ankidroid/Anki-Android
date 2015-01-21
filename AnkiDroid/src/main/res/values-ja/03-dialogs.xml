@@ -56,8 +56,8 @@
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Android用のフラッシュカード</h2>AnkiDroidは、PCソフトウェア <a href=\"%2$s\">Anki</a> と完全互換のフラッシュカードアプリです。あなたは、AnkiDroid と Anki のどちらでも教材を作成、ダウンロード、学習し、また、簡単に双方の同期をとることができます。]]></item>
     <item><![CDATA[AnkiDroid を改善するために、できるだけバグを <a href="%1$s">こちら</a>に報告していただければ幸いです。 新しい機能のアイデアも大歓迎します！　<a href="%2$s">Wiki </a> を使用して、<a href="%3$s">フォーラム</a>にご意見をお寄せください。]]></item>
-    <item><![CDATA[AnkiDroid は、<a href="%1$s">オープン ソース ソフトウェア<a/>です。誰でも<a href="%3$s">貢献者</a> として<a href="%2$s">参加</a>できます。私たちは、あなたの参加を大いに歓迎します。:-)　]]></item>
-    <item><![CDATA[開発者でなくても、例えば AnkiDroid を<a href="%1$s">翻訳</a>したり、Wikiやスクリーン ショットを更新したり、PC版の Anki に<a href="%2$s">寄付</a>をしたり、AnkiDroid についてのブログを書いたりして貢献できます！]]></item>
+    <item><![CDATA[AnkiDroid は、<a href="%1$s">オープンソースソフトウェア<a/>です。誰でも<a href="%3$s">貢献者</a> として<a href="%2$s">参加</a>できます。私たちは、あなたの参加を大いに歓迎します :-)　]]></item>
+    <item><![CDATA[開発者でなくても、例えば AnkiDroid を<a href="%1$s">翻訳</a>したり、Wiki やスクリーン ショットを更新したり、PCソフト Anki に<a href="%2$s">寄付</a>をしたり、AnkiDroid についてのブログを書いたりして貢献できます！]]></item>
     <item><![CDATA[AnkiDroid は、<a href="%1$s">GNU GPL v3 ライセンス</a>の下でリリースされており、ソースコードは<a href="%2$s">こちら</a>です。]]></item>
   </string-array>
   <string name="dont_show_again">今後は表示しない</string>

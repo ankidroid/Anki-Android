@@ -66,6 +66,6 @@
   <string name="backup_restore_select_title">Choisissez la sauvegarde à récupérer</string>
   <string name="backup_restore_no_backups">Aucune sauvegarde disponible pour ce paquet. Si vous en possédez sur votre ordinateur, veuillez les copier manuellement dans votre dossier AnkiDroid.</string>
   <string name="open_collection_failed_title">La collection n’est pas ouverte</string>
-  <string name="open_collection_failed_message">Database could not be opened. It\'s either not a real Anki database or has been corrupted.\n\nYou can try to repair the collection or restore it from a backup. Touch \'options\' for that. \n\nMore information about repairing corrupted collections: %1$s</string>
+  <string name="open_collection_failed_message">Database could not be opened. It\'s either not a real Anki database or has been corrupted.\n\nTouch \'options\' for various options to restore the database, or for more information about repairing corrupted collections see:\n%1$s</string>
   <string name="deck_repair_error">La collection n’a pas pu être réparée</string>
 </resources>

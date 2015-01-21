@@ -70,7 +70,7 @@
   <string name="notification_stop">Již mě na tuto aktualizaci neupozorňujte</string>
   <string name="reset_card_dialog_title">Obnovit pokrok v učení</string>
   <string name="reset_card_dialog_message">Tato karta bude umístěna na konec fronty s novými kartami.</string>
-  <string name="reset_card_dialog_acknowledge">Card reset</string>
+  <string name="reset_card_dialog_acknowledge">Obnovit kartu</string>
   <string name="reschedule_card_dialog_title">Přeplánovat kartu</string>
   <string name="reschedule_card_dialog_message">Přeplánovat zkoušení pro x dní:</string>
   <string name="reschedule_card_dialog_acknowledge">Karta přeplánována</string>
