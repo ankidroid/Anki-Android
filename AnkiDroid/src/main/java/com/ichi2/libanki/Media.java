@@ -307,7 +307,7 @@ public class Media {
                 // NOTE: python uses the named group 'fname'. Java doesn't have named groups, so we have to determine
                 // the index based on which pattern we are using
                 int fnameIdx = p == fSoundRegexps ? 2 : p == fImgRegExpU ? 2 : 3;
-                m = p.matcher(string);
+                m = p.matcher(s);
                 while (m.find()) {
                     String fname = m.group(fnameIdx);
                     boolean isLocal = !fRemotePattern.matcher(fname.toLowerCase(Locale.US)).find();
