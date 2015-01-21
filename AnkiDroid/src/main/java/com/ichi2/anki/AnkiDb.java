@@ -82,7 +82,6 @@ public class AnkiDb {
                 sRepaired = true;
                 Log.i(AnkiDroidApp.TAG, "Attempting to repair the database...");
                 BackupManager.repairDeck(AnkiDroidApp.COLLECTION_PATH);
-                AnkiDroidApp.openCollection(AnkiDroidApp.COLLECTION_PATH);
                 Log.i(AnkiDroidApp.TAG, "The database seems to have been successfully repaired");
                 AnkiDroidApp.saveExceptionReportFile("AnkiDb.MyDbErrorHandler.onCorruption", "Db successfully repaired");
             } else {

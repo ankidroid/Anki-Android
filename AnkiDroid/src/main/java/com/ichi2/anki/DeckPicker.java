@@ -1223,7 +1223,9 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
     @Override
     public void exit() {
+        AnkiDroidApp.closeCollection(false);
         finishWithoutAnimation();
+        System.exit(0);
     }
 
 
