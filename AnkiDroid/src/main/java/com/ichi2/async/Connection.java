@@ -18,7 +18,6 @@
 
 package com.ichi2.async;
 
-import android.app.Application;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
@@ -27,7 +26,6 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.Feedback;
 import com.ichi2.anki.R;
 import com.ichi2.anki.exception.UnknownHttpResponseException;
 import com.ichi2.anki.exception.UnsupportedSyncException;
@@ -65,7 +63,6 @@ import java.net.URLConnection;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
@@ -77,7 +74,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     public static final int TASK_TYPE_SYNC = 1;
     public static final int TASK_TYPE_GET_SHARED_DECKS = 2;
     public static final int TASK_TYPE_GET_PERSONAL_DECKS = 3;
-    public static final int TASK_TYPE_SEND_CRASH_REPORT = 4;
+    //public static final int TASK_TYPE_SEND_CRASH_REPORT = 4;
     public static final int TASK_TYPE_DOWNLOAD_MEDIA = 5;
     public static final int TASK_TYPE_REGISTER = 6;
     public static final int TASK_TYPE_UPGRADE_DECKS = 7;
@@ -216,12 +213,6 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     }
 
 
-    public static Connection sendFeedback(TaskListener listener, Payload data) {
-        data.taskType = TASK_TYPE_SEND_CRASH_REPORT;
-        return launchConnectionTask(listener, data);
-    }
-
-
     public static Connection downloadMissingMedia(TaskListener listener, Payload data) {
         data.taskType = TASK_TYPE_DOWNLOAD_MEDIA;
         return launchConnectionTask(listener, data);
@@ -270,9 +261,6 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             case TASK_TYPE_SYNC:
                 return doInBackgroundSync(data);
 
-            case TASK_TYPE_SEND_CRASH_REPORT:
-                return doInBackgroundSendFeedback(data);
-
             case TASK_TYPE_DOWNLOAD_MEDIA:
                 return doInBackgroundDownloadMissingMedia(data);
 
@@ -302,7 +290,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         } catch (Exception e2) {
             // Ask user to report all bugs which aren't timeout errors
             if (!timeoutOccured(e2)) {
-                AnkiDroidApp.saveExceptionReportFile(e2, "doInBackgroundLogin");
+                AnkiDroidApp.sendExceptionReport(e2, "doInBackgroundLogin");
             }
             data.success = false;
             data.result = new Object[] {"connectionError" };
@@ -496,7 +484,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     }
                     col = AnkiDroidApp.openCollection(path);
                 } catch (OutOfMemoryError e) {
-                    AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync-fullSync");
+                    AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync-fullSync");
                     data.success = false;
                     data.result = new Object[] { "OutOfMemoryError" };
                     data.data = new Object[] { mediaUsn };
@@ -505,7 +493,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     if (timeoutOccured(e)) {
                         data.result = new Object[] {"connectionError" };
                     } else {
-                        AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync-fullSync");
+                        AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync-fullSync");
                         data.result = new Object[] { "IOException" };
                     }
                     data.success = false;
@@ -543,12 +531,12 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 } catch (UnsupportedSyncException e) {
                     mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_unsupported);
                     AnkiDroidApp.getSharedPrefs(sContext).edit().putBoolean("syncFetchesMedia", false).commit();
-                    AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync-mediaSync");
+                    AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync-mediaSync");
                 } catch (RuntimeException e) {
                     if (timeoutOccured(e)) {
                         data.result = new Object[] {"connectionError" };
                     } else {
-                        AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync-mediaSync");
+                        AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync-mediaSync");
                     }
                     mediaError = e.getLocalizedMessage();
                 }
@@ -582,7 +570,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             if (timeoutOccured(e)) {
                 data.result = new Object[] {"connectionError" };
             } else {
-                AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSync");
+                AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync");
                 data.result = new Object[] {e.getLocalizedMessage()};
             }
             return data;
@@ -610,56 +598,6 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
 
     public void publishProgress(int id, long up, long down) {
         super.publishProgress(id, up, down);
-    }
-
-
-    private Payload doInBackgroundSendFeedback(Payload data) {
-        Log.i(AnkiDroidApp.TAG, "doInBackgroundSendFeedback");
-        String feedbackUrl = (String) data.data[0];
-        String errorUrl = (String) data.data[1];
-        String feedback = (String) data.data[2];
-        ArrayList<HashMap<String, String>> errors = (ArrayList<HashMap<String, String>>) data.data[3];
-        String groupId = data.data[4].toString();
-        Application app = (Application) data.data[5];
-        boolean deleteAfterSending = (Boolean) data.data[6];
-
-        String postType = null;
-        if (feedback.length() > 0) {
-            if (errors.size() > 0) {
-                postType = Feedback.TYPE_ERROR_FEEDBACK;
-            } else {
-                postType = Feedback.TYPE_FEEDBACK;
-            }
-            publishProgress(postType, 0, Feedback.STATE_UPLOADING);
-            Payload reply = Feedback.postFeedback(feedbackUrl, postType, feedback, groupId, 0, null);
-            if (reply.success) {
-                publishProgress(postType, 0, Feedback.STATE_SUCCESSFUL, reply.returnType, reply.result);
-            } else {
-                publishProgress(postType, 0, Feedback.STATE_FAILED, reply.returnType, reply.result);
-            }
-        }
-
-        for (int i = 0; i < errors.size(); i++) {
-            HashMap<String, String> error = errors.get(i);
-            if (error.containsKey("state") && error.get("state").equals(Feedback.STATE_WAITING)) {
-                postType = Feedback.TYPE_STACKTRACE;
-                publishProgress(postType, i, Feedback.STATE_UPLOADING);
-                Payload reply = Feedback.postFeedback(errorUrl, postType, error.get("filename"), groupId, i, app);
-                if (reply.success) {
-                    publishProgress(postType, i, Feedback.STATE_SUCCESSFUL, reply.returnType, reply.result);
-                } else {
-                    publishProgress(postType, i, Feedback.STATE_FAILED, reply.returnType, reply.result);
-                }
-                if (deleteAfterSending && (reply.success || reply.returnType == 200)) {
-                    File file = new File(app.getFilesDir() + "/" + error.get("filename"));
-                    file.delete();
-                }
-            }
-        }
-
-        app = null;
-
-        return data;
     }
 
 

@@ -34,6 +34,6 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:19.1.0'
     compile 'com.google.code.gson:gson:2.3'
-    compile 'ch.acra:acra:4.6.0RC1'
+    compile 'ch.acra:acra:4.6.0RC2'
     compile project(":ShowcaseView:library")
 }

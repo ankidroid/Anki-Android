@@ -318,7 +318,7 @@ public class Collection {
                     lock();
                 }
             } catch (RuntimeException e) {
-                AnkiDroidApp.saveExceptionReportFile(e, "closeDB");
+                AnkiDroidApp.sendExceptionReport(e, "closeDB");
             }
             AnkiDatabaseManager.closeDatabase(mPath);
             mDb = null;
@@ -1519,7 +1519,7 @@ public class Collection {
             }
         } catch (RuntimeException e) {
             Log.e(AnkiDroidApp.TAG, "doInBackgroundCheckDatabase - RuntimeException on marking card: " + e);
-            AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundCheckDatabase");
+            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundCheckDatabase");
             return -1;
         }
         // and finally, optimize

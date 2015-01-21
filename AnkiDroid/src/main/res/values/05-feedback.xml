@@ -54,5 +54,6 @@
     <string name="feedback_manual_toast_text">AnkiDroid has encountered a problem; a report is being generated…</string>
     <string name="feedback_copy_debug">Copy debug info</string>
     <string name="feedback_report">Report</string>
+    <string name="feedback_report_automatically">Send error reports automatically</string>
 
 </resources>

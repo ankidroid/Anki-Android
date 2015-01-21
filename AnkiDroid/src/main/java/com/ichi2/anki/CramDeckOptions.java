@@ -190,7 +190,7 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
                     mCol.getDecks().save(mDeck);
                 } catch (RuntimeException e) {
                     Log.e(AnkiDroidApp.TAG, "CramDeckOptions - RuntimeException on saving deck: " + e);
-                    AnkiDroidApp.saveExceptionReportFile(e, "CramDeckOptionsSaveDeck");
+                    AnkiDroidApp.sendExceptionReport(e, "CramDeckOptionsSaveDeck");
                     setResult(DeckPicker.RESULT_DB_ERROR);
                     finish();
                 }

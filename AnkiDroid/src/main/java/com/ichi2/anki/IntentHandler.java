@@ -89,15 +89,15 @@ public class IntentHandler extends Activity {
                         successful = sendShowImportFileDialogMsg(importUri.getEncodedPath());
                     } catch (FileNotFoundException e) {
                         errorMessage=e.getLocalizedMessage();
-                        AnkiDroidApp.saveExceptionReportFile(e, "IntentHandler.java", "apkg import failed: " + filename);
+                        AnkiDroidApp.sendExceptionReport(e, "IntentHandler.java", "apkg import failed: " + filename);
                     } catch (IOException e2) {
                         errorMessage=e2.getLocalizedMessage();
-                        AnkiDroidApp.saveExceptionReportFile(e2, "IntentHandler.java", "apkg import failed" + filename);
+                        AnkiDroidApp.sendExceptionReport(e2, "IntentHandler.java", "apkg import failed" + filename);
                     }
                 } else {
                     if (filename == null) {
                         errorMessage = "Could not retrieve filename from content resolver; try opening the apkg file with a file explorer";
-                        AnkiDroidApp.saveExceptionReportFile("IntentHandler.java", "apkg import failed (filename null, no MIME type provided)");
+                        AnkiDroidApp.sendExceptionReport("IntentHandler.java", "apkg import failed (filename null, no MIME type provided)");
                     } else {
                         errorMessage = getResources().getString(R.string.import_error_not_apkg_extension, filename);
                     }
