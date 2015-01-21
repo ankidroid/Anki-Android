@@ -1003,6 +1003,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     protected void onResume() {
         super.onResume();
         restartTimer();
+        // Set the context for the Sound manager
+        Sound.setContext(new WeakReference<Activity>(this));
     }
 
 
@@ -2267,14 +2269,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                     !(sDisplayAnswer && Sound.hasAnswer()) && !(!sDisplayAnswer && Sound.hasQuestion());
             // We need to play the sounds from the proper side of the card
             if (!useTTS) { // Text to speech not in effect here
-                WeakReference<Activity> contextRef = new WeakReference<Activity>(this);
                 if (doAudioReplay && replayQuestion && sDisplayAnswer) {
                     // only when all of the above are true will question be played with answer, to match desktop
-                    Sound.playSounds(Sound.SOUNDS_QUESTION_AND_ANSWER, contextRef);
+                    Sound.playSounds(Sound.SOUNDS_QUESTION_AND_ANSWER);
                 } else if (sDisplayAnswer) {
-                    Sound.playSounds(Sound.SOUNDS_ANSWER, contextRef);
+                    Sound.playSounds(Sound.SOUNDS_ANSWER);
                 } else { // question is displayed
-                    Sound.playSounds(Sound.SOUNDS_QUESTION, contextRef);
+                    Sound.playSounds(Sound.SOUNDS_QUESTION);
                 }
             } else { // Text to speech is in effect here
                 // If the question is displayed or if the question should be replayed, read the question
