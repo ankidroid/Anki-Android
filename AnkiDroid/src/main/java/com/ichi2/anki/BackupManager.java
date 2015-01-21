@@ -244,19 +244,21 @@ public class BackupManager {
             process.waitFor();
 
             if (!new File(deckPath + ".tmp").exists()) {
+                Log.e(AnkiDroidApp.TAG, "repairDeck - dump to " + deckPath + ".tmp failed");
                 return false;
             }
 
             if (!moveDatabaseToBrokenFolder(deckPath, false)) {
+                Log.e(AnkiDroidApp.TAG, "repairDeck - could not move corrupt file to broken folder");
                 return false;
             }
             Log.i(AnkiDroidApp.TAG, "repairDeck - moved corrupt file to broken folder");
             File repairedFile = new File(deckPath + ".tmp");
             return repairedFile.renameTo(deckFile);
         } catch (IOException e) {
-            Log.e("AnkiDroidApp.TAG", "repairCollection - error: " + e);
+            Log.e("AnkiDroidApp.TAG", "repairCollection - error: " + e.getMessage());
         } catch (InterruptedException e) {
-            Log.e("AnkiDroidApp.TAG", "repairCollection - error: " + e);
+            Log.e("AnkiDroidApp.TAG", "repairCollection - error: " +  e.getMessage());
         }
         return false;
     }
