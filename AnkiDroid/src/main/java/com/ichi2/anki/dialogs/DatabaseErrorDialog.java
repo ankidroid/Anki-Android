@@ -14,6 +14,7 @@ import com.ichi2.anki.R;
 import com.ichi2.themes.StyledDialog;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class DatabaseErrorDialog extends AsyncDialogFragment {
@@ -88,6 +89,15 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
         StyledDialog.Builder builder = new StyledDialog.Builder(getActivity());
         setCancelable(true);
         builder.setTitle(getTitle());
+
+        boolean sqliteInstalled = false;
+        try {
+            sqliteInstalled = Runtime.getRuntime().exec("sqlite3 --version").waitFor() == 0;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         switch (mType) {
             case DIALOG_LOAD_FAILED:
@@ -166,8 +176,10 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                     values.add(1);
                 }
                 // repair db with sqlite
-                options.add(res.getString(R.string.backup_error_menu_repair));
-                values.add(2);
+                if (sqliteInstalled) {
+                    options.add(res.getString(R.string.backup_error_menu_repair));
+                    values.add(2);
+                }
                 // // restore from backup
                 options.add(res.getString(R.string.backup_restore));
                 values.add(3);
