@@ -223,8 +223,7 @@ public class Sound {
      * Plays the sounds for the indicated sides
      * @param qa -- One of Sound.SOUNDS_QUESTION, Sound.SOUNDS_ANSWER, or Sound.SOUNDS_QUESTION_AND_ANSWER
      */
-    public static void playSounds(int qa, WeakReference<Activity> activityRef) {
-        sCallingActivity = activityRef;
+    public static void playSounds(int qa) {
         // If there are sounds to play for the current card, start with the first one
         if (sSoundPaths != null && sSoundPaths.containsKey(qa)) {
             playSound(sSoundPaths.get(qa).get(0), new PlayAllCompletionListener(qa));
@@ -427,6 +426,14 @@ public class Sound {
     private static boolean hasURIScheme(String path) {
         Matcher uriMatcher = sUriPattern.matcher(path.trim());
         return uriMatcher.matches() && uriMatcher.group(2) != null;
+    }
+
+    /**
+     * Set the context for the calling activity (necessary for playing videos)
+     * @param activityRef
+     */
+    public static void setContext(WeakReference<Activity> activityRef) {
+        sCallingActivity = activityRef;
     }
 
     public static OnCompletionListener getMediaCompletionListener() {
