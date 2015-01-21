@@ -122,7 +122,7 @@
     <string name="ankionline_sign_up_url">https://ankiweb.net/</string>
     <string name="feedback_post_url">http://ankidroid-triage.appspot.com/feedback_receiver</string>
     <string name="shared_decks_url">https://ankiweb.net/shared/decks/</string>
-    <string name="repair_deck">http://ankisrs.net/docs/DeckErrors.html</string>
+    <string name="repair_deck">http://ankisrs.net/docs/manual.html#corrupt-collections</string>
     <string name="resetpw_url">http://ankiweb.net/account/resetpw</string>
 
     <string-array name="leech_action_values">
