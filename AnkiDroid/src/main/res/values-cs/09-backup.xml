@@ -66,6 +66,6 @@
   <string name="backup_restore_select_title">Vyberte zálohu pro obnovení</string>
   <string name="backup_restore_no_backups">Žádné zálohy pro tento balíček nejsou k dispozici. Máte-li zálohu na stolním počítači, zkopírujte jí ručně do složky AnkiDroid</string>
   <string name="open_collection_failed_title">Kolekce není otevřena</string>
-  <string name="open_collection_failed_message">Databázi nelze otevřít. Buď to není Anki databáze nebo byla porušena.\n\nMůžeš se pokusit opravit kolekci nebo jí obnovit ze zálohy (v obou případech, kopie poškozeného balíčku bude přemístěna do podsložky \'%1$s\'). Klikněte na \'Možnosti\' pro toto.\n\nVíce informace o opravě poškozeného balíčku: %2$s.</string>
+  <string name="open_collection_failed_message">Database could not be opened. It\'s either not a real Anki database or has been corrupted.\n\nYou can try to repair the collection or restore it from a backup. Touch \'options\' for that. \n\nMore information about repairing corrupted collections: %1$s</string>
   <string name="deck_repair_error">Kolekci nelze opravit</string>
 </resources>

@@ -46,7 +46,7 @@
   <string name="CardEditorNoteDeck">Колода:</string>
   <string name="CardEditorModel">Тип:</string>
   <string name="CardEditorTags">Теги: %1$s</string>
-  <string name="CardEditorCards">Cards: %1$s</string>
+  <string name="CardEditorCards">Карты: %1$s</string>
   <string name="add_new_filter_tags">Добавить / Отфильтровать метки</string>
   <string name="note_type">Тип заметки</string>
   <string name="card_type">Тип карты</string>
@@ -89,8 +89,8 @@
   <string name="select">Выбрать</string>
   <string name="saving_changes">Сохранение изменений...</string>
   <string name="reordering_cards">Изменение очерёдности карт...</string>
-  <string name="field_remapping">%1$s (from \'%2$s\')</string>
-  <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
+  <string name="field_remapping">%1$s (из \'%2$s\')</string>
+  <string name="confirm_map_cards_to_nothing">Не сопоставленные карты будут удалены. Заметки, оставшиеся без карт, будут утеряны. Продолжить?</string>
   <plurals name="timebox_reached">
     <item quantity="one">Карт изучено: %1$d за %2$s</item>
     <item quantity="other">%1$d карты изучено за %2$s</item>
@@ -154,7 +154,7 @@
   <string name="import_log_success">Успешно импортированы %d карты</string>
   <string name="import_log_error">Импорт не удался</string>
   <string name="import_log_no_apkg">Это негодный apkg-файл</string>
-  <string name="import_error_not_apkg_extension">Filename %s does not have .apkg extension</string>
+  <string name="import_error_not_apkg_extension">У файла %s должно быть расширение .apkg</string>
   <string name="import_importing">Импортирование карт.\nПожалуйста, подождите...</string>
   <string name="export_include_schedule">Включить планирование</string>
   <string name="export_include_media">Включить медиа</string>

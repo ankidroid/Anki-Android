@@ -66,6 +66,6 @@
   <string name="backup_restore_select_title">Wybierz kopię do odtworzenia.</string>
   <string name="backup_restore_no_backups">Brak kopii zapasowych dla tej kolekcji na urządzeniu. Jeśli masz kopię zapasową na swoim komputerze stacjonarnym, przenieś ją ręcznie do folderu AnkiDroid.</string>
   <string name="open_collection_failed_title">Nie udało się otworzyć kolekcji</string>
-  <string name="open_collection_failed_message">Nie można otworzyć bazy danych. Baza nie jest formatu anki lub jest uszkodzona.\n\n Spróbuj naprawić kolekcję lub przywołaj wersję zapasową (w obu przypadkach, kopia uszkodzonej talii zostanie przeniesiona do folderu \'%1$s\'). Naciśnij \"Opcje\" żeby kontynuować.\n\n Więcej informacji na temat uszkodzonych talii: %2$s.</string>
+  <string name="open_collection_failed_message">Database could not be opened. It\'s either not a real Anki database or has been corrupted.\n\nYou can try to repair the collection or restore it from a backup. Touch \'options\' for that. \n\nMore information about repairing corrupted collections: %1$s</string>
   <string name="deck_repair_error">Nie można naprawić kolekcji</string>
 </resources>

@@ -66,6 +66,6 @@
   <string name="backup_restore_select_title">Välj säkerhetskopia att återställa</string>
   <string name="backup_restore_no_backups">Inga säkerhetskopior för samlingen finns på den här enheten. Om du har säkerhetskopior på din stationära dator, kopiera dem manuellt till din AnkiDroid-mapp</string>
   <string name="open_collection_failed_title">Samlingen är inte öppnad</string>
-  <string name="open_collection_failed_message">Databasen kunde inte öppnas. Den är antingen korrupt eller ingen äkta Anki-databas.\n\nDu kan försöka att reparera samlingen eller återställa den från en säkerhetskopia (i båda fallen kommer en kopia av den felaktiga kortleken att flyttas till undermappen \'%1$s\'). Klicka på \'alternativ\' för den.\n\nMer information om att reparera felaktiga kortlekar: %2$s.</string>
+  <string name="open_collection_failed_message">Database could not be opened. It\'s either not a real Anki database or has been corrupted.\n\nYou can try to repair the collection or restore it from a backup. Touch \'options\' for that. \n\nMore information about repairing corrupted collections: %1$s</string>
   <string name="deck_repair_error">Samlingen kunde inte repareras</string>
 </resources>

@@ -64,5 +64,4 @@
   <string name="feedback_manual_toast_text">AnkiDroid ha detectado un problema; se está generando un informe...</string>
   <string name="feedback_copy_debug">Copiar información de depuración</string>
   <string name="feedback_report">Informe</string>
-  <string name="feedback_automatically_submit">Enviar automáticamente informes de errores</string>
 </resources>

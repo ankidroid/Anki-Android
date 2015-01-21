@@ -66,6 +66,6 @@
   <string name="backup_restore_select_title">Selecteer de back-up om te herstellen</string>
   <string name="backup_restore_no_backups">Geen back-ups van deze collectie beschikbaar op dit toestel. Indien u back-ups op uw PC heeft, kunt u deze handmatig kopiëren naar uw AnkiDroid map</string>
   <string name="open_collection_failed_title">Collectie niet geopend</string>
-  <string name="open_collection_failed_message">Database kon niet worden geopend. Of het is niet een echt anki-database of het is corrupt.\n\nJe kan proberen de collectie te herstellen of een back-up terugzetten (in beide gevallen zal een  kopie van het corrupte leerset verplaatst worden naar de submap \'%1$s\'). Klik hiervoor op \'Opties\'.\n\nMeer informatie over het herstellen van beschadigde leersets: %2$s.</string>
+  <string name="open_collection_failed_message">Database could not be opened. It\'s either not a real Anki database or has been corrupted.\n\nYou can try to repair the collection or restore it from a backup. Touch \'options\' for that. \n\nMore information about repairing corrupted collections: %1$s</string>
   <string name="deck_repair_error">Collectie kon niet worden hersteld</string>
 </resources>

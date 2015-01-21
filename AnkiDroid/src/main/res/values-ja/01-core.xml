@@ -180,17 +180,16 @@
   <string name="pc">PC</string>
   <string name="nothing">Nothing</string>
   <string name="title_activity_graphical_activity">統計グラフ</string>
-  <string name="title_activity_template_editor">Card Types for %s</string>
+  <string name="title_activity_template_editor">%sのカードタイプ</string>
   <string name="card_template_editor_front">表面のテンプレート</string>
   <string name="card_template_editor_back">裏面のテンプレート</string>
   <string name="card_template_editor_styling">書式</string>
-  <string name="card_template_editor_menu_add_reverse">Add reverse</string>
+  <string name="card_template_editor_menu_add_reverse">裏面カードを追加する</string>
   <string name="card_template_editor_menu_delete">削除</string>
   <string name="card_template_editor_cant_delete">カードは少なくとも１種類必要です。</string>
   <plurals name="card_template_editor_confirm_delete">
     <item quantity="one">カードタイプ \'%2$s\' とそのカード  %1$d 枚を削除しますか？</item>
     <item quantity="other">カードタイプ \'%2$s\' とそのカード %1$d 枚を削除しますか？</item>
   </plurals>
-  <string name="card_template_editor_would_delete_note"> Removing this card type would cause one or
-        more notes to be deleted. Please create a new card type first.</string>
+  <string name="card_template_editor_would_delete_note">このカードタイプを削除すると、一つ以上のノートも削除することになります。まずは新しいカードタイプを追加してください。</string>
 </resources>

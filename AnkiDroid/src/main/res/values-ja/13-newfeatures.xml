@@ -28,7 +28,7 @@
     <item>動画の再生をサポート</item>
     <item>ブラウザーの2列目のレンダリングを改善</item>
     <item>スワイプジェスチャーの感度を改善</item>
-    <item>Increase number of languages in Glosbe translator</item>
+    <item>Glosbeの使える言語を増やした</item>
     <item>Chromebook のサポートを追加</item>
     <item>バグの修正</item>
   </string-array>

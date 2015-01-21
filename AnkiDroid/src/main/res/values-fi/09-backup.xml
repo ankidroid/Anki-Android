@@ -67,6 +67,6 @@ Tämä nollaa edistymisesi ja poistaa kaikki kortit!</string>
   <string name="backup_restore_select_title">Valitse varmuuskopio palauttaaksesi</string>
   <string name="backup_restore_no_backups">Ei varmuuskopioita käytettävissä tälle kokoelmalle tällä laitteella. Jos sinulla on varmuuskopioita pöytätietokoneella, kopioi ne manuaalisesti AnkiDroid-kansioon</string>
   <string name="open_collection_failed_title">Kokoelman avaus epäonnistui</string>
-  <string name="open_collection_failed_message">Tietokantaa ei voi avata. Joko se ei ole oikea anki-tietokanta tai se on vioittunut.\n\nVoit yrittää korjata kokoelman tai palauttaa sen varmuuskopiosta (molemmissa tapauksissa korruptoituneen pakan kopio siirretään %1$s-alikansioon). Klikkaa \"asetukset\" tehdäksesi niin.\n\nLisää tietoa vioittuneiden pakkojen korjaamisesta: %2$s.</string>
+  <string name="open_collection_failed_message">Database could not be opened. It\'s either not a real Anki database or has been corrupted.\n\nYou can try to repair the collection or restore it from a backup. Touch \'options\' for that. \n\nMore information about repairing corrupted collections: %1$s</string>
   <string name="deck_repair_error">Kokoelman korjaus epäonnistui</string>
 </resources>

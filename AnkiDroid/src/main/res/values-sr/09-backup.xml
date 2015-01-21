@@ -66,6 +66,6 @@
   <string name="backup_restore_select_title">Изаберите резервну копију за обнављање</string>
   <string name="backup_restore_no_backups">Нема резервних копија ове колекције на том уређају. Ако имате резервне копије на рачунару, копирајте их ручно у радну фасциклу програма AnkiDroid</string>
   <string name="open_collection_failed_title">Колекција није отворена</string>
-  <string name="open_collection_failed_message">База података не може да се отвори. Или то није датотека базе података Anki, или је датотека оштећена.\n\nМожете покушати да обновите колекцију или обновите њену резервну копију (у оба случаја ће копија оштећеног шпила бити премештена у подфасциклу \'%1$s\'). Кликните \'опције\' за то.\n\nДетаљније о обнављању оштећених шпилова: %2$s.</string>
+  <string name="open_collection_failed_message">Database could not be opened. It\'s either not a real Anki database or has been corrupted.\n\nYou can try to repair the collection or restore it from a backup. Touch \'options\' for that. \n\nMore information about repairing corrupted collections: %1$s</string>
   <string name="deck_repair_error">Колекција не може бити исправљена</string>
 </resources>

@@ -66,6 +66,6 @@
   <string name="backup_restore_select_title">복원할 백업 파일 선택</string>
   <string name="backup_restore_no_backups">이 컬렉션을 위한 백업이 장치에 존재하지 않습니다. 데스크탑 컴퓨터에 백업이 있다면, 직접 AnkiDroid 폴더로 옮겨주시기 바랍니다.</string>
   <string name="open_collection_failed_title">컬렉션 열리지 않음</string>
-  <string name="open_collection_failed_message">데이터베이스 파일을 열 수 없습니다. Anki 데이터베이스 파일이 아니거나 파일이 손상되었습니다.\n\n 컬렉션 파일을 수정하거나 백업 파일로 부터 복원할 수 있습니다.(손상된 암기묶음 파일은 \'%1$s\'하위폴더에 저장됩니다). \'옵션\'을 선택합니다.\n\n 더 많은 파일 복원에 과한 더 많은 정보를 원하면 :%2$s 를 선택하세요.</string>
+  <string name="open_collection_failed_message">Database could not be opened. It\'s either not a real Anki database or has been corrupted.\n\nYou can try to repair the collection or restore it from a backup. Touch \'options\' for that. \n\nMore information about repairing corrupted collections: %1$s</string>
   <string name="deck_repair_error">컬렉션 복구할 수 없음</string>
 </resources>

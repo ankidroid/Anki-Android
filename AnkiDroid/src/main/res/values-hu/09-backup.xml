@@ -66,6 +66,6 @@
   <string name="backup_restore_select_title">Válaszd ki a visszaállítandó biztonsági másolatot</string>
   <string name="backup_restore_no_backups">Az AnkiDroid nem találja a pakli biztonsági másolatát. Ha van biztonsági mentés a számítógépeden, kérlek másold be az AnkiDroid mappádba kézzel</string>
   <string name="open_collection_failed_title">A gyűjtemény nincs megnyitva</string>
-  <string name="open_collection_failed_message">Az adatbázist nem lehet megnyitni, mert vagy nem anki adatbázis, vagy sérült.\n\nMegpróbálhatod kijavítani a gyűjteményt, vagy biztonsági mentésből visszaállítani(mindkét esetben biztonsági másolat készül a sérült pakliról a \'%1$s\' almappában). Kattints a \'Beállítások\'-ra.\n\nTöbb információ a sérült paklik kijavításáról itt: %2$s.</string>
+  <string name="open_collection_failed_message">Database could not be opened. It\'s either not a real Anki database or has been corrupted.\n\nYou can try to repair the collection or restore it from a backup. Touch \'options\' for that. \n\nMore information about repairing corrupted collections: %1$s</string>
   <string name="deck_repair_error">Gyűjtemény nem javítható</string>
 </resources>

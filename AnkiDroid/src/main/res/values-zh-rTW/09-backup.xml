@@ -66,6 +66,6 @@
   <string name="backup_restore_select_title">請選擇要還原的備份檔案</string>
   <string name="backup_restore_no_backups">裝置上沒有可用來還原收藏的備份檔案，如果你的電腦上有備份檔，請手動複製到你的 AnkiDroid 資料夾裡。</string>
   <string name="open_collection_failed_title">無法打開您的收藏</string>
-  <string name="open_collection_failed_message">打不開資料庫。也許這不是真正的 Anki 資料庫，或者是資料庫已經損壞了。\n\n你可以試試看修復您的收藏，或者是從備份中還原(在這兩種情況下，損壞的牌組檔案副本會被移動到 \'%1$s\' 資料夾)。\n\n關於修復損壞的牌組的更多資訊，請看 %2$s。</string>
+  <string name="open_collection_failed_message">Database could not be opened. It\'s either not a real Anki database or has been corrupted.\n\nYou can try to repair the collection or restore it from a backup. Touch \'options\' for that. \n\nMore information about repairing corrupted collections: %1$s</string>
   <string name="deck_repair_error">無法修復收藏</string>
 </resources>

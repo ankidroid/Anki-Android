@@ -66,6 +66,6 @@
   <string name="backup_restore_select_title">نسخه پشتیبان را جهت بازیابی انتخاب کنید</string>
   <string name="backup_restore_no_backups">هیچ نسخه پشتیبانی برای این مجموعه در این دستگاه وجود ندارد.اگر در رایانه خود فایل پشتیبان دارید، آن را به صورت دستی در پوشه آنکی دروید کپی کنید </string>
   <string name="open_collection_failed_title">مجموعه باز نشد</string>
-  <string name="open_collection_failed_message">پایگاه داده را نمی توان بازکرد. یا آن پایگاه داده واقعی آنکی نیست یا اینکه خراب شده است.\n\nشما می توانید مجموعه را تعمیر کنید و یا آن را از نسخه پشتیبان بازیابی کنید (در هر دو صورت, کپی دسته خراب از روی پوشه فرعی  حذف خواهد شد \'%1$s\'). برای انجام آن روی گزینه ها کلیک کنید.\n\nاطلاعات بیشتر درباره تعمیر دسته های خراب شده: %2$s.</string>
+  <string name="open_collection_failed_message">Database could not be opened. It\'s either not a real Anki database or has been corrupted.\n\nYou can try to repair the collection or restore it from a backup. Touch \'options\' for that. \n\nMore information about repairing corrupted collections: %1$s</string>
   <string name="deck_repair_error">مجموعه را نمی توان بازگرداند</string>
 </resources>
