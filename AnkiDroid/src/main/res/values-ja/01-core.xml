@@ -181,15 +181,15 @@
   <string name="nothing">Nothing</string>
   <string name="title_activity_graphical_activity">統計グラフ</string>
   <string name="title_activity_template_editor">Card Types for %s</string>
-  <string name="card_template_editor_front">Front Template</string>
-  <string name="card_template_editor_back">Back Template</string>
-  <string name="card_template_editor_styling">Styling</string>
+  <string name="card_template_editor_front">表面のテンプレート</string>
+  <string name="card_template_editor_back">裏面のテンプレート</string>
+  <string name="card_template_editor_styling">書式</string>
   <string name="card_template_editor_menu_add_reverse">Add reverse</string>
-  <string name="card_template_editor_menu_delete">Delete</string>
-  <string name="card_template_editor_cant_delete">At least one card type is required.</string>
+  <string name="card_template_editor_menu_delete">削除</string>
+  <string name="card_template_editor_cant_delete">カードは少なくとも１種類必要です。</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
-    <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
+    <item quantity="one">カードタイプ \'%2$s\' とそのカード  %1$d 枚を削除しますか？</item>
+    <item quantity="other">カードタイプ \'%2$s\' とそのカード %1$d 枚を削除しますか？</item>
   </plurals>
   <string name="card_template_editor_would_delete_note"> Removing this card type would cause one or
         more notes to be deleted. Please create a new card type first.</string>

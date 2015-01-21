@@ -22,14 +22,14 @@
 <resources>
   <string-array name="new_version_features">
     <item>Move \"preview\" feature to browser</item>
-    <item>Add ability to change note type of existing flashcards</item>
-    <item>Add ability to view and delete card templates</item>
-    <item>Fix TTS for most devices</item>
+    <item>Ajout de la possibilité de changer le type de note de cartes existantes</item>
+    <item>Ajout de la possibilité d\'afficher et effacer les modéles de carte</item>
+    <item>TTS corrigé sur la plupart des appareils</item>
     <item>Support playback of videos</item>
-    <item>Improve rendering of second column in browser</item>
-    <item>Improve detection of swipe gestures</item>
-    <item>Increase number of languages in Glosbe translator</item>
+    <item>Amélioration du rendu de l\'affichage en deux colonnes dans le navigateur</item>
+    <item>Amélioriation de la détection des mouvements de glissement (swipe)</item>
+    <item>Augmenter le nombre de langues dans le traducteur Glosbe</item>
     <item>Add support for Chromebooks</item>
-    <item>Bug fixes</item>
+    <item>Correction de bugs</item>
   </string-array>
 </resources>

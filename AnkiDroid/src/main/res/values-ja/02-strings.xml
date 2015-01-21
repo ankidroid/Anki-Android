@@ -154,7 +154,7 @@
   <string name="import_log_success">%d 枚のカードを読み込みました</string>
   <string name="import_log_error">インポート失敗</string>
   <string name="import_log_no_apkg">これは取り込み可能なapkgファイルではありません</string>
-  <string name="import_error_not_apkg_extension">Filename %s does not have .apkg extension</string>
+  <string name="import_error_not_apkg_extension">ファイル名 \"%s\" は .apkg 拡張子を持っていません</string>
   <string name="import_importing">カード取得中です\nしばらくお待ちください</string>
   <string name="export_include_schedule">スケジュールを含める</string>
   <string name="export_include_media">メディアを含める</string>

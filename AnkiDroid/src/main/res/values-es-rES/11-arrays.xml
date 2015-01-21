@@ -36,12 +36,12 @@
 -->
 <resources>
   <string-array name="navigation_titles">
-    <item>Decks</item>
-    <item>Card Browser</item>
+    <item>Mazos</item>
+    <item>Explorador de tarjetas</item>
     <item>Estadísticas</item>
-    <item>Settings</item>
+    <item>Configuración</item>
     <item>Ayuda</item>
-    <item>Send Feedback</item>
+    <item>Enviar comentarios</item>
   </string-array>
   <string-array name="newCardSchedulingLabels">
     <item>Distribuir entre repasos</item>
@@ -97,8 +97,8 @@
     <item>Ocultar tarjeta</item>
     <item>Suspender tarjeta</item>
     <item>Eliminar tarjeta</item>
-    <item>Play media</item>
-    <item>Abort learning</item>
+    <item>Reproducir archivos multimedia</item>
+    <item>Abandonar aprendizaje</item>
   </string-array>
   <string-array name="theme_labels">
     <item>Android Oscuro</item>

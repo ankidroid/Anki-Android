@@ -178,19 +178,19 @@
   <string name="confirm">Confirmer</string>
   <string name="internet">Toile</string>
   <string name="pc">PC</string>
-  <string name="nothing">Nothing</string>
+  <string name="nothing">Rien</string>
   <string name="title_activity_graphical_activity">Graphique statistique</string>
-  <string name="title_activity_template_editor">Card Types for %s</string>
+  <string name="title_activity_template_editor">Types de carte pour %s</string>
   <string name="card_template_editor_front">Front Template</string>
   <string name="card_template_editor_back">Back Template</string>
   <string name="card_template_editor_styling">Styling</string>
   <string name="card_template_editor_menu_add_reverse">Add reverse</string>
-  <string name="card_template_editor_menu_delete">Delete</string>
-  <string name="card_template_editor_cant_delete">At least one card type is required.</string>
+  <string name="card_template_editor_menu_delete">Supprimer</string>
+  <string name="card_template_editor_cant_delete">Il faut au moins un type de carte.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
-    <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
+    <item quantity="one">Supprimer le type de carte «%2$s » et sa carte %1$d ?</item>
+    <item quantity="other">Supprimer le type de carte «%2$s » et ses cartes %1$d ?</item>
   </plurals>
-  <string name="card_template_editor_would_delete_note"> Removing this card type would cause one or
-        more notes to be deleted. Please create a new card type first.</string>
+  <string name="card_template_editor_would_delete_note"> Retirer ce type de carte provoquerait la suppression 
+        d\'une ou de plusieurs notes. Veuillez d\'abord créer un nouveau type de carte.</string>
 </resources>
