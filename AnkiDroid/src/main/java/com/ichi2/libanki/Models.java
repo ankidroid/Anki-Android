@@ -950,7 +950,7 @@ public class Models {
 
             txt = _fields.get(tag);
 
-            Timber.d("Processing field modifier %s: extra = %s, field %s = %s" + mod, extra, tag, txt);
+            Timber.d("Processing field modifier %s: extra = %s, field %s = %s",  mod, extra, tag, txt);
 
             // built-in modifiers
             if (mod.equals("text")) {

@@ -182,7 +182,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     private AdapterView.OnItemClickListener mDeckSelHandler = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View v, int p, long id) {
-            Timber.i("Selected deck in position %d", p);
+            Timber.i("DeckPicker:: Selected deck in position %d", p);
             handleDeckSelection(p);
         }
     };
@@ -473,7 +473,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         mDeckListView.setOnItemLongClickListener(new OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Timber.i("Long tapped on deck in position %d", position);
+                Timber.i("DeckPicker:: Long tapped on deck in position %d", position);
                 if (!AnkiDroidApp.colIsOpen() || mDeckList == null || mDeckList.size() == 0) {
                     return true;
                 }
@@ -557,18 +557,18 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         switch (item.getItemId()) {
 
             case R.id.action_sync:
-                Timber.i("Sync button pressed");
+                Timber.i("DeckPicker:: Sync button pressed");
                 sync();
                 return true;
 
             case R.id.action_add_note_from_deck_picker:
-                Timber.i("Add note button pressed");
+                Timber.i("DeckPicker:: Add note button pressed");
                 hideShowcaseView();
                 addNote();
                 return true;
 
             case R.id.action_shared_decks:
-                Timber.i("Get shared deck button pressed");
+                Timber.i("DeckPicker:: Get shared deck button pressed");
                 hideShowcaseView();
                 if (colOpen()) {
                     addSharedDeck();
@@ -576,7 +576,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 return true;
 
             case R.id.action_new_deck:
-                Timber.i("Add deck button pressed");
+                Timber.i("DeckPicker:: Add deck button pressed");
                 hideShowcaseView();
                 StyledDialog.Builder builder2 = new StyledDialog.Builder(DeckPicker.this);
                 builder2.setTitle(res.getString(R.string.new_deck));
@@ -588,7 +588,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                     public void onClick(DialogInterface dialog, int which) {
                         String deckName = mDialogEditText.getText().toString()
                                 .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
-                        Timber.i("Creating new deck...");
+                        Timber.i("DeckPicker:: Creating new deck...");
                         getCol().getDecks().id(deckName, true);
                         loadCounts();
                     }
@@ -598,12 +598,12 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 return true;
 
             case R.id.action_import:
-                Timber.i("Import button pressed");
+                Timber.i("DeckPicker:: Import button pressed");
                 showImportDialog(ImportDialog.DIALOG_IMPORT_HINT);
                 return true;
 
             case R.id.action_new_filtered_deck:
-                Timber.i("New filtered deck button pressed");
+                Timber.i("DeckPicker:: New filtered deck button pressed");
                 StyledDialog.Builder builder3 = new StyledDialog.Builder(DeckPicker.this);
                 builder3.setTitle(res.getString(R.string.new_deck));
                 mDialogEditText = new EditText(DeckPicker.this);
@@ -621,7 +621,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String enteredCramDeckName = mDialogEditText.getText().toString();
-                        Timber.i("Creating cram deck...");
+                        Timber.i("DeckPicker:: Creating cram deck...");
                         long id = getCol().getDecks().newDyn(enteredCramDeckName);
                         openStudyOptions(id, new Bundle());
                     }
@@ -631,22 +631,22 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 return true;
 
             case R.id.action_check_database:
-                Timber.i("Check database button pressed");
+                Timber.i("DeckPicker:: Check database button pressed");
                 showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_CONFIRM_DATABASE_CHECK);
                 return true;
 
             case R.id.action_check_media:
-                Timber.i("Check media button pressed");
+                Timber.i("DeckPicker:: Check media button pressed");
                 showMediaCheckDialog(MediaCheckDialog.DIALOG_CONFIRM_MEDIA_CHECK);
                 return true;
 
             case R.id.action_restore_backup:
-                Timber.i("Restore from backup button pressed");
+                Timber.i("DeckPicker:: Restore from backup button pressed");
                 showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_CONFIRM_RESTORE_BACKUP);
                 return true;
 
             case R.id.action_export:
-                Timber.i("Export collection button pressed");
+                Timber.i("DeckPicker:: Export collection button pressed");
                 String msg = getResources().getString(R.string.confirm_apkg_export);
                 showDialogFragment(ExportDialog.newInstance(msg));
                 return true;
@@ -781,7 +781,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            Timber.i("onBackPressed()");
+            Timber.i("DeckPicker:: onBackPressed()");
             finishWithAnimation();
             return true;
         }
@@ -1692,7 +1692,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
      * @param did The deck ID of the deck to select.
      */
     private void selectDeck(long did) {
-        Timber.i("Selected deck with ID %d", did);
+        Timber.i("DeckPicker:: Selected deck with ID %d", did);
         for (int i = 0; i < mDeckList.size(); i++) {
             if (Long.parseLong(mDeckList.get(i).get("did")) == did) {
                 final int lastPosition = i;
@@ -1879,7 +1879,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String newName = mDialogEditText.getText().toString().replaceAll("\"", "");
-                Timber.i("Renaming deck...", newName);
+                Timber.i("DeckPicker:: Renaming deck...", newName);
                 Collection col = getCol();
                 if (col != null) {
                     if (col.getDecks().rename(col.getDecks().get(mContextMenuDid), newName)) {

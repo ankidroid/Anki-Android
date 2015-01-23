@@ -148,34 +148,34 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
             // long timeLimit = 0;
             switch (v.getId()) {
                 case R.id.studyoptions_start:
-                    Timber.i("start study button pressed");
+                    Timber.i("StudyOptionsFragment:: start study button pressed");
                     openReviewer();
                     return;
                 case R.id.studyoptions_custom:
-                    Timber.i("custom study button pressed");
+                    Timber.i("StudyOptionsFragment:: custom study button pressed");
                     showCustomStudyContextMenu();
                     return;
                 case R.id.studyoptions_unbury:
-                    Timber.i("unbury button pressed");
+                    Timber.i("StudyOptionsFragment:: unbury button pressed");
                     col.getSched().unburyCardsForDeck();
                     resetAndRefreshInterface();
                     return;
                 case R.id.studyoptions_options_cram:
-                    Timber.i("cram deck options button pressed");
+                    Timber.i("StudyOptionsFragment:: cram deck options button pressed");
                     openCramDeckOptions();
                     return;
                 case R.id.studyoptions_options:
-                    Timber.i("deck options button pressed");
+                    Timber.i("StudyOptionsFragment:: deck options button pressed");
                     Intent i = new Intent(getActivity(), DeckOptions.class);
                     startActivityForResult(i, DECK_OPTIONS);
                     ActivityTransitionAnimation.slide(getActivity(), ActivityTransitionAnimation.FADE);
                     return;
                 case R.id.studyoptions_rebuild_cram:
-                    Timber.i("rebuild cram deck button pressed");
+                    Timber.i("StudyOptionsFragment:: rebuild cram deck button pressed");
                     rebuildCramDeck();
                     return;
                 case R.id.studyoptions_empty_cram:
-                    Timber.i("empty cram deck button pressed");
+                    Timber.i("StudyOptionsFragment:: empty cram deck button pressed");
                     mProgressDialog = StyledProgressDialog.show(getActivity(), "",
                             getResources().getString(R.string.empty_cram_deck), true);
                     DeckTask.launchDeckTask(DeckTask.TASK_TYPE_EMPTY_CRAM, getDeckTaskListener(true),
@@ -572,7 +572,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_undo:
-                Timber.i("Undo button pressed");
+                Timber.i("StudyOptionsFragment:: Undo button pressed");
                 if (colOpen()) {
                     getCol().undo();
                     resetAndRefreshInterface();
@@ -582,18 +582,18 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
             case R.id.action_night_mode:
                 SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getActivity());
                 if (preferences.getBoolean("invertedColors", false)) {
-                    Timber.i("Night mode was disabled");
+                    Timber.i("StudyOptionsFragment:: Night mode was disabled");
                     preferences.edit().putBoolean("invertedColors", false).commit();
                     item.setIcon(R.drawable.ic_menu_night);
                 } else {
-                    Timber.i("Night mode was enabled");
+                    Timber.i("StudyOptionsFragment:: Night mode was enabled");
                     preferences.edit().putBoolean("invertedColors", true).commit();
                     item.setIcon(R.drawable.ic_menu_night_checked);
                 }
                 return true;
 
             case R.id.action_add_note_from_study_options:
-                Timber.i("Add note button pressed");
+                Timber.i("StudyOptionsFragment:: Add note button pressed");
                 addNote();
                 return true;
 

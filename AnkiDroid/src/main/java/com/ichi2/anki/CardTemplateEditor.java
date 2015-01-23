@@ -176,7 +176,7 @@ public class CardTemplateEditor extends AnkiActivity {
         // Set activity title
         setTitle(getResources().getString(R.string.title_activity_template_editor, col.getModels().get(mModelId).optString("name")));
         // Close collection opening dialog if needed
-        Timber.i("Card template editor successfully started for model id %d", mModelId);
+        Timber.i("CardTemplateEditor:: Card template editor successfully started for model id %d", mModelId);
         dismissOpeningCollectionDialog();
     }
 
@@ -353,11 +353,11 @@ public class CardTemplateEditor extends AnkiActivity {
         public boolean onOptionsItemSelected(MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.action_add:
-                    Timber.i("Add template button pressed");
+                    Timber.i("CardTemplateEditor:: Add template button pressed");
                     addNewTemplateWithCheck(getModel());
                     return true;
                 case R.id.action_delete:
-                    Timber.i("Delete template button pressed");
+                    Timber.i("CardTemplateEditor:: Delete template button pressed");
                     Resources res = getResources();
                     final Collection col = ((AnkiActivity) getActivity()).getCol();
                     int position = getArguments().getInt("position");

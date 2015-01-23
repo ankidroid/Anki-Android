@@ -116,23 +116,23 @@ public class Themes {
         switch (theme == -1 ? mCurrentTheme : theme) {
             case THEME_ANDROID_DARK:
                 context.setTheme(android.R.style.Theme_Black);
-                Timber.i("Set theme: dark");
+                Timber.d("Set theme: dark");
                 break;
             case THEME_ANDROID_LIGHT:
                 context.setTheme(android.R.style.Theme_Light);
-                Timber.i("Set theme: light");
+                Timber.d("Set theme: light");
                 break;
             case THEME_BLUE:
                 context.setTheme(R.style.Theme_Blue);
-                Timber.i("Set theme: blue");
+                Timber.d("Set theme: blue");
                 break;
             case THEME_FLAT:
                 context.setTheme(R.style.Theme_Flat);
-                Timber.i("Set theme: flat");
+                Timber.d("Set theme: flat");
                 break;
             case THEME_WHITE:
                 context.setTheme(R.style.Theme_White);
-                Timber.i("Set theme: white");
+                Timber.d("Set theme: white");
                 break;
             case -1:
                 break;
