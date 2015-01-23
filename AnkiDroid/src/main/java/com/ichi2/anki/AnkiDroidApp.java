@@ -30,6 +30,7 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Message;
+import android.util.Log;
 import android.view.Display;
 import android.view.ViewConfiguration;
 import android.view.WindowManager;
@@ -62,6 +63,8 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import timber.log.Timber;
 
@@ -635,39 +638,66 @@ public class AnkiDroidApp extends Application {
         editor.commit();
     }
 
-    /** A tree which logs important information for crash reporting. */
-    private static class CrashReportingTree extends Timber.HollowTree {
-        @Override public void i(String message, Object... args) {
-            try {
-                i(message, args);
-            } catch (Exception e) {
-                i("failed to log message: " + message);
-            }
-        }
-
-        @Override public void i(Throwable t, String message, Object... args) {
-            try {
-                i(t, message, args);
-            } catch (Exception e) {
-                i("failed to log message: " + message);
-            }
-        }
+    /** A tree which logs necessary data for crash reporting. */
+    public static class CrashReportingTree extends Timber.HollowTree {
+        private static final ThreadLocal<String> NEXT_TAG = new ThreadLocal<String>();
+        private static final Pattern ANONYMOUS_CLASS = Pattern.compile("\\$\\d+$");
 
         @Override public void e(String message, Object... args) {
-            try {
-                e(message, args);
-            } catch (Exception e) {
-                e("failed to log error: " + message);
-            }
+            Log.e(createTag(), formatString(message, args)); // Just add to the log.
         }
 
         @Override public void e(Throwable t, String message, Object... args) {
+            Log.e(createTag(), formatString(message, args), t); // Just add to the log.
+        }
+
+        @Override public void w(String message, Object... args) {
+            Log.w(createTag(), formatString(message, args)); // Just add to the log.
+        }
+
+        @Override public void w(Throwable t, String message, Object... args) {
+            Log.w(createTag(), formatString(message, args), t); // Just add to the log.
+        }
+
+        @Override public void i(String message, Object... args) {
+            // Skip createTag() to improve  performance. message should be descriptive enough without it
+            Log.i(TAG, formatString(message, args)); // Just add to the log.
+        }
+
+        @Override public void i(Throwable t, String message, Object... args) {
+            // Skip createTag() to improve  performance. message should be descriptive enough without it
+            Log.i(TAG, formatString(message, args), t); // Just add to the log.
+        }
+
+        // Ignore logs below INFO level --> Non-overridden methods go to HollowTree
+
+        static String formatString(String message, Object... args) {
+            // If no varargs are supplied, treat it as a request to log the string without formatting.
             try {
-                e(t, message, args);
-                // TODO e.g., saveExceptionReportFile(t, origin?, message);
+                return args.length == 0 ? message : String.format(message, args);
             } catch (Exception e) {
-                e("failed to log error" + message);
+                return message;
             }
+        }
+
+        private static String createTag() {
+            String tag = NEXT_TAG.get();
+            if (tag != null) {
+                NEXT_TAG.remove();
+                return tag;
+            }
+
+            StackTraceElement[] stackTrace = new Throwable().getStackTrace();
+            if (stackTrace.length < 6) {
+                throw new IllegalStateException(
+                        "Synthetic stacktrace didn't have enough elements: are you using proguard?");
+            }
+            tag = stackTrace[5].getClassName();
+            Matcher m = ANONYMOUS_CLASS.matcher(tag);
+            if (m.find()) {
+                tag = m.replaceAll("");
+            }
+            return tag.substring(tag.lastIndexOf('.') + 1);
         }
     }
 }

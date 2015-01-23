@@ -434,7 +434,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            Timber.i("CardBrowser - onBackPressed()");
+            Timber.i("CardBrowser:: CardBrowser - onBackPressed()");
             closeCardBrowser(Activity.RESULT_OK);
             return true;
         }
@@ -552,7 +552,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         }
 
         if (requestCode == EDIT_CARD && resultCode != RESULT_CANCELED) {
-            Timber.i("CardBrowser: Saving card...");
+            Timber.i("CardBrowser:: CardBrowser: Saving card...");
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler,
                     new DeckTask.TaskData(getCol().getSched(), sCardBrowserCard, false));
         } else if (requestCode == ADD_NOTE && resultCode == RESULT_OK) {
@@ -994,7 +994,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                         new DialogInterface.OnCancelListener(){
                             @Override
                             public void onCancel(DialogInterface dialog){
-                                Timber.i("Search cards dialog dismissed");
+                                Timber.i("CardBrowser:: Search cards dialog dismissed");
                                 DeckTask.cancelTask(DeckTask.TASK_TYPE_SEARCH_CARDS);
                                 sSearchCancelled = true;
                             }
@@ -1010,7 +1010,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         @Override
         public void onPostExecute(TaskData result) {            
             if (result != null && mCards != null) {
-                Timber.i("Completed doInBackgroundSearchCards Successfuly");
+                Timber.i("CardBrowser:: Completed doInBackgroundSearchCards Successfuly");
                 updateList();
                 if (mProgressDialog != null && mProgressDialog.isShowing()) {
                     mProgressDialog.dismiss();
