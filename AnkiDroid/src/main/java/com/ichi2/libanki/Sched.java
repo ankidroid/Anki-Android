@@ -148,7 +148,6 @@ public class Sched {
 
     public void answerCard(Card card, int ease) {
         mCol.log();
-        Timber.i("answerCard - ease: %d", ease);
         mCol.markReview(card);
         if (mBurySiblingsOnAnswer) {
             _burySiblings(card);
