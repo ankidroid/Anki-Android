@@ -681,7 +681,10 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         @Override
         public void onPostExecute(TaskData result) {
             dismissProgressDialog();
-            ((DeckPicker) getActivity()).refreshMainInterface();
+            DeckPicker activity = (DeckPicker) getActivity();
+            if (activity != null) {
+                activity.refreshMainInterface();
+            }
         }
 
         @Override
