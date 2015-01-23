@@ -46,7 +46,7 @@
   <string name="CardEditorNoteDeck">Deste:</string>
   <string name="CardEditorModel">Tür:</string>
   <string name="CardEditorTags">Etiketler: %1$s</string>
-  <string name="CardEditorCards">Cards: %1$s</string>
+  <string name="CardEditorCards">Kartlar: %1$s</string>
   <string name="add_new_filter_tags">Etiket ekle/filtrele</string>
   <string name="note_type">Not türü</string>
   <string name="card_type">Kart türü</string>
@@ -82,15 +82,15 @@
   <string name="factadder_saving_error">Not kaydedilirken hata</string>
   <string name="pref_lang_support">Dil</string>
   <string name="saving_facts">Not kaydediliyor</string>
-  <string name="saving_model">Saving model</string>
+  <string name="saving_model">Modeli kaydet</string>
   <string name="deck">Deste</string>
   <string name="add">Ekle</string>
   <string name="close">Kapat</string>
   <string name="select">Seç</string>
   <string name="saving_changes">Değişiklikler kaydediliyor...</string>
   <string name="reordering_cards">Kartların sırası değiştiriliyor...</string>
-  <string name="field_remapping">%1$s (from \'%2$s\')</string>
-  <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
+  <string name="field_remapping">%1$s (\'%2$s\')\'dan/den</string>
+  <string name="confirm_map_cards_to_nothing">Hiçbiriyle eşlemeyen herhangi bir kart silinecek. Geriye kalan kartları olmayan not varsa, kaybolur. Devam etmek istediğinizden emin misiniz?</string>
   <plurals name="timebox_reached">
     <item quantity="one">%2$s içinde %1$d kart çalışıldı</item>
     <item quantity="other">%2$s %1$d kart çalışıldı</item>
@@ -154,7 +154,7 @@
   <string name="import_log_success">%d kart başarıyla aktarıldı</string>
   <string name="import_log_error">Aktarma başarısız</string>
   <string name="import_log_no_apkg">Bu geçerli bir apkg dosyası değil</string>
-  <string name="import_error_not_apkg_extension">Filename %s does not have .apkg extension</string>
+  <string name="import_error_not_apkg_extension">%s dosyasının .apkg uzantısı yok</string>
   <string name="import_importing">Kartlar aktarılıyor.\nLütfen bekleyin...</string>
   <string name="export_include_schedule">Zamanlama dâhil</string>
   <string name="export_include_media">Medya dâhil</string>

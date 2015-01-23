@@ -66,6 +66,6 @@
   <string name="backup_restore_select_title">復元するバックアップの選択</string>
   <string name="backup_restore_no_backups">このデバイス上では、このコレクションをバックアップできません。デスクトップコンピューターにバックアップがある場合には、それをあなたのAnkiDroidフォルダに手動でコピーしてください</string>
   <string name="open_collection_failed_title">コレクションは開かれていません</string>
-  <string name="open_collection_failed_message">データベースを開けませんでした。Ankiのデータでないか、またはデータベースが破損しています\n\n\'オプション\'をタップしたら、色々な修復しかたを選べます。\n\n壊れた単語帳修復についての詳しい情報：\n\n%1$s</string>
+  <string name="open_collection_failed_message">データベースを開けませんでした。Ankiのデータでないか、またはデータベースが破損しています\n\n\'オプション\'をタップしたら、色々な修復しかたを選べます。\n\n壊れた単語帳修復についての詳しい情報：\n%1$s</string>
   <string name="deck_repair_error">コレクションは修復できませんでした</string>
 </resources>

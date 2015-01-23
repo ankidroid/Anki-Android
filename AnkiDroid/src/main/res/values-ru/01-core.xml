@@ -184,7 +184,7 @@
   <string name="card_template_editor_front">Front Template</string>
   <string name="card_template_editor_back">Back Template</string>
   <string name="card_template_editor_styling">Styling</string>
-  <string name="card_template_editor_menu_add_reverse">Add reverse</string>
+  <string name="card_template_editor_menu_add_reverse">Добавить обратную сторону</string>
   <string name="card_template_editor_menu_delete">Удалить</string>
   <string name="card_template_editor_cant_delete">At least one card type is required.</string>
   <plurals name="card_template_editor_confirm_delete">

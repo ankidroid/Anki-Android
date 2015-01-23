@@ -178,19 +178,18 @@
   <string name="confirm">Onayla</string>
   <string name="internet">İnternet</string>
   <string name="pc">PC</string>
-  <string name="nothing">Nothing</string>
+  <string name="nothing">Hiçbirşey</string>
   <string name="title_activity_graphical_activity">İstatistik grafiği</string>
-  <string name="title_activity_template_editor">Card Types for %s</string>
-  <string name="card_template_editor_front">Front Template</string>
-  <string name="card_template_editor_back">Back Template</string>
-  <string name="card_template_editor_styling">Styling</string>
-  <string name="card_template_editor_menu_add_reverse">Add reverse</string>
-  <string name="card_template_editor_menu_delete">Delete</string>
-  <string name="card_template_editor_cant_delete">At least one card type is required.</string>
+  <string name="title_activity_template_editor">%s için kart türleri</string>
+  <string name="card_template_editor_front">Şablon Ön Yüz</string>
+  <string name="card_template_editor_back">Şablon Arka Yüz</string>
+  <string name="card_template_editor_styling">Stil</string>
+  <string name="card_template_editor_menu_add_reverse">Tersini Ekle</string>
+  <string name="card_template_editor_menu_delete">Sil</string>
+  <string name="card_template_editor_cant_delete">En az bir kart türü gerekiyor.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
-    <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
+    <item quantity="one">\'%2$s\' kart tipi ve %1$d kartı silinsin mi?</item>
+    <item quantity="other">\'%2$s\' kart tipi ve %1$d kartı silinsin mi?</item>
   </plurals>
-  <string name="card_template_editor_would_delete_note"> Removing this card type would cause one or
-        more notes to be deleted. Please create a new card type first.</string>
+  <string name="card_template_editor_would_delete_note"> Bu kart tipini kaldırmak bir veya daha fazla notun silinmesine neden olur. Lütfen önce yeni bir kart türü oluşturun.</string>
 </resources>
