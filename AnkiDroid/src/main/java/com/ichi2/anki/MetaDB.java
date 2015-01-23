@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
-import android.util.Log;
+
 
 import com.ichi2.libanki.Utils;
 import com.ichi2.widget.DeckStatus;
@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import timber.log.Timber;
 
 /**
  * Used to store additional information besides what is stored in the deck itself.
@@ -62,18 +64,18 @@ public class MetaDB {
             if (mMetaDb.needUpgrade(DATABASE_VERSION)) {
                 mMetaDb = upgradeDB(mMetaDb, DATABASE_VERSION);
             }
-            Log.i(AnkiDroidApp.TAG, "Opening MetaDB");
+            Timber.v("Opening MetaDB");
         } catch (Exception e) {
-            Log.e("Error", "Error opening MetaDB ", e);
+            Timber.e(e, "Error opening MetaDB ");
         }
     }
 
 
     /** Creating any table that missing and upgrading necessary tables. */
     private static SQLiteDatabase upgradeDB(SQLiteDatabase mMetaDb, int databaseVersion) {
-        Log.i(AnkiDroidApp.TAG, "Upgrading Internal Database..");
+        Timber.i("MetaDB:: Upgrading Internal Database..");
         // if (mMetaDb.getVersion() == 0) {
-        Log.i(AnkiDroidApp.TAG, "Applying changes for version: 0");
+        Timber.i("MetaDB:: Applying changes for version: 0");
 
         if (mMetaDb.getVersion() < 4) {
             mMetaDb.execSQL("DROP TABLE IF EXISTS languages;");
@@ -113,7 +115,7 @@ public class MetaDB {
             mMetaDb.execSQL("ALTER TABLE intentInformation " + "DROP COLUMN target INTEGER NOT NULL DEFAULT '0'");
         }
         mMetaDb.setVersion(databaseVersion);
-        Log.i(AnkiDroidApp.TAG, "Upgrading Internal Database finished. New version: " + databaseVersion);
+        Timber.i("MetaDB:: Upgrading Internal Database finished. New version: %d", databaseVersion);
         return mMetaDb;
     }
 
@@ -131,7 +133,7 @@ public class MetaDB {
         if (mMetaDb != null && mMetaDb.isOpen()) {
             mMetaDb.close();
             mMetaDb = null;
-            Log.i(AnkiDroidApp.TAG, "Closing MetaDB");
+            Timber.d("Closing MetaDB");
         }
     }
 
@@ -141,21 +143,21 @@ public class MetaDB {
         openDBIfClosed(context);
         try {
             mMetaDb.execSQL("DROP TABLE IF EXISTS languages;");
-            Log.i(AnkiDroidApp.TAG, "Resetting all language assignment");
+            Timber.i("MetaDB:: Resetting all language assignment");
             mMetaDb.execSQL("DROP TABLE IF EXISTS whiteboardState;");
-            Log.i(AnkiDroidApp.TAG, "Resetting whiteboard state");
+            Timber.i("MetaDB:: Resetting whiteboard state");
             mMetaDb.execSQL("DROP TABLE IF EXISTS customDictionary;");
-            Log.i(AnkiDroidApp.TAG, "Resetting custom Dictionary");
+            Timber.i("MetaDB:: Resetting custom Dictionary");
             mMetaDb.execSQL("DROP TABLE IF EXISTS widgetStatus;");
-            Log.i(AnkiDroidApp.TAG, "Resetting widget status");
+            Timber.i("MetaDB:: Resetting widget status");
             mMetaDb.execSQL("DROP TABLE IF EXISTS smallWidgetStatus;");
-            Log.i(AnkiDroidApp.TAG, "Resetting small widget status");
+            Timber.i("MetaDB:: Resetting small widget status");
             mMetaDb.execSQL("DROP TABLE IF EXISTS intentInformation;");
-            Log.i(AnkiDroidApp.TAG, "Resetting intentInformation");
+            Timber.i("MetaDB:: Resetting intentInformation");
             upgradeDB(mMetaDb, DATABASE_VERSION);
             return true;
         } catch (Exception e) {
-            Log.e("Error", "Error resetting MetaDB ", e);
+            Timber.e(e, "Error resetting MetaDB ");
         }
         return false;
     }
@@ -167,12 +169,12 @@ public class MetaDB {
             openDB(context);
         }
         try {
-            Log.i(AnkiDroidApp.TAG, "Resetting all language assignments");
+            Timber.i("MetaDB:: Resetting all language assignments");
             mMetaDb.execSQL("DROP TABLE IF EXISTS languages;");
             upgradeDB(mMetaDb, DATABASE_VERSION);
             return true;
         } catch (Exception e) {
-            Log.e("Error", "Error resetting MetaDB ", e);
+            Timber.e(e, "Error resetting MetaDB ");
         }
         return false;
     }
@@ -184,13 +186,13 @@ public class MetaDB {
             openDB(context);
         }
         try {
-            Log.i(AnkiDroidApp.TAG, "Resetting widget status");
+            Timber.i("MetaDB:: Resetting widget status");
             mMetaDb.execSQL("DROP TABLE IF EXISTS widgetStatus;");
             mMetaDb.execSQL("DROP TABLE IF EXISTS smallWidgetStatus;");
             upgradeDB(mMetaDb, DATABASE_VERSION);
             return true;
         } catch (Exception e) {
-            Log.e("Error", "Error resetting widgetStatus and smallWidgetStatus", e);
+            Timber.e(e, "Error resetting widgetStatus and smallWidgetStatus");
         }
         return false;
     }
@@ -202,12 +204,12 @@ public class MetaDB {
             openDB(context);
         }
         try {
-            Log.i(AnkiDroidApp.TAG, "Resetting intent information");
+            Timber.i("MetaDB:: Resetting intent information");
             mMetaDb.execSQL("DROP TABLE IF EXISTS intentInformation;");
             upgradeDB(mMetaDb, DATABASE_VERSION);
             return true;
         } catch (Exception e) {
-            Log.e("Error", "Error resetting intentInformation ", e);
+            Timber.e(e, "Error resetting intentInformation ");
         }
         return false;
     }
@@ -225,9 +227,9 @@ public class MetaDB {
         try {
             mMetaDb.execSQL("INSERT INTO languages (did, ord, qa, language) " + " VALUES (?, ?, ?, ?);", new Object[] {
                     did, ord, qa, language });
-            Log.i(AnkiDroidApp.TAG, "Store language for deck " + did);
+            Timber.v("Store language for deck %d", did);
         } catch (Exception e) {
-            Log.e("Error", "Error storing language in MetaDB ", e);
+            Timber.e(e,"Error storing language in MetaDB ");
         }
     }
 
@@ -247,12 +249,12 @@ public class MetaDB {
             String query = "SELECT language FROM languages " + "WHERE did = " + did + " AND ord = " + ord
                     + " AND qa = " + qa + " " + "LIMIT 1";
             cur = mMetaDb.rawQuery(query, null);
-            Log.i(AnkiDroidApp.TAG, "getLanguage: " + query);
+            Timber.v("getLanguage: %s", query);
             if (cur.moveToNext()) {
                 language = cur.getString(0);
             }
         } catch (Exception e) {
-            Log.e("Error", "Error fetching language ", e);
+            Timber.e(e, "Error fetching language ");
         } finally {
             if (cur != null && !cur.isClosed()) {
                 cur.close();
@@ -271,10 +273,10 @@ public class MetaDB {
         openDBIfClosed(context);
         try {
             mMetaDb.execSQL("DELETE FROM languages WHERE did = " + did + ";");
-            Log.i(AnkiDroidApp.TAG, "Resetting language assignment for deck " + did);
+            Timber.i("MetaDB:: Resetting language assignment for deck %d", did);
             return true;
         } catch (Exception e) {
-            Log.e("Error", "Error resetting deck language", e);
+            Timber.e(e, "Error resetting deck language");
         }
         return false;
     }
@@ -296,7 +298,7 @@ public class MetaDB {
                 return false;
             }
         } catch (Exception e) {
-            Log.e("Error", "Error retrieving whiteboard state from MetaDB ", e);
+            Timber.e(e, "Error retrieving whiteboard state from MetaDB ");
             return false;
         } finally {
             if (cur != null && !cur.isClosed()) {
@@ -320,13 +322,13 @@ public class MetaDB {
             if (cur.moveToNext()) {
                 mMetaDb.execSQL("UPDATE whiteboardState " + "SET did = " + did + ", " + "state="
                         + Integer.toString(state) + " " + "WHERE _id=" + cur.getString(0) + ";");
-                Log.i(AnkiDroidApp.TAG, "Store whiteboard state (" + state + ") for deck " + did);
+                Timber.d("Store whiteboard state (%d) for deck %d", state, did);
             } else {
                 mMetaDb.execSQL("INSERT INTO whiteboardState (did, state) VALUES (?, ?)", new Object[] { did, state });
-                Log.i(AnkiDroidApp.TAG, "Store whiteboard state (" + state + ") for deck " + did);
+                Timber.d("Store whiteboard state (%d) for deck %d", state, did);
             }
         } catch (Exception e) {
-            Log.e("Error", "Error storing whiteboard state in MetaDB ", e);
+            Timber.e(e,"Error storing whiteboard state in MetaDB ");
         } finally {
             if (cur != null && !cur.isClosed()) {
                 cur.close();
@@ -351,7 +353,7 @@ public class MetaDB {
                 return -1;
             }
         } catch (Exception e) {
-            Log.e("Error", "Error retrieving custom dictionary from MetaDB ", e);
+            Timber.e(e, "Error retrieving custom dictionary from MetaDB ");
             return -1;
         } finally {
             if (cur != null && !cur.isClosed()) {
@@ -374,14 +376,14 @@ public class MetaDB {
             if (cur.moveToNext()) {
                 mMetaDb.execSQL("UPDATE customDictionary " + "SET did = " + did + ", " + "dictionary="
                         + Integer.toString(dictionary) + " " + "WHERE _id=" + cur.getString(0) + ";");
-                Log.i(AnkiDroidApp.TAG, "Store custom dictionary (" + dictionary + ") for deck " + did);
+                Timber.i("MetaDB:: Store custom dictionary (%d) for deck %d", dictionary, did);
             } else {
                 mMetaDb.execSQL("INSERT INTO customDictionary (did, dictionary) VALUES (?, ?)", new Object[] { did,
                         dictionary });
-                Log.i(AnkiDroidApp.TAG, "Store custom dictionary (" + dictionary + ") for deck " + did);
+                Timber.i("MetaDB:: Store custom dictionary (%d) for deck %d", dictionary, did);
             }
         } catch (Exception e) {
-            Log.e("Error", "Error storing custom dictionary to MetaDB ", e);
+            Timber.e(e, "Error storing custom dictionary to MetaDB ");
         } finally {
             if (cur != null && !cur.isClosed()) {
                 cur.close();
@@ -416,7 +418,7 @@ public class MetaDB {
             }
             return decks;
         } catch (SQLiteException e) {
-            Log.e(AnkiDroidApp.TAG, "Error while querying widgetStatus", e);
+            Timber.e(e, "Error while querying widgetStatus");
         } finally {
             if (cursor != null && !cursor.isClosed()) {
                 cursor.close();
@@ -441,7 +443,7 @@ public class MetaDB {
                 return (new int[] { cursor.getInt(0), cursor.getInt(1), cursor.getInt(2) });
             }
         } catch (SQLiteException e) {
-            Log.e(AnkiDroidApp.TAG, "Error while querying widgetStatus", e);
+            Timber.e(e, "Error while querying widgetStatus");
         } finally {
             if (cursor != null && !cursor.isClosed()) {
                 cursor.close();
@@ -464,7 +466,7 @@ public class MetaDB {
             // due += cursor.getInt(0) + cursor.getInt(1) + cursor.getInt(2);
             // }
         } catch (SQLiteException e) {
-            Log.e(AnkiDroidApp.TAG, "Error while querying widgetStatus", e);
+            Timber.e(e, "Error while querying widgetStatus");
         } finally {
             if (cursor != null && !cursor.isClosed()) {
                 cursor.close();
@@ -488,11 +490,11 @@ public class MetaDB {
                 mMetaDb.endTransaction();
             }
         } catch (IllegalStateException e) {
-            Log.e(AnkiDroidApp.TAG, "MetaDB.storeSmallWidgetStatus: failed", e);
+            Timber.e(e, "MetaDB.storeSmallWidgetStatus: failed");
         } catch (SQLiteException e) {
-            Log.e(AnkiDroidApp.TAG, "MetaDB.storeSmallWidgetStatus: failed", e);
+            Timber.e(e, "MetaDB.storeSmallWidgetStatus: failed");
             closeDB();
-            Log.i(AnkiDroidApp.TAG, "Trying to reset Widget: " + resetWidget(context));
+            Timber.i("MetaDB:: Trying to reset Widget: " + resetWidget(context));
         }
     }
 
@@ -522,11 +524,11 @@ public class MetaDB {
                 mMetaDb.endTransaction();
             }
         } catch (IllegalStateException e) {
-            Log.e(AnkiDroidApp.TAG, "MetaDB.storeWidgetStatus: failed", e);
+            Timber.e(e, "MetaDB.storeWidgetStatus: failed");
         } catch (SQLiteException e) {
-            Log.e(AnkiDroidApp.TAG, "MetaDB.storeWidgetStatus: failed", e);
+            Timber.e(e, "MetaDB.storeWidgetStatus: failed");
             closeDB();
-            Log.i(AnkiDroidApp.TAG, "Trying to reset Widget: " + resetWidget(context));
+            Timber.i("MetaDB:: Trying to reset Widget: " + resetWidget(context));
         }
     }
 
@@ -561,7 +563,7 @@ public class MetaDB {
         } catch (SQLiteException e) {
             upgradeDB(mMetaDb, DATABASE_VERSION);
 
-            Log.e(AnkiDroidApp.TAG, "Error while querying intentInformation", e);
+            Timber.e(e, "Error while querying intentInformation");
         } finally {
             if (cursor != null && !cursor.isClosed()) {
                 cursor.close();
@@ -575,9 +577,9 @@ public class MetaDB {
         openDBIfClosed(context);
         try {
             mMetaDb.execSQL("INSERT INTO intentInformation (fields) " + " VALUES (?);", new Object[] { fields });
-            Log.i(AnkiDroidApp.TAG, "Store intentInformation: " + fields);
+            Timber.i("MetaDB:: Store intentInformation: " + fields);
         } catch (Exception e) {
-            Log.e("Error", "Error storing intentInformation in MetaDB ", e);
+            Timber.e(e, "Error storing intentInformation in MetaDB ");
         }
     }
 
@@ -587,11 +589,11 @@ public class MetaDB {
             openDB(context);
         }
         try {
-            Log.i(AnkiDroidApp.TAG, "Deleting intent information " + id);
+            Timber.i("MetaDB:: Deleting intent information " + id);
             mMetaDb.execSQL("DELETE FROM intentInformation WHERE id = " + id + ";");
             return true;
         } catch (Exception e) {
-            Log.e("Error", "Error deleting intentInformation " + id + ": ", e);
+            Timber.e(e, "Error deleting intentInformation " + id + ": ");
         }
         return false;
     }

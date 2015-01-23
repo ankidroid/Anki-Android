@@ -21,7 +21,7 @@ package com.ichi2.libanki;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.text.TextUtils;
-import android.util.Log;
+
 
 import com.ichi2.anki.AnkiDroidApp;
 
@@ -36,6 +36,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+
+import timber.log.Timber;
 
 /**
  A Card is the ultimate entity subject to review; it encapsulates the scheduling parameters (from which to derive
@@ -141,7 +143,7 @@ public class Card implements Cloneable {
         try {
             cursor = mCol.getDb().getDatabase().rawQuery("SELECT * FROM cards WHERE id = " + mId, null);
             if (!cursor.moveToFirst()) {
-                Log.w(AnkiDroidApp.TAG, "Card.load: No card with id " + mId);
+                Timber.w("Card.load: No card with id " + mId);
                 return;
             }
             mId = cursor.getLong(0);
@@ -428,7 +430,7 @@ public class Card implements Cloneable {
             mTimerStarted += Utils.now() - mTimerStopped;
             mTimerStopped = Double.NaN;
         } else {
-            Log.i(AnkiDroidApp.TAG, "Card Timer: nothing to resume");
+            Timber.i("Card Timer: nothing to resume");
         }
     }
 

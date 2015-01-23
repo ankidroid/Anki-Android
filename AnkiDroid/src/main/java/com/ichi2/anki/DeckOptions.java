@@ -33,7 +33,7 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.text.TextUtils;
-import android.util.Log;
+
 import android.view.KeyEvent;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
@@ -61,6 +61,8 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
 
+import timber.log.Timber;
+
 /**
  * Preferences for the current deck.
  */
@@ -85,7 +87,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
 
 
         protected void cacheValues() {
-            Log.i(AnkiDroidApp.TAG, "DeckOptions - CacheValues");
+            Timber.i("DeckOptions - CacheValues");
 
             try {
                 mOptions = mCol.getDecks().confForDid(mDeck.getLong("id"));
@@ -136,7 +138,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
 
             @Override
             public SharedPreferences.Editor clear() {
-                Log.d(AnkiDroidApp.TAG, "clear()");
+                Timber.d("clear()");
                 mUpdate = new ContentValues();
                 return this;
             }
@@ -144,13 +146,13 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
 
             @Override
             public boolean commit() {
-                Log.d(AnkiDroidApp.TAG, "DeckOptions - commit() changes back to database");
+                Timber.d("DeckOptions - commit() changes back to database");
 
                 try {
                     for (Entry<String, Object> entry : mUpdate.valueSet()) {
                         String key = entry.getKey();
                         Object value = entry.getValue();
-                        Log.i(AnkiDroidApp.TAG, "Change value for key '" + key + "': " + value);
+                        Timber.i("Change value for key '" + key + "': " + value);
 
                         if (key.equals("maxAnswerTime")) {
                             mOptions.put("maxTaken", (Integer) value);
@@ -285,7 +287,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
                 try {
                     mCol.getDecks().save(mOptions);
                 } catch (RuntimeException e) {
-                    Log.e(AnkiDroidApp.TAG, "DeckOptions - RuntimeException on saving conf: " + e);
+                    Timber.e("DeckOptions - RuntimeException on saving conf: " + e);
                     AnkiDroidApp.sendExceptionReport(e, "DeckOptionsSaveConf");
                     setResult(DeckPicker.RESULT_DB_ERROR);
                     finish();
@@ -342,7 +344,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
 
             @Override
             public SharedPreferences.Editor remove(String key) {
-                Log.d(this.getClass().toString(), String.format("Editor.remove(key=%s)", key));
+                Timber.d("Editor.remove(key=%s)", key);
                 mUpdate.remove(key);
                 return this;
             }
@@ -452,7 +454,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
 
         @Override
         public String getString(String key, String defValue) {
-            Log.d(this.getClass().toString(), String.format("getString(key=%s, defValue=%s)", key, defValue));
+            Timber.d("getString(key=%s, defValue=%s)", key, defValue);
             if (!mValues.containsKey(key)) {
                 return defValue;
             }
@@ -487,7 +489,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
 
     @Override
     public SharedPreferences getSharedPreferences(String name, int mode) {
-        Log.d(this.getClass().toString(), String.format("getSharedPreferences(name=%s)", name));
+        Timber.d("getSharedPreferences(name=%s)", name);
         return mPref;
     }
 
@@ -510,7 +512,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
         registerExternalStorageListener();
 
         if (mCol == null) {
-            Log.i(AnkiDroidApp.TAG, "DeckOptions - No Collection loaded");
+            Timber.w("DeckOptions - No Collection loaded");
             finish();
             return;
         } else {
@@ -544,7 +546,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            Log.i(AnkiDroidApp.TAG, "DeckOptions - onBackPressed()");
+            Timber.i("DeckOptions - onBackPressed()");
             finish();
             ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
             return true;

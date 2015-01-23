@@ -17,9 +17,11 @@
 package com.ichi2.utils;
 
 import android.text.TextUtils;
-import android.util.Log;
+
 
 import com.ichi2.anki.AnkiDroidApp;
+
+import timber.log.Timber;
 
 /**
  * Helper class to log method invocation.
@@ -100,9 +102,9 @@ public class MethodLogger {
         String callerClass = caller.getClassName();
         String callerMethod = caller.getMethodName();
         if (TextUtils.isEmpty(message)) {
-            Log.d(AnkiDroidApp.TAG, String.format("called: %s.%s()", callerClass, callerMethod));
+            Timber.d("called: %s.%s()", callerClass, callerMethod);
         } else {
-            Log.d(AnkiDroidApp.TAG, String.format("called: %s.%s(): %s", callerClass, callerMethod, message));
+            Timber.d("called: %s.%s(): %s", callerClass, callerMethod, message);
         }
     }
 

@@ -21,13 +21,15 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.util.Log;
+
 import android.view.View;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.Statistics;
 import com.wildplot.android.rendering.PlotSheet;
 import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap;
 import com.wildplot.android.rendering.graphics.wrapper.RectangleWrap;
+
+import timber.log.Timber;
 
 public class ChartView extends View{
 
@@ -54,7 +56,7 @@ public class ChartView extends View{
 
     @Override
     public void onDraw(Canvas canvas) {
-        //Log.d(AnkiDroidApp.TAG, "drawing chart");
+        //Timber.d("drawing chart");
         if(mDataIsSet){
             //Paint paint = new Paint(Paint.LINEAR_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
             Paint paint = new Paint(Paint.LINEAR_TEXT_FLAG);
@@ -89,7 +91,7 @@ public class ChartView extends View{
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        Log.d(AnkiDroidApp.TAG, "ChartView sizeChange!");
+        Timber.d("ChartView sizeChange!");
         if(mFragment != null)
             mFragment.checkAndUpdate();
     }

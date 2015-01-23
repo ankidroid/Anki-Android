@@ -7,10 +7,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.util.Log;
+
 
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledDialog;
+
+import timber.log.Timber;
 
 public class Lookup {
 
@@ -70,7 +72,7 @@ public class Lookup {
                 mIsDictionaryAvailable = false;
                 break;
         }
-        Log.i(AnkiDroidApp.TAG, "Is intent available = " + mIsDictionaryAvailable);
+        Timber.v("Is intent available = %b", mIsDictionaryAvailable);
         return mIsDictionaryAvailable;
     }
 

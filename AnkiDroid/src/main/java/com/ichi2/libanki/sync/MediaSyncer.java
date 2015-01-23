@@ -18,7 +18,7 @@
 package com.ichi2.libanki.sync;
 
 import android.text.TextUtils;
-import android.util.Log;
+
 import android.util.Pair;
 
 import com.ichi2.anki.AnkiDroidApp;
@@ -38,6 +38,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.zip.ZipFile;
+
+import timber.log.Timber;
 
 /**
  * About conflicts:
@@ -96,11 +98,11 @@ public class MediaSyncer {
             // loop through and process changes from server
             mCol.log("last local usn is " + lastUsn);
             mDownloadCount = 0;
-            Log.i(AnkiDroidApp.TAG, "MediaSyncer: Last local usn is: " + lastUsn);
+            Timber.i("MediaSyncer: Last local usn is: %d", lastUsn);
             while (true) {
                 JSONArray data = mServer.mediaChanges(lastUsn);
-                mCol.log("mediaChanges resp count: " + data.length());
-                Log.i(AnkiDroidApp.TAG, "MediaSyncer: mediaChanges resp count: " + data.length());
+                mCol.log("mediaChanges resp count: %d", data.length());
+                Timber.i("MediaSyncer: mediaChanges resp count: %d", data.length());
                 if (data.length() == 0) {
                     break;
                 }
@@ -203,10 +205,10 @@ public class MediaSyncer {
             throw new RuntimeException(e);
         } catch (APIVersionException e) {
             UnsupportedSyncException ee = new UnsupportedSyncException("Cannot sync media on this version of Android");
-            Log.e(AnkiDroidApp.TAG, e.getMessage());
+            Timber.e(e.getMessage());
             throw ee;
         } catch (Exception e) {
-            Log.e(AnkiDroidApp.TAG, "Syncing error: ", e);
+            Timber.e(e, "Syncing error");
             throw new RuntimeException(e);
         }
     }
@@ -235,7 +237,7 @@ public class MediaSyncer {
                 mCon.publishProgress(String.format(
                         AnkiDroidApp.getAppResources().getString(R.string.sync_media_downloaded_count), mDownloadCount));
             } catch (Exception e) {
-                Log.e(AnkiDroidApp.TAG, "Error downloading media files", e);
+                Timber.e(e, "Error downloading media files");
                 throw new RuntimeException(e);
             }
         }

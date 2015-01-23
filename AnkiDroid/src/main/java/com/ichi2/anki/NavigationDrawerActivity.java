@@ -38,6 +38,10 @@ import android.widget.TextView;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.stats.AnkiStatsTaskHandler;
 
+import java.util.Locale;
+
+import timber.log.Timber;
+
 
 public class NavigationDrawerActivity extends AnkiActivity {
     
@@ -107,6 +111,7 @@ public class NavigationDrawerActivity extends AnkiActivity {
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            Timber.i("Item %d selected in navigation drawer", position);
             selectNavigationItem(position);
         }
     }
@@ -172,9 +177,7 @@ public class NavigationDrawerActivity extends AnkiActivity {
      * @return
      */
     private String getFeedbackUrl() {
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
-        String locale = preferences.getString(Preferences.LANGUAGE, "");
-        if (locale.equals("ja")) {
+        if (isCurrentLanguage("ja")) {
             return getResources().getString(R.string.link_help_ja);
         } else {
             return getResources().getString(R.string.link_help);
@@ -186,13 +189,21 @@ public class NavigationDrawerActivity extends AnkiActivity {
      * @return
      */
     private String getManualUrl() {
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
-        String locale = preferences.getString(Preferences.LANGUAGE, "");
-        if (locale.equals("ja")) {
+        if (isCurrentLanguage("ja")) {
             return getResources().getString(R.string.link_manual_ja);
         } else {
             return getResources().getString(R.string.link_manual);
         }
+    }
+
+    /**
+     * Check whether l is the currently set language code
+     * @param l ISO2 language code
+     * @return
+     */
+    private boolean isCurrentLanguage(String l) {
+        String pref = AnkiDroidApp.getSharedPrefs(this).getString(Preferences.LANGUAGE, "");
+        return pref.equals(l) || pref.equals("") && Locale.getDefault().getLanguage().equals(l);
     }
     
     protected void deselectAllNavigationItems() {

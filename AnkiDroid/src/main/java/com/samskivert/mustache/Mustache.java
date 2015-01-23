@@ -4,7 +4,7 @@
 
 package com.samskivert.mustache;
 
-import android.util.Log;
+
 
 import com.ichi2.anki.AnkiDroidApp;
 
@@ -18,6 +18,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import timber.log.Timber;
 
 /**
  * Provides <a href="http://mustache.github.com/">Mustache</a> templating services.
@@ -207,7 +209,7 @@ public class Mustache
             accum.addTextSegment(text);
             break;
         case TAG:
-            Log.e(AnkiDroidApp.TAG, "Template ended while parsing a tag [line=" + line + ", tag="+ text + "]");
+            Timber.e("Template ended while parsing a tag [line=" + line + ", tag=" + text + "]");
             text.append(end1);
             accum.addTextSegment(text);
             break;
@@ -223,7 +225,7 @@ public class Mustache
         for (int ii = 0, ll = accum.length(); ii < ll; ii++) {
             if (accum.charAt(ii) == start1) {
                 if (start2 == -1 || (ii < ll-1 && accum.charAt(ii+1) == start2)) {
-                    Log.e(AnkiDroidApp.TAG, "Tag contains start tag delimiter, probably missing close delimiter " +
+                    Timber.e("Tag contains start tag delimiter, probably missing close delimiter " +
                             "[line=" + line + ", tag=" + accum + "]");
                     return false;
                 }

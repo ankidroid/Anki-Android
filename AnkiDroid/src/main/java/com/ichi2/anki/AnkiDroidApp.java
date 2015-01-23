@@ -64,6 +64,10 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import timber.log.Timber;
 
 /**
  * Application class.
@@ -200,6 +204,15 @@ public class AnkiDroidApp extends Application {
         // Setup error Reporter
         ACRA.init(this);
 
+        // Setup logging so that debug and verbose comments are not included in production builds
+        if (BuildConfig.DEBUG) {
+            Timber.plant(new Timber.DebugTree());
+        } else {
+            Timber.plant(new CrashReportingTree());
+        }
+        Timber.tag(TAG);
+
+
         if (isNookHdOrHdPlus() && AnkiDroidApp.SDK_VERSION == 15) {
             mCompat = new CompatV15NookHdOrHdPlus();
         } else if (AnkiDroidApp.SDK_VERSION >= 16) {
@@ -335,7 +348,7 @@ public class AnkiDroidApp extends Application {
         try {
             new File(decksDirectory.getAbsolutePath() + "/.nomedia").createNewFile();
         } catch (IOException e) {
-            Log.e(AnkiDroidApp.TAG, "Nomedia file could not be created");
+            Timber.e("Nomedia file could not be created");
         }
         createNoMediaFileIfMissing(decksDirectory);
     }
@@ -347,7 +360,7 @@ public class AnkiDroidApp extends Application {
             try {
                 mediaFile.createNewFile();
             } catch (IOException e) {
-                Log.e(AnkiDroidApp.TAG, "Nomedia file could not be created in path " + decksDirectory.getAbsolutePath());
+                Timber.e("Nomedia file could not be created in path %s", decksDirectory.getAbsolutePath());
             }
         }
     }
@@ -390,7 +403,7 @@ public class AnkiDroidApp extends Application {
             PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
             pkgName = context.getString(pInfo.applicationInfo.labelRes);
         } catch (PackageManager.NameNotFoundException e) {
-            Log.e(TAG, "Couldn't find package named " + context.getPackageName(), e);
+            Timber.e(e, "Couldn't find package named %s", context.getPackageName());
         }
 
         return pkgName;
@@ -411,7 +424,7 @@ public class AnkiDroidApp extends Application {
                 PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
                 pkgVersion = pInfo.versionName;
             } catch (PackageManager.NameNotFoundException e) {
-                Log.e(TAG, "Couldn't find package named " + context.getPackageName(), e);
+                Timber.e(e, "Couldn't find package named %s", context.getPackageName());
             }
         }
 
@@ -430,7 +443,7 @@ public class AnkiDroidApp extends Application {
             PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
             return pInfo.versionCode;
         } catch (PackageManager.NameNotFoundException e) {
-            Log.e(TAG, "Couldn't find package named " + context.getPackageName(), e);
+            Timber.e(e, "Couldn't find package named %s", context.getPackageName());
         }
         return 0;
     }
@@ -525,7 +538,7 @@ public class AnkiDroidApp extends Application {
 
     public static synchronized Collection openCollection(String path, boolean force) {
         mLock.lock();
-        Log.i(AnkiDroidApp.TAG, "openCollection: " + path);
+        Timber.i("openCollection: %s", path);
         try {
             if (!colIsOpen() || !sInstance.mCurrentCollection.getPath().equals(path) || force) {
                 if (colIsOpen()) {
@@ -535,10 +548,10 @@ public class AnkiDroidApp extends Application {
                 }
                 sInstance.mCurrentCollection = Storage.Collection(path, false, true);
                 sInstance.mAccessThreadCount++;
-                Log.i(AnkiDroidApp.TAG, "Access to collection is requested: collection has been opened");
+                Timber.d("Access to collection is requested: collection has been opened");
             } else {
                 sInstance.mAccessThreadCount++;
-                Log.i(AnkiDroidApp.TAG, "Access to collection is requested: collection has not been reopened (count: " + sInstance.mAccessThreadCount + ")");
+                Timber.d("Access to collection is requested: collection has not been reopened (count: %d)", sInstance.mAccessThreadCount);
             }
             return sInstance.mCurrentCollection;
         } finally {
@@ -554,12 +567,12 @@ public class AnkiDroidApp extends Application {
 
     public static void closeCollection(boolean save) {
         mLock.lock();
-        Log.i(AnkiDroidApp.TAG, "closeCollection");
+        Timber.i("closeCollection");
         try {
             if (sInstance.mAccessThreadCount > 0) {
                 sInstance.mAccessThreadCount--;
             }
-            Log.i(AnkiDroidApp.TAG, "Access to collection has been closed: (count: " + sInstance.mAccessThreadCount + ")");
+            Timber.d("Access to collection has been closed: (count: %d)", sInstance.mAccessThreadCount);
             if (sInstance.mAccessThreadCount == 0 && sInstance.mCurrentCollection != null) {
                 Collection col = sInstance.mCurrentCollection;
                 sInstance.mCurrentCollection = null;
@@ -582,7 +595,7 @@ public class AnkiDroidApp extends Application {
     public static void resetAccessThreadCount() {
         sInstance.mAccessThreadCount = 0;
         sInstance.mCurrentCollection = null;
-        Log.i(AnkiDroidApp.TAG, "Access has been reset to 0");
+        Timber.d("Access has been reset to 0");
     }
 
     public static void setStoredDialogHandlerMessage(Message msg) {
@@ -623,9 +636,72 @@ public class AnkiDroidApp extends Application {
                     ACRA.getConfig().setResToastText(R.string.feedback_manual_toast_text);
                 }
             } catch (ACRAConfigurationException e) {
-                Log.e(AnkiDroidApp.TAG, "Could not set ACRA report mode");
+                Timber.e("Could not set ACRA report mode");
             }
         }
         editor.commit();
+    }
+
+    /** A tree which logs necessary data for crash reporting. */
+    public static class CrashReportingTree extends Timber.HollowTree {
+        private static final ThreadLocal<String> NEXT_TAG = new ThreadLocal<String>();
+        private static final Pattern ANONYMOUS_CLASS = Pattern.compile("\\$\\d+$");
+
+        @Override public void e(String message, Object... args) {
+            Log.e(createTag(), formatString(message, args)); // Just add to the log.
+        }
+
+        @Override public void e(Throwable t, String message, Object... args) {
+            Log.e(createTag(), formatString(message, args), t); // Just add to the log.
+        }
+
+        @Override public void w(String message, Object... args) {
+            Log.w(createTag(), formatString(message, args)); // Just add to the log.
+        }
+
+        @Override public void w(Throwable t, String message, Object... args) {
+            Log.w(createTag(), formatString(message, args), t); // Just add to the log.
+        }
+
+        @Override public void i(String message, Object... args) {
+            // Skip createTag() to improve  performance. message should be descriptive enough without it
+            Log.i(TAG, formatString(message, args)); // Just add to the log.
+        }
+
+        @Override public void i(Throwable t, String message, Object... args) {
+            // Skip createTag() to improve  performance. message should be descriptive enough without it
+            Log.i(TAG, formatString(message, args), t); // Just add to the log.
+        }
+
+        // Ignore logs below INFO level --> Non-overridden methods go to HollowTree
+
+        static String formatString(String message, Object... args) {
+            // If no varargs are supplied, treat it as a request to log the string without formatting.
+            try {
+                return args.length == 0 ? message : String.format(message, args);
+            } catch (Exception e) {
+                return message;
+            }
+        }
+
+        private static String createTag() {
+            String tag = NEXT_TAG.get();
+            if (tag != null) {
+                NEXT_TAG.remove();
+                return tag;
+            }
+
+            StackTraceElement[] stackTrace = new Throwable().getStackTrace();
+            if (stackTrace.length < 6) {
+                throw new IllegalStateException(
+                        "Synthetic stacktrace didn't have enough elements: are you using proguard?");
+            }
+            tag = stackTrace[5].getClassName();
+            Matcher m = ANONYMOUS_CLASS.matcher(tag);
+            if (m.find()) {
+                tag = m.replaceAll("");
+            }
+            return tag.substring(tag.lastIndexOf('.') + 1);
+        }
     }
 }

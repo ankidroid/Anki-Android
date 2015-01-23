@@ -27,7 +27,7 @@ import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
-import android.util.Log;
+
 import android.view.Display;
 import android.view.WindowManager;
 import android.widget.VideoView;
@@ -42,6 +42,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import timber.log.Timber;
 
 /**
  * Class used to parse, load and play sound files on AnkiDroid.
@@ -180,7 +182,7 @@ public class Sound {
         StringBuilder stringBuilder = new StringBuilder();
         String contentLeft = content;
 
-        Log.i(AnkiDroidApp.TAG, "expandSounds");
+        Timber.d("expandSounds");
 
         Matcher matcher = sSoundPattern.matcher(content);
         // While there is matches of the pattern for sound markers
@@ -207,7 +209,7 @@ public class Sound {
                         + "<span style='padding:5px;'>"+ button
                         + "</span></a>");
             contentLeft = contentLeft.substring(markerStart + soundMarker.length());
-            Log.i(AnkiDroidApp.TAG, "Content left = " + contentLeft);
+            Timber.d("Content left = %s", contentLeft);
         }
 
         // unused code related to tts support taken out after v2.2alpha55
@@ -252,7 +254,7 @@ public class Sound {
      */
     @SuppressLint("NewApi")
     public static void playSound(String soundPath, OnCompletionListener playAllListener, final VideoView videoView) {
-        Log.i(AnkiDroidApp.TAG, "Playing " + soundPath + " has listener? " + Boolean.toString(playAllListener != null));
+        Timber.d("Playing %s has listener? %b", soundPath, playAllListener != null);
 
         if (soundPath.substring(0, 3).equals("tts")) {
             // TODO: give information about did
@@ -318,7 +320,7 @@ public class Sound {
                 sMediaPlayer.prepareAsync();
                 AnkiDroidApp.getCompat().requestAudioFocus(sAudioManager);
             } catch (Exception e) {
-                Log.e(AnkiDroidApp.TAG, "playSounds - Error reproducing sound " + soundPath + " = " + e.getMessage());
+                Timber.e(e, "playSounds - Error reproducing sound %s", soundPath);
                 releaseSound();
             }
         }

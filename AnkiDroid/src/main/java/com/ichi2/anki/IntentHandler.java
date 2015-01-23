@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.os.Message;
 import android.provider.OpenableColumns;
 import android.support.v4.content.IntentCompat;
-import android.util.Log;
+
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.DialogHandler;
@@ -21,6 +21,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
+import timber.log.Timber;
 
 /**
  * Class which handles how the application responds to different intents, forcing it to always be single task,
@@ -36,7 +38,7 @@ public class IntentHandler extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.styled_open_collection_dialog);
         Intent intent = getIntent();
-        Log.v(AnkiDroidApp.TAG, intent.toString());
+        Timber.v(intent.toString());
         Intent reloadIntent = new Intent(this, DeckPicker.class);
         reloadIntent.setDataAndType(getIntent().getData(), getIntent().getType());
         String action = intent.getAction();
@@ -63,14 +65,14 @@ public class IntentHandler extends Activity {
                    If the data type is apkg then we can assume that it's a shared deck from AnkiWeb
                    so we give it a dummy filename*/
                 if (filename == null) {
-                    Log.e(AnkiDroidApp.TAG, "Could not get filename from Content Provider. cursor = " + cursor);
+                    Timber.e("Could not get filename from Content Provider. cursor = " + cursor);
                     if (intent.getType().equals("application/apkg")) {
                         filename = "unknown_filename.apkg";
                     }
                 }
                 if (filename != null && filename.endsWith(".apkg")) {
                     Uri importUri = Uri.fromFile(new File(getCacheDir(), filename));
-                    Log.v(AnkiDroidApp.TAG, "IntentHandler copying apkg file to " + importUri.getEncodedPath());
+                    Timber.v("IntentHandler copying apkg file to %s", importUri.getEncodedPath());
                     // Copy to temp file
                     try {
                         // Get an input stream to the data in ContentProvider

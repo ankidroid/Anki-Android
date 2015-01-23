@@ -21,7 +21,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.IntentCompat;
 import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
+
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.animation.Animation;
@@ -33,6 +33,8 @@ import com.ichi2.anki.dialogs.SimpleMessageDialog;
 import com.ichi2.async.CollectionLoader;
 import com.ichi2.libanki.Collection;
 import com.ichi2.themes.StyledOpenCollectionDialog;
+
+import timber.log.Timber;
 
 public class AnkiActivity extends ActionBarActivity implements LoaderManager.LoaderCallbacks<Collection>,
         SimpleMessageDialog.SimpleMessageDialogListener {
@@ -214,7 +216,7 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
     // Method for loading the collection which is inherited by all AnkiActivitys
     public void startLoadingCollection() {
         // Initialize the open collection loader
-        Log.i(AnkiDroidApp.TAG, "AnkiActivity.startLoadingCollection()");
+        Timber.d("AnkiActivity.startLoadingCollection()");
         if (!AnkiDroidApp.colIsOpen()) {
             showOpeningCollectionDialog();
         }
@@ -388,7 +390,7 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
             if (resultPendingIntent == null) {
                 // PendingIntent could not be created... probably something wrong with the extras
                 // try again without the extras, though the original dialog will not be shown when app started
-                Log.e(AnkiDroidApp.TAG, "AnkiActivity.showSimpleNotification() failed due to null PendingIntent");
+                Timber.e("AnkiActivity.showSimpleNotification() failed due to null PendingIntent");
                 resultIntent = new Intent(this, DeckPicker.class);
                 resultPendingIntent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             }
@@ -425,7 +427,7 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
     // Restart the activity
     @SuppressLint("NewApi")
     protected void restartActivity() {
-        Log.i(AnkiDroidApp.TAG, "AnkiActivity -- restartActivity()");
+        Timber.i("AnkiActivity -- restartActivity()");
         Intent intent = new Intent();
         intent.setClass(this, this.getClass());
         intent.putExtras(new Bundle());

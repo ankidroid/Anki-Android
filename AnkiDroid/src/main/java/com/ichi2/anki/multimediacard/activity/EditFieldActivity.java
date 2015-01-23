@@ -22,7 +22,7 @@ package com.ichi2.anki.multimediacard.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,6 +43,8 @@ import com.ichi2.anki.multimediacard.fields.ImageField;
 import com.ichi2.anki.multimediacard.fields.TextField;
 
 import java.io.File;
+
+import timber.log.Timber;
 
 public class EditFieldActivity extends FragmentActivity {
 
@@ -107,7 +109,7 @@ public class EditFieldActivity extends FragmentActivity {
         mFieldController = controllerFactory.createControllerForField(mField);
 
         if (mFieldController == null) {
-            Log.d(AnkiDroidApp.TAG, "Field controller creation failed");
+            Timber.d("Field controller creation failed");
             return;
         }
 
@@ -138,23 +140,27 @@ public class EditFieldActivity extends FragmentActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.multimedia_edit_field_to_text:
+                Timber.i("To text field button pressed");
                 toTextField();
                 return true;
 
             case R.id.multimedia_edit_field_to_image:
+                Timber.i("To image button pressed");
                 toImageField();
                 return true;
 
             case R.id.multimedia_edit_field_to_audio:
+                Timber.i("To audio button pressed");
                 toAudioField();
                 return true;
 
             case R.id.multimedia_edit_field_done:
+                Timber.i("Save button pressed");
                 done();
                 return true;
 
             case android.R.id.home:
-
+                Timber.i("Home button pressed");
                 return true;
         }
         return super.onOptionsItemSelected(item);

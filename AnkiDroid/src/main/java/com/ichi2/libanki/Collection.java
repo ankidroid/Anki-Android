@@ -22,7 +22,7 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
-import android.util.Log;
+
 import android.util.Pair;
 
 import com.ichi2.anki.AnkiDatabaseManager;
@@ -51,6 +51,8 @@ import java.util.Map;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import timber.log.Timber;
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags
 // for autocomplete and in the browser. For efficiency, deletions are not
@@ -224,7 +226,7 @@ public class Collection {
      * Flush state to DB, updating mod time.
      */
     public void flush(long mod) {
-        Log.i(AnkiDroidApp.TAG, "flush - Saving information to DB...");
+        Timber.i("flush - Saving information to DB...");
         mMod = (mod == 0 ? Utils.intNow(1000) : mod);
         ContentValues values = new ContentValues();
         values.put("crt", mCrt);
@@ -324,7 +326,7 @@ public class Collection {
             mDb = null;
             mMedia.close();
             _closeLog();
-            Log.i(AnkiDroidApp.TAG, "Collection closed");
+            Timber.i("Collection closed");
         }
     }
 
@@ -1518,7 +1520,7 @@ public class Collection {
                 mDb.getDatabase().endTransaction();
             }
         } catch (RuntimeException e) {
-            Log.e(AnkiDroidApp.TAG, "doInBackgroundCheckDatabase - RuntimeException on marking card: " + e);
+            Timber.e(e, "doInBackgroundCheckDatabase - RuntimeException on marking card");
             AnkiDroidApp.sendExceptionReport(e, "doInBackgroundCheckDatabase");
             return -1;
         }
@@ -1536,9 +1538,9 @@ public class Collection {
 
 
     public void optimize() {
-        Log.i(AnkiDroidApp.TAG, "executing VACUUM statement");
+        Timber.i("executing VACUUM statement");
         mDb.execute("VACUUM");
-        Log.i(AnkiDroidApp.TAG, "executing ANALYZE statement");
+        Timber.i("executing ANALYZE statement");
         mDb.execute("ANALYZE");
     }
 
@@ -1556,7 +1558,7 @@ public class Collection {
         String s = String.format("[%s] %s:%s(): %s", Utils.intNow(), trace.getFileName(), trace.getMethodName(),
                 TextUtils.join(",  ", args));
         mLogHnd.println(s);
-        Log.d(AnkiDroidApp.TAG, s);
+        Timber.d(s);
     }
 
 
@@ -1576,7 +1578,7 @@ public class Collection {
             mLogHnd = new PrintWriter(new BufferedWriter(new FileWriter(lpath, true)), true);
         } catch (IOException e) {
             // turn off logging if we can't open the log file
-            Log.e(AnkiDroidApp.TAG, "Failed to open collection.log file - disabling logging");
+            Timber.e("Failed to open collection.log file - disabling logging");
             mDebugLog = false;
         }
     }
