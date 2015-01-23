@@ -29,7 +29,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -65,6 +65,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.*;
+
+import timber.log.Timber;
 
 public class StudyOptionsFragment extends Fragment implements LoaderManager.LoaderCallbacks<Collection> {
 
@@ -146,27 +148,34 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
             // long timeLimit = 0;
             switch (v.getId()) {
                 case R.id.studyoptions_start:
+                    Timber.i("start study button pressed");
                     openReviewer();
                     return;
                 case R.id.studyoptions_custom:
+                    Timber.i("custom study button pressed");
                     showCustomStudyContextMenu();
                     return;
                 case R.id.studyoptions_unbury:
+                    Timber.i("unbury button pressed");
                     col.getSched().unburyCardsForDeck();
                     resetAndRefreshInterface();
                     return;
                 case R.id.studyoptions_options_cram:
+                    Timber.i("cram deck options button pressed");
                     openCramDeckOptions();
                     return;
                 case R.id.studyoptions_options:
+                    Timber.i("deck options button pressed");
                     Intent i = new Intent(getActivity(), DeckOptions.class);
                     startActivityForResult(i, DECK_OPTIONS);
                     ActivityTransitionAnimation.slide(getActivity(), ActivityTransitionAnimation.FADE);
                     return;
                 case R.id.studyoptions_rebuild_cram:
+                    Timber.i("rebuild cram deck button pressed");
                     rebuildCramDeck();
                     return;
                 case R.id.studyoptions_empty_cram:
+                    Timber.i("empty cram deck button pressed");
                     mProgressDialog = StyledProgressDialog.show(getActivity(), "",
                             getResources().getString(R.string.empty_cram_deck), true);
                     DeckTask.launchDeckTask(DeckTask.TASK_TYPE_EMPTY_CRAM, getDeckTaskListener(true),
@@ -253,7 +262,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         if (mFullNewCountThread != null) {
             mFullNewCountThread.interrupt();
         }
-        Log.i(AnkiDroidApp.TAG, "StudyOptions - onDestroy()");
+        Timber.d("onDestroy()");
     }
 
 
@@ -261,7 +270,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     public void onResume() {
         super.onResume();
         if (colOpen() && !mFragmented) {
-            Log.i(AnkiDroidApp.TAG, "StudyOptionsFragment.onResume() -- refreshing interface");
+            Timber.d("onResume() -- refreshing interface");
             // If not in tablet mode then reload deck counts (reload is taken care of by DeckPicker when mFragmented)
             if (Utils.now() > getCol().getSched().getDayCutoff()) {
                 resetAndRefreshInterface(false);
@@ -269,7 +278,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                 refreshInterface();
             }
         } else {
-            Log.i(AnkiDroidApp.TAG, "StudyOptionsFragment.onResume() -- skipping refresh of interface");
+            Timber.d("onResume() -- skipping refresh of interface");
         }
     }
 
@@ -283,7 +292,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         } else if (a == null) {
             // getActivity() can return null if reference to fragment lingers after parent activity has been closed,
             // which is particularly relevant when using AsyncTasks.
-            Log.e(AnkiDroidApp.TAG, "closeStudyOptions() failed due to getActivity() returning null");
+            Timber.e("closeStudyOptions() failed due to getActivity() returning null");
         }
     }
 
@@ -514,7 +523,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     private void refreshInterface(boolean reset, boolean updateDeckList) {
         // Exit if collection not open
         if (!colOpen()) {
-            Log.e(AnkiDroidApp.TAG, "StudyOptionsFragment.refreshInterface failed due to Collection being closed");
+            Timber.e("StudyOptionsFragment.refreshInterface failed due to Collection being closed");
             return;
         }
         // Load the deck counts for the deck from Collection asynchronously
@@ -563,6 +572,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_undo:
+                Timber.i("Undo button pressed");
                 if (colOpen()) {
                     getCol().undo();
                     resetAndRefreshInterface();
@@ -572,15 +582,18 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
             case R.id.action_night_mode:
                 SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getActivity());
                 if (preferences.getBoolean("invertedColors", false)) {
+                    Timber.i("Night mode was disabled");
                     preferences.edit().putBoolean("invertedColors", false).commit();
                     item.setIcon(R.drawable.ic_menu_night);
                 } else {
+                    Timber.i("Night mode was enabled");
                     preferences.edit().putBoolean("invertedColors", true).commit();
                     item.setIcon(R.drawable.ic_menu_night_checked);
                 }
                 return true;
 
             case R.id.action_add_note_from_study_options:
+                Timber.i("Add note button pressed");
                 addNote();
                 return true;
 
@@ -594,7 +607,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
-        Log.i(AnkiDroidApp.TAG, "StudyOptionsFragment: onActivityResult");
+        Timber.d("onActivityResult (requestCode = %d, resultCode = %d)", requestCode, resultCode);
         getActivity().supportInvalidateOptionsMenu();
         if (resultCode == DeckPicker.RESULT_DB_ERROR) {
             closeStudyOptions(DeckPicker.RESULT_DB_ERROR);
@@ -627,7 +640,6 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
             } else if (requestCode == ADD_NOTE && resultCode != Activity.RESULT_CANCELED) {
                 resetAndRefreshInterface();
             } else if (requestCode == REQUEST_REVIEW) {
-                Log.i(AnkiDroidApp.TAG, "Result code = " + resultCode);
                 resetAndRefreshInterface();
                 if (resultCode == Reviewer.RESULT_NO_MORE_CARDS) {
                     // If no more cards getting returned while counts > 0 then show a toast
@@ -653,7 +665,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
             try {
                 mProgressDialog.dismiss();
             } catch (Exception e) {
-                Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
+                Timber.e("onPostExecute - Dialog dismiss Exception = " + e.getMessage());
             }
         }
     }
@@ -720,7 +732,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
 
                 // Don't do anything if the fragment is no longer attached to it's Activity or col has been closed
                 if (getActivity() == null || !colOpen()) {
-                    Log.e(AnkiDroidApp.TAG, "StudyOptionsFragment.mRefreshFragmentListener :: can't refresh");
+                    Timber.e("StudyOptionsFragment.mRefreshFragmentListener :: can't refresh");
                     return;
                 }
                 // Reinitialize controls incase changed to filtered deck
@@ -890,7 +902,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     // Method for loading the collection which is inherited by all AnkiActivitys
     protected void startLoadingCollection() {
         // Initialize the open collection loader
-        Log.i(AnkiDroidApp.TAG, "StudyOptionsFragment.loadCollection()");
+        Timber.d("startLoadingCollection()");
         if (AnkiDroidApp.getCol() == null) {
             showCollectionLoadingDialog();
         }

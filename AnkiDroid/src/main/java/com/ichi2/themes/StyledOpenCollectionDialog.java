@@ -21,7 +21,7 @@ package com.ichi2.themes;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -32,6 +32,8 @@ import android.widget.TextView;
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
+
+import timber.log.Timber;
 
 public class StyledOpenCollectionDialog extends Dialog {
 
@@ -49,7 +51,7 @@ public class StyledOpenCollectionDialog extends Dialog {
             setCanceledOnTouchOutside(false);
             super.show();
         } catch (BadTokenException e) {
-            Log.e(AnkiDroidApp.TAG, "Could not show dialog: " + e);
+            Timber.e(e, "Could not show dialog");
         }
     }
 
@@ -59,7 +61,7 @@ public class StyledOpenCollectionDialog extends Dialog {
         try {
             super.dismiss();
         } catch (BadTokenException e) {
-            Log.e(AnkiDroidApp.TAG, "Could not dismiss dialog: " + e);
+            Timber.e(e, "Could not dismiss dialog");
         }
     }
 

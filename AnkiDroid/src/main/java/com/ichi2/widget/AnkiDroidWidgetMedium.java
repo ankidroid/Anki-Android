@@ -31,7 +31,7 @@ import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
+
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -42,6 +42,8 @@ import com.ichi2.anki.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import timber.log.Timber;
+
 public class AnkiDroidWidgetMedium extends AppWidgetProvider {
 
     private static BroadcastReceiver mMountReceiver = null;
@@ -50,7 +52,7 @@ public class AnkiDroidWidgetMedium extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        Log.i(AnkiDroidApp.TAG, "MediumWidget: onUpdate");
+        Timber.d("MediumWidget: onUpdate");
         WidgetStatus.update(context);
     }
 
@@ -58,7 +60,7 @@ public class AnkiDroidWidgetMedium extends AppWidgetProvider {
     @Override
     public void onEnabled(Context context) {
         super.onEnabled(context);
-        Log.i(AnkiDroidApp.TAG, "MediumWidget: Widget enabled");
+        Timber.d("MediumWidget: Widget enabled");
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
         preferences.edit().putBoolean("widgetMediumEnabled", true).commit();
     }
@@ -67,7 +69,7 @@ public class AnkiDroidWidgetMedium extends AppWidgetProvider {
     @Override
     public void onDisabled(Context context) {
         super.onDisabled(context);
-        Log.i(AnkiDroidApp.TAG, "MediumWidget: Widget disabled");
+        Timber.d("MediumWidget: Widget disabled");
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
         preferences.edit().putBoolean("widgetMediumEnabled", false).commit();
     }
@@ -137,7 +139,7 @@ public class AnkiDroidWidgetMedium extends AppWidgetProvider {
 
         @Override
         public void onStart(Intent intent, int startId) {
-            Log.i(AnkiDroidApp.TAG, "MediumWidget: OnStart");
+            Timber.i("MediumWidget: OnStart");
 
             boolean updateDueDecksNow = true;
             if (intent != null) {
@@ -159,7 +161,7 @@ public class AnkiDroidWidgetMedium extends AppWidgetProvider {
                     updateDueDecksNow = false;
                 } else if (ACTION_UPDATE.equals(intent.getAction())) {
                     // Updating the widget is done below for all actions.
-                    Log.d(AnkiDroidApp.TAG, "AnkiDroidWidget.UpdateService: UPDATE");
+                    Timber.d("AnkiDroidWidget.UpdateService: UPDATE");
                 }
             }
             RemoteViews updateViews = buildUpdate(this, updateDueDecksNow);
@@ -171,7 +173,7 @@ public class AnkiDroidWidgetMedium extends AppWidgetProvider {
 
 
         private RemoteViews buildUpdate(Context context, boolean updateDueDecksNow) {
-            Log.i(AnkiDroidApp.TAG, "MediumWidget: buildUpdate");
+            Timber.d("MediumWidget: buildUpdate");
 
             // Resources res = context.getResources();
             RemoteViews updateViews = new RemoteViews(context.getPackageName(), R.layout.widget);
@@ -194,7 +196,7 @@ public class AnkiDroidWidgetMedium extends AppWidgetProvider {
                         public void onReceive(Context context, Intent intent) {
                             String action = intent.getAction();
                             if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
-                                Log.i(AnkiDroidApp.TAG, "mMountReceiver - Action = Media Mounted");
+                                Timber.d("mMountReceiver - Action = Media Mounted");
                                 if (remounted) {
                                     WidgetStatus.update(getBaseContext());
                                     remounted = false;
@@ -336,7 +338,7 @@ public class AnkiDroidWidgetMedium extends AppWidgetProvider {
 
         @Override
         public IBinder onBind(Intent arg0) {
-            Log.i(AnkiDroidApp.TAG, "onBind");
+            Timber.d("onBind");
             return null;
         }
     }

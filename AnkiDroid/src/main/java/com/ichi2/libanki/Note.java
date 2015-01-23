@@ -18,7 +18,7 @@
 package com.ichi2.libanki;
 
 import android.database.Cursor;
-import android.util.Log;
+
 import android.util.Pair;
 
 import com.ichi2.anki.AnkiDroidApp;
@@ -32,6 +32,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import timber.log.Timber;
 
 public class Note implements Cloneable {
 
@@ -94,7 +96,7 @@ public class Note implements Cloneable {
             cursor = mCol.getDb().getDatabase()
                     .rawQuery("SELECT guid, mid, mod, usn, tags, flds, flags, data FROM notes WHERE id = " + mId, null);
             if (!cursor.moveToFirst()) {
-                Log.w(AnkiDroidApp.TAG, "Notes.load(): No result from query.");
+                Timber.w("Notes.load(): No result from query.");
                 return;
             }
             mGuId = cursor.getString(0);

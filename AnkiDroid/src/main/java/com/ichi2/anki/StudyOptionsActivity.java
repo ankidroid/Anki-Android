@@ -23,7 +23,7 @@ import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.util.Log;
+
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,6 +36,8 @@ import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
 
 import org.json.JSONArray;
+
+import timber.log.Timber;
 
 public class StudyOptionsActivity extends NavigationDrawerActivity implements StudyOptionsListener {
 
@@ -124,7 +126,7 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
-        Log.i(AnkiDroidApp.TAG, "StudyOptionsActivity: onActivityResult");
+        Timber.d("onActivityResult (requestCode = %d, resultCode = %d)", requestCode, resultCode);
 
         String newLanguage = AnkiDroidApp.getSharedPrefs(this).getString(Preferences.LANGUAGE, "");
         if (AnkiDroidApp.setLanguage(newLanguage)) {
@@ -149,7 +151,7 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            Log.i(AnkiDroidApp.TAG, "StudyOptions - onBackPressed()");
+            Timber.i("onBackPressed()");
             closeStudyOptions();
             return true;
         }

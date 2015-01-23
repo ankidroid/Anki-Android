@@ -16,13 +16,15 @@
 
 package com.ichi2.libanki.hooks;
 
-import android.util.Log;
+
 
 import com.ichi2.anki.AnkiDroidApp;
 
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import timber.log.Timber;
 
 public class ChessFilter extends Hook {
     private static final Pattern fFenPattern = Pattern.compile("\\[fen ?([^\\]]*)\\]([^\\[]+)\\[/fen\\]");
@@ -84,7 +86,7 @@ public class ChessFilter extends Hook {
                 mf.appendReplacement(sb, "<script type=\"text/javascript\">document.write(" +
                         String.format(Locale.US, fRenderFen, mf.group(2), showBlack) + ");</script>");
             } catch (Exception e) {
-                Log.e(AnkiDroidApp.TAG, "ChessFilter exception: ", e);
+                Timber.e("ChessFilter exception: ", e);
             }
         }
         mf.appendTail(sb);

@@ -1,7 +1,7 @@
 
 package com.ichi2.utils;
 
-import android.util.Log;
+
 
 import com.ichi2.anki.AnkiDroidApp;
 
@@ -16,6 +16,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import java.io.IOException;
 import java.util.List;
 
+import timber.log.Timber;
+
 public class HttpUtility {
     public static Boolean postReport(String url, List<NameValuePair> values) {
         HttpClient httpClient = new DefaultHttpClient();
@@ -27,19 +29,18 @@ public class HttpUtility {
 
             switch (response.getStatusLine().getStatusCode()) {
                 case 200:
-                    Log.e(AnkiDroidApp.TAG, String.format("feedback report posted to %s", url));
+                    Timber.e("feedback report posted to %s", url);
                     return true;
 
                 default:
-                    Log.e(AnkiDroidApp.TAG, String.format("feedback report posted to %s message", url));
-                    Log.e(AnkiDroidApp.TAG, String.format("%d: %s", response.getStatusLine().getStatusCode(), response
-                            .getStatusLine().getReasonPhrase()));
+                    Timber.e("feedback report posted to %s message", url);
+                    Timber.e("%d: %s", response.getStatusLine().getStatusCode(), response.getStatusLine().getReasonPhrase());
                     break;
             }
         } catch (ClientProtocolException ex) {
-            Log.e(AnkiDroidApp.TAG, ex.toString());
+            Timber.e(ex.toString());
         } catch (IOException ex) {
-            Log.e(AnkiDroidApp.TAG, ex.toString());
+            Timber.e(ex.toString());
         }
 
         return false;

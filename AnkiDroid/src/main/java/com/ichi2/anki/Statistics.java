@@ -20,7 +20,7 @@ import android.os.Bundle;
 
 import android.support.v4.app.*;
 import android.support.v4.view.*;
-import android.util.Log;
+
 import android.view.*;
 import android.webkit.WebView;
 import android.widget.*;
@@ -37,6 +37,8 @@ import org.json.JSONException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+
+import timber.log.Timber;
 
 
 public class Statistics extends NavigationDrawerActivity {
@@ -62,7 +64,7 @@ public class Statistics extends NavigationDrawerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.i(AnkiDroidApp.TAG, "Statistics -- onCreate()");
+        Timber.d("onCreate()");
         sIsWholeCollectionOnly = AnkiStatsTaskHandler.isWholeCollection();  //if it starts with true, do not let user select deck
         sIsSubtitle = true;
         super.onCreate(savedInstanceState);
@@ -75,7 +77,7 @@ public class Statistics extends NavigationDrawerActivity {
     
     @Override
     protected void onCollectionLoaded(Collection col) {
-        Log.i(AnkiDroidApp.TAG, "Statistics -- onCollectionLoaded()");
+        Timber.d("onCollectionLoaded()");
         // Setup Task Handler
         mTaskHandler = new AnkiStatsTaskHandler();
 
@@ -101,7 +103,7 @@ public class Statistics extends NavigationDrawerActivity {
 
     @Override
     protected void onResume() {
-        Log.i(AnkiDroidApp.TAG, "Statistics -- onResume()");
+        Timber.d("onResume()");
         super.onResume();
         selectNavigationItem(NavigationDrawerActivity.DRAWER_STATISTICS);
     }
@@ -405,9 +407,9 @@ public class Statistics extends NavigationDrawerActivity {
             View rootView = inflater.inflate(R.layout.fragment_anki_stats, container, false);
             mChart = (ChartView) rootView.findViewById(R.id.image_view_chart);
             if(mChart == null)
-                Log.d(AnkiDroidApp.TAG, "mChart null!!!");
+                Timber.d("mChart null!!!");
             else
-                Log.d(AnkiDroidApp.TAG, "mChart is not null!");
+                Timber.d("mChart is not null!");
 
             //mChart.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
@@ -560,15 +562,15 @@ public class Statistics extends NavigationDrawerActivity {
             // Workaround for issue 2406 -- crash when resuming after app is purged from RAM
             // TODO: Implementing loader for Collection in Fragment itself would be a better solution.
             if (handler == null) {
-                Log.e(AnkiDroidApp.TAG, "Statistics.createStatisticsOverview() TaskHandler not found");
+                Timber.e("Statistics.createStatisticsOverview() TaskHandler not found");
                 getActivity().finish();
                 return rootView;
             }
             mWebView = (WebView) rootView.findViewById(R.id.web_view_stats);
             if(mWebView == null)
-                Log.d(AnkiDroidApp.TAG, "mChart null!!!");
+                Timber.d("mChart null!!!");
             else
-                Log.d(AnkiDroidApp.TAG, "mChart is not null!");
+                Timber.d("mChart is not null!");
 
             //mChart.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 

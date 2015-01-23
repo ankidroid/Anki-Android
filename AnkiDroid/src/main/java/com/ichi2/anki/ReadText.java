@@ -21,7 +21,7 @@ import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Handler;
 import android.speech.tts.TextToSpeech;
-import android.util.Log;
+
 import android.widget.Toast;
 
 import com.ichi2.themes.StyledDialog;
@@ -30,6 +30,8 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
+
+import timber.log.Timber;
 
 public class ReadText {
     private static TextToSpeech mTts;
@@ -51,15 +53,14 @@ public class ReadText {
         if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
             Toast.makeText(mReviewer.get(), mReviewer.get().getString(R.string.no_tts_available_message)
                     +" ("+loc+")", Toast.LENGTH_LONG).show();
-            Log.e(AnkiDroidApp.TAG, "Error loading locale " + loc);
+            Timber.e("Error loading locale " + loc);
         } else {
             if (mTts.isSpeaking()) {
-                Log.v(AnkiDroidApp.TAG, "tts engine appears to be busy... clearing queue");
+                Timber.d("tts engine appears to be busy... clearing queue");
                 stopTts();
-                //Log.v(AnkiDroidApp.TAG, "tts text '" + text + "' added to queue for locale ("+loc+")");
                 //sTextQueue.add(new String[] { text, loc });
             }
-            Log.v(AnkiDroidApp.TAG, "tts text '" + text + "' to be played for locale ("+loc+")");
+            Timber.d("tts text '%s' to be played for locale (%s)",text, loc);
             mTts.speak(mTextToSpeak, TextToSpeech.QUEUE_FLUSH, mTtsParams);
         }
     }
@@ -75,10 +76,10 @@ public class ReadText {
         mQuestionAnswer = qa;
         mDid = did;
         mOrd = ord;
-        Log.v(AnkiDroidApp.TAG, "ReadText.textToSpeech() method started for string '" + text + "'");
+        Timber.d("ReadText.textToSpeech() method started for string '%s'", text);
         // get the user's existing language preference
         String language = getLanguage(mDid, mOrd, mQuestionAnswer);
-        Log.v(AnkiDroidApp.TAG, "ReadText.textToSpeech() method found language choice '" + language + "'");
+        Timber.d("ReadText.textToSpeech() method found language choice '%s'", language);
         // rebuild the language list if it's empty
         if (availableTtsLocales.isEmpty()) {
             buildAvailableLanguages();
@@ -99,7 +100,7 @@ public class ReadText {
         final StyledDialog.Builder builder = new StyledDialog.Builder(mReviewer.get());
         if (availableTtsLocales.size() == 0) {
             // builder.setTitle(res.getString(R.string.no_tts_available_title));
-            Log.e(AnkiDroidApp.TAG, "ReadText.textToSpeech() no TTS languages available");
+            Timber.w("ReadText.textToSpeech() no TTS languages available");
             builder.setMessage(res.getString(R.string.no_tts_available_message));
             builder.setIcon(R.drawable.ic_dialog_alert);
             builder.setPositiveButton(res.getString(R.string.dialog_ok), null);
@@ -121,7 +122,7 @@ public class ReadText {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     String locale = dialogIds.get(which);
-                    Log.v(AnkiDroidApp.TAG, "ReadText.textToSpeech() user chose locale '" + locale + "'");
+                    Timber.d("ReadText.textToSpeech() user chose locale '%s'", locale);
                     if (!locale.equals(NO_TTS)) {
                         speak(mTextToSpeak, locale);
                     }
@@ -153,11 +154,11 @@ public class ReadText {
                     buildAvailableLanguages();
                     if (availableTtsLocales.size() > 0) {
                         // notify the reviewer that TTS has been initialized
-                        Log.v(AnkiDroidApp.TAG, "TTS initialized and available languages found");
+                        Timber.d("TTS initialized and available languages found");
                         ((AbstractFlashcardViewer) mReviewer.get()).ttsInitialized();
                     } else {
                         Toast.makeText(mReviewer.get(), mReviewer.get().getString(R.string.no_tts_available_message), Toast.LENGTH_LONG).show();
-                        Log.e(AnkiDroidApp.TAG, "TTS initialized but no available languages found");
+                        Timber.w("TTS initialized but no available languages found");
                     }
                 } else {
                     Toast.makeText(mReviewer.get(), mReviewer.get().getString(R.string.no_tts_available_message), Toast.LENGTH_LONG).show();
@@ -180,10 +181,10 @@ public class ReadText {
                 if (retCode >= TextToSpeech.LANG_COUNTRY_AVAILABLE) {
                     availableTtsLocales.add(loc);
                 } else {
-                    Log.v(AnkiDroidApp.TAG, "ReadText.buildAvailableLanguages() :: " + loc.getDisplayName() + " not available (error code "+Integer.toString(retCode)+")");
+                    Timber.v("ReadText.buildAvailableLanguages() :: %s  not available (error code %d)", loc.getDisplayName(), retCode);
                 }
             } catch (IllegalArgumentException e) {
-                Log.e(AnkiDroidApp.TAG, "Error checking if language " + loc.getDisplayName() + " available");
+                Timber.e("Error checking if language " + loc.getDisplayName() + " available");
             }
         }
     }
