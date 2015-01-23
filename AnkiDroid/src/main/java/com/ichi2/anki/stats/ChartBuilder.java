@@ -17,7 +17,7 @@ package com.ichi2.anki.stats;
 
 import android.content.res.Resources;
 import android.graphics.Paint;
-import android.util.Log;
+
 import android.widget.TextView;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
@@ -26,6 +26,8 @@ import com.ichi2.libanki.Stats;
 import com.wildplot.android.rendering.*;
 import com.wildplot.android.rendering.graphics.wrapper.ColorWrap;
 import com.wildplot.android.rendering.graphics.wrapper.RectangleWrap;
+
+import timber.log.Timber;
 
 
 public class ChartBuilder {
@@ -113,8 +115,8 @@ public class ChartBuilder {
 
         int height = mChartView.getMeasuredHeight();
         int width = mChartView.getMeasuredWidth();
+        Timber.d("height: %d, width: %d, %d", height, width, mChartView.getWidth());
 
-        Log.d(AnkiDroidApp.TAG, "heigth: " + height + ", width: " + width + ", " + mChartView.getWidth());
 
         if(height <=0 || width <= 0){
             return null;
@@ -348,7 +350,7 @@ public class ChartBuilder {
     public PlotSheet createSmallDueChart(double[][] serieslist){
         int height = mChartView.getMeasuredHeight();
         int width = mChartView.getMeasuredWidth();
-        Log.d(AnkiDroidApp.TAG, "SmallDueChart: heigth: " + height + ", width: " + width);
+        Timber.d("SmallDueChart: height: %d, width: %d", height, width);
         Paint paint = new Paint(Paint.LINEAR_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.STROKE);
 
@@ -440,7 +442,7 @@ public class ChartBuilder {
         while((deltaRange/(tics))/2 >= ticlimit) {
             tics *= 2.0;
         }
-        Log.d(AnkiDroidApp.TAG, "ChartBuilder ticksCalcY: pixelDistance: " + pixelDistance + ", ticks: " + tics);
+        Timber.d("ChartBuilder ticksCalcY: pixelDistance: %d, ticks: %d", pixelDistance, tics);
         return tics;
     }
 

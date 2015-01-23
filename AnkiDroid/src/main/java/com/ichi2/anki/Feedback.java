@@ -23,7 +23,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.Log;
+
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -65,6 +65,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 import java.util.UUID;
+
+import timber.log.Timber;
 
 public class Feedback extends AnkiActivity {
     public static String REPORT_ASK = "2";
@@ -231,7 +233,7 @@ public class Feedback extends AnkiActivity {
                         mPostingFeedback = true;
                     }
                 } catch (Exception e) {
-                    Log.e(AnkiDroidApp.TAG, e.toString());
+                    Timber.e(e.toString());
                 }
                 finish();
                 ActivityTransitionAnimation.slide(Feedback.this, ActivityTransitionAnimation.NONE);
@@ -386,7 +388,7 @@ public class Feedback extends AnkiActivity {
                     i++;
                 }
             } catch (Exception e) {
-                Log.e(AnkiDroidApp.TAG, String.format("Could not delete file: %s", mErrorReports.get(i)));
+                Timber.e(String.format("Could not delete file: %s", mErrorReports.get(i)));
             }
         }
     }
@@ -558,10 +560,10 @@ public class Feedback extends AnkiActivity {
             }
             br.close();
         } catch (FileNotFoundException e) {
-            Log.w(AnkiDroidApp.TAG, "Couldn't open crash report " + errorFile);
+            Timber.w("Couldn't open crash report " + errorFile);
             return null;
         } catch (IOException e) {
-            Log.w(AnkiDroidApp.TAG, "Couldn't read crash report " + errorFile);
+            Timber.w("Couldn't read crash report " + errorFile);
             return null;
         }
 
@@ -605,7 +607,7 @@ public class Feedback extends AnkiActivity {
         try {
             httpPost.setEntity(new UrlEncodedFormEntity(pairs));
             HttpResponse response = httpClient.execute(httpPost);
-            Log.e(AnkiDroidApp.TAG, String.format("Bug report posted to %s", url));
+            Timber.e(String.format("Bug report posted to %s", url));
 
             int respCode = response.getStatusLine().getStatusCode();
             switch (respCode) {
@@ -613,11 +615,11 @@ public class Feedback extends AnkiActivity {
                     result.success = true;
                     result.returnType = respCode;
                     result.result = Utils.convertStreamToString(response.getEntity().getContent());
-                    Log.i(AnkiDroidApp.TAG, String.format("postFeedback OK: %s", result.result));
+                    Timber.i(String.format("postFeedback OK: %s", result.result));
                     break;
 
                 default:
-                    Log.e(AnkiDroidApp.TAG, String.format("postFeedback failure: %d - %s", response.getStatusLine()
+                    Timber.e(String.format("postFeedback failure: %d - %s", response.getStatusLine()
                             .getStatusCode(), response.getStatusLine().getReasonPhrase()));
                     result.success = false;
                     result.returnType = respCode;
@@ -625,11 +627,11 @@ public class Feedback extends AnkiActivity {
                     break;
             }
         } catch (ClientProtocolException ex) {
-            Log.e(AnkiDroidApp.TAG, "ClientProtocolException: " + ex.toString());
+            Timber.e(ex, "ClientProtocolException: ");
             result.success = false;
             result.result = ex.toString();
         } catch (IOException ex) {
-            Log.e(AnkiDroidApp.TAG, "IOException: " + ex.toString());
+            Timber.e(ex, "IOException: ");
             result.success = false;
             result.result = ex.toString();
         }

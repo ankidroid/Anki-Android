@@ -22,12 +22,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.IBinder;
-import android.util.Log;
+
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
 import com.ichi2.widget.WidgetStatus;
+
+import timber.log.Timber;
 
 public class NotificationService extends Service {
 
@@ -47,7 +49,7 @@ public class NotificationService extends Service {
 
     @Override
     public void onStart(Intent intent, int startId) {
-        Log.i(AnkiDroidApp.TAG, "NotificationService: OnStart");
+        Timber.i("NotificationService: OnStart");
 
         Context context = AnkiDroidApp.getInstance().getBaseContext();
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);

@@ -18,7 +18,7 @@
 
 package com.samskivert.mustache;
 
-import android.util.Log;
+
 
 import com.ichi2.anki.AnkiDroidApp;
 
@@ -26,6 +26,8 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Map;
+
+import timber.log.Timber;
 
 /**
  * Represents a compiled template. Templates are executed with a <em>context</em> to generate
@@ -83,7 +85,7 @@ public class Template
             ctx = ctx.parent;
         }
         // Graceful failing, no need to throw exception
-        Log.e(AnkiDroidApp.TAG, "Could not retrieve from context name '" + name + "' on line " + line);
+        Timber.e("Could not retrieve from context name '" + name + "' on line " + line);
         return defaultValue;
     }
 

@@ -18,7 +18,7 @@ package com.ichi2.anki;
 
 import android.content.SharedPreferences;
 import android.os.StatFs;
-import android.util.Log;
+
 
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
@@ -40,6 +40,8 @@ import java.util.Locale;
 import java.util.UnknownFormatConversionException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
+
+import timber.log.Timber;
 
 public class BackupManager {
 
@@ -123,7 +125,7 @@ public class BackupManager {
         File[] deckBackups = getBackups(collectionFile);
         int len = deckBackups.length;
         if (len > 0 && deckBackups[len - 1].lastModified() == collectionFile.lastModified()) {
-            Log.i(AnkiDroidApp.TAG, "performBackup: No backup necessary due to no collection changes");
+            Timber.d("performBackup: No backup necessary due to no collection changes");
             return false;
         }
 
@@ -142,7 +144,7 @@ public class BackupManager {
             }
         }
         if (lastBackupDate != null && lastBackupDate.getTime() + interval * 3600000L > Utils.intNow(1000) && !force) {
-            Log.i(AnkiDroidApp.TAG, "performBackup: No backup created. Last backup younger than 5 hours");
+            Timber.d("performBackup: No backup created. Last backup younger than 5 hours");
             return false;
         }
 
@@ -151,18 +153,18 @@ public class BackupManager {
             backupFilename = String.format(Utils.ENGLISH_LOCALE, collectionFile.getName().replace(".anki2", "")
                     + "-%s.apkg", df.format(cal.getTime()));
         } catch (UnknownFormatConversionException e) {
-            Log.e(AnkiDroidApp.TAG, "performBackup: error on creating backup filename: " + e);
+            Timber.e(e, "performBackup: error on creating backup filename");
             return false;
         }
 
         final File backupFile = new File(getBackupDirectory().getPath(), backupFilename);
         if (backupFile.exists()) {
-            Log.i(AnkiDroidApp.TAG, "performBackup: No new backup created. File already exists");
+            Timber.d("performBackup: No new backup created. File already exists");
             return false;
         }
 
         if (getFreeDiscSpace(collectionFile) < collectionFile.length() + (MIN_FREE_SPACE * 1024 * 1024)) {
-            Log.e(AnkiDroidApp.TAG, "performBackup: Not enough space on sd card to backup.");
+            Timber.e("performBackup: Not enough space on sd card to backup.");
             prefs.edit().putBoolean("noSpaceLeft", true).commit();
             return false;
         }
@@ -191,6 +193,7 @@ public class BackupManager {
                     deleteDeckBackups(path, prefs.getInt("backupMax", 8));
                     // set timestamp of file in order to avoid creating a new backup unless its changed
                     backupFile.setLastModified(collectionFile.lastModified());
+                    Timber.i("Backup created succesfully for %s", path);
                 } catch (FileNotFoundException e1) {
                     e1.printStackTrace();
                 } catch (IOException e) {
@@ -220,7 +223,7 @@ public class BackupManager {
             long blocksize = stat.getBlockSize();
             return blocks * blocksize;
         } catch (IllegalArgumentException e) {
-            Log.e(AnkiDroidApp.TAG, "Free space could not be retrieved: " + e);
+            Timber.e(e, "Free space could not be retrieved");
             return MIN_FREE_SPACE * 1024 * 1024;
         }
     }
@@ -237,28 +240,28 @@ public class BackupManager {
 
         // repair file
         String execString = "sqlite3 " + deckPath + " .dump | sqlite3 " + deckPath + ".tmp";
-        Log.i(AnkiDroidApp.TAG, "repairDeck - Execute: " + execString);
+        Timber.i("repairDeck - Execute: " + execString);
         try {
             String[] cmd = { "/system/bin/sh", "-c", execString };
             Process process = Runtime.getRuntime().exec(cmd);
             process.waitFor();
 
             if (!new File(deckPath + ".tmp").exists()) {
-                Log.e(AnkiDroidApp.TAG, "repairDeck - dump to " + deckPath + ".tmp failed");
+                Timber.e("repairDeck - dump to " + deckPath + ".tmp failed");
                 return false;
             }
 
             if (!moveDatabaseToBrokenFolder(deckPath, false)) {
-                Log.e(AnkiDroidApp.TAG, "repairDeck - could not move corrupt file to broken folder");
+                Timber.e("repairDeck - could not move corrupt file to broken folder");
                 return false;
             }
-            Log.i(AnkiDroidApp.TAG, "repairDeck - moved corrupt file to broken folder");
+            Timber.i("repairDeck - moved corrupt file to broken folder");
             File repairedFile = new File(deckPath + ".tmp");
             return repairedFile.renameTo(deckFile);
         } catch (IOException e) {
-            Log.e("AnkiDroidApp.TAG", "repairCollection - error: " + e.getMessage());
+            Timber.e("repairCollection - error: " + e.getMessage());
         } catch (InterruptedException e) {
-            Log.e("AnkiDroidApp.TAG", "repairCollection - error: " +  e.getMessage());
+            Timber.e("repairCollection - error: " +  e.getMessage());
         }
         return false;
     }
@@ -335,7 +338,7 @@ public class BackupManager {
         }
         for (int i = 0; i < backups.length - keepNumber; i++) {
             backups[i].delete();
-            Log.e(AnkiDroidApp.TAG, "deleteDeckBackups: backup file "+backups[i].getPath()+ " deleted.");
+            Timber.e("deleteDeckBackups: backup file "+backups[i].getPath()+ " deleted.");
         }
         return true;
     }
