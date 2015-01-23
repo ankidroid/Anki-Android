@@ -883,6 +883,10 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             // No space left
             showDialogFragment(DeckPickerBackupNoSpaceLeftDialog.newInstance());
             preferences.edit().putBoolean("noSpaceLeft", false).commit();
+        } else if (preferences.getString("lastVersion", "").equals("")) {
+            // Fresh install
+            preferences.edit().putString("lastVersion", AnkiDroidApp.getPkgVersionName()).commit();
+            startLoadingCollection();
         } else if (skip < 2 && !preferences.getString("lastVersion", "").equals(AnkiDroidApp.getPkgVersionName())) {
             // AnkiDroid is being updated and a collection already exists. We check if we are upgrading
             // to a version that contains additions to the database integrity check routine that we would
@@ -948,15 +952,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                     startActivityForResultWithoutAnimation(infoIntent, SHOW_INFO_NEW_VERSION);
                 }
             }
-        /* Old error reporting scheme before switching to ACRA
-        } else if (skip < 4 && hasErrorFiles()) {
-            // Need to submit error reports
-            Intent i = new Intent(this, Feedback.class);
-            if (skip != 0) {
-                startActivityForResultWithAnimation(i, REPORT_ERROR, ActivityTransitionAnimation.LEFT);
-            } else {
-                startActivityForResultWithoutAnimation(i, REPORT_ERROR);
-            }*/
         } else {
             // This is the main call when there is nothing special required
             startLoadingCollection();
