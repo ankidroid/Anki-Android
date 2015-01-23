@@ -23,7 +23,7 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
+
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +39,8 @@ import android.widget.Toast;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
+
+import timber.log.Timber;
 
 public class Themes {
 
@@ -114,23 +116,23 @@ public class Themes {
         switch (theme == -1 ? mCurrentTheme : theme) {
             case THEME_ANDROID_DARK:
                 context.setTheme(android.R.style.Theme_Black);
-                Log.i(AnkiDroidApp.TAG, "Set theme: dark");
+                Timber.i("Set theme: dark");
                 break;
             case THEME_ANDROID_LIGHT:
                 context.setTheme(android.R.style.Theme_Light);
-                Log.i(AnkiDroidApp.TAG, "Set theme: light");
+                Timber.i("Set theme: light");
                 break;
             case THEME_BLUE:
                 context.setTheme(R.style.Theme_Blue);
-                Log.i(AnkiDroidApp.TAG, "Set theme: blue");
+                Timber.i("Set theme: blue");
                 break;
             case THEME_FLAT:
                 context.setTheme(R.style.Theme_Flat);
-                Log.i(AnkiDroidApp.TAG, "Set theme: flat");
+                Timber.i("Set theme: flat");
                 break;
             case THEME_WHITE:
                 context.setTheme(R.style.Theme_White);
-                Log.i(AnkiDroidApp.TAG, "Set theme: white");
+                Timber.i("Set theme: white");
                 break;
             case -1:
                 break;
@@ -620,7 +622,7 @@ public class Themes {
             } catch (OutOfMemoryError e) {
                 mWallpaper = mBackgroundColor;
                 view.setBackgroundResource(mWallpaper);
-                Log.e(AnkiDroidApp.TAG, "Themes: setWallpaper: OutOfMemoryError = " + e);
+                Timber.e(e, "Themes: setWallpaper: OutOfMemoryError");
             }
         }
     }
@@ -720,7 +722,7 @@ public class Themes {
             }
             result.show();
         } catch (OutOfMemoryError e) {
-            Log.e(AnkiDroidApp.TAG, "showThemedToast - OutOfMemoryError occured: " + e);
+            Timber.e(e, "showThemedToast - OutOfMemoryError occured");
             result.getView().setBackgroundResource(R.color.black);
             result.show();
         }
@@ -766,7 +768,7 @@ public class Themes {
                 ((View) main.findViewById(R.id.titleDivider)).setBackgroundResource(mDividerHorizontalBright);
                 contentPanel.setBackgroundResource(mPopupBottomBright);
             } catch (OutOfMemoryError e) {
-                Log.e(AnkiDroidApp.TAG, "setStyledDialogBackgrounds - OutOfMemoryError occured: " + e);
+                Timber.e(e, "setStyledDialogBackgrounds - OutOfMemoryError occured");
                 topPanel.setBackgroundResource(R.color.black);
                 contentPanel.setBackgroundResource(R.color.white);
             }
@@ -774,7 +776,7 @@ public class Themes {
             try {
                 contentPanel.setBackgroundResource(mPopupFullMedium);
             } catch (OutOfMemoryError e) {
-                Log.e(AnkiDroidApp.TAG, "setStyledDialogBackgrounds - OutOfMemoryError occured: " + e);
+                Timber.e(e, "setStyledDialogBackgrounds - OutOfMemoryError occured");
                 contentPanel.setBackgroundResource(R.color.white);
             }
         }
@@ -818,7 +820,7 @@ public class Themes {
                 topPanel.setBackgroundResource(mPopupTopDark);
                 ((View) main.findViewById(R.id.titleDivider)).setBackgroundResource(mDividerHorizontalBright);
             } catch (OutOfMemoryError e) {
-                Log.e(AnkiDroidApp.TAG, "setStyledDialogBackgrounds - OutOfMemoryError occured: " + e);
+                Timber.e(e, "setStyledDialogBackgrounds - OutOfMemoryError occured");
                 topPanel.setBackgroundResource(R.color.black);
             }
             visibility[0] = true;
@@ -840,7 +842,7 @@ public class Themes {
             try {
                 buttonPanel.setBackgroundResource(mPopupBottomMedium);
             } catch (OutOfMemoryError e) {
-                Log.e(AnkiDroidApp.TAG, "setStyledDialogBackgrounds - OutOfMemoryError occured: " + e);
+                Timber.e(e, "setStyledDialogBackgrounds - OutOfMemoryError occured");
                 buttonPanel.setBackgroundResource(R.color.white);
             }
             if (buttonNumbers > 1 || AnkiDroidApp.SDK_VERSION > 13) {
@@ -875,7 +877,7 @@ public class Themes {
         try {
             contentPanel.setBackgroundResource(res);
         } catch (OutOfMemoryError e) {
-            Log.e(AnkiDroidApp.TAG, "setStyledDialogBackgrounds - OutOfMemoryError occured: " + e);
+            Timber.e(e, "setStyledDialogBackgrounds - OutOfMemoryError occured");
             contentPanel.setBackgroundResource(R.color.black);
         }
 
@@ -892,7 +894,7 @@ public class Themes {
         try {
             listViewPanel.setBackgroundResource(res);
         } catch (OutOfMemoryError e) {
-            Log.e(AnkiDroidApp.TAG, "setStyledDialogBackgrounds - OutOfMemoryError occured: " + e);
+            Timber.e(e, "setStyledDialogBackgrounds - OutOfMemoryError occured");
             listViewPanel.setBackgroundResource(R.color.white);
         }
 
@@ -912,7 +914,7 @@ public class Themes {
         try {
             customPanel.setBackgroundResource(res);
         } catch (OutOfMemoryError e) {
-            Log.e(AnkiDroidApp.TAG, "setStyledDialogBackgrounds - OutOfMemoryError occured: " + e);
+            Timber.e(e, "setStyledDialogBackgrounds - OutOfMemoryError occured");
             customPanel.setBackgroundResource(brightCustomPanelBackground ? R.color.white : R.color.black);
         }
 

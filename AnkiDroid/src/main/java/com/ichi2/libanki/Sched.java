@@ -27,7 +27,7 @@ import android.graphics.Typeface;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.StyleSpan;
-import android.util.Log;
+
 import android.util.Pair;
 
 import com.ichi2.anki.AnkiDroidApp;
@@ -54,6 +54,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 import java.util.TreeSet;
+
+import timber.log.Timber;
 
 public class Sched {
 
@@ -146,7 +148,7 @@ public class Sched {
 
     public void answerCard(Card card, int ease) {
         mCol.log();
-        Log.i(AnkiDroidApp.TAG, "answerCard - ease:" + ease);
+        Timber.i("answerCard - ease: %d", ease);
         mCol.markReview(card);
         if (mBurySiblingsOnAnswer) {
             _burySiblings(card);
@@ -1544,7 +1546,7 @@ public class Sched {
         JSONObject deck = mCol.getDecks().get(did);
         try {
             if (deck.getInt("dyn") == 0) {
-                Log.e(AnkiDroidApp.TAG, "error: deck is not a filtered deck");
+                Timber.e("error: deck is not a filtered deck");
                 return null;
             }
         } catch (JSONException e1) {
@@ -1680,7 +1682,7 @@ public class Sched {
 
     private int _dynIvlBoost(Card card) {
         if (card.getODid() == 0 || card.getType() != 2 || card.getFactor() == 0) {
-            Log.e(AnkiDroidApp.TAG, "error: deck is not a filtered deck");
+            Timber.e("error: deck is not a filtered deck");
             return 0;
         }
         long elapsed = card.getIvl() - (card.getODue() - mToday);

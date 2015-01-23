@@ -24,7 +24,7 @@ import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.util.Log;
+
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.Feedback;
@@ -70,6 +70,8 @@ import java.util.HashMap;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
+
+import timber.log.Timber;
 
 public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connection.Payload> {
 
@@ -312,7 +314,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         boolean valid = false;
         if (ret != null) {
             data.returnType = ret.getStatusLine().getStatusCode();
-            Log.i(AnkiDroidApp.TAG, "doInBackgroundLogin - response from server: " + data.returnType + " (" + ret.getStatusLine().getReasonPhrase() + ")");
+            Timber.d("doInBackgroundLogin - response from server: %d, (%s)", data.returnType, ret.getStatusLine().getReasonPhrase());
             if (data.returnType == 200) {
                 try {
                     JSONObject jo = (new JSONObject(server.stream2String(ret.getEntity().getContent())));
@@ -327,7 +329,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 }
             }
         } else {
-            Log.e(AnkiDroidApp.TAG, "doInBackgroundLogin - empty response from server");
+            Timber.e("doInBackgroundLogin - empty response from server");
         }
         if (valid) {
             data.success = true;
@@ -396,7 +398,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
 
     private Payload doInBackgroundSync(Payload data) {
         // for for doInBackgroundLoadDeckCounts if any
-        Log.v(AnkiDroidApp.TAG, "doInBackgroundSync()");
+        Timber.d("doInBackgroundSync()");
         // Block execution until any previous background task finishes, or timeout after 5s
         boolean ok = DeckTask.waitToFinish(5);
 
@@ -425,7 +427,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             // run sync and check state
             boolean noChanges = false;
             if (conflictResolution == null) {
-                Log.i(AnkiDroidApp.TAG, "Sync - starting sync");
+                Timber.i("Sync - starting sync");
                 publishProgress(R.string.sync_prepare_syncing);
                 Object[] ret = client.sync(this);
                 data.message = client.getSyncMsg();
@@ -460,7 +462,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 try {
                     server = new FullSyncer(col, hkey, this);
                     if (conflictResolution.equals("upload")) {
-                        Log.i(AnkiDroidApp.TAG, "Sync - fullsync - upload collection");
+                        Timber.i("Sync - fullsync - upload collection");
                         publishProgress(R.string.sync_preparing_full_sync_message);
                         Object[] ret = server.upload();
                         if (ret == null) {
@@ -476,7 +478,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                             return data;
                         }
                     } else if (conflictResolution.equals("download")) {
-                        Log.i(AnkiDroidApp.TAG, "Sync - fullsync - download collection");
+                        Timber.i("Sync - fullsync - download collection");
                         publishProgress(R.string.sync_downloading_message);
                         Object[] ret = server.download();
                         if (ret == null) {
@@ -565,7 +567,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 return data;
             }
         } catch (UnknownHttpResponseException e) {
-            Log.e(AnkiDroidApp.TAG, "doInBackgroundSync -- unknown response code error");
+            Timber.e("doInBackgroundSync -- unknown response code error");
             e.printStackTrace();
             data.success = false;
             Integer code = e.getResponseCode();
@@ -576,7 +578,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         } catch (Exception e) {
             // Global error catcher.
             // Try to give a human readable error, otherwise print the raw error message
-            Log.e(AnkiDroidApp.TAG, "doInBackgroundSync error");
+            Timber.e("doInBackgroundSync error");
             e.printStackTrace();
             data.success = false;
             if (timeoutOccured(e)) {
@@ -588,10 +590,10 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             return data;
         } finally {
             // Close collection to roll back any sync failures and
-            Log.i(AnkiDroidApp.TAG, "doInBackgroundSync -- closing collection on outer finally statement");
+            Timber.d("doInBackgroundSync -- closing collection on outer finally statement");
             col.close(false);
             AnkiDroidApp.setSyncInProgress(false);
-            Log.i(AnkiDroidApp.TAG, "doInBackgroundSync -- reopening collection on outer finally statement");
+            Timber.d("doInBackgroundSync -- reopening collection on outer finally statement");
             AnkiDroidApp.openCollection(AnkiDroidApp.getCollectionPath());
         }
 
@@ -614,7 +616,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
 
 
     private Payload doInBackgroundSendFeedback(Payload data) {
-        Log.i(AnkiDroidApp.TAG, "doInBackgroundSendFeedback");
+        Timber.i("doInBackgroundSendFeedback");
         String feedbackUrl = (String) data.data[0];
         String errorUrl = (String) data.data[1];
         String feedback = (String) data.data[2];
@@ -671,7 +673,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
      *         of total missing media, data.data[1] is the number of downloaded ones.
      */
     private Payload doInBackgroundDownloadMissingMedia(Payload data) {
-        Log.i(AnkiDroidApp.TAG, "DownloadMissingMedia");
+        Timber.i("DownloadMissingMedia");
         HashMap<String, String> missingPaths = new HashMap<String, String>();
         HashMap<String, String> missingSums = new HashMap<String, String>();
 
@@ -707,7 +709,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 if (!file.exists()) {
                     missingPaths.put(f, path);
                     missingSums.put(f, cursor.getString(1));
-                    Log.i(AnkiDroidApp.TAG, "Missing file: " + f);
+                    Timber.d("Missing file: %s", f);
                 }
             }
         } finally {
@@ -744,7 +746,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     FileOutputStream fos = new FileOutputStream(path);
                     while ((readbytes = bis.read(buf, 0, 4096)) != -1) {
                         fos.write(buf, 0, readbytes);
-                        Log.i(AnkiDroidApp.TAG, "Downloaded " + readbytes + " file: " + path);
+                        Timber.d("Downloaded %d file: %s", readbytes, path);
                     }
                     fos.close();
 
@@ -754,15 +756,15 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                         grabbed++;
                     } else {
                         // Download corrupted, delete file
-                        Log.i(AnkiDroidApp.TAG, "Downloaded media file " + path + " failed checksum.");
+                        Timber.i("Downloaded media file %s failed checksum.", path);
                         File f = new File(path);
                         f.delete();
                         missing++;
                     }
                 } else {
-                    Log.e(AnkiDroidApp.TAG, "Connection error (" + connection.getResponseCode()
+                    Timber.e("Connection error (" + connection.getResponseCode()
                             + ") while retrieving media file " + urlbase + file);
-                    Log.e(AnkiDroidApp.TAG, "Connection message: " + connection.getResponseMessage());
+                    Timber.e("Connection message: " + connection.getResponseMessage());
                     if (missingSums.get(file).equals("")) {
                         // Ignore and keep going
                         missing++;
@@ -774,10 +776,9 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 }
                 connection.disconnect();
             } catch (URISyntaxException e) {
-                Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
+                Timber.e(e, "doInBackgroundDownloadMissingMedia URISyntaxException");
             } catch (MalformedURLException e) {
-                Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
-                Log.e(AnkiDroidApp.TAG, "MalformedURLException while download media file " + path);
+                Timber.e(e, "MalformedURLException while download media file " + path);
                 if (missingSums.get(file).equals("")) {
                     // Ignore and keep going
                     missing++;
@@ -787,8 +788,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     return data;
                 }
             } catch (IOException e) {
-                Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
-                Log.e(AnkiDroidApp.TAG, "IOException while download media file " + path);
+                Timber.e(e, "IOException while download media file " + path);
                 if (missingSums.get(file).equals("")) {
                     // Ignore and keep going
                     missing++;
@@ -833,22 +833,22 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             conn.setReadTimeout(10000);
             cont = conn.getInputStream();
         } catch (MalformedURLException e) {
-            Log.e(AnkiDroidApp.TAG, "doInBackgroundDownloadSharedDeck: ", e);
+            Timber.e(e, "doInBackgroundDownloadSharedDeck");
             data.success = false;
             return data;
         } catch (IOException e) {
-            Log.e(AnkiDroidApp.TAG, "doInBackgroundDownloadSharedDeck: ", e);
+            Timber.e(e, "doInBackgroundDownloadSharedDeck");
             data.success = false;
             return data;
         } catch (NoSuchAlgorithmException e) {
-            Log.e(AnkiDroidApp.TAG, "doInBackgroundDownloadSharedDeck: ", e);
+            Timber.e(e, "doInBackgroundDownloadSharedDeck");
             data.success = false;
             return data;
         } catch (KeyStoreException e) {
-            Log.e(AnkiDroidApp.TAG, "doInBackgroundDownloadSharedDeck: ", e);
+            Timber.e(e, "doInBackgroundDownloadSharedDeck");
             return data;
         } catch (KeyManagementException e) {
-            Log.e(AnkiDroidApp.TAG, "doInBackgroundDownloadSharedDeck: ", e);
+            Timber.e(e, "doInBackgroundDownloadSharedDeck");
             data.success = false;
             return data;
         }
@@ -950,63 +950,6 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         }
     }
 
-    // public static void cancelGetSharedDecks() {
-    // HttpSyncer.resetSharedDecks();
-    // sInstance.cancel(true);
-    // }
-
-    // private Payload doInBackgroundGetSharedDecks(Payload data) {
-    // // DeckManager.closeMainDeck();
-    // try {
-    // data.result = HttpSyncer.getSharedDecks();
-    // } catch (OutOfMemoryError e) {
-    // data.success = false;
-    // data.returnType = RETURN_TYPE_OUT_OF_MEMORY;
-    // Log.e(AnkiDroidApp.TAG, "doInBackgroundGetSharedDecks: OutOfMemoryError: " + e);
-    // } catch (Exception e) {
-    // data.success = false;
-    // data.exception = e;
-    // Log.e(AnkiDroidApp.TAG, "doInBackgroundGetSharedDecks - Error getting shared decks = " + e.getMessage());
-    // Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
-    // }
-    // return data;
-    // }
-    //
-    //
-    // private Payload doInBackgroundGetPersonalDecks(Payload data) {
-    // Resources res = sContext.getResources();
-    // // DeckManager.closeMainDeck();
-    // try {
-    // String username = (String) data.data[0];
-    // String password = (String) data.data[1];
-    // HttpSyncer server = new HttpSyncer(username, password);
-    //
-    // int connectResult = server.connect(false);
-    // if (connectResult != HttpSyncer.LOGIN_OK) {
-    // if (connectResult == HttpSyncer.LOGIN_INVALID_USER_PASS) {
-    // data.result = res.getString(R.string.invalid_username_password);
-    // } else if (connectResult == HttpSyncer.LOGIN_OLD_VERSION) {
-    // data.result = String.format(res.getString(R.string.sync_log_old_version),
-    // res.getString(R.string.link_ankidroid));
-    // } else if (connectResult == HttpSyncer.LOGIN_TOO_BUSY) {
-    // data.result = res.getString(R.string.sync_too_busy);
-    // } else {
-    // data.result = res.getString(R.string.login_generic_error);
-    // }
-    // data.success = false;
-    // return data;
-    // }
-    //
-    // data.result = server.getPersonalDecks();
-    // } catch (Exception e) {
-    // data.success = false;
-    // data.result = null;
-    // data.exception = e;
-    // Log.e(AnkiDroidApp.TAG, "doInBackgroundGetPersonalDecks - Error getting personal decks = " + e.getMessage());
-    // Log.e(AnkiDroidApp.TAG, Log.getStackTraceString(e));
-    // }
-    // return data;
-    // }
 
     public static final class OldAnkiDeckFilter implements FileFilter {
         @Override

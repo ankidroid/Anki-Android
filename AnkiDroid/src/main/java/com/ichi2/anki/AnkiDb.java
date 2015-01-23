@@ -26,13 +26,15 @@ import android.database.DatabaseErrorHandler;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
-import android.util.Log;
+
 import android.widget.Toast;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import timber.log.Timber;
 
 /**
  * Database layer for AnkiDroid. Can read the native Anki format through Android's SQLite driver.
@@ -76,7 +78,7 @@ public class AnkiDb {
     public class MyDbErrorHandler implements DatabaseErrorHandler {
         @Override
         public void onCorruption(SQLiteDatabase db) {
-            Log.e(AnkiDroidApp.TAG, "The database has been corrupted...");
+            Timber.e("The database has been corrupted...");
             AnkiDroidApp.saveExceptionReportFile("AnkiDb.MyDbErrorHandler.onCorruption", "Db has been corrupted ");
             AnkiDroidApp.closeCollection(false);
         }
@@ -91,7 +93,7 @@ public class AnkiDb {
             // set journal mode again to delete in order to make the db accessible for anki desktop and for full upload
             setDeleteJournalMode();
             mDatabase.close();
-            Log.i(AnkiDroidApp.TAG, "AnkiDb - closeDatabase, database " + mDatabase.getPath() + " closed = " + !mDatabase.isOpen());
+            Timber.d("closeDatabase, database %s closed = %s", mDatabase.getPath(), !mDatabase.isOpen());
             mDatabase = null;
         }
     }
@@ -257,13 +259,13 @@ public class AnkiDb {
                     sb.append("Exception due to null. Query: " + query);
                     sb.append(" Null occurrences during this query: " + nullExceptionCount);
                     AnkiDroidApp.saveExceptionReportFile(nullException, "queryColumn_encounteredNull", sb.toString());
-                    Log.w(AnkiDroidApp.TAG, sb.toString());
+                    Timber.w(sb.toString());
                 } else { // nullException not properly initialized
                     StringBuilder sb = new StringBuilder();
                     sb.append("AnkiDb.queryColumn(): Critical error -- ");
                     sb.append("unable to pass in the actual exception to error reporting.");
                     AnkiDroidApp.saveExceptionReportFile("queryColumn_encounteredNull", sb.toString());
-                    Log.e(AnkiDroidApp.TAG, sb.toString());
+                    Timber.e(sb.toString());
                 }
             }
         }

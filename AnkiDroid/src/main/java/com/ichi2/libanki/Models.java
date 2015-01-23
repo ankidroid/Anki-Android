@@ -21,7 +21,7 @@ package com.ichi2.libanki;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.util.Log;
+
 import android.util.Pair;
 
 import com.ichi2.anki.AnkiDroidApp;
@@ -45,6 +45,8 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import timber.log.Timber;
 
 public class Models {
     private static final Pattern fClozePattern1 = Pattern.compile("(?:\\{\\{|<%)cloze:(.+?)(?:\\}\\}|%>)");
@@ -948,7 +950,7 @@ public class Models {
 
             txt = _fields.get(tag);
 
-            Log.d(AnkiDroidApp.TAG, "Processing field modifier " + mod + ": extra = " + extra + ", field " + tag + " = " + txt);
+            Timber.d("Processing field modifier %s: extra = %s, field %s = %s" + mod, extra, tag, txt);
 
             // built-in modifiers
             if (mod.equals("text")) {

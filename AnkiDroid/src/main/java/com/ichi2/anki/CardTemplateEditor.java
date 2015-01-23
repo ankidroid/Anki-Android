@@ -24,7 +24,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -50,6 +50,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import timber.log.Timber;
 
 
 /**
@@ -89,7 +91,7 @@ public class CardTemplateEditor extends AnkiActivity {
                 try {
                     mProgressDialog.dismiss();
                 } catch (IllegalArgumentException e) {
-                    Log.e(AnkiDroidApp.TAG, "Card Template Editor: Error on dismissing progress dialog: " + e);
+                    Timber.e(e, "Card Template Editor: Error on dismissing progress dialog");
                 }
             }
             if (result.getBoolean()) {
@@ -122,14 +124,14 @@ public class CardTemplateEditor extends AnkiActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.v(AnkiDroidApp.TAG, "CardTemplateEditor:: onCreate");
+        Timber.d("onCreate()");
         Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.card_template_editor_activity);
         // get id for currently edited card (optional)
         mModelId = getIntent().getLongExtra("modelId", -1L);
         if (mModelId == -1) {
-            Log.e(AnkiDroidApp.TAG, "CardTemplateEditor :: no model ID was provided");
+            Timber.e("CardTemplateEditor :: no model ID was provided");
             finishWithoutAnimation();
             return;
         }
@@ -174,6 +176,7 @@ public class CardTemplateEditor extends AnkiActivity {
         // Set activity title
         setTitle(getResources().getString(R.string.title_activity_template_editor, col.getModels().get(mModelId).optString("name")));
         // Close collection opening dialog if needed
+        Timber.i("Card template editor successfully started for model id %d", mModelId);
         dismissOpeningCollectionDialog();
     }
 
@@ -350,9 +353,11 @@ public class CardTemplateEditor extends AnkiActivity {
         public boolean onOptionsItemSelected(MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.action_add:
+                    Timber.i("Add template button pressed");
                     addNewTemplateWithCheck(getModel());
                     return true;
                 case R.id.action_delete:
+                    Timber.i("Delete template button pressed");
                     Resources res = getResources();
                     final Collection col = ((AnkiActivity) getActivity()).getCol();
                     int position = getArguments().getInt("position");

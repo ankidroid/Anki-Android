@@ -26,12 +26,14 @@ import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaRecorder;
 import android.os.Build;
-import android.util.Log;
+
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import com.ichi2.anki.R;
+
+import timber.log.Timber;
 
 // Not designed for visual editing
 @SuppressLint("ViewConstructor")
@@ -131,19 +133,6 @@ public class AudioView extends LinearLayout {
     }
 
 
-    // public void setAudioPath(String audioPath)
-    // {
-    // if (mStatus == Status.IDLE)
-    // {
-    // mAudioPath = audioPath;
-    // }
-    // else
-    // {
-    // Log.e("Audio View",
-    // "Cannot set audio path after it has been initialized");
-    // }
-    // }
-
     public String getAudioPath() {
         return mAudioPath;
     }
@@ -236,7 +225,7 @@ public class AudioView extends LinearLayout {
                             mStatus = Status.PLAYING;
                             notifyPlay();
                         } catch (Exception e) {
-                            Log.e("AudioView", e.getMessage());
+                            Timber.e(e.getMessage());
                             showToast(gtxt(R.string.multimedia_editor_audio_view_playing_failed));
                             mStatus = Status.IDLE;
                         }
@@ -258,7 +247,7 @@ public class AudioView extends LinearLayout {
                             mPlayer.prepare();
                             mPlayer.seekTo(0);
                         } catch (Exception e) {
-                            Log.e("AudioView", e.getMessage());
+                            Timber.e(e.getMessage());
                         }
                         mPlayer.start();
                         notifyPlay();
@@ -391,7 +380,7 @@ public class AudioView extends LinearLayout {
                                 mRecorder.start();
 
                             } catch (Exception e) {
-                                Log.e("AudioView", "RecordButton.onClick() :: error recording to " + mAudioPath + "\n" +e.getMessage());
+                                Timber.e("RecordButton.onClick() :: error recording to " + mAudioPath + "\n" +e.getMessage());
                                 showToast(gtxt(R.string.multimedia_editor_audio_view_recording_failed));
                                 mStatus = Status.STOPPED;
                                 break;

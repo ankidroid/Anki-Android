@@ -20,7 +20,7 @@ import android.content.pm.PackageManager;
 import android.os.Environment;
 import android.os.StatFs;
 import android.text.TextUtils;
-import android.util.Log;
+
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -32,6 +32,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.TimeZone;
+
+import timber.log.Timber;
 
 public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
 
@@ -46,7 +48,7 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
     static CustomExceptionHandler getInstance() {
         if (sInstance == null) {
             sInstance = new CustomExceptionHandler();
-            Log.i(AnkiDroidApp.TAG, "New instance of custom exception handler");
+            Timber.i("New instance of custom exception handler");
         }
 
         return sInstance;
@@ -79,14 +81,14 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
 
 
     private void collectInformation() {
-        Log.i(AnkiDroidApp.TAG, "collectInformation");
+        Timber.i("collectInformation");
 
         if (mCurContext == null) {
             return;
         }
 
         try {
-            Log.i(AnkiDroidApp.TAG, "collecting information");
+            Timber.i("collecting information");
 
             PackageManager pm = mCurContext.getPackageManager();
             PackageInfo pi = pm.getPackageInfo(mCurContext.getPackageName(), 0);
@@ -110,9 +112,9 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
             mInformation.put("TotalInternalMemory", Long.toString(getTotalInternalMemorySize()));
             mInformation.put("AvailableInternalMemory", Long.toString(getAvailableInternalMemorySize()));
             mInformation.put("Locale", AnkiDroidApp.getAppResources().getConfiguration().locale.toString());
-            Log.i(AnkiDroidApp.TAG, "Information collected");
+            Timber.i("Information collected");
         } catch (Exception e) {
-            Log.i(AnkiDroidApp.TAG, e.toString());
+            Timber.i(e.toString());
         }
     }
 
@@ -129,7 +131,7 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
 
 
     public void uncaughtException(Thread t, Throwable e, String origin, String additionalInfo) {
-        Log.i(AnkiDroidApp.TAG, "uncaughtException");
+        Timber.i("uncaughtException");
 
         collectInformation();
 
@@ -186,7 +188,7 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
 
         printWriter.close();
 
-        Log.i(AnkiDroidApp.TAG, "report infomation string created");
+        Timber.i("report infomation string created");
         saveReportToFile(reportInformation.toString());
 
         if (t != null) {
@@ -197,20 +199,20 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
 
     private void saveReportToFile(String reportInformation) {
         try {
-            Log.i(AnkiDroidApp.TAG, "saveReportFile");
+            Timber.i("saveReportFile");
 
             Date currentDate = new Date();
             SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
             String filename = String.format("ad-%s.stacktrace", formatter.format(currentDate));
 
-            Log.i(AnkiDroidApp.TAG, "No external storage available");
+            Timber.i("No external storage available");
             FileOutputStream trace = mCurContext.openFileOutput(filename, Context.MODE_PRIVATE);
             trace.write(reportInformation.getBytes());
             trace.close();
 
-            Log.i(AnkiDroidApp.TAG, "report saved");
+            Timber.i("report saved");
         } catch (Exception e) {
-            Log.i(AnkiDroidApp.TAG, e.toString());
+            Timber.i(e.toString());
         }
     }
 }

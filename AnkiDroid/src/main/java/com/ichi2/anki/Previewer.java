@@ -19,11 +19,13 @@
 package com.ichi2.anki;
 
 import android.os.Bundle;
-import android.util.Log;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import com.ichi2.libanki.Collection;
+
+import timber.log.Timber;
 
 public class Previewer extends AbstractFlashcardViewer {
     Long mCurrentCardId;
@@ -31,7 +33,7 @@ public class Previewer extends AbstractFlashcardViewer {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.i(AnkiDroidApp.TAG, "PreviewClass - onCreate");
+        Timber.d("onCreate()");
         mCurrentCardId=getIntent().getLongExtra("currentCardId", -1);
     }
 

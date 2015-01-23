@@ -18,7 +18,7 @@
 package com.ichi2.libanki.sync;
 
 import android.text.TextUtils;
-import android.util.Log;
+
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.exception.UnknownHttpResponseException;
@@ -39,6 +39,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.zip.ZipFile;
+
+import timber.log.Timber;
 
 public class RemoteMediaServer extends HttpSyncer {
 
@@ -108,7 +110,7 @@ public class RemoteMediaServer extends HttpSyncer {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
-            Log.e(AnkiDroidApp.TAG, "Failed to create temp media sync zip file", e);
+            Timber.e(e, "Failed to create temp media sync zip file");
             throw new RuntimeException(e);
         }
     }

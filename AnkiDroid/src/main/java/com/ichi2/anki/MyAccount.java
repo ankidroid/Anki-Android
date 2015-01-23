@@ -24,7 +24,7 @@ import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
+
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -39,6 +39,8 @@ import com.ichi2.async.Connection.Payload;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
+
+import timber.log.Timber;
 
 public class MyAccount extends AnkiActivity {
 
@@ -157,7 +159,7 @@ public class MyAccount extends AnkiActivity {
         try {
             AnkiDroidApp.getCol().getMedia().forceResync();
         } catch (SQLiteException e) {
-            Log.e(AnkiDroidApp.TAG, "MyAccount.logout()  reinitializing media db due to sqlite error");
+            Timber.e("MyAccount.logout()  reinitializing media db due to sqlite error");
             AnkiDroidApp.getCol().getMedia()._initDB();
         }
         setContentView(mLoginToMyAccountView);
@@ -331,7 +333,7 @@ public class MyAccount extends AnkiActivity {
 
         @Override
         public void onPreExecute() {
-            Log.i(AnkiDroidApp.TAG, "MyAccount - onPreExcecute");
+            Timber.d("loginListener.onPreExcecute()");
             if (mProgressDialog == null || !mProgressDialog.isShowing()) {
                 mProgressDialog = StyledProgressDialog.show(MyAccount.this, "",
                         getResources().getString(R.string.alert_logging_message), true);
@@ -341,13 +343,13 @@ public class MyAccount extends AnkiActivity {
 
         @Override
         public void onPostExecute(Payload data) {
-            Log.i(AnkiDroidApp.TAG, "MyAccount - onPostExecute, succes = " + data.success);
+            Timber.d("loginListener.onPostExecute, succes = %b", data.success);
             if (mProgressDialog != null) {
                 mProgressDialog.dismiss();
             }
 
             if (data.success) {
-                Log.i(AnkiDroidApp.TAG, "User successfully logged in!");
+                Timber.i("User successfully logged in!");
                 saveUserInformation((String) data.data[0], (String) data.data[1]);
 
                 Intent i = MyAccount.this.getIntent();
@@ -391,7 +393,7 @@ public class MyAccount extends AnkiActivity {
 
         @Override
         public void onPreExecute() {
-            Log.i(AnkiDroidApp.TAG, "MyAccount - onPreExcecute");
+            Timber.d("registerListener.onPreExcecute()");
             if (mProgressDialog == null || !mProgressDialog.isShowing()) {
                 mProgressDialog = StyledProgressDialog.show(MyAccount.this, "",
                         getResources().getString(R.string.registering_message), true);
@@ -401,13 +403,13 @@ public class MyAccount extends AnkiActivity {
 
         @Override
         public void onPostExecute(Payload data) {
-            Log.i(AnkiDroidApp.TAG, "MyAccount - onPostExecute, succes = " + data.success);
+            Timber.d("registerListener.onPostExecute(), succes = %b", data.success);
             if (mProgressDialog != null) {
                 mProgressDialog.dismiss();
             }
 
             if (data.success) {
-                Log.i(AnkiDroidApp.TAG, "User successfully registered!");
+                Timber.i("User successfully registered!");
                 saveUserInformation((String) data.data[0], (String) data.data[1]);
 
                 Intent i = MyAccount.this.getIntent();
@@ -440,7 +442,7 @@ public class MyAccount extends AnkiActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            Log.i(AnkiDroidApp.TAG, "MyAccount - onBackPressed()");
+            Timber.i("MyAccount - onBackPressed()");
             finish();
             ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
             return true;

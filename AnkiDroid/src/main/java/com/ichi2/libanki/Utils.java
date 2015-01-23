@@ -26,7 +26,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.text.Html;
-import android.util.Log;
+
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -80,6 +80,8 @@ import java.util.regex.Pattern;
 import java.util.zip.Deflater;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+
+import timber.log.Timber;
 
 /**
  * TODO comments
@@ -137,9 +139,9 @@ public class Utils {
 
     /**The time in integer seconds. Pass scale=1000 to get milliseconds. */
     public static long intNow() {
-    	return intNow(1);
+        return intNow(1);
     }
-	public static long intNow(int scale) {
+    public static long intNow(int scale) {
         return (long) (now() * scale);
     }
 
@@ -161,80 +163,80 @@ public class Utils {
         return fmtTimeSpan(time, 0, _short, false, 99);
     }
     public static String fmtTimeSpan(int time, int format, boolean _short, boolean boldNumber, int unit) {
-    	int type;
-    	int point = 0;
-    	if (Math.abs(time) < 60 || unit < 1) {
-    		type = TIME_SECONDS;
-    	} else if (Math.abs(time) < 3600 || unit < 2) {
-    		type = TIME_MINUTES;
-    	} else if (Math.abs(time) < 60 * 60 * 24 || unit < 3) {
-    		type = TIME_HOURS;
-    	} else if (Math.abs(time) < 60 * 60 * 24 * 29.5 || unit < 4) {
-    		type = TIME_DAYS;
-    	} else if (Math.abs(time) < 60 * 60 * 24 * 30 * 11.95 || unit < 5) {
-    		type = TIME_MONTHS;
-    		point = 1;
-    	} else {
-    		type = TIME_YEARS;
-    		point = 1;
-    	}
-    	double ftime = convertSecondsTo(time, type);
+        int type;
+        int point = 0;
+        if (Math.abs(time) < 60 || unit < 1) {
+            type = TIME_SECONDS;
+        } else if (Math.abs(time) < 3600 || unit < 2) {
+            type = TIME_MINUTES;
+        } else if (Math.abs(time) < 60 * 60 * 24 || unit < 3) {
+            type = TIME_HOURS;
+        } else if (Math.abs(time) < 60 * 60 * 24 * 29.5 || unit < 4) {
+            type = TIME_DAYS;
+        } else if (Math.abs(time) < 60 * 60 * 24 * 30 * 11.95 || unit < 5) {
+            type = TIME_MONTHS;
+            point = 1;
+        } else {
+            type = TIME_YEARS;
+            point = 1;
+        }
+        double ftime = convertSecondsTo(time, type);
 
-    	int formatId;
-    	if (false){//_short) {
-    	    //formatId = R.array.next_review_short;
-    	} else {
-        	switch (format) {
-        	case TIME_FORMAT_IN:
-        		if (Math.round(ftime * 10) == 10) {
-        			formatId = R.array.next_review_in_s;
-        		} else {
-        			formatId = R.array.next_review_in_p;
-        		}
-        		break;
-        	case TIME_FORMAT_BEFORE:
-        		if (Math.round(ftime * 10) == 10) {
-        			formatId = R.array.next_review_before_s;
-        		} else {
-        			formatId = R.array.next_review_before_p;
-        		}
-        		break;
-        	case TIME_FORMAT_DEFAULT:
-        	default:
-        		if (Math.round(ftime * 10) == 10) {
-        			formatId = R.array.next_review_s;
-        		} else {
-        			formatId = R.array.next_review_p;
-        		}
-        		break;
-        	}
-    	}
+        int formatId;
+        if (false){//_short) {
+            //formatId = R.array.next_review_short;
+        } else {
+            switch (format) {
+            case TIME_FORMAT_IN:
+                if (Math.round(ftime * 10) == 10) {
+                    formatId = R.array.next_review_in_s;
+                } else {
+                    formatId = R.array.next_review_in_p;
+                }
+                break;
+            case TIME_FORMAT_BEFORE:
+                if (Math.round(ftime * 10) == 10) {
+                    formatId = R.array.next_review_before_s;
+                } else {
+                    formatId = R.array.next_review_before_p;
+                }
+                break;
+            case TIME_FORMAT_DEFAULT:
+            default:
+                if (Math.round(ftime * 10) == 10) {
+                    formatId = R.array.next_review_s;
+                } else {
+                    formatId = R.array.next_review_p;
+                }
+                break;
+            }
+        }
 
-    	String timeString = String.format(AnkiDroidApp.getAppResources().getStringArray(formatId)[type], boldNumber ? "<b>" + fmtDouble(ftime, point) + "</b>" : fmtDouble(ftime, point));
-		if (boldNumber && time == 1) {
-			timeString = timeString.replace("1", "<b>1</b>");
-		}
-		return timeString;
+        String timeString = String.format(AnkiDroidApp.getAppResources().getStringArray(formatId)[type], boldNumber ? "<b>" + fmtDouble(ftime, point) + "</b>" : fmtDouble(ftime, point));
+        if (boldNumber && time == 1) {
+            timeString = timeString.replace("1", "<b>1</b>");
+        }
+        return timeString;
     }
 
 
     private static double convertSecondsTo(int seconds, int type) {
-    	switch (type) {
-    	case TIME_SECONDS:
-    		return seconds;
-    	case TIME_MINUTES:
-    		return seconds / 60.0;
-    	case TIME_HOURS:
-    		return seconds / 3600.0;
-    	case TIME_DAYS:
-    		return seconds / 86400.0;
-    	case TIME_MONTHS:
-    		return seconds / 2592000.0;
-    	case TIME_YEARS:
-    		return seconds / 31536000.0;
-		default:
-    		return 0;
-    	}
+        switch (type) {
+        case TIME_SECONDS:
+            return seconds;
+        case TIME_MINUTES:
+            return seconds / 60.0;
+        case TIME_HOURS:
+            return seconds / 3600.0;
+        case TIME_DAYS:
+            return seconds / 86400.0;
+        case TIME_MONTHS:
+            return seconds / 2592000.0;
+        case TIME_YEARS:
+            return seconds / 31536000.0;
+        default:
+            return 0;
+        }
     }
 
     /**
@@ -246,15 +248,15 @@ public class Utils {
      * @return double with percentage sign
      */
     public static String fmtPercentage(Double value) {
-	return fmtPercentage(value, 0);
+    return fmtPercentage(value, 0);
     }
     public static String fmtPercentage(Double value, int point) {
-    	// only retrieve the percentage format the first time
-    	if (mCurrentPercentageFormat == null) {
-    		mCurrentPercentageFormat = NumberFormat.getPercentInstance(Locale.getDefault());
-    	}
-    	mCurrentNumberFormat.setMaximumFractionDigits(point);
-    	return mCurrentPercentageFormat.format(value);
+        // only retrieve the percentage format the first time
+        if (mCurrentPercentageFormat == null) {
+            mCurrentPercentageFormat = NumberFormat.getPercentInstance(Locale.getDefault());
+        }
+        mCurrentNumberFormat.setMaximumFractionDigits(point);
+        return mCurrentPercentageFormat.format(value);
     }
 
 
@@ -262,15 +264,15 @@ public class Utils {
      * @return a string with decimal separator according to current locale
      */
     public static String fmtDouble(Double value) {
-    	return fmtDouble(value, 1);
+        return fmtDouble(value, 1);
     }
     public static String fmtDouble(Double value, int point) {
-    	// only retrieve the number format the first time
-    	if (mCurrentNumberFormat == null) {
-    		mCurrentNumberFormat = NumberFormat.getInstance(Locale.getDefault());
-    	}
-    	mCurrentNumberFormat.setMaximumFractionDigits(point);
-    	return mCurrentNumberFormat.format(value);
+        // only retrieve the number format the first time
+        if (mCurrentNumberFormat == null) {
+            mCurrentNumberFormat = NumberFormat.getInstance(Locale.getDefault());
+        }
+        mCurrentNumberFormat.setMaximumFractionDigits(point);
+        return mCurrentNumberFormat.format(value);
     }
 
     /**
@@ -304,8 +306,8 @@ public class Utils {
 
 
     private String minimizeHTML(String s) {
-    	// TODO
-    	return s;
+        // TODO
+        return s;
     }
 
 
@@ -341,17 +343,17 @@ public class Utils {
 
 
     public static long dehexifyID(String id) {
-    	return Long.valueOf(id, 16);
+        return Long.valueOf(id, 16);
     }
 
 
     /** Given a list of integers, return a string '(int1,int2,...)'. */
     public static String ids2str(int[] ids) {
-    	StringBuilder sb = new StringBuilder();
-    	sb.append("(");
+        StringBuilder sb = new StringBuilder();
+        sb.append("(");
         if (ids != null) {
-        	String s = Arrays.toString(ids);
-        	sb.append(s.substring(1, s.length() - 1));
+            String s = Arrays.toString(ids);
+            sb.append(s.substring(1, s.length() - 1));
         }
         sb.append(")");
         return sb.toString();
@@ -414,7 +416,7 @@ public class Utils {
                         str.append(ids.get(i)).append(",");
                     }
                 } catch (JSONException e) {
-                    Log.e(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
+                    Timber.e(e, "ids2str :: JSONException");
                 }
             }
         }
@@ -425,75 +427,75 @@ public class Utils {
 
     /** LIBANKI: not in libanki */
     public static long[] arrayList2array(List<Long> list) {
-    	long[] ar = new long[list.size()];
-    	int i = 0;
-    	for (long l : list) {
-    		ar[i++] = l;
-    	}
-    	return ar;
+        long[] ar = new long[list.size()];
+        int i = 0;
+        for (long l : list) {
+            ar[i++] = l;
+        }
+        return ar;
     }
 
     /** Return a non-conflicting timestamp for table. */
     public static long timestampID(AnkiDb db, String table) {
-    	// be careful not to create multiple objects without flushing them, or they
+        // be careful not to create multiple objects without flushing them, or they
         // may share an ID.
-    	long t = intNow(1000);
-    	while (db.queryScalar("SELECT id FROM " + table + " WHERE id = " + t, false) != 0) {
-    		t += 1;
-    	}
-    	return t;
+        long t = intNow(1000);
+        while (db.queryScalar("SELECT id FROM " + table + " WHERE id = " + t, false) != 0) {
+            t += 1;
+        }
+        return t;
     }
 
 
     /** Return the first safe ID to use. */
     public static long maxID(AnkiDb db) {
-    	long now = intNow(1000);
-    	now = Math.max(now, db.queryLongScalar("SELECT MAX(id) FROM cards"));
-    	now = Math.max(now, db.queryLongScalar("SELECT MAX(id) FROM notes"));
-    	return now + 1;
+        long now = intNow(1000);
+        now = Math.max(now, db.queryLongScalar("SELECT MAX(id) FROM cards"));
+        now = Math.max(now, db.queryLongScalar("SELECT MAX(id) FROM notes"));
+        return now + 1;
     }
 
 
     // used in ankiweb
     public static String base62(int num, String extra) {
-    	String table = ALL_CHARACTERS + extra;
-    	int len = table.length();
-    	String buf = "";
-    	int mod = 0;
-    	while (num != 0) {
-    		mod = num % len;
-    		buf = buf + table.substring(mod, mod + 1);
-    		num = num / len;
-    	}
+        String table = ALL_CHARACTERS + extra;
+        int len = table.length();
+        String buf = "";
+        int mod = 0;
+        while (num != 0) {
+            mod = num % len;
+            buf = buf + table.substring(mod, mod + 1);
+            num = num / len;
+        }
         return buf;
     }
 
     // all printable characters minus quotes, backslash and separators
     public static String base91(int num) {
-    	return base62(num, BASE91_EXTRA_CHARS);
+        return base62(num, BASE91_EXTRA_CHARS);
     }
 
 
     /** return a base91-encoded 64bit random number */
     public static String guid64() {
-    	return base91((new Random()).nextInt((int) (Math.pow(2, 61) - 1)));
+        return base91((new Random()).nextInt((int) (Math.pow(2, 61) - 1)));
     }
 
     // increment a guid by one, for note type conflicts
     public static String incGuid(String guid) {
-    	return new StringBuffer(_incGuid(new StringBuffer(guid).reverse().toString())).reverse().toString();
+        return new StringBuffer(_incGuid(new StringBuffer(guid).reverse().toString())).reverse().toString();
     }
 
     private static String _incGuid(String guid) {
-    	String table = ALL_CHARACTERS + BASE91_EXTRA_CHARS;
-    	int idx = table.indexOf(guid.substring(0, 1));
-    	if (idx + 1 == table.length()) {
-    		// overflow
-    		guid = table.substring(0, 1) + _incGuid(guid.substring(1, guid.length()));
-    	} else {
-    		guid = table.substring(idx + 1) + guid.substring(1, guid.length());
-    	}
-    	return guid;
+        String table = ALL_CHARACTERS + BASE91_EXTRA_CHARS;
+        int idx = table.indexOf(guid.substring(0, 1));
+        if (idx + 1 == table.length()) {
+            // overflow
+            guid = table.substring(0, 1) + _incGuid(guid.substring(1, guid.length()));
+        } else {
+            guid = table.substring(idx + 1) + guid.substring(1, guid.length());
+        }
+        return guid;
     }
 
 //    public static JSONArray listToJSONArray(List<Object> list) {
@@ -519,9 +521,9 @@ public class Utils {
 //    }
 
     public static long[] jsonArrayToLongArray(JSONArray jsonArray) throws JSONException {
-    	long[] ar = new long[jsonArray.length()];
+        long[] ar = new long[jsonArray.length()];
         for (int i = 0; i < jsonArray.length(); i++) {
-        	ar[i] = jsonArray.getLong(i);
+            ar[i] = jsonArray.getLong(i);
         }
         return ar;
     }
@@ -544,16 +546,16 @@ public class Utils {
 
 
     public static String[] splitFields(String fields) {
-    	// do not drop empty fields
-    	fields = fields.replaceAll("\\x1f\\x1f", "\u001f\u001e\u001f");
-    	fields = fields.replaceAll("\\x1f$", "\u001f\u001e");
-    	String[] split = fields.split("\\x1f");
-    	for (int i = 0; i < split.length; i++) {
-    		if (split[i].matches("\\x1e")) {
-    			split[i] = "";
-    		}
-    	}
-    	return split;
+        // do not drop empty fields
+        fields = fields.replaceAll("\\x1f\\x1f", "\u001f\u001e\u001f");
+        fields = fields.replaceAll("\\x1f$", "\u001f\u001e");
+        String[] split = fields.split("\\x1f");
+        for (int i = 0; i < split.length; i++) {
+            if (split[i].matches("\\x1e")) {
+                split[i] = "";
+            }
+        }
+        return split;
     }
 
     /**
@@ -577,10 +579,10 @@ public class Utils {
                 md = MessageDigest.getInstance("SHA1");
                 digest = md.digest(data.getBytes("UTF-8"));
             } catch (NoSuchAlgorithmException e) {
-                Log.e(AnkiDroidApp.TAG, "Utils.checksum: No such algorithm. " + e.getMessage());
+                Timber.e(e, "Utils.checksum: No such algorithm.");
                 throw new RuntimeException(e);
             } catch (UnsupportedEncodingException e) {
-                Log.e(AnkiDroidApp.TAG, "Utils.checksum: " + e.getMessage());
+                Timber.e(e, "Utils.checksum :: UnsupportedEncodingException");
                 e.printStackTrace();
             }
             BigInteger biginteger = new BigInteger(1, digest);
@@ -604,7 +606,7 @@ public class Utils {
      * @return 32 bit unsigned number from first 8 digits of sha1 hash
      */
     public static long fieldChecksum(String data) {
-    	return Long.valueOf(checksum(stripHTMLMedia(data)).substring(0, 8), 16);
+        return Long.valueOf(checksum(stripHTMLMedia(data)).substring(0, 8), 16);
     }
 
     /**
@@ -628,11 +630,11 @@ public class Utils {
             fis.close();
             digest = md.digest();
         } catch (FileNotFoundException e) {
-            Log.e(AnkiDroidApp.TAG, "Utils.fileChecksum: File not found.", e);
+            Timber.e(e, "Utils.fileChecksum: File not found.");
         } catch (NoSuchAlgorithmException e) {
-            Log.e(AnkiDroidApp.TAG, "Utils.fileChecksum: No such algorithm.", e);
+            Timber.e(e, "Utils.fileChecksum: No such algorithm.");
         } catch (IOException e) {
-            Log.e(AnkiDroidApp.TAG, "Utils.fileChecksum: IO exception.", e);
+            Timber.e(e, "Utils.fileChecksum: IO exception.");
         }
         BigInteger biginteger = new BigInteger(1, digest);
         String result = biginteger.toString(16);
@@ -651,7 +653,7 @@ public class Utils {
     /** Replace HTML line break tags with new lines. */
     public static String replaceLineBreak(String text) {
         return text.replaceAll("<br(\\s*\\/*)>", "\n");
-	}
+    }
 
 
 //    /**
@@ -672,12 +674,12 @@ public class Utils {
 //                fin.read(bytes);
 //            }
 //        } catch (FileNotFoundException e) {
-//            Log.e(AnkiDroidApp.TAG, "Can't find file " + path + " to calculate its checksum");
+//            Timber.e("Can't find file " + path + " to calculate its checksum");
 //        } catch (IOException e) {
-//            Log.e(AnkiDroidApp.TAG, "Can't read file " + path + " to calculate its checksum");
+//            Timber.e("Can't read file " + path + " to calculate its checksum");
 //        }
 //        if (bytes == null) {
-//            Log.w(AnkiDroidApp.TAG, "File " + path + " appears to be empty");
+//            Timber.w("File " + path + " appears to be empty");
 //            return "";
 //        }
 //        MessageDigest md = null;
@@ -686,7 +688,7 @@ public class Utils {
 //            md = MessageDigest.getInstance("MD5");
 //            digest = md.digest(bytes);
 //        } catch (NoSuchAlgorithmException e) {
-//            Log.e(AnkiDroidApp.TAG, "Utils.checksum: No such algorithm. " + e.getMessage());
+//            Timber.e("Utils.checksum: No such algorithm. " + e.getMessage());
 //            throw new RuntimeException(e);
 //        }
 //        BigInteger biginteger = new BigInteger(1, digest);
@@ -734,7 +736,7 @@ public class Utils {
         byte[] buf = new byte[FILE_COPY_BUFFER_SIZE];
         File dir = new File(targetDirectory);
         if (!dir.exists() && !dir.mkdirs()) {
-            Log.e(AnkiDroidApp.TAG, "Utils.unzipFiles: Could not create target directory: " + targetDirectory);
+            Timber.e("Utils.unzipFiles: Could not create target directory: " + targetDirectory);
             return false;
         }
         if (zipEntryToFilenameMap == null) {
@@ -756,7 +758,7 @@ public class Utils {
                         return false;
                     }
                     if (!ze.isDirectory()) {
-                        Log.i(AnkiDroidApp.TAG, "uncompress " + name);
+                        Timber.i("uncompress %s", name);
                         zis = new BufferedInputStream(zipFile.getInputStream(ze));
                         bos = new BufferedOutputStream(new FileOutputStream(destFile), FILE_COPY_BUFFER_SIZE);
                         int n;
@@ -770,7 +772,7 @@ public class Utils {
                 }
             }
         } catch (IOException e) {
-            Log.e(AnkiDroidApp.TAG, "Utils.unzipFiles: Error while unzipping archive.", e);
+            Timber.e(e, "Utils.unzipFiles: Error while unzipping archive.");
             return false;
         } finally {
             try {
@@ -778,14 +780,14 @@ public class Utils {
                     bos.close();
                 }
             } catch (IOException e) {
-                Log.e(AnkiDroidApp.TAG, "Utils.unzipFiles: Error while closing output stream.", e);
+                Timber.e(e, "Utils.unzipFiles: Error while closing output stream.");
             }
             try {
                 if (zis != null) {
                     zis.close();
                 }
             } catch (IOException e) {
-                Log.e(AnkiDroidApp.TAG, "Utils.unzipFiles: Error while closing zip input stream.", e);
+                Timber.e(e, "Utils.unzipFiles: Error while closing zip input stream.");
             }
         }
         return true;
@@ -828,7 +830,7 @@ public class Utils {
      * @throws IOException
      */
     public static void writeToFile(InputStream source, String destination) throws IOException {
-        Log.i(AnkiDroidApp.TAG, "Creating new file... = " + destination);
+        Timber.d("Creating new file... = %s", destination);
         new File(destination).createNewFile();
 
         long startTimeMillis = System.currentTimeMillis();
@@ -839,7 +841,7 @@ public class Utils {
         long sizeBytes = 0;
         int len;
         if (source == null) {
-            Log.e(AnkiDroidApp.TAG, "source is null!");
+            Timber.e("writeToFile :: source is null!");
         }
         while ((len = source.read(buf)) >= 0) {
             output.write(buf, 0, len);
@@ -847,14 +849,14 @@ public class Utils {
         }
         long endTimeMillis = System.currentTimeMillis();
 
-        Log.i(AnkiDroidApp.TAG, "Finished writing!");
+        Timber.d("Finished writeToFile!");
         long durationSeconds = (endTimeMillis - startTimeMillis) / 1000;
         long sizeKb = sizeBytes / 1024;
         long speedKbSec = 0;
         if (endTimeMillis != startTimeMillis) {
             speedKbSec = sizeKb * 1000 / (endTimeMillis - startTimeMillis);
         }
-        Log.d(AnkiDroidApp.TAG, "Utils.writeToFile: " + "Size: " + sizeKb + "Kb, " + "Duration: " + durationSeconds + "s, " + "Speed: " + speedKbSec + "Kb/s");
+        Timber.d("Utils.writeToFile: Size: %d Kb, Duration: %d s, Speed: %d Kb/s", sizeKb, durationSeconds, speedKbSec);
         output.close();
     }
 
@@ -878,7 +880,7 @@ public class Utils {
                 }
             }
         } catch (IOException ioe) {
-            Log.e(AnkiDroidApp.TAG, "IOException = " + ioe.getMessage());
+            Timber.e(ioe, "printJSONObject.IOException");
         }
     }
 
@@ -902,28 +904,28 @@ public class Utils {
                             buff.write(indentation + " " + key + " : ");
                             buff.newLine();
                         }
-                        Log.i(AnkiDroidApp.TAG, "	" + indentation + key + " : ");
+                        Timber.i("  " + indentation + key + " : ");
                         printJSONObject((JSONObject) value, indentation + "-", buff);
                     } else {
                         if (buff != null) {
                             buff.write(indentation + " " + key + " = " + jsonObject.get(key).toString());
                             buff.newLine();
                         }
-                        Log.i(AnkiDroidApp.TAG, "	" + indentation + key + " = " + jsonObject.get(key).toString());
+                        Timber.i("  " + indentation + key + " = " + jsonObject.get(key).toString());
                     }
                 } catch (JSONException e) {
-                    Log.e(AnkiDroidApp.TAG, "JSONException = " + e.getMessage());
+                    Timber.e(e, "printJSONObject : JSONException");
                 }
             }
         } catch (IOException e1) {
-            Log.e(AnkiDroidApp.TAG, "IOException = " + e1.getMessage());
+            Timber.e(e1, "printJSONObject : IOException");
         }
     }
 
 
     /*
     public static void saveJSONObject(JSONObject jsonObject) throws IOException {
-        Log.i(AnkiDroidApp.TAG, "saveJSONObject");
+        Timber.i("saveJSONObject");
         BufferedWriter buff = new BufferedWriter(new FileWriter("/sdcard/jsonObjectAndroid.txt", true));
         buff.write(jsonObject.toString());
         buff.close();
@@ -963,25 +965,25 @@ public class Utils {
 
 
     public static void printDate(String name, double date) {
-    	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
-    	df.setTimeZone(TimeZone.getTimeZone("GMT"));
-    	Calendar cal = new GregorianCalendar(TimeZone.getTimeZone("GMT"));
-    	cal.setTimeInMillis((long)date * 1000);
-    	Log.d(AnkiDroidApp.TAG, "Value of " + name + ": " + cal.getTime().toGMTString());
-	}
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
+        df.setTimeZone(TimeZone.getTimeZone("GMT"));
+        Calendar cal = new GregorianCalendar(TimeZone.getTimeZone("GMT"));
+        cal.setTimeInMillis((long)date * 1000);
+        Timber.d("Value of %s: %s", name, cal.getTime().toGMTString());
+    }
 
 
     public static String doubleToTime(double value) {
-    	int time = (int) Math.round(value);
-    	int seconds = time % 60;
-    	int minutes = (time - seconds) / 60;
-    	String formattedTime;
-    	if (seconds < 10) {
-    		formattedTime = Integer.toString(minutes) + ":0" + Integer.toString(seconds);
-    	} else {
-    		formattedTime = Integer.toString(minutes) + ":" + Integer.toString(seconds);
-    	}
-    	return formattedTime;
+        int time = (int) Math.round(value);
+        int seconds = time % 60;
+        int minutes = (time - seconds) / 60;
+        String formattedTime;
+        if (seconds < 10) {
+            formattedTime = Integer.toString(minutes) + ":0" + Integer.toString(seconds);
+        } else {
+            formattedTime = Integer.toString(minutes) + ":" + Integer.toString(seconds);
+        }
+        return formattedTime;
     }
 
 
@@ -1062,7 +1064,7 @@ public class Utils {
             lparam.width = x;
             view.setLayoutParams(lparam);
         } else if (view.getParent() instanceof FrameLayout) {
-        	FrameLayout.LayoutParams lparam = new FrameLayout.LayoutParams(0, 0);
+            FrameLayout.LayoutParams lparam = new FrameLayout.LayoutParams(0, 0);
             lparam.height = y;
             lparam.width = x;
             view.setLayoutParams(lparam);
@@ -1116,15 +1118,15 @@ public class Utils {
         int fontsCount = 0;
         File[] fontsList = null;
         if (fontsDir.exists() && fontsDir.isDirectory()) {
-        	fontsCount = fontsDir.listFiles().length;
-        	fontsList = fontsDir.listFiles();
+            fontsCount = fontsDir.listFiles().length;
+            fontsList = fontsDir.listFiles();
         }
         String[] ankiDroidFonts = null;
-		try {
-			ankiDroidFonts = context.getAssets().list("fonts");
-		} catch (IOException e) {
-			Log.e(AnkiDroidApp.TAG, "Error on retrieving ankidroid fonts: " + e);
-		}
+        try {
+            ankiDroidFonts = context.getAssets().list("fonts");
+        } catch (IOException e) {
+            Timber.e(e, "Error on retrieving ankidroid fonts");
+        }
         List<AnkiFont> fonts = new ArrayList<AnkiFont>();
         for (int i = 0; i < fontsCount; i++) {
             String filePath = fontsList[i].getAbsolutePath();
@@ -1151,7 +1153,7 @@ public class Utils {
             }
         }
 
-       	return fonts;
+        return fonts;
     }
 
 
@@ -1162,17 +1164,17 @@ public class Utils {
         int deckCount = 0;
         File[] deckList = null;
         if (dir.exists() && dir.isDirectory()) {
-        	deckList = dir.listFiles(new FileFilter(){
+            deckList = dir.listFiles(new FileFilter(){
                 @Override
                 public boolean accept(File pathname) {
                     return pathname.isFile() && pathname.getName().endsWith(".apkg");
                 }
             });
-        	deckCount = deckList.length;
+            deckCount = deckList.length;
         }
         List<File> decks = new ArrayList<File>();
         decks.addAll(Arrays.asList(deckList).subList(0, deckCount));
-       	return decks;
+        return decks;
     }
 
 

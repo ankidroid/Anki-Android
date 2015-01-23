@@ -18,7 +18,7 @@
 
 package com.ichi2.libanki.sync;
 
-import android.util.Log;
+
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.exception.UnknownHttpResponseException;
@@ -69,6 +69,8 @@ import java.util.Random;
 import java.util.zip.GZIPOutputStream;
 
 import javax.net.ssl.SSLException;
+
+import timber.log.Timber;
 
 /**
  * # HTTP syncing tools
@@ -233,13 +235,13 @@ public class HttpSyncer {
                 assertOk(httpResponse);
                 return httpResponse;
             } catch (SSLException e) {
-                Log.e(AnkiDroidApp.TAG, "SSLException while building HttpClient", e);
+                Timber.e(e, "SSLException while building HttpClient");
                 throw new RuntimeException("SSLException while building HttpClient");
             }
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
-            Log.e(AnkiDroidApp.TAG, "BasicHttpSyncer.sync: IOException", e);
+            Timber.e(e, "BasicHttpSyncer.sync: IOException");
             throw new RuntimeException(e);
         } catch (JSONException e) {
             throw new RuntimeException(e);
@@ -435,7 +437,7 @@ public class HttpSyncer {
         try {
             return new ByteArrayInputStream(string.getBytes("UTF-8"));
         } catch (UnsupportedEncodingException e) {
-            Log.e(AnkiDroidApp.TAG, "HttpSyncer: error on getting bytes from string: " + e);
+            Timber.e(e, "HttpSyncer: error on getting bytes from string");
             return null;
         }
     }

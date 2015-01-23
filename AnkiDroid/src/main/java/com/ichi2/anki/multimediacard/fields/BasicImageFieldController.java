@@ -29,7 +29,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.MediaStore.MediaColumns;
 import android.util.DisplayMetrics;
-import android.util.Log;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -48,6 +48,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
+import timber.log.Timber;
 
 public class BasicImageFieldController extends FieldControllerBase implements IFieldController {
 
@@ -161,7 +163,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             // Do Nothing.
         } else if (requestCode == ACTIVITY_SELECT_IMAGE) {
             Uri selectedImage = data.getData();
-            // Log.d(TAG, selectedImage.toString());
+            // Timber.d(selectedImage.toString());
             String[] filePathColumn = { MediaColumns.DATA };
 
             Cursor cursor = mActivity.getContentResolver().query(selectedImage, filePathColumn, null, null, null);
@@ -202,7 +204,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             f.delete();
             return outPath;
         } catch (FileNotFoundException e) {
-            Log.e(AnkiDroidApp.TAG, "Error in BasicImageFieldController.rotateAndCompress() : " + e.getMessage());
+            Timber.e("Error in BasicImageFieldController.rotateAndCompress() : " + e.getMessage());
             return inPath;
         } finally {
             try {

@@ -895,7 +895,7 @@ public class Decks {
     // String dir = null;
     // File mediaDir = null;
     // if (mDeckPath != null && !mDeckPath.equals("")) {
-    // Log.i(AnkiDroidApp.TAG, "mediaDir - mediaPrefix = " + mMediaPrefix);
+    // Timber.i("mediaDir - mediaPrefix = " + mMediaPrefix);
     // if (mMediaPrefix != null) {
     // dir = mMediaPrefix + "/" + mDeckName + ".media";
     // } else {
@@ -909,11 +909,11 @@ public class Decks {
     // if (!mediaDir.exists() && create) {
     // try {
     // if (!mediaDir.mkdir()) {
-    // Log.e(AnkiDroidApp.TAG, "Couldn't create media directory " + dir);
+    // Timber.e("Couldn't create media directory " + dir);
     // return null;
     // }
     // } catch (SecurityException e) {
-    // Log.e(AnkiDroidApp.TAG,
+    // Timber.e(
     // "Security restriction: Couldn't create media directory " + dir);
     // return null;
     // }
@@ -927,7 +927,7 @@ public class Decks {
     // return null;
     // }
     // }
-    // Log.i(AnkiDroidApp.TAG, "mediaDir - mediaDir = " + dir);
+    // Timber.i("mediaDir - mediaDir = " + dir);
     // return dir;
     // }
     //

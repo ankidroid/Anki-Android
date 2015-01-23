@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Typeface;
-import android.util.Log;
+
 import android.widget.Toast;
 
 import com.ichi2.libanki.Utils;
@@ -16,6 +16,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+
+import timber.log.Timber;
 
 public class AnkiFont {
     private String mName;
@@ -127,7 +129,7 @@ public class AnkiFont {
                     sb.deleteCharAt(sb.length() - 1);
                     sb.append(" !important;");
                 } else {
-                    Log.d(AnkiDroidApp.TAG, "AnkiFont.getCSS() - unable to set a font attribute important while override is set.");
+                    Timber.d("AnkiFont.getCSS() - unable to set a font attribute important while override is set.");
                 }
             }
         }
@@ -153,7 +155,7 @@ public class AnkiFont {
                 return Typeface.createFromFile(path);
             }
         } catch (RuntimeException e) {
-            Log.w(AnkiDroidApp.TAG, "AnkiFont.getTypeface: " + e.getMessage() + " - File: " + path);
+            Timber.w(e, "Runtime error in getTypeface for File: %s", path);
             if (!corruptFonts.contains(path)) {
                 // Show warning toast
                 String name = new File(path).getName();

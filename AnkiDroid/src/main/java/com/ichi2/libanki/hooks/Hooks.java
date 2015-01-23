@@ -17,7 +17,7 @@
 package com.ichi2.libanki.hooks;
 
 import android.content.SharedPreferences;
-import android.util.Log;
+
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.libanki.LaTeX;
@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import timber.log.Timber;
 
 public class Hooks {
     private Map<String, List<Hook>> hooks;
@@ -106,8 +108,7 @@ public class Hooks {
                     func.runHook(args);
                 }
             } catch (Exception e) {
-                Log.e(AnkiDroidApp.TAG, "Exception while running hook " +
-                        hook + ":" + funcName, e);
+                Timber.e(e, "Exception while running hook %s : %s", hook, funcName);
                 return;
             }
         }
@@ -131,8 +132,7 @@ public class Hooks {
                     arg = func.runFilter(arg, args);
                 }
             } catch (Exception e) {
-                Log.e(AnkiDroidApp.TAG, "Exception while running hook " +
-                        hook + ":" + funcName, e);
+                Timber.e(e, "Exception while running hook %s : %s", hook, funcName);
                 return "Error in filter " + hook + ":" + funcName;
             }
         }

@@ -19,10 +19,12 @@ package com.ichi2.anki.receiver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
+
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.libanki.Collection;
+
+import timber.log.Timber;
 
 /**
  * This Broadcast-Receiver listens to media ejects and closes the collection prior to unmount. It then sends a broadcast
@@ -39,7 +41,7 @@ public class SdCardReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals(Intent.ACTION_MEDIA_EJECT)) {
-            Log.i(AnkiDroidApp.TAG, "media eject detected - closing collection and sending broadcast");
+            Timber.i("media eject detected - closing collection and sending broadcast");
             Intent i = new Intent();
             i.setAction(MEDIA_EJECT);
             context.sendBroadcast(i);
@@ -48,7 +50,7 @@ public class SdCardReceiver extends BroadcastReceiver {
                 col.close();
             }
         } else if (intent.getAction().equals(Intent.ACTION_MEDIA_MOUNTED)) {
-            Log.i(AnkiDroidApp.TAG, "media mount detected - sending broadcast");
+            Timber.i("media mount detected - sending broadcast");
             Intent i = new Intent();
             i.setAction(MEDIA_MOUNT);
             context.sendBroadcast(i);

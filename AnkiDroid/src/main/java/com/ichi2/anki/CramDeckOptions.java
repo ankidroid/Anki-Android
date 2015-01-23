@@ -31,7 +31,7 @@ import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
-import android.util.Log;
+
 import android.view.KeyEvent;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
@@ -51,6 +51,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+
+import timber.log.Timber;
 
 /**
  * Preferences for the current deck.
@@ -86,7 +88,7 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
 
 
         protected void cacheValues() {
-            Log.i(AnkiDroidApp.TAG, "CramDeckOptions - CacheValues");
+            Timber.d("cacheValues()");
 
             try {
                 JSONArray ar = mDeck.getJSONArray("terms").getJSONArray(0);
@@ -113,7 +115,7 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
 
             @Override
             public SharedPreferences.Editor clear() {
-                Log.d(AnkiDroidApp.TAG, "clear()");
+                Timber.d("clear()");
                 mUpdate = new ContentValues();
                 return this;
             }
@@ -121,11 +123,11 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
 
             @Override
             public boolean commit() {
-                Log.d(AnkiDroidApp.TAG, "CramDeckOptions - commit() changes back to database");
+                Timber.d("CramDeckOptions - commit() changes back to database");
 
                 try {
                     for (Entry<String, Object> entry : mUpdate.valueSet()) {
-                        Log.i(AnkiDroidApp.TAG, "Change value for key '" + entry.getKey() + "': " + entry.getValue());
+                        Timber.i("Change value for key '" + entry.getKey() + "': " + entry.getValue());
                         if (entry.getKey().equals("search")) {
                             JSONArray ar = mDeck.getJSONArray("terms");
                             ar.getJSONArray(0).put(0, (String) entry.getValue());
@@ -189,7 +191,7 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
                 try {
                     mCol.getDecks().save(mDeck);
                 } catch (RuntimeException e) {
-                    Log.e(AnkiDroidApp.TAG, "CramDeckOptions - RuntimeException on saving deck: " + e);
+                    Timber.e(e, "CramDeckOptions - RuntimeException on saving deck");
                     AnkiDroidApp.saveExceptionReportFile(e, "CramDeckOptionsSaveDeck");
                     setResult(DeckPicker.RESULT_DB_ERROR);
                     finish();
@@ -245,7 +247,7 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
 
             @Override
             public SharedPreferences.Editor remove(String key) {
-                Log.d(this.getClass().toString(), String.format("Editor.remove(key=%s)", key));
+                Timber.d("Editor.remove(key=%s)", key);
                 mUpdate.remove(key);
                 return this;
             }
@@ -311,7 +313,7 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
 
         @Override
         public String getString(String key, String defValue) {
-            Log.d(this.getClass().toString(), String.format("getString(key=%s, defValue=%s)", key, defValue));
+            Timber.d("getString(key=%s, defValue=%s)", key, defValue);
             if (!mValues.containsKey(key)) {
                 return defValue;
             }
@@ -346,7 +348,7 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
 
     @Override
     public SharedPreferences getSharedPreferences(String name, int mode) {
-        Log.d(this.getClass().toString(), String.format("getSharedPreferences(name=%s)", name));
+        Timber.d("getSharedPreferences(name=%s)", name);
         return mPref;
     }
 
@@ -380,7 +382,7 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
 
         try {
             if (mCol == null || mDeck.getInt("dyn") != 1) {
-                Log.w(AnkiDroidApp.TAG, "CramDeckOptions - No Collection loaded or deck is not a dyn deck");
+                Timber.w("CramDeckOptions - No Collection loaded or deck is not a dyn deck");
                 finish();
                 return;
             } else {
@@ -418,7 +420,7 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            Log.i(AnkiDroidApp.TAG, "DeckOptions - onBackPressed()");
+            Timber.i("DeckOptions - onBackPressed()");
             finish();
             ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
             return true;
