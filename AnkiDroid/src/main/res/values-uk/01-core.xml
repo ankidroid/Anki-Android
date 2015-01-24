@@ -149,6 +149,7 @@
   <string name="studyoptions_congrats_more_rev">Ви вичерпали ліміт повторювання на сьогодні, але досі є картки, які чекають на перегляд. Для оптимального запам\'ятовування можна збільшити щоденнній лиміт у налаштуваннях.</string>
   <string name="studyoptions_congrats_more_new">Доступно більше нових карток але денний ліміт вичерпано. Ви можете збільшити ліміт в налаштуваннях, але, будь-ласка, зверніть увагу що це збільшить навантаження.</string>
   <string name="studyoptions_congrats_custom">Для навчання за межами нормального разкладу клацніть на \"Додатковий Трейнінг\" внизу.</string>
+  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
     <item quantity="other">Завтра буде: %1$d карток повторити та %2$d.\nПриблизний час: %3$s</item>

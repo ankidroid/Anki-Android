@@ -149,6 +149,7 @@
   <string name="studyoptions_congrats_more_rev">Je hebt de overhoringslimiet bereikt, maar er wachten nog kaarten om overhoord te worden. Voor een optimale geheugentraining, overweeg om de dagelijkse limiet te verhogen bij instellingen.</string>
   <string name="studyoptions_congrats_more_new">Er zijn meer nieuwe kaarten beschikbaar, maar de dagelijkse limiet is bereikt. Je kunt de limiet verhogen in de instellingen, maar houd er rekening mee dat dit de werklast voor de korte termijn zal verhogen.</string>
   <string name="studyoptions_congrats_custom">Om buiten het normale schema te studeren, klik op onderstaande knop Aangepast Studeren.</string>
+  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Morgen zijn er: %1$d kaarten te overhoren en %2$s.\n Geschatte tijd: %3$s</item>
     <item quantity="other">Morgen zijn er: %1$d kaarten te overhoren en %2$s.\n Geschatte tijd: %3$s</item>

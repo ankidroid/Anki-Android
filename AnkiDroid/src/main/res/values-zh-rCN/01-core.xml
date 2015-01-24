@@ -149,6 +149,7 @@
   <string name="studyoptions_congrats_more_rev">今天的复习数量限制已达到，但仍有一些卡牌需要复习。为了更好的记忆效果，请考虑在选项中增加每日的复习数量限制。</string>
   <string name="studyoptions_congrats_more_new">还有新卡牌待学习，但已达到每日上限。您可以增加设置中的每日学习上限，不过请留意，这会增加您短期的复习工作量。</string>
   <string name="studyoptions_congrats_custom">计划外学习，点击下面的自定义学习按钮。</string>
+  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">明天将有：%1$d张卡牌需要复习%2$s\n预计耗时：%3$s</item>
     <item quantity="other">明天将有：%1$d张卡牌需要复习%2$s\n预计耗时：%3$s</item>

@@ -30,6 +30,7 @@
     <item>Jest algılama geliştir</item>
     <item>Glosbe tercüme programı dillerinin sayısını arttırın</item>
     <item>Chromebooks için destek ekle</item>
-    <item>Hata düzeltmeleri</item>
+    <item>New crash reporting system</item>
+    <item>Bug fixes</item>
   </string-array>
 </resources>

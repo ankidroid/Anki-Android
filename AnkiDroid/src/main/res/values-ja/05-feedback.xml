@@ -64,4 +64,5 @@
   <string name="feedback_manual_toast_text">AnkiDroid で問題が発生しました。レポートを作成しています&#8230;</string>
   <string name="feedback_copy_debug">デバッグ情報をコピー</string>
   <string name="feedback_report">レポート</string>
+  <string name="feedback_report_automatically">Send error reports automatically</string>
 </resources>

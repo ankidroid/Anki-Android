@@ -150,6 +150,7 @@
 </string>
   <string name="studyoptions_congrats_more_new">牌組裡還有其他新的卡片，只是您已經達到今天的進度了。您可以在選項中增加每日卡片數量上限，但請注意，這將會加重你短期的復習量。</string>
   <string name="studyoptions_congrats_custom">如果要有額外的學習進度，請按下方的「自訂學習」按鈕。</string>
+  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
     <item quantity="other">明天有: %1$d 張卡片待複習和%2$s。\n估計時間: %3$s</item>

@@ -149,6 +149,7 @@
   <string name="studyoptions_congrats_more_rev">S\'ha assolit el límit de revisió d\'avui, però encara hi ha fitxes per a revisar. Per a optimitzar la memòria, considereu augmentar el límit diari a les opcions.</string>
   <string name="studyoptions_congrats_more_new">Hi ha més fitxes noves, però s\'ha assolit el límit diari. Podeu augmentar el límit a les opcions, però si us plau, tingueu en compte que això farà augmentar la càrrega de treball de la revisió a curt termini.</string>
   <string name="studyoptions_congrats_custom">Per a estudiar fora de la planificació normal, cliqueu al botó Estudi a Mida d\'aquí sota.</string>
+  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
     <item quantity="other">Demà hi haurà: %1$d fitxes per revisar i %2$s.\n Temps aproximat: %3$s</item>

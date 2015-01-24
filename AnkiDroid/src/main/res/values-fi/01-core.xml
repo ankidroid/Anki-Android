@@ -149,6 +149,7 @@
   <string name="studyoptions_congrats_more_rev">Tämän päivän kertauskiintiö on täynnä, mutta pakassa on vielä läpikäyntiä odottavia kortteja. Voit nostaa kiintiötä asetuksista.</string>
   <string name="studyoptions_congrats_more_new">Pakassa on lisää uusia kortteja, mutta päivittäinen raja on täyttynyt. Voit korottaa rajaa asetuksista, mutta huomioi, että tämä lisää lyhytaikaisen läpikäynnin työmäärää.</string>
   <string name="studyoptions_congrats_custom">Opiskellaksesi normaalin aikataulun ulkopuolella, napsauta alapuolella olevaa Mukautettu opiskelu -painiketta.</string>
+  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Huomenna ohjelmassa: %1$d kortin läpikäynti ja %2$s.\n Arvioitu kesto: %3$s</item>
     <item quantity="other">Huomenna ohjelmassa: %1$d kortin läpikäynti ja %2$s.\n Arvioitu kesto: %3$s</item>

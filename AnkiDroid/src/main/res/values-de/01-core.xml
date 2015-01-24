@@ -149,6 +149,7 @@
   <string name="studyoptions_congrats_more_rev">Ihr heutiges Limit ist erreicht, aber es sind noch Karten fällig. Sie können das Limit in den Stapeloptionen erhöhen.</string>
   <string name="studyoptions_congrats_more_new">Es sind noch neue Karten verfügbar, aber das tägliche Lernlimit wurde erreicht. Sie können das Limit in den Optionen erhöhen, bedenken Sie aber, dass dies Ihr kurzfristiges Arbeitspensum erhöht.</string>
   <string name="studyoptions_congrats_custom">Tippen Sie unten auf \"Benutzerdefiniertes Lernen\", um außerhalb des regulären Lehrplans zu lernen</string>
+  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Morgen ist %1$d Karte fällig und %2$s.\n Geschätzte Zeit: %3$s</item>
     <item quantity="other">Morgen sind %1$d Karten fällig und %2$s.\n Geschätzte Zeit: %3$s</item>

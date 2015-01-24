@@ -149,6 +149,7 @@
   <string name="studyoptions_congrats_more_rev">Φτάσατε το σημερινό όριο επανάληψης, αλλά υπάρχουν ακόμη κάρτες που περιμένουν επανεξέταση. Για βέλτιστη απομνημόνευση, εξετάστε το ενδεχόμενο αύξησης του ημερήσιου ορίου στις επιλογές.</string>
   <string name="studyoptions_congrats_more_new">Υπάρχουν διαθέσιμες νέες κάρτες, αλλά το ημερήσιο όριο έχει επιτευχθεί. Μπορείτε να αυξήσετε το όριο στις επιλογές, αλλά έχετε υπόψη ότι αυτό θα αυξήσει το βραχυπρόθεσμο φόρτο επανάληψης.</string>
   <string name="studyoptions_congrats_custom">Για μελέτη εκτός του κανονικού χρονοδιαγράμματος, κάντε κλικ στο κουμπί Προσαρμοσμένη Μελέτη παρακάτω.</string>
+  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
     <item quantity="other">Αύριο θα υπάρχουν: %1$d κάρτες για επανάληψη και %2$s.\n Εκτιμώμενος χρόνος: %3$s</item>

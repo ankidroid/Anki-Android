@@ -149,6 +149,7 @@
   <string name="studyoptions_congrats_more_rev">Acadouse o límite de repasos por hoxe, pero aínda hai cartas agardando a ser repasadas. Para unha memoria óptima, sopesa ampliar o límite diario nas opcións.</string>
   <string name="studyoptions_congrats_more_new">Hai máis cartóns dispoñibles, pero o límite diario foi acadado. Podes ampliar o límite nas opcións, pero ten en conta que isto incrementará a carga de traballo do repaso a curto plazo.</string>
   <string name="studyoptions_congrats_custom">Para estudar fóra da planificación normal, faga click no botón Estudo Personalizado abaixo.</string>
+  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
     <item quantity="other">Mañá haberá: %1$d cartóns para repasar e %2$s.\n Tempo estimado: %3$s</item>

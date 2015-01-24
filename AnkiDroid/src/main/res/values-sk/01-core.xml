@@ -149,6 +149,7 @@
   <string name="studyoptions_congrats_more_rev">Bol dosiahnutý denný limit, ale stále zostávajú nejaké karty na opakovanie. Pre optimálne zapamätanie zvážte zvýšenie tohto limitu v nastaveniach.</string>
   <string name="studyoptions_congrats_more_new">Dostupné sú aj ďalšie nové karty, ale bol dosiahnutý denný limit.  Môžete ho zvýšiť v nastaveniach, ale prosím majte na pamäti, že tým sa v najbližšej dobe zvýši aj počet kariet na opakovanie.</string>
   <string name="studyoptions_congrats_custom">Ak chcete študovať mimo bežný plán, kliknite na tlačidlo Vlastné štúdium nižšie.</string>
+  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Zajtra: %1$d kariet na opakovanie a %2$s.\n Odhadovaný čas: %3$s</item>
     <item quantity="other">Zajtra: %1$d kariet na opakovanie a %2$s.\n Odhadovaný čas: %3$s</item>

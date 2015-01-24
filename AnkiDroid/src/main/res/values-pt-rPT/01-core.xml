@@ -149,6 +149,7 @@
   <string name="studyoptions_congrats_more_rev">Atingiu o limite diário de revisões, mas ainda existem fichas à espera para serem revistas. Para otimizar a memória, considere aumentar o limite diário nas opções.</string>
   <string name="studyoptions_congrats_more_new">O limite diário foi atingido. Estão disponíveis mais fichas novas; pode aumentar o limite nas opções, mas tenha em conta que isso irá aumentar a sua carga de memorização a curto prazo.</string>
   <string name="studyoptions_congrats_custom">Para estudar fora da agenda normal, por favor toque no botão de \"Estudo personalizado\"</string>
+  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Amanhã haverá: %1$d ficha para rever e %2$s.\n Tempo estimado: %3$s</item>
     <item quantity="other">Amanhã haverá: %1$d fichas para rever e %2$s.\n Tempo estimado: %3$s</item>

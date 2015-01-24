@@ -30,6 +30,7 @@
     <item>Mejorar la detección de los gestos de deslizamiento</item>
     <item>Aumentar el número de lenguas en el traductor Glosbe</item>
     <item>Añadido soporte para Chromebooks</item>
-    <item>Corrección de errores</item>
+    <item>New crash reporting system</item>
+    <item>Bug fixes</item>
   </string-array>
 </resources>

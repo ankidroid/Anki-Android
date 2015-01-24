@@ -149,6 +149,7 @@
   <string name="studyoptions_congrats_more_rev">به حد روزانه مرور رسیده اید، ولی هنوز کارتهایی هستند که باید مرور شوند. برای بهینه سازی حافظه، می توانید حد روزانه مرور را در بخش گزینه ها افزایش دهید.</string>
   <string name="studyoptions_congrats_more_new">کارتهای جدید بیشتری موجودند، ولی شما به حد تعیین شده روزانه مرور رسیده اید. شما می توانید این حد را در بخش گزینه ها افزایش دهید، ولی لطفا به یاد داشته باشید که بار کاری مرور کوتاه مدت شما افزایش خواهد یافت.</string>
   <string name="studyoptions_congrats_custom">جهت مطالعه خارج از برنامه ، بر روی دکمه مطالعه سفارشی زیر کلیک کنید.</string>
+  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">فردا %1$d کارت برای مرور خواهید داشت و %2$s. \n زمان برآورد شده: %3$s</item>
     <item quantity="other">فردا %1$d کارت برای مرور خواهید داشت و %2$s. \n زمان برآورد شده: %3$s</item>

@@ -149,6 +149,7 @@
   <string name="studyoptions_congrats_more_rev">Šiandienos apžvalgų riba pasiekta, bet dar yra likusių neperžvelgtų kortelių. Atminties optimizavimui siūlome parinktyse padidinti dienos limitą.</string>
   <string name="studyoptions_congrats_more_new">Today\'s limit has been reached. There are more new cards available; you can increase the limit in the options, but this will increase your short-term review workload.</string>
   <string name="studyoptions_congrats_custom">To study outside of the normal schedule, touch the \"Custom study\" button below</string>
+  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
     <item quantity="other">Rytoj lauks %1$d kortelė ir %2$s.\n Apskaičiuotas laikas: %3$s</item>

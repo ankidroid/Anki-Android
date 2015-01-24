@@ -149,6 +149,7 @@
   <string name="studyoptions_congrats_more_rev">Dagens gräns för antal repetitioner har uppnåtts, men det finns fortfarande kort kvar att repetera. För att optimera inlärningsprocessen, överväg att öka den dagliga gränsen för antal repetitioner i inställningarna.</string>
   <string name="studyoptions_congrats_more_new">Det finns fler nya kort, men den dagliga gränsen har uppnåtts. Du kan höja gränsen i inställningarna, men kom ihåg att detta också ökar antalet repetitioner på kort sikt.</string>
   <string name="studyoptions_congrats_custom">Välj knappen Anpassade studier nedan för att studera utanför det normala schemat.</string>
+  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">I morgon finns det: %1$d kort att repetera och %2$s.\n Beräknad tid: %3$s</item>
     <item quantity="other">I morgon kommer det finnas: %1$d kort att repetera och %2$s.\n Beräknad tid: %3$s</item>

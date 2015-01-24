@@ -149,6 +149,7 @@
   <string name="studyoptions_congrats_more_rev">Dosežena je bila današnja omejitev za pregled, vendar pa je prostalo še nekaj kartic, ki jih je potrebno pregledati. Za optimalno pomnjenje priporočamo povečanje nastavitve dnevne omejitve med možnostmi.</string>
   <string name="studyoptions_congrats_more_new">Kartic ni več na voljo, čeprav dnevna omejitev ni bila dosežena. Med možnostmi lahko povečate omejitev, toda prosim imejte v mislih, da boste s tem povečali obremenitev pri kratkoročnem pregledu.</string>
   <string name="studyoptions_congrats_custom">Za učenje izven običajnega urnika kliknite spodnji gumb Učenje po meri.</string>
+  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
     <item quantity="other">Jutri bo: %1$d kartic za pregled in %2$s.\n Predviden čas: %3$s</item>

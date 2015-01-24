@@ -149,6 +149,7 @@
   <string name="studyoptions_congrats_more_rev">Достигнут ограничитель количества просмотров на сегодня, но всё ещё есть карты ожидающие просмотра. Для оптимального запоминания рекомендуется увеличить ежедневный лимит в параметрах.</string>
   <string name="studyoptions_congrats_more_new">Есть ещё новые карты, но дневной лимит карт был уже выучен. Вы можете увеличить лимит, но учтите, что это увеличит и объёмы повторений в следующие дни.</string>
   <string name="studyoptions_congrats_custom">Чтобы изменить привычный график изучения колоды, нажмите \"Дополнительное обучение\" ниже.</string>
+  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Завтра будет: %1$d карт выучить и %2$s.\n Оценочное время: %3$s</item>
     <item quantity="other">Завтра будет: %1$d карт для просмотра и %2$s.\n Вероятно займёт: %3$s</item>

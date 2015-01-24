@@ -149,6 +149,7 @@
   <string name="studyoptions_congrats_more_rev">لقد بلغت حد المراجعة لهذا اليوم، ولكن لا زالت هناك بطاقات تنتظر المراجعة. للذاكرة المثلى، أعد التفكير في زيادة الحد اليومي من قائمة الخيارات.</string>
   <string name="studyoptions_congrats_more_new">هناك المزيد من البطاقات الجديدة المتاحة، ولكن وصلت إلى الحد الأقصى اليومي. يمكنك زيادة الحد الأقصى في الخيارات، ولكن يرجى أن تضع في الاعتبار أن ذلك سيزيد من عبء العمل الخاص بك للمراجعة قصيرة المدى.</string>
   <string name="studyoptions_congrats_custom">للدراسة خارج الجدول الزمني العادي، انقر فوق الزر \"مخصص الدراسة\" أدناه.</string>
+  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
     <item quantity="other">غدا سيكون هناك: %1$d بطاقات للمراجعة و %2$s.\n الوقت المقدر: %3$s</item>

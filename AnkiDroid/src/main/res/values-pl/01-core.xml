@@ -149,6 +149,7 @@
   <string name="studyoptions_congrats_more_rev">Dzisiejszy limit powtórek został wyczerpany, ale wciąż pozostają karty do przejrzenia. Dla optymalnego zapamiętywania proszę rozważyć zwiększenie dziennego limitu w ustawieniach.</string>
   <string name="studyoptions_congrats_more_new">Pozostało więcej kart do przejrzenia, ale dzienny limit został osiągnięty. Możesz zwiększyć limit w opcjach, ale miej na uwadze, że zwiększy to ilość powtórzeń w najbliższych dniach.</string>
   <string name="studyoptions_congrats_custom">Aby kontynuować naukę poza zwykłym schematem kliknij przycisk Nauki Niestandardowej poniżej.</string>
+  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Jutro będzie %1$d kart do przejrzenia oraz %2$s.\n Szacowany czas: %3$s</item>
     <item quantity="other">Jutro będzie %1$d kart do powtórki i %2$s.\n Szacowany czas: %3$s</item>

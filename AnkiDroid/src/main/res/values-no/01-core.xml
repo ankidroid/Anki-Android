@@ -149,6 +149,7 @@
   <string name="studyoptions_congrats_more_rev">Du har nådd grensen for gjennomgang i dag, men det er fortsatt kort du ikke har gått gjennom. For best mulig effekt, bør du vurdere å øke grensen i alternativene.</string>
   <string name="studyoptions_congrats_more_new">Det finnes flere nye kort tilgjengelig, men den daglige grensen er nådd. Du kan øke grensen i innstillingene, men vær oppmerksom på at dette også vil øke den kortsiktige mengden av kort til repetering.</string>
   <string name="studyoptions_congrats_custom">To study outside of the normal schedule, touch the \"Custom study\" button below</string>
+  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
     <item quantity="other">I morgen blir det: %1$d kort å gå gjennomg og %2$s.\n Estimert tid: %3$s</item>

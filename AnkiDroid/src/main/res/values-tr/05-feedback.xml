@@ -64,4 +64,5 @@
   <string name="feedback_manual_toast_text">AnkiDroid bir sorunla karşılaştı; hata raporu üretiliyor&#8230;</string>
   <string name="feedback_copy_debug">Hata ayıklama bilgisini kopyala</string>
   <string name="feedback_report">Bildir</string>
+  <string name="feedback_report_automatically">Send error reports automatically</string>
 </resources>

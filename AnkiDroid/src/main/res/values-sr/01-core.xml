@@ -149,6 +149,7 @@
   <string name="studyoptions_congrats_more_rev">Достигнута је лимит броја прегледа за данас, али још постоје картице које чекају проучавање. За оптимално памћење препоручује се да увећате дневни лимит у опцијама.</string>
   <string name="studyoptions_congrats_more_new">Постоје нове карте, али дневни лимит је научен. Можете да повећате лимит, али имајте на уму, да ће то увећати и обим понављања следећих дана.</string>
   <string name="studyoptions_congrats_custom">Да бисте променили уобичајени распоред учења картица, кликните \"Допунско учење\" испод.</string>
+  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Сутра ће бити: %1$d картица за учење и %2$s.\n Процењено време: %3$s</item>
     <item quantity="other">Сутра ће бити: %1$d картица за преглед и %2$s.\n Процењено време: %3$s</item>

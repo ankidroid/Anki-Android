@@ -149,6 +149,7 @@
   <string name="studyoptions_congrats_more_rev">Vous avez atteint votre limite aujourd\'hui, mais il reste des cartes à passer en revue. Vous pouvez augmenter le seuil journalier dans les options.</string>
   <string name="studyoptions_congrats_more_new">Il reste des nouvelles cartes disponibles, mais la limite journalière a été atteinte. Vous pouvez augmenter cette limite dans les options, mais gardez à l\'esprit que cela augmentera votre charge de travail à court terme.</string>
   <string name="studyoptions_congrats_custom">Pour étudier en dehors des horaires normaux, cliquez sur le bouton d\'étude personnalisée ci-dessous.</string>
+  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Demain il y aura : %1$d carte à revoir et %2$s.\n Durée estimée : %3$s</item>
     <item quantity="other">Demain, il y aura %2$s cartes nouvelles et %1$d à revoir.\n Durée estimée : %3$s</item>
@@ -181,10 +182,10 @@
   <string name="nothing">Rien</string>
   <string name="title_activity_graphical_activity">Graphique statistique</string>
   <string name="title_activity_template_editor">Types de carte pour %s</string>
-  <string name="card_template_editor_front">Front Template</string>
-  <string name="card_template_editor_back">Back Template</string>
-  <string name="card_template_editor_styling">Styling</string>
-  <string name="card_template_editor_menu_add_reverse">Add reverse</string>
+  <string name="card_template_editor_front">Modèle Front</string>
+  <string name="card_template_editor_back">Modèle Back</string>
+  <string name="card_template_editor_styling">Style</string>
+  <string name="card_template_editor_menu_add_reverse">Ajouter l\'inverse</string>
   <string name="card_template_editor_menu_delete">Supprimer</string>
   <string name="card_template_editor_cant_delete">Il faut au moins un type de carte.</string>
   <plurals name="card_template_editor_confirm_delete">

@@ -149,6 +149,7 @@
   <string name="studyoptions_congrats_more_rev">S-a atins limita de recapitulare pentru astăzi, dar încă mai există carduri ce aştepta sa fie revizuite. Pentru memorare optima, ia în considerare creşterea limitei zilnice în opţiuni.</string>
   <string name="studyoptions_congrats_more_new">Sunt disponibile mai multe carduri noi, dar s-a atins limita zilnică. Puteţi mări limita în opţiuni, dar vă rugăm să ţineţi cont de faptul că aceasta va creşte volumul dumneavoastră de muncă de revizuire pe termen scurt.</string>
   <string name="studyoptions_congrats_custom">Pentru a studia în afara programului normal, faceţi clic pe butonul Studiu Personalizat de mai jos.</string>
+  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
     <item quantity="other">Mâine vor fi: %1$d carduri de recapitulat şi %2$s.\n timp estimat: %3$s</item>

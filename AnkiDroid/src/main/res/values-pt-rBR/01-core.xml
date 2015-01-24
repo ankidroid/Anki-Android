@@ -149,6 +149,7 @@
   <string name="studyoptions_congrats_more_rev">O limite de revisão de hoje foi atingido, mas ainda existem cartões esperando para serem revistos. Para uma ótima memória, considere aumentar o limite diário nas opções.</string>
   <string name="studyoptions_congrats_more_new">Existem mais cartões novos disponíveis, mas o limite diário foi alcançado. Você pode aumentar o limite nas opções, mas por favor, tenha em mente que isso vai aumentar sua carga de trabalho de revisão a curto prazo.</string>
   <string name="studyoptions_congrats_custom">Para estudar fora do agendamento normal, clique no botão Estudo Personalizado abaixo.</string>
+  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Amanhã haverá: %1$d cartões para revisar e %2$s.\n Tempo estimado: %3$s</item>
     <item quantity="other">Amanhã haverá: %1$d cartões para revisar e %2$s.\n Tempo estimado: %3$s</item>

@@ -152,6 +152,7 @@
 그러면 단기적으로 공부할 양이 증가한다는 것을 명심하세요.
 </string>
   <string name="studyoptions_congrats_custom">평상시 일정을 넘어 더 공부하려면, 맞춤 학습 버튼을 누르십시오.</string>
+  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
     <item quantity="other">내일의 학습 일정: 복습할 카드 %1$d개 및 %2$s.\n 예상 소요 시간: %3$s</item>

@@ -83,8 +83,8 @@
   <string name="card_browser_font_size_summ">XXX ％</string>
   <string name="col_path">コレクションの保存先</string>
   <string name="col_path_summ">XXX</string>
-  <string name="fullscreen_review">フルスクリーン モード</string>
-  <string name="fullscreen_review_summ">ステータス バーの非表示</string>
+  <string name="fullscreen_review">フルスクリーンモード</string>
+  <string name="fullscreen_review_summ">ステータスバーの非表示</string>
   <string name="gestures">ジェスチャー有効化</string>
   <string name="gestures_summ">解答や編集操作にジェスチャーを割り当てます</string>
   <string name="gestures_swipe_up">上にスワイプ</string>
@@ -123,7 +123,7 @@
   <string name="notification_pref">通知</string>
   <string name="notification_pref_title">通知のタイミング</string>
   <string name="never_notify">通知なし</string>
-  <string name="notify_when_pending">保留（操作待ち）状態になった時</string>
+  <string name="notify_when_pending">保留（応答待ち）状態になった時</string>
   <string name="notification_minimum_cards_due">期限カードが %d 枚より多い時</string>
   <string name="notification_minimum_cards_due_vibrate">振動で通知</string>
   <string name="notification_minimum_cards_due_blink">ライト点滅で通知</string>
@@ -155,7 +155,7 @@
   <string name="new_spread">新規カードの追加場所</string>
   <string name="learn_cutoff">先取り学習の限度（分）</string>
   <string name="learn_cutoff_summ">XXX 分</string>
-  <string name="time_limit">タイム ボックス時間制限</string>
+  <string name="time_limit">タイムボックスの制限時間</string>
   <string name="time_limit_summ">XXX 分</string>
   <string name="day_offset">日付更新の時刻</string>
   <string name="day_offset_summ">XXX 時</string>

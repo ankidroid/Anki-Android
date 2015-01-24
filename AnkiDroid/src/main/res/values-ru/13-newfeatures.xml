@@ -30,6 +30,7 @@
     <item>Улучшить определение жеста \"смахивание\"</item>
     <item>Увеличить число языков в словаре Glosbe</item>
     <item>Добавить поддержку Chromebook</item>
-    <item>Исправить ошибки</item>
+    <item>New crash reporting system</item>
+    <item>Bug fixes</item>
   </string-array>
 </resources>

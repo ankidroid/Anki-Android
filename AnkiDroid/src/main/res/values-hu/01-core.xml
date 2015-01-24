@@ -149,6 +149,7 @@
   <string name="studyoptions_congrats_more_rev">A mai átnézési korlátot elérted, de még mindig maradt átnézendő kártya. Az optimális tanulás érdekében lehet, hogy meg kellene emelni a napi korlátot a Beállítások menüben.</string>
   <string name="studyoptions_congrats_more_new">További új kártyák állnak rendelkezésre, azonban a napi limitet elérted. A napi limitet az opciók menüben módosíthatod, de kérlek ne feledd, hogy ez rövidtávon megnöveli az ismétléseid számát.</string>
   <string name="studyoptions_congrats_custom">Ahhoz, hogy a szokásostól eltérő ütemben tanulhass, kattints lent, az \"Egyéni tanulás\" gombra.</string>
+  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Holnap %1$d kártyát kell átnézni és %2$s.\n Becsült idő: %3$s</item>
     <item quantity="other">Holnap %1$d kártyát kell átnézni és %2$s.\n Becsült idő: %3$s</item>
