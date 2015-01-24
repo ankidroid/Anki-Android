@@ -62,7 +62,7 @@
   <string name="whiteboard_stroke_width">描かれる線の太さ</string>
   <string name="whiteboard_stroke_width_summ">XXX</string>
   <string name="whiteboard_black">黒色の線</string>
-  <string name="whiteboard_black_summ">メモリの節約、夜間モードでは動作しません</string>
+  <string name="whiteboard_black_summ">カラーの線ではなく黒色の線を描き、メモリを節約します（ナイトモードではこの設定は無視されます）</string>
   <string name="write_answers_disable">タイピング無効化</string>
   <string name="write_answers_disable_summ">解答入力フィールドがある場合にカード上にキーボードを表示させなくします</string>
   <string name="text_selection_click">長押しの 回避策</string>

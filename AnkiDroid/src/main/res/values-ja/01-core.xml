@@ -149,7 +149,7 @@
   <string name="studyoptions_congrats_more_rev">復習カードがまだ他にも残っていますが、一日あたりの復習カード枚数の上限に達しています。上限は「単語帳オプション」内の設定で上げられます。</string>
   <string name="studyoptions_congrats_more_new">新規カードがまだ他にも残っていますが、一日あたりの新規カード枚数の上限に達しています。上限は「単語帳オプション」内の設定で上げられます。（その場合、短期の復習の負担が増えますのでご注意ください。）</string>
   <string name="studyoptions_congrats_custom">通常のスケジュール以外で学習するには、「カスタム学習」ボタンをタップしてください。</string>
-  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
+  <string name="studyoptions_no_cards_due">期日に達したカードはありません。</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">明日は %1$d 枚の復習カードがあります。%2$s.\n 必要な時間　%3$s</item>
     <item quantity="other">明日は %1$d 枚のカードがあります。そして復習カードは %2$s.\n 必要な時間は%3$s</item>
