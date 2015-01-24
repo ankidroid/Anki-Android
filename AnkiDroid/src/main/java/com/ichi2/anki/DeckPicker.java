@@ -213,6 +213,8 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                             // If activity has been stopped then just ignore the updated counts
                             Timber.e("DeckPicker mLoadCountsHandler -- could not update StudyOptionsFragment");
                         }
+                    } else {
+                        reloadShowcaseView();
                     }
                 }
             } catch (JSONException e) {
@@ -812,11 +814,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             long did = col.getDecks().selected();
             selectDeck(did);
         }
-        // Set flag to show the showcase view if no fragments need to finish adding items to action bar
-        if (!mFragmented) {
-            mShowShowcaseView = true;
-        }
-        AnkiDroidApp.getCompat().invalidateOptionsMenu(this);
         // Force a full sync if flag was set in upgrade path, asking the user to confirm if necessary
         if (mRecommendFullSync) {
             mRecommendFullSync = false;
