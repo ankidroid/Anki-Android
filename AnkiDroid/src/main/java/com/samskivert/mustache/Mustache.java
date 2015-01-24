@@ -84,138 +84,143 @@ public class Mustache
      */
     protected static Template compile (Reader source, Compiler compiler)
     {
-        // a hand-rolled parser; whee!
-        Accumulator accum = new Accumulator(compiler);
-        char start1 = '{', start2 = '{', end1 = '}', end2 = '}';
-        int state = TEXT;
-        StringBuilder text = new StringBuilder();
-        int line = 1;
-        boolean skipNewline = false;
-        boolean skippedExtraBracket = false;
+        try {
+            // a hand-rolled parser; whee!
+            Accumulator accum = new Accumulator(compiler);
+            char start1 = '{', start2 = '{', end1 = '}', end2 = '}';
+            int state = TEXT;
+            StringBuilder text = new StringBuilder();
+            int line = 1;
+            boolean skipNewline = false;
+            boolean skippedExtraBracket = false;
 
-        while (true) {
-            char c;
-            try {
-                int v = source.read();
-                if (v == -1) {
-                    break;
+            while (true) {
+                char c;
+                try {
+                    int v = source.read();
+                    if (v == -1) {
+                        break;
+                    }
+                    c = (char) v;
+                } catch (IOException e) {
+                    throw new MustacheException(e);
                 }
-                c = (char)v;
-            } catch (IOException e) {
-                throw new MustacheException(e);
-            }
 
-            if (c == '\n') {
-                line++;
-                // if we just parsed an open section or close section task, we'll skip the first
-                // newline character following it, if desired; TODO: handle CR, sigh
-                if (skipNewline) {
+                if (c == '\n') {
+                    line++;
+                    // if we just parsed an open section or close section task, we'll skip the first
+                    // newline character following it, if desired; TODO: handle CR, sigh
+                    if (skipNewline) {
+                        skipNewline = false;
+                        continue;
+                    }
+                } else {
                     skipNewline = false;
-                    continue;
                 }
-            } else {
-                skipNewline = false;
-            }
 
-            switch (state) {
-            case TEXT:
-                if (c == start1) {
-                    if (start2 == -1) {
-                        accum.addTextSegment(text);
-                        state = TAG;
-                    } else {
-                        state = MATCHING_START;
-                    }
-                } else {
-                    text.append(c);
-                }
-                break;
-
-            case MATCHING_START:
-                if (c == start2) {
-                    accum.addTextSegment(text);
-                    state = TAG;
-                } else {
-                    text.append(start1);
-                    if (c != start1) {
-                        text.append(c);
-                        state = TEXT;
-                    }
-                }
-                break;
-
-            case TAG:
-                if (c == end1) {
-                    if (!skippedExtraBracket && text.charAt(0) == '{') {
-                        // This tag requires an extra closing '}', we need to skip it
-                        skippedExtraBracket = true;
-                    } else if (end2 == -1) {
-                        if (text.charAt(0) == '=') {
-                            // TODO: change delimiters
-                        } else {
-                            if (sanityCheckTag(text, line, start1, start2)) {
-                                accum = accum.addTagSegment(text, line);
+                switch (state) {
+                    case TEXT:
+                        if (c == start1) {
+                            if (start2 == -1) {
+                                accum.addTextSegment(text);
+                                state = TAG;
                             } else {
-                                text.setLength(0);
+                                state = MATCHING_START;
                             }
-                            skipNewline = accum.skipNewline();
-                            skippedExtraBracket = false;
-                        }
-                        state = TEXT;
-                    } else {
-                        state = MATCHING_END;
-                    }
-                } else {
-                    text.append(c);
-                }
-                break;
-
-            case MATCHING_END:
-                if (c == end2) {
-                    if (text.charAt(0) == '=') {
-                        // TODO: change delimiters
-                    } else {
-                        if (sanityCheckTag(text, line, start1, start2)) {
-                            accum = accum.addTagSegment(text, line);
                         } else {
-                            text.setLength(0);
+                            text.append(c);
                         }
-                        skipNewline = accum.skipNewline();
-                        skippedExtraBracket = false;
-                    }
-                    state = TEXT;
-                } else {
-                    text.append(end1);
-                    if (c != end1) {
-                        text.append(c);
-                        state = TAG;
-                    }
+                        break;
+
+                    case MATCHING_START:
+                        if (c == start2) {
+                            accum.addTextSegment(text);
+                            state = TAG;
+                        } else {
+                            text.append(start1);
+                            if (c != start1) {
+                                text.append(c);
+                                state = TEXT;
+                            }
+                        }
+                        break;
+
+                    case TAG:
+                        if (c == end1) {
+                            if (!skippedExtraBracket && text.charAt(0) == '{') {
+                                // This tag requires an extra closing '}', we need to skip it
+                                skippedExtraBracket = true;
+                            } else if (end2 == -1) {
+                                if (text.charAt(0) == '=') {
+                                    // TODO: change delimiters
+                                } else {
+                                    if (sanityCheckTag(text, line, start1, start2)) {
+                                        accum = accum.addTagSegment(text, line);
+                                    } else {
+                                        text.setLength(0);
+                                    }
+                                    skipNewline = accum.skipNewline();
+                                    skippedExtraBracket = false;
+                                }
+                                state = TEXT;
+                            } else {
+                                state = MATCHING_END;
+                            }
+                        } else {
+                            text.append(c);
+                        }
+                        break;
+
+                    case MATCHING_END:
+                        if (c == end2) {
+                            if (text.charAt(0) == '=') {
+                                // TODO: change delimiters
+                            } else {
+                                if (sanityCheckTag(text, line, start1, start2)) {
+                                    accum = accum.addTagSegment(text, line);
+                                } else {
+                                    text.setLength(0);
+                                }
+                                skipNewline = accum.skipNewline();
+                                skippedExtraBracket = false;
+                            }
+                            state = TEXT;
+                        } else {
+                            text.append(end1);
+                            if (c != end1) {
+                                text.append(c);
+                                state = TAG;
+                            }
+                        }
+                        break;
                 }
-                break;
             }
-        }
 
-        // accumulate any trailing text
-        switch (state) {
-        case TEXT:
-            accum.addTextSegment(text);
-            break;
-        case MATCHING_START:
-            text.append(start1);
-            accum.addTextSegment(text);
-            break;
-        case MATCHING_END:
-            text.append(end1);
-            accum.addTextSegment(text);
-            break;
-        case TAG:
-            Timber.e("Template ended while parsing a tag [line=" + line + ", tag=" + text + "]");
-            text.append(end1);
-            accum.addTextSegment(text);
-            break;
-        }
+            // accumulate any trailing text
+            switch (state) {
+                case TEXT:
+                    accum.addTextSegment(text);
+                    break;
+                case MATCHING_START:
+                    text.append(start1);
+                    accum.addTextSegment(text);
+                    break;
+                case MATCHING_END:
+                    text.append(end1);
+                    accum.addTextSegment(text);
+                    break;
+                case TAG:
+                    Timber.e("Template ended while parsing a tag [line=" + line + ", tag=" + text + "]");
+                    text.append(end1);
+                    accum.addTextSegment(text);
+                    break;
+            }
 
-        return new Template(accum.finish());
+            return new Template(accum.finish());
+        } catch (Exception e) {
+            Timber.e(e, "Unhandled mustache error");
+            throw new MustacheException("Unhandled eror", e);
+        }
     }
 
     private Mustache () {} // no instantiateski
