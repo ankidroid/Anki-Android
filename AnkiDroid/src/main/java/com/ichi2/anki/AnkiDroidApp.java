@@ -35,6 +35,7 @@ import android.view.Display;
 import android.view.ViewConfiguration;
 import android.view.WindowManager;
 
+import com.ichi2.anki.dialogs.AnkiDroidCrashReportDialog;
 import com.ichi2.anki.exception.AnkiDroidErrorReportException;
 import com.ichi2.async.Connection;
 import com.ichi2.compat.Compat;
@@ -72,7 +73,7 @@ import timber.log.Timber;
  * Application class.
  */
 @ReportsCrashes(
-        formKey = "", // This is required for backward compatibility but not used
+        reportDialogClass = AnkiDroidCrashReportDialog.class,
         httpMethod = HttpSender.Method.PUT,
         reportType = HttpSender.Type.JSON,
         formUri = "https://ankidroid.org/acra/report",
@@ -82,7 +83,6 @@ import timber.log.Timber;
         resDialogText =  R.string.feedback_default_text,
         resToastText = R.string.feedback_auto_toast_text,
         resDialogPositiveButtonText = R.string.feedback_report,
-        sharedPreferencesName = "com.ichi2.anki",
         additionalSharedPreferences = {"com.ichi2.anki"},
         excludeMatchingSharedPreferencesKeys = {"username","hkey"},
         customReportContent = {
@@ -134,6 +134,10 @@ public class AnkiDroidApp extends Application {
     public static final String LIBANKI_VERSION = "1.2.5";
     public static final String DROPBOX_PUBLIC_DIR = "/dropbox/Public/Anki";
     public static final String APP_NAMESPACE = "http://schemas.android.com/apk/res/com.ichi2.anki";
+    public static final String FEEDBACK_REPORT_ASK = "2";
+    public static final String FEEDBACK_REPORT_NEVER = "1";
+    public static final String FEEDBACK_REPORT_ALWAYS = "0";
+
 
 
     /**
@@ -259,7 +263,7 @@ public class AnkiDroidApp extends Application {
         DEFAULT_SWIPE_THRESHOLD_VELOCITY = vc.getScaledMinimumFlingVelocity();
 
         // Set ACRA reporting mode
-        setAcraReportingMode(preferences.getString("reportErrorMode",Feedback.REPORT_ASK));
+        setAcraReportingMode(preferences.getString("reportErrorMode", FEEDBACK_REPORT_ASK));
     }
 
 
@@ -459,21 +463,21 @@ public class AnkiDroidApp extends Application {
     }
 
 
-    public static void saveExceptionReportFile(String origin, String additionalInfo) {
+    public static void sendExceptionReport(String origin, String additionalInfo) {
         try {
             throw new AnkiDroidErrorReportException();
         } catch (AnkiDroidErrorReportException e) {
-            saveExceptionReportFile(e, origin, additionalInfo);
+            sendExceptionReport(e, origin, additionalInfo);
         }
     }
 
 
-    public static void saveExceptionReportFile(Throwable e, String origin) {
-        saveExceptionReportFile(e, origin, null);
+    public static void sendExceptionReport(Throwable e, String origin) {
+        sendExceptionReport(e, origin, null);
     }
 
 
-    public static void saveExceptionReportFile(Throwable e, String origin, String additionalInfo) {
+    public static void sendExceptionReport(Throwable e, String origin, String additionalInfo) {
         //CustomExceptionHandler.getInstance().uncaughtException(null, e, origin, additionalInfo);
         ACRA.getErrorReporter().putCustomData("origin", origin);
         ACRA.getErrorReporter().putCustomData("additionalInfo", additionalInfo);
@@ -618,16 +622,16 @@ public class AnkiDroidApp extends Application {
     public void setAcraReportingMode(String value) {
         SharedPreferences.Editor editor = getSharedPrefs(this).edit();
         // Set the ACRA disable value
-        if (value.equals(Feedback.REPORT_NEVER)) {
+        if (value.equals(FEEDBACK_REPORT_NEVER)) {
             editor.putBoolean("acra.disable", true);
         } else {
             editor.putBoolean("acra.disable", false);
             // Switch between auto-report via toast and manual report via dialog
             try {
-                if (value.equals(Feedback.REPORT_ALWAYS)) {
+                if (value.equals(FEEDBACK_REPORT_ALWAYS)) {
                     ACRA.getConfig().setMode(ReportingInteractionMode.TOAST);
                     ACRA.getConfig().setResToastText(R.string.feedback_auto_toast_text);
-                } else if (value.equals(Feedback.REPORT_ASK)) {
+                } else if (value.equals(FEEDBACK_REPORT_ASK)) {
                     ACRA.getConfig().setMode(ReportingInteractionMode.DIALOG);
                     ACRA.getConfig().setResToastText(R.string.feedback_manual_toast_text);
                 }

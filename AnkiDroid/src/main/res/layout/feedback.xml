@@ -4,35 +4,10 @@
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:orientation="vertical"
-    android:paddingBottom="5dp"
+    android:paddingBottom="10dp"
     android:paddingLeft="5dp"
     android:paddingRight="5dp"
     android:paddingTop="10dp" >
-
-    <LinearLayout
-        android:id="@+id/llFeedbackTopLine"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical|center_horizontal"
-        android:orientation="horizontal" >
-
-        <Button
-            android:id="@+id/btnFeedbackSend"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="@+id/feedback_send_feedback_and_errors" />
-
-        <ProgressBar
-            android:id="@+id/pbFeedbackSpinner"
-            style="?android:attr/progressBarStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:indeterminate="true"
-            android:visibility="gone" />
-    </LinearLayout>
 
     <ScrollView
         android:id="@+id/scrollView1"
@@ -48,36 +23,13 @@
             android:minLines="2" />
     </ScrollView>
 
-    <LinearLayout
-        android:id="@+id/lvButtons"
+    <CheckBox
+        android:id="@+id/alwaysReportCheckbox"
+        android:text="@+string/feedback_report_automatically"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-        <Button
-            android:id="@+id/btnFeedbackKeepLatest"
-            android:layout_width="0dip"
-            android:layout_height="fill_parent"
-            android:layout_gravity="center|center_vertical"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/feedback_keep_latest" />
-
-        <Button
-            android:id="@+id/btnFeedbackClearAll"
-            android:layout_width="0dip"
-            android:layout_height="fill_parent"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/feedback_clear_all" />
-    </LinearLayout>
-
-    <ListView
-        android:id="@+id/lvFeedbackErrorList"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:fastScrollEnabled="true" />
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"/>
 
     <ScrollView
         android:layout_width="fill_parent"
@@ -87,11 +39,12 @@
         android:fillViewport="true" >
 
         <TextView
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
             android:id="@+id/tvFeedbackDisclaimer"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@+string/feedback_disclaimer"
-            android:textColor="#000000" />
+            android:text="@+string/feedback_disclaimer" />
     </ScrollView>
 
 </LinearLayout>

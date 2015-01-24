@@ -1326,7 +1326,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                     return 0;
             }
         } catch (RuntimeException e) {
-            AnkiDroidApp.saveExceptionReportFile(e, "AbstractReviewer-getRecommendedEase");
+            AnkiDroidApp.sendExceptionReport(e, "AbstractReviewer-getRecommendedEase");
             closeReviewer(DeckPicker.RESULT_DB_ERROR, true);
             return 0;
         }
@@ -1594,7 +1594,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         try {
             buttonCount = mSched.answerButtons(mCurrentCard);
         } catch (RuntimeException e) {
-            AnkiDroidApp.saveExceptionReportFile(e, "AbstractReviewer-showEaseButtons");
+            AnkiDroidApp.sendExceptionReport(e, "AbstractReviewer-showEaseButtons");
             closeReviewer(DeckPicker.RESULT_DB_ERROR, true);
             return;
         }
