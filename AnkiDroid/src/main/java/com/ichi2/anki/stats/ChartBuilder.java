@@ -15,11 +15,9 @@
  ****************************************************************************************/
 package com.ichi2.anki.stats;
 
-import android.content.res.Resources;
 import android.graphics.Paint;
 
 import android.widget.TextView;
-import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Stats;
@@ -442,7 +440,7 @@ public class ChartBuilder {
         while((deltaRange/(tics))/2 >= ticlimit) {
             tics *= 2.0;
         }
-        Timber.d("ChartBuilder ticksCalcY: pixelDistance: %d, ticks: %d", pixelDistance, tics);
+        Timber.d("ChartBuilder ticksCalcY: pixelDistance: %d, ticks: %,.2f", pixelDistance, tics);
         return tics;
     }
 

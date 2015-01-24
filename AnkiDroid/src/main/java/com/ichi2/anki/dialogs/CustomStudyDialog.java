@@ -198,9 +198,9 @@ public class CustomStudyDialog extends DialogFragment {
             case CUSTOM_STUDY_NEW:
                 return Integer.toString(prefs.getInt("extendNew", 10));
             case CUSTOM_STUDY_REV:
-                return Integer.toString(prefs.getInt("extendRev", 10));
+                return Integer.toString(prefs.getInt("extendRev", 50));
             case CUSTOM_STUDY_FORGOT:
-                return Integer.toString(prefs.getInt("forgottenDays", 2));
+                return Integer.toString(prefs.getInt("forgottenDays", 1));
             case CUSTOM_STUDY_AHEAD:
                 return Integer.toString(prefs.getInt("aheadDays", 1));
             case CUSTOM_STUDY_RANDOM:

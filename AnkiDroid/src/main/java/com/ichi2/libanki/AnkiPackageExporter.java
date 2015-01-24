@@ -16,6 +16,8 @@
 
 package com.ichi2.libanki;
 
+import android.content.ContentValues;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,6 +36,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
+
+import timber.log.Timber;
 
 class Exporter {
     Collection mCol;
@@ -95,49 +99,63 @@ class AnkiExporter extends Exporter {
         // attach dst to src so we can copy data between them. This isn't done in original libanki as Python more
         // flexible
         dst.close();
+        Timber.d("Attach DB");
         mSrc.getDb().getDatabase().execSQL("ATTACH '" + path + "' AS DST_DB");
         // copy cards, noting used nids (as unique set)
+        Timber.d("Copy cards");
         mSrc.getDb().getDatabase()
                 .execSQL("INSERT INTO DST_DB.cards select * from cards where id in " + Utils.ids2str(cids));
         Set<Long> nids = new HashSet<Long>(mSrc.getDb().queryColumn(Long.class,
                 "select nid from cards where id in " + Utils.ids2str(cids), 0));
         // notes
-        String strnids = Utils.ids2str(new ArrayList<Long>(nids));
+        Timber.d("Copy notes");
+        ArrayList<Long> uniqueNids = new ArrayList<Long>(nids);
+        String strnids = Utils.ids2str(uniqueNids);
         mSrc.getDb().getDatabase().execSQL("INSERT INTO DST_DB.notes select * from notes where id in " + strnids);
         // remove system tags if not exporting scheduling info
         if (!mIncludeSched) {
+            Timber.d("Stripping system tags from list");
             ArrayList<String> srcTags = mSrc.getDb().queryColumn(String.class,
                     "select tags from notes where id in " + strnids, 0);
-            ArrayList<Object[]> dstTags = new ArrayList<Object[]>();
+            ArrayList<Object[]> args = new ArrayList<Object[]>(srcTags.size());
+            Object [] arg = new Object[2];
             for (int row = 0; row < srcTags.size(); row++) {
-                dstTags.add(new Object[] { removeSystemTags(srcTags.get(row)) });
+                arg[0]=removeSystemTags(srcTags.get(row));
+                arg[1]=uniqueNids.get(row);
+                args.add(row, arg);
             }
-            mSrc.getDb().executeMany("UPDATE DST_DB.notes set tags=? where id in " + strnids, dstTags);
+            mSrc.getDb().executeMany("UPDATE DST_DB.notes set tags=? where id=?", args);
         }
         // models used by the notes
+        Timber.d("Finding models used by notes");
         ArrayList<Long> mids = mSrc.getDb().queryColumn(Long.class,
                 "select distinct mid from DST_DB.notes where id in " + strnids, 0);
         // card history and revlog
         if (mIncludeSched) {
+            Timber.d("Copy history and revlog");
             mSrc.getDb().getDatabase()
                     .execSQL("insert into DST_DB.revlog select * from revlog where cid in " + Utils.ids2str(cids));
             // reopen collection to destination database (different from original python code)
             mSrc.getDb().getDatabase().execSQL("DETACH DST_DB");
             dst.reopen();
         } else {
+            Timber.d("Detaching destination db and reopening");
             // first reopen collection to destination database (different from original python code)
             mSrc.getDb().getDatabase().execSQL("DETACH DST_DB");
             dst.reopen();
             // then need to reset card state
+            Timber.d("Resetting cards");
             dst.getSched().resetCards(cids);
         }
         // models - start with zero
+        Timber.d("Copy models");
         for (JSONObject m : mSrc.getModels().all()) {
             if (mids.contains(m.getLong("id"))) {
                 dst.getModels().update(m);
             }
         }
         // decks
+        Timber.d("Copy decks");
         ArrayList<Long> dids = new ArrayList<Long>();
         if (mDid != null) {
             dids.add(mDid);
@@ -165,12 +183,14 @@ class AnkiExporter extends Exporter {
             dst.getDecks().update(d);
         }
         // copy used deck confs
+        Timber.d("Copy deck options");
         for (JSONObject dc : mSrc.getDecks().allConf()) {
             if (dconfs.has(dc.getString("id"))) {
                 dst.getDecks().updateConf(dc);
             }
         }
         // find used media
+        Timber.d("Find used media");
         JSONObject media = new JSONObject();
         mMediaDir = mSrc.getMedia().dir();
         if (mIncludeMedia) {
@@ -198,6 +218,7 @@ class AnkiExporter extends Exporter {
                 mMediaFiles.add(keys.getString(i));
             }
         }
+        Timber.d("Cleanup");
         dst.setCrt(mSrc.getCrt());
         // todo: tags?
         mCount = dst.cardCount();

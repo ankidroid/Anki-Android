@@ -476,7 +476,11 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                     dyn = col.getDecks().get(did);
                 }
                 // and then set various options
-                dyn.put("delays", delays);
+                if (delays.length() > 0) {
+                    dyn.put("delays", delays);
+                } else {
+                    dyn.remove("delays");
+                }
                 JSONArray ar = dyn.getJSONArray("terms");
                 ar.getJSONArray(0).put(0,
                         new StringBuilder("deck:\"").append(deckName).append("\" ").append(terms[0]).toString());
