@@ -196,9 +196,10 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 Timber.w("loadCounts() onPostExecute :: result = null");
                 return;
             }
-            Timber.d("loadCounts() onPostExecute :: result = %s", result.getObjArray().toString());
             Object[] res = result.getObjArray();
-            updateDecksList((TreeSet<Object[]>) res[0], (Integer) res[1], (Integer) res[2]);
+            TreeSet<Object[]> countList = (TreeSet<Object[]>) res[0];
+            Timber.d("loadCounts() onPostExecute :: result = (length %d TreeSet, %d, %d)", countList.size(), res[1], res[2]);
+            updateDecksList(countList, (Integer) res[1], (Integer) res[2]);
             dismissOpeningCollectionDialog();
             try {
                 // Ensure we have the correct deck selected in the deck list after we have updated it. Check first
