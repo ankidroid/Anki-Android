@@ -88,8 +88,8 @@
     <item>回答ボタン２</item>
     <item>回答ボタン３</item>
     <item>回答ボタン４</item>
-    <item>推奨する答え（緑色）</item>
-    <item>推奨された答えよりも良い答え</item>
+    <item>推奨される答え（緑色）</item>
+    <item>推奨される答えよりも良い答え</item>
     <item>戻す</item>
     <item>カードを編集する</item>
     <item>マークをつける</item>
@@ -107,8 +107,8 @@
     <item>White</item>
   </string-array>
   <string-array name="leech_action_labels">
-    <item>カードの保留</item>
-    <item>タグを追加</item>
+    <item>カードを保留</item>
+    <item>タグを付けるだけ</item>
   </string-array>
   <string-array name="new_order_labels">
     <item>新規カードを無作為に選んで表示する</item>
@@ -127,8 +127,8 @@
   <string-array name="custom_study_options_labels">
     <item>今日の新規カードの上限を上げる</item>
     <item>今日の復習カードの上限を上げる</item>
-    <item>忘却カードの復習</item>
-    <item>指定日分の先行復習</item>
+    <item>忘却したカードを復習する</item>
+    <item>先取りして復習する</item>
     <item>カードをランダムに学習する</item>
     <item>新規カードをプレビューする</item>
     <item>特定のタグによる選択</item>
@@ -145,7 +145,7 @@
   <string-array name="cards_for_tag_filtered_deck_labels">
     <item>全カード</item>
     <item>新規分</item>
-    <item>期限切れ</item>
+    <item>期日</item>
   </string-array>
   <string-array name="override_font_labels">
     <item>フォントが指定されていない場合</item>

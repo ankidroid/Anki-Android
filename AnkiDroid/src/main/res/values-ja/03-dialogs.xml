@@ -84,12 +84,12 @@
   <string name="intent_aedict_category">AnkiDroidにカードを登録するため、すべてのNotepadカテゴリを削除するか追、\'default\' という名前のカテゴリを追加してください。</string>
   <string name="custom_study_new_total_new">単語帳の中の新規カードの枚数: %s</string>
   <string name="custom_study_rev_total_rev">期限がきた復習カード数: %s</string>
-  <string name="custom_study_new_extend">取り組む新規カードの上限数</string>
-  <string name="custom_study_rev_extend">復習カードの上限数</string>
-  <string name="custom_study_forgotten">復習する忘却カードの指定日数</string>
-  <string name="custom_study_ahead">先行して復習する日数</string>
+  <string name="custom_study_new_extend">今日の新規カードの上限をあとx枚上げる</string>
+  <string name="custom_study_rev_extend">今日の復習カードの上限をあとx枚上げる</string>
+  <string name="custom_study_forgotten">過去x日以内に忘却したカードを復習する</string>
+  <string name="custom_study_ahead">先取りする日数</string>
   <string name="custom_study_random">単語帳からランダムに抽出するカードの枚数</string>
-  <string name="custom_study_preview">以前追加された新規カードをプレビュー（日数指定）</string>
+  <string name="custom_study_preview">過去 x 日間に追加された新規カードをプレビュー</string>
   <string name="custom_study_tags">タグの入力</string>
   <string name="rebuild_custom_study_deck">カスタム単語帳を再構築します\nしばらくお待ちください</string>
   <string name="deck_upgrade_title">単語帳の更新</string>

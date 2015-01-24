@@ -182,7 +182,7 @@
   <string name="nothing">Rien</string>
   <string name="title_activity_graphical_activity">Graphique statistique</string>
   <string name="title_activity_template_editor">Types de carte pour %s</string>
-  <string name="card_template_editor_front">Modèle Front</string>
+  <string name="card_template_editor_front">Modèle du recto</string>
   <string name="card_template_editor_back">Modèle Back</string>
   <string name="card_template_editor_styling">Style</string>
   <string name="card_template_editor_menu_add_reverse">Ajouter l\'inverse</string>

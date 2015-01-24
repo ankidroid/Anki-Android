@@ -28,9 +28,9 @@
     <item>動画の再生をサポート</item>
     <item>ブラウザーの2列目のレンダリングを改善</item>
     <item>スワイプジェスチャーの感度を改善</item>
-    <item>Glosbeの使える言語を増やした</item>
+    <item>Glosbe翻訳で選択できる言語をさらに追加</item>
     <item>Chromebook のサポートを追加</item>
-    <item>New crash reporting system</item>
-    <item>Bug fixes</item>
+    <item>クラッシュ（アプリの異常終了）報告システムの刷新</item>
+    <item>バグの修正</item>
   </string-array>
 </resources>

@@ -57,11 +57,11 @@
   <string name="show_whiteboard">ホワイトボードを表示する</string>
   <string name="hide_whiteboard">ホワイトボードを隠す</string>
   <string name="clear_whiteboard">ホワイトボードの内容を全て消去</string>
-  <string name="replay_audio">音声の再生</string>
+  <string name="replay_audio">音声をリプレイ</string>
   <string name="cram_edit_warning">総復習中はカードの編集はできません</string>
-  <string name="suspend_leeches">学習困難カードの非表示</string>
-  <string name="leech_suspend_notification">このカードは学習困難カードとして登録されました</string>
-  <string name="leech_notification">学習困難カードとして登録されました</string>
+  <string name="suspend_leeches">学習困難（無駄）カードの非表示</string>
+  <string name="leech_suspend_notification">このカードは学習困難（無駄）カードとして登録されました</string>
+  <string name="leech_notification">学習困難（無駄）カードとして登録されました</string>
   <string name="corrupt_font">使用できないフォントファイル %s</string>
   <string-array name="browser_column1_headings">
     <item>ソートフィールド</item>

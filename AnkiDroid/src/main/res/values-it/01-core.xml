@@ -179,14 +179,14 @@
   <string name="confirm">Conferma</string>
   <string name="internet">Internet</string>
   <string name="pc">PC</string>
-  <string name="nothing">Nothing</string>
+  <string name="nothing">Niente</string>
   <string name="title_activity_graphical_activity">Statistiche</string>
   <string name="title_activity_template_editor">Card Types for %s</string>
   <string name="card_template_editor_front">Front Template</string>
   <string name="card_template_editor_back">Back Template</string>
   <string name="card_template_editor_styling">Styling</string>
   <string name="card_template_editor_menu_add_reverse">Add reverse</string>
-  <string name="card_template_editor_menu_delete">Delete</string>
+  <string name="card_template_editor_menu_delete">Elimina</string>
   <string name="card_template_editor_cant_delete">At least one card type is required.</string>
   <plurals name="card_template_editor_confirm_delete">
     <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
