@@ -942,7 +942,7 @@ public class Media {
      * if it already exists.
      */
     public void markFileAdd(String fname) {
-        Timber.i("Marking media file addition in media db: " + fname);
+        Timber.d("Marking media file addition in media db: %s", fname);
         String path = new File(dir(), fname).getAbsolutePath();
         mDb.execute("insert or replace into media values (?,?,?,?)",
                 new Object[] { fname, _checksum(path), _mtime(path), 1 });
@@ -957,7 +957,7 @@ public class Media {
         if (f.exists()) {
             f.delete();
         }
-        Timber.i("Marking media file removal in media db: " + fname);
+        Timber.d("Marking media file removal in media db: %s", fname);
         mDb.execute("insert or replace into media values (?,?,?,?)",
                 new Object[] { fname, null, 0, 1 });
     }
