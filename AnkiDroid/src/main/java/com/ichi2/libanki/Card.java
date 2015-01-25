@@ -22,9 +22,6 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.text.TextUtils;
 
-
-import com.ichi2.anki.AnkiDroidApp;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -143,8 +140,7 @@ public class Card implements Cloneable {
         try {
             cursor = mCol.getDb().getDatabase().rawQuery("SELECT * FROM cards WHERE id = " + mId, null);
             if (!cursor.moveToFirst()) {
-                Timber.w("Card.load: No card with id " + mId);
-                return;
+                throw new RuntimeException(" No card with id " + mId);
             }
             mId = cursor.getLong(0);
             mNid = cursor.getLong(1);
