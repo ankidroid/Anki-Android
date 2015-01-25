@@ -50,15 +50,15 @@
   <string name="studyoptions_eta">推定時間 (分):</string>
   <string name="studyoptions_start">学習開始</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%1$d 枚の期限カード (%2$s)</item>
-    <item quantity="other">%1$d 枚の期限カード (%2$s)</item>
+    <item quantity="one">今日の目標: %1$d 枚 (%2$s)</item>
+    <item quantity="other">今日の目標: %1$d 枚 (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">%d 分</item>
     <item quantity="other">%d 分</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item quantity="one">%1$d 期限　全体 %2$d 枚</item>
+    <item quantity="one">%1$d 期日　全体 %2$d 枚</item>
     <item quantity="other">残り%2$d枚中%1$d枚</item>
   </plurals>
   <plurals name="reviewer_window_title">
@@ -145,9 +145,9 @@
   <string name="empty_cram_deck">カードを元の単語帳へ戻します。</string>
   <string name="custom_study_deck_name">カスタム学習セッション</string>
   <string name="custom_study_deck_exists">最初に、既存のカスタム学習の単語帳の名称変更を行ってください。</string>
-  <string name="studyoptions_congrats_finished">おめでとうございます！　今日の目標を達成しました。</string>
-  <string name="studyoptions_congrats_more_rev">復習カードがまだ他にも残っていますが、一日あたりの復習カード枚数の上限に達しています。上限は「単語帳オプション」内の設定で上げられます。</string>
-  <string name="studyoptions_congrats_more_new">新規カードがまだ他にも残っていますが、一日あたりの新規カード枚数の上限に達しています。上限は「単語帳オプション」内の設定で上げられます。（ただしそれに伴って短期的に復習の負担が増えますのでご注意ください。）</string>
+  <string name="studyoptions_congrats_finished">おめでとうございます！ 今日の目標を達成しました</string>
+  <string name="studyoptions_congrats_more_rev">期日に達した復習カードがまだ他にも残っていますが、一日あたりの復習カード枚数の上限に達しています。上限は「単語帳オプション」内の設定で上げられます。</string>
+  <string name="studyoptions_congrats_more_new">新規カードがまだ他にも残っていますが、一日あたりの新規カード枚数の上限に達しています。上限は「単語帳オプション」内の設定で上げられます。（ただしそれに伴って短期的に学習の負担が増えますのでご注意ください。）</string>
   <string name="studyoptions_congrats_custom">通常のスケジュール以外で学習するには、「カスタム学習」ボタンをタップしてください。</string>
   <string name="studyoptions_no_cards_due">学習予定時刻に達したカードがまだありません</string>
   <plurals name="studyoptions_congrats_message">

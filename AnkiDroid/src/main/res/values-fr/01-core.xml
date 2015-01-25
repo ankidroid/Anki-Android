@@ -50,8 +50,8 @@
   <string name="studyoptions_eta">Temps estimé (min):</string>
   <string name="studyoptions_start">Réviser</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%1$d carte dûe (%2$s)</item>
-    <item quantity="other">%1$d cartes dûes (%2$s)</item>
+    <item quantity="one">%1$d carte à relire (%2$s)</item>
+    <item quantity="other">%1$d cartes à relire (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">%d min.</item>
@@ -149,7 +149,7 @@
   <string name="studyoptions_congrats_more_rev">Vous avez atteint votre limite aujourd\'hui, mais il reste des cartes à passer en revue. Vous pouvez augmenter le seuil journalier dans les options.</string>
   <string name="studyoptions_congrats_more_new">Il reste des nouvelles cartes disponibles, mais la limite journalière a été atteinte. Vous pouvez augmenter cette limite dans les options, mais gardez à l\'esprit que cela augmentera votre charge de travail à court terme.</string>
   <string name="studyoptions_congrats_custom">Pour étudier en dehors des horaires normaux, cliquez sur le bouton d\'étude personnalisée ci-dessous.</string>
-  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
+  <string name="studyoptions_no_cards_due">Aucune carte à relire actuellement.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Demain il y aura : %1$d carte à revoir et %2$s.\n Durée estimée : %3$s</item>
     <item quantity="other">Demain, il y aura %2$s cartes nouvelles et %1$d à revoir.\n Durée estimée : %3$s</item>

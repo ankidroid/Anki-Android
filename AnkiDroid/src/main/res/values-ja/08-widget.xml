@@ -39,13 +39,13 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="widget_minimum_cards_due_notification_ticker_title">残り</string>
-  <string name="widget_minimum_cards_due_notification_ticker_text">残り%d枚</string>
-  <string name="widget_no_cards_due">期限切れ無し</string>
+  <string name="widget_minimum_cards_due_notification_ticker_title">今日の目標</string>
+  <string name="widget_minimum_cards_due_notification_ticker_text">あと%d枚です</string>
+  <string name="widget_no_cards_due">期日に達したカード無し</string>
   <string name="widget_loading">ウィジェットをロード中...</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">%2$s中%1$d枚が期限です</item>
-    <item quantity="other">%2$s中%1$d枚が期限です</item>
+    <item quantity="one">%2$s中%1$d枚が期日に達しています</item>
+    <item quantity="other">%2$s中%1$d枚が期日に達しています</item>
   </plurals>
   <plurals name="widget_decks">
     <item quantity="one">%1$d 単語帳</item>
@@ -60,5 +60,5 @@
     <item quantity="one">推定時間: %1$d 分</item>
     <item quantity="other">予想時間: %d 分</item>
   </plurals>
-  <string name="widget_big_tomorrow_due">明日が期限のカード:</string>
+  <string name="widget_big_tomorrow_due">明日が期日のカード:</string>
 </resources>

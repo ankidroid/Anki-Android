@@ -44,19 +44,19 @@
   <string name="statistics_mature">熟知カード</string>
   <string name="statistics_young_and_learn">学習中カード＋未熟カード</string>
   <string name="statistics_unlearned">新規カード</string>
-  <string name="statistics_suspended">保留カード</string>
-  <string name="statistics_relearn">再学習</string>
+  <string name="statistics_suspended">保留カード＋延期カード</string>
+  <string name="statistics_relearn">再学習カード</string>
   <string name="statistics_learn">学習中カード</string>
-  <string name="statistics_cram">詰め込み学習</string>
+  <string name="statistics_cram">詰め込み学習カード</string>
   <string name="statistics_type_title">統計情報</string>
   <string name="stats_cards">枚数</string>
-  <string name="stats_cards_intervals">間隔を与えられたカード</string>
+  <string name="stats_cards_intervals">ある間隔で次の復習を行うカード</string>
   <string name="stats_cumulative_cards">累積枚数</string>
   <string name="stats_cumulative_answers">累積回答数</string>
   <string name="stats_cumulative_time_minutes">累積時間（分）</string>
   <string name="stats_cumulative_time_hours">累積時間</string>
-  <string name="stats_cumulative">累積（右目盛）</string>
-  <string name="stats_cumulative_percentage">累積パーセンテージ</string>
+  <string name="stats_cumulative">累積</string>
+  <string name="stats_cumulative_percentage">累積パーセント</string>
   <string formatted="false" name="stats_cumulative_correct_percentage">累積正解率(%)</string>
   <string name="stats_answers">回答数</string>
   <string name="stats_minutes">分</string>
@@ -70,11 +70,11 @@
   <string name="stats_time_of_day">時刻</string>
   <string name="stats_day_of_week">曜日</string>
   <string formatted="false" name="stats_percentage_correct">正解率(%)</string>
-  <string name="stats_reviews">復習</string>
+  <string name="stats_reviews">学習枚数</string>
   <string name="stats_answer_type">回答の種類</string>
   <string name="stats_today_again_count">忘却回数: &lt;b&gt;%d&lt;/b&gt;</string>
-  <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt;  正解)</string>
-  <string name="stats_today_type_breakdown">学習: &lt;b&gt;%1$s&lt;/b&gt;枚、復習: &lt;b&gt;%2$s&lt;/b&gt;枚、再学習: &lt;b&gt;%3$s&lt;/b&gt;枚、フィルター: &lt;b&gt;%4$s&lt;/b&gt;枚</string>
+  <string name="stats_today_correct_count">(正解率: &lt;b&gt;%.1f%%&lt;/b&gt;)</string>
+  <string name="stats_today_type_breakdown">学習: &lt;b&gt;%1$s&lt;/b&gt;枚、復習: &lt;b&gt;%2$s&lt;/b&gt;枚、再学習: &lt;b&gt;%3$s&lt;/b&gt;枚、フィルター(詰め込み学習): &lt;b&gt;%4$s&lt;/b&gt;枚</string>
   <string name="stats_today_mature_cards">熟知カードの正解: %1$d/%2$d (%3$.1f%%)</string>
   <string name="stats_today_no_mature_cards">熟知カードは学習していません。</string>
   <string name="statistics_period_x_axis_minutes">分</string>
@@ -100,7 +100,7 @@
   <string name="deck_summary_average_year">昨年の平均</string>
   <string name="deck_summary_average_total">今までの平均</string>
   <string name="deck_summary_forecast">予測</string>
-  <string name="deck_summary_tomorrow_due">明日の期限切れカード: &lt;b&gt;%d&lt;/b&gt;枚</string>
+  <string name="deck_summary_tomorrow_due">明日に期日に達するカード: &lt;b&gt;%d&lt;/b&gt;枚</string>
   <string name="deck_summary_tomorrow_new">明日の新規カード: &lt;b&gt;%d&lt;/b&gt;枚</string>
   <string name="deck_summary_tomorrow_time">明日の推定必要時間: &lt;b&gt;%d&lt;/b&gt; 分.</string>
   <string name="deck_summary_finished_in">新規カードの終了: &lt;b&gt;%d&lt;/b&gt; 日</string>
@@ -151,7 +151,7 @@
   <string name="stats_review_count">履歴（枚数）</string>
   <string name="stats_review_time">履歴（時間）</string>
   <string name="stats_review_intervals">間隔</string>
-  <string name="stats_breakdown">時間ごとの分析</string>
+  <string name="stats_breakdown">時間帯ごとの分析</string>
   <string name="stats_weekly_breakdown">曜日ごとの分析</string>
   <string name="stats_answer_buttons">回答ボタン</string>
   <string name="stats_cards_types">カードの種類</string>
@@ -194,8 +194,8 @@
     <item>簡</item>
   </string-array>
   <plurals name="stats_today_cards">
-    <item quantity="one">今日は &lt;b&gt;%1$d枚のカード&lt;/b&gt; を &lt;b&gt;%2$s&lt;/b&gt; で学習しています。</item>
-    <item quantity="other">今日は &lt;b&gt;%1$d 枚のカード&lt;/b&gt; を &lt;b&gt;%2$s&lt;/b&gt; で学習しています。</item>
+    <item quantity="one">今日は &lt;b&gt;%1$d枚&lt;/b&gt; のカードを &lt;b&gt;%2$s&lt;/b&gt; で学習しています。</item>
+    <item quantity="other">今日は &lt;b&gt;%1$d枚&lt;/b&gt; のカードを &lt;b&gt;%2$s&lt;/b&gt; で学習しています。</item>
   </plurals>
   <plurals name="stats_today_cards_not_bold">
     <item quantity="one">今日は %1$d枚のカード を %2$s で学習しています。</item>

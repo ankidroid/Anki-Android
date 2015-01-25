@@ -39,7 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="backup_collection">バックアップを作成します...</string>
+  <string name="backup_collection">バックアップを作成しています...</string>
   <string name="backup_deck_no_space_left">最後のバックアップ·アクションは、あなたのSDカード上のスペース不足が原因で実行できませんでした\n\n必要なスペースを確保してください。</string>
   <string name="sd_space_warning">SDカードに、 %d mb 以下の空きしかありません。\nデータの損失を避けるために空き領域を増やしてください。</string>
   <string name="backup_deck_success">バックアップが正常に作成されました。</string>
@@ -67,5 +67,7 @@
   <string name="backup_restore_no_backups">このデバイス上では、このコレクションをバックアップできません。デスクトップコンピューターにバックアップがある場合には、それをあなたのAnkiDroidフォルダに手動でコピーしてください</string>
   <string name="open_collection_failed_title">コレクションは開かれていません</string>
   <string name="open_collection_failed_message">データベースを開けませんでした。Ankiシステムのデータベースでないか、または破損しています。\n\n\'オプション\'をタップして、データベースを修復するための方法を選んでください。\n\n破損したコレクションを修復するための詳しい情報についてはこちらをご覧ください：\n%1$s</string>
+  <string name="corrupt_db_message">Unfortunately your collection has become corrupted.\n\nTouch \'options\' to restore from a backup, or if that does not work, see the following instructions for manually repairing the database:\n%1$s</string>
+  <string name="access_collection_failed_message">An error occurred while accessing your collection. It may have been caused by a harmless bug, or there may be a problem with it. \n\nTry running check database, or restoring from backup by pressing the \'options\' button. If you continue to see this message, please file a bug report:\n%1$s</string>
   <string name="deck_repair_error">コレクションは修復できませんでした</string>
 </resources>

@@ -50,7 +50,7 @@
   <string name="pref_cat_fonts">フォント</string>
   <string name="pref_cat_fonts_summ">既定フォントとサイズの変更</string>
   <string name="pref_cat_gestures">ジェスチャー</string>
-  <string name="pref_cat_gestures_summ">よく使うボタン操作をタップやスワイプにも割り当てる</string>
+  <string name="pref_cat_gestures_summ">よく使うボタン操作をタップやスワイプにも割り当てます</string>
   <string name="pref_cat_actions">アクション</string>
   <string name="pref_cat_advanced">拡張機能</string>
   <string name="pref_cat_advanced_summ">最適化と実験的な機能</string>
@@ -70,7 +70,7 @@
   <string name="dictionary">検索辞書</string>
   <string name="dictionary_summ">XXX</string>
   <string name="reset_languages">言語設定のリセット</string>
-  <string name="reset_languages_summ">すべての単語帳の言語の設定(テキスト読み上げ, 辞書)をリセットします. 単語帳選択で選択した単語帳の設定をリセットします</string>
+  <string name="reset_languages_summ">すべての単語帳の言語の設定（音声合成、辞書）をリセットします。単語帳選択で選択した単語帳の設定をリセットします</string>
   <string name="reset_languages_question">言語の割り当てをリセットしますか?</string>
   <string name="reset_confirmation">すべての状態をリセット</string>
   <string name="display_font_size">復習時フォントスケール</string>
@@ -86,7 +86,7 @@
   <string name="fullscreen_review">フルスクリーンモード</string>
   <string name="fullscreen_review_summ">ステータスバーの非表示</string>
   <string name="gestures">ジェスチャー有効化</string>
-  <string name="gestures_summ">解答や編集操作にジェスチャーを割り当てます</string>
+  <string name="gestures_summ">回答やカード編集などの操作にジェスチャーを割り当てます</string>
   <string name="gestures_swipe_up">上にスワイプ</string>
   <string name="gestures_swipe_down">下にスワイプ</string>
   <string name="gestures_swipe_left">左にスワイプ</string>
@@ -103,14 +103,14 @@
   <string name="swipe_sensitivity">スワイプ感度</string>
   <string name="swipe_sensitivity_summ">XXX</string>
   <string name="tts">音声合成</string>
-  <string name="tts_summ">音声ファイルが含まれていない場合に、質問と答えを読み上げる。</string>
+  <string name="tts_summ">音声ファイルが含まれていない場合に、質問と答えを読み上げます</string>
   <string name="sync_fetch_missing_media">メディアの同期</string>
-  <string name="sync_fetch_missing_media_summ">同期時に、不足しているメディア（音声、画像）を自動的に取得します。</string>
+  <string name="sync_fetch_missing_media_summ">同期時に、不足しているメディア（画像、音声、動画）を自動的に取得します</string>
   <string name="sync_account">AnkiWeb アカウント</string>
   <string name="sync_account_summ_logged_out">ログインしていません。</string>
   <string name="sync_account_summ_logged_in">%s</string>
   <string name="fix_hebrew_text">ヘブライ語母音への対応</string>
-  <string name="fix_hebrew_text_summ">正しくヘブライ語の母音を描画するため回避策。</string>
+  <string name="fix_hebrew_text_summ">ヘブライ語の母音を適切に描画するための回避策です</string>
   <string name="fix_hebrew_instructions">この設定は、ヘブライ語を表示するために、AndroidのRTLアルゴリズムをバイパスします\n\nこのが機能を使うために、フォント（Tohu.ttf）をダウンロードして手動で:\n%s/fonts/\n\nへコピーする必要があります。カードを変更する必要はありません。</string>
   <string name="fix_hebrew_download_font">フォントをダウンロードします。</string>
   <string name="default_font">既定のフォント</string>
@@ -124,11 +124,11 @@
   <string name="notification_pref_title">通知のタイミング</string>
   <string name="never_notify">通知なし</string>
   <string name="notify_when_pending">保留（応答待ち）状態になった時</string>
-  <string name="notification_minimum_cards_due">期限カードが %d 枚より多い時</string>
+  <string name="notification_minimum_cards_due">当日の目標枚数が%d枚を超えている時</string>
   <string name="notification_minimum_cards_due_vibrate">振動で通知</string>
   <string name="notification_minimum_cards_due_blink">ライト点滅で通知</string>
   <string name="timeout_answer_text">答えを自動的に表示</string>
-  <string name="timeout_answer_summ">入力しなくても自動的に答えを表示</string>
+  <string name="timeout_answer_summ">操作しなくても自動的に答えを表示</string>
   <string name="timeout_answer_seconds">答えを表示するまでの時間</string>
   <string name="timeout_answer_seconds_summ">XXX s</string>
   <string name="timeout_question_seconds">次の質問までの時間</string>
@@ -140,7 +140,7 @@
   <string name="vertical_centering_summ">コンテンツを垂直方向に中段揃え</string>
   <string name="pref_cat_backup">バックアップ</string>
   <string name="pref_backup">自動バックアップ</string>
-  <string name="pref_backup_summ">自動的にバックアップを作成（単語帳を開く前に1 日 1 回) </string>
+  <string name="pref_backup_summ">単語帳を開く前に自動的にバックアップを作成します（1 日あたり 1 回）</string>
   <string name="pref_backup_max">保管するバックアップの世代数</string>
   <string name="pref_backup_max_summ">XXX</string>
   <string name="pref_disable_backup_title">バックアップを無効にしますか？</string>
@@ -150,7 +150,7 @@
   <string name="show_estimates">ボタン上に時間を表示</string>
   <string name="show_estimates_summ">回答ボタンの上に、次の復習間隔を表示します</string>
   <string name="show_progress">残りのカード枚数を表示</string>
-  <string name="show_progress_summ">残りのカード数を表示</string>
+  <string name="show_progress_summ">画面左上に、残りのカード枚数（3種類）を表示します</string>
   <string name="use_current">新規カードの追加先</string>
   <string name="new_spread">新規カードの追加場所</string>
   <string name="learn_cutoff">先取り学習の限度（分）</string>
@@ -173,7 +173,7 @@
   <string name="convert_fen_text">チェス表記のサポート</string>
   <string name="filter_google_translate">Google翻訳から</string>
   <string name="filter_google_translate_summ">翻訳元と結果の保存</string>
-  <string name="convert_fen_text_summ"> Forsyth Edwards Notation表記法を使いチェス盤を描画。この表記は[fen][/fen] で囲む必要があります。</string>
+  <string name="convert_fen_text_summ">Forsyth Edwards Notation 表記法を使いチェス盤を描画します。この表記は[fen][/fen] で囲む必要があります</string>
   <string name="studyoptions_limit_select_tags">タグを選択</string>
   <string name="studyoptions_limit_tags_active">あり: %1$s</string>
   <string name="studyoptions_limit_tags_inactive">なし: %1$s</string>
@@ -189,11 +189,11 @@
   <string name="deck_conf_deck_description">単語帳の説明</string>
   <string name="deck_conf_group">オプショングループ</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n%2$d の単語帳がこのグループを使用しています。</item>
-    <item quantity="other">%1$s\n%2$d 個の単語帳がこのグループを使用しています。</item>
+    <item quantity="one">%1$s\n%2$d の単語帳がこのグループを使用しています</item>
+    <item quantity="other">%1$s\n%2$d 個の単語帳がこのグループを使用しています</item>
   </plurals>
   <string name="deck_conf_new_cards">新規カード</string>
-  <string name="deck_conf_rev_cards">復習</string>
+  <string name="deck_conf_rev_cards">復習カード</string>
   <string name="deck_conf_lps_cards">忘却</string>
   <string name="deck_conf_general">一般</string>
   <string name="deck_conf_steps">学習ステップ（分）</string>
@@ -205,9 +205,9 @@
   <string name="deck_conf_start_ease">易しさの初期値</string>
   <string name="deck_conf_max_rev">一日あたりの復習カード枚数の上限</string>
   <string name="deck_conf_new_bury">新規の関連カードの学習を延期</string>
-  <string name="deck_conf_new_bury_summ">新規の関連カード（同じノートから作られた別のカード）の学習を翌日まで延期する</string>
+  <string name="deck_conf_new_bury_summ">新規の関連カード（同じノートから作られた別のカード）の学習を翌日まで延期します</string>
   <string name="deck_conf_rev_bury">復習の延期</string>
-  <string name="deck_conf_rev_bury_summ">関連カード（同じノートから作られた別のカード）の復習を翌日まで延期する</string>
+  <string name="deck_conf_rev_bury_summ">関連カード（同じノートから作られた別のカード）の復習を翌日まで延期します</string>
   <string name="deck_conf_easy_bonus">簡単と答えた時のボーナス</string>
   <string name="deck_conf_ivl_fct">間隔の調整</string>
   <string name="deck_conf_max_ivl">間隔の上限</string>
@@ -221,7 +221,7 @@
   <string name="deck_conf_timer">タイマーの表示</string>
   <string name="deck_conf_autoplay">音声を自動再生する</string>
   <string name="deck_conf_replayq">質問音声のリプレイ</string>
-  <string name="deck_conf_replayq_summ">解答が表示されている時に「音声のリプレイ」を選択すると、質問と解答の音声を順番に再生する</string>
+  <string name="deck_conf_replayq_summ">解答が表示されている時に「音声のリプレイ」を選択すると、質問と解答の音声を順番に再生します</string>
   <string name="deck_conf_manage">グループ管理</string>
   <string name="deck_conf_current_group">現在のグループ</string>
   <string name="deck_conf_rename">名前の変更</string>
@@ -229,14 +229,14 @@
   <string name="deck_conf_reset_title">標準の設定へ戻す</string>
   <string name="deck_conf_reset_message">現在のオプショングループを標準の設定に戻しますか？</string>
   <string name="deck_conf_add">追加</string>
-  <string name="deck_conf_add_summ">現在のオプショングループのコピーを作成します。</string>
+  <string name="deck_conf_add_summ">現在のオプショングループのコピーを作成します</string>
   <string name="deck_conf_remove">削除</string>
   <string name="deck_conf_remove_title">削除</string>
   <string name="deck_conf_remove_message">現在のオプショングループを削除しますか？</string>
   <string name="deck_conf_set_subdecks">全てのサブ単語帳に適用</string>
   <plurals name="deck_conf_set_subdecks_summ">
     <item quantity="one">%s 個のサブ単語帳がこのグループを使用します。</item>
-    <item quantity="other">この設定を行うと %s 個のサブ単語帳もこのグループを使用することになります。</item>
+    <item quantity="other">この設定を行うと %s 個のサブ単語帳もこのグループを使用することになります</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">全てのサブ単語帳に適用</string>
   <string name="deck_conf_set_subdecks_message">現在のオプショングループをすべてのサブ単語帳に適用しますか？</string>

@@ -71,7 +71,7 @@
   <string-array name="studyoptions_more_rev_card_order">
     <item>間隔の一番長いカードから復習する</item>
     <item>間隔の一番短いカードから復習する</item>
-    <item>期限の順番で復習します</item>
+    <item>期日の順番で復習します</item>
     <item>カードを無作為に選んで復習する</item>
   </string-array>
   <string-array name="studyoptions_more_fail_card_option">
@@ -115,14 +115,14 @@
     <item>新規カードを追加順に表示する</item>
   </string-array>
   <string-array name="cram_deck_conf_order_labels">
-    <item>古いカードを先頭に</item>
+    <item>初回表示が古い順</item>
     <item>ランダム</item>
     <item>間隔が小さい順</item>
     <item>間隔が大きい順</item>
     <item>忘却回数が多い順</item>
     <item>追加順</item>
     <item>復習期日が古い順</item>
-    <item>最後の追加カードを先頭に</item>
+    <item>追加時期が新しい順</item>
   </string-array>
   <string-array name="custom_study_options_labels">
     <item>今日の新規カードの上限を上げる</item>
