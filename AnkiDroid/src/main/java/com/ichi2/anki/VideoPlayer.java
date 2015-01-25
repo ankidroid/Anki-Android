@@ -71,7 +71,6 @@ public class VideoPlayer extends Activity implements android.view.SurfaceHolder.
     }
     @Override
     public void onStop() {
-        Sound.stopSounds();
         super.onStop();
     }
 }

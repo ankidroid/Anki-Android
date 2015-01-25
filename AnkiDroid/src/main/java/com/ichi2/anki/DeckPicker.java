@@ -215,6 +215,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                             Timber.e("DeckPicker mLoadCountsHandler -- could not update StudyOptionsFragment");
                         }
                     } else {
+                        // Show the ShowcaseView tutorial unless in tablet mode (which shows it after loading StudyOptionsFragment)
                         reloadShowcaseView();
                     }
                 }
@@ -515,7 +516,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         menu.findItem(R.id.action_check_media).setEnabled(sdCardAvailable);
 
         // Show the welcome screen here if col empty to be sure that the action bar exists
-        if (mShowShowcaseView && colOpen() && getCol().isEmpty()) {
+        if (mShowShowcaseView && colOpen() && getCol().isEmpty() && mDeckList!= null && mDeckList.size() <=1) {
             mShowShowcaseView = false;
             final Resources res = getResources();
             ActionItemTarget target = new ActionItemTarget(this, R.id.action_add_decks);

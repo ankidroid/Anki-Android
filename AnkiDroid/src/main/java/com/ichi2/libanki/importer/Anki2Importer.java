@@ -256,39 +256,51 @@ public class Anki2Importer {
                             new String[] { "id", "guid", "mid", "mod", "usn", "tags", "flds", "sfld", "csum", "flags",
                                     "data" }, null, null, null, null, null);
             int total = cursor.getCount();
+            boolean largeCollection = total > 100;
+            int onePercent = total/100;
             int i = 0;
-            while (cursor.moveToNext()) {
-                Object[] note = new Object[] { cursor.getLong(0), cursor.getString(1), cursor.getLong(2),
-                        cursor.getLong(3), cursor.getInt(4), cursor.getString(5), cursor.getString(6),
-                        cursor.getString(7), cursor.getLong(8), cursor.getInt(9), cursor.getString(10) };
-                boolean shouldAdd = _uniquifyNote(note);
-                if (shouldAdd) {
-                    // ensure id is unique
-                    while (existing.containsKey(note[0])) {
-                        note[0] = ((Long) note[0]) + 999;
+            // Use transactions for media db to increase performance
+            mDst.getMedia().getDb().getDatabase().beginTransaction();
+            try {
+                while (cursor.moveToNext()) {
+                    Object[] note = new Object[]{cursor.getLong(0), cursor.getString(1), cursor.getLong(2),
+                            cursor.getLong(3), cursor.getInt(4), cursor.getString(5), cursor.getString(6),
+                            cursor.getString(7), cursor.getLong(8), cursor.getInt(9), cursor.getString(10)};
+                    boolean shouldAdd = _uniquifyNote(note);
+                    if (shouldAdd) {
+                        // ensure id is unique
+                        while (existing.containsKey(note[0])) {
+                            note[0] = ((Long) note[0]) + 999;
+                        }
+                        existing.put((Long) note[0], true);
+                        // bump usn
+                        note[4] = usn;
+                        // update media references in case of dupes
+                        note[6] = _mungeMedia((Long) note[MID], (String) note[6]);
+                        add.add(note);
+                        dirty.add((Long) note[0]);
+                        // note we have the added guid
+                        mNotes.put((String) note[GUID], new Object[]{note[0], note[3], note[MID]});
+                    } else {
+                        dupes += 1;
+                        // // update existing note - not yet tested; for post 2.0
+                        // boolean newer = note[3] > mod;
+                        // if (mAllowUpdate && _mid(mid) == mid && newer) {
+                        // note[0] = localNid;
+                        // note[4] = usn;
+                        // add.add(note);
+                        // dirty.add(note[0]);
+                        // }
                     }
-                    existing.put((Long) note[0], true);
-                    // bump usn
-                    note[4] = usn;
-                    // update media references in case of dupes
-                    note[6] = _mungeMedia((Long) note[MID], (String) note[6]);
-                    add.add(note);
-                    dirty.add((Long) note[0]);
-                    // note we have the added guid
-                    mNotes.put((String) note[GUID], new Object[] { note[0], note[3], note[MID] });
-                } else {
-                    dupes += 1;
-                    // // update existing note - not yet tested; for post 2.0
-                    // boolean newer = note[3] > mod;
-                    // if (mAllowUpdate && _mid(mid) == mid && newer) {
-                    // note[0] = localNid;
-                    // note[4] = usn;
-                    // add.add(note);
-                    // dirty.add(note[0]);
-                    // }
+                    ++i;
+                    if (!largeCollection || i%onePercent==0) {
+                        // Calls to publishProgress are reasonably expensive due to res.getString()
+                        publishProgress(true, i * 100 / total, 0, false);
+                    }
                 }
-                ++i;
-                publishProgress(true, i * 100 / total, 0, false);
+                mDst.getMedia().getDb().getDatabase().setTransactionSuccessful();
+            } finally {
+                mDst.getMedia().getDb().getDatabase().endTransaction();
             }
         } finally {
             if (cursor != null) {
@@ -587,11 +599,13 @@ public class Anki2Importer {
 
 
     private String _mungeMedia(long mid, String fields) {
-        String[] fs = Utils.splitFields(fields);
+        // running splitFields() on every note is fairly expensive and actually not necessary
+        //String[] fs = Utils.splitFields(fields);
+        //for (int i = 0; i < fs.length; ++i) {
 
-        for (int i = 0; i < fs.length; ++i) {
             for (Pattern p : Media.mRegexps) {
-                Matcher m = p.matcher(fs[i]);
+                //Matcher m = p.matcher(fs[i]);
+                Matcher m = p.matcher(fields);
                 StringBuffer sb = new StringBuffer();
                 int fnameIdx = Media.indexOfFname(p);
                 while (m.find()) {
@@ -627,9 +641,10 @@ public class Anki2Importer {
                     m.appendReplacement(sb, m.group(0).replace(fname, lname));
                 }
                 m.appendTail(sb);
-                fs[i] = sb.toString();
+                //fs[i] = sb.toString();
+                fields = sb.toString();
             }
-        }
+        //}
         return fields;
     }
 

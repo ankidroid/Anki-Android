@@ -81,6 +81,7 @@ public class AnkiDb {
             Timber.e("The database has been corrupted...");
             AnkiDroidApp.sendExceptionReport("AnkiDb.MyDbErrorHandler.onCorruption", "Db has been corrupted ");
             AnkiDroidApp.closeCollection(false);
+            AnkiDroidApp.setDbCorruptedFlag();
         }
     }
 
