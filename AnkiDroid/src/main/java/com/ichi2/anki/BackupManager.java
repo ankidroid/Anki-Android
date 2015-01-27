@@ -46,6 +46,7 @@ import timber.log.Timber;
 public class BackupManager {
 
     public static final int MIN_FREE_SPACE = 10;
+    public static final int MIN_BACKUP_COL_SIZE = 10000; // threshold in bytes to backup a col file
 
     public final static int RETURN_BACKUP_CREATED = 0;
     public final static int RETURN_ERROR = 1;
@@ -133,6 +134,7 @@ public class BackupManager {
         Calendar cal = new GregorianCalendar();
         cal.setTimeInMillis(System.currentTimeMillis());
 
+        // Abort backup if one was already made less than 5 hours ago
         Date lastBackupDate = null;
         while (lastBackupDate == null && len > 0) {
             try {
@@ -157,18 +159,31 @@ public class BackupManager {
             return false;
         }
 
+        // Abort backup if destination already exists (extremely unlikely)
         final File backupFile = new File(getBackupDirectory().getPath(), backupFilename);
         if (backupFile.exists()) {
             Timber.d("performBackup: No new backup created. File already exists");
             return false;
         }
 
+        // Abort backup if not enough free space
         if (getFreeDiscSpace(collectionFile) < collectionFile.length() + (MIN_FREE_SPACE * 1024 * 1024)) {
             Timber.e("performBackup: Not enough space on sd card to backup.");
             prefs.edit().putBoolean("noSpaceLeft", true).commit();
             return false;
         }
 
+        // Don't bother trying to do backup if the collection is too small to be valid
+        if (collectionFile.length() < MIN_BACKUP_COL_SIZE) {
+            Timber.d("performBackup: No backup created as the collection is too small to be valid");
+            return false;
+        }
+
+
+        // TODO: Probably not a good idea to do the backup while the collection is open
+        if (AnkiDroidApp.colIsOpen()) {
+            Timber.w("Collection is already open during backup... we probably shouldn't be doing this");
+        }
 
         // Backup collection as apkg in new thread
         Thread thread = new Thread() {

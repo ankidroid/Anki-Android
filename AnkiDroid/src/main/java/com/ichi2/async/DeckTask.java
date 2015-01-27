@@ -904,6 +904,14 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
                 tmpCol.close();
                 return new TaskData(-2, null, false);
             }
+        } catch (Exception e) {
+            Timber.e("Error opening new collection file... probably it's invalid");
+            try {
+                tmpCol.close();
+            } catch (Exception e2) {
+                // do nothing
+            }
+            return new TaskData(-2, null, false);
         } finally {
             if (tmpCol != null) {
                 tmpCol.close();
