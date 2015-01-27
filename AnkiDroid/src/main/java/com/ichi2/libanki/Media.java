@@ -300,7 +300,7 @@ public class Media {
 
         for (String s : strings) {
             // handle latex
-            s =  LaTeX.mungeQA(s, mCol); // TODO: why only two parameters? what about model?
+            s =  LaTeX.mungeQA(s, mCol);
             // extract filenames
             Matcher m;
             for (Pattern p : mRegexps) {
