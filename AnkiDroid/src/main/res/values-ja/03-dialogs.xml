@@ -57,7 +57,7 @@
     <item><![CDATA[<h2>%1$s:<br/>Android用のフラッシュカード</h2>AnkiDroidは、PCソフトウェア <a href=\"%2$s\">Anki</a> と完全互換のフラッシュカードアプリです。あなたは、AnkiDroid と Anki のどちらでも教材を作成、ダウンロード、学習し、また、簡単に双方の同期をとることができます。]]></item>
     <item><![CDATA[AnkiDroid を改善するために、できるだけバグを <a href="%1$s">こちら</a>に報告していただければ幸いです。 新しい機能のアイデアも大歓迎します！　<a href="%2$s">Wiki </a> を使用して、<a href="%3$s">フォーラム</a>にご意見をお寄せください。]]></item>
     <item><![CDATA[AnkiDroid は、<a href="%1$s">オープンソースソフトウェア<a/>です。誰でも<a href="%3$s">貢献者</a> として<a href="%2$s">参加</a>できます。私たちは、あなたの参加を大いに歓迎します :-)　]]></item>
-    <item><![CDATA[開発者でなくても、例えば AnkiDroid を<a href="%1$s">翻訳</a>したり、Wiki やスクリーン ショットを更新したり、Ankiプロジェクトに<a href="%2$s">寄付</a>をしたり、AnkiDroid についてのブログを書いたりして貢献できます！]]></item>
+    <item><![CDATA[開発者でなくても、例えば AnkiDroid を<a href="%1$s">翻訳</a>したり、Wiki やスクリーンショットを更新したり、Ankiプロジェクトに<a href="%2$s">寄付</a>をしたり、AnkiDroid についてのブログを書いたりして貢献できます！]]></item>
     <item><![CDATA[AnkiDroid は、<a href="%1$s">GNU GPL v3 ライセンス</a>の下でリリースされており、ソースコードは<a href="%2$s">こちら</a>です。]]></item>
   </string-array>
   <string name="dont_show_again">今後は表示しない</string>
@@ -83,7 +83,7 @@
   <string name="intent_aedict_empty">カテゴリー \'default\' が空です。</string>
   <string name="intent_aedict_category">AnkiDroidにカードを登録するため、すべてのNotepadカテゴリを削除するか追、\'default\' という名前のカテゴリを追加してください。</string>
   <string name="custom_study_new_total_new">単語帳の中の新規カードの枚数: %s</string>
-  <string name="custom_study_rev_total_rev">期日に達した復習カード数: %s</string>
+  <string name="custom_study_rev_total_rev">学習予定日時に達した復習カード数: %s</string>
   <string name="custom_study_new_extend">今日の新規カードの上限をあとx枚上げる</string>
   <string name="custom_study_rev_extend">今日の復習カードの上限をあとx枚上げる</string>
   <string name="custom_study_forgotten">過去x日以内に忘却したカードを復習する</string>
@@ -128,7 +128,7 @@
   <string name="import_add_progress">• 解凍中のアーカイブ %1$s\n• ノートのインポート %2$d%%\n• カードのインポート %3$d%%\n• クリーンアップ %4$s</string>
   <string name="sd_card_full_title">SD カード残量なし</string>
   <string name="sd_card_almost_full_title">SD カード残量わずか</string>
-  <string name="restore_backup_title">バックアップを復元しますか？</string>
+  <string name="restore_backup_title">バックアップからコレクションを復元しますか？</string>
   <string name="restore_backup">コレクションは、古い物と置き換えられます。また、未保存のものは失われます。</string>
   <string name="dialog_cancel">キャンセル</string>
   <string name="dialog_ok">OK</string>

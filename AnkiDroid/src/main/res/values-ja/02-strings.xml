@@ -73,7 +73,7 @@
     <item>ノート</item>
     <item>質問</item>
     <item>タグ</item>
-    <item>忘却（再学習）カード</item>
+    <item>忘却</item>
     <item>復習</item>
   </string-array>
   <string name="cardeditor_title_add_note">ノートの追加</string>
@@ -136,14 +136,14 @@
     <item>間隔が大きい順</item>
     <item>忘却回数が多い順</item>
     <item>追加順に</item>
-    <item>期日順に</item>
+    <item>学習予定日時順に</item>
   </string-array>
   <string name="menu_cardbrowser">ブラウザー</string>
   <string name="show_hint">%s を表示</string>
   <string name="pref_lang_other">使用言語の選択</string>
   <string name="pref_font_UI">使用フォントの設定</string>
   <string name="info_rate">AnkiDroidの評価</string>
-  <string name="col_load_failed">コレクションの取り込みに失敗しました\n AnkiDroidに戻ってください</string>
+  <string name="col_load_failed">コレクションの読み込みに失敗しました\n Backボタンを押して AnkiDroid を終了してください</string>
   <string name="import_title">カードのインポート</string>
   <string name="import_select_title">インポートするファイルを選択</string>
   <string name="import_message">ファイル%s の内容を、コレクションに追加、または、置き換えますか？</string>

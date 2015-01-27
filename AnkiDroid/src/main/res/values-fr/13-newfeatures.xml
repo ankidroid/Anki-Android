@@ -30,7 +30,7 @@
     <item>Amélioriation de la détection des mouvements de glissement (swipe)</item>
     <item>Augmenter le nombre de langues dans le traducteur Glosbe</item>
     <item>Support des Chromebooks</item>
-    <item>New crash reporting system</item>
-    <item>Bug fixes</item>
+    <item>Système de rapport de plantage</item>
+    <item>Corrections de bogues</item>
   </string-array>
 </resources>

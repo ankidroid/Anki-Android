@@ -100,7 +100,7 @@
   <string name="deck_summary_average_year">昨年の平均</string>
   <string name="deck_summary_average_total">今までの平均</string>
   <string name="deck_summary_forecast">予測</string>
-  <string name="deck_summary_tomorrow_due">明日に期日に達するカード: &lt;b&gt;%d&lt;/b&gt;枚</string>
+  <string name="deck_summary_tomorrow_due">明日に学習予定日時に達するカード: &lt;b&gt;%d&lt;/b&gt;枚</string>
   <string name="deck_summary_tomorrow_new">明日の新規カード: &lt;b&gt;%d&lt;/b&gt;枚</string>
   <string name="deck_summary_tomorrow_time">明日の推定必要時間: &lt;b&gt;%d&lt;/b&gt; 分.</string>
   <string name="deck_summary_finished_in">新規カードの終了: &lt;b&gt;%d&lt;/b&gt; 日</string>
@@ -198,7 +198,7 @@
     <item quantity="other">今日は &lt;b&gt;%1$d枚&lt;/b&gt; のカードを &lt;b&gt;%2$s&lt;/b&gt; で学習しています。</item>
   </plurals>
   <plurals name="stats_today_cards_not_bold">
-    <item quantity="one">今日は %1$d枚のカード を %2$s で学習しています。</item>
-    <item quantity="other">今日は %1$d枚のカード を %2$s で学習しています。</item>
+    <item quantity="one">今日は %1$d枚 のカードを %2$s で学習しています</item>
+    <item quantity="other">今日は %1$d枚 のカードを %2$s で学習しています</item>
   </plurals>
 </resources>

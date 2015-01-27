@@ -43,7 +43,7 @@
   <string name="error_cancel">Non segnalare gli errori</string>
   <string name="error_reporting_choice">Modalità di segnalazione degli errori</string>
   <string name="error_reporting_choice_summary">Gli errori possono essere segnalati automaticamente, mai segnalati, oppure è possibile che venga richiesto</string>
-  <string name="feedback_disclaimer">Disclaimer: We don\'t collect any personal information such as your email address, phone number, or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves and the steps which led up to them occuring.</string>
+  <string name="feedback_disclaimer">Avvertenza: Non raccogliamo informazioni personali come indirizzo email, numero di telefono o il codice IMEI del telefono. Raccogliamo alcune informazioni sul vostro dispositivo come nome del produttore, modello e versione di Android, così come la natura di segnalati errori, essi stessi, e le fasi che le hanno prodotti.</string>
   <string name="feedback_title">Commenti e suggerimenti</string>
   <string name="feedback_send_feedback">Inviaci la tua opinione</string>
   <string name="feedback_send_feedback_and_errors">Invia gli errori e il tuo feedback</string>
@@ -60,9 +60,9 @@
   <string name="feedback_error_reply_issue_fixed_prod">Problema %1$d, risolto nell\'ultima versione</string>
   <string name="feedback_error_reply_malformed">Bug archiviato, nessuna risposta</string>
   <string name="feedback_error_reply_failed">Impossibile inviare</string>
-  <string name="feedback_auto_toast_text">AnkiDroid has encountered a problem; a report is being sent to the developers&#8230;</string>
-  <string name="feedback_manual_toast_text">AnkiDroid has encountered a problem; a report is being generated&#8230;</string>
-  <string name="feedback_copy_debug">Copy debug info</string>
-  <string name="feedback_report">Report</string>
-  <string name="feedback_report_automatically">Send error reports automatically</string>
+  <string name="feedback_auto_toast_text">AnkiDroid ha riscontrato un problema; una segnalazione viene inviata agli sviluppatori&#8230;</string>
+  <string name="feedback_manual_toast_text">AnkiDroid ha riscontrato un problema; viene generato una signalazione&#8230;</string>
+  <string name="feedback_copy_debug">Copiare le informazioni di debugging</string>
+  <string name="feedback_report">Segnala</string>
+  <string name="feedback_report_automatically">Inviare segnalazioni di errori automaticamente</string>
 </resources>

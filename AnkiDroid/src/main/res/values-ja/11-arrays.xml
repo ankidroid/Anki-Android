@@ -71,7 +71,7 @@
   <string-array name="studyoptions_more_rev_card_order">
     <item>間隔の一番長いカードから復習する</item>
     <item>間隔の一番短いカードから復習する</item>
-    <item>期日の順番で復習します</item>
+    <item>学習予定日時の順番で復習します</item>
     <item>カードを無作為に選んで復習する</item>
   </string-array>
   <string-array name="studyoptions_more_fail_card_option">
@@ -121,7 +121,7 @@
     <item>間隔が大きい順</item>
     <item>忘却回数が多い順</item>
     <item>追加順</item>
-    <item>復習期日が古い順</item>
+    <item>学習予定日時が古い順</item>
     <item>追加時期が新しい順</item>
   </string-array>
   <string-array name="custom_study_options_labels">
@@ -145,7 +145,7 @@
   <string-array name="cards_for_tag_filtered_deck_labels">
     <item>全カード</item>
     <item>新規分</item>
-    <item>期日</item>
+    <item>学習予定日時</item>
   </string-array>
   <string-array name="override_font_labels">
     <item>フォントが指定されていない場合</item>

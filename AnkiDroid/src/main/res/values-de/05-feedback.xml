@@ -43,7 +43,7 @@
   <string name="error_cancel">Melde keine Fehler</string>
   <string name="error_reporting_choice">Fehlermeldungs-Modus</string>
   <string name="error_reporting_choice_summary">Fehler können automatisch, nie oder nach Nachfrage gemeldet werden</string>
-  <string name="feedback_disclaimer">Disclaimer: We don\'t collect any personal information such as your email address, phone number, or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves and the steps which led up to them occuring.</string>
+  <string name="feedback_disclaimer">Hinweis: Es werden keine persönlichen Daten wie Ihre E-Mail-Adresse, Telefonnummer oder IMEI übertragen. Gesendet werden lediglich einige Informationen über Ihr Gerät wie Hersteller, Modell und Android-Version sowie Näheres über die aufgetretenen Fehler selbst.</string>
   <string name="feedback_title">Rückmeldung</string>
   <string name="feedback_send_feedback">Geben Sie uns Rückmeldung</string>
   <string name="feedback_send_feedback_and_errors">Senden Sie uns Fehler- und Rückmeldungen</string>
@@ -60,9 +60,9 @@
   <string name="feedback_error_reply_issue_fixed_prod">Fehler %1$d, in der neuesten Version behoben</string>
   <string name="feedback_error_reply_malformed">Archivierter Fehler, keine Antwort</string>
   <string name="feedback_error_reply_failed">Senden fehlgeschlagen</string>
-  <string name="feedback_auto_toast_text">AnkiDroid has encountered a problem; a report is being sent to the developers&#8230;</string>
-  <string name="feedback_manual_toast_text">AnkiDroid has encountered a problem; a report is being generated&#8230;</string>
+  <string name="feedback_auto_toast_text">In AnkiDroid ist ein Problem aufgetreten; ein Bericht wird an die Entwickler gesandt&#8230;</string>
+  <string name="feedback_manual_toast_text">In AnkiDroid ist ein Problem aufgetreten; ein Bericht wird erstellt&#8230;</string>
   <string name="feedback_copy_debug">Copy debug info</string>
   <string name="feedback_report">Berichten</string>
-  <string name="feedback_report_automatically">Send error reports automatically</string>
+  <string name="feedback_report_automatically">Fehlerberichte automatisch senden</string>
 </resources>

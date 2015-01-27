@@ -46,7 +46,7 @@
   <string name="CardEditorNoteDeck">Mazzo:</string>
   <string name="CardEditorModel">Tipo:</string>
   <string name="CardEditorTags">Etichette: %1$s</string>
-  <string name="CardEditorCards">Cards: %1$s</string>
+  <string name="CardEditorCards">Carte : %1$s</string>
   <string name="add_new_filter_tags">Aggiungi/filtra etichette</string>
   <string name="note_type">Tipo di nota</string>
   <string name="card_type">Tipo di carta</string>
@@ -82,15 +82,15 @@
   <string name="factadder_saving_error">Errore salvataggio nota</string>
   <string name="pref_lang_support">Lingua</string>
   <string name="saving_facts">Salvataggio nota</string>
-  <string name="saving_model">Saving model</string>
+  <string name="saving_model">Salvataggio del modello</string>
   <string name="deck">Mazzo</string>
   <string name="add">Aggiungi</string>
   <string name="close">Chiudi</string>
   <string name="select">Seleziona</string>
   <string name="saving_changes">Salvataggio delle modifiche ...</string>
   <string name="reordering_cards">Riordino le carte...</string>
-  <string name="field_remapping">%1$s (from \'%2$s\')</string>
-  <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
+  <string name="field_remapping">%1$s (di \'%2$s\')</string>
+  <string name="confirm_map_cards_to_nothing">Verranno eliminate eventuali schede senza connessione. Se una nota non ha nessuna carta rimanente, sarà perduta. Sei sicuro di voler continuare?</string>
   <plurals name="timebox_reached">
     <item quantity="one">%1$d carte studiate in %2$s</item>
     <item quantity="other">%1$d carte studiate in %2$s</item>
@@ -154,7 +154,7 @@
   <string name="import_log_success">Importato %d carte con successo</string>
   <string name="import_log_error">Importazione fallita</string>
   <string name="import_log_no_apkg">Questo non è un file apkg valido</string>
-  <string name="import_error_not_apkg_extension">Filename %s does not have .apkg extension</string>
+  <string name="import_error_not_apkg_extension">Il nome del file %s non ha l\'estensione .apkg</string>
   <string name="import_importing">Importazione carte.\nAttendi...</string>
   <string name="export_include_schedule">Includi schedulazione</string>
   <string name="export_include_media">Includi Media</string>

@@ -154,7 +154,7 @@
   <string name="import_log_success">Erfolgreich %d Karten importiert</string>
   <string name="import_log_error">Import fehlgeschlagen</string>
   <string name="import_log_no_apkg">Dies ist keine gültige apgk-Datei</string>
-  <string name="import_error_not_apkg_extension">Filename %s does not have .apkg extension</string>
+  <string name="import_error_not_apkg_extension">Dateiname %s hat keine .apkg-Endung</string>
   <string name="import_importing">Karten werden importiert&#8230;</string>
   <string name="export_include_schedule">Zeitabstände einbeziehen</string>
   <string name="export_include_media">Medien einbeziehen</string>

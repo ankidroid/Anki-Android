@@ -44,22 +44,22 @@
   <string name="app_name_droid">Droid</string>
   <string name="studyoptions_title">学習オプション</string>
   <string name="studyoptions_deck_name">単語帳名</string>
-  <string name="studyoptions_due_today">今日の目標:</string>
+  <string name="studyoptions_due_today">今日の学習目標:</string>
   <string name="studyoptions_new_total">新規カードの枚数:</string>
   <string name="studyoptions_total_cards">カードの総数:</string>
   <string name="studyoptions_eta">推定時間 (分):</string>
   <string name="studyoptions_start">学習開始</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">今日の目標: %1$d 枚 (%2$s)</item>
-    <item quantity="other">今日の目標: %1$d 枚 (%2$s)</item>
+    <item quantity="one">現在の学習目標: %1$d 枚 (%2$s)</item>
+    <item quantity="other">現在の学習目標: あと %1$d 枚 (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">%d 分</item>
     <item quantity="other">%d 分</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item quantity="one">%1$d 期日　全体 %2$d 枚</item>
-    <item quantity="other">残り%2$d枚中%1$d枚</item>
+    <item quantity="one">%1$d 学習目標　全体 %2$d 枚</item>
+    <item quantity="other">%1$d 学習目標　全体 %2$d 枚</item>
   </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">残り %d 分</item>

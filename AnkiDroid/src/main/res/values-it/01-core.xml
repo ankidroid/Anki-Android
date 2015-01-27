@@ -50,8 +50,8 @@
   <string name="studyoptions_eta">Tempo stimato (min):</string>
   <string name="studyoptions_start">Studia ora</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%1$d carte dovute (%2$s)</item>
-    <item quantity="other">%1$d carte dovute (%2$s)</item>
+    <item quantity="one">%1$d carta di (%2$s) da ripetere</item>
+    <item quantity="other">%1$d carte di (%2$s) da ripetere</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">%d min.</item>
@@ -149,7 +149,7 @@
   <string name="studyoptions_congrats_more_rev">Il limite delle ripetizioni per oggi è stato raggiunto, ma ci sono ancora carte che aspettano di essere ripetute. Per un utilizzo ottimale della memoria, considera di aumentare il limite giornaliero nelle opzioni.</string>
   <string name="studyoptions_congrats_more_new">Ci sono ulteriori carte nuove disponibili, ma il limite giornaliero è stato raggiunto. Puoi aumentare il limite nelle opzioni, ma ricordati che ciò aumenterà il tuo carico di lavoro per le ripetizioni a breve termine.</string>
   <string name="studyoptions_congrats_custom">Per studiare al di fuori della programmazione normale, clicca sul pulsante \'Studio Personalizzato\' qui sotto.</string>
-  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
+  <string name="studyoptions_no_cards_due">Nessuna carta da riperere ora.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Domani ci saranno: %1$d carte da rivedere e %2$s.\n Tempo stimato: %3$s</item>
     <item quantity="other">Domani ci saranno: %1$d carte da ripetere e %2$s.\n Durata stimata: %3$s</item>
@@ -181,17 +181,17 @@
   <string name="pc">PC</string>
   <string name="nothing">Niente</string>
   <string name="title_activity_graphical_activity">Statistiche</string>
-  <string name="title_activity_template_editor">Card Types for %s</string>
-  <string name="card_template_editor_front">Front Template</string>
-  <string name="card_template_editor_back">Back Template</string>
-  <string name="card_template_editor_styling">Styling</string>
-  <string name="card_template_editor_menu_add_reverse">Add reverse</string>
+  <string name="title_activity_template_editor">Tipo di carta per %s</string>
+  <string name="card_template_editor_front">Modello del recto</string>
+  <string name="card_template_editor_back">Modello del verso</string>
+  <string name="card_template_editor_styling">Stile</string>
+  <string name="card_template_editor_menu_add_reverse">Aggiungere la direzione contraria</string>
   <string name="card_template_editor_menu_delete">Elimina</string>
-  <string name="card_template_editor_cant_delete">At least one card type is required.</string>
+  <string name="card_template_editor_cant_delete">C\'è bisogno di almeno un tipo di carta.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
-    <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
+    <item quantity="one">Eliminare il tipo di carta «%2$s» e la sua carta %1$d?</item>
+    <item quantity="other">Eliminare il tipo di carta «%2$s» e le sue carte %1$d ?</item>
   </plurals>
-  <string name="card_template_editor_would_delete_note"> Removing this card type would cause one or
-        more notes to be deleted. Please create a new card type first.</string>
+  <string name="card_template_editor_would_delete_note"> Rimuovendo questo tipo di carta, causerebbe l\'eliminazione di una o
+        più note. Si prega di creare prima un nuovo tipo di carta.</string>
 </resources>

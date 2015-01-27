@@ -28,9 +28,9 @@
     <item>Support playback of videos</item>
     <item>Improve rendering of second column in browser</item>
     <item>Improve detection of swipe gestures</item>
-    <item>Increase number of languages in Glosbe translator</item>
-    <item>Add support for Chromebooks</item>
+    <item>Aumentare il numero di lingue del traduttore Glosbe</item>
+    <item>Aggiungere il supporto per i Chromebook</item>
     <item>New crash reporting system</item>
-    <item>Bug fixes</item>
+    <item>Correzioni di bug</item>
   </string-array>
 </resources>

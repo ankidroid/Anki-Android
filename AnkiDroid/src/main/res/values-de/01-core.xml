@@ -84,7 +84,7 @@
   <string name="undo_action_suspend_note">Notiz dauerhaft aussetzen</string>
   <string name="undo_action_delete">Notiz löschen</string>
   <string name="undo_action_mark">Notiz markieren</string>
-  <string name="unbury">Verbergen aufheben</string>
+  <string name="unbury">Vorläufiges Aussetzen aufheben</string>
   <string name="finish_operation">Letzte Operation wird beendet (vermutlich eine Sicherung der Sammlung)&#8230;</string>
   <string name="contextmenu_deckpicker_download_missing_media">Fehlende Media-Daten herunterladen</string>
   <string name="contextmenu_deckpicker_reset_language_assignments">Sprachzuordnungen zurücksetzen</string>
@@ -189,8 +189,8 @@
   <string name="card_template_editor_menu_delete">Löschen</string>
   <string name="card_template_editor_cant_delete">Mindestens ein Kartentyp wird benötigt</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
-    <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
+    <item quantity="one">Kartentyp \"%2$s\" und seine %1$d Karte löschen?</item>
+    <item quantity="other">Kartentyp \"%2$s\" und seine %1$d Karten löschen?</item>
   </plurals>
   <string name="card_template_editor_would_delete_note">Kartentyp kann nicht gelöscht werden, da dadurch mindestens eine Notiz gelöscht würde</string>
 </resources>

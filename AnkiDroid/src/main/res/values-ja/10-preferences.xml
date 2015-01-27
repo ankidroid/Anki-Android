@@ -124,7 +124,7 @@
   <string name="notification_pref_title">通知のタイミング</string>
   <string name="never_notify">通知なし</string>
   <string name="notify_when_pending">保留（応答待ち）状態になった時</string>
-  <string name="notification_minimum_cards_due">当日の目標枚数が%d枚を超えている時</string>
+  <string name="notification_minimum_cards_due">学習目標のカードが%d枚を超えている時</string>
   <string name="notification_minimum_cards_due_vibrate">振動で通知</string>
   <string name="notification_minimum_cards_due_blink">ライト点滅で通知</string>
   <string name="timeout_answer_text">答えを自動的に表示</string>
@@ -194,7 +194,7 @@
   </plurals>
   <string name="deck_conf_new_cards">新規カード</string>
   <string name="deck_conf_rev_cards">復習カード</string>
-  <string name="deck_conf_lps_cards">忘却</string>
+  <string name="deck_conf_lps_cards">忘却（再学習）カード</string>
   <string name="deck_conf_general">一般</string>
   <string name="deck_conf_steps">学習ステップ（分）</string>
   <string name="deck_conf_order">順序</string>

@@ -55,7 +55,7 @@
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">%d min.</item>
-    <item quantity="other">%d minute(s).</item>
+    <item quantity="other">%d minute.</item>
   </plurals>
   <plurals name="deckpicker_due">
     <item quantity="one">%1$d de %2$d dû</item>
