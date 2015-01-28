@@ -126,7 +126,8 @@ import timber.log.Timber;
             ReportField.MEDIA_CODEC_LIST,
             ReportField.THREAD_DETAILS
             //ReportField.USER_IP
-        }
+        },
+        logcatArguments = { "-t", "100", "-v", "time", "ActivityManager:I", "SQLiteLog:W", AnkiDroidApp.TAG + ":D", "*:S" }
 )
 public class AnkiDroidApp extends Application {
 
@@ -202,14 +203,24 @@ public class AnkiDroidApp extends Application {
         // Get preferences
         SharedPreferences preferences = getSharedPrefs(this);
 
-        // Setup error Reporter
+        // Initialize crash reporting module
         ACRA.init(this);
 
-        // Setup logging so that debug and verbose comments are not included in production builds
+        // Setup logging and crash reporting
         if (BuildConfig.DEBUG) {
+            // Enable verbose error logging and do method tracing to put the Class name as log tag
             Timber.plant(new Timber.DebugTree());
+            // Don't report crashes, regardless of user setting
+            // note: manually changing crash report mode from within app can re-enable this
+            setAcraReportingMode(FEEDBACK_REPORT_NEVER);
+            // Use a wider logcat filter incase crash reporting manually re-enabled
+            String [] logcatArgs = { "-t", "300", "-v", "long", "ACRA:S"};
+            ACRA.getConfig().setLogcatArguments(logcatArgs);
         } else {
-            Timber.plant(new CrashReportingTree());
+            // Disable verbose error logging and use fixed log tag "AnkiDroid"
+            Timber.plant(new ProductionCrashReportingTree());
+            // Enable or disable crash reporting based on user setting
+            setAcraReportingMode(preferences.getString("reportErrorMode", FEEDBACK_REPORT_ASK));
         }
         Timber.tag(TAG);
 
@@ -262,9 +273,6 @@ public class AnkiDroidApp extends Application {
             DEFAULT_SWIPE_MIN_DISTANCE = vc.getScaledTouchSlop()*2;
         }
         DEFAULT_SWIPE_THRESHOLD_VELOCITY = vc.getScaledMinimumFlingVelocity();
-
-        // Set ACRA reporting mode
-        setAcraReportingMode(preferences.getString("reportErrorMode", FEEDBACK_REPORT_ASK));
     }
 
 
@@ -629,7 +637,7 @@ public class AnkiDroidApp extends Application {
      * @param value value of reportErrorMode preference
      */
     public void setAcraReportingMode(String value) {
-        SharedPreferences.Editor editor = getSharedPrefs(this).edit();
+        SharedPreferences.Editor editor = ACRA.getACRASharedPreferences().edit();
         // Set the ACRA disable value
         if (value.equals(FEEDBACK_REPORT_NEVER)) {
             editor.putBoolean("acra.disable", true);
@@ -652,24 +660,24 @@ public class AnkiDroidApp extends Application {
     }
 
     /** A tree which logs necessary data for crash reporting. */
-    public static class CrashReportingTree extends Timber.HollowTree {
+    public static class ProductionCrashReportingTree extends Timber.HollowTree {
         private static final ThreadLocal<String> NEXT_TAG = new ThreadLocal<String>();
         private static final Pattern ANONYMOUS_CLASS = Pattern.compile("\\$\\d+$");
 
         @Override public void e(String message, Object... args) {
-            Log.e(createTag(), formatString(message, args)); // Just add to the log.
+            Log.e(TAG, createTag() + "/ " + formatString(message, args)); // Just add to the log.
         }
 
         @Override public void e(Throwable t, String message, Object... args) {
-            Log.e(createTag(), formatString(message, args), t); // Just add to the log.
+            Log.e(TAG, createTag() + "/ " + formatString(message, args), t); // Just add to the log.
         }
 
         @Override public void w(String message, Object... args) {
-            Log.w(createTag(), formatString(message, args)); // Just add to the log.
+            Log.w(TAG, createTag() + "/ " + formatString(message, args)); // Just add to the log.
         }
 
         @Override public void w(Throwable t, String message, Object... args) {
-            Log.w(createTag(), formatString(message, args), t); // Just add to the log.
+            Log.w(TAG, createTag() + "/ " + formatString(message, args), t); // Just add to the log.
         }
 
         @Override public void i(String message, Object... args) {
