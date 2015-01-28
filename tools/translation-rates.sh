@@ -2,7 +2,7 @@
 #
 # Shows the completion rate of the translation for each language.
 #
-wget -O tmp-translations-page.html https://crowdin.net/project/ankidroid
+wget -O tmp-translations-page.html https://crowdin.net/project/ankidroid --no-check-certificate
 cat tmp-translations-page.html |
  tr "\n" " " |
  sed -e "s/project-language-name\">/\n/g" |
