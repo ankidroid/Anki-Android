@@ -61,7 +61,7 @@
   <string name="card_browser_tags_shown">タグ: %1$s</string>
   <string name="card_browser_change_display_order">表示順を変更する</string>
   <string name="card_browser_change_display_order_title">表示順を選択します</string>
-  <string name="card_browser_change_display_order_reverse">昇順、降順の切り替えは▼（▲）をタップしてください</string>
+  <string name="card_browser_change_display_order_reverse">昇順、降順の切り替えは ▼(▲) をタップしてください</string>
   <string name="card_browser_order_reverse">（反転）</string>
   <string name="card_details_question">質問</string>
   <string name="card_details_answer">解答</string>
@@ -91,6 +91,6 @@
     <item>間隔順</item>
     <item>易しさ順</item>
     <item>カードの評価順</item>
-    <item>忘却回数が多い順</item>
+    <item>忘却回数順</item>
   </string-array>
 </resources>

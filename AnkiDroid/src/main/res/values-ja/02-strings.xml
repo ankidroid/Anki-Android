@@ -73,8 +73,8 @@
     <item>ノート</item>
     <item>質問</item>
     <item>タグ</item>
-    <item>忘却</item>
-    <item>復習</item>
+    <item>忘却回数</item>
+    <item>復習回数</item>
   </string-array>
   <string name="cardeditor_title_add_note">ノートの追加</string>
   <string name="cardeditor_title_edit_card">ノートの編集</string>

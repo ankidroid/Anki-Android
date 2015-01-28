@@ -51,7 +51,7 @@
   <string name="studyoptions_start">学習開始</string>
   <plurals name="deckpicker_title">
     <item quantity="one">現在の学習目標: %1$d 枚 (%2$s)</item>
-    <item quantity="other">現在の学習目標: あと %1$d 枚 (%2$s)</item>
+    <item quantity="other">現在の学習目標: %1$d 枚 (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">%d 分</item>
