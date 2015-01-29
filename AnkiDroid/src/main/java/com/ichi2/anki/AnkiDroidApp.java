@@ -307,6 +307,10 @@ public class AnkiDroidApp extends Application {
         return android.os.Build.BRAND.equalsIgnoreCase("chromium") || android.os.Build.MANUFACTURER.equalsIgnoreCase("chromium");
     }
 
+    public static boolean isKindle() {
+        return Build.BRAND.equalsIgnoreCase("amazon") || Build.MANUFACTURER.equalsIgnoreCase("amazon");
+    }
+
 
     /**
      * Convenience method for accessing Shared preferences
