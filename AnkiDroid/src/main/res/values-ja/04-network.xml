@@ -61,7 +61,7 @@
   <string name="resume_download">ダウンロードを再開</string>
   <string name="pause_download">ダウンロード一時停止</string>
   <string name="duplicate_download">この単語帳は既にダウンロード中です</string>
-  <string name="menu_get_shared_decks">共有単語帳の取得</string>
+  <string name="menu_get_shared_decks">共有単語帳を取得</string>
   <string name="download_button_return">戻る</string>
   <string name="connection_error_message">ネットワークエラーが発生しました。</string>
   <string name="sync_log_db_error">データベース エラーが発生しました。</string>
@@ -100,8 +100,8 @@
   <string name="sync_reload_message">コレクションの再ロード</string>
   <string name="sync_title">同期</string>
   <string name="sync_downloading_media">メディア %1$d/%2$d をダウンロード中...</string>
-  <string name="sync_log_uploading_message">サーバ側への完全同期</string>
-  <string name="sync_log_downloading_message">サーバーから端末への完全同期が完了</string>
+  <string name="sync_log_uploading_message">AnkiWeb側への完全同期</string>
+  <string name="sync_log_downloading_message">AnkiWeb から端末への完全同期が完了</string>
   <string name="sync_log_clocks_unsynchronized">端末の時計が正しくありません（%1$d 秒 %2$s）；データ同期時のエラー発生を防止するため、時計を正しくセットしてください。日付、時刻、およびタイムゾーンが正しく設定した後、再び同期を開始してください。</string>
   <string name="sync_log_clocks_unsynchronized_tz">, 端末のタイムゾーンが間違っています</string>
   <string name="sync_log_clocks_unsynchronized_date">, 端末の日付が間違っています</string>
@@ -121,7 +121,7 @@
   <string name="sync_deletions_message">削除の反映（同期）</string>
   <string name="sync_small_objects_message">小さなオブジェクトを同期.</string>
   <string name="sync_finish_message">同期を終了しています</string>
-  <string name="sync_log_finish_error">終了データをサーバーに送信中にエラーが発生しました</string>
+  <string name="sync_log_finish_error">同期終了メッセージを AnkiWeb に送信中にエラーが発生しました</string>
   <string name="sync_writing_db">データに変更内容を書き込んでいます</string>
   <string name="sync_download_chunk">変更内容をダウンロードしています</string>
   <string name="sync_upload_chunk">変更内容をアップロードしています</string>
@@ -131,8 +131,8 @@
   <string name="sync_check_download_file">ダウンロードしたファイルを確認しています</string>
   <string name="sync_media_find">変更されたファイルを探しています</string>
   <string name="sync_media_remove">削除されたメディアの処置</string>
-  <string name="sync_media_from_server">メディアをサーバーからダウンロード中</string>
-  <string name="sync_media_to_server">メディアをサーバーにアップロードしています.</string>
+  <string name="sync_media_from_server">メディアを AnkiWeb からダウンロード中...</string>
+  <string name="sync_media_to_server">メディアを AnkiWeb にアップロード中...</string>
   <string name="sync_media_sanity_check">メディアの総数を確認しています</string>
   <string name="sync_media_no_changes">メディアファイルへの変更はありません</string>
   <string name="sync_media_success">メディアは正常に同期しました</string>

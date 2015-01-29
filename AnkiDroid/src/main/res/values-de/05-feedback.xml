@@ -62,7 +62,7 @@
   <string name="feedback_error_reply_failed">Senden fehlgeschlagen</string>
   <string name="feedback_auto_toast_text">In AnkiDroid ist ein Problem aufgetreten; ein Bericht wird an die Entwickler gesandt&#8230;</string>
   <string name="feedback_manual_toast_text">In AnkiDroid ist ein Problem aufgetreten; ein Bericht wird erstellt&#8230;</string>
-  <string name="feedback_copy_debug">Copy debug info</string>
+  <string name="feedback_copy_debug">Debuginformationen kopieren</string>
   <string name="feedback_report">Berichten</string>
   <string name="feedback_report_automatically">Fehlerberichte automatisch senden</string>
 </resources>

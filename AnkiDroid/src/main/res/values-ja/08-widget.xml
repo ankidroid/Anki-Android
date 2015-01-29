@@ -57,7 +57,7 @@
   <string name="widget_big_restrictions_dialog">Androidウィジェットの仕組みの制限により、このウィジェットが表示できるのはテキストのみで画像や音声などはできません。</string>
   <string name="open_in_reviewer">AnkiDroidで単語帳を開く</string>
   <plurals name="widget_big_eta">
-    <item quantity="one">推定時間: %1$d 分</item>
+    <item quantity="one">推定学習時間: %d 分</item>
     <item quantity="other">予想時間: %d 分</item>
   </plurals>
   <string name="widget_big_tomorrow_due">明日が学習予定日のカード:</string>

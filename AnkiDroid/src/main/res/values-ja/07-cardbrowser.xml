@@ -40,8 +40,8 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="one">%d 枚のカードが表示されます。</item>
-    <item quantity="other">%d 枚のカードが表示されます。</item>
+    <item quantity="one">%d 枚のカード</item>
+    <item quantity="other">%d 枚のカード</item>
   </plurals>
   <string name="card_browser_all_decks">すべての単語帳</string>
   <string name="card_browser_load">書き込み中です\nしばらくお待ちください</string>
@@ -90,7 +90,7 @@
     <item>学習予定日時順</item>
     <item>間隔順</item>
     <item>易しさ順</item>
-    <item>カードの評価順</item>
+    <item>学習回数順</item>
     <item>忘却回数順</item>
   </string-array>
 </resources>

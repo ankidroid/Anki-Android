@@ -55,13 +55,13 @@
   <string name="stats_cumulative_answers">累積回答数</string>
   <string name="stats_cumulative_time_minutes">累積時間（分）</string>
   <string name="stats_cumulative_time_hours">累積時間</string>
-  <string name="stats_cumulative">累積</string>
+  <string name="stats_cumulative">累積枚数</string>
   <string name="stats_cumulative_percentage">累積パーセント</string>
   <string formatted="false" name="stats_cumulative_correct_percentage">累積正解率(%)</string>
-  <string name="stats_answers">回答数</string>
+  <string name="stats_answers">学習枚数</string>
   <string name="stats_minutes">分</string>
   <string name="stats_hours">時間</string>
-  <string name="stats_percentage">パーセント</string>
+  <string name="stats_percentage">累積パーセント</string>
   <string name="stats_period_month">1か月</string>
   <string name="stats_period_year">1年</string>
   <string name="stats_period_lifetime">すべての期間</string>
@@ -74,7 +74,7 @@
   <string name="stats_answer_type">回答の種類</string>
   <string name="stats_today_again_count">忘却回数: &lt;b&gt;%d&lt;/b&gt;</string>
   <string name="stats_today_correct_count">(正解率: &lt;b&gt;%.1f%%&lt;/b&gt;)</string>
-  <string name="stats_today_type_breakdown">学習: &lt;b&gt;%1$s&lt;/b&gt;枚、復習: &lt;b&gt;%2$s&lt;/b&gt;枚、再学習: &lt;b&gt;%3$s&lt;/b&gt;枚、フィルター(詰め込み学習): &lt;b&gt;%4$s&lt;/b&gt;枚</string>
+  <string name="stats_today_type_breakdown">学習: &lt;b&gt;%1$s&lt;/b&gt;枚、復習: &lt;b&gt;%2$s&lt;/b&gt;枚、再学習: &lt;b&gt;%3$s&lt;/b&gt;枚、\nフィルター(詰め込み学習): &lt;b&gt;%4$s&lt;/b&gt;枚</string>
   <string name="stats_today_mature_cards">熟知カードの正解: %1$d/%2$d (%3$.1f%%)</string>
   <string name="stats_today_no_mature_cards">熟知カードは学習していません。</string>
   <string name="statistics_period_x_axis_minutes">分</string>

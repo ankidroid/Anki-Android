@@ -50,7 +50,7 @@
   <string name="backup_new_collection">新しいコレクション</string>
   <string name="backup_del_collection">コレクションの削除と新規作成</string>
   <string name="backup_del_collection_question">コレクションを削除して、新しいコレクションを作成ますか？すべての学習進度と、すべてのカードが削除されます！</string>
-  <string name="backup_full_sync_from_server">サーバー側からの完全同期</string>
+  <string name="backup_full_sync_from_server">AnkiWeb側からの完全同期</string>
   <string name="backup_full_sync_from_server_question">AnkiWebからコレクションを上書きしますか？すべての学習進度と、前回の同期後の情報を削除します！</string>
   <string name="error_handling_title">エラー処理</string>
   <string name="error_handling_options">オプション</string>

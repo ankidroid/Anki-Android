@@ -144,8 +144,8 @@
   </string-array>
   <string-array name="cards_for_tag_filtered_deck_labels">
     <item>全カード</item>
-    <item>新規分</item>
-    <item>学習予定日時</item>
+    <item>新規</item>
+    <item>予定日以降</item>
   </string-array>
   <string-array name="override_font_labels">
     <item>フォントが指定されていない場合</item>

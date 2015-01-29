@@ -67,16 +67,16 @@
     <item>ソートフィールド</item>
   </string-array>
   <string-array name="browser_column2_headings">
-    <item>回答</item>
-    <item>カード</item>
+    <item>解答</item>
+    <item>カードタイプ</item>
     <item>単語帳</item>
-    <item>ノート</item>
+    <item>ノートタイプ</item>
     <item>質問</item>
     <item>タグ</item>
     <item>忘却回数</item>
-    <item>復習回数</item>
+    <item>学習回数</item>
   </string-array>
-  <string name="cardeditor_title_add_note">ノートの追加</string>
+  <string name="cardeditor_title_add_note">ノートを追加</string>
   <string name="cardeditor_title_edit_card">ノートの編集</string>
   <string name="discard_unsaved_changes">閉じて現在の入力を破棄しますか？</string>
   <string name="factadder_saving_error">ノートの保存エラー</string>
@@ -105,7 +105,7 @@
   <string name="fact_adder_intent_title">AnkiDroid カード</string>
   <string name="deckpicker_select_dictionary_title">辞書を選択してください</string>
   <string name="deckpicker_select_dictionary_default">標準設定</string>
-  <string name="card_editor_add_card">ノートの追加</string>
+  <string name="card_editor_add_card">ノートを追加</string>
   <string name="card_editor_reset">リセット</string>
   <string name="card_editor_copy_card">カードをコピー</string>
   <string name="card_editor_reset_card">学習進行状況をリセット</string>

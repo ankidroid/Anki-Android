@@ -23,12 +23,12 @@
   <string-array name="new_version_features">
     <item>\"Vorschau\" in die Kartenübersicht verlegt</item>
     <item>Möglichkeit den Notiztyp existierender Karteikarten zu ändern hinzugefügt</item>
-    <item>Add ability to view and delete card templates</item>
-    <item>Fix TTS for most devices</item>
+    <item>Möglichkeit hinzugefügt, Kartenvorlagen anzusehen und zu löschen</item>
+    <item>Vorlesen für die meisten Geräte repariert</item>
     <item>Videodateien werden abgespielt</item>
-    <item>Improve rendering of second column in browser</item>
-    <item>Improve detection of swipe gestures</item>
-    <item>Increase number of languages in Glosbe translator</item>
+    <item>Darstellung der zweiten Spalte in der Kartenübersicht verbessert</item>
+    <item>Erkennung der Wischgesten verbessert</item>
+    <item>Zahl der Sprachen des Glosbe-Übersetzers erhöht</item>
     <item>Unterstützung für Chromebooks hinzugefügt</item>
     <item>Neues System für Absturzmeldungen</item>
     <item>Fehler behoben</item>
