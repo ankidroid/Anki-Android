@@ -157,8 +157,14 @@ public class Info extends ActionBarActivity {
             @Override
             public void onClick(View arg0) {
                 if (mType == TYPE_ABOUT) {
-                    Info.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri
-                            .parse("market://details?id=com.ichi2.anki")));
+                    if (AnkiDroidApp.isKindle()) {
+                        Intent intent = new Intent("android.intent.action.VIEW",
+                                Uri.parse("http://www.amazon.com/gp/mas/dl/android?p=com.ichi2.anki"));
+                        startActivity(intent);
+                    } else {
+                        Info.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri
+                                .parse("market://details?id=com.ichi2.anki")));
+                    }
                     return;
                 }
                 setResult(RESULT_OK);
