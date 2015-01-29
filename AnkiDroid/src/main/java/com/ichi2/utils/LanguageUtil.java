@@ -40,7 +40,11 @@ public class LanguageUtil {
         if (TextUtils.isEmpty(localeCode)) {
             locale = Locale.getDefault();
         } else if (localeCode.length() > 2) {
-            locale = new Locale(localeCode.substring(0, 2), localeCode.substring(3, 5));
+            try {
+                locale = new Locale(localeCode.substring(0, 2), localeCode.substring(3, 5));
+            } catch (StringIndexOutOfBoundsException e) {
+                locale = new Locale(localeCode);
+            }
         } else {
             locale = new Locale(localeCode);
         }
