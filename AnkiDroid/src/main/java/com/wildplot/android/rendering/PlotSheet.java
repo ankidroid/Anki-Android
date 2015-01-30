@@ -444,7 +444,7 @@ public class PlotSheet implements Drawable {
                 g.setColor(ColorWrap.BLACK);
                 g.drawString(" : "+legendName, xPointer + rectangleSize , ySpacer+rectangleSize);
                 xPointer += rectangleSize*1.3f + stringWidth;
-                Timber.d("drawing a legend Item: (%s) %d, x: %d , y: %d", legendName, legendCnt, xPointer + rectangleSize, ySpacer+rectangleSize);
+                Timber.d("drawing a legend Item: (%s) %d, x: %,.2f , y: %,.2f", legendName, legendCnt, xPointer + rectangleSize, ySpacer+rectangleSize);
 
             }
             g.setFontSize(oldFontSize);

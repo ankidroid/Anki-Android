@@ -343,7 +343,6 @@ public class MyAccount extends AnkiActivity {
 
         @Override
         public void onPostExecute(Payload data) {
-            Timber.d("loginListener.onPostExecute, succes = %b", data.success);
             if (mProgressDialog != null) {
                 mProgressDialog.dismiss();
             }
@@ -362,6 +361,7 @@ public class MyAccount extends AnkiActivity {
                     setContentView(mLoggedIntoMyAccountView);
                 }
             } else {
+                Timber.e("Login failed, error code %d",data.returnType);
                 if (data.returnType == 403) {
                     if (mInvalidUserPassAlert != null) {
                         mInvalidUserPassAlert.show();
@@ -403,7 +403,6 @@ public class MyAccount extends AnkiActivity {
 
         @Override
         public void onPostExecute(Payload data) {
-            Timber.d("registerListener.onPostExecute(), succes = %b", data.success);
             if (mProgressDialog != null) {
                 mProgressDialog.dismiss();
             }
@@ -424,7 +423,11 @@ public class MyAccount extends AnkiActivity {
             } else {
                 mErrorAlert.show();
                 if (data.data != null) {
-                    mErrorAlert.setMessage(((String[]) data.data)[0]);
+                    String msg = ((String[]) data.data)[0];
+                    Timber.e("User registration failed: %s", msg);
+                    mErrorAlert.setMessage(msg);
+                } else {
+                    Timber.e("User registration failed");
                 }
             }
         }

@@ -349,7 +349,9 @@ public class Sound {
     }
 
     public static void notifyConfigurationChanged(VideoView videoView) {
-        configureVideo(videoView, sMediaPlayer.getVideoWidth(), sMediaPlayer.getVideoHeight());
+        if (sMediaPlayer != null) {
+            configureVideo(videoView, sMediaPlayer.getVideoWidth(), sMediaPlayer.getVideoHeight());
+        }
     }
 
     /**
