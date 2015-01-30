@@ -255,6 +255,7 @@ public class Sound {
     @SuppressLint("NewApi")
     public static void playSound(String soundPath, OnCompletionListener playAllListener, final VideoView videoView) {
         Timber.d("Playing %s has listener? %b", soundPath, playAllListener != null);
+        Uri soundUri = Uri.parse(soundPath);
 
         if (soundPath.substring(0, 3).equals("tts")) {
             // TODO: give information about did
@@ -264,13 +265,7 @@ public class Sound {
             // Check if file is video
             final boolean isVideo;
             if (AnkiDroidApp.SDK_VERSION > 7){
-                String realPath;
-                try {
-                    realPath = (new File(soundPath.replace("file:///",""))).getCanonicalPath();
-                } catch (IOException e1) {
-                    realPath = soundPath;
-                }
-                isVideo = ThumbnailUtils.createVideoThumbnail(realPath, MediaStore.Images.Thumbnails.MINI_KIND) != null;
+                isVideo = ThumbnailUtils.createVideoThumbnail(soundUri.getPath(), MediaStore.Images.Thumbnails.MINI_KIND) != null;
             } else {
                 // Don't bother supporting video on Android 2.1
                 isVideo = false;
@@ -304,7 +299,6 @@ public class Sound {
                     });
                 }
                 // Setup the MediaPlayer
-                Uri soundUri = Uri.parse(soundPath);
                 sMediaPlayer.setDataSource(AnkiDroidApp.getInstance().getApplicationContext(),
                                            soundUri);
                 sMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);

@@ -152,6 +152,7 @@ public class AnkiDroidApp extends Application {
      */
     private static AnkiDroidApp sInstance;
     private static boolean sSyncInProgress = false;
+    private static boolean sDatabaseCorrupt = false;
     private Collection mCurrentCollection;
     private int mAccessThreadCount = 0;
     private static final Lock mLock = new ReentrantLock();
@@ -612,6 +613,14 @@ public class AnkiDroidApp extends Application {
 
     public static boolean getSyncInProgress() {
         return sSyncInProgress;
+    }
+
+    public static void setDbCorruptedFlag() {
+        sDatabaseCorrupt = true;
+    }
+
+    public static boolean getDbCorruptedFlag() {
+        return sDatabaseCorrupt;
     }
 
 
