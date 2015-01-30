@@ -1495,12 +1495,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         WebView webView = new MyWebView(this);
         webView.setWillNotCacheDrawing(true);
         webView.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_OVERLAY);
-        boolean zoom_ctrls = false;
         if (AnkiDroidApp.SDK_VERSION > 11) {
-            zoom_ctrls = true;
+            // Disable the on-screen zoom buttons for API > 11
             webView.getSettings().setDisplayZoomControls(false);
         }
-        webView.getSettings().setBuiltInZoomControls(zoom_ctrls);
+        webView.getSettings().setBuiltInZoomControls(true);
         webView.getSettings().setSupportZoom(true);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebChromeClient(new AnkiDroidWebChromeClient());
