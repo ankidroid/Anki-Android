@@ -81,7 +81,6 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.stats.AnkiStatsTaskHandler;
 import com.ichi2.async.Connection;
-import com.ichi2.async.Connection.OldAnkiDeckFilter;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.async.DeckTask;
 import com.ichi2.async.DeckTask.TaskData;
@@ -936,6 +935,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                     startActivityForResultWithoutAnimation(infoIntent, SHOW_INFO_NEW_VERSION);
                 }
             }
+        /* Old error reporting scheme before switching to ACRA
         } else if (skip < 4 && hasErrorFiles()) {
             // Need to submit error reports
             Intent i = new Intent(this, Feedback.class);
@@ -943,7 +943,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 startActivityForResultWithAnimation(i, REPORT_ERROR, ActivityTransitionAnimation.LEFT);
             } else {
                 startActivityForResultWithoutAnimation(i, REPORT_ERROR);
-            }
+            }*/
         } else {
             // This is the main call when there is nothing special required
             startLoadingCollection();
@@ -984,9 +984,8 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             // Increase default number of backups
             preferences.edit().putInt("backupMax", 8).commit();
         }
-        // when upgrading from before 2.4alpha38
-        if (previousVersionCode < 20400138) {
-            // Reset the swipe sensitivity to 100% as the algorithm was changed
+        // reset swipeSensitivity from 2.4beta3
+        if (previousVersionCode < 20400203) {
             preferences.edit().putInt("swipeSensitivity", 100).commit();
         }
     }

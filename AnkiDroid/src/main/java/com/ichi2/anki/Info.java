@@ -18,6 +18,7 @@
 package com.ichi2.anki;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -28,8 +29,10 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.ClipboardManager;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -51,6 +54,7 @@ import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 
+import org.acra.util.Installation;
 import org.apache.commons.httpclient.contrib.ssl.EasySSLSocketFactory;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -193,6 +197,15 @@ public class Info extends ActionBarActivity {
                 sb.append("</body></html>");
                 mWebView.loadDataWithBaseURL("", sb.toString(), "text/html", "utf-8", null);
                 ((Button) findViewById(R.id.info_continue)).setText(res.getString(R.string.info_rate));
+                Button debugCopy = ((Button) findViewById(R.id.info_later));
+                debugCopy.setText(res.getString(R.string.feedback_copy_debug));
+                debugCopy.setVisibility(View.VISIBLE);
+                debugCopy.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        copyDebugInfo();
+                    }
+                });
                 break;
 
             case TYPE_NEW_VERSION:
@@ -1186,6 +1199,24 @@ public class Info extends ActionBarActivity {
             }
         });
         builder.show();
+    }
+
+    /**
+     * Copy debug information about the device to the clipboard
+     * @return debugInfo
+     */
+    public String copyDebugInfo() {
+        StringBuilder sb = new StringBuilder();
+        // AnkiDroid Version
+        sb.append("AnkiDroid Version = ").append(AnkiDroidApp.getPkgVersionName()).append("\n\n");
+        // Android SDK
+        sb.append("Android Version = " + Build.VERSION.RELEASE).append("\n\n");
+        // ACRA install ID
+        sb.append("ACRA UUID = ").append(Installation.id(this)).append("\n");
+        String debugInfo = sb.toString();
+        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        clipboard.setText(debugInfo);
+        return debugInfo;
     }
 
 }

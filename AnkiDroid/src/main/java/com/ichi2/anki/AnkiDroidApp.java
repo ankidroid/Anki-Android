@@ -51,6 +51,13 @@ import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.hooks.Hooks;
 import com.ichi2.utils.LanguageUtil;
 
+import org.acra.ACRA;
+import org.acra.ACRAConfigurationException;
+import org.acra.ReportField;
+import org.acra.ReportingInteractionMode;
+import org.acra.annotation.ReportsCrashes;
+import org.acra.sender.HttpSender;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
@@ -60,6 +67,63 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * Application class.
  */
+@ReportsCrashes(
+        formKey = "", // This is required for backward compatibility but not used
+        httpMethod = HttpSender.Method.PUT,
+        reportType = HttpSender.Type.JSON,
+        formUri = "https://ankidroid.org/acra/report",
+        mode = ReportingInteractionMode.DIALOG,
+        resDialogCommentPrompt =  R.string.empty_string,
+        resDialogTitle =  R.string.feedback_title,
+        resDialogText =  R.string.feedback_default_text,
+        resToastText = R.string.feedback_auto_toast_text,
+        resDialogPositiveButtonText = R.string.feedback_report,
+        sharedPreferencesName = "com.ichi2.anki",
+        additionalSharedPreferences = {"com.ichi2.anki"},
+        excludeMatchingSharedPreferencesKeys = {"username","hkey"},
+        customReportContent = {
+            ReportField.REPORT_ID,
+            ReportField.APP_VERSION_CODE,
+            ReportField.APP_VERSION_NAME,
+            ReportField.PACKAGE_NAME,
+            ReportField.FILE_PATH,
+            ReportField.PHONE_MODEL,
+            ReportField.ANDROID_VERSION,
+            ReportField.BUILD,
+            ReportField.BRAND,
+            ReportField.PRODUCT,
+            ReportField.TOTAL_MEM_SIZE,
+            ReportField.AVAILABLE_MEM_SIZE,
+            ReportField.BUILD_CONFIG,
+            ReportField.CUSTOM_DATA,
+            ReportField.STACK_TRACE,
+            ReportField.STACK_TRACE_HASH,
+            //ReportField.INITIAL_CONFIGURATION,
+            ReportField.CRASH_CONFIGURATION,
+            //ReportField.DISPLAY,
+            ReportField.USER_COMMENT,
+            ReportField.USER_APP_START_DATE,
+            ReportField.USER_CRASH_DATE,
+            //ReportField.DUMPSYS_MEMINFO,
+            //ReportField.DROPBOX,
+            ReportField.LOGCAT,
+            //ReportField.EVENTSLOG,
+            //ReportField.RADIOLOG,
+            //ReportField.IS_SILENT,
+            ReportField.INSTALLATION_ID,
+            //ReportField.USER_EMAIL,
+            //ReportField.DEVICE_FEATURES,
+            ReportField.ENVIRONMENT,
+            //ReportField.SETTINGS_SYSTEM,
+            //ReportField.SETTINGS_SECURE,
+            //ReportField.SETTINGS_GLOBAL,
+            ReportField.SHARED_PREFERENCES,
+            ReportField.APPLICATION_LOG,
+            ReportField.MEDIA_CODEC_LIST,
+            ReportField.THREAD_DETAILS
+            //ReportField.USER_IP
+        }
+)
 public class AnkiDroidApp extends Application {
 
     public static final int SDK_VERSION = android.os.Build.VERSION.SDK_INT;
@@ -115,7 +179,7 @@ public class AnkiDroidApp extends Application {
      * The latest package version number that included changes to the preferences that requires handling. All
      * collections being upgraded to (or after) this version must update preferences.
      */
-    public static final int CHECK_PREFERENCES_AT_VERSION = 20200170;
+    public static final int CHECK_PREFERENCES_AT_VERSION = 20400203;
 
 
     /**
@@ -123,8 +187,14 @@ public class AnkiDroidApp extends Application {
      */
     @TargetApi(Build.VERSION_CODES.FROYO)
     @Override
+
     public void onCreate() {
         super.onCreate();
+        // Get preferences
+        SharedPreferences preferences = getSharedPrefs(this);
+
+        // Setup error Reporter
+        ACRA.init(this);
 
         if (isNookHdOrHdPlus() && AnkiDroidApp.SDK_VERSION == 15) {
             mCompat = new CompatV15NookHdOrHdPlus();
@@ -148,15 +218,9 @@ public class AnkiDroidApp extends Application {
 
         Connection.setContext(getApplicationContext());
 
-        // Error Reporter
-        CustomExceptionHandler customExceptionHandler = CustomExceptionHandler.getInstance();
-        customExceptionHandler.init(sInstance.getApplicationContext());
-        Thread.setDefaultUncaughtExceptionHandler(customExceptionHandler);
+        // Configure WebView to allow file scheme pages to access cookies.
+        mCompat.enableCookiesForFileSchemePages();
 
-		// Configure WebView to allow file scheme pages to access cookies.
-		mCompat.enableCookiesForFileSchemePages();
-		
-        SharedPreferences preferences = getSharedPrefs(this);
         sInstance.mHooks = new Hooks(preferences);
         setLanguage(preferences.getString(Preferences.LANGUAGE, ""));
         // Assign some default settings if necessary
@@ -180,6 +244,9 @@ public class AnkiDroidApp extends Application {
             DEFAULT_SWIPE_MIN_DISTANCE = vc.getScaledTouchSlop()*2;
         }
         DEFAULT_SWIPE_THRESHOLD_VELOCITY = vc.getScaledMinimumFlingVelocity();
+
+        // Set ACRA reporting mode
+        setAcraReportingMode(preferences.getString("reportErrorMode",Feedback.REPORT_ASK));
     }
 
 
@@ -194,12 +261,12 @@ public class AnkiDroidApp extends Application {
     private boolean isNookHdOrHdPlus() {
         return isNookHd() || isNookHdPlus();
     }
-    
+
     private boolean isNookHdPlus() {
         return android.os.Build.BRAND.equals("NOOK") && android.os.Build.PRODUCT.equals("HDplus")
                 && android.os.Build.DEVICE.equals("ovation");
     }
-    
+
     private boolean isNookHd () {
         return android.os.Build.MODEL.equalsIgnoreCase("bntv400") && android.os.Build.BRAND.equals("NOOK");
     }
@@ -217,7 +284,7 @@ public class AnkiDroidApp extends Application {
 
     /**
      * Convenience method for accessing Shared preferences
-     * 
+     *
      * @param context Context to get preferences for.
      * @return A SharedPreferences object for this instance of the app.
      */
@@ -308,7 +375,7 @@ public class AnkiDroidApp extends Application {
 
     /**
      * Get package name as defined in the manifest.
-     * 
+     *
      * @return the package name.
      */
     public static String getAppName() {
@@ -328,18 +395,20 @@ public class AnkiDroidApp extends Application {
 
     /**
      * Get the package versionName as defined in the manifest.
-     * 
+     *
      * @return the package version.
      */
     public static String getPkgVersionName() {
         String pkgVersion = "?";
-        Context context = sInstance.getApplicationContext();
+        if (sInstance != null) {
+            Context context = sInstance.getApplicationContext();
 
-        try {
-            PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-            pkgVersion = pInfo.versionName;
-        } catch (PackageManager.NameNotFoundException e) {
-            Log.e(TAG, "Couldn't find package named " + context.getPackageName(), e);
+            try {
+                PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+                pkgVersion = pInfo.versionName;
+            } catch (PackageManager.NameNotFoundException e) {
+                Log.e(TAG, "Couldn't find package named " + context.getPackageName(), e);
+            }
         }
 
         return pkgVersion;
@@ -348,7 +417,7 @@ public class AnkiDroidApp extends Application {
 
     /**
      * Get the package versionCode as defined in the manifest.
-     * 
+     *
      * @return
      */
     public static int getPkgVersionCode() {
@@ -365,7 +434,7 @@ public class AnkiDroidApp extends Application {
 
     /**
      * Get the DropBox folder
-     * 
+     *
      * @return the absolute path to the DropBox public folder, or null if it is not found
      */
     public static String getDropboxDir() {
@@ -384,21 +453,24 @@ public class AnkiDroidApp extends Application {
             saveExceptionReportFile(e, origin, additionalInfo);
         }
     }
-    
-    
+
+
     public static void saveExceptionReportFile(Throwable e, String origin) {
         saveExceptionReportFile(e, origin, null);
     }
-    
-    
+
+
     public static void saveExceptionReportFile(Throwable e, String origin, String additionalInfo) {
-        CustomExceptionHandler.getInstance().uncaughtException(null, e, origin, additionalInfo);
+        //CustomExceptionHandler.getInstance().uncaughtException(null, e, origin, additionalInfo);
+        ACRA.getErrorReporter().putCustomData("origin", origin);
+        ACRA.getErrorReporter().putCustomData("additionalInfo", additionalInfo);
+        ACRA.getErrorReporter().handleException(e);
     }
 
 
     /**
      * Sets the user language.
-     * 
+     *
      * @param localeCode The locale code of the language to set
      * @return True if the language has changed, else false
      */
@@ -523,5 +595,33 @@ public class AnkiDroidApp extends Application {
 
     public static boolean getSyncInProgress() {
         return sSyncInProgress;
+    }
+
+
+    /**
+     * Set the reporting mode for ACRA based on the value of the reportErrorMode preference
+     * @param value value of reportErrorMode preference
+     */
+    public void setAcraReportingMode(String value) {
+        SharedPreferences.Editor editor = getSharedPrefs(this).edit();
+        // Set the ACRA disable value
+        if (value.equals(Feedback.REPORT_NEVER)) {
+            editor.putBoolean("acra.disable", true);
+        } else {
+            editor.putBoolean("acra.disable", false);
+            // Switch between auto-report via toast and manual report via dialog
+            try {
+                if (value.equals(Feedback.REPORT_ALWAYS)) {
+                    ACRA.getConfig().setMode(ReportingInteractionMode.TOAST);
+                    ACRA.getConfig().setResToastText(R.string.feedback_auto_toast_text);
+                } else if (value.equals(Feedback.REPORT_ASK)) {
+                    ACRA.getConfig().setMode(ReportingInteractionMode.DIALOG);
+                    ACRA.getConfig().setResToastText(R.string.feedback_manual_toast_text);
+                }
+            } catch (ACRAConfigurationException e) {
+                Log.e(AnkiDroidApp.TAG, "Could not set ACRA report mode");
+            }
+        }
+        editor.commit();
     }
 }
