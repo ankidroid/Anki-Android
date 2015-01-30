@@ -31,7 +31,7 @@ Adj új szavakat a paklihoz az asztali Ankival, vagy közvetlenül az AnkiDroidd
 • teljes mentési rendszer
 • navigáció söpréssel, lenyomással
 • testreszabható
-dinamikus pakli kezelés
+• dinamikus pakli kezelés
 • éjszakai mód
 • 27 fordítás
 • minden korábbi AnkiDroid verzió letölthető a honlapról
