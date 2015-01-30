@@ -34,7 +34,6 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.libanki.AnkiPackageExporter;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Sched;
 import com.ichi2.libanki.Stats;
@@ -387,7 +386,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             }
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundAddNote - RuntimeException on adding fact");
-            AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundAddNote");
+            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundAddNote");
             return new TaskData(false);
         }
         return new TaskData(true);
@@ -434,7 +433,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             }
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundUpdateNote - RuntimeException on updating fact");
-            AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundUpdateNote");
+            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundUpdateNote");
             return new TaskData(false);
         }
         return new TaskData(true);
@@ -467,7 +466,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             }
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundAnswerCard - RuntimeException on answering card");
-            AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundAnswerCard");
+            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundAnswerCard");
             return new TaskData(false);
         }
         return new TaskData(true);
@@ -581,7 +580,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             }
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundSuspendCard - RuntimeException on suspending card");
-            AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundSuspendCard");
+            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSuspendCard");
             return new TaskData(false);
         }
         return new TaskData(true);
@@ -613,7 +612,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             }
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundMarkCard - RuntimeException on marking card");
-            AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundMarkCard");
+            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundMarkCard");
             return new TaskData(false);
         }
         return new TaskData(true);
@@ -648,7 +647,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             }
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundUndo - RuntimeException on undoing");
-            AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundUndo");
+            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundUndo");
             return new TaskData(false);
         }
         return new TaskData(true);
@@ -859,11 +858,11 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             return new TaskData(addedCount, result.getObjArray(), true);
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundImportAdd - RuntimeException on importing cards");
-            AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundImportAdd");
+            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportAdd");
             return new TaskData(false);
         } catch (IOException e) {
             Timber.e(e, "doInBackgroundImportAdd - IOException on importing cards: ");
-            AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundImportAdd");
+            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportAdd");
             return new TaskData(false);
         }
     }
@@ -890,7 +889,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             zip = new ZipFile(new File(path), ZipFile.OPEN_READ);
         } catch (IOException e) {
             Timber.e(e, "doInBackgroundImportReplace - Error while unzipping");
-            AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundImportReplace0");
+            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace0");
             return new TaskData(false);
         }
         if (!Utils.unzipFiles(zip, fileDir, new String[] { "collection.anki2", "media" }, null)
@@ -978,15 +977,15 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             return new TaskData(addedCount, result.getObjArray(), true);
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundImportReplace - RuntimeException");
-            AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundImportReplace1");
+            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace1");
             return new TaskData(false);
         } catch (FileNotFoundException e) {
             Timber.e(e, "doInBackgroundImportReplace - FileNotFoundException");
-            AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundImportReplace2");
+            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace2");
             return new TaskData(false);
         } catch (IOException e) {
             Timber.e(e, "doInBackgroundImportReplace - IOException");
-            AnkiDroidApp.saveExceptionReportFile(e, "doInBackgroundImportReplace3");
+            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace3");
             return new TaskData(false);
         }
     }

@@ -1095,9 +1095,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     // Callback method to submit error report
     @Override
     public void sendErrorReport() {
-        Intent i = new Intent(this, Feedback.class);
-        i.putExtra("request", DeckPicker.RESULT_DB_ERROR);
-        startActivityForResultWithAnimation(i, DeckPicker.REPORT_ERROR, ActivityTransitionAnimation.RIGHT);
+        AnkiDroidApp.sendExceptionReport(new RuntimeException(), "DeckPicker.sendErrorReport");
     }
 
 

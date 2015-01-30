@@ -7,8 +7,6 @@ import android.support.v4.content.AsyncTaskLoader;
 
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.BackupManager;
-import com.ichi2.anki.R;
 import com.ichi2.libanki.Collection;
 
 import java.lang.ref.WeakReference;
@@ -37,7 +35,7 @@ public class CollectionLoader extends AsyncTaskLoader<Collection> {
             return AnkiDroidApp.openCollection(colPath);
         } catch (RuntimeException e) {
             Timber.e(e, "loadInBackground - RuntimeException on opening collection");
-            AnkiDroidApp.saveExceptionReportFile(e, "CollectionLoader.loadInBackground");
+            AnkiDroidApp.sendExceptionReport(e, "CollectionLoader.loadInBackground");
             return null;
         }
     }

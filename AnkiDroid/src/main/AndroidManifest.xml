@@ -193,11 +193,7 @@
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.ichi2.anki.Feedback"
-            android:configChanges="locale"
-            android:label="@string/feedback_title" />
-        <activity android:name="org.acra.CrashReportDialog"
+        <activity android:name="com.ichi2.anki.dialogs.AnkiDroidCrashReportDialog"
             android:theme="@style/Theme.CrashReportDialog"
             android:launchMode="singleInstance"
             android:excludeFromRecents="true"

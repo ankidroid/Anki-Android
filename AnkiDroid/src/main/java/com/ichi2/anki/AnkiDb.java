@@ -79,7 +79,7 @@ public class AnkiDb {
         @Override
         public void onCorruption(SQLiteDatabase db) {
             Timber.e("The database has been corrupted...");
-            AnkiDroidApp.saveExceptionReportFile("AnkiDb.MyDbErrorHandler.onCorruption", "Db has been corrupted ");
+            AnkiDroidApp.sendExceptionReport("AnkiDb.MyDbErrorHandler.onCorruption", "Db has been corrupted ");
             AnkiDroidApp.closeCollection(false);
         }
     }
@@ -258,13 +258,13 @@ public class AnkiDb {
                     sb.append("AnkiDb.queryColumn (column " + column + "): ");
                     sb.append("Exception due to null. Query: " + query);
                     sb.append(" Null occurrences during this query: " + nullExceptionCount);
-                    AnkiDroidApp.saveExceptionReportFile(nullException, "queryColumn_encounteredNull", sb.toString());
+                    AnkiDroidApp.sendExceptionReport(nullException, "queryColumn_encounteredNull", sb.toString());
                     Timber.w(sb.toString());
                 } else { // nullException not properly initialized
                     StringBuilder sb = new StringBuilder();
                     sb.append("AnkiDb.queryColumn(): Critical error -- ");
                     sb.append("unable to pass in the actual exception to error reporting.");
-                    AnkiDroidApp.saveExceptionReportFile("queryColumn_encounteredNull", sb.toString());
+                    AnkiDroidApp.sendExceptionReport("queryColumn_encounteredNull", sb.toString());
                     Timber.e(sb.toString());
                 }
             }
