@@ -450,7 +450,12 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
                 continue;
             } else if (pref instanceof ListPreference) {
                 ListPreference lp = (ListPreference) pref;
-                value = lp.getEntry().toString();
+                CharSequence entry = lp.getEntry();
+                if (entry != null) {
+                    value = entry.toString();
+                } else {
+                    value = "";
+                }
             } else {
                 value = this.mPref.getString(key, "");
             }
