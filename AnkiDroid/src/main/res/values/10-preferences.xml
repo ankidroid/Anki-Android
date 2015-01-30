@@ -80,7 +80,6 @@
     <string name="gestures_tap_bottom">Touch bottom</string>
     <string name="gestures_tap_left">Touch left</string>
     <string name="gestures_tap_right">Touch right</string>
-    <string name="gestures_longclick">Long press</string>
     <string name="more_scrolling_buttons">eReader</string>
     <string name="more_scrolling_buttons_summ">Also use kanji/katakana, emoji/kao-moji buttons for scrolling</string>
     <string name="double_scrolling_gap">Double scrolling</string>

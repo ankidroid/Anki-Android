@@ -333,14 +333,6 @@
                 android:key="gestureTapRight"
                 android:summary=""
                 android:title="@string/gestures_tap_right" />
-            <ListPreference
-                android:defaultValue="11"
-                android:dependency="gestures"
-                android:entries="@array/gestures_labels"
-                android:entryValues="@array/gestures_values"
-                android:key="gestureLongclick"
-                android:summary=""
-                android:title="@string/gestures_longclick" />
         </PreferenceCategory>
     </PreferenceScreen>
 

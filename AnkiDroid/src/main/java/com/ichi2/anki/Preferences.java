@@ -98,7 +98,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private static String[] sShowValueInSummList = { LANGUAGE, "dictionary", "reportErrorMode",
             "gestureSwipeUp", "gestureSwipeDown", "gestureSwipeLeft",
             "gestureSwipeRight", "gestureDoubleTap", "gestureTapTop", "gestureTapBottom", "gestureTapRight",
-            "gestureLongclick", "gestureTapLeft", "newSpread", "useCurrent", "defaultFont", "overrideFontBehavior", "browserEditorFont" };
+            "gestureTapLeft", "newSpread", "useCurrent", "defaultFont", "overrideFontBehavior", "browserEditorFont" };
     private static String[] sListNumericCheck = {"minimumCardsDueForNotification"};
     private static String[] sShowValueInSummSeek = { "relativeDisplayFontSize", "relativeCardBrowserFontSize",
             "relativeImageSize", "answerButtonSize", "whiteBoardStrokeWidth", "swipeSensitivity",
