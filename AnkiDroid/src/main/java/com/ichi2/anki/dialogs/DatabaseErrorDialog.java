@@ -354,8 +354,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
     private String getMessage() {
         switch (getArguments().getInt("dialogType")) {
             case DIALOG_LOAD_FAILED:
-                return res().getString(R.string.open_collection_failed_message,
-                        BackupManager.BROKEN_DECKS_SUFFIX, res().getString(R.string.repair_deck));
+                return res().getString(R.string.open_collection_failed_message, res().getString(R.string.repair_deck));
             case DIALOG_DB_ERROR:
                 return res().getString(R.string.answering_error_message);
             case DIALOG_REPAIR_COLLECTION:

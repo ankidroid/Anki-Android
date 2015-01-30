@@ -81,11 +81,18 @@ public class AnkiDb {
             if (! sRepaired) {
                 sRepaired = true;
                 Log.i(AnkiDroidApp.TAG, "Attempting to repair the database...");
-                BackupManager.repairDeck(AnkiDroidApp.COLLECTION_PATH);
-                Log.i(AnkiDroidApp.TAG, "The database seems to have been successfully repaired");
-                AnkiDroidApp.saveExceptionReportFile("AnkiDb.MyDbErrorHandler.onCorruption", "Db successfully repaired");
+                boolean result = BackupManager.repairDeck(AnkiDroidApp.COLLECTION_PATH);
+                if (result) {
+                    Log.i(AnkiDroidApp.TAG, "Attempting to reopen the database...");
+                    AnkiDroidApp.openCollection(AnkiDroidApp.COLLECTION_PATH);
+                    Log.i(AnkiDroidApp.TAG, "The database seems to have been successfully repaired and reopened");
+                    AnkiDroidApp.saveExceptionReportFile("AnkiDb.MyDbErrorHandler.onCorruption", "Db successfully repaired");
+                } else {
+                    Log.e(AnkiDroidApp.TAG, "The database could not be automatically repaired...");
+                    AnkiDroidApp.saveExceptionReportFile("AnkiDb.MyDbErrorHandler.onCorruption", "Db not successfully repaired");
+                }
             } else {
-                Log.i(AnkiDroidApp.TAG, "The database could not be automatically repaired....");
+                Log.i(AnkiDroidApp.TAG, "The database was corrupted again after repair");
                 AnkiDroidApp.closeCollection(false);
             }
         }
