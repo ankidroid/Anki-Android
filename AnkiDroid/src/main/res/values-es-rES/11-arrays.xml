@@ -38,9 +38,9 @@
   <string-array name="navigation_titles">
     <item>Decks</item>
     <item>Card Browser</item>
-    <item>Statistics</item>
+    <item>Estadísticas</item>
     <item>Settings</item>
-    <item>Help</item>
+    <item>Ayuda</item>
     <item>Send Feedback</item>
   </string-array>
   <string-array name="newCardSchedulingLabels">

@@ -36,8 +36,8 @@
 -->
 <resources>
   <string-array name="navigation_titles">
-    <item>Baralhos</item>
-    <item>Navegador de fichas</item>
+    <item>Decks</item>
+    <item>Navegador de Cartões</item>
     <item>Estatísticas</item>
     <item>Configurações</item>
     <item>Ajuda</item>
@@ -97,7 +97,7 @@
     <item>Enterrar cartão</item>
     <item>Suspender cartão</item>
     <item>Apagar cartão</item>
-    <item>Reproduzir multimédia</item>
+    <item>Reproduzir mídia</item>
     <item>Abortar a aprendizagem</item>
   </string-array>
   <string-array name="theme_labels">

@@ -41,12 +41,12 @@
 <resources>
   <string name="pref_cat_general">AnkiDroid</string>
   <string name="pref_cat_general_summ">一般設定</string>
-  <string name="pref_cat_reviewing">カードの復習と評価</string>
+  <string name="pref_cat_reviewing">カードの学習と評価</string>
   <string name="pref_cat_reviewing_summ">特定の単語帳に限定されない設定</string>
   <string name="pref_cat_reviewer_behaviour">動作</string>
   <string name="pref_cat_flashcard">画面表示</string>
   <string name="pref_cat_whiteboard">ホワイトボード機能</string>
-  <string name="pref_cat_automatic_display">回答自動表示</string>
+  <string name="pref_cat_automatic_display">解答の自動表示</string>
   <string name="pref_cat_fonts">フォント</string>
   <string name="pref_cat_fonts_summ">既定フォントとサイズの変更</string>
   <string name="pref_cat_gestures">ジェスチャー</string>
@@ -77,7 +77,7 @@
   <string name="display_font_size_summ">XXX ％</string>
   <string name="image_size">復習時画像表示スケール</string>
   <string name="image_size_summ">XXX ％</string>
-  <string name="button_size">解答ボタンのサイズ</string>
+  <string name="button_size">解答ボタン・回答ボタンのサイズ</string>
   <string name="button_size_summ">XXX ％</string>
   <string name="card_browser_font_size">ブラウザー用フォントサイズ調整</string>
   <string name="card_browser_font_size_summ">XXX ％</string>
@@ -96,7 +96,6 @@
   <string name="gestures_tap_bottom">下をタップ</string>
   <string name="gestures_tap_left">左をタップ</string>
   <string name="gestures_tap_right">右をタップ</string>
-  <string name="gestures_longclick">長押しタップ</string>
   <string name="more_scrolling_buttons">eReader</string>
   <string name="more_scrolling_buttons_summ">スクロール用に、漢字、カタカナ、絵文字、顔文字ボタンを使用</string>
   <string name="double_scrolling_gap">ダブル スクロール</string>
@@ -122,10 +121,10 @@
   <string name="language_summ">XXX</string>
   <string name="language_system">システム言語</string>
   <string name="notification_pref">通知</string>
-  <string name="notification_pref_title">Notify when</string>
-  <string name="never_notify">Never notify</string>
-  <string name="notify_when_pending">Pending messages available</string>
-  <string name="notification_minimum_cards_due">More than %d cards due</string>
+  <string name="notification_pref_title">通知のタイミング</string>
+  <string name="never_notify">通知なし</string>
+  <string name="notify_when_pending">使用できる保留中のメッセージ</string>
+  <string name="notification_minimum_cards_due">期限カードが %d 枚より多い時</string>
   <string name="notification_minimum_cards_due_vibrate">振動で通知</string>
   <string name="notification_minimum_cards_due_blink">ライト点滅で通知</string>
   <string name="timeout_answer_text">答えを自動的に表示</string>
@@ -136,7 +135,7 @@
   <string name="timeout_question_seconds_summ">XXX s</string>
   <string name="select_locale_title">言語を選択</string>
   <string name="safe_display">安全表示モード</string>
-  <string name="safe_display_summ">次の場合アニメーションを無効にしてください。表示が不安定な場合、E-inkや古い機器の使用、カスタムフォントを使用</string>
+  <string name="safe_display_summ">アニメーションを無効化し、より安全な方法で描画します。電子ペーパーや古い機器でカスタムフォントを使用する際にお試しください。</string>
   <string name="vertical_centering">中央揃え</string>
   <string name="vertical_centering_summ">コンテンツを垂直方向に中段揃え</string>
   <string name="pref_cat_backup">バックアップ</string>
@@ -194,19 +193,19 @@
     <item quantity="other">%1$s\n%2$d 個の単語帳がこのグループを使用しています。</item>
   </plurals>
   <string name="deck_conf_new_cards">新規カード</string>
-  <string name="deck_conf_rev_cards">カードの復習と評価</string>
+  <string name="deck_conf_rev_cards">復習</string>
   <string name="deck_conf_lps_cards">忘却</string>
   <string name="deck_conf_general">一般</string>
   <string name="deck_conf_steps">学習ステップ（分）</string>
   <string name="deck_conf_order">順序</string>
   <string name="deck_conf_new_cards_day">一日の新規カードの上限（枚）</string>
-  <string name="deck_conf_graduating_ivl">学習終了後に設定する間隔</string>
+  <string name="deck_conf_graduating_ivl">学習後に設定する間隔</string>
   <string name="deck_conf_days">XXX 日</string>
   <string name="deck_conf_easy_ivl">簡単と答えた時に設定する間隔</string>
-  <string name="deck_conf_start_ease">開始時の難易度</string>
+  <string name="deck_conf_start_ease">易しさの初期値</string>
   <string name="deck_conf_max_rev">最大復習枚数／日</string>
   <string name="deck_conf_new_bury">新規の関連カードの学習を延期</string>
-  <string name="deck_conf_new_bury_summ">新規の関連カードの復習を翌日まで延期します</string>
+  <string name="deck_conf_new_bury_summ">新規の関連カードの復習を翌日まで延期する</string>
   <string name="deck_conf_rev_bury">復習の延期</string>
   <string name="deck_conf_rev_bury_summ">関連カードの復習を翌日まで延期する</string>
   <string name="deck_conf_easy_bonus">簡単と答えた時のボーナス</string>
@@ -221,7 +220,7 @@
   <string name="deck_conf_seconds">XXX 秒</string>
   <string name="deck_conf_timer">タイマーの表示</string>
   <string name="deck_conf_autoplay">音声の自動再生</string>
-  <string name="deck_conf_replayq">質問の再表示</string>
+  <string name="deck_conf_replayq">質問音声のリプレイ</string>
   <string name="deck_conf_replayq_summ">答えを表示するときに、質問と答えの音声を再生する</string>
   <string name="deck_conf_manage">グループ管理</string>
   <string name="deck_conf_current_group">現在のグループ</string>

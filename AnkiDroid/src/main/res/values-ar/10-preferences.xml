@@ -96,7 +96,6 @@
   <string name="gestures_tap_bottom">النقر أسفل</string>
   <string name="gestures_tap_left">النقر يسارا</string>
   <string name="gestures_tap_right">النقر يمينا</string>
-  <string name="gestures_longclick">نقرة طويلة</string>
   <string name="more_scrolling_buttons">القارئ الإلكتروني</string>
   <string name="more_scrolling_buttons_summ">Also use kanji/katakana, emoji/kao-moji buttons for scrolling</string>
   <string name="double_scrolling_gap">تسريع التحريك</string>

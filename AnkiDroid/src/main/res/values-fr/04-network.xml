@@ -42,7 +42,7 @@
 <resources>
   <string name="youre_offline">Vous n\'êtes pas connecté à Internet</string>
   <string name="currently_downloading">En cours de téléchargement</string>
-  <string name="starting_download">Démarrage de téléchargement...</string>
+  <string name="starting_download">Démarrage du téléchargement&#8230;</string>
   <string name="downloading">Téléchargement en cours...</string>
   <string name="paused">Arrêté</string>
   <string name="downloaded">Téléchargé</string>
@@ -66,7 +66,7 @@
   <string name="connection_error_message">Une erreur réseau s\'est produite.</string>
   <string name="sync_log_db_error">Une erreur s\'est produite dans la base de données.</string>
   <string name="not_logged_in_title">Se connecter à AnkiWeb</string>
-  <string name="login_create_account_message">Vous devez vous connecter à un compte AnkiDroid. Vous pourrez en créer un à la prochaine étape.</string>
+  <string name="login_create_account_message">Vous devez vous connecter à un compte AnkiWeb. Vous pourrez en créer un à la prochaine étape.</string>
   <string name="no_email_client">Aucun client de messagerie disponible</string>
   <string name="username">Adresse électronique</string>
   <string name="username_repeat">Confirmation de l\'adresse électronique</string>
@@ -94,7 +94,7 @@
   <string name="sync_conflict_remote_confirm">Êtes-vous sûr de vouloir récupérer la collection du serveur ? Soyez conscient que cela va écraser votre collection locale.</string>
   <string name="sync_conflict_local_confirm">Êtes-vous sûr de vouloir charger la collection locale sur le serveur ? Soyez conscient que cela va écraser la collection du serveur.</string>
   <string name="sync_prepare_syncing">Préparation de la synchronisation...</string>
-  <string name="sync_preparing_full_sync_message">Préparation d\'une synchronisation complète ...</string>
+  <string name="sync_preparing_full_sync_message">Préparation de la synchronisation complète&#8230;</string>
   <string name="sync_uploading_message">Envoi en cours&#8230;</string>
   <string name="sync_downloading_message">Téléchargement...</string>
   <string name="sync_reload_message">Rechargement de la collection...</string>
@@ -105,11 +105,11 @@
   <string name="sync_log_clocks_unsynchronized">L\'heure sur votre appareil est incorrecte de %1$d secondes %2$s; La synchronisation requiert que votre horloge et le fuseau horaire soient définis correctement afin d\'éviter les erreurs. Veuillez vous assurer que les date, heure et fuseau horaire sur votre appareil sont correctement réglés, puis resynchronisez.</string>
   <string name="sync_log_clocks_unsynchronized_tz">, le fuseau horaire de l\'appareil est peut-être erroné</string>
   <string name="sync_log_clocks_unsynchronized_date">, la date de l\'appareil est peut-être erronée</string>
-  <string name="sync_log_old_version">Le protocole de synchrnonisation a changé, veuillez mettre à jour AnkiDroid. Voir http://code.google.com/p/ankidroid</string>
+  <string name="sync_log_old_version">Le protocole de synchronisation a changé, veuillez mettre à jour AnkiDroid. Voir %s</string>
   <string name="sync_conflict_title">Conflit de synchronisation</string>
   <string name="sync_no_changes_message">Aucun changement trouvé.</string>
   <string name="sync_database_acknowledge">Collection synchronisée</string>
-  <string name="sync_log_error_fix">Une erreur de synchronisation a eu lieu%s.\n\nSi cette erreur survient à chaque fois, vous pouvez effectuer une synchronisation complète, qui résoudra probablement le problème. Sachez que cela va remplacer soit votre collection locale soit celle sur AnkiWeb.\nSi vous voulez vraiment une synchronisation complète, choisissez si vous souhaitez envoyer votre collection locale ou télécharger celle serveur.</string>
+  <string name="sync_log_error_fix">Une erreur de synchronisation a eu lieu%s.\n\nSi cette erreur survient à chaque fois, vous pouvez effectuer une synchronisation complète, qui résoudra probablement le problème. Sachez que cela va remplacer soit votre collection locale soit celle sur AnkiWeb.\nSi vous voulez vraiment effectuer une synchronisation complète, choisissez si vous souhaitez envoyer votre collection locale ou télécharger celle du serveur.</string>
   <string name="sync_log_error_specific">Erreur de synchronisation, type:%1$s, message:%2$s</string>
   <string name="sync_corrupt_database">Votre base de données est corrompue. Veuillez la réparer avant de tenter à nouveau de synchroniser.\n\nVoir %s pour plus d\'informations sur la réparation de votre base de données.</string>
   <string name="sync_too_busy">Serveur trop occupé. Réessayez plus tard.</string>
@@ -117,7 +117,7 @@
   <string name="sync_overwrite_error">Votre collection actuelle ne peut pas être écrasée par le fichier téléchargé.</string>
   <string name="sync_connection_error">La connexion a expiré. Vérifiez votre connexion internet, ou peut-être avez-vous un très gros fichier dans votre dossier de médias ?</string>
   <string name="sync_error_409">Seulement un client peut accéder à AnkiWeb à la fois. Si une précédente synchronisation a échoué, veuillez réessayer dans quelques minutes.</string>
-  <string name="sync_write_access_error">Le fichier téléchargé n\'a pas pu être sauvegardé sur la carte sd. Soit votre carte sd est montée en lecture seule soit il n\'y a pas assez d\'espace libre dessus.</string>
+  <string name="sync_write_access_error">Le fichier téléchargé n\'a pas pu être sauvegardé sur la carte SD. Soit votre carte SD est montée en lecture seule soit il n\'y a pas assez d\'espace libre dessus.</string>
   <string name="sync_deletions_message">Synchronisation des suppressions...</string>
   <string name="sync_small_objects_message">Synchronisation des petits objets...</string>
   <string name="sync_finish_message">Fin de la synchronisation...</string>
@@ -134,12 +134,12 @@
   <string name="sync_media_from_server">Réception des médias depuis le serveur...</string>
   <string name="sync_media_to_server">Envoi des médias au serveur...</string>
   <string name="sync_media_sanity_check">Vérification du nombre de médias...</string>
-  <string name="sync_media_no_changes">Pas de changements des fichiers medias.</string>
+  <string name="sync_media_no_changes">Pas de changements des fichiers médias</string>
   <string name="sync_media_success">Médias synchronisés avec succès.</string>
   <string name="sync_media_changes_count">%d modifications de médias à envoyer</string>
   <string name="sync_media_downloaded_count">%d médias téléchargés</string>
   <string name="sync_sanity_failed">Après la synchronisation, la collection s\'est retrouvée dans un état incohérent. Pour résoudre ce problème, AnkiDroid va forcer une synchronisation complète. Veuillez choisir avec quelle version vous voulez continuer, ou annulez si vous voulez synchroniser plus tard.</string>
-  <string name="sync_media_sanity_failed">La synchronisation des médias est achevée mais le nombre de média ne correspond pas à celui de serveur. La prochaine synchronisation des médias sera complète afin de corriger des erreurs éventuelles.</string>
+  <string name="sync_media_sanity_failed">La synchronisation des médias est achevée mais le nombre de médias ne correspond pas à celui du serveur. La prochaine synchronisation des médias sera complète afin de corriger d\'éventuelles erreurs.</string>
   <string name="sync_media_error">Erreur pendant la synchronisation des médias.</string>
   <string name="sync_media_unsupported">Les noms de fichiers de média compliqués ne sont gérés ni par Android 2.2 ni par ses versions antérieures. La synchronisation multimédia a été désactivée.</string>
   <string name="register_error">Une erreur s\'est produite. Veuillez réessayer plus tard.</string>
@@ -167,5 +167,6 @@
   <string name="force_full_sync_title">Forcer synchronisation complète</string>
   <string name="force_full_sync_summary">La prochaine fois, forcer la synchronisation dans une direction</string>
   <string name="full_sync_confirmation">Une telle modification suppose de ré-envoyer la totalité de la base de données lors de la prochaine synchronisation de la collection. S’il y de plus récentes modifications à partir d’un appareil tiers, qui n’ont pu être synchronisées, celles-ci seront perdues. Continuer ?</string>
-  <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it\'s recommended to force a full sync.</string>
+  <string name="full_sync_confirmation_upgrade">En raison d\'un bogue dans la version précédemment installée d\'AnkiDroid, il est recommandé de forcer une synchronisation complète.</string>
+  <string name="sync_error_501_upgrade_required">Please upgrade to the latest version of AnkiDroid</string>
 </resources>

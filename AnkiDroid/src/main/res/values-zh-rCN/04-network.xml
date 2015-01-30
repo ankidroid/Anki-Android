@@ -169,4 +169,5 @@
   <string name="force_full_sync_summary">在下一次同步时, 强制单方向的改变.</string>
   <string name="full_sync_confirmation">请求的改变需要在下次同步你的集合时上传整个数据库. 如果你还有在其他设备上未同步的复习或者其他改变, 他们将会丢失, 是否继续?</string>
   <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it\'s recommended to force a full sync.</string>
+  <string name="sync_error_501_upgrade_required">Please upgrade to the latest version of AnkiDroid</string>
 </resources>

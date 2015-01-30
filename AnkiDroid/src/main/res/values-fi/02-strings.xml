@@ -46,6 +46,7 @@
   <string name="CardEditorNoteDeck">Pakka:</string>
   <string name="CardEditorModel">Tyyppi:</string>
   <string name="CardEditorTags">Tunnisteet: %1$s</string>
+  <string name="CardEditorCards">Cards: %1$s</string>
   <string name="add_new_filter_tags">Lisää/suodata tunnisteita</string>
   <string name="note_type">Merkinnän tyyppi</string>
   <string name="card_type">Korttityyppi</string>
@@ -81,12 +82,15 @@
   <string name="factadder_saving_error">Virhe tallennettaessa merkintää</string>
   <string name="pref_lang_support">Kieli</string>
   <string name="saving_facts">Tallennetaan merkintää</string>
+  <string name="saving_model">Saving model</string>
   <string name="deck">Pakka</string>
   <string name="add">Lisää</string>
   <string name="close">Sulje</string>
   <string name="select">Valitse</string>
   <string name="saving_changes">Tallennetaan muutoksia&#8230;</string>
   <string name="reordering_cards">Uudelleenjärjestetään kortteja...</string>
+  <string name="field_remapping">%1$s (from \'%2$s\')</string>
+  <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
   <plurals name="timebox_reached">
     <item quantity="one">%1$d kortti opiskeltu ajassa %2$s</item>
     <item quantity="other">%1$d korttia opiskeltu ajassa %2$s</item>
@@ -150,6 +154,7 @@
   <string name="import_log_success">Tuotiin %d korttia onnistuneesti</string>
   <string name="import_log_error">Tuonti epäonnistui</string>
   <string name="import_log_no_apkg">Tämä ei ole validi apkg-tiedosto</string>
+  <string name="import_error_not_apkg_extension">Filename %s does not have .apkg extension</string>
   <string name="import_importing">Tuodaan kortteja&#8230;</string>
   <string name="export_include_schedule">Myös ajoitukset</string>
   <string name="export_include_media">Myös media</string>

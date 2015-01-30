@@ -69,7 +69,7 @@
   <string name="card_details_last_due">前回の期限切れ</string>
   <string name="card_details_now">今</string>
   <string name="card_details_interval">間隔</string>
-  <string name="card_details_ease">難易度</string>
+  <string name="card_details_ease">易しさ</string>
   <string name="card_details_average_time">平均時間</string>
   <string name="card_details_total_time">合計時間</string>
   <string name="card_details_yes_count">正解した数</string>
@@ -89,7 +89,7 @@
     <item>変更時刻順</item>
     <item>期限順</item>
     <item>間隔順</item>
-    <item>容易さ順</item>
+    <item>易しさ順</item>
     <item>カードの評価順</item>
     <item>忘却回数が多い順</item>
   </string-array>

@@ -40,15 +40,15 @@
 -->
 <resources>
   <string name="pref_cat_general">AnkiDroid</string>
-  <string name="pref_cat_general_summ">Definições gerais</string>
+  <string name="pref_cat_general_summ">Configurações gerais</string>
   <string name="pref_cat_reviewing">Revisando</string>
-  <string name="pref_cat_reviewing_summ">Definições do revisor independentes do baralho</string>
+  <string name="pref_cat_reviewing_summ">Configurações gerais do revisor</string>
   <string name="pref_cat_reviewer_behaviour">Comportamento</string>
   <string name="pref_cat_flashcard">Exibição</string>
   <string name="pref_cat_whiteboard">Quadro</string>
   <string name="pref_cat_automatic_display">Mostrar resposta automaticamente</string>
-  <string name="pref_cat_fonts">Tipos de letra</string>
-  <string name="pref_cat_fonts_summ">Alterar tipo e tamanho de letra padrão</string>
+  <string name="pref_cat_fonts">Fontes</string>
+  <string name="pref_cat_fonts_summ">Alterar o tipo e o tamanho da fonte padrão</string>
   <string name="pref_cat_gestures">Gestos</string>
   <string name="pref_cat_gestures_summ">Usar gestos em vez de botões</string>
   <string name="pref_cat_actions">Ações</string>
@@ -64,7 +64,7 @@
   <string name="whiteboard_black">Traçados pretos</string>
   <string name="whiteboard_black_summ">Utilizar menos memória, exceto no modo noturno</string>
   <string name="write_answers_disable">Desativar digitação em resposta</string>
-  <string name="write_answers_disable_summ">Impede que o teclado apareça em fichas contendo campos \'escreva a resposta\'</string>
+  <string name="write_answers_disable_summ">Impede que o teclado apareça em cartões contendo campos \'escreva a resposta\'</string>
   <string name="text_selection_click">Solução alternativa de pressão longa</string>
   <string name="text_selection_click_summ">Ative isso se você não é capaz de iniciar a seleção de texto por meio de clique longo</string>
   <string name="dictionary">Dicionário de busca</string>
@@ -84,9 +84,9 @@
   <string name="col_path">Caminho da coleção</string>
   <string name="col_path_summ">XXX</string>
   <string name="fullscreen_review">Modo tela cheia</string>
-  <string name="fullscreen_review_summ">Ocultar a barra de estado do sistema</string>
+  <string name="fullscreen_review_summ">Ocultar a barra de status do sistema</string>
   <string name="gestures">Habilitar gestos</string>
-  <string name="gestures_summ">Atribuir gestos a ações tais como responder e editar fichas.</string>
+  <string name="gestures_summ">Atribuir gestos a ações tais como responder e editar cartões.</string>
   <string name="gestures_swipe_up">Deslizar para cima</string>
   <string name="gestures_swipe_down">Deslizar para baixo</string>
   <string name="gestures_swipe_left">Deslizar à esquerda</string>
@@ -96,7 +96,6 @@
   <string name="gestures_tap_bottom">Toque abaixo</string>
   <string name="gestures_tap_left">Toque à esquerda</string>
   <string name="gestures_tap_right">Toque à direita</string>
-  <string name="gestures_longclick">Clique longo</string>
   <string name="more_scrolling_buttons">eReader</string>
   <string name="more_scrolling_buttons_summ">Também utilizar botões de kanji/katakana, emoji/kao-moji para rolagem</string>
   <string name="double_scrolling_gap">Rolagem dupla</string>
@@ -124,8 +123,8 @@
   <string name="notification_pref">Notificações</string>
   <string name="notification_pref_title">Notificar quando</string>
   <string name="never_notify">Nunca notificar</string>
-  <string name="notify_when_pending">Mensagens pendentes disponíveis</string>
-  <string name="notification_minimum_cards_due">Mais do que %d fichas pendentes</string>
+  <string name="notify_when_pending">Houver mensagens pendentes</string>
+  <string name="notification_minimum_cards_due">Mais que %d fichas estiverem pendentes</string>
   <string name="notification_minimum_cards_due_vibrate">Vibrar</string>
   <string name="notification_minimum_cards_due_blink">Luz de piscamento</string>
   <string name="timeout_answer_text">Exibir resposta automáticamente</string>
@@ -190,7 +189,7 @@
   <string name="deck_conf_deck_description">Descrição do deck</string>
   <string name="deck_conf_group">Grupo de opções</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n%2$d baralho usa este grupo</item>
+    <item quantity="one">%1$s\n%2$d decks usam este grupo</item>
     <item quantity="other">%1$s\n%2$d decks usam este grupo</item>
   </plurals>
   <string name="deck_conf_new_cards">Novos cartões</string>
@@ -236,7 +235,7 @@
   <string name="deck_conf_remove_message">Remover o grupo de opções atual?</string>
   <string name="deck_conf_set_subdecks">Definir para todos os subdecks</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">Sub-baralho %s utilizará este grupo</item>
+    <item quantity="one">%s subdecks usarão este grupo</item>
     <item quantity="other">%s subdecks usarão este grupo</item>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Definir para todos os subdecks</string>

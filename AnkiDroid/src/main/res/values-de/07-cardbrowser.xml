@@ -84,7 +84,7 @@
   <string-array name="card_browser_order_labels">
     <item>Keine Sortierung (schneller)</item>
     <item>Nach Suchfeld</item>
-    <item>Nach Fälligkeit</item>
+    <item>Nach Erstellungsdatum</item>
     <item>Nach Änderungsdatum</item>
     <item>Nach letzter Veränderung</item>
     <item>Nach Fälligkeit</item>

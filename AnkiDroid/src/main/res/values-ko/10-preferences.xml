@@ -96,7 +96,6 @@
   <string name="gestures_tap_bottom">아래쪽 탭하기</string>
   <string name="gestures_tap_left">왼쪽 탭하기</string>
   <string name="gestures_tap_right">오른쪽 탭하기</string>
-  <string name="gestures_longclick">긴 클릭</string>
   <string name="more_scrolling_buttons">e리더</string>
   <string name="more_scrolling_buttons_summ">Also use kanji/katakana, emoji/kao-moji buttons for scrolling</string>
   <string name="double_scrolling_gap">이중 스크롤</string>

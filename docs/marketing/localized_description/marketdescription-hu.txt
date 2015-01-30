@@ -29,8 +29,8 @@ Adj új szavakat a paklihoz az asztali Ankival, vagy közvetlenül az AnkiDroidd
 • kártyák hozzáadása más programokból (pl. szótárak)
 • egyéni betűtípus támogatás
 • teljes mentési rendszer
-• navigation by swipe, tap
-• customisable
+• navigáció söpréssel, lenyomással
+• testreszabható
 dinamikus pakli kezelés
 • éjszakai mód
 • 27 fordítás

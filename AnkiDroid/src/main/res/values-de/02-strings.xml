@@ -46,6 +46,7 @@
   <string name="CardEditorNoteDeck">Stapel:</string>
   <string name="CardEditorModel">Typ:</string>
   <string name="CardEditorTags">Schlagworte: %1$s</string>
+  <string name="CardEditorCards">Cards: %1$s</string>
   <string name="add_new_filter_tags">Schlagworte hinzfügen/filtern</string>
   <string name="note_type">Notiztyp</string>
   <string name="card_type">Kartentyp</string>
@@ -53,10 +54,10 @@
   <string name="sdcard_missing_message">Deaktivieren Sie den  USB-Speicher um auf Ihre Stapel zuzugreifen</string>
   <string name="enable_whiteboard">Whiteboard aktivieren</string>
   <string name="disable_whiteboard">Whiteboard ausschalten</string>
-  <string name="show_whiteboard">Whiteboard an</string>
-  <string name="hide_whiteboard">Whiteboard aus</string>
+  <string name="show_whiteboard">Whiteboard anzeigen</string>
+  <string name="hide_whiteboard">Whiteboard ausblenden</string>
   <string name="clear_whiteboard">Whiteboard säubern</string>
-  <string name="replay_audio">Audio wiederholen</string>
+  <string name="replay_audio">Tonspur wiederholen</string>
   <string name="cram_edit_warning">Kartenbearbeitung während des Paukens nicht erlaubt</string>
   <string name="suspend_leeches">Lernbremsen aussetzen</string>
   <string name="leech_suspend_notification">Karte als Lernbremse markiert und ausgesetzt</string>
@@ -72,7 +73,7 @@
     <item>Notiz</item>
     <item>Frage</item>
     <item>Schlagworte</item>
-    <item>Fehlschläge</item>
+    <item>Fehler</item>
     <item>Wiederholungen</item>
   </string-array>
   <string name="cardeditor_title_add_note">Notiz hinzufügen</string>
@@ -81,12 +82,15 @@
   <string name="factadder_saving_error">Fehler beim Speichern der Notiz</string>
   <string name="pref_lang_support">Sprache</string>
   <string name="saving_facts">Notiz speichern</string>
+  <string name="saving_model">Saving model</string>
   <string name="deck">Stapel</string>
   <string name="add">Hinzufügen</string>
   <string name="close">Schließen</string>
   <string name="select">Auswählen</string>
   <string name="saving_changes">Änderungen werden gespeichert&#8230;</string>
   <string name="reordering_cards">Sortiere Karten&#8230;</string>
+  <string name="field_remapping">%1$s (from \'%2$s\')</string>
+  <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
   <plurals name="timebox_reached">
     <item quantity="one">%1$d Karte gelernt in %2$s</item>
     <item quantity="other">%1$d Karten gelernt in %2$s</item>
@@ -105,7 +109,7 @@
   <string name="card_editor_reset">Zurücksetzen</string>
   <string name="card_editor_copy_card">Karte kopieren</string>
   <string name="card_editor_reset_card">Fortschritt zurücksetzen</string>
-  <string name="card_editor_reschedule_card">Verschieben der Karte</string>
+  <string name="card_editor_reschedule_card">Karte verschieben</string>
   <string name="card_editor_preview_card">Vorschau</string>
   <string name="error_insufficient_memory">Vorgang wegen unzureichenden Gerätespeichers nicht möglich</string>
   <string name="rename">Umbenennen</string>
@@ -150,6 +154,7 @@
   <string name="import_log_success">Erfolgreich %d Karten importiert</string>
   <string name="import_log_error">Import fehlgeschlagen</string>
   <string name="import_log_no_apkg">Dies ist keine gültige apgk-Datei</string>
+  <string name="import_error_not_apkg_extension">Filename %s does not have .apkg extension</string>
   <string name="import_importing">Karten werden importiert&#8230;</string>
   <string name="export_include_schedule">Zeitabstände einbeziehen</string>
   <string name="export_include_media">Medien einbeziehen</string>

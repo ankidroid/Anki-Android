@@ -129,9 +129,9 @@
     <item>לפני שנייה אחת</item>
     <item>לפני דקה אחת</item>
     <item>לפנה שעה אחת</item>
-    <item>1 day before</item>
-    <item>1 month before</item>
-    <item>1 year before</item>
+    <item>לפני יום אחד</item>
+    <item>לפנה חודש אחד</item>
+    <item>לפנה שנה אחת</item>
   </string-array>
   <string-array name="next_review_before_p">
     <item>%s seconds before</item>

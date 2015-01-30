@@ -96,7 +96,6 @@
   <string name="gestures_tap_bottom">Toqueu la part inferior</string>
   <string name="gestures_tap_left">Toqueu a l\'esquerra</string>
   <string name="gestures_tap_right">Toqueu a la dreta</string>
-  <string name="gestures_longclick">Clic a llarg</string>
   <string name="more_scrolling_buttons">eReader</string>
   <string name="more_scrolling_buttons_summ">Also use kanji/katakana, emoji/kao-moji buttons for scrolling</string>
   <string name="double_scrolling_gap">Desplaçament doble</string>

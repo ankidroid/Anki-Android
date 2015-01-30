@@ -50,7 +50,7 @@
   <string name="studyoptions_eta">Szacowany czas (min):</string>
   <string name="studyoptions_start">Ucz się teraz</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%1$d oczekującej na przejrzenie karty (%2$s)</item>
+    <item quantity="one">%1$d oczekująca na przejrzenie karta (%2$s)</item>
     <item quantity="other">%1$d oczekujących na przejrzenie kart (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
@@ -75,11 +75,11 @@
   <string name="card_unsuspended">Karta reaktywowana</string>
   <string name="card_suspended">Karta zawieszona</string>
   <string name="menu_rotate">Obrót</string>
-  <string name="menu_import">Import</string>
+  <string name="menu_import">Importuj</string>
   <string name="undo">Cofnij</string>
   <string name="undo_action_review">ostatnia powtórka</string>
   <string name="undo_action_edit">edycję notatki</string>
-  <string name="undo_action_bury">ukrycie notatki</string>
+  <string name="undo_action_bury">zakop notatkę</string>
   <string name="undo_action_suspend_card">zawieszenie karty</string>
   <string name="undo_action_suspend_note">zawieszenie notatki</string>
   <string name="undo_action_delete">usunięcie notatki</string>
@@ -101,12 +101,12 @@
   <string name="menu_my_account">Synchronizacja konta</string>
   <string name="menu_preferences">Ustawienia</string>
   <string name="menu_about">O programie</string>
-  <string name="menu_dismiss_note">Hide / Delete</string>
+  <string name="menu_dismiss_note">Ukryj / Usuń</string>
   <string name="menu_bury_card">Zakop kartę</string>
   <string name="menu_bury_note">Ukryj notatkę</string>
   <string name="menu_suspend_card">Zawieś kartę</string>
   <string name="menu_suspend_note">Zawieś notatkę</string>
-  <string name="menu_save_note">zapisz notatkę</string>
+  <string name="menu_save_note">Zapisz notatkę</string>
   <string name="menu_delete_note">Usuń notatkę</string>
   <string name="delete_note_message">Jesteś pewny, że chcesz usunąć tę notatkę i wszystkie jej karty?\n%s</string>
   <string name="menu_edit_card">Edytuj kartę</string>
@@ -178,5 +178,19 @@
   <string name="confirm">Potwierdź</string>
   <string name="internet">Internet</string>
   <string name="pc">PC</string>
+  <string name="nothing">Nothing</string>
   <string name="title_activity_graphical_activity">Statystyczny wykres</string>
+  <string name="title_activity_template_editor">Card Types for %s</string>
+  <string name="card_template_editor_front">Front Template</string>
+  <string name="card_template_editor_back">Back Template</string>
+  <string name="card_template_editor_styling">Styling</string>
+  <string name="card_template_editor_menu_add_reverse">Add reverse</string>
+  <string name="card_template_editor_menu_delete">Delete</string>
+  <string name="card_template_editor_cant_delete">At least one card type is required.</string>
+  <plurals name="card_template_editor_confirm_delete">
+    <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
+    <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
+  </plurals>
+  <string name="card_template_editor_would_delete_note"> Removing this card type would cause one or
+        more notes to be deleted. Please create a new card type first.</string>
 </resources>

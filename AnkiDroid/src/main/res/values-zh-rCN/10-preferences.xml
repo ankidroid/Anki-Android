@@ -96,7 +96,6 @@
   <string name="gestures_tap_bottom">点击底部</string>
   <string name="gestures_tap_left">点击左侧</string>
   <string name="gestures_tap_right">点击右侧</string>
-  <string name="gestures_longclick">长单击</string>
   <string name="more_scrolling_buttons">电子书阅读器</string>
   <string name="more_scrolling_buttons_summ">也使用 kanji/katakana， emoji/kao-moji 按钮来滚动</string>
   <string name="double_scrolling_gap">双滚动</string>

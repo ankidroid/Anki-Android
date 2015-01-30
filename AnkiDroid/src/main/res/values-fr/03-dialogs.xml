@@ -51,7 +51,7 @@
   <string name="new_version_message">Nouvelles fonctionnalités :</string>
   <string name="no_tts_available_title">Synthèse vocale</string>
   <string name="no_tts_available_message">Aucune langue disponible pour la synthèse vocale</string>
-  <string name="initializing_tts">Initializing TTS&#8230;</string>
+  <string name="initializing_tts">Initialisation de la synthèse vocale&#8230;</string>
   <string name="tts_no_tts">Ne pas parler</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Cartes à mémoriser pour Android</h2>AnkiDroid est une application de gestion de cartes à mémoriser (ou encore fiches-mémoire) qui est entièrement compatible avec le logiciel de bureau <a href="%2$s">Anki</a>. Vous pouvez créer, télécharger et apprendre du contenu sur à la fois Ankidroid et Anki, et les synchroniser très facilement.]]></item>

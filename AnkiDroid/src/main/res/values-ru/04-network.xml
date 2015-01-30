@@ -79,7 +79,7 @@
   <string name="logged_as">Используется логин</string>
   <string name="log_out">Завершить сеанс</string>
   <string name="alert_logging_message">Вход в систему, пожалуйста, подождите...</string>
-  <string name="invalid_username_password">Недопустимый имейл или пароль.</string>
+  <string name="invalid_username_password">Недопустимый адрес электронной почты или пароль.</string>
   <string name="login_generic_error">Не удалось войти на сервер.</string>
   <string name="reset_password">Сбросить пароль</string>
   <string name="download_finished">Загрузка завершена</string>
@@ -164,8 +164,9 @@
   <string name="download_deck">Загрузка колоды (%d кбайт).\nПожалуйста, подождите...</string>
   <string name="sync_sanity_local">Локальную</string>
   <string name="sync_sanity_remote">Удалённую</string>
-  <string name="force_full_sync_title">Force full sync</string>
+  <string name="force_full_sync_title">Выполнить полную синхронизацию</string>
   <string name="force_full_sync_summary">При следующей синхронизации, перезаписать в одном направлении</string>
-  <string name="full_sync_confirmation">Запрощеннок действие произведет полную загрузку данных следующий раз вы синхронизируете вашу коллекцию. Просмотры и другие изменения на ваших устройствах, которые не были синхронизированны, будут потерянны. Продолжить?</string>
-  <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it\'s recommended to force a full sync.</string>
+  <string name="full_sync_confirmation">При следующей синхронизации будет произведена полная выгрузка вашей коллекции с этого устройства на сервер. Все изменения в коллекции, сделанные на других устройствах и которые еще не были синхронизированы с этим устройством, будут потеряны! Продолжить?</string>
+  <string name="full_sync_confirmation_upgrade">В связи с ошибкой в ранее установленной версии AnkiDroid требуется выполнить полную синхронизацию.</string>
+  <string name="sync_error_501_upgrade_required">Please upgrade to the latest version of AnkiDroid</string>
 </resources>

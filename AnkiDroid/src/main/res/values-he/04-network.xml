@@ -40,22 +40,22 @@
 
 -->
 <resources>
-  <string name="youre_offline">You are offline</string>
-  <string name="currently_downloading">Currently downloading</string>
-  <string name="starting_download">Starting download&#8230;</string>
-  <string name="downloading">Downloading&#8230;</string>
-  <string name="paused">Paused</string>
-  <string name="downloaded">Downloaded</string>
-  <string name="sync_error">Sync Error</string>
-  <string name="vague_error">Error</string>
-  <string name="cancelling">Cancelling&#8230;</string>
-  <string name="connection_error_return_message">A network error has occurred. Retry, or cancel and return to the previous screen.</string>
-  <string name="retry">Retry</string>
+  <string name="youre_offline">במצב לא מקוון</string>
+  <string name="currently_downloading">מוריד כעת</string>
+  <string name="starting_download">מתחיל הורדה&#8230;</string>
+  <string name="downloading">מוריד&#8230;</string>
+  <string name="paused">מושהה</string>
+  <string name="downloaded">הורד</string>
+  <string name="sync_error">שגיאת סנכרון</string>
+  <string name="vague_error">שגיאה</string>
+  <string name="cancelling">מבטל&#8230;</string>
+  <string name="connection_error_return_message">אירעה שגיאת רשת. תנסה שנית, או תבטל ותחזור למסך הקודם.</string>
+  <string name="retry">נסה שנית</string>
   <string name="cancel">בטל</string>
-  <string name="download_overwrite">Overwrite</string>
-  <string name="download_cancel">Cancel download</string>
-  <string name="shared_decks">Shared decks</string>
-  <string name="loading_shared_decks">Loading available shared decks&#8230;</string>
+  <string name="download_overwrite">לדרוס</string>
+  <string name="download_cancel">בטל הורדה</string>
+  <string name="shared_decks">חפיסות משותפות</string>
+  <string name="loading_shared_decks">מטעין חפיסות משותפות זמינות&#8230;</string>
   <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Terms and conditions</a></string>
   <string name="cancel_download">Cancel download</string>
   <string name="resume_download">Resume download</string>
@@ -168,4 +168,5 @@
   <string name="force_full_sync_summary">On next sync, force changes in one direction</string>
   <string name="full_sync_confirmation">The requested change will require a full upload of the database when you next synchronize your collection. If you have reviews or other changes waiting on another device that haven\'t been synchronized here yet, they will be lost. Continue?</string>
   <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it\'s recommended to force a full sync.</string>
+  <string name="sync_error_501_upgrade_required">Please upgrade to the latest version of AnkiDroid</string>
 </resources>

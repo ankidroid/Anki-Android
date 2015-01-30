@@ -96,7 +96,6 @@
   <string name="gestures_tap_bottom">Kosketus alas</string>
   <string name="gestures_tap_left">Kosketus vasemmalle</string>
   <string name="gestures_tap_right">Kosketus oikealle</string>
-  <string name="gestures_longclick">Pitkä painallus</string>
   <string name="more_scrolling_buttons">sähkökirja</string>
   <string name="more_scrolling_buttons_summ">Käytä myös kanji/katakana, emoji/kao-moji -painikkeita vierittämiseen</string>
   <string name="double_scrolling_gap">Kaksoisvieritys</string>

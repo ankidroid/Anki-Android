@@ -164,8 +164,9 @@
   <string name="download_deck">Descargando mazo (%d kb).\nPor favor, espera...</string>
   <string name="sync_sanity_local">Local</string>
   <string name="sync_sanity_remote">Remoto</string>
-  <string name="force_full_sync_title">Force full sync</string>
+  <string name="force_full_sync_title">Forzar sincronización completa</string>
   <string name="force_full_sync_summary">Forzar cambios en una dirección en la próxima sincronización</string>
   <string name="full_sync_confirmation">El cambio solicitado hará necesaria una subida completa de la base de datos la próxima vez que sincronices tu colección. Si tienes repasos u otros cambios pendientes en otro dispositivo que no hayan sido sincronizados aún, se perderán. ¿Deseas continuar?</string>
   <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it\'s recommended to force a full sync.</string>
+  <string name="sync_error_501_upgrade_required">Please upgrade to the latest version of AnkiDroid</string>
 </resources>

@@ -43,7 +43,7 @@
   <string name="error_cancel">Μην αναφέρετε σφάλματα</string>
   <string name="error_reporting_choice">Λειτουργία αναφοράς σφαλμάτων</string>
   <string name="error_reporting_choice_summary">Σφάλματα μπορεί να αναφερθούν αυτόματα, ποτέ, ή μπορεί να σας ζητηθεί</string>
-  <string name="feedback_disclaimer">Αποποίηση ευθυνών: Δεν συλλέγουμε προσωπικές πληροφορίες όπως η ηλεκτρονική σας διεύθυνση, αριθμό τηλεφώνου, τη διεύθυνση IP ή το τηλέφωνό σας ΙΜΕΙ. Συλλέγουμε ορισμένες πληροφορίες σχετικά με τη συσκευή σας όπως ο κατασκευαστής, το μοντέλο και έκδοση του Android, καθώς και τη φύση των αναφερόμενων σφαλμάτων</string>
+  <string name="feedback_disclaimer">Disclaimer: We don\'t collect any personal information such as your email address, phone number, or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves and the steps which led up to them occuring.</string>
   <string name="feedback_title">Σχόλια</string>
   <string name="feedback_send_feedback">Στείλτε μας τα σχόλιά σας</string>
   <string name="feedback_send_feedback_and_errors">Στείλτε σφάλματα και τα σχόλιά σας</string>
@@ -60,4 +60,8 @@
   <string name="feedback_error_reply_issue_fixed_prod">Πρόβλημα %1$d, επιλυμένο στην τελευταία έκδοση</string>
   <string name="feedback_error_reply_malformed">Αρχειοθετημένο πρόβλημα, καμία απάντηση</string>
   <string name="feedback_error_reply_failed">Αποστολή απέτυχε</string>
+  <string name="feedback_auto_toast_text">AnkiDroid has encountered a problem; a report is being sent to the developers&#8230;</string>
+  <string name="feedback_manual_toast_text">AnkiDroid has encountered a problem; a report is being generated&#8230;</string>
+  <string name="feedback_copy_debug">Copy debug info</string>
+  <string name="feedback_report">Report</string>
 </resources>

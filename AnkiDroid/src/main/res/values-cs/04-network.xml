@@ -168,4 +168,5 @@
   <string name="force_full_sync_summary">Při příští synchronizaci vynutit změny v jednom směru</string>
   <string name="full_sync_confirmation">Požadovaná změna způsobí kompletní nahrání databáze na server při příští synchronizaci Vaší sbírky. Máte-li změny nebo naplánované zkoušení na jiném zařízení, které ještě nebyly synchronizovány, budou ztraceny. Chcete pokračovat?</string>
   <string name="full_sync_confirmation_upgrade">Kvůli chybě v dříve nainstalované verzi AnkiDroid doporučujeme vynutit úplnou synchronizaci.</string>
+  <string name="sync_error_501_upgrade_required">Please upgrade to the latest version of AnkiDroid</string>
 </resources>

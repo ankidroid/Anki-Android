@@ -43,7 +43,7 @@
   <string name="error_cancel">Không báo lỗi</string>
   <string name="error_reporting_choice">Chế độ báo lỗi</string>
   <string name="error_reporting_choice_summary">Lỗi có thể được báo tự động, không bao giờ báo, hoặc bạn có thể được nhắc.</string>
-  <string name="feedback_disclaimer">Khuyến cáo: Chúng tôi không thu thập bất kỳ thông tin cá nhân như địa chỉ email, số điện thoại, địa chỉ IP hoặc số IMEI của điện thoại của bạn. Chúng tôi thu thập một số thông tin về thiết bị của bạn chẳng hạn như các nhà sản xuất, loại điện thoại và phiên bản của Android, cũng như nguyên nhân các lỗi được báo cáo.</string>
+  <string name="feedback_disclaimer">Disclaimer: We don\'t collect any personal information such as your email address, phone number, or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves and the steps which led up to them occuring.</string>
   <string name="feedback_title">Thông tin phản hồi</string>
   <string name="feedback_send_feedback">Send us your feedback</string>
   <string name="feedback_send_feedback_and_errors">Send errors and your feedback</string>
@@ -60,4 +60,8 @@
   <string name="feedback_error_reply_issue_fixed_prod">Issue %1$d, fixed in the latest version</string>
   <string name="feedback_error_reply_malformed">Filed bug, no response</string>
   <string name="feedback_error_reply_failed">Không gửi được</string>
+  <string name="feedback_auto_toast_text">AnkiDroid has encountered a problem; a report is being sent to the developers&#8230;</string>
+  <string name="feedback_manual_toast_text">AnkiDroid has encountered a problem; a report is being generated&#8230;</string>
+  <string name="feedback_copy_debug">Copy debug info</string>
+  <string name="feedback_report">Report</string>
 </resources>

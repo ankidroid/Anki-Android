@@ -43,19 +43,19 @@
   <string name="statistics_young">Fiatal</string>
   <string name="statistics_mature">Érett</string>
   <string name="statistics_young_and_learn">Young+Learn</string>
-  <string name="statistics_unlearned">Unseen</string>
-  <string name="statistics_suspended">Suspended</string>
+  <string name="statistics_unlearned">Eddig nem látott</string>
+  <string name="statistics_suspended">Felfüggesztett</string>
   <string name="statistics_relearn">Újratanulás</string>
   <string name="statistics_learn">Tanulás</string>
   <string name="statistics_cram">Magolás</string>
   <string name="statistics_type_title">Statisztikák</string>
   <string name="stats_cards">Kártyák</string>
-  <string name="stats_cards_intervals">Cards with given Interval</string>
+  <string name="stats_cards_intervals">Kártyák megadott intervallummal</string>
   <string name="stats_cumulative_cards">Cumulative Cards</string>
   <string name="stats_cumulative_answers">Cumulative Answers</string>
-  <string name="stats_cumulative_time_minutes">Cumulative Minutes</string>
-  <string name="stats_cumulative_time_hours">Cumulative Hours</string>
-  <string name="stats_cumulative">Cumulative</string>
+  <string name="stats_cumulative_time_minutes">Összes idő (perc)</string>
+  <string name="stats_cumulative_time_hours">Összes idő (óra)</string>
+  <string name="stats_cumulative">Összesen</string>
   <string name="stats_cumulative_percentage">Cumulative Percentage</string>
   <string formatted="false" name="stats_cumulative_correct_percentage">Cumulative Correct %</string>
   <string name="stats_answers">Válaszok</string>

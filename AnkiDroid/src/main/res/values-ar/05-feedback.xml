@@ -43,7 +43,7 @@
   <string name="error_cancel">لا ترسل تقرير الأخطاء</string>
   <string name="error_reporting_choice">نمط الإبلاغ عن الأخطاء</string>
   <string name="error_reporting_choice_summary">يمكن الإبلاغ عن الأخطاء بشكل تلقائي، أو لا يبلغ عنها مطلقا، أو أن تسأل في كل مرة</string>
-  <string name="feedback_disclaimer">تنويه: نحن لا نجمع أي معلومات شخصية من مثل عنوان بريدك الإلكتروني، أو رقم الهاتف أو عنوان IP أو رقم هاتفك IMEI. نحن نقوم بجمع بعض المعلومات حول الجهاز الخاص بك من مثل الشركة المصنعة، الطراز وإصدار أندرويد، فضلا عن طبيعة الأخطاء المبلغ عنها.</string>
+  <string name="feedback_disclaimer">Disclaimer: We don\'t collect any personal information such as your email address, phone number, or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves and the steps which led up to them occuring.</string>
   <string name="feedback_title">مرئيات</string>
   <string name="feedback_send_feedback">أرسل لنا مرئياتك</string>
   <string name="feedback_send_feedback_and_errors">أرسل الأخطاء ومرئياتك</string>
@@ -60,4 +60,8 @@
   <string name="feedback_error_reply_issue_fixed_prod">المشكلة %1$d، أصلحت في آخر إصدارة</string>
   <string name="feedback_error_reply_malformed">علة موثقة، بدون رد</string>
   <string name="feedback_error_reply_failed">فشل في الإرسال</string>
+  <string name="feedback_auto_toast_text">AnkiDroid has encountered a problem; a report is being sent to the developers&#8230;</string>
+  <string name="feedback_manual_toast_text">AnkiDroid has encountered a problem; a report is being generated&#8230;</string>
+  <string name="feedback_copy_debug">Copy debug info</string>
+  <string name="feedback_report">Report</string>
 </resources>

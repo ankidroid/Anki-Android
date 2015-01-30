@@ -46,7 +46,7 @@
   <string name="downloading">Descargando...</string>
   <string name="paused">Pausado</string>
   <string name="downloaded">Descargado</string>
-  <string name="sync_error">Sync Error</string>
+  <string name="sync_error">Error de sincronización</string>
   <string name="vague_error">Error</string>
   <string name="cancelling">Cancelando...</string>
   <string name="connection_error_return_message">Ocurrió un error de red. Intente nuevamente, o cancele y regrese a la pantalla previa.</string>
@@ -67,7 +67,7 @@
   <string name="sync_log_db_error">Ha ocurrido un error en la base de datos.</string>
   <string name="not_logged_in_title">Iniciar sesión en AnkiWeb</string>
   <string name="login_create_account_message">Debes iniciar sesión en una cuenta de AnkiWeb. Puedes crear una en el próximo paso.</string>
-  <string name="no_email_client">No email client available</string>
+  <string name="no_email_client">No hay un cliente de email disponible</string>
   <string name="username">Dirección de correo electrónico</string>
   <string name="username_repeat">Repetir dirección de correo electrónico</string>
   <string name="password">Contraseña</string>
@@ -115,8 +115,8 @@
   <string name="sync_too_busy">Servidor ocupado. Intente nuevamente más tarde.</string>
   <string name="sync_remote_db_error">La base de datos descargada estaba corrompida. Intente por favor nuevamente.</string>
   <string name="sync_overwrite_error">Su colección actual no pudo ser sobreescrita por el archivo descargado.</string>
-  <string name="sync_connection_error">La conexión ha expirado. O bien hay problemas con su conexión a internet  o bien el fichero es demasiado grande.</string>
-  <string name="sync_error_409">Sólo un cliente puede acceder AnkiWeb al mismo tiempo. Si una sincronización anterior falló, por favor, vuelve a intentarlo pasados unos minutos.</string>
+  <string name="sync_connection_error">La conexión ha espirado. O bien su conexión a internet está teniendo problemas o bien tiene un archivo muy grande en su carpeta de archivos multimedia.</string>
+  <string name="sync_error_409">Sólo un cliente puede acceder a AnkiWeb al mismo tiempo. Si la sincronización previa falló, por favor intente nuevamente en unos minutos.</string>
   <string name="sync_write_access_error">El archivo descargado no pudo ser guardado en la tarjeta SD. O bien su tarjeta SD está montada como sólo-escritura o bien no hay espacio suficiente.</string>
   <string name="sync_deletions_message">Sincronizando eliminaciones...</string>
   <string name="sync_small_objects_message">Sincronizando pequeños objetos...</string>
@@ -136,12 +136,12 @@
   <string name="sync_media_sanity_check">Comprobando contador multimedia...</string>
   <string name="sync_media_no_changes">No hay cambios en los archivos multimedia.</string>
   <string name="sync_media_success">Archivos multimedia sincronizados exitosamente.</string>
-  <string name="sync_media_changes_count">%d media changes to upload</string>
-  <string name="sync_media_downloaded_count">%d media files downloaded</string>
+  <string name="sync_media_changes_count">%d cambios multimedia para subir</string>
+  <string name="sync_media_downloaded_count">%d archivos multimedia descargados</string>
   <string name="sync_sanity_failed">Luego de sincronizar, la colección tuvo un estado inconsistente. Para solucionar este problema, AnkiDroid forzará una sincronización completa. Por favor, elija qué lado desea mantener, o cancele si prefiere sincronizar más tarde.</string>
   <string name="sync_media_sanity_failed">Sincronización multimedia finalizada pero el contador multimedia no coincide con el servidor. La próxima sincronización multimedia será completa a fin de corregir cualquier error.</string>
   <string name="sync_media_error">Error al sincronizar datos multimedia.</string>
-  <string name="sync_media_unsupported">Complex media file names are not supported on Android 2.2 and below. Media syncing has been disabled.</string>
+  <string name="sync_media_unsupported">Nombres complejos de archivos multimedia no son soportados en Android 2.2 y versiones previas. La sincronización de medios ha sido desactivada.</string>
   <string name="register_error">Ocurrió un error. Por favor intente nuevamente más tarde.</string>
   <string name="register_title">Registrar cuenta</string>
   <string name="register_mismatch">La repetición del usuario/contraseña no coincide o está vacía. Por favor, vuelva a ingresar.</string>
@@ -164,8 +164,9 @@
   <string name="download_deck">Descargando mazo (%d kb).\nPor favor aguarde...</string>
   <string name="sync_sanity_local">Local</string>
   <string name="sync_sanity_remote">Remoto</string>
-  <string name="force_full_sync_title">Force full sync</string>
-  <string name="force_full_sync_summary">Forzar cambios en una dirección en la próxima sincronización</string>
-  <string name="full_sync_confirmation">El cambio solicitado hará necesaria una subida completa de la base de datos la próxima vez que sincronices tu colección. Si tienes repasos u otros cambios pendientes en otro dispositivo que no hayan sido sincronizados aún, se perderán. ¿Deseas continuar?</string>
-  <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it\'s recommended to force a full sync.</string>
+  <string name="force_full_sync_title">Forzar sincronización completa</string>
+  <string name="force_full_sync_summary">En la próxima sincronización, forzar cambios en una dirección</string>
+  <string name="full_sync_confirmation">El cambio solicitado requiere una subida completa de la base de datos en la próxima sincronización de su colección. Si tiene repasos u otros cambios aguardando en otro dispositivo que no hayan sido aún sincronizados, se perderán. ¿Continuar?</string>
+  <string name="full_sync_confirmation_upgrade">Debido a un error en la versión previamente instalada de AnkiDroid, se recomienda forzar una sincronización completa.</string>
+  <string name="sync_error_501_upgrade_required">Please upgrade to the latest version of AnkiDroid</string>
 </resources>

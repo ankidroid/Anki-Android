@@ -43,7 +43,7 @@
   <string name="error_cancel">Älä ilmoita virheistä</string>
   <string name="error_reporting_choice">Virheraportointitila</string>
   <string name="error_reporting_choice_summary">Virheitä voidaan raportoida automaattisesti, ei koskaan, tai pyytää luvan sinulta</string>
-  <string name="feedback_disclaimer">Tietosuojasta: Emme tallenna henkilökohtaisia tietojasi kuten sähköpostiosoite, puhelinnumero, IP-osoite tai puhelimen IMEI. Keräämme kuitenkin joitain tietoja laitteestasi, kuten valmistaja, malli, Androidin versio ja raportoidut virheet.</string>
+  <string name="feedback_disclaimer">Disclaimer: We don\'t collect any personal information such as your email address, phone number, or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves and the steps which led up to them occuring.</string>
   <string name="feedback_title">Palaute</string>
   <string name="feedback_send_feedback">Lähetä meille palautetta</string>
   <string name="feedback_send_feedback_and_errors">Lähetä virheet ja palautteesi</string>
@@ -60,4 +60,8 @@
   <string name="feedback_error_reply_issue_fixed_prod">Virhe %1$d, korjattu uusimmassa versiossa</string>
   <string name="feedback_error_reply_malformed">Arkistoitu virhe, ei vastausta</string>
   <string name="feedback_error_reply_failed">Lähettäminen epäonnistui</string>
+  <string name="feedback_auto_toast_text">AnkiDroid has encountered a problem; a report is being sent to the developers&#8230;</string>
+  <string name="feedback_manual_toast_text">AnkiDroid has encountered a problem; a report is being generated&#8230;</string>
+  <string name="feedback_copy_debug">Copy debug info</string>
+  <string name="feedback_report">Report</string>
 </resources>
