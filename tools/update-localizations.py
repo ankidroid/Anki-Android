@@ -23,16 +23,17 @@
 # Do not remove languages.
 # When you add a language, please also add it to mAppLanguages in Preferences.java
 
-languages = ['ar', 'bg', 'ca', 'cs', 'de', 'el', 'es-AR', 'es-ES', 'et', 'fa', 'fi', 'fr', 'gl', 'he', 'hi', 'hu', 'id', 'it', 'ja', 'ko', 'lt', 'lv', 'nl', 'no', 'pl', 'pt-PT', 'pt-BR', 'ro', 'ru', 'sk', 'sl', 'sr', 'sv-SE', 'th', 'tr', 'uk', 'vi', 'zh-CN', 'zh-TW'];
+languages = ['ar', 'bg', 'ca', 'cs', 'de', 'el', 'es-AR', 'es-ES', 'et', 'fa', 'fi', 'fr', 'gl', 'he', 'hi', 'hu', 'id', 'it', 'ja', 'ko', 'lt', 'lv', 'nl', 'no', 'pl', 'pt-PT', 'pt-BR', 'ro', 'ru', 'sk', 'sl', 'sr', 'sv-SE', 'th', 'tr', 'uk', 'vi', 'zh-CN', 'zh-TW', 'got'];
 # languages which are localized for more than one region
 localizedRegions = ['es', 'pt', 'zh']
 
-fileNames = ['01-core', '02-strings', '03-dialogs', '04-network', '05-feedback', '06-statistics', '07-cardbrowser', '08-widget', '09-backup', '10-preferences', '11-arrays', '13-newfeatures', '14-marketdescription', '15-markettitle']
+fileNames = ['01-core', '02-strings', '03-dialogs', '04-network', '05-feedback', '06-statistics', '07-cardbrowser', '08-widget', '09-backup', '10-preferences', '11-arrays', '13-newfeatures', '14-marketdescription', '15-markettitle', '16-multimedia-editor']
 anyError = False
 titleFile = 'docs/marketing/localized_description/ankidroid-titles.txt'
 titleString = 'AnkiDroid Flashcards'
 
 import os
+import shutil
 import zipfile
 import urllib
 import string
@@ -93,7 +94,7 @@ def replacechars(filename, fileExt, isCrowdin):
 		fin.write(" </string-array>\n</resources>");
 	s.close()
 	fin.close()
-	os.rename(newfilename, filename)
+	shutil.move(newfilename,filename)
 	if errorOccured:
 		#os.remove(filename)
 		print 'Error in file ' + filename
@@ -161,9 +162,7 @@ build()
 zipname = 'ankidroid.zip'
 
 print "Downloading Crowdin file"
-req = urllib.urlopen('http://crowdin.net/download/project/ankidroid.zip')
-file(zipname, 'w').write(req.read())
-req.close()
+urllib.urlretrieve('http://crowdin.net/download/project/ankidroid.zip',zipname)
 
 zip = zipfile.ZipFile(zipname, "r")
 
@@ -179,7 +178,7 @@ for language in languages:
 		androidLanguage = language[:2] # Example: es-ES becomes es
 
 	print "\nCopying language files for: " + androidLanguage
-	valuesDirectory = "res/values-" + androidLanguage + "/"
+	valuesDirectory = "AnkiDroid/src/main/res/values-" + androidLanguage + "/"
 	createIfNotExisting(valuesDirectory)
 
 	# Copy localization files, mask chars and append gnu/gpl licence
@@ -192,10 +191,11 @@ for language in languages:
 		anyError = False
 
 print "\nRemoving Crowdin file\n"
-os.remove(zipname)	
+zip.close()
+os.remove(zipname)
 
 print "Committing updates. Please add any fixes as another commit."
-subprocess.call("git add docs/marketing/localized_description res/values*", shell=True)
+subprocess.call("git add docs/marketing/localized_description AnkiDroid/src/main/res/values*", shell=True)
 subprocess.call("git commit -m 'Updated strings from Crowdin'", shell=True)
 
 print "Checking with Lint."

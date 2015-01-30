@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+~ Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+
+    <!--
+        WARNING: These values here match static values defined in Deck.java DO
+        NOT edit them, unless you change their corresponding values
+    -->
+    <!-- Used in deck preferences -->
+    <string-array name="dictionary_labels">
+        <item>None</item>
+        <item>Aedict</item>
+        <item>Eijiro (Web)</item>
+        <item>Leo.org (Web)</item>
+        <item>Leo.org (App)</item>
+        <item>ColorDict/GoldenDict</item>
+        <item>Fora</item>
+        <item>Nciku (Web)</item>
+    </string-array>
+    <string-array name="dictionary_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+    </string-array>
+    <string-array name="error_reporting_choice_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    <string-array name="notification_minimum_cards_due_labels">
+        <item>@string/never_notify</item>
+        <item>@string/notify_when_pending</item>
+        <item>@string/notification_minimum_cards_due</item>
+        <item>@string/notification_minimum_cards_due</item>
+        <item>@string/notification_minimum_cards_due</item>
+        <item>@string/notification_minimum_cards_due</item>
+        <item>@string/notification_minimum_cards_due</item>
+        <item>@string/notification_minimum_cards_due</item>
+        <item>@string/notification_minimum_cards_due</item>
+        <item>@string/notification_minimum_cards_due</item>
+    </string-array>
+    <string-array name="notification_minimum_cards_due_values">
+        <item>2000000</item>
+        <item>1000000</item>
+        <item>10</item>
+        <item>25</item>
+        <item>50</item>
+        <item>75</item>
+        <item>100</item>
+        <item>150</item>
+        <item>200</item>
+        <item>500</item>
+    </string-array>
+    <string-array name="gestures_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <!--15 reserved for clear whiteboard action-->
+        <item>16</item>
+        <item>17</item>
+    </string-array>
+    <string-array name="theme_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+
+    <string name="link_anki">http://ankisrs.net</string>
+    <string name="link_ankiweb">https://ankiweb.net</string>
+    <string name="link_ankidroid">http://code.google.com/p/ankidroid</string>
+    <string name="link_forum">http://groups.google.com/group/anki-android</string>
+    <string name="link_wiki">http://code.google.com/p/ankidroid/wiki/Index</string>
+    <string name="link_issue_tracker">http://code.google.com/p/ankidroid/issues</string>
+    <string name="licence_wiki">http://www.gnu.org/licenses/gpl.html</string>
+    <string name="link_source">https://github.com/ankidroid/Anki-Android</string>
+    <string name="link_donation">http://ankisrs.net/support</string>
+    <string name="link_translation">http://crowdin.net/project/ankidroid</string>
+    <string name="link_wikipedia_open_source">http://en.wikipedia.org/wiki/Open_source_software</string>
+    <string name="link_contribution">http://code.google.com/p/ankidroid/wiki/Contribution</string>
+    <string name="link_contribution_contributors">http://code.google.com/p/ankidroid/wiki/Contribution</string>
+    <string name="link_help">https://ankidroid.org/docs/help.html</string>
+    <string name="link_manual">https://ankidroid.org/docs/manual.html</string>
+    <string name="link_help_ja">https://ankidroid.org/docs/help-ja.html</string>
+    <string name="link_manual_ja">https://ankidroid.org/docs/manual-ja.html</string>
+    <string name="link_manual_getting_started">https://ankidroid.org/docs/manual.html#gettingStarted</string>
+    <string name="link_hebrew_font">http://code.google.com/p/ankidroid/downloads/detail?name=Tohu.ttf</string>
+    <string name="error_email">ankidroid@gmail.com</string>
+    <string name="error_post_url">http://ankidroid-triage.appspot.com/crash_receiver</string>
+    <string name="ankionline_sign_up_url">https://ankiweb.net/</string>
+    <string name="feedback_post_url">http://ankidroid-triage.appspot.com/feedback_receiver</string>
+    <string name="shared_decks_url">https://ankiweb.net/shared/decks/</string>
+    <string name="repair_deck">http://ankisrs.net/docs/manual.html#corrupt-collections</string>
+    <string name="resetpw_url">http://ankiweb.net/account/resetpw</string>
+
+    <string-array name="leech_action_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+    <string-array name="new_order_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+    <string-array name="rev_order_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string name="deck_conf_percent">XXX \%%</string>
+
+    <string-array name="zeemote_action_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+    </string-array>
+    <string-array name="cram_deck_conf_order_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+    </string-array>
+    <string-array name="custom_study_options_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+    </string-array>
+    <string-array name="add_to_cur_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+    <string-array name="new_spread_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    <string-array name="override_font_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>     
+    <array name="drawer_images">
+        <item>@drawable/ic_action_storage</item>
+        <item>@drawable/ic_action_search</item>
+        <item>@drawable/ic_menu_statistics</item>
+        <item>@drawable/ic_action_settings</item>
+        <item>@drawable/ic_action_help</item>
+        <item>@drawable/ic_action_email</item>
+    </array>    
+</resources>

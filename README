@@ -1,3 +1,7 @@
 AnkiDroid: Anki on Android
 
-How to compile: http://code.google.com/p/ankidroid/wiki/Contribution#Source_code
+Starting from 10th November 2014, the project has been configured to work "out of the box" with Android Studio.
+
+After forking and cloning the Anki-Android git repository, open Android Studio, configure the SDK, choose "Open Project", and then select the folder which you cloned the github repository to. The project should start without error, and build automatically. 
+
+See the Wiki for more information: http://code.google.com/p/ankidroid/wiki/Contribution#Source_code

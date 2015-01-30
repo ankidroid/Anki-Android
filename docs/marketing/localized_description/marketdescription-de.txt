@@ -1,12 +1,12 @@
-Lernen Sie mit AnkiDroid alles, was Sie benötigen!
+Lernen Sie mit AnkiDroid alles, was Sie sich merken möchten!
 
 Mit AnkiDroid lassen sich Karteikarten sehr effizient auswendig lernen, indem sie kurz vor dem Vergessen wiederholt werden. Voll kompatibel mit der Spaced-Repetition-Software Anki (inklusive Synchronisation). Anki gibt es für Windows, Linux und Mac OS.
 
-Lernen Sie alle möglichen Dinge, wo und wann Sie wollen. Nutzen Sie freie Zeit sinnvoll, sei es im Bus, in der Supermarkt-Warteschlange oder in irgend einer anderen Situation in der Sie warten müssen.
+Lernen Sie alle möglichen Dinge, wo und wann Sie wollen. Nutzen Sie freie Zeit sinnvoll, sei es im Bus, in der Schlange vor der Supermarktkasse oder wo immer Sie sonst warten müssen.
 
-Erstellen Sie eigene Karteikarten-Stapel oder laden kostenlos vorgefertigte Stapel herunter (es sind mehr als 6000 Stapel zu verschiedenen Sprachen und Themen verfügbar).
+Erstellen Sie eigene Karteikarten-Stapel oder laden Sie kostenlos vorgefertigte Stapel herunter (es sind mehr als 6000 Stapel zu verschiedenen Sprachen und Themen verfügbar).
 
-Fügen Sie neues Material mit der Desktop-Applikation oder direkt mit AnkiDroid hinzu. Es wird sogar das automatische Hinzufügen von Material aus einem Wörterbuch unterstützt!
+Fügen Sie neues Material mit der Desktop-Applikation oder direkt mit AnkiDroid hinzu. Die Anwendung unterstützt sogar das automatische Hinzufügen von Material aus einem Wörterbuch!
 
 ★ Haupt-Merkmale:
 • Unterstützte Karteikarten-Inhalte: Text, Bilder, Sounds, LaTeX
@@ -21,7 +21,7 @@ Fügen Sie neues Material mit der Desktop-Applikation oder direkt mit AnkiDroid 
 ★ Zusätzliche Merkmale:
 • Antworten schreiben (optional)
 • Whiteboard
-• Karteneditor/Möglichkeit, Karten hinzuzufügen
+• Karteneditor/ Hinzufügen von neuen Karteikarten
 • Kartenübersicht
 • Tablet-Layout
 • Importieren von bestehenden Sammlungen (über Anki Desktop)
@@ -29,9 +29,9 @@ Fügen Sie neues Material mit der Desktop-Applikation oder direkt mit AnkiDroid 
 • Fügen Sie Karten über Intents von anderen Programmen (wie z.B. Wörterbüchern) hinzu
 • Unterstützung für andere Schriftarten
 • Ausgebautes Sicherungssystem
-Navigation durch wischen, berühren
-• anpassbar
+• Navigation durch wischen und berühren
+• Anpassbar
 • Dynamische Stapel
 • Nacht-Modus
-• 27 Sprachen
+• 27 Sprachen verfügbar
 • Alle vorherigen AnkiDroid-Version können von der Website heruntergeladen werden

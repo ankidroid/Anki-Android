@@ -33,6 +33,7 @@ function main() {
   test $# = 0
 
   # Download the Android SDK and necessary components.
+  # http://stackoverflow.com/questions/2766713/android-download-the-android-sdk-components-for-offline-install
   download_and_install \
     $base_uri/tools_r22.6.3-linux.zip \
     $root/android
@@ -52,6 +53,11 @@ function main() {
   download_and_install \
     $base_uri/sysimg_armv7a-19_r02.zip \
     $root/android/system-images/android-19
+
+  # Android support repository :: https://dl-ssl.google.com/android/repository/addon.xml
+  download_and_install \
+    $base_uri/android_m2repository_r08.zip \
+    $root/android/extras/android
 }
 
 set -e

@@ -1,7 +1,7 @@
 #!/bin/bash
-# Perform an alpha or beta release of AnkiDroid
-# Nicolas Raoul
-# 2011/10/24
+# Perform a release of AnkiDroid
+# Nicolas Raoul 2011/10/24
+# Timothy Rae 2014/11/10
 # Usage from AnkiDroid's root directory:
 # tools/release.sh # For an alpha or beta release
 # tools/release.sh public # For a public (non alpha/beta) release
@@ -11,6 +11,10 @@ SUFFIX=""
 #SUFFIX="-EXPERIMENTAL"
 
 PUBLIC=$1
+
+# Define the location of the manifest file
+SRC_DIR="./AnkiDroid/src/main/"
+MANIFEST="AndroidManifest.xml"
 
 if [ "$PUBLIC" = "public" ]; then
   echo "About to perform a public release. Please first:"
@@ -25,7 +29,8 @@ fi
 
 set -x
 
-VERSION=`grep android:versionName AndroidManifest.xml | sed -e 's/.*="//' | sed -e 's/".*//'`
+VERSION=`grep android:versionName $SRC_DIR$MANIFEST | sed -e 's/.*="//' | sed -e 's/".*//'`
+echo $VERSION
 
 if [ "$PUBLIC" != "public" ]; then
   # Increment version name
@@ -40,34 +45,34 @@ if [ "$PUBLIC" != "public" ]; then
   # Increment version code
   # It is an integer in AndroidManifest that nobody actually sees.
   # Ex: 72 to 73
-  PREVIOUS_CODE=`grep android:versionCode AndroidManifest.xml | sed -e 's/.*="//' | sed -e 's/".*//'`
+  PREVIOUS_CODE=`grep android:versionCode $SRC_DIR$MANIFEST | sed -e 's/.*="//' | sed -e 's/".*//'`
   GUESSED_CODE=`expr $PREVIOUS_CODE + 1`
 
   # Edit AndroidManifest.xml to bump version string
   echo "Bumping version from $PREVIOUS_VERSION$SUFFIX to $VERSION (and code from $PREVIOUS_CODE to $GUESSED_CODE)"
-  sed -i -e s/$PREVIOUS_VERSION$SUFFIX/$VERSION/g AndroidManifest.xml
-  sed -i -e s/versionCode=\"$PREVIOUS_CODE/versionCode=\"$GUESSED_CODE/g AndroidManifest.xml
+  sed -i -e s/$PREVIOUS_VERSION$SUFFIX/$VERSION/g $SRC_DIR$MANIFEST
+  sed -i -e s/versionCode=\"$PREVIOUS_CODE/versionCode=\"$GUESSED_CODE/g $SRC_DIR$MANIFEST
 fi
 
-# Generate signed APK
-ant clean release
+# Read the key passwords
+read -sp "Enter keystore password: " KSTOREPWD; echo
+read -sp "Enter key password: " KEYPWD; echo
+export KSTOREPWD
+export KEYPWD
+# Build signed APK using Gradle
+CMD="./gradlew assembleRelease"
+${CMD}
 if [ $? -ne 0 ]; then
   # APK contains problems, abort release
-  git checkout -- AndroidManifest.xml # Revert version change
+  git checkout -- $SRC_DIR$MANIFEST # Revert version change
   exit
 fi
 
-# Detect problems in code (Lint must run AFTER compilation)
-lint . --config lint.xml --nowarn --exitcode
-if [ $? -ne 0 ]; then
-  exit
-fi
-
-# Upload APK to Google Project's downloads section
-cp bin/AnkiDroid-release.apk AnkiDroid-$VERSION.apk
+# Copy exported file to cwd
+cp AnkiDroid/build/outputs/apk/AnkiDroid-release.apk AnkiDroid-$VERSION.apk
 
 # Commit modified AndroidManifest.xml
-git add AndroidManifest.xml
+git add $SRC_DIR$MANIFEST
 git commit -m "Bumped version to $VERSION
 @branch-specific"
 
@@ -90,7 +95,7 @@ else
   PRE_RELEASE="--pre-release"
 fi
 
-~/p/github-release release --tag v$VERSION --name "AnkiDroid $VERSION" $PRE_RELEASE
-~/p/github-release upload --tag v$VERSION --name AnkiDroid-$VERSION.apk --file AnkiDroid-$VERSION.apk
+github-release release --tag v$VERSION --name "AnkiDroid $VERSION" $PRE_RELEASE
+github-release upload --tag v$VERSION --name AnkiDroid-$VERSION.apk --file AnkiDroid-$VERSION.apk
 
 # TODO: Push to Google Play
