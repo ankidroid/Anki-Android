@@ -260,15 +260,15 @@ public class TagsDialog extends DialogFragment implements OnDismissListener, OnC
         mAddTagIV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String tag = addFilterTagET.getText().toString();
                 if (!TextUtils.isEmpty(tag)) {
                     if (mCurrentTags.contains(tag)) {
                         addFilterTagET.setText("");
                         return;
                     }
-                    if (!mAllTags.contains(tag)) {
-                        mAllTags.add(tag);
-                    }
+                    mCurrentTags.clear();
+                    mCurrentTags.addAll(mStyledDialog.getCheckedItems());
                     mCurrentTags.add(tag);
                     addFilterTagET.setText("");
                     actualizeCurrTagDialog();
@@ -310,8 +310,6 @@ public class TagsDialog extends DialogFragment implements OnDismissListener, OnC
 
     /**
      * Set the item list and checked items for the current dialog.
-     * @param allTags
-     * @param checkedTags
      */
     public void actualizeCurrTagDialog() {
         for (String tag : mCurrentTags) {
@@ -332,12 +330,13 @@ public class TagsDialog extends DialogFragment implements OnDismissListener, OnC
         mStyledDialog.setMultiChoiceItems(tags, checkedTags(), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String tag = mStyledDialog.getItemList().get(which);
+                // "which" returns the wrong index when the tag filter is used, so below code won't work
+                /*String tag = mStyledDialog.getItemList().get(which);
                 if (mCurrentTags.contains(tag)) {
                     mCurrentTags.remove(tag);
                 } else {
                     mCurrentTags.add(tag);
-                }
+                }*/
             }
         }, new CompoundButton.OnCheckedChangeListener() {
             @Override
