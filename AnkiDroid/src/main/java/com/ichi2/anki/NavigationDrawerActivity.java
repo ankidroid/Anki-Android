@@ -109,6 +109,7 @@ public class NavigationDrawerActivity extends AnkiActivity {
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            Timber.i("Item %d selected in navigation drawer", position);
             selectNavigationItem(position);
         }
     }
@@ -122,7 +123,6 @@ public class NavigationDrawerActivity extends AnkiActivity {
 
         switch (position){
             case DRAWER_DECK_PICKER:
-                Timber.i("Hit Decks button in navigation drawer");
                 if (!(this instanceof DeckPicker)) {
                     Intent deckPicker = new Intent(this, DeckPicker.class);
                     deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);    // opening DeckPicker should clear back history
@@ -130,7 +130,6 @@ public class NavigationDrawerActivity extends AnkiActivity {
                 }
                 break;
             case DRAWER_BROWSER:
-                Timber.i("Hit Browser button in navigation drawer");
                 Intent cardBrowser = new Intent(this, CardBrowser.class);
                 if (!(this instanceof CardBrowser)) {
                     if (this instanceof DeckPicker && !mFragmented){
@@ -140,7 +139,6 @@ public class NavigationDrawerActivity extends AnkiActivity {
                 }
                 break;
             case DRAWER_STATISTICS:
-                Timber.i("Hit Stats button in navigation drawer");
             	boolean selectAllDecksButton = false;
                 if(!(this instanceof Statistics)) {
                     if ((this instanceof DeckPicker && !mFragmented)) {
@@ -153,19 +151,16 @@ public class NavigationDrawerActivity extends AnkiActivity {
 
                 break;
             case DRAWER_SETTINGS:
-                Timber.i("Hit Settomgs button in navigation drawer");
                 mOldColPath = AnkiDroidApp.getSharedPrefs(this).getString("deckPath", "oldPath");
                 startActivityForResultWithAnimation(new Intent(this, Preferences.class), REQUEST_PREFERENCES_UPDATE, ActivityTransitionAnimation.LEFT);
                 break;
             
             case DRAWER_HELP:
-                Timber.i("Hit Help button in navigation drawer");
                 Intent helpIntent = new Intent("android.intent.action.VIEW", Uri.parse(getManualUrl()));
                 startActivityWithoutAnimation(helpIntent);
                 break;
                 
             case DRAWER_FEEDBACK:
-                Timber.i("Hit Feedback button in navigation drawer");
                 Intent feedbackIntent = new Intent("android.intent.action.VIEW", Uri.parse(getFeedbackUrl()));
                 startActivityWithoutAnimation(feedbackIntent);
                 break;

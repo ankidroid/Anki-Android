@@ -366,7 +366,7 @@ public class NoteEditor extends AnkiActivity {
         mCardsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Timber.i("Cards button pressed. Opening template editor");
+                Timber.i("NoteEditor:: Cards button pressed. Opening template editor");
                 showCardTemplateEditor();
             }
         });
@@ -502,7 +502,7 @@ public class NoteEditor extends AnkiActivity {
         mNoteDeckSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                // Timber.i("onItemSelected() fired on mNoteDeckSpinner with pos = "+Integer.toString(pos)); 
+                // Timber.i("NoteEditor:: onItemSelected() fired on mNoteDeckSpinner with pos = "+Integer.toString(pos)); 
                 mCurrentDid = mAllDeckIds.get(pos);
             }
 
@@ -555,13 +555,13 @@ public class NoteEditor extends AnkiActivity {
         ((LinearLayout) findViewById(R.id.CardEditorTagButton)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Timber.i("Tags button pressed... opening tags editor");
+                Timber.i("NoteEditor:: Tags button pressed... opening tags editor");
                 showTagsDialog();
             }
         });
 
         if (!mAddNote && mCurrentEditedCard != null) {
-            Timber.i("Edit note activity successfully started with card id %d", mCurrentEditedCard.getId());
+            Timber.i("NoteEditor:: Edit note activity successfully started with card id %d", mCurrentEditedCard.getId());
         }
        
         // Close collection opening dialog if needed
@@ -818,7 +818,7 @@ public class NoteEditor extends AnkiActivity {
 
     @Override
     public void onBackPressed() {
-        Timber.i("onBackPressed()");
+        Timber.i("NoteEditor:: onBackPressed()");
         closeCardEditorWithCheck();
     }
 
@@ -834,7 +834,7 @@ public class NoteEditor extends AnkiActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         // TODO
-        // Timber.i("onSaveInstanceState: " + path);
+        // Timber.i("NoteEditor:: onSaveInstanceState: " + path);
         // outState.putString("deckFilename", path);
         outState.putBoolean("addFact", mAddNote);
         outState.putInt("caller", mCaller);
@@ -883,17 +883,17 @@ public class NoteEditor extends AnkiActivity {
         switch (item.getItemId()) {
 
             case android.R.id.home:
-                Timber.i("Home button pressed");
+                Timber.i("NoteEditor:: Home button pressed");
                 closeCardEditorWithCheck();
                 return true;
 
             case R.id.action_save:
-                Timber.i("Save note button pressed");
+                Timber.i("NoteEditor:: Save note button pressed");
                 saveNote();
                 return true;
 
             case R.id.action_later:
-                Timber.i("Later button pressed");
+                Timber.i("NoteEditor:: Later button pressed");
                 String content = getFieldsText();
                 if (content.length() > mEditFields.size() - 1) {
                     MetaDB.saveIntentInformation(NoteEditor.this, content);
@@ -909,7 +909,7 @@ public class NoteEditor extends AnkiActivity {
 
             case R.id.action_add_card_from_card_editor:
             case R.id.action_copy_card:
-                Timber.i("Copy or add card button pressed");
+                Timber.i("NoteEditor:: Copy or add card button pressed");
                 Intent intent = new Intent(NoteEditor.this, NoteEditor.class);
                 intent.putExtra(EXTRA_CALLER, CALLER_CARDEDITOR);
                 // intent.putExtra(EXTRA_DECKPATH, mDeckPath);
@@ -920,17 +920,17 @@ public class NoteEditor extends AnkiActivity {
                 return true;
 
             case R.id.action_reset_card_progress:
-                Timber.i("Reset progress button pressed");
+                Timber.i("NoteEditor:: Reset progress button pressed");
                 showDialog(DIALOG_RESET_CARD);
                 return true;
 
             case R.id.action_saved_notes:
-                Timber.i("Saved data button pressed");
+                Timber.i("NoteEditor:: Saved data button pressed");
                 showDialog(DIALOG_INTENT_INFORMATION);
                 return true;
 
             case R.id.action_reschedule_card:
-                Timber.i("Reschedule button pressed");
+                Timber.i("NoteEditor:: Reschedule button pressed");
                 showDialog(DIALOG_RESCHEDULE_CARD);
                 return true;
 
@@ -983,7 +983,7 @@ public class NoteEditor extends AnkiActivity {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Timber.i("OK button pressed to confirm discard changes");
+                        Timber.i("NoteEditor:: OK button pressed to confirm discard changes");
                         closeNoteEditor();
                     }
                 });
@@ -1085,7 +1085,7 @@ public class NoteEditor extends AnkiActivity {
                 builder.setPositiveButton(res.getString(R.string.dialog_positive_reset), new OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Timber.i("OK button pressed");
+                        Timber.i("NoteEditor:: OK button pressed");
                         getCol().getSched().forgetCards(new long[] { mCurrentEditedCard.getId() });
                         getCol().reset();
                         mRescheduled = true;
@@ -1108,7 +1108,7 @@ public class NoteEditor extends AnkiActivity {
                 builder.setPositiveButton(res.getString(R.string.dialog_ok), new OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Timber.i("OK button pressed");
+                        Timber.i("NoteEditor:: OK button pressed");
                         int days = Integer.parseInt(((EditText) rescheduleEditText).getText().toString());
                         getCol().getSched().reschedCards(new long[] { mCurrentEditedCard.getId() }, days, days);
                         getCol().reset();
@@ -1289,7 +1289,7 @@ public class NoteEditor extends AnkiActivity {
         mediaButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Timber.i("Multimedia button pressed for field %d", index);
+                Timber.i("NoteEditor:: Multimedia button pressed for field %d", index);
                 if (mEditorNote.items()[index][1].length() > 0) {
                     // If the field already exists then we start the field editor, which figures out the type
                     // automatically
@@ -1310,19 +1310,19 @@ public class NoteEditor extends AnkiActivity {
                             IField field = mNote.getField(index);
                             switch (item.getItemId()) {
                                 case R.id.menu_multimedia_audio:
-                                    Timber.i("Record audio button pressed");
+                                    Timber.i("NoteEditor:: Record audio button pressed");
                                     field = new AudioField();
                                     mNote.setField(index, field);
                                     startMultimediaFieldEditor(index, mNote, field);
                                     return true;
                                 case R.id.menu_multimedia_photo:
-                                    Timber.i("Add image button pressed");
+                                    Timber.i("NoteEditor:: Add image button pressed");
                                     field = new ImageField();
                                     mNote.setField(index, field);
                                     startMultimediaFieldEditor(index, mNote, field);
                                     return true;
                                 case R.id.menu_multimedia_text:
-                                    Timber.i("Advanced editor button pressed");
+                                    Timber.i("NoteEditor:: Advanced editor button pressed");
                                     startMultimediaFieldEditor(index, mNote, field);
                                     return true;
                                 default:
@@ -1341,7 +1341,7 @@ public class NoteEditor extends AnkiActivity {
         remapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Timber.i("Remap button pressed for new field %d", newFieldIndex);
+                Timber.i("NoteEditor:: Remap button pressed for new field %d", newFieldIndex);
                 // Show list of fields from the original note which we can map to
                 PopupMenu popup = new PopupMenu(NoteEditor.this, v);
                 final String [][] items = mEditorNote.items();
@@ -1355,7 +1355,7 @@ public class NoteEditor extends AnkiActivity {
                     public boolean onMenuItemClick(MenuItem item) {
                         // Get menu item id
                         Integer idx = item.getItemId();
-                        Timber.i("User chose to remap to old field %d", idx);
+                        Timber.i("NoteEditor:: User chose to remap to old field %d", idx);
                         // Retrieve any existing mappings between newFieldIndex and idx
                         Integer previousMapping = getKeyByValue(mModelChangeFieldMap, newFieldIndex);
                         Integer mappingConflict = mModelChangeFieldMap.get(idx);
@@ -1686,7 +1686,7 @@ public class NoteEditor extends AnkiActivity {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
             // If a new column was selected then change the key used to map from mCards to the column TextView
-            //Timber.i("onItemSelected() fired on mNoteTypeSpinner");
+            //Timber.i("NoteEditor:: onItemSelected() fired on mNoteTypeSpinner");
             long oldModelId;
             try {
                 oldModelId = getCol().getModels().current().getLong("id");

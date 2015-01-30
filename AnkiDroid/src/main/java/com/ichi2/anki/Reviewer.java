@@ -96,61 +96,61 @@ public class Reviewer extends AbstractFlashcardViewer {
         switch (item.getItemId()) {
 
             case android.R.id.home:
-                Timber.i("Home button pressed");
+                Timber.i("Reviewer:: Home button pressed");
                 closeReviewer(RESULT_OK, true);
                 break;
 
             case R.id.action_undo:
-                Timber.i("Undo button pressed");
+                Timber.i("Reviewer:: Undo button pressed");
                 undo();
                 break;
 
             case R.id.action_mark_card:
-                Timber.i("Mark button pressed");
+                Timber.i("Reviewer:: Mark button pressed");
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, mMarkCardHandler, new DeckTask.TaskData(mSched,
                         mCurrentCard, 0));
                 break;
 
             case R.id.action_replay:
-                Timber.i("Replay audio button pressed (from menu)");
+                Timber.i("Reviewer:: Replay audio button pressed (from menu)");
                 playSounds(true);
                 break;
 
             case R.id.action_edit:
-                Timber.i("Edit note button pressed");
+                Timber.i("Reviewer:: Edit note button pressed");
                 return editCard();
 
             case R.id.action_bury_card:
-                Timber.i("Bury card button pressed");
+                Timber.i("Reviewer:: Bury card button pressed");
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
                         mSched, mCurrentCard, 4));
                 break;
 
             case R.id.action_bury_note:
-                Timber.i("Bury note button pressed");
+                Timber.i("Reviewer:: Bury note button pressed");
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
                         mSched, mCurrentCard, 0));
                 break;
 
             case R.id.action_suspend_card:
-                Timber.i("Suspend card button pressed");
+                Timber.i("Reviewer:: Suspend card button pressed");
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
                         mSched, mCurrentCard, 1));
                 break;
 
             case R.id.action_suspend_note:
-                Timber.i("Suspend note button pressed");
+                Timber.i("Reviewer:: Suspend note button pressed");
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
                         mSched, mCurrentCard, 2));
                 break;
 
             case R.id.action_delete:
-                Timber.i("Delete note button pressed");
+                Timber.i("Reviewer:: Delete note button pressed");
                 showDeleteNoteDialog();
                 break;
 
             case R.id.action_clear_whiteboard:
-                Timber.i("Clear whiteboard button pressed");
+                Timber.i("Reviewer:: Clear whiteboard button pressed");
                 if (mWhiteboard != null) {
                     mWhiteboard.clear();    
                 }
@@ -158,7 +158,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
             case R.id.action_hide_whiteboard:
                 // toggle whiteboard visibility
-                Timber.i("Whiteboard visibility set to %b", !mShowWhiteboard);
+                Timber.i("Reviewer:: Whiteboard visibility set to %b", !mShowWhiteboard);
                 setWhiteboardVisibility(!mShowWhiteboard);
                 refreshActionBar();
                 break;
@@ -166,14 +166,14 @@ public class Reviewer extends AbstractFlashcardViewer {
             case R.id.action_enable_whiteboard:
                 // toggle whiteboard enabled state (and show/hide whiteboard item in action bar)
                 mPrefWhiteboard = ! mPrefWhiteboard;
-                Timber.i("Whiteboard enabled state set to %b", mPrefWhiteboard);
+                Timber.i("Reviewer:: Whiteboard enabled state set to %b", mPrefWhiteboard);
                 setWhiteboardEnabledState(mPrefWhiteboard);
                 setWhiteboardVisibility(mPrefWhiteboard);
                 refreshActionBar();
                 break;
 
             case R.id.action_search_dictionary:
-                Timber.i("Search dictionary button pressed");
+                Timber.i("Reviewer:: Search dictionary button pressed");
                 lookUpOrSelectText();
                 break;
 

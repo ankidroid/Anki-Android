@@ -367,7 +367,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private final Runnable longClickTestRunnable = new Runnable() {
         @Override
         public void run() {
-            Timber.i("onEmulatedLongClick");
+            Timber.i("AbstractFlashcardViewer:: onEmulatedLongClick");
             // Show hint about lookup function if dictionary available and Webview version supports text selection
             if (!mDisableClipboard && Lookup.isAvailable() && AnkiDroidApp.SDK_VERSION >= 11) {
                 String lookupHint = getResources().getString(R.string.lookup_hint);
@@ -388,7 +388,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private View.OnClickListener mCardStatisticsListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Timber.i("Show card statistics");
+            Timber.i("AbstractFlashcardViewer:: Show card statistics");
             stopTimer();
             // Themes.htmlOkDialog(AbstractReviewer.this, getResources().getString(R.string.card_browser_card_details),
             // mCurrentCard.getCardDetails(AbstractReviewer.this, false), new DialogInterface.OnClickListener() {
@@ -409,7 +409,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private View.OnClickListener mFlipCardListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Timber.i("Show answer button pressed");
+            Timber.i("AbstractFlashcardViewer:: Show answer button pressed");
             mTimeoutHandler.removeCallbacks(mShowAnswerTask);
             displayCardAnswer();
         }
@@ -421,19 +421,19 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             mTimeoutHandler.removeCallbacks(mShowQuestionTask);
             switch (view.getId()) {
                 case R.id.flashcard_layout_ease1:
-                    Timber.i("EASE_FAILED pressed");
+                    Timber.i("AbstractFlashcardViewer:: EASE_FAILED pressed");
                     answerCard(EASE_FAILED);
                     break;
                 case R.id.flashcard_layout_ease2:
-                    Timber.i("EASE_HARD pressed");
+                    Timber.i("AbstractFlashcardViewer:: EASE_HARD pressed");
                     answerCard(EASE_HARD);
                     break;
                 case R.id.flashcard_layout_ease3:
-                    Timber.i("EASE_MID pressed");
+                    Timber.i("AbstractFlashcardViewer:: EASE_MID pressed");
                     answerCard(EASE_MID);
                     break;
                 case R.id.flashcard_layout_ease4:
-                    Timber.i("EASE_EASY pressed");
+                    Timber.i("AbstractFlashcardViewer:: EASE_EASY pressed");
                     answerCard(EASE_EASY);
                     break;
                 default:
@@ -494,7 +494,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             if (mIsSelecting) {
                 return false;
             }
-            Timber.i("onLongClick");
+            Timber.i("AbstractFlashcardViewer:: onLongClick");
             Vibrator vibratorManager = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
             vibratorManager.vibrate(50);
             longClickHandler.postDelayed(startLongClickAction, 300);
@@ -1140,7 +1140,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             // Modification of the note is independent of rescheduling, so we still need to save it if it
             // happened.
             if (resultCode != RESULT_CANCELED) {
-                Timber.i("Saving card...");
+                Timber.i("AbstractFlashcardViewer:: Saving card...");
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler, new DeckTask.TaskData(
                         mSched, mCurrentCard, true));
             } else {
@@ -1302,7 +1302,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Timber.i("OK button pressed to delete note %d", mCurrentCard.getNid());
+                        Timber.i("AbstractFlashcardViewer:: OK button pressed to delete note %d", mCurrentCard.getNid());
                         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler,
                                 new DeckTask.TaskData(mSched, mCurrentCard, 3));
                     }
@@ -1478,7 +1478,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
             @Override
             public void onClick(View arg0) {
-                Timber.i("Lookup button pressed");
+                Timber.i("AbstractFlashcardViewer:: Lookup button pressed");
                 if (clipboardHasText()) {
                     lookUp();
                 }
@@ -2017,7 +2017,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             mTimeoutHandler.postDelayed(mShowAnswerTask, mWaitAnswerSecond * 1000);
         }
 
-        Timber.i("Question successfully shown for card id %d", mCurrentCard.getId());
+        Timber.i("AbstractFlashcardViewer:: Question successfully shown for card id %d", mCurrentCard.getId());
     }
 
 
@@ -2760,7 +2760,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     public final class AnkiDroidWebChromeClient extends WebChromeClient {
         @Override
         public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
-            Timber.i("onJsAlert: %s", message);
+            Timber.i("AbstractFlashcardViewer:: onJsAlert: %s", message);
             result.confirm();
             return true;
         }

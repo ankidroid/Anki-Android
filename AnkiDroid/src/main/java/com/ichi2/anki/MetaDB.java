@@ -73,9 +73,9 @@ public class MetaDB {
 
     /** Creating any table that missing and upgrading necessary tables. */
     private static SQLiteDatabase upgradeDB(SQLiteDatabase mMetaDb, int databaseVersion) {
-        Timber.i("Upgrading Internal Database..");
+        Timber.i("MetaDB:: Upgrading Internal Database..");
         // if (mMetaDb.getVersion() == 0) {
-        Timber.i("Applying changes for version: 0");
+        Timber.i("MetaDB:: Applying changes for version: 0");
 
         if (mMetaDb.getVersion() < 4) {
             mMetaDb.execSQL("DROP TABLE IF EXISTS languages;");
@@ -115,7 +115,7 @@ public class MetaDB {
             mMetaDb.execSQL("ALTER TABLE intentInformation " + "DROP COLUMN target INTEGER NOT NULL DEFAULT '0'");
         }
         mMetaDb.setVersion(databaseVersion);
-        Timber.i("Upgrading Internal Database finished. New version: %d", databaseVersion);
+        Timber.i("MetaDB:: Upgrading Internal Database finished. New version: %d", databaseVersion);
         return mMetaDb;
     }
 
@@ -143,17 +143,17 @@ public class MetaDB {
         openDBIfClosed(context);
         try {
             mMetaDb.execSQL("DROP TABLE IF EXISTS languages;");
-            Timber.i("Resetting all language assignment");
+            Timber.i("MetaDB:: Resetting all language assignment");
             mMetaDb.execSQL("DROP TABLE IF EXISTS whiteboardState;");
-            Timber.i("Resetting whiteboard state");
+            Timber.i("MetaDB:: Resetting whiteboard state");
             mMetaDb.execSQL("DROP TABLE IF EXISTS customDictionary;");
-            Timber.i("Resetting custom Dictionary");
+            Timber.i("MetaDB:: Resetting custom Dictionary");
             mMetaDb.execSQL("DROP TABLE IF EXISTS widgetStatus;");
-            Timber.i("Resetting widget status");
+            Timber.i("MetaDB:: Resetting widget status");
             mMetaDb.execSQL("DROP TABLE IF EXISTS smallWidgetStatus;");
-            Timber.i("Resetting small widget status");
+            Timber.i("MetaDB:: Resetting small widget status");
             mMetaDb.execSQL("DROP TABLE IF EXISTS intentInformation;");
-            Timber.i("Resetting intentInformation");
+            Timber.i("MetaDB:: Resetting intentInformation");
             upgradeDB(mMetaDb, DATABASE_VERSION);
             return true;
         } catch (Exception e) {
@@ -169,7 +169,7 @@ public class MetaDB {
             openDB(context);
         }
         try {
-            Timber.i("Resetting all language assignments");
+            Timber.i("MetaDB:: Resetting all language assignments");
             mMetaDb.execSQL("DROP TABLE IF EXISTS languages;");
             upgradeDB(mMetaDb, DATABASE_VERSION);
             return true;
@@ -186,7 +186,7 @@ public class MetaDB {
             openDB(context);
         }
         try {
-            Timber.i("Resetting widget status");
+            Timber.i("MetaDB:: Resetting widget status");
             mMetaDb.execSQL("DROP TABLE IF EXISTS widgetStatus;");
             mMetaDb.execSQL("DROP TABLE IF EXISTS smallWidgetStatus;");
             upgradeDB(mMetaDb, DATABASE_VERSION);
@@ -204,7 +204,7 @@ public class MetaDB {
             openDB(context);
         }
         try {
-            Timber.i("Resetting intent information");
+            Timber.i("MetaDB:: Resetting intent information");
             mMetaDb.execSQL("DROP TABLE IF EXISTS intentInformation;");
             upgradeDB(mMetaDb, DATABASE_VERSION);
             return true;
@@ -273,7 +273,7 @@ public class MetaDB {
         openDBIfClosed(context);
         try {
             mMetaDb.execSQL("DELETE FROM languages WHERE did = " + did + ";");
-            Timber.i("Resetting language assignment for deck %d", did);
+            Timber.i("MetaDB:: Resetting language assignment for deck %d", did);
             return true;
         } catch (Exception e) {
             Timber.e(e, "Error resetting deck language");
@@ -376,11 +376,11 @@ public class MetaDB {
             if (cur.moveToNext()) {
                 mMetaDb.execSQL("UPDATE customDictionary " + "SET did = " + did + ", " + "dictionary="
                         + Integer.toString(dictionary) + " " + "WHERE _id=" + cur.getString(0) + ";");
-                Timber.i("Store custom dictionary (%d) for deck %d", dictionary, did);
+                Timber.i("MetaDB:: Store custom dictionary (%d) for deck %d", dictionary, did);
             } else {
                 mMetaDb.execSQL("INSERT INTO customDictionary (did, dictionary) VALUES (?, ?)", new Object[] { did,
                         dictionary });
-                Timber.i("Store custom dictionary (%d) for deck %d", dictionary, did);
+                Timber.i("MetaDB:: Store custom dictionary (%d) for deck %d", dictionary, did);
             }
         } catch (Exception e) {
             Timber.e(e, "Error storing custom dictionary to MetaDB ");
@@ -494,7 +494,7 @@ public class MetaDB {
         } catch (SQLiteException e) {
             Timber.e(e, "MetaDB.storeSmallWidgetStatus: failed");
             closeDB();
-            Timber.i("Trying to reset Widget: " + resetWidget(context));
+            Timber.i("MetaDB:: Trying to reset Widget: " + resetWidget(context));
         }
     }
 
@@ -528,7 +528,7 @@ public class MetaDB {
         } catch (SQLiteException e) {
             Timber.e(e, "MetaDB.storeWidgetStatus: failed");
             closeDB();
-            Timber.i("Trying to reset Widget: " + resetWidget(context));
+            Timber.i("MetaDB:: Trying to reset Widget: " + resetWidget(context));
         }
     }
 
@@ -577,7 +577,7 @@ public class MetaDB {
         openDBIfClosed(context);
         try {
             mMetaDb.execSQL("INSERT INTO intentInformation (fields) " + " VALUES (?);", new Object[] { fields });
-            Timber.i("Store intentInformation: " + fields);
+            Timber.i("MetaDB:: Store intentInformation: " + fields);
         } catch (Exception e) {
             Timber.e(e, "Error storing intentInformation in MetaDB ");
         }
@@ -589,7 +589,7 @@ public class MetaDB {
             openDB(context);
         }
         try {
-            Timber.i("Deleting intent information " + id);
+            Timber.i("MetaDB:: Deleting intent information " + id);
             mMetaDb.execSQL("DELETE FROM intentInformation WHERE id = " + id + ";");
             return true;
         } catch (Exception e) {
