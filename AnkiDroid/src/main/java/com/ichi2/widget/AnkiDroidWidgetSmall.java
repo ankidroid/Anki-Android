@@ -25,13 +25,15 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.IBinder;
-import android.util.Log;
+
 import android.view.View;
 import android.widget.RemoteViews;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
+
+import timber.log.Timber;
 
 public class AnkiDroidWidgetSmall extends AppWidgetProvider {
 
@@ -41,7 +43,7 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        Log.i(AnkiDroidApp.TAG, "SmallWidget: onUpdate");
+        Timber.d("SmallWidget: onUpdate");
         WidgetStatus.update(context);
     }
 
@@ -49,7 +51,7 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
     @Override
     public void onEnabled(Context context) {
         super.onEnabled(context);
-        Log.i(AnkiDroidApp.TAG, "SmallWidget: Widget enabled");
+        Timber.d("SmallWidget: Widget enabled");
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
         preferences.edit().putBoolean("widgetSmallEnabled", true).commit();
     }
@@ -58,7 +60,7 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
     @Override
     public void onDisabled(Context context) {
         super.onDisabled(context);
-        Log.i(AnkiDroidApp.TAG, "SmallWidget: Widget disabled");
+        Timber.d("SmallWidget: Widget disabled");
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
         preferences.edit().putBoolean("widgetSmallEnabled", false).commit();
     }
@@ -77,7 +79,7 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
 
         @Override
         public void onStart(Intent intent, int startId) {
-            Log.i(AnkiDroidApp.TAG, "SmallWidget: OnStart");
+            Timber.i("SmallWidget: OnStart");
 
             RemoteViews updateViews = buildUpdate(this, true);
 
@@ -88,7 +90,7 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
 
 
         private RemoteViews buildUpdate(Context context, boolean updateDueDecksNow) {
-            Log.i(AnkiDroidApp.TAG, "buildUpdate");
+            Timber.d("buildUpdate");
 
             // Resources res = context.getResources();
             RemoteViews updateViews = new RemoteViews(context.getPackageName(), R.layout.widget_small);
@@ -106,7 +108,7 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
                         public void onReceive(Context context, Intent intent) {
                             String action = intent.getAction();
                             if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
-                                Log.i(AnkiDroidApp.TAG, "mMountReceiver - Action = Media Mounted");
+                                Timber.d("mMountReceiver - Action = Media Mounted");
                                 if (remounted) {
                                     WidgetStatus.update(getBaseContext());
                                     remounted = false;
@@ -173,7 +175,7 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
 
         @Override
         public IBinder onBind(Intent arg0) {
-            Log.i(AnkiDroidApp.TAG, "onBind");
+            Timber.d("onBind");
             return null;
         }
     }

@@ -21,7 +21,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.net.Uri;
 import android.text.TextUtils;
-import android.util.Log;
+
 import android.util.Pair;
 
 import com.ichi2.anki.AnkiDatabaseManager;
@@ -57,6 +57,8 @@ import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
+
+import timber.log.Timber;
 
 /**
  * Media manager - handles the addition and removal of media files from the media directory (collection.media) and
@@ -123,7 +125,7 @@ public class Media {
         File fd = new File(mDir);
         if (!fd.exists()) {
             if (!fd.mkdir()) {
-                Log.e(AnkiDroidApp.TAG, "Cannot create media directory: " + mDir);
+                Timber.e("Cannot create media directory: " + mDir);
             }
         }
         // change database
@@ -856,7 +858,7 @@ public class Media {
             z.close();
             return new Pair<File, List<String>>(f, fnames);
         } catch (IOException e) {
-            Log.e(AnkiDroidApp.TAG, "Failed to create media changes zip", e);
+            Timber.e("Failed to create media changes zip", e);
             throw new RuntimeException(e);
         } finally {
             if (cur != null) {
@@ -940,7 +942,7 @@ public class Media {
      * if it already exists.
      */
     public void markFileAdd(String fname) {
-        Log.i(AnkiDroidApp.TAG, "Marking media file addition in media db: " + fname);
+        Timber.i("Marking media file addition in media db: " + fname);
         String path = new File(dir(), fname).getAbsolutePath();
         mDb.execute("insert or replace into media values (?,?,?,?)",
                 new Object[] { fname, _checksum(path), _mtime(path), 1 });
@@ -955,7 +957,7 @@ public class Media {
         if (f.exists()) {
             f.delete();
         }
-        Log.i(AnkiDroidApp.TAG, "Marking media file removal in media db: " + fname);
+        Timber.i("Marking media file removal in media db: " + fname);
         mDb.execute("insert or replace into media values (?,?,?,?)",
                 new Object[] { fname, null, 0, 1 });
     }

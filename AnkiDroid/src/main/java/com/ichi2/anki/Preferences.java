@@ -39,7 +39,7 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
-import android.util.Log;
+
 import android.view.KeyEvent;
 import android.view.WindowManager.BadTokenException;
 import android.widget.Toast;
@@ -69,6 +69,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
+
+import timber.log.Timber;
 
 /**
  * Preferences dialog.
@@ -317,7 +319,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         try {
             entry = listpref.getEntry().toString();
         } catch (NullPointerException e) {
-            Log.e(AnkiDroidApp.TAG, "Error getting set preference value of " + key + ": " + e);
+            Timber.e("Error getting set preference value of " + key + ": " + e);
             entry = "?";
         }
         if (mListsToUpdate.containsKey(key)) {
@@ -353,7 +355,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         try {
             entry = pref.getText();
         } catch (NullPointerException e) {
-            Log.e(AnkiDroidApp.TAG, "Error getting set preference value of " + key + ": " + e);
+            Timber.e("Error getting set preference value of " + key + ": " + e);
             entry = "?";
         }
         if (mListsToUpdate.containsKey(key)) {
@@ -385,7 +387,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 }
             }
         } catch (NullPointerException e) {
-            Log.e(AnkiDroidApp.TAG, "Exception when updating seekbar preference: " + e);
+            Timber.e(e, "Exception when updating seekbar preference");
         }
     }
 
@@ -406,7 +408,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 }
             }
         } catch (NullPointerException e) {
-            Log.e(AnkiDroidApp.TAG, "Exception when updating NumberRangePreference: " + e);
+            Timber.e(e, "Exception when updating NumberRangePreference");
         }
     }
 
@@ -567,7 +569,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 updateNumberRangePreference(key);
             }
         } catch (BadTokenException e) {
-            Log.e(AnkiDroidApp.TAG, "Preferences: BadTokenException on showDialog: " + e);
+            Timber.e(e, "Preferences: BadTokenException on showDialog");
         } catch (NumberFormatException e) {
             throw new RuntimeException();
         } catch (JSONException e) {
@@ -585,18 +587,18 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private String[] getCustomFonts(String defaultValue, boolean useFullPath) {
         List<AnkiFont> mFonts = Utils.getCustomFonts(this);
         int count = mFonts.size();
-        Log.d(AnkiDroidApp.TAG, "There are " + count + " custom fonts");
+        Timber.d("There are %d custom fonts", count);
         String[] names = new String[count + 1];
         names[0] = defaultValue;
         if (useFullPath) {
             for (int index = 1; index < count + 1; ++index) {
                 names[index] = mFonts.get(index - 1).getPath();
-                Log.d(AnkiDroidApp.TAG, "Adding custom font: " + names[index]);
+                Timber.d("Adding custom font: %s", names[index]);
             }
         } else {
             for (int index = 1; index < count + 1; ++index) {
                 names[index] = mFonts.get(index - 1).getName();
-                Log.d(AnkiDroidApp.TAG, "Adding custom font: " + names[index]);
+                Timber.d("Adding custom font: %s", names[index]);
             }
         }
         return names;
@@ -606,7 +608,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            Log.i(AnkiDroidApp.TAG, "Preferences - onBackPressed()");
+            Timber.i("onBackPressed()");
             closePreferences();
             return true;
         }

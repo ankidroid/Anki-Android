@@ -3,13 +3,15 @@ package com.ichi2.anki;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
+
 import android.view.WindowManager;
 
 import com.ichi2.async.DeckTask;
 import com.ichi2.async.DeckTask.TaskData;
 
 import java.util.Calendar;
+
+import timber.log.Timber;
 
 public class UIUtils {
 
@@ -40,13 +42,13 @@ public class UIUtils {
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CLOSE_DECK, new DeckTask.TaskListener() {
                 @Override
                 public void onPreExecute() {
-                    Log.i(AnkiDroidApp.TAG, "closeCollectionInBackground: start");
+                    Timber.d("closeCollectionInBackground: start");
                 }
 
 
                 @Override
                 public void onPostExecute(TaskData result) {
-                    Log.i(AnkiDroidApp.TAG, "closesCollectionInBackground: finished");
+                    Timber.d("closesCollectionInBackground: finished");
                 }
 
 
@@ -68,13 +70,13 @@ public class UIUtils {
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_COLLECTION, new DeckTask.TaskListener() {
                 @Override
                 public void onPreExecute() {
-                    Log.i(AnkiDroidApp.TAG, "saveCollectionInBackground: start");
+                    Timber.d("saveCollectionInBackground: start");
                 }
 
 
                 @Override
                 public void onPostExecute(TaskData result) {
-                    Log.i(AnkiDroidApp.TAG, "saveCollectionInBackground: finished");
+                    Timber.d("saveCollectionInBackground: finished");
                 }
 
 

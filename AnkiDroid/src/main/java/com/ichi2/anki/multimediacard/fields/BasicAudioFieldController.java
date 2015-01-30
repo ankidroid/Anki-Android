@@ -20,7 +20,7 @@
 package com.ichi2.anki.multimediacard.fields;
 
 import android.content.Intent;
-import android.util.Log;
+
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -31,6 +31,8 @@ import com.ichi2.utils.DiskUtil;
 
 import java.io.File;
 import java.io.IOException;
+
+import timber.log.Timber;
 
 public class BasicAudioFieldController extends FieldControllerBase implements IFieldController {
 
@@ -64,7 +66,7 @@ public class BasicAudioFieldController extends FieldControllerBase implements IF
                 file = File.createTempFile("ankidroid_audiorec", ".3gp", DiskUtil.getStoringDirectory());
                 tempAudioPath = file.getAbsolutePath();
             } catch (IOException e) {
-                Log.e(AnkiDroidApp.TAG, "Could not create temporary audio file. " + e.getMessage());
+                Timber.e("Could not create temporary audio file. " + e.getMessage());
                 tempAudioPath = null;
             }
         }

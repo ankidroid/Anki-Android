@@ -18,7 +18,7 @@ package com.ichi2.anki.stats;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
+
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
@@ -35,6 +35,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+
+import timber.log.Timber;
 
 public class AnkiStatsTaskHandler {
 
@@ -122,10 +124,10 @@ public class AnkiStatsTaskHandler {
             sLock.lock();
             try {
                 if (!mIsRunning) {
-                    Log.d(AnkiDroidApp.TAG, "quiting CreateChartTask(" + mChartType.name() + ") before execution");
+                    Timber.d("quiting CreateChartTask (%s) before execution", mChartType.name());
                     return null;
                 } else
-                    Log.d(AnkiDroidApp.TAG, "starting Create ChartTask, type: " + mChartType.name());
+                    Timber.d("starting Create ChartTask, type: %s", mChartType.name());
                 mImageView = (ChartView) params[0];
                 mProgressBar = (ProgressBar) params[1];
                 ChartBuilder chartBuilder = new ChartBuilder(mImageView, mCollectionData, sIsWholeCollection, mChartType);
@@ -173,10 +175,10 @@ public class AnkiStatsTaskHandler {
             sLock.lock();
             try {
                 if (!mIsRunning) {
-                    Log.d(AnkiDroidApp.TAG, "quiting CreateSmallDueChart before execution");
+                    Timber.d("quiting CreateSmallDueChart before execution");
                     return null;
                 } else
-                    Log.d(AnkiDroidApp.TAG, "starting CreateSmallDueChart");
+                    Timber.d("starting CreateSmallDueChart");
                 mImageView = (ChartView) params[0];
                 ChartBuilder chartBuilder = new ChartBuilder(mImageView, AnkiDroidApp.getCol(), sIsWholeCollection, Stats.ChartType.OTHER);
                 return chartBuilder.createSmallDueChart(mSeriesList);
@@ -197,7 +199,7 @@ public class AnkiStatsTaskHandler {
                 mImageView.setData(plotSheet);
                 mImageView.setVisibility(View.VISIBLE);
                 mImageView.invalidate();
-                Log.d(AnkiDroidApp.TAG, "finished CreateSmallDueChart");
+                Timber.d("finished CreateSmallDueChart");
             }
         }
 
@@ -220,10 +222,10 @@ public class AnkiStatsTaskHandler {
             sLock.lock();
             try {
                 if (!mIsRunning) {
-                    Log.d(AnkiDroidApp.TAG, "quiting CreateStatisticsOverview before execution");
+                    Timber.d("quiting CreateStatisticsOverview before execution");
                     return null;
                 } else
-                    Log.d(AnkiDroidApp.TAG, "starting CreateStatisticsOverview" );
+                    Timber.d("starting CreateStatisticsOverview" );
                 mWebView = (WebView) params[0];
                 mProgressBar = (ProgressBar) params[1];
                 String html = "";
@@ -276,17 +278,17 @@ public class AnkiStatsTaskHandler {
             try {
                 Collection collection = (Collection) params[0];
                 if (!mIsRunning || collection == null || collection.getDb() == null) {
-                    Log.d(AnkiDroidApp.TAG, "quiting CreateSmallTodayOverview before execution");
+                    Timber.d("quiting CreateSmallTodayOverview before execution");
                     return null;
                 } else
-                    Log.d(AnkiDroidApp.TAG, "starting CreateSmallTodayOverview" );
+                    Timber.d("starting CreateSmallTodayOverview" );
                 mTextView = (TextView) params[1];
 
                 //eventually put this in Stats (in desktop it is not though)
                 int cards, thetime;
                 Cursor cur = null;
                 String query = "select count(), sum(time)/1000 from revlog where id > " + ((collection.getSched().getDayCutoff()-86400)*1000);
-                Log.d(AnkiDroidApp.TAG, "CreateSmallTodayOverview query: " + query);
+                Timber.d("CreateSmallTodayOverview query: " + query);
 
                 try {
                     cur = collection.getDb()
@@ -343,17 +345,17 @@ public class AnkiStatsTaskHandler {
             try {
                 Collection collection = (Collection) params[0];
                 if (!mIsRunning || collection == null || collection.getDb() == null) {
-                    Log.d(AnkiDroidApp.TAG, "quiting CreateTodayLearnCountOnly before execution");
+                    Timber.d("quiting CreateTodayLearnCountOnly before execution");
                     return null;
                 } else
-                    Log.d(AnkiDroidApp.TAG, "starting CreateTodayLearnCountOnly" );
+                    Timber.d("starting CreateTodayLearnCountOnly" );
                 mViewPager = (ViewPager) params[1];
 
                 //eventually put this in Stats (in desktop it is not though)
                 int cards;
                 Cursor cur = null;
                 String query = "select count() from revlog where id > " + ((collection.getSched().getDayCutoff()-86400)*1000);
-                Log.d(AnkiDroidApp.TAG, "CreateSmallTodayOverview query: " + query);
+                Timber.d("CreateSmallTodayOverview query: " + query);
 
                 try {
                     cur = collection.getDb()

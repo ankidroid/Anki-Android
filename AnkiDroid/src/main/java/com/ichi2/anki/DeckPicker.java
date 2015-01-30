@@ -43,7 +43,6 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -101,6 +100,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.TreeSet;
+
+import timber.log.Timber;
 
 public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEventListener,
         StudyOptionsListener, DatabaseErrorDialog.DatabaseErrorDialogListener,
@@ -181,6 +182,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     private AdapterView.OnItemClickListener mDeckSelHandler = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View v, int p, long id) {
+            Timber.i("Selected deck in position %d", p);
             handleDeckSelection(p);
         }
     };
@@ -191,10 +193,10 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
             if (result == null) {
-                Log.i(AnkiDroidApp.TAG, "loadCounts() onPostExecute :: result = null");
+                Timber.w("loadCounts() onPostExecute :: result = null");
                 return;
             }
-            Log.i(AnkiDroidApp.TAG, "loadCounts() onPostExecute :: result = "+result.getObjArray().toString());
+            Timber.d("loadCounts() onPostExecute :: result = %s", result.getObjArray().toString());
             Object[] res = result.getObjArray();
             updateDecksList((TreeSet<Object[]>) res[0], (Integer) res[1], (Integer) res[2]);
             dismissOpeningCollectionDialog();
@@ -209,7 +211,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                             loadStudyOptionsFragment(did, null);
                         } catch (IllegalStateException e) {
                             // If activity has been stopped then just ignore the updated counts
-                            Log.e(AnkiDroidApp.TAG, "DeckPicker mLoadCountsHandler -- could not update StudyOptionsFragment");
+                            Timber.e("DeckPicker mLoadCountsHandler -- could not update StudyOptionsFragment");
                         }
                     }
                 }
@@ -231,7 +233,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
         @Override
         public void onCancelled() {
-            Log.v(AnkiDroidApp.TAG, "loadCounts onCancelled()");
+            Timber.d("loadCounts onCancelled()");
         }
     };
 
@@ -383,7 +385,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     /** Called when the activity is first created. */
     @Override
     protected void onCreate(Bundle savedInstanceState) throws SQLException {
-        Log.i(AnkiDroidApp.TAG, "DeckPicker - onCreate");
+        Timber.d("onCreate()");
         Intent intent = getIntent();
         // Show splashscreen if app first starting
         if (intent.getCategories()!= null || !AnkiDroidApp.colIsOpen()) {
@@ -471,6 +473,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         mDeckListView.setOnItemLongClickListener(new OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Timber.i("Long tapped on deck in position %d", position);
                 if (!AnkiDroidApp.colIsOpen() || mDeckList == null || mDeckList.size() == 0) {
                     return true;
                 }
@@ -554,15 +557,18 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         switch (item.getItemId()) {
 
             case R.id.action_sync:
+                Timber.i("Sync button pressed");
                 sync();
                 return true;
 
             case R.id.action_add_note_from_deck_picker:
+                Timber.i("Add note button pressed");
                 hideShowcaseView();
                 addNote();
                 return true;
 
             case R.id.action_shared_decks:
+                Timber.i("Get shared deck button pressed");
                 hideShowcaseView();
                 if (colOpen()) {
                     addSharedDeck();
@@ -570,6 +576,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 return true;
 
             case R.id.action_new_deck:
+                Timber.i("Add deck button pressed");
                 hideShowcaseView();
                 StyledDialog.Builder builder2 = new StyledDialog.Builder(DeckPicker.this);
                 builder2.setTitle(res.getString(R.string.new_deck));
@@ -582,7 +589,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                     public void onClick(DialogInterface dialog, int which) {
                         String deckName = mDialogEditText.getText().toString()
                                 .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
-                        Log.i(AnkiDroidApp.TAG, "Creating deck: " + deckName);
+                        Timber.i("Creating new deck...");
                         getCol().getDecks().id(deckName, true);
                         loadCounts();
                     }
@@ -592,10 +599,12 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 return true;
 
             case R.id.action_import:
+                Timber.i("Import button pressed");
                 showImportDialog(ImportDialog.DIALOG_IMPORT_HINT);
                 return true;
 
             case R.id.action_new_filtered_deck:
+                Timber.i("New filtered deck button pressed");
                 StyledDialog.Builder builder3 = new StyledDialog.Builder(DeckPicker.this);
                 builder3.setTitle(res.getString(R.string.new_deck));
                 mDialogEditText = new EditText(DeckPicker.this);
@@ -612,7 +621,9 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 builder3.setPositiveButton(res.getString(R.string.create), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        long id = getCol().getDecks().newDyn(mDialogEditText.getText().toString());
+                        String enteredCramDeckName = mDialogEditText.getText().toString();
+                        Timber.i("Creating cram deck...");
+                        long id = getCol().getDecks().newDyn(enteredCramDeckName);
                         openStudyOptions(id, new Bundle());
                     }
                 });
@@ -621,18 +632,22 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 return true;
 
             case R.id.action_check_database:
+                Timber.i("Check database button pressed");
                 showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_CONFIRM_DATABASE_CHECK);
                 return true;
 
             case R.id.action_check_media:
+                Timber.i("Check media button pressed");
                 showMediaCheckDialog(MediaCheckDialog.DIALOG_CONFIRM_MEDIA_CHECK);
                 return true;
 
             case R.id.action_restore_backup:
+                Timber.i("Restore from backup button pressed");
                 showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_CONFIRM_RESTORE_BACKUP);
                 return true;
 
             case R.id.action_export:
+                Timber.i("Export collection button pressed");
                 String msg = getResources().getString(R.string.confirm_apkg_export);
                 showDialogFragment(ExportDialog.newInstance(msg));
                 return true;
@@ -688,7 +703,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 mImportPath = null;
             }
         } else if (requestCode == REQUEST_REVIEW) {
-            Log.i(AnkiDroidApp.TAG, "Result code = " + resultCode);
             switch (resultCode) {
                 default:
                     // do not reload counts, if activity is created anew because it has been before destroyed by android
@@ -707,7 +721,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
     @Override
     protected void onResume() {
-        Log.i(AnkiDroidApp.TAG, "DeckPicker - onResume");
+        Timber.d("onResume()");
         super.onResume();
         if (colOpen() && AnkiDroidApp.isSdCardMounted()) {
             loadCounts();
@@ -738,7 +752,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
     @Override
     protected void onPause() {
-        Log.i(AnkiDroidApp.TAG, "DeckPicker - onPause");
+        Timber.d("onPause()");
 
         super.onPause();
     }
@@ -746,7 +760,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
     @Override
     protected void onStop() {
-        Log.i(AnkiDroidApp.TAG, "DeckPicker - onStop");
+        Timber.d("onStop()");
         super.onStop();
         if (colOpen()) {
             WidgetStatus.update(this);
@@ -761,14 +775,14 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver);
         }
-        Log.i(AnkiDroidApp.TAG, "DeckPicker - onDestroy()");
+        Timber.d("onDestroy()");
     }
 
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            Log.i(AnkiDroidApp.TAG, "DeckPicker - onBackPressed()");
+            Timber.i("onBackPressed()");
             finishWithAnimation();
             return true;
         }
@@ -1352,7 +1366,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         public void onPostExecute(Payload data) {
             String dialogMessage = "";
             String syncMessage = "";
-            Log.i(AnkiDroidApp.TAG, "Sync Listener onPostExecute");
+            Timber.d("Sync Listener onPostExecute()");
             Resources res = getResources();
             if (mProgressDialog != null) {
                 mProgressDialog.dismiss();
@@ -1679,7 +1693,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
      * @param did The deck ID of the deck to select.
      */
     private void selectDeck(long did) {
-        Log.i(AnkiDroidApp.TAG, "Selected deck with ID " + did);
+        Timber.i("Selected deck with ID %d", did);
         for (int i = 0; i < mDeckList.size(); i++) {
             if (Long.parseLong(mDeckList.get(i).get("did")) == did) {
                 final int lastPosition = i;
@@ -1729,11 +1743,8 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
 
     private void handleDeckSelection(int id) {
-        String deckFilename = null;
-
         @SuppressWarnings("unchecked")
         HashMap<String, String> data = (HashMap<String, String>) mDeckListAdapter.getItem(id);
-        Log.i(AnkiDroidApp.TAG, "Selected " + deckFilename);
         long deckId = Long.parseLong(data.get("did"));
         getCol().getDecks().select(deckId);
         openStudyOptions(deckId);
@@ -1742,7 +1753,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
     private void updateDecksList(TreeSet<Object[]> decks, int eta, int count) {
         if (decks == null) {
-            Log.e(AnkiDroidApp.TAG, "updateDecksList: empty decks list");
+            Timber.e("updateDecksList: empty decks list");
             return;
         }
         mDeckList.clear();
@@ -1869,6 +1880,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String newName = mDialogEditText.getText().toString().replaceAll("\"", "");
+                Timber.i("Renaming deck...", newName);
                 Collection col = getCol();
                 if (col != null) {
                     if (col.getDecks().rename(col.getDecks().get(mContextMenuDid), newName)) {
@@ -1942,7 +1954,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                     try {
                         mProgressDialog.dismiss();
                     } catch (Exception e) {
-                        Log.e(AnkiDroidApp.TAG, "onPostExecute - Dialog dismiss Exception = " + e.getMessage());
+                        Timber.e(e, "onPostExecute - Exception dismissing dialog");
                     }
                 }
             }

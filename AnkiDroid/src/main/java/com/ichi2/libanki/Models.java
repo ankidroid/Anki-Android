@@ -22,7 +22,6 @@ package com.ichi2.libanki;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Pair;
 
 import com.ichi2.anki.AnkiDroidApp;
@@ -48,6 +47,8 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import timber.log.Timber;
 
 public class Models {
     private static final Pattern fHookFieldMod = Pattern.compile("^(.*?)(?:\\((.*)\\))?$");
@@ -974,7 +975,7 @@ public class Models {
             });
 
             for (String mod : mods) {
-                Log.d(AnkiDroidApp.TAG, String.format("Processing field: modifier=%s, extra=%s, tag=%s, txt=%s", mod, extra, tag, txt));
+                Timber.d("Models.get():: Processing field: modifier=%s, extra=%s, tag=%s, txt=%s", mod, extra, tag, txt);
                 // built-in modifiers
                 if (mod.equals("text")) {
                     // strip html

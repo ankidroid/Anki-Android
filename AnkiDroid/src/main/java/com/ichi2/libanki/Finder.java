@@ -21,7 +21,7 @@ package com.ichi2.libanki;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.text.TextUtils;
-import android.util.Log;
+
 import android.util.Pair;
 
 import com.ichi2.anki.AnkiDroidApp;
@@ -45,6 +45,8 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import timber.log.Timber;
 
 public class Finder {
 
@@ -1044,7 +1046,7 @@ public class Finder {
                 // cancel if the launching task was cancelled. 
                 // Note that checking sSearchCancelled is a hack -- see comments in DeckTask.launchDeckTask
                 if (DeckTask.taskIsCancelled(DeckTask.TASK_TYPE_SEARCH_CARDS) || CardBrowser.sSearchCancelled){
-                    Log.i(AnkiDroidApp.TAG, "_findCardsForCardBrowser() cancelled...");
+                    Timber.i("_findCardsForCardBrowser() cancelled...");
                     return null;
                 }                
                 HashMap<String, String> map = new HashMap<String, String>();
@@ -1062,7 +1064,7 @@ public class Finder {
             }
         } catch (SQLException e) {
             // invalid grouping
-            Log.e(AnkiDroidApp.TAG, "Invalid grouping, sql: " + sql);
+            Timber.e("Invalid grouping, sql: " + sql);
             return new ArrayList<HashMap<String, String>>();
         } finally {
             if (cur != null) {

@@ -18,12 +18,14 @@ package com.ichi2.libanki.hooks;
 
 import android.app.Activity;
 import android.content.res.Resources;
-import android.util.Log;
+
 import android.widget.Toast;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.libanki.Card;
+
+import timber.log.Timber;
 
 /**
  * Class used to display toast when leech is made
@@ -50,7 +52,7 @@ public class Leech {
                 });
 
             } else {
-                Log.e(AnkiDroidApp.TAG, "LeechHook :: could not show leech toast as activity was null");
+                Timber.e("LeechHook :: could not show leech toast as activity was null");
             }
         }
     }

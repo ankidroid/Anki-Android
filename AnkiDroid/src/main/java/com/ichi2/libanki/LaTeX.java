@@ -103,7 +103,6 @@ public class LaTeX {
         return latex;
     }
 
-
     public class LaTeXFilter extends Hook {
         @Override
         public Object runFilter(Object arg, Object... args) {

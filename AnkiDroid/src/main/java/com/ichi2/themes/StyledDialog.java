@@ -23,7 +23,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -49,6 +49,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import timber.log.Timber;
+
 public class StyledDialog extends Dialog {
 
     private Context mContext;
@@ -71,7 +73,7 @@ public class StyledDialog extends Dialog {
             setCanceledOnTouchOutside(false);
             super.show();
         } catch (BadTokenException e) {
-            Log.e(AnkiDroidApp.TAG, "Could not show dialog: " + e);
+            Timber.e(e, "Could not show dialog");
         }
     }
 
@@ -677,7 +679,7 @@ public class StyledDialog extends Dialog {
             try {
                 Themes.setStyledDialogBackgrounds(layout, numberOfButtons, brightViewBackground);
             } catch (OutOfMemoryError e) {
-                Log.e(AnkiDroidApp.TAG, "StyledDialog - Dialog could not be created: " + e);
+                Timber.e(e, "StyledDialog - Dialog could not be created");
                 Themes.showThemedToast(context, context.getResources().getString(R.string.error_insufficient_memory),
                         false);
                 return null;

@@ -17,7 +17,7 @@
 package com.ichi2.libanki.sync;
 
 import android.database.sqlite.SQLiteDatabaseCorruptException;
-import android.util.Log;
+
 
 import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.AnkiDb;
@@ -38,6 +38,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Locale;
+
+import timber.log.Timber;
 
 public class FullSyncer extends HttpSyncer {
 
@@ -99,11 +101,11 @@ public class FullSyncer extends HttpSyncer {
         try {
             AnkiDb d = AnkiDatabaseManager.getDatabase(tpath);
             if (!d.queryString("PRAGMA integrity_check").equalsIgnoreCase("ok")) {
-                Log.e(AnkiDroidApp.TAG, "Full sync - downloaded file corrupt");
+                Timber.e("Full sync - downloaded file corrupt");
                 return new Object[] { "remoteDbError" };
             }
         } catch (SQLiteDatabaseCorruptException e) {
-            Log.e(AnkiDroidApp.TAG, "Full sync - downloaded file corrupt");
+            Timber.e("Full sync - downloaded file corrupt");
             return new Object[] { "remoteDbError" };
         } finally {
             AnkiDatabaseManager.closeDatabase(tpath);

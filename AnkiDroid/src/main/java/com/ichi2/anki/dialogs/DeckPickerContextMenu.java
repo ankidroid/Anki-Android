@@ -10,6 +10,8 @@ import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
 import com.ichi2.themes.StyledDialog;
 
+import timber.log.Timber;
+
 public class DeckPickerContextMenu extends DialogFragment {
     /**
      * Context Menus
@@ -64,21 +66,26 @@ public class DeckPickerContextMenu extends DialogFragment {
         public void onClick(DialogInterface dialog, int item) {
             switch (item) {
                 case CONTEXT_MENU_COLLAPSE_DECK:
+                    Timber.i("Collapse deck selected");
                     ((DeckPicker) getActivity()).collapseContextMenuDeck();
                     return;
                 case CONTEXT_MENU_DELETE_DECK:
+                    Timber.i("Delete deck selected");
                     ((DeckPicker) getActivity()).confirmDeckDeletion();
                     return;
 
                 case CONTEXT_MENU_DECK_OPTIONS:
+                    Timber.i("Open deck options selected");
                     ((DeckPicker) getActivity()).showContextMenuDeckOptions();
                     return;
 
                 case CONTEXT_MENU_RENAME_DECK:
+                    Timber.i("Rename deck selected");
                     ((DeckPicker) getActivity()).renameContextMenuDeckDialog();
                     return;
 
                 case CONTEXT_MENU_EXPORT_DECK:
+                    Timber.i("Export deck selected");
                     ((DeckPicker) getActivity()).showContextMenuExportDialog();
                     return;
 

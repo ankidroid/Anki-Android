@@ -18,7 +18,7 @@ package com.ichi2.libanki.importer;
 
 import android.content.res.Resources;
 import android.database.Cursor;
-import android.util.Log;
+
 
 import com.google.gson.stream.JsonReader;
 import com.ichi2.anki.AnkiDatabaseManager;
@@ -49,6 +49,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.ZipFile;
+
+import timber.log.Timber;
 
 public class Anki2Importer {
 
@@ -164,10 +166,10 @@ public class Anki2Importer {
             publishProgress(true, 100, 100, true);
             return cnt;
         } catch (RuntimeException e) {
-            Log.e(AnkiDroidApp.TAG, "RuntimeException while importing ", e);
+            Timber.e(e, "RuntimeException while importing");
             return -1;
         } catch (IOException e) {
-            Log.e(AnkiDroidApp.TAG, "IOException while importing ", e);
+            Timber.e(e, "IOException while importing");
             return -1;
         }
     }
@@ -186,15 +188,15 @@ public class Anki2Importer {
             long id = mDst.getDecks().id(mDeckPrefix);
             mDst.getDecks().select(id);
         }
-        Log.i(AnkiDroidApp.TAG, "Import - preparing");
+        Timber.i("Import - preparing");
         _prepareTS();
         _prepareModels();
-        Log.i(AnkiDroidApp.TAG, "Import - importing notes");
+        Timber.i("Import - importing notes");
         _importNotes();
-        Log.i(AnkiDroidApp.TAG, "Import - importing cards");
+        Timber.i("Import - importing cards");
         int cnt = _importCards();
         // _importMedia();
-        Log.i(AnkiDroidApp.TAG, "Import - finishing");
+        Timber.i("Import - finishing");
         publishProgress(true, 100, 100, false);
         _postImport();
         // LIBANKI: vacuum and analyze is done in DeckTask
@@ -692,7 +694,7 @@ public class Anki2Importer {
             try {
                 return new BufferedInputStream(mZip.getInputStream(mZip.getEntry(nameToNum.get(fname))));
             } catch (IOException e) {
-                Log.e(AnkiDroidApp.TAG, "Could not extract media file " + fname + "from mZip file.");
+                Timber.e("Could not extract media file " + fname + "from mZip file.");
             }
         }
         return null;
@@ -716,9 +718,7 @@ public class Anki2Importer {
             mDst.getMedia().markFileAdd(fname);
         } catch (IOException e) {
             // the user likely used subdirectories
-            Log.e(AnkiDroidApp.TAG, String.format(Locale.US,
-                    "Anki2Importer._writeDstMedia: error copying file to %s (%s), ignoring and continuing.", fname,
-                    e.getMessage()));
+            Timber.e(e, "Anki2Importer._writeDstMedia: error copying file to %s, ignoring and continuing.", fname);
         }
     }
 
