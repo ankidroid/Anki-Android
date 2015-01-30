@@ -73,7 +73,8 @@
         android:icon="@drawable/anki"
         android:label="@string/app_name"
         android:theme="@style/Theme_White"
-        android:windowSoftInputMode="adjustResize" >
+        android:windowSoftInputMode="adjustResize"
+        android:largeHeap="true">
         <activity
             android:name="com.ichi2.anki.IntentHandler"
             android:configChanges="keyboardHidden|orientation|screenSize|locale"

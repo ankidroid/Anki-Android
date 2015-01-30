@@ -46,7 +46,6 @@ public class AnkiDb {
      */
     private SQLiteDatabase mDatabase;
     private boolean mMod = false;
-    private static boolean sRepaired = false;
 
 
     /**
@@ -77,24 +76,9 @@ public class AnkiDb {
     public class MyDbErrorHandler implements DatabaseErrorHandler {
         @Override
         public void onCorruption(SQLiteDatabase db) {
-            Log.e(AnkiDroidApp.TAG, "The database has been corrupted... attempting to repair");
-            if (! sRepaired) {
-                sRepaired = true;
-                Log.i(AnkiDroidApp.TAG, "Attempting to repair the database...");
-                boolean result = BackupManager.repairDeck(AnkiDroidApp.COLLECTION_PATH);
-                if (result) {
-                    Log.i(AnkiDroidApp.TAG, "Attempting to reopen the database...");
-                    AnkiDroidApp.openCollection(AnkiDroidApp.COLLECTION_PATH);
-                    Log.i(AnkiDroidApp.TAG, "The database seems to have been successfully repaired and reopened");
-                    AnkiDroidApp.saveExceptionReportFile("AnkiDb.MyDbErrorHandler.onCorruption", "Db successfully repaired");
-                } else {
-                    Log.e(AnkiDroidApp.TAG, "The database could not be automatically repaired...");
-                    AnkiDroidApp.saveExceptionReportFile("AnkiDb.MyDbErrorHandler.onCorruption", "Db not successfully repaired");
-                }
-            } else {
-                Log.i(AnkiDroidApp.TAG, "The database was corrupted again after repair");
-                AnkiDroidApp.closeCollection(false);
-            }
+            Log.e(AnkiDroidApp.TAG, "The database has been corrupted...");
+            AnkiDroidApp.saveExceptionReportFile("AnkiDb.MyDbErrorHandler.onCorruption", "Db has been corrupted ");
+            AnkiDroidApp.closeCollection(false);
         }
     }
 
