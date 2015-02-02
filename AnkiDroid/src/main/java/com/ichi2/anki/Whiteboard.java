@@ -24,8 +24,10 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 
 /**
  * Whiteboard allowing the user to draw the card's answer on the touchscreen.
@@ -193,7 +195,7 @@ public class Whiteboard extends View {
     private void createBitmap() {
         // To fix issue #1336, just make the whiteboard big and
         // square.
-        int bitmapSize = Math.max(AnkiDroidApp.getDisplayWidth(), AnkiDroidApp.getDisplayHeight());
+        int bitmapSize = Math.max(getDisplayWidth(), getDisplayHeight());
         if (mMonochrome && !mInvertedColors) {
             createBitmap(bitmapSize, bitmapSize, Bitmap.Config.ALPHA_8);
         } else {
@@ -227,5 +229,18 @@ public class Whiteboard extends View {
         mCanvas.drawPath(mPath, mPaint);
         // kill this so we don't double draw
         mPath.reset();
+    }
+
+    private static int getDisplayHeight() {
+        Display display = ((WindowManager) AnkiDroidApp.getInstance().getApplicationContext().
+                getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+        return display.getHeight();
+    }
+
+
+    private static int getDisplayWidth() {
+        Display display = ((WindowManager) AnkiDroidApp.getInstance().getApplicationContext().
+                getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+        return display.getWidth();
     }
 }

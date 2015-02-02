@@ -21,7 +21,6 @@ import android.database.SQLException;
 
 import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.AnkiDb;
-import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 
 import org.json.JSONArray;
@@ -47,9 +46,6 @@ public class Storage {
 
         File dbFile = new File(path);
         boolean create = !dbFile.exists();
-        if (create) {
-            AnkiDroidApp.createDirectoryIfMissing(dbFile.getParentFile());
-        }
         // connect
         AnkiDb db = AnkiDatabaseManager.getDatabase(path);
         int ver;

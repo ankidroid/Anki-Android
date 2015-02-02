@@ -22,7 +22,6 @@ import android.annotation.TargetApi;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -30,14 +29,12 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
-import android.view.Display;
 import android.view.ViewConfiguration;
-import android.view.WindowManager;
 
 import com.ichi2.anki.dialogs.AnkiDroidCrashReportDialog;
 import com.ichi2.anki.exception.AnkiDroidErrorReportException;
-import com.ichi2.async.Connection;
 import com.ichi2.compat.Compat;
 import com.ichi2.compat.CompatV12;
 import com.ichi2.compat.CompatV15;
@@ -132,8 +129,6 @@ import timber.log.Timber;
 public class AnkiDroidApp extends Application {
 
     public static final int SDK_VERSION = android.os.Build.VERSION.SDK_INT;
-    public static final String LIBANKI_VERSION = "1.2.5";
-    public static final String DROPBOX_PUBLIC_DIR = "/dropbox/Public/Anki";
     public static final String APP_NAMESPACE = "http://schemas.android.com/apk/res/com.ichi2.anki";
     public static final String FEEDBACK_REPORT_ASK = "2";
     public static final String FEEDBACK_REPORT_NEVER = "1";
@@ -146,7 +141,7 @@ public class AnkiDroidApp extends Application {
      */
     public static final String TAG = "AnkiDroid";
 
-    public static final String COLLECTION_PATH = "/collection.anki2";
+    public static final String COLLECTION_FILENAME = "collection.anki2";
 
     /**
      * Singleton instance of this class.
@@ -171,7 +166,6 @@ public class AnkiDroidApp extends Application {
      */
     public static final String SHARED_PREFS_NAME = AnkiDroidApp.class.getPackage().getName();
 
-    private static boolean mGesturesEnabled;
     public static int sSwipeMinDistance = -1;
     public static int sSwipeThresholdVelocity = -1;
 
@@ -197,7 +191,6 @@ public class AnkiDroidApp extends Application {
      */
     @TargetApi(Build.VERSION_CODES.FROYO)
     @Override
-
     public void onCreate() {
         super.onCreate();
         // Get preferences
@@ -224,55 +217,44 @@ public class AnkiDroidApp extends Application {
         }
         Timber.tag(TAG);
 
-
-        if (isNookHdOrHdPlus() && AnkiDroidApp.SDK_VERSION == 15) {
+        if (isNookHdOrHdPlus() && SDK_VERSION == 15) {
             mCompat = new CompatV15NookHdOrHdPlus();
-        } else if (AnkiDroidApp.SDK_VERSION >= 16) {
+        } else if (SDK_VERSION >= 16) {
             mCompat = new CompatV16();
-        } else if (AnkiDroidApp.SDK_VERSION >= 15) {
+        } else if (SDK_VERSION >= 15) {
             mCompat = new CompatV15();
-        } else if (AnkiDroidApp.SDK_VERSION >= 12) {
+        } else if (SDK_VERSION >= 12) {
             mCompat = new CompatV12();
-        } else if (AnkiDroidApp.SDK_VERSION >= 9) {
+        } else if (SDK_VERSION >= 9) {
             mCompat = new CompatV9();
-        } else if (AnkiDroidApp.SDK_VERSION >= 8) {
+        } else if (SDK_VERSION >= 8) {
             mCompat = new CompatV8();
-        } else if (isNook() && AnkiDroidApp.SDK_VERSION == 7) {
+        } else if (isNook() && SDK_VERSION == 7) {
             mCompat = new CompatV7Nook();
         } else {
             mCompat = new CompatV7();
         }
 
         sInstance = this;
-
-        Connection.setContext(getApplicationContext());
+        sInstance.mHooks = new Hooks(preferences);
+        setLanguage(preferences.getString(Preferences.LANGUAGE, ""));
 
         // Configure WebView to allow file scheme pages to access cookies.
         mCompat.enableCookiesForFileSchemePages();
 
-        sInstance.mHooks = new Hooks(preferences);
-        setLanguage(preferences.getString(Preferences.LANGUAGE, ""));
-        // Assign some default settings if necessary
-        if (!preferences.contains("deckPath")) {
-            Editor editor = preferences.edit();
-            // Create the folder "AnkiDroid", if not exists, where the decks
-            // will be stored by default
-            String deckPath = getDefaultAnkiDroidDirectory();
-            createDirectoryIfMissing(new File(deckPath));
-            // Put the base path in preferences pointing to the default "AnkiDroid" folder
-            editor.putString("deckPath", deckPath);
-            // Using commit instead of apply even though we don't need a return value.
-            // Reason: apply() not available on Android 1.5
-            editor.commit();
-        }
-        // Get good default values for swipe detection
+        // Set good default values for swipe detection
         final ViewConfiguration vc = ViewConfiguration.get(this);
-        if (AnkiDroidApp.SDK_VERSION >= 8) {
+        if (SDK_VERSION >= 8) {
             DEFAULT_SWIPE_MIN_DISTANCE = vc.getScaledPagingTouchSlop();
         } else {
             DEFAULT_SWIPE_MIN_DISTANCE = vc.getScaledTouchSlop()*2;
         }
         DEFAULT_SWIPE_THRESHOLD_VELOCITY = vc.getScaledMinimumFlingVelocity();
+
+        // Create the AnkiDroid directory if missing
+        initializeAnkiDroidDirectory();
+        // TODO: Check for write access before proceeding
+        // We should not allow the application to proceed if this directory is inaccessible.
     }
 
 
@@ -328,52 +310,70 @@ public class AnkiDroidApp extends Application {
     }
 
 
-    private static String getStorageDirectory() {
-        return Environment.getExternalStorageDirectory().getAbsolutePath();
-    }
-
-
     public static String getCacheStorageDirectory() {
         return sInstance.getCacheDir().getAbsolutePath();
     }
 
 
     public static String getCollectionPath() {
-        return getCurrentAnkiDroidDirectory() + AnkiDroidApp.COLLECTION_PATH;
+        return new File(getCurrentAnkiDroidDirectory(), COLLECTION_FILENAME).getAbsolutePath();
     }
 
-
+    /**
+     * Get the absolute path to a directory that is suitable to be the default starting location
+     * for the AnkiDroid folder. This is a folder named "AnkiDroid" at the top level of the
+     * external storage directory.
+     */
     private static String getDefaultAnkiDroidDirectory() {
-        return getStorageDirectory() + "/AnkiDroid";
+        return new File(Environment.getExternalStorageDirectory(), "AnkiDroid").getAbsolutePath();
     }
 
 
+    /**
+     * Get the absolute path to the AnkiDroid directory.
+     */
     public static String getCurrentAnkiDroidDirectory() {
         SharedPreferences prefs = getSharedPrefs(sInstance.getApplicationContext());
-        return prefs.getString("deckPath", AnkiDroidApp.getDefaultAnkiDroidDirectory());
+        return prefs.getString("deckPath", getDefaultAnkiDroidDirectory());
     }
 
 
-    public static void createDirectoryIfMissing(File decksDirectory) {
-        if (!decksDirectory.isDirectory()) {
-            decksDirectory.mkdirs();
+    /**
+     * Create the AnkiDroid directory if it doesn't exist and add a .nomedia file to it if needed.
+     *
+     * The AnkiDroid directory is a user preference stored under the "deckPath" key, and a sensible
+     * default is chosen if the preference hasn't been created yet (i.e., on the first run).
+     *
+     * The presence of a .nomedia file indicates to media scanners that the directory must be
+     * excluded from their search. We need to include this to avoid media scanners including
+     * media files from the collection.media directory. The .nomedia file works at the directory
+     * level, so placing it in the AnkiDroid directory will ensure media scanners will also exclude
+     * the collection.media sub-directory.
+     */
+    public static void initializeAnkiDroidDirectory() {
+        SharedPreferences preferences = getSharedPrefs(sInstance);
+        // Set the default directory if it's the first run or has been cleared by the user
+        String path = preferences.getString("deckPath", null);
+        if (TextUtils.isEmpty(path)) {
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putString("deckPath", getDefaultAnkiDroidDirectory());
+            editor.commit();
         }
-        try {
-            new File(decksDirectory.getAbsolutePath() + "/.nomedia").createNewFile();
-        } catch (IOException e) {
-            Timber.e("Nomedia file could not be created");
+        // Create the AnkiDroid directory if it doesn't exit
+        File dir = new File(getCurrentAnkiDroidDirectory());
+        if (!dir.exists() && !dir.mkdirs()) {
+            Timber.e("Failed to create AnkiDroid directory");
         }
-        createNoMediaFileIfMissing(decksDirectory);
-    }
-
-
-    public static void createNoMediaFileIfMissing(File decksDirectory) {
-        File mediaFile = new File(decksDirectory.getAbsolutePath() + "/.nomedia");
-        if (!mediaFile.exists()) {
+        if (!dir.canWrite()) {
+            Timber.e("No write access to AnkiDroid directory");
+        }
+        // Add a .nomedia file to it if it doesn't exist
+        File nomedia = new File(dir, ".nomedia");
+        if (!nomedia.exists()) {
             try {
-                mediaFile.createNewFile();
+                nomedia.createNewFile();
             } catch (IOException e) {
-                Timber.e("Nomedia file could not be created in path %s", decksDirectory.getAbsolutePath());
+                Timber.e("Failed to create .nomedia file");
             }
         }
     }
@@ -389,24 +389,8 @@ public class AnkiDroidApp extends Application {
     }
 
 
-    public static int getDisplayHeight() {
-        Display display = ((WindowManager) sInstance.getApplicationContext().getSystemService(Context.WINDOW_SERVICE))
-                .getDefaultDisplay();
-        return display.getHeight();
-    }
-
-
-    public static int getDisplayWidth() {
-        Display display = ((WindowManager) sInstance.getApplicationContext().getSystemService(Context.WINDOW_SERVICE))
-                .getDefaultDisplay();
-        return display.getWidth();
-    }
-
-
     /**
      * Get package name as defined in the manifest.
-     *
-     * @return the package name.
      */
     public static String getAppName() {
         String pkgName = TAG;
@@ -425,8 +409,6 @@ public class AnkiDroidApp extends Application {
 
     /**
      * Get the package versionName as defined in the manifest.
-     *
-     * @return the package version.
      */
     public static String getPkgVersionName() {
         String pkgVersion = "?";
@@ -447,8 +429,6 @@ public class AnkiDroidApp extends Application {
 
     /**
      * Get the package versionCode as defined in the manifest.
-     *
-     * @return
      */
     public static int getPkgVersionCode() {
         Context context = sInstance.getApplicationContext();
@@ -459,20 +439,6 @@ public class AnkiDroidApp extends Application {
             Timber.e(e, "Couldn't find package named %s", context.getPackageName());
         }
         return 0;
-    }
-
-
-    /**
-     * Get the DropBox folder
-     *
-     * @return the absolute path to the DropBox public folder, or null if it is not found
-     */
-    public static String getDropboxDir() {
-        File f = new File(AnkiDroidApp.getStorageDirectory() + DROPBOX_PUBLIC_DIR);
-        if (f.exists() && f.isDirectory()) {
-            return f.getAbsolutePath();
-        }
-        return null;
     }
 
 
@@ -522,10 +488,9 @@ public class AnkiDroidApp extends Application {
     }
 
 
-    public static boolean initiateGestures(Context context, SharedPreferences preferences) {
-        mGesturesEnabled = preferences.getBoolean("gestures", false);
-
-        if (mGesturesEnabled) {
+    public static boolean initiateGestures(SharedPreferences preferences) {
+        Boolean enabled = preferences.getBoolean("gestures", false);
+        if (enabled) {
             int sensitivity = preferences.getInt("swipeSensitivity", 100);
             if (sensitivity != 100) {
                 float sens = 100.0f/sensitivity;
@@ -536,7 +501,7 @@ public class AnkiDroidApp extends Application {
                 sSwipeThresholdVelocity = DEFAULT_SWIPE_THRESHOLD_VELOCITY;
             }
         }
-        return mGesturesEnabled;
+        return enabled;
     }
 
 
@@ -548,6 +513,7 @@ public class AnkiDroidApp extends Application {
     public static synchronized Collection openCollection(String path) {
         return openCollection(path, false);
     }
+
 
     public static synchronized Collection openCollection(String path, boolean force) {
         mLock.lock();
@@ -604,12 +570,6 @@ public class AnkiDroidApp extends Application {
                 && sInstance.mCurrentCollection.getDb().getDatabase().isOpen();
     }
 
-
-    public static void resetAccessThreadCount() {
-        sInstance.mAccessThreadCount = 0;
-        sInstance.mCurrentCollection = null;
-        Timber.d("Access has been reset to 0");
-    }
 
     public static void setStoredDialogHandlerMessage(Message msg) {
         sStoredDialogHandlerMessage = msg;
