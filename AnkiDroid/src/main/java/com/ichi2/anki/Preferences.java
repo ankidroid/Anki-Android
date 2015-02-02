@@ -506,11 +506,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                     useBackupPreference.setChecked(true);
                     showDialog(DIALOG_BACKUP);
                 }
-            } else if (key.equals("deckPath")) {
-                File decksDirectory = new File(AnkiDroidApp.getCurrentAnkiDroidDirectory());
-                if (decksDirectory.exists()) {
-                    AnkiDroidApp.createNoMediaFileIfMissing(decksDirectory);
-                }
             } else if (key.equals("convertFenText")) {
                 if (convertFenText.isChecked()) {
                     ChessFilter.install(AnkiDroidApp.getHooks());

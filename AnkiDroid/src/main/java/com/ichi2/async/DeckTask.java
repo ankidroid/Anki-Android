@@ -704,7 +704,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         // Try to reopen the collection if it's null
         if (!AnkiDroidApp.colIsOpen()) {
             Timber.e("doInBackgroundCheckDatabase :: collection not open, trying to reload");
-            AnkiDroidApp.openCollection(AnkiDroidApp.COLLECTION_PATH);
+            AnkiDroidApp.openCollection(AnkiDroidApp.getCollectionPath());
             col = AnkiDroidApp.getCol();
             if (col == null) {
                 Timber.e("doInBackgroundCheckDatabase :: collection reload failed");
