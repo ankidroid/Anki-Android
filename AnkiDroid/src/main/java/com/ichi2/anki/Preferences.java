@@ -186,6 +186,10 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         // Check that input is valid when changing the collection path
         collectionPathPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
             public boolean onPreferenceChange(Preference preference, final Object newValue) {
+                // Don't save the change if the user just cleared the path
+                if (TextUtils.isEmpty((String) newValue)) {
+                    return false;
+                }
                 File collectionPath = new File((String) newValue);
                 if (!collectionPath.exists()) {
                     Dialog pathCheckDialog = new AlertDialog.Builder(Preferences.this)
