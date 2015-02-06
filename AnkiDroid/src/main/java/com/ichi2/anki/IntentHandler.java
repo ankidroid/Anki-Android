@@ -10,7 +10,6 @@ import android.os.Message;
 import android.provider.OpenableColumns;
 import android.support.v4.content.IntentCompat;
 
-
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.themes.StyledDialog;
@@ -27,7 +26,7 @@ import timber.log.Timber;
 /**
  * Class which handles how the application responds to different intents, forcing it to always be single task,
  * but allowing custom behavior depending on the intent
- * 
+ *
  * @author Tim
  *
  */

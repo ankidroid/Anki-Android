@@ -35,6 +35,7 @@ import android.view.ViewConfiguration;
 
 import com.ichi2.anki.dialogs.AnkiDroidCrashReportDialog;
 import com.ichi2.anki.exception.AnkiDroidErrorReportException;
+import com.ichi2.anki.exception.StorageAccessException;
 import com.ichi2.compat.Compat;
 import com.ichi2.compat.CompatV12;
 import com.ichi2.compat.CompatV15;
@@ -250,11 +251,6 @@ public class AnkiDroidApp extends Application {
             DEFAULT_SWIPE_MIN_DISTANCE = vc.getScaledTouchSlop()*2;
         }
         DEFAULT_SWIPE_THRESHOLD_VELOCITY = vc.getScaledMinimumFlingVelocity();
-
-        // Create the AnkiDroid directory if missing
-        initializeAnkiDroidDirectory();
-        // TODO: Check for write access before proceeding
-        // We should not allow the application to proceed if this directory is inaccessible.
     }
 
 
@@ -350,7 +346,7 @@ public class AnkiDroidApp extends Application {
      * level, so placing it in the AnkiDroid directory will ensure media scanners will also exclude
      * the collection.media sub-directory.
      */
-    public static void initializeAnkiDroidDirectory() {
+    public static void initializeAnkiDroidDirectory() throws StorageAccessException {
         SharedPreferences preferences = getSharedPrefs(sInstance);
         // Set the default directory if it's the first run or has been cleared by the user
         String path = preferences.getString("deckPath", null);
@@ -362,10 +358,10 @@ public class AnkiDroidApp extends Application {
         // Create the AnkiDroid directory if it doesn't exit
         File dir = new File(getCurrentAnkiDroidDirectory());
         if (!dir.exists() && !dir.mkdirs()) {
-            Timber.e("Failed to create AnkiDroid directory");
+            throw new StorageAccessException("Failed to create AnkiDroid directory");
         }
         if (!dir.canWrite()) {
-            Timber.e("No write access to AnkiDroid directory");
+            throw new StorageAccessException("No write access to AnkiDroid directory");
         }
         // Add a .nomedia file to it if it doesn't exist
         File nomedia = new File(dir, ".nomedia");
@@ -373,7 +369,7 @@ public class AnkiDroidApp extends Application {
             try {
                 nomedia.createNewFile();
             } catch (IOException e) {
-                Timber.e("Failed to create .nomedia file");
+                throw new StorageAccessException("Failed to create .nomedia file");
             }
         }
     }

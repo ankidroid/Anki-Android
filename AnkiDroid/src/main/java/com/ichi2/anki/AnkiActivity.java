@@ -30,9 +30,11 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.AsyncDialogFragment;
 import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.anki.dialogs.SimpleMessageDialog;
+import com.ichi2.anki.exception.StorageAccessException;
 import com.ichi2.async.CollectionLoader;
 import com.ichi2.libanki.Collection;
 import com.ichi2.themes.StyledOpenCollectionDialog;
+import com.ichi2.themes.Themes;
 
 import timber.log.Timber;
 
@@ -43,6 +45,26 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
 
     private StyledOpenCollectionDialog mOpenCollectionDialog;
     private DialogHandler mHandler = new DialogHandler(this);
+
+    @Override
+    protected void onCreate(Bundle savedInstance) {
+        super.onCreate(savedInstance);
+
+        // Make sure the AnkiDroid directory exists and we have permission to use it. There is no
+        // point trying to do anything with a collection if we cannot get past this point.
+        try {
+            AnkiDroidApp.initializeAnkiDroidDirectory();
+        } catch (StorageAccessException e) {
+            Timber.e(e, "Failed to initialize AnkiDroid directory");
+            // If we end up here we open the Preferences activity to allow the user to pick a
+            // usable directory.
+            Intent i = new Intent(this, Preferences.class);
+            finishWithoutAnimation();
+            startActivityWithoutAnimation(i);
+            Themes.showThemedToast(this, getResources().getString(R.string.directory_inaccessible), false);
+            return;
+        }
+    }
 
     @Override
     protected void onResume() {
