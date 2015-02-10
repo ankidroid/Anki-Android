@@ -417,6 +417,15 @@ public class Statistics extends NavigationDrawerActivity {
 
             mProgressBar.setVisibility(View.VISIBLE);
             //mChart.setVisibility(View.GONE);
+
+            // TODO: Implementing loader for Collection in Fragment itself would be a better solution.
+            if ((((Statistics)getActivity()).getTaskHandler()) == null) {
+                // Close statistics if the TaskHandler hasn't been loaded yet
+                Timber.e("Statistics.ChartFragment.onCreateView() TaskHandler not found");
+                getActivity().finish();
+                return rootView;
+            }
+
             createChart();
             mHeight = mChart.getMeasuredHeight();
             mWidth = mChart.getMeasuredWidth();
@@ -562,7 +571,7 @@ public class Statistics extends NavigationDrawerActivity {
             // Workaround for issue 2406 -- crash when resuming after app is purged from RAM
             // TODO: Implementing loader for Collection in Fragment itself would be a better solution.
             if (handler == null) {
-                Timber.e("Statistics.createStatisticsOverview() TaskHandler not found");
+                Timber.e("Statistics.OverviewStatisticsFragment.onCreateView() TaskHandler not found");
                 getActivity().finish();
                 return rootView;
             }
