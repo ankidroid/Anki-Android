@@ -46,7 +46,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     private boolean mHasDrawerSwipeConflicts = false;
     private boolean mShowWhiteboard = true;
     private boolean mBlackWhiteboard = true;
-    
+
     @Override
     protected void setTitle() {
         try {
@@ -66,7 +66,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         // Load the first card and start reviewing. Uses the answer card
         // task to load a card, but since we send null
         // as the card to answer, no card will be answered.
-        
+
         mPrefWhiteboard = MetaDB.getWhiteboardState(this, getParentDid());
         if (mPrefWhiteboard) {
             setWhiteboardEnabledState(true);
@@ -152,7 +152,7 @@ public class Reviewer extends AbstractFlashcardViewer {
             case R.id.action_clear_whiteboard:
                 Timber.i("Reviewer:: Clear whiteboard button pressed");
                 if (mWhiteboard != null) {
-                    mWhiteboard.clear();    
+                    mWhiteboard.clear();
                 }
                 break;
 
@@ -341,7 +341,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
         return super.onKeyUp(keyCode, event);
     }
-    
+
 
     @Override
     protected SharedPreferences restorePreferences() {
@@ -350,7 +350,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         mBlackWhiteboard = preferences.getBoolean("blackWhiteboard", true);
         return preferences;
     }
-    
+
     @Override
     public void fillFlashcard() {
         super.fillFlashcard();
@@ -416,7 +416,7 @@ public class Reviewer extends AbstractFlashcardViewer {
                 }
                 return getGestureDetector().onTouchEvent(event);
             }
-        });  
+        });
         mWhiteboard.setEnabled(true);
     }
 
@@ -434,7 +434,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
     }
 
-    
+
     private void disableDrawerSwipeOnConflicts() {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         boolean gesturesEnabled = AnkiDroidApp.initiateGestures(preferences);
@@ -448,6 +448,6 @@ public class Reviewer extends AbstractFlashcardViewer {
                 mHasDrawerSwipeConflicts = true;
                 super.disableDrawerSwipe();
             }
-        } 
+        }
     }
 }

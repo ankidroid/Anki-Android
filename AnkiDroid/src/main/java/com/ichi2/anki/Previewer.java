@@ -1,6 +1,6 @@
 /***************************************************************************************
  * Copyright (c) 2011 Kostas Spyropoulos <inigo.aldana@gmail.com>                       *
- * Copyright (c) 2013 Jolta Technologies												*
+ * Copyright (c) 2013 Jolta Technologies                                                *
  * Copyright (c) 2014 Bruno Romero de Azevedo <brunodea@inf.ufsm.br>                    *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
