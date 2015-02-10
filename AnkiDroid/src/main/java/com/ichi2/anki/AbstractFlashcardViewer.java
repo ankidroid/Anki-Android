@@ -578,12 +578,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
+            boolean cardChanged = false;
             if (mCurrentCard != values[0].getCard()) {
                 /*
                  * Before updating mCurrentCard, we check whether it is changing or not. If the current card changes,
                  * then we need to display it as a new card, without showing the answer.
                  */
                 sDisplayAnswer = false;
+                cardChanged = true;  // Keep track of that so we can run a bit of new-card code
             }
             mCurrentCard = values[0].getCard();
             if (mCurrentCard == null) {
@@ -603,6 +605,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 generateQuestionSoundList(); // questions must be intentionally regenerated
                 displayCardAnswer();
             } else {
+                if (cardChanged) {
+                    updateTypeAnswerInfo();
+                }
                 displayCardQuestion();
                 initTimer();
             }
