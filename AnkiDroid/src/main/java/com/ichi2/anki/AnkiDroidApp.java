@@ -36,7 +36,6 @@ import android.view.ViewConfiguration;
 import android.view.WindowManager;
 
 import com.ichi2.anki.dialogs.AnkiDroidCrashReportDialog;
-import com.ichi2.anki.exception.AnkiDroidErrorReportException;
 import com.ichi2.async.Connection;
 import com.ichi2.compat.Compat;
 import com.ichi2.compat.CompatV12;
@@ -473,15 +472,6 @@ public class AnkiDroidApp extends Application {
             return f.getAbsolutePath();
         }
         return null;
-    }
-
-
-    public static void sendExceptionReport(String origin, String additionalInfo) {
-        try {
-            throw new AnkiDroidErrorReportException();
-        } catch (AnkiDroidErrorReportException e) {
-            sendExceptionReport(e, origin, additionalInfo);
-        }
     }
 
 
