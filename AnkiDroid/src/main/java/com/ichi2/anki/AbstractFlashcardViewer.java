@@ -1501,6 +1501,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         }
         webView.getSettings().setBuiltInZoomControls(true);
         webView.getSettings().setSupportZoom(true);
+        // Start at the most zoomed-out level
+        webView.getSettings().setLoadWithOverviewMode(true);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebChromeClient(new AnkiDroidWebChromeClient());
         if (AnkiDroidApp.SDK_VERSION > 7) {
