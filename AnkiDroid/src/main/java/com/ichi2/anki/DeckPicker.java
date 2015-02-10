@@ -246,11 +246,11 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         @Override
         public void onPostExecute(DeckTask.TaskData result) {
             String message = "";
+            Resources res = getResources();
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
                 mProgressDialog.dismiss();
             }
             if (result != null && result.getBoolean()) {
-                Resources res = getResources();
                 int count = result.getInt();
                 if (count < 0) {
                     if (count == -2) {
@@ -266,7 +266,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                     updateDecksList((TreeSet<Object[]>) info[0], (Integer) info[1], (Integer) info[2]);
                 }
             } else {
-                handleDbError();
+                showSimpleMessageDialog(res.getString(R.string.import_log_error));
             }
             // delete temp file if necessary and reset import path so that it's not incorrectly imported next time
             // Activity starts

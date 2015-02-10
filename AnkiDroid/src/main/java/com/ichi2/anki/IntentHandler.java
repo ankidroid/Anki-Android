@@ -21,6 +21,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import timber.log.Timber;
 
@@ -33,7 +35,7 @@ import timber.log.Timber;
  */
 
 public class IntentHandler extends Activity {
-    @Override 
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.styled_open_collection_dialog);
@@ -45,11 +47,12 @@ public class IntentHandler extends Activity {
         if (Intent.ACTION_VIEW.equals(action)) {
             // This intent is used for opening apkg package files
             // We want to go immediately to DeckPicker, clearing any history in the process
+            Timber.i("IntentHandler/ User requested to view a file");
             boolean successful = false;
             String errorMessage =getResources().getString(R.string.import_log_no_apkg);
             // If the file is being sent from a content provider we need to read the content before we can open the file
             if (intent.getData().getScheme().equals("content")) {
-                // Get the original filename from the content provider URI and save to temporary cache dir
+                // Get the original filename from the content provider URI
                 String filename = null;
                 Cursor cursor = null;
                 try {
@@ -61,52 +64,39 @@ public class IntentHandler extends Activity {
                     if (cursor != null)
                         cursor.close();
                 }
-                /* Querying the filename appears to fail for a small minority of users.
-                   If the data type is apkg then we can assume that it's a shared deck from AnkiWeb
-                   so we give it a dummy filename*/
+                // Hack to fix bug where ContentResolver not returning filename correctly
                 if (filename == null) {
-                    Timber.e("Could not get filename from Content Provider. cursor = " + cursor);
-                    if (intent.getType().equals("application/apkg")) {
+                    if (intent.getType().equals("application/apkg") || hasValidZipFile(intent)) {
+                        // Set a dummy filename if MIME type provided or is a valid zip file
                         filename = "unknown_filename.apkg";
+                        Timber.w("Could not retrieve filename from ContentProvider, but was valid zip file so we try to continue");
+                    } else {
+                        Timber.e("Could not retrieve filename from ContentProvider or read content as ZipFile");
+                        AnkiDroidApp.sendExceptionReport("IntentHandler.java", "apkg import failed");
                     }
                 }
-                if (filename != null && filename.endsWith(".apkg")) {
-                    Uri importUri = Uri.fromFile(new File(getCacheDir(), filename));
-                    Timber.v("IntentHandler copying apkg file to %s", importUri.getEncodedPath());
-                    // Copy to temp file
-                    try {
-                        // Get an input stream to the data in ContentProvider
-                        InputStream in = getContentResolver().openInputStream(intent.getData());
-                        // Create new output stream in temporary path
-                        OutputStream out = new FileOutputStream(importUri.getEncodedPath());
-                        // Copy the input stream to temporary file
-                        byte[] buf = new byte[1024];
-                        int len;
-                        while ((len = in.read(buf)) > 0) {
-                            out.write(buf, 0, len);
-                        }
-                        in.close();
-                        out.close();
-                        // Show import dialog
-                        successful = sendShowImportFileDialogMsg(importUri.getEncodedPath());
-                    } catch (FileNotFoundException e) {
-                        errorMessage=e.getLocalizedMessage();
-                        AnkiDroidApp.sendExceptionReport(e, "IntentHandler.java", "apkg import failed: " + filename);
-                    } catch (IOException e2) {
-                        errorMessage=e2.getLocalizedMessage();
-                        AnkiDroidApp.sendExceptionReport(e2, "IntentHandler.java", "apkg import failed" + filename);
-                    }
-                } else {
-                    if (filename == null) {
-                        errorMessage = "Could not retrieve filename from content resolver; try opening the apkg file with a file explorer";
-                        AnkiDroidApp.sendExceptionReport("IntentHandler.java", "apkg import failed (filename null, no MIME type provided)");
+                // Copy to temporary file
+                if (filename != null) {
+                    String tempOutDir = Uri.fromFile(new File(getCacheDir(), filename)).getEncodedPath();
+                    successful = copyFileToCache(intent, tempOutDir);
+                    // Show import dialog
+                    if (successful) {
+                        sendShowImportFileDialogMsg(tempOutDir);
                     } else {
-                        errorMessage = getResources().getString(R.string.import_error_not_apkg_extension, filename);
+                        AnkiDroidApp.sendExceptionReport("IntentHandler.java", "apkg import failed");
+                        errorMessage = getResources().getString(R.string.import_error_content_provider, AnkiDroidApp.getManualUrl()+"#importing");
                     }
                 }
             } else if (intent.getData().getScheme().equals("file")) {
                 // When the VIEW intent is sent as a file, we can open it directly without copying from content provider                
-                successful = sendShowImportFileDialogMsg(intent.getData().getPath());
+                String filename = intent.getData().getPath();
+                if (filename != null && filename.endsWith(".apkg")) {
+                    // If file has apkg extension then send message to show Import dialog
+                    sendShowImportFileDialogMsg(filename);
+                    successful = true;
+                } else {
+                    errorMessage = getResources().getString(R.string.import_error_not_apkg_extension, filename);
+                }
             }
             // Start DeckPicker if we correctly processed ACTION_VIEW
             if (successful) {
@@ -128,7 +118,6 @@ public class IntentHandler extends Activity {
                     }
                 });
                 builder.create().show();
-                return;
             }
         } else {
             // Launcher intents should start DeckPicker if no other task exists,
@@ -144,36 +133,126 @@ public class IntentHandler extends Activity {
 
     /**
      * Send a Message to AnkiDroidApp so that the DialogMessageHandler shows the Import apkg dialog.
-     * @param path
+     * @param path path to apkg file which will be imported
      */
-    private boolean sendShowImportFileDialogMsg(String path) {
+    private void sendShowImportFileDialogMsg(String path) {
         // Get the filename from the path
         File f = new File(path);
         String filename = f.getName();
-        if (filename != null && filename.endsWith(".apkg")) {
-            // Create a new message for DialogHandler so that we see the appropriate import dialog in DeckPicker
-            Message handlerMessage = Message.obtain();
-            Bundle msgData = new Bundle();
-            msgData.putString("importPath", path);
-            handlerMessage.setData(msgData);
-            if (filename.equals("collection.apkg")) {
-                // Show confirmation dialog asking to confirm import with replace when file called "collection.apkg"
-                handlerMessage.what = DialogHandler.MSG_SHOW_COLLECTION_IMPORT_REPLACE_DIALOG;
-            } else {
-                // Otherwise show confirmation dialog asking to confirm import with add
-                handlerMessage.what = DialogHandler.MSG_SHOW_COLLECTION_IMPORT_ADD_DIALOG;
-            }
-            // Store the message in AnkiDroidApp message holder, which is loaded later in AnkiActivity.onResume
-            AnkiDroidApp.setStoredDialogHandlerMessage(handlerMessage);
-            return true;
+
+        // Create a new message for DialogHandler so that we see the appropriate import dialog in DeckPicker
+        Message handlerMessage = Message.obtain();
+        Bundle msgData = new Bundle();
+        msgData.putString("importPath", path);
+        handlerMessage.setData(msgData);
+        if (filename.equals("collection.apkg")) {
+            // Show confirmation dialog asking to confirm import with replace when file called "collection.apkg"
+            handlerMessage.what = DialogHandler.MSG_SHOW_COLLECTION_IMPORT_REPLACE_DIALOG;
         } else {
-            return false;
+            // Otherwise show confirmation dialog asking to confirm import with add
+            handlerMessage.what = DialogHandler.MSG_SHOW_COLLECTION_IMPORT_ADD_DIALOG;
         }
+        // Store the message in AnkiDroidApp message holder, which is loaded later in AnkiActivity.onResume
+        AnkiDroidApp.setStoredDialogHandlerMessage(handlerMessage);
     }
 
     /** Finish Activity using FADE animation **/
     private void finishWithFade() {
     	finish();
     	ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
+    }
+
+    /**
+     * Check if the InputStream is to a valid non-empty zip file
+     * @param intent intent from which to get input stream
+     * @return whether or not valid zip file
+     */
+    private boolean hasValidZipFile(Intent intent) {
+        // Get an input stream to the data in ContentProvider
+        InputStream in = null;
+        try {
+            in = getContentResolver().openInputStream(intent.getData());
+        } catch (FileNotFoundException e) {
+            Timber.e(e, "Could not open input stream to intent data");
+        }
+        // Make sure it's not null
+        if (in == null) {
+            Timber.e("Could not open input stream to intent data");
+            return false;
+        }
+        // Open zip input stream
+        ZipInputStream zis = new ZipInputStream(in);
+        boolean ok = false;
+        try {
+            try {
+                ZipEntry ze = zis.getNextEntry();
+                if (ze != null) {
+                    // set ok flag to true if there are any valid entries in the zip file
+                    ok = true;
+                }
+            } catch (IOException e) {
+                // don't set ok flag
+                Timber.d(e, "Error checking if provided file has a zip entry");
+            }
+        } finally {
+            // close the input streams
+            try {
+                zis.close();
+                in.close();
+            } catch (Exception e) {
+                Timber.d(e, "Error closing the InputStream");
+            }
+        }
+        return ok;
+    }
+
+
+    /**
+     * Copy the data from the intent to a temporary file
+     * @param intent intent from which to get input stream
+     * @param tempPath temporary path to store the cached file
+     * @return whether or not copy was successful
+     */
+    private boolean copyFileToCache(Intent intent, String tempPath) {
+        // Get an input stream to the data in ContentProvider
+        InputStream in;
+        try {
+            in = getContentResolver().openInputStream(intent.getData());
+        } catch (FileNotFoundException e) {
+            Timber.e(e, "Could not open input stream to intent data");
+            return false;
+        }
+        // Check non-null
+        if (in == null) {
+            return false;
+        }
+        // Create new output stream in temporary path
+        OutputStream out;
+        try {
+            out = new FileOutputStream(tempPath);
+        } catch (FileNotFoundException e) {
+            Timber.e(e, "Could not access destination file %s", tempPath);
+            return false;
+        }
+
+        try {
+            // Copy the input stream to temporary file
+            byte[] buf = new byte[1024];
+            int len;
+            while ((len = in.read(buf)) > 0) {
+                out.write(buf, 0, len);
+            }
+            in.close();
+        } catch (IOException e) {
+            Timber.e(e, "Could not copy file to %s", tempPath);
+            return false;
+        } finally {
+            try {
+                out.close();
+            } catch (IOException e) {
+                Timber.e(e, "Error closing tempOutDir %s", tempPath);
+            }
+        }
+        return true;
     }
 }
