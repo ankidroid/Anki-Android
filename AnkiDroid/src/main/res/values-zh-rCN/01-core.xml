@@ -75,7 +75,7 @@
   <string name="card_unsuspended">撤消卡牌暂停</string>
   <string name="card_suspended">卡牌再次暂停</string>
   <string name="menu_rotate">旋转</string>
-  <string name="menu_import">Import</string>
+  <string name="menu_import">菜单_导入</string>
   <string name="undo">撤销</string>
   <string name="undo_action_review">上次复习</string>
   <string name="undo_action_edit">编辑卡牌记录</string>
@@ -101,7 +101,7 @@
   <string name="menu_my_account">同步帐户</string>
   <string name="menu_preferences">偏好设置</string>
   <string name="menu_about">关于</string>
-  <string name="menu_dismiss_note">Hide / Delete</string>
+  <string name="menu_dismiss_note">隐藏/删除</string>
   <string name="menu_bury_card">隐藏卡牌</string>
   <string name="menu_bury_note">隐藏卡牌记录</string>
   <string name="menu_suspend_card">暂停卡牌</string>
@@ -179,10 +179,10 @@
   <string name="confirm">确认</string>
   <string name="internet">互联网</string>
   <string name="pc">PC个人电脑</string>
-  <string name="nothing">Nothing</string>
+  <string name="nothing">无</string>
   <string name="title_activity_graphical_activity">统计图表</string>
-  <string name="title_activity_template_editor">Card Types for %s</string>
-  <string name="card_template_editor_front">Front Template</string>
+  <string name="title_activity_template_editor">%s 的卡类型</string>
+  <string name="card_template_editor_front">前台模板</string>
   <string name="card_template_editor_back">Back Template</string>
   <string name="card_template_editor_styling">Styling</string>
   <string name="card_template_editor_menu_add_reverse">Add reverse</string>

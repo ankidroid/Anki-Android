@@ -73,7 +73,7 @@
   <string name="multimedia_editor_field_editing_text">テキスト</string>
   <string name="multimedia_editor_field_editing_image">画像</string>
   <string name="multimedia_editor_field_editing_audio">音声</string>
-  <string name="multimedia_editor_field_editing_done">完了しました</string>
+  <string name="multimedia_editor_field_editing_done">完了</string>
   <string name="multimedia_editor_text_field_editing_search_label">検索対象</string>
   <string name="multimedia_editor_text_field_editing_show">画像</string>
   <string name="multimedia_editor_text_field_editing_say">発音</string>

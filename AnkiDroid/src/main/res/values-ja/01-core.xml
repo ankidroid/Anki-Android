@@ -47,7 +47,7 @@
   <string name="studyoptions_due_today">今日の学習目標:</string>
   <string name="studyoptions_new_total">新規カードの枚数:</string>
   <string name="studyoptions_total_cards">カードの総数:</string>
-  <string name="studyoptions_eta">推定時学習間 (分):</string>
+  <string name="studyoptions_eta">推定学習時間 (分):</string>
   <string name="studyoptions_start">学習開始</string>
   <plurals name="deckpicker_title">
     <item quantity="one">現在の学習目標: %1$d 枚 ( %2$s)</item>
@@ -146,7 +146,7 @@
   <string name="custom_study_deck_name">カスタム学習セッション</string>
   <string name="custom_study_deck_exists">最初に、既存のカスタム学習の単語帳の名称変更を行ってください。</string>
   <string name="studyoptions_congrats_finished">おめでとうございます！ 今日の目標を達成しました</string>
-  <string name="studyoptions_congrats_more_rev">期日に達した復習カードがまだ他にも残っていますが、一日あたりの復習カード枚数の上限に達しています。上限は「単語帳オプション」内の設定で上げられます。</string>
+  <string name="studyoptions_congrats_more_rev">学習予定日に達した復習カードがまだ他にも残っていますが、一日あたりの復習カード枚数の上限に達しています。上限は「単語帳オプション」内の設定で上げられます。</string>
   <string name="studyoptions_congrats_more_new">新規カードがまだ他にも残っていますが、一日あたりの新規カード枚数の上限に達しています。上限は「単語帳オプション」内の設定で上げられます。（ただしそれに伴って短期的に学習の負担が増えますのでご注意ください。）</string>
   <string name="studyoptions_congrats_custom">通常のスケジュール以外で学習するには、「カスタム学習」ボタンをタップしてください。</string>
   <string name="studyoptions_no_cards_due">学習予定時刻に達したカードがまだありません</string>

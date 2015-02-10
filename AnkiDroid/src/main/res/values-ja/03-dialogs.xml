@@ -125,10 +125,10 @@
   <string name="importing_collection">コレクションをインポートしています。\nお待ちください&#8230;</string>
   <string name="import_media_count">メディアファイルをインポートしています。 %1$d%%\nお待ちください&#8230;</string>
   <string name="import_update_counts">単語帳の数を更新しています。\nお待ちください&#8230;</string>
-  <string name="import_add_progress">• 解凍中のアーカイブ %1$s\n• ノートのインポート %2$d%%\n• カードのインポート %3$d%%\n• クリーンアップ %4$s</string>
+  <string name="import_add_progress">• アーカイブの解凍 %1$s\n• ノートのインポート %2$d%%\n• カードのインポート %3$d%%\n• クリーンアップ %4$s</string>
   <string name="sd_card_full_title">SD カード残量なし</string>
   <string name="sd_card_almost_full_title">SD カード残量わずか</string>
-  <string name="restore_backup_title">バックアップからコレクションを復元しますか？</string>
+  <string name="restore_backup_title">バックアップから復元しますか？</string>
   <string name="restore_backup">コレクションは、古い物と置き換えられます。また、未保存のものは失われます。</string>
   <string name="dialog_cancel">キャンセル</string>
   <string name="dialog_ok">OK</string>

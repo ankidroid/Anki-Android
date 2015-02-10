@@ -42,7 +42,7 @@
   <string name="app_name">AnkiDroid</string>
   <string name="app_name_anki">Anki</string>
   <string name="app_name_droid">Droid</string>
-  <string name="studyoptions_title">Study Options</string>
+  <string name="studyoptions_title">Opţiuni de studiu</string>
   <string name="studyoptions_deck_name">Nume Pachet</string>
   <string name="studyoptions_due_today">Pentru astăzi:</string>
   <string name="studyoptions_new_total">Totalul cardurilor noi:</string>
@@ -62,7 +62,7 @@
     <item quantity="other">%1$d din %2$d scadente</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%d minute left</item>
+    <item quantity="one">au mai ramas %d minute</item>
     <item quantity="other">au mai ramas %d minute</item>
   </plurals>
   <string name="type_answer_hint">Type answer</string>

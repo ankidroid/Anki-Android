@@ -149,7 +149,7 @@
   <string name="studyoptions_congrats_more_rev">Il limite delle ripetizioni per oggi è stato raggiunto, ma ci sono ancora carte che aspettano di essere ripetute. Per un utilizzo ottimale della memoria, considera di aumentare il limite giornaliero nelle opzioni.</string>
   <string name="studyoptions_congrats_more_new">Ci sono ulteriori carte nuove disponibili, ma il limite giornaliero è stato raggiunto. Puoi aumentare il limite nelle opzioni, ma ricordati che ciò aumenterà il tuo carico di lavoro per le ripetizioni a breve termine.</string>
   <string name="studyoptions_congrats_custom">Per studiare al di fuori della programmazione normale, clicca sul pulsante \'Studio Personalizzato\' qui sotto.</string>
-  <string name="studyoptions_no_cards_due">Nessuna carta da riperere ora.</string>
+  <string name="studyoptions_no_cards_due">Nessuna carta da ripetere ora.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Domani ci saranno: %1$d carte da rivedere e %2$s.\n Tempo stimato: %3$s</item>
     <item quantity="other">Domani ci saranno: %1$d carte da ripetere e %2$s.\n Durata stimata: %3$s</item>

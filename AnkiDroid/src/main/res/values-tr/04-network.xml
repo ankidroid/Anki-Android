@@ -166,7 +166,7 @@
   <string name="sync_sanity_remote">Sunucu</string>
   <string name="force_full_sync_title">Zorunlu tam senkronizasyon</string>
   <string name="force_full_sync_summary">Bir sonraki eşitlemede, değişiklikleri tek yönde yapın</string>
-  <string name="full_sync_confirmation">The requested change will require a full upload of the database when you next synchronize your collection. If you have reviews or other changes waiting on another device that haven\'t been synchronized here yet, they will be lost. Continue?</string>
+  <string name="full_sync_confirmation">İstenen değişiklik koleksiyonunuzu bir sonraki senkronize edişinizde veritabanının toptan karşıya yüklenmesini gerektirecek. Başka bir cihazda bekleyen, burada henüz senkronize edilmemiş çalışmalarınız veya başka değişiklikleriniz varsa kaybolacaklar. Devam edilsin mi?</string>
   <string name="full_sync_confirmation_upgrade">AnkiDroid daha önce yüklenmiş sürümündeki bir hata nedeniyle, tam senkronizasyon yapma tavsiye edilir.</string>
   <string name="sync_error_501_upgrade_required">Lütfen en son AnkiDroid sürümüne yükseltin</string>
 </resources>

@@ -149,7 +149,7 @@
   <string name="studyoptions_congrats_more_rev">Bugünün çalışma sınırına ulaşıldı, ama hâlâ çalışılmayı bekleyen kartlar var. En uygun belleme için, seçeneklerden günlük sınırı artırabilirsiniz.</string>
   <string name="studyoptions_congrats_more_new">Daha çalışılacak yeni kartlar var, ama günlük sınıra ulaşıldı. Sınırı seçeneklerden artırabilirsiniz, ama lütfen unutmayın ki bu kısa vâdede çalışma yükünüzü artıracak.</string>
   <string name="studyoptions_congrats_custom">Normal programın dışında çalışmak için, aşağıdaki Kişisel Çalışma düğmesine basın.</string>
-  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
+  <string name="studyoptions_no_cards_due">Henüz çalışılacak kart yok.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Yarın: %1$d kart çalışılacak ve %2$s.\n Tahminî süre: %3$s</item>
     <item quantity="other">Yarın; %1$d kart çalışılacak ve %2$s.\n Tahminî süre: %3$s</item>

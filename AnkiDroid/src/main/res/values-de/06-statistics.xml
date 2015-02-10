@@ -153,8 +153,8 @@
   <string name="stats_review_intervals">Intervalle</string>
   <string name="stats_breakdown">Gedächtnisleistung nach Tageszeit</string>
   <string name="stats_weekly_breakdown">Gedächtnisleistung nach Wochentag</string>
-  <string name="stats_answer_buttons">Antwortknopf</string>
-  <string name="stats_cards_types">Kartenstatus</string>
+  <string name="stats_answer_buttons">Antwortschaltflächen</string>
+  <string name="stats_cards_types">Kartentypen</string>
   <string-array name="stats_period">
     <item>1 Monat</item>
     <item>1 Jahr</item>

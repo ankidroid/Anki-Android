@@ -102,7 +102,7 @@
   <string name="deck_summary_forecast">予測</string>
   <string name="deck_summary_tomorrow_due">明日に学習予定日時に達するカード: &lt;b&gt;%d&lt;/b&gt;枚</string>
   <string name="deck_summary_tomorrow_new">明日の新規カード: &lt;b&gt;%d&lt;/b&gt;枚</string>
-  <string name="deck_summary_tomorrow_time">明日の推定必要時間: &lt;b&gt;%d&lt;/b&gt; 分.</string>
+  <string name="deck_summary_tomorrow_time">明日の推定学習時間: &lt;b&gt;%d&lt;/b&gt; 分.</string>
   <string name="deck_summary_finished_in">新規カードの終了: &lt;b&gt;%d&lt;/b&gt; 日</string>
   <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; 枚/日</string>
   <string name="deck_summary_deck_age">単語帳作成日: &lt;b&gt;%d&lt;/b&gt; 日前</string>
