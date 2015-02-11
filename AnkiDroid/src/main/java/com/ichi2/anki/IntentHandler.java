@@ -72,7 +72,7 @@ public class IntentHandler extends Activity {
                         Timber.w("Could not retrieve filename from ContentProvider, but was valid zip file so we try to continue");
                     } else {
                         Timber.e("Could not retrieve filename from ContentProvider or read content as ZipFile");
-                        AnkiDroidApp.sendExceptionReport("IntentHandler.java", "apkg import failed");
+                        AnkiDroidApp.sendExceptionReport(new RuntimeException("Could not import apkg from ContentProvider"), "IntentHandler.java", "apkg import failed");
                     }
                 }
                 // Copy to temporary file
@@ -83,7 +83,7 @@ public class IntentHandler extends Activity {
                     if (successful) {
                         sendShowImportFileDialogMsg(tempOutDir);
                     } else {
-                        AnkiDroidApp.sendExceptionReport("IntentHandler.java", "apkg import failed");
+                        AnkiDroidApp.sendExceptionReport(new RuntimeException("Error importing apkg file"), "IntentHandler.java", "apkg import failed");
                         errorMessage = getResources().getString(R.string.import_error_content_provider, AnkiDroidApp.getManualUrl()+"#importing");
                     }
                 }
