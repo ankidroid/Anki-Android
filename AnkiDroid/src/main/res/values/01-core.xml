@@ -101,7 +101,6 @@
     <string name="menu_save_note">Save note</string>
     <string name="menu_delete_note">Delete note</string>
     <string name="delete_note_message">Really delete this note and all its cards?\n%s</string>
-    <string name="menu_edit_card">Edit card</string>
     <string name="menu_select">Select text</string>
     <string name="menu_search">Lookup in %1$s</string>
     <string name="menu_mark_card">Mark card</string>
