@@ -24,7 +24,6 @@ import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 
-
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.exception.UnknownHttpResponseException;
@@ -48,7 +47,6 @@ import org.json.JSONObject;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileFilter;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -64,6 +62,7 @@ import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
+
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
@@ -883,13 +882,6 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         }
     }
 
-
-    public static final class OldAnkiDeckFilter implements FileFilter {
-        @Override
-        public boolean accept(File pathname) {
-            return pathname.isFile() && pathname.getName().endsWith(".anki");
-        }
-    }
 
     public class CancelCallback {
         private WeakReference<ThreadSafeClientConnManager> mConnectionManager = null;
