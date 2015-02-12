@@ -110,9 +110,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
     public static final int CRAM_DECK_FRAGMENT = -1;
 
-    public static final String UPGRADE_OLD_COLLECTION_RENAME = "oldcollection.apkg";
-    public static final String IMPORT_REPLACE_COLLECTION_NAME = "collection.apkg";
-
     private String mImportPath;
 
     public static final String EXTRA_START = "start";
@@ -144,9 +141,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     // private static final int LOG_IN = 13;
     private static final int BROWSE_CARDS = 14;
     private static final int ADD_SHARED_DECKS = 15;
-    private static final int LOG_IN_FOR_SHARED_DECK = 16;
     private static final int ADD_CRAM_DECK = 17;
-    //private static final int SHOW_INFO_UPGRADE_DECKS = 18;
     private static final int REQUEST_REVIEW = 19;
 
     private StyledProgressDialog mProgressDialog;
@@ -695,8 +690,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         } else if (requestCode == REPORT_FEEDBACK && resultCode == RESULT_OK) {
         } else if (requestCode == LOG_IN_FOR_SYNC && resultCode == RESULT_OK) {
             sync();
-        } else if (requestCode == LOG_IN_FOR_SHARED_DECK && resultCode == RESULT_OK) {
-            addSharedDeck();
         } else if (requestCode == ADD_SHARED_DECKS) {
             if (intent != null) {
                 mImportPath = intent.getStringExtra("importPath");
