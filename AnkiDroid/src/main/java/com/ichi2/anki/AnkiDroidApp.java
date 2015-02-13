@@ -34,7 +34,6 @@ import android.util.Log;
 import android.view.ViewConfiguration;
 
 import com.ichi2.anki.dialogs.AnkiDroidCrashReportDialog;
-import com.ichi2.anki.exception.AnkiDroidErrorReportException;
 import com.ichi2.compat.Compat;
 import com.ichi2.compat.CompatV12;
 import com.ichi2.compat.CompatV15;
@@ -439,15 +438,6 @@ public class AnkiDroidApp extends Application {
             Timber.e(e, "Couldn't find package named %s", context.getPackageName());
         }
         return 0;
-    }
-
-
-    public static void sendExceptionReport(String origin, String additionalInfo) {
-        try {
-            throw new AnkiDroidErrorReportException();
-        } catch (AnkiDroidErrorReportException e) {
-            sendExceptionReport(e, origin, additionalInfo);
-        }
     }
 
 

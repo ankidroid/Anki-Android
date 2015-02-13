@@ -79,7 +79,7 @@ public class AnkiDb {
         @Override
         public void onCorruption(SQLiteDatabase db) {
             Timber.e("The database has been corrupted...");
-            AnkiDroidApp.sendExceptionReport("AnkiDb.MyDbErrorHandler.onCorruption", "Db has been corrupted ");
+            AnkiDroidApp.sendExceptionReport(new RuntimeException("Database corrupted"), "AnkiDb.MyDbErrorHandler.onCorruption", "Db has been corrupted ");
             AnkiDroidApp.closeCollection(false);
             AnkiDroidApp.setDbCorruptedFlag();
         }
@@ -265,7 +265,7 @@ public class AnkiDb {
                     StringBuilder sb = new StringBuilder();
                     sb.append("AnkiDb.queryColumn(): Critical error -- ");
                     sb.append("unable to pass in the actual exception to error reporting.");
-                    AnkiDroidApp.sendExceptionReport("queryColumn_encounteredNull", sb.toString());
+                    AnkiDroidApp.sendExceptionReport(new RuntimeException("queryColumn null"), "queryColumn_encounteredNull", sb.toString());
                     Timber.e(sb.toString());
                 }
             }
