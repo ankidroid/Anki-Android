@@ -22,6 +22,7 @@ package com.ichi2.libanki;
 import android.content.ContentValues;
 import android.database.Cursor;
 
+import android.text.TextUtils;
 import android.util.Pair;
 
 import com.ichi2.anki.AnkiDroidApp;
@@ -35,6 +36,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -49,8 +52,12 @@ import java.util.regex.Pattern;
 import timber.log.Timber;
 
 public class Models {
-    private static final Pattern fClozePattern1 = Pattern.compile("(?:\\{\\{|<%)cloze:(.+?)(?:\\}\\}|%>)");
-    private static final Pattern fClozePattern2 = Pattern.compile("\\{\\{c(\\d+)::.+?\\}\\}");
+    private static final Pattern fHookFieldMod = Pattern.compile("^(.*?)(?:\\((.*)\\))?$");
+    private static final Pattern fClozePattern1 = Pattern.compile("\\{\\{[^}]*?cloze:(?:[^}]?:)*(.+?)\\}\\}");
+    private static final Pattern fClozePattern2 = Pattern.compile("<%cloze:(.+?)%>");
+    private static final Pattern fClozeOrdPattern = Pattern.compile("\\{\\{c(\\d+)::.+?\\}\\}");
+
+    protected static final String clozeReg = "(?s)\\{\\{c%s::(.*?)(::(.*?))?\\}\\}";
 
     public static final String defaultModel =
               "{'sortf': 0, "
@@ -913,9 +920,8 @@ public class Models {
     }
 
 
-    // originally from anki.template.template
     // Handle fields fetched from templates and any anki-specific formatting
-    protected static final String clozeReg = "\\{\\{c%s::(.*?)(::(.*?))?\\}\\}";
+
     protected static class fieldParser implements Mustache.VariableFetcher {
         private Map<String, String> _fields;
 
@@ -925,6 +931,7 @@ public class Models {
         }
 
 
+        // libanki: render_unescaped
         public Object get(Object ctx, String tag_name) throws Exception {
             if (tag_name.length() == 0) {
                 return null;
@@ -935,57 +942,86 @@ public class Models {
             }
 
             // field modifiers
-            String[] parts = tag_name.split(":", 3);
-            String mod = null, extra = null, tag = null;
-            if (parts.length == 1 || parts[0].equals("")) {
-                return null;
-            } else if (parts.length == 2) {
-                mod = parts[0];
-                tag = parts[1];
-            } else if (parts.length == 3) {
-                mod = parts[0];
-                extra = parts[1];
-                tag = parts[2];
+            List<String> parts = Arrays.asList(tag_name.split(":"));
+            String extra = null;
+            List<String> mods;
+            String tag;
+            if (parts.size() == 1 || parts.get(0).equals("")) {
+                return String.format("{unknown field %s}", tag_name);
+            } else {
+                mods = parts.subList(0, parts.size() - 1);
+                tag = parts.get(parts.size()-1);
             }
 
             txt = _fields.get(tag);
 
-            Timber.d("Processing field modifier %s: extra = %s, field %s = %s",  mod, extra, tag, txt);
+            // Since 'text:' and other mods can affect html on which Anki relies to
+            // process clozes, we need to make sure clozes are always
+            // treated after all the other mods, regardless of how they're specified
+            // in the template, so that {{cloze:text: == {{text:cloze:
+            // For type:, we return directly since no other mod than cloze (or other
+            // pre-defined mods) can be present and those are treated separately
+            Collections.reverse(mods);
+            Collections.sort(mods, new Comparator<String>() {
+                // This comparator ensures "type:" mods are ordered first in the list. The rest of
+                // the list remains in the same order.
+                @Override
+                public int compare(String lhs, String rhs) {
+                    if (lhs.equals("type")) {
+                        return 0;
+                    } else {
+                        return 1;
+                    }
+                };
+            });
 
-            // built-in modifiers
-            if (mod.equals("text")) {
-                // strip html
-                if (txt != null && txt.length() > 0) {
-                    return Utils.stripHTML(txt);
-                }
-                return "";
-            } else if (mod.equals("type")) {
-                // type answer field; convert it to [[type:...]] for the gui code to process
-                return "[[" + tag_name + "]]";
-            } else if (mod.equals("cq") || mod.equals("ca")) {
-                // cloze deletion
-                if (txt != null && txt.length() != 0 && extra != null && extra.length() != 0) {
-                    return clozeText(txt, extra, mod.charAt(1));
+            for (String mod : mods) {
+                Timber.d("Processing field: modifier=%s, extra=%s, tag=%s, txt=%s", mod, extra, tag, txt);
+                // built-in modifiers
+                if (mod.equals("text")) {
+                    // strip html
+                    if (!TextUtils.isEmpty(txt)) {
+                        txt = Utils.stripHTML(txt);
+                    } else {
+                        txt = "";
+                    }
+                } else if (mod.equals("type")) {
+                    // type answer field; convert it to [[type:...]] for the gui code
+                    // to process
+                    return "[[" + tag_name + "]]";
+                } else if (mod.startsWith("cq-") || mod.startsWith("ca-")) {
+                    // cloze deletion
+                    String[] split = mod.split("-");
+                    mod = split[0];
+                    extra = split[1];
+                    if (!TextUtils.isEmpty(txt) && !TextUtils.isEmpty(extra)) {
+                        txt = clozeText(txt, extra, mod.charAt(1));
+                    }
                 } else {
-                    return "";
+                    // hook-based field modifier
+                    Matcher m = fHookFieldMod.matcher(mod);
+                    if (m.matches()) {
+                        mod = m.group(1);
+                        extra = m.group(2);
+                    }
+                    txt = (String) AnkiDroidApp.getHooks().runFilter("fmod_" + mod,
+                            txt == null ? "" : txt,
+                            extra == null ? "" : extra,
+                            AnkiDroidApp.getAppResources(),
+                            tag, tag_name);
+
+                    if (txt == null) {
+                        return String.format("{unknown field %s}", tag_name);
+                    }
                 }
-            } else {
-                // hook-based field modifier
-                if (txt == null) {
-                    txt = (String) AnkiDroidApp.getHooks().runFilter("fmod_" + mod, "", extra, AnkiDroidApp.getAppResources(), tag, tag_name);
-                } else {
-                    txt = (String) AnkiDroidApp.getHooks().runFilter("fmod_" + mod, txt, extra, AnkiDroidApp.getAppResources(), tag, tag_name);
-                }
-                if (txt == null) {
-                    return "{unknown field " + tag_name + "}";
-                }
-                return txt;
             }
+            return txt;
         }
 
 
         private static String clozeText(String txt, String ord, char type) {
             Matcher m = Pattern.compile(String.format(Locale.US, clozeReg, ord)).matcher(txt);
+
             StringBuffer rep = new StringBuffer();
             Boolean found = false;
 
@@ -1323,23 +1359,28 @@ public class Models {
         String[] sflds = Utils.splitFields(flds);
         Map<String, Pair<Integer, JSONObject>> map = fieldMap(m);
         Set<Integer> ords = new HashSet<Integer>();
-        Matcher matcher1 = null;
+        List<String> matches = new ArrayList<String>();
+        Matcher mm;
         try {
-            matcher1 = fClozePattern1.matcher(m.getJSONArray("tmpls").getJSONObject(0).getString("qfmt"));
-            // Libanki makes two finds for each case of the cloze tags, but we embed both in the pattern.
-            // Please note, that this approach is not 100% correct, as we allow cases like {{cloze:...%>
+            mm = fClozePattern1.matcher(m.getJSONArray("tmpls").getJSONObject(0).getString("qfmt"));
+            while (mm.find()) {
+                matches.add(mm.group(1));
+            }
+            mm = fClozePattern2.matcher(m.getJSONArray("tmpls").getJSONObject(0).getString("qfmt"));
+            while (mm.find()) {
+                matches.add(mm.group(1));
+            }
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-        while (matcher1.find()) {
-            String fname = matcher1.group(1);
+        for (String fname : matches) {
             if (!map.containsKey(fname)) {
                 continue;
             }
             int ord = map.get(fname).first;
-            Matcher matcher2 = fClozePattern2.matcher(sflds[ord]);
-            while (matcher2.find()) {
-                ords.add(Integer.parseInt(matcher2.group(1)) - 1);
+            mm = fClozeOrdPattern.matcher(sflds[ord]);
+            while (mm.find()) {
+                ords.add(Integer.parseInt(mm.group(1)) - 1);
             }
         }
         if (ords.contains(-1)) {

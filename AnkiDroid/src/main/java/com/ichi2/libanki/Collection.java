@@ -95,9 +95,10 @@ public class Collection {
     private boolean mDebugLog;
     private PrintWriter mLogHnd;
 
-    // Cloze regex
-    private static final Pattern fClozePattern = Pattern.compile("\\{\\{cloze:");
-    private static final Pattern fAltClozePattern = Pattern.compile("<%cloze:");
+    private static final Pattern fClozePatternQ = Pattern.compile("\\{\\{(?!type:)(.*?)cloze:");
+    private static final Pattern fClozePatternA = Pattern.compile("\\{\\{(.*?)cloze:");
+    private static final Pattern fClozeTagStart = Pattern.compile("<%cloze:");
+
     // other options
     public static final String defaultConf = "{"
             +
@@ -987,9 +988,9 @@ public class Collection {
 
                 // runFilter mungeFields for type "q"
                 Models.fieldParser fparser = new Models.fieldParser(fields);
-                Matcher m = fClozePattern.matcher(qfmt);
-                format = m.replaceAll(String.format(Locale.US, "{{cq:%d:", cardNum));
-                m = fAltClozePattern.matcher(format);
+                Matcher m = fClozePatternQ.matcher(qfmt);
+                format = m.replaceAll(String.format(Locale.US, "{{$1cq-%d:", cardNum));
+                m = fClozeTagStart.matcher(format);
                 format = m.replaceAll(String.format(Locale.US, "<%%cq:%d:", cardNum));
                 html = mModels.getCmpldTemplate(format).execute(fparser);
                 html = (String) AnkiDroidApp.getHooks().runFilter("mungeQA", html, "q", fields, model, data, this);
@@ -1004,13 +1005,11 @@ public class Collection {
                 // the following line differs from inherited libanki (original in comment)
                 fields.put("FrontSide", d.get("q")); // fields.put("FrontSide", mMedia.stripAudio(d.get("q")));
 
-
-
                 // runFilter mungeFields for type "a"
                 fparser = new Models.fieldParser(fields);
-                m = fClozePattern.matcher(afmt);
-                format = m.replaceAll(String.format(Locale.US, "{{ca:%d:", cardNum));
-                m = fAltClozePattern.matcher(format);
+                m = fClozePatternA.matcher(afmt);
+                format = m.replaceAll(String.format(Locale.US, "{{$1ca-%d:", cardNum));
+                m = fClozeTagStart.matcher(format);
                 format = m.replaceAll(String.format(Locale.US, "<%%ca:%d:", cardNum));
                 html = mModels.getCmpldTemplate(format).execute(fparser);
                 html = (String) AnkiDroidApp.getHooks().runFilter("mungeQA", html, "a", fields, model, data, this);
