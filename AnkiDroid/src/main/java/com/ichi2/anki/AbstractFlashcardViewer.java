@@ -1994,7 +1994,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         if (mCurrentSimpleInterface) {
             mCardContent = convertToSimple(question);
-            if (mCardContent.length() == 0) {
+            if (mCardContent== null || mCardContent.length() == 0) {
                 SpannableString hint = new SpannableString(getResources().getString(R.string.simple_interface_hint,
                         R.string.card_details_question));
                 hint.setSpan(new StyleSpan(Typeface.ITALIC), 0, mCardContent.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -2097,7 +2097,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         if (mCurrentSimpleInterface) {
             mCardContent = convertToSimple(answer);
-            if (mCardContent.length() == 0) {
+            if (mCardContent== null || mCardContent.length() == 0) {
                 SpannableString hint = new SpannableString(getResources().getString(R.string.simple_interface_hint,
                         R.string.card_details_answer));
                 hint.setSpan(new StyleSpan(Typeface.ITALIC), 0, mCardContent.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -3034,7 +3034,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
 
     private Spanned convertToSimple(String text) {
-        return Html.fromHtml(text, mSimpleInterfaceImagegetter, mSimpleInterfaceTagHandler);
+        try {
+            return Html.fromHtml(text, mSimpleInterfaceImagegetter, mSimpleInterfaceTagHandler);
+        } catch (Exception e) {
+            Timber.e(e, "Error converting to simple interface");
+            return null;
+        }
     }
 
 
