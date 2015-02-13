@@ -623,6 +623,40 @@ public class AnkiDroidApp extends Application {
         editor.commit();
     }
 
+    /**
+     * Get the url for the feedback page
+     * @return
+     */
+    public static String getFeedbackUrl() {
+        if (isCurrentLanguage("ja")) {
+            return sInstance.getResources().getString(R.string.link_help_ja);
+        } else {
+            return sInstance.getResources().getString(R.string.link_help);
+        }
+    }
+
+    /**
+     * Get the url for the manual
+     * @return
+     */
+    public static String getManualUrl() {
+        if (isCurrentLanguage("ja")) {
+            return sInstance.getResources().getString(R.string.link_manual_ja);
+        } else {
+            return sInstance.getResources().getString(R.string.link_manual);
+        }
+    }
+
+    /**
+     * Check whether l is the currently set language code
+     * @param l ISO2 language code
+     * @return
+     */
+    private static boolean isCurrentLanguage(String l) {
+        String pref = getSharedPrefs(sInstance).getString(Preferences.LANGUAGE, "");
+        return pref.equals(l) || pref.equals("") && Locale.getDefault().getLanguage().equals(l);
+    }
+
     /** A tree which logs necessary data for crash reporting. */
     public static class ProductionCrashReportingTree extends Timber.HollowTree {
         private static final ThreadLocal<String> NEXT_TAG = new ThreadLocal<String>();

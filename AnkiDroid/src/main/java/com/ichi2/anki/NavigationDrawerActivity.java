@@ -158,12 +158,12 @@ public class NavigationDrawerActivity extends AnkiActivity {
                 break;
             
             case DRAWER_HELP:
-                Intent helpIntent = new Intent("android.intent.action.VIEW", Uri.parse(getManualUrl()));
+                Intent helpIntent = new Intent("android.intent.action.VIEW", Uri.parse(AnkiDroidApp.getManualUrl()));
                 startActivityWithoutAnimation(helpIntent);
                 break;
                 
             case DRAWER_FEEDBACK:
-                Intent feedbackIntent = new Intent("android.intent.action.VIEW", Uri.parse(getFeedbackUrl()));
+                Intent feedbackIntent = new Intent("android.intent.action.VIEW", Uri.parse(AnkiDroidApp.getFeedbackUrl()));
                 startActivityWithoutAnimation(feedbackIntent);
                 break;
             
@@ -172,40 +172,6 @@ public class NavigationDrawerActivity extends AnkiActivity {
         }
     }
 
-    /**
-     * Get the url for the feedback page
-     * @return
-     */
-    private String getFeedbackUrl() {
-        if (isCurrentLanguage("ja")) {
-            return getResources().getString(R.string.link_help_ja);
-        } else {
-            return getResources().getString(R.string.link_help);
-        }
-    }
-
-    /**
-     * Get the url for the manual
-     * @return
-     */
-    private String getManualUrl() {
-        if (isCurrentLanguage("ja")) {
-            return getResources().getString(R.string.link_manual_ja);
-        } else {
-            return getResources().getString(R.string.link_manual);
-        }
-    }
-
-    /**
-     * Check whether l is the currently set language code
-     * @param l ISO2 language code
-     * @return
-     */
-    private boolean isCurrentLanguage(String l) {
-        String pref = AnkiDroidApp.getSharedPrefs(this).getString(Preferences.LANGUAGE, "");
-        return pref.equals(l) || pref.equals("") && Locale.getDefault().getLanguage().equals(l);
-    }
-    
     protected void deselectAllNavigationItems() {
         // Deselect all entries in navigation drawer
         for (int i=0; i< mDrawerList.getCount(); i++) {
