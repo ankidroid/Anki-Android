@@ -83,7 +83,6 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     public static final int TASK_TYPE_DOWNLOAD_SHARED_DECK = 8;
     public static final int CONN_TIMEOUT = 30000;
 
-    private static Context sContext;
 
     private static Connection sInstance;
     private TaskListener mListener;
@@ -532,7 +531,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     }
                 } catch (UnsupportedSyncException e) {
                     mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_unsupported);
-                    AnkiDroidApp.getSharedPrefs(sContext).edit().putBoolean("syncFetchesMedia", false).commit();
+                    AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getApplicationContext()).edit().putBoolean("syncFetchesMedia", false).commit();
                     AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync-mediaSync");
                 } catch (RuntimeException e) {
                     if (timeoutOccured(e)) {
@@ -828,7 +827,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
 
 
     public static boolean isOnline() {
-        ConnectivityManager cm = (ConnectivityManager) sContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager cm = (ConnectivityManager) AnkiDroidApp.getInstance().getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
 
         if (cm.getActiveNetworkInfo() != null) {
             return cm.getActiveNetworkInfo().isConnectedOrConnecting();
@@ -837,10 +836,6 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         }
     }
 
-
-    public static void setContext(Context applicationContext) {
-        sContext = applicationContext;
-    }
 
     public static interface TaskListener {
         public void onPreExecute();
