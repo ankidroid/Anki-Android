@@ -371,7 +371,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                     // Before honeycomb there's no way to know if the db has actually been corrupted
                     // so we show a non-specific message.
                     return res().getString(R.string.open_collection_failed_message, res().getString(R.string.repair_deck));
-                } else if (AnkiDroidApp.getDbCorruptedFlag()) {
+                } else if (AnkiDroidApp.sDatabaseCorruptFlag) {
                     // The sqlite database has been corrupted (DatabaseErrorHandler.onCorrupt() was called)
                     // Show a specific message appropriate for the situation
                     return res().getString(R.string.corrupt_db_message, res().getString(R.string.repair_deck));

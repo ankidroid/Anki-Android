@@ -58,18 +58,18 @@ public class CollectionLoader extends AsyncTaskLoader<Collection> {
     @Override
     protected void onStartLoading() {
         // Don't touch collection if sync in progress
-        if (AnkiDroidApp.getSyncInProgress()) {
-            Timber.v("CollectionLoader.onStartLoading() -- sync in progress; don't load collection");
+        if (AnkiDroidApp.sSyncInProgressFlag) {
+            Timber.w("CollectionLoader.onStartLoading() -- sync in progress; don't load collection");
             return;
         }
         String colPath = AnkiDroidApp.getCollectionPath();
         if (AnkiDroidApp.colIsOpen() && AnkiDroidApp.getCol() != null && AnkiDroidApp.getCol().getPath().equals(colPath)) {
             // deliver current path if open and valid
-            Timber.v("CollectionLoader.onStartLoading() -- deliverResult as col already open");
+            Timber.d("CollectionLoader.onStartLoading() -- deliverResult as col already open");
             deliverResult(AnkiDroidApp.getCol());
         } else {
             // otherwise reload the collection
-            Timber.v("CollectionLoader.onStartLoading() -- force load collection");
+            Timber.d("CollectionLoader.onStartLoading() -- force load collection");
             forceLoad();
         }        
     }
