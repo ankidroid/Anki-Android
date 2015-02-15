@@ -406,7 +406,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         }
         String path = AnkiDroidApp.getCollectionPath();
         try {
-            AnkiDroidApp.setSyncInProgress(true);
+            AnkiDroidApp.sSyncInProgressFlag = true;
             HttpSyncer server = new RemoteServer(this, hkey);
             Syncer client = new Syncer(col, server);
 
@@ -578,7 +578,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             // Close collection to roll back any sync failures and
             Timber.d("doInBackgroundSync -- closing collection on outer finally statement");
             col.close(false);
-            AnkiDroidApp.setSyncInProgress(false);
+            AnkiDroidApp.sSyncInProgressFlag = false;
             Timber.d("doInBackgroundSync -- reopening collection on outer finally statement");
             AnkiDroidApp.openCollection(AnkiDroidApp.getCollectionPath());
         }

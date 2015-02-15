@@ -153,7 +153,7 @@ public class NavigationDrawerActivity extends AnkiActivity {
 
                 break;
             case DRAWER_SETTINGS:
-                mOldColPath = AnkiDroidApp.getSharedPrefs(this).getString("deckPath", "oldPath");
+                mOldColPath = AnkiDroidApp.getCurrentAnkiDroidDirectory();
                 startActivityForResultWithAnimation(new Intent(this, Preferences.class), REQUEST_PREFERENCES_UPDATE, ActivityTransitionAnimation.LEFT);
                 break;
             
@@ -306,7 +306,7 @@ public class NavigationDrawerActivity extends AnkiActivity {
         AnkiDroidApp.setLanguage(preferences.getString(Preferences.LANGUAGE, ""));
         // Restart the activity on preference change
         if (requestCode == REQUEST_PREFERENCES_UPDATE) {
-            if (mOldColPath!=null && preferences.getString("deckPath", "").equals(mOldColPath)) {
+            if (mOldColPath!=null && AnkiDroidApp.getCurrentAnkiDroidDirectory().equals(mOldColPath)) {
                 // collection path hasn't been changed so just restart the current activity
                 if ((this instanceof Reviewer) && preferences.getBoolean("tts", false)) {
                     // Workaround to kick user back to StudyOptions after opening settings from Reviewer
@@ -319,8 +319,6 @@ public class NavigationDrawerActivity extends AnkiActivity {
                 // collection path has changed so kick the user back to the DeckPicker
                 AnkiDroidApp.closeCollection(true);
                 finishWithoutAnimation();
-                // Ensure the new collection directory exists before reloading
-                AnkiDroidApp.initializeAnkiDroidDirectory();
                 Intent deckPicker = new Intent(this, DeckPicker.class);
                 deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivityWithoutAnimation(deckPicker);
