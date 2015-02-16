@@ -556,10 +556,13 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler,
                     new DeckTask.TaskData(getCol().getSched(), sCardBrowserCard, false));
         } else if (requestCode == ADD_NOTE && resultCode == RESULT_OK) {
-            mSearchTerms = mSearchView.getQuery().toString();
-            // Both toLowerCase(Locale.US) and toLowerCase(Locale.getDefault()) would be wrong here. Keywords are pulled
-            // toLowerCase(Locale.US) later.
-            searchCards();
+            if (mSearchView != null) {
+                mSearchTerms = mSearchView.getQuery().toString();
+                searchCards();
+            } else {
+                Timber.w("Note was added from browser and on return mSearchView == null");
+            }
+
         }
     }
 
