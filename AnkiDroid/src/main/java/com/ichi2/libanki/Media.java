@@ -40,11 +40,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ByteArrayOutputStream;
+import java.io.ByteArrayInputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -55,8 +56,8 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
+import java.util.zip.ZipInputStream;
 
 import timber.log.Timber;
 
@@ -302,7 +303,7 @@ public class Media {
 
         for (String s : strings) {
             // handle latex
-            s =  LaTeX.mungeQA(s, mCol); // TODO: why only two parameters? what about model?
+            s =  LaTeX.mungeQA(s, mCol);
             // extract filenames
             Matcher m;
             for (Pattern p : mRegexps) {
@@ -874,32 +875,64 @@ public class Media {
      * caller to save the zip to disk first. This also spares us from holding the entire downloaded data in memory,
      * which is not practical on a mobile device.
      */
-    public int addFilesFromZip(ZipFile z) throws APIVersionException {
+    public int addFilesFromZip(ZipInputStream z) throws APIVersionException {
         try {
             List<Object[]> media = new ArrayList<Object[]>();
             // get meta info first
-            JSONObject meta = new JSONObject(Utils.convertStreamToString(z.getInputStream(z.getEntry("_meta"))));
+            JSONObject meta = null;
             // then loop through all files
             int cnt = 0;
-
-            for (ZipEntry i : Collections.list(z.entries())) {
+            ZipEntry i;
+            String filename;
+            byte[] bytes;
+            Map<String, byte[]> fileEntries = new HashMap<String, byte[]>();
+            while ((i = z.getNextEntry()) != null) {
+                // get output stream
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                byte[] buffer = new byte[1024];
+                int count;
+                while ((count = z.read(buffer)) != -1) {
+                    baos.write(buffer, 0, count);
+                }
+                bytes = baos.toByteArray();
                 if (i.getName().equals("_meta")) {
+                    // get input stream
+                    ByteArrayInputStream is = new ByteArrayInputStream(bytes);
+                    // ignore previously-retrieved meta
+                    meta = new JSONObject(Utils.convertStreamToString(is));
+                } else {
+                    filename = i.getName();
+                    fileEntries.put(filename, bytes);
+                }
+            }
+
+            z.close();
+            if (meta == null)
+            {
+                return 0;
+            }
+            for (Map.Entry<String, byte[]> entry : fileEntries.entrySet())
+            {
+                filename = entry.getKey();
+                bytes = entry.getValue();
+                // get input stream
+                if (filename.equals("_meta")) {
                     // ignore previously-retrieved meta
                     continue;
                 } else {
-                    String name = meta.getString(i.getName());
+                    ByteArrayInputStream is = new ByteArrayInputStream(bytes);
+                    String name = meta.getString(filename);
                     // normalize name for platform
                     name = AnkiDroidApp.getCompat().nfcNormalized(name);
                     // save file
                     String destPath = dir().concat(File.separator).concat(name);
-                    Utils.writeToFile(z.getInputStream(i), destPath);
+                    Utils.writeToFile(is, destPath);
                     String csum = Utils.fileChecksum(destPath);
                     // update db
                     media.add(new Object[] {name, csum, _mtime(destPath), 0});
                     cnt += 1;
                 }
             }
-            z.close();
             if (media.size() > 0) {
                 mDb.executeMany("insert or replace into media values (?,?,?,?)", media);
             }
