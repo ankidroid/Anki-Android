@@ -58,8 +58,8 @@ public class BackupManager {
     public final static int RETURN_LOW_SYSTEM_SPACE = 7;
     public final static int RETURN_BACKUP_NEEDED = 8;
 
-    public final static String BACKUP_SUFFIX = "/backup";
-    public final static String BROKEN_DECKS_SUFFIX = "/broken";
+    public final static String BACKUP_SUFFIX = "backup";
+    public final static String BROKEN_DECKS_SUFFIX = "broken";
 
     private static boolean mUseBackups = true;
 
@@ -81,9 +81,7 @@ public class BackupManager {
 
 
     private static File getBackupDirectory() {
-        SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
-        File directory = new File(prefs.getString("deckPath", AnkiDroidApp.getCurrentAnkiDroidDirectory())
-                + BACKUP_SUFFIX);
+        File directory = new File(AnkiDroidApp.getCurrentAnkiDroidDirectory(), BACKUP_SUFFIX);
         if (!directory.isDirectory()) {
             directory.mkdirs();
         }
@@ -92,9 +90,7 @@ public class BackupManager {
 
 
     private static File getBrokenDirectory() {
-        SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
-        File directory = new File(prefs.getString("deckPath", AnkiDroidApp.getCurrentAnkiDroidDirectory())
-                + BROKEN_DECKS_SUFFIX);
+        File directory = new File(AnkiDroidApp.getCurrentAnkiDroidDirectory(), BROKEN_DECKS_SUFFIX);
         if (!directory.isDirectory()) {
             directory.mkdirs();
         }

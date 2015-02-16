@@ -19,7 +19,6 @@
 
 package com.ichi2.anki;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -46,6 +45,7 @@ import android.widget.Toast;
 
 import com.hlidskialf.android.preference.SeekBarPreference;
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.exception.StorageAccessException;
 import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
@@ -60,7 +60,6 @@ import com.ichi2.utils.LanguageUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -186,37 +185,16 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         // Check that input is valid when changing the collection path
         collectionPathPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
             public boolean onPreferenceChange(Preference preference, final Object newValue) {
-                File collectionPath = new File((String) newValue);
-                if (!collectionPath.exists()) {
-                    Dialog pathCheckDialog = new AlertDialog.Builder(Preferences.this)
-                    .setTitle(R.string.dialog_collection_path_title)
-                    .setMessage(R.string.dialog_collection_path_text)
-                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener()
-                    {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which)
-                        {
-                            collectionPathPreference.setText((String) newValue);
-                            updateEditTextPreference("deckPath");
-                            
-                        }
-                    })
-                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener()
-                    {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which)
-                        {}
-                    })
-                    .create();
-                    pathCheckDialog.show();
-                    return false;
-                } else if (collectionPath.exists() && !collectionPath.isDirectory()) {
-                    Toast.makeText(getApplicationContext(), R.string.dialog_collection_path_not_dir , Toast.LENGTH_LONG).show();
-                    return false;
-                } else {
+                final String newPath = (String) newValue;
+                try {
+                    AnkiDroidApp.initializeAnkiDroidDirectory(newPath);
+                    AnkiDroidApp.sStorageAccessExceptionFlag = false;
                     return true;
+                } catch (StorageAccessException e) {
+                    Timber.e(e, "Could not initialize directory: %s", newPath);
+                    Toast.makeText(getApplicationContext(), R.string.dialog_collection_path_not_dir, Toast.LENGTH_LONG).show();
+                    return false;
                 }
-                
             }
         });
         
@@ -355,7 +333,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         try {
             entry = pref.getText();
         } catch (NullPointerException e) {
-            Timber.e("Error getting set preference value of " + key + ": " + e);
+            Timber.e(e, "Error getting set preference value of %s", key);
             entry = "?";
         }
         if (mListsToUpdate.containsKey(key)) {
@@ -660,6 +638,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         }
         return builder.create();
     }
+
 
     private DeckTask.TaskListener mDeckOperationHandler = new DeckTask.TaskListener() {
         @Override

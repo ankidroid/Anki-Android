@@ -111,6 +111,7 @@
     <string name="studyoptions_feedback">Feedback</string>
     <!-- <string name="studyoptions_load_sample_deck">Load sample deck</string> -->
     <string name="night_mode">Night mode</string>
+    <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
 
     <string-array name="next_review_s">
         <item>1 second</item>

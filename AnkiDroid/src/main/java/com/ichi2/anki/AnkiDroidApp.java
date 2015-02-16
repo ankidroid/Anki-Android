@@ -29,11 +29,11 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Message;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.ViewConfiguration;
 
 import com.ichi2.anki.dialogs.AnkiDroidCrashReportDialog;
+import com.ichi2.anki.exception.StorageAccessException;
 import com.ichi2.compat.Compat;
 import com.ichi2.compat.CompatV12;
 import com.ichi2.compat.CompatV15;
@@ -146,12 +146,17 @@ public class AnkiDroidApp extends Application {
      * Singleton instance of this class.
      */
     private static AnkiDroidApp sInstance;
-    private static boolean sSyncInProgress = false;
-    private static boolean sDatabaseCorrupt = false;
     private Collection mCurrentCollection;
     private int mAccessThreadCount = 0;
     private static final Lock mLock = new ReentrantLock();
     private static Message sStoredDialogHandlerMessage;
+
+    /**
+     * Global boolean flags
+     */
+    public static boolean sSyncInProgressFlag = false;
+    public static boolean sDatabaseCorruptFlag = false;
+    public static boolean sStorageAccessExceptionFlag = false;
 
     /** Global hooks */
     private Hooks mHooks;
@@ -251,9 +256,14 @@ public class AnkiDroidApp extends Application {
         DEFAULT_SWIPE_THRESHOLD_VELOCITY = vc.getScaledMinimumFlingVelocity();
 
         // Create the AnkiDroid directory if missing
-        initializeAnkiDroidDirectory();
-        // TODO: Check for write access before proceeding
-        // We should not allow the application to proceed if this directory is inaccessible.
+        try {
+            initializeAnkiDroidDirectory(getCurrentAnkiDroidDirectory());
+            sStorageAccessExceptionFlag = false;
+        } catch (StorageAccessException e) {
+            Timber.e(e, "Could not initialize AnkiDroid directory");
+            sendExceptionReport(e, "AnkiDroidApp.onCreate");
+            sStorageAccessExceptionFlag = true;
+        }
     }
 
 
@@ -348,23 +358,18 @@ public class AnkiDroidApp extends Application {
      * media files from the collection.media directory. The .nomedia file works at the directory
      * level, so placing it in the AnkiDroid directory will ensure media scanners will also exclude
      * the collection.media sub-directory.
+     *
+     * @param path  Directory to initialize
+     * @throws StorageAccessException If no write access to directory
      */
-    public static void initializeAnkiDroidDirectory() {
-        SharedPreferences preferences = getSharedPrefs(sInstance);
-        // Set the default directory if it's the first run or has been cleared by the user
-        String path = preferences.getString("deckPath", null);
-        if (TextUtils.isEmpty(path)) {
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putString("deckPath", getDefaultAnkiDroidDirectory());
-            editor.commit();
-        }
-        // Create the AnkiDroid directory if it doesn't exit
-        File dir = new File(getCurrentAnkiDroidDirectory());
+    public static void initializeAnkiDroidDirectory(String path) throws StorageAccessException {
+        // Create specified directory if it doesn't exit
+        File dir = new File(path);
         if (!dir.exists() && !dir.mkdirs()) {
-            Timber.e("Failed to create AnkiDroid directory");
+            throw new StorageAccessException("Failed to create AnkiDroid directory");
         }
         if (!dir.canWrite()) {
-            Timber.e("No write access to AnkiDroid directory");
+            throw new StorageAccessException("No write access to AnkiDroid directory");
         }
         // Add a .nomedia file to it if it doesn't exist
         File nomedia = new File(dir, ".nomedia");
@@ -372,7 +377,7 @@ public class AnkiDroidApp extends Application {
             try {
                 nomedia.createNewFile();
             } catch (IOException e) {
-                Timber.e("Failed to create .nomedia file");
+                throw new StorageAccessException("Failed to create .nomedia file");
             }
         }
     }
@@ -567,22 +572,6 @@ public class AnkiDroidApp extends Application {
 
     public static Message getStoredDialogHandlerMessage() {
         return sStoredDialogHandlerMessage;
-    }
-
-    public static void setSyncInProgress(boolean value) {
-        sSyncInProgress = value;
-    }
-
-    public static boolean getSyncInProgress() {
-        return sSyncInProgress;
-    }
-
-    public static void setDbCorruptedFlag() {
-        sDatabaseCorrupt = true;
-    }
-
-    public static boolean getDbCorruptedFlag() {
-        return sDatabaseCorrupt;
     }
 
 
