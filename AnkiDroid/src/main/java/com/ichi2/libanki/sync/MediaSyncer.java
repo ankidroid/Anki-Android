@@ -37,7 +37,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.zip.ZipFile;
+import java.util.zip.ZipInputStream;
 
 import timber.log.Timber;
 
@@ -222,7 +222,7 @@ public class MediaSyncer {
             try {
                 List<String> top = fnames.subList(0, Math.min(fnames.size(), Consts.SYNC_ZIP_COUNT));
                 mCol.log("fetch " + top);
-                ZipFile zipData = mServer.downloadFiles(top);
+                ZipInputStream zipData = mServer.downloadFiles(top);
                 int cnt = mCol.getMedia().addFilesFromZip(zipData);
                 mDownloadCount += cnt;
                 mCol.log("received " + cnt + " files");
