@@ -1489,7 +1489,7 @@ public class NoteEditor extends AnkiActivity {
 
     private void setNote(Note note) {
         try {
-            if (note == null) {
+            if (note == null || mAddNote) {
                 JSONObject conf = getCol().getConf();
                 JSONObject model = getCol().getModels().current();
                 if (conf.optBoolean("addToCur", true)) {
