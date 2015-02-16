@@ -155,6 +155,7 @@
   <string name="import_log_error">Échec de l\'importation</string>
   <string name="import_log_no_apkg">Ce n\'est pas un fichier apkg valide</string>
   <string name="import_error_not_apkg_extension">Le nom de fichier %s n\'a pas l\'extension .apkg</string>
+  <string name="import_error_content_provider">The selected file could not be imported automatically by AnkiDroid. Please see the user manual for how to manually import anki files: \n %s</string>
   <string name="import_importing">Import en cours\nVeuillez patienter...</string>
   <string name="export_include_schedule">Inclure la planification</string>
   <string name="export_include_media">Inclure les médias</string>

@@ -119,6 +119,7 @@
   <string name="new_dynamic_deck">Gefilterten Stapel erstellen</string>
   <string name="studyoptions_feedback">Feedback</string>
   <string name="night_mode">Nachtmodus</string>
+  <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
   <string-array name="next_review_s">
     <item>1 Sekunde</item>
     <item>1 Minute</item>

@@ -50,8 +50,8 @@
   <string name="studyoptions_eta">Tempo stimato (min):</string>
   <string name="studyoptions_start">Studia ora</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%1$d carta di (%2$s) da ripetere</item>
-    <item quantity="other">%1$d carte di (%2$s) da ripetere</item>
+    <item quantity="one">%1$d carta da ripetere (%2$s)</item>
+    <item quantity="other">%1$d carte da ripetere (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">%d min.</item>
@@ -119,6 +119,7 @@
   <string name="new_dynamic_deck">Crea mazzo filtrato</string>
   <string name="studyoptions_feedback">Commenti e suggerimenti</string>
   <string name="night_mode">Modalità notturna</string>
+  <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
   <string-array name="next_review_s">
     <item>1 secondo</item>
     <item>1 minuto</item>
@@ -181,17 +182,16 @@
   <string name="pc">PC</string>
   <string name="nothing">Niente</string>
   <string name="title_activity_graphical_activity">Statistiche</string>
-  <string name="title_activity_template_editor">Tipo di carta per %s</string>
-  <string name="card_template_editor_front">Modello del recto</string>
-  <string name="card_template_editor_back">Modello del verso</string>
+  <string name="title_activity_template_editor">Tipi di carta per %s</string>
+  <string name="card_template_editor_front">Modello del fronte</string>
+  <string name="card_template_editor_back">Modello del retro</string>
   <string name="card_template_editor_styling">Stile</string>
-  <string name="card_template_editor_menu_add_reverse">Aggiungere la direzione contraria</string>
+  <string name="card_template_editor_menu_add_reverse">Aggiungi inversa</string>
   <string name="card_template_editor_menu_delete">Elimina</string>
-  <string name="card_template_editor_cant_delete">C\'è bisogno di almeno un tipo di carta.</string>
+  <string name="card_template_editor_cant_delete">È necessario almeno un tipo di carta.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">Eliminare il tipo di carta «%2$s» e la sua carta %1$d?</item>
-    <item quantity="other">Eliminare il tipo di carta «%2$s» e le sue carte %1$d ?</item>
+    <item quantity="one">Eliminare il tipo di carta \'%2$s\' e la sua carta %1$d?</item>
+    <item quantity="other">Eliminare il tipo di carta \'%2$s\' e le sue carte %1$d?</item>
   </plurals>
-  <string name="card_template_editor_would_delete_note"> Rimuovendo questo tipo di carta, causerebbe l\'eliminazione di una o
-        più note. Si prega di creare prima un nuovo tipo di carta.</string>
+  <string name="card_template_editor_would_delete_note">Rimuovendo questo tipo di carta, verrebbero eliminate una o più note. Crea dapprima un nuovo tipo di carta.</string>
 </resources>

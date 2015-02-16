@@ -119,6 +119,7 @@
   <string name="new_dynamic_deck">Tạo Bài chọn lọc</string>
   <string name="studyoptions_feedback">Phản hồi</string>
   <string name="night_mode">Chế độ ban đêm</string>
+  <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
   <string-array name="next_review_s">
     <item>1 giây</item>
     <item>1 phút</item>

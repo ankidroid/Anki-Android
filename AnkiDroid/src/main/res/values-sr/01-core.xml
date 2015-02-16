@@ -119,6 +119,7 @@
   <string name="new_dynamic_deck">Направи филтриран шпил</string>
   <string name="studyoptions_feedback">Повратна веза</string>
   <string name="night_mode">Ноћни режим</string>
+  <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
   <string-array name="next_review_s">
     <item>1 секунда</item>
     <item>1 минут</item>

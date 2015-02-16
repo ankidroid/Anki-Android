@@ -119,6 +119,7 @@
   <string name="new_dynamic_deck">Skapei wikon mi</string>
   <string name="studyoptions_feedback">Niuhseins</string>
   <string name="night_mode">Nahtamodus</string>
+  <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
   <string-array name="next_review_s">
     <item>1 saikundo</item>
     <item>1 minutus</item>

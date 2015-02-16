@@ -119,6 +119,7 @@
   <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">مرئياتك</string>
   <string name="night_mode">وضع ليلي</string>
+  <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
   <string-array name="next_review_s">
     <item>ثانية واحدة</item>
     <item>دقيقة واحدة</item>

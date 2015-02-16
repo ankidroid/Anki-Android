@@ -47,10 +47,10 @@
   <string name="CardEditorModel">ノート:</string>
   <string name="CardEditorTags">タグ: %1$s</string>
   <string name="CardEditorCards">カード:%1$s</string>
-  <string name="add_new_filter_tags">フィルタータグの追加</string>
+  <string name="add_new_filter_tags">絞り込み / 新しいタグの追加</string>
   <string name="note_type">ノートタイプ</string>
   <string name="card_type">カードタイプ</string>
-  <string name="filter_tags">フィルタータグ</string>
+  <string name="filter_tags">タグの絞り込み(前方一致検索)</string>
   <string name="sdcard_missing_message">USBストレージとして使用されているので、SDカードは使用できません。単語帳にアクセスするには、USBを切断してください。</string>
   <string name="enable_whiteboard">ホワイトボードを有効にする</string>
   <string name="disable_whiteboard">ホワイトボードを無効にする</string>
@@ -142,7 +142,7 @@
   <string name="show_hint">%s を表示</string>
   <string name="pref_lang_other">使用言語の選択</string>
   <string name="pref_font_UI">使用フォントの設定</string>
-  <string name="info_rate">AnkiDroidの評価</string>
+  <string name="info_rate">AnkiDroidを評価</string>
   <string name="col_load_failed">コレクションの読み込みに失敗しました\n Backボタンを押して AnkiDroid を終了してください</string>
   <string name="import_title">カードのインポート</string>
   <string name="import_select_title">インポートするファイルを選択</string>
@@ -155,6 +155,7 @@
   <string name="import_log_error">インポート失敗</string>
   <string name="import_log_no_apkg">これは取り込み可能なapkgファイルではありません</string>
   <string name="import_error_not_apkg_extension">ファイル名 \"%s\" は .apkg 拡張子を持っていません</string>
+  <string name="import_error_content_provider">The selected file could not be imported automatically by AnkiDroid. Please see the user manual for how to manually import anki files: \n %s</string>
   <string name="import_importing">カード取得中です\nしばらくお待ちください</string>
   <string name="export_include_schedule">スケジュールを含める</string>
   <string name="export_include_media">メディアを含める</string>
@@ -180,7 +181,7 @@
   <string name="sched_unbury_button">それらのカードを今すぐ表示するには、「延期を解除」ボタンをタップしてください。</string>
   <string name="sched_has_buried">関連カード、延期カードの学習は明日まで延期されます。</string>
   <string name="tag_editor_add_hint">右側のチェックマークを使って、新しいタグを追加する</string>
-  <string name="tag_editor_add_feedback">\"%2$s\" ボタンを使って \"%1$s\" の追加を確認する</string>
+  <string name="tag_editor_add_feedback">新しいタグ「%1$s」がリストに（暫定的に）追加され、選択状態です。この追加を確定する場合は「%2$s」ボタンをタップしてください。</string>
   <string name="lookup_hint">テキストをコピーした後、検索アイコンを表示するために カードのどこかをタップしてください。</string>
   <string name="add_content_showcase_text">開始する場合は、「＋」ボタンをタップして新しい学習データを追加してください。\n\n マニュアルを見る場合は、「ヘルプ」を押してください。</string>
 </resources>

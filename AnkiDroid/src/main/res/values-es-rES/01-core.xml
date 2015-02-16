@@ -119,6 +119,7 @@
   <string name="new_dynamic_deck">Crear mazo filtrado</string>
   <string name="studyoptions_feedback">Sugerencias</string>
   <string name="night_mode">Modo Nocturno</string>
+  <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
   <string-array name="next_review_s">
     <item>1 segundo</item>
     <item>1 minuto</item>

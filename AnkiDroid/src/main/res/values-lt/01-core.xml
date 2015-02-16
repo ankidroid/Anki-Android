@@ -119,6 +119,7 @@
   <string name="new_dynamic_deck">Sukurti malką su filtrais</string>
   <string name="studyoptions_feedback">Atsiliepimas</string>
   <string name="night_mode">Naktinis režimas</string>
+  <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
   <string-array name="next_review_s">
     <item>1 sekundė</item>
     <item>1 minutė</item>

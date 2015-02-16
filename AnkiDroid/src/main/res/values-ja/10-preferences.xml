@@ -98,8 +98,8 @@
   <string name="gestures_tap_right">右をタップ</string>
   <string name="more_scrolling_buttons">eReader</string>
   <string name="more_scrolling_buttons_summ">スクロール用に、漢字、カタカナ、絵文字、顔文字ボタンを使用</string>
-  <string name="double_scrolling_gap">ダブル スクロール</string>
-  <string name="double_scrolling_gap_summ">eReader とのスクロールのギャップを 2 倍にする場合、これを有効にします。</string>
+  <string name="double_scrolling_gap">ダブルスクロール</string>
+  <string name="double_scrolling_gap_summ">eReader とのスクロールのギャップを 2 倍にする場合、これを有効にします</string>
   <string name="swipe_sensitivity">スワイプ感度</string>
   <string name="swipe_sensitivity_summ">XXX</string>
   <string name="tts">音声合成</string>
@@ -135,7 +135,7 @@
   <string name="timeout_question_seconds_summ">XXX s</string>
   <string name="select_locale_title">言語を選択</string>
   <string name="safe_display">安全表示モード</string>
-  <string name="safe_display_summ">アニメーションを無効化し、より安全な方法で描画します。電子ペーパーや古い機器でカスタムフォントを使用する際にお試しください。</string>
+  <string name="safe_display_summ">アニメーションを無効化し、より安全な方法で描画します。電子ペーパーや古い機器でカスタムフォントを使用する際にお試しください</string>
   <string name="vertical_centering">中央揃え</string>
   <string name="vertical_centering_summ">コンテンツを垂直方向に中段揃え</string>
   <string name="pref_cat_backup">バックアップ</string>
@@ -153,7 +153,7 @@
   <string name="show_progress_summ">画面左上に、残りのカード枚数（3種類）を表示します</string>
   <string name="use_current">新規カードの追加先</string>
   <string name="new_spread">新規カードの追加場所</string>
-  <string name="learn_cutoff">先取り学習の限度（分）</string>
+  <string name="learn_cutoff">先取り学習の限度</string>
   <string name="learn_cutoff_summ">XXX 分</string>
   <string name="time_limit">タイムボックスの制限時間</string>
   <string name="time_limit_summ">XXX 分</string>
@@ -164,7 +164,7 @@
   <string name="pref_keep_screen_on">スクリーンをオンのままにする</string>
   <string name="pref_keep_screen_on_summ">画面タイムアウトの無効化</string>
   <string name="pref_simple_interface">簡易なインターフェイス</string>
-  <string name="pref_simple_interface_summ">高速表示をするために、htmlフォーマットを画面に反映しません。</string>
+  <string name="pref_simple_interface_summ">高速表示をするために、htmlフォーマットを画面に反映しません</string>
   <string name="pref_simple_interface_exclude_tags">除外するタグ</string>
   <string name="pref_simple_interface_exclude_tags_summ">シンプルなインターフェイスを使いたくないカードには、タグを付けてください。切換えに使用するタグ: XXX</string>
   <string name="write_answers_message">書かれた答えを比較すために、Anki Desktopを使い単語帳のフィールドを定義してください。 (単語帳のプロパティ -&gt; 編集モデル　 -&gt; カードレイアウト）　\n\n 比較フィールドが設定されていない場合は、書かれた答えはカードのすべての答えと比較されます。</string>

@@ -119,6 +119,7 @@
   <string name="new_dynamic_deck">Criar deck com filtros</string>
   <string name="studyoptions_feedback">Feedback</string>
   <string name="night_mode">Modo noite</string>
+  <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
   <string-array name="next_review_s">
     <item>1 segundo</item>
     <item>1 minuto</item>

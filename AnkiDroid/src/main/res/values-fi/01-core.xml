@@ -119,6 +119,7 @@
   <string name="new_dynamic_deck">Uusi suodatettu pakka</string>
   <string name="studyoptions_feedback">Palaute</string>
   <string name="night_mode">Yötila</string>
+  <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
   <string-array name="next_review_s">
     <item>1 sekunti</item>
     <item>1 minuutti</item>

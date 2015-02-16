@@ -119,6 +119,7 @@
   <string name="new_dynamic_deck">Filtreli deste oluştur</string>
   <string name="studyoptions_feedback">Geribildirim</string>
   <string name="night_mode">Gece modu</string>
+  <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
   <string-array name="next_review_s">
     <item>1 saniye</item>
     <item>1 dakika</item>

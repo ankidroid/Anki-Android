@@ -51,11 +51,11 @@
   <string name="studyoptions_start">学習開始</string>
   <plurals name="deckpicker_title">
     <item quantity="one">現在の学習目標: %1$d 枚 ( %2$s)</item>
-    <item quantity="other">現在の学習目標: %1$d 枚 ( %2$s)</item>
+    <item quantity="other">現在の学習目標: %1$d 枚 ( %2$s )</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one">%d 分</item>
-    <item quantity="other">%d 分</item>
+    <item quantity="one">%d分</item>
+    <item quantity="other">%d分</item>
   </plurals>
   <plurals name="deckpicker_due">
     <item quantity="one">%1$d 学習目標　全体 %2$d 枚</item>
@@ -118,7 +118,8 @@
   <string name="create">作成</string>
   <string name="new_dynamic_deck">フィルター単語帳を作成</string>
   <string name="studyoptions_feedback">フィードバック</string>
-  <string name="night_mode">夜間表示（反転）</string>
+  <string name="night_mode">ナイトモード</string>
+  <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
   <string-array name="next_review_s">
     <item>1秒</item>
     <item>1分</item>

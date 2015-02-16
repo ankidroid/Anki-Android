@@ -155,6 +155,7 @@
   <string name="import_log_error">عدم موفقیت در وارد کردن</string>
   <string name="import_log_no_apkg">این فایل، یک فایل معتبر apkg نیست.</string>
   <string name="import_error_not_apkg_extension">Filename %s does not have .apkg extension</string>
+  <string name="import_error_content_provider">The selected file could not be imported automatically by AnkiDroid. Please see the user manual for how to manually import anki files: \n %s</string>
   <string name="import_importing">وارد کردن کارت. \nPlease صبر کنید...</string>
   <string name="export_include_schedule">Include scheduling</string>
   <string name="export_include_media">Include media</string>

@@ -50,18 +50,18 @@
   <string name="statistics_cram">詰め込み学習カード</string>
   <string name="statistics_type_title">統計情報</string>
   <string name="stats_cards">枚数</string>
-  <string name="stats_cards_intervals">ある間隔で次の復習を行うカード</string>
-  <string name="stats_cumulative_cards">累積枚数</string>
-  <string name="stats_cumulative_answers">累積回答数</string>
-  <string name="stats_cumulative_time_minutes">累積時間（分）</string>
-  <string name="stats_cumulative_time_hours">累積時間</string>
-  <string name="stats_cumulative">累積枚数</string>
-  <string name="stats_cumulative_percentage">累積パーセント</string>
-  <string formatted="false" name="stats_cumulative_correct_percentage">累積正解率(%)</string>
+  <string name="stats_cards_intervals">次の復習予定日が ～後のカード</string>
+  <string name="stats_cumulative_cards">累積枚数 〔折れ線グラフ〕</string>
+  <string name="stats_cumulative_answers">累積回答数 〔折れ線グラフ〕</string>
+  <string name="stats_cumulative_time_minutes">累積時間（分） 〔折れ線グラフ〕</string>
+  <string name="stats_cumulative_time_hours">累積時間 〔折れ線グラフ〕</string>
+  <string name="stats_cumulative">累積枚数 〔折れ線グラフ〕</string>
+  <string name="stats_cumulative_percentage">累積割合（％） 〔折れ線グラフ〕</string>
+  <string formatted="false" name="stats_cumulative_correct_percentage">累積正解率（％） 〔折れ線グラフ〕</string>
   <string name="stats_answers">学習枚数</string>
   <string name="stats_minutes">分</string>
   <string name="stats_hours">時間</string>
-  <string name="stats_percentage">累積パーセント</string>
+  <string name="stats_percentage">累積割合（％） 〔折れ線グラフ〕</string>
   <string name="stats_period_month">1か月</string>
   <string name="stats_period_year">1年</string>
   <string name="stats_period_lifetime">すべての期間</string>
@@ -198,7 +198,7 @@
     <item quantity="other">今日は &lt;b&gt;%1$d枚&lt;/b&gt; のカードを &lt;b&gt;%2$s&lt;/b&gt; で学習しています。</item>
   </plurals>
   <plurals name="stats_today_cards_not_bold">
-    <item quantity="one">今日は %1$d枚 のカードを %2$s で学習しています</item>
-    <item quantity="other">今日は %1$d枚 のカードを %2$s で学習しています</item>
+    <item quantity="one">今日は%1$d枚のカードを%2$sで学習しています</item>
+    <item quantity="other">今日は%1$d枚のカードを%2$sで学習しています</item>
   </plurals>
 </resources>

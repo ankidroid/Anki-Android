@@ -119,6 +119,7 @@
   <string name="new_dynamic_deck">Pakli szűrt elemekkel létrehozása</string>
   <string name="studyoptions_feedback">Visszajelzés</string>
   <string name="night_mode">Éjszakai mód</string>
+  <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
   <string-array name="next_review_s">
     <item>1 másodperc</item>
     <item>1 perc</item>

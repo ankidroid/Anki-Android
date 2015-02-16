@@ -119,6 +119,7 @@
   <string name="new_dynamic_deck">创建筛选过的牌组</string>
   <string name="studyoptions_feedback">反馈</string>
   <string name="night_mode">夜间模式</string>
+  <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
   <string-array name="next_review_s">
     <item>1秒</item>
     <item>1分钟</item>

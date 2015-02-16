@@ -119,6 +119,7 @@
   <string name="new_dynamic_deck">צור חפיסה מסוננת</string>
   <string name="studyoptions_feedback">משוב</string>
   <string name="night_mode">מצב לילה</string>
+  <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
   <string-array name="next_review_s">
     <item>שנייה</item>
     <item>דקה</item>

@@ -119,6 +119,7 @@
   <string name="new_dynamic_deck">Создать фильтрованную колоду</string>
   <string name="studyoptions_feedback">Обратная связь</string>
   <string name="night_mode">Ночной режим</string>
+  <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
   <string-array name="next_review_s">
     <item>1 секунда</item>
     <item>1 минута</item>
