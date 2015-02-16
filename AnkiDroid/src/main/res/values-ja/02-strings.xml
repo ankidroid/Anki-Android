@@ -47,10 +47,10 @@
   <string name="CardEditorModel">ノート:</string>
   <string name="CardEditorTags">タグ: %1$s</string>
   <string name="CardEditorCards">カード:%1$s</string>
-  <string name="add_new_filter_tags">絞り込み / 新しいタグの追加</string>
+  <string name="add_new_filter_tags">タグフィルター / 新規タグ追加</string>
   <string name="note_type">ノートタイプ</string>
   <string name="card_type">カードタイプ</string>
-  <string name="filter_tags">タグの絞り込み(前方一致検索)</string>
+  <string name="filter_tags">タグフィルター(前方一致検索)</string>
   <string name="sdcard_missing_message">USBストレージとして使用されているので、SDカードは使用できません。単語帳にアクセスするには、USBを切断してください。</string>
   <string name="enable_whiteboard">ホワイトボードを有効にする</string>
   <string name="disable_whiteboard">ホワイトボードを無効にする</string>
