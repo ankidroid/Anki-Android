@@ -106,11 +106,9 @@ public class RemoteMediaServer extends HttpSyncer {
                     super.getInputStream(Utils.jsonToString(new JSONObject().put("files", new JSONArray(top)))));
             String zipPath = mCol.getPath().replaceFirst("collection\\.anki2$", "tmpSyncFromServer.zip");
             // retrieve contents and save to file on disk:
-            //super.writeToFile(resp.getEntity().getContent(), zipPath);
             InputStream is = resp.getEntity().getContent();
             ZipInputStream zis = new ZipInputStream(is);
             return zis;
-            //return new ZipFile(new File(zipPath), ZipFile.OPEN_READ);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {

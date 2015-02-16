@@ -882,7 +882,6 @@ public class Media {
             JSONObject meta = null;
             // then loop through all files
             int cnt = 0;
-            //Utils.convertStreamToString(z.getInputStream(z.getEntry("_meta")))
             ZipEntry i;
             String filename;
             byte[] bytes;
