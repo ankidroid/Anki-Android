@@ -479,7 +479,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                 if (delays.length() > 0) {
                     dyn.put("delays", delays);
                 } else {
-                    dyn.remove("delays");
+                    dyn.put("delays", JSONObject.NULL);
                 }
                 JSONArray ar = dyn.getJSONArray("terms");
                 ar.getJSONArray(0).put(0,
