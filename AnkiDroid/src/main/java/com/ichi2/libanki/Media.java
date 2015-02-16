@@ -879,12 +879,14 @@ public class Media {
         try {
             List<Object[]> media = new ArrayList<Object[]>();
             // get meta info first
-            JSONObject meta = new JSONObject();
+            JSONObject meta = null;
             // then loop through all files
             int cnt = 0;
             //Utils.convertStreamToString(z.getInputStream(z.getEntry("_meta")))
             ZipEntry i;
-
+            String filename;
+            byte[] bytes;
+            Map<String, byte[]> fileEntries = new HashMap<String, byte[]>();
             while ((i = z.getNextEntry()) != null) {
                 // get output stream
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -893,15 +895,34 @@ public class Media {
                 while ((count = z.read(buffer)) != -1) {
                     baos.write(buffer, 0, count);
                 }
-                byte[] bytes = baos.toByteArray();
-                // get input stream
-                ByteArrayInputStream is = new ByteArrayInputStream(bytes);
+                bytes = baos.toByteArray();
                 if (i.getName().equals("_meta")) {
+                    // get input stream
+                    ByteArrayInputStream is = new ByteArrayInputStream(bytes);
                     // ignore previously-retrieved meta
-                    Utils.convertStreamToString(is);
+                    meta = new JSONObject(Utils.convertStreamToString(is));
+                } else {
+                    filename = i.getName();
+                    fileEntries.put(filename, bytes);
+                }
+            }
+
+            z.close();
+            if (meta == null)
+            {
+                return 0;
+            }
+            for (Map.Entry<String, byte[]> entry : fileEntries.entrySet())
+            {
+                filename = entry.getKey();
+                bytes = entry.getValue();
+                // get input stream
+                if (filename.equals("_meta")) {
+                    // ignore previously-retrieved meta
                     continue;
                 } else {
-                    String name = meta.getString(i.getName());
+                    ByteArrayInputStream is = new ByteArrayInputStream(bytes);
+                    String name = meta.getString(filename);
                     // normalize name for platform
                     name = AnkiDroidApp.getCompat().nfcNormalized(name);
                     // save file
@@ -913,7 +934,6 @@ public class Media {
                     cnt += 1;
                 }
             }
-            z.close();
             if (media.size() > 0) {
                 mDb.executeMany("insert or replace into media values (?,?,?,?)", media);
             }

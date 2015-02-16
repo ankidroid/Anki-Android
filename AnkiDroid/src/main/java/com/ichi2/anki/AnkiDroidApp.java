@@ -62,7 +62,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+import android.content.ContextWrapper;
 import timber.log.Timber;
 
 /**
@@ -334,7 +334,8 @@ public class AnkiDroidApp extends Application {
      * external storage directory.
      */
     private static String getDefaultAnkiDroidDirectory() {
-        return new File(Environment.getExternalStorageDirectory(), "AnkiDroid").getAbsolutePath();
+        return new File(Environment.getDownloadCacheDirectory(),"").getAbsolutePath();
+        //return new File(Environment.getExternalStorageDirectory(), "AnkiDroid").getAbsolutePath();
     }
 
 
