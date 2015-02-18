@@ -36,8 +36,8 @@ import com.ichi2.anki.AbstractFlashcardViewer;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.ReadText;
 import java.io.File;
-import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -205,7 +205,7 @@ public class Sound {
             String soundMarker = matcher.group();
             int markerStart = contentLeft.indexOf(soundMarker);
             stringBuilder.append(contentLeft.substring(0, markerStart));
-            stringBuilder.append("<a class='replaybutton' href='playsound:" + soundPath + "'>"
+            stringBuilder.append("<a class='replaybutton' href=\"playsound:" + soundPath + "\">"
                         + "<span style='padding:5px;'>"+ button
                         + "</span></a>");
             contentLeft = contentLeft.substring(markerStart + soundMarker.length());
@@ -406,14 +406,41 @@ public class Sound {
     }
 
     /**
+     * Test if file sound in soundDir is accessible
+     * @param soundDir -- base path to the media files.
+     * @param sound -- path to the sound file from the card content.
+     * @return true if file exists
+     */
+    private static  boolean testFile(String soundDir, String sound) {
+        final Uri uri = Uri.parse(soundDir + sound);
+        if ("file".equals(uri.getScheme())) {
+            return new File(uri.getPath()).exists();
+        }
+        // for everything that's not a local file we can't know
+        return true;
+    }
+
+    /**
      * @param soundDir -- base path to the media files.
      * @param sound -- path to the sound file from the card content.
      * @return absolute URI to the sound file.
      */
+    @SuppressLint("NewApi")
     private static String getSoundPath(String soundDir, String sound) {
         if (hasURIScheme(sound)) {
             return sound;
         }
+
+        if (!testFile(soundDir, sound)) {
+            // try to normalize
+            if (AnkiDroidApp.SDK_VERSION >= 9) {
+                String normalized = Normalizer.normalize(sound, Normalizer.Form.NFC);
+                if (new File(Uri.parse(soundDir).getPath() + normalized).exists()) {
+                    sound = normalized;
+                }
+            }
+        }
+
         return soundDir + Uri.encode(sound);
     }
 
