@@ -119,7 +119,7 @@ public class Decks {
             }
             JSONObject confarray = new JSONObject(dconf);
             ids = confarray.names();
-            for (int i = 0; i < ids.length(); i++) {
+            for (int i = 0; ids != null && i < ids.length(); i++) {
                 String id = ids.getString(i);
                 mDconf.put(Long.parseLong(id), confarray.getJSONObject(id));
             }
