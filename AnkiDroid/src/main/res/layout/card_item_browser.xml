@@ -10,7 +10,8 @@
         android:layout_height="fill_parent"
         android:layout_weight="1"
         android:paddingRight="3dip"
-        android:textColor="#000000" />
+        android:background="?attr/backgroundColor"
+        android:textColor="?android:textColorPrimary" />
 
     <TextView
         android:id="@+id/card_column2"
@@ -18,6 +19,7 @@
         android:layout_height="fill_parent"
         android:layout_weight="1"
         android:paddingLeft="3dip"
-        android:textColor="#000000" />
+        android:background="?attr/backgroundColor"
+        android:textColor="?android:textColorPrimary" />
 
 </LinearLayout>

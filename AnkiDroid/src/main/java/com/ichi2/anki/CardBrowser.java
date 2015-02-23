@@ -33,7 +33,6 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.SearchView;
-
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -65,6 +64,7 @@ import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
+import com.ichi2.themes.ThemeDevUtils;
 import com.ichi2.themes.Themes;
 import com.ichi2.upgrade.Upgrade;
 import com.ichi2.widget.WidgetStatus;
@@ -241,8 +241,8 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         Timber.d("onCreate()");
         View mainView = getLayoutInflater().inflate(R.layout.card_browser, null);
         setContentView(mainView);
-        Themes.setContentStyle(mainView, Themes.CALLER_CARDBROWSER);
-        
+//        Themes.setContentStyle(mainView, Themes.CALLER_CARDBROWSER);
+        Themes.setCardBrowserContentStyle(mainView);
         initNavigationDrawer(mainView);
         selectNavigationItem(DRAWER_BROWSER);
         
@@ -264,7 +264,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         Intent i = getIntent();
         mWholeCollection = i.hasExtra("fromDeckpicker") && i.getBooleanExtra("fromDeckpicker", false);
 
-        mBackground = Themes.getCardBrowserBackground();
+        mBackground = Themes.getCardBrowserItemBackgroundColors();
 
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         Resources res = getResources();
@@ -305,7 +305,8 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         // TODO: Maybe allow column1 to be changed as well, but always make default sfld
         mCardsColumn1Spinner = (Spinner) findViewById(R.id.browser_column1_spinner);
         ArrayAdapter<CharSequence> column1Adapter = ArrayAdapter.createFromResource(this,
-                R.array.browser_column1_headings, android.R.layout.simple_spinner_item);
+                R.array.browser_column1_headings, R.layout.simple_spinner_item);
+//                R.array.browser_column1_headings, android.R.layout.simple_spinner_item); // Create our own, to better control appearance
         column1Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mCardsColumn1Spinner.setAdapter(column1Adapter);
         mCardsColumn1Spinner.setClickable(false); // We disable and set plain background since it only has 1 item
@@ -314,8 +315,9 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         // Setup the column 2 heading as a spinner so that users can easily change the column type
         mCardsColumn2Spinner = (Spinner) findViewById(R.id.browser_column2_spinner);
         ArrayAdapter<CharSequence> column2Adapter = ArrayAdapter.createFromResource(this,
-                R.array.browser_column2_headings, android.R.layout.simple_spinner_item);
-        column2Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                R.array.browser_column2_headings, R.layout.simple_spinner_item);
+//                R.array.browser_column2_headings, android.R.layout.simple_spinner_item);
+        column2Adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
         mCardsColumn2Spinner.setAdapter(column2Adapter);
         // Create a new list adapter with updated column map any time the user changes the column
         mCardsColumn2Spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -444,12 +446,20 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
             return true;
         }
 
+        if ((keyCode == KeyEvent.KEYCODE_VOLUME_UP)) {
+            return ThemeDevUtils.volumeUp(this);
+        }
+        if ((keyCode == KeyEvent.KEYCODE_VOLUME_DOWN)) {
+            return ThemeDevUtils.volumeDown(this);
+        }
+
         return super.onKeyDown(keyCode, event);
     }
     
     @Override
     protected void onResume() {
         Timber.d("onResume()");
+        Themes.applyTheme(this);
         super.onResume();
         selectNavigationItem(DRAWER_BROWSER);
     }
@@ -1151,21 +1161,29 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         }
 
 
+        // TODO JS Examine this carefully
         private void bindView(int position, View v) {
             // Draw the content in the columns
             View[] columns = (View[]) v.getTag();
+//            v.setBackgroundColor(Themes.getBackgroundFrameColor());  // Should be set in xml, if at all  JS
             final Map<String, String> dataSet = mData.get(position);
             final int color = getColor(dataSet.get(mColorFlagKey));
             for (int i = 0; i < mToIds.length; i++) {
                 TextView col = (TextView) columns[i];
                 // set font for column
                 setFont(col);
-                // set background color for column
-                col.setBackgroundResource(mBackground[color]);
+                // set background color for column, changed from setBackgroundResource     (See [1] below)
+                col.setBackgroundColor(mBackground[color]);  // Array now holds colors, not IDs
+                // Why is it necessary to set the background color, but not the foreground color? xml is working for foreground? JS
                 // set text for column
                 col.setText(dataSet.get(mFromKeys[i]));
             }
         }
+
+        // [1] This code previously appeared to support the use of any appropriate Resource ID (not just colors) to be used directly as backgrounds for
+        // marked and suspended cards.   Since API 21 seems to be broken, and since the actual code only uses colors, I'm limiting the
+        // setBackground functionality to colors here (not images)
+        // http://stackoverflow.com/questions/7675231/background-issue-with-styles-and-themes
 
 
         private void setFont(TextView v) {
@@ -1237,23 +1255,19 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
 
 
     private final class DeckDropDownAdapter extends BaseAdapter {
-
         private Context context;
         private ArrayList<JSONObject> decks;
         private int count;
-
 
         public DeckDropDownAdapter(Context context, ArrayList<JSONObject> decks) {
             this.context = context;
             this.decks = decks;
         }
 
-
         @Override
         public int getCount() {
             return decks.size() + 1;
         }
-
 
         @Override
         public Object getItem(int position) {
@@ -1264,12 +1278,10 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
             }
         }
 
-
         @Override
         public long getItemId(int position) {
             return position;
         }
-
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
@@ -1277,6 +1289,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
             TextView deckNameView;
             TextView deckCountsView;
             if (convertView == null) {
+                // TODO JS Check that these layouts have been converted:
                 convertView = LayoutInflater.from(context).inflate(R.layout.dropdown_deck_selected_item, parent, false);
                 deckNameView = (TextView) convertView.findViewById(R.id.dropdown_deck_name);
                 deckCountsView = (TextView) convertView.findViewById(R.id.dropdown_deck_counts);

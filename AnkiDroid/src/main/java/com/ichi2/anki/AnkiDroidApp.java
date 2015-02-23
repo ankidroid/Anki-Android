@@ -218,6 +218,7 @@ public class AnkiDroidApp extends Application {
             // Enable or disable crash reporting based on user setting
             setAcraReportingMode(preferences.getString("reportErrorMode", FEEDBACK_REPORT_ASK));
         }
+
         Timber.tag(TAG);
 
         if (isNookHdOrHdPlus() && SDK_VERSION == 15) {

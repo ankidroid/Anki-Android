@@ -43,11 +43,13 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.Window;
@@ -87,6 +89,7 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.StyledProgressDialog;
+import com.ichi2.themes.ThemeDevUtils;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
 
@@ -164,10 +167,12 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     int mStatisticType;
 
     boolean mCompletionBarRestrictToActive = false; // set this to true in order to calculate completion bar only for
-                                                    // active cards
+    // active cards
     boolean mShowShowcaseView = false;
     // flag asking user to do a full sync which is used in upgrade path
     boolean mRecommendFullSync = false;
+
+
 
     // ----------------------------------------------------------------------------
     // LISTENERS
@@ -384,20 +389,21 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     @Override
     protected void onCreate(Bundle savedInstanceState) throws SQLException {
         Timber.d("onCreate()");
+        Themes.applyTheme(this);
         Intent intent = getIntent();
+
         // Show splashscreen if app first starting
         if (intent.getCategories()!= null || !AnkiDroidApp.colIsOpen()) {
             showOpeningCollectionDialog();
         }
 
-        Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
-
-        setTitle(getResources().getString(R.string.app_name));
+        setTitle(getResources().getString(R.string.app_name));  // appears to have no effect
 
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
 
-        View mainView = getLayoutInflater().inflate(R.layout.deck_picker, null);
+        // Two layouts called R.layout.deck_picker and R.layout.deckpicker_view?  Should one or both should be renamed for clarity?
+        final View mainView = getLayoutInflater().inflate(R.layout.deck_picker, null);
         setContentView(mainView);
 
         // check, if tablet layout
@@ -405,8 +411,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         // set protected variable from NavigationDrawerActivity
         mFragmented = studyoptionsFrame != null && studyoptionsFrame.getVisibility() == View.VISIBLE;
 
-        Themes.setContentStyle(mFragmented ? mainView : mainView.findViewById(R.id.deckpicker_view),
-                Themes.CALLER_DECKPICKER);
+        Themes.setDeckPickerContentStyle(mFragmented ? mainView : mainView.findViewById(R.id.deckpicker_view));  // Do this in xml, then remove this call
 
         registerExternalStorageListener();
 
@@ -423,45 +428,38 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 "sep", "dyn" }, new int[] { R.id.DeckPickerName, R.id.deckpicker_new, R.id.deckpicker_lrn,
                 R.id.deckpicker_rev, // R.id.deckpicker_bar_mat, R.id.deckpicker_bar_all,
                 R.id.deckpicker_deck, R.id.DeckPickerName });
+
         mDeckListAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
             @Override
+            // text will be top, bot, ful, cen; or d0, d1; or '0' ; or other?
             public boolean setViewValue(View view, Object data, String text) {
                 if (view.getId() == R.id.deckpicker_deck) {
-                    if (text.equals("top")) {
-                        view.setBackgroundResource(R.drawable.white_deckpicker_top);
-                        return true;
-                    } else if (text.equals("bot")) {
-                        view.setBackgroundResource(R.drawable.white_deckpicker_bottom);
-                        return true;
-                    } else if (text.equals("ful")) {
-                        view.setBackgroundResource(R.drawable.white_deckpicker_full);
-                        return true;
-                    } else if (text.equals("cen")) {
-                        view.setBackgroundResource(R.drawable.white_deckpicker_center);
-                        return true;
-                    }
+                    // TODO JS Move this to xml, if possible.  (Given dependance on 'text', may not be possible.)
+                    view.setBackgroundResource(Themes.getDeckPickerListElementBackgroundResourceID(text));
+                    return true;
                 } else if (view.getId() == R.id.DeckPickerName) {
+                    // d0 and d1 signify non-dynamic and dynamic decks, respectively
                     if (text.equals("d0")) {
-                        ((TextView) view).setTextColor(getResources().getColor(R.color.non_dyn_deck));
+                        ((TextView) view).setTextColor(  Themes.getDeckPicker_Non_DynamicTextColor() );
                         return true;
                     } else if (text.equals("d1")) {
-                        ((TextView) view).setTextColor(getResources().getColor(R.color.dyn_deck));
+                        ((TextView) view).setTextColor(  Themes.getDeckPickerDynamicTextColor() );
                         return true;
                     }
                 } else if (view.getId() == R.id.deckpicker_new) {
-                    // Set the right color, light gray or blue.
-                    ((TextView) view).setTextColor((text.equals("0")) ? getResources().getColor(R.color.zero_count)
-                            : getResources().getColor(R.color.new_count));
+                    // Moving away from programmatic control of UI, but setting these text colors should still be done programmatically
+                    ((TextView) view).setTextColor((text.equals("0")) ? Themes.getDeckPickerZeroCountTextColor() :
+                            Themes.getDeckPickerNewTextColor());
                     return false; // Let SimpleAdapter take care of binding the number to the TextView.
                 } else if (view.getId() == R.id.deckpicker_lrn) {
                     // ... or red.
-                    ((TextView) view).setTextColor((text.equals("0")) ? getResources().getColor(R.color.zero_count)
-                            : getResources().getColor(R.color.learn_count));
+                    ((TextView) view).setTextColor((text.equals("0")) ? Themes.getDeckPickerZeroCountTextColor() :
+                            Themes.getDeckPickerLearnTextColor());
                     return false;
                 } else if (view.getId() == R.id.deckpicker_rev) {
                     // ... or green.
-                    ((TextView) view).setTextColor((text.equals("0")) ? getResources().getColor(R.color.zero_count)
-                            : getResources().getColor(R.color.review_count));
+                    ((TextView) view).setTextColor((text.equals("0")) ? Themes.getDeckPickerZeroCountTextColor() :
+                            Themes.getDeckPickerReviewTextColor());
                     return false;
                 }
                 return false;
@@ -479,6 +477,8 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 String deckName = getCol().getDecks().name(mContextMenuDid);
                 boolean isCollapsed = getCol().getDecks().get(mContextMenuDid).optBoolean("collapsed", false);
                 showDialogFragment(DeckPickerContextMenu.newInstance(deckName, isCollapsed));
+
+
                 return true;
             }
         });
@@ -496,6 +496,14 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             // Otherwise just update the deck list
             loadCounts();
         }
+
+        // TODO JS remove this when tested:
+        if (mainView instanceof ViewGroup) {
+//            Themes.recursivelyTheme((ViewGroup) mainView);
+        } else {
+            Log.e("JS", "expected viewgroup");
+        }
+
     }
 
 
@@ -723,6 +731,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     @Override
     protected void onResume() {
         Timber.d("onResume()");
+        Themes.applyTheme(this);
         super.onResume();
         if (colOpen() && AnkiDroidApp.isSdCardMounted()) {
             loadCounts();
@@ -779,13 +788,19 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         Timber.d("onDestroy()");
     }
 
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             Timber.i("DeckPicker:: onBackPressed()");
             finishWithAnimation();
             return true;
+        }
+
+        if ((keyCode == KeyEvent.KEYCODE_VOLUME_UP)) {
+            return ThemeDevUtils.volumeUp(this);
+        }
+        if ((keyCode == KeyEvent.KEYCODE_VOLUME_DOWN)) {
+            return ThemeDevUtils.volumeDown(this);
         }
         return super.onKeyDown(keyCode, event);
     }
@@ -826,7 +841,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 Message handlerMessage = Message.obtain();
                 handlerMessage.what = DialogHandler.MSG_SHOW_FORCE_FULL_SYNC_DIALOG;
                 Bundle handlerMessageData = new Bundle();
-                handlerMessageData.putString("message", res.getString(R.string.full_sync_confirmation_upgrade) + 
+                handlerMessageData.putString("message", res.getString(R.string.full_sync_confirmation_upgrade) +
                         "\n\n" + res.getString(R.string.full_sync_confirmation));
                 handlerMessage.setData(handlerMessageData);
                 getDialogHandler().sendMessage(handlerMessage);
@@ -1028,7 +1043,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         showAsyncDialogFragment(newFragment);
     }
 
-    /** 
+    /**
      *  Show log message after sync, using "Sync Error" as the dialog title, and reload activity
      * @param message
      */
@@ -1037,7 +1052,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         showSyncLogDialog(message, true);
     }
 
-    /** 
+    /**
      *  Show log message after sync, and reload activity
      * @param message
      * @param error Show "Sync Error" as dialog title if this flag is set, otherwise use no title
@@ -1266,7 +1281,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
      * The mother of all syncing attempts. This might be called from sync() as first attempt to sync a collection OR
      * from the mSyncConflictResolutionListener if the first attempt determines that a full-sync is required. In the
      * second case, we have passed the mediaUsn that was obtained during the first attempt.
-     * 
+     *
      * @param syncConflictResolution Either "upload" or "download", depending on the user's choice.
      * @param syncMediaUsn The media Usn, as determined during the prior sync() attempt that determined that full
      *            syncing was required.
@@ -1682,7 +1697,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
     /**
      * Programmatically click on a deck in the deck list.
-     * 
+     *
      * @param did The deck ID of the deck to select.
      */
     private void selectDeck(long did) {
@@ -1722,7 +1737,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
      * <p>
      * Note that this method does not change the currently selected deck in the collection, only the highlighted deck in
      * the deck list. To select a deck, see {@link #selectDeck(long)}.
-     * 
+     *
      * @param did The deck ID of the deck to select.
      */
     public void setSelectedDeck(long did) {
@@ -1762,6 +1777,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             m.put("dyn", ((Boolean) d[5]) ? "d1" : "d0");
             // m.put("complMat", ((Float)d[5]).toString());
             // m.put("complAll", ((Float)d[6]).toString());
+            // Following code designates each item was one of "Top, center, bottom, or full" to indicate whether/how it is grouped.  This affects the layout and possibly the choice of background image
             if (name.length == 1) {
                 due += Integer.parseInt(m.get("new")) + Integer.parseInt(m.get("lrn")) + Integer.parseInt(m.get("rev"));
                 // top position
@@ -1798,8 +1814,8 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             if (eta != -1) {
                 time = res.getQuantityString(R.plurals.deckpicker_title_minutes, eta, eta);
             }
-            AnkiDroidApp.getCompat().setSubtitle(this,
-                    res.getQuantityString(R.plurals.deckpicker_title, due, due, time));
+            AnkiDroidApp.getCompat().setSubtitle(this,res.getQuantityString(R.plurals.deckpicker_title, due, due, time));
+//            AnkiDroidApp.getCompat().setSubtitle(this,res.getQuantityString(R.plurals.deckpicker_title, due, due, time) , Themes.getForegroundColor());
         }
 
         // update widget

@@ -26,7 +26,6 @@ import com.ichi2.anki.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 import timber.log.Timber;

@@ -180,7 +180,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
             // If we're running on Honeycomb or newer, then we can use the Theme's
             // selectableItemBackground to ensure that the View has a pressed state
             TypedValue outValue = new TypedValue();
-            getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground,
+            getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground,  // TODO carefull consider if this is still the right thing to do
                     outValue, true);
             textView.setBackgroundResource(outValue.resourceId);
         }

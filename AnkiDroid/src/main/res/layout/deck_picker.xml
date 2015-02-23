@@ -3,32 +3,47 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:attr/colorBackground" >
+    android:background="?attr/backgroundColor" >
 
     <RelativeLayout
         android:id="@+id/deckpicker_view"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:background="?attr/backgroundColor"
+
         android:orientation="vertical" >
 
+        <!--
+        android:fadingEdgeLength="15sp"
+            android:dividerHeight="@null"
+-->
+
+<!--Previously, 'files' background was set to R.drawable.deckpicker_lv_background-->
+        <!--android:background="?attr/deckpicker_lv_background"-->
         <ListView
             android:id="@+id/files"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+        android:background="?attr/backgroundColor"
             android:layout_alignParentTop="true"
-            android:background="?android:attr/colorBackground"
             android:drawSelectorOnTop="true"
             android:fastScrollEnabled="true"
+             android:scrollbars="none"
             android:layout_above="@+id/today_stats_text_view"
+            android:fadingEdgeLength="15px"
+            android:dividerHeight="0dp"
+            android:divider="@null"
             android:focusable="true" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/today_stats_text_view"
+            android:textColor="?android:textColorPrimary"
+	    android:background="@color/transparent"
             android:layout_alignParentBottom="true"
             android:layout_centerInParent="true"
             android:gravity="center"/>
-    </RelativeLayout>    
+    </RelativeLayout>
 
     <include layout="@layout/navigation_drawer" />
 </android.support.v4.widget.DrawerLayout>

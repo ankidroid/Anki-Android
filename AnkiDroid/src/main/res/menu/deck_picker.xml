@@ -2,8 +2,8 @@
     xmlns:ankidroid="http://schemas.android.com/apk/res-auto" >
 
     <item
+        android:icon="?attr/ic_menu_add"
         android:id="@+id/action_add_decks"
-        android:icon="@drawable/ic_menu_add"
         android:title="@string/menu_add"
         ankidroid:showAsAction="always">
         <menu>

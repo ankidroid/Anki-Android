@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+        <item android:drawable="@drawable/deepblack_deckpicker_full_pressed" android:state_pressed="true"/>
+        <item android:drawable="@drawable/deepblack_deckpicker_full_activated" android:state_activated="true" android:state_pressed="false"/>
+    <item android:drawable="@drawable/deepblack_deckpicker_full_normal" android:state_activated="false" android:state_pressed="false"/>
+
+</selector>

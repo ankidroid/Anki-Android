@@ -3,11 +3,17 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:attr/colorBackground" >
+    android:background="?attr/backgroundColor"
+>
+    <!--
+    android:background="?android:attr/studyOptionsBackground"
+    -->
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/studyoptions_frame"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
+        android:layout_height="fill_parent"
+        android:background="?attr/backgroundColor"
+        />
     <include layout="@layout/navigation_drawer" />
 </android.support.v4.widget.DrawerLayout>
 

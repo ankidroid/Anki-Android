@@ -23,7 +23,7 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 
 import android.view.View;
-import com.ichi2.anki.AnkiDroidApp;
+
 import com.ichi2.anki.Statistics;
 import com.wildplot.android.rendering.PlotSheet;
 import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap;

@@ -25,22 +25,27 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:background="?attr/backgroundColor">
 
     <TextView
         android:id="@+id/custom_study_details_text1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
-        android:layout_marginLeft="4dip"
-        android:layout_marginRight="4dip"
+        android:paddingLeft="4dip"
+        android:paddingRight="4dip"
         android:gravity="left"
-        android:text=""
+        android:text="Example custom study details text 1"
+        android:background="@color/transparent"
+        android:textColor="?android:textColorPrimary"
         android:textSize="16sp" />
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:background="?attr/backgroundColor"
+
         android:orientation="horizontal" >
 
         <TextView
@@ -48,12 +53,14 @@
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:layout_marginBottom="16dip"
-            android:layout_marginLeft="4dip"
+            android:paddingBottom="16dip"
+            android:paddingLeft="4dip"
             android:layout_weight="4"
             android:gravity="left|center"
             android:lines="2"
-            android:text=""
+            android:background="@color/transparent"
+            android:textColor="?android:textColorPrimary"
+            android:text="Example custom study details text 2"
             android:textSize="16sp" />
 
         <EditText
@@ -65,6 +72,9 @@
             android:layout_weight="1"
             android:gravity="bottom"
             android:inputType="number"
+            android:background="@color/transparent"
+            android:textColor="?android:textColorPrimary"
+
             android:text="1"
             tools:ignore="HardcodedText"/>
     </LinearLayout>

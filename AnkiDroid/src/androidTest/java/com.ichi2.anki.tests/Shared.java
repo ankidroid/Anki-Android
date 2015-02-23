@@ -18,8 +18,6 @@ package com.ichi2.anki.tests;
 
 import android.content.Context;
 
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.BackupManager;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Storage;
 

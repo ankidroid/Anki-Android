@@ -18,6 +18,8 @@
 */
 -->
 
+    <!-- TODO JS update this file with attr references -->
+
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -62,7 +64,7 @@
                 android:paddingBottom="3dip"
                 android:paddingRight="10dip"
                 android:paddingTop="3dip"
-                android:src="@drawable/ic_dialog_info"
+                android:src="?attr/ic_dialog_info"
                 tools:ignore="ContentDescription" />
 
             <TextView
@@ -97,8 +99,13 @@
         android:layout_height="1dip"
         android:gravity="fill_horizontal"
         android:scaleType="fitXY"
-        tools:ignore="ContentDescription" />
+        android:background="?attr/styledDialogTitleDivider"
 
+        tools:ignore="ContentDescription" />
+<!--
+   ^^ Above use of attr/sDTD not tested
+        android:background="@drawable/ic_menu_zoom_in_deepblack"
+-->
     <LinearLayout
         android:id="@+id/contentPanel"
         android:layout_width="fill_parent"
@@ -142,7 +149,7 @@
             android:dividerHeight="1dip"
             android:drawSelectorOnTop="true"
             android:focusableInTouchMode="true"
-            android:listSelector="@drawable/white_list_selector_background"
+            android:listSelector="?attr/white_list_selector_background"
             android:paddingBottom="0dip"
             android:paddingTop="0dip" />
     </FrameLayout>

@@ -51,7 +51,6 @@ import android.text.TextUtils;
 import android.text.style.StrikethroughSpan;
 import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
-
 import android.util.TypedValue;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
@@ -92,6 +91,7 @@ import com.ichi2.libanki.Utils;
 import com.ichi2.themes.HtmlColors;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
+import com.ichi2.themes.ThemeDevUtils;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.DiffEngine;
 
@@ -904,13 +904,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         // Create the extensions as early as possible, so that they can be offered events.
         mExtensions = new ReviewerExtRegistry(getBaseContext());
-
         Themes.applyTheme(this);
-        super.onCreate(savedInstanceState);
         Timber.d("onCreate()");
+        super.onCreate(savedInstanceState);
 
-        mChangeBorderStyle = Themes.getTheme() == Themes.THEME_ANDROID_LIGHT
-                || Themes.getTheme() == Themes.THEME_ANDROID_DARK;
+        mChangeBorderStyle = false;  // Left over from previous approach to theming.  When testing is finished, remove this and its refereces.
 
         // create inherited navigation drawer layout here so that it can be used by parent class
         View mainView = getLayoutInflater().inflate(R.layout.flashcard, null);
@@ -1012,6 +1010,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
     @Override
     protected void onResume() {
+        Themes.applyTheme(this);
         super.onResume();
         restartTimer();
         // Set the context for the Sound manager
@@ -1042,7 +1041,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         /** Enhancement 722: Hardware buttons for scrolling, I.Z. */
         if (!mCurrentSimpleInterface) {
-            if (keyCode == 92) {
+            if (keyCode == 92) { // TODO Used named keycodes (private static final int, or Keycode.x) in place of numbers
                 mCard.pageUp(false);
                 if (mDoubleScrolling) {
                     mCard.pageUp(false);
@@ -1086,6 +1085,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 	            }
 	        }
         }
+
+        if ((keyCode == KeyEvent.KEYCODE_VOLUME_UP)) {
+            return ThemeDevUtils.volumeUp(this);
+        }
+        if ((keyCode == KeyEvent.KEYCODE_VOLUME_DOWN)) {
+            return ThemeDevUtils.volumeDown(this);
+        }
+
         return super.onKeyUp(keyCode, event);
     }
 
@@ -1384,7 +1391,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     // Set the content view to the one provided and initialize accessors.
     protected void initLayout() {
         mMainLayout = findViewById(R.id.main_layout);
-        Themes.setContentStyle(mMainLayout, Themes.CALLER_REVIEWER);
+//        Themes.setContentStyle(mMainLayout, Themes.CALLER_REVIEWER);
 
         mCardContainer = (FrameLayout) findViewById(R.id.flashcard_frame);
 
@@ -1572,11 +1579,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         mNext4.setTextColor(mNextTimeTextColor);
         mEase4.setTextColor(mNextTimeTextColor);
         mCardTimer.setTextColor(mForegroundColor);
-        mTextBarNew.setTextColor(invert ? res.getColor(R.color.new_count_night) : res.getColor(R.color.new_count));
-        mTextBarLearn
-                .setTextColor(invert ? res.getColor(R.color.learn_count_night) : res.getColor(R.color.learn_count));
-        mTextBarReview.setTextColor(invert ? res.getColor(R.color.review_count_night) : res
-                .getColor(R.color.review_count));
+
+        // Gradually shifting code over to an xml approach to theming, removing programatic theming.  However, leaving in 'invert' mode for now
+        // assume the non-inverted color was set correctly by the theme
+        if (invert) {
+            mTextBarNew.setTextColor(res.getColor(R.color.new_count_night));
+            mTextBarLearn.setTextColor(res.getColor(R.color.learn_count_night));
+            mTextBarReview.setTextColor(res.getColor(R.color.review_count_night));
+        }
+
+        // all of the following theming code should become unneeded:
         mAnswerField.setTextColor(mForegroundColor);
 
         if (mSimpleCard != null) {
@@ -1808,7 +1820,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (mCurrentSimpleInterface) {
             if (mSimpleCard == null) {
                 mSimpleCard = new ScrollTextView(this);
-                Themes.setRegularFont(mSimpleCard);
+//                Themes.setRegularFont(mSimpleCard);
                 mSimpleCard.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, getResources()
                         .getDisplayMetrics())
                         * mDisplayFontSize / 100);

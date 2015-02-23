@@ -38,6 +38,7 @@ import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
+import com.ichi2.themes.ThemeDevUtils;
 import com.ichi2.themes.Themes;
 
 import timber.log.Timber;
@@ -175,9 +176,9 @@ public class MyAccount extends AnkiActivity {
 
     private void initAllContentViews() {
         mLoginToMyAccountView = getLayoutInflater().inflate(R.layout.my_account, null);
-        Themes.setWallpaper(mLoginToMyAccountView);
-        Themes.setTextViewStyle(mLoginToMyAccountView.findViewById(R.id.MyAccountLayout));
-        Themes.setTextViewStyle(mLoginToMyAccountView.findViewById(R.id.no_account_text));
+//        Themes.setWallpaper(mLoginToMyAccountView);
+//        Themes.setTextViewStyle(mLoginToMyAccountView.findViewById(R.id.MyAccountLayout));
+//        Themes.setTextViewStyle(mLoginToMyAccountView.findViewById(R.id.no_account_text));
         mUsername = (EditText) mLoginToMyAccountView.findViewById(R.id.username);
         mPassword = (EditText) mLoginToMyAccountView.findViewById(R.id.password);
 
@@ -211,8 +212,8 @@ public class MyAccount extends AnkiActivity {
         });
 
         mLoggedIntoMyAccountView = getLayoutInflater().inflate(R.layout.my_account_logged_in, null);
-        Themes.setWallpaper(mLoggedIntoMyAccountView);
-        Themes.setTitleStyle(mLoggedIntoMyAccountView.findViewById(R.id.logged_text));
+//        Themes.setWallpaper(mLoggedIntoMyAccountView);
+//        Themes.setTitleStyle(mLoggedIntoMyAccountView.findViewById(R.id.logged_text));  // Moving this into xml.  TODO this hasn't been tested
         mUsernameLoggedIn = (TextView) mLoggedIntoMyAccountView.findViewById(R.id.username_logged_in);
         Button logoutButton = (Button) mLoggedIntoMyAccountView.findViewById(R.id.logout_button);
         logoutButton.setOnClickListener(new OnClickListener() {
@@ -225,7 +226,7 @@ public class MyAccount extends AnkiActivity {
         });
 
         mRegisterView = getLayoutInflater().inflate(R.layout.my_account_register, null);
-        Themes.setWallpaper(mRegisterView);
+//        Themes.setWallpaper(mRegisterView);
         mUsername1 = (EditText) mRegisterView.findViewById(R.id.username1);
         mPassword1 = (EditText) mRegisterView.findViewById(R.id.password1);
         mUsername2 = (EditText) mRegisterView.findViewById(R.id.username2);
@@ -450,6 +451,14 @@ public class MyAccount extends AnkiActivity {
             ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
             return true;
         }
+
+        if ((keyCode == KeyEvent.KEYCODE_VOLUME_UP)) {
+            return ThemeDevUtils.volumeUp(this);
+        }
+        if ((keyCode == KeyEvent.KEYCODE_VOLUME_DOWN)) {
+            return ThemeDevUtils.volumeDown(this);
+        }
+
         return super.onKeyDown(keyCode, event);
     }
 

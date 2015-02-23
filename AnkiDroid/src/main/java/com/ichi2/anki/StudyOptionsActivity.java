@@ -23,15 +23,16 @@ import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.themes.StyledOpenCollectionDialog;
+import com.ichi2.themes.ThemeDevUtils;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
 
@@ -44,16 +45,18 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
     private BroadcastReceiver mUnmountReceiver = null;
     private StyledOpenCollectionDialog mNotMountedDialog;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Themes.applyTheme(this);
-        super.onCreate(savedInstanceState);
+
         // The empty frame layout is a workaround for fragments not showing when they are added
+        super.onCreate(savedInstanceState);
         // to android.R.id.content when an action bar is used in Android 2.1 (and potentially
         // higher) with the appcompat package.
         View mainView = getLayoutInflater().inflate(R.layout.studyoptions, null);
         setContentView(mainView);
+        // js note: current crashed when theme is set to Android[Dark|Light], while blue and white work fine
+
         // create inherited navigation drawer layout here so that it can be used by parent class
         initNavigationDrawer(mainView);
         if (savedInstanceState == null) {
@@ -89,18 +92,16 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
         getSupportFragmentManager().beginTransaction().replace(R.id.studyoptions_frame, currentFragment).commit();
     }
 
-
     private StudyOptionsFragment getCurrentFragment() {
         return (StudyOptionsFragment) getSupportFragmentManager().findFragmentById(R.id.studyoptions_frame);
     }
 
-
     @Override
     protected void onResume() {
+        Themes.applyTheme(this);
         super.onResume();
         deselectAllNavigationItems();
     }    
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -111,7 +112,6 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
         }
         
         switch (item.getItemId()) {
-
             case android.R.id.home:
                 closeStudyOptions();
                 return true;
@@ -154,6 +154,13 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
             Timber.i("StudyOptionsActivity:: onBackPressed()");
             closeStudyOptions();
             return true;
+        }
+
+        if ((keyCode == KeyEvent.KEYCODE_VOLUME_UP)) {
+            return ThemeDevUtils.volumeUp(this);
+        }
+        if ((keyCode == KeyEvent.KEYCODE_VOLUME_DOWN)) {
+            return ThemeDevUtils.volumeDown(this);
         }
         return super.onKeyDown(keyCode, event);
     }
@@ -221,4 +228,9 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
     public void createFilteredDeck(JSONArray delays, Object[] terms, Boolean resched) {
         getCurrentFragment().createFilteredDeck(delays, terms, resched);
     }
+
+
+
+
+//
 }

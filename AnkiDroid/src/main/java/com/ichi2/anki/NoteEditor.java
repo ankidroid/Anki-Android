@@ -27,7 +27,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.widget.PopupMenu;
@@ -37,8 +36,8 @@ import android.text.Html;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-
 import android.util.Pair;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -79,6 +78,7 @@ import com.ichi2.libanki.Utils;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledDialog.Builder;
 import com.ichi2.themes.StyledProgressDialog;
+import com.ichi2.themes.ThemeDevUtils;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.PopupMenuWithIcons;
 import com.ichi2.widget.WidgetStatus;
@@ -356,8 +356,12 @@ public class NoteEditor extends AnkiActivity {
         registerExternalStorageListener();
         View mainView = getLayoutInflater().inflate(R.layout.note_editor, null);
         setContentView(mainView);
-        Themes.setWallpaper(mainView);
-        Themes.setContentStyle(mainView, Themes.CALLER_CARD_EDITOR);
+//        Themes.setWallpaper(mainView);  // set in xml
+
+        // Go into setContentStyle, remove all programmatic UI control and move the equivalent into xml
+//        Themes.setContentStyle(mainView, Themes.CALLER_CARD_EDITOR);
+//        As of March 1 2014, setContentStyle ONLY does this for CALLER_CARD_EDITOR:  view.findViewById(R.id.CardEditorEditFieldsLayout).setBackgroundResource(mTextViewStyle);
+        // This forced the background to be "white_textview" or similar, which simply provides a little padding / frame via 9patch.  So I'm replacing this with genericBackgroundFrame in xml
 
         mFieldsLayoutContainer = (LinearLayout) findViewById(R.id.CardEditorEditFieldsLayout);
 
@@ -461,9 +465,9 @@ public class NoteEditor extends AnkiActivity {
             }
         }
 
-        ArrayAdapter<String> noteTypeAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, modelNames);
+        ArrayAdapter<String> noteTypeAdapter = new ArrayAdapter<String>(this,R.layout.simple_spinner_item, modelNames);
         mNoteTypeSpinner.setAdapter(noteTypeAdapter);
-        noteTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        noteTypeAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
 
 
         // Deck Selector
@@ -496,9 +500,9 @@ public class NoteEditor extends AnkiActivity {
             }
         }
 
-        ArrayAdapter<String> noteDeckAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, deckNames);
+        ArrayAdapter<String> noteDeckAdapter = new ArrayAdapter<String>(this,R.layout.simple_spinner_item, deckNames);
         mNoteDeckSpinner.setAdapter(noteDeckAdapter);
-        noteDeckAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        noteDeckAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
         mNoteDeckSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
@@ -1151,7 +1155,7 @@ public class NoteEditor extends AnkiActivity {
                 mIntentInformationDialog.dismiss();
             }
         });
-        mCardItemBackground = Themes.getCardBrowserBackground()[0];
+        mCardItemBackground = Themes.getCardBrowserItemBackgroundColors()[0];  // Leaving this programmtic control of colors, since it depends on whether card is marked.  However using arrays with numbered indices (versus enums, constancts, or objects with named fields) is not easy for other devs to understand.
         mIntentInformationAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
             @Override
             public boolean setViewValue(View view, Object arg1, String text) {
@@ -1162,10 +1166,22 @@ public class NoteEditor extends AnkiActivity {
                 return false;
             }
         });
-        listView.setBackgroundColor(android.R.attr.colorBackground);
+
+        listView.setBackgroundColor(Themes.getBackgroundColor());
         listView.setDrawSelectorOnTop(true);
         listView.setFastScrollEnabled(true);
-        Themes.setContentStyle(listView, Themes.CALLER_CARDEDITOR_INTENTDIALOG);
+
+        // This previous call:
+//        Themes.setContentStyle(listView, Themes.CALLER_CARDEDITOR_INTENTDIALOG);
+// simply did the following (taken from Themes.xml:
+//        lv3.setSelector(R.drawable.blue_cardbrowser_list_selector);
+//        lv3.setDividerHeight(0);
+//
+
+        listView.setSelector(R.drawable.blue_cardbrowser_list_selector);  // move this to xml, create a getter in Themes.java
+        listView.setDividerHeight(0);
+
+
         builder.setView(listView, false, true);
         builder.setCancelable(true);
         builder.setPositiveButton(res.getString(R.string.intent_add_clear_all), new OnClickListener() {
@@ -1262,7 +1278,8 @@ public class NoteEditor extends AnkiActivity {
             initFieldEditText(newTextbox, i, fields[i], mCustomTypeface, !editModelMode);
 
             TextView label = newTextbox.getLabel();
-            label.setTextColor(Color.BLACK);
+            label.setTextColor(Themes.getForegroundColor());  // Should be done in xml, not programmatically
+            label.setBackgroundColor(Themes.getBackgroundColor());  // Move to xml eventually
             label.setPadding((int) UIUtils.getDensityAdjustedValue(this, 3.4f), 0, 0, 0);
             mEditFields.add(newTextbox);
 
@@ -1276,7 +1293,7 @@ public class NoteEditor extends AnkiActivity {
                 mediaButton.setBackgroundResource(0);
             } else {
                 // Use media editor button if not changing note type
-                mediaButton.setBackgroundResource(R.drawable.ic_media);
+//                mediaButton.setBackgroundResource(R.drawable.ic_media); // Should already be happening in the xml  - double check
                 setMMButtonListener(mediaButton, i);
             }
             mFieldsLayoutContainer.addView(label);
@@ -1790,4 +1807,16 @@ public class NoteEditor extends AnkiActivity {
             // Do Nothing
         }
     }
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_VOLUME_UP)) {
+            return ThemeDevUtils.volumeUp(this);
+        }
+        if ((keyCode == KeyEvent.KEYCODE_VOLUME_DOWN)) {
+            return ThemeDevUtils.volumeDown(this);
+        }
+        return super.onKeyUp(keyCode, event);
+    }
+
 }

@@ -1,0 +1,986 @@
+I want most textviews to have transparent backgrounds.  Their background value defaults to android:background. 
+Thus I had made android:background transparent, but now wish to use it, so I'm explicitly making most textviews transparent
+
+Here are a list of textviews which do not have any background defined:
+
+
+layout-xlarge/styled_open_collection_dialog.xml:68:        <TextView
+layout-xlarge/styled_open_collection_dialog.xml:47:            <TextView
+layout-v14/styled_dialog.xml:68:            <TextView
+layout/note_editor.xml:101:                <TextView
+layout/flashcard.xml:76:            <TextView
+layout/flashcard.xml:45:            <TextView
+layout/simple_spinner_item.xml:2:<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+layout/activity_load_pronounciation.xml:9:    <TextView
+layout/styled_open_collection_dialog.xml:71:        <TextView
+layout/styled_open_collection_dialog.xml:50:            <TextView
+layout/widget_big.xml:535:        <TextView
+layout/widget_big.xml:468:            <TextView
+layout/widget_big.xml:53:                <TextView
+layout/widget_big.xml:33:            <TextView
+layout/dropdown_deck_selected_item.xml:7:    <TextView
+layout/next_time_textview.xml:2:<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+layout/widget.xml:37:            <TextView
+layout/deck_picker.xml:32:        <TextView
+layout/studyoptions_fragment.xml:194:	                    <TextView
+
+
+And here is a list of textviews which DO have backgrounds defined.  Most should be untouched, but a few should be made transparent.
+
+
+layout/card_item_browser.xml:7:    <TextView
+layout/card_item_browser.xml:16:    <TextView
+layout/drawer_submenu_list_item.xml:13:    <TextView
+layout/drawer_list_item.xml:13:    <TextView
+layout/widget.xml:12:    <TextView
+layout/dropdown_deck_item.xml:3:<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+layout/widget_big.xml:210:                    <TextView
+layout/widget_big.xml:220:                    <TextView
+layout/widget_big.xml:318:                <TextView
+layout/widget_big.xml:318:                <TextView
+layout/widget_big.xml:326:                <TextView
+layout/widget_big.xml:354:                        <TextView
+layout/widget_big.xml:370:                        <TextView
+layout/widget_big.xml:378:                        <TextView
+layout/widget_big.xml:395:                        <TextView
+layout/widget_big.xml:403:                        <TextView
+layout/widget_big.xml:420:                        <TextView
+layout/widget_big.xml:437:                    <TextView
+layout/widget_big.xml:445:                    <TextView
+layout/widget_big.xml:495:                <TextView
+layout/widget_big.xml:518:            <TextView
+layout/widget_big.xml:526:            <TextView
+layout/flashcard.xml:53:            <TextView
+layout/flashcard.xml:65:            <TextView
+layout/widget_small.xml:18:        <TextView
+layout/widget_small.xml:54:        <TextView
+layout-land/widget_small.xml:20:        <TextView
+layout-land/widget_small.xml:56:        <TextView
+
+
+----------------------------------------------------------------------------------------------------
+And here is the results of a grep used to find the above:
+
+layout/styled_custom_study_details_dialog.xml:31:    <TextView
+layout/styled_custom_study_details_dialog.xml-32-        android:id="@+id/custom_study_details_text1"
+layout/styled_custom_study_details_dialog.xml-33-        android:layout_width="wrap_content"
+layout/styled_custom_study_details_dialog.xml-34-        android:layout_height="wrap_content"
+layout/styled_custom_study_details_dialog.xml-35-        android:layout_gravity="left"
+layout/styled_custom_study_details_dialog.xml-36-        android:layout_marginLeft="4dip"
+layout/styled_custom_study_details_dialog.xml-37-        android:layout_marginRight="4dip"
+layout/styled_custom_study_details_dialog.xml-38-        android:gravity="left"
+layout/styled_custom_study_details_dialog.xml-39-        android:text=""
+layout/styled_custom_study_details_dialog.xml-40-        android: BACKGROUND ="?attr/backgroundElevatedColor"
+layout/styled_custom_study_details_dialog.xml-41-        android:textColor="?android:textColorPrimary"
+layout/styled_custom_study_details_dialog.xml-42-        android:textSize="16sp" />
+layout/styled_custom_study_details_dialog.xml-43-
+layout/styled_custom_study_details_dialog.xml-44-    <LinearLayout
+layout/styled_custom_study_details_dialog.xml-45-        android:layout_width="fill_parent"
+layout/styled_custom_study_details_dialog.xml-46-        android:layout_height="wrap_content"
+layout/styled_custom_study_details_dialog.xml-47-        android: BACKGROUND ="?attr/backgroundElevatedColor"
+layout/styled_custom_study_details_dialog.xml-48-
+layout/styled_custom_study_details_dialog.xml-49-        android:orientation="horizontal" >
+layout/styled_custom_study_details_dialog.xml-50-
+layout/styled_custom_study_details_dialog.xml:51:        <TextView
+layout/styled_custom_study_details_dialog.xml-52-            android:id="@+id/custom_study_details_text2"
+layout/styled_custom_study_details_dialog.xml-53-            android:layout_width="0dip"
+layout/styled_custom_study_details_dialog.xml-54-            android:layout_height="wrap_content"
+layout/styled_custom_study_details_dialog.xml-55-            android:layout_gravity="left"
+layout/styled_custom_study_details_dialog.xml-56-            android:layout_marginBottom="16dip"
+layout/styled_custom_study_details_dialog.xml-57-            android:layout_marginLeft="4dip"
+layout/styled_custom_study_details_dialog.xml-58-            android:layout_weight="4"
+layout/styled_custom_study_details_dialog.xml-59-            android:gravity="left|center"
+layout/styled_custom_study_details_dialog.xml-60-            android:lines="2"
+layout/styled_custom_study_details_dialog.xml-61-            android: BACKGROUND ="@color/transparent"
+layout/styled_custom_study_details_dialog.xml-62-            android:textColor="?android:textColorPrimary"
+layout/styled_custom_study_details_dialog.xml-63-            android:text=""
+layout/styled_custom_study_details_dialog.xml-64-            android:textSize="16sp" />
+layout/styled_custom_study_details_dialog.xml-65-
+layout/styled_custom_study_details_dialog.xml-66-        <EditText
+layout/styled_custom_study_details_dialog.xml-67-            android:id="@+id/custom_study_details_edittext2"
+layout/styled_custom_study_details_dialog.xml-68-            android:layout_width="0dip"
+layout/styled_custom_study_details_dialog.xml-69-            android:layout_height="38dip"
+layout/styled_custom_study_details_dialog.xml-70-            android:layout_marginBottom="16dip"
+layout/styled_custom_study_details_dialog.xml-71-            android:layout_marginRight="4dip"
+--
+layout/studyoptions_fragment.xml:36:        	    <TextView
+layout/studyoptions_fragment.xml-37-                    android:id="@+id/studyoptions_deck_name"
+layout/studyoptions_fragment.xml-38-                    android:layout_width="fill_parent"
+layout/studyoptions_fragment.xml-39-                    android:layout_height="wrap_content"
+layout/studyoptions_fragment.xml-40-                    android:layout_margin="5dp"
+layout/studyoptions_fragment.xml-41-                    android:ellipsize="end"
+layout/studyoptions_fragment.xml-42-                    android:gravity="center"
+layout/studyoptions_fragment.xml-43-                    android:maxLines="3"
+layout/studyoptions_fragment.xml-44-                    android:text=""
+layout/studyoptions_fragment.xml-45-                    android:textColor="?android:textColorPrimary"
+layout/studyoptions_fragment.xml-46-                    android: BACKGROUND ="@color/transparent"
+layout/studyoptions_fragment.xml-47-                    android:textSize="28sp"
+layout/studyoptions_fragment.xml-48-                    android:textStyle="bold" />
+layout/studyoptions_fragment.xml-49-	            <LinearLayout
+layout/studyoptions_fragment.xml-50-	                android:id="@+id/studyoptions_deckinformation"
+layout/studyoptions_fragment.xml-51-	                android:layout_width="fill_parent"
+layout/studyoptions_fragment.xml-52-	                android:layout_height="wrap_content"
+layout/studyoptions_fragment.xml-53-	                android:gravity="center"
+layout/studyoptions_fragment.xml-54-	                android:orientation="vertical" >
+layout/studyoptions_fragment.xml-55-	                <LinearLayout
+layout/studyoptions_fragment.xml-56-	                    android:id="@+id/studyoptions_deckcounts"
+--
+layout/studyoptions_fragment.xml:74:	                            <TextView
+layout/studyoptions_fragment.xml-75-	                                android:layout_width="wrap_content"
+layout/studyoptions_fragment.xml-76-	                                android:layout_height="wrap_content"
+layout/studyoptions_fragment.xml-77-	                                android:layout_centerVertical="true"
+layout/studyoptions_fragment.xml-78-	                                android:paddingRight="5dip"
+layout/studyoptions_fragment.xml-79-	                                android:text="@string/studyoptions_due_today"
+layout/studyoptions_fragment.xml-80-	                                android:textColor="?android:textColorPrimary"
+layout/studyoptions_fragment.xml-81-                                    android: BACKGROUND ="@color/transparent"
+layout/studyoptions_fragment.xml-82-                                    />
+layout/studyoptions_fragment.xml-83-	
+layout/studyoptions_fragment.xml-84-	                            <LinearLayout
+layout/studyoptions_fragment.xml-85-	                                android:layout_width="wrap_content"
+layout/studyoptions_fragment.xml-86-	                                android:layout_height="wrap_content"
+layout/studyoptions_fragment.xml-87-	                                android:gravity="right"
+layout/studyoptions_fragment.xml-88-	                                android:orientation="horizontal" >
+layout/studyoptions_fragment.xml-89-	
+layout/studyoptions_fragment.xml:90:	                                <TextView
+layout/studyoptions_fragment.xml-91-	                                    android:id="@+id/studyoptions_new"
+layout/studyoptions_fragment.xml-92-	                                    android:layout_width="wrap_content"
+layout/studyoptions_fragment.xml-93-	                                    android:layout_height="wrap_content"
+layout/studyoptions_fragment.xml-94-	                                    android:paddingRight="5dip"
+layout/studyoptions_fragment.xml-95-	                                    android:textColor="?attr/newCountTextColor"
+layout/studyoptions_fragment.xml-96-                                        android: BACKGROUND ="@color/transparent"
+layout/studyoptions_fragment.xml-97-                                        />
+layout/studyoptions_fragment.xml-98-	
+layout/studyoptions_fragment.xml:99:	                                <TextView
+layout/studyoptions_fragment.xml-100-	                                    android:id="@+id/studyoptions_lrn"
+layout/studyoptions_fragment.xml-101-	                                    android:layout_width="wrap_content"
+layout/studyoptions_fragment.xml-102-	                                    android:layout_height="wrap_content"
+layout/studyoptions_fragment.xml-103-	                                    android:layout_gravity="center"
+layout/studyoptions_fragment.xml-104-	                                    android:paddingRight="5dip"
+layout/studyoptions_fragment.xml-105-	                                    android:textColor="?attr/learnCountTextColor"
+layout/studyoptions_fragment.xml-106-                                        android: BACKGROUND ="@color/transparent"
+layout/studyoptions_fragment.xml-107-                                        />
+layout/studyoptions_fragment.xml-108-
+layout/studyoptions_fragment.xml-109-
+layout/studyoptions_fragment.xml:110:                                    <TextView
+layout/studyoptions_fragment.xml-111-	                                    android:id="@+id/studyoptions_rev"
+layout/studyoptions_fragment.xml-112-	                                    android:layout_width="wrap_content"
+layout/studyoptions_fragment.xml-113-	                                    android:layout_height="wrap_content"
+layout/studyoptions_fragment.xml-114-	                                    android:textColor="?attr/reviewCountTextColor"
+layout/studyoptions_fragment.xml-115-                                        android: BACKGROUND ="@color/transparent"
+layout/studyoptions_fragment.xml-116-                                        />
+layout/studyoptions_fragment.xml-117-
+layout/studyoptions_fragment.xml-118-                                </LinearLayout>
+layout/studyoptions_fragment.xml-119-	                        </TableRow>
+layout/studyoptions_fragment.xml-120-	
+layout/studyoptions_fragment.xml-121-	                        <TableRow>
+layout/studyoptions_fragment.xml-122-	
+layout/studyoptions_fragment.xml:123:	                            <TextView
+layout/studyoptions_fragment.xml-124-	                                android:layout_width="wrap_content"
+layout/studyoptions_fragment.xml-125-	                                android:layout_height="wrap_content"
+layout/studyoptions_fragment.xml-126-	                                android:paddingRight="5dip"
+layout/studyoptions_fragment.xml-127-	                                android:text="@string/studyoptions_new_total"
+layout/studyoptions_fragment.xml-128-	                                android:textColor="?android:textColorPrimary"
+layout/studyoptions_fragment.xml-129-                                    android: BACKGROUND ="@color/transparent"
+layout/studyoptions_fragment.xml-130-                                    />
+layout/studyoptions_fragment.xml-131-
+layout/studyoptions_fragment.xml-132-
+layout/studyoptions_fragment.xml:133:                                <TextView
+layout/studyoptions_fragment.xml-134-	                                android:id="@+id/studyoptions_total_new"
+layout/studyoptions_fragment.xml-135-	                                android:layout_width="wrap_content"
+layout/studyoptions_fragment.xml-136-	                                android:layout_height="wrap_content"
+layout/studyoptions_fragment.xml-137-	                                android:gravity="right"
+layout/studyoptions_fragment.xml-138-	                                android:textColor="?android:textColorPrimary"
+layout/studyoptions_fragment.xml-139-                                    android: BACKGROUND ="@color/transparent"
+layout/studyoptions_fragment.xml-140-                                    />
+layout/studyoptions_fragment.xml-141-
+layout/studyoptions_fragment.xml-142-                            </TableRow>
+layout/studyoptions_fragment.xml-143-	
+layout/studyoptions_fragment.xml-144-	                        <TableRow>
+layout/studyoptions_fragment.xml-145-	
+layout/studyoptions_fragment.xml:146:	                            <TextView
+layout/studyoptions_fragment.xml-147-	                                android:layout_width="wrap_content"
+layout/studyoptions_fragment.xml-148-	                                android:layout_height="wrap_content"
+layout/studyoptions_fragment.xml-149-	                                android:paddingRight="5dip"
+layout/studyoptions_fragment.xml-150-	                                android:text="@string/studyoptions_total_cards"
+layout/studyoptions_fragment.xml-151-                                    android:textColor="?android:textColorPrimary"
+layout/studyoptions_fragment.xml-152-                                    android: BACKGROUND ="@color/transparent"
+layout/studyoptions_fragment.xml-153-                                    />
+layout/studyoptions_fragment.xml-154-
+layout/studyoptions_fragment.xml:155:                                <TextView
+layout/studyoptions_fragment.xml-156-	                                android:id="@+id/studyoptions_total"
+layout/studyoptions_fragment.xml-157-	                                android:layout_width="wrap_content"
+layout/studyoptions_fragment.xml-158-	                                android:layout_height="wrap_content"
+layout/studyoptions_fragment.xml-159-	                                android:gravity="right"
+layout/studyoptions_fragment.xml-160-                                    android:textColor="?android:textColorPrimary"
+layout/studyoptions_fragment.xml-161-                                    android: BACKGROUND ="@color/transparent"
+layout/studyoptions_fragment.xml-162-                                    />
+layout/studyoptions_fragment.xml-163-
+layout/studyoptions_fragment.xml-164-                            </TableRow>
+layout/studyoptions_fragment.xml-165-	
+layout/studyoptions_fragment.xml-166-	                        <TableRow>
+layout/studyoptions_fragment.xml-167-	
+layout/studyoptions_fragment.xml:168:	                            <TextView
+layout/studyoptions_fragment.xml-169-	                                android:layout_width="wrap_content"
+layout/studyoptions_fragment.xml-170-	                                android:layout_height="wrap_content"
+layout/studyoptions_fragment.xml-171-	                                android:paddingRight="5dip"
+layout/studyoptions_fragment.xml-172-	                                android:text="@string/studyoptions_eta"
+layout/studyoptions_fragment.xml-173-                                    android:textColor="?android:textColorPrimary"
+layout/studyoptions_fragment.xml-174-                                    android: BACKGROUND ="@color/transparent"
+layout/studyoptions_fragment.xml-175-                                    />
+layout/studyoptions_fragment.xml-176-
+layout/studyoptions_fragment.xml:177:                                <TextView
+layout/studyoptions_fragment.xml-178-	                                android:id="@+id/studyoptions_eta"
+layout/studyoptions_fragment.xml-179-	                                android:layout_width="wrap_content"
+layout/studyoptions_fragment.xml-180-	                                android:layout_height="wrap_content"
+layout/studyoptions_fragment.xml-181-	                                android:gravity="right"
+layout/studyoptions_fragment.xml-182-                                    android:textColor="?android:textColorPrimary"
+layout/studyoptions_fragment.xml-183-                                    android: BACKGROUND ="@color/transparent"
+layout/studyoptions_fragment.xml-184-                                    />
+layout/studyoptions_fragment.xml-185-                            </TableRow>
+layout/studyoptions_fragment.xml-186-	                    </TableLayout>
+layout/studyoptions_fragment.xml-187-	                </LinearLayout>
+layout/studyoptions_fragment.xml-188-	
+layout/studyoptions_fragment.xml-189-	                <LinearLayout
+layout/studyoptions_fragment.xml-190-	                    android:layout_width="fill_parent"
+layout/studyoptions_fragment.xml-191-	                    android:layout_height="wrap_content"
+layout/studyoptions_fragment.xml-192-	                    android:orientation="vertical" >
+layout/studyoptions_fragment.xml-193-	
+layout/studyoptions_fragment.xml:194:	                    <TextView
+layout/studyoptions_fragment.xml-195-	                        android:id="@+id/studyoptions_deck_description"
+layout/studyoptions_fragment.xml-196-	                        android:layout_width="fill_parent"
+layout/studyoptions_fragment.xml-197-	                        android:layout_height="wrap_content"
+layout/studyoptions_fragment.xml-198-	                        android:layout_marginBottom="5dp"
+layout/studyoptions_fragment.xml-199-	                        android:layout_marginLeft="5dp"
+layout/studyoptions_fragment.xml-200-	                        android:layout_marginRight="5dp"
+layout/studyoptions_fragment.xml-201-	                        android:gravity="center"
+layout/studyoptions_fragment.xml-202-	                        android:text=""
+layout/studyoptions_fragment.xml-203-                            android:textColor="?android:textColorPrimary"
+--
+layout/my_account_logged_in.xml-29-            android:textColor="#000000"
+layout/my_account_logged_in.xml-30-            android:textSize="20sp"
+layout/my_account_logged_in.xml-31-            android:textStyle="bold" />
+layout/my_account_logged_in.xml-32-    </LinearLayout>
+layout/my_account_logged_in.xml-33-
+layout/my_account_logged_in.xml-34-    <Button
+layout/my_account_logged_in.xml-35-        android:id="@+id/logout_button"
+layout/my_account_logged_in.xml-36-        android:layout_width="fill_parent"
+layout/my_account_logged_in.xml-37-        android:layout_height="wrap_content"
+layout/my_account_logged_in.xml-38-        android:layout_centerInParent="true"
+layout/my_account_logged_in.xml-39-        android:text="@string/log_out" />
+layout/my_account_logged_in.xml-40-
+layout/my_account_logged_in.xml-41-</RelativeLayout>
+--
+layout/card_item_browser.xml:7:    <TextView
+layout/card_item_browser.xml-8-        android:id="@+id/card_sfld"
+layout/card_item_browser.xml-9-        android:layout_width="0dip"
+layout/card_item_browser.xml-10-        android:layout_height="fill_parent"
+layout/card_item_browser.xml-11-        android:layout_weight="1"
+layout/card_item_browser.xml-12-        android:paddingRight="3dip"
+layout/card_item_browser.xml-13-        android: BACKGROUND ="?attr/backgroundColor"
+layout/card_item_browser.xml-14-        android:textColor="?android:textColorPrimary" />
+layout/card_item_browser.xml-15-
+layout/card_item_browser.xml:16:    <TextView
+layout/card_item_browser.xml-17-        android:id="@+id/card_column2"
+layout/card_item_browser.xml-18-        android:layout_width="0dip"
+layout/card_item_browser.xml-19-        android:layout_height="fill_parent"
+layout/card_item_browser.xml-20-        android:layout_weight="1"
+layout/card_item_browser.xml-21-        android:paddingLeft="3dip"
+layout/card_item_browser.xml-22-        android: BACKGROUND ="?attr/backgroundColor"
+layout/card_item_browser.xml-23-        android:textColor="?android:textColorPrimary" />
+layout/card_item_browser.xml-24-
+layout/card_item_browser.xml-25-</LinearLayout>
+--
+layout/deck_picker.xml:32:        <TextView
+layout/deck_picker.xml-33-            android:layout_width="match_parent"
+layout/deck_picker.xml-34-            android:layout_height="wrap_content"
+layout/deck_picker.xml-35-            android:id="@+id/today_stats_text_view"
+layout/deck_picker.xml-36-            android:textColor="?android:textColorPrimary"
+layout/deck_picker.xml-37-            android:layout_alignParentBottom="true"
+layout/deck_picker.xml-38-            android:layout_centerInParent="true"
+layout/deck_picker.xml-39-            android:gravity="center"/>
+layout/deck_picker.xml-40-    </RelativeLayout>    
+layout/deck_picker.xml-41-
+layout/deck_picker.xml-42-    <include layout="@layout/navigation_drawer" />
+layout/deck_picker.xml-43-</android.support.v4.widget.DrawerLayout>
+layout/deck_picker.xml-44-
+--
+layout/drawer_submenu_list_item.xml:13:    <TextView
+layout/drawer_submenu_list_item.xml-14-        android:id="@+id/drawer_list_item_text"
+layout/drawer_submenu_list_item.xml-15-        android:layout_width="fill_parent"
+layout/drawer_submenu_list_item.xml-16-        android:layout_height="match_parent"
+layout/drawer_submenu_list_item.xml-17-        android:gravity="center_vertical"
+layout/drawer_submenu_list_item.xml-18-        android:paddingLeft="4dp"
+layout/drawer_submenu_list_item.xml-19-        android:paddingRight="16dp"
+layout/drawer_submenu_list_item.xml-20-        android:drawablePadding="16dp"
+layout/drawer_submenu_list_item.xml-21-        android:textColor="?android:textColorPrimary"
+layout/drawer_submenu_list_item.xml-22-        android: BACKGROUND ="?attr/backgroundColor"
+layout/drawer_submenu_list_item.xml-23-        android:textSize="12sp"
+layout/drawer_submenu_list_item.xml-24-        android:textAllCaps="true"/>
+layout/drawer_submenu_list_item.xml-25-</RelativeLayout>
+--
+layout/drawer_list_item.xml:13:    <TextView
+layout/drawer_list_item.xml-14-        android:id="@+id/drawer_list_item_text"
+layout/drawer_list_item.xml-15-        android:layout_width="fill_parent"
+layout/drawer_list_item.xml-16-        android:layout_height="wrap_content"
+layout/drawer_list_item.xml-17-        android:gravity="center_vertical"
+layout/drawer_list_item.xml-18-        android:paddingLeft="4dp"
+layout/drawer_list_item.xml-19-        android:paddingRight="16dp"
+layout/drawer_list_item.xml-20-        android:drawablePadding="16dp"
+layout/drawer_list_item.xml-21-        android:textColor="?android:textColorPrimary"
+layout/drawer_list_item.xml-22-        android: BACKGROUND ="?attr/backgroundColor"
+layout/drawer_list_item.xml-23-        android:textSize="20sp" />
+layout/drawer_list_item.xml-24-</RelativeLayout>
+--
+layout/widget.xml:12:    <TextView
+layout/widget.xml-13-        android:id="@+id/anki_droid_logo"
+layout/widget.xml-14-        android:layout_width="80dip"
+layout/widget.xml-15-        android:layout_height="fill_parent"
+layout/widget.xml-16-        android:layout_alignParentLeft="true"
+layout/widget.xml-17-        android: BACKGROUND ="@drawable/widget_bg_medium"
+layout/widget.xml-18-        android:focusable="true" />
+layout/widget.xml-19-
+layout/widget.xml-20-    <LinearLayout
+layout/widget.xml-21-        android:layout_width="fill_parent"
+layout/widget.xml-22-        android:layout_height="fill_parent"
+layout/widget.xml-23-        android:layout_toRightOf="@+id/anki_droid_logo"
+layout/widget.xml-24-        android:focusable="false"
+layout/widget.xml-25-        android:gravity="center"
+layout/widget.xml-26-        android:orientation="vertical"
+layout/widget.xml-27-        android:paddingBottom="10dip"
+layout/widget.xml-28-        android:paddingLeft="0dip"
+layout/widget.xml-29-        android:paddingRight="11dip"
+layout/widget.xml-30-        android:paddingTop="10dip" >
+layout/widget.xml-31-
+layout/widget.xml-32-        <LinearLayout
+--
+layout/widget.xml:37:            <TextView
+layout/widget.xml-38-                android:id="@+id/anki_droid_title"
+layout/widget.xml-39-                android:layout_width="fill_parent"
+layout/widget.xml-40-                android:layout_height="wrap_content"
+--
+layout/styled_dialog.xml-130-                android:textSize="16sp" />
+layout/styled_dialog.xml-131-        </ScrollView>
+layout/styled_dialog.xml-132-    </LinearLayout>
+layout/styled_dialog.xml-133-
+layout/styled_dialog.xml-134-    <FrameLayout
+layout/styled_dialog.xml-135-        android:id="@+id/listViewPanel"
+layout/styled_dialog.xml-136-        android:layout_width="fill_parent"
+layout/styled_dialog.xml-137-        android:layout_height="wrap_content"
+layout/styled_dialog.xml-138-        android:layout_weight="100" >
+layout/styled_dialog.xml-139-
+layout/styled_dialog.xml-140-        <ListView
+layout/styled_dialog.xml-141-            android:id="@+id/listview"
+layout/styled_dialog.xml-142-            android:layout_width="fill_parent"
+layout/styled_dialog.xml-143-            android:layout_height="wrap_content"
+--
+layout/dropdown_deck_item.xml:3:<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+layout/dropdown_deck_item.xml-4-    android:id="@+id/dropdown_deck_name"
+layout/dropdown_deck_item.xml-5-    style="?attr/spinnerDropDownItemStyle"
+layout/dropdown_deck_item.xml-6-    android:layout_width="match_parent"
+layout/dropdown_deck_item.xml-7-    android:layout_height="?attr/dropdownListPreferredItemHeight"
+layout/dropdown_deck_item.xml-8-    android: BACKGROUND ="?attr/backgroundElevatedColor"
+layout/dropdown_deck_item.xml-9-    android:textColor="?android:textColorPrimary"
+layout/dropdown_deck_item.xml-10-    android:singleLine="true" />
+--
+layout/next_time_textview.xml:2:<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+layout/next_time_textview.xml-3-    android:layout_width="fill_parent"
+layout/next_time_textview.xml-4-    android:layout_height="wrap_content"
+layout/next_time_textview.xml-5-    android:layout_gravity="center"
+layout/next_time_textview.xml-6-    android:layout_marginBottom="1dip"
+layout/next_time_textview.xml-7-    android:ellipsize="marquee"
+layout/next_time_textview.xml-8-    android:gravity="bottom|center_horizontal"
+layout/next_time_textview.xml-9-    android:singleLine="true"
+layout/next_time_textview.xml-10-    android:textSize="12.5sp" />
+--
+layout/dropdown_deck_selected_item.xml:7:    <TextView
+layout/dropdown_deck_selected_item.xml-8-        android:id="@+id/dropdown_deck_name"
+layout/dropdown_deck_selected_item.xml-9-        android:layout_width="wrap_content"
+layout/dropdown_deck_selected_item.xml-10-        android:layout_height="wrap_content"
+layout/dropdown_deck_selected_item.xml-11-        android:singleLine="true"
+layout/dropdown_deck_selected_item.xml-12-        style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+layout/dropdown_deck_selected_item.xml-13-        android:textColor="?android:textColorPrimary"/>
+--
+layout/my_account_register.xml-100-        android:layout_height="wrap_content"
+layout/my_account_register.xml-101-        android:text="@string/sign_up_terms" />
+layout/my_account_register.xml-102-
+layout/my_account_register.xml-103-</LinearLayout>
+--
+layout/widget_big.xml:33:            <TextView
+layout/widget_big.xml-34-                android:id="@+id/widget_big_cardcontent"
+layout/widget_big.xml-35-                android:layout_width="fill_parent"
+layout/widget_big.xml-36-                android:layout_height="fill_parent"
+layout/widget_big.xml-37-                android:gravity="center"
+layout/widget_big.xml-38-                android:padding="5dip"
+layout/widget_big.xml-39-                android:textColor="#000000"
+layout/widget_big.xml-40-                android:textSize="18sp" />
+layout/widget_big.xml-41-
+layout/widget_big.xml-42-            <LinearLayout
+layout/widget_big.xml-43-                android:id="@+id/widget_big_deckfield"
+layout/widget_big.xml-44-                android:layout_width="wrap_content"
+layout/widget_big.xml-45-                android:layout_height="wrap_content"
+layout/widget_big.xml-46-                android:layout_gravity="center"
+layout/widget_big.xml-47-                android:layout_margin="8dip"
+layout/widget_big.xml-48-                android: BACKGROUND ="@drawable/widget_big_deckfield"
+layout/widget_big.xml-49-                android:clickable="true"
+layout/widget_big.xml-50-                android:orientation="vertical"
+layout/widget_big.xml-51-                android:visibility="invisible" >
+layout/widget_big.xml-52-
+layout/widget_big.xml:53:                <TextView
+layout/widget_big.xml-54-                    android:id="@+id/widget_big_totalcongrats"
+layout/widget_big.xml-55-                    android:layout_width="fill_parent"
+layout/widget_big.xml-56-                    android:layout_height="fill_parent"
+layout/widget_big.xml-57-                    android:gravity="center"
+layout/widget_big.xml-58-                    android:lineSpacingMultiplier="1.2"
+layout/widget_big.xml-59-                    android:text="@string/widget_big_tomorrow_due"
+layout/widget_big.xml-60-                    android:textColor="@color/widget_big_font_color"
+layout/widget_big.xml-61-                    android:textStyle="bold"
+layout/widget_big.xml-62-                    android:visibility="gone" />
+layout/widget_big.xml-63-
+layout/widget_big.xml-64-                <RelativeLayout
+layout/widget_big.xml-65-                    android:layout_width="wrap_content"
+layout/widget_big.xml-66-                    android:layout_height="wrap_content"
+layout/widget_big.xml-67-                    android:layout_gravity="center"
+layout/widget_big.xml-68-                    android:clickable="false"
+--
+layout/widget_big.xml-195-                    android:layout_height="fill_parent"
+layout/widget_big.xml-196-                    android:layout_above="@+id/widget_big_congrats_buttons"
+layout/widget_big.xml-197-                    android:layout_marginBottom="5dip"
+layout/widget_big.xml-198-                    android:clickable="false"
+layout/widget_big.xml-199-                    android:gravity="center"
+layout/widget_big.xml-200-                    android:textColor="#000000" />
+layout/widget_big.xml-201-
+layout/widget_big.xml-202-                <LinearLayout
+layout/widget_big.xml-203-                    android:id="@+id/widget_big_congrats_buttons"
+layout/widget_big.xml-204-                    android:layout_width="fill_parent"
+layout/widget_big.xml-205-                    android:layout_height="wrap_content"
+layout/widget_big.xml-206-                    android:layout_alignParentBottom="true"
+layout/widget_big.xml-207-                    android:layout_gravity="center"
+layout/widget_big.xml-208-                    android:orientation="horizontal" >
+layout/widget_big.xml-209-
+layout/widget_big.xml:210:                    <TextView
+layout/widget_big.xml-211-                        android:id="@+id/widget_big_review_early"
+layout/widget_big.xml-212-                        android:layout_width="0dip"
+layout/widget_big.xml-213-                        android:layout_height="fill_parent"
+layout/widget_big.xml-214-                        android:layout_weight="1"
+layout/widget_big.xml-215-                        android: BACKGROUND ="@drawable/white_btn_default"
+layout/widget_big.xml-216-                        android:clickable="true"
+layout/widget_big.xml-217-                        android:gravity="center"
+layout/widget_big.xml-218-                        android:textColor="@color/widget_big_font_color" />
+layout/widget_big.xml-219-
+layout/widget_big.xml:220:                    <TextView
+layout/widget_big.xml-221-                        android:id="@+id/widget_big_learn_more"
+layout/widget_big.xml-222-                        android:layout_width="0dip"
+layout/widget_big.xml-223-                        android:layout_height="fill_parent"
+layout/widget_big.xml-224-                        android:layout_weight="1"
+layout/widget_big.xml-225-                        android: BACKGROUND ="@drawable/white_btn_default"
+layout/widget_big.xml-226-                        android:clickable="true"
+layout/widget_big.xml-227-                        android:gravity="center"
+layout/widget_big.xml-228-                        android:textColor="@color/widget_big_font_color" />
+layout/widget_big.xml-229-                </LinearLayout>
+layout/widget_big.xml-230-            </RelativeLayout>
+layout/widget_big.xml-231-
+layout/widget_big.xml-232-            <RelativeLayout
+layout/widget_big.xml-233-                android:id="@+id/widget_big_progressbar"
+layout/widget_big.xml-234-                android:layout_width="fill_parent"
+layout/widget_big.xml-235-                android:layout_height="fill_parent"
+layout/widget_big.xml-236-                android:clickable="true"
+layout/widget_big.xml-237-                android:visibility="invisible" >
+layout/widget_big.xml-238-
+layout/widget_big.xml-239-                <ProgressBar
+layout/widget_big.xml-240-                    style="@android:style/Widget.ProgressBar.Small"
+--
+layout/widget_big.xml:318:                <TextView
+layout/widget_big.xml-319-                    android:id="@+id/widget_big_open"
+layout/widget_big.xml-320-                    android:layout_width="fill_parent"
+layout/widget_big.xml-321-                    android:layout_height="fill_parent"
+layout/widget_big.xml-322-                    android: BACKGROUND ="@drawable/widget_big_opendeck"
+layout/widget_big.xml-323-                    android:clickable="false"
+layout/widget_big.xml-324-                    android:visibility="visible" />
+layout/widget_big.xml-325-
+layout/widget_big.xml:326:                <TextView
+layout/widget_big.xml-327-                    android:id="@+id/widget_big_close"
+layout/widget_big.xml-328-                    android:layout_width="fill_parent"
+layout/widget_big.xml-329-                    android:layout_height="fill_parent"
+layout/widget_big.xml-330-                    android: BACKGROUND ="@drawable/widget_big_closedeck"
+layout/widget_big.xml-331-                    android:clickable="false"
+layout/widget_big.xml-332-                    android:visibility="invisible" />
+layout/widget_big.xml-333-            </FrameLayout>
+layout/widget_big.xml-334-
+layout/widget_big.xml-335-            <FrameLayout
+layout/widget_big.xml-336-                android:layout_width="fill_parent"
+layout/widget_big.xml-337-                android:layout_height="dip"
+layout/widget_big.xml-338-                android:layout_weight="4" >
+layout/widget_big.xml-339-
+layout/widget_big.xml-340-                <LinearLayout
+layout/widget_big.xml-341-                    android:layout_width="fill_parent"
+layout/widget_big.xml-342-                    android:layout_height="fill_parent"
+layout/widget_big.xml-343-                    android:focusable="false"
+layout/widget_big.xml-344-                    android:orientation="vertical" >
+layout/widget_big.xml-345-
+layout/widget_big.xml-346-                    <FrameLayout
+--
+layout/widget_big.xml:354:                        <TextView
+layout/widget_big.xml-355-                            android:layout_width="fill_parent"
+layout/widget_big.xml-356-                            android:layout_height="fill_parent"
+layout/widget_big.xml-357-                            android: BACKGROUND ="@drawable/widget_big_ease4"
+layout/widget_big.xml-358-                            android:clickable="false"
+layout/widget_big.xml-359-                            android:visibility="visible" />
+layout/widget_big.xml-360-                    </FrameLayout>
+layout/widget_big.xml-361-
+layout/widget_big.xml-362-                    <FrameLayout
+layout/widget_big.xml-363-                        android:id="@+id/widget_big_ease3"
+layout/widget_big.xml-364-                        android:layout_width="fill_parent"
+layout/widget_big.xml-365-                        android:layout_height="0dip"
+layout/widget_big.xml-366-                        android:layout_weight="1"
+layout/widget_big.xml-367-                        android: BACKGROUND ="@drawable/widget_big_button"
+layout/widget_big.xml-368-                        android:clickable="true" >
+layout/widget_big.xml-369-
+layout/widget_big.xml:370:                        <TextView
+layout/widget_big.xml-371-                            android:id="@+id/widget_big_ease3_normal"
+layout/widget_big.xml-372-                            android:layout_width="fill_parent"
+layout/widget_big.xml-373-                            android:layout_height="fill_parent"
+layout/widget_big.xml-374-                            android: BACKGROUND ="@drawable/widget_big_ease3"
+layout/widget_big.xml-375-                            android:clickable="false"
+layout/widget_big.xml-376-                            android:visibility="invisible" />
+layout/widget_big.xml-377-
+layout/widget_big.xml:378:                        <TextView
+layout/widget_big.xml-379-                            android:id="@+id/widget_big_ease3_rec"
+layout/widget_big.xml-380-                            android:layout_width="fill_parent"
+layout/widget_big.xml-381-                            android:layout_height="fill_parent"
+layout/widget_big.xml-382-                            android: BACKGROUND ="@drawable/widget_big_ease3_rec"
+layout/widget_big.xml-383-                            android:clickable="false"
+layout/widget_big.xml-384-                            android:visibility="visible" />
+layout/widget_big.xml-385-                    </FrameLayout>
+layout/widget_big.xml-386-
+layout/widget_big.xml-387-                    <FrameLayout
+layout/widget_big.xml-388-                        android:id="@+id/widget_big_ease2"
+layout/widget_big.xml-389-                        android:layout_width="fill_parent"
+layout/widget_big.xml-390-                        android:layout_height="0dip"
+layout/widget_big.xml-391-                        android:layout_weight="1"
+layout/widget_big.xml-392-                        android: BACKGROUND ="@drawable/widget_big_button"
+layout/widget_big.xml-393-                        android:clickable="true" >
+layout/widget_big.xml-394-
+layout/widget_big.xml:395:                        <TextView
+layout/widget_big.xml-396-                            android:id="@+id/widget_big_ease2_rec"
+layout/widget_big.xml-397-                            android:layout_width="fill_parent"
+layout/widget_big.xml-398-                            android:layout_height="fill_parent"
+layout/widget_big.xml-399-                            android: BACKGROUND ="@drawable/widget_big_ease2"
+layout/widget_big.xml-400-                            android:clickable="false"
+layout/widget_big.xml-401-                            android:visibility="visible" />
+layout/widget_big.xml-402-
+layout/widget_big.xml:403:                        <TextView
+layout/widget_big.xml-404-                            android:id="@+id/widget_big_ease2_normal"
+layout/widget_big.xml-405-                            android:layout_width="fill_parent"
+layout/widget_big.xml-406-                            android:layout_height="fill_parent"
+layout/widget_big.xml-407-                            android: BACKGROUND ="@drawable/widget_big_ease2_rec"
+layout/widget_big.xml-408-                            android:clickable="false"
+layout/widget_big.xml-409-                            android:visibility="invisible" />
+layout/widget_big.xml-410-                    </FrameLayout>
+layout/widget_big.xml-411-
+layout/widget_big.xml-412-                    <FrameLayout
+layout/widget_big.xml-413-                        android:id="@+id/widget_big_ease1"
+layout/widget_big.xml-414-                        android:layout_width="fill_parent"
+layout/widget_big.xml-415-                        android:layout_height="0dip"
+layout/widget_big.xml-416-                        android:layout_weight="1"
+layout/widget_big.xml-417-                        android: BACKGROUND ="@drawable/widget_big_button"
+layout/widget_big.xml-418-                        android:clickable="true" >
+layout/widget_big.xml-419-
+layout/widget_big.xml:420:                        <TextView
+layout/widget_big.xml-421-                            android:layout_width="fill_parent"
+layout/widget_big.xml-422-                            android:layout_height="fill_parent"
+layout/widget_big.xml-423-                            android: BACKGROUND ="@drawable/widget_big_ease1"
+layout/widget_big.xml-424-                            android:clickable="false"
+layout/widget_big.xml-425-                            android:visibility="visible" />
+layout/widget_big.xml-426-                    </FrameLayout>
+layout/widget_big.xml-427-                </LinearLayout>
+layout/widget_big.xml-428-
+layout/widget_big.xml-429-                <FrameLayout
+layout/widget_big.xml-430-                    android:id="@+id/widget_big_empty"
+layout/widget_big.xml-431-                    android:layout_width="fill_parent"
+layout/widget_big.xml-432-                    android:layout_height="fill_parent"
+layout/widget_big.xml-433-                    android:layout_weight="1"
+layout/widget_big.xml-434-                    android: BACKGROUND ="@drawable/widget_big_button"
+layout/widget_big.xml-435-                    android:clickable="true" >
+layout/widget_big.xml-436-
+layout/widget_big.xml:437:                    <TextView
+layout/widget_big.xml-438-                        android:id="@+id/widget_big_flipcard"
+layout/widget_big.xml-439-                        android:layout_width="fill_parent"
+layout/widget_big.xml-440-                        android:layout_height="fill_parent"
+layout/widget_big.xml-441-                        android: BACKGROUND ="@drawable/widget_big_flipcard"
+layout/widget_big.xml-442-                        android:clickable="false"
+layout/widget_big.xml-443-                        android:visibility="invisible" />
+layout/widget_big.xml-444-
+layout/widget_big.xml:445:                    <TextView
+layout/widget_big.xml-446-                        android:id="@+id/widget_big_help"
+layout/widget_big.xml-447-                        android:layout_width="fill_parent"
+layout/widget_big.xml-448-                        android:layout_height="fill_parent"
+layout/widget_big.xml-449-                        android: BACKGROUND ="@drawable/widget_big_help"
+layout/widget_big.xml-450-                        android:clickable="false"
+layout/widget_big.xml-451-                        android:visibility="visible" />
+layout/widget_big.xml-452-                </FrameLayout>
+layout/widget_big.xml-453-            </FrameLayout>
+layout/widget_big.xml-454-        </LinearLayout>
+layout/widget_big.xml-455-
+layout/widget_big.xml-456-        <RelativeLayout
+layout/widget_big.xml-457-            android:id="@+id/widget_big_top"
+layout/widget_big.xml-458-            android:layout_width="fill_parent"
+layout/widget_big.xml-459-            android:layout_height="22dip"
+layout/widget_big.xml-460-            android:layout_alignParentTop="true"
+layout/widget_big.xml-461-            android:layout_marginLeft="18dip"
+layout/widget_big.xml-462-            android:layout_marginRight="9.3333dip"
+layout/widget_big.xml-463-            android:layout_marginTop="8dip"
+layout/widget_big.xml-464-            android:clickable="false"
+layout/widget_big.xml-465-            android:focusable="false"
+--
+layout/widget_big.xml:468:            <TextView
+layout/widget_big.xml-469-                android:id="@+id/widget_big_deckname"
+layout/widget_big.xml-470-                android:layout_width="fill_parent"
+--
+layout/widget_big.xml-480-                android:id="@+id/widget_big_counts"
+layout/widget_big.xml-481-                android:layout_width="wrap_content"
+layout/widget_big.xml-482-                android:layout_height="fill_parent"
+layout/widget_big.xml-483-                android:layout_marginRight="8sp"
+layout/widget_big.xml-484-                android:layout_toLeftOf="@+id/widget_big_eta_layout"
+layout/widget_big.xml-485-                android:gravity="center"
+layout/widget_big.xml-486-                android:singleLine="true" />
+layout/widget_big.xml-487-
+layout/widget_big.xml-488-            <LinearLayout
+layout/widget_big.xml-489-                android:id="@+id/widget_big_eta_layout"
+layout/widget_big.xml-490-                android:layout_width="32dip"
+layout/widget_big.xml-491-                android:layout_height="fill_parent"
+layout/widget_big.xml-492-                android:layout_alignParentRight="true"
+layout/widget_big.xml-493-                android:gravity="center" >
+layout/widget_big.xml-494-
+layout/widget_big.xml:495:                <TextView
+layout/widget_big.xml-496-                    android:id="@+id/widget_big_eta"
+layout/widget_big.xml-497-                    android:layout_width="wrap_content"
+layout/widget_big.xml-498-                    android:layout_height="fill_parent"
+layout/widget_big.xml-499-                    android:layout_gravity="center"
+layout/widget_big.xml-500-                    android: BACKGROUND ="@drawable/widget_big_eta"
+layout/widget_big.xml-501-                    android:gravity="center"
+layout/widget_big.xml-502-                    android:singleLine="true"
+layout/widget_big.xml-503-                    android:textColor="@color/widget_big_font_color" />
+layout/widget_big.xml-504-            </LinearLayout>
+layout/widget_big.xml-505-        </RelativeLayout>
+layout/widget_big.xml-506-
+layout/widget_big.xml-507-        <FrameLayout
+layout/widget_big.xml-508-            android:id="@+id/widget_big_bottom_right"
+layout/widget_big.xml-509-            android:layout_width="38.6667dip"
+layout/widget_big.xml-510-            android:layout_height="27.3333dip"
+layout/widget_big.xml-511-            android:layout_alignParentBottom="true"
+layout/widget_big.xml-512-            android:layout_alignParentRight="true"
+layout/widget_big.xml-513-            android:layout_marginBottom="8sp"
+layout/widget_big.xml-514-            android:layout_marginRight="8sp"
+layout/widget_big.xml-515-            android: BACKGROUND ="@drawable/widget_big_button_bottom_right"
+--
+layout/widget_big.xml:518:            <TextView
+layout/widget_big.xml-519-                android:id="@+id/widget_big_add"
+layout/widget_big.xml-520-                android:layout_width="fill_parent"
+layout/widget_big.xml-521-                android:layout_height="fill_parent"
+layout/widget_big.xml-522-                android: BACKGROUND ="@drawable/widget_big_add"
+layout/widget_big.xml-523-                android:clickable="false"
+layout/widget_big.xml-524-                android:visibility="invisible" />
+layout/widget_big.xml-525-
+layout/widget_big.xml:526:            <TextView
+layout/widget_big.xml-527-                android:id="@+id/widget_big_star"
+layout/widget_big.xml-528-                android:layout_width="fill_parent"
+layout/widget_big.xml-529-                android:layout_height="fill_parent"
+layout/widget_big.xml-530-                android: BACKGROUND ="@drawable/widget_big_button_star"
+layout/widget_big.xml-531-                android:clickable="false"
+layout/widget_big.xml-532-                android:visibility="visible" />
+layout/widget_big.xml-533-        </FrameLayout>
+layout/widget_big.xml-534-
+layout/widget_big.xml:535:        <TextView
+layout/widget_big.xml-536-            android:id="@+id/widget_big_message"
+layout/widget_big.xml-537-            android:layout_width="fill_parent"
+layout/widget_big.xml-538-            android:layout_height="22dip"
+layout/widget_big.xml-539-            android:layout_alignParentBottom="true"
+layout/widget_big.xml-540-            android:layout_marginBottom="8.6667dip"
+layout/widget_big.xml-541-            android:layout_marginLeft="16dip"
+layout/widget_big.xml-542-            android:layout_marginRight="4.6667dip"
+layout/widget_big.xml-543-            android:layout_toLeftOf="@+id/widget_big_bottom_right"
+layout/widget_big.xml-544-            android:clickable="false"
+layout/widget_big.xml-545-            android:ellipsize="start"
+layout/widget_big.xml-546-            android:focusable="false"
+layout/widget_big.xml-547-            android:gravity="center"
+layout/widget_big.xml-548-            android:orientation="horizontal"
+layout/widget_big.xml-549-            android:singleLine="true"
+layout/widget_big.xml-550-            android:textColor="@color/widget_big_font_color"
+--
+layout/styled_open_collection_dialog.xml-48-                android:textSize="36sp" />
+layout/styled_open_collection_dialog.xml-49-
+layout/styled_open_collection_dialog.xml:50:            <TextView
+layout/styled_open_collection_dialog.xml-51-                android:layout_width="wrap_content"
+layout/styled_open_collection_dialog.xml-52-                android:layout_height="wrap_content"
+layout/styled_open_collection_dialog.xml-53-                android:text="@string/app_name_droid"
+layout/styled_open_collection_dialog.xml-54-                android:textColor="#ffffff"
+layout/styled_open_collection_dialog.xml-55-                android:textSize="36sp"
+layout/styled_open_collection_dialog.xml-56-                android:textStyle="bold" />
+layout/styled_open_collection_dialog.xml-57-        </LinearLayout>
+layout/styled_open_collection_dialog.xml-58-
+layout/styled_open_collection_dialog.xml-59-        <ProgressBar
+layout/styled_open_collection_dialog.xml-60-            android:id="@android:id/progress"
+layout/styled_open_collection_dialog.xml-61-            style="@style/White.Spinner.White"
+layout/styled_open_collection_dialog.xml-62-            android:layout_width="wrap_content"
+layout/styled_open_collection_dialog.xml-63-            android:layout_height="wrap_content"
+layout/styled_open_collection_dialog.xml-64-            android:layout_marginBottom="10dip"
+layout/styled_open_collection_dialog.xml-65-            android:layout_marginLeft="10dip"
+layout/styled_open_collection_dialog.xml-66-            android:layout_marginRight="10dip"
+layout/styled_open_collection_dialog.xml-67-            android:layout_marginTop="10dip"
+layout/styled_open_collection_dialog.xml-68-            android: BACKGROUND ="@color/transparent"
+layout/styled_open_collection_dialog.xml-69-            android:max="10000" />
+layout/styled_open_collection_dialog.xml-70-
+layout/styled_open_collection_dialog.xml:71:        <TextView
+layout/styled_open_collection_dialog.xml-72-            android:id="@+id/deckpicker_loading_layer_statusline"
+layout/styled_open_collection_dialog.xml-73-            android:layout_width="wrap_content"
+layout/styled_open_collection_dialog.xml-74-            android:layout_height="wrap_content"
+layout/styled_open_collection_dialog.xml-75-            android:layout_marginBottom="0dip"
+layout/styled_open_collection_dialog.xml-76-            android:layout_marginLeft="12dip"
+layout/styled_open_collection_dialog.xml-77-            android:layout_marginRight="12dip"
+layout/styled_open_collection_dialog.xml-78-            android:layout_marginTop="4dip"
+layout/styled_open_collection_dialog.xml-79-            android:gravity="center_horizontal"
+layout/styled_open_collection_dialog.xml-80-            android:minLines="4"
+layout/styled_open_collection_dialog.xml-81-            android:text="@string/open_collection"
+layout/styled_open_collection_dialog.xml-82-            android:textColor="#ffffff"
+layout/styled_open_collection_dialog.xml-83-            android:textSize="14sp" />
+layout/styled_open_collection_dialog.xml-84-    </LinearLayout>
+layout/styled_open_collection_dialog.xml-85-
+layout/styled_open_collection_dialog.xml-86-</FrameLayout>
+--
+layout/activity_load_pronounciation.xml:9:    <TextView
+layout/activity_load_pronounciation.xml-10-        android:id="@+id/textViewPoweredBy"
+layout/activity_load_pronounciation.xml-11-        android:layout_width="wrap_content"
+layout/activity_load_pronounciation.xml-12-        android:layout_height="wrap_content"
+layout/activity_load_pronounciation.xml-13-        android:text="@string/multimedia_editor_poweredbeolingus" />
+layout/activity_load_pronounciation.xml-14-
+layout/activity_load_pronounciation.xml-15-</LinearLayout>
+--
+layout/simple_spinner_item.xml:2:<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+layout/simple_spinner_item.xml-3-    android:id="@+id/simple_spinner_item"
+layout/simple_spinner_item.xml-4-    style="?android:attr/spinnerItemStyle"
+layout/simple_spinner_item.xml-5-    android:singleLine="true"
+layout/simple_spinner_item.xml-6-    android:layout_width="match_parent"
+layout/simple_spinner_item.xml-7-    android:layout_height="wrap_content"
+layout/simple_spinner_item.xml-8-    android:ellipsize="marquee"
+layout/simple_spinner_item.xml-9-    android:textColor="?android:textColorPrimary"
+layout/simple_spinner_item.xml-10-    android:textAlignment="inherit"
+layout/simple_spinner_item.xml-11-    />
+layout/simple_spinner_item.xml-12-
+layout/simple_spinner_item.xml-13-    <!--
+layout/simple_spinner_item.xml-14-    android:textColor="?android:textColorPrimary"
+layout/simple_spinner_item.xml-15-    android: BACKGROUND ="?attr/backgroundColor"-->
+--
+layout/flashcard.xml:45:            <TextView
+layout/flashcard.xml-46-                android:id="@+id/new_number"
+layout/flashcard.xml-47-                android:layout_width="wrap_content"
+layout/flashcard.xml-48-                android:layout_height="wrap_content"
+layout/flashcard.xml-49-                android:text=""
+layout/flashcard.xml-50-                android:textColor="?attr/newCountTextColor"
+layout/flashcard.xml-51-                android:textSize="14sp" />
+layout/flashcard.xml-52-
+layout/flashcard.xml:53:            <TextView
+layout/flashcard.xml-54-                android:id="@+id/learn_number"
+layout/flashcard.xml-55-                android:layout_width="wrap_content"
+layout/flashcard.xml-56-                android:layout_height="wrap_content"
+layout/flashcard.xml-57-                android:layout_toRightOf="@+id/new_number"
+layout/flashcard.xml-58-                android:paddingLeft="8dp"
+layout/flashcard.xml-59-                android: BACKGROUND ="?attr/backgroundColor"
+layout/flashcard.xml-60-                android:textColor="?attr/learnCountTextColor"
+layout/flashcard.xml-61-                android:text=""
+layout/flashcard.xml-62-                android:textSize="14sp"
+layout/flashcard.xml-63-                />
+layout/flashcard.xml-64-
+layout/flashcard.xml:65:            <TextView
+layout/flashcard.xml-66-                android:id="@+id/review_number"
+layout/flashcard.xml-67-                android:layout_width="wrap_content"
+layout/flashcard.xml-68-                android:layout_height="wrap_content"
+layout/flashcard.xml-69-                android:layout_toRightOf="@+id/learn_number"
+layout/flashcard.xml-70-                android:paddingLeft="8dp"
+layout/flashcard.xml-71-                android:text=""
+layout/flashcard.xml-72-                android:textColor="?attr/reviewCountTextColor"
+layout/flashcard.xml-73-                android: BACKGROUND ="?attr/backgroundColor"
+layout/flashcard.xml-74-                android:textSize="14sp" />
+layout/flashcard.xml-75-
+layout/flashcard.xml:76:            <TextView
+layout/flashcard.xml-77-                android:id="@+id/choosen_answer"
+layout/flashcard.xml-78-                android:layout_width="wrap_content"
+layout/flashcard.xml-79-                android:layout_height="wrap_content"
+layout/flashcard.xml-80-                android:layout_centerHorizontal="true"
+layout/flashcard.xml-81-                android:gravity="center"
+layout/flashcard.xml-82-                android:text=""
+layout/flashcard.xml-83-                android:textSize="14sp" />
+layout/flashcard.xml-84-
+layout/flashcard.xml-85-            <Chronometer
+layout/flashcard.xml-86-                android:id="@+id/card_time"
+layout/flashcard.xml-87-                android:layout_width="wrap_content"
+layout/flashcard.xml-88-                android:layout_height="wrap_content"
+layout/flashcard.xml-89-                android:layout_alignParentRight="true"
+layout/flashcard.xml-90-                android:gravity="center"
+layout/flashcard.xml-91-                android:textColor="#000000"
+layout/flashcard.xml-92-                android:textSize="14sp"
+layout/flashcard.xml-93-                android:visibility="invisible" />
+--
+layout/note_editor.xml:101:                <TextView
+layout/note_editor.xml-102-                    android:id="@+id/CardEditorCardsText"
+layout/note_editor.xml-103-                    android:layout_width="fill_parent"
+layout/note_editor.xml-104-                    android:layout_height="wrap_content"
+layout/note_editor.xml-105-                    android:layout_gravity="center"
+layout/note_editor.xml-106-                    android:layout_marginLeft="5dip"
+layout/note_editor.xml-107-                    android:layout_marginRight="5dip"
+layout/note_editor.xml-108-                    android:clickable="false"
+layout/note_editor.xml-109-                    android:gravity="left|center_vertical"
+layout/note_editor.xml-110-                    android:textColor="#000000" />
+layout/note_editor.xml-111-            </LinearLayout>
+layout/note_editor.xml-112-        </LinearLayout>
+layout/note_editor.xml-113-    </LinearLayout>
+layout/note_editor.xml-114-
+layout/note_editor.xml-115-</ScrollView>
+--
+layout/widget_small.xml:18:        <TextView
+layout/widget_small.xml-19-            android:id="@+id/widget_due"
+layout/widget_small.xml-20-            android:layout_width="wrap_content"
+layout/widget_small.xml-21-            android:layout_height="wrap_content"
+layout/widget_small.xml-22-            android: BACKGROUND ="@drawable/widget_bg_number"
+layout/widget_small.xml-23-            android:gravity="center"
+layout/widget_small.xml-24-            android:singleLine="true"
+layout/widget_small.xml-25-            android:textColor="#ffffff"
+layout/widget_small.xml-26-            android:textSize="16sp"
+layout/widget_small.xml-27-            android:visibility="invisible" />
+layout/widget_small.xml-28-
+layout/widget_small.xml-29-        <FrameLayout
+layout/widget_small.xml-30-            android:id="@+id/widget_progress_frame"
+layout/widget_small.xml-31-            android:layout_width="fill_parent"
+layout/widget_small.xml-32-            android:layout_height="5dip"
+layout/widget_small.xml-33-            android:layout_alignRight="@+id/widget_due"
+layout/widget_small.xml-34-            android:layout_below="@+id/widget_due"
+layout/widget_small.xml-35-            android:layout_marginTop="2dip"
+layout/widget_small.xml-36-            android: BACKGROUND ="#ffffff"
+layout/widget_small.xml-37-            android:padding="1dip"
+layout/widget_small.xml-38-            android:visibility="invisible" >
+--
+layout/widget_small.xml:54:        <TextView
+layout/widget_small.xml-55-            android:id="@+id/widget_eta"
+layout/widget_small.xml-56-            android:layout_width="wrap_content"
+layout/widget_small.xml-57-            android:layout_height="wrap_content"
+layout/widget_small.xml-58-            android:layout_alignParentBottom="true"
+layout/widget_small.xml-59-            android:layout_alignParentRight="true"
+layout/widget_small.xml-60-            android: BACKGROUND ="@drawable/widget_bg_time"
+layout/widget_small.xml-61-            android:gravity="center"
+layout/widget_small.xml-62-            android:singleLine="true"
+layout/widget_small.xml-63-            android:textColor="#ffffff"
+layout/widget_small.xml-64-            android:textSize="16sp"
+layout/widget_small.xml-65-            android:visibility="invisible" />
+layout/widget_small.xml-66-    </RelativeLayout>
+layout/widget_small.xml-67-
+layout/widget_small.xml-68-    <FrameLayout
+layout/widget_small.xml-69-        android:id="@+id/ankidroid_widget_small_finish_layout"
+layout/widget_small.xml-70-        android:layout_width="fill_parent"
+layout/widget_small.xml-71-        android:layout_height="fill_parent"
+layout/widget_small.xml-72-        android: BACKGROUND ="@drawable/widget_bg_small_finish"
+layout/widget_small.xml-73-        android:clickable="false"
+layout/widget_small.xml-74-        android:focusable="false"
+--
+layout-land/widget_small.xml:20:        <TextView
+layout-land/widget_small.xml-21-            android:id="@+id/widget_due"
+layout-land/widget_small.xml-22-            android:layout_width="wrap_content"
+layout-land/widget_small.xml-23-            android:layout_height="wrap_content"
+layout-land/widget_small.xml-24-            android: BACKGROUND ="@drawable/widget_bg_number"
+layout-land/widget_small.xml-25-            android:gravity="center"
+layout-land/widget_small.xml-26-            android:singleLine="true"
+layout-land/widget_small.xml-27-            android:textColor="#ffffff"
+layout-land/widget_small.xml-28-            android:textSize="13.5dip"
+layout-land/widget_small.xml-29-            android:visibility="invisible" />
+layout-land/widget_small.xml-30-
+layout-land/widget_small.xml-31-        <FrameLayout
+layout-land/widget_small.xml-32-            android:id="@+id/widget_progress_frame"
+layout-land/widget_small.xml-33-            android:layout_width="fill_parent"
+layout-land/widget_small.xml-34-            android:layout_height="5dip"
+layout-land/widget_small.xml-35-            android:layout_alignRight="@+id/widget_due"
+layout-land/widget_small.xml-36-            android:layout_below="@+id/widget_due"
+layout-land/widget_small.xml-37-            android:layout_marginTop="2dip"
+layout-land/widget_small.xml-38-            android: BACKGROUND ="#ffffff"
+layout-land/widget_small.xml-39-            android:padding="1dip"
+layout-land/widget_small.xml-40-            android:visibility="invisible" >
+--
+layout-land/widget_small.xml:56:        <TextView
+layout-land/widget_small.xml-57-            android:id="@+id/widget_eta"
+layout-land/widget_small.xml-58-            android:layout_width="wrap_content"
+layout-land/widget_small.xml-59-            android:layout_height="wrap_content"
+layout-land/widget_small.xml-60-            android:layout_alignParentBottom="true"
+layout-land/widget_small.xml-61-            android:layout_alignParentRight="true"
+layout-land/widget_small.xml-62-            android: BACKGROUND ="@drawable/widget_bg_time"
+layout-land/widget_small.xml-63-            android:gravity="center"
+layout-land/widget_small.xml-64-            android:singleLine="true"
+layout-land/widget_small.xml-65-            android:textColor="#ffffff"
+layout-land/widget_small.xml-66-            android:textSize="13.5dip"
+layout-land/widget_small.xml-67-            android:visibility="invisible" />
+layout-land/widget_small.xml-68-    </RelativeLayout>
+layout-land/widget_small.xml-69-
+layout-land/widget_small.xml-70-    <FrameLayout
+layout-land/widget_small.xml-71-        android:id="@+id/ankidroid_widget_small_finish_layout"
+layout-land/widget_small.xml-72-        android:layout_width="fill_parent"
+layout-land/widget_small.xml-73-        android:layout_height="fill_parent"
+layout-land/widget_small.xml-74-        android: BACKGROUND ="@drawable/widget_bg_small_finish"
+layout-land/widget_small.xml-75-        android:clickable="false"
+layout-land/widget_small.xml-76-        android:focusable="false"
+--
+layout-v14/styled_dialog.xml:68:            <TextView
+layout-v14/styled_dialog.xml-69-                android:id="@+id/alertTitle"
+layout-v14/styled_dialog.xml-70-                android:layout_width="wrap_content"
+layout-v14/styled_dialog.xml-71-                android:layout_height="fill_parent"
+layout-v14/styled_dialog.xml-72-                android:layout_gravity="center"
+layout-v14/styled_dialog.xml-73-                android:layout_weight="1"
+layout-v14/styled_dialog.xml-74-                android:ellipsize="end"
+layout-v14/styled_dialog.xml-75-                android:paddingBottom="3dip"
+layout-v14/styled_dialog.xml-76-                android:paddingTop="3dip"
+layout-v14/styled_dialog.xml-77-                android:singleLine="true"
+layout-v14/styled_dialog.xml-78-                android:textColor="#ffff"
+layout-v14/styled_dialog.xml-79-                android:textSize="20sp"
+layout-v14/styled_dialog.xml-80-                android:textStyle="bold" />
+layout-v14/styled_dialog.xml-81-
+layout-v14/styled_dialog.xml-82-            <CheckBox
+layout-v14/styled_dialog.xml-83-                android:id="@+id/SelectAllCheckbox"
+layout-v14/styled_dialog.xml-84-                android:layout_width="wrap_content"
+--
+layout-xlarge/styled_open_collection_dialog.xml-45-                android:textSize="44sp" />
+layout-xlarge/styled_open_collection_dialog.xml-46-
+layout-xlarge/styled_open_collection_dialog.xml:47:            <TextView
+layout-xlarge/styled_open_collection_dialog.xml-48-                android:layout_width="wrap_content"
+layout-xlarge/styled_open_collection_dialog.xml-49-                android:layout_height="wrap_content"
+layout-xlarge/styled_open_collection_dialog.xml-50-                android:text="@string/app_name_droid"
+layout-xlarge/styled_open_collection_dialog.xml-51-                android:textColor="#ffffff"
+layout-xlarge/styled_open_collection_dialog.xml-52-                android:textSize="44sp"
+layout-xlarge/styled_open_collection_dialog.xml-53-                android:textStyle="bold" />
+layout-xlarge/styled_open_collection_dialog.xml-54-        </LinearLayout>
+layout-xlarge/styled_open_collection_dialog.xml-55-
+layout-xlarge/styled_open_collection_dialog.xml-56-        <ProgressBar
+layout-xlarge/styled_open_collection_dialog.xml-57-            android:id="@android:id/progress"
+layout-xlarge/styled_open_collection_dialog.xml-58-            style="@style/White.Spinner.White"
+layout-xlarge/styled_open_collection_dialog.xml-59-            android:layout_width="wrap_content"
+layout-xlarge/styled_open_collection_dialog.xml-60-            android:layout_height="wrap_content"
+layout-xlarge/styled_open_collection_dialog.xml-61-            android:layout_marginBottom="10dip"
+layout-xlarge/styled_open_collection_dialog.xml-62-            android:layout_marginLeft="10dip"
+layout-xlarge/styled_open_collection_dialog.xml-63-            android:layout_marginRight="10dip"
+layout-xlarge/styled_open_collection_dialog.xml-64-            android:layout_marginTop="10dip"
+layout-xlarge/styled_open_collection_dialog.xml-65-            android: BACKGROUND ="@color/transparent"
+layout-xlarge/styled_open_collection_dialog.xml-66-            android:max="10000" />
+layout-xlarge/styled_open_collection_dialog.xml-67-
+layout-xlarge/styled_open_collection_dialog.xml:68:        <TextView
+layout-xlarge/styled_open_collection_dialog.xml-69-            android:id="@+id/deckpicker_loading_layer_statusline"
+layout-xlarge/styled_open_collection_dialog.xml-70-            android:layout_width="wrap_content"
+layout-xlarge/styled_open_collection_dialog.xml-71-            android:layout_height="wrap_content"
+layout-xlarge/styled_open_collection_dialog.xml-72-            android:layout_marginBottom="0dip"
+layout-xlarge/styled_open_collection_dialog.xml-73-            android:layout_marginLeft="16dip"
+layout-xlarge/styled_open_collection_dialog.xml-74-            android:layout_marginRight="16dip"
+layout-xlarge/styled_open_collection_dialog.xml-75-            android:layout_marginTop="6dip"
+layout-xlarge/styled_open_collection_dialog.xml-76-            android:gravity="center_horizontal"
+layout-xlarge/styled_open_collection_dialog.xml-77-            android:minLines="4"
+layout-xlarge/styled_open_collection_dialog.xml-78-            android:text="@string/open_collection"
+layout-xlarge/styled_open_collection_dialog.xml-79-            android:textColor="#ffffff"
+layout-xlarge/styled_open_collection_dialog.xml-80-            android:textSize="16sp" />
+layout-xlarge/styled_open_collection_dialog.xml-81-    </LinearLayout>
+layout-xlarge/styled_open_collection_dialog.xml-82-
+layout-xlarge/styled_open_collection_dialog.xml-83-</FrameLayout>
+
+
+

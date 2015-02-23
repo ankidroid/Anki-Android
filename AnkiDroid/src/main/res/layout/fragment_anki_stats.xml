@@ -16,6 +16,8 @@
         android:textColor="#FFFFFF"
         android:layout_margin="0dp"
         android:visibility="visible"/>
+    <!-- Carefully consider whether and how to improve on the use of default colors in the text and background colors. -->
+
     <ProgressBar
         android:id="@+id/progress_bar_stats"
         android:layout_width="wrap_content"

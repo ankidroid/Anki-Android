@@ -1,0 +1,1 @@
+for i in */white_*9.png ; do echo $i;  cp $i t0; convert -crop +1+1 t0 t1 ; convert -crop -1-1 t1 t2 ; convert -negate t2 t3; composite -gravity center t3 t0 t4; cp t4 $i.deepblack; done;

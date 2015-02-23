@@ -3,18 +3,18 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:attr/colorBackground" >
+    android:background="?attr/backgroundColor" >
     
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="?android:attr/colorBackground"
+        android:background="?attr/backgroundFrameColor"
         android:orientation="vertical" >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?android:attr/colorBackground"
+            android:background="?attr/backgroundFrameColor"
             android:orientation="horizontal" >
 
             <Spinner
@@ -22,22 +22,29 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="?android:attr/colorBackground" />
-
+/> <!--                android:background="?attr/backgroundColor"
+                />
+-->
             <Spinner
                 android:id="@+id/browser_column2_spinner"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
-        </LinearLayout>
+                android:layout_weight="1"
+   /><!--             android:background="?attr/backgroundColor"
+                />
+       --> </LinearLayout>
 
         <ListView
             android:id="@+id/card_browser_list"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:background="?android:attr/colorBackground"
+            android:background="?attr/backgroundFrameColor"
             android:drawSelectorOnTop="true"
-            android:fastScrollEnabled="true" />
+            android:fastScrollEnabled="true"
+            />
+        <!--
+                    android:background="?android:attr/colorBackground"
+-->
 
     </LinearLayout>
     

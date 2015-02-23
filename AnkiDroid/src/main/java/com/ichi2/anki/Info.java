@@ -34,6 +34,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.themes.ThemeDevUtils;
 import com.ichi2.themes.Themes;
 
 import org.acra.util.Installation;
@@ -68,7 +69,7 @@ public class Info extends ActionBarActivity {
 
         webView = (WebView) findViewById(R.id.info);
         webView.setBackgroundColor(res.getColor(Themes.getBackgroundColor()));
-        Themes.setWallpaper((View) webView.getParent().getParent().getParent());
+//        Themes.setWallpaper((View) webView.getParent().getParent().getParent());
 
         TextView termsAndConditionsView = (TextView) findViewById(R.id.info_terms_and_conditions);
         termsAndConditionsView.setMovementMethod(LinkMovementMethod.getInstance());
@@ -163,6 +164,14 @@ public class Info extends ActionBarActivity {
             finishWithAnimation();
             return true;
         }
+
+        if ((keyCode == KeyEvent.KEYCODE_VOLUME_UP)) {
+            return ThemeDevUtils.volumeUp(this);
+        }
+        if ((keyCode == KeyEvent.KEYCODE_VOLUME_DOWN)) {
+            return ThemeDevUtils.volumeDown(this);
+        }
+
         return super.onKeyDown(keyCode, event);
     }
 

@@ -24,6 +24,7 @@ import android.content.DialogInterface;
 import android.text.Editable;
 import android.text.TextWatcher;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -42,7 +43,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 
 import java.util.ArrayList;
@@ -90,14 +90,14 @@ public class StyledDialog extends Dialog {
         View main = super.getWindow().getDecorView();
         ((TextView) main.findViewById(R.id.message)).setText(message);
         ((View) main.findViewById(R.id.contentPanel)).setVisibility(View.VISIBLE);
-        Themes.setStyledDialogBackgrounds(main);
+//        Themes.setStyledDialogBackgrounds(main);
     }
 
 
     public void setTitle(String message) {
         View main = super.getWindow().getDecorView();
         ((TextView) main.findViewById(R.id.alertTitle)).setText(message);
-        Themes.setStyledDialogBackgrounds(main);
+//        Themes.setStyledDialogBackgrounds(main);
     }
 
 
@@ -105,7 +105,7 @@ public class StyledDialog extends Dialog {
         View main = super.getWindow().getDecorView();
         ((TextView) main.findViewById(R.id.message)).setText(message);
         ((View) main.findViewById(R.id.contentPanel)).setVisibility(View.VISIBLE);
-        Themes.setStyledDialogBackgrounds(main);
+//        Themes.setStyledDialogBackgrounds(main);
     }
 
 
@@ -596,7 +596,7 @@ public class StyledDialog extends Dialog {
             if (title != null && title.length() > 0) {
                 ((TextView) layout.findViewById(R.id.alertTitle)).setText(title);
                 if (icon != 0) {
-                    ((ImageView) layout.findViewById(R.id.icon)).setImageResource(icon);
+                    ((ImageView) layout.findViewById(R.id.icon)).setImageResource(icon);  // Must be done programmatically
                 } else {
                     layout.findViewById(R.id.icon).setVisibility(View.GONE);
                 }

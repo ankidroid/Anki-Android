@@ -6,8 +6,6 @@ package com.samskivert.mustache;
 
 
 
-import com.ichi2.anki.AnkiDroidApp;
-
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;

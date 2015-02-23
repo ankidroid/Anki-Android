@@ -62,7 +62,7 @@
                 android:paddingBottom="3dip"
                 android:paddingRight="10dip"
                 android:paddingTop="3dip"
-                android:src="@drawable/ic_dialog_info"
+                android:src="?attr/ic_dialog_info"
                 tools:ignore="ContentDescription" />
 
             <TextView

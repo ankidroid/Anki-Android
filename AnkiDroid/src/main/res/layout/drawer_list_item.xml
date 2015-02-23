@@ -8,6 +8,7 @@
     android:paddingTop="9dip"
     android:paddingBottom="9dip"
     android:gravity="center_vertical"
+    android:background="?attr/backgroundColor"
     android:orientation="horizontal" >
     <TextView
         android:id="@+id/drawer_list_item_text"
@@ -17,6 +18,7 @@
         android:paddingLeft="4dp"
         android:paddingRight="16dp"
         android:drawablePadding="16dp"
-        android:textColor="#000000"
+        android:textColor="?android:textColorPrimary"
+        android:background="?attr/backgroundColor"
         android:textSize="20sp" />
 </RelativeLayout>

@@ -54,6 +54,7 @@ import com.ichi2.libanki.hooks.HebrewFixFilter;
 import com.ichi2.preferences.NumberRangePreference;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
+import com.ichi2.themes.ThemeDevUtils;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.LanguageUtil;
 
@@ -126,9 +127,10 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Themes.applyTheme(this);
         // Workaround for bug 4611: http://code.google.com/p/android/issues/detail?id=4611
         if (AnkiDroidApp.SDK_VERSION <= 10) {
-            Themes.applyTheme(this, Themes.THEME_ANDROID_DARK);
+//            Themes.applyTheme(this, Themes.THEME_ANDROID_DARK);
         }
         super.onCreate(savedInstanceState);
 
@@ -454,6 +456,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     @Override
     protected void onResume() {
+        Themes.applyTheme(this);
         super.onResume();
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
 
@@ -584,6 +587,14 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             closePreferences();
             return true;
         }
+
+        if ((keyCode == KeyEvent.KEYCODE_VOLUME_UP)) {
+            return ThemeDevUtils.volumeUp(this);
+        }
+        if ((keyCode == KeyEvent.KEYCODE_VOLUME_DOWN)) {
+            return ThemeDevUtils.volumeDown(this);
+        }
+
         return super.onKeyDown(keyCode, event);
     }
 

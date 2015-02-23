@@ -30,7 +30,7 @@ public class CompatV7 implements Compat {
 
     // Only match text that is entirely ASCII.
     private static final Pattern fASCII = Pattern.compile("^\\p{ASCII}*$");
-    
+
     /*
      *  Return the input string. Not doing the NFD normalization may cause problems with syncing media to Macs
      *  where the file name contains diacritics, as file names are decomposed on HFS file systems.
@@ -95,48 +95,86 @@ public class CompatV7 implements Compat {
         actionBarActivity.supportInvalidateOptionsMenu();
     }
 
-
-    public void setActionBarBackground(Activity activity, int color) {
+    // Currently uses R.color ID, not color value. Later decide which and standardize all methods
+    public void setActionBarBackground(Activity activity, int colorID) {
         ActionBarActivity actionBarActivity = (ActionBarActivity) activity;
         ActionBar actionBar = actionBarActivity.getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setBackgroundDrawable(new ColorDrawable(activity.getResources().getColor(color)));
+            actionBar.setBackgroundDrawable(new ColorDrawable(activity.getResources().getColor(colorID)));
         }
     }
 
-
+/*
     public void setTitle(Activity activity, String title, boolean inverted) {
+        setSubtitle(activity,title, R.color.black, inverted );
+    }
+*/
+
+/*
+    @Override
+    public void setTitle(Activity activity, String title, int textColor) {
+        setTitle(activity, title, textColor, false);
+    }
+*/
+
+    // Currently textColor is a color value, not a R.color id.
+    public void setTitle(Activity activity, String title, boolean inverted) {
+//    public void setTitle(Activity activity, String title, int textColor, boolean inverted) {
         ActionBarActivity actionBarActivity = (ActionBarActivity) activity;
         ActionBar actionBar = actionBarActivity.getSupportActionBar();
-        if (actionBar != null) {
-            CharacterStyle span = new ForegroundColorSpan(activity.getResources().getColor(
-                    inverted ? R.color.white : R.color.black));
-            SpannableStringBuilder ssb = new SpannableStringBuilder(title);
-            ssb.setSpan(span, 0, ssb.length(), 0);
-            actionBar.setTitle(ssb);
-        }
+
+        actionBar.setTitle(title);
+        // Forcing textColor to be derived from xml.   In what situation would we invert the title text color ?
+//        int colorValue = textColor;
+//        if (inverted) {
+//            colorValue = activity.getResources().getColor(R.color.white);
+//        }
+//        if (actionBar != null) {
+//            CharacterStyle span = new ForegroundColorSpan(colorValue);  // do more intelligent inversion later
+//            SpannableStringBuilder ssb = new SpannableStringBuilder(title);
+//            ssb.setSpan(span, 0, ssb.length(), 0);
+//            actionBar.setTitle(ssb);
+//        }
     }
+
+
 
 
     public void setSubtitle(Activity activity, String title) {
         setSubtitle(activity, title, false);
     }
 
-
     public void setSubtitle(Activity activity, String title, boolean inverted) {
+        setSubtitle(activity, title, R.color.black, inverted);
+    }
+
+    public void setSubtitle(Activity activity, String title, int textColorParam, boolean inverted) {
+        int textColor = textColorParam;
         ActionBarActivity actionBarActivity = (ActionBarActivity) activity;
         ActionBar actionBar = actionBarActivity.getSupportActionBar();
+
+        if (actionBar != null) {
+            actionBar.setSubtitle(title);
+        }
+
+/*  // Skip all of this, as I am reducing programmatic approach to styling and moving everything into xml. Revert this if we end up still needing this approach to inversion
         if (actionBar != null) {
             if (inverted) {
-                CharacterStyle span = new ForegroundColorSpan(activity.getResources().getColor(
-                        inverted ? R.color.white : R.color.black));
-                SpannableStringBuilder ssb = new SpannableStringBuilder(title);
-                ssb.setSpan(span, 0, ssb.length(), 0);
-                actionBar.setSubtitle(ssb);
+                textColor = activity.getResources().getColor(R.color.white);  // Improve inversion
             } else {
-                actionBar.setSubtitle(title);
+                textColor = textColorParam;
             }
+            CharacterStyle span = new ForegroundColorSpan(textColor);
+            actionBar.setSubtitle(title);
+            SpannableStringBuilder ssb = new SpannableStringBuilder(title);
+            ssb.setSpan(span, 0, ssb.length(), 0);
+            actionBar.setSubtitle(ssb);
         }
+*/
+    }
+
+    public void setSubtitle(Activity activity, String title, int textColor) {
+        setSubtitle(activity, title, textColor, false);
     }
 
 
@@ -167,7 +205,7 @@ public class CompatV7 implements Compat {
     public int parentLayoutSize() {
         return LayoutParams.FILL_PARENT;
     }
-	
+
     // Below API level 12, file scheme pages are not restricted, so no adjustment is needed.
     public void enableCookiesForFileSchemePages() { }
 }

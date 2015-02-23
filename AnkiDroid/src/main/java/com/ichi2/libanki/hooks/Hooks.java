@@ -19,7 +19,6 @@ package com.ichi2.libanki.hooks;
 import android.content.SharedPreferences;
 
 
-import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.libanki.LaTeX;
 
 import java.util.ArrayList;

@@ -19,8 +19,6 @@ package com.ichi2.utils;
 import android.text.TextUtils;
 
 
-import com.ichi2.anki.AnkiDroidApp;
-
 import timber.log.Timber;
 
 /**

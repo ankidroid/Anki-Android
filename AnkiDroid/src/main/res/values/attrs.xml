@@ -16,10 +16,114 @@
 -->
 
 <resources>
-
     <attr name="min" format="integer" />
     <attr name="max" format="integer" />
     <attr name="allowEmpty" format="boolean" />
+
+    <!-- The following items are all themable.  Refer to them in any layout via ?attr/, and include the appropriate tag in the appropriate theme within themes.xml -->
+    <declare-styleable name="anki_theme_items">
+        <!-- Misc menu buttons, and similar -->
+        <attr name="ic_menu_add" format="string" />
+        <attr name="ic_start" format="string" />
+        <attr name="ic_dialog_info" format="string" />
+        <attr name="ic_media" format="string" />
+        <attr name="ic_lookup" format="string" />
+
+        <attr name="wallpaper" format="string" />
+
+        <!-- introduced first for flashcard.xml, not sure where else used:  -->
+        <attr name="buttonStyleSmall" format="string" />
+
+
+        <!-- experiment with tinting images rather than create multiple sets of different hued images -->
+        <attr name="tintAllImages" format="reference|color" />
+
+
+        <!-- Used for deckpicker -->
+        <attr name="deckpicker_lv_background" format="reference" />
+
+        <attr name="actionBarTitleTextColor" format="color" />
+        <attr name="actionBarSubtitleTextColor" format="color" />
+        <attr name="actionBarBackgroundColor" format="color" />
+
+        <!--Taken from the navigation drawer.  Not sure where else it is used.  -->
+        <attr name="listviewDividerColor" format="color" />
+
+
+        <!-- Used by deckpicker, backgrounds for list items, depends on position in a grouping -->
+        <attr name="deckpicker_top" format="reference|" />
+        <attr name="deckpicker_bottom" format="reference" />
+        <attr name="deckpicker_full" format="reference" />
+        <attr name="deckpicker_center" format="reference" />
+
+
+
+
+
+        <attr name="deckpicker_load_bg" format="string" />
+        <attr name="white_list_selector_background" format="string" />
+
+        <!-- Generic 'foreground color', often used for textfield text color -->
+        <!--<attr name="foregroundColor" format="color" />-->  <!-- replace with android:textColorxxx -->
+
+        <!-- The base background. ?Redundant with android:background? -->
+        <attr name="backgroundColor" format="color" />
+        <!-- The 'card' background, or background color for any elements resting on the base background -->
+        <attr name="backgroundElevatedColor" format="color" />
+        <attr name="backgroundFrameColor" format="color" /> <!-- Usually set equal to background color, may be used to frame content in some views -->
+
+        <attr name="dyn_deck" format="color" />
+        <attr name="non_dyn_deck" format="color" />
+
+
+        <!-- Use to give the cardbroswer a thin frame -->
+        <attr name="cardBrowserBackgroundFrame" format="reference" />
+
+        <attr name="genericBackgroundFrame" format="reference" /><!-- used at the moment in studyoptions_scrollcontainer, probably elsewhere-->
+
+        <attr name="studyOptionsButtonBackground" format="reference" /> <!-- background for the buttons in the study options screen, currently images, try to use a selector -->
+
+
+        <attr name="styledDialogTitleDivider" format="reference" /><!-- Replaces need for Themes.java programmatically setting background of titleDivider view in styled_dialog.xml-->
+        <attr name="styledDialogPopupTopBackground" format="reference" /><!-- Replaces: Themes.java setting background of styled_dialog.xml's topPanel -->
+<!-- Should it be sd..TopPanelDark and TopPanelBright, or just TopPanel ? -->
+
+        <!-- Three colors used for the counts of remaining learn, review, and new cards.  -->
+        <!-- Much of this is happening programmically, their future use as a themeable component is more complicated -->
+        <attr name="learnCountTextColor" format="color" />
+        <attr name="reviewCountTextColor" format="color" />
+        <attr name="newCountTextColor" format="color" />
+        <attr name="zeroCountTextColor" format="color" />
+
+        <attr name="flashCardButtonBackground" format="color"  />
+        <!--<attr name="deckPickerItemSelectorBackground" format="reference"  />-->
+        <attr name="deckPickerListSelector" format="reference"  />
+
+
+        <!-- Card browser-specific theme settings -->
+        <attr name="card_browser_marked" format="color"/>
+        <attr name="card_browser_normal" format="color"/>
+        <attr name="card_browser_suspended" format="color"/>
+
+
+        <attr name="editTextBackground" format="color" />
+
+
+        <!-- icons for study options fragment -->
+<attr name="ic_menu_revert" format="reference" />
+<!-- already added: <attr name="ic_menu_add" format="reference" /> -->
+<attr name="ic_menu_night" format="reference" />
+
+
+
+
+
+
+        <!-- for compatibility with old blue theme.  optional ?
+        <attr name="studyOptionsBackground" format="reference" />
+-->
+
+    </declare-styleable>
 
     <declare-styleable name="SeekBarPreference">
         <attr name="interval" format="integer" />
