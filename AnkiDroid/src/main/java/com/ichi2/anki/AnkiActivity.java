@@ -30,11 +30,9 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.AsyncDialogFragment;
 import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.anki.dialogs.SimpleMessageDialog;
-import com.ichi2.anki.exception.StorageAccessException;
 import com.ichi2.async.CollectionLoader;
 import com.ichi2.libanki.Collection;
 import com.ichi2.themes.StyledOpenCollectionDialog;
-import com.ichi2.themes.Themes;
 
 import timber.log.Timber;
 
