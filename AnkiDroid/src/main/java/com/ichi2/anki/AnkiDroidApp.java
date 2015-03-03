@@ -156,7 +156,6 @@ public class AnkiDroidApp extends Application {
      */
     public static boolean sSyncInProgressFlag = false;
     public static boolean sDatabaseCorruptFlag = false;
-    public static boolean sStorageAccessExceptionFlag = false;
 
     /** Global hooks */
     private Hooks mHooks;
@@ -255,14 +254,14 @@ public class AnkiDroidApp extends Application {
         }
         DEFAULT_SWIPE_THRESHOLD_VELOCITY = vc.getScaledMinimumFlingVelocity();
 
-        // Create the AnkiDroid directory if missing
+        // Create the AnkiDroid directory if missing. Send exception report if inaccessible.
         try {
             initializeAnkiDroidDirectory(getCurrentAnkiDroidDirectory());
-            sStorageAccessExceptionFlag = false;
         } catch (StorageAccessException e) {
             Timber.e(e, "Could not initialize AnkiDroid directory");
-            sendExceptionReport(e, "AnkiDroidApp.onCreate");
-            sStorageAccessExceptionFlag = true;
+            if (isSdCardMounted()) {
+                sendExceptionReport(e, "AnkiDroidApp.onCreate");
+            }
         }
     }
 
@@ -390,6 +389,19 @@ public class AnkiDroidApp extends Application {
 
     public static boolean isSdCardMounted() {
         return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
+    }
+
+    /**
+     * Try to access the current AnkiDroid directory
+     * @return whether or not dir is accessible
+     */
+    public static boolean isCurrentAnkiDroidDirAccessible() {
+        try {
+            initializeAnkiDroidDirectory(getCurrentAnkiDroidDirectory());
+            return true;
+        } catch (StorageAccessException e) {
+            return false;
+        }
     }
 
 
