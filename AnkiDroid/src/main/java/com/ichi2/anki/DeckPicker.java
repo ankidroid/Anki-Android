@@ -1362,8 +1362,13 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             String syncMessage = "";
             Timber.d("Sync Listener onPostExecute()");
             Resources res = getResources();
-            if (mProgressDialog != null) {
-                mProgressDialog.dismiss();
+            try {
+                if (mProgressDialog != null) {
+                    mProgressDialog.dismiss();
+                }
+            } catch (IllegalArgumentException e) {
+                Timber.e(e, "Could not dismiss mProgressDialog. The Activity must have been destroyed while the AsyncTask was running");
+                AnkiDroidApp.sendExceptionReport(e, "DeckPicker.onPostExecute", "Could not dismiss mProgressDialog");
             }
             syncMessage = data.message;
             if (!data.success) {
