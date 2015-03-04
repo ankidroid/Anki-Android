@@ -157,7 +157,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
     private BroadcastReceiver mUnmountReceiver = null;
 
-    private String mPrefDeckPath = null;
     private long mContextMenuDid;
 
     private EditText mDialogEditText;
@@ -396,7 +395,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
         setTitle(getResources().getString(R.string.app_name));
 
-        SharedPreferences preferences = restorePreferences();
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
 
         View mainView = getLayoutInflater().inflate(R.layout.deck_picker, null);
         setContentView(mainView);
@@ -863,18 +862,17 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         startActivityForResultWithAnimation(intent, ADD_NOTE, ActivityTransitionAnimation.LEFT);
     }
 
-    private SharedPreferences restorePreferences() {
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-        mPrefDeckPath = AnkiDroidApp.getCurrentAnkiDroidDirectory();
-        return preferences;
-    }
-
 
     private void showStartupScreensAndDialogs(SharedPreferences preferences, int skip) {
         if (!AnkiDroidApp.isSdCardMounted()) {
-            // SD Card mounted
+            // SD Card not mounted
             showSdCardNotMountedDialog();
-        } else if (!BackupManager.enoughDiscSpace(mPrefDeckPath)) {
+        } else if (!AnkiDroidApp.isCurrentAnkiDroidDirAccessible()) {
+            // AnkiDroid directory inaccessible
+            Intent i = new Intent(this, Preferences.class);
+            startActivityWithoutAnimation(i);
+            Themes.showThemedToast(this, getResources().getString(R.string.directory_inaccessible), false);
+        } else if (!BackupManager.enoughDiscSpace(AnkiDroidApp.getCurrentAnkiDroidDirectory())) {
             // Not enough space to do backup
             showDialogFragment(DeckPickerNoSpaceLeftDialog.newInstance());
         } else if (preferences.getBoolean("noSpaceLeft", false)) {

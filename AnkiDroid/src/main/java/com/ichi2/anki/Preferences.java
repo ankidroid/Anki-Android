@@ -188,7 +188,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 final String newPath = (String) newValue;
                 try {
                     AnkiDroidApp.initializeAnkiDroidDirectory(newPath);
-                    AnkiDroidApp.sStorageAccessExceptionFlag = false;
                     return true;
                 } catch (StorageAccessException e) {
                     Timber.e(e, "Could not initialize directory: %s", newPath);
