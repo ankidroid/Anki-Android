@@ -514,20 +514,25 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         if (mShowShowcaseView && colOpen() && getCol().isEmpty() && mDeckList!= null && mDeckList.size() <=1) {
             mShowShowcaseView = false;
             final Resources res = getResources();
-            ActionItemTarget target = new ActionItemTarget(this, R.id.action_add_decks);
-            mShowcaseDialog = new ShowcaseView.Builder(this).setTarget(target)
-                    .setContentTitle(res.getString(R.string.studyoptions_welcome_title))
-                    .setStyle(R.style.ShowcaseView_Light).setShowcaseEventListener(this)
-                    .setOnClickListener(new OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            mShowcaseDialog.hide();
-                            Intent helpIntent = new Intent("android.intent.action.VIEW", Uri.parse(res
-                                    .getString(R.string.link_manual_getting_started)));
-                            startActivityWithoutAnimation(helpIntent);
-                        }
-                    }).setContentText(res.getString(R.string.add_content_showcase_text)).hideOnTouchOutside().build();
-            mShowcaseDialog.setButtonText(getResources().getString(R.string.help_title));
+            try {
+                ActionItemTarget target = new ActionItemTarget(this, R.id.action_add_decks);
+                mShowcaseDialog = new ShowcaseView.Builder(this).setTarget(target)
+                        .setContentTitle(res.getString(R.string.studyoptions_welcome_title))
+                        .setStyle(R.style.ShowcaseView_Light).setShowcaseEventListener(this)
+                        .setOnClickListener(new OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mShowcaseDialog.hide();
+                                Intent helpIntent = new Intent("android.intent.action.VIEW", Uri.parse(res
+                                        .getString(R.string.link_manual_getting_started)));
+                                startActivityWithoutAnimation(helpIntent);
+                            }
+                        }).setContentText(res.getString(R.string.add_content_showcase_text)).hideOnTouchOutside().build();
+                mShowcaseDialog.setButtonText(getResources().getString(R.string.help_title));
+            } catch (Exception e) {
+                Timber.e(e, "Error showing ShowcaseView");
+                Themes.showThemedToast(this, res.getString(R.string.add_content_showcase_text), false);
+            }
         } else if (mShowcaseDialog != null && colOpen() && !getCol().isEmpty()) {
             hideShowcaseView();
         }
