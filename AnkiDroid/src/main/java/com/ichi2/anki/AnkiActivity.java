@@ -33,7 +33,6 @@ import com.ichi2.anki.dialogs.SimpleMessageDialog;
 import com.ichi2.async.CollectionLoader;
 import com.ichi2.libanki.Collection;
 import com.ichi2.themes.StyledOpenCollectionDialog;
-import com.ichi2.themes.Themes;
 
 import timber.log.Timber;
 
@@ -45,18 +44,6 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
     private StyledOpenCollectionDialog mOpenCollectionDialog;
     private DialogHandler mHandler = new DialogHandler(this);
 
-    @Override
-    protected void onCreate(Bundle savedInstance) {
-        super.onCreate(savedInstance);
-        // Take user to preferences editor if there was a storage access exception on app startup
-        if (AnkiDroidApp.sStorageAccessExceptionFlag) {
-            Intent i = new Intent(this, Preferences.class);
-            finishWithoutAnimation();
-            startActivityWithoutAnimation(i);
-            Themes.showThemedToast(this, getResources().getString(R.string.directory_inaccessible), false);
-            return;
-        }
-    }
 
     @Override
     protected void onResume() {
