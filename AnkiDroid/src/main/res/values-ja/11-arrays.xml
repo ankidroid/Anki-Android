@@ -107,7 +107,7 @@
     <item>White</item>
   </string-array>
   <string-array name="leech_action_labels">
-    <item>カードを保留</item>
+    <item>タグを付けて保留</item>
     <item>タグを付けるだけ</item>
   </string-array>
   <string-array name="new_order_labels">

@@ -98,7 +98,7 @@
   <string name="menu_add_note">Ajouter une note</string>
   <string name="menu_download_deck">Télécharger le paquet</string>
   <string name="menu_download_shared_deck">Paquet partagé</string>
-  <string name="menu_my_account">Concorder compte</string>
+  <string name="menu_my_account">Compte de synchronisation</string>
   <string name="menu_preferences">Préférences</string>
   <string name="menu_about">À propos</string>
   <string name="menu_dismiss_note">Masquer / Supprimer</string>
@@ -116,10 +116,10 @@
   <string name="menu_unmark_card">Retirer le marquage</string>
   <string name="new_deck">Créer un jeu de cartes</string>
   <string name="create">Créer</string>
-  <string name="new_dynamic_deck">Créer un jeu de cartes filtrées</string>
+  <string name="new_dynamic_deck">Créer un paquet filtré</string>
   <string name="studyoptions_feedback">Commentaires</string>
   <string name="night_mode">Mode nuit</string>
-  <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
+  <string name="directory_inaccessible">Le répertoire d\'AnkiDroid est inaccessible</string>
   <string-array name="next_review_s">
     <item>1 seconde</item>
     <item>1 minute</item>
@@ -152,7 +152,7 @@
   <string name="studyoptions_congrats_custom">Pour étudier en dehors des horaires normaux, cliquez sur le bouton d\'étude personnalisée ci-dessous.</string>
   <string name="studyoptions_no_cards_due">Aucune carte à relire actuellement.</string>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Demain il y aura : %1$d carte à revoir et %2$s.\n Durée estimée : %3$s</item>
+    <item quantity="one">Demain, il y aura : %1$d carte à revoir et %2$s.\n Durée estimée : %3$s</item>
     <item quantity="other">Demain, il y aura %2$s cartes nouvelles et %1$d à revoir.\n Durée estimée : %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
@@ -161,7 +161,7 @@
   </plurals>
   <plurals name="studyoptions_congrats_eta">
     <item quantity="one">Durée estimée : %1$d min.</item>
-    <item quantity="other">Durée estimée : %1$d mn.</item>
+    <item quantity="other">Durée estimée : %1$d min.</item>
   </plurals>
   <string name="sd_card_not_mounted">La carte SD n\'est pas montée.\n\nVous pouvez également sauvegarder votre collection dans la mémoire interne bien que cela ne soit pas recommandé car cela rendrait plus difficile l\'accès au fichier. Vous pouvez activer cela dans les préférences (accédez-y en cliquant sur ce texte).</string>
   <string name="studyoptions_options">Options</string>

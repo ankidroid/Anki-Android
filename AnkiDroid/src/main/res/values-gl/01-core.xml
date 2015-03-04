@@ -42,7 +42,7 @@
   <string name="app_name">AnkiDroid</string>
   <string name="app_name_anki">Anki</string>
   <string name="app_name_droid">Droid</string>
-  <string name="studyoptions_title">Study Options</string>
+  <string name="studyoptions_title">Opcións de estudo</string>
   <string name="studyoptions_deck_name">Nome da baralla</string>
   <string name="studyoptions_due_today">Pendentes hoxe:</string>
   <string name="studyoptions_new_total">Total de cartas novas:</string>
@@ -75,9 +75,9 @@
   <string name="card_unsuspended">Suspensión do cartón desfeita</string>
   <string name="card_suspended">Cartón suspendido de novo</string>
   <string name="menu_rotate">Virar</string>
-  <string name="menu_import">Import</string>
+  <string name="menu_import">Importar</string>
   <string name="undo">Desfacer</string>
-  <string name="undo_action_review">last review</string>
+  <string name="undo_action_review">última revisión</string>
   <string name="undo_action_edit">editar notación</string>
   <string name="undo_action_bury">agochar notación</string>
   <string name="undo_action_suspend_card">suspender cartón</string>
@@ -94,19 +94,19 @@
   <string name="contextmenu_deckpicker_collapse_deck">Hide subdecks</string>
   <string name="contextmenu_deckpicker_inflate_deck">Show subdecks</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Fixar dicionario personalizado</string>
-  <string name="menu_add">Add</string>
-  <string name="menu_add_note">Add note</string>
+  <string name="menu_add">Engadir</string>
+  <string name="menu_add_note">Engadir nota</string>
   <string name="menu_download_deck">Baixar baralla</string>
   <string name="menu_download_shared_deck">Baralla compartida</string>
   <string name="menu_my_account">Sincronizar conta</string>
   <string name="menu_preferences">Preferencias</string>
   <string name="menu_about">Sobre</string>
-  <string name="menu_dismiss_note">Hide / Delete</string>
+  <string name="menu_dismiss_note">Agochar/eliminar</string>
   <string name="menu_bury_card">Bury card</string>
   <string name="menu_bury_note">Agochar nota</string>
   <string name="menu_suspend_card">Suspender cartón</string>
   <string name="menu_suspend_note">Suspender notación</string>
-  <string name="menu_save_note">Save note</string>
+  <string name="menu_save_note">Gardar nota</string>
   <string name="menu_delete_note">Eliminar notación</string>
   <string name="delete_note_message">¿Desexas realmente eliminar esta notacióne todos os seus cartóns?\n%s</string>
   <string name="menu_edit_card">Editar cartón</string>
@@ -119,7 +119,7 @@
   <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">Suxestións</string>
   <string name="night_mode">Modo nocturno</string>
-  <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
+  <string name="directory_inaccessible">O directorio AnkiDroid non está accesible</string>
   <string-array name="next_review_s">
     <item>1 segundo</item>
     <item>1 minuto</item>
@@ -152,15 +152,15 @@
   <string name="studyoptions_congrats_custom">Para estudar fóra da planificación normal, faga click no botón Estudo Personalizado abaixo.</string>
   <string name="studyoptions_no_cards_due">No cards are due yet.</string>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
-    <item quantity="other">Mañá haberá: %1$d cartóns para repasar e %2$s.\n Tempo estimado: %3$s</item>
+    <item quantity="one">Mañá haberá: %1$d cartóns para revisar e %2$s.\nTempo estimado: %3$s</item>
+    <item quantity="other">Mañá haberá: %1$d cartóns para revisar e %2$s.\nTempo estimado: %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">%1$d new card</item>
+    <item quantity="one">%1$d cartón novo</item>
     <item quantity="other">%1$d cartóns novos</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">Estimated time: %1$d min.</item>
+    <item quantity="one">Tempo estimado: %1$d min.</item>
     <item quantity="other">Tiempo estimado: %1$d min.</item>
   </plurals>
   <string name="sd_card_not_mounted">A tarxeta SD non está montada.\n\nTamén podes almacenar a túa colección na memoria interna mais non é recomendable, xa que non poderías acceder ao archivo tan doadamente. Podes activar isto nas preferencias (ábreas facendo click neste texto).</string>
@@ -176,19 +176,19 @@
   <string name="ankiweb">AnkiWeb</string>
   <string name="usb">USB</string>
   <string name="_import">Importar</string>
-  <string name="export">Export</string>
+  <string name="export">Exportar</string>
   <string name="confirm">Confirmar</string>
   <string name="internet">Internet</string>
   <string name="pc">PC</string>
-  <string name="nothing">Nothing</string>
-  <string name="title_activity_graphical_activity">Statistical chart</string>
-  <string name="title_activity_template_editor">Card Types for %s</string>
+  <string name="nothing">Nada</string>
+  <string name="title_activity_graphical_activity">Estatísticas</string>
+  <string name="title_activity_template_editor">Tipos de cartón de %s</string>
   <string name="card_template_editor_front">Front Template</string>
   <string name="card_template_editor_back">Back Template</string>
   <string name="card_template_editor_styling">Styling</string>
   <string name="card_template_editor_menu_add_reverse">Add reverse</string>
-  <string name="card_template_editor_menu_delete">Delete</string>
-  <string name="card_template_editor_cant_delete">At least one card type is required.</string>
+  <string name="card_template_editor_menu_delete">Eliminar</string>
+  <string name="card_template_editor_cant_delete">Cando menos un tipo de cartón é obrigatorio.</string>
   <plurals name="card_template_editor_confirm_delete">
     <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
     <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>

@@ -168,5 +168,5 @@
   <string name="force_full_sync_summary">Vid nästa synkroniseringstillfälle, framtvinga förändringar i en riktning</string>
   <string name="full_sync_confirmation">Den önskade förändringen kommer att kräva en full uppladdning av databasen vid nästa synkronisering av din samling. Om du har recensioner eller andra förändringar som väntar på en annan enhet som inte har synkroniserats här ännu, så kommer de att förloras. Vill du fortsätta?</string>
   <string name="full_sync_confirmation_upgrade">På grund av en bugg i den tidigare installerade versionen av AnkiDroid är det rekommenderat att tvinga en fullständig synkronisering.</string>
-  <string name="sync_error_501_upgrade_required">Please upgrade to the latest version of AnkiDroid</string>
+  <string name="sync_error_501_upgrade_required">Vänligen uppgradera till senaste versionen av AnkiDroid</string>
 </resources>

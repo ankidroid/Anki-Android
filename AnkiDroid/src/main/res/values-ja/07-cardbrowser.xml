@@ -40,8 +40,8 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="one">%d 枚のカード</item>
-    <item quantity="other">%d 枚のカード</item>
+    <item quantity="one">%d枚のカード</item>
+    <item quantity="other">%d枚のカード</item>
   </plurals>
   <string name="card_browser_all_decks">すべての単語帳</string>
   <string name="card_browser_load">書き込み中です\nしばらくお待ちください</string>
@@ -52,7 +52,7 @@
   <string name="card_browser_mark_card">ノートにマーク</string>
   <string name="card_browser_unmark_card">マークを解除</string>
   <string name="delete_card_title">ノートの削除</string>
-  <string name="delete_card_message">ノートと全てのカードを削除してもよろしいですか？\n検索フィールド: %s</string>
+  <string name="delete_card_message">このノートから作られたカードを全て削除してもよろしいですか？\n検索フィールド: %s</string>
   <string name="card_browser_show_marked">マーク付きカードの抽出</string>
   <string name="card_browser_field">並び替えフィールドの変更</string>
   <string name="card_browser_field_title">並び替えフィールドの変更</string>

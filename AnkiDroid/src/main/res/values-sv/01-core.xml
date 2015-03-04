@@ -119,7 +119,7 @@
   <string name="new_dynamic_deck">Skapa filtrerad kortlek</string>
   <string name="studyoptions_feedback">Feedback</string>
   <string name="night_mode">Nattläge</string>
-  <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
+  <string name="directory_inaccessible">AnkiDroid-mappen är inte tillgänglig</string>
   <string-array name="next_review_s">
     <item>1 sekund</item>
     <item>1 minut</item>
@@ -150,7 +150,7 @@
   <string name="studyoptions_congrats_more_rev">Dagens gräns för antal repetitioner har uppnåtts, men det finns fortfarande kort kvar att repetera. För att optimera inlärningsprocessen, överväg att öka den dagliga gränsen för antal repetitioner i inställningarna.</string>
   <string name="studyoptions_congrats_more_new">Det finns fler nya kort, men den dagliga gränsen har uppnåtts. Du kan höja gränsen i inställningarna, men kom ihåg att detta också ökar antalet repetitioner på kort sikt.</string>
   <string name="studyoptions_congrats_custom">Välj knappen Anpassade studier nedan för att studera utanför det normala schemat.</string>
-  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
+  <string name="studyoptions_no_cards_due">Inga kort i kö.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">I morgon finns det: %1$d kort att repetera och %2$s.\n Beräknad tid: %3$s</item>
     <item quantity="other">I morgon kommer det finnas: %1$d kort att repetera och %2$s.\n Beräknad tid: %3$s</item>
@@ -180,18 +180,18 @@
   <string name="confirm">Bekräfta</string>
   <string name="internet">Internet</string>
   <string name="pc">PC</string>
-  <string name="nothing">Nothing</string>
+  <string name="nothing">Inget</string>
   <string name="title_activity_graphical_activity">Statistikdiagram</string>
-  <string name="title_activity_template_editor">Card Types for %s</string>
-  <string name="card_template_editor_front">Front Template</string>
-  <string name="card_template_editor_back">Back Template</string>
-  <string name="card_template_editor_styling">Styling</string>
-  <string name="card_template_editor_menu_add_reverse">Add reverse</string>
-  <string name="card_template_editor_menu_delete">Delete</string>
-  <string name="card_template_editor_cant_delete">At least one card type is required.</string>
+  <string name="title_activity_template_editor">Korttyper för %s</string>
+  <string name="card_template_editor_front">Kortmall för framsida</string>
+  <string name="card_template_editor_back">Kortmall för baksida</string>
+  <string name="card_template_editor_styling">Formgivning</string>
+  <string name="card_template_editor_menu_add_reverse">Lägg till omvändning</string>
+  <string name="card_template_editor_menu_delete">Ta bort</string>
+  <string name="card_template_editor_cant_delete">Minst en korttyp krävs.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
-    <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
+    <item quantity="one">Ta bort korttypen \'%2$s\' och dess %1$d kort?</item>
+    <item quantity="other">Ta bort korttypen \'%2$s\' och dess %1$d kort?</item>
   </plurals>
-  <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create a new card type first.</string>
+  <string name="card_template_editor_would_delete_note">Att ta bort det här kortet skulle göra att en eller flera anteckningar tas bort. Vänligen skapa en ny korttyp först.</string>
 </resources>

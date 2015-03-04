@@ -50,8 +50,8 @@
   <string name="studyoptions_eta">推定学習時間 (分):</string>
   <string name="studyoptions_start">学習開始</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">現在の学習目標: %1$d 枚 ( %2$s)</item>
-    <item quantity="other">現在の学習目標: %1$d 枚 ( %2$s )</item>
+    <item quantity="one">現在の学習目標: %1$d枚 (%2$s)</item>
+    <item quantity="other">現在の学習目標: %1$d枚 (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">%d分</item>
@@ -108,7 +108,7 @@
   <string name="menu_suspend_note">ノートの保留</string>
   <string name="menu_save_note">ノート形式の保存</string>
   <string name="menu_delete_note">ノートの削除</string>
-  <string name="delete_note_message">このノートとすべてのカードを削除してもよろしいですか？\n%s</string>
+  <string name="delete_note_message">このノートと、このノートから作られた全てのカードを削除してもよろしいですか？\n%s</string>
   <string name="menu_edit_card">カードの編集</string>
   <string name="menu_select">テキスト選択</string>
   <string name="menu_search">%1$sで探す</string>
@@ -119,7 +119,7 @@
   <string name="new_dynamic_deck">フィルター単語帳を作成</string>
   <string name="studyoptions_feedback">フィードバック</string>
   <string name="night_mode">ナイトモード</string>
-  <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
+  <string name="directory_inaccessible">AnkiDroid ディレクトリにアクセスできません</string>
   <string-array name="next_review_s">
     <item>1秒</item>
     <item>1分</item>
@@ -147,7 +147,7 @@
   <string name="custom_study_deck_name">カスタム学習セッション</string>
   <string name="custom_study_deck_exists">最初に、既存のカスタム学習の単語帳の名称変更を行ってください。</string>
   <string name="studyoptions_congrats_finished">おめでとうございます！ 今日の目標を達成しました</string>
-  <string name="studyoptions_congrats_more_rev">復習予定日に達したカードがまだ他にも残っていますが、一日あたりの復習カード枚数の上限に達しています。上限は「単語帳オプション」内の設定で上げられます。</string>
+  <string name="studyoptions_congrats_more_rev">予定日に達した復習カードがまだ他にも残っていますが、一日あたりの復習カード枚数の上限に達しています。上限は「単語帳オプション」内の設定で上げられます。</string>
   <string name="studyoptions_congrats_more_new">新規カードがまだ他にも残っていますが、一日あたりの新規カード枚数の上限に達しています。上限は「単語帳オプション」内の設定で上げられます。（ただしそれに伴って短期的に学習の負担が増えますのでご注意ください。）</string>
   <string name="studyoptions_congrats_custom">通常のスケジュール以外で学習するには、「カスタム学習」ボタンをタップしてください。</string>
   <string name="studyoptions_no_cards_due">学習予定時刻に達したカードがまだありません</string>
