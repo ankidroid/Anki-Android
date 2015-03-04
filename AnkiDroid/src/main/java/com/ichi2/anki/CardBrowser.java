@@ -171,6 +171,11 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
 
         @Override
         public void onClick(DialogInterface dialog, int which) {
+            if (getCards().size() == 0) {
+                // Don't do anything if mCards empty
+                searchCards();
+                return;
+            }
             switch (which) {
                 case CONTEXT_MENU_MARK:
                     DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD,
@@ -710,6 +715,11 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                 }
                 break;
             case DIALOG_CONTEXT_MENU:
+                if (getCards().size()==0) {
+                    // Don't do anything if mCards empty
+                    Timber.e("Context menu opened for a card, but mCards is empty");
+                    return;
+                }
                 HashMap<String, String> card = getCards().get(mPositionInCardsList);
                 int flags = Integer.parseInt(card.get("flags"));
                 if (flags == 2 || flags == 3) {
