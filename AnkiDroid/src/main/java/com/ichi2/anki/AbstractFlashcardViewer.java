@@ -1128,6 +1128,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        if (!AnkiDroidApp.colIsOpen()) {
+            Timber.e("onActivityResult -- Collection is not open... aborting");
+            return;
+        }
+
         if (resultCode == DeckPicker.RESULT_DB_ERROR) {
             closeReviewer(DeckPicker.RESULT_DB_ERROR, false);
         }
@@ -1136,20 +1141,23 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             finishNoStorageAvailable();
         }
         if (requestCode == EDIT_CURRENT_CARD) {
-            // If the card was rescheduled, we need to remove it from the top of the queue as it is
-            // no longer positioned there. Use a "fake" answer for this by passing a null card.
-            if (data != null && data.hasExtra("rescheduled")) {
+            if (resultCode == RESULT_CANCELED  && !(data!=null && data.hasExtra("reloadRequired"))) {
+                // If note not saved and no reload required then simply redraw the flashcard
+                fillFlashcard();
+            } else {
+                // Save the note if required
+                if (resultCode == RESULT_OK) {
+                    Timber.i("AbstractFlashcardViewer:: Saving card...");
+                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler, new DeckTask.TaskData(
+                            mSched, mCurrentCard, true));
+                }
+
+                /* Reset the schedule and reload the latest card off the top of the stack.
+                   This always needs to be done, as the card could have been rescheduled, the deck could
+                   have changed, or a change of note type could have lead to the card being deleted */
+                getCol().getSched().reset();
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(
                         mSched, null, 0));
-            }
-            // Modification of the note is independent of rescheduling, so we still need to save it if it
-            // happened.
-            if (resultCode != RESULT_CANCELED) {
-                Timber.i("AbstractFlashcardViewer:: Saving card...");
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler, new DeckTask.TaskData(
-                        mSched, mCurrentCard, true));
-            } else {
-                fillFlashcard();
             }
         }
         if (!mDisableClipboard) {
