@@ -22,7 +22,7 @@
 
 <!--  General Preferences -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://arbitrary.namespace/com.ichi2.anki" >
+    xmlns:app="http://arbitrary.namespace/com.ichi2.anki" >
     <PreferenceScreen android:title="@string/pref_cat_general"
         android:summary="@string/pref_cat_general_summ" >
         <EditTextPreference
@@ -145,7 +145,7 @@ xmlns:app="http://arbitrary.namespace/com.ichi2.anki" >
                 android:text=" %"
                 android:title="@string/button_size"
                 app:interval="10"
-                app:min="100" />                
+                app:min="100" />
             <CheckBoxPreference
                 android:key="showProgress"
                 android:summary="@string/show_progress_summ"
@@ -339,10 +339,10 @@ xmlns:app="http://arbitrary.namespace/com.ichi2.anki" >
     <!-- Advanced Preferences -->
     <PreferenceScreen android:title="@string/pref_cat_advanced"
         android:summary="@string/pref_cat_advanced_summ" >
-	    <Preference 
-	        android:key="force_full_sync"
-	        android:title="@string/force_full_sync_title"
-	        android:summary="@string/force_full_sync_summary" />
+        <Preference
+            android:key="force_full_sync"
+            android:title="@string/force_full_sync_title"
+            android:summary="@string/force_full_sync_summary" />
         <PreferenceCategory android:title="@string/pref_cat_performance" >
             <CheckBoxPreference
                 android:defaultValue="false"
@@ -452,7 +452,27 @@ xmlns:app="http://arbitrary.namespace/com.ichi2.anki" >
                 android:title="@string/double_scrolling_gap" />
         </PreferenceCategory>
     </PreferenceScreen>
-    <Preference 
+    <!-- TODO replace these inline strings with references to @string/x -->
+    <PreferenceScreen android:title="Themes"
+        android:summary="Change the themes used" >
+        <ListPreference
+            android:defaultValue="2"
+            android:entries="@array/theme_labels"
+            android:entryValues="@array/theme_values"
+            android:key="dayModeTheme"
+            android:summary=""
+            android:title="Theme for Day Mode" />
+        <ListPreference
+            android:defaultValue="4"
+            android:entries="@array/theme_labels"
+            android:entryValues="@array/theme_values"
+            android:key="nightModeTheme"
+            android:summary=""
+            android:title="Theme for Night Mode" />
+
+    </PreferenceScreen>
+
+    <Preference
         android:key="about_dialog_preference"
         android:title="@string/about_title" />
 </PreferenceScreen>

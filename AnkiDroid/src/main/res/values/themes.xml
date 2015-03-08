@@ -339,6 +339,13 @@
         <item name="backgroundColor">#101010</item>
         <item name="android:background">@color/transparent</item>
 
+
+        <item name="android:textColorPrimary">#aaaaaa</item>
+        <item name="android:textColorSecondary">#999999</item>
+        <item name="android:textColorTertiary">#888888</item>
+
+
+
         <item name="wallpaper">@drawable/deepblack_wallpaper</item>
 
         <item name="genericBackgroundFrame">@drawable/deepblack_textview</item>

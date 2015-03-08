@@ -528,6 +528,18 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             } else if (key.equals("reportErrorMode")) {
                 String value = sharedPreferences.getString("reportErrorMode", "");
                 AnkiDroidApp.getInstance().setAcraReportingMode(value);
+            } else if (key.equals("dayModeTheme")) {
+                Themes.updateThemeFromPreferences(sharedPreferences);  // TODO Eventually have themes.java query and sync with the preference object directly
+                Themes.applyTheme(this);
+                finish();
+                startActivity(getIntent() );
+
+            } else if (key.equals("nightModeTheme")) {
+                Themes.updateThemeFromPreferences(sharedPreferences);  // TODO Eventually have themes.java query and sync with the preference object directly
+                Themes.applyTheme(this);  // TODO Eventually have themes.java query and sync with the preference object directly
+                finish();
+                startActivity(getIntent() );
+
             }
             
             if (Arrays.asList(sShowValueInSummList).contains(key)) {

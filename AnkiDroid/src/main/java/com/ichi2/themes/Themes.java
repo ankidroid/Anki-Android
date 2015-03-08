@@ -22,6 +22,7 @@ package com.ichi2.themes;
 import android.content.Context;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
@@ -42,6 +43,7 @@ import timber.log.Timber;
 
 public class Themes {
 
+    // TODO Consider getting themeNames from @string/theme_labels
     private final static String themeNames[] = {"CrazyForTesting", "Aqua", "Original - White", "Deep Black", "Grey Black"};
     private final static int themeIDs[] = {R.style.Theme_CrazyForTesting, R.style.Theme_Aqua,  R.style.Theme_White, R.style.Theme_DeepBlack, R.style.Theme_GreyBlack};
 
@@ -1322,6 +1324,8 @@ public class Themes {
     private static int mBackgroundColor = NOT_INITIALIZED;
 
     private static int mCurrentTheme = NOT_INITIALIZED;
+    private static int mCurrentNightModeTheme = NOT_INITIALIZED;  // TODO Eventually switch to always querying the app preference object directly
+    private static int mCurrentDayModeTheme = NOT_INITIALIZED;
 
 
 //    private static int mActionbarBackgroundColor = NOT_INITIALIZED;  // Most of these fields are state-dependant, and so must change programmatically.  For this one, I simply haven't yet figured out how to do this xml-only
@@ -1478,6 +1482,10 @@ public class Themes {
         return mBackgroundFrameColor;
     }
 
+
+
+
+
     public static void applyTheme(Context context) {
         applyTheme(context, mCurrentTheme);
     }
@@ -1486,6 +1494,7 @@ public class Themes {
     public static void applyTheme(Context context, int theme) {
         Log.e("JS", "applyTheme");
         mContext = context;
+
         if ((mCurrentTheme >= 0) && (mCurrentTheme <= themeNames.length)) {
             context.setTheme(themeIDs[mCurrentTheme]);
             Timber.d("Set theme: " + themeNames[mCurrentTheme]);
@@ -1602,6 +1611,12 @@ public class Themes {
         }
     }
 
+    public static void updateThemeFromPreferences(SharedPreferences sharedPreferences) {
+        mCurrentDayModeTheme = Integer.parseInt(sharedPreferences.getString("dayModeTheme", "1"));
+        mCurrentNightModeTheme = Integer.parseInt(sharedPreferences.getString("nightModeTheme", "1"));
+
+        mCurrentTheme = mCurrentDayModeTheme;  // TODO To where has the night mode boolean been centralized?
+    }
 }
 
 // Given an R.attr.x value, return the R.x.x value that it refers to (Usually R.color.x)
