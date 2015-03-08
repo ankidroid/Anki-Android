@@ -396,6 +396,7 @@
         <!--<item name="android:popup">?attr/backgroundColor</item>-->
     </style>
 
+
     <style name="ActionBarStyle" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
         <item name="android:background">?attr/actionBarBackgroundColor</item>
         <item name="android:titleTextStyle">@style/MyActionBarTitleStyle</item>

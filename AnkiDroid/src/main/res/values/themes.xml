@@ -21,8 +21,8 @@
     <!-- WHITE theme -->
     <style name="Theme_White" parent="@style/Theme.AppCompat.Light">
         <!-- Image files, icons, wallpaper -->
-        <item name="ic_menu_add">@drawable/ic_menu_add</item>
         <item name="ic_start">@drawable/ic_start</item>
+        <item name="ic_menu_add">@drawable/ic_menu_add</item>
         <item name="ic_dialog_info">@drawable/ic_dialog_info</item>
         <item name="ic_media">@drawable/ic_media</item>
         <item name="ic_lookup">@drawable/ic_lookup</item>
@@ -255,13 +255,13 @@
 
         <item name="android:windowBackground">@drawable/deepblack_wallpaper</item>
 
-        <item name="ic_menu_add">@drawable/brighternow_ic_menu_add_deepblack</item>
+        <item name="ic_menu_add">@drawable/ic_menu_add_deepblack</item>
         <item name="ic_start">@drawable/ic_start_deepblack2</item>
         <item name="ic_dialog_info">@drawable/ic_dialog_info_deepblack</item>
         <item name="ic_media">@drawable/ic_media_deepblack</item>
         <item name="ic_lookup">@drawable/ic_lookup_deepblack</item>
-        <item name="ic_menu_revert">@drawable/brighternow_ic_menu_revert_deepblack</item>
-        <item name="ic_menu_night">@drawable/ic_menu_night_deepblack2</item>
+        <item name="ic_menu_revert">@drawable/ic_menu_revert_deepblack</item>
+        <item name="ic_menu_night">@drawable/ic_menu_night_deepblack</item>
 
         <item name="deckpicker_load_bg">@drawable/deckpicker_load_bg</item>
         <item name="white_list_selector_background">@drawable/white_list_selector_background</item>
