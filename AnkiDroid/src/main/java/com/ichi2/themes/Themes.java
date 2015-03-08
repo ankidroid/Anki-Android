@@ -1326,6 +1326,7 @@ public class Themes {
     private static int mCurrentTheme = NOT_INITIALIZED;
     private static int mCurrentNightModeTheme = NOT_INITIALIZED;  // TODO Eventually switch to always querying the app preference object directly
     private static int mCurrentDayModeTheme = NOT_INITIALIZED;
+    private static boolean mNightModeBoolean = false;
 
 
 //    private static int mActionbarBackgroundColor = NOT_INITIALIZED;  // Most of these fields are state-dependant, and so must change programmatically.  For this one, I simply haven't yet figured out how to do this xml-only
@@ -1482,10 +1483,6 @@ public class Themes {
         return mBackgroundFrameColor;
     }
 
-
-
-
-
     public static void applyTheme(Context context) {
         applyTheme(context, mCurrentTheme);
     }
@@ -1494,6 +1491,13 @@ public class Themes {
     public static void applyTheme(Context context, int theme) {
         Log.e("JS", "applyTheme");
         mContext = context;
+
+        // TODO look throughout code for other uses of mCurrentTheme, be sure its getting the correct theme wrt mNightModeBoolean
+        if (mNightModeBoolean) {
+            mCurrentTheme = mCurrentNightModeTheme;
+        } else {
+            mCurrentTheme = mCurrentDayModeTheme;
+        }
 
         if ((mCurrentTheme >= 0) && (mCurrentTheme <= themeNames.length)) {
             context.setTheme(themeIDs[mCurrentTheme]);
@@ -1614,6 +1618,7 @@ public class Themes {
     public static void updateThemeFromPreferences(SharedPreferences sharedPreferences) {
         mCurrentDayModeTheme = Integer.parseInt(sharedPreferences.getString("dayModeTheme", "1"));
         mCurrentNightModeTheme = Integer.parseInt(sharedPreferences.getString("nightModeTheme", "1"));
+        mNightModeBoolean = sharedPreferences.getBoolean("nightModeToggle", false);
 
         mCurrentTheme = mCurrentDayModeTheme;  // TODO To where has the night mode boolean been centralized?
     }

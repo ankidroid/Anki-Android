@@ -460,15 +460,26 @@
             android:entries="@array/theme_labels"
             android:entryValues="@array/theme_values"
             android:key="dayModeTheme"
-            android:summary=""
-            android:title="Theme for Day Mode" />
+            android:summary="Choose the theme to be used when the app is in Day Mode"
+            android:title="Day Mode Theme" />
         <ListPreference
             android:defaultValue="4"
             android:entries="@array/theme_labels"
             android:entryValues="@array/theme_values"
             android:key="nightModeTheme"
-            android:summary=""
-            android:title="Theme for Night Mode" />
+            android:summary="Choose the theme to be used when the app is in Night Mode"
+            android:title="Night Mode Theme" />
+        <!-- TODO Choose and implement a strategy for having the changes to the theme appear immediately while also keeping the user in the preference dialog. (see below)
+        At present, the preference activity is restarted to apply changes immediately, which drops the user out of the theme page of the preferences activity -->
+        <SwitchPreference
+            android:defaultValue="off"
+            android:key="nightModeToggle"
+            android:summary="Toggle whether the app is currently in Night Mode"
+            android:title="Night Mode Toggle" />
+
+        <!--android:entries="@array/theme_labels"-->
+        <!--android:entryValues="@array/theme_values"-->
+
 
     </PreferenceScreen>
 
