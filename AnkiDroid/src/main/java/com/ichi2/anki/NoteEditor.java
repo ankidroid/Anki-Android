@@ -154,7 +154,7 @@ public class NoteEditor extends AnkiActivity {
 
     private boolean mChanged = false;
     private boolean mFieldEdited = false;
-    private boolean mRescheduled = false;
+    private boolean mReloadRequired = false;
 
 
     /**
@@ -808,10 +808,10 @@ public class NoteEditor extends AnkiActivity {
     private void changeNoteType(JSONObject oldModel, JSONObject newModel) throws ConfirmModSchemaException {
         final long [] nids = {mEditorNote.getId()};
         getCol().getModels().change(oldModel, nids, newModel, mModelChangeFieldMap, mModelChangeCardMap);
-        // refresh the note & card objects to reflect the database changes
-        mCurrentEditedCard.load();
-        mEditorNote = mCurrentEditedCard.note();
+        // refresh the note object to reflect the database changes
+        mEditorNote.load();
         // close note editor
+        mReloadRequired = true;
         closeNoteEditor();
     }
 
@@ -1005,12 +1005,13 @@ public class NoteEditor extends AnkiActivity {
         } else {
             result = RESULT_CANCELED;
         }
-        if (mRescheduled) {
+        if (mReloadRequired) {
             if (intent == null) {
                 intent = new Intent();
             }
-            intent.putExtra("rescheduled", true);
+            intent.putExtra("reloadRequired", true);
         }
+
         closeNoteEditor(result, intent);
     }
 
@@ -1088,7 +1089,7 @@ public class NoteEditor extends AnkiActivity {
                         Timber.i("NoteEditor:: OK button pressed");
                         getCol().getSched().forgetCards(new long[] { mCurrentEditedCard.getId() });
                         getCol().reset();
-                        mRescheduled = true;
+                        mReloadRequired = true;
                         Themes.showThemedToast(NoteEditor.this,
                                 getResources().getString(R.string.reset_card_dialog_acknowledge), true);
                     }
@@ -1112,7 +1113,7 @@ public class NoteEditor extends AnkiActivity {
                         int days = Integer.parseInt(((EditText) rescheduleEditText).getText().toString());
                         getCol().getSched().reschedCards(new long[] { mCurrentEditedCard.getId() }, days, days);
                         getCol().reset();
-                        mRescheduled = true;
+                        mReloadRequired = true;
                         Themes.showThemedToast(NoteEditor.this,
                                 getResources().getString(R.string.reschedule_card_dialog_acknowledge), true);
                     }
