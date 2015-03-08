@@ -1769,6 +1769,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         for (Object[] d : decks) {
             HashMap<String, String> m = new HashMap<String, String>();
             String[] name = ((String[]) d[0]);
+            Log.v("DeckPicker", "deck name: " + readableDeckName(name));
             m.put("name", readableDeckName(name));
             m.put("did", ((Long) d[1]).toString());
             m.put("new", ((Integer) d[2]).toString());
@@ -1779,19 +1780,24 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             // m.put("complAll", ((Float)d[6]).toString());
             // Following code designates each item was one of "Top, center, bottom, or full" to indicate whether/how it is grouped.  This affects the layout and possibly the choice of background image
             if (name.length == 1) {
+                Log.v("DeckPicker", "sep / top");
                 due += Integer.parseInt(m.get("new")) + Integer.parseInt(m.get("lrn")) + Integer.parseInt(m.get("rev"));
                 // top position
                 m.put("sep", "top");
                 // correct previous deck
                 if (mDeckList.size() > 0) {
                     HashMap<String, String> map = mDeckList.get(mDeckList.size() - 1);
+                    Log.v("DeckPicker", "correct previous deck");
                     if (map.get("sep").equals("top")) {
+                        Log.v("DeckPicker", "sep / from top to ful");
                         map.put("sep", "ful");
                     } else {
+                        Log.v("DeckPicker", "sep / bot");
                         map.put("sep", "bot");
                     }
                 }
             } else {
+                Log.v("DeckPicker", "sep / cen");
                 // center position
                 m.put("sep", "cen");
             }
@@ -1805,6 +1811,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             }
             mDeckList.add(m);
         }
+        Log.v("DeckPicker", "mDeckList: " + mDeckList.toArray());
         mDeckListAdapter.notifyDataSetChanged();
 
         // set title
