@@ -155,6 +155,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
     private SimpleAdapter mDeckListAdapter;
     private ArrayList<HashMap<String, String>> mDeckList;
+    private List<DeckGroup> mNewDeckList;
     private ListView mDeckListView;
     private TextView mTodayTextView;
 
@@ -421,6 +422,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             selectNavigationItem(DRAWER_DECK_PICKER);
         }
 
+        mNewDeckList = new ArrayList<DeckGroup>();
         mDeckList = new ArrayList<HashMap<String, String>>();
         mDeckListView = (ListView) findViewById(R.id.files);
         mDeckListAdapter = new SimpleAdapter(this, mDeckList, R.layout.deck_item, new String[] { "name", "new", "lrn",
@@ -1765,11 +1767,26 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             Timber.e("updateDecksList: empty decks list");
             return;
         }
+        mNewDeckList.clear();
         mDeckList.clear();
         int due = 0;
+
+        DeckGroup deckGroup = null;
         for (Object[] d : decks) {
+            // TODO -- remove all below
             HashMap<String, String> m = new HashMap<String, String>();
             String[] name = ((String[]) d[0]);
+            // TODO -- remove all above
+
+            Deck deck = new Deck();
+            deck.setDeckName(readableDeckName(name));
+            deck.setDeckId((Long) d[1]);
+            deck.setNewCardsDue((Integer) d[2]);
+            deck.setLearnedCardsDue((Integer) d[3]);
+            deck.setReviewCardsDue((Integer) d[4]);
+            deck.setIsDynamic((Boolean) d[5]);
+
+            // TODO -- remove all below
             m.put("name", readableDeckName(name));
             m.put("did", ((Long) d[1]).toString());
             m.put("new", ((Integer) d[2]).toString());
@@ -1778,8 +1795,21 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             m.put("dyn", ((Boolean) d[5]) ? "d1" : "d0");
             // m.put("complMat", ((Float)d[5]).toString());
             // m.put("complAll", ((Float)d[6]).toString());
+            // TODO -- remove all above
+
             // Following code designates each item was one of "Top, center, bottom, or full" to indicate whether/how it is grouped.  This affects the layout and possibly the choice of background image
             if (name.length == 1) {
+                // create a new DeckGroup, and add the Deck
+                deckGroup = new DeckGroup();
+                deckGroup.add(deck);
+
+                // add this Deck's due cards to the total due across all Decks
+//                due += deck.getNewCardsDue() + deck.getLearnedCardsDue() + deck.getReviewCardsDue();
+
+                // add the new DeckGroup to mDeckList, our list of DeckGroups
+                mNewDeckList.add(deckGroup);
+
+                // TODO -- remove all below
                 due += Integer.parseInt(m.get("new")) + Integer.parseInt(m.get("lrn")) + Integer.parseInt(m.get("rev"));
                 // top position
                 m.put("sep", "top");
@@ -1792,10 +1822,15 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                         map.put("sep", "bot");
                     }
                 }
+                // TODO -- remove all above
             } else {
+                if (deckGroup != null) {
+                    deckGroup.add(deck);
+                }
                 // center position
                 m.put("sep", "cen");
             }
+            // TODO -- remove all below
             if (mDeckList.size() > 0 && mDeckList.size() == decks.size() - 1) {
                 // bottom position
                 if (name.length == 1) {
@@ -1805,6 +1840,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 }
             }
             mDeckList.add(m);
+            // TODO -- remove all above
         }
         mDeckListAdapter.notifyDataSetChanged();
 

@@ -44,6 +44,7 @@ Thumbs.db
 .idea/datasources.xml
 .idea/dataSources.ids
 .idea/libraries
+.idea/vcs.xml
 
 # Additionally ignore project files themselves so developers can choose their root directory name freely
 .idea/modules.xml
