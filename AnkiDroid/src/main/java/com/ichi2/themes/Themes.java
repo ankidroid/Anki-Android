@@ -42,8 +42,8 @@ import timber.log.Timber;
 
 public class Themes {
 
-    private final static String themeNames[] = {"Blue", "White", "Flat", "Deep Black", "Grey Black"};
-    private final static int themeIDs[] = {R.style.Theme_Blue, R.style.Theme_Flat, R.style.Theme_White, R.style.Theme_DeepBlack, R.style.Theme_GreyBlack};
+    private final static String themeNames[] = {"CrazyForTesting", "Aqua", "Original - White", "Deep Black", "Grey Black"};
+    private final static int themeIDs[] = {R.style.Theme_CrazyForTesting, R.style.Theme_Aqua,  R.style.Theme_White, R.style.Theme_DeepBlack, R.style.Theme_GreyBlack};
 
 //    public final static String themeNames[] = {"Android Dark", "Android Light", "Blue", "White", "Flat", "Deep Black", "Grey Black"};
 //    public final static int THEME_ANDROID_DARK = 0;
@@ -857,13 +857,13 @@ public class Themes {
     public static void showThemedToast(Context context, String text, boolean shortLength) {
         Toast result = Toast.makeText(context, text, shortLength ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG);
         try {
-            if (mCurrentTheme >= THEME_BLUE) {
+//            if (mCurrentTheme >= THEME_BLUE) {
                 TextView tv = new TextView(context);
                 tv.setBackgroundResource(mToastBackground);
                 tv.setTextColor(mProgressDialogFontColor);
                 tv.setText(text);
                 result.setView(tv);
-            }
+//            }
             result.show();
         } catch (OutOfMemoryError e) {
             Timber.e(e, "showThemedToast - OutOfMemoryError occured");
@@ -952,9 +952,9 @@ public class Themes {
     // TODO JS this code may be the reason dialogs are not conforming to the XML. Fix this.
     public static void setStyledDialogBackgrounds(View main, int buttonNumbers, boolean brightCustomPanelBackground) {
 //        setFont(main);
-        if (mCurrentTheme == THEME_WHITE) {
+//        if (mCurrentTheme == THEME_WHITE) {
 //            setTextColor(main, mContext.getResources().getColor(R.color.black));
-        }
+//        }
         // order of styled dialog elements:
         // 1. top panel (title)
         // 2. content panel
@@ -1120,15 +1120,15 @@ public class Themes {
 
 
     public static int getNightModeCardBackground(Context context) {
-        switch (mCurrentTheme) {
-            case THEME_BLUE:
+//        switch (mCurrentTheme) {
+//            case THEME_BLUE:
                 return context.getResources().getColor(R.color.reviewer_night_card_background);
-            case THEME_FLAT:
-                return context.getResources().getColor(R.color.reviewer_night_card_background);
-            case THEME_WHITE:
-            default:
-                return context.getResources().getColor(R.color.black);
-        }
+//            case THEME_FLAT:
+//                return context.getResources().getColor(R.color.reviewer_night_card_background);
+//            case THEME_WHITE:
+//            default:
+//                return context.getResources().getColor(R.color.black);
+//        }
     }
 
 
@@ -1160,21 +1160,22 @@ public class Themes {
             foregroundColor = Color.WHITE;
             nextTimeRecommendedColor = res.getColor(R.color.next_time_recommended_color_inv);
 
-            switch (mCurrentTheme) {
-                case THEME_BLUE:
-                    border.setBackgroundResource(R.drawable.blue_bg_webview_night);
-                    view.setBackgroundColor(res.getColor(R.color.background_dark_blue));
-                    break;
-                case THEME_WHITE:
+//            switch (mCurrentTheme) {
+//                case THEME_BLUE:
+//                    border.setBackgroundResource(R.drawable.blue_bg_webview_night);
+//                    view.setBackgroundColor(res.getColor(R.color.background_dark_blue));
+//                    break;
+//                case THEME_WHITE:
                     border.setBackgroundResource(R.drawable.white_bg_webview_night);
                     view.setBackgroundColor(res.getColor(R.color.white_background_night));
                     ((View) view.getParent()).setBackgroundColor(res.getColor(R.color.white_background_night));
-                    break;
-                case THEME_FLAT:
-                default:
-                    view.setBackgroundColor(res.getColor(R.color.black));
-                    break;
-            }
+//
+//  break;
+//                case THEME_FLAT:
+//                default:
+//                    view.setBackgroundColor(res.getColor(R.color.black));
+//                    break;
+//            }
         } else {
             foregroundColor = Color.BLACK;
             nextTimeRecommendedColor = res.getColor(R.color.next_time_recommended_color);
@@ -1267,11 +1268,12 @@ public class Themes {
 
     // TODO FIX THIS centralized themes.xml approach
     public static TypedArray getNavigationImages(Resources resources) {
-        if (mCurrentTheme != THEME_DEEPBLACK) {
+        // TODO create an attr method of getting drawer_images  appropriate to the theme
+//        if (mCurrentTheme != THEME_DEEPBLACK) {
             return resources.obtainTypedArray(R.array.drawer_images);
-        } else {
-            return resources.obtainTypedArray(R.array.drawer_images_deepblack);
-        }
+//        } else {
+//            return resources.obtainTypedArray(R.array.drawer_images_deepblack);
+//        }
     }
 
 
