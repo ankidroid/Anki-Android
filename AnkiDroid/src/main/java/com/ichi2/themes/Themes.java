@@ -22,6 +22,7 @@ package com.ichi2.themes;
 import android.content.Context;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
@@ -42,8 +43,9 @@ import timber.log.Timber;
 
 public class Themes {
 
-    private final static String themeNames[] = {"Blue", "White", "Flat", "Deep Black", "Grey Black"};
-    private final static int themeIDs[] = {R.style.Theme_Blue, R.style.Theme_Flat, R.style.Theme_White, R.style.Theme_DeepBlack, R.style.Theme_GreyBlack};
+    // TODO Consider getting themeNames from @string/theme_labels
+    private final static String themeNames[] = {"CrazyForTesting", "Aqua", "Original - White", "Deep Black", "Grey Black"};
+    private final static int themeIDs[] = {R.style.Theme_CrazyForTesting, R.style.Theme_Aqua,  R.style.Theme_White, R.style.Theme_DeepBlack, R.style.Theme_GreyBlack};
 
 //    public final static String themeNames[] = {"Android Dark", "Android Light", "Blue", "White", "Flat", "Deep Black", "Grey Black"};
 //    public final static int THEME_ANDROID_DARK = 0;
@@ -857,13 +859,13 @@ public class Themes {
     public static void showThemedToast(Context context, String text, boolean shortLength) {
         Toast result = Toast.makeText(context, text, shortLength ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG);
         try {
-            if (mCurrentTheme >= THEME_BLUE) {
+//            if (mCurrentTheme >= THEME_BLUE) {
                 TextView tv = new TextView(context);
                 tv.setBackgroundResource(mToastBackground);
                 tv.setTextColor(mProgressDialogFontColor);
                 tv.setText(text);
                 result.setView(tv);
-            }
+//            }
             result.show();
         } catch (OutOfMemoryError e) {
             Timber.e(e, "showThemedToast - OutOfMemoryError occured");
@@ -952,9 +954,9 @@ public class Themes {
     // TODO JS this code may be the reason dialogs are not conforming to the XML. Fix this.
     public static void setStyledDialogBackgrounds(View main, int buttonNumbers, boolean brightCustomPanelBackground) {
 //        setFont(main);
-        if (mCurrentTheme == THEME_WHITE) {
+//        if (mCurrentTheme == THEME_WHITE) {
 //            setTextColor(main, mContext.getResources().getColor(R.color.black));
-        }
+//        }
         // order of styled dialog elements:
         // 1. top panel (title)
         // 2. content panel
@@ -1120,15 +1122,15 @@ public class Themes {
 
 
     public static int getNightModeCardBackground(Context context) {
-        switch (mCurrentTheme) {
-            case THEME_BLUE:
+//        switch (mCurrentTheme) {
+//            case THEME_BLUE:
                 return context.getResources().getColor(R.color.reviewer_night_card_background);
-            case THEME_FLAT:
-                return context.getResources().getColor(R.color.reviewer_night_card_background);
-            case THEME_WHITE:
-            default:
-                return context.getResources().getColor(R.color.black);
-        }
+//            case THEME_FLAT:
+//                return context.getResources().getColor(R.color.reviewer_night_card_background);
+//            case THEME_WHITE:
+//            default:
+//                return context.getResources().getColor(R.color.black);
+//        }
     }
 
 
@@ -1160,21 +1162,22 @@ public class Themes {
             foregroundColor = Color.WHITE;
             nextTimeRecommendedColor = res.getColor(R.color.next_time_recommended_color_inv);
 
-            switch (mCurrentTheme) {
-                case THEME_BLUE:
-                    border.setBackgroundResource(R.drawable.blue_bg_webview_night);
-                    view.setBackgroundColor(res.getColor(R.color.background_dark_blue));
-                    break;
-                case THEME_WHITE:
+//            switch (mCurrentTheme) {
+//                case THEME_BLUE:
+//                    border.setBackgroundResource(R.drawable.blue_bg_webview_night);
+//                    view.setBackgroundColor(res.getColor(R.color.background_dark_blue));
+//                    break;
+//                case THEME_WHITE:
                     border.setBackgroundResource(R.drawable.white_bg_webview_night);
                     view.setBackgroundColor(res.getColor(R.color.white_background_night));
                     ((View) view.getParent()).setBackgroundColor(res.getColor(R.color.white_background_night));
-                    break;
-                case THEME_FLAT:
-                default:
-                    view.setBackgroundColor(res.getColor(R.color.black));
-                    break;
-            }
+//
+//  break;
+//                case THEME_FLAT:
+//                default:
+//                    view.setBackgroundColor(res.getColor(R.color.black));
+//                    break;
+//            }
         } else {
             foregroundColor = Color.BLACK;
             nextTimeRecommendedColor = res.getColor(R.color.next_time_recommended_color);
@@ -1267,11 +1270,12 @@ public class Themes {
 
     // TODO FIX THIS centralized themes.xml approach
     public static TypedArray getNavigationImages(Resources resources) {
-        if (mCurrentTheme != THEME_DEEPBLACK) {
+        // TODO create an attr method of getting drawer_images  appropriate to the theme
+//        if (mCurrentTheme != THEME_DEEPBLACK) {
             return resources.obtainTypedArray(R.array.drawer_images);
-        } else {
-            return resources.obtainTypedArray(R.array.drawer_images_deepblack);
-        }
+//        } else {
+//            return resources.obtainTypedArray(R.array.drawer_images_deepblack);
+//        }
     }
 
 
@@ -1320,6 +1324,9 @@ public class Themes {
     private static int mBackgroundColor = NOT_INITIALIZED;
 
     private static int mCurrentTheme = NOT_INITIALIZED;
+    private static int mCurrentNightModeTheme = NOT_INITIALIZED;  // TODO Eventually switch to always querying the app preference object directly
+    private static int mCurrentDayModeTheme = NOT_INITIALIZED;
+    private static boolean mNightModeBoolean = false;
 
 
 //    private static int mActionbarBackgroundColor = NOT_INITIALIZED;  // Most of these fields are state-dependant, and so must change programmatically.  For this one, I simply haven't yet figured out how to do this xml-only
@@ -1484,6 +1491,14 @@ public class Themes {
     public static void applyTheme(Context context, int theme) {
         Log.e("JS", "applyTheme");
         mContext = context;
+
+        // TODO look throughout code for other uses of mCurrentTheme, be sure its getting the correct theme wrt mNightModeBoolean
+        if (mNightModeBoolean) {
+            mCurrentTheme = mCurrentNightModeTheme;
+        } else {
+            mCurrentTheme = mCurrentDayModeTheme;
+        }
+
         if ((mCurrentTheme >= 0) && (mCurrentTheme <= themeNames.length)) {
             context.setTheme(themeIDs[mCurrentTheme]);
             Timber.d("Set theme: " + themeNames[mCurrentTheme]);
@@ -1600,6 +1615,13 @@ public class Themes {
         }
     }
 
+    public static void updateThemeFromPreferences(SharedPreferences sharedPreferences) {
+        mCurrentDayModeTheme = Integer.parseInt(sharedPreferences.getString("dayModeTheme", "1"));
+        mCurrentNightModeTheme = Integer.parseInt(sharedPreferences.getString("nightModeTheme", "1"));
+        mNightModeBoolean = sharedPreferences.getBoolean("nightModeToggle", false);
+
+        mCurrentTheme = mCurrentDayModeTheme;  // TODO To where has the night mode boolean been centralized?
+    }
 }
 
 // Given an R.attr.x value, return the R.x.x value that it refers to (Usually R.color.x)

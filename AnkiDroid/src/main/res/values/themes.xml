@@ -100,7 +100,7 @@
         <item name="deckPickerListSelector">@drawable/white_deckpicker_list_selector</item>
 
         <!-- Misc button styles -->
-<!--Bring this back during testing-->
+        <!--Bring this back during testing-->
         <item name="android:buttonStyle">@style/White.Button</item>
         <!--<item name="android:buttonStyleSmall">@style/White.Button.Small</item>-->
         <!--<item name="android:buttonStyleToggle">@style/White.Button.Toggle</item>-->
@@ -145,7 +145,33 @@
 
     <!--  ================================================================================== -->
     <!-- Blue Theme -->
-    <style name="Theme_Blue" parent="@style/Theme_White">
+    <style name="Theme_Aqua" parent="@style/Theme_White">
+        <item name="android:colorBackground">@color/background_blue</item>
+        <item name="android:colorForeground">#eeeeff</item>
+        <item name="android:textColorPrimary">#111144</item>
+        <item name="android:textColorSecondary">#222288</item>
+        <item name="android:textColorTertiary">#333399</item>
+
+        <item name="android:background">#ccccff</item>
+
+        <item name="learnCountTextColor">#ff0000</item>
+        <item name="reviewCountTextColor">#00ff00</item>
+        <item name="newCountTextColor">#000088</item>
+
+        <item name="dyn_deck">#226611</item>
+        <item name="non_dyn_deck">@color/non_dyn_deck</item>
+
+        <!-- Card browser specific theme settings -->
+        <item name="card_browser_marked">#ff8888</item>
+        <item name="card_browser_suspended">#228888</item>
+    </style>
+
+
+
+    <!--  ================================================================================== -->
+    <!-- CrazyForTesting Theme -->
+    <style name="Theme_CrazyForTesting" parent="@style/Theme_White">
+
         <!-- to do preference screens, etc, over-ride these: -->
         <item name="android:colorBackground">@color/background_blue</item>
         <item name="android:colorForeground">#eeeeff</item>
@@ -196,50 +222,9 @@
         <!--<item name="android:spinnerDropDownItemStyle">@style/Blue.Widget.DropDownItem.Spinner</item>-->
     </style>  <!-- Blue theme ^^  -->
 
-    <!--  ================================================================================== -->
-    <!-- Flat Theme -->
-    <style name="Theme_Flat" parent="@style/Theme_White">
-        <!--<item name="foregroundColor">#222222</item>-->
-        <!--<item name="android:buttonStyle">@style/Blue.Button</item>-->
-        <!--<item name="android:buttonStyleSmall">@style/Blue.Button.Small</item>-->
-        <!--<item name="android:buttonStyleToggle">@style/Blue.Button.Toggle</item>-->
-        <!--<item name="android:checkboxStyle">@style/Blue.CompoundButton.CheckBox</item>-->
-        <!--<item name="android:colorForeground">#0000</item>-->
-        <!--<item name="android:colorBackground">@color/background_blue</item>-->
-        <!--<item name="android:editTextStyle">@style/Blue.Edittext</item>-->
-        <!--<item name="android:radioButtonStyle">@style/Blue.CompoundButton.RadioButton</item>-->
-
-        <!-- Dialog styles -->
-        <!--<item name="android:alertDialogStyle">@style/Blue.AlertDialog</item>-->
-        <!--<item name="android:listChoiceIndicatorSingle">@drawable/blue_btn_radio</item>-->
-        <!--<item name="android:listChoiceIndicatorMultiple">@drawable/blue_btn_check</item>-->
-        <!--<item name="android:listViewStyle">@style/Blue.Widget.ListView</item>-->
-        <!--<item name="android:dropDownListViewStyle">@style/Blue.Widget.ListView.DropDown</item>-->
-        <!--<item name="android:listDivider">@drawable/blue_divider_horizontal_bright</item>-->
-        <!--<item name="android:listPreferredItemHeight">56dip</item>-->
-        <!--<item name="android:spinnerStyle">@style/Blue.Widget.Spinner</item>-->
-        <!--<item name="android:spinnerDropDownItemStyle">@style/Blue.Widget.DropDownItem.Spinner</item>-->
-    </style>
 
 
-    <!-- ================================================================= -->
-    <!-- Translucent -->
-    <style name="Theme_Translucent" parent="@style/Theme_Blue">
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:colorBackgroundCacheHint">@null</item>
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowAnimationStyle">@android:style/Animation</item>
-        <!--         <item name="studyOptionsBackground">@drawable/</item> -->
-    </style>
 
-    <!-- Basic theme for dialogs -->
-
-    <style name="Theme_Start" parent="@style/Theme_White">
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowNoTitle">true</item>
-    </style>
 
     <!-- ===================================================================== -->
     <!-- DEEP BLACK theme -->
@@ -275,7 +260,7 @@
 
 
         <!--<item name="android:colorBackground">#000010</item>  -->
-                    <!-- experimenting with this as a way to force the dropdown and popup color to change -->
+        <!-- experimenting with this as a way to force the dropdown and popup color to change -->
         <item name="android:textColor">#dddddd</item> <!-- experimenting with this as a way to force the dropdown and popup color to change -->
 
         <item name="actionBarBackgroundColor">#000010</item>
@@ -354,6 +339,13 @@
         <item name="backgroundColor">#101010</item>
         <item name="android:background">@color/transparent</item>
 
+
+        <item name="android:textColorPrimary">#aaaaaa</item>
+        <item name="android:textColorSecondary">#999999</item>
+        <item name="android:textColorTertiary">#888888</item>
+
+
+
         <item name="wallpaper">@drawable/deepblack_wallpaper</item>
 
         <item name="genericBackgroundFrame">@drawable/deepblack_textview</item>
@@ -396,6 +388,13 @@
     </style>
 
 
+    <!-- Basic theme for dialogs -->
+
+    <style name="Theme_Start" parent="@style/Theme_White">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
 
 </resources>
 
@@ -419,3 +418,5 @@
     <color name="dyn_deck">#2222bb</color>
     <color name="non_dyn_deck">#000000</color>
     -->
+
+

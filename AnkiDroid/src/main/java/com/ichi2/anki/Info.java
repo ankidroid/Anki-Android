@@ -69,7 +69,8 @@ public class Info extends ActionBarActivity {
         setContentView(R.layout.info);
 
         webView = (WebView) findViewById(R.id.info);
-        webView.setBackgroundColor(Color.WHITE); // TODO
+        // TODO This is working for me, but does res.getColor expect the kind  of value returned by getBackgroundColor()
+        webView.setBackgroundColor(Color.WHITE);
 //        Themes.setWallpaper((View) webView.getParent().getParent().getParent());
 
         TextView termsAndConditionsView = (TextView) findViewById(R.id.info_terms_and_conditions);

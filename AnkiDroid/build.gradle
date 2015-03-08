@@ -5,7 +5,7 @@ android {
     buildToolsVersion "19.1"
 
     defaultConfig {
-        applicationId "com.ichi2.anki"
+        applicationId "com.ichi2.anki_themes"
         minSdkVersion 7
         targetSdkVersion 21
         testApplicationId "com.ichi2.anki.tests"
