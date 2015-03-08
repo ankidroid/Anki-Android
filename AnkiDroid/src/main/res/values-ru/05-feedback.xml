@@ -64,5 +64,5 @@
   <string name="feedback_manual_toast_text">AnkiDroid столкнулся с проблемой; отчет генерируется&#8230;</string>
   <string name="feedback_copy_debug">Копировать данные дебага</string>
   <string name="feedback_report">Отчёт</string>
-  <string name="feedback_report_automatically">Send error reports automatically</string>
+  <string name="feedback_report_automatically">Автоматически отправлять отчеты об ошибках</string>
 </resources>
