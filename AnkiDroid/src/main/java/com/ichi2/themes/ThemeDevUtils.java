@@ -16,8 +16,7 @@ public class ThemeDevUtils {
         Themes.forceDecrementTheme();  // Hack for dev/testing only.
         Themes.applyTheme(a);
 //            Log.e("JS", "vol keydown, decrement");
-        Toast.makeText(a,"Theme: "+Themes.getThemeName(),Toast.LENGTH_SHORT).
-                show();
+        Toast.makeText(a,"Theme: "+Themes.getThemeName(),Toast.LENGTH_SHORT).show();
         a.finish();
         a.startActivity(a.getIntent() );
         return true;

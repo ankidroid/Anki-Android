@@ -48,7 +48,7 @@ public class Previewer extends AbstractFlashcardViewer {
 
     @Override
     protected void setTitle() {
-        AnkiDroidApp.getCompat().setTitle(this, getResources().getString(R.string.preview_title), mInvertedColors);
+        AnkiDroidApp.getCompat().setTitle(this, getResources().getString(R.string.preview_title));
     }
 
 

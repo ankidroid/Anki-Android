@@ -6,7 +6,7 @@
     <item
         android:id="@+id/action_deck_chooser"
         android:title="@string/stats_select_decks"
-        android:icon="@drawable/ic_action_storage"
+        android:icon="?attr/ic_action_storage"
         app:showAsAction="always">
         <menu>
             <group android:id="@+id/group1" android:checkableBehavior="single">
@@ -22,7 +22,7 @@
     <item
         android:id="@+id/action_time_chooser"
         android:title="@string/stats_select_time_scale"
-        android:icon="@drawable/ic_action_time"
+        android:icon="?attr/ic_action_time"
         app:showAsAction="always">
         <menu>
             <group android:id="@+id/group2" android:checkableBehavior="single">

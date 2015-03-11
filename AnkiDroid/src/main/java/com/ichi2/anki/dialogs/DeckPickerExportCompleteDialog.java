@@ -29,7 +29,7 @@ public class DeckPickerExportCompleteDialog extends AsyncDialogFragment {
         Resources res = getResources();
         builder.setTitle(getNotificationTitle());
         builder.setMessage(getNotificationMessage());
-        builder.setIcon(R.drawable.ic_menu_send);
+        builder.setIconID(R.drawable.ic_menu_send);
         builder.setPositiveButton(res.getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

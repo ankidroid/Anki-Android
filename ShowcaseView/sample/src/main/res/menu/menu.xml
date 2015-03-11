@@ -18,10 +18,10 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/menu_item1"
-          android:icon="@drawable/ic_edit"
+          android:iconID="@drawable/ic_edit"
         android:title="item1"
             android:showAsAction="always"/>
     <item android:id="@+id/menu_item2"
-          android:icon="@drawable/ic_discard"
+          android:iconID="@drawable/ic_discard"
             android:title="Showcase title"/>
 </menu>

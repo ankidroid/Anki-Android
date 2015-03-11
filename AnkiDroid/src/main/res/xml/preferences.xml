@@ -454,7 +454,15 @@
     </PreferenceScreen>
     <!-- TODO replace these inline strings with references to @string/x -->
     <PreferenceScreen android:title="Themes"
-        android:summary="Change the themes used" >
+        android:summary="Change the themes used for Day and Night modes" >
+        <Preference
+            android:key="no_key_needed"
+            android:selectable="false"
+            android:title=""
+            android:summary="For testing only - currently restarts preference activity to immediately apply theme. This will be improved.
+            \nConsider having the theme selector run in its own activity, so activity restarts don't cause the user to switch to previous screen.
+            \nCurrently allows light themes in night mode and dark themes in day mode, which might be confusing to some, but preferred by those AMOLED users who want to save power during the day.
+            \nVolume rocker keys will also change the theme (and restart current activity) in many places in the app"/>
         <ListPreference
             android:defaultValue="2"
             android:entries="@array/theme_labels"
@@ -473,7 +481,7 @@
         At present, the preference activity is restarted to apply changes immediately, which drops the user out of the theme page of the preferences activity -->
         <SwitchPreference
             android:defaultValue="off"
-            android:key="nightModeToggle"
+            android:key="nightModeEnabled"
             android:summary="Toggle whether the app is currently in Night Mode"
             android:title="Night Mode Toggle" />
 

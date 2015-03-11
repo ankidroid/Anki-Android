@@ -2,6 +2,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
+    <!-- TODO JS make this file more fully themable -->
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
@@ -13,12 +15,12 @@
             android:layout_marginLeft="11.3333dip"
             android:layout_marginRight="43.3333dip"
             android:layout_marginTop="30dip"
-            android:background="#ffffff" >
+            android:background="?attr/backgroundElevatedColor" >
 
             <FrameLayout
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:background="#ffffff"
+                android:background="?attr/backgroundElevatedColor"
                 android:clickable="false"
                 android:focusable="false" />
 
@@ -334,7 +336,7 @@
 
             <FrameLayout
                 android:layout_width="fill_parent"
-                android:layout_height="dip"
+                android:layout_height="wrap_content"
                 android:layout_weight="4" >
 
                 <LinearLayout

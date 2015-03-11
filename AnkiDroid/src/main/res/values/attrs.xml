@@ -28,6 +28,40 @@
         <attr name="ic_dialog_info" format="string" />
         <attr name="ic_media" format="string" />
         <attr name="ic_lookup" format="string" />
+        <attr name="ic_menu_night_checked" format="string" />
+        <attr name="ic_menu_sort_by_size" format="string" />
+        <attr name="ic_menu_view" format="string" />
+        <attr name="ic_action_cancel" format="string" />
+        <attr name="ic_lookup_normal" format="string" />
+        <attr name="ic_lookup_pressed" format="string" />
+
+        <attr name="ic_action_replay" format="string" />
+        <attr name="ic_action_whiteboard_enable_light" format="string" />
+        <attr name="ic_dialog_alert" format="string" />
+        <attr name="ic_menu_edit" format="string" />
+        <attr name="ic_menu_mark" format="string" />
+        <attr name="ic_menu_revert_disabled" format="string" />
+        <attr name="ic_action_search" format="string" />
+        <attr name="ic_menu_refresh" format="string" />
+        <!--<attr name="actionBarOverflowIcon" format="string" />-->
+        <attr name="ic_action_time" format="string" />
+        <attr name="ic_action_storage" format="string" />
+
+<!-- From popupmenu multimedia options -->
+        <attr name="ic_action_camera" format="string" />
+        <attr name="ic_action_mic" format="string" />
+        <attr name="text" format="string" />
+
+        <!-- activity edit text-->
+        <attr name="content_picture" format="string" />
+        <attr name="device_access_mic" format="string" />
+        <attr name="ic_action_accept" format="string" />
+
+        <attr name="android_std_content_discard" format="string" />
+
+        <!-- Navigation drawer images are grouped into an array -->
+        <attr name="navigationDrawerIconImages" format="reference" />
+
 
         <attr name="wallpaper" format="string" />
 
@@ -59,9 +93,8 @@
 
 
 
-
         <attr name="deckpicker_load_bg" format="string" />
-        <attr name="white_list_selector_background" format="string" />
+        <attr name="list_selector_background" format="string" />
 
         <!-- Generic 'foreground color', often used for textfield text color -->
         <!--<attr name="foregroundColor" format="color" />-->  <!-- replace with android:textColorxxx -->
@@ -106,6 +139,8 @@
         <attr name="card_browser_suspended" format="color"/>
 
 
+        <attr name="dialogTitleBackgroundColor" format="color" />
+        <attr name="dialogBackgroundColor" format="color" />
         <attr name="editTextBackground" format="color" />
 
 

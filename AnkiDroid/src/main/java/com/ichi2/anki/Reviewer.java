@@ -51,12 +51,13 @@ public class Reviewer extends AbstractFlashcardViewer {
     protected void setTitle() {
         try {
             String[] title = mSched.getCol().getDecks().current().getString("name").split("::");
-            AnkiDroidApp.getCompat().setTitle(this, title[title.length - 1], mNightMode);
+            AnkiDroidApp.getCompat().setTitle(this, title[title.length - 1]);
             super.setTitle(title[title.length - 1]);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-        AnkiDroidApp.getCompat().setSubtitle(this, "", mNightMode);
+//        AnkiDroidApp.getCompat().setSubtitle(this, "", mNightMode);
+        AnkiDroidApp.getCompat().setSubtitle(this, "");
     }
 
 
@@ -218,11 +219,11 @@ public class Reviewer extends AbstractFlashcardViewer {
             menu.findItem(R.id.action_hide_whiteboard).setVisible(true);
             menu.findItem(R.id.action_clear_whiteboard).setVisible(true);
             if (mShowWhiteboard) {
-                //menu.findItem(R.id.action_clear_whiteboard).setIcon(R.drawable.ic_whiteboard_clear_enabled);
+                //menu.findItem(R.id.action_clear_whiteboard).setIconID(R.drawable.ic_whiteboard_clear_enabled);
                 menu.findItem(R.id.action_hide_whiteboard).setIcon(R.drawable.ic_action_whiteboard_enable_light);
                 menu.findItem(R.id.action_hide_whiteboard).setTitle(R.string.hide_whiteboard);
             } else {
-                //menu.findItem(R.id.action_clear_whiteboard).setIcon(R.drawable.ic_whiteboard_clear_disabled);
+                //menu.findItem(R.id.action_clear_whiteboard).setIconID(R.drawable.ic_whiteboard_clear_disabled);
                 menu.findItem(R.id.action_hide_whiteboard).setIcon(R.drawable.ic_action_whiteboard_enable_light_disabled);
                 menu.findItem(R.id.action_hide_whiteboard).setTitle(R.string.show_whiteboard);
             }

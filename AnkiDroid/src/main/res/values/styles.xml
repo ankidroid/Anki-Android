@@ -401,6 +401,8 @@
         <item name="android:background">?attr/actionBarBackgroundColor</item>
         <item name="android:titleTextStyle">@style/MyActionBarTitleStyle</item>
         <item name="android:subtitleTextStyle">@style/MyActionBarSubtitleStyle</item>
+        <!--<item name="android:src">?attr/actionBarOverflowIcon</item>-->
+        <!-- TODO looks like I'll need to create overflow icon images first, if I want to change the color using new images -->
 
         <!-- test for solutions to white dropdown problem: -->
         <item name="android:itemTextAppearance">@style/MyActionBarItemTextAppearanceStyle</item>

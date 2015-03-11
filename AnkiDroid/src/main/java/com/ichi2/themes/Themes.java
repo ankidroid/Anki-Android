@@ -43,7 +43,7 @@ import timber.log.Timber;
 
 public class Themes {
 
-    // TODO Consider getting themeNames from @string/theme_labels
+    // TODO JS Consider getting themeNames from @string/theme_labels... or populating theme_labels using themNames.
     private final static String themeNames[] = {"CrazyForTesting", "Aqua", "Original - White", "Deep Black", "Grey Black"};
     private final static int themeIDs[] = {R.style.Theme_CrazyForTesting, R.style.Theme_Aqua,  R.style.Theme_White, R.style.Theme_DeepBlack, R.style.Theme_GreyBlack};
 
@@ -55,6 +55,7 @@ public class Themes {
 //    public final static int THEME_FLAT = 4;
 //    public final static int THEME_DEEPBLACK = 5;
 //    public final static int THEME_GREYBLACK = 6;
+
 
     public final static int THEME_BLUE = 0;
     public final static int THEME_WHITE = 1;
@@ -94,13 +95,13 @@ public class Themes {
     private static int mTitleStyle = 0;
     private static int mTitleTextColor;
     private static int mTextColor;
-    //    private static int mForegroundColor;
+    //    private static int sForegroundColor;
     private static int mTextViewStyle = 0;
     private static int mWallpaper = 0;
 //    private static int mBackgroundColor;
     private static int mBackgroundDarkColor = 0;
     private static int mDialogBackgroundColor = 0;
-    private static int mToastBackground = 0;
+    private static int sToastBackground = 0;
     private static int mPopupTopDark;
     private static int mPopupTopMedium;
     private static int mPopupTopBright;
@@ -117,13 +118,13 @@ public class Themes {
     private static Typeface mLightFont;
     private static Typeface mRegularFont;
     private static Typeface mBoldFont;
-    private static int mProgressDialogFontColor;
+    private static int sProgressDialogFontColor;
     private static int mNightModeButton;
 */
 
 
     // Replace this switch/case with an array of themes  context.setTheme(themeArray[currentTheme]);
-   /*     switch (theme == -1 ? mCurrentTheme : theme) {
+   /*     switch (theme == -1 ? sCurrentTheme : theme) {
             case THEME_ANDROID_DARK:
                 context.setTheme(android.R.style.Theme_Black);
 //                Timber.d("Set theme: dark");
@@ -164,7 +165,7 @@ public class Themes {
 //            } else {
 //                child.setBackgroundColor(mBackgroundColor);
 //                if (child instanceof TextView) {
-//                    ((TextView) child).setTextColor(mTitleTextColor);   // TODO different text color?
+//                    ((TextView) child).setTextColor(mTitleTextColor);   //
 //                }
 //            }
 //        }
@@ -207,7 +208,7 @@ public class Themes {
                 // view.findViewById(R.id.studyoptions_global_bar)).setBackgroundResource(mProgressbarsYoungColor);
 
 
-                if (mCurrentTheme == THEME_WHITE) {
+                if (sCurrentTheme == THEME_WHITE) {
 
 
                     setMargins(view.findViewById(R.id.studyoptions_deck_name), LayoutParams.WRAP_CONTENT,
@@ -240,7 +241,7 @@ public class Themes {
                 lv.setDividerHeight(0);
                 AnkiDroidApp.getCompat().setOverScrollModeNever(lv);
 
-                switch (mCurrentTheme) {
+                switch (sCurrentTheme) {
 
                     case THEME_BLUE:
                         lv.setSelector(R.drawable.blue_deckpicker_list_selector);
@@ -252,7 +253,7 @@ public class Themes {
                         lv.setSelector(R.drawable.white_deckpicker_list_selector);
                         lv.setBackgroundResource(R.drawable.white_deckpicker_lv_background);
                         view.setBackgroundResource(mWallpaper);
-                        // lv.setDivider(mContext.getResources().getDrawable(R.drawable.white_listdivider));
+                        // lv.setDivider(sContext.getResources().getDrawable(R.drawable.white_listdivider));
                         // setMargins(view, LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, 4f, 4f, 4f, 4f);
                         break;
                     case THEME_DEEPBLACK:
@@ -280,7 +281,7 @@ public class Themes {
                 setWallpaper(view);
 
 
-                switch (mCurrentTheme) {
+                switch (sCurrentTheme) {
                     case THEME_BLUE:
                         lv2.setSelector(R.drawable.blue_cardbrowser_list_selector);
                         lv2.setDividerHeight(0);
@@ -294,7 +295,7 @@ public class Themes {
                         lv2.setSelector(R.drawable.white_deckpicker_list_selector);
 
                         lv2.setSelector(R.drawable.white_deckpicker_list_selector);
-                        lv2.setDivider(mContext.getResources().getDrawable(R.drawable.white_listdivider));
+                        lv2.setDivider(sContext.getResources().getDrawable(R.drawable.white_listdivider));
                         break;
                     default:
                         break;
@@ -303,7 +304,7 @@ public class Themes {
 
             case CALLER_CARDEDITOR_INTENTDIALOG:
                 ListView lv3 = (ListView) view;
-                switch (mCurrentTheme) {
+                switch (sCurrentTheme) {
                     case THEME_BLUE:
                         lv3.setSelector(R.drawable.blue_cardbrowser_list_selector);
                         lv3.setDividerHeight(0);
@@ -335,28 +336,28 @@ public class Themes {
             case CALLER_REVIEWER:
                 ((View) view.findViewById(R.id.main_layout)).setBackgroundResource(mReviewerBackgroundID);
                 ((View) view.findViewById(R.id.flashcard_border)).setBackgroundResource(mFlashcardBorder);
-                switch (mCurrentTheme) {
+                switch (sCurrentTheme) {
                     case THEME_ANDROID_DARK:
                     case THEME_ANDROID_LIGHT:
                         ((View) view.findViewById(R.id.flashcard_frame)).setBackgroundResource(AnkiDroidApp
-                                .getSharedPrefs(mContext).getBoolean("invertedColors", false) ? R.color.black
+                                .getSharedPrefs(sContext).getBoolean("invertedColors", false) ? R.color.black
                                 : R.color.white);
                         break;
                     case THEME_BLUE:
                         ((View) view.findViewById(R.id.flashcard_frame))
-                                .setBackgroundResource(AnkiDroidApp.getSharedPrefs(mContext).getBoolean(
+                                .setBackgroundResource(AnkiDroidApp.getSharedPrefs(sContext).getBoolean(
                                         "invertedColors", false) ? R.color.reviewer_night_card_background
                                         : R.color.white);
                         break;
                     case THEME_FLAT:
                         ((View) view.findViewById(R.id.flashcard_frame))
-                                .setBackgroundResource(AnkiDroidApp.getSharedPrefs(mContext).getBoolean(
+                                .setBackgroundResource(AnkiDroidApp.getSharedPrefs(sContext).getBoolean(
                                         "invertedColors", false) ? R.color.reviewer_night_card_background
                                         : R.color.white);
                         break;
                     case THEME_WHITE:
                         ((View) view.findViewById(R.id.flashcard_frame)).setBackgroundResource(AnkiDroidApp
-                                .getSharedPrefs(mContext).getBoolean("invertedColors", false) ? R.color.black
+                                .getSharedPrefs(sContext).getBoolean("invertedColors", false) ? R.color.black
                                 : R.color.white);
 
                         setMargins(view.findViewById(R.id.main_layout), LayoutParams.FILL_PARENT,
@@ -371,13 +372,13 @@ public class Themes {
                 break;
 
             case CALLER_FEEDBACK:
-//                ((TextView) view).setTextColor(mForegroundColor);
+//                ((TextView) view).setTextColor(sForegroundColor);
                 ((TextView) view).setTextColor(getForegroundColor());
                 break;
 
             case CALLER_CARD_EDITOR:
                 view.findViewById(R.id.CardEditorEditFieldsLayout).setBackgroundResource(mTextViewStyle);
-                // int padding = (int) (4 * mContext.getResources().getDisplayMetrics().density);
+                // int padding = (int) (4 * sContext.getResources().getDisplayMetrics().density);
                 // view.findViewById(R.id.CardEditorScroll).setPadding(padding, padding, padding, padding);
                 break;
 
@@ -393,17 +394,17 @@ public class Themes {
 /*
     public static void loadTheme() {
         Log.e("JS", "loadTheme");
-        // SharedPreferences preferences = PrefSettings.getSharedPrefs(mContext);
-        //mCurrentTheme = Integer.parseInt(preferences.getString("theme", "3"));
+        // SharedPreferences preferences = PrefSettings.getSharedPrefs(sContext);
+        //sCurrentTheme = Integer.parseInt(preferences.getString("theme", "3"));
 
         // set theme always to "white" until theming is properly reimplemented
-        if (mCurrentTheme == -1) {  // temporary hack js
-            mCurrentTheme = 3;
+        if (sCurrentTheme == -1) {  // temporary hack js
+            sCurrentTheme = 3;
         }
 
-        switch (mCurrentTheme) {
+        switch (sCurrentTheme) {
             case THEME_ANDROID_DARK:
-                mDialogBackgroundColor = mContext.getResources().getColor(R.color.card_browser_background);
+                mDialogBackgroundColor = sContext.getResources().getColor(R.color.card_browser_background);
                 mProgressbarsBackgroundColorID = R.color.studyoptions_progressbar_background_default;
                 mProgressbarsFrameColorID = R.color.studyoptions_progressbar_frame_default;
                 mProgressbarsMatureColorID = R.color.studyoptions_progressbar_mature_default;
@@ -413,10 +414,10 @@ public class Themes {
                 mFlashcardBorder = 0;
                 mDeckpickerItemBorder = 0;
                 mTitleStyle = 0;
-                mTitleTextColor = mContext.getResources().getColor(R.color.white);
+                mTitleTextColor = sContext.getResources().getColor(R.color.white);
                 mTextViewStyle = 0;
                 mWallpaper = 0;
-                mToastBackground = 0;
+                sToastBackground = 0;
                 mBackgroundDarkColor = 0;
                 mReviewerProgressbarColorID = 0;
                 mCardbrowserItemColors = new int[]{0, R.color.card_browser_marked, R.color.card_browser_suspended,
@@ -435,9 +436,9 @@ public class Themes {
                 mPopupFullDark = R.drawable.popup_full_dark;
                 mPopupFullMedium = R.drawable.popup_full_bright;
                 mDividerHorizontalBright = R.drawable.blue_divider_horizontal_bright;
-                mBackgroundColor = mContext.getResources().getColor(R.color.white);
+                mBackgroundColor = sContext.getResources().getColor(R.color.white);
 
-                mProgressDialogFontColor = mContext.getResources().getColor(R.color.white);
+                sProgressDialogFontColor = sContext.getResources().getColor(R.color.white);
                 mNightModeButton = R.drawable.btn_keyboard_key_fulltrans_normal;
                 break;
 
@@ -451,13 +452,13 @@ public class Themes {
                 mFlashcardBorder = 0;
                 mDeckpickerItemBorder = 0;
                 mTitleStyle = 0;
-                mTitleTextColor = mContext.getResources().getColor(R.color.black);
+                mTitleTextColor = sContext.getResources().getColor(R.color.black);
                 mTextViewStyle = 0;
                 mWallpaper = 0;
-                mToastBackground = 0;
+                sToastBackground = 0;
                 mBackgroundDarkColor = 0;
-                mDialogBackgroundColor = mContext.getResources().getColor(R.color.card_browser_background);
-                // Fix mContext.getResources().getColor() for this
+                mDialogBackgroundColor = sContext.getResources().getColor(R.color.card_browser_background);
+                // Fix sContext.getResources().getColor() for this
                 mCardbrowserItemColors = new int[]{0, R.color.card_browser_marked, R.color.card_browser_suspended,
                         R.color.card_browser_marked};
                 mReviewerProgressbarColorID = mProgressbarsYoungColorID;
@@ -475,8 +476,8 @@ public class Themes {
                 mPopupFullMedium = R.drawable.popup_full_bright;
                 mPopupFullDark = R.drawable.popup_full_dark;
                 mDividerHorizontalBright = R.drawable.blue_divider_horizontal_bright;
-                mBackgroundColor = mContext.getResources().getColor(R.color.white);
-                mProgressDialogFontColor = mContext.getResources().getColor(R.color.white);
+                mBackgroundColor = sContext.getResources().getColor(R.color.white);
+                sProgressDialogFontColor = sContext.getResources().getColor(R.color.white);
                 mNightModeButton = R.drawable.btn_keyboard_key_fulltrans_normal;
                 break;
 
@@ -490,13 +491,13 @@ public class Themes {
                 mFlashcardBorder = R.drawable.blue_bg_webview;
                 mDeckpickerItemBorder = R.drawable.blue_bg_deckpicker;
                 mTitleStyle = R.drawable.blue_title;
-                mTitleTextColor = mContext.getResources().getColor(R.color.black);
+                mTitleTextColor = sContext.getResources().getColor(R.color.black);
                 mTextViewStyle = R.drawable.blue_textview;
                 mWallpaper = R.drawable.blue_background;
-                mBackgroundColor = mContext.getResources().getColor(R.color.background_blue);
-                mToastBackground = R.drawable.blue_toast_frame;
-                mDialogBackgroundColor = mContext.getResources().getColor(R.color.background_dialog_blue);
-                mBackgroundDarkColor = mContext.getResources().getColor(R.color.background_dark_blue);
+                mBackgroundColor = sContext.getResources().getColor(R.color.background_blue);
+                sToastBackground = R.drawable.blue_toast_frame;
+                mDialogBackgroundColor = sContext.getResources().getColor(R.color.background_dialog_blue);
+                mBackgroundDarkColor = sContext.getResources().getColor(R.color.background_dark_blue);
                 mReviewerProgressbarColorID = R.color.reviewer_progressbar_session_blue;
                 mCardbrowserItemColors = new int[]{R.drawable.blue_bg_cardbrowser,
                         R.drawable.blue_bg_cardbrowser_marked, R.drawable.blue_bg_cardbrowser_suspended,
@@ -515,7 +516,7 @@ public class Themes {
                 mPopupFullMedium = R.drawable.blue_popup_full_medium;
                 mPopupFullDark = R.drawable.blue_popup_full_dark;
                 mDividerHorizontalBright = R.drawable.blue_divider_horizontal_bright;
-                mProgressDialogFontColor = mContext.getResources().getColor(R.color.white);
+                sProgressDialogFontColor = sContext.getResources().getColor(R.color.white);
                 mNightModeButton = R.drawable.blue_btn_night;
                 break;
 
@@ -529,13 +530,13 @@ public class Themes {
                 mFlashcardBorder = R.drawable.blue_bg_webview;
                 mDeckpickerItemBorder = R.drawable.blue_bg_deckpicker;
                 mTitleStyle = R.drawable.flat_title;
-                mTitleTextColor = mContext.getResources().getColor(R.color.flat_title_color);
+                mTitleTextColor = sContext.getResources().getColor(R.color.flat_title_color);
                 mTextViewStyle = R.drawable.flat_textview;
                 mWallpaper = R.drawable.flat_background;
-                mBackgroundColor = mContext.getResources().getColor(R.color.background_blue);
-                mToastBackground = R.drawable.blue_toast_frame;
-                mDialogBackgroundColor = mContext.getResources().getColor(R.color.background_dialog_blue);
-                mBackgroundDarkColor = mContext.getResources().getColor(R.color.background_dark_blue);
+                mBackgroundColor = sContext.getResources().getColor(R.color.background_blue);
+                sToastBackground = R.drawable.blue_toast_frame;
+                mDialogBackgroundColor = sContext.getResources().getColor(R.color.background_dialog_blue);
+                mBackgroundDarkColor = sContext.getResources().getColor(R.color.background_dark_blue);
                 mReviewerProgressbarColorID = R.color.reviewer_progressbar_session_blue;
                 mCardbrowserItemColors = new int[]{R.drawable.blue_bg_cardbrowser,
                         R.drawable.blue_bg_cardbrowser_marked, R.drawable.blue_bg_cardbrowser_suspended,
@@ -554,10 +555,10 @@ public class Themes {
                 mPopupFullMedium = R.drawable.blue_popup_full_medium;
                 mPopupFullDark = R.drawable.blue_popup_full_dark;
                 mDividerHorizontalBright = R.drawable.blue_divider_horizontal_bright;
-                mLightFont = Typeface.createFromAsset(mContext.getAssets(), "fonts/OpenSans-Light.ttf");   // TODO JS if fonts are being loaded from files, how to move this into xml?
-                mRegularFont = Typeface.createFromAsset(mContext.getAssets(), "fonts/OpenSans-Regular.ttf");
-                mBoldFont = Typeface.createFromAsset(mContext.getAssets(), "fonts/OpenSans-Bold.ttf");
-                mProgressDialogFontColor = mContext.getResources().getColor(R.color.white);
+                mLightFont = Typeface.createFromAsset(sContext.getAssets(), "fonts/OpenSans-Light.ttf");   // TODO JS Ensure fonts are still being loaded correctly, despite theme related changes
+                mRegularFont = Typeface.createFromAsset(sContext.getAssets(), "fonts/OpenSans-Regular.ttf");
+                mBoldFont = Typeface.createFromAsset(sContext.getAssets(), "fonts/OpenSans-Bold.ttf");
+                sProgressDialogFontColor = sContext.getResources().getColor(R.color.white);
                 mNightModeButton = R.drawable.blue_btn_night;
                 break;
 
@@ -570,15 +571,15 @@ public class Themes {
                 mReviewerBackgroundID = R.color.white_background;
                 mFlashcardBorder = R.drawable.white_bg_webview;
                 mTitleStyle = R.drawable.white_btn_default_normal;
-                mTitleTextColor = mContext.getResources().getColor(R.color.black);
-                mTextColor = mContext.getResources().getColor(R.color.white);
+                mTitleTextColor = sContext.getResources().getColor(R.color.black);
+                mTextColor = sContext.getResources().getColor(R.color.white);
                 mTextViewStyle = R.drawable.white_textview_padding;
                 mWallpaper = R.drawable.white_wallpaper;
-                mBackgroundColor = mContext.getResources().getColor(R.color.white_background);
-//                mForegroundColor = mContext.getResources().getColor(android.R.color.black); // R.color.white_foreground;
-                mToastBackground = R.drawable.white_toast_frame;
-                mDialogBackgroundColor = mContext.getResources().getColor(R.color.white);
-                mBackgroundDarkColor = mContext.getResources().getColor(R.color.background_dark_blue);
+                mBackgroundColor = sContext.getResources().getColor(R.color.white_background);
+//                sForegroundColor = sContext.getResources().getColor(android.R.color.black); // R.color.white_foreground;
+                sToastBackground = R.drawable.white_toast_frame;
+                mDialogBackgroundColor = sContext.getResources().getColor(R.color.white);
+                mBackgroundDarkColor = sContext.getResources().getColor(R.color.background_dark_blue);
                 mReviewerProgressbarColorID = R.color.reviewer_progressbar_session_blue;
                 mCardbrowserItemColors = new int[]{R.drawable.white_bg_cardbrowser,
                         R.drawable.white_bg_cardbrowser_marked, R.drawable.white_bg_cardbrowser_suspended,
@@ -597,10 +598,10 @@ public class Themes {
                 mPopupFullMedium = R.drawable.white_popup_full_medium;
                 mPopupFullDark = mPopupFullBright;
                 mDividerHorizontalBright = R.drawable.white_dialog_divider;
-                mLightFont = Typeface.createFromAsset(mContext.getAssets(), "fonts/OpenSans-Light.ttf");
-                mRegularFont = Typeface.createFromAsset(mContext.getAssets(), "fonts/OpenSans-Regular.ttf");
-                mBoldFont = Typeface.createFromAsset(mContext.getAssets(), "fonts/OpenSans-Bold.ttf");
-                mProgressDialogFontColor = mContext.getResources().getColor(R.color.black);
+                mLightFont = Typeface.createFromAsset(sContext.getAssets(), "fonts/OpenSans-Light.ttf");
+                mRegularFont = Typeface.createFromAsset(sContext.getAssets(), "fonts/OpenSans-Regular.ttf");
+                mBoldFont = Typeface.createFromAsset(sContext.getAssets(), "fonts/OpenSans-Bold.ttf");
+                sProgressDialogFontColor = sContext.getResources().getColor(R.color.black);
                 mNightModeButton = R.drawable.white_btn_night;
                 break;
 
@@ -613,37 +614,37 @@ public class Themes {
                 mReviewerBackgroundID = R.color.deepblack_background;
                 mFlashcardBorder = R.drawable.deepblack_bg_webview;
                 mTitleStyle = R.drawable.deepblack_btn_default_normal;  // For dialogs?
-                mTitleTextColor = mContext.getResources().getColor(R.color.deepblack_textcolor);
-                mTextColor = mContext.getResources().getColor(R.color.deepblack_textcolor);
+                mTitleTextColor = sContext.getResources().getColor(R.color.deepblack_textcolor);
+                mTextColor = sContext.getResources().getColor(R.color.deepblack_textcolor);
                 mTextViewStyle = R.drawable.deepblack_textview_padding;
                 mWallpaper = R.drawable.deepblack_wallpaper;
-                mBackgroundColor = mContext.getResources().getColor(R.color.deepblack_background);
-//                mForegroundColor = mContext.getResources().getColor(android.R.color.white); //R.color.deepblack_foreground;
-                mToastBackground = R.drawable.deepblack_toast_frame;
-                mDialogBackgroundColor = mContext.getResources().getColor(R.color.deepblack_background);
-                mBackgroundDarkColor = mContext.getResources().getColor(R.color.background_dark_blue);  // TODO tweak
+                mBackgroundColor = sContext.getResources().getColor(R.color.deepblack_background);
+//                sForegroundColor = sContext.getResources().getColor(android.R.color.white); //R.color.deepblack_foreground;
+                sToastBackground = R.drawable.deepblack_toast_frame;
+                mDialogBackgroundColor = sContext.getResources().getColor(R.color.deepblack_background);
+                mBackgroundDarkColor = sContext.getResources().getColor(R.color.background_dark_blue);  //
                 mReviewerProgressbarColorID = R.color.reviewer_progressbar_session_blue;
                 mCardbrowserItemColors = new int[]{R.drawable.deepblack_bg_cardbrowser,
                         R.drawable.deepblack_bg_cardbrowser_marked, R.drawable.deepblack_bg_cardbrowser_suspended,
                         R.drawable.deepblack_bg_cardbrowser_marked_suspended};
-                mChartColors = new int[]{Color.WHITE, Color.BLACK};  // TODO tweak this
+                mChartColors = new int[]{Color.WHITE, Color.BLACK};  //
                 mPopupTopBright = R.drawable.deepblack_popup_top_bright;
                 mPopupTopMedium = R.drawable.deepblack_popup_top_medium;
-                mPopupTopDark = mPopupTopMedium;  // TODO not sure correct color for deepblack theme
+                mPopupTopDark = mPopupTopMedium;  //
                 mPopupCenterDark = R.drawable.deepblack_popup_center_bright;
                 mPopupCenterBright = R.drawable.deepblack_popup_center_bright;
                 mPopupCenterMedium = R.drawable.deepblack_popup_center_medium;
                 mPopupBottomBright = R.drawable.deepblack_popup_bottom_bright;
-                mPopupBottomDark = mPopupBottomBright; // TODO not sure correct color for deepblack theme
+                mPopupBottomDark = mPopupBottomBright; //
                 mPopupBottomMedium = R.drawable.deepblack_popup_bottom_medium;
                 mPopupFullBright = R.drawable.deepblack_popup_full_bright;
                 mPopupFullMedium = R.drawable.deepblack_popup_full_medium;
-                mPopupFullDark = mPopupFullBright; // TODO not sure correct color for deepblack theme
+                mPopupFullDark = mPopupFullBright; //
                 mDividerHorizontalBright = R.drawable.deepblack_dialog_divider;
-                mLightFont = Typeface.createFromAsset(mContext.getAssets(), "fonts/OpenSans-Light.ttf");
-                mRegularFont = Typeface.createFromAsset(mContext.getAssets(), "fonts/OpenSans-Regular.ttf");
-                mBoldFont = Typeface.createFromAsset(mContext.getAssets(), "fonts/OpenSans-Bold.ttf");
-                mProgressDialogFontColor = mContext.getResources().getColor(R.color.black);
+                mLightFont = Typeface.createFromAsset(sContext.getAssets(), "fonts/OpenSans-Light.ttf");
+                mRegularFont = Typeface.createFromAsset(sContext.getAssets(), "fonts/OpenSans-Regular.ttf");
+                mBoldFont = Typeface.createFromAsset(sContext.getAssets(), "fonts/OpenSans-Bold.ttf");
+                sProgressDialogFontColor = sContext.getResources().getColor(R.color.black);
                 mNightModeButton = R.drawable.deepblack_btn_night;
                 break;
 
@@ -703,7 +704,7 @@ public class Themes {
     // Keep this in for now, as I don't understand how fonts (custom and built-in) work in this app
     public static String getReviewerFontName() {
         return "OpenSans";
-//        switch (mCurrentTheme) {
+//        switch (sCurrentTheme) {
 //            case THEME_WHITE:
 //                return "OpenSans";
 //            default:
@@ -773,7 +774,7 @@ public class Themes {
         if (view instanceof TextView) {
             TextView tv = (TextView) view;
             tv.setTextColor(mTitleTextColor);
-            if (mCurrentTheme == THEME_FLAT) {
+            if (sCurrentTheme == THEME_FLAT) {
                 tv.setMinLines(1);
                 tv.setMaxLines(2);
                 int height = (int) (tv.getLineHeight() / 2);
@@ -800,7 +801,7 @@ public class Themes {
 //
 // TODO eliminate calls to this code, use XML instead
         Class<?> c = view.getParent().getClass();
-        float factor = mContext.getResources().getDisplayMetrics().density;
+        float factor = sContext.getResources().getDisplayMetrics().density;
         if (c == LinearLayout.class) {
             LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(width, height);
             llp.setMargins((int) (dipLeft * factor), (int) (dipTop * factor), (int) (dipRight * factor),
@@ -834,11 +835,11 @@ public class Themes {
 */
 
     public static int getTheme() {
-        return mCurrentTheme;
+        return sCurrentTheme;
     }
 
     public static String getThemeName() {
-        return themeNames[mCurrentTheme];
+        return themeNames[sCurrentTheme];
     }
 
 
@@ -853,18 +854,18 @@ public class Themes {
 
     private final static int NOT_INITIALIZED = -1;
 
-    private static int mToastBackground = NOT_INITIALIZED;
-    private static int mProgressDialogFontColor = NOT_INITIALIZED;
+    private static int sToastBackground = NOT_INITIALIZED;
+    private static int sProgressDialogFontColor = NOT_INITIALIZED;
 
     public static void showThemedToast(Context context, String text, boolean shortLength) {
         Toast result = Toast.makeText(context, text, shortLength ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG);
         try {
-//            if (mCurrentTheme >= THEME_BLUE) {
-                TextView tv = new TextView(context);
-                tv.setBackgroundResource(mToastBackground);
-                tv.setTextColor(mProgressDialogFontColor);
-                tv.setText(text);
-                result.setView(tv);
+//            if (sCurrentTheme >= THEME_BLUE) {
+            TextView tv = new TextView(context);
+//                tv.setBackgroundResource(sToastBackground);  // TODO are themed toasts useful? Wanted?
+//                tv.setTextColor(sProgressDialogFontColor);
+            tv.setText(text);
+            result.setView(tv);
 //            }
             result.show();
         } catch (OutOfMemoryError e) {
@@ -930,8 +931,8 @@ public class Themes {
                 contentPanel.setBackgroundResource(R.color.white);
             }
         }
-        ((TextView) main.findViewById(R.id.alertTitle)).setTextColor(mProgressDialogFontColor);
-        ((TextView) main.findViewById(R.id.message)).setTextColor(mProgressDialogFontColor);
+        ((TextView) main.findViewById(R.id.alertTitle)).setTextColor(sProgressDialogFontColor);
+        ((TextView) main.findViewById(R.id.message)).setTextColor(sProgressDialogFontColor);
     }
 
 
@@ -951,11 +952,11 @@ public class Themes {
     }
 
 
-    // TODO JS this code may be the reason dialogs are not conforming to the XML. Fix this.
+    // TODO JS this code may be the reason some dialogs are not conforming to the XML. Fix this.
     public static void setStyledDialogBackgrounds(View main, int buttonNumbers, boolean brightCustomPanelBackground) {
 //        setFont(main);
-//        if (mCurrentTheme == THEME_WHITE) {
-//            setTextColor(main, mContext.getResources().getColor(R.color.black));
+//        if (sCurrentTheme == THEME_WHITE) {
+//            setTextColor(main, sContext.getResources().getColor(R.color.black));
 //        }
         // order of styled dialog elements:
         // 1. top panel (title)
@@ -994,11 +995,11 @@ public class Themes {
             LinearLayout buttonPanel = (LinearLayout) main.findViewById(R.id.buttonPanel);
             try {
 //                buttonPanel.setBackgroundResource(mPopupBottomMedium);
-                buttonPanel.setBackgroundResource(tmpGetResourceIDFromAttributeID(R.attr.background));
+                buttonPanel.setBackgroundResource(tmpGetResourceIDFromAttributeID(R.attr.backgroundColor));
             } catch (OutOfMemoryError e) {
                 Timber.e(e, "setStyledDialogBackgrounds - OutOfMemoryError occured");
 //                buttonPanel.setBackgroundResource(R.color.white);
-                buttonPanel.setBackgroundResource(tmpGetResourceIDFromAttributeID(R.attr.background));
+                buttonPanel.setBackgroundResource(tmpGetResourceIDFromAttributeID(R.attr.backgroundColor));
             }
             if (buttonNumbers > 1 || AnkiDroidApp.SDK_VERSION > 13) {
                 // Starting at API 14, the dialog looks quite different, and these spacers are in the way.
@@ -1008,6 +1009,7 @@ public class Themes {
             visibility[4] = true;
         }
 
+        // Identify the indices of the first and last elements of visibility[] which are 'true'
         int first = -1;
         int last = -1;
         for (int i = 0; i < 5; i++) {
@@ -1122,9 +1124,9 @@ public class Themes {
 
 
     public static int getNightModeCardBackground(Context context) {
-//        switch (mCurrentTheme) {
+//        switch (sCurrentTheme) {
 //            case THEME_BLUE:
-                return context.getResources().getColor(R.color.reviewer_night_card_background);
+        return context.getResources().getColor(R.color.reviewer_night_card_background);
 //            case THEME_FLAT:
 //                return context.getResources().getColor(R.color.reviewer_night_card_background);
 //            case THEME_WHITE:
@@ -1134,6 +1136,7 @@ public class Themes {
     }
 
 
+    // TODO JS Much left to do to ensure that night mode/inversion is being done correctly
     public static int[] setNightMode(Context context, View view, boolean nightMode) {
         Resources res = context.getResources();
         View flipCard = view.findViewById(R.id.flashcard_layout_flip);
@@ -1159,18 +1162,19 @@ public class Themes {
             mAnswerField.setBackgroundResource(mNightModeButton);
 */
 
+            // TODO JS No more direct references to colors in code, everything goes through themes
             foregroundColor = Color.WHITE;
             nextTimeRecommendedColor = res.getColor(R.color.next_time_recommended_color_inv);
 
-//            switch (mCurrentTheme) {
+//            switch (sCurrentTheme) {
 //                case THEME_BLUE:
 //                    border.setBackgroundResource(R.drawable.blue_bg_webview_night);
 //                    view.setBackgroundColor(res.getColor(R.color.background_dark_blue));
 //                    break;
 //                case THEME_WHITE:
-                    border.setBackgroundResource(R.drawable.white_bg_webview_night);
-                    view.setBackgroundColor(res.getColor(R.color.white_background_night));
-                    ((View) view.getParent()).setBackgroundColor(res.getColor(R.color.white_background_night));
+            border.setBackgroundResource(R.drawable.white_bg_webview_night);
+            view.setBackgroundColor(res.getColor(R.color.white_background_night));
+            ((View) view.getParent()).setBackgroundColor(res.getColor(R.color.white_background_night));
 //
 //  break;
 //                case THEME_FLAT:
@@ -1199,7 +1203,7 @@ public class Themes {
     public static int getDeckPickerListElementBackground(String text) {
 //        Log.e("JS", "getDeckPicker...");
         if (text.equals("top")) {
-            switch (mCurrentTheme) {
+            switch (sCurrentTheme) {
                 case THEME_DEEPBLACK:
                     return R.drawable.deepblack_deckpicker_top;
                 case THEME_WHITE:
@@ -1211,7 +1215,7 @@ public class Themes {
             }
 //            return res.getDrawable(R.drawable.deepblack_deckpicker_top);
         } else if (text.equals("bot")) {
-            switch (mCurrentTheme) {
+            switch (sCurrentTheme) {
                 case THEME_DEEPBLACK:
                     return R.drawable.deepblack_deckpicker_bottom;
                 case THEME_WHITE:
@@ -1223,7 +1227,7 @@ public class Themes {
             }
 
         } else if (text.equals("ful")) {
-            switch (mCurrentTheme) {
+            switch (sCurrentTheme) {
                 case THEME_DEEPBLACK:
                     return R.drawable.deepblack_deckpicker_full;
                 case THEME_WHITE:
@@ -1234,7 +1238,7 @@ public class Themes {
                     return R.drawable.white_deckpicker_full;
             }
         } else if (text.equals("cen")) {
-            switch (mCurrentTheme) {
+            switch (sCurrentTheme) {
                 case THEME_DEEPBLACK:
                     return R.drawable.deepblack_deckpicker_center;
                 case THEME_WHITE:
@@ -1268,11 +1272,11 @@ public class Themes {
         return R.drawable.white_deckpicker_center;
     }
 
-    // TODO FIX THIS centralized themes.xml approach
+    // TODO JS fix this centralized themes.xml approach
     public static TypedArray getNavigationImages(Resources resources) {
         // TODO create an attr method of getting drawer_images  appropriate to the theme
-//        if (mCurrentTheme != THEME_DEEPBLACK) {
-            return resources.obtainTypedArray(R.array.drawer_images);
+//        if (sCurrentTheme != THEME_DEEPBLACK) {
+        return resources.obtainTypedArray(getResourceIdFromAttributeId(R.attr.navigationDrawerIconImages));
 //        } else {
 //            return resources.obtainTypedArray(R.array.drawer_images_deepblack);
 //        }
@@ -1290,19 +1294,64 @@ public class Themes {
     }
 */
 
+
+
+
     // temporary hack js
     public static void forceIncrementTheme() {
-        mCurrentTheme = (mCurrentTheme >= themeNames.length - 1) ? 0 : (mCurrentTheme + 1);  // Hack js
+        SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(sContext);
+        sIsNightMode = prefs.getBoolean("nightModeEnabled", false);
+
+        if (sIsNightMode) {
+            sCurrentNightModeTheme = Integer.parseInt(prefs.getString("nightModeTheme", "3"));
+            Log.d("JS", "Old night theme: "+themeNames[sCurrentNightModeTheme]);
+            sCurrentNightModeTheme = (sCurrentNightModeTheme >= themeNames.length - 1) ? 0 : (sCurrentNightModeTheme + 1);  // Increment, and roll back to zero
+//            sCurrentNightModeTheme = (sCurrentNightModeTheme + 1) % themeNames.length;  // Increment, rolling back to zero when >= length
+            Log.d("JS", "New night theme: " + themeNames[sCurrentNightModeTheme]);
+            prefs.edit().putString("nightModeTheme", Integer.toString(sCurrentNightModeTheme)).commit();
+            sCurrentTheme = sCurrentNightModeTheme;
+        } else {
+            sCurrentDayModeTheme = Integer.parseInt(prefs.getString("dayModeTheme", "2"));
+            Log.d("JS", "Old day theme: "+themeNames[sCurrentDayModeTheme]);
+            sCurrentDayModeTheme = (sCurrentDayModeTheme >= themeNames.length - 1) ? 0 : (sCurrentDayModeTheme + 1);  // Increment, and roll back to zero
+//            sCurrentDayModeTheme = (sCurrentDayModeTheme + 1) % themeNames.length;  // Increment, rolling back to zero when >= length
+            Log.d("JS", "New day theme: "+themeNames[sCurrentDayModeTheme]);
+            prefs.edit().putString("dayModeTheme", Integer.toString(sCurrentDayModeTheme)).commit();
+            sCurrentTheme = sCurrentDayModeTheme;
+        }
+
+        if (sCurrentDayModeTheme == NOT_INITIALIZED) { sCurrentDayModeTheme = THEME_WHITE; }
+        if (sCurrentNightModeTheme == NOT_INITIALIZED) { sCurrentNightModeTheme = THEME_DEEPBLACK; }
+        showThemedToast(sContext, "Mode:" + (sIsNightMode ?  "Night " : "Day ") + "\nDay:" + themeNames[sCurrentDayModeTheme] + "\nNight:"+ themeNames[sCurrentNightModeTheme], false);
+        Log.d("JS", "Result of pushing string to preferences - day: "+ themeNames[Integer.parseInt(prefs.getString("dayModeTheme", "1"))] +" night: "+
+                themeNames[Integer.parseInt(prefs.getString("dayModeTheme", "1"))] );
     }
 
     public static void forceDecrementTheme() {
-        mCurrentTheme = (mCurrentTheme <= 0) ? (themeNames.length - 1) : (mCurrentTheme - 1);  // Hack js
+        SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(sContext);
+        sIsNightMode = prefs.getBoolean("nightModeEnabled", false);
+
+        if (sIsNightMode) {
+            sCurrentNightModeTheme = Integer.parseInt(prefs.getString("nightModeTheme", "1"));
+            sCurrentNightModeTheme = (sCurrentNightModeTheme <= 0) ? (themeNames.length - 1) : (sCurrentNightModeTheme - 1);  // Hack js
+//            sCurrentNightModeTheme = (sCurrentNightModeTheme - 1) % themeNames.length;
+            prefs.edit().putString("nightModeTheme", Integer.toString(sCurrentNightModeTheme)).commit();
+            sCurrentTheme = sCurrentNightModeTheme;
+        } else {
+            sCurrentDayModeTheme = Integer.parseInt(prefs.getString("dayModeTheme", "1"));
+            sCurrentDayModeTheme = (sCurrentDayModeTheme <= 0) ? (themeNames.length - 1) : (sCurrentDayModeTheme - 1);  // Hack js
+//            sCurrentDayModeTheme = (sCurrentDayModeTheme - 1) % themeNames.length;  // Decrement, rolling up to max when going below zero
+            prefs.edit().putString("dayModeTheme", Integer.toString(sCurrentDayModeTheme)).commit();
+            sCurrentTheme = sCurrentDayModeTheme;
+        }
+
+        showThemedToast(sContext, "Mode:" + (sIsNightMode ?  "Night " : "Day ") + "\nDay:" + themeNames[sCurrentDayModeTheme] + "\nNight:"+ themeNames[sCurrentNightModeTheme], false);
+
+//        sCurrentTheme = (sCurrentTheme <= 0) ? (themeNames.length - 1) : (sCurrentTheme - 1);  // Hack js
     }
 
 
-    // /////////////////////////////////////////////////////////////////////////////////
-    // /////////////////////////////////////////////////////////////////////////////////
-    // /////////////////////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////////////////////////////////////////////
     // Most of the code above this line will eventually be removed.
     // Code below this line reflects the necessary (can't be moved to xml)
     //   fields and methods to dynamically theme the app
@@ -1310,23 +1359,23 @@ public class Themes {
 
     private static int[] mCardbrowserItemColors;
 
-    private static Context mContext;
+    private static Context sContext;
 
 
-    private static int mForegroundColor = NOT_INITIALIZED;
-    private static int mDeckPickerZeroCountTextColor = NOT_INITIALIZED;
-    private static int mDeckPickerNewTextColor = NOT_INITIALIZED;
-    private static int mDeckPickerLearnTextColor = NOT_INITIALIZED;
-    private static int mDeckPickerReviewTextColor = NOT_INITIALIZED;
-    private static int mDeckPickerDynamicTextColor = NOT_INITIALIZED;
+    private static int sForegroundColor = NOT_INITIALIZED;
+    private static int sDeckPickerZeroCountTextColor = NOT_INITIALIZED;
+    private static int sDeckPickerNewTextColor = NOT_INITIALIZED;  // Provide
+    private static int sDeckPickerLearnTextColor = NOT_INITIALIZED;
+    private static int sDeckPickerReviewTextColor = NOT_INITIALIZED;
+    private static int sDeckPickerDynamicTextColor = NOT_INITIALIZED;
     private static int mDeckPickerNonDynamicTextColor = NOT_INITIALIZED;
     private static int mBackgroundFrameColor = NOT_INITIALIZED;
     private static int mBackgroundColor = NOT_INITIALIZED;
 
-    private static int mCurrentTheme = NOT_INITIALIZED;
-    private static int mCurrentNightModeTheme = NOT_INITIALIZED;  // TODO Eventually switch to always querying the app preference object directly
-    private static int mCurrentDayModeTheme = NOT_INITIALIZED;
-    private static boolean mNightModeBoolean = false;
+    private static int sCurrentTheme = NOT_INITIALIZED;
+    private static int sCurrentNightModeTheme = NOT_INITIALIZED;  // TODO JS Eventually switch to always querying the app preference object directly
+    private static int sCurrentDayModeTheme = NOT_INITIALIZED;
+    private static boolean sIsNightMode = false;
 
 
 //    private static int mActionbarBackgroundColor = NOT_INITIALIZED;  // Most of these fields are state-dependant, and so must change programmatically.  For this one, I simply haven't yet figured out how to do this xml-only
@@ -1334,39 +1383,39 @@ public class Themes {
 
     // See how it is used, then rename to getPrimaryTextColor (or delete this
     public static int getForegroundColor() {
-        mForegroundColor = getThemeColorFromAttributeID(R.attr.actionBarTitleTextColor);  // fake it with the title text for now
-        return mForegroundColor;
+        sForegroundColor = getThemeColorFromAttributeID(R.attr.actionBarTitleTextColor);  // fake it with the title text for now
+        return sForegroundColor;
     }
 
     // this is 'loadTheme' rewritten piece by piece, filtering for xml-ifiable pieces
     public static void initTheme() {
-//        mDeckPickerDynamicTextColor = mContext.getResources().getColor(R.color.dyn_deck);
-//        mDeckPickerNonDynamicTextColor = mContext.getResources().getColor(R.color.non_dyn_deck);
-        mDeckPickerDynamicTextColor = getThemeColorFromAttributeID(R.attr.dyn_deck);
+//        sDeckPickerDynamicTextColor = sContext.getResources().getColor(R.color.dyn_deck);
+//        mDeckPickerNonDynamicTextColor = sContext.getResources().getColor(R.color.non_dyn_deck);
+        sDeckPickerDynamicTextColor = getThemeColorFromAttributeID(R.attr.dyn_deck);
         mDeckPickerNonDynamicTextColor = getThemeColorFromAttributeID(R.attr.non_dyn_deck);
 
         // May be removed:
-        mToastBackground = getBackgroundColor();
-        mProgressDialogFontColor = getForegroundColor();
+        sToastBackground = getBackgroundColor();
+        sProgressDialogFontColor = getForegroundColor();
 
 
-        mForegroundColor = getThemeColorFromAttributeID(R.attr.actionBarTitleTextColor); // fake it with title text for now
+        sForegroundColor = getThemeColorFromAttributeID(R.attr.actionBarTitleTextColor); // fake it with title text for now
         mBackgroundColor = getThemeColorFromAttributeID(R.attr.backgroundColor);
         mBackgroundFrameColor = getThemeColorFromAttributeID(R.attr.backgroundFrameColor);
-        mDeckPickerZeroCountTextColor = getThemeColorFromAttributeID(R.attr.zeroCountTextColor);
-        mDeckPickerNewTextColor = getThemeColorFromAttributeID(R.attr.newCountTextColor);
-        mDeckPickerLearnTextColor = getThemeColorFromAttributeID(R.attr.learnCountTextColor);
-        mDeckPickerReviewTextColor = getThemeColorFromAttributeID(R.attr.reviewCountTextColor);
-        mDeckPickerDynamicTextColor = getThemeColorFromAttributeID(R.attr.dyn_deck);
+        sDeckPickerZeroCountTextColor = getThemeColorFromAttributeID(R.attr.zeroCountTextColor);
+        sDeckPickerNewTextColor = getThemeColorFromAttributeID(R.attr.newCountTextColor);
+        sDeckPickerLearnTextColor = getThemeColorFromAttributeID(R.attr.learnCountTextColor);
+        sDeckPickerReviewTextColor = getThemeColorFromAttributeID(R.attr.reviewCountTextColor);
+        sDeckPickerDynamicTextColor = getThemeColorFromAttributeID(R.attr.dyn_deck);
         mDeckPickerNonDynamicTextColor = getThemeColorFromAttributeID(R.attr.non_dyn_deck);
-        mForegroundColor = getThemeColorFromAttributeID(R.attr.actionBarTitleTextColor);  // fake it with title text color
+        sForegroundColor = getThemeColorFromAttributeID(R.attr.actionBarTitleTextColor);  // fake it with title text color
 
-        if (mCurrentTheme == NOT_INITIALIZED) {  // temporary hack js
-            mCurrentTheme = THEME_DEEPBLACK;
+        if (sCurrentTheme == NOT_INITIALIZED) {  // temporary hack js
+            sCurrentTheme = THEME_DEEPBLACK;
         }
 
-//        Log.e("JS", "Checking values:"+                        "\ncolor/cbm is "+R.color.card_browser_marked+"\n attr/cbm is "+R.attr.card_browser_marked+"\n getARID(attr-cbm) is "+getThemeAttributeResourceID(R.attr.card_browser_marked)+
-//                        "\ncolor/cbs is "+R.color.card_browser_suspended+"\n attr/sbm is "+R.attr.card_browser_suspended+"\n getARID(attr-cbs) is "+getThemeAttributeResourceID(R.attr.card_browser_suspended)        );
+//        Log.e("JS", "Checking values:"+                        "\ncolor/cbm is "+R.color.card_browser_marked+"\n attr/cbm is "+R.attr.card_browser_marked+"\n getARID(attr-cbm) is "+getResourceIdFromAttributeId(R.attr.card_browser_marked)+
+//                        "\ncolor/cbs is "+R.color.card_browser_suspended+"\n attr/sbm is "+R.attr.card_browser_suspended+"\n getARID(attr-cbs) is "+getResourceIdFromAttributeId(R.attr.card_browser_suspended)        );
 
         // Originally these were four drawable IDs used to paint the background of card items displayed - default, marked, suspended, and marked
         mCardbrowserItemColors = new int[]{
@@ -1378,16 +1427,16 @@ public class Themes {
 
     public static int getDeckPickerNewTextColor() {
         return getThemeColorFromAttributeID(R.attr.newCountTextColor);
-//        return mContext.getResources().getColor(R.color.new_count);
+//        return sContext.getResources().getColor(R.color.new_count);
     }
 
     public static int getDeckPickerLearnTextColor() {
-//        return mContext.getResources().getColor(R.color.learn_count);
+//        return sContext.getResources().getColor(R.color.learn_count);
         return getThemeColorFromAttributeID(R.attr.learnCountTextColor);
     }
 
     public static int getDeckPickerReviewTextColor() {
-//        return mContext.getResources().getColor(R.color.review_count);
+//        return sContext.getResources().getColor(R.color.review_count);
         return getThemeColorFromAttributeID(R.attr.reviewCountTextColor);
     }
 
@@ -1406,46 +1455,46 @@ public class Themes {
     //  Allows programmatic access to attr values stored, for example, in themes.xml
     public static int getThemeColorFromAttributeID(int attributeID) {
         TypedValue typedValue = new TypedValue();
-        Resources.Theme theme = mContext.getTheme();
+        Resources.Theme theme = sContext.getTheme();
         theme.resolveAttribute(attributeID, typedValue, true);
         return typedValue.data;
     }
 
     // This method might be replaced as the re-themification of anki is completed
     private static int tmpGetResourceIDFromAttributeID(int attributeID) {
-        Log.e("JS", "\n1: attrID " + Integer.toHexString(attributeID));
+//        Log.e("JS", "\n1: attrID " + Integer.toHexString(attributeID));
         TypedValue typedValue = new TypedValue();
-        Resources.Theme theme = mContext.getTheme();
+        Resources.Theme theme = sContext.getTheme();
         theme.resolveAttribute(attributeID, typedValue, true);
-        Log.e("JS", "2: rID  " + Integer.toHexString(typedValue.resourceId));
+//        Log.e("JS", "2: rID  " + Integer.toHexString(typedValue.resourceId));
         return typedValue.resourceId;
     }
 
 
     // This method might be replaced as the re-themification of anki is completed
     public static Drawable tmpGetDrawableFromAttributeID(int attributeID) {
-        Log.e("JS", "\n1: attrID " + Integer.toHexString(attributeID));
+//        Log.e("JS", "\n1: attrID " + Integer.toHexString(attributeID));
         TypedValue typedValue = new TypedValue();
-        Resources.Theme theme = mContext.getTheme();
+        Resources.Theme theme = sContext.getTheme();
         theme.resolveAttribute(attributeID, typedValue, true);
-        Log.e("JS", "2: rID  " + Integer.toHexString(typedValue.resourceId));
-        Drawable retval = mContext.getDrawable(typedValue.resourceId);  // Consider the other getDrawable(int, theme) ?
-        Log.e("JS", "3: retval " + retval + "\n\n");
+//        Log.e("JS", "2: rID  " + Integer.toHexString(typedValue.resourceId));
+        Drawable retval = sContext.getDrawable(typedValue.resourceId);  // Consider the other getDrawable(int, theme) ?
+//        Log.e("JS", "3: retval " + retval + "\n\n");
         return retval;
     }
 
     public static Drawable getThemeDrawableFromAttributeID(int attributeID) {
-        Log.e("JS", " in getTheme, attrID is " + attributeID);
+//        Log.e("JS", " in getTheme, attrID is " + attributeID);
         // Based on:  http://stackoverflow.com/questions/9398610/how-to-get-the-attr-reference-in-code
         int[] attrs = new int[]{attributeID};
-        TypedArray typedArray = mContext.obtainStyledAttributes(attrs);
+        TypedArray typedArray = sContext.obtainStyledAttributes(attrs);
         Drawable drawableFromTheme = typedArray.getDrawable(0);
         typedArray.recycle();
         return drawableFromTheme;
     }
 
     // Color used for the deck name in the deckpicker, when the deck is normal (non-dynamic)
-    // TODO Possibly make mDeckPicker_Non_DynamicTextColor the same as 'foreground' or 'generic text color' ?
+    // TODO JS Possibly make mDeckPicker_Non_DynamicTextColor the same as 'foreground' or 'generic text color' ?
     public static int getDeckPicker_Non_DynamicTextColor() {
         if (mDeckPickerNonDynamicTextColor == NOT_INITIALIZED) {
             mDeckPickerNonDynamicTextColor = getThemeColorFromAttributeID(R.attr.non_dyn_deck);
@@ -1455,18 +1504,18 @@ public class Themes {
 
     // Color used for the deck name in the deckpicker, when the deck is dynamic
     public static int getDeckPickerDynamicTextColor() {
-        if (mDeckPickerDynamicTextColor == NOT_INITIALIZED) {
-            mDeckPickerDynamicTextColor = getThemeColorFromAttributeID(R.attr.dyn_deck);
+        if (sDeckPickerDynamicTextColor == NOT_INITIALIZED) {
+            sDeckPickerDynamicTextColor = getThemeColorFromAttributeID(R.attr.dyn_deck);
         }
-        return mDeckPickerDynamicTextColor;
+        return sDeckPickerDynamicTextColor;
     }
 
     // Color used for the card count fields in the deckpicker
     public static int getDeckPickerZeroCountTextColor() {
         if (mDeckPickerNonDynamicTextColor == NOT_INITIALIZED) {
-            mDeckPickerNonDynamicTextColor = mContext.getResources().getColor(R.color.zero_count);  // Switch to attr?
+            mDeckPickerNonDynamicTextColor = sContext.getResources().getColor(R.color.zero_count);  // Switch to attr?
         }
-        return mDeckPickerZeroCountTextColor;
+        return sDeckPickerZeroCountTextColor;
     }
 
     public static int getBackgroundColor() {
@@ -1484,31 +1533,50 @@ public class Themes {
     }
 
     public static void applyTheme(Context context) {
-        applyTheme(context, mCurrentTheme);
+        sContext = context;
+
+        SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(sContext);
+
+        if (prefs == null) {
+            Log.e("JS", "<-- NULL PREFERENCE ERROR -->");
+            applyTheme(context, sIsNightMode ? sCurrentNightModeTheme : sCurrentDayModeTheme);
+            return;
+        }
+        sIsNightMode = prefs.getBoolean("nightModeEnabled", false);
+
+        if (sIsNightMode) {
+            sCurrentNightModeTheme = Integer.parseInt(prefs.getString("nightModeTheme", "1"));
+            sCurrentTheme = sCurrentNightModeTheme;
+            Log.d("JS", "Using night mode " + themeNames[sCurrentNightModeTheme]);
+            applyTheme(context, sCurrentNightModeTheme);
+        } else {
+            sCurrentDayModeTheme = Integer.parseInt(prefs.getString("dayModeTheme", "1"));
+            sCurrentTheme = sCurrentDayModeTheme;
+            Log.d("JS", "Using daymode "+themeNames[sCurrentDayModeTheme]);
+            applyTheme(context, sCurrentDayModeTheme);
+        }
     }
+
+
 
     // call Activity.setTheme on current activity, using current theme.
     public static void applyTheme(Context context, int theme) {
-        Log.e("JS", "applyTheme");
-        mContext = context;
+        Log.e("JS", "applyTheme - "+theme+" - "+themeNames[theme]);
+        sContext = context;
+        sCurrentTheme = theme;
 
-        // TODO look throughout code for other uses of mCurrentTheme, be sure its getting the correct theme wrt mNightModeBoolean
-        if (mNightModeBoolean) {
-            mCurrentTheme = mCurrentNightModeTheme;
-        } else {
-            mCurrentTheme = mCurrentDayModeTheme;
-        }
+        // TODO JS look throughout code for other uses of sCurrentTheme, be sure its getting the correct theme wrt sIsNightMode
 
-        if ((mCurrentTheme >= 0) && (mCurrentTheme <= themeNames.length)) {
-            context.setTheme(themeIDs[mCurrentTheme]);
-            Timber.d("Set theme: " + themeNames[mCurrentTheme]);
-            Log.e("JS", "theme: " + themeNames[mCurrentTheme]);  // js
+        if ((sCurrentTheme >= 0) && (sCurrentTheme <= themeNames.length)) {
+            context.setTheme(themeIDs[sCurrentTheme]);
+            Timber.d("Set theme: " + themeNames[sCurrentTheme]);
+            Log.e("JS", "theme: " + themeNames[sCurrentTheme]);  // js
         } else {
             Timber.d("Invalid theme");
-            Log.e("JS", "<<  ERROR >>  Invalid theme " + mCurrentTheme);
+            Log.e("JS", "<<  ERROR >>  Invalid theme " + sCurrentTheme);
             // Fail gracefully:
-            mCurrentTheme = THEME_DEEPBLACK;
-            context.setTheme(themeIDs[mCurrentTheme]);
+            sCurrentTheme = THEME_DEEPBLACK;
+            context.setTheme(themeIDs[sCurrentTheme]);
         }
         initTheme();
     }
@@ -1524,7 +1592,7 @@ public class Themes {
 //        lv.setDividerHeight(0);  // tried dividerHeight="0px"
         AnkiDroidApp.getCompat().setOverScrollModeNever(lv);
 
-        switch (mCurrentTheme) {
+        switch (sCurrentTheme) {
 
             case THEME_BLUE:
                 lv.setSelector(R.drawable.blue_deckpicker_list_selector);
@@ -1536,7 +1604,7 @@ public class Themes {
                 lv.setSelector(R.drawable.white_deckpicker_list_selector);
                 lv.setBackgroundResource(R.drawable.white_deckpicker_lv_background);
 //                view.setBackgroundResource(mWallpaper);
-                // lv.setDivider(mContext.getResources().getDrawable(R.drawable.white_listdivider));
+                // lv.setDivider(sContext.getResources().getDrawable(R.drawable.white_listdivider));
                 // setMargins(view, LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, 4f, 4f, 4f, 4f);
                 break;
             case THEME_DEEPBLACK:
@@ -1580,10 +1648,10 @@ public class Themes {
         AnkiDroidApp.getCompat().setOverScrollModeNever(lv2);
         lv2.setFadingEdgeLength(15);
         lv2.setDividerHeight(0);
-//        setFont(view);  // TODO Check fonts are still correct
+//        setFont(view);  // TODO JS Check fonts are still correct
 //        setWallpaper(view);
 
-        switch (mCurrentTheme) {
+        switch (sCurrentTheme) {
             case THEME_BLUE:
                 lv2.setSelector(R.drawable.blue_cardbrowser_list_selector);
                 lv2.setDividerHeight(0);
@@ -1598,7 +1666,7 @@ public class Themes {
                 // How to indicate 'no frame, so no 9-patch needed' in xml?
                 lv2.setBackgroundResource(R.drawable.white_textview);  //  This creates a frame around the list
                 lv2.setSelector(R.drawable.white_deckpicker_list_selector);
-                lv2.setDivider(mContext.getResources().getDrawable(R.drawable.white_listdivider));
+                lv2.setDivider(sContext.getResources().getDrawable(R.drawable.white_listdivider));
                 break;
             case THEME_DEEPBLACK:
                 lv2.setBackgroundColor(getBackgroundFrameColor());
@@ -1616,21 +1684,41 @@ public class Themes {
     }
 
     public static void updateThemeFromPreferences(SharedPreferences sharedPreferences) {
-        mCurrentDayModeTheme = Integer.parseInt(sharedPreferences.getString("dayModeTheme", "1"));
-        mCurrentNightModeTheme = Integer.parseInt(sharedPreferences.getString("nightModeTheme", "1"));
-        mNightModeBoolean = sharedPreferences.getBoolean("nightModeToggle", false);
+        sCurrentDayModeTheme = Integer.parseInt(sharedPreferences.getString("dayModeTheme", "1"));
+        sCurrentNightModeTheme = Integer.parseInt(sharedPreferences.getString("nightModeTheme", "1"));
+        sIsNightMode = sharedPreferences.getBoolean("nightModeEnabled", false);
 
-        mCurrentTheme = mCurrentDayModeTheme;  // TODO To where has the night mode boolean been centralized?
+        Log.d("JS", "day "+themeNames[sCurrentDayModeTheme]+", night "+themeNames[sCurrentNightModeTheme]+", mode=night? "+ sIsNightMode);
+
+        if (sIsNightMode) {
+            sCurrentTheme = sCurrentNightModeTheme;
+        } else {
+            sCurrentTheme = sCurrentDayModeTheme;  // TODO JS Decide whether everyone will query preferences all the time, or everyone should query Themes all the time, refactor accordingly
+        }
+    }
+
+    //Given an R.attr.x value, return the R.x.x value that it refers to (R.color.x or R.drawable.x)
+    public static int getResourceIdFromAttributeId(int attributeID) {
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = sContext.getTheme();
+        theme.resolveAttribute(attributeID, typedValue, true);
+        return typedValue.resourceId;
+    }
+
+    public static String getCurrentDayModeThemeAsString() {
+        if (sCurrentDayModeTheme == NOT_INITIALIZED) {
+            return "TESTING - TODO: SETUP DEFAULT CORRECTLY";
+        }
+        return themeNames[sCurrentDayModeTheme];
+    }
+    public static String getCurrentNightModeThemeAsString() {
+        if (sCurrentNightModeTheme == NOT_INITIALIZED) {
+            return "TESTING - TODO: SETUP DEFAULT CORRECTLY";
+        }
+        return themeNames[sCurrentNightModeTheme];
     }
 }
 
-// Given an R.attr.x value, return the R.x.x value that it refers to (Usually R.color.x)
-//    public static int getThemeAttributeResourceID(int attributeID) {
-//        TypedValue typedValue = new TypedValue();
-//        Resources.Theme theme = mContext.getTheme();
-//        theme.resolveAttribute(attributeID, typedValue, true);
-//        return typedValue.resourceId;
-//    }
 
 //    public static int[] getCardBrowserItemBackgroundColors() {
 //        return mCardbrowserItemColors;

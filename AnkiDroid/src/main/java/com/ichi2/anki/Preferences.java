@@ -37,6 +37,7 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
+import android.preference.SwitchPreference;
 import android.text.TextUtils;
 
 import android.view.KeyEvent;
@@ -123,6 +124,8 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private ListPreference useCurrent;
     private ListPreference newSpread;
     private SeekBarPreference dayOffset;
+    private ListPreference nightModeTheme, dayModeTheme;
+    private SwitchPreference nightModeEnabled;
 
 
     @Override
@@ -159,6 +162,12 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         longclickWorkaround = (CheckBoxPreference) getPreferenceScreen().findPreference("textSelectionLongclickWorkaround");
         fixHebrewText = (CheckBoxPreference) getPreferenceScreen().findPreference("fixHebrewText");
         fixArabicText = (CheckBoxPreference) getPreferenceScreen().findPreference("fixArabicText");
+        nightModeTheme = (ListPreference) getPreferenceScreen().findPreference("nightModeTheme");
+        dayModeTheme = (ListPreference) getPreferenceScreen().findPreference("dayModeTheme");
+        nightModeEnabled = (SwitchPreference) getPreferenceScreen().findPreference("nightModeEnabled");
+
+        // TODO JS look into the non-deprecated way to do all of the above
+
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         if (AnkiDroidApp.SDK_VERSION > 14){
             workarounds.removePreference(inputWorkaround);
@@ -273,6 +282,10 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         for (String key : sShowValueInSummNumRange) {
             updateNumberRangePreference(key);
         }
+
+        dayModeTheme.setSummary("Theme to use when the app is in Day Mode.  Currently set to: "+Themes.getCurrentDayModeThemeAsString());
+        nightModeTheme.setSummary("Theme to use when the app is in Night Mode.  Currently set to: "+Themes.getCurrentNightModeThemeAsString());
+
         // Handle notification preference separately
         updateNotificationPreference();
     }
@@ -542,7 +555,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 listPreference.setSummary("Choose theme for Night Mode - currently "+listPreference.getEntry());
                 finish();
                 startActivity(getIntent() );
-            } else if (key.equals("nightModeToggle")) {
+            } else if (key.equals("nightModeEnabled")) {
                 Themes.updateThemeFromPreferences(sharedPreferences);  // TODO Eventually have themes.java query and sync with the preference object directly
                 Themes.applyTheme(this);  // TODO Eventually have themes.java query and sync with the preference object directly
                 finish();

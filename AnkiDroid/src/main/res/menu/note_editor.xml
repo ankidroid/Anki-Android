@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/action_save"
-        android:icon="@drawable/ic_action_accept"
+        android:icon="?attr/ic_action_accept"
         android:title="@string/add"
         ankidroid:showAsAction="always"/>
     <item

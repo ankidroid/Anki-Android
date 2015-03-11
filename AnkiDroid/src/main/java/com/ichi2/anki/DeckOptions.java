@@ -499,10 +499,8 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
     protected void onCreate(Bundle icicle) {
         // Workaround for bug 4611: http://code.google.com/p/android/issues/detail?id=4611
 //        if (AnkiDroidApp.SDK_VERSION <= 10) {            Themes.applyTheme(this);        }   // Why was this only done for SDK less-equal 10?
-        Themes.applyTheme(this); // Why only do it for versions less-equal 10?
+        Themes.applyTheme(this); // Why did we  always do it for versions less-equal 10?  At present I'm always doing it always, for convenience during development
         super.onCreate(icicle);
-
-
 
         mCol = AnkiDroidApp.getCol();
         if (mCol == null) {

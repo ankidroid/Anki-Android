@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- TODO Items and personal notes: -->
-    <!-- TODO remember to reset the theme in all onResume methods -->
+    <!-- TODO JS Items and personal notes: -->
+    <!-- TODO JS remember to reset the theme in all onResume methods (during development only)  -->
     <!--  Undecided on this one:    <item name="deckpicker_load_bg">@drawable/deckpicker_load_bg</item>-->
     <!-- to understand how to fix dialogs, examine styled_custom_study_details_dialog.xml and CustomStudyDialog -->
     <!-- Must use anki-specific themes (vs usual android themes)  -->
@@ -10,7 +10,7 @@
     <!--<style name="Theme_Base_Custom_Light" parent="@style/Theme.AppCompat.Light" />-->
     <!--<style name="Theme_Base_Dark" parent="@style/Theme.AppCompat" />-->
 
-    <!-- Haven't looked at dialogs yet... -->
+    <!-- Haven't finished looking into dialogs -->
     <style name="Theme_Base_Dialog" parent="@android:style/Theme.Dialog"        />
 
     <!-- White Theme is considered the default theme, and is used as the base theme for custom themes during development. May or may switch to a generic theme, from which all others derive -->
@@ -27,16 +27,49 @@
         <item name="ic_media">@drawable/ic_media</item>
         <item name="ic_lookup">@drawable/ic_lookup</item>
         <item name="deckpicker_load_bg">@drawable/deckpicker_load_bg</item>
-        <item name="white_list_selector_background">@drawable/white_list_selector_background</item>
+        <item name="list_selector_background">@drawable/deepblack_list_selector_background</item>
         <item name="wallpaper">@drawable/white_wallpaper</item>
-        <!-- TODO be sure wallpaper is only used where a true wallpaper is needed - not as a simple way to get appropriate color background -->
+        <!-- TODO JS be sure wallpaper is only used where a true wallpaper is needed - not as a simple way to get appropriate color background -->
         <item name="ic_menu_revert">@drawable/ic_menu_revert</item>
         <item name="ic_menu_night">@drawable/ic_menu_night</item>
+        <item name="ic_menu_night_checked">@drawable/ic_menu_night_checked</item>
+        <item name="ic_menu_sort_by_size">@drawable/ic_menu_night_checked</item>
 
+        <item name="ic_action_cancel">@drawable/ic_action_cancel</item>
+        <item name="ic_action_replay">@drawable/ic_action_replay</item>
+        <item name="ic_action_whiteboard_enable_light">@drawable/ic_action_whiteboard_enable_light</item>
+        <item name="ic_dialog_alert">@drawable/ic_dialog_alert</item>
+        <item name="ic_menu_edit">@drawable/ic_menu_edit</item>
+        <item name="ic_menu_mark">@drawable/ic_menu_mark</item>
+        <item name="ic_menu_revert_disabled">@drawable/ic_menu_revert_disabled</item>
+        <item name="ic_action_search">@drawable/ic_action_search</item>
+        <item name="ic_menu_refresh">@drawable/ic_menu_refresh</item>
+        <!--<item name="actionBarOverflowIcon">@drawable/ic_menu_refresh</item>-->
+        <item name="ic_lookup_normal">@drawable/ic_lookup_normal</item>
+        <item name="ic_lookup_pressed">@drawable/ic_lookup_pressed</item>
+
+        <item name="ic_action_time">@drawable/ic_action_time</item>
+        <item name="ic_action_storage">@drawable/ic_action_storage</item>
+        <item name="ic_action_camera">@drawable/ic_action_camera</item>
+        <item name="ic_action_mic">@drawable/ic_action_mic</item>
+        <item name="text">@drawable/text</item>
+        <item name="content_picture">@drawable/content_picture</item>
+        <item name="device_access_mic">@drawable/device_access_mic</item>
+        <item name="ic_action_accept">@drawable/ic_action_accept</item>
+        <item name="android_std_content_discard">@drawable/android_std_content_discard</item>
+
+
+
+
+
+
+        <item name="dialogTitleBackgroundColor">#d0d0d0</item>
+        <item name="dialogBackgroundColor">#f0f0f0</item>
+
+        <item name="navigationDrawerIconImages">@array/drawer_images</item>
 
         <!--<item name="android:colorBackground">#f5f5f5</item>-->
         <item name="android:colorForeground">#aaaaaa</item>
-        <item name="android:textColorPrimary">#000000</item>
         <item name="android:textColorSecondary">#101010</item>
         <item name="android:textColorTertiary">#202020</item>
         <!--<item name="android:textColorHint">#778899</item>-->   <!-- where is this used -->
@@ -50,11 +83,12 @@
         <item name="editTextBackground">#dddddd</item>  <!-- To be used in many, not all, editable textviews  -->
         <item name="backgroundFrameColor">#eeeeee</item>  <!-- may later be removed, currently conceived as a color that would frame views.  a 9-patch seems to have been previously used for this purpose -->
 
-        <!-- TODO where is this vv being used?  Eliminate in favor of textColorPrimary ? -->
+        <!-- TODO JS where is this vv being used?  Eliminate in favor of textColorPrimary ? -->
         <item name="android:textColor">#000000</item> <!-- experimenting with this as a way to force the dropdown and popup color to change -->
+        <item name="android:textColorPrimary">#000000</item> <!-- experimenting with this as a way to force the dropdown and popup color to change -->
 
         <item name="styledDialogTitleDivider">@drawable/white_dialog_divider</item>  <!-- TODO Who is using this? -->
-        <item name="styledDialogPopupTopBackground">@drawable/popup_top_dark</item>
+        <item name="styledDialogPopupTopBackground">@drawable/popup_top_dark</item> <!-- Has this been replaced by dialogTitleBackgroundColor ? -->
 
         <!--  ACTION BAR -->
         <!-- Action bar styles is defined to refer back to colors defined in this theme. -->
@@ -64,10 +98,10 @@
         <item name="actionBarTitleTextColor">#000000</item>
         <item name="actionBarSubtitleTextColor">#000000</item>
 
-        <!-- TODO This was for testing colored themes based on white images tinted appropriately -->
+        <!-- TODO JS This was for testing colored themes based on white images tinted appropriately -->
         <!--<item name="tintAllImages">#88ff0000</item>-->
 
-        <!-- TODO Confirm this isn't necessary, and remove vvv -->
+        <!-- TODO JS Confirm this isn't necessary, and remove vvv -->
         <!--<item name="android:actionBarStyle" tools:targetApi="11">@style/White.ActionBarStyle</item> -->
 
         <!-- Dynamic text colors -->
@@ -238,18 +272,44 @@
         <item name="android:textColorSecondary">#dddddd</item>
         <item name="android:textColorTertiary">#aaaaaa</item>
 
+
+        <item name="dialogTitleBackgroundColor">#202020</item>
+        <item name="dialogBackgroundColor">#101010</item>
+
+
         <item name="android:windowBackground">@drawable/deepblack_wallpaper</item>
 
+        <!-- Image files, icons, wallpaper -->
         <item name="ic_menu_add">@drawable/ic_menu_add_deepblack</item>
-        <item name="ic_start">@drawable/ic_start_deepblack2</item>
+        <item name="ic_start">@drawable/ic_start_deepblack</item>
         <item name="ic_dialog_info">@drawable/ic_dialog_info_deepblack</item>
         <item name="ic_media">@drawable/ic_media_deepblack</item>
         <item name="ic_lookup">@drawable/ic_lookup_deepblack</item>
         <item name="ic_menu_revert">@drawable/ic_menu_revert_deepblack</item>
         <item name="ic_menu_night">@drawable/ic_menu_night_deepblack</item>
 
+        <item name="ic_action_cancel">@drawable/ic_action_cancel_deepblack</item>
+        <item name="ic_action_replay">@drawable/ic_action_replay_deepblack</item>
+        <item name="ic_action_whiteboard_enable_light">@drawable/ic_action_whiteboard_enable_light_deepblack</item>
+        <item name="ic_dialog_alert">@drawable/ic_dialog_alert_deepblack</item>
+        <item name="ic_menu_edit">@drawable/ic_menu_edit_deepblack</item>
+        <item name="ic_menu_mark">@drawable/ic_menu_mark_deepblack</item>
+        <item name="ic_menu_revert_disabled">@drawable/ic_menu_revert_disabled_deepblack</item>
+
+
+        <!-- These are stored in constants.xml -->
+        <item name="navigationDrawerIconImages">@array/drawer_images_deepblack</item>
+
+
+
         <item name="deckpicker_load_bg">@drawable/deckpicker_load_bg</item>
-        <item name="white_list_selector_background">@drawable/white_list_selector_background</item>
+        <item name="list_selector_background">@drawable/white_list_selector_background</item>
+        <!--<item name="wallpaper">@drawable/white_wallpaper</item>-->
+        <!-- TODO be sure wallpaper is only used where a true wallpaper is needed - not as a simple way to get appropriate color background -->
+        <item name="ic_menu_night_checked">@drawable/ic_menu_night_checked_deepblack</item>
+        <item name="ic_menu_sort_by_size">@drawable/ic_menu_sort_by_size_deepblack</item>
+
+
 
         <item name="styledDialogTitleDivider">@drawable/deepblack_dialog_divider</item>
         <item name="styledDialogPopupTopBackground">@drawable/blue_popup_top_dark</item>

@@ -102,7 +102,7 @@ public class ReadText {
             // builder.setTitle(res.getString(R.string.no_tts_available_title));
             Timber.w("ReadText.textToSpeech() no TTS languages available");
             builder.setMessage(res.getString(R.string.no_tts_available_message));
-            builder.setIcon(R.drawable.ic_dialog_alert);
+            builder.setIconID(R.drawable.ic_dialog_alert);
             builder.setPositiveButton(res.getString(R.string.dialog_ok), null);
         } else {
             ArrayList<CharSequence> dialogItems = new ArrayList<CharSequence>();

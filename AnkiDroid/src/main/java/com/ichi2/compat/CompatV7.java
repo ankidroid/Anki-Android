@@ -10,9 +10,6 @@ import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnUtteranceCompletedListener;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.text.SpannableStringBuilder;
-import android.text.style.CharacterStyle;
-import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.webkit.WebView;
@@ -95,7 +92,6 @@ public class CompatV7 implements Compat {
         actionBarActivity.supportInvalidateOptionsMenu();
     }
 
-    // Currently uses R.color ID, not color value. Later decide which and standardize all methods
     public void setActionBarBackground(Activity activity, int colorID) {
         ActionBarActivity actionBarActivity = (ActionBarActivity) activity;
         ActionBar actionBar = actionBarActivity.getSupportActionBar();
@@ -104,22 +100,9 @@ public class CompatV7 implements Compat {
         }
     }
 
-/*
-    public void setTitle(Activity activity, String title, boolean inverted) {
-        setSubtitle(activity,title, R.color.black, inverted );
-    }
-*/
-
-/*
-    @Override
-    public void setTitle(Activity activity, String title, int textColor) {
-        setTitle(activity, title, textColor, false);
-    }
-*/
-
-    // Currently textColor is a color value, not a R.color id.
-    public void setTitle(Activity activity, String title, boolean inverted) {
-//    public void setTitle(Activity activity, String title, int textColor, boolean inverted) {
+    // No longer using 'inverted' to adjust
+    public void setTitle(Activity activity, String title) {
+//    public void setTitle(Activity activity, String title, boolean inverted) {
         ActionBarActivity actionBarActivity = (ActionBarActivity) activity;
         ActionBar actionBar = actionBarActivity.getSupportActionBar();
 

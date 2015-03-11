@@ -53,10 +53,11 @@ public interface Compat {
     public abstract void setOverScrollModeNever(View v);
     public abstract void invalidateOptionsMenu(Activity activity);
     public abstract void setActionBarBackground(Activity activity, int colorID);
-    public abstract void setTitle(Activity activity, String title, boolean inverted);
+    public abstract void setTitle(Activity activity, String title);  // Night mode no longer affects the title color via this method call.  Instead, night mode changes the whole them.
+//    public abstract void setTitle(Activity activity, String title, boolean inverted);
 //    public abstract void setTitle(Activity activity, String title, int textColor);
-    public abstract void setSubtitle(Activity activity, String title);
-    public abstract void setSubtitle(Activity activity, String title, boolean inverted);
+    public abstract void setSubtitle(Activity activity, String title); // Night mode no longer affects the subtitle color via this method call.  Instead, night mode changes the whole them.
+//    public abstract void setSubtitle(Activity activity, String title, boolean inverted);
 //    public abstract void setSubtitle(Activity activity, String title, int textColor);
 
     public abstract void setTtsOnUtteranceProgressListener(TextToSpeech tts);

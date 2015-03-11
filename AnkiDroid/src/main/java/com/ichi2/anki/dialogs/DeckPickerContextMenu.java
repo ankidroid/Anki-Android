@@ -45,7 +45,7 @@ public class DeckPickerContextMenu extends DialogFragment {
         entries[CONTEXT_MENU_DELETE_DECK] = res.getString(R.string.contextmenu_deckpicker_delete_deck);
         entries[CONTEXT_MENU_EXPORT_DECK] = res.getString(R.string.export);
         builder.setTitle("Context Menu");
-        builder.setIcon(R.drawable.ic_menu_manage);
+        builder.setIconID(R.drawable.ic_menu_manage);
         builder.setItems(entries, mContextMenuListener);
         builder.setTitle(getArguments().getString("dialogTitle"));
         StyledDialog dialog = builder.create();

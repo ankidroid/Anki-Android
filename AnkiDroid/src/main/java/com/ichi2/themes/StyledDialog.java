@@ -24,7 +24,6 @@ import android.content.DialogInterface;
 import android.text.Editable;
 import android.text.TextWatcher;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -97,7 +96,7 @@ public class StyledDialog extends Dialog {
     public void setTitle(String message) {
         View main = super.getWindow().getDecorView();
         ((TextView) main.findViewById(R.id.alertTitle)).setText(message);
-//        Themes.setStyledDialogBackgrounds(main);
+        Themes.setStyledDialogBackgrounds(main);
     }
 
 
@@ -120,6 +119,7 @@ public class StyledDialog extends Dialog {
         mItemList = new ArrayList<String>();
         Collections.addAll(mItemList, values);
         mListener = listener;
+        // TODO This is not readable.  Numbers like this "type == 3" should be replaced with meaningfully named constants
         if (type == 3) {
             mListView.setOnItemClickListener(new OnItemClickListener() {
                 @Override
@@ -326,7 +326,7 @@ public class StyledDialog extends Dialog {
         private View contentView;
         private int bottomMargin = 0;
         private boolean brightViewBackground = false;
-        private int icon = 0;
+        private int iconID = 0;  // Renaming variable to iconID, as this is a resourceID, not a drawable
 
         private DialogInterface.OnClickListener positiveButtonClickListener;
         private DialogInterface.OnClickListener negativeButtonClickListener;
@@ -380,8 +380,8 @@ public class StyledDialog extends Dialog {
         }
 
 
-        public Builder setIcon(int icon) {
-            this.icon = icon;
+        public Builder setIconID(int iconID) {
+            this.iconID = iconID;
             return this;
         }
 
@@ -595,8 +595,8 @@ public class StyledDialog extends Dialog {
             // set title
             if (title != null && title.length() > 0) {
                 ((TextView) layout.findViewById(R.id.alertTitle)).setText(title);
-                if (icon != 0) {
-                    ((ImageView) layout.findViewById(R.id.icon)).setImageResource(icon);  // Must be done programmatically
+                if (iconID != 0) {
+                    ((ImageView) layout.findViewById(R.id.icon)).setImageResource(iconID);  // Must be done programmatically
                 } else {
                     layout.findViewById(R.id.icon).setVisibility(View.GONE);
                 }
@@ -663,6 +663,7 @@ public class StyledDialog extends Dialog {
                 ((View) layout.findViewById(R.id.listViewPanel)).setVisibility(View.GONE);
             }
 
+            // Do we really want this programmatic control of appearance here?
             // set a custom view
             if (contentView != null) {
                 FrameLayout frame = (FrameLayout) layout.findViewById(R.id.custom);

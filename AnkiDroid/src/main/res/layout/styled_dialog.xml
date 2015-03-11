@@ -43,7 +43,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:minHeight="54dip"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:background="?attr/backgroundColor">
 
         <LinearLayout
             android:id="@+id/title_template"
@@ -77,9 +78,10 @@
                 android:paddingBottom="3dip"
                 android:paddingTop="3dip"
                 android:singleLine="true"
-                android:textColor="#ffff"
+                android:textColor="?android:textColorPrimary"
                 android:textSize="20sp"
                 android:textStyle="bold" />
+            <!-- TODO consider creating/using more tailored attributes to use as style settings for these dialog components -->
 
             <CheckBox
                 android:id="@+id/SelectAllCheckbox"
@@ -103,8 +105,7 @@
 
         tools:ignore="ContentDescription" />
 <!--
-   ^^ Above use of attr/sDTD not tested
-        android:background="@drawable/ic_menu_zoom_in_deepblack"
+   ^^ TODO JS confirm the above use of attr/sDTD works
 -->
     <LinearLayout
         android:id="@+id/contentPanel"
@@ -128,7 +129,7 @@
                 android:layout_height="wrap_content"
                 android:autoLink="web"
                 android:padding="5dip"
-                android:textColor="#ffff"
+                android:textColor="?android:textColorPrimary"
                 android:textSize="16sp" />
         </ScrollView>
     </LinearLayout>
@@ -143,13 +144,13 @@
             android:id="@+id/listview"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="#ffffff"
-            android:cacheColorHint="#ffffff"
+            android:background="?attr/backgroundColor"
+            android:cacheColorHint="?attr/backgroundColor"
             android:divider="#dfdfdf"
             android:dividerHeight="1dip"
             android:drawSelectorOnTop="true"
             android:focusableInTouchMode="true"
-            android:listSelector="?attr/white_list_selector_background"
+            android:listSelector="?attr/list_selector_background"
             android:paddingBottom="0dip"
             android:paddingTop="0dip" />
     </FrameLayout>
@@ -178,6 +179,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:hint="@string/filter_tags"
+    android:textColor="?android:textColorPrimary"
             android:visibility="gone" />
 
         <FrameLayout

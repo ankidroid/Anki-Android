@@ -232,13 +232,15 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
             // Currently in a layout without a container, so no reason to create our view.
             return null;
         }
+
+
         restorePreferences();
         mStudyOptionsView = inflater.inflate(R.layout.studyoptions_fragment, container, false);
         mFragmented = getActivity().getClass() != StudyOptionsActivity.class;
         startLoadingCollection();
         return mStudyOptionsView;
     }
-    
+
     // Called when the collection loader has finished
     // NOTE: Fragment transactions are NOT allowed to be called from here onwards
     private void onCollectionLoaded(Collection col) {
@@ -377,7 +379,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         Resources res = getResources();
         StyledDialog.Builder builder1 = new StyledDialog.Builder(this.getActivity());
         builder1.setTitle(res.getString(R.string.custom_study));
-        builder1.setIcon(android.R.drawable.ic_menu_sort_by_size);
+        builder1.setIconID(Themes.getResourceIdFromAttributeId(R.attr.ic_menu_sort_by_size));
         builder1.setItems(res.getStringArray(R.array.custom_study_options_labels),
                 new DialogInterface.OnClickListener() {
                     @Override
@@ -556,12 +558,12 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         getActivity().getMenuInflater().inflate(R.menu.study_options_fragment, menu);
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getActivity());
-        if (preferences.getBoolean("invertedColors", false)) {
-//            menu.findItem(R.id.action_night_mode).setIcon(Themes.getThemeImage(R.attr.ic_menu_night_checked));  // create attr for this an un-comment
-            menu.findItem(R.id.action_night_mode).setIcon(R.drawable.ic_menu_night_checked);
+        if (preferences.getBoolean("nightModeEnabled", false)) {
+//            menu.findItem(R.id.action_night_mode).setIconID(Themes.getThemeImage(R.attr.ic_menu_night_checked));  // create attr for this an un-comment
+            menu.findItem(R.id.action_night_mode).setIcon(Themes.getThemeDrawableFromAttributeID(R.attr.ic_menu_night_checked));
         } else {
             menu.findItem(R.id.action_night_mode).setIcon(Themes.getThemeDrawableFromAttributeID(R.attr.ic_menu_night) );
-//            menu.findItem(R.id.action_night_mode).setIcon(R.drawable.ic_menu_night);
+//            menu.findItem(R.id.action_night_mode).setIconID(R.drawable.ic_menu_night);
         }
 
         if (!getCol().undoAvailable()) {
@@ -590,16 +592,32 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                 return true;
             case R.id.action_night_mode:
                 SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getActivity());
-                if (preferences.getBoolean("invertedColors", false)) {
+                // Consider removing 'invertedColors' from preferences, unless its useful to actually have a nightMode boolean _and_ an invertedColors boolean
+                if (preferences.getBoolean("nightModeEnabled", false)) {
+                    Timber.i("StudyOptionsFragment:: Night mode now disabled");
+                    preferences.edit().putBoolean("nightModeEnabled", false).commit();
+                    item.setIcon(Themes.getThemeDrawableFromAttributeID(R.attr.ic_menu_night));
+                    getActivity().finish();
+                    startActivity(getActivity().getIntent());
+                } else {
+                    Timber.i("StudyOptionsFragment:: Night mode now enabled");
+                    preferences.edit().putBoolean("nightModeEnabled", true).commit();
+                    item.setIcon(Themes.getThemeDrawableFromAttributeID(R.attr.ic_menu_night_checked));
+                    getActivity().finish();
+                    startActivity(getActivity().getIntent());
+                }
+
+/*                if (preferences.getBoolean("invertedColors", false)) {
                     Timber.i("StudyOptionsFragment:: Night mode was disabled");
                     preferences.edit().putBoolean("invertedColors", false).commit();
-//                    item.setIcon(R.drawable.ic_menu_night);
-                    item.setIcon(Themes.getThemeDrawableFromAttributeID(R.attr.ic_menu_night));
+//                    item.setIconID(R.drawable.ic_menu_night);
+                    item.setIconID(Themes.getThemeDrawableFromAttributeID(R.attr.ic_menu_night));
                 } else {
                     Timber.i("StudyOptionsFragment:: Night mode was enabled");
                     preferences.edit().putBoolean("invertedColors", true).commit();
-                    item.setIcon(R.drawable.ic_menu_night_checked);
+                    item.setIconID(R.drawable.ic_menu_night_checked);
                 }
+*/
                 return true;
 
             case R.id.action_add_note_from_study_options:
@@ -836,7 +854,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                 } else {
                     // if truncated then make a thread to allow full count to load
                     mTextNewTotal.setText(">1000");
-                    if (mFullNewCountThread != null) { 
+                    if (mFullNewCountThread != null) {
                         // a thread was previously made -- interrupt it
                         mFullNewCountThread.interrupt();
                     }
@@ -856,7 +874,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                                     public void run() {
                                         mTextNewTotal.setText(String.valueOf(fullNewCount));
                                     }
-                                 };
+                                };
                                 if (!Thread.currentThread().isInterrupted()) {
                                     mTextNewTotal.post(setNewTotalText);
                                 }
@@ -920,7 +938,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         if (AnkiDroidApp.getCol() == null) {
             showCollectionLoadingDialog();
         }
-        getLoaderManager().initLoader(0, null, this);  
+        getLoaderManager().initLoader(0, null, this);
     }
 
 
@@ -950,7 +968,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     // Open collection dialog
     public void showCollectionLoadingDialog() {
         if (mOpenCollectionDialog == null || !mOpenCollectionDialog.isShowing()) {
-            mOpenCollectionDialog = StyledOpenCollectionDialog.show(getActivity(), getResources().getString(R.string.open_collection), 
+            mOpenCollectionDialog = StyledOpenCollectionDialog.show(getActivity(), getResources().getString(R.string.open_collection),
                     new OnCancelListener() {@Override public void onCancel(DialogInterface arg0) {}}
             );
         }

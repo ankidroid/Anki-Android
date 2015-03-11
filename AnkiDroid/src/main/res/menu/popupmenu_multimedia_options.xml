@@ -5,15 +5,15 @@
         android:title="@string/multimedia_editor_attach_media" >
         <item
             android:id="@+id/menu_multimedia_photo"
-            android:icon="@drawable/ic_action_camera"
+            android:icon="?attr/ic_action_camera"
             android:title="@string/multimedia_editor_popup_image"/>
         <item
             android:id="@+id/menu_multimedia_audio"
-            android:icon="@drawable/ic_action_mic"
+            android:icon="?attr/ic_action_mic"
             android:title="@string/multimedia_editor_popup_audio"/>
         <item
             android:id="@+id/menu_multimedia_text"
-            android:icon="@drawable/text"
+            android:icon="?attr/text"
             android:title="@string/multimedia_editor_popup_text"/>
     </group>
 
