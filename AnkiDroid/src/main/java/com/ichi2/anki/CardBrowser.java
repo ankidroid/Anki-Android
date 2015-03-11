@@ -569,6 +569,11 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
             }
 
         }
+
+        if (requestCode == EDIT_CARD &&  data!=null && data.hasExtra("reloadRequired")) {
+            // if reloadRequired flag was sent from note editor then reload card list
+            searchCards();
+        }
     }
 
     private DialogFragment showDialogFragment(int id) {
