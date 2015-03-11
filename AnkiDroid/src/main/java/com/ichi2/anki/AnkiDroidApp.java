@@ -312,6 +312,10 @@ public class AnkiDroidApp extends Application {
         return context.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE);
     }
 
+    public static SharedPreferences getApplicationPrefs() {
+        return getSharedPrefs(sInstance.getApplicationContext());
+    }
+
 
     public static AnkiDroidApp getInstance() {
         return sInstance;
