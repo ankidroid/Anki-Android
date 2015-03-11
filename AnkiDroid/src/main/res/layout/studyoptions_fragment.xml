@@ -1,33 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/studyoptions_main"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="fill_parent"
     android:layout_gravity="center"
     android:gravity="center"
-    android:orientation="vertical"
+    android:background="?attr/backgroundColor"
     android:paddingTop="12dp" >
+
+    <!-- Switching  height to 'fill parent' to force filling of desired background color -->
 
     <LinearLayout
         android:id="@+id/studyoptions_mainframe"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:layout_gravity="center"
+        android:background="?attr/backgroundColor"
         android:orientation="vertical" >
+
+        <!--android:background="?attr/genericBackgroundFrame"-->
 
         <ScrollView
             android:layout_width="fill_parent"
             android:layout_height="0dp"
+            android:background="?attr/backgroundElevatedColor"
             android:layout_weight="1"
             android:fadeScrollbars="false"
-            android:fillViewport="true" >
+        android:layout_marginLeft="4sp"
+        android:layout_marginRight="4sp"
+
+        android:fillViewport="true" >
+
+
             <LinearLayout
                 android:id="@+id/studyoptions_scrollcontainer"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:background="?attr/backgroundElevatedColor"
                 android:orientation="vertical" >
-        	    <TextView
+                <TextView
                     android:id="@+id/studyoptions_deck_name"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
@@ -36,159 +49,198 @@
                     android:gravity="center"
                     android:maxLines="3"
                     android:text=""
-                    android:textColor="#000000"
+                    android:textColor="?android:textColorPrimary"
+                    android:background="@color/transparent"
+
                     android:textSize="28sp"
                     android:textStyle="bold" />
-	            <LinearLayout
-	                android:id="@+id/studyoptions_deckinformation"
-	                android:layout_width="fill_parent"
-	                android:layout_height="wrap_content"
-	                android:gravity="center"
-	                android:orientation="vertical" >
-	                <LinearLayout
-	                    android:id="@+id/studyoptions_deckcounts"
-	                    android:layout_width="wrap_content"
-	                    android:layout_height="wrap_content"
-	                    android:layout_marginBottom="5dip"
-	                    android:layout_marginLeft="5dip"
-	                    android:layout_marginRight="3dip"
-	                    android:gravity="center"
-	                    android:orientation="vertical"
-	                    android:visibility="visible" >
-	
-	                    <TableLayout
-	                        android:layout_width="fill_parent"
-	                        android:layout_height="wrap_content"
-	                        android:layout_gravity="center_horizontal"
-	                        android:layout_marginBottom="5dip" >
-	
-	                        <TableRow>
-	
-	                            <TextView
-	                                android:layout_width="wrap_content"
-	                                android:layout_height="wrap_content"
-	                                android:layout_centerVertical="true"
-	                                android:paddingRight="5dip"
-	                                android:text="@string/studyoptions_due_today"
-	                                android:textColor="#000000" />
-	
-	                            <LinearLayout
-	                                android:layout_width="wrap_content"
-	                                android:layout_height="wrap_content"
-	                                android:gravity="right"
-	                                android:orientation="horizontal" >
-	
-	                                <TextView
-	                                    android:id="@+id/studyoptions_new"
-	                                    android:layout_width="wrap_content"
-	                                    android:layout_height="wrap_content"
-	                                    android:paddingRight="5dip"
-	                                    android:textColor="@color/new_count" />
-	
-	                                <TextView
-	                                    android:id="@+id/studyoptions_lrn"
-	                                    android:layout_width="wrap_content"
-	                                    android:layout_height="wrap_content"
-	                                    android:layout_gravity="center"
-	                                    android:paddingRight="5dip"
-	                                    android:textColor="@color/learn_count" />
-	
-	                                <TextView
-	                                    android:id="@+id/studyoptions_rev"
-	                                    android:layout_width="wrap_content"
-	                                    android:layout_height="wrap_content"
-	                                    android:textColor="@color/review_count" />
-	                            </LinearLayout>
-	                        </TableRow>
-	
-	                        <TableRow>
-	
-	                            <TextView
-	                                android:layout_width="wrap_content"
-	                                android:layout_height="wrap_content"
-	                                android:paddingRight="5dip"
-	                                android:text="@string/studyoptions_new_total"
-	                                android:textColor="#000000" />
-	
-	                            <TextView
-	                                android:id="@+id/studyoptions_total_new"
-	                                android:layout_width="wrap_content"
-	                                android:layout_height="wrap_content"
-	                                android:gravity="right"
-	                                android:textColor="#000000" />
-	                        </TableRow>
-	
-	                        <TableRow>
-	
-	                            <TextView
-	                                android:layout_width="wrap_content"
-	                                android:layout_height="wrap_content"
-	                                android:paddingRight="5dip"
-	                                android:text="@string/studyoptions_total_cards"
-	                                android:textColor="#000000" />
-	
-	                            <TextView
-	                                android:id="@+id/studyoptions_total"
-	                                android:layout_width="wrap_content"
-	                                android:layout_height="wrap_content"
-	                                android:gravity="right"
-	                                android:textColor="#000000" />
-	                        </TableRow>
-	
-	                        <TableRow>
-	
-	                            <TextView
-	                                android:layout_width="wrap_content"
-	                                android:layout_height="wrap_content"
-	                                android:paddingRight="5dip"
-	                                android:text="@string/studyoptions_eta"
-	                                android:textColor="#000000" />
-	
-	                            <TextView
-	                                android:id="@+id/studyoptions_eta"
-	                                android:layout_width="wrap_content"
-	                                android:layout_height="wrap_content"
-	                                android:gravity="right"
-	                                android:textColor="#000000" />
-	                        </TableRow>
-	                    </TableLayout>
-	                </LinearLayout>
-	
-	                <LinearLayout
-	                    android:layout_width="fill_parent"
-	                    android:layout_height="wrap_content"
-	                    android:orientation="vertical" >
-	
-	                    <TextView
-	                        android:id="@+id/studyoptions_deck_description"
-	                        android:layout_width="fill_parent"
-	                        android:layout_height="wrap_content"
-	                        android:layout_marginBottom="5dp"
-	                        android:layout_marginLeft="5dp"
-	                        android:layout_marginRight="5dp"
-	                        android:gravity="center"
-	                        android:text=""
-	                        android:textColor="#000000" />
-	                </LinearLayout>
-	            </LinearLayout>
-	                <LinearLayout
-	                    android:id="@+id/studyoptions_congrats_layout"
-	                    android:layout_width="fill_parent"
-	                    android:layout_height="wrap_content"
-	                    android:orientation="vertical" >
-	
-	                    <TextView
-	                        android:id="@+id/studyoptions_congrats_message"
-	                        android:layout_width="fill_parent"
-	                        android:layout_height="wrap_content"
-	                        android:layout_marginBottom="5dp"
-	                        android:layout_marginLeft="5dp"
-	                        android:layout_marginRight="5dp"
-	                        android:gravity="center"
-	                        android:text=""
-	                        android:textColor="#000000" />
-	                </LinearLayout>
-            </LinearLayout>            
+                <LinearLayout
+                    android:id="@+id/studyoptions_deckinformation"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:background="@color/transparent"
+                    android:orientation="vertical" >
+                    <LinearLayout
+                        android:id="@+id/studyoptions_deckcounts"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dip"
+                        android:layout_marginLeft="5dip"
+                        android:layout_marginRight="3dip"
+                        android:gravity="center"
+                        android:background="@color/transparent"
+                        android:orientation="vertical"
+                        android:visibility="visible" >
+
+                        <TableLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginBottom="5dip"
+                            android:background="@color/transparent">
+
+                            <TableRow android:background="@color/transparent">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:paddingRight="5dip"
+                                    android:text="@string/studyoptions_due_today"
+                                    android:textColor="?android:textColorPrimary"
+                                    android:background="@color/transparent"
+                                    />
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="right"
+                                    android:orientation="horizontal"
+                                    android:background="@color/transparent">
+
+                                    <TextView
+                                        android:id="@+id/studyoptions_new"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:paddingRight="5dip"
+                                        android:textColor="?attr/newCountTextColor"
+                                        android:background="@color/transparent"
+                                        />
+
+                                    <TextView
+                                        android:id="@+id/studyoptions_lrn"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:paddingRight="5dip"
+                                        android:textColor="?attr/learnCountTextColor"
+                                        android:background="@color/transparent"
+                                        />
+
+
+                                    <TextView
+                                        android:id="@+id/studyoptions_rev"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="?attr/reviewCountTextColor"
+                                        android:background="@color/transparent"
+                                        />
+
+                                </LinearLayout>
+                            </TableRow>
+
+                            <TableRow android:background="@color/transparent">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingRight="5dip"
+                                    android:text="@string/studyoptions_new_total"
+                                    android:textColor="?android:textColorPrimary"
+                                    android:background="@color/transparent"
+                                    />
+
+
+                                <TextView
+                                    android:id="@+id/studyoptions_total_new"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="right"
+                                    android:textColor="?android:textColorPrimary"
+                                    android:background="@color/transparent"
+                                    />
+
+                            </TableRow>
+
+                            <TableRow android:background="@color/transparent">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingRight="5dip"
+                                    android:text="@string/studyoptions_total_cards"
+                                    android:textColor="?android:textColorPrimary"
+                                    android:background="@color/transparent"
+                                    />
+
+                                <TextView
+                                    android:id="@+id/studyoptions_total"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="right"
+                                    android:textColor="?android:textColorPrimary"
+                                    android:background="@color/transparent"
+                                    />
+
+                            </TableRow>
+
+                            <TableRow android:background="@color/transparent">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingRight="5dip"
+                                    android:text="@string/studyoptions_eta"
+                                    android:textColor="?android:textColorPrimary"
+                                    android:background="@color/transparent"
+                                    />
+
+                                <TextView
+                                    android:id="@+id/studyoptions_eta"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="right"
+                                    android:textColor="?android:textColorPrimary"
+                                    android:background="@color/transparent"
+                                    />
+                            </TableRow>
+                        </TableLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="@color/transparent">
+
+                        <TextView
+                            android:id="@+id/studyoptions_deck_description"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:gravity="center"
+                            android:text=""
+                            android:background="@color/transparent"
+                            android:textColor="?android:textColorPrimary"
+
+                            />
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/studyoptions_congrats_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/studyoptions_congrats_message"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:gravity="center"
+                        android:text=""
+                        android:background="@color/transparent"
+                        android:textColor="?android:textColorPrimary"
+
+                        />
+                </LinearLayout>
+            </LinearLayout>
         </ScrollView>
 
         <LinearLayout
@@ -202,17 +254,23 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" >
 
+                <!-- Use xml / attr approach to giveing these buttons the correct backgrounds -->
                 <Button
                     android:id="@+id/studyoptions_start"
                     android:layout_width="0dip"
                     android:layout_height="fill_parent"
                     android:layout_weight="1"
-                    android:drawableLeft="@drawable/ic_start"
+                    android:drawableLeft="?attr/ic_start"
                     android:lines="1"
-                    android:paddingLeft="16dip"
                     android:text="@string/studyoptions_start"
+                    android:textColor="?android:textColorPrimary"
+                    android:background="?attr/studyOptionsButtonBackground"
+
                     android:textSize="20sp"
                     android:textStyle="bold" />
+                <!--android:paddingLeft="16dip"-->
+
+
             </LinearLayout>
             <!--
                  	<LinearLayout
@@ -269,6 +327,9 @@
                     android:layout_weight="1"
                     android:lines="1"
                     android:text="@string/study_options"
+                    android:textColor="?android:textColorPrimary"
+                    android:background="?attr/studyOptionsButtonBackground"
+
                     android:textSize="12sp"
                     android:textStyle="bold" />
 
@@ -279,6 +340,9 @@
                     android:layout_weight="1"
                     android:lines="1"
                     android:text="@string/custom_study"
+                    android:textColor="?android:textColorPrimary"
+                    android:background="?attr/studyOptionsButtonBackground"
+
                     android:textSize="12sp"
                     android:textStyle="bold" />
 
@@ -289,8 +353,10 @@
                     android:layout_weight="1"
                     android:lines="1"
                     android:text="@string/unbury"
+                    android:textColor="?android:textColorPrimary"
                     android:textSize="12sp"
                     android:textStyle="bold"
+                    android:background="?attr/studyOptionsButtonBackground"
                     android:visibility="gone" />
             </LinearLayout>
 
@@ -317,6 +383,9 @@
                         android:layout_height="fill_parent"
                         android:layout_weight="1"
                         android:text="@string/study_options"
+                        android:textColor="?android:textColorPrimary"
+                        android:background="?attr/studyOptionsButtonBackground"
+
                         android:textSize="12sp" />
 
                     <Button
@@ -325,6 +394,9 @@
                         android:layout_height="fill_parent"
                         android:layout_weight="1"
                         android:text="@string/rebuild_cram_label"
+                        android:textColor="?android:textColorPrimary"
+                        android:background="?attr/studyOptionsButtonBackground"
+
                         android:textSize="12sp" />
 
                     <Button
@@ -333,10 +405,13 @@
                         android:layout_height="fill_parent"
                         android:layout_weight="1"
                         android:text="@string/empty_cram_label"
+                        android:textColor="?android:textColorPrimary"
+                        android:background="?attr/studyOptionsButtonBackground"
+
                         android:textSize="12sp" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
-</LinearLayout>
+</FrameLayout>

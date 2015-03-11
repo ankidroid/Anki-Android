@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
     android:layout_gravity="center"
-    android:background="@color/transparent"
+    android:background="?attr/flashCardButtonBackground"
     android:clickable="false"
     android:ellipsize="marquee"
     android:gravity="center"

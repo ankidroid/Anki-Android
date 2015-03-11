@@ -82,10 +82,11 @@
         <item>Abort learning</item>
     </string-array>
     <string-array name="theme_labels">
-        <item>Android dark</item>
-        <item>Android light</item>
-        <item>Blue</item>
-        <item>White</item>
+        <item>Crazy For Testing</item>
+        <item>Aqua</item>
+        <item>Original</item>
+        <item>Deep Black</item>
+        <item>Grey Black</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>Suspend card</item>

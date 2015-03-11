@@ -24,13 +24,12 @@ import com.ichi2.anki.exception.APIVersionException;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Media;
-import com.ichi2.anki.tests.Shared;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import com.ichi2.utils.*;
 
 
 /**
@@ -46,8 +45,8 @@ public class MediaTest extends AndroidTestCase {
                 // do nothing
             }
         }
-        Collection d = Shared.getEmptyCol();
-        File dir = Shared.getTestDir(mContext);
+        Collection d = com.ichi2.anki.tests.Shared.getEmptyCol();
+        File dir = com.ichi2.anki.tests.Shared.getTestDir(mContext);
         BackupManager.removeDir(dir);
         dir.mkdirs();
         File path = new File(dir, "foo.jpg");

@@ -37,6 +37,7 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
+import android.preference.SwitchPreference;
 import android.text.TextUtils;
 
 import android.view.KeyEvent;
@@ -54,6 +55,7 @@ import com.ichi2.libanki.hooks.HebrewFixFilter;
 import com.ichi2.preferences.NumberRangePreference;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
+import com.ichi2.themes.ThemeDevUtils;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.LanguageUtil;
 
@@ -122,13 +124,16 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private ListPreference useCurrent;
     private ListPreference newSpread;
     private SeekBarPreference dayOffset;
+    private ListPreference nightModeTheme, dayModeTheme;
+    private SwitchPreference nightModeEnabled;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Themes.applyTheme(this);
         // Workaround for bug 4611: http://code.google.com/p/android/issues/detail?id=4611
         if (AnkiDroidApp.SDK_VERSION <= 10) {
-            Themes.applyTheme(this, Themes.THEME_ANDROID_DARK);
+//            Themes.applyTheme(this, Themes.THEME_ANDROID_DARK);
         }
         super.onCreate(savedInstanceState);
 
@@ -157,6 +162,12 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         longclickWorkaround = (CheckBoxPreference) getPreferenceScreen().findPreference("textSelectionLongclickWorkaround");
         fixHebrewText = (CheckBoxPreference) getPreferenceScreen().findPreference("fixHebrewText");
         fixArabicText = (CheckBoxPreference) getPreferenceScreen().findPreference("fixArabicText");
+        nightModeTheme = (ListPreference) getPreferenceScreen().findPreference("nightModeTheme");
+        dayModeTheme = (ListPreference) getPreferenceScreen().findPreference("dayModeTheme");
+        nightModeEnabled = (SwitchPreference) getPreferenceScreen().findPreference("nightModeEnabled");
+
+        // TODO JS look into the non-deprecated way to do all of the above
+
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         if (AnkiDroidApp.SDK_VERSION > 14){
             workarounds.removePreference(inputWorkaround);
@@ -271,6 +282,10 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         for (String key : sShowValueInSummNumRange) {
             updateNumberRangePreference(key);
         }
+
+        dayModeTheme.setSummary("Theme to use when the app is in Day Mode.  Currently set to: "+Themes.getCurrentDayModeThemeAsString());
+        nightModeTheme.setSummary("Theme to use when the app is in Night Mode.  Currently set to: "+Themes.getCurrentNightModeThemeAsString());
+
         // Handle notification preference separately
         updateNotificationPreference();
     }
@@ -454,6 +469,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     @Override
     protected void onResume() {
+        Themes.applyTheme(this);
         super.onResume();
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
 
@@ -525,8 +541,27 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             } else if (key.equals("reportErrorMode")) {
                 String value = sharedPreferences.getString("reportErrorMode", "");
                 AnkiDroidApp.getInstance().setAcraReportingMode(value);
+            } else if (key.equals("dayModeTheme")) {
+                Themes.updateThemeFromPreferences(sharedPreferences);  // TODO Eventually have themes.java query and sync with the preference object directly
+                Themes.applyTheme(this);
+                ListPreference listPreference =  (ListPreference)findPreference(key);
+                listPreference.setSummary("Choose theme for Day Mode - currently "+listPreference.getEntry());
+                finish();
+                startActivity(getIntent() );
+            } else if (key.equals("nightModeTheme")) {
+                Themes.updateThemeFromPreferences(sharedPreferences);  // TODO Eventually have themes.java query and sync with the preference object directly
+                Themes.applyTheme(this);  // TODO Eventually have themes.java query and sync with the preference object directly
+                ListPreference listPreference =  (ListPreference)findPreference(key);
+                listPreference.setSummary("Choose theme for Night Mode - currently "+listPreference.getEntry());
+                finish();
+                startActivity(getIntent() );
+            } else if (key.equals("nightModeEnabled")) {
+                Themes.updateThemeFromPreferences(sharedPreferences);  // TODO Eventually have themes.java query and sync with the preference object directly
+                Themes.applyTheme(this);  // TODO Eventually have themes.java query and sync with the preference object directly
+                finish();
+                startActivity(getIntent() );
             }
-            
+
             if (Arrays.asList(sShowValueInSummList).contains(key)) {
                 if (Arrays.asList(sListNumericCheck).contains(key)) {
                     updateListPreference(key, true);
@@ -584,6 +619,14 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             closePreferences();
             return true;
         }
+
+        if ((keyCode == KeyEvent.KEYCODE_VOLUME_UP)) {
+            return ThemeDevUtils.volumeUp(this);
+        }
+        if ((keyCode == KeyEvent.KEYCODE_VOLUME_DOWN)) {
+            return ThemeDevUtils.volumeDown(this);
+        }
+
         return super.onKeyDown(keyCode, event);
     }
 

@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
+
+Derived from the AOSP copy of styled.dialog.xml ?
+
 /* //device/apps/common/res/layout/alert_dialog.xml
 **
 ** Copyright 2006, The Android Open Source Project
@@ -28,9 +31,12 @@
     android:minWidth="280dip"
     android:orientation="vertical"
     android:paddingBottom="3dip"
-    android:paddingLeft="3dip"
+    android:background="?attr/dialogBackgroundColor"
+    >
+    <!--android:paddingLeft="3dip"
     android:paddingRight="1dip"
-    android:paddingTop="9dip" >
+    android:paddingTop="9dip"
+    -->
     <!--
     android:majorWeight="0.65"
     android:minorWeight="0.9"
@@ -41,7 +47,9 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:minHeight="54dip"
-        android:orientation="vertical" >
+        android:background="?attr/dialogTitleBackgroundColor"
+        android:orientation="vertical"
+        >
 
         <LinearLayout
             android:id="@+id/title_template"
@@ -62,7 +70,7 @@
                 android:paddingBottom="3dip"
                 android:paddingRight="10dip"
                 android:paddingTop="3dip"
-                android:src="@drawable/ic_dialog_info"
+                android:src="?attr/ic_dialog_info"
                 tools:ignore="ContentDescription" />
 
             <TextView
@@ -75,8 +83,10 @@
                 android:paddingBottom="3dip"
                 android:paddingTop="3dip"
                 android:singleLine="true"
-                android:textColor="#ffff"
+                android:textColor="?android:textColorPrimary"
+                android:background="@color/transparent"
                 android:textSize="20sp"
+                android:text="This string allows theme appearance to be tested in the android studio design tab"
                 android:textStyle="bold" />
 
             <CheckBox
@@ -121,7 +131,8 @@
                 android:layout_height="wrap_content"
                 android:autoLink="web"
                 android:padding="5dip"
-                android:textColor="#ffff"
+                android:text="This string allows theme appearance to be tested in the android studio design tab"
+                android:textColor="?android:textColorPrimary"
                 android:textSize="16sp" />
         </ScrollView>
     </LinearLayout>
@@ -136,16 +147,17 @@
             android:id="@+id/listview"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="#ffffff"
-            android:cacheColorHint="#ffffff"
+            android:background="@color/transparent"
+            android:cacheColorHint="?attr/backgroundColor"
             android:divider="#dfdfdf"
             android:dividerHeight="1dip"
             android:drawSelectorOnTop="true"
             android:focusableInTouchMode="true"
-            android:listSelector="@drawable/white_list_selector_background"
+            android:listSelector="?attr/list_selector_background"
             android:paddingBottom="0dip"
             android:paddingTop="0dip" />
     </FrameLayout>
+    <!-- TODO for the above drawable - either remove it, or make it accessed via the theme/attr -->
 
     <ImageView
         android:id="@+id/bottomDivider"
@@ -171,6 +183,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:hint="@string/filter_tags"
+            android:text="This string allows theme appearance to be tested in the android studio design tab"
+            android:textColor="?android:textColorPrimary"
             android:visibility="gone" />
 
         <FrameLayout
@@ -229,9 +243,12 @@
                 android:layout_height="fill_parent"
                 android:layout_gravity="right"
                 android:layout_weight="1"
+                android:text="This string allows theme appearance to be tested in the android studio design tab"
+                android:textColor="?android:textColorPrimary"
                 android:ellipsize="none"
                 android:singleLine="true" />
 
+            <!-- TODO follow up on buttonBarButtonStyle and ensure it changes as the theme changes -->
             <Button
                 android:id="@+id/neutral_button"
                 style="?android:attr/buttonBarButtonStyle"
@@ -240,6 +257,9 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
                 android:ellipsize="none"
+                android:text="This string allows theme appearance to be tested in the android studio design tab"
+                android:textColor="?android:textColorPrimary"
+
                 android:singleLine="true" />
 
             <Button
@@ -249,7 +269,10 @@
                 android:layout_height="fill_parent"
                 android:layout_gravity="left"
                 android:layout_weight="1"
+                android:textColor="?android:textColorPrimary"
                 android:ellipsize="none"
+                android:text="This string allows theme appearance to be tested in the android studio design tab"
+
                 android:singleLine="true" />
 
             <LinearLayout

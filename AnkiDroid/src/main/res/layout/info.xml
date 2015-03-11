@@ -45,7 +45,7 @@
                 android:id="@+id/info_loading_layer"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:background="@color/white"
+                android:background="?attr/backgroundColor"
                 android:gravity="center"
                 android:visibility="invisible" >
 

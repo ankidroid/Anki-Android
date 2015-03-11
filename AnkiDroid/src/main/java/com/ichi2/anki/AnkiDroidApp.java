@@ -128,7 +128,7 @@ import timber.log.Timber;
 public class AnkiDroidApp extends Application {
 
     public static final int SDK_VERSION = android.os.Build.VERSION.SDK_INT;
-    public static final String APP_NAMESPACE = "http://schemas.android.com/apk/res/com.ichi2.anki";
+    public static final String XML_CUSTOM_NAMESPACE = "http://arbitrary.namespace/com.ichi2.anki";
     public static final String FEEDBACK_REPORT_ASK = "2";
     public static final String FEEDBACK_REPORT_NEVER = "1";
     public static final String FEEDBACK_REPORT_ALWAYS = "0";
@@ -218,6 +218,7 @@ public class AnkiDroidApp extends Application {
             // Enable or disable crash reporting based on user setting
             setAcraReportingMode(preferences.getString("reportErrorMode", FEEDBACK_REPORT_ASK));
         }
+
         Timber.tag(TAG);
 
         if (isNookHdOrHdPlus() && SDK_VERSION == 15) {

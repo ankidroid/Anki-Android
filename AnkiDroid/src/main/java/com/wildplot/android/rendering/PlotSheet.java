@@ -18,7 +18,6 @@ package com.wildplot.android.rendering;
 
 import android.graphics.Typeface;
 
-import com.ichi2.anki.AnkiDroidApp;
 import com.wildplot.android.rendering.graphics.wrapper.*;
 import com.wildplot.android.rendering.interfaces.Drawable;
 import com.wildplot.android.rendering.interfaces.Legendable;

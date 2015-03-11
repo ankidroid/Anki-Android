@@ -4,7 +4,9 @@
     android:layout_width="250dp"
     android:layout_height="match_parent"
     android:layout_gravity="start"
-    android:background="?android:attr/colorBackground"
+    android:background="?attr/backgroundColor"
     android:choiceMode="singleChoice"
-    android:divider="#d3d3d3"
+    android:divider="?attr/listviewDividerColor"
     android:dividerHeight="1dp" />
+
+    <!--android:divider="#d3d3d3"-->

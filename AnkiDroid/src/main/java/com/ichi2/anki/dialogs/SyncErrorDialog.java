@@ -73,7 +73,7 @@ public class SyncErrorDialog extends AsyncDialogFragment {
         switch (getArguments().getInt("dialogType")) {
             case DIALOG_USER_NOT_LOGGED_IN_SYNC:
                 // User not logged in; take them to login screen
-                builder.setIcon(R.drawable.ic_dialog_alert);
+                builder.setIconID(R.drawable.ic_dialog_alert);
 
                 builder.setNegativeButton(res().getString(R.string.dialog_cancel), null);
                 builder.setPositiveButton(res().getString(R.string.log_in), new DialogInterface.OnClickListener() {
@@ -86,7 +86,7 @@ public class SyncErrorDialog extends AsyncDialogFragment {
 
             case DIALOG_CONNECTION_ERROR:
                 // Connection error; allow user to retry or cancel
-                builder.setIcon(R.drawable.ic_dialog_alert);
+                builder.setIconID(R.drawable.ic_dialog_alert);
                 builder.setPositiveButton(res().getString(R.string.retry), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -99,7 +99,7 @@ public class SyncErrorDialog extends AsyncDialogFragment {
 
             case DIALOG_SYNC_CONFLICT_RESOLUTION:
                 // Sync conflict; allow user to cancel, or choose between local and remote versions
-                builder.setIcon(android.R.drawable.ic_input_get);
+                builder.setIconID(android.R.drawable.ic_input_get);
                 builder.setPositiveButton(res().getString(R.string.sync_conflict_local),
                         new DialogInterface.OnClickListener() {
                             @Override

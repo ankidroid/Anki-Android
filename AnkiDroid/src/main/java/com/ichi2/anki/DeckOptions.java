@@ -44,6 +44,7 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.preferences.StepsPreference;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
+import com.ichi2.themes.ThemeDevUtils;
 import com.ichi2.themes.Themes;
 
 import org.json.JSONArray;
@@ -497,9 +498,8 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
     @Override
     protected void onCreate(Bundle icicle) {
         // Workaround for bug 4611: http://code.google.com/p/android/issues/detail?id=4611
-        if (AnkiDroidApp.SDK_VERSION <= 10) {
-            Themes.applyTheme(this, Themes.THEME_ANDROID_DARK);
-        }
+//        if (AnkiDroidApp.SDK_VERSION <= 10) {            Themes.applyTheme(this);        }   // Why was this only done for SDK less-equal 10?
+        Themes.applyTheme(this); // Why did we  always do it for versions less-equal 10?  At present I'm always doing it always, for convenience during development
         super.onCreate(icicle);
 
         mCol = AnkiDroidApp.getCol();
@@ -524,7 +524,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
             this.updateSummaries();
             // Set the activity title to include the name of the deck
             String title = getResources().getString(R.string.deckpreferences_title);
-            if (title.contains("XXX")) {
+            if (title.contains("XXX")) {  // Why?
                 try {
                     title = title.replace("XXX", mDeck.getString("name"));
                 } catch (JSONException e) {
@@ -550,6 +550,13 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
             finish();
             ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
             return true;
+        }
+
+        if ((keyCode == KeyEvent.KEYCODE_VOLUME_UP)) {
+            return ThemeDevUtils.volumeUp(this);
+        }
+        if ((keyCode == KeyEvent.KEYCODE_VOLUME_DOWN)) {
+            return ThemeDevUtils.volumeDown(this);
         }
         return super.onKeyDown(keyCode, event);
     }

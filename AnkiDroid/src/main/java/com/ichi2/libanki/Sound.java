@@ -35,8 +35,7 @@ import android.widget.VideoView;
 import com.ichi2.anki.AbstractFlashcardViewer;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.ReadText;
-import java.io.File;
-import java.io.IOException;
+
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;

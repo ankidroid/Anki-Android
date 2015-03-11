@@ -106,7 +106,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                 // the activity
                 setCancelable(false);
                 builder.setMessage(getMessage());
-                builder.setIcon(R.drawable.ic_dialog_alert);
+                builder.setIconID(R.drawable.ic_dialog_alert);
                 builder.setPositiveButton(res.getString(R.string.error_handling_options),
                         new DialogInterface.OnClickListener() {
                             @Override
@@ -128,7 +128,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                 // options, submitting an error report, or closing the activity
                 setCancelable(false);
                 builder.setMessage(getMessage());
-                builder.setIcon(R.drawable.ic_dialog_alert);
+                builder.setIconID(R.drawable.ic_dialog_alert);
                 builder.setPositiveButton(res.getString(R.string.error_handling_options),
                         new DialogInterface.OnClickListener() {
                             @Override
@@ -160,7 +160,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
             case DIALOG_ERROR_HANDLING:
                 // The user has asked to see repair options; allow them to choose one of the repair options or go back
                 // to the previous dialog
-                builder.setIcon(R.drawable.ic_dialog_alert);
+                builder.setIconID(R.drawable.ic_dialog_alert);
                 builder.setSingleChoiceItems(new String[] { "1" }, 0, null);
                 builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
 
@@ -232,7 +232,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
             case DIALOG_REPAIR_COLLECTION:
                 // Allow user to run BackupManager.repairDeck()
                 builder.setMessage(getMessage());
-                builder.setIcon(R.drawable.ic_dialog_alert);
+                builder.setIconID(R.drawable.ic_dialog_alert);
                 builder.setPositiveButton(res.getString(R.string.dialog_positive_repair),
                         new DialogInterface.OnClickListener() {
                             @Override
@@ -268,7 +268,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                                 ".*-(\\d{4}-\\d{2}-\\d{2})-(\\d{2})-(\\d{2}).apkg", "$1 ($2:$3 h)");
                     }
                     builder.setTitle(res.getString(R.string.backup_restore_select_title));
-                    builder.setIcon(android.R.drawable.ic_input_get);
+                    builder.setIconID(android.R.drawable.ic_input_get);
                     builder.setSingleChoiceItems(dates, dates.length, new DialogInterface.OnClickListener() {
 
                         @Override

@@ -27,7 +27,7 @@ public class DeckPickerConfirmDeleteDeckDialog extends DialogFragment {
         Resources res = getResources();
         builder.setTitle(res.getString(R.string.delete_deck_title));
         builder.setMessage(getArguments().getString("dialogMessage"));
-        builder.setIcon(R.drawable.ic_dialog_alert);
+        builder.setIconID(R.drawable.ic_dialog_alert);
         builder.setPositiveButton(res.getString(R.string.dialog_positive_delete), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

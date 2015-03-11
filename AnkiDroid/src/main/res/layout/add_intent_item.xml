@@ -3,6 +3,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/add_intent_item"
     android:layout_width="fill_parent"
+    android:background="?attr/backgroundColor"
     android:layout_height="wrap_content" >
 
     <TextView
@@ -12,7 +13,8 @@
         android:layout_marginRight="0.5dip"
         android:layout_weight="2"
         android:gravity="center_vertical"
-        android:textColor="#000000" />
+        android:background="@color/transparent"
+        android:textColor="?android:textColorPrimary" />
 
     <TextView
         android:id="@+id/card_content"
@@ -21,7 +23,8 @@
         android:layout_marginLeft="0.5dip"
         android:layout_weight="3"
         android:gravity="center_vertical"
-        android:textColor="#000000" />
+        android:background="@color/transparent"
+        android:textColor="?android:textColorPrimary" />
 
     <TextView
         android:id="@+id/id"
@@ -30,7 +33,8 @@
         android:layout_marginLeft="0.5dip"
         android:layout_weight="1"
         android:gravity="center_vertical"
-        android:textColor="#000000"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:background="@color/transparent"
+        android:textColor="?android:textColorPrimary" />
 
 </LinearLayout>

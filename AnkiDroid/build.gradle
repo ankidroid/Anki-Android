@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 def homePath = System.properties['user.home']
 android {
-    compileSdkVersion 19
+    compileSdkVersion 21
     buildToolsVersion "19.1"
 
     defaultConfig {
-        applicationId "com.ichi2.anki"
+        applicationId "com.ichi2.anki_themes"
         minSdkVersion 7
-        targetSdkVersion 19
+        targetSdkVersion 21
         testApplicationId "com.ichi2.anki.tests"
     }
     signingConfigs {
@@ -33,6 +33,8 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:19.1.0'
+    compile 'com.android.support:cardview-v7:21.0.+'
+    compile 'com.android.support:recyclerview-v7:21.0.+'
     compile 'com.google.code.gson:gson:2.3'
     compile 'ch.acra:acra:4.6.0RC2'
     compile 'com.jakewharton.timber:timber:2.5.1'

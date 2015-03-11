@@ -25,8 +25,6 @@ import java.util.Locale;
 
 import android.content.Context;
 
-import com.ichi2.anki.R;
-
 /**
  * This language lister is used to call glosbe.com translation services.
  * <p>

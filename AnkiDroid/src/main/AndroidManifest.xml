@@ -312,10 +312,10 @@
             android:name="com.sec.android.support.multiwindow"
             android:value="true" />
         <meta-data
-            android:name="com.sec.minimode.icon.portrait.normal"
+            android:name="com.sec.minimode.iconID.portrait.normal"
             android:resource="@drawable/anki" />
         <meta-data
-            android:name="com.sec.minimode.icon.landscape.normal"
+            android:name="com.sec.minimode.iconID.landscape.normal"
             android:resource="@drawable/anki" />
     </application>
 

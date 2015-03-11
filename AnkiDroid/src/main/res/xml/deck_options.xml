@@ -16,7 +16,7 @@
 -->
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res/com.ichi2.anki" >
+    xmlns:app="http://arbitrary.namespace/com.ichi2.anki" >
         <ListPreference
             android:key="deckConf"
             android:title="@string/deck_conf_group" />
@@ -32,7 +32,7 @@
                 android:title="@string/deck_conf_add" />
 
             <com.ichi2.preferences.CustomDialogPreference
-                android:dialogIcon="@android:drawable/ic_dialog_alert"
+                android:dialogIcon="?attr/ic_dialog_alert"
                 android:dialogMessage="@string/deck_conf_remove_message"
                 android:dialogTitle="@string/deck_conf_remove_title"
                 android:key="confRemove"
@@ -45,7 +45,7 @@
                 android:title="@string/deck_conf_rename" />
 
             <com.ichi2.preferences.CustomDialogPreference
-                android:dialogIcon="@android:drawable/ic_dialog_alert"
+                android:dialogIcon="?attr/ic_dialog_alert"
                 android:dialogMessage="@string/deck_conf_reset_message"
                 android:dialogTitle="@string/deck_conf_reset_title"
                 android:key="confRestore"
@@ -53,7 +53,7 @@
                 android:positiveButtonText="@string/dialog_positive_restore"
                 android:title="@string/deck_conf_reset_title" />
             <com.ichi2.preferences.CustomDialogPreference
-                android:dialogIcon="@android:drawable/ic_dialog_alert"
+                android:dialogIcon="?attr/ic_dialog_alert"
                 android:dialogMessage="@string/deck_conf_set_subdecks_message"
                 android:dialogTitle="@string/deck_conf_set_subdecks_title"
                 android:key="confSetSubdecks"

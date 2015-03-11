@@ -14,6 +14,7 @@ import android.support.v4.content.IntentCompat;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.themes.StyledDialog;
+import com.ichi2.themes.Themes;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -38,6 +39,7 @@ public class IntentHandler extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Themes.applyTheme(this);  // TODO JS also move the default theme into the manifest
         setContentView(R.layout.styled_open_collection_dialog);
         Intent intent = getIntent();
         Timber.v(intent.toString());

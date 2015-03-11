@@ -22,7 +22,7 @@
     android:id="@+id/deckpicker_loading_layer"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#000000" >
+    android:background="?attr/backgroundColor" >
 
     <LinearLayout
         android:layout_width="fill_parent"

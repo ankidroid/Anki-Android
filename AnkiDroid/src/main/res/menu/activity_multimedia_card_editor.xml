@@ -2,7 +2,7 @@
 
     <item
         android:id="@+id/multimedia_delete_note"
-        android:icon="@drawable/android_std_content_discard"
+        android:icon="?attr/android_std_content_discard"
         android:orderInCategory="100"
         android:showAsAction="ifRoom|withText"
         android:title="@string/menu_delete_note"/>

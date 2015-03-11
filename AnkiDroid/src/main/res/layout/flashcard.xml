@@ -39,6 +39,7 @@
             android:layout_marginLeft="9dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="4dp"
+            android:background="?attr/backgroundElevatedColor"
             android:gravity="center_vertical" >
 
             <TextView
@@ -46,7 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textColor="@color/new_count"
+                android:textColor="?attr/newCountTextColor"
                 android:textSize="14sp" />
 
             <TextView
@@ -55,9 +56,11 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/new_number"
                 android:paddingLeft="8dp"
+                android:background="?attr/backgroundColor"
+                android:textColor="?attr/learnCountTextColor"
                 android:text=""
-                android:textColor="@color/learn_count"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                />
 
             <TextView
                 android:id="@+id/review_number"
@@ -66,7 +69,8 @@
                 android:layout_toRightOf="@+id/learn_number"
                 android:paddingLeft="8dp"
                 android:text=""
-                android:textColor="@color/review_count"
+                android:textColor="?attr/reviewCountTextColor"
+                android:background="?attr/backgroundColor"
                 android:textSize="14sp" />
 
             <TextView
@@ -141,7 +145,7 @@
                 android:layout_gravity="right"
                 android:clickable="true"
                 android:padding="5dip"
-                android:src="@drawable/ic_lookup"
+                android:src="?attr/ic_lookup"
                 android:visibility="gone"
                 android:contentDescription="@string/lookup_button_content" />
 
@@ -193,7 +197,7 @@
                         style="?android:attr/buttonStyleSmall"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
-                        android:background="@color/transparent"
+                        android:background="?attr/flashCardButtonBackground"
                         android:clickable="false"
                         android:gravity="center"
                         android:lines="1"
@@ -211,7 +215,7 @@
                         <Button
                             android:layout_width="0dip"
                             android:layout_height="wrap_content"
-                            android:background="@color/transparent"
+                            android:background="?attr/flashCardButtonBackground"
                             android:lines="1"
                             android:textSize="14sp" />
                     </LinearLayout>

@@ -24,7 +24,6 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.multimediacard.AudioView;
 import com.ichi2.utils.DiskUtil;

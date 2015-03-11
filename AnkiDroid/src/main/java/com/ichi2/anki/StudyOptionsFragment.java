@@ -21,7 +21,6 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -29,7 +28,6 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -51,7 +49,6 @@ import com.ichi2.anki.stats.ChartView;
 import com.ichi2.async.CollectionLoader;
 import com.ichi2.async.DeckTask;
 import com.ichi2.async.DeckTask.TaskData;
-
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Utils;
@@ -64,7 +61,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import timber.log.Timber;
 
@@ -94,7 +93,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
      * Preferences
      */
     private int mCurrentContentView = CONTENT_STUDY_OPTIONS;
-    boolean mInvertedColors = false;
+    boolean mInvertedColors = false;  // Confirm this is for 'night mode' then fix code so this is no longer used.  Query static themes class or similar instead.
 
     /** Alerts to inform the user about different situations */
     private StyledProgressDialog mProgressDialog;
@@ -233,13 +232,15 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
             // Currently in a layout without a container, so no reason to create our view.
             return null;
         }
+
+
         restorePreferences();
         mStudyOptionsView = inflater.inflate(R.layout.studyoptions_fragment, container, false);
         mFragmented = getActivity().getClass() != StudyOptionsActivity.class;
         startLoadingCollection();
         return mStudyOptionsView;
     }
-    
+
     // Called when the collection loader has finished
     // NOTE: Fragment transactions are NOT allowed to be called from here onwards
     private void onCollectionLoaded(Collection col) {
@@ -320,7 +321,9 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
 
 
     private void initAllContentViews() {
-        Themes.setContentStyle(mStudyOptionsView, Themes.CALLER_STUDYOPTIONS);
+//        Themes.setContentStyle(mStudyOptionsView, Themes.CALLER_STUDYOPTIONS);
+
+        Themes.setStudyOptionsContentStyle(mStudyOptionsView);  // Replace this with xml approach
         mDeckInfoLayout = mStudyOptionsView.findViewById(R.id.studyoptions_deckinformation);
         mTextDeckName = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_deck_name);
         mTextDeckDescription = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_deck_description);
@@ -376,7 +379,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         Resources res = getResources();
         StyledDialog.Builder builder1 = new StyledDialog.Builder(this.getActivity());
         builder1.setTitle(res.getString(R.string.custom_study));
-        builder1.setIcon(android.R.drawable.ic_menu_sort_by_size);
+        builder1.setIconID(Themes.getResourceIdFromAttributeId(R.attr.ic_menu_sort_by_size));
         builder1.setItems(res.getStringArray(R.array.custom_study_options_labels),
                 new DialogInterface.OnClickListener() {
                     @Override
@@ -540,7 +543,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         if (mSmallChart != null) {
 
             ChartView chartView = (ChartView) mSmallChart.findViewById(R.id.chart_view_small_chart);
-            chartView.setBackgroundColor(Color.BLACK);
+//            chartView.setBackgroundColor(Color.BLACK);
             AnkiStatsTaskHandler.createSmallDueChartChart(serieslist, chartView);
             if (mDeckChart.getVisibility() == View.INVISIBLE) {
                 mDeckChart.setVisibility(View.VISIBLE);
@@ -555,10 +558,12 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         getActivity().getMenuInflater().inflate(R.menu.study_options_fragment, menu);
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getActivity());
-        if (preferences.getBoolean("invertedColors", false)) {
-            menu.findItem(R.id.action_night_mode).setIcon(R.drawable.ic_menu_night_checked);
+        if (preferences.getBoolean("nightModeEnabled", false)) {
+//            menu.findItem(R.id.action_night_mode).setIconID(Themes.getThemeImage(R.attr.ic_menu_night_checked));  // create attr for this an un-comment
+            menu.findItem(R.id.action_night_mode).setIcon(Themes.getThemeDrawableFromAttributeID(R.attr.ic_menu_night_checked));
         } else {
-            menu.findItem(R.id.action_night_mode).setIcon(R.drawable.ic_menu_night);
+            menu.findItem(R.id.action_night_mode).setIcon(Themes.getThemeDrawableFromAttributeID(R.attr.ic_menu_night) );
+//            menu.findItem(R.id.action_night_mode).setIconID(R.drawable.ic_menu_night);
         }
 
         if (!getCol().undoAvailable()) {
@@ -566,7 +571,9 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         } else {
             menu.findItem(R.id.action_undo).setVisible(true);
             Resources res = AnkiDroidApp.getAppResources();
-            menu.findItem(R.id.action_undo).setTitle(res.getString(R.string.studyoptions_congrats_undo, getCol().undoName(res)));
+            menu.findItem(R.id.action_undo).setTitle(
+                    res.getString(R.string.studyoptions_congrats_undo, getCol().undoName(res)));
+//                    Themes.getSpannableForegroundColor(res.getString(R.string.studyoptions_congrats_undo, getCol().undoName(res))));
         }
         super.onCreateOptionsMenu(menu, inflater);
     }
@@ -585,15 +592,32 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                 return true;
             case R.id.action_night_mode:
                 SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getActivity());
-                if (preferences.getBoolean("invertedColors", false)) {
+                // Consider removing 'invertedColors' from preferences, unless its useful to actually have a nightMode boolean _and_ an invertedColors boolean
+                if (preferences.getBoolean("nightModeEnabled", false)) {
+                    Timber.i("StudyOptionsFragment:: Night mode now disabled");
+                    preferences.edit().putBoolean("nightModeEnabled", false).commit();
+                    item.setIcon(Themes.getThemeDrawableFromAttributeID(R.attr.ic_menu_night));
+                    getActivity().finish();
+                    startActivity(getActivity().getIntent());
+                } else {
+                    Timber.i("StudyOptionsFragment:: Night mode now enabled");
+                    preferences.edit().putBoolean("nightModeEnabled", true).commit();
+                    item.setIcon(Themes.getThemeDrawableFromAttributeID(R.attr.ic_menu_night_checked));
+                    getActivity().finish();
+                    startActivity(getActivity().getIntent());
+                }
+
+/*                if (preferences.getBoolean("invertedColors", false)) {
                     Timber.i("StudyOptionsFragment:: Night mode was disabled");
                     preferences.edit().putBoolean("invertedColors", false).commit();
-                    item.setIcon(R.drawable.ic_menu_night);
+//                    item.setIconID(R.drawable.ic_menu_night);
+                    item.setIconID(Themes.getThemeDrawableFromAttributeID(R.attr.ic_menu_night));
                 } else {
                     Timber.i("StudyOptionsFragment:: Night mode was enabled");
                     preferences.edit().putBoolean("invertedColors", true).commit();
-                    item.setIcon(R.drawable.ic_menu_night_checked);
+                    item.setIconID(R.drawable.ic_menu_night_checked);
                 }
+*/
                 return true;
 
             case R.id.action_add_note_from_study_options:
@@ -764,9 +788,13 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                     mTextDeckName.setText(nameBuilder.toString());
                     // Also set deck name in activity title in action bar if not tablet mode
                     if (!mFragmented) {
-                        getActivity().setTitle(getResources().getString(R.string.studyoptions_title));
+                        getActivity().setTitle(
+                                getResources().getString(R.string.studyoptions_title));
+//                                Themes.getSpannableForegroundColor(getResources().getString(R.string.studyoptions_title)));
                         List<String> parts = Arrays.asList(fullName.split("::"));
+
                         AnkiDroidApp.getCompat().setSubtitle(getActivity(), parts.get(parts.size() - 1));
+//                        AnkiDroidApp.getCompat().setSubtitle(getActivity(), parts.get(parts.size() - 1), Themes.getForegroundColor());
                     }
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
@@ -826,7 +854,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                 } else {
                     // if truncated then make a thread to allow full count to load
                     mTextNewTotal.setText(">1000");
-                    if (mFullNewCountThread != null) { 
+                    if (mFullNewCountThread != null) {
                         // a thread was previously made -- interrupt it
                         mFullNewCountThread.interrupt();
                     }
@@ -846,7 +874,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                                     public void run() {
                                         mTextNewTotal.setText(String.valueOf(fullNewCount));
                                     }
-                                 };
+                                };
                                 if (!Thread.currentThread().isInterrupted()) {
                                     mTextNewTotal.post(setNewTotalText);
                                 }
@@ -910,7 +938,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         if (AnkiDroidApp.getCol() == null) {
             showCollectionLoadingDialog();
         }
-        getLoaderManager().initLoader(0, null, this);  
+        getLoaderManager().initLoader(0, null, this);
     }
 
 
@@ -940,7 +968,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     // Open collection dialog
     public void showCollectionLoadingDialog() {
         if (mOpenCollectionDialog == null || !mOpenCollectionDialog.isShowing()) {
-            mOpenCollectionDialog = StyledOpenCollectionDialog.show(getActivity(), getResources().getString(R.string.open_collection), 
+            mOpenCollectionDialog = StyledOpenCollectionDialog.show(getActivity(), getResources().getString(R.string.open_collection),
                     new OnCancelListener() {@Override public void onCancel(DialogInterface arg0) {}}
             );
         }

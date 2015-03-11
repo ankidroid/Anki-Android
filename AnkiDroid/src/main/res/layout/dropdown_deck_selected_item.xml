@@ -9,12 +9,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:singleLine="true"
-        style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" />
+        style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+        android:textColor="?attr/actionBarTitleTextColor"/>
     <TextView
         android:id="@+id/dropdown_deck_counts"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/action_bar_subtitle_top_margin"
         android:singleLine="true"
-        style="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle" />
+        style="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
+        android:textColor="?attr/actionBarSubtitleTextColor"/>
+
 </LinearLayout>

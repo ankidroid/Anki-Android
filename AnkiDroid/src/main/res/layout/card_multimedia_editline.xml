@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-
+    android:background="?attr/backgroundColor"
     android:layout_width="match_parent"
     android:layout_height="wrap_content" >
 
@@ -9,6 +9,9 @@
         android:id="@+id/id_note_editText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?attr/editTextBackground"
+        android:textColor="?android:textColorPrimary"
+
         android:drawablePadding="8dp"
         android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@+id/id_media_button"
@@ -21,7 +24,7 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:gravity="right|center_vertical"
-        android:background="@drawable/ic_media"
+        android:background="?attr/ic_media"
         android:layout_alignParentRight="true"  />
 
 

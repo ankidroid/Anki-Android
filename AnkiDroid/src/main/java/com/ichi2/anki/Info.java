@@ -20,6 +20,7 @@ package com.ichi2.anki;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -34,6 +35,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.themes.ThemeDevUtils;
 import com.ichi2.themes.Themes;
 
 import org.acra.util.Installation;
@@ -67,8 +69,9 @@ public class Info extends ActionBarActivity {
         setContentView(R.layout.info);
 
         webView = (WebView) findViewById(R.id.info);
-        webView.setBackgroundColor(res.getColor(Themes.getBackgroundColor()));
-        Themes.setWallpaper((View) webView.getParent().getParent().getParent());
+        // TODO This is working for me, but does res.getColor expect the kind  of value returned by getBackgroundColor()
+        webView.setBackgroundColor(Color.WHITE); // TODO
+//        Themes.setWallpaper((View) webView.getParent().getParent().getParent());
 
         TextView termsAndConditionsView = (TextView) findViewById(R.id.info_terms_and_conditions);
         termsAndConditionsView.setMovementMethod(LinkMovementMethod.getInstance());
@@ -163,6 +166,14 @@ public class Info extends ActionBarActivity {
             finishWithAnimation();
             return true;
         }
+
+        if ((keyCode == KeyEvent.KEYCODE_VOLUME_UP)) {
+            return ThemeDevUtils.volumeUp(this);
+        }
+        if ((keyCode == KeyEvent.KEYCODE_VOLUME_DOWN)) {
+            return ThemeDevUtils.volumeDown(this);
+        }
+
         return super.onKeyDown(keyCode, event);
     }
 

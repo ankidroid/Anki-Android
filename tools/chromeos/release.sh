@@ -22,7 +22,7 @@ rm -rf cws/unpacked
 unzip -q cws/ankidroid.zip -d cws/unpacked
 
 # Optimize image for CWS
-cp $SOURCE_PATH/docs/marketing/chrome-web-store/icon.png cws/unpacked/
+cp $SOURCE_PATH/docs/marketing/chrome-web-store/iconID.png cws/unpacked/
 
 # Add short name and description placeholder to manifest
 echo "`jq '.short_name = "AnkiDroid" | .description = "__MSG_extDesc__"' cws/unpacked/manifest.json`" > cws/unpacked/manifest.json

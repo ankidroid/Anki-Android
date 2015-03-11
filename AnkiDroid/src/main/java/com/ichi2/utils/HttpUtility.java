@@ -3,8 +3,6 @@ package com.ichi2.utils;
 
 
 
-import com.ichi2.anki.AnkiDroidApp;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;

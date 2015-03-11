@@ -18,8 +18,7 @@
             android:id="@+id/username_title"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/username"
-            android:textColor="#000000" />
+            android:text="@string/username" />
 
         <EditText
             android:id="@+id/username"
@@ -32,7 +31,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/password"
-            android:textColor="#000000" />
+            android:textColor="?android:textColorPrimary" />
 
         <EditText
             android:id="@+id/password"
@@ -79,6 +78,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:textColor="?android:textColorPrimary"
                 android:singleLine="true"
                 android:text="@string/reset_password" />
 
@@ -90,7 +90,10 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:singleLine="true"
+                android:textColor="?android:textColorPrimary"
                 android:text="@string/sign_up" />
+
+            <!-- TODO JS styled these buttons correctly for the theme -->
         </LinearLayout>
     </LinearLayout>
 

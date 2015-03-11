@@ -19,6 +19,7 @@
     android:id="@+id/deckpicker_deck"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    android:background="?attr/backgroundElevatedColor"
     android:orientation="vertical" >
 
     <RelativeLayout
@@ -30,7 +31,10 @@
         android:layout_marginRight="5dip"
         android:layout_marginTop="5dip"
         android:gravity="center_vertical"
-        android:orientation="horizontal" >
+        android:background="@color/transparent"
+    android:orientation="horizontal" >
+        <!--
+            -->
 
         <TextView
             android:id="@+id/DeckPickerName"
@@ -40,8 +44,9 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/deckpicker_new"
             android:gravity="left"
+            android:background="@color/transparent"
+            android:textColor="?android:textColorPrimary"
             android:maxLines="2"
-            android:textColor="#000000"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -51,6 +56,8 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/deckpicker_lrn"
+            android:background="@color/transparent"
+            android:textColor="?attr/newCountTextColor"
             android:gravity="center"
             android:paddingRight="5dip"
             android:textSize="14sp" />
@@ -61,8 +68,10 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_gravity="center"
+            android:background="@color/transparent"
             android:layout_toLeftOf="@+id/deckpicker_rev"
             android:gravity="center"
+            android:textColor="?attr/learnCountTextColor"
             android:paddingRight="5dip"
             android:textSize="14sp" />
 
@@ -72,8 +81,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:background="@color/transparent"
             android:layout_gravity="center"
             android:layout_marginRight="6dip"
+            android:textColor="?attr/reviewCountTextColor"
             android:gravity="center"
             android:textSize="14sp" />
     </RelativeLayout>

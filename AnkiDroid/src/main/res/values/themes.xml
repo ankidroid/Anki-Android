@@ -1,108 +1,482 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="Theme_Base_Custom_Light" parent="@style/Theme.AppCompat.Light" />
+    <!-- TODO JS Items and personal notes: -->
+    <!-- TODO JS remember to reset the theme in all onResume methods (during development only)  -->
+    <!--  Undecided on this one:    <item name="deckpicker_load_bg">@drawable/deckpicker_load_bg</item>-->
+    <!-- to understand how to fix dialogs, examine styled_custom_study_details_dialog.xml and CustomStudyDialog -->
+    <!-- Must use anki-specific themes (vs usual android themes)  -->
 
-    <style name="Theme_Base_Dark" parent="@style/Theme.AppCompat" />
+    <!--<style name="Theme_Base_Custom_Light" parent="@style/Theme.AppCompat.Light" />-->
+    <!--<style name="Theme_Base_Dark" parent="@style/Theme.AppCompat" />-->
 
-    <style name="Theme_Base_Dialog" parent="@android:style/Theme.Dialog" />
+    <!-- Haven't finished looking into dialogs -->
+    <style name="Theme_Base_Dialog" parent="@android:style/Theme.Dialog"        />
 
-    <!-- Blue Theme -->
-    <style name="Theme_Blue" parent="@style/Theme_Base_Custom_Light">
-        <item name="android:buttonStyle">@style/Blue.Button</item>
-        <item name="android:buttonStyleSmall">@style/Blue.Button.Small</item>
-        <item name="android:buttonStyleToggle">@style/Blue.Button.Toggle</item>
-        <item name="android:checkboxStyle">@style/Blue.CompoundButton.CheckBox</item>
-        <item name="android:colorForeground">#0000</item>
-        <item name="android:colorBackground">@color/background_blue</item>
-        <item name="android:editTextStyle">@style/Blue.Edittext</item>
-        <item name="android:radioButtonStyle">@style/Blue.CompoundButton.RadioButton</item>
+    <!-- White Theme is considered the default theme, and is used as the base theme for custom themes during development. May or may switch to a generic theme, from which all others derive -->
+    <!-- Eventually consider having a 'light base' and  a 'dark base', but not to inherit the qualities from standard light and dark android themes - rather to facilitate re-use of light-friendly icons
+    dark-friendly icons  -->
 
-        <!-- Dialog styles -->
-        <item name="android:alertDialogStyle">@style/Blue.AlertDialog</item>
-        <item name="android:listChoiceIndicatorSingle">@drawable/blue_btn_radio</item>
-        <item name="android:listChoiceIndicatorMultiple">@drawable/blue_btn_check</item>
-        <item name="android:listViewStyle">@style/Blue.Widget.ListView</item>
-        <item name="android:dropDownListViewStyle">@style/Blue.Widget.ListView.DropDown</item>
-        <item name="android:listDivider">@drawable/blue_divider_horizontal_bright</item>
-        <item name="android:listPreferredItemHeight">56dip</item>
-        <item name="android:spinnerStyle">@style/Blue.Widget.Spinner</item>
-        <item name="android:spinnerDropDownItemStyle">@style/Blue.Widget.DropDownItem.Spinner</item>
-    </style>
+    <!--  ================================================================================== -->
+    <!-- WHITE theme -->
+    <style name="Theme_White" parent="@style/Theme.AppCompat.Light">
+        <!-- Image files, icons, wallpaper -->
+        <item name="ic_start">@drawable/ic_start</item>
+        <item name="ic_menu_add">@drawable/ic_menu_add</item>
+        <item name="ic_dialog_info">@drawable/ic_dialog_info</item>
+        <item name="ic_media">@drawable/ic_media</item>
+        <item name="ic_lookup">@drawable/ic_lookup</item>
+        <item name="deckpicker_load_bg">@drawable/deckpicker_load_bg</item>
+        <item name="list_selector_background">@drawable/deepblack_list_selector_background</item>
+        <item name="wallpaper">@drawable/white_wallpaper</item>
+        <!-- TODO JS be sure wallpaper is only used where a true wallpaper is needed - not as a simple way to get appropriate color background -->
+        <item name="ic_menu_revert">@drawable/ic_menu_revert</item>
+        <item name="ic_menu_night">@drawable/ic_menu_night</item>
+        <item name="ic_menu_night_checked">@drawable/ic_menu_night_checked</item>
+        <item name="ic_menu_sort_by_size">@drawable/ic_menu_night_checked</item>
 
-    <!-- Flat Theme -->
-    <style name="Theme_Flat" parent="@style/Theme_Base_Custom_Light">
-        <item name="android:buttonStyle">@style/Blue.Button</item>
-        <item name="android:buttonStyleSmall">@style/Blue.Button.Small</item>
-        <item name="android:buttonStyleToggle">@style/Blue.Button.Toggle</item>
-        <item name="android:checkboxStyle">@style/Blue.CompoundButton.CheckBox</item>
-        <item name="android:colorForeground">#0000</item>
-        <item name="android:colorBackground">@color/background_blue</item>
-        <item name="android:editTextStyle">@style/Blue.Edittext</item>
-        <item name="android:radioButtonStyle">@style/Blue.CompoundButton.RadioButton</item>
+        <item name="ic_action_cancel">@drawable/ic_action_cancel</item>
+        <item name="ic_action_replay">@drawable/ic_action_replay</item>
+        <item name="ic_action_whiteboard_enable_light">@drawable/ic_action_whiteboard_enable_light</item>
+        <item name="ic_dialog_alert">@drawable/ic_dialog_alert</item>
+        <item name="ic_menu_edit">@drawable/ic_menu_edit</item>
+        <item name="ic_menu_mark">@drawable/ic_menu_mark</item>
+        <item name="ic_menu_revert_disabled">@drawable/ic_menu_revert_disabled</item>
+        <item name="ic_action_search">@drawable/ic_action_search</item>
+        <item name="ic_menu_refresh">@drawable/ic_menu_refresh</item>
+        <!--<item name="actionBarOverflowIcon">@drawable/ic_menu_refresh</item>-->
+        <item name="ic_lookup_normal">@drawable/ic_lookup_normal</item>
+        <item name="ic_lookup_pressed">@drawable/ic_lookup_pressed</item>
 
-        <!-- Dialog styles -->
-        <item name="android:alertDialogStyle">@style/Blue.AlertDialog</item>
-        <item name="android:listChoiceIndicatorSingle">@drawable/blue_btn_radio</item>
-        <item name="android:listChoiceIndicatorMultiple">@drawable/blue_btn_check</item>
-        <item name="android:listViewStyle">@style/Blue.Widget.ListView</item>
-        <item name="android:dropDownListViewStyle">@style/Blue.Widget.ListView.DropDown</item>
-        <item name="android:listDivider">@drawable/blue_divider_horizontal_bright</item>
-        <item name="android:listPreferredItemHeight">56dip</item>
-        <item name="android:spinnerStyle">@style/Blue.Widget.Spinner</item>
-        <item name="android:spinnerDropDownItemStyle">@style/Blue.Widget.DropDownItem.Spinner</item>
-    </style>
+        <item name="ic_action_time">@drawable/ic_action_time</item>
+        <item name="ic_action_storage">@drawable/ic_action_storage</item>
+        <item name="ic_action_camera">@drawable/ic_action_camera</item>
+        <item name="ic_action_mic">@drawable/ic_action_mic</item>
+        <item name="text">@drawable/text</item>
+        <item name="content_picture">@drawable/content_picture</item>
+        <item name="device_access_mic">@drawable/device_access_mic</item>
+        <item name="ic_action_accept">@drawable/ic_action_accept</item>
+        <item name="android_std_content_discard">@drawable/android_std_content_discard</item>
 
-    <!-- White Theme -->
-    <style name="Theme_White" parent="@style/Theme_Base_Custom_Light">
+
+
+
+
+
+        <item name="dialogTitleBackgroundColor">#d0d0d0</item>
+        <item name="dialogBackgroundColor">#f0f0f0</item>
+
+        <item name="navigationDrawerIconImages">@array/drawer_images</item>
+
+        <!--<item name="android:colorBackground">#f5f5f5</item>-->
+        <item name="android:colorForeground">#aaaaaa</item>
+        <item name="android:textColorSecondary">#101010</item>
+        <item name="android:textColorTertiary">#202020</item>
+        <!--<item name="android:textColorHint">#778899</item>-->   <!-- where is this used -->
+
+
+        <!-- Colors used throughout the app -->
+        <!--<item name="foregroundColor">#000000</item>  &lt;!&ndash; belated realized that using android:textColorPrimary is a better way to go &ndash;&gt;-->
+        <item name="backgroundElevatedColor">#ffffff</item>
+        <item name="backgroundColor">#f5f5f5</item>
+
+        <item name="editTextBackground">#dddddd</item>  <!-- To be used in many, not all, editable textviews  -->
+        <item name="backgroundFrameColor">#eeeeee</item>  <!-- may later be removed, currently conceived as a color that would frame views.  a 9-patch seems to have been previously used for this purpose -->
+
+        <!-- TODO JS where is this vv being used?  Eliminate in favor of textColorPrimary ? -->
+        <item name="android:textColor">#000000</item> <!-- experimenting with this as a way to force the dropdown and popup color to change -->
+        <item name="android:textColorPrimary">#000000</item> <!-- experimenting with this as a way to force the dropdown and popup color to change -->
+
+        <item name="styledDialogTitleDivider">@drawable/white_dialog_divider</item>  <!-- TODO Who is using this? -->
+        <item name="styledDialogPopupTopBackground">@drawable/popup_top_dark</item> <!-- Has this been replaced by dialogTitleBackgroundColor ? -->
+
+        <!--  ACTION BAR -->
+        <!-- Action bar styles is defined to refer back to colors defined in this theme. -->
+        <item name="android:actionBarStyle">@style/ActionBarStyle</item>
+        <!-- Action bar colors, used by the action bar style -->
+        <item name="actionBarBackgroundColor">#f5f5f5</item>
+        <item name="actionBarTitleTextColor">#000000</item>
+        <item name="actionBarSubtitleTextColor">#000000</item>
+
+        <!-- TODO JS This was for testing colored themes based on white images tinted appropriately -->
+        <!--<item name="tintAllImages">#88ff0000</item>-->
+
+        <!-- TODO JS Confirm this isn't necessary, and remove vvv -->
+        <!--<item name="android:actionBarStyle" tools:targetApi="11">@style/White.ActionBarStyle</item> -->
+
+        <!-- Dynamic text colors -->
+        <!-- DeckPicker -->
+        <item name="learnCountTextColor">#990000</item>
+        <item name="reviewCountTextColor">#007700</item>
+        <item name="newCountTextColor">#000099</item>
+        <item name="dyn_deck">@color/dyn_deck</item>
+        <item name="non_dyn_deck">@color/non_dyn_deck</item>
+
+        <!-- Card browser specific theme settings -->
+        <item name="card_browser_marked">#E2A9F3</item>
+        <item name="card_browser_suspended">#F2F5A9</item>
+        <item name="card_browser_normal">#ffffff</item>
+
+
+        <item name="studyOptionsButtonBackground">@drawable/white_btn_default</item>
+
+        <!--vvv WHITE THEME ^^^^   (in case your screen is small, you are here) -->
+
+        <!-- probably replace cardBrowserBackgroundFrame with genericBackgroundFrame -->
+        <item name="cardBrowserBackgroundFrame">@drawable/white_textview</item> <!-- use to put a small frame around the cardbrowser -->
+        <item name="genericBackgroundFrame">@drawable/white_textview</item>
+        <!-- ^^ Since white_textview is used a few places to create frames, use a generic name for it.  found in cardbrowser and in studyoptions_scrollcontainer -->
+
+        <!-- Taken from bottom_button.xml and flashcard.xml - transparent -->
+        <item name="flashCardButtonBackground">#00000000</item>
+
+        <!-- taken out of Themes.java, deckpicker backgrounds?  -->
+        <item name="deckPickerListSelector">@drawable/white_deckpicker_list_selector</item>
+
+        <!-- Misc button styles -->
+        <!--Bring this back during testing-->
         <item name="android:buttonStyle">@style/White.Button</item>
-        <item name="android:buttonStyleSmall">@style/White.Button.Small</item>
-        <item name="android:buttonStyleToggle">@style/White.Button.Toggle</item>
-        <item name="android:checkboxStyle">@style/White.CompoundButton.CheckBox</item>
-        <item name="android:colorForeground">#0000</item>
-        <item name="android:colorBackground">@color/white_background</item>
-        <item name="android:editTextStyle">@style/White.Edittext</item>
-        <item name="android:radioButtonStyle">@style/White.CompoundButton.RadioButton</item>
+        <!--<item name="android:buttonStyleSmall">@style/White.Button.Small</item>-->
+        <!--<item name="android:buttonStyleToggle">@style/White.Button.Toggle</item>-->
+        <!--<item name="android:checkboxStyle">@style/White.CompoundButton.CheckBox</item>-->
+        <!--<item name="android:editTextStyle">@style/White.Edittext</item>-->
+        <!--<item name="android:radioButtonStyle">@style/White.CompoundButton.RadioButton</item>-->
 
-        <!-- Action bar styles -->
-        <item name="actionBarStyle">@style/White.ActionBarStyle</item>
-        <item name="android:actionBarStyle" tools:targetApi="11">@style/White.ActionBarStyle</item>
+        <!--vvv WHITE THEME ^^^^-->
 
-        <!-- Dialog styles -->
-        <item name="android:alertDialogStyle">@style/White.AlertDialog</item>
+        <!-- Dialog, list, and spinner styles - may need to simplify this old approach -->
+
+        <!--<item name="android:popupMenuStyle">@style/JSPopupMenuStyle</item>-->
+        <!--<item name="android:dropDownListViewStyle">@style/JSPopupMenuStyle</item>-->
+        <item name="android:alertDialogStyle">@style/MyAlertDialog</item>
         <item name="android:listChoiceIndicatorSingle">@drawable/blue_btn_radio</item>
         <item name="android:listChoiceIndicatorMultiple">@drawable/blue_btn_check</item>
         <item name="android:listViewStyle">@style/White.Widget.ListView</item>
-        <item name="android:dropDownListViewStyle">@style/White.Widget.ListView.DropDown</item>
+        <!--<item name="android:dropDownListViewStyle">@style/White.Widget.ListView.DropDown</item>-->
         <item name="android:listDivider">@drawable/white_listdivider</item>
         <item name="android:listPreferredItemHeight">56dip</item>
-        <item name="android:spinnerDropDownItemStyle">@style/White.Widget.DropDownItem.Spinner</item>
+        <!--<item name="android:spinnerDropDownItemStyle">@style/White.Widget.DropDownItem.Spinner</item>-->  <!-- Uncomment and test! -->
+
+        <item name="listviewDividerColor">#d3d3d3</item> <!-- Used in the navigation drawer, possibly elsewhere -->
+
+
+        <!-- Used by deckpicker, background images for items in list, depends on grouping -->
+        <item name="deckpicker_top">@drawable/white_deckpicker_top</item>
+        <item name="deckpicker_bottom">@drawable/white_deckpicker_bottom</item>
+        <item name="deckpicker_full">@drawable/white_deckpicker_full</item>
+        <item name="deckpicker_center">@drawable/white_deckpicker_center</item>
+
+
+        <!-- try to fix overflow menu -->
+        <item name="android:popupMenuStyle">@style/MyPopupMenuStyle</item>
+
+        <!-- To force background colors of the preference screens, I'm using a drawable.  How to simply use a color? -->
+        <item name="android:windowBackground">@drawable/white_wallpaper</item>
+
+    </style>
+    <!--End of WHITE THEME-->
+
+
+    <!--  ================================================================================== -->
+    <!-- Blue Theme -->
+    <style name="Theme_Aqua" parent="@style/Theme_White">
+        <item name="android:colorBackground">@color/background_blue</item>
+        <item name="android:colorForeground">#eeeeff</item>
+        <item name="android:textColorPrimary">#111144</item>
+        <item name="android:textColorSecondary">#222288</item>
+        <item name="android:textColorTertiary">#333399</item>
+
+        <item name="android:background">#ccccff</item>
+
+        <item name="learnCountTextColor">#ff0000</item>
+        <item name="reviewCountTextColor">#00ff00</item>
+        <item name="newCountTextColor">#000088</item>
+
+        <item name="dyn_deck">#226611</item>
+        <item name="non_dyn_deck">@color/non_dyn_deck</item>
+
+        <!-- Card browser specific theme settings -->
+        <item name="card_browser_marked">#ff8888</item>
+        <item name="card_browser_suspended">#228888</item>
     </style>
 
+
+
+    <!--  ================================================================================== -->
+    <!-- CrazyForTesting Theme -->
+    <style name="Theme_CrazyForTesting" parent="@style/Theme_White">
+
+        <!-- to do preference screens, etc, over-ride these: -->
+        <item name="android:colorBackground">@color/background_blue</item>
+        <item name="android:colorForeground">#eeeeff</item>
+        <item name="android:textColorPrimary">#111144</item>
+        <item name="android:textColorSecondary">#222288</item>
+        <item name="android:textColorTertiary">#333399</item>
+        <!--<item name="android:textColorHint">#778899</item>-->   <!-- how is this used -->
+
+        <item name="wallpaper">@drawable/blue_wallpaper</item>
+        <item name="styledDialogPopupTopBackground">@drawable/blue_popup_top_dark</item>
+        <item name="backgroundElevatedColor">#7777dd</item>
+
+        <!-- use odd colors for testing purposes -->
+        <!--<item name="android:colorBackground">#44ff44</item>-->
+        <item name="android:background">#4444ff</item>
+
+        <item name="actionBarBackgroundColor">#ff0000</item>
+        <item name="actionBarTitleTextColor">#00ff00</item>
+        <item name="actionBarSubtitleTextColor">#00ff00</item>
+
+        <item name="learnCountTextColor">#ff0000</item>
+        <item name="reviewCountTextColor">#00ff00</item>
+        <item name="newCountTextColor">#0000ff</item>
+
+        <item name="dyn_deck">@color/dyn_deck</item>
+        <item name="non_dyn_deck">@color/non_dyn_deck</item>
+
+        <!-- Card browser specific theme settings -->
+        <item name="card_browser_marked">#ff8888</item>
+        <item name="card_browser_suspended">#228888</item>
+
+        <!--<item name="android:buttonStyle">@style/Blue.Button</item>-->
+        <!--<item name="android:buttonStyleSmall">@style/Blue.Button.Small</item>-->
+        <!--<item name="android:buttonStyleToggle">@style/Blue.Button.Toggle</item>-->
+        <!--<item name="android:checkboxStyle">@style/Blue.CompoundButton.CheckBox</item>-->
+        <!--<item name="android:editTextStyle">@style/Blue.Edittext</item>-->
+        <!--<item name="android:radioButtonStyle">@style/Blue.CompoundButton.RadioButton</item>-->
+
+        <!-- Dialog styles -->
+        <!--<item name="android:alertDialogStyle">@style/Blue.AlertDialog</item>-->
+        <!--<item name="android:listChoiceIndicatorSingle">@drawable/blue_btn_radio</item>-->
+        <!--<item name="android:listChoiceIndicatorMultiple">@drawable/blue_btn_check</item>-->
+        <!--<item name="android:listViewStyle">@style/Blue.Widget.ListView</item>-->
+        <!--<item name="android:dropDownListViewStyle">@style/Blue.Widget.ListView.DropDown</item>-->
+        <!--<item name="android:listDivider">@drawable/blue_divider_horizontal_bright</item>-->
+        <!--<item name="android:listPreferredItemHeight">56dip</item>-->
+        <!--<item name="android:spinnerStyle">@style/Blue.Widget.Spinner</item>-->
+        <!--<item name="android:spinnerDropDownItemStyle">@style/Blue.Widget.DropDownItem.Spinner</item>-->
+    </style>  <!-- Blue theme ^^  -->
+
+
+
+
+
+    <!-- ===================================================================== -->
+    <!-- DEEP BLACK theme -->
+    <style name="Theme_DeepBlack" parent="@style/Theme_White">
+
+        <!-- to do preference screens, etc, over-ride these: -->
+        <item name="android:popupBackground">#000000</item> <!-- didn't help with preference screen -->
+        <item name="android:colorBackground">#000000</item>
+        <item name="android:colorForeground">#101010</item>
+        <item name="android:textColorPrimary">#ffffff</item>
+        <item name="android:textColorSecondary">#dddddd</item>
+        <item name="android:textColorTertiary">#aaaaaa</item>
+
+
+        <item name="dialogTitleBackgroundColor">#202020</item>
+        <item name="dialogBackgroundColor">#101010</item>
+
+
+        <item name="android:windowBackground">@drawable/deepblack_wallpaper</item>
+
+        <!-- Image files, icons, wallpaper -->
+        <item name="ic_menu_add">@drawable/ic_menu_add_deepblack</item>
+        <item name="ic_start">@drawable/ic_start_deepblack</item>
+        <item name="ic_dialog_info">@drawable/ic_dialog_info_deepblack</item>
+        <item name="ic_media">@drawable/ic_media_deepblack</item>
+        <item name="ic_lookup">@drawable/ic_lookup_deepblack</item>
+        <item name="ic_menu_revert">@drawable/ic_menu_revert_deepblack</item>
+        <item name="ic_menu_night">@drawable/ic_menu_night_deepblack</item>
+
+        <item name="ic_action_cancel">@drawable/ic_action_cancel_deepblack</item>
+        <item name="ic_action_replay">@drawable/ic_action_replay_deepblack</item>
+        <item name="ic_action_whiteboard_enable_light">@drawable/ic_action_whiteboard_enable_light_deepblack</item>
+        <item name="ic_dialog_alert">@drawable/ic_dialog_alert_deepblack</item>
+        <item name="ic_menu_edit">@drawable/ic_menu_edit_deepblack</item>
+        <item name="ic_menu_mark">@drawable/ic_menu_mark_deepblack</item>
+        <item name="ic_menu_revert_disabled">@drawable/ic_menu_revert_disabled_deepblack</item>
+
+
+        <!-- These are stored in constants.xml -->
+        <item name="navigationDrawerIconImages">@array/drawer_images_deepblack</item>
+
+
+
+        <item name="deckpicker_load_bg">@drawable/deckpicker_load_bg</item>
+        <item name="list_selector_background">@drawable/white_list_selector_background</item>
+        <!--<item name="wallpaper">@drawable/white_wallpaper</item>-->
+        <!-- TODO be sure wallpaper is only used where a true wallpaper is needed - not as a simple way to get appropriate color background -->
+        <item name="ic_menu_night_checked">@drawable/ic_menu_night_checked_deepblack</item>
+        <item name="ic_menu_sort_by_size">@drawable/ic_menu_sort_by_size_deepblack</item>
+
+
+
+        <item name="styledDialogTitleDivider">@drawable/deepblack_dialog_divider</item>
+        <item name="styledDialogPopupTopBackground">@drawable/blue_popup_top_dark</item>
+
+        <!--        popup_top_dark, blue_popup_top_dark, etc are some of the image used for the styled_dialog.xml's topPanel.  Need to look at differentiation of ..._dark, ..._bright, ..._medium -->
+
+        <item name="editTextBackground">#202020</item>  <!-- To be used in editable textviews  -->
+
+
+        <!--<item name="android:colorBackground">#000010</item>  -->
+        <!-- experimenting with this as a way to force the dropdown and popup color to change -->
+        <item name="android:textColor">#dddddd</item> <!-- experimenting with this as a way to force the dropdown and popup color to change -->
+
+        <item name="actionBarBackgroundColor">#000010</item>
+        <item name="actionBarTitleTextColor">#dddddd</item>
+        <item name="actionBarSubtitleTextColor">#bbbbbb</item>
+
+        <item name="listviewDividerColor">#606060</item> <!-- Used in the navigation drawer, possibly elsewhere -->
+
+        <!--<item name="actionbarBackgroundColor">#000000</item>-->
+        <item name="genericBackgroundFrame">@drawable/deepblack_textview</item>
+        <item name="wallpaper">@drawable/deepblack_wallpaper</item>
+        <item name="studyOptionsButtonBackground">@drawable/deepblack_btn_default</item>
+        <item name="tintAllImages">#88ff0000</item>
+
+        <!-- Used by deckpicker, background images for items in list, depends on grouping -->
+        <item name="deckpicker_top">@drawable/deepblack_deckpicker_top</item>
+        <item name="deckpicker_bottom">@drawable/deepblack_deckpicker_bottom</item>
+        <item name="deckpicker_full">@drawable/deepblack_deckpicker_full</item>
+        <item name="deckpicker_center">@drawable/deepblack_deckpicker_center</item>
+
+
+        <!--<item name="foregroundColor">#cccccc</item>-->
+        <item name="backgroundColor">#050510</item>
+        <item name="android:background">@color/transparent</item>
+        <!--^^  deep black vv -->
+        <item name="backgroundElevatedColor">#000000</item>
+        <item name="backgroundFrameColor">#111122</item>
+        <!--<item name="android:spinnerStyle">@style/White.Widget.Spinner</item>-->  <!-- TODO uncomment and test -->
+
+        <item name="cardBrowserBackgroundFrame">@color/transparent</item> <!-- used to put a small drawable frame around the cardbrowser, no frame if color is given  -->
+        <!-- TODO try ?attr/backgroundColor or similar for the frame -->
+        <item name="dyn_deck">@color/dyn_deck</item>
+        <item name="non_dyn_deck">#cccccc</item>
+        <!-- Bizarre bug seems to cause non-dynamic card name text fields to 'disappear' on a black background if the attribute color is set to #FFFFFF (or @color/white).
+        Not sure if it becomes transparent, or black, or if the field becomes invisible -->
+        <item name="learnCountTextColor">#ff4444</item>
+        <item name="reviewCountTextColor">#44cc44</item>
+        <item name="newCountTextColor">#4499FF</item>
+
+        <!-- Card broswer specific theme settings -->
+        <item name="card_browser_marked">#333300</item>
+        <item name="card_browser_suspended">#111133</item>
+        <item name="card_browser_normal">#222222</item>
+
+        <item name="deckPickerListSelector">@drawable/deepblack_deckpicker_list_selector</item>
+        <!--<item name="deckpicker_lv_background">@drawable/white_deckpicker_lv_background</item>-->
+        <item name="deckpicker_lv_background">@color/white</item>
+
+        <!--<item name="android:buttonStyle">@style/DeepBlack.Button</item>-->
+        <!--<item name="android:buttonStyleSmall">@style/DeepBlack.Button.Small</item>-->
+        <!--<item name="android:buttonStyleToggle">@style/DeepBlack.Button.Toggle</item>-->
+        <!--<item name="android:checkboxStyle">@style/DeepBlack.CompoundButton.CheckBox</item>-->
+        <!--<item name="android:colorForeground">#ccccff</item>-->
+        <!--<item name="android:editTextStyle">@style/DeepBlack.Edittext</item>-->
+        <!--<item name="android:colorBackground">@color/deepblack_background</item>-->
+        <!--<item name="android:radioButtonStyle">@style/DeepBlack.CompoundButton.RadioButton</item>-->
+
+        <!--<item name="android:actionBarStyle" tools:targetApi="11">@style/DeepBlack.ActionBarStyle</item>-->
+
+        <!-- Dialog styles -->
+        <!--<item name="android:alertDialogStyle">@style/DeepBlack.AlertDialog</item>-->
+        <item name="android:alertDialogStyle">@style/MyAlertDialog</item>
+        <item name="android:listChoiceIndicatorSingle">@drawable/deepblack_btn_radio</item>
+        <item name="android:listChoiceIndicatorMultiple">@drawable/deepblack_btn_check</item>
+        <!--<item name="android:listViewStyle">@style/DeepBlack.Widget.ListView</item>-->
+        <!--<item name="android:dropDownListViewStyle">@style/DeepBlack.Widget.ListView.DropDown</item>-->
+        <item name="android:listDivider">@drawable/deepblack_listdivider</item>
+        <item name="android:listPreferredItemHeight">56dip</item>
+        <!--<item name="android:spinnerDropDownItemStyle">@style/DeepBlack.Widget.DropDownItem.Spinner</item>-->
+    </style>
+    <!-- ^^^ deep black theme ^^^-->
+
+    <!--  ======================================================================================= -->
+    <!-- Grey-black Theme -->
+    <style name="Theme_GreyBlack" parent="@style/Theme_DeepBlack">
+        <item name="backgroundColor">#101010</item>
+        <item name="android:background">@color/transparent</item>
+
+
+        <item name="android:textColorPrimary">#aaaaaa</item>
+        <item name="android:textColorSecondary">#999999</item>
+        <item name="android:textColorTertiary">#888888</item>
+
+
+
+        <item name="wallpaper">@drawable/deepblack_wallpaper</item>
+
+        <item name="genericBackgroundFrame">@drawable/deepblack_textview</item>
+
+        <item name="actionBarBackgroundColor">#080808</item>
+        <item name="actionBarTitleTextColor">#999999</item>
+        <item name="actionBarSubtitleTextColor">#999999</item>
+
+        <item name="backgroundElevatedColor">#000000</item>
+        <!--<item name="foregroundColor">#999999</item>-->
+
+        <item name="dyn_deck">@color/dyn_deck</item>
+        <item name="non_dyn_deck">#777777</item>
+        <item name="backgroundFrameColor">#222222</item>
+        <!--<item name="android:spinnerStyle">@style/DeepBlack.Widget.Spinner</item>-->
+
+        <item name="ic_start">@drawable/ic_start_deepblack</item>
+
+        <item name="deckPickerListSelector">@drawable/deepblack_deckpicker_list_selector</item>
+    </style>
+    <!-- ^^^  Grey-black Theme ^^^ -->
+
+
+
+
+
+    <!--===================================================================================-->
+    <!-- White Statistics-->
     <style name="Theme_White_Statistics" parent="@style/Theme_White">
         <item name="android:radioButtonStyle">@android:style/Widget.CompoundButton.RadioButton</item>
     </style>
 
-    <!-- Basic theme for dialogs -->
+    <!--===================================================================================-->
+    <!--<item name="android:windowBackground">@color/translucentGrey</item>  Why was this translucent grey? No one used it that way!-->
     <style name="StyledDialog" parent="@style/Theme_Base_Dialog">
-        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:windowBackground">?attr/backgroundColor</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsFloating">true</item>
+        <!--      <item name="backgroundFrameColor">#ff0000</item> testing effects -->
     </style>
 
-    <!-- Theme for widget dialogs -->
-    <style name="Theme_Translucent" parent="@style/Theme_Blue">
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:colorBackgroundCacheHint">@null</item>
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowAnimationStyle">@android:style/Animation</item>
-    </style>
+
+    <!-- Basic theme for dialogs -->
 
     <style name="Theme_Start" parent="@style/Theme_White">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
     </style>
 
+
 </resources>
+
+
+    <!--<style name="Theme_Anki_Base" parent="@style/Theme_White">
+</style>
+-->
+
+
+    <!-- Do not edit this comment. This is for easy reference.  These are the original values stored in colors.xml before forking:
+      Colors for the card counts, in the top bar, deck picker etc.
+    <color name="new_count">#000099</color>
+    <color name="learn_count">#990000</color>
+    <color name="review_count">#007700</color>
+    <color name="zero_count">#1f000000</color>
+    <color name="new_count_night">#b1b1ff</color>
+    <color name="learn_count_night">#f50000</color>
+    <color name="review_count_night">#00cf00</color>
+    <color name="zero_count_night">#202020</color>
+    <color name="actionbar_background">#f5f5f5</color>
+    <color name="dyn_deck">#2222bb</color>
+    <color name="non_dyn_deck">#000000</color>
+    -->
+
+

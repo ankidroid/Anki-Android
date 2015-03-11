@@ -26,12 +26,11 @@ import android.webkit.WebView;
 import android.widget.*;
 
 import com.example.android.common.view.SlidingTabLayout;
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.NavigationDrawerActivity;
-import com.ichi2.anki.R;
 import com.ichi2.anki.stats.*;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Stats;
+import com.ichi2.themes.Themes;
+
 import org.json.JSONException;
 
 import java.util.Arrays;
@@ -65,6 +64,7 @@ public class Statistics extends NavigationDrawerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Timber.d("onCreate()");
+        Themes.applyTheme(this);
         sIsWholeCollectionOnly = AnkiStatsTaskHandler.isWholeCollection();  //if it starts with true, do not let user select deck
         sIsSubtitle = true;
         super.onCreate(savedInstanceState);
@@ -103,6 +103,8 @@ public class Statistics extends NavigationDrawerActivity {
 
     @Override
     protected void onResume() {
+        // TODO JS do we need to set the theme here?
+        Themes.applyTheme(this);
         Timber.d("onResume()");
         super.onResume();
         selectNavigationItem(NavigationDrawerActivity.DRAWER_STATISTICS);
@@ -399,6 +401,7 @@ public class Statistics extends NavigationDrawerActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
+            Themes.applyTheme(getActivity()); // Might not be necessary
             setHasOptionsMenu(true);
             Bundle bundle = getArguments();
             mSectionNumber = bundle.getInt(ARG_SECTION_NUMBER);

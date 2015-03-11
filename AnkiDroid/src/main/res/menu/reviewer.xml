@@ -4,35 +4,35 @@
     <item
         android:id="@+id/action_clear_whiteboard"
         android:title="@string/clear_whiteboard"
-        android:icon="@drawable/ic_action_cancel"
+        android:icon="?attr/ic_action_cancel"
         android:visible="false"
         ankidroid:showAsAction="always"/>
     <item
         android:id="@+id/action_hide_whiteboard"
         android:title="@string/hide_whiteboard"
-        android:icon="@drawable/ic_action_whiteboard_enable_light"
+        android:icon="?attr/ic_action_whiteboard_enable_light"
         android:visible="false"
         ankidroid:showAsAction="always"/>
     <item
         android:id="@+id/action_undo"
         android:enabled="false"
-        android:icon="@drawable/ic_menu_revert_disabled"
+        android:icon="?attr/ic_menu_revert_disabled"
         android:title="@string/undo"
         ankidroid:showAsAction="always"/>
     <item
         android:id="@+id/action_mark_card"
-        android:icon="@drawable/ic_menu_mark"
+        android:icon="?attr/ic_menu_mark"
         android:title="@string/menu_mark_card"
         ankidroid:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_edit"
-        android:icon="@drawable/ic_menu_edit"
+        android:icon="?attr/ic_menu_edit"
         android:title="@string/cardeditor_title_edit_card"
         ankidroid:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_replay"
         android:title="@string/replay_audio"
-        android:icon="@drawable/ic_action_replay"
+        android:icon="?attr/ic_action_replay"
         ankidroid:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_dismiss"

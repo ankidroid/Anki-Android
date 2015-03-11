@@ -30,7 +30,6 @@ import android.view.WindowManager.BadTokenException;
 import android.widget.TextView;
 
 import com.ichi2.anki.AnkiActivity;
-import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 
 import timber.log.Timber;

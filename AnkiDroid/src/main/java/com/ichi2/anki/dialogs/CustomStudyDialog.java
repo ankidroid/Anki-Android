@@ -54,7 +54,8 @@ public class CustomStudyDialog extends DialogFragment {
     @SuppressLint("InflateParams")
 	@Override
     public StyledDialog onCreateDialog(Bundle savedInstanceState) {
-        super.onCreateDialog(savedInstanceState);
+        Themes.applyTheme(getActivity());  // Needed?
+         super.onCreateDialog(savedInstanceState);
         Resources res = getActivity().getResources();
         StyledDialog.Builder builder = new StyledDialog.Builder(getActivity());
         // Set custom view

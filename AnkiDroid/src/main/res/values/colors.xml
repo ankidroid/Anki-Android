@@ -45,23 +45,39 @@
     <color name="studyoptions_foreground">#FFFF</color>
     <color name="studyoptions_foreground_deactivated">#484848</color>
     <color name="background">#FFFF</color>
+
     <color name="studyoptions_progressbar_mature_default">#CDCDCD</color>
     <color name="studyoptions_progressbar_young_default">#8d8d8d</color>
     <color name="studyoptions_progressbar_frame_default">#989898</color>
     <color name="studyoptions_progressbar_background_default">#484848</color>
+
+    <color name="studyoptions_progressbar_mature_deepblack">#CDCDCD</color>
+    <color name="studyoptions_progressbar_young_deepblack">#8d8d8d</color>
+    <color name="studyoptions_progressbar_frame_deepblack">#989898</color>
+    <color name="studyoptions_progressbar_background_deepblack">#666666</color>
+
+
     <color name="studyoptions_progressbar_mature_light">#323232</color>
     <color name="studyoptions_progressbar_young_light">#B0B0B0</color>
     <color name="studyoptions_progressbar_frame_light">#000000</color>
     <color name="studyoptions_progressbar_background_light">#FFFF</color>
+
     <color name="studyoptions_progressbar_background_nightmode">#d7d7d7</color>
     <color name="deckpicker_progressbar_young_light">#999999</color>
     <color name="deckpicker_progressbar_young_dark">#B0B0B0</color>
+    <color name="deckpicker_progressbar_young_deepblack">#B0B0B0</color>
+
     <color name="reviewer_background">#c6cfd6</color>
     <color name="reviewer_background_night">#19242e</color>
     <color name="reviewer_night_card_background">#0c1217</color>
+
+    <!-- -->
     <color name="transparent">#00000000</color>
     <color name="white">#ffffff</color>
+    <color name="grey">#888888</color>
+    <color name="translucentGrey">#dddddddd</color>
     <color name="black">#000000</color>
+
     <color name="widget_progressbar_empty">#000000</color>
     <color name="widget_big_font_color">#343634</color>
     <color name="widget_big_font_color_red">#cd5554</color>
@@ -86,16 +102,26 @@
     <color name="white_background_night">#3d3d3d</color>
     <color name="white_buttontext">#10171d</color>
 
+    <!-- colors for black theme -->
+    <color name="deepblack_background">#000000</color>
+    <color name="deepblack_background_night">#000000</color>
+    <color name="deepblack_buttontext">#eeeeee</color>
+    <color name="deepblack_textcolor">#BBBBBB</color>
+
+
     <!-- Colors for the card counts, in the top bar, deck picker etc. -->
-    <color name="new_count">#000099</color>
+    <!-- These colors were chosen for the white background, and may not work well in other themes -->
+
+    <color name="new_count">#1111dd</color>
     <color name="learn_count">#990000</color>
-    <color name="review_count">#007700</color>
+    <color name="review_count">#009900</color>
     <color name="zero_count">#1f000000</color>
     <color name="new_count_night">#b1b1ff</color>
     <color name="learn_count_night">#f50000</color>
     <color name="review_count_night">#00cf00</color>
     <color name="zero_count_night">#202020</color>
     <color name="actionbar_background">#f5f5f5</color>
+    <color name="deepblack_actionbar_background">#080808</color>
     <color name="dyn_deck">#2222bb</color>
     <color name="non_dyn_deck">#000000</color>
 
