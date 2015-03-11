@@ -59,9 +59,9 @@
   <string name="clear_whiteboard">ホワイトボードの内容を全て消去</string>
   <string name="replay_audio">音声をリプレイ</string>
   <string name="cram_edit_warning">総復習中はカードの編集はできません</string>
-  <string name="suspend_leeches">習得困難（無駄）カードの延期</string>
-  <string name="leech_suspend_notification">このカードはタグ \"leech\" （習得困難（無駄）カード）が付けられ、保留されました</string>
-  <string name="leech_notification">このカードにタグ \"leech\" （習得困難（無駄）カード）を付けました</string>
+  <string name="suspend_leeches">無駄（習得困難）カードの延期</string>
+  <string name="leech_suspend_notification">このカードは \"leech\" （無駄）というタグが付けられ、保留されました</string>
+  <string name="leech_notification">このカードに \"leech\" （無駄）というタグを付けました</string>
   <string name="corrupt_font">使用できないフォントファイル %s</string>
   <string-array name="browser_column1_headings">
     <item>ソートフィールド</item>

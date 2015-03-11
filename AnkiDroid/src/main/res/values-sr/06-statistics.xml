@@ -44,20 +44,20 @@
   <string name="statistics_mature">Развијени</string>
   <string name="statistics_young_and_learn">Младе + учење</string>
   <string name="statistics_unlearned">Непрегледане</string>
-  <string name="statistics_suspended">Отказаних</string>
+  <string name="statistics_suspended">Отказано</string>
   <string name="statistics_relearn">Поновно учење</string>
   <string name="statistics_learn">Учење</string>
   <string name="statistics_cram">Штребање</string>
   <string name="statistics_type_title">Статистика</string>
   <string name="stats_cards">Картице</string>
-  <string name="stats_cards_intervals">Картице са размаком</string>
-  <string name="stats_cumulative_cards">Акумулативне картице</string>
-  <string name="stats_cumulative_answers">Акумулативни одговори</string>
-  <string name="stats_cumulative_time_minutes">Акумулативни минути</string>
-  <string name="stats_cumulative_time_hours">Акумулативни сати</string>
-  <string name="stats_cumulative">Акумулативно</string>
-  <string name="stats_cumulative_percentage">Акумулативан проценат</string>
-  <string formatted="false" name="stats_cumulative_correct_percentage">Акумулативни тачни %</string>
+  <string name="stats_cards_intervals">Карте са задатим интервалом</string>
+  <string name="stats_cumulative_cards">Општа количина карата</string>
+  <string name="stats_cumulative_answers">Општа количина одговора</string>
+  <string name="stats_cumulative_time_minutes">Општа количина минута</string>
+  <string name="stats_cumulative_time_hours">Општа количина сати</string>
+  <string name="stats_cumulative">Сумарно</string>
+  <string name="stats_cumulative_percentage">Сумарно процената</string>
+  <string formatted="false" name="stats_cumulative_correct_percentage">Сумарно тачно %</string>
   <string name="stats_answers">Одговори</string>
   <string name="stats_minutes">Минута</string>
   <string name="stats_hours">Часова</string>
@@ -72,11 +72,11 @@
   <string formatted="false" name="stats_percentage_correct">% тачни</string>
   <string name="stats_reviews">Понављања</string>
   <string name="stats_answer_type">Врста одговора</string>
-  <string name="stats_today_again_count">Пута понављено: &lt;b&gt;%d&lt;/b&gt;</string>
+  <string name="stats_today_again_count">Поново прегледаних карата: &lt;b&gt;%d&lt;/b&gt;</string>
   <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; тачни)</string>
-  <string name="stats_today_type_breakdown">За учење: &lt;b&gt;%1$s&lt;/b&gt;, За преглед: &lt;b&gt;%2$s&lt;/b&gt;, За понављање: &lt;b&gt;%3$s&lt;/b&gt;, Филтриране: &lt;b&gt;%4$s&lt;/b&gt;</string>
+  <string name="stats_today_type_breakdown">Изучено: &lt;b&gt;%1$s&lt;/b&gt;, Прегледано: &lt;b&gt;%2$s&lt;/b&gt;, Поновљено: &lt;b&gt;%3$s&lt;/b&gt;, Филтрирано: &lt;b&gt;%4$s&lt;/b&gt;</string>
   <string name="stats_today_mature_cards">Тачни одговори за развијене картице:  %1$d/%2$d (%3$.1f%%)</string>
-  <string name="stats_today_no_mature_cards">Ниједна развијена картица проучена данас.</string>
+  <string name="stats_today_no_mature_cards">Ниједна развијена карта данас није научена.</string>
   <string name="statistics_period_x_axis_minutes">Минута</string>
   <string name="statistics_new_cards">Нове картице</string>
   <string name="statistics_failed_cards">Тешке картице</string>

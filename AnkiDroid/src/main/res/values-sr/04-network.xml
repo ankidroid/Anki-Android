@@ -54,27 +54,27 @@
   <string name="cancel">Откажи</string>
   <string name="download_overwrite">Замени</string>
   <string name="download_cancel">Откажи преузимање</string>
-  <string name="shared_decks">Јавни шпилови</string>
-  <string name="loading_shared_decks">Учитавање списка јавних шпилова...</string>
+  <string name="shared_decks">Дељени шпилови</string>
+  <string name="loading_shared_decks">Учитавање списка дељених шпилова...</string>
   <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Услови</a></string>
   <string name="cancel_download">Откажи Преузимање</string>
   <string name="resume_download">Настави Преузимање</string>
   <string name="pause_download">Паузирај Преузимање</string>
   <string name="duplicate_download">Овај шпил се већ преузима</string>
-  <string name="menu_get_shared_decks">Преузми јавне шпилове</string>
+  <string name="menu_get_shared_decks">Преузми дељене шпилове</string>
   <string name="download_button_return">Повратак</string>
   <string name="connection_error_message">Грешка у мрежи.</string>
   <string name="sync_log_db_error">Дошло је до грешке у бази података.</string>
   <string name="not_logged_in_title">Прикључите се на AnkiWeb</string>
   <string name="login_create_account_message">Морате да се прикључите на AnkiWeb. Можете направите налог у слећем кораку.</string>
-  <string name="no_email_client">Немате површину за е-пошту</string>
+  <string name="no_email_client">Немате клијент за е-пошту</string>
   <string name="username">Адреса е-поште</string>
   <string name="username_repeat">Поновите адресу е-поште</string>
-  <string name="password">Lozinka</string>
+  <string name="password">Лозинка</string>
   <string name="password_repeat">Поновите лозинку</string>
-  <string name="log_in">Prijavi se</string>
+  <string name="log_in">Пријави се</string>
   <string name="sign_up_description">Немате AnkiWeb налог? Бесплатан је!</string>
-  <string name="sign_up">Registruj se</string>
+  <string name="sign_up">Региструј</string>
   <string name="sign_up_terms">Притиском <i>Региструј</i>, потврђујете да сте прочитали и да се слажете са нашим <a href="https://ankiweb.net/account/terms">условима коришћења</a>.</string>
   <string name="logged_as">Prijavljen kao</string>
   <string name="log_out">Odjavi se</string>
@@ -82,11 +82,11 @@
   <string name="invalid_username_password">Пограшна адреса е-поште или лозинка.</string>
   <string name="login_generic_error">Неуспело прикључивање на сервер.</string>
   <string name="reset_password">Ресетујте лозинку</string>
-  <string name="download_finished">Preuzimanje gotovo</string>
-  <string name="personaldeckpicker_title">Otvori Internet Špil</string>
-  <string name="shareddeckpicker_title">Izaberite špil koji želite skinuti</string>
-  <string name="downloaddeck_search">Traži</string>
-  <string name="preferences_title">Postavke</string>
+  <string name="download_finished">Преузимање готово</string>
+  <string name="personaldeckpicker_title">Отвори онлајн шпил</string>
+  <string name="shareddeckpicker_title">Изаберите шпил који желите да преузмете</string>
+  <string name="downloaddeck_search">Претрага</string>
+  <string name="preferences_title">Поставке</string>
   <string name="deckpreferences_title">Опције за XXX</string>
   <string name="sync_conflict_message">Ваши шпилови овде и на AnkiWeb се разликују и не могу бити обједињени, јер је неопходно попуно презаписати један шпил другим.\n\nЖелите ли да учитате шпил одавде или да преузмете шпил са AnkiWeb овамо?</string>
   <string name="sync_conflict_local">Учитавање</string>
@@ -164,9 +164,9 @@
   <string name="download_deck">Учитавање шпила (%d kb).\n</string>
   <string name="sync_sanity_local">Локално</string>
   <string name="sync_sanity_remote">Удаљени приступ</string>
-  <string name="force_full_sync_title">Force full sync</string>
-  <string name="force_full_sync_summary">On next sync, force changes in one direction</string>
+  <string name="force_full_sync_title">Уради потпуну синхронизацију</string>
+  <string name="force_full_sync_summary">При следећој синхронизацији, презапиши у једном смеру</string>
   <string name="full_sync_confirmation">Измена, коју сте затражили, захтеваће учитавање целе базе података приликом следеће синхронизације ваше колекције. Ако на другом уређају имате измене које још нису синхронизоване, изгубићете их. Да ли желите да наставите?</string>
-  <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it\'s recommended to force a full sync.</string>
-  <string name="sync_error_501_upgrade_required">Please upgrade to the latest version of AnkiDroid</string>
+  <string name="full_sync_confirmation_upgrade">Због грешке у ранијој верзији AnkiDroid, потребно је урадити потпуну синхронизацију.</string>
+  <string name="sync_error_501_upgrade_required">Молимо, инсталирајте последњу верзију AnkiDroid</string>
 </resources>

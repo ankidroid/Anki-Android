@@ -213,9 +213,9 @@
   <string name="deck_conf_max_ivl">間隔の上限</string>
   <string name="deck_conf_new_lps_ivl">新しい間隔</string>
   <string name="deck_conf_min_ivl">間隔の下限</string>
-  <string name="deck_conf_leech_thres">習得困難（無駄）カードと判定する基準</string>
+  <string name="deck_conf_leech_thres">無駄（習得困難）カードと判定する基準</string>
   <string name="deck_conf_fails">XXX 回 忘却（復習カードに「もう一回」と回答）した時</string>
-  <string name="deck_conf_leech_action">習得困難（無駄）カードへの処置</string>
+  <string name="deck_conf_leech_action">無駄（習得困難）カードへの処置</string>
   <string name="deck_conf_max_time">統計情報に利用する解答時間の最大値</string>
   <string name="deck_conf_seconds">XXX 秒</string>
   <string name="deck_conf_timer">タイマーの表示</string>

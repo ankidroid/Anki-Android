@@ -41,8 +41,8 @@
 <resources>
   <string name="app_name">AnkiDroid</string>
   <string name="app_name_anki">Anki</string>
-  <string name="app_name_droid">Дројд</string>
-  <string name="studyoptions_title">Опције за проучавање</string>
+  <string name="app_name_droid">Droid</string>
+  <string name="studyoptions_title">Варијанте учења</string>
   <string name="studyoptions_deck_name">Назив шпила</string>
   <string name="studyoptions_due_today">За данас:</string>
   <string name="studyoptions_new_total">Укупно нових картица:</string>
@@ -50,19 +50,19 @@
   <string name="studyoptions_eta">Процењено време (мин):</string>
   <string name="studyoptions_start">Започни учење</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%1$d картица следи (%2$s)</item>
-    <item quantity="other">%1$d картице следе (%2$s)</item>
+    <item quantity="one">%1$d карата за (%2$s)</item>
+    <item quantity="other">%1$d карата за (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">%d мин.</item>
     <item quantity="other">%d мин.</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item quantity="one">%1$d од %2$d следе</item>
+    <item quantity="one">%1$d од %2$d за</item>
     <item quantity="other">%1$d од %2$d следе</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%d минут остао</item>
+    <item quantity="one">%d минута остало</item>
     <item quantity="other">%d минута остало</item>
   </plurals>
   <string name="type_answer_hint">Унесите одговор</string>
@@ -77,7 +77,7 @@
   <string name="menu_rotate">Окрени</string>
   <string name="menu_import">Увези</string>
   <string name="undo">Опозови</string>
-  <string name="undo_action_review">последње проучавање</string>
+  <string name="undo_action_review">последње понављање</string>
   <string name="undo_action_edit">уреди белешку</string>
   <string name="undo_action_bury">закопај белешку</string>
   <string name="undo_action_suspend_card">откажи картицу</string>
@@ -119,7 +119,7 @@
   <string name="new_dynamic_deck">Направи филтриран шпил</string>
   <string name="studyoptions_feedback">Повратна веза</string>
   <string name="night_mode">Ноћни режим</string>
-  <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
+  <string name="directory_inaccessible">Недоступан каталог AnkiDroid</string>
   <string-array name="next_review_s">
     <item>1 секунда</item>
     <item>1 минут</item>
@@ -147,10 +147,10 @@
   <string name="custom_study_deck_name">Посебна сесија проучавања</string>
   <string name="custom_study_deck_exists">Прво преименујте постојеће специјалне шпилове.</string>
   <string name="studyoptions_congrats_finished">Честитамо! Завршили сте данашњи задатак.</string>
-  <string name="studyoptions_congrats_more_rev">Достигнута је лимит броја прегледа за данас, али још постоје картице које чекају проучавање. За оптимално памћење препоручује се да увећате дневни лимит у опцијама.</string>
+  <string name="studyoptions_congrats_more_rev">Достигнут је лимит броја прегледа за данас, али још постоје карте које чекају на преглед. За оптимално памћење препоручује се да увећате дневни лимит у опцијама.</string>
   <string name="studyoptions_congrats_more_new">Постоје нове карте, али дневни лимит је научен. Можете да повећате лимит, али имајте на уму, да ће то увећати и обим понављања следећих дана.</string>
   <string name="studyoptions_congrats_custom">Да бисте променили уобичајени распоред учења картица, кликните \"Допунско учење\" испод.</string>
-  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
+  <string name="studyoptions_no_cards_due">Нема редне карте.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Сутра ће бити: %1$d картица за учење и %2$s.\n Процењено време: %3$s</item>
     <item quantity="other">Сутра ће бити: %1$d картица за преглед и %2$s.\n Процењено време: %3$s</item>
@@ -180,18 +180,18 @@
   <string name="confirm">Потврда</string>
   <string name="internet">Интернет</string>
   <string name="pc">ПР</string>
-  <string name="nothing">Nothing</string>
+  <string name="nothing">Ништа</string>
   <string name="title_activity_graphical_activity">Статистички графикон</string>
-  <string name="title_activity_template_editor">Card Types for %s</string>
-  <string name="card_template_editor_front">Front Template</string>
-  <string name="card_template_editor_back">Back Template</string>
-  <string name="card_template_editor_styling">Styling</string>
-  <string name="card_template_editor_menu_add_reverse">Add reverse</string>
-  <string name="card_template_editor_menu_delete">Delete</string>
-  <string name="card_template_editor_cant_delete">At least one card type is required.</string>
+  <string name="title_activity_template_editor">Типови карата за %s</string>
+  <string name="card_template_editor_front">Предњи шаблон</string>
+  <string name="card_template_editor_back">Задњи шаблон</string>
+  <string name="card_template_editor_styling">Стил</string>
+  <string name="card_template_editor_menu_add_reverse">Додај задњу страну</string>
+  <string name="card_template_editor_menu_delete">Избриши</string>
+  <string name="card_template_editor_cant_delete">Потребан је бар један тип.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
-    <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
+    <item quantity="one">Да избришем тип карте \'%2$s\' и све %1$d његове карте?</item>
+    <item quantity="other">Избриши тип карти \'%2$s\' и све %1$d његове карте?</item>
   </plurals>
-  <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create a new card type first.</string>
+  <string name="card_template_editor_would_delete_note">Брисање тог типа карата довешће до брисања једног или неколико белешки. Направите прво нови тип карата.</string>
 </resources>
