@@ -612,54 +612,55 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
         Timber.d("onActivityResult (requestCode = %d, resultCode = %d)", requestCode, resultCode);
+
+        // rebuild action bar
         getActivity().supportInvalidateOptionsMenu();
-        if (resultCode == DeckPicker.RESULT_DB_ERROR) {
-            closeStudyOptions(DeckPicker.RESULT_DB_ERROR);
+
+        // boot back to deck picker if there was an error
+        if (resultCode == DeckPicker.RESULT_DB_ERROR || resultCode == DeckPicker.RESULT_MEDIA_EJECTED) {
+            closeStudyOptions(resultCode);
+            return;
         }
 
-        // TODO: proper integration of big widget
-        if (resultCode == DeckPicker.RESULT_MEDIA_EJECTED) {
-            closeStudyOptions(DeckPicker.RESULT_MEDIA_EJECTED);
-        } else {
-            if (!colOpen()) {
-                startLoadingCollection();
-                return;
-            }
-            if (requestCode == DECK_OPTIONS) {
-                if (mCramInitialConfig != null) {
-                    mCramInitialConfig = null;
-                    try {
-                        JSONObject deck = getCol().getDecks().current();
-                        if (deck.getInt("dyn") != 0 && deck.has("empty")) {
-                            deck.remove("empty");
-                        }
-                    } catch (JSONException e) {
-                        throw new RuntimeException(e);
+        // check that the collection is open before doing anything
+        if (!colOpen()) {
+            startLoadingCollection();
+            return;
+        }
+
+        // rebuild the interface so that we update the number of cards shown
+        if (resultCode != Activity.RESULT_CANCELED) {
+            resetAndRefreshInterface();
+        }
+
+        // perform some special actions depending on which activity we're returning from
+        if (requestCode == DECK_OPTIONS) {
+            if (mCramInitialConfig != null) {
+                mCramInitialConfig = null;
+                try {
+                    JSONObject deck = getCol().getDecks().current();
+                    if (deck.getInt("dyn") != 0 && deck.has("empty")) {
+                        deck.remove("empty");
                     }
-                    rebuildCramDeck();
-                } else {
-                    DeckTask.waitToFinish();
-                    resetAndRefreshInterface();
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
                 }
-            } else if (requestCode == ADD_NOTE && resultCode != Activity.RESULT_CANCELED) {
+                rebuildCramDeck();
+            } else {
+                DeckTask.waitToFinish();
                 resetAndRefreshInterface();
-            } else if (requestCode == REQUEST_REVIEW) {
-                resetAndRefreshInterface();
-                if (resultCode == Reviewer.RESULT_NO_MORE_CARDS) {
-                    // If no more cards getting returned while counts > 0 then show a toast
-                    int[] counts = getCol().getSched().counts();
-                    if ((counts[0]+counts[1]+counts[2])>0) {
-                        Toast.makeText(getActivity(), R.string.studyoptions_no_cards_due , Toast.LENGTH_LONG).show();
-                    }
-                }
-            } else if (requestCode == BROWSE_CARDS
-                    && (resultCode == Activity.RESULT_OK || resultCode == Activity.RESULT_CANCELED)) {
-                resetAndRefreshInterface();
-            } else if (requestCode == STATISTICS && mCurrentContentView == CONTENT_CONGRATS) {
-                resetAndRefreshInterface();
-                mCurrentContentView = CONTENT_STUDY_OPTIONS;
-                setFragmentContentView(mStudyOptionsView);
             }
+        } else if (requestCode == REQUEST_REVIEW) {
+            if (resultCode == Reviewer.RESULT_NO_MORE_CARDS) {
+                // If no more cards getting returned while counts > 0 then show a toast
+                int[] counts = getCol().getSched().counts();
+                if ((counts[0]+counts[1]+counts[2])>0) {
+                    Toast.makeText(getActivity(), R.string.studyoptions_no_cards_due , Toast.LENGTH_LONG).show();
+                }
+            }
+        } else if (requestCode == STATISTICS && mCurrentContentView == CONTENT_CONGRATS) {
+            mCurrentContentView = CONTENT_STUDY_OPTIONS;
+            setFragmentContentView(mStudyOptionsView);
         }
     }
 
