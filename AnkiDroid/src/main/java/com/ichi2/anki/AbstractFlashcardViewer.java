@@ -1128,11 +1128,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (!AnkiDroidApp.colIsOpen()) {
-            Timber.e("onActivityResult -- Collection is not open... aborting");
-            return;
-        }
-
         if (resultCode == DeckPicker.RESULT_DB_ERROR) {
             closeReviewer(DeckPicker.RESULT_DB_ERROR, false);
         }
@@ -1140,24 +1135,30 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (resultCode == DeckPicker.RESULT_MEDIA_EJECTED) {
             finishNoStorageAvailable();
         }
-        if (requestCode == EDIT_CURRENT_CARD) {
-            if (resultCode == RESULT_CANCELED  && !(data!=null && data.hasExtra("reloadRequired"))) {
-                // If note not saved and no reload required then simply redraw the flashcard
-                fillFlashcard();
-            } else {
-                // Save the note if required
-                if (resultCode == RESULT_OK) {
-                    Timber.i("AbstractFlashcardViewer:: Saving card...");
-                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler, new DeckTask.TaskData(
-                            mSched, mCurrentCard, true));
-                }
 
-                /* Reset the schedule and reload the latest card off the top of the stack.
-                   This always needs to be done, as the card could have been rescheduled, the deck could
-                   have changed, or a change of note type could have lead to the card being deleted */
+        if (!AnkiDroidApp.colIsOpen()) {
+            Timber.e("onActivityResult -- Collection is not open... aborting");
+            return;
+        }
+
+        if (requestCode == EDIT_CURRENT_CARD) {
+            /* Reset the schedule and reload the latest card off the top of the stack if required.
+               The card could have been rescheduled, the deck could have changed, or a change of
+               note type could have lead to the card being deleted */
+            if (data!=null && data.hasExtra("reloadRequired")) {
                 getCol().getSched().reset();
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(
                         mSched, null, 0));
+            }
+
+            if (resultCode == RESULT_OK) {
+                // content of note was changed so update the note and current card
+                Timber.i("AbstractFlashcardViewer:: Saving card...");
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler, new DeckTask.TaskData(
+                        mSched, mCurrentCard, true));
+            } else if (resultCode == RESULT_CANCELED && !(data!=null && data.hasExtra("reloadRequired"))) {
+                // nothing was changed by the note editor so just redraw the card
+                fillFlashcard();
             }
         }
         if (!mDisableClipboard) {

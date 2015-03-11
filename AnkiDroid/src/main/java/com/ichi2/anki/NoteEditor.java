@@ -154,6 +154,10 @@ public class NoteEditor extends AnkiActivity {
 
     private boolean mChanged = false;
     private boolean mFieldEdited = false;
+
+    /**
+     * Flag which forces the calling activity to rebuild it's definition of current card from scratch
+     */
     private boolean mReloadRequired = false;
 
 
@@ -719,6 +723,7 @@ public class NoteEditor extends AnkiActivity {
             final JSONObject newModel = getCurrentlySelectedModel();
             final JSONObject oldModel = mCurrentEditedCard.model();
             if (!newModel.equals(oldModel)) {
+                mReloadRequired = true;
                 if (mModelChangeCardMap.size() < mEditorNote.cards().size() || mModelChangeCardMap.containsKey(null)) {
                     // If cards will be lost via the new mapping then show a confirmation dialog before proceeding with the change
                     ConfirmationDialog dialog = new ConfirmationDialog () {
@@ -740,6 +745,7 @@ public class NoteEditor extends AnkiActivity {
             boolean modified = false;
             // changed did? this has to be done first as remFromDyn() involves a direct write to the database
             if (mCurrentEditedCard.getDid() != mCurrentDid) {
+                mReloadRequired = true;
                 // remove card from filtered deck first (if relevant)
                 AnkiDroidApp.getCol().getSched().remFromDyn(new long[] { mCurrentEditedCard.getId() });
                 // refresh the card object to reflect the database changes in remFromDyn()
@@ -811,7 +817,6 @@ public class NoteEditor extends AnkiActivity {
         // refresh the note object to reflect the database changes
         mEditorNote.load();
         // close note editor
-        mReloadRequired = true;
         closeNoteEditor();
     }
 
