@@ -11,6 +11,8 @@
             <option value="$PROJECT_DIR$/AnkiDroid" />
             <option value="$PROJECT_DIR$/ShowcaseView" />
             <option value="$PROJECT_DIR$/ShowcaseView/library" />
+            <option value="$PROJECT_DIR$/android" />
+            <option value="$PROJECT_DIR$/libfortestingjs" />
           </set>
         </option>
       </GradleProjectSettings>
