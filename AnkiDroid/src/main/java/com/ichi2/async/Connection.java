@@ -379,7 +379,8 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 msg.contains("HttpHostConnectException") ||
                 msg.contains("SSLException while building HttpClient") ||
                 msg.contains("SocketTimeoutException") ||
-                msg.contains("ClientProtocolException");
+                msg.contains("ClientProtocolException") ||
+                msg.contains("TimeoutException");
     }
 
 

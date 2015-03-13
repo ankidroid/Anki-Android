@@ -102,6 +102,7 @@ public class Syncer {
                 Timber.i("Sync: getting meta data from server");
                 JSONObject rMeta = new JSONObject(mServer.stream2String(ret.getEntity().getContent()));
                 mCol.log("rmeta", rMeta);
+                mSyncMsg = rMeta.getString("msg");
                 if (!rMeta.getBoolean("cont")) {
                     // Don't add syncMsg; it can be fetched by UI code using the accessor
                     return new Object[] { "serverAbort" };
@@ -115,7 +116,6 @@ public class Syncer {
                 mRMod = rMeta.getLong("mod");
                 mMaxUsn = rMeta.getInt("usn");
                 mMediaUsn = rMeta.getInt("musn");
-                mSyncMsg = rMeta.getString("msg");
                 // skip uname, AnkiDroid already stores and shows it
                 Timber.i("Sync: building local meta data");
                 JSONObject lMeta = meta();
