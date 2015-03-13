@@ -15,6 +15,7 @@
  ****************************************************************************************/
 package com.ichi2.anki;
 
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -26,6 +27,7 @@ import android.webkit.WebView;
 import android.widget.*;
 
 import com.example.android.common.view.SlidingTabLayout;
+import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.NavigationDrawerActivity;
 import com.ichi2.anki.R;
@@ -422,7 +424,7 @@ public class Statistics extends NavigationDrawerActivity {
             if ((((Statistics)getActivity()).getTaskHandler()) == null) {
                 // Close statistics if the TaskHandler hasn't been loaded yet
                 Timber.e("Statistics.ChartFragment.onCreateView() TaskHandler not found");
-                getActivity().finish();
+                getActivity(). finish();
                 return rootView;
             }
 
@@ -652,6 +654,22 @@ public class Statistics extends NavigationDrawerActivity {
         }
 
 
+
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            Timber.i("Statistics:: Statistics - onBackPressed()");
+            closeStatistics(Activity.RESULT_OK);
+            return true;
+        }
+
+        return super.onKeyDown(keyCode, event);
+    }
+
+    private void closeStatistics(int result) {
+        setResult(result);
+        finishWithAnimation(ActivityTransitionAnimation.RIGHT);
+    }
 }
