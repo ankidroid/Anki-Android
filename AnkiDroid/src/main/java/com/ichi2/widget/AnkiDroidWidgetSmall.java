@@ -18,12 +18,15 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.appwidget.AppWidgetProviderInfo;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.os.Bundle;
 import android.os.IBinder;
 
 import android.view.View;
@@ -32,7 +35,6 @@ import android.widget.RemoteViews;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
-
 import timber.log.Timber;
 
 public class AnkiDroidWidgetSmall extends AppWidgetProvider {
@@ -46,6 +48,7 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
         Timber.d("SmallWidget: onUpdate");
         WidgetStatus.update(context);
     }
+
 
 
     @Override
@@ -92,7 +95,6 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
         private RemoteViews buildUpdate(Context context, boolean updateDueDecksNow) {
             Timber.d("buildUpdate");
 
-            // Resources res = context.getResources();
             RemoteViews updateViews = new RemoteViews(context.getPackageName(), R.layout.widget_small);
 
             boolean mounted = AnkiDroidApp.isSdCardMounted();
@@ -167,11 +169,40 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
             ankiDroidIntent.addCategory(Intent.CATEGORY_LAUNCHER);
             PendingIntent pendingAnkiDroidIntent = PendingIntent.getActivity(context, 0, ankiDroidIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT);
-            updateViews.setOnClickPendingIntent(R.id.ankidroid_widget_small_layout, pendingAnkiDroidIntent);
+            updateViews.setOnClickPendingIntent(R.id.ankidroid_widget_small_button, pendingAnkiDroidIntent);
 
+            AppWidgetManager manager = AppWidgetManager.getInstance(context);
+            int[] ids = manager.getAppWidgetIds(new ComponentName(this, AnkiDroidWidgetSmall.class));
+            for (int id : ids) {
+                AppWidgetProviderInfo providerInfo = manager.getAppWidgetInfo(id);
+                final float scale = getResources().getDisplayMetrics().density;
+                float scaledDensity = context.getResources().getDisplayMetrics().scaledDensity;
+                int[] dimensions = AnkiDroidApp.getCompat().getWidgetDimensions(manager, id);
+                if (dimensions != null && dimensions.length == 4) {
+                    float width, height;
+                    if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                        width = dimensions[0];
+                        height = dimensions[3];
+                    } else {
+                        width = dimensions[1];
+                        height = dimensions[2];
+                    }
+                    int horizontal, vertical;
+                    float text;
+                    if ((width / height) > 0.8) {
+                        horizontal = (int) (((width - (height * 0.8))/2 + 4) * scale + 0.5f);
+                        vertical = (int) (4 * scale + 0.5f);
+                        text = (float)(Math.sqrt(height * 0.8 / width) * 18);
+                    } else {
+                        vertical = (int) (((height - (width * 1.25))/2 + 4) * scale + 0.5f);
+                        horizontal = (int) (4 * scale + 0.5f);
+                        text = (float)(Math.sqrt(width * 1.25 / height) * 18);
+                    }
+                    AnkiDroidApp.getCompat().adjustSmallWidgetDimensions(updateViews, R.id.ankidroid_widget_text_layout, horizontal, vertical, horizontal, vertical, text);
+                }
+            }
             return updateViews;
         }
-
 
         @Override
         public IBinder onBind(Intent arg0) {

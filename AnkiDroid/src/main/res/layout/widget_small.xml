@@ -1,13 +1,24 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ankidroid_widget_small_layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/widget_bg_small"
     android:clickable="true"
     android:focusable="false"
-    android:orientation="horizontal" >
+    android:background="#00FFFFFF">
+
+    <ImageButton
+        android:id="@+id/ankidroid_widget_small_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="#00FFFFFF"
+        android:clickable="true"
+        android:focusable="false"
+        android:scaleType="fitCenter"
+        android:src="@drawable/widget_bg_small"/>
 
     <RelativeLayout
+        android:id="@+id/ankidroid_widget_text_layout"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:clickable="false"
@@ -23,7 +34,7 @@
             android:gravity="center"
             android:singleLine="true"
             android:textColor="#ffffff"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:visibility="invisible" />
 
         <FrameLayout
@@ -65,15 +76,15 @@
             android:visibility="invisible" />
     </RelativeLayout>
 
-    <FrameLayout
+    <ImageButton
         android:id="@+id/ankidroid_widget_small_finish_layout"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:background="@drawable/widget_bg_small_finish"
-        android:clickable="false"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="#00FFFFFF"
+        android:clickable="true"
         android:focusable="false"
-        android:orientation="horizontal"
-        android:visibility="gone" >
-    </FrameLayout>
-
-</RelativeLayout>
+        android:scaleType="fitCenter"
+        android:visibility="gone"
+        android:src="@drawable/widget_bg_small_finish"/>
+</FrameLayout>

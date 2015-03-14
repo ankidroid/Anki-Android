@@ -3,6 +3,7 @@ package com.ichi2.compat;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.appwidget.AppWidgetManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.ColorDrawable;
 import android.media.AudioManager;
@@ -16,6 +17,7 @@ import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.webkit.WebView;
+import android.widget.RemoteViews;
 
 import com.ichi2.anki.R;
 import com.ichi2.anki.ReadText;
@@ -170,4 +172,13 @@ public class CompatV7 implements Compat {
 	
     // Below API level 12, file scheme pages are not restricted, so no adjustment is needed.
     public void enableCookiesForFileSchemePages() { }
+
+    @Override
+    public void adjustSmallWidgetDimensions(RemoteViews views, int id, int left, int top, int right, int bottom, float ts) {
+    }
+
+    @Override
+    public int[] getWidgetDimensions(AppWidgetManager manager, int id) {
+        return new int[0];
+    }
 }
