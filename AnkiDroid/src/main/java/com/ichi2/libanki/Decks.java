@@ -774,6 +774,12 @@ public class Decks {
     }
 
 
+    public boolean hasChildren(long did) {
+        TreeMap<String, Long> children = children(did);
+        return children != null && children.size() != 0;
+    }
+
+
     /* all parents of did */
     public ArrayList<JSONObject> parents(long did) {
         // get parent and grandparent names

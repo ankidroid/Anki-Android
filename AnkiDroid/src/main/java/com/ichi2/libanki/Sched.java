@@ -2624,7 +2624,11 @@ public class Sched {
                     JSONObject deck = mCol.getDecks().get((Long) d[1]);
                     if (deck.getBoolean("collapsed")) {
                         String[] name = (String[]) d[0];
-                        name[name.length - 1] = name[name.length - 1] + " (+)";
+                        name[name.length - 1] = name[name.length - 1] + "[coll]";
+                        d[0] = name;
+                    } else if (!mCol.getDecks().hasChildren((Long)d[1])) {
+                        String[] name = (String[]) d[0];
+                        name[name.length - 1] = name[name.length - 1] + "[nchi]";
                         d[0] = name;
                     }
                     decksNet.add(new Object[]{d[0], d[1], d[2], d[3], d[4], deck.getInt("dyn") != 0});

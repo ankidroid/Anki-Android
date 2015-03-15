@@ -1974,11 +1974,17 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < len; i++) {
             if (i == len - 1) {
-                sb.append(name[i]);
-            } else if (i == len - 2) {
-                sb.append("\u21aa");
+                 if (name[i].endsWith("[coll]")) {
+                     sb.append("\u25B7 ");
+                     sb.append(name[i].substring(0, Math.max(1, name[i].length() - 6)));
+                 } else if (name[i].endsWith("[nchi]")) {
+                     sb.append("\u2009\u2009\u2009 ");
+                     sb.append(name[i].substring(0, Math.max(1, name[i].length() - 6)));
+                } else {
+                    sb.append("\u25BD ").append(name[i]);
+                }
             } else {
-                sb.append("    ");
+                sb.append("   ");
             }
         }
         return sb.toString();
