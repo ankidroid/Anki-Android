@@ -68,6 +68,14 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
         preferences.edit().putBoolean("widgetSmallEnabled", false).commit();
     }
 
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        if (intent.getAction().contentEquals("com.sec.android.widgetapp.APPWIDGET_RESIZE")) {
+            updateWidgetDimensions(context, new RemoteViews(context.getPackageName(), R.layout.widget_small));
+        }
+        super.onReceive(context, intent);
+    }
+
     public static class UpdateService extends Service {
 
         /** The cached number of total due cards. */
@@ -171,36 +179,8 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
                     PendingIntent.FLAG_UPDATE_CURRENT);
             updateViews.setOnClickPendingIntent(R.id.ankidroid_widget_small_button, pendingAnkiDroidIntent);
 
-            AppWidgetManager manager = AppWidgetManager.getInstance(context);
-            int[] ids = manager.getAppWidgetIds(new ComponentName(this, AnkiDroidWidgetSmall.class));
-            for (int id : ids) {
-                AppWidgetProviderInfo providerInfo = manager.getAppWidgetInfo(id);
-                final float scale = getResources().getDisplayMetrics().density;
-                float scaledDensity = context.getResources().getDisplayMetrics().scaledDensity;
-                int[] dimensions = AnkiDroidApp.getCompat().getWidgetDimensions(manager, id);
-                if (dimensions != null && dimensions.length == 4) {
-                    float width, height;
-                    if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-                        width = dimensions[0];
-                        height = dimensions[3];
-                    } else {
-                        width = dimensions[1];
-                        height = dimensions[2];
-                    }
-                    int horizontal, vertical;
-                    float text;
-                    if ((width / height) > 0.8) {
-                        horizontal = (int) (((width - (height * 0.8))/2 + 4) * scale + 0.5f);
-                        vertical = (int) (4 * scale + 0.5f);
-                        text = (float)(Math.sqrt(height * 0.8 / width) * 18);
-                    } else {
-                        vertical = (int) (((height - (width * 1.25))/2 + 4) * scale + 0.5f);
-                        horizontal = (int) (4 * scale + 0.5f);
-                        text = (float)(Math.sqrt(width * 1.25 / height) * 18);
-                    }
-                    AnkiDroidApp.getCompat().adjustSmallWidgetDimensions(updateViews, R.id.ankidroid_widget_text_layout, horizontal, vertical, horizontal, vertical, text);
-                }
-            }
+            updateWidgetDimensions(context, updateViews);
+
             return updateViews;
         }
 
@@ -208,6 +188,40 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
         public IBinder onBind(Intent arg0) {
             Timber.d("onBind");
             return null;
+        }
+
+    }
+
+    private static void updateWidgetDimensions(Context context, RemoteViews updateViews) {
+        AppWidgetManager manager = AppWidgetManager.getInstance(context);
+        int[] ids = manager.getAppWidgetIds(new ComponentName(context, AnkiDroidWidgetSmall.class));
+        for (int id : ids) {
+            AppWidgetProviderInfo providerInfo = manager.getAppWidgetInfo(id);
+            final float scale = context.getResources().getDisplayMetrics().density;
+            float scaledDensity = context.getResources().getDisplayMetrics().scaledDensity;
+            int[] dimensions = AnkiDroidApp.getCompat().getWidgetDimensions(manager, id);
+            if (dimensions != null && dimensions.length == 4) {
+                float width, height;
+                if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                    width = dimensions[0];
+                    height = dimensions[3];
+                } else {
+                    width = dimensions[1];
+                    height = dimensions[2];
+                }
+                int horizontal, vertical;
+                float text;
+                if ((width / height) > 0.8) {
+                    horizontal = (int) (((width - (height * 0.8))/2 + 4) * scale + 0.5f);
+                    vertical = (int) (4 * scale + 0.5f);
+                    text = (float)(Math.sqrt(height * 0.8 / width) * 18);
+                } else {
+                    vertical = (int) (((height - (width * 1.25))/2 + 4) * scale + 0.5f);
+                    horizontal = (int) (4 * scale + 0.5f);
+                    text = (float)(Math.sqrt(width * 1.25 / height) * 18);
+                }
+                AnkiDroidApp.getCompat().adjustSmallWidgetDimensions(updateViews, R.id.ankidroid_widget_text_layout, horizontal, vertical, horizontal, vertical, text);
+            }
         }
     }
 }
