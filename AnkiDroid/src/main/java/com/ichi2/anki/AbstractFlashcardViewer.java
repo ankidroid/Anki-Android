@@ -1016,6 +1016,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         restartTimer();
         // Set the context for the Sound manager
         Sound.setContext(new WeakReference<Activity>(this));
+        // Reset the activity title
+        deselectAllNavigationItems();
     }
 
 
