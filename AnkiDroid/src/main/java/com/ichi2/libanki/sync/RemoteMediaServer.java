@@ -55,7 +55,7 @@ public class RemoteMediaServer extends HttpSyncer {
 
     @Override
     public String syncURL() {
-        return Consts.SYNC_BASE + "msync/";
+        return Consts.SYNC_MEDIA_BASE;
     }
 
 
