@@ -142,8 +142,6 @@ public class CustomStudyDialog extends DialogFragment {
                     default:
                         break;                       
                 }
-                // Refresh interface
-                ((StudyOptionsListener) getActivity()).refreshMainInterface();
             }
         });
         builder.setNegativeButton(res.getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {

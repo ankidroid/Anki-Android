@@ -29,7 +29,6 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -50,8 +49,6 @@ import com.ichi2.anki.stats.AnkiStatsTaskHandler;
 import com.ichi2.anki.stats.ChartView;
 import com.ichi2.async.CollectionLoader;
 import com.ichi2.async.DeckTask;
-import com.ichi2.async.DeckTask.TaskData;
-
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Utils;
@@ -64,7 +61,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import timber.log.Timber;
 
@@ -133,10 +132,24 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
 
     private Thread mFullNewCountThread = null;
 
+    StudyOptionsListener mListener;
+
+
     public interface StudyOptionsListener {
-        public void refreshMainInterface();
+        public void onRequireDeckListUpdate();
         public void createFilteredDeck(JSONArray delays, Object[] terms, Boolean resched);
     }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mListener = (StudyOptionsListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString() + " must implement StudyOptionsListener");
+        }
+    }
+
 
     /**
      * Callbacks for UI events
@@ -158,7 +171,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                 case R.id.studyoptions_unbury:
                     Timber.i("StudyOptionsFragment:: unbury button pressed");
                     col.getSched().unburyCardsForDeck();
-                    resetAndRefreshInterface();
+                    refreshInterfaceAndDecklist(true);
                     return;
                 case R.id.studyoptions_options_cram:
                     Timber.i("StudyOptionsFragment:: cram deck options button pressed");
@@ -172,7 +185,10 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                     return;
                 case R.id.studyoptions_rebuild_cram:
                     Timber.i("StudyOptionsFragment:: rebuild cram deck button pressed");
-                    rebuildCramDeck();
+                    mProgressDialog = StyledProgressDialog.show(getActivity(), "",
+                            getResources().getString(R.string.rebuild_cram_deck), true);
+                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REBUILD_CRAM, getDeckTaskListener(true),
+                            new DeckTask.TaskData(getCol(), getCol().getDecks().selected(), mFragmented));
                     return;
                 case R.id.studyoptions_empty_cram:
                     Timber.i("StudyOptionsFragment:: empty cram deck button pressed");
@@ -201,23 +217,13 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     }
 
 
-    private void rebuildCramDeck() {
-        mProgressDialog = StyledProgressDialog.show(getActivity(), "",
-                getResources().getString(R.string.rebuild_cram_deck), true);
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REBUILD_CRAM, getDeckTaskListener(true), new DeckTask.TaskData(
-                getCol(), getCol().getDecks().selected(), mFragmented));
-    }
-
-
     public static StudyOptionsFragment newInstance(long deckId, Bundle cramInitialConfig) {
         StudyOptionsFragment f = new StudyOptionsFragment();
-
         // Supply index input as an argument.
         Bundle args = new Bundle();
         args.putLong("deckId", deckId);
         args.putBundle("cramInitialConfig", cramInitialConfig);
         f.setArguments(args);
-
         return f;
     }
 
@@ -246,7 +252,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         mCollection = col;
         initAllContentViews();
         mCramInitialConfig = getArguments().getBundle("cramInitialConfig");
-        resetAndRefreshInterface(false);
+        refreshInterface(true);
         setHasOptionsMenu(true);
         dismissCollectionLoadingDialog();
         // rebuild action bar so that Showcase works correctly
@@ -269,16 +275,9 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     @Override
     public void onResume() {
         super.onResume();
-        if (colOpen() && !mFragmented) {
-            Timber.d("onResume() -- refreshing interface");
-            // If not in tablet mode then reload deck counts (reload is taken care of by DeckPicker when mFragmented)
-            if (Utils.now() > getCol().getSched().getDayCutoff()) {
-                resetAndRefreshInterface(false);
-            } else {
-                refreshInterface();
-            }
-        } else {
-            Timber.d("onResume() -- skipping refresh of interface");
+        if (colOpen()) {
+            Timber.d("onResume()");
+            refreshInterface(true);
         }
     }
 
@@ -509,33 +508,6 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     }
 
 
-    public void resetAndRefreshInterface() {
-        refreshInterface(true, true);
-    }
-
-
-    private void resetAndRefreshInterface(boolean updateDeckList) {
-        refreshInterface(true, updateDeckList);
-    }
-
-
-    private void refreshInterface() {
-        refreshInterface(false, true);
-    }
-
-
-    private void refreshInterface(boolean reset, boolean updateDeckList) {
-        // Exit if collection not open
-        if (!colOpen()) {
-            Timber.e("StudyOptionsFragment.refreshInterface failed due to Collection being closed");
-            return;
-        }
-        // Load the deck counts for the deck from Collection asynchronously
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_VALUES_FROM_DECK, getDeckTaskListener(updateDeckList),
-                new DeckTask.TaskData(getCol(), new Object[] { reset, mSmallChart != null }));
-    }
-
-
     private void updateChart(double[][] serieslist) {
         if (mSmallChart != null) {
 
@@ -579,7 +551,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                 Timber.i("StudyOptionsFragment:: Undo button pressed");
                 if (colOpen()) {
                     getCol().undo();
-                    resetAndRefreshInterface();
+                    refreshInterfaceAndDecklist(true);
                     getActivity().supportInvalidateOptionsMenu();
                 }
                 return true;
@@ -628,11 +600,6 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
             return;
         }
 
-        // rebuild the interface so that we update the number of cards shown
-        if (resultCode != Activity.RESULT_CANCELED) {
-            resetAndRefreshInterface();
-        }
-
         // perform some special actions depending on which activity we're returning from
         if (requestCode == DECK_OPTIONS) {
             if (mCramInitialConfig != null) {
@@ -645,10 +612,13 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
-                rebuildCramDeck();
+                    mProgressDialog = StyledProgressDialog.show(getActivity(), "",
+                            getResources().getString(R.string.rebuild_cram_deck), true);
+                    DeckTask.launchDeckTask(DeckTask.TASK_TYPE_REBUILD_CRAM, getDeckTaskListener(true),
+                            new DeckTask.TaskData(getCol(), getCol().getDecks().selected(), mFragmented));
             } else {
                 DeckTask.waitToFinish();
-                resetAndRefreshInterface();
+                refreshInterface(true);
             }
         } else if (requestCode == REQUEST_REVIEW) {
             if (resultCode == Reviewer.RESULT_NO_MORE_CARDS) {
@@ -682,218 +652,225 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     }
 
 
-    private DeckTask.TaskListener getDeckTaskListener(boolean updateDeckList) {
-        if (mFragmented && updateDeckList) {
-            return mRefreshWholeInterfaceListener;
-        } else {
-            return mRefreshFragmentListener;
+    private void refreshInterfaceAndDecklist(boolean resetSched) {
+        refreshInterface(resetSched, true);
+    }
+
+    protected void refreshInterface() {
+        refreshInterface(false, false);
+    }
+
+    protected void refreshInterface(boolean resetSched) {
+        refreshInterface(resetSched, false);
+    }
+
+    /**
+     * Rebuild the fragment's interface to reflect the status of the currently selected deck.
+     *
+     * @param resetSched    Indicates whether to rebuild the queues as well. Set to true for any
+     *                      task that modifies queues (e.g., unbury or empty filtered deck).
+     * @param resetDecklist Indicates whether to call back to the parent activity in order to
+     *                      also refresh the deck list.
+     */
+    protected void refreshInterface(boolean resetSched, boolean resetDecklist) {
+        // Exit if collection not open
+        if (!colOpen()) {
+            Timber.e("StudyOptionsFragment.refreshInterface failed due to Collection being closed");
+            return;
         }
+        Timber.d("Refreshing StudyOptionsFragment");
+        // Load the deck counts for the deck from Collection asynchronously
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_VALUES_FROM_DECK,
+                getDeckTaskListener(resetDecklist),
+                new DeckTask.TaskData(getCol(), new Object[]{resetSched, mSmallChart != null}));
     }
 
 
-    /** This listener does full refresh of the interface, which includes updating deck list 
-     * when in tablet mode
+    /**
+     * Returns a listener that rebuilds the interface after execute.
+     *
+     * @param refreshDecklist If true, the listener notifies the parent activity to update its deck list
+     *                        to reflect the latest values.
      */
-    DeckTask.TaskListener mRefreshWholeInterfaceListener = new DeckTask.TaskListener() {
-        @Override
-        public void onPostExecute(TaskData result) {
-            dismissProgressDialog();
-            DeckPicker activity = (DeckPicker) getActivity();
-            if (activity != null) {
-                activity.refreshMainInterface();
+    private DeckTask.TaskListener getDeckTaskListener(final boolean refreshDecklist) {
+        return new DeckTask.TaskListener() {
+            @Override
+            public void onPreExecute() {
+
             }
-        }
 
-        @Override
-        public void onPreExecute() {
-        }
+            @Override
+            public void onPostExecute(DeckTask.TaskData result) {
+                dismissProgressDialog();
+                if (result != null) {
+                    // Get the return values back from the AsyncTask
+                    Object[] obj = result.getObjArray();
+                    int newCards = (Integer) obj[0];
+                    int lrnCards = (Integer) obj[1];
+                    int revCards = (Integer) obj[2];
+                    int totalNew = (Integer) obj[3];
+                    int totalCards = (Integer) obj[4];
+                    int eta = (Integer) obj[7];
+                    double[][] serieslist = (double[][]) obj[8];
 
-        @Override
-        public void onProgressUpdate(TaskData... values) {
-        }
-
-        @Override
-        public void onCancelled() {
-        }
-    };
-
-    /** This is the main code which sets all the elements in the Fragment.
-     * It can be used by any async task which returns the parameters necessary
-     * for rebuilding the interface
-     */
-    DeckTask.TaskListener mRefreshFragmentListener = new DeckTask.TaskListener() {
-        @Override
-        public void onPostExecute(DeckTask.TaskData result) {
-            if (result != null) {
-                // Get the return values back from the AsyncTask
-                Object[] obj = result.getObjArray();
-                int newCards = (Integer) obj[0];
-                int lrnCards = (Integer) obj[1];
-                int revCards = (Integer) obj[2];
-                int totalNew = (Integer) obj[3];
-                int totalCards = (Integer) obj[4];
-                int eta = (Integer) obj[7];
-                double[][] serieslist = (double[][]) obj[8];
-
-                // Don't do anything if the fragment is no longer attached to it's Activity or col has been closed
-                if (getActivity() == null || !colOpen()) {
-                    Timber.e("StudyOptionsFragment.mRefreshFragmentListener :: can't refresh");
-                    return;
-                }
-                // Reinitialize controls incase changed to filtered deck
-                initAllContentViews();
-                // Set the deck name
-                String fullName;
-                JSONObject deck = getCol().getDecks().current();
-                try {
-                    // Main deck name
-                    fullName = deck.getString("name");
-                    String[] name = fullName.split("::");
-                    StringBuilder nameBuilder = new StringBuilder();
-                    if (name.length > 0) {
-                        nameBuilder.append(name[0]);
+                    // Don't do anything if the fragment is no longer attached to it's Activity or col has been closed
+                    if (getActivity() == null || !colOpen()) {
+                        Timber.e("StudyOptionsFragment.mRefreshFragmentListener :: can't refresh");
+                        return;
                     }
-                    if (name.length > 1) {
-                        nameBuilder.append("\n").append(name[1]);
+                    // Reinitialize controls incase changed to filtered deck
+                    initAllContentViews();
+                    // Set the deck name
+                    String fullName;
+                    JSONObject deck = getCol().getDecks().current();
+                    try {
+                        // Main deck name
+                        fullName = deck.getString("name");
+                        String[] name = fullName.split("::");
+                        StringBuilder nameBuilder = new StringBuilder();
+                        if (name.length > 0) {
+                            nameBuilder.append(name[0]);
+                        }
+                        if (name.length > 1) {
+                            nameBuilder.append("\n").append(name[1]);
+                        }
+                        if (name.length > 3) {
+                            nameBuilder.append("...");
+                        }
+                        if (name.length > 2) {
+                            nameBuilder.append("\n").append(name[name.length - 1]);
+                        }
+                        mTextDeckName.setText(nameBuilder.toString());
+                        // Also set deck name in activity title in action bar if not tablet mode
+                        if (!mFragmented) {
+                            getActivity().setTitle(getResources().getString(R.string.studyoptions_title));
+                            List<String> parts = Arrays.asList(fullName.split("::"));
+                            AnkiDroidApp.getCompat().setSubtitle(getActivity(), parts.get(parts.size() - 1));
+                        }
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
                     }
-                    if (name.length > 3) {
-                        nameBuilder.append("...");
-                    }
-                    if (name.length > 2) {
-                        nameBuilder.append("\n").append(name[name.length - 1]);
-                    }
-                    mTextDeckName.setText(nameBuilder.toString());
-                    // Also set deck name in activity title in action bar if not tablet mode
-                    if (!mFragmented) {
-                        getActivity().setTitle(getResources().getString(R.string.studyoptions_title));
-                        List<String> parts = Arrays.asList(fullName.split("::"));
-                        AnkiDroidApp.getCompat().setSubtitle(getActivity(), parts.get(parts.size() - 1));
-                    }
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
 
-                // open cram deck option if deck is opened for the first time
-                if (mCramInitialConfig != null) {
-                    openCramDeckOptions(mCramInitialConfig);
-                    return;
-                }
+                    // open cram deck option if deck is opened for the first time
+                    if (mCramInitialConfig != null) {
+                        openCramDeckOptions(mCramInitialConfig);
+                        return;
+                    }
 
-                // Switch between the ordinary view and "congratulations" view 
-                if (newCards + lrnCards + revCards == 0) {
-                    mCurrentContentView = CONTENT_CONGRATS;
-                    mDeckInfoLayout.setVisibility(View.GONE);
-                    mCongratsLayout.setVisibility(View.VISIBLE);
-                    mTextCongratsMessage.setText(getCol().getSched().finishedMsg(getActivity()));
-                    mButtonStart.setVisibility(View.GONE);
-                } else {
-                    mDeckCounts.setVisibility(View.VISIBLE); // not working without this... why?
-                    mCurrentContentView = CONTENT_STUDY_OPTIONS;
-                    mDeckInfoLayout.setVisibility(View.VISIBLE);
-                    mCongratsLayout.setVisibility(View.GONE);
-                    mButtonStart.setVisibility(View.VISIBLE);
-                }
-
-                // Set deck description
-                String desc;
-                try {
-                    if (deck.getInt("dyn") == 0) {
-                        desc = getCol().getDecks().getActualDescription();
+                    // Switch between the ordinary view and "congratulations" view
+                    if (newCards + lrnCards + revCards == 0) {
+                        mCurrentContentView = CONTENT_CONGRATS;
+                        mDeckInfoLayout.setVisibility(View.GONE);
+                        mCongratsLayout.setVisibility(View.VISIBLE);
+                        mTextCongratsMessage.setText(getCol().getSched().finishedMsg(getActivity()));
+                        mButtonStart.setVisibility(View.GONE);
                     } else {
-                        desc = getResources().getString(R.string.dyn_deck_desc);
+                        mDeckCounts.setVisibility(View.VISIBLE); // not working without this... why?
+                        mCurrentContentView = CONTENT_STUDY_OPTIONS;
+                        mDeckInfoLayout.setVisibility(View.VISIBLE);
+                        mCongratsLayout.setVisibility(View.GONE);
+                        mButtonStart.setVisibility(View.VISIBLE);
                     }
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
-                if (desc.length() > 0) {
-                    mTextDeckDescription.setText(Html.fromHtml(desc));
-                    mTextDeckDescription.setVisibility(View.VISIBLE);
-                } else {
-                    mTextDeckDescription.setVisibility(View.GONE);
-                }
 
-                // Update the chart (for tablet view)
-                updateChart(serieslist);
-
-                // Set new/learn/review card counts
-                mTextTodayNew.setText(String.valueOf(newCards));
-                mTextTodayLrn.setText(String.valueOf(lrnCards));
-                mTextTodayRev.setText(String.valueOf(revCards));
-
-                // Set the total number of new cards in deck
-                if (totalNew < NEW_CARD_COUNT_TRUNCATE_THRESHOLD) {
-                    // if it hasn't been truncated by libanki then just set it usually
-                    mTextNewTotal.setText(String.valueOf(totalNew));
-                } else {
-                    // if truncated then make a thread to allow full count to load
-                    mTextNewTotal.setText(">1000");
-                    if (mFullNewCountThread != null) { 
-                        // a thread was previously made -- interrupt it
-                        mFullNewCountThread.interrupt();
+                    // Set deck description
+                    String desc;
+                    try {
+                        if (deck.getInt("dyn") == 0) {
+                            desc = getCol().getDecks().getActualDescription();
+                        } else {
+                            desc = getResources().getString(R.string.dyn_deck_desc);
+                        }
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
                     }
-                    mFullNewCountThread = new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Collection collection = getCol();
-                            // TODO: refactor code to not rewrite this query, add to Sched.totalNewForCurrentDeck()
-                            StringBuilder sbQuery = new StringBuilder();
-                            sbQuery.append("SELECT count(*) FROM cards WHERE did IN ");
-                            sbQuery.append(Utils.ids2str(collection.getDecks().active()));
-                            sbQuery.append(" AND queue = 0");
-                            final int fullNewCount = collection.getDb().queryScalar(sbQuery.toString(), false);
-                            if (fullNewCount > 0) {
-                                Runnable setNewTotalText = new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        mTextNewTotal.setText(String.valueOf(fullNewCount));
+                    if (desc.length() > 0) {
+                        mTextDeckDescription.setText(Html.fromHtml(desc));
+                        mTextDeckDescription.setVisibility(View.VISIBLE);
+                    } else {
+                        mTextDeckDescription.setVisibility(View.GONE);
+                    }
+
+                    // Update the chart (for tablet view)
+                    updateChart(serieslist);
+
+                    // Set new/learn/review card counts
+                    mTextTodayNew.setText(String.valueOf(newCards));
+                    mTextTodayLrn.setText(String.valueOf(lrnCards));
+                    mTextTodayRev.setText(String.valueOf(revCards));
+
+                    // Set the total number of new cards in deck
+                    if (totalNew < NEW_CARD_COUNT_TRUNCATE_THRESHOLD) {
+                        // if it hasn't been truncated by libanki then just set it usually
+                        mTextNewTotal.setText(String.valueOf(totalNew));
+                    } else {
+                        // if truncated then make a thread to allow full count to load
+                        mTextNewTotal.setText(">1000");
+                        if (mFullNewCountThread != null) {
+                            // a thread was previously made -- interrupt it
+                            mFullNewCountThread.interrupt();
+                        }
+                        mFullNewCountThread = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Collection collection = getCol();
+                                // TODO: refactor code to not rewrite this query, add to Sched.totalNewForCurrentDeck()
+                                StringBuilder sbQuery = new StringBuilder();
+                                sbQuery.append("SELECT count(*) FROM cards WHERE did IN ");
+                                sbQuery.append(Utils.ids2str(collection.getDecks().active()));
+                                sbQuery.append(" AND queue = 0");
+                                final int fullNewCount = collection.getDb().queryScalar(sbQuery.toString(), false);
+                                if (fullNewCount > 0) {
+                                    Runnable setNewTotalText = new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            mTextNewTotal.setText(String.valueOf(fullNewCount));
+                                        }
+                                    };
+                                    if (!Thread.currentThread().isInterrupted()) {
+                                        mTextNewTotal.post(setNewTotalText);
                                     }
-                                 };
-                                if (!Thread.currentThread().isInterrupted()) {
-                                    mTextNewTotal.post(setNewTotalText);
                                 }
                             }
-                        }
-                    });
-                    mFullNewCountThread.start();
-                }
+                        });
+                        mFullNewCountThread.start();
+                    }
 
-                // Set total number of cards
-                mTextTotal.setText(String.valueOf(totalCards));
-                // Set estimated time remaining
-                if (eta != -1) {
-                    mTextETA.setText(Integer.toString(eta));
-                } else {
-                    mTextETA.setText("-");
-                }
-
-                // Show unbury button if necessary
-                if (mButtonUnbury != null) {
-                    if (getCol().getSched().haveBuried()) {
-                        mButtonUnbury.setVisibility(View.VISIBLE);
+                    // Set total number of cards
+                    mTextTotal.setText(String.valueOf(totalCards));
+                    // Set estimated time remaining
+                    if (eta != -1) {
+                        mTextETA.setText(Integer.toString(eta));
                     } else {
-                        mButtonUnbury.setVisibility(View.GONE);
+                        mTextETA.setText("-");
+                    }
+
+                    // Show unbury button if necessary
+                    if (mButtonUnbury != null) {
+                        if (getCol().getSched().haveBuried()) {
+                            mButtonUnbury.setVisibility(View.VISIBLE);
+                        } else {
+                            mButtonUnbury.setVisibility(View.GONE);
+                        }
                     }
                 }
+
+                // If in fragmented mode, refresh the deck list
+                if (mFragmented && refreshDecklist) {
+                    mListener.onRequireDeckListUpdate();
+                }
             }
-            // for rebuilding cram decks
-            dismissProgressDialog();
-        }
 
+            @Override
+            public void onProgressUpdate(DeckTask.TaskData... values) {
 
-        @Override
-        public void onPreExecute() {
-        }
+            }
 
+            @Override
+            public void onCancelled() {
 
-        @Override
-        public void onProgressUpdate(DeckTask.TaskData... values) {
-        }
-
-
-        @Override
-        public void onCancelled() {
-        }
-    };
+            }
+        };
+    }
 
 
     private Collection getCol() {
