@@ -1987,41 +1987,45 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         setInterface();
 
         String question;
-        if (mCurrentSimpleInterface) {
-            question = mCurrentCard.qSimple();
-        } else {
-            question = mCurrentCard.q();
-        }
-        question = getCol().getMedia().escapeImages(question);
-        question = typeAnsQuestionFilter(question);
-
-        if (mPrefFixArabic) {
-            question = ArabicUtilities.reshapeSentence(question, true);
-        }
-
-        Timber.d("question: '%s'", question);
-
         String displayString = "";
-
-        if (mCurrentSimpleInterface) {
-            mCardContent = convertToSimple(question);
-            if (mCardContent== null || mCardContent.length() == 0) {
-                SpannableString hint = new SpannableString(getResources().getString(R.string.simple_interface_hint,
-                        R.string.card_details_question));
-                hint.setSpan(new StyleSpan(Typeface.ITALIC), 0, mCardContent.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                mCardContent = hint;
-            }
+        if (mCurrentCard.isEmpty()) {
+            displayString = getResources().getString(R.string.empty_card_warning);
         } else {
-            // If the user wants to write the answer
-            if (typeAnswer()) {
-                mAnswerField.setVisibility(View.VISIBLE);
+            if (mCurrentSimpleInterface) {
+                question = mCurrentCard.qSimple();
+            } else {
+                question = mCurrentCard.q();
+            }
+            question = getCol().getMedia().escapeImages(question);
+            question = typeAnsQuestionFilter(question);
+
+            if (mPrefFixArabic) {
+                question = ArabicUtilities.reshapeSentence(question, true);
             }
 
-            displayString = enrichWithQADiv(question, false);
+            Timber.d("question: '%s'", question);
 
-            if (mSpeakText) {
-                // ReadText.setLanguageInformation(Model.getModel(DeckManager.getMainDeck(),
-                // mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId());
+
+            if (mCurrentSimpleInterface) {
+                mCardContent = convertToSimple(question);
+                if (mCardContent== null || mCardContent.length() == 0) {
+                    SpannableString hint = new SpannableString(getResources().getString(R.string.simple_interface_hint,
+                            R.string.card_details_question));
+                    hint.setSpan(new StyleSpan(Typeface.ITALIC), 0, mCardContent.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    mCardContent = hint;
+                }
+            } else {
+                // If the user wants to write the answer
+                if (typeAnswer()) {
+                    mAnswerField.setVisibility(View.VISIBLE);
+                }
+
+                displayString = enrichWithQADiv(question, false);
+
+                if (mSpeakText) {
+                    // ReadText.setLanguageInformation(Model.getModel(DeckManager.getMainDeck(),
+                    // mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId());
+                }
             }
         }
 
