@@ -22,7 +22,7 @@
 
 <!--  General Preferences -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res/com.ichi2.anki" >
+    xmlns:app="http://arbitrary.app.namespace/com.ichi2.anki" >
     <PreferenceScreen android:title="@string/pref_cat_general"
         android:summary="@string/pref_cat_general_summ" >
         <EditTextPreference

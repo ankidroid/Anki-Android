@@ -168,6 +168,6 @@ public class StepsPreference extends EditTextPreference {
         if (attrs == null) {
             return true;
         }
-        return attrs.getAttributeBooleanValue(AnkiDroidApp.APP_NAMESPACE, "allowEmpty", true);
+        return attrs.getAttributeBooleanValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "allowEmpty", true);
     }
 }
