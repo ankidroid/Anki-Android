@@ -28,6 +28,7 @@ import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.exception.APIVersionException;
+import com.ichi2.libanki.template.Template;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -330,7 +331,7 @@ public class Media {
             ords.add(m.group(1));
         }
         ArrayList<String> strings = new ArrayList<String>();
-        String clozeReg = Models.clozeReg;
+        String clozeReg = Template.clozeReg;
         
         for (String ord : ords) {
             StringBuffer buf = new StringBuffer();
