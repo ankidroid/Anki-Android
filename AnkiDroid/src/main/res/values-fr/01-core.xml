@@ -50,12 +50,12 @@
   <string name="studyoptions_eta">Temps estimé (min):</string>
   <string name="studyoptions_start">Réviser</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%1$d carte dûe (%2$s)</item>
-    <item quantity="other">%1$d cartes dûes (%2$s)</item>
+    <item quantity="one">%1$d carte à relire (%2$s)</item>
+    <item quantity="other">%1$d cartes à relire (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">%d min.</item>
-    <item quantity="other">%d minute(s).</item>
+    <item quantity="other">%d minute.</item>
   </plurals>
   <plurals name="deckpicker_due">
     <item quantity="one">%1$d de %2$d dû</item>
@@ -98,7 +98,7 @@
   <string name="menu_add_note">Ajouter une note</string>
   <string name="menu_download_deck">Télécharger le paquet</string>
   <string name="menu_download_shared_deck">Paquet partagé</string>
-  <string name="menu_my_account">Concorder compte</string>
+  <string name="menu_my_account">Compte de synchronisation</string>
   <string name="menu_preferences">Préférences</string>
   <string name="menu_about">À propos</string>
   <string name="menu_dismiss_note">Masquer / Supprimer</string>
@@ -116,9 +116,10 @@
   <string name="menu_unmark_card">Retirer le marquage</string>
   <string name="new_deck">Créer un jeu de cartes</string>
   <string name="create">Créer</string>
-  <string name="new_dynamic_deck">Créer un jeu de cartes filtrées</string>
+  <string name="new_dynamic_deck">Créer un paquet filtré</string>
   <string name="studyoptions_feedback">Commentaires</string>
   <string name="night_mode">Mode nuit</string>
+  <string name="directory_inaccessible">Le répertoire d\'AnkiDroid est inaccessible</string>
   <string-array name="next_review_s">
     <item>1 seconde</item>
     <item>1 minute</item>
@@ -149,8 +150,9 @@
   <string name="studyoptions_congrats_more_rev">Vous avez atteint votre limite aujourd\'hui, mais il reste des cartes à passer en revue. Vous pouvez augmenter le seuil journalier dans les options.</string>
   <string name="studyoptions_congrats_more_new">Il reste des nouvelles cartes disponibles, mais la limite journalière a été atteinte. Vous pouvez augmenter cette limite dans les options, mais gardez à l\'esprit que cela augmentera votre charge de travail à court terme.</string>
   <string name="studyoptions_congrats_custom">Pour étudier en dehors des horaires normaux, cliquez sur le bouton d\'étude personnalisée ci-dessous.</string>
+  <string name="studyoptions_no_cards_due">Aucune carte à relire actuellement.</string>
   <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Demain il y aura : %1$d carte à revoir et %2$s.\n Durée estimée : %3$s</item>
+    <item quantity="one">Demain, il y aura : %1$d carte à revoir et %2$s.\n Durée estimée : %3$s</item>
     <item quantity="other">Demain, il y aura %2$s cartes nouvelles et %1$d à revoir.\n Durée estimée : %3$s</item>
   </plurals>
   <plurals name="studyoptions_congrats_new_cards">
@@ -159,7 +161,7 @@
   </plurals>
   <plurals name="studyoptions_congrats_eta">
     <item quantity="one">Durée estimée : %1$d min.</item>
-    <item quantity="other">Durée estimée : %1$d mn.</item>
+    <item quantity="other">Durée estimée : %1$d min.</item>
   </plurals>
   <string name="sd_card_not_mounted">La carte SD n\'est pas montée.\n\nVous pouvez également sauvegarder votre collection dans la mémoire interne bien que cela ne soit pas recommandé car cela rendrait plus difficile l\'accès au fichier. Vous pouvez activer cela dans les préférences (accédez-y en cliquant sur ce texte).</string>
   <string name="studyoptions_options">Options</string>
@@ -178,19 +180,19 @@
   <string name="confirm">Confirmer</string>
   <string name="internet">Toile</string>
   <string name="pc">PC</string>
-  <string name="nothing">Nothing</string>
+  <string name="nothing">Rien</string>
   <string name="title_activity_graphical_activity">Graphique statistique</string>
-  <string name="title_activity_template_editor">Card Types for %s</string>
-  <string name="card_template_editor_front">Front Template</string>
-  <string name="card_template_editor_back">Back Template</string>
-  <string name="card_template_editor_styling">Styling</string>
-  <string name="card_template_editor_menu_add_reverse">Add reverse</string>
-  <string name="card_template_editor_menu_delete">Delete</string>
-  <string name="card_template_editor_cant_delete">At least one card type is required.</string>
+  <string name="title_activity_template_editor">Types de carte pour %s</string>
+  <string name="card_template_editor_front">Modèle du recto</string>
+  <string name="card_template_editor_back">Modèle Back</string>
+  <string name="card_template_editor_styling">Style</string>
+  <string name="card_template_editor_menu_add_reverse">Ajouter l\'inverse</string>
+  <string name="card_template_editor_menu_delete">Supprimer</string>
+  <string name="card_template_editor_cant_delete">Il faut au moins un type de carte.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
-    <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
+    <item quantity="one">Supprimer le type de carte «%2$s » et sa carte %1$d ?</item>
+    <item quantity="other">Supprimer le type de carte «%2$s » et ses cartes %1$d ?</item>
   </plurals>
-  <string name="card_template_editor_would_delete_note"> Removing this card type would cause one or
-        more notes to be deleted. Please create a new card type first.</string>
+  <string name="card_template_editor_would_delete_note"> Retirer ce type de carte provoquerait la suppression 
+        d\'une ou de plusieurs notes. Veuillez d\'abord créer un nouveau type de carte.</string>
 </resources>

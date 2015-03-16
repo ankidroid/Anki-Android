@@ -119,6 +119,7 @@
   <string name="new_dynamic_deck">Stwórz filtrowaną talię</string>
   <string name="studyoptions_feedback">Informacje zwrotne</string>
   <string name="night_mode">Tryb nocny</string>
+  <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
   <string-array name="next_review_s">
     <item>1 sekunda</item>
     <item>1 minuta</item>
@@ -149,6 +150,7 @@
   <string name="studyoptions_congrats_more_rev">Dzisiejszy limit powtórek został wyczerpany, ale wciąż pozostają karty do przejrzenia. Dla optymalnego zapamiętywania proszę rozważyć zwiększenie dziennego limitu w ustawieniach.</string>
   <string name="studyoptions_congrats_more_new">Pozostało więcej kart do przejrzenia, ale dzienny limit został osiągnięty. Możesz zwiększyć limit w opcjach, ale miej na uwadze, że zwiększy to ilość powtórzeń w najbliższych dniach.</string>
   <string name="studyoptions_congrats_custom">Aby kontynuować naukę poza zwykłym schematem kliknij przycisk Nauki Niestandardowej poniżej.</string>
+  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Jutro będzie %1$d kart do przejrzenia oraz %2$s.\n Szacowany czas: %3$s</item>
     <item quantity="other">Jutro będzie %1$d kart do powtórki i %2$s.\n Szacowany czas: %3$s</item>
@@ -191,6 +193,5 @@
     <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
     <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
   </plurals>
-  <string name="card_template_editor_would_delete_note"> Removing this card type would cause one or
-        more notes to be deleted. Please create a new card type first.</string>
+  <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create a new card type first.</string>
 </resources>

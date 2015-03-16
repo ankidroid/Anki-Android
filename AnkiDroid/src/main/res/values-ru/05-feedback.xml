@@ -43,7 +43,7 @@
   <string name="error_cancel">Не отправлять отчёт об ошибках</string>
   <string name="error_reporting_choice">Сообщать об ошибках</string>
   <string name="error_reporting_choice_summary">Можно посылать ошибки программы автоматически, не посылать или выводить вопрос пользователю</string>
-  <string name="feedback_disclaimer">Disclaimer: We don\'t collect any personal information such as your email address, phone number, or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves and the steps which led up to them occuring.</string>
+  <string name="feedback_disclaimer">Отказ от ответственности: мы не собираем личную информацию, например, ваш адрес электронной почты, номер телефона или IMEI телефона. Мы собираем некоторую информацию о вашем устройстве, например, название производителя, модель и версию Android, а также описание ошибок и последовательность шагов, приведших к их появлению.</string>
   <string name="feedback_title">Обратная связь</string>
   <string name="feedback_send_feedback">Отправить нам свой отзыв</string>
   <string name="feedback_send_feedback_and_errors">Отправить ошибки и ваши отзывы</string>
@@ -60,8 +60,9 @@
   <string name="feedback_error_reply_issue_fixed_prod">Проблема %1$d, устранена в последней версии</string>
   <string name="feedback_error_reply_malformed">Зарегистрированная ошибка, но пока не исправляется</string>
   <string name="feedback_error_reply_failed">Не удалось отправить</string>
-  <string name="feedback_auto_toast_text">AnkiDroid has encountered a problem; a report is being sent to the developers&#8230;</string>
-  <string name="feedback_manual_toast_text">AnkiDroid has encountered a problem; a report is being generated&#8230;</string>
-  <string name="feedback_copy_debug">Copy debug info</string>
-  <string name="feedback_report">Report</string>
+  <string name="feedback_auto_toast_text">AnkiDroid столкнулся с проблемой; отчет отправляется к разработчикам&#8230;</string>
+  <string name="feedback_manual_toast_text">AnkiDroid столкнулся с проблемой; отчет генерируется&#8230;</string>
+  <string name="feedback_copy_debug">Копировать данные дебага</string>
+  <string name="feedback_report">Отчёт</string>
+  <string name="feedback_report_automatically">Автоматически отправлять отчеты об ошибках</string>
 </resources>

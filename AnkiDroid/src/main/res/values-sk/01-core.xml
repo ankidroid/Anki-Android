@@ -119,6 +119,7 @@
   <string name="new_dynamic_deck">Vytvoriť filtrovaný balíček</string>
   <string name="studyoptions_feedback">Spätná väzba</string>
   <string name="night_mode">Nočný režim</string>
+  <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
   <string-array name="next_review_s">
     <item>1 sekunda</item>
     <item>1 minúta</item>
@@ -149,6 +150,7 @@
   <string name="studyoptions_congrats_more_rev">Bol dosiahnutý denný limit, ale stále zostávajú nejaké karty na opakovanie. Pre optimálne zapamätanie zvážte zvýšenie tohto limitu v nastaveniach.</string>
   <string name="studyoptions_congrats_more_new">Dostupné sú aj ďalšie nové karty, ale bol dosiahnutý denný limit.  Môžete ho zvýšiť v nastaveniach, ale prosím majte na pamäti, že tým sa v najbližšej dobe zvýši aj počet kariet na opakovanie.</string>
   <string name="studyoptions_congrats_custom">Ak chcete študovať mimo bežný plán, kliknite na tlačidlo Vlastné štúdium nižšie.</string>
+  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Zajtra: %1$d kariet na opakovanie a %2$s.\n Odhadovaný čas: %3$s</item>
     <item quantity="other">Zajtra: %1$d kariet na opakovanie a %2$s.\n Odhadovaný čas: %3$s</item>
@@ -191,6 +193,5 @@
     <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
     <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
   </plurals>
-  <string name="card_template_editor_would_delete_note"> Removing this card type would cause one or
-        more notes to be deleted. Please create a new card type first.</string>
+  <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create a new card type first.</string>
 </resources>

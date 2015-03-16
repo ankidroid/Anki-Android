@@ -119,6 +119,7 @@
   <string name="new_dynamic_deck">Tạo Bài chọn lọc</string>
   <string name="studyoptions_feedback">Phản hồi</string>
   <string name="night_mode">Chế độ ban đêm</string>
+  <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
   <string-array name="next_review_s">
     <item>1 giây</item>
     <item>1 phút</item>
@@ -149,6 +150,7 @@
   <string name="studyoptions_congrats_more_rev">Đã tới giới hạn ôn tập của ngày hôm nay, nhưng vẫn còn có thẻ đợi được ôn tập. Để tối ưu sự ghi nhớ, cân nhắc tùy chọn tăng giới hạn hàng ngày.</string>
   <string name="studyoptions_congrats_more_new">Không có thẻ mới, nhưng bạn đã đạt giới hạn hàng ngày. Bạn có thể tăng giới hạn trong các tùy chọn, nhưng vui lòng nhớ rằng điều này sẽ làm tăng khối lượng  công việc của bạn.</string>
   <string name="studyoptions_congrats_custom">Để học bên ngoài thời gian biểu, hãy chọn vào nút Lựa chọn việc học.</string>
+  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
     <item quantity="other">Ngày mai sẽ có: %1$d thẻ cần ôn tập và %2$s.\n Thời gian ước tính: %3$s</item>
@@ -191,6 +193,5 @@
     <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
     <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
   </plurals>
-  <string name="card_template_editor_would_delete_note"> Removing this card type would cause one or
-        more notes to be deleted. Please create a new card type first.</string>
+  <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create a new card type first.</string>
 </resources>

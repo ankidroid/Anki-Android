@@ -66,6 +66,8 @@
   <string name="backup_restore_select_title">Velg sikkerhetskopiering som skal gjenopprettes</string>
   <string name="backup_restore_no_backups">Ingen sikkerhetskopier for denne samlingen er tilgjengelige på denne enheten. Hvis du har sikkerhetskopier på datamaskinen din, vennligst kopier dem manuelt til AnkiDroid-mappen</string>
   <string name="open_collection_failed_title">Samlingen ikke åpnet</string>
-  <string name="open_collection_failed_message">Kan ikke åpne databasen. Enten er det ikke en ekte Anki-database, eller så er den ødelagt.\n\nDu kan prøve å reparere samlingen, eller gjenopprette den fra en sikkerhetskopi (i begge tilfelle kommer kopien av den ødelagte kortstokken til å bli flyttet til undermappen \"%1$s\"). Klikk \"Alternativer\" for å gjenopprette.\n\nMer informasjon om å reparere ødelagte kortstokker: %2$s.</string>
+  <string name="open_collection_failed_message">Database could not be opened. It\'s either not a real Anki database or has been corrupted.\n\nTouch \'options\' for various options to restore the database, or for more information about repairing corrupted collections see:\n%1$s</string>
+  <string name="corrupt_db_message">Unfortunately your collection has become corrupted.\n\nTouch \'options\' to restore from a backup, or if that does not work, see the following instructions for manually repairing the database:\n%1$s</string>
+  <string name="access_collection_failed_message">An error occurred while accessing your collection. It may have been caused by a harmless bug, or there may be a problem with it. \n\nTry running check database, or restoring from backup by pressing the \'options\' button. If you continue to see this message, please file a bug report:\n%1$s</string>
   <string name="deck_repair_error">Samlingen kan ikke repareres</string>
 </resources>

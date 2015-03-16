@@ -46,7 +46,7 @@
   <string name="CardEditorNoteDeck">Шпил:</string>
   <string name="CardEditorModel">Врста:</string>
   <string name="CardEditorTags">Ознаке: %1$s</string>
-  <string name="CardEditorCards">Cards: %1$s</string>
+  <string name="CardEditorCards">Карте: %1$s</string>
   <string name="add_new_filter_tags">Додај/филтрирај ознаке</string>
   <string name="note_type">Тип белешке</string>
   <string name="card_type">Тип картице</string>
@@ -78,19 +78,19 @@
   </string-array>
   <string name="cardeditor_title_add_note">Додај белешку</string>
   <string name="cardeditor_title_edit_card">Уреди белешку</string>
-  <string name="discard_unsaved_changes">Уклони и изгуби унешен податак?</string>
+  <string name="discard_unsaved_changes">Да затворим и искористим текући унос?</string>
   <string name="factadder_saving_error">Грешка при чувању белешке</string>
   <string name="pref_lang_support">Језик</string>
-  <string name="saving_facts">Сачување белешке</string>
-  <string name="saving_model">Saving model</string>
+  <string name="saving_facts">Сачуване белешке</string>
+  <string name="saving_model">Сачувај модел</string>
   <string name="deck">Шпил</string>
   <string name="add">Додаj</string>
   <string name="close">Затвори</string>
   <string name="select">Изабери</string>
   <string name="saving_changes">Сачувај промене...</string>
   <string name="reordering_cards">Промена редоследа картица&#8230;</string>
-  <string name="field_remapping">%1$s (from \'%2$s\')</string>
-  <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
+  <string name="field_remapping">%1$s (од \'%2$s\')</string>
+  <string name="confirm_map_cards_to_nothing">Немапиране карте ће бити избрисане. Напомене, које немају своје карте, биће изгубљене. Да продужим?</string>
   <plurals name="timebox_reached">
     <item quantity="one">%1$d картица проучена у %2$s</item>
     <item quantity="other">%1$d картице проучене у %2$s</item>
@@ -154,7 +154,8 @@
   <string name="import_log_success">Успешно увезено %d картица</string>
   <string name="import_log_error">Неуспешан увоз</string>
   <string name="import_log_no_apkg">Ово је неодговарајућа apkg датотека</string>
-  <string name="import_error_not_apkg_extension">Filename %s does not have .apkg extension</string>
+  <string name="import_error_not_apkg_extension">Датотека %s треба да има проширење .apkg</string>
+  <string name="import_error_content_provider">Ова датотека не може да се увезе аутоматски. Погледајте у упуству како се ручно увози anki датотека: \n %s</string>
   <string name="import_importing">Увоз картица.\nМолим сачекајте&#8230;</string>
   <string name="export_include_schedule">Укључујући заказивање</string>
   <string name="export_include_media">Обухватај медијске датотеке</string>

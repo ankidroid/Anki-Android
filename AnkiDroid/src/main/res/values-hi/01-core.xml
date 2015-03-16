@@ -119,6 +119,7 @@
   <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">आपके सुझाव</string>
   <string name="night_mode">रात मोड</string>
+  <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
   <string-array name="next_review_s">
     <item>1 सेकंड</item>
     <item>1 मिनट</item>
@@ -149,6 +150,7 @@
   <string name="studyoptions_congrats_more_rev">आज की समीक्षा की सीमा तक पहुँच गया है, लेकिन वहाँ अभी भी कार्ड की समीक्षा की जा करने के लिए इंतज़ार कर रहे हैं। इष्टतम स्मृति के लिए, विकल्प में दैनिक सीमा बढ़ाने पर विचार करें।</string>
   <string name="studyoptions_congrats_more_new">वहाँ और अधिक नए कार्ड उपलब्ध हैं, लेकिन दैनिक सीमा तक पहुँच गया है। आप विकल्पों में सीमा में वृद्धि कर सकते हैं, लेकिन कि यह अपने अल्पकालिक समीक्षा काम का बोझ बढ़ जाएगा मन में भालू कृपया।</string>
   <string name="studyoptions_congrats_custom">सामान्य समय के बाहर का अध्ययन करने के लिए, कस्टम अध्ययन बटन नीचे क्लिक करें।</string>
+  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
     <item quantity="other">कल वहाँ हो जाएगा: %1$d कार्ड की समीक्षा करने और %2$s.\n अनुमानित समय: %3$s</item>
@@ -191,6 +193,5 @@
     <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
     <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
   </plurals>
-  <string name="card_template_editor_would_delete_note"> Removing this card type would cause one or
-        more notes to be deleted. Please create a new card type first.</string>
+  <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create a new card type first.</string>
 </resources>

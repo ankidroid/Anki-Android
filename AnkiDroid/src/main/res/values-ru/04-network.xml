@@ -168,5 +168,5 @@
   <string name="force_full_sync_summary">При следующей синхронизации, перезаписать в одном направлении</string>
   <string name="full_sync_confirmation">При следующей синхронизации будет произведена полная выгрузка вашей коллекции с этого устройства на сервер. Все изменения в коллекции, сделанные на других устройствах и которые еще не были синхронизированы с этим устройством, будут потеряны! Продолжить?</string>
   <string name="full_sync_confirmation_upgrade">В связи с ошибкой в ранее установленной версии AnkiDroid требуется выполнить полную синхронизацию.</string>
-  <string name="sync_error_501_upgrade_required">Please upgrade to the latest version of AnkiDroid</string>
+  <string name="sync_error_501_upgrade_required">Пожалуйста, установите последнюю версию AnkiDroid</string>
 </resources>

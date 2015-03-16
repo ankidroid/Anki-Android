@@ -46,7 +46,7 @@
   <string name="CardEditorNoteDeck">Mazo:</string>
   <string name="CardEditorModel">Tipo:</string>
   <string name="CardEditorTags">Etiquetas: %1$s</string>
-  <string name="CardEditorCards">Cards: %1$s</string>
+  <string name="CardEditorCards">Tarjetas: %1$s</string>
   <string name="add_new_filter_tags">Añadir/filtrar etiquetas</string>
   <string name="note_type">Tipo de Nota</string>
   <string name="card_type">Tipo de tarjeta</string>
@@ -64,7 +64,7 @@
   <string name="leech_notification">Tarjeta marcada como sanguijuela</string>
   <string name="corrupt_font">Archivo de fuentes corrupto %s</string>
   <string-array name="browser_column1_headings">
-    <item>Sort field</item>
+    <item>Ordenar campo</item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Respuesta</item>
@@ -78,19 +78,19 @@
   </string-array>
   <string name="cardeditor_title_add_note">Añadir Nota</string>
   <string name="cardeditor_title_edit_card">Editar Nota</string>
-  <string name="discard_unsaved_changes">Close and lose current input?</string>
+  <string name="discard_unsaved_changes">¿Cerrar y perder la entrada de actual?</string>
   <string name="factadder_saving_error">Error al guardar la nota</string>
   <string name="pref_lang_support">Idioma</string>
   <string name="saving_facts">Guardando nota</string>
-  <string name="saving_model">Saving model</string>
+  <string name="saving_model">Guardando el modelo</string>
   <string name="deck">Mazo</string>
   <string name="add">Añadir</string>
   <string name="close">Cerrar</string>
   <string name="select">Seleccionar</string>
   <string name="saving_changes">Guardando cambios...</string>
   <string name="reordering_cards">Ordenando tarjetas...</string>
-  <string name="field_remapping">%1$s (from \'%2$s\')</string>
-  <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
+  <string name="field_remapping">%1$s (de \'%2$s\')</string>
+  <string name="confirm_map_cards_to_nothing">Se eliminará cualquier tarjeta no asignada a nada. Si una nota no tiene cartas restantes, se perderá. ¿Está seguro de que desea continuar?</string>
   <plurals name="timebox_reached">
     <item quantity="one">%1$d tarjetas estudiadas en %2$s</item>
     <item quantity="other">%1$d tarjetas estudiadas en %2$s</item>
@@ -109,7 +109,7 @@
   <string name="card_editor_reset">Restablecer</string>
   <string name="card_editor_copy_card">Copiar tarjeta</string>
   <string name="card_editor_reset_card">Reiniciar cuenta de progreso</string>
-  <string name="card_editor_reschedule_card">Reschedule card</string>
+  <string name="card_editor_reschedule_card">Reprogramar tarjeta</string>
   <string name="card_editor_preview_card">Vista previa</string>
   <string name="error_insufficient_memory">La operación no es posible debido a insuficiencia de memoria en tu dispositivo</string>
   <string name="rename">Renombrar</string>
@@ -123,7 +123,7 @@
   <string name="help_online">Ayuda en línea</string>
   <string name="help_faq">Preguntas más frecuentes</string>
   <string name="check_db">Comprobar base de datos</string>
-  <string name="check_media">Check media</string>
+  <string name="check_media">Comprobar medio</string>
   <string name="check_db_message">Comprobando base de datos.\nPor favor, espera...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Tarjeta vacía. Ejecute \"Herramientas&gt;Tarjetas vacías...\" en el cliente de escritorio.</string>
   <string name="unknown_type_field_warning">Escribir respuesta: campo %s desconocido</string>
@@ -139,7 +139,7 @@
     <item>Orden programadas</item>
   </string-array>
   <string name="menu_cardbrowser">Explorador de tarjetas</string>
-  <string name="show_hint">Show %s</string>
+  <string name="show_hint">Mostrar %s</string>
   <string name="pref_lang_other">Preferencias de Idioma</string>
   <string name="pref_font_UI">Fuente de interfaz de usuario personalizada</string>
   <string name="info_rate">Puntúa AnkiDroid</string>
@@ -154,15 +154,16 @@
   <string name="import_log_success">Se importaron con éxito %d tarjetas</string>
   <string name="import_log_error">La importación falló</string>
   <string name="import_log_no_apkg">Éste no es un archivo apkg válido</string>
-  <string name="import_error_not_apkg_extension">Filename %s does not have .apkg extension</string>
+  <string name="import_error_not_apkg_extension">El nombre de archivo %s no tiene la extensión .apkg</string>
+  <string name="import_error_content_provider">The selected file could not be imported automatically by AnkiDroid. Please see the user manual for how to manually import anki files: \n %s</string>
   <string name="import_importing">Importando tarjetas.\nPor favor, espera...</string>
-  <string name="export_include_schedule">Include scheduling</string>
+  <string name="export_include_schedule">Incluir programación</string>
   <string name="export_include_media">Incluir multimedia</string>
   <string name="confirm_apkg_export">¿Exportar colección como archivo apkg?</string>
   <string name="confirm_apkg_export_deck">¿Exportar \"%s\" como archivo apkg?</string>
   <string name="export_in_progress">Exportando archivo apkg&#8230;</string>
-  <string name="export_successful_title">Email apkg?</string>
-  <string name="export_successful">File \"%s\" was exported. Do you want to email it?</string>
+  <string name="export_successful_title">¿Enviar apkg por correo?</string>
+  <string name="export_successful">Archivo \"%s\" fue exportado. ¿Quieres enviar por correo electrónico?</string>
   <string name="export_unsuccessful">Se produjo un error exportando la colección</string>
   <string name="import_hint">Para importar tarjetas, coloca el archivo apkg en el directorio %s y presiona ok</string>
   <string name="upgrade_import_no_file_found">No se encontró archivo importable %1$s</string>
@@ -179,8 +180,8 @@
   <string name="sched_end">(fin)</string>
   <string name="sched_unbury_button">Para verlos ahora, pulse el botón Desenterrar.</string>
   <string name="sched_has_buried">Algunas tarjetas relacionadas o enterradas fueron postergadas para una sesión posterior.</string>
-  <string name="tag_editor_add_hint">Use tick mark on the right to add new tag</string>
-  <string name="tag_editor_add_feedback">Press \"%2$s\" button to confirm adding \"%1$s\"</string>
+  <string name="tag_editor_add_hint">Use la marca de tick a la derecha para añadir una nueva etiqueta</string>
+  <string name="tag_editor_add_feedback">Presione el botón \"%2$s\" para confirmar la adición de \"%1$s\"</string>
   <string name="lookup_hint">Después de copiar el texto, pulsa en cualquier lugar sobre la tarjeta para mostrar el icono de búsqueda.</string>
   <string name="add_content_showcase_text">Para comenzar, presiona el botón +  y añade material de estudio nuevo.\n\n Presiona \'Ayuda\' para consultar el manual.</string>
 </resources>

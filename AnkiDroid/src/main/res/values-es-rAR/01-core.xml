@@ -119,6 +119,7 @@
   <string name="new_dynamic_deck">Crear mazo filtrado</string>
   <string name="studyoptions_feedback">Comentarios</string>
   <string name="night_mode">Modo nocturno</string>
+  <string name="directory_inaccessible">No se puede acceder a la carpeta de AnkiDroid</string>
   <string-array name="next_review_s">
     <item>1 segundo</item>
     <item>1 minuto</item>
@@ -149,6 +150,7 @@
   <string name="studyoptions_congrats_more_rev">El límite de revisión para hoy ha sido alcanzado pero aún hay tarjetas esperando a ser revisadas. Para una memoria óptima considere incrementar el límite diario en las ocpiones.</string>
   <string name="studyoptions_congrats_more_new">Hay más tarjetas nuevas disponibles pero el límite diario ha sido alcanzado. Puede incrementar el límite en las opciones, pero por favor tenga en cuenta que esto incrementará el trabajo de revisión a corto plazo.</string>
   <string name="studyoptions_congrats_custom">Para estudiar por fuera de la programación normal, haga click en el botón inferior Estudio Personalizado.</string>
+  <string name="studyoptions_no_cards_due">Aún no hay tarjetas programadas.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Mañana habrá: %1$d tarjetas para repasar y %2$s.\nTiempo estimado: %3$s</item>
     <item quantity="other">Mañana habrá: %1$d tarjetas para revisar y %2$s.\n Tiempo estimado: %3$s</item>
@@ -178,19 +180,18 @@
   <string name="confirm">Confirmar</string>
   <string name="internet">Internet</string>
   <string name="pc">PC</string>
-  <string name="nothing">Nothing</string>
+  <string name="nothing">Nada</string>
   <string name="title_activity_graphical_activity">Estadísticas</string>
-  <string name="title_activity_template_editor">Card Types for %s</string>
-  <string name="card_template_editor_front">Front Template</string>
-  <string name="card_template_editor_back">Back Template</string>
-  <string name="card_template_editor_styling">Styling</string>
-  <string name="card_template_editor_menu_add_reverse">Add reverse</string>
-  <string name="card_template_editor_menu_delete">Delete</string>
-  <string name="card_template_editor_cant_delete">At least one card type is required.</string>
+  <string name="title_activity_template_editor">Tipos de Tarjeta por %s</string>
+  <string name="card_template_editor_front">Plantilla Anverso</string>
+  <string name="card_template_editor_back">Plantilla Reverso</string>
+  <string name="card_template_editor_styling">Estilo</string>
+  <string name="card_template_editor_menu_add_reverse">Añadir reverso</string>
+  <string name="card_template_editor_menu_delete">Eliminar</string>
+  <string name="card_template_editor_cant_delete">Se requiere al menos un tipo de nota.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
-    <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
+    <item quantity="one">¿Eliminar el tipo de tarjeta \'%2$s\' y su tarjeta %1$d?</item>
+    <item quantity="other">Eliminar el tipo de tarjeta \'%2$s\' y sus tarjetas %1$d?</item>
   </plurals>
-  <string name="card_template_editor_would_delete_note"> Removing this card type would cause one or
-        more notes to be deleted. Please create a new card type first.</string>
+  <string name="card_template_editor_would_delete_note">Eliminar este tipo de tarjeta podría causar la eliminación de una o más notas. Por favor, cree primero un nuevo tipo de tarjeta.</string>
 </resources>

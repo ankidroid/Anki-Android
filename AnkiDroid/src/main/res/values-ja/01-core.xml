@@ -44,22 +44,22 @@
   <string name="app_name_droid">Droid</string>
   <string name="studyoptions_title">学習オプション</string>
   <string name="studyoptions_deck_name">単語帳名</string>
-  <string name="studyoptions_due_today">今日が期限:</string>
+  <string name="studyoptions_due_today">今日の学習目標:</string>
   <string name="studyoptions_new_total">新規カードの枚数:</string>
-  <string name="studyoptions_total_cards">カードの総数</string>
-  <string name="studyoptions_eta">推定時間 (分):</string>
+  <string name="studyoptions_total_cards">カードの総数:</string>
+  <string name="studyoptions_eta">推定学習時間 (分):</string>
   <string name="studyoptions_start">学習開始</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%1$d 枚の期限カード (%2$s)</item>
-    <item quantity="other">%1$d 枚の期限カード (%2$s)</item>
+    <item quantity="one">現在の学習目標: %1$d枚 (%2$s)</item>
+    <item quantity="other">現在の学習目標: %1$d枚 (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one">%d 分</item>
-    <item quantity="other">%d 分</item>
+    <item quantity="one">%d分</item>
+    <item quantity="other">%d分</item>
   </plurals>
   <plurals name="deckpicker_due">
-    <item quantity="one">%1$d 期限　全体 %2$d 枚</item>
-    <item quantity="other">残り%2$d枚中%1$d枚</item>
+    <item quantity="one">%1$d 学習目標　全体 %2$d 枚</item>
+    <item quantity="other">%1$d 学習目標　全体 %2$d 枚</item>
   </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">残り %d 分</item>
@@ -95,7 +95,7 @@
   <string name="contextmenu_deckpicker_inflate_deck">単語帳展開</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">カスタム辞書設定</string>
   <string name="menu_add">追加</string>
-  <string name="menu_add_note">ノートの追加</string>
+  <string name="menu_add_note">ノートを追加</string>
   <string name="menu_download_deck">単語帳をダウンロード</string>
   <string name="menu_download_shared_deck">共有の単語帳</string>
   <string name="menu_my_account">アカウントの設定と同期</string>
@@ -108,17 +108,18 @@
   <string name="menu_suspend_note">ノートの保留</string>
   <string name="menu_save_note">ノート形式の保存</string>
   <string name="menu_delete_note">ノートの削除</string>
-  <string name="delete_note_message">このノートとすべてのカードを削除してもよろしいですか？\n%s</string>
+  <string name="delete_note_message">このノートと、このノートから作られた全てのカードを削除してもよろしいですか？\n%s</string>
   <string name="menu_edit_card">カードの編集</string>
   <string name="menu_select">テキスト選択</string>
   <string name="menu_search">%1$sで探す</string>
   <string name="menu_mark_card">カードをマーク</string>
   <string name="menu_unmark_card">カードのマークを消す</string>
-  <string name="new_deck">単語帳作成</string>
+  <string name="new_deck">単語帳を作成</string>
   <string name="create">作成</string>
-  <string name="new_dynamic_deck">フィルター単語帳の作成</string>
+  <string name="new_dynamic_deck">フィルター単語帳を作成</string>
   <string name="studyoptions_feedback">フィードバック</string>
-  <string name="night_mode">夜間表示（反転）</string>
+  <string name="night_mode">ナイトモード</string>
+  <string name="directory_inaccessible">AnkiDroid ディレクトリにアクセスできません</string>
   <string-array name="next_review_s">
     <item>1秒</item>
     <item>1分</item>
@@ -145,10 +146,11 @@
   <string name="empty_cram_deck">カードを元の単語帳へ戻します。</string>
   <string name="custom_study_deck_name">カスタム学習セッション</string>
   <string name="custom_study_deck_exists">最初に、既存のカスタム学習の単語帳の名称変更を行ってください。</string>
-  <string name="studyoptions_congrats_finished">おめでとうございます！　今日の目標を達成しました。</string>
-  <string name="studyoptions_congrats_more_rev">復習カードがまだ他にも残っていますが、一日あたりの復習カード枚数の上限に達しています。上限は「単語帳オプション」内の設定で上げられます。</string>
-  <string name="studyoptions_congrats_more_new">新規カードがまだ他にも残っていますが、一日あたりの新規カード枚数の上限に達しています。上限は「単語帳オプション」内の設定で上げられます。（その場合、短期の復習の負担が増えますのでご注意ください。）</string>
+  <string name="studyoptions_congrats_finished">おめでとうございます！ 今日の目標を達成しました</string>
+  <string name="studyoptions_congrats_more_rev">予定日に達した復習カードがまだ他にも残っていますが、一日あたりの復習カード枚数の上限に達しています。上限は「単語帳オプション」内の設定で上げられます。</string>
+  <string name="studyoptions_congrats_more_new">新規カードがまだ他にも残っていますが、一日あたりの新規カード枚数の上限に達しています。上限は「単語帳オプション」内の設定で上げられます。（ただしそれに伴って短期的に学習の負担が増えますのでご注意ください。）</string>
   <string name="studyoptions_congrats_custom">通常のスケジュール以外で学習するには、「カスタム学習」ボタンをタップしてください。</string>
+  <string name="studyoptions_no_cards_due">学習予定時刻に達したカードがまだありません</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">明日は %1$d 枚の復習カードがあります。%2$s.\n 必要な時間　%3$s</item>
     <item quantity="other">明日は %1$d 枚のカードがあります。そして復習カードは %2$s.\n 必要な時間は%3$s</item>
@@ -158,8 +160,8 @@
     <item quantity="other">%1$d枚の新カード</item>
   </plurals>
   <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">推定時間: %1$d 分</item>
-    <item quantity="other">推定時間: %1$d 分</item>
+    <item quantity="one">推定学習時間: %1$d 分</item>
+    <item quantity="other">推定学習時間: %1$d 分</item>
   </plurals>
   <string name="sd_card_not_mounted">外部SDカードが見つかりません\n\n内部メモリーにコレクションを格納できますが、簡単にアクセスできませんので、お勧めできません。内部メモリーは環境設定でアクティブにすることができます。(このテキストをタップして環境設定を開きます)</string>
   <string name="studyoptions_options">オプション</string>
@@ -180,17 +182,16 @@
   <string name="pc">PC</string>
   <string name="nothing">Nothing</string>
   <string name="title_activity_graphical_activity">統計グラフ</string>
-  <string name="title_activity_template_editor">Card Types for %s</string>
-  <string name="card_template_editor_front">Front Template</string>
-  <string name="card_template_editor_back">Back Template</string>
-  <string name="card_template_editor_styling">Styling</string>
-  <string name="card_template_editor_menu_add_reverse">Add reverse</string>
-  <string name="card_template_editor_menu_delete">Delete</string>
-  <string name="card_template_editor_cant_delete">At least one card type is required.</string>
+  <string name="title_activity_template_editor">%sのカードタイプ</string>
+  <string name="card_template_editor_front">表面のテンプレート</string>
+  <string name="card_template_editor_back">裏面のテンプレート</string>
+  <string name="card_template_editor_styling">書式</string>
+  <string name="card_template_editor_menu_add_reverse">裏面カードを追加する</string>
+  <string name="card_template_editor_menu_delete">削除</string>
+  <string name="card_template_editor_cant_delete">カードは少なくとも１種類必要です。</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
-    <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
+    <item quantity="one">カードタイプ \'%2$s\' とそのカード  %1$d 枚を削除しますか？</item>
+    <item quantity="other">カードタイプ \'%2$s\' とそのカード %1$d 枚を削除しますか？</item>
   </plurals>
-  <string name="card_template_editor_would_delete_note"> Removing this card type would cause one or
-        more notes to be deleted. Please create a new card type first.</string>
+  <string name="card_template_editor_would_delete_note">このカードタイプを削除すると、一つ以上のノートも削除することになります。まずは新しいカードタイプを追加してください。</string>
 </resources>

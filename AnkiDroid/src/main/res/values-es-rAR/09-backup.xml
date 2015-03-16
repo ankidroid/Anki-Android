@@ -66,6 +66,8 @@
   <string name="backup_restore_select_title">Seleccione copia de seguridad para restaurar</string>
   <string name="backup_restore_no_backups">No hay copias de seguridad para esta colección disponibles en este dispositivo. Si tiene copias de seguridad en su computadora de escritorio por favor cópielas manualmente al directorio de AnkiDroid</string>
   <string name="open_collection_failed_title">La colección no fue abierta</string>
-  <string name="open_collection_failed_message">La base de datos no pudo ser abierta. O no se trata de una base de datos propia de Anki o bien ha sido corrompida.\n\nPuede intentar reparar la colección o restaurarla desde una copia de seguridad (en ambos casos la copia del mazo corrupto será movida al subdirectorio \'%1$s\'). Haga click en \'opciones\' para ello.\n\nMás información acerca de la reparación de mazos corruptos: %2$s.</string>
+  <string name="open_collection_failed_message">La base de datos no pudo ser abierta. O bien no se trata de una base de datos real de Anki o la misma ha sido corrompida.\n\nToque \'opciones\' para varias opciones de restauración de la base de datos, o para más información sobre sobre reparación de colecciones corruptas vea:\n%1$s</string>
+  <string name="corrupt_db_message">Desafortunadamente su colección se ha corrompido.\n\nToque \'opciones\' para restaurarla desde una copia de seguridad, o si eso no funciona revisa las siguientes instrucciones para repararla manualmente:\n%1$s</string>
+  <string name="access_collection_failed_message">Ocurrió un error al acceder a su colección. Pudo haber sido causado por un error inofensivo, o podría haber un problema con ella.\n\nIntente ejecutar la verificación de su base de datos o restaurarla desde una copia de seguridad presionando el botón \'opciones\'. Si continúa viendo este mensaje, por favor cree un informe de error:\n%1$s</string>
   <string name="deck_repair_error">La colección no pudo ser reparada</string>
 </resources>

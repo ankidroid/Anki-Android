@@ -84,10 +84,10 @@
   <string-array name="gestures_labels">
     <item>Keine Aktion</item>
     <item>Antwort zeigen</item>
-    <item>Antwort-Schaltfläche 1</item>
-    <item>Antwort-Schaltfläche 2</item>
-    <item>Antwort-Schaltfläche 3</item>
-    <item>Antwort-Schaltfläche 4</item>
+    <item>Antwortschaltfläche 1</item>
+    <item>Antwortschaltfläche 2</item>
+    <item>Antwortschaltfläche 3</item>
+    <item>Antwortschaltfläche 4</item>
     <item>Empfohlene Antwort (grün)</item>
     <item>Antwort besser als empfohlen</item>
     <item>Rückgängig</item>
