@@ -1177,7 +1177,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     protected long getParentDid() {
         long deckID;
         try {
-            deckID = mSched.getCol().getDecks().current().getLong("id");
+            deckID = AnkiDroidApp.getCol().getDecks().current().getLong("id");
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -1232,7 +1232,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
 
     protected void undo() {
-        if (mSched.getCol().undoAvailable()) {
+        if (AnkiDroidApp.getCol().undoAvailable()) {
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
                 mProgressDialog.setMessage(getResources().getString(R.string.saving_changes));
             } else {

@@ -507,8 +507,12 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
             finish();
             return;
         }
-        mDeck = mCol.getDecks().current();
-
+        Bundle extras = getIntent().getExtras();
+        if (extras != null && extras.containsKey("did")) {
+            mDeck = mCol.getDecks().get(extras.getLong("did"));
+        } else {
+            mDeck = mCol.getDecks().current();
+        }
         registerExternalStorageListener();
 
         if (mCol == null) {

@@ -548,9 +548,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 return data;
             } else {
                 data.success = true;
-                Object[] dc = col.getSched().deckCounts();
-                data.result = dc[0];
-                data.data = new Object[] { conflictResolution, col, dc[1], dc[2], mediaError };
+                data.data = new Object[] { conflictResolution, col, mediaError };
                 return data;
             }
         } catch (UnknownHttpResponseException e) {
