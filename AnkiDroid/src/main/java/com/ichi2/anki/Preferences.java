@@ -186,11 +186,10 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         collectionPathPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
             public boolean onPreferenceChange(Preference preference, final Object newValue) {
                 final String newPath = (String) newValue;
-                try {
-                    AnkiDroidApp.initializeAnkiDroidDirectory(newPath);
+                if (AnkiDroidApp.isAnkiDroidDirAccessible(newPath)) {
                     return true;
-                } catch (StorageAccessException e) {
-                    Timber.e(e, "Could not initialize directory: %s", newPath);
+                } else {
+                    Timber.e("Could not initialize directory: %s", newPath);
                     Toast.makeText(getApplicationContext(), R.string.dialog_collection_path_not_dir, Toast.LENGTH_LONG).show();
                     return false;
                 }

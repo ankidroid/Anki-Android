@@ -19,7 +19,6 @@ package com.ichi2.anki.tests;
 import android.content.Context;
 
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.BackupManager;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Storage;
 
@@ -31,12 +30,13 @@ import java.io.IOException;
  */
 public class Shared {
 
-    public static Collection getEmptyCol() throws IOException {
+    public static Collection getEmptyCol(Context context) throws IOException {
         File f = File.createTempFile("test", ".anki2");
         // Provide a string instead of an actual File. Storage.Collection won't populate the DB
         // if the file already exists (it assumes it's an existing DB).
         String path = f.getAbsolutePath();
         f.delete();
+        AnkiDroidApp.initializeHooks(context);
         return Storage.Collection(path);
     }
 

@@ -158,7 +158,7 @@ public class AnkiDroidApp extends Application {
     public static boolean sDatabaseCorruptFlag = false;
 
     /** Global hooks */
-    private Hooks mHooks;
+    private static Hooks sHooks;
 
     /** Compatibility interface, Used to perform operation in a platform specific way. */
     private Compat mCompat;
@@ -239,7 +239,6 @@ public class AnkiDroidApp extends Application {
         }
 
         sInstance = this;
-        sInstance.mHooks = new Hooks(preferences);
         setLanguage(preferences.getString(Preferences.LANGUAGE, ""));
 
         // Configure WebView to allow file scheme pages to access cookies.
@@ -361,7 +360,7 @@ public class AnkiDroidApp extends Application {
      * @param path  Directory to initialize
      * @throws StorageAccessException If no write access to directory
      */
-    public static void initializeAnkiDroidDirectory(String path) throws StorageAccessException {
+    private static synchronized void initializeAnkiDroidDirectory(String path) throws StorageAccessException {
         // Create specified directory if it doesn't exit
         File dir = new File(path);
         if (!dir.exists() && !dir.mkdirs()) {
@@ -381,6 +380,12 @@ public class AnkiDroidApp extends Application {
         }
     }
 
+    /**
+     * Initialize the hooks instance
+     */
+    public static void initializeHooks(Context context) {
+        sHooks = new Hooks(getSharedPrefs(context));
+    }
 
     public static Resources getAppResources() {
         return sInstance.getResources();
@@ -391,13 +396,15 @@ public class AnkiDroidApp extends Application {
         return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
     }
 
+
     /**
-     * Try to access the current AnkiDroid directory
+     * Try to access the provided AnkiDroid directory
+     * @param path
      * @return whether or not dir is accessible
      */
-    public static boolean isCurrentAnkiDroidDirAccessible() {
+    public static boolean isAnkiDroidDirAccessible(String path) {
         try {
-            initializeAnkiDroidDirectory(getCurrentAnkiDroidDirectory());
+            initializeAnkiDroidDirectory(path);
             return true;
         } catch (StorageAccessException e) {
             return false;
@@ -491,7 +498,7 @@ public class AnkiDroidApp extends Application {
 
 
     public static Hooks getHooks() {
-        return sInstance.mHooks;
+        return sHooks;
     }
 
 
@@ -523,8 +530,21 @@ public class AnkiDroidApp extends Application {
 
 
     public static synchronized Collection openCollection(String path, boolean force) {
-        mLock.lock();
         Timber.i("openCollection: %s", path);
+        /* Create the AnkiDroid directory and hooks if missing, returning null if not.
+            The collection needs to be initialized here as there can be multiple entry-points
+            to the program -- for example via the ContentProvider and MediaTest -- which can bypass
+            the AnkiDroidApp.onCreate() method
+         */
+        try {
+            initializeAnkiDroidDirectory(new File(path).getParentFile().getAbsolutePath());
+        } catch (StorageAccessException e) {
+            Timber.e(e, "Could not initialize AnkiDroid directory: %s", path);
+            return null;
+        }
+        initializeHooks(sInstance);
+        // Open the collection in a thread-safe way
+        mLock.lock();
         try {
             if (!colIsOpen() || !sInstance.mCurrentCollection.getPath().equals(path) || force) {
                 if (colIsOpen()) {
