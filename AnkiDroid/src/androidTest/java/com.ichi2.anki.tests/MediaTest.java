@@ -38,15 +38,7 @@ import com.ichi2.utils.*;
  */
 public class MediaTest extends AndroidTestCase {
     public void testAdd() throws IOException, APIVersionException {
-        // Hack to wait for the main application to be initialized since it runs in a different thread
-        while (AnkiDroidApp.getInstance() == null || AnkiDroidApp.getHooks() == null) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                // do nothing
-            }
-        }
-        Collection d = Shared.getEmptyCol();
+        Collection d = Shared.getEmptyCol(mContext);
         File dir = Shared.getTestDir(mContext);
         BackupManager.removeDir(dir);
         dir.mkdirs();
@@ -69,7 +61,7 @@ public class MediaTest extends AndroidTestCase {
 
 
     public void testStrings() throws IOException {
-        Collection d = Shared.getEmptyCol();
+        Collection d = Shared.getEmptyCol(mContext);
         Long mid = d.getModels().getModels().entrySet().iterator().next().getKey();
         List<String> expected;
         List<String> actual;
@@ -123,7 +115,7 @@ public class MediaTest extends AndroidTestCase {
     }
 
     public void testDeckIntegration() throws IOException, APIVersionException {
-        Collection d = Shared.getEmptyCol();
+        Collection d = Shared.getEmptyCol(mContext);
         // create a media dir
         d.getMedia().dir();
         // Put a file into it
@@ -171,7 +163,7 @@ public class MediaTest extends AndroidTestCase {
     }
 
     public void testChanges() throws IOException, APIVersionException {
-        Collection d = Shared.getEmptyCol();
+        Collection d = Shared.getEmptyCol(mContext);
         assertTrue(d.getMedia()._changed() != null);
         assertTrue(added(d).size() == 0);
         assertTrue(removed(d).size() == 0);
@@ -210,7 +202,7 @@ public class MediaTest extends AndroidTestCase {
 
 
     public void testIllegal() throws IOException {
-        Collection d = Shared.getEmptyCol();
+        Collection d = Shared.getEmptyCol(mContext);
         String aString = "a:b|cd\\e/f\0g*h";
         String good = "abcdefgh";
         assertTrue(d.getMedia().stripIllegal(aString).equals(good));

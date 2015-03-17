@@ -781,15 +781,16 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
 
     private void showStartupScreensAndDialogs(SharedPreferences preferences, int skip) {
+        String mainDirectory = AnkiDroidApp.getCurrentAnkiDroidDirectory();
         if (!AnkiDroidApp.isSdCardMounted()) {
             // SD Card not mounted
             showSdCardNotMountedDialog();
-        } else if (!AnkiDroidApp.isCurrentAnkiDroidDirAccessible()) {
+        } else if (!AnkiDroidApp.isAnkiDroidDirAccessible(mainDirectory)) {
             // AnkiDroid directory inaccessible
             Intent i = new Intent(this, Preferences.class);
             startActivityWithoutAnimation(i);
             Themes.showThemedToast(this, getResources().getString(R.string.directory_inaccessible), false);
-        } else if (!BackupManager.enoughDiscSpace(AnkiDroidApp.getCurrentAnkiDroidDirectory())) {
+        } else if (!BackupManager.enoughDiscSpace(mainDirectory)) {
             // Not enough space to do backup
             showDialogFragment(DeckPickerNoSpaceLeftDialog.newInstance());
         } else if (preferences.getBoolean("noSpaceLeft", false)) {
