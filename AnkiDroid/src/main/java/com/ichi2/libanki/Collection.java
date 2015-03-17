@@ -31,7 +31,7 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
-import com.samskivert.mustache.MustacheException;
+import com.ichi2.libanki.template.Template;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -49,7 +49,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import timber.log.Timber;
@@ -61,10 +60,6 @@ import timber.log.Timber;
 // This module manages the tag cache and tags for notes.
 
 public class Collection {
-
-    private static final String TEMPLATE_ERROR = "<div style='background-color:#f44; color:#fff;'>%s</div>%s"+
-                                                 "<br><br><code style='font-size:80%%'>%s</code><br><br>"+
-                                                 "%s: <b>%s</b><br>%s: <b>%s</b><br><br>%s";
 
     private AnkiDb mDb;
     private boolean mServer;
@@ -955,15 +950,14 @@ public class Collection {
         // unpack fields and create dict
         String[] flist = Utils.splitFields((String) data[6]);
         Map<String, String> fields = new HashMap<String, String>();
-        long modelId = (Long) data[2];
-        int cardNum = ((Integer) data[4]) + 1;
-        JSONObject model = mModels.get(modelId);
+        JSONObject model = mModels.get((Long) data[2]);
         Map<String, Pair<Integer, JSONObject>> fmap = mModels.fieldMap(model);
-        for (String fname : fmap.keySet()) {
-            fields.put(fname, flist[fmap.get(fname).first]);
+        for (String name : fmap.keySet()) {
+            fields.put(name, flist[fmap.get(name).first]);
         }
-        fields.put("Tags", ((String)data[5]).trim());
         try {
+            int cardNum = ((Integer) data[4]) + 1;
+            fields.put("Tags", ((String) data[5]).trim());
             fields.put("Type", (String) model.get("name"));
             fields.put("Deck", mDecks.name((Long) data[3]));
             String[] parents = fields.get("Deck").split("::");
@@ -975,68 +969,35 @@ public class Collection {
                 template = model.getJSONArray("tmpls").getJSONObject(0);
             }
             fields.put("Card", template.getString("name"));
-            fields.put("c" + cardNum, "1");
-
+            fields.put(String.format(Locale.US, "c%d", cardNum), "1");
             // render q & a
             HashMap<String, String> d = new HashMap<String, String>();
-            try {
-                d.put("id", Long.toString((Long) data[0]));
-                if (qfmt==null || qfmt.equals("")){qfmt = template.getString("qfmt");}
-                if (afmt==null || afmt.equals("")){afmt = template.getString("afmt");}
-                String html;
-                String format;
-
-                // runFilter mungeFields for type "q"
-                Models.fieldParser fparser = new Models.fieldParser(fields);
-                Matcher m = fClozePatternQ.matcher(qfmt);
-                format = m.replaceAll(String.format(Locale.US, "{{$1cq-%d:", cardNum));
-                m = fClozeTagStart.matcher(format);
-                format = m.replaceAll(String.format(Locale.US, "<%%cq:%d:", cardNum));
-                html = mModels.getCmpldTemplate(format).execute(fparser);
-                html = (String) AnkiDroidApp.getHooks().runFilter("mungeQA", html, "q", fields, model, data, this);
-                d.put("q", html);
+            d.put("id", Long.toString((Long) data[0]));
+            qfmt = TextUtils.isEmpty(qfmt) ? template.getString("qfmt") : qfmt;
+            afmt = TextUtils.isEmpty(afmt) ? template.getString("afmt") : afmt;
+            for (Pair<String, String> p : new Pair[]{new Pair<String, String>("q", qfmt), new Pair<String, String>("a", afmt)}) {
+                String type = p.first;
+                String format = p.second;
+                if (type.equals("q")) {
+                    format = fClozePatternQ.matcher(format).replaceAll(String.format(Locale.US, "{{$1cq-%d:", cardNum));
+                    format = fClozeTagStart.matcher(format).replaceAll(String.format(Locale.US, "<%%cq:%d:", cardNum));
+                } else {
+                    format = fClozePatternA.matcher(format).replaceAll(String.format(Locale.US, "{{$1ca-%d:", cardNum));
+                    format = fClozeTagStart.matcher(format).replaceAll(String.format(Locale.US, "<%%ca:%d:", cardNum));
+                    // the following line differs from libanki // TODO: why?
+                    fields.put("FrontSide", d.get("q")); // fields.put("FrontSide", mMedia.stripAudio(d.get("q")));
+                }
+                fields = (Map<String, String>) AnkiDroidApp.getHooks().runFilter("mungeFields", fields, model, data, this);
+                String html = new Template(format, fields).render();
+                d.put(type, (String) AnkiDroidApp.getHooks().runFilter("mungeQA", html, type, fields, model, data, this));
                 // empty cloze?
-                if (model.getInt("type") == Consts.MODEL_CLOZE) {
+                if (type.equals("q") && model.getInt("type") == Consts.MODEL_CLOZE) {
                     if (getModels()._availClozeOrds(model, (String) data[6], false).size() == 0) {
-                        d.put("q", "Please edit this note and add some cloze deletions.");
+                        String link = String.format("<a href=%s#cloze>%s</a>", Consts.HELP_SITE, "help");
+                        d.put("q", String.format("Please edit this note and add some cloze deletions. (%s)", link));
                     }
                 }
-
-                // the following line differs from inherited libanki (original in comment)
-                fields.put("FrontSide", d.get("q")); // fields.put("FrontSide", mMedia.stripAudio(d.get("q")));
-
-                // runFilter mungeFields for type "a"
-                fparser = new Models.fieldParser(fields);
-                m = fClozePatternA.matcher(afmt);
-                format = m.replaceAll(String.format(Locale.US, "{{$1ca-%d:", cardNum));
-                m = fClozeTagStart.matcher(format);
-                format = m.replaceAll(String.format(Locale.US, "<%%ca:%d:", cardNum));
-                html = mModels.getCmpldTemplate(format).execute(fparser);
-                html = (String) AnkiDroidApp.getHooks().runFilter("mungeQA", html, "a", fields, model, data, this);
-                d.put("a", html);
-                // empty cloze?
-                if (model.getInt("type") == Consts.MODEL_CLOZE) {
-                    if (getModels()._availClozeOrds(model, (String) data[6], false).size() == 0) {
-                        d.put("q",
-                                AnkiDroidApp.getAppResources().getString(
-                                        com.ichi2.anki.R.string.empty_cloze_warning,
-                                        "<a href=" + Consts.HELP_SITE + "#cloze>" +
-                                        AnkiDroidApp.getAppResources().getString(
-                                                com.ichi2.anki.R.string.help_cloze) + "</a>"));
-                    }
-                }
-            } catch (MustacheException e) {
-                Resources res = AnkiDroidApp.getAppResources();
-
-                String templateError = String.format(TEMPLATE_ERROR, res.getString(R.string.template_error),
-                        res.getString(R.string.template_error_detail), e.getMessage(),
-                        res.getString(R.string.note_type), model.getString("name"),
-                        res.getString(R.string.card_type), template.getString("name"),
-                        res.getString(R.string.template_error_fix));
-                d.put("q", templateError);
-                d.put("a", templateError);
             }
-
             return d;
         } catch (JSONException e) {
             throw new RuntimeException(e);
