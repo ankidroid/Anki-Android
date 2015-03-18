@@ -20,7 +20,6 @@ package com.ichi2.anki;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -70,7 +69,8 @@ public class Info extends ActionBarActivity {
 
         webView = (WebView) findViewById(R.id.info);
         // TODO This is working for me, but does res.getColor expect the kind  of value returned by getBackgroundColor()
-        webView.setBackgroundColor(Color.WHITE); // TODO
+//        webView.setBackgroundColor(Color.WHITE); // TODO
+        webView.setBackgroundColor(res.getColor(Themes.getBackgroundColor()));
 //        Themes.setWallpaper((View) webView.getParent().getParent().getParent());
 
         TextView termsAndConditionsView = (TextView) findViewById(R.id.info_terms_and_conditions);
