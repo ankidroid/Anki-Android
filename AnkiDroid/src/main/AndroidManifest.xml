@@ -24,6 +24,11 @@
     android:versionCode="20500000"
     android:versionName="2.5dev" >
 
+    <!-- Add a minSdk of 16 for UI testing -->
+    <uses-sdk android:minSdkVersion="16"
+        android:targetSdkVersion="21"
+        android:maxSdkVersion="21" />
+
     <!--
         The version number is of the form:
           <major>.<minor>.<maintenance>[dev|alpha<build>|beta<build>|]

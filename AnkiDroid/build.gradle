@@ -6,8 +6,8 @@ android {
 
     defaultConfig {
         applicationId "com.ichi2.anki_themes"
-        minSdkVersion 7
-        targetSdkVersion 21
+        minSdkVersion 16
+        targetSdkVersion 19
         testApplicationId "com.ichi2.anki.tests"
     }
     signingConfigs {
