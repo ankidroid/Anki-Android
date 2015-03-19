@@ -926,7 +926,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         if (col != null) {
             onCollectionLoaded(col);
         } else {
-            AnkiDatabaseManager.closeDatabase(AnkiDroidApp.getCollectionPath());
+            AnkiDatabaseManager.closeDatabase(AnkiDroidApp.getCollectionPath(getActivity()));
             //showDialog(DIALOG_LOAD_FAILED);
         }
     }

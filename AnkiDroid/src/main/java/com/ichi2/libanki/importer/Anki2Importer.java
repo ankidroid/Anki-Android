@@ -107,7 +107,7 @@ public class Anki2Importer {
         publishProgress(false, 0, 0, false);
         try {
             // extract the deck from the zip file
-            String tempDir = AnkiDroidApp.getCurrentAnkiDroidDirectory() + "/tmpzip";
+            String tempDir = AnkiDroidApp.getCurrentAnkiDroidDirectory(AnkiDroidApp.getInstance()) + "/tmpzip";
             // from anki2.py
             String colFile = tempDir + "/collection.anki2";
             if (!Utils.unzipFiles(mZip, tempDir, new String[] { "collection.anki2", "media" }, null)

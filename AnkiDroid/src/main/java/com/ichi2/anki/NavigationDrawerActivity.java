@@ -153,7 +153,7 @@ public class NavigationDrawerActivity extends AnkiActivity {
 
                 break;
             case DRAWER_SETTINGS:
-                mOldColPath = AnkiDroidApp.getCurrentAnkiDroidDirectory();
+                mOldColPath = AnkiDroidApp.getCurrentAnkiDroidDirectory(getApplicationContext());
                 startActivityForResultWithAnimation(new Intent(this, Preferences.class), REQUEST_PREFERENCES_UPDATE, ActivityTransitionAnimation.LEFT);
                 break;
             
@@ -306,7 +306,7 @@ public class NavigationDrawerActivity extends AnkiActivity {
         AnkiDroidApp.setLanguage(preferences.getString(Preferences.LANGUAGE, ""));
         // Restart the activity on preference change
         if (requestCode == REQUEST_PREFERENCES_UPDATE) {
-            if (mOldColPath!=null && AnkiDroidApp.getCurrentAnkiDroidDirectory().equals(mOldColPath)) {
+            if (mOldColPath!=null && AnkiDroidApp.getCurrentAnkiDroidDirectory(getApplicationContext()).equals(mOldColPath)) {
                 // collection path hasn't been changed so just restart the current activity
                 if ((this instanceof Reviewer) && preferences.getBoolean("tts", false)) {
                     // Workaround to kick user back to StudyOptions after opening settings from Reviewer

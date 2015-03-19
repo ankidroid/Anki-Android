@@ -246,7 +246,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
 
             case DIALOG_RESTORE_BACKUP:
                 // Allow user to restore one of the backups
-                File[] files = BackupManager.getBackups(new File(AnkiDroidApp.getCollectionPath()));
+                File[] files = BackupManager.getBackups(new File(AnkiDroidApp.getCollectionPath(getActivity())));
                 mBackups = new File[files.length];
                 for (int i = 0; i < files.length; i++) {
                     mBackups[i] = files[files.length - 1 - i];
@@ -302,7 +302,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 AnkiDroidApp.closeCollection(false);
-                                String path = AnkiDroidApp.getCollectionPath();
+                                String path = AnkiDroidApp.getCollectionPath(getActivity());
                                 AnkiDatabaseManager.closeDatabase(path);
                                 if (BackupManager.moveDatabaseToBrokenFolder(path, false)) {
                                     ((DatabaseErrorDialogListener) getActivity()).startLoadingCollection();

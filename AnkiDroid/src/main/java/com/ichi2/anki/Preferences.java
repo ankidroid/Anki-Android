@@ -623,7 +623,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 builder.setTitle(res.getString(R.string.fix_hebrew_text));
                 builder.setCancelable(false);
                 builder.setMessage(res.getString(R.string.fix_hebrew_instructions,
-                        AnkiDroidApp.getCurrentAnkiDroidDirectory()));
+                        AnkiDroidApp.getCurrentAnkiDroidDirectory(getApplicationContext())));
                 builder.setNegativeButton(R.string.dialog_cancel, null);
                 builder.setPositiveButton(res.getString(R.string.fix_hebrew_download_font), new OnClickListener() {
                     @Override

@@ -64,7 +64,7 @@ public class ImportDialog extends DialogFragment {
             case DIALOG_IMPORT_HINT:
                 // Instruct the user that they need to put their APKG files into the AnkiDroid directory
                 builder.setTitle(res.getString(R.string.import_title));
-                builder.setMessage(res.getString(R.string.import_hint, AnkiDroidApp.getCurrentAnkiDroidDirectory()));
+                builder.setMessage(res.getString(R.string.import_hint, AnkiDroidApp.getCurrentAnkiDroidDirectory(getActivity())));
                 builder.setPositiveButton(res.getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -78,7 +78,7 @@ public class ImportDialog extends DialogFragment {
                 // Allow user to choose from the list of available APKG files
                 builder.setTitle(res.getString(R.string.import_select_title));
                 StyledDialog dialog = builder.create();
-                List<File> fileList = Utils.getImportableDecks();
+                List<File> fileList = Utils.getImportableDecks(getActivity());
                 if (fileList.size() == 0) {
                     Themes.showThemedToast(getActivity(),
                             getResources().getString(R.string.upgrade_import_no_file_found, "'.apkg'"), false);

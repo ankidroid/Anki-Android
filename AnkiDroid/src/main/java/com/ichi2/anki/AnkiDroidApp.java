@@ -146,8 +146,8 @@ public class AnkiDroidApp extends Application {
      * Singleton instance of this class.
      */
     private static AnkiDroidApp sInstance;
-    private Collection mCurrentCollection;
-    private int mAccessThreadCount = 0;
+    private static Collection sCurrentCollection;
+    private static int sAccessThreadCount = 0;
     private static final Lock mLock = new ReentrantLock();
     private static Message sStoredDialogHandlerMessage;
 
@@ -158,7 +158,7 @@ public class AnkiDroidApp extends Application {
     public static boolean sDatabaseCorruptFlag = false;
 
     /** Global hooks */
-    private Hooks mHooks;
+    private static Hooks sHooks;
 
     /** Compatibility interface, Used to perform operation in a platform specific way. */
     private Compat mCompat;
@@ -239,7 +239,6 @@ public class AnkiDroidApp extends Application {
         }
 
         sInstance = this;
-        sInstance.mHooks = new Hooks(preferences);
         setLanguage(preferences.getString(Preferences.LANGUAGE, ""));
 
         // Configure WebView to allow file scheme pages to access cookies.
@@ -256,7 +255,7 @@ public class AnkiDroidApp extends Application {
 
         // Create the AnkiDroid directory if missing. Send exception report if inaccessible.
         try {
-            initializeAnkiDroidDirectory(getCurrentAnkiDroidDirectory());
+            initializeAnkiDroidDirectory(getCurrentAnkiDroidDirectory(this));
         } catch (StorageAccessException e) {
             Timber.e(e, "Could not initialize AnkiDroid directory");
             if (isSdCardMounted()) {
@@ -323,8 +322,8 @@ public class AnkiDroidApp extends Application {
     }
 
 
-    public static String getCollectionPath() {
-        return new File(getCurrentAnkiDroidDirectory(), COLLECTION_FILENAME).getAbsolutePath();
+    public static String getCollectionPath(Context context) {
+        return new File(getCurrentAnkiDroidDirectory(context), COLLECTION_FILENAME).getAbsolutePath();
     }
 
     /**
@@ -340,8 +339,8 @@ public class AnkiDroidApp extends Application {
     /**
      * Get the absolute path to the AnkiDroid directory.
      */
-    public static String getCurrentAnkiDroidDirectory() {
-        SharedPreferences prefs = getSharedPrefs(sInstance.getApplicationContext());
+    public static String getCurrentAnkiDroidDirectory(Context context) {
+        SharedPreferences prefs = getSharedPrefs(context);
         return prefs.getString("deckPath", getDefaultAnkiDroidDirectory());
     }
 
@@ -395,9 +394,9 @@ public class AnkiDroidApp extends Application {
      * Try to access the current AnkiDroid directory
      * @return whether or not dir is accessible
      */
-    public static boolean isCurrentAnkiDroidDirAccessible() {
+    public static boolean isCurrentAnkiDroidDirAccessible(Context context) {
         try {
-            initializeAnkiDroidDirectory(getCurrentAnkiDroidDirectory());
+            initializeAnkiDroidDirectory(getCurrentAnkiDroidDirectory(context));
             return true;
         } catch (StorageAccessException e) {
             return false;
@@ -491,7 +490,7 @@ public class AnkiDroidApp extends Application {
 
 
     public static Hooks getHooks() {
-        return sInstance.mHooks;
+        return sHooks;
     }
 
 
@@ -517,29 +516,32 @@ public class AnkiDroidApp extends Application {
     }
 
 
-    public static synchronized Collection openCollection(String path) {
-        return openCollection(path, false);
+    public static synchronized Collection openCollection(Context context, String path) {
+        return openCollection(context, path, false);
     }
 
 
-    public static synchronized Collection openCollection(String path, boolean force) {
+    public static synchronized Collection openCollection(Context context, String path, boolean force) {
         mLock.lock();
         Timber.i("openCollection: %s", path);
+        if (sHooks == null) {
+            sHooks = new Hooks(getSharedPrefs(context));
+        }
         try {
-            if (!colIsOpen() || !sInstance.mCurrentCollection.getPath().equals(path) || force) {
+            if (!colIsOpen() || !sCurrentCollection.getPath().equals(path) || force) {
                 if (colIsOpen()) {
                     // close old collection prior to opening new one
-                    sInstance.mCurrentCollection.close();
-                    sInstance.mAccessThreadCount = 0;
+                    sCurrentCollection.close();
+                    sAccessThreadCount = 0;
                 }
-                sInstance.mCurrentCollection = Storage.Collection(path, false, true);
-                sInstance.mAccessThreadCount++;
+                sCurrentCollection = Storage.Collection(path, false, true);
+                sAccessThreadCount++;
                 Timber.d("Access to collection is requested: collection has been opened");
             } else {
-                sInstance.mAccessThreadCount++;
-                Timber.d("Access to collection is requested: collection has not been reopened (count: %d)", sInstance.mAccessThreadCount);
+                sAccessThreadCount++;
+                Timber.d("Access to collection is requested: collection has not been reopened (count: %d)", sAccessThreadCount);
             }
-            return sInstance.mCurrentCollection;
+            return sCurrentCollection;
         } finally {
             mLock.unlock();
         }
@@ -547,7 +549,7 @@ public class AnkiDroidApp extends Application {
 
 
     public static Collection getCol() {
-        return sInstance.mCurrentCollection;
+            return sCurrentCollection;
     }
 
 
@@ -555,13 +557,13 @@ public class AnkiDroidApp extends Application {
         mLock.lock();
         Timber.i("closeCollection");
         try {
-            if (sInstance.mAccessThreadCount > 0) {
-                sInstance.mAccessThreadCount--;
+            if (sAccessThreadCount > 0) {
+                sAccessThreadCount--;
             }
-            Timber.d("Access to collection has been closed: (count: %d)", sInstance.mAccessThreadCount);
-            if (sInstance.mAccessThreadCount == 0 && sInstance.mCurrentCollection != null) {
-                Collection col = sInstance.mCurrentCollection;
-                sInstance.mCurrentCollection = null;
+            Timber.d("Access to collection has been closed: (count: %d)", sAccessThreadCount);
+            if (sAccessThreadCount == 0 && sCurrentCollection != null) {
+                Collection col = sCurrentCollection;
+                sCurrentCollection = null;
                 col.close(save);
             }
         } finally {
@@ -572,9 +574,9 @@ public class AnkiDroidApp extends Application {
 
 
     public static boolean colIsOpen() {
-        return sInstance.mCurrentCollection != null && sInstance.mCurrentCollection.getDb() != null
-                && sInstance.mCurrentCollection.getDb().getDatabase() != null
-                && sInstance.mCurrentCollection.getDb().getDatabase().isOpen();
+        return sCurrentCollection != null && sCurrentCollection.getDb() != null
+                && sCurrentCollection.getDb().getDatabase() != null
+                && sCurrentCollection.getDb().getDatabase().isOpen();
     }
 
 

@@ -1112,7 +1112,7 @@ public class Utils {
 
     /** Returns a list of files for the installed custom fonts. */
     public static List<AnkiFont> getCustomFonts(Context context) {
-        String deckPath = AnkiDroidApp.getCurrentAnkiDroidDirectory();
+        String deckPath = AnkiDroidApp.getCurrentAnkiDroidDirectory(context);
         String fontsPath = deckPath + "/fonts/";
         File fontsDir = new File(fontsPath);
         int fontsCount = 0;
@@ -1158,8 +1158,8 @@ public class Utils {
 
 
     /** Returns a list of apkg-files. */
-    public static List<File> getImportableDecks() {
-        String deckPath = AnkiDroidApp.getCurrentAnkiDroidDirectory();
+    public static List<File> getImportableDecks(Context context) {
+        String deckPath = AnkiDroidApp.getCurrentAnkiDroidDirectory(context);
         File dir = new File(deckPath);
         int deckCount = 0;
         File[] deckList = null;
