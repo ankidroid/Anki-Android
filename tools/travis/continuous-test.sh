@@ -16,6 +16,7 @@ function start_emulator() {
       --force \
       --name test \
       --target $TARGET \
+      --sdcard 10M \
       --abi $ABI
   emulator -avd test -no-skin -no-audio -no-window -gpu off &
 }
