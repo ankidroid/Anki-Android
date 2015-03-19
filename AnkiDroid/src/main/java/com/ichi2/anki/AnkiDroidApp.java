@@ -522,11 +522,17 @@ public class AnkiDroidApp extends Application {
 
 
     public static synchronized Collection openCollection(Context context, String path, boolean force) {
-        mLock.lock();
         Timber.i("openCollection: %s", path);
         if (sHooks == null) {
             sHooks = new Hooks(getSharedPrefs(context));
         }
+        try {
+            initializeAnkiDroidDirectory(path);
+        } catch (StorageAccessException e) {
+            Timber.e(e, "Could not initialize AnkiDroid directory: %s", path);
+            return null;
+        }
+        mLock.lock();
         try {
             if (!colIsOpen() || !sCurrentCollection.getPath().equals(path) || force) {
                 if (colIsOpen()) {
