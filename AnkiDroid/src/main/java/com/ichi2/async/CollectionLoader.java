@@ -29,10 +29,9 @@ public class CollectionLoader extends AsyncTaskLoader<Collection> {
     @Override
     public Collection loadInBackground() {
         // load collection
-        Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
-        String colPath = AnkiDroidApp.getCollectionPath();
+        String colPath = AnkiDroidApp.getCollectionPath(getContext());
         try {
-            return AnkiDroidApp.openCollection(colPath);
+            return AnkiDroidApp.openCollection(getContext(), colPath);
         } catch (RuntimeException e) {
             Timber.e(e, "loadInBackground - RuntimeException on opening collection");
             AnkiDroidApp.sendExceptionReport(e, "CollectionLoader.loadInBackground");
@@ -62,7 +61,7 @@ public class CollectionLoader extends AsyncTaskLoader<Collection> {
             Timber.w("CollectionLoader.onStartLoading() -- sync in progress; don't load collection");
             return;
         }
-        String colPath = AnkiDroidApp.getCollectionPath();
+        String colPath = AnkiDroidApp.getCollectionPath(getContext());
         if (AnkiDroidApp.colIsOpen() && AnkiDroidApp.getCol() != null && AnkiDroidApp.getCol().getPath().equals(colPath)) {
             // deliver current path if open and valid
             Timber.d("CollectionLoader.onStartLoading() -- deliverResult as col already open");

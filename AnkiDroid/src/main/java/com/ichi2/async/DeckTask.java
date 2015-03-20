@@ -698,7 +698,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         // Try to reopen the collection if it's null
         if (!AnkiDroidApp.colIsOpen()) {
             Timber.e("doInBackgroundCheckDatabase :: collection not open, trying to reload");
-            AnkiDroidApp.openCollection(AnkiDroidApp.getCollectionPath());
+            AnkiDroidApp.openCollection(AnkiDroidApp.getInstance(), AnkiDroidApp.getCollectionPath(AnkiDroidApp.getInstance()));
             col = AnkiDroidApp.getCol();
             if (col == null) {
                 Timber.e("doInBackgroundCheckDatabase :: collection reload failed");
@@ -864,7 +864,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
 
         // extract the deck from the zip file
-        String fileDir = AnkiDroidApp.getCurrentAnkiDroidDirectory() + "/tmpzip";
+        String fileDir = AnkiDroidApp.getCurrentAnkiDroidDirectory(AnkiDroidApp.getInstance()) + "/tmpzip";
         File dir = new File(fileDir);
         if (dir.exists()) {
             BackupManager.removeDir(dir);
@@ -916,7 +916,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             BackupManager.performBackupInBackground(colPath, true);
         }
         // overwrite collection
-        colPath = AnkiDroidApp.getCollectionPath();
+        colPath = AnkiDroidApp.getCollectionPath(AnkiDroidApp.getInstance());
         File f = new File(colFile);
         if (!f.renameTo(new File(colPath))) {
             // Exit early if this didn't work
@@ -925,7 +925,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         int addedCount = -1;
         try {
             // open using force close of old collection, as background loader may have reopened the col
-            col = AnkiDroidApp.openCollection(colPath, true);
+            col = AnkiDroidApp.openCollection(AnkiDroidApp.getInstance(), colPath, true);
 
             // because users don't have a backup of media, it's safer to import new
             // data and rely on them running a media db check to get rid of any

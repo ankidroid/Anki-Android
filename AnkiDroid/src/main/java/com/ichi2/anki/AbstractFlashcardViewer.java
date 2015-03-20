@@ -2239,7 +2239,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
             if (SAVE_CARD_CONTENT) {
                 try {
-                    FileOutputStream f = new FileOutputStream(new File(AnkiDroidApp.getCurrentAnkiDroidDirectory(),
+                    FileOutputStream f = new FileOutputStream(new File(AnkiDroidApp.getCurrentAnkiDroidDirectory(getApplicationContext()),
                             "card.html"));
                     try {
                         f.write(mCardContent.toString().getBytes());
@@ -3036,7 +3036,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         @Override
         public Drawable getDrawable(String source) {
-            String path = AnkiDroidApp.getCurrentAnkiDroidDirectory() + "/collection.media/" + source;
+            String path = AnkiDroidApp.getCurrentAnkiDroidDirectory(getApplicationContext()) + "/collection.media/" + source;
             if ((new File(path)).exists()) {
                 Drawable d = Drawable.createFromPath(path);
                 d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight());

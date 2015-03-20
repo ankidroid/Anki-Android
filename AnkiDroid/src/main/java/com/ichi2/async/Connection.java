@@ -405,7 +405,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 return data;
             }
         }
-        String path = AnkiDroidApp.getCollectionPath();
+        String path = AnkiDroidApp.getCollectionPath(AnkiDroidApp.getInstance());
         try {
             AnkiDroidApp.sSyncInProgressFlag = true;
             HttpSyncer server = new RemoteServer(this, hkey);
@@ -455,13 +455,13 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                         if (ret == null) {
                             data.success = false;
                             data.result = new Object[] { "genericError" };
-                            AnkiDroidApp.openCollection(path);
+                            AnkiDroidApp.openCollection(AnkiDroidApp.getInstance(), path);
                             return data;
                         }
                         if (!ret[0].equals(HttpSyncer.ANKIWEB_STATUS_OK)) {
                             data.success = false;
                             data.result = ret;
-                            AnkiDroidApp.openCollection(path);
+                            AnkiDroidApp.openCollection(AnkiDroidApp.getInstance(), path);
                             return data;
                         }
                     } else if (conflictResolution.equals("download")) {
@@ -471,19 +471,19 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                         if (ret == null) {
                             data.success = false;
                             data.result = new Object[] { "genericError" };
-                            AnkiDroidApp.openCollection(path);
+                            AnkiDroidApp.openCollection(AnkiDroidApp.getInstance(), path);
                             return data;
                         }
                         if (!ret[0].equals("success")) {
                             data.success = false;
                             data.result = ret;
                             if (!colCorruptFullSync) {
-                                AnkiDroidApp.openCollection(path);
+                                AnkiDroidApp.openCollection(AnkiDroidApp.getInstance(), path);
                             }
                             return data;
                         }
                     }
-                    col = AnkiDroidApp.openCollection(path);
+                    col = AnkiDroidApp.openCollection(AnkiDroidApp.getInstance(), path);
                 } catch (OutOfMemoryError e) {
                     AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync-fullSync");
                     data.success = false;
@@ -579,7 +579,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             col.close(false);
             AnkiDroidApp.sSyncInProgressFlag = false;
             Timber.d("doInBackgroundSync -- reopening collection on outer finally statement");
-            AnkiDroidApp.openCollection(AnkiDroidApp.getCollectionPath());
+            AnkiDroidApp.openCollection(AnkiDroidApp.getInstance(), AnkiDroidApp.getCollectionPath(AnkiDroidApp.getInstance()));
         }
 
     }
@@ -749,7 +749,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
 
     private Payload doInBackgroundDownloadSharedDeck(Payload data) {
         String url = (String) data.data[0];
-        String colFilename = AnkiDroidApp.getCurrentAnkiDroidDirectory() + "/tmpImportFile.apkg";
+        String colFilename = AnkiDroidApp.getCurrentAnkiDroidDirectory(AnkiDroidApp.getInstance()) + "/tmpImportFile.apkg";
         URL fileUrl;
         URLConnection conn;
         InputStream cont = null;

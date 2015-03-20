@@ -189,7 +189,7 @@ public final class WidgetStatus {
             // } else {
             try {
                 if (sSmallWidgetStatus == null) {
-                    Collection col = AnkiDroidApp.openCollection(AnkiDroidApp.getCollectionPath());
+                    Collection col = AnkiDroidApp.openCollection(context, AnkiDroidApp.getCollectionPath(context));
                     mSmallWidgetStatus = col.getSched().progressToday(sDeckCounts, null, true);
                     AnkiDroidApp.closeCollection(false);
                 } else {

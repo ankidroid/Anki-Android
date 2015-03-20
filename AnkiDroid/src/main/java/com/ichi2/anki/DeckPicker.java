@@ -784,12 +784,12 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         if (!AnkiDroidApp.isSdCardMounted()) {
             // SD Card not mounted
             showSdCardNotMountedDialog();
-        } else if (!AnkiDroidApp.isCurrentAnkiDroidDirAccessible()) {
+        } else if (!AnkiDroidApp.isCurrentAnkiDroidDirAccessible(getApplicationContext())) {
             // AnkiDroid directory inaccessible
             Intent i = new Intent(this, Preferences.class);
             startActivityWithoutAnimation(i);
             Themes.showThemedToast(this, getResources().getString(R.string.directory_inaccessible), false);
-        } else if (!BackupManager.enoughDiscSpace(AnkiDroidApp.getCurrentAnkiDroidDirectory())) {
+        } else if (!BackupManager.enoughDiscSpace(AnkiDroidApp.getCurrentAnkiDroidDirectory(getApplicationContext()))) {
             // Not enough space to do backup
             showDialogFragment(DeckPickerNoSpaceLeftDialog.newInstance());
         } else if (preferences.getBoolean("noSpaceLeft", false)) {
@@ -830,7 +830,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             // Delete the media database made by any version before 2.3 beta due to upgrade errors.
             // It is rebuilt on the next sync or media check
             if (previous < 20300200) {
-                File mediaDb = new File(AnkiDroidApp.getCurrentAnkiDroidDirectory(), "collection.media.ad.db2");
+                File mediaDb = new File(AnkiDroidApp.getCurrentAnkiDroidDirectory(getApplicationContext()), "collection.media.ad.db2");
                 if (mediaDb.exists()) {
                     mediaDb.delete();
                 }
@@ -1045,7 +1045,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             @Override
             public void onCancelled() {
             }
-        }, new DeckTask.TaskData(AnkiDroidApp.getCol(), AnkiDroidApp.getCollectionPath()));
+        }, new DeckTask.TaskData(AnkiDroidApp.getCol(), AnkiDroidApp.getCollectionPath(getApplicationContext())));
     }
 
 

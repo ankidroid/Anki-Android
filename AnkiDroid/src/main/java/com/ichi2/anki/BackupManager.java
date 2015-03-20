@@ -16,6 +16,7 @@
 
 package com.ichi2.anki;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.StatFs;
 
@@ -80,8 +81,8 @@ public class BackupManager {
     }
 
 
-    private static File getBackupDirectory() {
-        File directory = new File(AnkiDroidApp.getCurrentAnkiDroidDirectory(), BACKUP_SUFFIX);
+    private static File getBackupDirectory(Context context) {
+        File directory = new File(AnkiDroidApp.getCurrentAnkiDroidDirectory(context), BACKUP_SUFFIX);
         if (!directory.isDirectory()) {
             directory.mkdirs();
         }
@@ -89,8 +90,8 @@ public class BackupManager {
     }
 
 
-    private static File getBrokenDirectory() {
-        File directory = new File(AnkiDroidApp.getCurrentAnkiDroidDirectory(), BROKEN_DECKS_SUFFIX);
+    private static File getBrokenDirectory(Context context) {
+        File directory = new File(AnkiDroidApp.getCurrentAnkiDroidDirectory(context), BROKEN_DECKS_SUFFIX);
         if (!directory.isDirectory()) {
             directory.mkdirs();
         }
@@ -156,7 +157,7 @@ public class BackupManager {
         }
 
         // Abort backup if destination already exists (extremely unlikely)
-        final File backupFile = new File(getBackupDirectory().getPath(), backupFilename);
+        final File backupFile = new File(getBackupDirectory(AnkiDroidApp.getInstance()).getPath(), backupFilename);
         if (backupFile.exists()) {
             Timber.d("performBackup: No new backup created. File already exists");
             return false;
@@ -281,14 +282,15 @@ public class BackupManager {
     public static boolean moveDatabaseToBrokenFolder(String colPath, boolean moveConnectedFilesToo) {
         File colFile = new File(colPath);
 
+        Context context = AnkiDroidApp.getInstance();
         // move file
         Date value = Utils.genToday(Utils.utcOffset());
         String movedFilename = String.format(Utils.ENGLISH_LOCALE, colFile.getName().replace(".anki2", "")
                 + "-corrupt-%tF.anki2", value);
-        File movedFile = new File(getBrokenDirectory().getPath(), movedFilename);
+        File movedFile = new File(getBrokenDirectory(context).getPath(), movedFilename);
         int i = 1;
         while (movedFile.exists()) {
-            movedFile = new File(getBrokenDirectory().getPath(), movedFilename.replace(".anki2",
+            movedFile = new File(getBrokenDirectory(context).getPath(), movedFilename.replace(".anki2",
                     "-" + Integer.toString(i) + ".anki2"));
             i++;
         }
@@ -303,7 +305,7 @@ public class BackupManager {
             File directory = new File(colFile.getParent());
             for (File f : directory.listFiles()) {
                 if (f.getName().startsWith(deckName)) {
-                    if (!f.renameTo(new File(getBrokenDirectory().getPath(), f.getName().replace(deckName,
+                    if (!f.renameTo(new File(getBrokenDirectory(context).getPath(), f.getName().replace(deckName,
                             movedFilename)))) {
                         return false;
                     }
@@ -315,7 +317,7 @@ public class BackupManager {
 
 
     public static File[] getBackups(File colFile) {
-        File[] files = getBackupDirectory().listFiles();
+        File[] files = getBackupDirectory(AnkiDroidApp.getInstance()).listFiles();
         if (files == null) {
             files = new File[0];
         }

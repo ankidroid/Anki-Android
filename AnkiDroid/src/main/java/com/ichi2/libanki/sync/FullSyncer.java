@@ -78,7 +78,7 @@ public class FullSyncer extends HttpSyncer {
         } catch (IOException e1) {
             return null;
         }
-        String path = AnkiDroidApp.getCollectionPath();
+        String path = AnkiDroidApp.getCollectionPath(AnkiDroidApp.getInstance());
         if (mCol != null) {
             mCol.close(false);
             mCol = null;
