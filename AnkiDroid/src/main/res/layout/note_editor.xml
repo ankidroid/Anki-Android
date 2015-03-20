@@ -26,7 +26,7 @@
                 android:gravity="left|center_vertical"
                 android:textColor="#000000"
                 android:textStyle="bold"
-                android:text="@string/CardEditorModel" />"
+                android:text="@string/CardEditorModel" />
             <Spinner
                 android:id="@+id/note_type_spinner"
                 android:layout_width="fill_parent"

@@ -165,7 +165,6 @@
                 android:id="@+id/answer_field"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/flip_card"
                 android:hint="@string/type_answer_hint"
                 android:imeOptions="actionDone"
                 android:inputType="text|textNoSuggestions" />
@@ -177,8 +176,7 @@
             <LinearLayout
                 android:id="@+id/answer_options_layout"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_alignParentBottom="true" >
+                android:layout_height="fill_parent" >
 
                 <LinearLayout
                     android:id="@+id/flashcard_layout_flip"

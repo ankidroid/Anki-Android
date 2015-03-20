@@ -1505,7 +1505,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     }
 
 
-    @SuppressLint("NewApi")
+    @SuppressLint({"NewApi", "SetJavaScriptEnabled"})
     // because of setDisplayZoomControls.
     private WebView createWebView() {
         WebView webView = new MyWebView(this);
