@@ -195,14 +195,30 @@ public class Reviewer extends AbstractFlashcardViewer {
         getMenuInflater().inflate(R.menu.reviewer, menu);
         Resources res = getResources();
         if (mCurrentCard != null && mCurrentCard.note().hasTag("marked")) {
-            menu.findItem(R.id.action_mark_card).setTitle(R.string.menu_unmark_card).setIcon(R.drawable.ic_menu_marked);
+            if (mNightMode) {
+                menu.findItem(R.id.action_mark_card).setTitle(R.string.menu_unmark_card).setIcon(R.drawable.ic_menu_marked_dark);
+            } else {
+                menu.findItem(R.id.action_mark_card).setTitle(R.string.menu_unmark_card).setIcon(R.drawable.ic_menu_marked);
+            }
         } else {
-            menu.findItem(R.id.action_mark_card).setTitle(R.string.menu_mark_card).setIcon(R.drawable.ic_menu_mark);
+            if (mNightMode) {
+                menu.findItem(R.id.action_mark_card).setTitle(R.string.menu_mark_card).setIcon(R.drawable.ic_menu_mark_dark);
+            }else {
+                menu.findItem(R.id.action_mark_card).setTitle(R.string.menu_mark_card).setIcon(R.drawable.ic_menu_mark);
+            }
         }
         if (colOpen() && getCol().undoAvailable()) {
-            menu.findItem(R.id.action_undo).setEnabled(true).setIcon(R.drawable.ic_menu_revert);
+            if (mNightMode) {
+                menu.findItem(R.id.action_undo).setEnabled(true).setIcon(R.drawable.ic_menu_revert_dark);
+            } else {
+                menu.findItem(R.id.action_undo).setEnabled(true).setIcon(R.drawable.ic_menu_revert);
+            }
         } else {
-            menu.findItem(R.id.action_undo).setEnabled(false).setIcon(R.drawable.ic_menu_revert_disabled);
+            if (mNightMode) {
+                menu.findItem(R.id.action_undo).setEnabled(false).setIcon(R.drawable.ic_menu_revert_disabled_dark);
+            } else {
+                menu.findItem(R.id.action_undo).setEnabled(false).setIcon(R.drawable.ic_menu_revert_disabled);
+            }
         }
         if (mPrefWhiteboard) {
             // Check if we can forceably squeeze in 3 items into the action bar, if not hide "show whiteboard"
@@ -223,12 +239,20 @@ public class Reviewer extends AbstractFlashcardViewer {
             menu.findItem(R.id.action_hide_whiteboard).setVisible(true);
             menu.findItem(R.id.action_clear_whiteboard).setVisible(true);
             if (mShowWhiteboard) {
+                if (mNightMode) {
+                    menu.findItem(R.id.action_hide_whiteboard).setIcon(R.drawable.ic_action_whiteboard_enable_dark);
+                } else {
+                    menu.findItem(R.id.action_hide_whiteboard).setIcon(R.drawable.ic_action_whiteboard_enable_light);
+                }
                 //menu.findItem(R.id.action_clear_whiteboard).setIcon(R.drawable.ic_whiteboard_clear_enabled);
-                menu.findItem(R.id.action_hide_whiteboard).setIcon(R.drawable.ic_action_whiteboard_enable_light);
                 menu.findItem(R.id.action_hide_whiteboard).setTitle(R.string.hide_whiteboard);
             } else {
-                //menu.findItem(R.id.action_clear_whiteboard).setIcon(R.drawable.ic_whiteboard_clear_disabled);
-                menu.findItem(R.id.action_hide_whiteboard).setIcon(R.drawable.ic_action_whiteboard_enable_light_disabled);
+                if (mNightMode) {
+                    menu.findItem(R.id.action_hide_whiteboard).setIcon(R.drawable.ic_action_whiteboard_enable_dark_disabled);
+                } else {
+                    menu.findItem(R.id.action_hide_whiteboard).setIcon(R.drawable.ic_action_whiteboard_enable_light_disabled);
+                }
+                    //menu.findItem(R.id.action_clear_whiteboard).setIcon(R.drawable.ic_whiteboard_clear_disabled);
                 menu.findItem(R.id.action_hide_whiteboard).setTitle(R.string.show_whiteboard);
             }
         } else {
@@ -240,9 +264,6 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
         return super.onCreateOptionsMenu(menu);
     }
-
-
-
 
     /*
      * Modify the options menu.

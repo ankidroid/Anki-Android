@@ -692,7 +692,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                 entries[CONTEXT_MENU_DELETE] = res.getString(R.string.card_browser_delete_card);
                 entries[CONTEXT_MENU_DETAILS] = res.getString(R.string.card_editor_preview_card);
                 builder.setTitle("contextmenu");
-                builder.setIcon(R.drawable.ic_menu_manage);
+                // No icon
                 builder.setItems(entries, mContextMenuListener);
                 dialog = builder.create();
                 break;
