@@ -28,7 +28,12 @@
         android:id="@+id/main_layout"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="?android:attr/colorBackground" >
+        android:paddingLeft="@dimen/standard_margins"
+        android:paddingRight="@dimen/standard_margins"
+        android:paddingBottom="@dimen/standard_margins"
+        >
+        <!--android:background="?android:attr/colorBackground"-->
+
 
         <!-- Top bar -->
 
@@ -37,9 +42,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="9dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="4dp"
-            android:background="?attr/backgroundElevatedColor"
+            android:layout_marginRight="@dimen/standard_margins"
+            android:layout_marginTop="@dimen/standard_margins"
             android:gravity="center_vertical" >
 
             <TextView
@@ -56,7 +60,6 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/new_number"
                 android:paddingLeft="8dp"
-                android:background="?attr/backgroundColor"
                 android:textColor="?attr/learnCountTextColor"
                 android:text=""
                 android:textSize="14sp"
@@ -70,7 +73,6 @@
                 android:paddingLeft="8dp"
                 android:text=""
                 android:textColor="?attr/reviewCountTextColor"
-                android:background="?attr/backgroundColor"
                 android:textSize="14sp" />
 
             <TextView
@@ -88,9 +90,11 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:gravity="center"
-                android:textColor="#000000"
+                android:textColor="?android:textColorPrimary"
                 android:textSize="14sp"
-                android:visibility="invisible" />
+                android:visibility="invisible"
+
+                />
         </RelativeLayout>
         <!-- Card and whiteboard -->
 
@@ -100,13 +104,15 @@
             android:layout_height="fill_parent"
             android:layout_above="@+id/bottom_area_layout"
             android:layout_below="@+id/top_bar"
-            android:layout_margin="0dip" >
+            android:paddingBottom="10dp"
+            >
 
             <FrameLayout
                 android:id="@+id/flashcard"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:padding="4.6667dip" />
+                />
+            <!--android:padding="5dip"-->
 
             <RelativeLayout
                 android:layout_width="fill_parent"
@@ -145,9 +151,11 @@
                 android:layout_gravity="right"
                 android:clickable="true"
                 android:padding="5dip"
-                android:src="?attr/ic_lookup"
+                android:src="@drawable/ic_lookup"
                 android:visibility="gone"
                 android:contentDescription="@string/lookup_button_content" />
+
+            <!-- switching ic_lookup to ?attr caused a crash. fix -->
 
             <FrameLayout
                 android:id="@+id/flashcard_border"
@@ -159,7 +167,7 @@
         <LinearLayout
             android:id="@+id/bottom_area_layout"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/answer_bar_height"
             android:layout_alignParentBottom="true"
             android:orientation="vertical" >
 
@@ -167,6 +175,8 @@
 
             <EditText
                 android:id="@+id/answer_field"
+                style="@style/BasicButtonStyle"
+
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/flip_card"
@@ -182,19 +192,23 @@
                 android:id="@+id/answer_options_layout"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
+                android:background="?attr/backgroundColor"
                 android:layout_alignParentBottom="true" >
+                <!--style="?android:buttonBarStyle"-->
+
+                <!--android:showDividers="middle"-->
 
                 <LinearLayout
                     android:id="@+id/flashcard_layout_flip"
-                    style="?android:attr/buttonStyleSmall"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:layout_weight="1"
-                    android:orientation="vertical" >
-
+                    android:orientation="vertical"
+                    >
+                    <!--android:paddingBottom="5dp"-->
+                    <!--style="?android:attr/buttonStyleSmall"-->
                     <Button
                         android:id="@+id/flip_card"
-                        style="?android:attr/buttonStyleSmall"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:background="?attr/flashCardButtonBackground"
@@ -202,7 +216,8 @@
                         android:gravity="center"
                         android:lines="1"
                         android:text="@string/show_answer" />
-
+                    <!--android:paddingRight="10dp"-->
+                    <!--style="?android:attr/buttonStyleSmall"-->
                     <LinearLayout
                         android:layout_width="0dip"
                         android:layout_height="fill_parent"
@@ -223,12 +238,15 @@
 
                 <LinearLayout
                     android:id="@+id/flashcard_layout_ease1"
-                    style="?android:attr/buttonStyleSmall"
                     android:layout_width="0dip"
                     android:layout_height="fill_parent"
                     android:layout_weight="1"
+                    style="@style/BasicButtonStyle"
+                    android:background="?attr/backgroundElevatedColor"
                     android:orientation="vertical"
                     android:visibility="gone" >
+                    <!--android:layout_gravity="center"-->
+                    <!--style="?android:attr/buttonStyleSmall"-->
 
                     <include
                         android:id="@+id/nextTime1"
@@ -241,12 +259,16 @@
 
                 <LinearLayout
                     android:id="@+id/flashcard_layout_ease2"
-                    style="?android:attr/buttonStyleSmall"
+                    style="@style/BasicButtonStyle"
                     android:layout_width="0dip"
                     android:layout_height="fill_parent"
+                    android:layout_gravity="center"
                     android:layout_weight="1"
+                    android:background="?attr/backgroundElevatedColor"
                     android:orientation="vertical"
-                    android:visibility="gone" >
+                android:layout_marginLeft="@dimen/answer_button_spacing"
+
+                android:visibility="gone" >
 
                     <include
                         android:id="@+id/nextTime2"
@@ -260,12 +282,20 @@
 
                 <LinearLayout
                     android:id="@+id/flashcard_layout_ease3"
-                    style="?android:attr/buttonStyleSmall"
+                    style="@style/BasicButtonStyle"
+
                     android:layout_width="0dip"
                     android:layout_height="fill_parent"
                     android:layout_weight="1"
+                    android:background="?attr/backgroundElevatedColor"
                     android:orientation="vertical"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/answer_button_spacing"
+
                     android:visibility="gone" >
+                    <!--style="?android:attr/buttonStyleSmall"-->
+                    <!--android:layout_marginRight="10dp"-->
+
 
                     <include
                         android:id="@+id/nextTime3"
@@ -278,12 +308,17 @@
 
                 <LinearLayout
                     android:id="@+id/flashcard_layout_ease4"
-                    style="?android:attr/buttonStyleSmall"
+                    style="@style/BasicButtonStyle"
+
                     android:layout_width="0dip"
                     android:layout_height="fill_parent"
                     android:layout_weight="1"
                     android:orientation="vertical"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/answer_button_spacing"
+                    android:background="?attr/backgroundElevatedColor"
                     android:visibility="gone" >
+                    <!--style="?android:attr/buttonStyleSmall"-->
 
                     <include
                         android:id="@+id/nextTime4"
@@ -297,7 +332,7 @@
         </LinearLayout>
 
     </RelativeLayout>
-    
+
     <include layout="@layout/navigation_drawer" />
 </android.support.v4.widget.DrawerLayout>
 

@@ -2,4 +2,9 @@
 <resources>
     <!-- Top margin for action bar subtitles -->
     <dimen name="action_bar_subtitle_top_margin">-3dp</dimen>
+    <!--Height of the answer answer buttons -->
+    <dimen name="answer_bar_height">50sp</dimen>
+    <!--Distance between answer buttons in the answer button bar-->
+    <dimen name="answer_button_spacing">10dp</dimen>
+    <dimen name="standard_margins">5dp</dimen>
 </resources>

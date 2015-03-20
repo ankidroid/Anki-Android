@@ -369,7 +369,10 @@
     <!--Most styles listed in this file are destined to be deleted, after everything is reworked to derive directly from the contents of themes.xml-->
     <!--The styles below this line will replace the functionality of the styles above this line-->
 
+<style name="BasicButtonStyle" parent="@android:style/Widget.Button">
+    <item name="android:padding">5dp</item>
 
+</style>
 
 
     <style name="MyAlertDialog">
@@ -410,8 +413,14 @@
         <item name="android:dropDownListViewStyle">@style/MyActionBarItemTextAppearanceStyle</item>
             <item name="android:dropDownItemStyle">@style/MyActionBarItemTextAppearanceStyle</item>
         <item name="android:spinnerDropDownItemStyle">@style/MyActionBarItemTextAppearanceStyle</item>
+        <item name="android:actionDropDownStyle">@style/MyDropDownStyle</item>
 
     </style>
+
+    <style name="MyDropDownStyle" parent="@style/MyActionBarTitleStyle">
+        <item name="android:background">?attr/backgroundColor</item>
+    </style>
+
 
     <style name="MyActionBarTitleStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:textColor">?attr/actionBarTitleTextColor</item>

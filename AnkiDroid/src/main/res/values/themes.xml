@@ -127,8 +127,9 @@
         <item name="genericBackgroundFrame">@drawable/white_textview</item>
         <!-- ^^ Since white_textview is used a few places to create frames, use a generic name for it.  found in cardbrowser and in studyoptions_scrollcontainer -->
 
-        <!-- Taken from bottom_button.xml and flashcard.xml - transparent -->
-        <item name="flashCardButtonBackground">#00000000</item>
+        <!-- Taken from bottom_button.xml and flashcard.xml -->
+        <!-- Do we need a separate color for the button? Make them all the same color as another element in the UI, like 'backgroundElevate' ? -->
+        <item name="flashCardButtonBackground">#FFFFFF</item>
 
         <!-- taken out of Themes.java, deckpicker backgrounds?  -->
         <item name="deckPickerListSelector">@drawable/white_deckpicker_list_selector</item>
@@ -208,8 +209,8 @@
 
         <!-- to do preference screens, etc, over-ride these: -->
         <item name="android:colorBackground">@color/background_blue</item>
-        <item name="android:colorForeground">#eeeeff</item>
-        <item name="android:textColorPrimary">#111144</item>
+        <item name="android:colorForeground">#00eeff</item>
+        <item name="android:textColorPrimary">#aaaa33</item>
         <item name="android:textColorSecondary">#222288</item>
         <item name="android:textColorTertiary">#333399</item>
         <!--<item name="android:textColorHint">#778899</item>-->   <!-- how is this used -->
@@ -220,11 +221,11 @@
 
         <!-- use odd colors for testing purposes -->
         <!--<item name="android:colorBackground">#44ff44</item>-->
-        <item name="android:background">#4444ff</item>
+        <item name="android:background">#118844</item>
 
         <item name="actionBarBackgroundColor">#ff0000</item>
         <item name="actionBarTitleTextColor">#00ff00</item>
-        <item name="actionBarSubtitleTextColor">#00ff00</item>
+        <item name="actionBarSubtitleTextColor">#008830</item>
 
         <item name="learnCountTextColor">#ff0000</item>
         <item name="reviewCountTextColor">#00ff00</item>
@@ -326,6 +327,7 @@
         <item name="actionBarBackgroundColor">#000010</item>
         <item name="actionBarTitleTextColor">#dddddd</item>
         <item name="actionBarSubtitleTextColor">#bbbbbb</item>
+
 
         <item name="listviewDividerColor">#606060</item> <!-- Used in the navigation drawer, possibly elsewhere -->
 
