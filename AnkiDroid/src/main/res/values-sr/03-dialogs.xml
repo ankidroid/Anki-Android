@@ -51,7 +51,7 @@
   <string name="new_version_message">Нове могућности:</string>
   <string name="no_tts_available_title">Претварање текста у говор</string>
   <string name="no_tts_available_message">Функција претварања текста у говор није доступна</string>
-  <string name="initializing_tts">Initializing TTS&#8230;</string>
+  <string name="initializing_tts">Иницијализација синтезе говора&#8230;</string>
   <string name="tts_no_tts">Не изговарај</string>
   <string-array name="about_content">
     <item><![CDATA[<h2>%1$s:<br/>Флеш-картице за Android</h2>AnkiDroid је програм за изучавање обучавајућих карата и компатибилан је са десктоп верзијом <a href=\"%2$s\">Anki</a>. Можете креирати, преузимати и проучавати информацију и у AnkiDroid и у Anki Desktop, синхронизујући их међусобно.]]></item>

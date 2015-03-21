@@ -369,8 +369,12 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
             finish();
             return;
         }
-        mDeck = mCol.getDecks().current();
-
+        Bundle extras = getIntent().getExtras();
+        if (extras != null && extras.containsKey("did")) {
+            mDeck = mCol.getDecks().get(extras.getLong("did"));
+        } else {
+            mDeck = mCol.getDecks().current();
+        }
         Bundle initialConfig = getIntent().getBundleExtra("cramInitialConfig");
         if (initialConfig != null) {
             if (initialConfig.containsKey("searchSuffix")) {

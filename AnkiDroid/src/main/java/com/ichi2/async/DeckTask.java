@@ -397,7 +397,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         Timber.d("doInBackgroundUpdateNote");
         // Save the note
         Sched sched = params[0].getSched();
-        Collection col = sched.getCol();
+        Collection col = AnkiDroidApp.getCol();
         Card editCard = params[0].getCard();
         Note editNote = editCard.note();
         boolean fromReviewer = params[0].getBoolean();
@@ -446,7 +446,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         int ease = params[0].getInt();
         Card newCard = null;
         try {
-            AnkiDb ankiDB = sched.getCol().getDb();
+            AnkiDb ankiDB = AnkiDroidApp.getCol().getDb();
             ankiDB.getDatabase().beginTransaction();
             try {
                 if (oldCard != null) {
@@ -481,21 +481,16 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         return sched.getCard();
     }
 
-
     private TaskData doInBackgroundLoadDeckCounts(TaskData... params) {
         Timber.d("doInBackgroundLoadDeckCounts");
-        Collection col = params[0].getCollection();
-        if (col == null || col.getDb() == null) {
-            return null;
-        }
         try {
-            return new TaskData(col.getSched().deckCounts());
+            Object[] o = new Object[] {AnkiDroidApp.getCol().getSched().deckDueTree()};
+            return new TaskData(o);
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundLoadDeckCounts - error");
             return null;
         }
     }
-
 
     private TaskData doInBackgroundSaveCollection(TaskData... params) {
         Timber.d("doInBackgroundSaveCollection");
@@ -513,7 +508,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
     private TaskData doInBackgroundDismissNote(TaskData... params) {
         Sched sched = params[0].getSched();
-        Collection col = sched.getCol();
+        Collection col = AnkiDroidApp.getCol();
         Card card = params[0].getCard();
         Note note = card.note();
         int type = params[0].getInt();
@@ -589,14 +584,13 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
     private TaskData doInBackgroundMarkCard(TaskData... params) {
         Card card = params[0].getCard();
-        Sched sched = params[0].getSched();
         try {
-            AnkiDb ankiDB = sched.getCol().getDb();
+            AnkiDb ankiDB = AnkiDroidApp.getCol().getDb();
             ankiDB.getDatabase().beginTransaction();
             try {
                 if (card != null) {
                     Note note = card.note();
-                    sched.getCol().markUndo(Collection.UNDO_MARK_NOTE,
+                    AnkiDroidApp.getCol().markUndo(Collection.UNDO_MARK_NOTE,
                             new Object[] { note.getId(), note.stringTags(), card.getId() });
                     if (note.hasTag("marked")) {
                         note.delTag("marked");
@@ -621,7 +615,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
     private TaskData doInBackgroundUndo(TaskData... params) {
         Sched sched = params[0].getSched();
-        Collection col = sched.getCol();
+        Collection col = AnkiDroidApp.getCol();
         try {
             col.getDb().getDatabase().beginTransaction();
             Card newCard;
@@ -766,7 +760,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             double[][] serieslist = null;
             // only calculate stats if necessary
             if ((Boolean) obj[1]) {
-                serieslist = Stats.getSmallDueStats(sched.getCol());
+                serieslist = Stats.getSmallDueStats(AnkiDroidApp.getCol());
             }
             return new TaskData(new Object[] { counts[0], counts[1], counts[2], totalNewCount, totalCount,
                     progressMature, progressAll, sched.eta(counts), serieslist });
@@ -789,7 +783,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         Collection col = params[0].getCollection();
         long did = params[0].getLong();
         col.getDecks().rem(did, true);
-        return doInBackgroundLoadDeckCounts(new TaskData(col));
+        return new TaskData(col);
     }
 
 
@@ -850,12 +844,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             }
 
             publishProgress(new TaskData(res.getString(R.string.import_update_counts)));
-            // Update the counts
-            DeckTask.TaskData result = doInBackgroundLoadDeckCounts(new TaskData(col));
-            if (result == null) {
-                return null;
-            }
-            return new TaskData(addedCount, result.getObjArray(), true);
+            return new TaskData(true);
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundImportAdd - RuntimeException on importing cards");
             AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportAdd");
@@ -975,14 +964,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             zip.close();
             // delete tmp dir
             BackupManager.removeDir(dir);
-
-            publishProgress(new TaskData(res.getString(R.string.import_update_counts)));
-            // Update the counts
-            DeckTask.TaskData result = doInBackgroundLoadDeckCounts(new TaskData(col));
-            if (result == null) {
-                return null;
-            }
-            return new TaskData(addedCount, result.getObjArray(), true);
+            return new TaskData(true);
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundImportReplace - RuntimeException");
             AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace1");
@@ -1413,11 +1395,6 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
         public TaskData(boolean bool) {
             mBool = bool;
-        }
-
-
-        public TaskData(TreeSet<Object[]> deckList) {
-            mDeckList = deckList;
         }
 
 

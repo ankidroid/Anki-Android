@@ -1016,6 +1016,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         restartTimer();
         // Set the context for the Sound manager
         Sound.setContext(new WeakReference<Activity>(this));
+        // Reset the activity title
+        deselectAllNavigationItems();
     }
 
 
@@ -1135,20 +1137,29 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (resultCode == DeckPicker.RESULT_MEDIA_EJECTED) {
             finishNoStorageAvailable();
         }
+
+        if (!AnkiDroidApp.colIsOpen()) {
+            Timber.e("onActivityResult -- Collection is not open... aborting");
+            return;
+        }
+
         if (requestCode == EDIT_CURRENT_CARD) {
-            // If the card was rescheduled, we need to remove it from the top of the queue as it is
-            // no longer positioned there. Use a "fake" answer for this by passing a null card.
-            if (data != null && data.hasExtra("rescheduled")) {
+            /* Reset the schedule and reload the latest card off the top of the stack if required.
+               The card could have been rescheduled, the deck could have changed, or a change of
+               note type could have lead to the card being deleted */
+            if (data!=null && data.hasExtra("reloadRequired")) {
+                getCol().getSched().reset();
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(
                         mSched, null, 0));
             }
-            // Modification of the note is independent of rescheduling, so we still need to save it if it
-            // happened.
-            if (resultCode != RESULT_CANCELED) {
+
+            if (resultCode == RESULT_OK) {
+                // content of note was changed so update the note and current card
                 Timber.i("AbstractFlashcardViewer:: Saving card...");
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler, new DeckTask.TaskData(
                         mSched, mCurrentCard, true));
-            } else {
+            } else if (resultCode == RESULT_CANCELED && !(data!=null && data.hasExtra("reloadRequired"))) {
+                // nothing was changed by the note editor so just redraw the card
                 fillFlashcard();
             }
         }
@@ -1166,7 +1177,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     protected long getParentDid() {
         long deckID;
         try {
-            deckID = mSched.getCol().getDecks().current().getLong("id");
+            deckID = AnkiDroidApp.getCol().getDecks().current().getLong("id");
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -1221,7 +1232,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
 
     protected void undo() {
-        if (mSched.getCol().undoAvailable()) {
+        if (AnkiDroidApp.getCol().undoAvailable()) {
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
                 mProgressDialog.setMessage(getResources().getString(R.string.saving_changes));
             } else {
@@ -1494,7 +1505,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     }
 
 
-    @SuppressLint("NewApi")
+    @SuppressLint({"NewApi", "SetJavaScriptEnabled"})
     // because of setDisplayZoomControls.
     private WebView createWebView() {
         WebView webView = new MyWebView(this);
@@ -1976,41 +1987,45 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         setInterface();
 
         String question;
-        if (mCurrentSimpleInterface) {
-            question = mCurrentCard.qSimple();
-        } else {
-            question = mCurrentCard.q();
-        }
-        question = getCol().getMedia().escapeImages(question);
-        question = typeAnsQuestionFilter(question);
-
-        if (mPrefFixArabic) {
-            question = ArabicUtilities.reshapeSentence(question, true);
-        }
-
-        Timber.d("question: '%s'", question);
-
         String displayString = "";
-
-        if (mCurrentSimpleInterface) {
-            mCardContent = convertToSimple(question);
-            if (mCardContent== null || mCardContent.length() == 0) {
-                SpannableString hint = new SpannableString(getResources().getString(R.string.simple_interface_hint,
-                        R.string.card_details_question));
-                hint.setSpan(new StyleSpan(Typeface.ITALIC), 0, mCardContent.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                mCardContent = hint;
-            }
+        if (mCurrentCard.isEmpty()) {
+            displayString = getResources().getString(R.string.empty_card_warning);
         } else {
-            // If the user wants to write the answer
-            if (typeAnswer()) {
-                mAnswerField.setVisibility(View.VISIBLE);
+            if (mCurrentSimpleInterface) {
+                question = mCurrentCard.qSimple();
+            } else {
+                question = mCurrentCard.q();
+            }
+            question = getCol().getMedia().escapeImages(question);
+            question = typeAnsQuestionFilter(question);
+
+            if (mPrefFixArabic) {
+                question = ArabicUtilities.reshapeSentence(question, true);
             }
 
-            displayString = enrichWithQADiv(question, false);
+            Timber.d("question: '%s'", question);
 
-            if (mSpeakText) {
-                // ReadText.setLanguageInformation(Model.getModel(DeckManager.getMainDeck(),
-                // mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId());
+
+            if (mCurrentSimpleInterface) {
+                mCardContent = convertToSimple(question);
+                if (mCardContent== null || mCardContent.length() == 0) {
+                    SpannableString hint = new SpannableString(getResources().getString(R.string.simple_interface_hint,
+                            R.string.card_details_question));
+                    hint.setSpan(new StyleSpan(Typeface.ITALIC), 0, mCardContent.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    mCardContent = hint;
+                }
+            } else {
+                // If the user wants to write the answer
+                if (typeAnswer()) {
+                    mAnswerField.setVisibility(View.VISIBLE);
+                }
+
+                displayString = enrichWithQADiv(question, false);
+
+                if (mSpeakText) {
+                    // ReadText.setLanguageInformation(Model.getModel(DeckManager.getMainDeck(),
+                    // mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId());
+                }
             }
         }
 

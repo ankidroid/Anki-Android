@@ -119,6 +119,7 @@
   <string name="new_dynamic_deck">ایجاد دسته فیلتر شده</string>
   <string name="studyoptions_feedback">بازخورد</string>
   <string name="night_mode">حالت شب</string>
+  <string name="directory_inaccessible">AnkiDroid فهرست غیر قابل دسترس است</string>
   <string-array name="next_review_s">
     <item>1 ثانیه</item>
     <item>1 دقیقه</item>
@@ -149,6 +150,7 @@
   <string name="studyoptions_congrats_more_rev">به حد روزانه مرور رسیده اید، ولی هنوز کارتهایی هستند که باید مرور شوند. برای بهینه سازی حافظه، می توانید حد روزانه مرور را در بخش گزینه ها افزایش دهید.</string>
   <string name="studyoptions_congrats_more_new">کارتهای جدید بیشتری موجودند، ولی شما به حد تعیین شده روزانه مرور رسیده اید. شما می توانید این حد را در بخش گزینه ها افزایش دهید، ولی لطفا به یاد داشته باشید که بار کاری مرور کوتاه مدت شما افزایش خواهد یافت.</string>
   <string name="studyoptions_congrats_custom">جهت مطالعه خارج از برنامه ، بر روی دکمه مطالعه سفارشی زیر کلیک کنید.</string>
+  <string name="studyoptions_no_cards_due">هیچ کارتی دریافت نشده است </string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">فردا %1$d کارت برای مرور خواهید داشت و %2$s. \n زمان برآورد شده: %3$s</item>
     <item quantity="other">فردا %1$d کارت برای مرور خواهید داشت و %2$s. \n زمان برآورد شده: %3$s</item>
@@ -178,7 +180,7 @@
   <string name="confirm">تایید</string>
   <string name="internet">اینترنت</string>
   <string name="pc">رایانه</string>
-  <string name="nothing">Nothing</string>
+  <string name="nothing">هیچ </string>
   <string name="title_activity_graphical_activity">نمودار آماری</string>
   <string name="title_activity_template_editor">Card Types for %s</string>
   <string name="card_template_editor_front">Front Template</string>
@@ -186,11 +188,10 @@
   <string name="card_template_editor_styling">Styling</string>
   <string name="card_template_editor_menu_add_reverse">Add reverse</string>
   <string name="card_template_editor_menu_delete">Delete</string>
-  <string name="card_template_editor_cant_delete">At least one card type is required.</string>
+  <string name="card_template_editor_cant_delete">حداقل یک کارت وارد کنید.</string>
   <plurals name="card_template_editor_confirm_delete">
     <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
     <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
   </plurals>
-  <string name="card_template_editor_would_delete_note"> Removing this card type would cause one or
-        more notes to be deleted. Please create a new card type first.</string>
+  <string name="card_template_editor_would_delete_note">پاکسازی این نوع کارت ممکن است منجر به پاک شدن یک یا تعدادی یادداشت شود.لطفاً در ابتدا یک نوع کارت بسازید. </string>
 </resources>

@@ -148,7 +148,7 @@
   <string name="pref_intent_add_instant">Sofortiges Hinzufügen</string>
   <string name="pref_intent_add_instant_summ">Neue Karten von Wörterbüchern hinzufügen, ohne AnkiDroid zu öffnen. Sie finden sie später unter \"gespeicherte Daten\" im Karteneditor.</string>
   <string name="show_estimates">Wiederholungszeiten anzeigen</string>
-  <string name="show_estimates_summ">Zeigt Zeiten bis zur nächsten Wiederholung über den Antwort-Schaltflächen</string>
+  <string name="show_estimates_summ">Zeigt Zeiten bis zur nächsten Wiederholung auf den Antwortschaltflächen</string>
   <string name="show_progress">Fällige anzeigen</string>
   <string name="show_progress_summ">Verbleibende Anzahl der Karten anzeigen</string>
   <string name="use_current">Stapel für neue Karten</string>

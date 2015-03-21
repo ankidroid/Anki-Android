@@ -29,8 +29,11 @@
                 android:layout_height="fill_parent"
                 android:layout_margin="5dp"
                 android:textIsSelectable="true"
-                android:editable="false"
-                android:inputType="textMultiLine" />
+                android:inputType="textMultiLine"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false" />
         </LinearLayout>
     </ScrollView>
     <!-- Styling -->
@@ -56,10 +59,12 @@
                 android:layout_height="fill_parent"
                 android:layout_margin="5dp"
                 android:text=""
-                android:editable="false"
                 android:textIsSelectable="true"
-                android:inputType="textMultiLine" />
-
+                android:inputType="textMultiLine"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false" />
         </LinearLayout>
     </ScrollView>
     <!-- Back -->
@@ -85,8 +90,11 @@
                 android:layout_height="fill_parent"
                 android:layout_margin="5dp"
                 android:textIsSelectable="true"
-                android:editable="false"
-                android:inputType="textMultiLine" />
+                android:inputType="textMultiLine"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

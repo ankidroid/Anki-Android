@@ -119,6 +119,7 @@
   <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">Atsauksmes</string>
   <string name="night_mode">Nakts režīms</string>
+  <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
   <string-array name="next_review_s">
     <item>1 sekunde</item>
     <item>1 minūte</item>
@@ -149,6 +150,7 @@
   <string name="studyoptions_congrats_more_rev">Šodienas vērtēšanas limits ir sasniegts, bet vēl ir kārtis kas ir jāizvērtē. Optimālai atmiņai apsveriet iespēju palielināt dienas limitu (iestatījumos).</string>
   <string name="studyoptions_congrats_more_new">Ir pieejamas vairākas jaunas kārtis, bet dienas limits ir sasniegts. Jūs vara palielināt šo limitu iestatījumos, bet ņemiet vērā, ka tas palielinās Jūsu īstermiņa pārskatīšanas darba slodzi.</string>
   <string name="studyoptions_congrats_custom">Lai studētu ārpus normālā darba laika, nospiediet uz Pielāgotā Pētījuma pogas zemāk.</string>
+  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
     <item quantity="other">Rīt būs: %1$d kārtis pārskatam un %2$s.\n Aptuvenais laiks: %3$s</item>
@@ -191,6 +193,5 @@
     <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
     <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
   </plurals>
-  <string name="card_template_editor_would_delete_note"> Removing this card type would cause one or
-        more notes to be deleted. Please create a new card type first.</string>
+  <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create a new card type first.</string>
 </resources>

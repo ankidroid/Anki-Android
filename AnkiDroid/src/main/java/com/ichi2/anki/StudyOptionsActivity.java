@@ -57,7 +57,7 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
         // create inherited navigation drawer layout here so that it can be used by parent class
         initNavigationDrawer(mainView);
         if (savedInstanceState == null) {
-            loadStudyOptionsFragment();
+            loadStudyOptionsFragment(getCol().getDecks().current().optLong("did"), null);
         }
         registerExternalStorageListener();
     }
@@ -73,15 +73,10 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
         return true;
     }
 
-    private void loadStudyOptionsFragment() {
-        loadStudyOptionsFragment(0, null);
-    }
-
 
     private void loadStudyOptionsFragment(long deckId, Bundle cramConfig) {
         StudyOptionsFragment currentFragment = StudyOptionsFragment.newInstance(deckId, null);
         Bundle args = getIntent().getExtras();
-
         if (cramConfig != null) {
             args.putBundle("cramInitialConfig", cramConfig);
         }
@@ -212,8 +207,8 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
 
 
     @Override
-    public void refreshMainInterface() {
-        getCurrentFragment().resetAndRefreshInterface();
+    public void onRequireDeckListUpdate() {
+        getCurrentFragment().refreshInterface();
     }
 
 

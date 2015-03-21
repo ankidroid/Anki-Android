@@ -119,6 +119,7 @@
   <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">Σχόλια</string>
   <string name="night_mode">Νυκτερινή λειτουργία</string>
+  <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
   <string-array name="next_review_s">
     <item>1 δευτερόλεπτο</item>
     <item>1 λεπτό</item>
@@ -149,6 +150,7 @@
   <string name="studyoptions_congrats_more_rev">Φτάσατε το σημερινό όριο επανάληψης, αλλά υπάρχουν ακόμη κάρτες που περιμένουν επανεξέταση. Για βέλτιστη απομνημόνευση, εξετάστε το ενδεχόμενο αύξησης του ημερήσιου ορίου στις επιλογές.</string>
   <string name="studyoptions_congrats_more_new">Υπάρχουν διαθέσιμες νέες κάρτες, αλλά το ημερήσιο όριο έχει επιτευχθεί. Μπορείτε να αυξήσετε το όριο στις επιλογές, αλλά έχετε υπόψη ότι αυτό θα αυξήσει το βραχυπρόθεσμο φόρτο επανάληψης.</string>
   <string name="studyoptions_congrats_custom">Για μελέτη εκτός του κανονικού χρονοδιαγράμματος, κάντε κλικ στο κουμπί Προσαρμοσμένη Μελέτη παρακάτω.</string>
+  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
     <item quantity="other">Αύριο θα υπάρχουν: %1$d κάρτες για επανάληψη και %2$s.\n Εκτιμώμενος χρόνος: %3$s</item>
@@ -191,6 +193,5 @@
     <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
     <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
   </plurals>
-  <string name="card_template_editor_would_delete_note"> Removing this card type would cause one or
-        more notes to be deleted. Please create a new card type first.</string>
+  <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create a new card type first.</string>
 </resources>

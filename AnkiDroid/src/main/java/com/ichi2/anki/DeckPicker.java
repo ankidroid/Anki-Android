@@ -22,7 +22,6 @@
 package com.ichi2.anki;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -38,6 +37,7 @@ import android.graphics.PixelFormat;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -48,8 +48,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewTreeObserver;
-import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.Window;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -84,6 +82,7 @@ import com.ichi2.async.Connection.Payload;
 import com.ichi2.async.DeckTask;
 import com.ichi2.async.DeckTask.TaskData;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Sched;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.StyledProgressDialog;
@@ -99,7 +98,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.TreeSet;
 
 import timber.log.Timber;
 
@@ -141,8 +139,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     // private static final int LOG_IN = 13;
     private static final int BROWSE_CARDS = 14;
     private static final int ADD_SHARED_DECKS = 15;
-    private static final int ADD_CRAM_DECK = 17;
-    private static final int REQUEST_REVIEW = 19;
+
 
     private StyledProgressDialog mProgressDialog;
     private StyledOpenCollectionDialog mNotMountedDialog;
@@ -169,6 +166,13 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     // flag asking user to do a full sync which is used in upgrade path
     boolean mRecommendFullSync = false;
 
+    /**
+     * Keep track of which deck was last given focus in the deck list. If we find that this value
+     * has changed between deck list refreshes, we need to recenter the deck list to the new current
+     * deck (e.g., when a filtered deck was created in a study options fragment).
+     */
+    private Long mFocusedDeck;
+
     // ----------------------------------------------------------------------------
     // LISTENERS
     // ----------------------------------------------------------------------------
@@ -181,59 +185,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         }
     };
 
-    DeckTask.TaskListener mLoadCountsHandler = new DeckTask.TaskListener() {
-
-        @SuppressWarnings("unchecked")
-        @Override
-        public void onPostExecute(DeckTask.TaskData result) {
-            if (result == null) {
-                Timber.w("loadCounts() onPostExecute :: result = null");
-                return;
-            }
-            Object[] res = result.getObjArray();
-            TreeSet<Object[]> countList = (TreeSet<Object[]>) res[0];
-            Timber.d("loadCounts() onPostExecute :: result = (length %d TreeSet, %d, %d)", countList.size(), res[1], res[2]);
-            updateDecksList(countList, (Integer) res[1], (Integer) res[2]);
-            dismissOpeningCollectionDialog();
-            try {
-                // Ensure we have the correct deck selected in the deck list after we have updated it. Check first
-                // if the collection is open since it might have been closed before this task completes.
-                if (colOpen()) {
-                    Long did = getCol().getDecks().current().getLong("id");
-                    setSelectedDeck(did);
-                    if (mFragmented) {
-                        try {
-                            loadStudyOptionsFragment(did, null);
-                        } catch (IllegalStateException e) {
-                            // If activity has been stopped then just ignore the updated counts
-                            Timber.e("DeckPicker mLoadCountsHandler -- could not update StudyOptionsFragment");
-                        }
-                    } else {
-                        // Show the ShowcaseView tutorial unless in tablet mode (which shows it after loading StudyOptionsFragment)
-                        reloadShowcaseView();
-                    }
-                }
-            } catch (JSONException e) {
-                throw new RuntimeException();
-            }
-        }
-
-
-        @Override
-        public void onPreExecute() {
-        }
-
-
-        @Override
-        public void onProgressUpdate(DeckTask.TaskData... values) {
-        }
-
-
-        @Override
-        public void onCancelled() {
-            Timber.d("loadCounts onCancelled()");
-        }
-    };
 
     DeckTask.TaskListener mImportAddListener = new DeckTask.TaskListener() {
         @SuppressWarnings("unchecked")
@@ -256,8 +207,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 } else {
                     message = res.getString(R.string.import_log_success, count);
                     showSimpleMessageDialog(message);
-                    Object[] info = result.getObjArray();
-                    updateDecksList((TreeSet<Object[]>) info[0], (Integer) info[1], (Integer) info[2]);
+                    updateDeckList();
                 }
             } else {
                 showSimpleMessageDialog(res.getString(R.string.import_log_error));
@@ -306,8 +256,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                     // not a valid apkg file
                     showSimpleMessageDialog(res.getString(R.string.import_log_no_apkg));
                 }
-                Object[] info = result.getObjArray();
-                updateDecksList((TreeSet<Object[]>) info[0], (Integer) info[1], (Integer) info[2]);
+                updateDeckList();
                 dismissOpeningCollectionDialog();
             } else {
                 showSimpleMessageDialog(res.getString(R.string.import_log_no_apkg), true);
@@ -419,10 +368,8 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         mDeckList = new ArrayList<HashMap<String, String>>();
         mDeckListView = (ListView) findViewById(R.id.files);
         mDeckListAdapter = new SimpleAdapter(this, mDeckList, R.layout.deck_item, new String[] { "name", "new", "lrn",
-                "rev", // "complMat", "complAll",
-                "sep", "dyn" }, new int[] { R.id.DeckPickerName, R.id.deckpicker_new, R.id.deckpicker_lrn,
-                R.id.deckpicker_rev, // R.id.deckpicker_bar_mat, R.id.deckpicker_bar_all,
-                R.id.deckpicker_deck, R.id.DeckPickerName });
+                "rev", "sep", "dyn" }, new int[] { R.id.DeckPickerName, R.id.deckpicker_new, R.id.deckpicker_lrn,
+                R.id.deckpicker_rev, R.id.deckpicker_deck, R.id.DeckPickerName });
         mDeckListAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
             @Override
             public boolean setViewValue(View view, Object data, String text) {
@@ -484,18 +431,9 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         });
         mDeckListView.setAdapter(mDeckListAdapter);
         mTodayTextView = (TextView) findViewById(R.id.today_stats_text_view);
-
-        if (mFragmented) {
-            mDeckListView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
-        }
-
-        if (getCol() == null) {
-            // Show splash screen and load collection if it's null
-            showStartupScreensAndDialogs(preferences, 0);
-        } else {
-            // Otherwise just update the deck list
-            loadCounts();
-        }
+        mDeckListView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+        // Show splash screen and load collection
+        showStartupScreensAndDialogs(preferences, 0);
     }
 
 
@@ -594,7 +532,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                                 .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
                         Timber.i("DeckPicker:: Creating new deck...");
                         getCol().getDecks().id(deckName, true);
-                        loadCounts();
+                        updateDeckList();
                     }
                 });
                 builder2.setNegativeButton(res.getString(R.string.dialog_cancel), null);
@@ -613,21 +551,21 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 mDialogEditText = new EditText(DeckPicker.this);
                 ArrayList<String> names = getCol().getDecks().allNames();
                 int n = 1;
-                String cramDeckName = "Cram 1";
-                while (names.contains(cramDeckName)) {
+                String filteredDeckName = "Filtered Deck 1"; // TODO: needs to be a resource
+                while (names.contains(filteredDeckName)) {
                     n++;
-                    cramDeckName = "Cram " + n;
+                    filteredDeckName = "Filtered Deck " + n;
                 }
-                mDialogEditText.setText(cramDeckName);
+                mDialogEditText.setText(filteredDeckName);
                 // mDialogEditText.setFilters(new InputFilter[] { mDeckNameFilter });
                 builder3.setView(mDialogEditText, false, false);
                 builder3.setPositiveButton(res.getString(R.string.create), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String enteredCramDeckName = mDialogEditText.getText().toString();
-                        Timber.i("DeckPicker:: Creating cram deck...");
-                        long id = getCol().getDecks().newDyn(enteredCramDeckName);
-                        openStudyOptions(id, new Bundle());
+                        Timber.i("DeckPicker:: Creating filtered deck...");
+                        long did = getCol().getDecks().newDyn(enteredCramDeckName);
+                        openStudyOptions(did, true);
                     }
                 });
                 builder3.setNegativeButton(res.getString(R.string.dialog_cancel), null);
@@ -672,17 +610,8 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             handleDbError();
             return;
         }
-        if (requestCode == SHOW_STUDYOPTIONS && resultCode == RESULT_OK) {
-            loadCounts();
-        } else if (requestCode == ADD_NOTE && resultCode != RESULT_CANCELED) {
-            loadCounts();
-        } else if (requestCode == BROWSE_CARDS
-                && (resultCode == Activity.RESULT_OK || resultCode == Activity.RESULT_CANCELED)) {
-            loadCounts();
-        } else if (requestCode == ADD_CRAM_DECK) {
-            // TODO: check, if ok has been clicked
-            loadCounts();
-        } else if (requestCode == REPORT_ERROR) {
+
+        if (requestCode == REPORT_ERROR) {
             showStartupScreensAndDialogs(AnkiDroidApp.getSharedPrefs(getBaseContext()), 4);
         } else if (requestCode == SHOW_INFO_WELCOME || requestCode == SHOW_INFO_NEW_VERSION) {
             if (resultCode == RESULT_OK) {
@@ -703,19 +632,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                         mImportPath, true));
                 mImportPath = null;
             }
-        } else if (requestCode == REQUEST_REVIEW) {
-            switch (resultCode) {
-                default:
-                    // do not reload counts, if activity is created anew because it has been before destroyed by android
-                    loadCounts();
-                    break;
-                case AbstractFlashcardViewer.RESULT_NO_MORE_CARDS:
-                    Intent i = new Intent();
-                    i.setClass(this, StudyOptionsActivity.class);
-                    startActivityForResultWithAnimation(i, SHOW_STUDYOPTIONS, ActivityTransitionAnimation.RIGHT);
-                    break;
-            }
-
         }
     }
 
@@ -725,7 +641,8 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         Timber.d("onResume()");
         super.onResume();
         if (colOpen() && AnkiDroidApp.isSdCardMounted()) {
-            loadCounts();
+            updateDeckList();
+            dismissOpeningCollectionDialog();
         }
         selectNavigationItem(DRAWER_DECK_PICKER);
     }
@@ -809,11 +726,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         if (started) {
             // Themes.showThemedToast(this, getResources().getString(R.string.backup_collection), true);
         }
-        // select last loaded deck if any
-        if (mFragmented) {
-            long did = col.getDecks().selected();
-            selectDeck(did);
-        }
         // Force a full sync if flag was set in upgrade path, asking the user to confirm if necessary
         if (mRecommendFullSync) {
             mRecommendFullSync = false;
@@ -833,7 +745,22 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             }
         }
         // prepare deck counts and mini-today-statistic
-        loadCounts();
+        updateDeckList();
+        // Open StudyOptionsFragment if in fragmented mode
+        if (mFragmented) {
+            // Create the fragment in a new handler since Android won't let you perform fragment
+            // transactions in a loader's onLoadFinished.
+            new Handler().post(new Runnable() {
+                public void run() {
+                    loadStudyOptionsFragment(getCol().getDecks().current().optLong("id"), false);
+                }
+            });
+        }
+        dismissOpeningCollectionDialog();
+        // Show the ShowcaseView tutorial unless in tablet mode (which shows it after loading StudyOptionsFragment)
+        if (!mFragmented) {
+            reloadShowcaseView();
+        }
     }
 
 
@@ -842,16 +769,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         // Show dialogs for handling collection load error
         setOpeningCollectionDialogMessage(getResources().getString(R.string.col_load_failed));
         getDialogHandler().sendEmptyMessage(DialogHandler.MSG_SHOW_COLLECTION_LOADING_ERROR_DIALOG);
-    }
-
-
-    // Load deck counts, and update the today overview
-    private void loadCounts() {
-        if (colOpen()) {
-            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK_COUNTS, mLoadCountsHandler, new TaskData(getCol()));
-            mTodayTextView.setVisibility(View.GONE);
-            AnkiStatsTaskHandler.createSmallTodayOverview(getCol(), mTodayTextView);
-        }
     }
 
 
@@ -1470,10 +1387,8 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                     }
                 }
             } else {
-                updateDecksList((TreeSet<Object[]>) data.result, (Integer) data.data[2], (Integer) data.data[3]);
-
-                if (data.data[4] != null) {
-                    dialogMessage = (String) data.data[4];
+                if (data.data[2] != null) {
+                    dialogMessage = (String) data.data[2];
                 } else if (data.data.length > 0 && data.data[0] instanceof String
                         && ((String) data.data[0]).length() > 0) {
                     String dataString = (String) data.data[0];
@@ -1488,8 +1403,9 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 } else {
                     dialogMessage = res.getString(R.string.sync_database_acknowledge);
                 }
+                showSyncLogDialog(joinSyncMessages(dialogMessage, syncMessage), false);
 
-               showSyncLogDialog(joinSyncMessages(dialogMessage, syncMessage), false);
+                // Note: the interface is not refreshed since the activity is restarted after sync.
             }
         }
     };
@@ -1583,26 +1499,18 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     }
 
 
-    public void loadStudyOptionsFragment() {
-        loadStudyOptionsFragment(0, null);
-    }
-
-
-    public void loadStudyOptionsFragment(long deckId, Bundle cramConfig) {
-        StudyOptionsFragment details = StudyOptionsFragment.newInstance(deckId, cramConfig);
+    /**
+     * Load a new studyOptionsFragment. If withDeckOptions is true, the deck options activity will
+     * be loaded on top of it. Use this flag when creating a new filtered deck to allow the user to
+     * modify the filter settings before being shown the fragment. The fragment itself will handle
+     * rebuilding the deck if the settings change.
+     */
+    private void loadStudyOptionsFragment(long deckId, boolean withDeckOptions) {
+        Bundle b = withDeckOptions ? new Bundle() : null;
+        StudyOptionsFragment details = StudyOptionsFragment.newInstance(deckId, b);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
         ft.replace(R.id.studyoptions_fragment, details);
         ft.commit();
-    }
-
-
-    /** Callback from StudyOptionsFragment via OnStudyOptionsReloadListener
-     * This allows us to update the deck list and reload the StudyOptionsFragment
-     * when in tablet mode
-     */
-    public void refreshMainInterface() {
-        loadCounts();
     }
 
 
@@ -1662,75 +1570,15 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     }
 
 
-    private void openStudyOptions(long deckId) {
-        openStudyOptions(deckId, null);
-    }
-
-
-    private void openStudyOptions(long deckId, Bundle cramInitialConfig) {
+    private void openStudyOptions(long deckId, boolean withDeckOptions) {
         if (mFragmented) {
-            loadStudyOptionsFragment(deckId, cramInitialConfig);
+            // The fragment will show the study options screen instead of launching a new activity.
+            loadStudyOptionsFragment(deckId, withDeckOptions);
         } else {
             Intent intent = new Intent();
             intent.putExtra("index", deckId);
-            intent.putExtra("cramInitialConfig", cramInitialConfig);
             intent.setClass(this, StudyOptionsActivity.class);
             startActivityForResultWithAnimation(intent, SHOW_STUDYOPTIONS, ActivityTransitionAnimation.LEFT);
-        }
-    }
-
-
-    /**
-     * Programmatically click on a deck in the deck list.
-     * 
-     * @param did The deck ID of the deck to select.
-     */
-    private void selectDeck(long did) {
-        Timber.i("DeckPicker:: Selected deck with ID %d", did);
-        for (int i = 0; i < mDeckList.size(); i++) {
-            if (Long.parseLong(mDeckList.get(i).get("did")) == did) {
-                final int lastPosition = i;
-                mDeckListView.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
-                    @Override
-                    public void onGlobalLayout() {
-                        removeOnGlobalLayoutListener(mDeckListView, this);
-                        mDeckListView.performItemClick(null, lastPosition, 0);
-                        // Scroll the listView to the currently selected row, then offset it by half the
-                        // listview's height so that it is centered.
-                        mDeckListView.setSelectionFromTop(lastPosition, mDeckListView.getHeight() / 2);
-                    }
-                });
-                break;
-            }
-        }
-    }
-
-
-    @SuppressLint("NewApi")
-    @SuppressWarnings("deprecation")
-    public static void removeOnGlobalLayoutListener(View v, ViewTreeObserver.OnGlobalLayoutListener listener) {
-        if (AnkiDroidApp.SDK_VERSION < 16) {
-            v.getViewTreeObserver().removeGlobalOnLayoutListener(listener);
-        } else {
-            v.getViewTreeObserver().removeOnGlobalLayoutListener(listener);
-        }
-    }
-
-
-    /**
-     * Set which deck is selected (highlighted) in the deck list.
-     * <p>
-     * Note that this method does not change the currently selected deck in the collection, only the highlighted deck in
-     * the deck list. To select a deck, see {@link #selectDeck(long)}.
-     * 
-     * @param did The deck ID of the deck to select.
-     */
-    public void setSelectedDeck(long did) {
-        for (int i = 0; i < mDeckList.size(); i++) {
-            if (Long.parseLong(mDeckList.get(i).get("did")) == did) {
-                mDeckListView.setItemChecked(i, true);
-                break;
-            }
         }
     }
 
@@ -1738,74 +1586,191 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     private void handleDeckSelection(int id) {
         @SuppressWarnings("unchecked")
         HashMap<String, String> data = (HashMap<String, String>) mDeckListAdapter.getItem(id);
-        long deckId = Long.parseLong(data.get("did"));
-        getCol().getDecks().select(deckId);
-        openStudyOptions(deckId);
+        long did = Long.parseLong(data.get("did"));
+        getCol().getDecks().select(did);
+        mFocusedDeck = did;
+        openStudyOptions(did, false);
     }
 
 
-    private void updateDecksList(TreeSet<Object[]> decks, int eta, int count) {
-        if (decks == null) {
-            Timber.e("updateDecksList: empty decks list");
-            return;
+    /**
+     * Scroll the deck list so that it is centered on the current deck.
+     */
+    private void focusDecklistOnDeck(long did) {
+        for (int i = 0; i < mDeckList.size(); i++) {
+            if (Long.parseLong(mDeckList.get(i).get("did")) == did) {
+                mDeckListView.setSelectionFromTop(i, (mDeckListView.getHeight() / 2));
+                break;
+            }
         }
-        mDeckList.clear();
-        int due = 0;
-        for (Object[] d : decks) {
-            HashMap<String, String> m = new HashMap<String, String>();
-            String[] name = ((String[]) d[0]);
-            m.put("name", readableDeckName(name));
-            m.put("did", ((Long) d[1]).toString());
-            m.put("new", ((Integer) d[2]).toString());
-            m.put("lrn", ((Integer) d[3]).toString());
-            m.put("rev", ((Integer) d[4]).toString());
-            m.put("dyn", ((Boolean) d[5]) ? "d1" : "d0");
-            // m.put("complMat", ((Float)d[5]).toString());
-            // m.put("complAll", ((Float)d[6]).toString());
-            if (name.length == 1) {
-                due += Integer.parseInt(m.get("new")) + Integer.parseInt(m.get("lrn")) + Integer.parseInt(m.get("rev"));
-                // top position
-                m.put("sep", "top");
-                // correct previous deck
-                if (mDeckList.size() > 0) {
-                    HashMap<String, String> map = mDeckList.get(mDeckList.size() - 1);
-                    if (map.get("sep").equals("top")) {
-                        map.put("sep", "ful");
-                    } else {
-                        map.put("sep", "bot");
+    }
+
+
+    /**
+     * Launch an asynchronous task to rebuild the deck list and recalculate the deck counts. Use this
+     * after any change to a deck (e.g., rename, collapse, add/delete) that needs to be reflected
+     * in the deck list.
+     *
+     * This method also triggers an update for the widget to reflect the newly calculated counts.
+     */
+    private void updateDeckList() {
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_LOAD_DECK_COUNTS, new DeckTask.TaskListener() {
+            // Totals accumulated as each deck is processed
+            private int nNew;
+            private int nLrn;
+            private int nRev;
+
+            @Override
+            public void onPreExecute() {
+                Timber.d("Refreshing deck list");
+            }
+
+            @Override
+            public void onPostExecute(TaskData result) {
+                List<Sched.DeckDueTreeNode> nodes = (List<Sched.DeckDueTreeNode>) result.getObjArray()[0];
+                mDeckList.clear();
+                _renderDeckTree(nodes);
+                mDeckListAdapter.notifyDataSetChanged();
+
+                // Set the "x due in y minutes" subtitle
+                int eta = getCol().getSched().eta(new int[]{nNew, nLrn, nRev});
+                int due = nNew + nLrn + nRev;
+                Resources res = getResources();
+                if (getCol().cardCount() != -1) {
+                    String time = "-";
+                    if (eta != -1) {
+                        time = res.getQuantityString(R.plurals.deckpicker_title_minutes, eta, eta);
+                    }
+                    AnkiDroidApp.getCompat().setSubtitle(DeckPicker.this,
+                            res.getQuantityString(R.plurals.deckpicker_title, due, due, time));
+                }
+
+                Long did = getCol().getDecks().current().optLong("id");
+                if (mFocusedDeck == null || !mFocusedDeck.equals(did)) {
+                    focusDecklistOnDeck(did);
+                    mFocusedDeck = did;
+                }
+
+                // update widget
+                WidgetStatus.update(DeckPicker.this, nodes);
+                // update options menu and clear welcome screen
+                AnkiDroidApp.getCompat().invalidateOptionsMenu(DeckPicker.this);
+                // Update the mini statistics bar as well
+                AnkiStatsTaskHandler.createSmallTodayOverview(getCol(), mTodayTextView);
+            }
+
+            @Override
+            public void onProgressUpdate(TaskData... values) {
+            }
+
+            @Override
+            public void onCancelled() {
+            }
+
+
+            private void _renderDeckTree(List<Sched.DeckDueTreeNode> nodes) {
+                _renderDeckTree(nodes, 0);
+            }
+
+
+            private void _renderDeckTree(List<Sched.DeckDueTreeNode> nodes, int depth) {
+                for (Sched.DeckDueTreeNode node : nodes) {
+                    _deckRow(node, depth, nodes.size());
+                }
+            }
+
+
+            /**
+             * Create a row in the deck list using the given node.
+             *
+             * This method determines various visual elements of each row:
+             *  - Indenting level based on depth if it's a subdeck
+             *  - Addition of a unicode arrow to indicate subdeck status
+             *  - Addition of an indicator to notify collapsed state
+             *  - The type of padding given to each row
+             *
+             * NOTE: Each row in the list also contains the deck ID (did) which is later fetched
+             * to perform operations on the correct deck when the user interacts with the list.
+             *
+             * @param node The row data.
+             * @param depth The subdeck level this node is at.
+             * @param cnt The number of decks in the collection.
+             */
+            private void _deckRow(Sched.DeckDueTreeNode node, int depth, int cnt) {
+                HashMap<String, String> m = new HashMap<String, String>();
+                boolean collapsed = getCol().getDecks().get(node.did).optBoolean("collapsed", false);
+                m.put("name", decoratedDeckName(node.names[0], depth, collapsed));
+                m.put("did", Long.toString(node.did));
+                m.put("new", Integer.toString(node.newCount));
+                m.put("lrn", Integer.toString(node.lrnCount));
+                m.put("rev", Integer.toString(node.revCount));
+                m.put("dyn", getCol().getDecks().isDyn(node.did) ? "d1" : "d0");
+
+                // Add this node's counts to the totals
+                nNew += node.newCount;
+                nLrn += node.lrnCount;
+                nRev += node.revCount;
+
+                // If the default deck is empty, hide it
+                // We don't hide it if it's the only deck or if it has sub-decks
+                if (node.did == 1 && cnt > 1 && node.children.size() == 0) {
+                    if (getCol().getDb().queryScalar("select 1 from cards where did = 1", false) == 0) {
+                        return;
                     }
                 }
-            } else {
-                // center position
-                m.put("sep", "cen");
-            }
-            if (mDeckList.size() > 0 && mDeckList.size() == decks.size() - 1) {
-                // bottom position
-                if (name.length == 1) {
-                    m.put("sep", "ful");
+
+                // Add the appropriate separators
+                if (depth == 0 && node.children.size() > 0 && !collapsed) {
+                    // Top-level decks with expanded subdecks have only a top border
+                    m.put("sep", "top");
+                } else if (depth > 0) {
+                    // All subdecks begin with no borders (i.e., thin centered borders)
+                    m.put("sep", "cen");
                 } else {
-                    m.put("sep", "bot");
+                    // Every other deck gets full borders
+                    m.put("sep", "ful");
+                }
+
+                // Parent toggled for collapsing
+                for (JSONObject parent : getCol().getDecks().parents(node.did)) {
+                    if (parent.optBoolean("collapsed")) {
+                        return;
+                    }
+                }
+                // If this deck is the current deck, highlight it in the deck list
+                if (node.did == getCol().getDecks().current().optLong("id")) {
+                    mDeckListView.setItemChecked(mDeckList.size(), true);
+                }
+
+                mDeckList.add(m);
+                _renderDeckTree(node.children, depth + 1);
+
+                // If the deck contained expanded subdecks, ensure the last one has a bottom border
+                if (depth == 0 && node.children.size() > 0 && !collapsed) {
+                    mDeckList.get(mDeckList.size() - 1).put("sep", "bot");
                 }
             }
-            mDeckList.add(m);
-        }
-        mDeckListAdapter.notifyDataSetChanged();
 
-        // set title
-        Resources res = getResources();
-        if (count != -1) {
-            String time = "-";
-            if (eta != -1) {
-                time = res.getQuantityString(R.plurals.deckpicker_title_minutes, eta, eta);
+
+            /**
+             * Returns the name of the deck to be displayed in the deck list.
+             *
+             * Various properties of a deck are indicated to the user by the deck name in the deck list
+             * (as opposed to additional native UI elements). This includes the amount of indenting
+             * for nested decks based on depth and an indicator of collapsed state.
+             */
+            private String decoratedDeckName(String name, int depth, boolean collapsed) {
+                if (collapsed) {
+                    name = name + " (+)";
+                }
+                if (depth == 0) {
+                    return name;
+                } else {
+                    // Add 4 spaces for every level of nesting and prefix the deck name with an arrow
+                    return new String(new char[depth]).replace("\0", "    ") + "\u21aa" + name;
+                }
             }
-            AnkiDroidApp.getCompat().setSubtitle(this,
-                    res.getQuantityString(R.plurals.deckpicker_title, due, due, time));
-        }
-
-        // update widget
-        WidgetStatus.update(this, decks);
-        // update options menu and clear welcome screen
-        AnkiDroidApp.getCompat().invalidateOptionsMenu(this);
+        });
     }
 
 
@@ -1816,7 +1781,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             if (getCol().getDecks().children(mContextMenuDid).size() > 0) {
                 deck.put("collapsed", !deck.getBoolean("collapsed"));
                 getCol().getDecks().save(deck);
-                loadCounts();
+                updateDeckList();
             }
         } catch (JSONException e1) {
             // do nothing
@@ -1826,19 +1791,17 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
     // Callback to show study options for currently selected deck
     public void showContextMenuDeckOptions() {
-        getCol().getDecks().select(mContextMenuDid);
-        if (mFragmented) {
-            loadStudyOptionsFragment(mContextMenuDid, null);
-        }
         // open deck options
         if (getCol().getDecks().isDyn(mContextMenuDid)) {
             // open cram options if filtered deck
             Intent i = new Intent(DeckPicker.this, CramDeckOptions.class);
             i.putExtra("cramInitialConfig", (String) null);
+            i.putExtra("did", mContextMenuDid);
             startActivityWithAnimation(i, ActivityTransitionAnimation.FADE);
         } else {
             // otherwise open regular options
             Intent i = new Intent(DeckPicker.this, DeckOptions.class);
+            i.putExtra("did", mContextMenuDid);
             startActivityWithAnimation(i, ActivityTransitionAnimation.FADE);
         }
     }
@@ -1883,7 +1846,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                             }
                         }
                         mDeckListAdapter.notifyDataSetChanged();
-                        loadCounts();
+                        updateDeckList();
                     } else {
                         try {
                             Themes.showThemedToast(
@@ -1925,10 +1888,16 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     // Callback to delete currently selected deck
     public void deleteContextMenuDeck() {
         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DELETE_DECK, new DeckTask.TaskListener() {
+            // Flag to indicate if the deck being deleted is the current deck.
+            private boolean removingCurrent;
+
             @Override
             public void onPreExecute() {
                 mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "",
                         getResources().getString(R.string.delete_deck), true);
+                if (mContextMenuDid == getCol().getDecks().current().optLong("id")) {
+                    removingCurrent = true;
+                }
             }
 
 
@@ -1938,11 +1907,16 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 if (result == null) {
                     return;
                 }
-                Object[] res = result.getObjArray();
-                updateDecksList((TreeSet<Object[]>) res[0], (Integer) res[1], (Integer) res[2]);
-                if (mFragmented) {
-                    selectDeck(getCol().getDecks().selected());
+                // In fragmented mode, if the deleted deck was the current deck, we need to reload
+                // the study options fragment with a valid deck and re-center the deck list to the
+                // new current deck. Otherwise we just update the list normally.
+                if (mFragmented && removingCurrent) {
+                    updateDeckList();
+                    openStudyOptions(getCol().getDecks().current().optLong("id"), false);
+                } else {
+                    updateDeckList();
                 }
+
                 if (mProgressDialog.isShowing()) {
                     try {
                         mProgressDialog.dismiss();
@@ -1962,32 +1936,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             public void onCancelled() {
             }
         }, new TaskData(getCol(), mContextMenuDid));
-    }
-
-
-    // ----------------------------------------------------------------------------
-    // INNER CLASSES
-    // ----------------------------------------------------------------------------
-
-    public static String readableDeckName(String[] name) {
-        int len = name.length;
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < len; i++) {
-            if (i == len - 1) {
-                 if (name[i].endsWith("[coll]")) {
-                     sb.append("\u25B7 ");
-                     sb.append(name[i].substring(0, Math.max(1, name[i].length() - 6)));
-                 } else if (name[i].endsWith("[nchi]")) {
-                     sb.append("\u2009\u2009\u2009 ");
-                     sb.append(name[i].substring(0, Math.max(1, name[i].length() - 6)));
-                } else {
-                    sb.append("\u25BD ").append(name[i]);
-                }
-            } else {
-                sb.append("   ");
-            }
-        }
-        return sb.toString();
     }
 
 
@@ -2043,6 +1991,11 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         supportInvalidateOptionsMenu();
     }
 
+
+    @Override
+    public void onRequireDeckListUpdate() {
+        updateDeckList();
+    }
 
     @Override
     public void createFilteredDeck(JSONArray delays, Object[] terms, Boolean resched) {

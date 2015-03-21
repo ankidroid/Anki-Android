@@ -1,28 +1,29 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ankidroid="http://schemas.android.com/apk/res-auto" >
 
     <item
         android:id="@+id/multimedia_edit_field_to_text"
         android:icon="@drawable/text"
         android:orderInCategory="100"
-        android:showAsAction="ifRoom|withText"
-        android:title="@string/multimedia_editor_field_editing_text"/>
+        android:title="@string/multimedia_editor_field_editing_text"
+        ankidroid:showAsAction="ifRoom|withText"/>
     <item
         android:id="@+id/multimedia_edit_field_to_image"
         android:icon="@drawable/content_picture"
         android:orderInCategory="100"
-        android:showAsAction="ifRoom|withText"
-        android:title="@string/multimedia_editor_field_editing_image"/>
+        android:title="@string/multimedia_editor_field_editing_image"
+        ankidroid:showAsAction="ifRoom|withText" />
     <item
         android:id="@+id/multimedia_edit_field_to_audio"
         android:icon="@drawable/device_access_mic"
         android:orderInCategory="100"
-        android:showAsAction="ifRoom|withText"
-        android:title="@string/multimedia_editor_field_editing_audio"/>
+        android:title="@string/multimedia_editor_field_editing_audio"
+        ankidroid:showAsAction="ifRoom|withText" />
     <item
         android:id="@+id/multimedia_edit_field_done"
         android:icon="@drawable/ic_action_accept"
         android:orderInCategory="100"
-        android:showAsAction="always"
-        android:title="@string/multimedia_editor_field_editing_done"/>
+        android:title="@string/multimedia_editor_field_editing_done"
+        ankidroid:showAsAction="always" />
 
 </menu>

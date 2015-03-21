@@ -119,6 +119,7 @@
   <string name="new_dynamic_deck">Criar baralho filtrado</string>
   <string name="studyoptions_feedback">Comentários</string>
   <string name="night_mode">Modo noturno</string>
+  <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
   <string-array name="next_review_s">
     <item>1 segundo</item>
     <item>1 minuto</item>
@@ -149,6 +150,7 @@
   <string name="studyoptions_congrats_more_rev">Atingiu o limite diário de revisões, mas ainda existem fichas à espera para serem revistas. Para otimizar a memória, considere aumentar o limite diário nas opções.</string>
   <string name="studyoptions_congrats_more_new">O limite diário foi atingido. Estão disponíveis mais fichas novas; pode aumentar o limite nas opções, mas tenha em conta que isso irá aumentar a sua carga de memorização a curto prazo.</string>
   <string name="studyoptions_congrats_custom">Para estudar fora da agenda normal, por favor toque no botão de \"Estudo personalizado\"</string>
+  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Amanhã haverá: %1$d ficha para rever e %2$s.\n Tempo estimado: %3$s</item>
     <item quantity="other">Amanhã haverá: %1$d fichas para rever e %2$s.\n Tempo estimado: %3$s</item>
@@ -191,6 +193,5 @@
     <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
     <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
   </plurals>
-  <string name="card_template_editor_would_delete_note"> Removing this card type would cause one or
-        more notes to be deleted. Please create a new card type first.</string>
+  <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create a new card type first.</string>
 </resources>

@@ -46,7 +46,7 @@
   <string name="downloading">正在下载&#8230;</string>
   <string name="paused">已暂停</string>
   <string name="downloaded">已下载</string>
-  <string name="sync_error">Sync Error</string>
+  <string name="sync_error">同步出错</string>
   <string name="vague_error">错误</string>
   <string name="cancelling">正在取消&#8230;</string>
   <string name="connection_error_return_message">出现网络错误。重试，或取消并返回上一个界面。</string>
@@ -68,7 +68,7 @@
   <string name="sync_log_db_error">发生数据库错误。</string>
   <string name="not_logged_in_title">登录到 AnkiWeb</string>
   <string name="login_create_account_message">您必须使用 AnkiWeb 帐户登录。您可以通过下一步创建一个新帐户。</string>
-  <string name="no_email_client">No email client available</string>
+  <string name="no_email_client">没有可用的电子邮件客户端</string>
   <string name="username">电子邮件地址</string>
   <string name="username_repeat">重复电子邮件地址</string>
   <string name="password">密码</string>
@@ -116,7 +116,7 @@
   <string name="sync_too_busy">服务器繁忙。请稍后重试。</string>
   <string name="sync_remote_db_error">已下载的数据库损坏。请重试。</string>
   <string name="sync_overwrite_error">您当前的集合不能被下载文件覆盖。</string>
-  <string name="sync_connection_error">Connection timed out. Either your internet connection is experiencing problems, or you have a very large file in your media folder.</string>
+  <string name="sync_connection_error">连接超时。您的Internet连接出了问题，或者您的媒体文件夹中有非常大的文件。</string>
   <string name="sync_error_409">一次只能用一个用户登录AnkiWeb，如果之前的同步失败，请在几分钟后重试。</string>
   <string name="sync_write_access_error">无法将已下载的文件保存到sd卡。你的sd卡装载为只读，或者空间不足。</string>
   <string name="sync_deletions_message">同步删除...</string>
@@ -165,9 +165,9 @@
   <string name="download_deck">下载卡牌组(%d kb).\n 请等待...</string>
   <string name="sync_sanity_local">本地</string>
   <string name="sync_sanity_remote">远程</string>
-  <string name="force_full_sync_title">Force full sync</string>
+  <string name="force_full_sync_title">强制完全同步</string>
   <string name="force_full_sync_summary">在下一次同步时, 强制单方向的改变.</string>
   <string name="full_sync_confirmation">请求的改变需要在下次同步你的集合时上传整个数据库. 如果你还有在其他设备上未同步的复习或者其他改变, 他们将会丢失, 是否继续?</string>
-  <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it\'s recommended to force a full sync.</string>
-  <string name="sync_error_501_upgrade_required">Please upgrade to the latest version of AnkiDroid</string>
+  <string name="full_sync_confirmation_upgrade">因先前安装的AnkiDroid版本中Bug的原因，我们建议强制完全同步一次。</string>
+  <string name="sync_error_501_upgrade_required">请升级到最新版本的AnkiDroid</string>
 </resources>

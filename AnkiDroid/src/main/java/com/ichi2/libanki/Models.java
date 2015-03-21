@@ -21,42 +21,31 @@ package com.ichi2.libanki;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.text.TextUtils;
 import android.util.Pair;
 
-import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
-import com.samskivert.mustache.Mustache;
-import com.samskivert.mustache.Template;
-
+import com.ichi2.libanki.template.Template;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import timber.log.Timber;
-
 public class Models {
-    private static final Pattern fHookFieldMod = Pattern.compile("^(.*?)(?:\\((.*)\\))?$");
     private static final Pattern fClozePattern1 = Pattern.compile("\\{\\{[^}]*?cloze:(?:[^}]?:)*(.+?)\\}\\}");
     private static final Pattern fClozePattern2 = Pattern.compile("<%cloze:(.+?)%>");
     private static final Pattern fClozeOrdPattern = Pattern.compile("\\{\\{c(\\d+)::.+?\\}\\}");
 
-    protected static final String clozeReg = "(?s)\\{\\{c%s::(.*?)(::(.*?))?\\}\\}";
 
     public static final String defaultModel =
               "{'sortf': 0, "
@@ -891,163 +880,6 @@ public class Models {
 
     private void _syncTemplates(JSONObject m) {
         ArrayList<Long> rem = mCol.genCards(Utils.arrayList2array(nids(m)));
-    }
-
-
-    // public TreeMap<Integer, JSONObject> getTemplates() {
-    // return mTemplateMap;
-    // }
-    //
-    //
-    // public JSONObject getTemplate(int ord) {
-    // return mTemplateMap.get(ord);
-    // }
-
-
-    // Not in libanki... it's related but not equivalent to anki.template.template.render
-    /**
-     * Get a compiled template, create it if missing or if args != null
-     * @param format
-     * @return
-     */
-    public Template getCmpldTemplate(String format) {
-        if (!mCmpldTemplateMap.containsKey(format)) {
-            mCmpldTemplateMap.put(format, Mustache.compiler().compile(format));
-        }
-
-        return mCmpldTemplateMap.get(format);
-    }
-
-
-    // Handle fields fetched from templates and any anki-specific formatting
-
-    protected static class fieldParser implements Mustache.VariableFetcher {
-        private Map<String, String> _fields;
-
-
-        public fieldParser(Map<String, String> fields) {
-            _fields = fields;
-        }
-
-
-        // libanki: render_unescaped
-        public Object get(Object ctx, String tag_name) throws Exception {
-            if (tag_name.length() == 0) {
-                return null;
-            }
-            String txt = _fields.get(tag_name);
-            if (txt != null) {
-                return txt;
-            }
-
-            // field modifiers
-            List<String> parts = Arrays.asList(tag_name.split(":"));
-            String extra = null;
-            List<String> mods;
-            String tag;
-            if (parts.size() == 1 || parts.get(0).equals("")) {
-                return String.format("{unknown field %s}", tag_name);
-            } else {
-                mods = parts.subList(0, parts.size() - 1);
-                tag = parts.get(parts.size()-1);
-            }
-
-            txt = _fields.get(tag);
-
-            // Since 'text:' and other mods can affect html on which Anki relies to
-            // process clozes, we need to make sure clozes are always
-            // treated after all the other mods, regardless of how they're specified
-            // in the template, so that {{cloze:text: == {{text:cloze:
-            // For type:, we return directly since no other mod than cloze (or other
-            // pre-defined mods) can be present and those are treated separately
-            Collections.reverse(mods);
-            Collections.sort(mods, new Comparator<String>() {
-                // This comparator ensures "type:" mods are ordered first in the list. The rest of
-                // the list remains in the same order.
-                @Override
-                public int compare(String lhs, String rhs) {
-                    if (lhs.equals("type")) {
-                        return 0;
-                    } else {
-                        return 1;
-                    }
-                };
-            });
-
-            for (String mod : mods) {
-                Timber.d("Models.get():: Processing field: modifier=%s, extra=%s, tag=%s, txt=%s", mod, extra, tag, txt);
-                // built-in modifiers
-                if (mod.equals("text")) {
-                    // strip html
-                    if (!TextUtils.isEmpty(txt)) {
-                        txt = Utils.stripHTML(txt);
-                    } else {
-                        txt = "";
-                    }
-                } else if (mod.equals("type")) {
-                    // type answer field; convert it to [[type:...]] for the gui code
-                    // to process
-                    return "[[" + tag_name + "]]";
-                } else if (mod.startsWith("cq-") || mod.startsWith("ca-")) {
-                    // cloze deletion
-                    String[] split = mod.split("-");
-                    mod = split[0];
-                    extra = split[1];
-                    if (!TextUtils.isEmpty(txt) && !TextUtils.isEmpty(extra)) {
-                        txt = clozeText(txt, extra, mod.charAt(1));
-                    }
-                } else {
-                    // hook-based field modifier
-                    Matcher m = fHookFieldMod.matcher(mod);
-                    if (m.matches()) {
-                        mod = m.group(1);
-                        extra = m.group(2);
-                    }
-                    txt = (String) AnkiDroidApp.getHooks().runFilter("fmod_" + mod,
-                            txt == null ? "" : txt,
-                            extra == null ? "" : extra,
-                            AnkiDroidApp.getAppResources(),
-                            tag, tag_name);
-
-                    if (txt == null) {
-                        return String.format("{unknown field %s}", tag_name);
-                    }
-                }
-            }
-            return txt;
-        }
-
-
-        private static String clozeText(String txt, String ord, char type) {
-            Matcher m = Pattern.compile(String.format(Locale.US, clozeReg, ord)).matcher(txt);
-
-            StringBuffer rep = new StringBuffer();
-            Boolean found = false;
-
-            while (m.find()) {
-                found = true;
-                // replace chozen cloze with type
-                if (type == 'q') {
-                    if (m.group(3) != null && m.group(3).length() != 0) {
-                        m.appendReplacement(rep, "<span class=cloze>[$3]</span>");
-                    } else {
-                        m.appendReplacement(rep, "<span class=cloze>[...]</span>");
-                    }
-                } else {
-                    m.appendReplacement(rep, "<span class=cloze>$1</span>");
-                }
-            }
-
-            if (found) {
-                m.appendTail(rep);
-
-                // and display other clozes normally
-                return rep.toString().replaceAll(String.format(Locale.US, clozeReg, ".*?"), "$1");
-            }
-            else {
-                return "";
-            }
-        }
     }
 
 

@@ -46,7 +46,7 @@
   <string name="CardEditorNoteDeck">Mazo:</string>
   <string name="CardEditorModel">Tipo:</string>
   <string name="CardEditorTags">Etiquetas: %1$s</string>
-  <string name="CardEditorCards">Cards: %1$s</string>
+  <string name="CardEditorCards">Tarjetas: %1$s</string>
   <string name="add_new_filter_tags">Añadir/filtrar etiquetas</string>
   <string name="note_type">Tipo de nota</string>
   <string name="card_type">Tipo de tarjeta</string>
@@ -82,15 +82,15 @@
   <string name="factadder_saving_error">Error al guardar nota</string>
   <string name="pref_lang_support">Idioma</string>
   <string name="saving_facts">Guardando nota</string>
-  <string name="saving_model">Saving model</string>
+  <string name="saving_model">Salvando modelo</string>
   <string name="deck">Mazo</string>
   <string name="add">Añadir</string>
   <string name="close">Cerrar</string>
   <string name="select">Seleccionar</string>
   <string name="saving_changes">Guardando modificaciones...</string>
   <string name="reordering_cards">Reordenando tarjetas...</string>
-  <string name="field_remapping">%1$s (from \'%2$s\')</string>
-  <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
+  <string name="field_remapping">%1$s (de \'%2$s\')</string>
+  <string name="confirm_map_cards_to_nothing">Se eliminará cualquier tarjeta sin asignación. Si una nota no posee tarjetas restantes se perderá. ¿Está seguro de que desea continuar?</string>
   <plurals name="timebox_reached">
     <item quantity="one">%1$d tarjeta estudiada en %2$s</item>
     <item quantity="other">%1$d tarjetas estudiadas en %2$s</item>
@@ -154,7 +154,8 @@
   <string name="import_log_success">%d tarjetas importadas exitosamente</string>
   <string name="import_log_error">Importación fallida</string>
   <string name="import_log_no_apkg">Este no es un archivo apkg válido</string>
-  <string name="import_error_not_apkg_extension">Filename %s does not have .apkg extension</string>
+  <string name="import_error_not_apkg_extension">El nombre de archivo %s no posee extensión .apkg</string>
+  <string name="import_error_content_provider">El archivo seleccionado no puede ser importado automáticamente por AnkiDroid. Por favor, revise el manual de usuario para cómo importar manualmente archivos de anki: \n %s</string>
   <string name="import_importing">Importando tarjetas.\nAguarde, por favor...</string>
   <string name="export_include_schedule">Incluir programación</string>
   <string name="export_include_media">Incluir multimedia</string>

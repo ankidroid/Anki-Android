@@ -121,10 +121,10 @@
   <string name="language_summ">XXX</string>
   <string name="language_system">Sistem Dili</string>
   <string name="notification_pref">Bildirimler</string>
-  <string name="notification_pref_title">Notify when</string>
-  <string name="never_notify">Never notify</string>
-  <string name="notify_when_pending">Pending messages available</string>
-  <string name="notification_minimum_cards_due">More than %d cards due</string>
+  <string name="notification_pref_title">Şu durumda bildir:</string>
+  <string name="never_notify">Hiç bildirme</string>
+  <string name="notify_when_pending">Bekleyen mesajlar olduğunda</string>
+  <string name="notification_minimum_cards_due">Çalışılacak en az %d kart olduğunda</string>
   <string name="notification_minimum_cards_due_vibrate">Titreş</string>
   <string name="notification_minimum_cards_due_blink">Işığı yanıp söndür</string>
   <string name="timeout_answer_text">Yanıtı otomatik göster</string>

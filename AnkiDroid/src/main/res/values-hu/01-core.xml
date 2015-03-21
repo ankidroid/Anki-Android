@@ -119,6 +119,7 @@
   <string name="new_dynamic_deck">Pakli szűrt elemekkel létrehozása</string>
   <string name="studyoptions_feedback">Visszajelzés</string>
   <string name="night_mode">Éjszakai mód</string>
+  <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
   <string-array name="next_review_s">
     <item>1 másodperc</item>
     <item>1 perc</item>
@@ -149,6 +150,7 @@
   <string name="studyoptions_congrats_more_rev">A mai átnézési korlátot elérted, de még mindig maradt átnézendő kártya. Az optimális tanulás érdekében lehet, hogy meg kellene emelni a napi korlátot a Beállítások menüben.</string>
   <string name="studyoptions_congrats_more_new">További új kártyák állnak rendelkezésre, azonban a napi limitet elérted. A napi limitet az opciók menüben módosíthatod, de kérlek ne feledd, hogy ez rövidtávon megnöveli az ismétléseid számát.</string>
   <string name="studyoptions_congrats_custom">Ahhoz, hogy a szokásostól eltérő ütemben tanulhass, kattints lent, az \"Egyéni tanulás\" gombra.</string>
+  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Holnap %1$d kártyát kell átnézni és %2$s.\n Becsült idő: %3$s</item>
     <item quantity="other">Holnap %1$d kártyát kell átnézni és %2$s.\n Becsült idő: %3$s</item>
@@ -191,6 +193,5 @@
     <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
     <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
   </plurals>
-  <string name="card_template_editor_would_delete_note"> Removing this card type would cause one or
-        more notes to be deleted. Please create a new card type first.</string>
+  <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create a new card type first.</string>
 </resources>

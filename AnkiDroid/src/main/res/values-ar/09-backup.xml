@@ -66,6 +66,8 @@
   <string name="backup_restore_select_title">اختر نسخة احتياطية لاستعادتها</string>
   <string name="backup_restore_no_backups">ليست هناك نسخ احتياطية لهذه المجموعة متاحة على هذا الجهاز. إذا كان لديك النسخة الاحتياطي على الكمبيوتر المكتبي الخاص بك، الرجاء نسخها يدوياً إلى مجلد أنكيدرويد</string>
   <string name="open_collection_failed_title">لم تفتح المجموعة</string>
-  <string name="open_collection_failed_message">تعذر فتح قاعدة البيانات. أما إنها ليست قاعدة بيانات أنكي حقيقية، أو ربما أنها معطوبة.\n\nيمكنك محاولة إصلاح المجموعة أو استعادتها من نسخة احتياطية (في كلتا الحالتين، ستنقل نسخة من الرزمة المعطوبة إلى المجلد الفرعي \'%1$s\'). انقر على \'الخيارات\' لفعل ذلك.\n\n للحصول على معلومات حول إصلاح الرزم التالفة: %2$s.</string>
+  <string name="open_collection_failed_message">Database could not be opened. It\'s either not a real Anki database or has been corrupted.\n\nTouch \'options\' for various options to restore the database, or for more information about repairing corrupted collections see:\n%1$s</string>
+  <string name="corrupt_db_message">Unfortunately your collection has become corrupted.\n\nTouch \'options\' to restore from a backup, or if that does not work, see the following instructions for manually repairing the database:\n%1$s</string>
+  <string name="access_collection_failed_message">An error occurred while accessing your collection. It may have been caused by a harmless bug, or there may be a problem with it. \n\nTry running check database, or restoring from backup by pressing the \'options\' button. If you continue to see this message, please file a bug report:\n%1$s</string>
   <string name="deck_repair_error">المجموعة لا يمكن إصلاحها</string>
 </resources>

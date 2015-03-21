@@ -46,7 +46,7 @@
   <string name="contextmenu_deckpicker_delete_deck">単語帳を削除</string>
   <string name="delete_deck_title">単語帳を削除</string>
   <string name="delete_deck_message">%s の中のすべてのカードを削除してもよろしいですか。</string>
-  <string name="delete_cram_deck_message"> %s のすべてのカードを、元の単語帳に戻してもよろしいですか？</string>
+  <string name="delete_cram_deck_message"> %s のすべてのカードを元の単語帳に戻してもよろしいですか？</string>
   <string name="delete_deck_confirm">削除</string>
   <string name="new_version_message">新機能:</string>
   <string name="no_tts_available_title">テキスト読み上げ</string>
@@ -54,10 +54,10 @@
   <string name="initializing_tts">テキスト読み上げ機能を初期化しています.</string>
   <string name="tts_no_tts">音声なし</string>
   <string-array name="about_content">
-    <item><![CDATA[<h2>%1$s:<br/>Android用のフラッシュカード</h2>AnkiDroidは、PCソフトウェア <a href=\"%2$s\">Anki</a> と完全互換のフラッシュカードアプリです。あなたは、AnkiDroid と Anki のどちらでも教材を作成、ダウンロード、学習し、また、簡単に双方の同期をとることができます。]]></item>
-    <item><![CDATA[AnkiDroid を改善するために、できるだけバグを <a href="%1$s">こちら</a>に報告していただければ幸いです。 新しい機能のアイデアも大歓迎します！　<a href="%2$s">Wiki </a> を使用して、<a href="%3$s">フォーラム</a>にご意見をお寄せください。]]></item>
-    <item><![CDATA[AnkiDroid は、<a href="%1$s">オープン ソース ソフトウェア<a/>です。誰でも<a href="%3$s">貢献者</a> として<a href="%2$s">参加</a>できます。私たちは、あなたの参加を大いに歓迎します。:-)　]]></item>
-    <item><![CDATA[開発者でなくても、例えば AnkiDroid を<a href="%1$s">翻訳</a>したり、Wikiやスクリーン ショットを更新したり、PC版の Anki に<a href="%2$s">寄付</a>をしたり、AnkiDroid についてのブログを書いたりして貢献できます！]]></item>
+    <item><![CDATA[<h2>%1$s:<br/>Android用のフラッシュカード</h2>AnkiDroid は、PCソフトウェア <a href=\"%2$s\">Anki</a> と完全互換のフラッシュカードアプリです。あなたは、AnkiDroid と Anki のどちらでも教材を作成、ダウンロード、学習し、また、簡単に双方の同期をとることができます。]]></item>
+    <item><![CDATA[AnkiDroid を改善するために、できるだけバグを <a href="%1$s">こちら</a>に報告していただければ幸いです。 新しい機能のアイデアも大歓迎します！　<a href="%2$s">Wiki</a> を使用して、<a href="%3$s">フォーラム</a>にご意見をお寄せください。]]></item>
+    <item><![CDATA[AnkiDroid は、<a href="%1$s">オープンソースソフトウェア<a/>です。誰でも<a href="%3$s">貢献者</a>として<a href="%2$s">参加</a>できます。私たちは、あなたの参加を大いに歓迎します :-)　]]></item>
+    <item><![CDATA[開発者でなくても、例えば AnkiDroid を<a href="%1$s">翻訳</a>したり、Wiki やスクリーンショットを更新したり、Ankiプロジェクトに<a href="%2$s">寄付</a>をしたり、AnkiDroid についてのブログを書いたりして貢献できます！]]></item>
     <item><![CDATA[AnkiDroid は、<a href="%1$s">GNU GPL v3 ライセンス</a>の下でリリースされており、ソースコードは<a href="%2$s">こちら</a>です。]]></item>
   </string-array>
   <string name="dont_show_again">今後は表示しない</string>
@@ -72,8 +72,8 @@
   <string name="reset_card_dialog_message">このカードは新規カードの最後に配置されます。</string>
   <string name="reset_card_dialog_acknowledge">カードがリセットされました</string>
   <string name="reschedule_card_dialog_title">スケジュールを変更</string>
-  <string name="reschedule_card_dialog_message">x日後に復習</string>
-  <string name="reschedule_card_dialog_acknowledge">カードのスケジュールが変更されました。</string>
+  <string name="reschedule_card_dialog_message">x 日後に復習</string>
+  <string name="reschedule_card_dialog_acknowledge">カードのスケジュールを変更しました</string>
   <string name="answering_error_title">データベース エラー</string>
   <string name="answering_error_message">コレクションへの書き込み中にエラーが発生しました。これは、データの破損か、ディスクの容量の不足が原因と考えられます。\n\n繰り返しエラーが発生する場合には、データをチェックするか、バックアップからコレクションを修復してください。\n\nまた、AnkiDroidのバグかもしれませんので\'オプション\'をクリックして、エラーを報告してください。</string>
   <string name="answering_error_report">エラーを報告する</string>
@@ -83,13 +83,13 @@
   <string name="intent_aedict_empty">カテゴリー \'default\' が空です。</string>
   <string name="intent_aedict_category">AnkiDroidにカードを登録するため、すべてのNotepadカテゴリを削除するか追、\'default\' という名前のカテゴリを追加してください。</string>
   <string name="custom_study_new_total_new">単語帳の中の新規カードの枚数: %s</string>
-  <string name="custom_study_rev_total_rev">期限がきた復習カード数: %s</string>
-  <string name="custom_study_new_extend">取り組む新規カードの上限数</string>
-  <string name="custom_study_rev_extend">復習カードの上限数</string>
-  <string name="custom_study_forgotten">復習する忘却カードの指定日数</string>
-  <string name="custom_study_ahead">先行して復習する日数</string>
+  <string name="custom_study_rev_total_rev">予定日時に達した復習カード数: %s</string>
+  <string name="custom_study_new_extend">今日の新規カードの上限をあと x 枚上げる</string>
+  <string name="custom_study_rev_extend">今日の復習カードの上限をあと x 枚上げる</string>
+  <string name="custom_study_forgotten">過去 x 日以内に忘却したカードを復習する</string>
+  <string name="custom_study_ahead">先取りする日数</string>
   <string name="custom_study_random">単語帳からランダムに抽出するカードの枚数</string>
-  <string name="custom_study_preview">以前追加された新規カードをプレビュー（日数指定）</string>
+  <string name="custom_study_preview">過去 x 日間に追加された新規カードをプレビュー</string>
   <string name="custom_study_tags">タグの入力</string>
   <string name="rebuild_custom_study_deck">カスタム単語帳を再構築します\nしばらくお待ちください</string>
   <string name="deck_upgrade_title">単語帳の更新</string>
@@ -125,10 +125,10 @@
   <string name="importing_collection">コレクションをインポートしています。\nお待ちください&#8230;</string>
   <string name="import_media_count">メディアファイルをインポートしています。 %1$d%%\nお待ちください&#8230;</string>
   <string name="import_update_counts">単語帳の数を更新しています。\nお待ちください&#8230;</string>
-  <string name="import_add_progress">• 解凍中のアーカイブ %1$s\n• ノートのインポート %2$d%%\n• カードのインポート %3$d%%\n• クリーンアップ %4$s</string>
+  <string name="import_add_progress">• アーカイブの解凍 %1$s\n• ノートのインポート %2$d%%\n• カードのインポート %3$d%%\n• クリーンアップ %4$s</string>
   <string name="sd_card_full_title">SD カード残量なし</string>
   <string name="sd_card_almost_full_title">SD カード残量わずか</string>
-  <string name="restore_backup_title">バックアップを復元しますか？</string>
+  <string name="restore_backup_title">バックアップから復元しますか？</string>
   <string name="restore_backup">コレクションは、古い物と置き換えられます。また、未保存のものは失われます。</string>
   <string name="dialog_cancel">キャンセル</string>
   <string name="dialog_ok">OK</string>
@@ -154,14 +154,14 @@
   <string name="dialog_collection_path_not_dir">指定されたパスは有効なディレクトリではありませんでした</string>
   <string name="check_media_title">メディアをチェックしますか？</string>
   <string name="check_media_warning">大きなコレクションの場合は、長い時間がかかる場合があります。</string>
-  <string name="check_media_message">メディアをチェックしています.</string>
+  <string name="check_media_message">メディアをチェックしています...</string>
   <string name="check_media_acknowledge">メディアがチェックされました。</string>
   <string name="check_media_failed">メディアのチェック時にエラーが発生しました</string>
   <string name="check_media_invalid">エンコーディングが無効なファイル数: %d</string>
-  <string name="check_media_unused">カードに使用されていないファイル（メディア ・ フォルダー内の数）: %d</string>
-  <string name="check_media_nohave">カードに使用されているが、メディア ・ フォルダー内に存在しないファイルの数: %d</string>
+  <string name="check_media_unused">(1) メディア用フォルダ内に存在するが、どのカードにも使用されていないファイル: %d 個</string>
+  <string name="check_media_nohave">(2) カードに使用されているが、メディア ・ フォルダー内に存在しないファイルの数: %d 個</string>
   <string name="check_media_no_unused_missing">使われていないファイル、不足しているファイルはありませんでした。</string>
   <string name="check_media_db_updated">メディアのデータベースが再構築されました。</string>
-  <string name="check_media_delete_unused">上記ファイル削除</string>
+  <string name="check_media_delete_unused">(1) を削除</string>
   <string name="check_media_deleted">削除されたファイル: %d</string>
 </resources>

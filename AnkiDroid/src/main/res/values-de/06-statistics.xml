@@ -153,8 +153,8 @@
   <string name="stats_review_intervals">Intervalle</string>
   <string name="stats_breakdown">Gedächtnisleistung nach Tageszeit</string>
   <string name="stats_weekly_breakdown">Gedächtnisleistung nach Wochentag</string>
-  <string name="stats_answer_buttons">Antwortknopf</string>
-  <string name="stats_cards_types">Kartenstatus</string>
+  <string name="stats_answer_buttons">Antwortschaltflächen</string>
+  <string name="stats_cards_types">Kartentypen</string>
   <string-array name="stats_period">
     <item>1 Monat</item>
     <item>1 Jahr</item>
@@ -172,13 +172,13 @@
     <item>3 Uhr</item>
   </string-array>
   <string-array name="stats_week_days">
-    <item>Son</item>
-    <item>Mon</item>
-    <item>Die</item>
-    <item>Mit</item>
-    <item>Don</item>
-    <item>Fre</item>
-    <item>Sam</item>
+    <item>So</item>
+    <item>Mo</item>
+    <item>Di</item>
+    <item>Mi</item>
+    <item>Do</item>
+    <item>Fr</item>
+    <item>Sa</item>
   </string-array>
   <string-array name="stats_eases_ticks">
     <item>1</item>

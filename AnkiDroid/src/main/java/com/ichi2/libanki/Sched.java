@@ -27,7 +27,6 @@ import android.graphics.Typeface;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.StyleSpan;
-
 import android.util.Pair;
 
 import com.ichi2.anki.AnkiDroidApp;
@@ -42,18 +41,16 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
-import java.util.TreeSet;
 
 import timber.log.Timber;
 
@@ -386,138 +383,141 @@ public class Sched {
     /**
      * Returns [deckname, did, rev, lrn, new]
      */
-    public ArrayList<Object[]> deckDueList() {
+    public List<DeckDueTreeNode> deckDueList() {
         _checkDay();
         mCol.getDecks().recoverOrphans();
-        // LIBANKI: uses all() instead of sorted() and then sorts the decks
         ArrayList<JSONObject> decks = mCol.getDecks().allSorted();
         HashMap<String, Integer[]> lims = new HashMap<String, Integer[]>();
-        ArrayList<Object[]> data = new ArrayList<Object[]>();
+        ArrayList<DeckDueTreeNode> data = new ArrayList<DeckDueTreeNode>();
         try {
             for (JSONObject deck : decks) {
-            	// if we've already seen the exact same deck name, remove the
-            	// invalid duplicate and reload
-            	if (lims.containsKey(deck.getString("name"))) {
-            		mCol.getDecks().rem(deck.getLong("id"), false, true);
-            		return deckDueList();
-            	}
-            	String p;
+                // if we've already seen the exact same deck name, remove the
+                // invalid duplicate and reload
+                if (lims.containsKey(deck.getString("name"))) {
+                    mCol.getDecks().rem(deck.getLong("id"), false, true);
+                    return deckDueList();
+                }
+                String p;
                 List<String> parts = Arrays.asList(deck.getString("name").split("::"));
                 if (parts.size() < 2) {
                     p = null;
                 } else {
                     parts = parts.subList(0, parts.size() - 1);
                     p = TextUtils.join("::", parts);
-            	}
-            	// new
-            	int nlim = _deckNewLimitSingle(deck);
-            	if (!TextUtils.isEmpty(p)) {
-            		if (!lims.containsKey(p)) {
-                		// if parent was missing, this deck is invalid, and we need to reload the deck list
-                		mCol.getDecks().rem(deck.getLong("id"), false, true);
-            			return deckDueList();
-            		}
-            		nlim = Math.min(nlim, lims.get(p)[0]);
-            	}
-            	int newC = _newForDeck(deck.getLong("id"), nlim);
-            	// learning
-            	int lrn = _lrnForDeck(deck.getLong("id"));
-            	// reviews
-            	int rlim = _deckRevLimitSingle(deck);
-            	if (!TextUtils.isEmpty(p)) {
-            		rlim = Math.min(rlim,  lims.get(p)[1]);
-            	}
-            	int rev = _revForDeck(deck.getLong("id"), rlim);
-            	// save to list
-            	// LIBANKI: order differs from libanki (here: new, lrn, rev)  // TODO: why?
-            	data.add(new Object[]{deck.getString("name"), deck.getLong("id"), newC, lrn, rev});
-            	// add deck as a parent
-            	lims.put(deck.getString("name"), new Integer[]{nlim, rlim});
+                }
+                // new
+                int nlim = _deckNewLimitSingle(deck);
+                if (!TextUtils.isEmpty(p)) {
+                    if (!lims.containsKey(p)) {
+                        // if parent was missing, this deck is invalid, and we need to reload the deck list
+                        mCol.getDecks().rem(deck.getLong("id"), false, true);
+                        return deckDueList();
+                    }
+                    nlim = Math.min(nlim, lims.get(p)[0]);
+                }
+                int _new = _newForDeck(deck.getLong("id"), nlim);
+                // learning
+                int lrn = _lrnForDeck(deck.getLong("id"));
+                // reviews
+                int rlim = _deckRevLimitSingle(deck);
+                if (!TextUtils.isEmpty(p)) {
+                    rlim = Math.min(rlim, lims.get(p)[1]);
+                }
+                int rev = _revForDeck(deck.getLong("id"), rlim);
+                // save to list
+                data.add(new DeckDueTreeNode(deck.getString("name"), deck.getLong("id"), rev, lrn, _new));
+                // add deck as a parent
+                lims.put(deck.getString("name"), new Integer[]{nlim, rlim});
             }
         } catch (JSONException e) {
-        	throw new RuntimeException(e);
+            throw new RuntimeException(e);
         }
         return data;
     }
 
 
-    public TreeSet<Object[]> deckDueTree() {
+    public List<DeckDueTreeNode> deckDueTree() {
         return _groupChildren(deckDueList());
     }
 
 
-    private TreeSet<Object[]> _groupChildren(ArrayList<Object[]> grps) {
-        TreeSet<Object[]> set = new TreeSet<Object[]>(new DeckNameCompare());
+    private List<DeckDueTreeNode> _groupChildren(List<DeckDueTreeNode> grps) {
         // first, split the group names into components
-        for (Object[] g : grps) {
-            set.add(new Object[] { ((String) g[0]).split("::"), g[1], g[2], g[3], g[4] });
+        for (DeckDueTreeNode g : grps) {
+            g.names = g.names[0].split("::");
         }
-        return _groupChildrenMain(set);
+        // and sort based on those components
+        Collections.sort(grps);
+        // then run main function
+        return _groupChildrenMain(grps);
     }
 
 
-    private TreeSet<Object[]> _groupChildrenMain(TreeSet<Object[]> grps) {
-    	return _groupChildrenMain(grps, 0);
-    }
-    private TreeSet<Object[]> _groupChildrenMain(TreeSet<Object[]> grps, int depth) {
-        TreeSet<Object[]> tree = new TreeSet<Object[]>(new DeckNameCompare());
+    private List<DeckDueTreeNode> _groupChildrenMain(List<DeckDueTreeNode> grps) {
+        List<DeckDueTreeNode> tree = new ArrayList<DeckDueTreeNode>();
         // group and recurse
-        Iterator<Object[]> it = grps.iterator();
-        Object[] tmp = null;
-        while (tmp != null || it.hasNext()) {
-            Object[] head;
-            if (tmp != null) {
-                head = tmp;
-                tmp = null;
-            } else {
-                head = it.next();
-            }
-            String[] title = (String[]) head[0];
-            long did = (Long) head[1];
-            int newCount = (Integer) head[2];
-            int lrnCount = (Integer) head[3];
-            int revCount = (Integer) head[4];
-            TreeSet<Object[]> children = new TreeSet<Object[]>(new DeckNameCompare());
+        ListIterator<DeckDueTreeNode> it = grps.listIterator();
+        while (it.hasNext()) {
+            DeckDueTreeNode node = it.next();
+            String head = node.names[0];
+            // Compose the "tail" node list. The tail is a list of all the nodes that proceed
+            // the current one that contain the same name[0]. I.e., they are subdecks that stem
+            // from this node. This is our version of python's itertools.groupby.
+            List<DeckDueTreeNode> tail  = new ArrayList<DeckDueTreeNode>();
+            tail.add(node);
             while (it.hasNext()) {
-                Object[] o = it.next();
-                if (((String[])o[0])[depth].equals(title[depth])) {
-                    // add to children
-                    children.add(o);
+                DeckDueTreeNode next = it.next();
+                if (head.equals(next.names[0])) {
+                    // Same head - add to tail of current head.
+                    tail.add(next);
                 } else {
-                    // proceed with this as head
-                    tmp = o;
+                    // We've iterated past this head, so step back in order to use this node as the
+                    // head in the next iteration of the outer loop.
+                    it.previous();
                     break;
                 }
             }
-            children = _groupChildrenMain(children, depth + 1);
-            // tally up children counts, but skip deeper sub-decks
-            for (Object[] ch : children) {
-               if (((String[])ch[0]).length == ((String[])head[0]).length+1) {
-                  newCount += (Integer)ch[2];
-                  lrnCount += (Integer)ch[3];
-                  revCount += (Integer)ch[4];
-               }
+            Long did = null;
+            int rev = 0;
+            int _new = 0;
+            int lrn = 0;
+            List<DeckDueTreeNode> children = new ArrayList<DeckDueTreeNode>();
+            for (DeckDueTreeNode c : tail) {
+                if (c.names.length == 1) {
+                    // current node
+                    did = c.did;
+                    rev += c.revCount;
+                    lrn += c.lrnCount;
+                    _new += c.newCount;
+                } else {
+                    // set new string to tail
+                    String[] newTail = new String[c.names.length-1];
+                    System.arraycopy(c.names, 1, newTail, 0, c.names.length-1);
+                    c.names = newTail;
+                    children.add(c);
+                }
+            }
+            children = _groupChildrenMain(children);
+            // tally up children counts
+            for (DeckDueTreeNode ch : children) {
+                rev +=  ch.revCount;
+                lrn +=  ch.lrnCount;
+                _new += ch.newCount;
             }
             // limit the counts to the deck's limits
             JSONObject conf = mCol.getDecks().confForDid(did);
             JSONObject deck = mCol.getDecks().get(did);
             try {
                 if (conf.getInt("dyn") == 0) {
-                    revCount = Math.max(0, Math.min(revCount, conf.getJSONObject("rev").getInt("perDay") - deck.getJSONArray("revToday").getInt(1)));
-                    newCount = Math.max(0, Math.min(newCount, conf.getJSONObject("new").getInt("perDay") - deck.getJSONArray("newToday").getInt(1)));
+                    rev = Math.max(0, Math.min(rev, conf.getJSONObject("rev").getInt("perDay") - deck.getJSONArray("revToday").getInt(1)));
+                    _new = Math.max(0, Math.min(_new, conf.getJSONObject("new").getInt("perDay") - deck.getJSONArray("newToday").getInt(1)));
                 }
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
-            tree.add(new Object[] {title, did, newCount, lrnCount, revCount,
-            children});
+            tree.add(new DeckDueTreeNode(head, did, rev, lrn, _new, children));
         }
-        TreeSet<Object[]> result = new TreeSet<Object[]>(new DeckNameCompare());
-        for (Object[] t : tree) {
-            result.add(new Object[]{t[0], t[1], t[2], t[3], t[4]});
-            result.addAll((TreeSet<Object[]>) t[5]);
-        }
-        return result;
+        return tree;
     }
 
 
@@ -803,7 +803,12 @@ public class Sched {
                 mLrnQueue.add(new long[] { cur.getLong(0), cur.getLong(1) });
             }
             // as it arrives sorted by did first, we need to sort it
-            Collections.sort(mLrnQueue, new DueComparator());
+            Collections.sort(mLrnQueue, new Comparator<long[]>() {
+                @Override
+                public int compare(long[] lhs, long[] rhs) {
+                    return Long.valueOf(lhs[0]).compareTo(rhs[0]);
+                }
+            });
             return !mLrnQueue.isEmpty();
         } finally {
             if (cur != null && !cur.isClosed()) {
@@ -1605,7 +1610,7 @@ public class Sched {
                 "UPDATE cards SET did = odid, queue = (CASE WHEN type = 1 THEN 0 "
                         + "ELSE type END), type = (CASE WHEN type = 1 THEN 0 ELSE type END), "
                         + "due = odue, odue = 0, odid = 0, usn = ?, mod = ? where " + lim,
-                new Object[] { mCol.usn(), Utils.intNow() });
+                new Object[]{mCol.usn(), Utils.intNow()});
     }
 
 
@@ -2156,8 +2161,8 @@ public class Sched {
     /** Put cards at the end of the new queue. */
     public void forgetCards(long[] ids) {
         remFromDyn(ids);
-        mCol.getDb().execute("update cards set type=0,queue=0,ivl=0,due=0,odue=0,factor=2500"+
-                             " where id in " + Utils.ids2str(ids));
+        mCol.getDb().execute("update cards set type=0,queue=0,ivl=0,due=0,odue=0,factor=2500" +
+                " where id in " + Utils.ids2str(ids));
         int pmax = mCol.getDb().queryScalar("SELECT max(due) FROM cards WHERE type=0", false);
         // takes care of mod + usn
         sortCards(ids, pmax + 1);
@@ -2184,7 +2189,7 @@ public class Sched {
         remFromDyn(ids);
         mCol.getDb().executeMany(
                 "update cards set type=2,queue=2,ivl=?,due=?,odue=0, " +
-                "usn=?,mod=?,factor=? where id=?", d);
+                        "usn=?,mod=?,factor=? where id=?", d);
         mCol.log(ids);
     }
 
@@ -2315,11 +2320,12 @@ public class Sched {
     }
 
 
-    /**
-     ***********************************************
-     * Everything below here is not in libanki.
-     ***********************************************
+    /*
+     * ***********************************************************
+     * The methods below are not in LibAnki.
+     * ***********************************************************
      */
+
 
     public String getName() {
         return mName;
@@ -2341,57 +2347,14 @@ public class Sched {
     }
 
 
-    public Collection getCol() {
-        return mCol;
-    }
-
-
-    public int getNewCount() {
-        return mNewCount;
-    }
-
     public int getReps(){
         return mReps;
     }
 
+
     public void setReps(int reps){
         mReps = reps;
     }
-
-
-    // Needed for tests
-    public LinkedList<Long> getNewQueue() {
-        return mNewQueue;
-    }
-
-    private class DeckNameCompare implements Comparator<Object[]> {
-        @Override
-        public int compare(Object[] lhs, Object[] rhs) {
-            String[] o1 = (String[]) lhs[0];
-            String[] o2 = (String[]) rhs[0];
-            for (int i = 0; i < Math.min(o1.length, o2.length); i++) {
-                int result = o1[i].compareToIgnoreCase(o2[i]);
-                if (result != 0) {
-                    return result;
-                }
-            }
-            if (o1.length < o2.length) {
-                return -1;
-            } else if (o1.length > o2.length) {
-                return 1;
-            } else {
-                return 0;
-            }
-        }
-    }
-
-    private class DueComparator implements Comparator<long[]> {
-        @Override
-        public int compare(long[] lhs, long[] rhs) {
-            return Long.valueOf(lhs[0]).compareTo(rhs[0]);
-        }
-    }
-
 
 
     /**
@@ -2399,21 +2362,13 @@ public class Sched {
      */
 
     public int cardCount() {
-        return cardCount(_deckLimit());
-    }
-
-
-    public int cardCount(String dids) {
+        String dids = _deckLimit();
         return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE did IN " + dids, false);
     }
 
 
     public int matureCount() {
-        return matureCount(_deckLimit());
-    }
-
-
-    public int matureCount(String dids) {
+        String dids = _deckLimit();
         return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE type = 2 AND ivl >= 21 AND did IN " + dids,
                 false);
     }
@@ -2425,7 +2380,7 @@ public class Sched {
      * @param card
      * @return [progressCurrentDeck, progressAllDecks, leftCards, eta]
      */
-    public float[] progressToday(TreeSet<Object[]> counts, Card card, boolean eta) {
+    public float[] progressToday(List<DeckDueTreeNode> counts, Card card, boolean eta) {
         try {
             int doneCurrent = 0;
             int[] leftCurrent = new int[]{0, 0, 0};
@@ -2458,15 +2413,15 @@ public class Sched {
                 mCachedDeckCounts.clear();
                 if (counts == null) {
                     // reload counts
-                    counts = (TreeSet<Object[]>)deckCounts()[0];
+                    counts = deckDueList();
                 }
-                for (Object[] d : counts) {
+                for (DeckDueTreeNode d : counts) {
                     int done = 0;
-                    JSONObject deck = mCol.getDecks().get((Long) d[1]);
+                    JSONObject deck = mCol.getDecks().get(d.did);
                     for (String s : cs) {
                         done += deck.getJSONArray(s + "Today").getInt(1);
                     }
-                    mCachedDeckCounts.put((Long)d[1], new Pair<String[], long[]> ((String[])d[0], new long[]{done, (Integer)d[2], (Integer)d[3], (Integer)d[4]}));
+                    mCachedDeckCounts.put(d.did, new Pair<String[], long[]> (d.names, new long[]{done, d.newCount, d.lrnCount, d.newCount}));
                 }
             }
 
@@ -2600,51 +2555,6 @@ public class Sched {
     }
 
 
-    public Object[] deckCounts() {
-        TreeSet<Object[]> decks = deckDueTree();
-        int[] counts = new int[] { 0, 0, 0 };
-        for (Object[] deck : decks) {
-            if (((String[]) deck[0]).length == 1) {
-                counts[0] += (Integer) deck[2];
-                counts[1] += (Integer) deck[3];
-                counts[2] += (Integer) deck[4];
-            }
-        }
-        TreeSet<Object[]> decksNet = new TreeSet<Object[]>(new DeckNameCompare());
-        for (Object[] d : decks) {
-            try {
-                boolean show = true;
-                for (JSONObject o : mCol.getDecks().parents((Long) d[1])) {
-                    if (o.getBoolean("collapsed")) {
-                        show = false;
-                        break;
-                    }
-                }
-                if (show) {
-                    JSONObject deck = mCol.getDecks().get((Long) d[1]);
-                    if (deck.getBoolean("collapsed")) {
-                        String[] name = (String[]) d[0];
-                        name[name.length - 1] = name[name.length - 1] + "[coll]";
-                        d[0] = name;
-                    } else if (!mCol.getDecks().hasChildren((Long)d[1])) {
-                        String[] name = (String[]) d[0];
-                        name[name.length - 1] = name[name.length - 1] + "[nchi]";
-                        d[0] = name;
-                    }
-                    decksNet.add(new Object[]{d[0], d[1], d[2], d[3], d[4], deck.getInt("dyn") != 0});
-                }
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return new Object[] { decksNet, eta(counts), mCol.cardCount() };
-    }
-
-
-    public void setSpreadRev(boolean mSpreadRev) {
-        this.mSpreadRev = mSpreadRev;
-    }
-
     /**
      * Sorts a card into the lrn queue LIBANKI: not in libanki
      */
@@ -2675,5 +2585,57 @@ public class Sched {
 
     public void setContext(WeakReference<Activity> contextReference) {
         mContextReference = contextReference;
+    }
+
+
+    /**
+     * Holds the data for a single node (row) in the deck due tree (the user-visible list
+     * of decks and their counts). A node also contains a list of nodes that refer to the
+     * next level of sub-decks for that particular deck (which can be an empty list).
+     *
+     * The names field is an array of names that build a deck name from a hierarchy (i.e., a nested
+     * deck will have an entry for every level of nesting). While the python version interchanges
+     * between a string and a list of strings throughout processing, we always use an array for
+     * this field and use names[0] for those cases.
+     */
+    public class DeckDueTreeNode implements Comparable {
+        public String[] names;
+        public long did;
+        public int revCount;
+        public int lrnCount;
+        public int newCount;
+        public List<DeckDueTreeNode> children = new ArrayList<DeckDueTreeNode>();
+
+        public DeckDueTreeNode(String[] names, long did, int revCount, int lrnCount, int newCount) {
+            this.names = names;
+            this.did = did;
+            this.revCount = revCount;
+            this.lrnCount = lrnCount;
+            this.newCount = newCount;
+        }
+
+        public DeckDueTreeNode(String name, long did, int revCount, int lrnCount, int newCount) {
+            this(new String[]{name}, did, revCount, lrnCount, newCount);
+        }
+
+        public DeckDueTreeNode(String name, long did, int revCount, int lrnCount, int newCount,
+                               List<DeckDueTreeNode> children) {
+            this(new String[]{name}, did, revCount, lrnCount, newCount);
+            this.children = children;
+        }
+
+        /**
+         * Sort on the head of the node.
+         */
+        @Override
+        public int compareTo(Object other) {
+            return this.names[0].compareTo(((DeckDueTreeNode)other).names[0]);
+        }
+
+        @Override
+        public String toString() {
+            return String.format("%s, %d, %d, %d, %d, %s",
+                    Arrays.toString(names), did, revCount, lrnCount, newCount, children);
+        }
     }
 }

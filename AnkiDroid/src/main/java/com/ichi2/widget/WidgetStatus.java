@@ -20,15 +20,15 @@ import android.content.SharedPreferences;
 import android.database.SQLException;
 import android.os.AsyncTask;
 
-
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.MetaDB;
 import com.ichi2.anki.services.NotificationService;
 import com.ichi2.async.BaseAsyncTask;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.Sched;
 
-import java.util.TreeSet;
+import java.util.List;
 
 import timber.log.Timber;
 
@@ -46,7 +46,7 @@ public final class WidgetStatus {
 
     private static DeckStatus sDeckStatus;
     private static float[] sSmallWidgetStatus;
-    private static TreeSet<Object[]> sDeckCounts;
+    private static List<Sched.DeckDueTreeNode> sDeckCounts;
 
     private static AsyncTask<Context, Void, Context> sUpdateDeckStatusAsyncTask;
 
@@ -68,7 +68,7 @@ public final class WidgetStatus {
     }
 
 
-    public static void update(Context context, TreeSet<Object[]> deckCounts) {
+    public static void update(Context context, List<Sched.DeckDueTreeNode> deckCounts) {
         update(context, true, null, null, deckCounts);
     }
 
@@ -79,7 +79,7 @@ public final class WidgetStatus {
 
 
     public static void update(Context context, boolean updateBigWidget, DeckStatus deckStatus,
-            float[] smallWidgetStatus, TreeSet<Object[]> deckCounts) {
+            float[] smallWidgetStatus, List<Sched.DeckDueTreeNode> deckCounts) {
         sDeckStatus = deckStatus;
         sSmallWidgetStatus = smallWidgetStatus;
         sDeckCounts = deckCounts;

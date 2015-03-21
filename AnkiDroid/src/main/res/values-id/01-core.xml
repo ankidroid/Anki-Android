@@ -119,6 +119,7 @@
   <string name="new_dynamic_deck">Buat penyaringan dek</string>
   <string name="studyoptions_feedback">Respon</string>
   <string name="night_mode">Mode malam</string>
+  <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
   <string-array name="next_review_s">
     <item>1 detik</item>
     <item>1 menit</item>
@@ -149,6 +150,7 @@
   <string name="studyoptions_congrats_more_rev">Hari ini batas telah dicapai, tetapi besok masih ada kartu-kartu untuk diriview. Kamu dapat meningkatkan batas di pilihan-pilihan.</string>
   <string name="studyoptions_congrats_more_new">Hari ini batas telah dicapai. Ada lebih banyak kartu-kartu baru yang tersedia; kamu dapat menambahkan batas di pilihan-pilihan, tetapi ini dapat meningkatkan jangka pendek review beban kerja.</string>
   <string name="studyoptions_congrats_custom">Untuk belajar di luar dari jadwal normal, sentuh tombol \"Belajar pilihan\" di bawah</string>
+  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Besok akan ada: %1$d kartu unuk diriview dan %2$s.\n Perkiraan waktu: %3$s</item>
     <item quantity="other">Besok akan ada: %1$d kartu-kartu untuk diriview dan %2$s.\n Perkiraan waktu: %3$s</item>
@@ -191,6 +193,5 @@
     <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
     <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
   </plurals>
-  <string name="card_template_editor_would_delete_note"> Removing this card type would cause one or
-        more notes to be deleted. Please create a new card type first.</string>
+  <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create a new card type first.</string>
 </resources>

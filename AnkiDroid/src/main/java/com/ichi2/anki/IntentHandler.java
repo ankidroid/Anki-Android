@@ -49,7 +49,7 @@ public class IntentHandler extends Activity {
             // We want to go immediately to DeckPicker, clearing any history in the process
             Timber.i("IntentHandler/ User requested to view a file");
             boolean successful = false;
-            String errorMessage =getResources().getString(R.string.import_log_no_apkg);
+            String errorMessage = getResources().getString(R.string.import_error_content_provider, AnkiDroidApp.getManualUrl()+"#importing");
             // If the file is being sent from a content provider we need to read the content before we can open the file
             if (intent.getData().getScheme().equals("content")) {
                 // Get the original filename from the content provider URI
@@ -64,6 +64,7 @@ public class IntentHandler extends Activity {
                     if (cursor != null)
                         cursor.close();
                 }
+
                 // Hack to fix bug where ContentResolver not returning filename correctly
                 if (filename == null) {
                     if (intent.getType().equals("application/apkg") || hasValidZipFile(intent)) {
@@ -75,8 +76,12 @@ public class IntentHandler extends Activity {
                         AnkiDroidApp.sendExceptionReport(new RuntimeException("Could not import apkg from ContentProvider"), "IntentHandler.java", "apkg import failed");
                     }
                 }
-                // Copy to temporary file
-                if (filename != null) {
+
+                if (filename != null && !filename.toLowerCase().endsWith(".apkg")) {
+                    // Don't import if not apkg file
+                    errorMessage = getResources().getString(R.string.import_error_not_apkg_extension, filename);
+                } else if (filename != null) {
+                    // Copy to temporary file
                     String tempOutDir = Uri.fromFile(new File(getCacheDir(), filename)).getEncodedPath();
                     successful = copyFileToCache(intent, tempOutDir);
                     // Show import dialog
@@ -84,7 +89,6 @@ public class IntentHandler extends Activity {
                         sendShowImportFileDialogMsg(tempOutDir);
                     } else {
                         AnkiDroidApp.sendExceptionReport(new RuntimeException("Error importing apkg file"), "IntentHandler.java", "apkg import failed");
-                        errorMessage = getResources().getString(R.string.import_error_content_provider, AnkiDroidApp.getManualUrl()+"#importing");
                     }
                 }
             } else if (intent.getData().getScheme().equals("file")) {

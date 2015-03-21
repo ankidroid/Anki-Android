@@ -49,7 +49,7 @@
   </plurals>
   <plurals name="widget_decks">
     <item quantity="one">%1$d Stapel</item>
-    <item quantity="other">%1$d Stapeln</item>
+    <item quantity="other">%1$d Stapel</item>
   </plurals>
   <string name="widget_medium">AnkiDroid Mittel</string>
   <string name="widget_small">AnkiDroid Klein</string>

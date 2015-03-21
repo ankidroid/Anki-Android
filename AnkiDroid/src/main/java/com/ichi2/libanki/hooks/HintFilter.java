@@ -18,6 +18,7 @@ package com.ichi2.libanki.hooks;
 
 import android.content.res.Resources;
 
+import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 
 public class HintFilter {
@@ -32,7 +33,7 @@ public class HintFilter {
             if (txt.trim().length() == 0) {
                 return "";
             }
-            Resources res = (Resources) args[1];
+            Resources res = AnkiDroidApp.getAppResources();
             // random id
             String domid = "hint" + txt.hashCode();
             return "<a class=hint href=\"#\" onclick=\"this.style.display='none';document.getElementById('" +

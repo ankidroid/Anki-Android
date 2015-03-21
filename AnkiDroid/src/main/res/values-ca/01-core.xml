@@ -119,6 +119,7 @@
   <string name="new_dynamic_deck">Create filtered deck</string>
   <string name="studyoptions_feedback">Comentaris</string>
   <string name="night_mode">Mode Nit</string>
+  <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
   <string-array name="next_review_s">
     <item>1 segon</item>
     <item>1 minut</item>
@@ -149,6 +150,7 @@
   <string name="studyoptions_congrats_more_rev">S\'ha assolit el límit de revisió d\'avui, però encara hi ha fitxes per a revisar. Per a optimitzar la memòria, considereu augmentar el límit diari a les opcions.</string>
   <string name="studyoptions_congrats_more_new">Hi ha més fitxes noves, però s\'ha assolit el límit diari. Podeu augmentar el límit a les opcions, però si us plau, tingueu en compte que això farà augmentar la càrrega de treball de la revisió a curt termini.</string>
   <string name="studyoptions_congrats_custom">Per a estudiar fora de la planificació normal, cliqueu al botó Estudi a Mida d\'aquí sota.</string>
+  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
     <item quantity="other">Demà hi haurà: %1$d fitxes per revisar i %2$s.\n Temps aproximat: %3$s</item>
@@ -191,6 +193,5 @@
     <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
     <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
   </plurals>
-  <string name="card_template_editor_would_delete_note"> Removing this card type would cause one or
-        more notes to be deleted. Please create a new card type first.</string>
+  <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create a new card type first.</string>
 </resources>

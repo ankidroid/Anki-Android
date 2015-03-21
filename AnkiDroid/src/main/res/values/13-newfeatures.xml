@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Be careful with a reordering. It will probably lead to a deletion of already translated strings on crowdin and should therefore only be done only immediately before release -->
-    <string-array name="new_version_features">
+    <string-array name="new_version_features" tools:ignore="InconsistentArrays">
         <item>See the commit history on github for changelog of development version</item>
     </string-array>
 </resources>

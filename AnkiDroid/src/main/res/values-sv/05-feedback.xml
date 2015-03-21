@@ -43,7 +43,7 @@
   <string name="error_cancel">Rapportera inte fel</string>
   <string name="error_reporting_choice">Läge för felrapportering</string>
   <string name="error_reporting_choice_summary">Fel kan rapporteras automatiskt, aldrig rapporteras, eller så kan du tillfrågas</string>
-  <string name="feedback_disclaimer">Disclaimer: We don\'t collect any personal information such as your email address, phone number, or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves and the steps which led up to them occuring.</string>
+  <string name="feedback_disclaimer">Disclaimer: Vi samlar inte in någon personlig information såsom din epostadress, ditt telefonnummer eller IMEI-nummer för din telefon. Vi samlar in viss information om din enhet såsom tillverkare, modell och version av AnkiDroid, så väl som de rapporterade felen och stegen som ledde fram till dem.</string>
   <string name="feedback_title">Feedback</string>
   <string name="feedback_send_feedback">Skicka oss din feedback</string>
   <string name="feedback_send_feedback_and_errors">Skicka felrapporter och din feedback</string>
@@ -60,8 +60,9 @@
   <string name="feedback_error_reply_issue_fixed_prod">Problem %1$d, fixat i senaste versionen</string>
   <string name="feedback_error_reply_malformed">Bugg rapporterad, inget svar</string>
   <string name="feedback_error_reply_failed">Kunde inte skicka</string>
-  <string name="feedback_auto_toast_text">AnkiDroid has encountered a problem; a report is being sent to the developers&#8230;</string>
-  <string name="feedback_manual_toast_text">AnkiDroid has encountered a problem; a report is being generated&#8230;</string>
-  <string name="feedback_copy_debug">Copy debug info</string>
-  <string name="feedback_report">Report</string>
+  <string name="feedback_auto_toast_text">AnkiDroid har stött på ett problem; en rapport skickas till utvecklarna&#8230;</string>
+  <string name="feedback_manual_toast_text">AnkiDroid har stött på ett problem; en rapport genereras&#8230;</string>
+  <string name="feedback_copy_debug">Kopiera debuginformation</string>
+  <string name="feedback_report">Rapportera</string>
+  <string name="feedback_report_automatically">Skicka felrapporter automatiskt</string>
 </resources>

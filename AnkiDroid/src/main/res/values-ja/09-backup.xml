@@ -39,7 +39,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="backup_collection">バックアップを作成します...</string>
+  <string name="backup_collection">バックアップを作成しています...</string>
   <string name="backup_deck_no_space_left">最後のバックアップ·アクションは、あなたのSDカード上のスペース不足が原因で実行できませんでした\n\n必要なスペースを確保してください。</string>
   <string name="sd_space_warning">SDカードに、 %d mb 以下の空きしかありません。\nデータの損失を避けるために空き領域を増やしてください。</string>
   <string name="backup_deck_success">バックアップが正常に作成されました。</string>
@@ -50,7 +50,7 @@
   <string name="backup_new_collection">新しいコレクション</string>
   <string name="backup_del_collection">コレクションの削除と新規作成</string>
   <string name="backup_del_collection_question">コレクションを削除して、新しいコレクションを作成ますか？すべての学習進度と、すべてのカードが削除されます！</string>
-  <string name="backup_full_sync_from_server">サーバー側からの完全同期</string>
+  <string name="backup_full_sync_from_server">AnkiWeb側からの完全同期</string>
   <string name="backup_full_sync_from_server_question">AnkiWebからコレクションを上書きしますか？すべての学習進度と、前回の同期後の情報を削除します！</string>
   <string name="error_handling_title">エラー処理</string>
   <string name="error_handling_options">オプション</string>
@@ -66,6 +66,8 @@
   <string name="backup_restore_select_title">復元するバックアップの選択</string>
   <string name="backup_restore_no_backups">このデバイス上では、このコレクションをバックアップできません。デスクトップコンピューターにバックアップがある場合には、それをあなたのAnkiDroidフォルダに手動でコピーしてください</string>
   <string name="open_collection_failed_title">コレクションは開かれていません</string>
-  <string name="open_collection_failed_message">データベースを開けませんでした。Ankiのデータでないか、またはデータベースが破損しています\n\nコレクションを修復するか、バックアップから修復してください（いずれの場合でも、破損したデッキのコピーは、サブフォルダ移動されます\'%1$s\'）。 \"オプション\"をタップしてください。\n\n壊れた単語帳修復についての情報：%2$s</string>
+  <string name="open_collection_failed_message">データベースを開けませんでした。Ankiシステムのデータベースでないか、または破損しています。\n\n\'オプション\'をタップして、データベースを修復するための方法を選んでください。\n\n破損したコレクションを修復するための詳しい情報についてはこちらをご覧ください：\n%1$s</string>
+  <string name="corrupt_db_message">残念ながら、コレクションが破損しています。\n\n「オプション」をタップして、バックアップからコレクションの復元を行ってください。もしそれで解決しない場合は、データベースを手動で修復するために次の手順を試してください：\n%1$s</string>
+  <string name="access_collection_failed_message">コレクションへのアクセス中にエラーが発生しました。無害なバグによって生じた可能性もありますが、コレクションに問題が発生した可能性もあります。\n\n「オプション」ボタンをタップして、データベースのチェックを行うか、バックアップからコレクションを復元してください。このメッセージが引き続き表示される場合は、バグレポートを送信してください:\n%1$s</string>
   <string name="deck_repair_error">コレクションは修復できませんでした</string>
 </resources>

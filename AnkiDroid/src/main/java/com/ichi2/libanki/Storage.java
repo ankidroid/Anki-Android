@@ -381,7 +381,7 @@ public class Storage {
             if (!db.queryString("PRAGMA integrity_check").equalsIgnoreCase("ok")) {
                 return false;
             }
-        } catch (SQLException _) {
+        } catch (SQLException ex) {
             return false;
         }
         // old version?

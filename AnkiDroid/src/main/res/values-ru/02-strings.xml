@@ -46,7 +46,7 @@
   <string name="CardEditorNoteDeck">Колода:</string>
   <string name="CardEditorModel">Тип:</string>
   <string name="CardEditorTags">Теги: %1$s</string>
-  <string name="CardEditorCards">Cards: %1$s</string>
+  <string name="CardEditorCards">Карты: %1$s</string>
   <string name="add_new_filter_tags">Добавить / Отфильтровать метки</string>
   <string name="note_type">Тип заметки</string>
   <string name="card_type">Тип карты</string>
@@ -82,15 +82,15 @@
   <string name="factadder_saving_error">Ошибка при сохранении заметки</string>
   <string name="pref_lang_support">Язык</string>
   <string name="saving_facts">Сохранение заметки</string>
-  <string name="saving_model">Saving model</string>
+  <string name="saving_model">Сохранение модели</string>
   <string name="deck">Колода</string>
   <string name="add">Добавить</string>
   <string name="close">Закрыть</string>
   <string name="select">Выбрать</string>
   <string name="saving_changes">Сохранение изменений...</string>
   <string name="reordering_cards">Изменение очерёдности карт...</string>
-  <string name="field_remapping">%1$s (from \'%2$s\')</string>
-  <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
+  <string name="field_remapping">%1$s (из \'%2$s\')</string>
+  <string name="confirm_map_cards_to_nothing">Не сопоставленные карты будут удалены. Заметки, оставшиеся без карт, будут утеряны. Продолжить?</string>
   <plurals name="timebox_reached">
     <item quantity="one">Карт изучено: %1$d за %2$s</item>
     <item quantity="other">%1$d карты изучено за %2$s</item>
@@ -101,14 +101,14 @@
   </plurals>
   <string name="studyoptions_welcome_title">Добро пожаловать в AnkiDroid</string>
   <string name="studyoptions_no_external_storage_title">Нет доступа к внешнему хранилищу</string>
-  <string name="studyoptions_no_external_storage_message">Не доступно внешнее хранилище. AnkiDroid должен иметь доступ к SD-карте для того, чтобы читать и загружать колоды. Убедитесь, что ваша SD-карта смонтирована и попробуйте еще раз.</string>
+  <string name="studyoptions_no_external_storage_message">AnkiDroid не может получить доступ к карте памяти SD для работы с колодами. Убедитесь, что SD-карта подключена и попробуйте еще раз.</string>
   <string name="fact_adder_intent_title">AnkiDroid Карта</string>
   <string name="deckpicker_select_dictionary_title">Выбрать словарь</string>
   <string name="deckpicker_select_dictionary_default">По умолчанию</string>
   <string name="card_editor_add_card">Добавить заметку</string>
   <string name="card_editor_reset">Сброс</string>
   <string name="card_editor_copy_card">Копировать карту</string>
-  <string name="card_editor_reset_card">Сброс прогресса</string>
+  <string name="card_editor_reset_card">Сбросить прогресс</string>
   <string name="card_editor_reschedule_card">Изменить расписание карты</string>
   <string name="card_editor_preview_card">Предпросмотр</string>
   <string name="error_insufficient_memory">Операция не возможна из-за недостатка памяти на Вашем устройстве</string>
@@ -127,7 +127,7 @@
   <string name="check_db_message">Проверка базы данных. \nПожалуйста подождите...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Пустая карта. Запустите «Инструменты&gt;Пустые карты...» на настольном клиенте.</string>
   <string name="unknown_type_field_warning">Тип ответа: неизвестное поле %s</string>
-  <string name="simple_interface_hint">Пустой %s. Имейте в виду то, что простой интерфейс не может показывать фотографии/звуки и т.д.</string>
+  <string name="simple_interface_hint">Пустой %s. Попробуйте отключить простой интерфейс.</string>
   <string name="delete_deck">Удаление колоды...\nПожалуйста подождите...</string>
   <string-array name="dynOrderLabels">
     <item>Старейшие появляться первыми</item>
@@ -154,7 +154,8 @@
   <string name="import_log_success">Успешно импортированы %d карты</string>
   <string name="import_log_error">Импорт не удался</string>
   <string name="import_log_no_apkg">Это негодный apkg-файл</string>
-  <string name="import_error_not_apkg_extension">Filename %s does not have .apkg extension</string>
+  <string name="import_error_not_apkg_extension">У файла %s должно быть расширение .apkg</string>
+  <string name="import_error_content_provider">Это файл невозможно импортировать автоматически. Пожалуйста, посмотрите в руководстве пользователя, как импортировать anki-файлы вручную: \n %s</string>
   <string name="import_importing">Импортирование карт.\nПожалуйста, подождите...</string>
   <string name="export_include_schedule">Включить планирование</string>
   <string name="export_include_media">Включить медиа</string>

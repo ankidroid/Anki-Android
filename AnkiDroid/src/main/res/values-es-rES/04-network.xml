@@ -46,7 +46,7 @@
   <string name="downloading">Descargando...</string>
   <string name="paused">Pausado</string>
   <string name="downloaded">Descargado</string>
-  <string name="sync_error">Sync Error</string>
+  <string name="sync_error">Error de sincronización</string>
   <string name="vague_error">Error</string>
   <string name="cancelling">Cancelando...</string>
   <string name="connection_error_return_message">Se ha producido un error de red. Vuelva a intentarlo, o cancele y vuelva a la pantalla anterior.</string>
@@ -67,7 +67,7 @@
   <string name="sync_log_db_error">Ocurrió un error en la base de datos.</string>
   <string name="not_logged_in_title">Iniciar sesión en AnkiWeb</string>
   <string name="login_create_account_message">Debes iniciar sesión en una cuenta de AnkiWeb. Puedes crear una en el paso siguiente.</string>
-  <string name="no_email_client">No email client available</string>
+  <string name="no_email_client">Ningún cliente de correo electrónico disponible</string>
   <string name="username">Dirección de correo electrónico</string>
   <string name="username_repeat">Repita la dirección de correo electrónico</string>
   <string name="password">Contraseña</string>
@@ -136,12 +136,12 @@
   <string name="sync_media_sanity_check">Comprobando cuenta de archivos multimedia...</string>
   <string name="sync_media_no_changes">Sin cambios en los archivos multimedia.</string>
   <string name="sync_media_success">Archivos multimedia sincronizados correctamente.</string>
-  <string name="sync_media_changes_count">%d media changes to upload</string>
-  <string name="sync_media_downloaded_count">%d media files downloaded</string>
+  <string name="sync_media_changes_count">%d cambios para cargar</string>
+  <string name="sync_media_downloaded_count">%d archivos multimedia descargados</string>
   <string name="sync_sanity_failed">Tras la sincronización, la colección quedó en un estado inconsistente. Para solucionar este problema, AnkiDroid forzará una sincronización completa. Por favor, elige qué lado deseas conservar, o cancela si prefieres sincronizar más tarde.</string>
   <string name="sync_media_sanity_failed">La sincronización de los archivos multimedia se completó, pero el número de archivos no coincide con el del servidor. La próxima sincronización será completa para corregir cualquier error.</string>
   <string name="sync_media_error">Error al sincronizar datos multimedia.</string>
-  <string name="sync_media_unsupported">Complex media file names are not supported on Android 2.2 and below. Media syncing has been disabled.</string>
+  <string name="sync_media_unsupported">Los nombres de archivo multimedia complejos no son compatibles con Android 2.2 o menos. . La sincronización de archivos multimedia ha sido desactivada.</string>
   <string name="register_error">Se ha producido un error. Inténtalo de nuevo más tarde.</string>
   <string name="register_title">Registrar cuenta</string>
   <string name="register_mismatch">El nombre de usuario/contraseña repetido no coincide o está vacío. Por favor, vuelve a introducirlo.</string>
@@ -167,6 +167,6 @@
   <string name="force_full_sync_title">Forzar sincronización completa</string>
   <string name="force_full_sync_summary">Forzar cambios en una dirección en la próxima sincronización</string>
   <string name="full_sync_confirmation">El cambio solicitado hará necesaria una subida completa de la base de datos la próxima vez que sincronices tu colección. Si tienes repasos u otros cambios pendientes en otro dispositivo que no hayan sido sincronizados aún, se perderán. ¿Deseas continuar?</string>
-  <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it\'s recommended to force a full sync.</string>
-  <string name="sync_error_501_upgrade_required">Please upgrade to the latest version of AnkiDroid</string>
+  <string name="full_sync_confirmation_upgrade">Debido a un error en la versión anterior de AnkiDroid, se recomienda forzar una sincronización completa.</string>
+  <string name="sync_error_501_upgrade_required">Por favor actualice a la versión más reciente de AnkiDroid</string>
 </resources>

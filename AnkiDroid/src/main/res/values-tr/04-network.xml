@@ -115,8 +115,8 @@
   <string name="sync_too_busy">Sunucu çok meşgul. Daha sonra yeniden deneyin.</string>
   <string name="sync_remote_db_error">İndirilen veritabanı bozuktu. Lütfen yeniden deneyin.</string>
   <string name="sync_overwrite_error">Geçerli koleksiyonunuz indirilen dosya tarafından üzerine yazılamadı.</string>
-  <string name="sync_connection_error">Connection timed out. Either your internet connection is experiencing problems, or you have a very large file in your media folder.</string>
-  <string name="sync_error_409">Only one client can access AnkiWeb at a time. If a previous sync failed, please try again in a few minutes.</string>
+  <string name="sync_connection_error">Bağlantı zaman aşımına uğradı. Internet bağlantı sorunları yaşıyorsunuz ya da medya klasörünüzde çok büyük bir dosya var .</string>
+  <string name="sync_error_409">AnkiWeb\'e aynı anda sadece tek bir istemci erişebilir. Önceki senkronizasyon başarısız olursa, lütfen bir kaç dakika sonra tekrar deneyin.</string>
   <string name="sync_write_access_error">İndirilen dosya sd karta kaydedilemedi. Ya sd kartınız salt okunur takılmış ya da yeterli boşluk yok.</string>
   <string name="sync_deletions_message">Silinenler eşitleniyor...</string>
   <string name="sync_small_objects_message">Küçük nesneler eşitleniyor...</string>
@@ -136,12 +136,12 @@
   <string name="sync_media_sanity_check">Medya sayıları kontrol ediliyor...</string>
   <string name="sync_media_no_changes">Medya dosyalarında değişiklik yok.</string>
   <string name="sync_media_success">Medya başarıyla eşitlendi.</string>
-  <string name="sync_media_changes_count">%d media changes to upload</string>
-  <string name="sync_media_downloaded_count">%d media files downloaded</string>
+  <string name="sync_media_changes_count">%d ortam yüklenmek için değiştirildi</string>
+  <string name="sync_media_downloaded_count">%d ortam dosyası indirildi</string>
   <string name="sync_sanity_failed">Eşitlemeden sonra, koleksiyon tutarsız bir durumdaydı. Bu sorunu düzeltmek için, AnkiDroid bir tam eşitleme gerektirecek. Lütfen hangi tarafı korumak istediğinizi seçin, veya sonra eşitlemeyi tercih ediyorsanız iptâl edin.</string>
   <string name="sync_media_sanity_failed">Medya eşitlemesi tamamlandı, ama medya sayısı sunucuyla uyuşmuyor. Bir sonraki medya eşitlemesi hataları düzeltmek için tam yapılacak.</string>
   <string name="sync_media_error">Medya veri senkronizasyonu hatası.</string>
-  <string name="sync_media_unsupported">Complex media file names are not supported on Android 2.2 and below. Media syncing has been disabled.</string>
+  <string name="sync_media_unsupported">Android 2.2 ve daha düşük versiyonlar karmaşık medya dosya adlarını desteklemiyor. Medya senkronizasyonu devre dışı bırakıldı.</string>
   <string name="register_error">Bir hatâ meydana geldi. Lütfen sonra yeniden deneyin.</string>
   <string name="register_title">Üye ol</string>
   <string name="register_mismatch">Kullanıcı adı/şifre tekrarı uyuşmuyor veya boş. Lütfen yeniden girin.</string>
@@ -164,9 +164,9 @@
   <string name="download_deck">Deste indiriliyor (%d KB)\nLütfen bekleyin...</string>
   <string name="sync_sanity_local">Yerel</string>
   <string name="sync_sanity_remote">Sunucu</string>
-  <string name="force_full_sync_title">Force full sync</string>
-  <string name="force_full_sync_summary">On next sync, force changes in one direction</string>
-  <string name="full_sync_confirmation">The requested change will require a full upload of the database when you next synchronize your collection. If you have reviews or other changes waiting on another device that haven\'t been synchronized here yet, they will be lost. Continue?</string>
-  <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it\'s recommended to force a full sync.</string>
-  <string name="sync_error_501_upgrade_required">Please upgrade to the latest version of AnkiDroid</string>
+  <string name="force_full_sync_title">Zorunlu tam senkronizasyon</string>
+  <string name="force_full_sync_summary">Bir sonraki eşitlemede, değişiklikleri tek yönde yapın</string>
+  <string name="full_sync_confirmation">İstenen değişiklik koleksiyonunuzu bir sonraki senkronize edişinizde veritabanının toptan karşıya yüklenmesini gerektirecek. Başka bir cihazda bekleyen, burada henüz senkronize edilmemiş çalışmalarınız veya başka değişiklikleriniz varsa kaybolacaklar. Devam edilsin mi?</string>
+  <string name="full_sync_confirmation_upgrade">AnkiDroid daha önce yüklenmiş sürümündeki bir hata nedeniyle, tam senkronizasyon yapma tavsiye edilir.</string>
+  <string name="sync_error_501_upgrade_required">Lütfen en son AnkiDroid sürümüne yükseltin</string>
 </resources>

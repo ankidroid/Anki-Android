@@ -50,7 +50,12 @@ public class Reviewer extends AbstractFlashcardViewer {
     @Override
     protected void setTitle() {
         try {
-            String[] title = mSched.getCol().getDecks().current().getString("name").split("::");
+            String[] title = {""};
+            if (AnkiDroidApp.colIsOpen()) {
+                title = getCol().getDecks().current().getString("name").split("::");
+            } else {
+                Timber.e("Could not set title in reviewer because collection closed");
+            }
             AnkiDroidApp.getCompat().setTitle(this, title[title.length - 1], mNightMode);
             super.setTitle(title[title.length - 1]);
         } catch (JSONException e) {

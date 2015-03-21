@@ -136,12 +136,12 @@
   <string name="sync_media_sanity_check">Prüfe Anzahl der Multimedia-Dateien...</string>
   <string name="sync_media_no_changes">Keine Multimedia-Dateien verändert.</string>
   <string name="sync_media_success">Multimedia-Dateien synchronisiert</string>
-  <string name="sync_media_changes_count">%d Medien Änderungen hochzuladen</string>
+  <string name="sync_media_changes_count">%d veränderte Medien hochzuladen</string>
   <string name="sync_media_downloaded_count">%d Multimedia-Dateien heruntergeladen</string>
   <string name="sync_sanity_failed">Nach dem Synchronisieren war Ihre Sammlung in einem widersprüchlichen Zustand. Um dieses Problem zu beheben wird AnkiDroid eine vollständige Synchronisierung erzwingen. Bitte wählen Sie die Seite, die Sie behalten wollen oder brechen Sie ab, falls Sie später synchronisieren wollen.</string>
   <string name="sync_media_sanity_failed">Die Multimedia-Synchronisierung wurde abgeschlossen, aber die Medienanzahl stimmt nicht mit der auf dem Server überein. Die nächste Medien-Synchronisierung wird die Medien voll synchronisieren, um den Fehler zu beheben.</string>
   <string name="sync_media_error">Fehler beim Synchronisieren der Multimedia-Dateien.</string>
-  <string name="sync_media_unsupported">Komplexe Medien-Dateinamen werden nicht unterstützt auf Android 2.2 und unten. Synchronisieren von Medien wurde deaktiviert.</string>
+  <string name="sync_media_unsupported">Komplexe Medien-Dateinamen werden auf Android 2.2 und darunter nicht unterstützt. Synchronisieren von Medien wurde deaktiviert.</string>
   <string name="register_error">Ein Fehler ist aufgetreten. Versuchen Sie es später erneut.</string>
   <string name="register_title">Konto erstellen</string>
   <string name="register_mismatch">Die Wiederholung der Benutzernamens bzw. des Passworts ist falsch oder leer. Bitte geben Sie die Informationen erneut ein.</string>
@@ -168,5 +168,5 @@
   <string name="force_full_sync_summary">Bei nächster Synchronisation Änderungen in eine Richtung übertragen</string>
   <string name="full_sync_confirmation">Nach dieser Änderung müssen Sie die gesamte Sammlung hochladen. Lernfortschritt  und Änderungen auf anderen Geräten, die noch nicht auf dieses Gerät synchronisiert wurden,  gehen verloren. Fortfahren?</string>
   <string name="full_sync_confirmation_upgrade">Wegen eines Fehlers in einer früheren Version von AnkiDroid sollten Sie eine Vollsynchronisation erzwingen.</string>
-  <string name="sync_error_501_upgrade_required">Please upgrade to the latest version of AnkiDroid</string>
+  <string name="sync_error_501_upgrade_required">Bitte installieren Sie die neuste AnkiDroid-Version</string>
 </resources>
