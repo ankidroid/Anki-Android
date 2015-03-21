@@ -40,6 +40,7 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.async.DeckTask;
+import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.preferences.StepsPreference;
 import com.ichi2.themes.StyledDialog;
@@ -497,12 +498,12 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
     @Override
     protected void onCreate(Bundle icicle) {
         // Workaround for bug 4611: http://code.google.com/p/android/issues/detail?id=4611
-        if (AnkiDroidApp.SDK_VERSION <= 10) {
+        if (!CompatHelper.isHoneycomb()) {
             Themes.applyTheme(this, Themes.THEME_ANDROID_DARK);
         }
         super.onCreate(icicle);
 
-        mCol = AnkiDroidApp.getCol();
+        mCol = CollectionHelper.getInstance().getCol(this);
         if (mCol == null) {
             finish();
             return;

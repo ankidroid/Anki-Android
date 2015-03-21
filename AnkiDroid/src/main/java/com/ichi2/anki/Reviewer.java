@@ -34,6 +34,7 @@ import android.view.ViewConfiguration;
 import android.widget.FrameLayout;
 
 import com.ichi2.async.DeckTask;
+import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.widget.WidgetStatus;
 
@@ -52,17 +53,17 @@ public class Reviewer extends AbstractFlashcardViewer {
     protected void setTitle() {
         try {
             String[] title = {""};
-            if (AnkiDroidApp.colIsOpen()) {
+            if (colIsOpen()) {
                 title = getCol().getDecks().current().getString("name").split("::");
             } else {
                 Timber.e("Could not set title in reviewer because collection closed");
             }
-            AnkiDroidApp.getCompat().setTitle(this, title[title.length - 1], mNightMode);
+            CompatHelper.getCompat().setTitle(this, title[title.length - 1], mNightMode);
             super.setTitle(title[title.length - 1]);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-        AnkiDroidApp.getCompat().setSubtitle(this, "", mNightMode);
+        CompatHelper.getCompat().setSubtitle(this, "", mNightMode);
     }
 
 
@@ -80,7 +81,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
 
         col.getSched().reset();     // Reset schedule incase card had previous been loaded
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(mSched, null,
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(getCol(), mSched, null,
                 0));
 
         // Since we aren't actually answering a card, decrement the rep count
@@ -113,8 +114,8 @@ public class Reviewer extends AbstractFlashcardViewer {
 
             case R.id.action_mark_card:
                 Timber.i("Reviewer:: Mark button pressed");
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, mMarkCardHandler, new DeckTask.TaskData(mSched,
-                        mCurrentCard, 0));
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, mMarkCardHandler, new DeckTask.TaskData(
+                        getCol(), mSched, mCurrentCard, 0));
                 break;
 
             case R.id.action_replay:
@@ -129,25 +130,25 @@ public class Reviewer extends AbstractFlashcardViewer {
             case R.id.action_bury_card:
                 Timber.i("Reviewer:: Bury card button pressed");
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
-                        mSched, mCurrentCard, 4));
+                        getCol(), mSched, mCurrentCard, 4));
                 break;
 
             case R.id.action_bury_note:
                 Timber.i("Reviewer:: Bury note button pressed");
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
-                        mSched, mCurrentCard, 0));
+                        getCol(), mSched, mCurrentCard, 0));
                 break;
 
             case R.id.action_suspend_card:
                 Timber.i("Reviewer:: Suspend card button pressed");
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
-                        mSched, mCurrentCard, 1));
+                        getCol(), mSched, mCurrentCard, 1));
                 break;
 
             case R.id.action_suspend_note:
                 Timber.i("Reviewer:: Suspend note button pressed");
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
-                        mSched, mCurrentCard, 2));
+                        getCol(), mSched, mCurrentCard, 2));
                 break;
 
             case R.id.action_delete:
@@ -208,7 +209,7 @@ public class Reviewer extends AbstractFlashcardViewer {
                 menu.findItem(R.id.action_mark_card).setTitle(R.string.menu_mark_card).setIcon(R.drawable.ic_menu_mark);
             }
         }
-        if (colOpen() && getCol().undoAvailable()) {
+        if (colIsOpen() && getCol().undoAvailable()) {
             if (mNightMode) {
                 menu.findItem(R.id.action_undo).setEnabled(true).setIcon(R.drawable.ic_menu_revert_dark);
             } else {
@@ -223,7 +224,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
         if (mPrefWhiteboard) {
             // Check if we can forceably squeeze in 3 items into the action bar, if not hide "show whiteboard"
-            if (AnkiDroidApp.SDK_VERSION >= 14 &&  !ViewConfiguration.get(this).hasPermanentMenuKey()) {
+            if (CompatHelper.getSdkVersion() >= 14 &&  !ViewConfiguration.get(this).hasPermanentMenuKey()) {
                 // Android 4.x device with overflow menu in the action bar and small screen can't
                 // support forcing 2 extra items into the action bar
                 Display display = getWindowManager().getDefaultDisplay();
@@ -259,7 +260,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         } else {
             menu.findItem(R.id.action_enable_whiteboard).setTitle(R.string.enable_whiteboard);
         }
-        if (AnkiDroidApp.SDK_VERSION < 11 && !mDisableClipboard) {
+        if (!CompatHelper.isHoneycomb() && !mDisableClipboard) {
             menu.findItem(R.id.action_search_dictionary).setVisible(true).setEnabled(!(mPrefWhiteboard && mShowWhiteboard))
                     .setTitle(clipboardHasText() ? Lookup.getSearchStringTitle() : res.getString(R.string.menu_select));
         }
@@ -337,28 +338,28 @@ public class Reviewer extends AbstractFlashcardViewer {
 	            return true;
 	        }
 	        if (keyPressed == '*') {
-	            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, mMarkCardHandler, new DeckTask.TaskData(mSched,
-	                    mCurrentCard, 0));
+	            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, mMarkCardHandler, new DeckTask.TaskData(
+                        getCol(), mSched, mCurrentCard, 0));
 	            return true;
 	        }
 	        if (keyPressed == '-') {
 	            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
-	                    mSched, mCurrentCard, 4));
+                        getCol(), mSched, mCurrentCard, 4));
 	            return true;
 	        }
 	        if (keyPressed == '=') {
 	            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
-	                    mSched, mCurrentCard, 0));
+                        getCol(), mSched, mCurrentCard, 0));
 	            return true;
 	        }
 	        if (keyPressed == '@') {
 	            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
-	                    mSched, mCurrentCard, 1));
+                        getCol(), mSched, mCurrentCard, 1));
 	            return true;
 	        }
 	        if (keyPressed == '!') {
 	            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
-	                    mSched, mCurrentCard, 2));
+                        getCol(), mSched, mCurrentCard, 2));
 	            return true;
 	        }
 	        if (keyPressed == 'r' || keyCode == KeyEvent.KEYCODE_F5) {
@@ -401,11 +402,11 @@ public class Reviewer extends AbstractFlashcardViewer {
         super.onStop();
 
         if (!isFinishing()) {
-            if (AnkiDroidApp.colIsOpen()) {
+            if (colIsOpen()) {
                 WidgetStatus.update(this, mSched.progressToday(null, mCurrentCard, true));
             }
         }
-        UIUtils.saveCollectionInBackground();
+        UIUtils.saveCollectionInBackground(this);
     }
 
 

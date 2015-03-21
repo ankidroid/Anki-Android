@@ -39,6 +39,7 @@ import android.widget.Toast;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
+import com.ichi2.compat.CompatHelper;
 
 import timber.log.Timber;
 
@@ -207,7 +208,7 @@ public class Themes {
                         break;
                     case THEME_WHITE:
                         lv.setSelector(R.drawable.white_deckpicker_list_selector);
-                        AnkiDroidApp.getCompat().setOverScrollModeNever(lv);
+                        CompatHelper.getCompat().setOverScrollModeNever(lv);
                         lv.setVerticalScrollBarEnabled(false);
                         lv.setFadingEdgeLength(15);
                         lv.setDividerHeight(0);
@@ -235,7 +236,7 @@ public class Themes {
                     case THEME_WHITE:
                         lv2.setBackgroundResource(R.drawable.white_textview);
                         lv2.setSelector(R.drawable.white_deckpicker_list_selector);
-                        AnkiDroidApp.getCompat().setOverScrollModeNever(lv2);
+                        CompatHelper.getCompat().setOverScrollModeNever(lv2);
                         lv2.setFadingEdgeLength(15);
                         lv2.setDividerHeight(0);
                         lv2.setSelector(R.drawable.white_deckpicker_list_selector);
@@ -845,7 +846,7 @@ public class Themes {
                 Timber.e(e, "setStyledDialogBackgrounds - OutOfMemoryError occured");
                 buttonPanel.setBackgroundResource(R.color.white);
             }
-            if (buttonNumbers > 1 || AnkiDroidApp.SDK_VERSION > 13) {
+            if (buttonNumbers > 1 || CompatHelper.getSdkVersion() > 13) {
                 // Starting at API 14, the dialog looks quite different, and these spacers are in the way.
                 main.findViewById(R.id.rightSpacer).setVisibility(View.GONE);
                 main.findViewById(R.id.leftSpacer).setVisibility(View.GONE);

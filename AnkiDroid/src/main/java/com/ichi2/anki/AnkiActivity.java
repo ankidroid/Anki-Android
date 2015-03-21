@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Message;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -49,13 +48,8 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
     protected void onResume() {
         super.onResume();
         ((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE)).cancel(SIMPLE_NOTIFICATION_ID);
-        // Show any pending dialogs
-        Message handlerMsg = AnkiDroidApp.getStoredDialogHandlerMessage();
-        if (handlerMsg != null) {
-            // TODO: Confirm whether or not it's ok to send the message without checking if the collection is open.
-            mHandler.sendMessage(handlerMsg);
-            AnkiDroidApp.setStoredDialogHandlerMessage(null);
-        }
+        // Show any pending dialogs which were stored persistently
+        mHandler.readMessage();
     }
 
 
@@ -65,11 +59,11 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
 
 
     public Collection getCol() {
-        return AnkiDroidApp.getCol();
+        return CollectionHelper.getInstance().getCol(this);
     }
 
-    public boolean colOpen() {
-        return AnkiDroidApp.colIsOpen();
+    public boolean colIsOpen() {
+        return CollectionHelper.getInstance().colIsOpen();
     }
 
 
@@ -218,7 +212,7 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
     public void startLoadingCollection() {
         // Initialize the open collection loader
         Timber.d("AnkiActivity.startLoadingCollection()");
-        if (!AnkiDroidApp.colIsOpen()) {
+        if (!colIsOpen()) {
             showOpeningCollectionDialog();
         }
         getSupportLoaderManager().restartLoader(0, null, this);
@@ -244,7 +238,7 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(Loader<Collection> loader, Collection col) {
-        if (col != null && AnkiDroidApp.colIsOpen()) {
+        if (col != null && colIsOpen()) {
             onCollectionLoaded(col);
         } else {
             onCollectionLoadError();
@@ -318,9 +312,11 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
         try {
             showDialogFragment(newFragment);
         } catch (IllegalStateException e) {
+            // Store a persistent message to SharedPreferences instructing AnkiDroid to show dialog
+            DialogHandler.storeMessage(newFragment.getDialogHandlerMessage());
+            // Show a basic notification to the user in the notification bar in the meantime
             String title = newFragment.getNotificationTitle();
             String message = newFragment.getNotificationMessage();
-            AnkiDroidApp.setStoredDialogHandlerMessage(newFragment.getDialogHandlerMessage());
             showSimpleNotification(title, message);
         }
     }

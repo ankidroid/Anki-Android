@@ -20,6 +20,7 @@ import android.text.TextUtils;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.libanki.Utils;
+import com.ichi2.libanki.hooks.Hooks;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -272,7 +273,8 @@ public class Template {
                     mod = m.group(1);
                     extra = m.group(2);
                 }
-                txt = (String) AnkiDroidApp.getHooks().runFilter("fmod_" + mod,
+
+                txt = (String) Hooks.runFilter("fmod_" + mod,
                         txt == null ? "" : txt,
                         extra == null ? "" : extra,
                         context, tag, tag_name);

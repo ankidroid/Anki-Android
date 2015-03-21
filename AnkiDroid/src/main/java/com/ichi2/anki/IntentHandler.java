@@ -157,7 +157,7 @@ public class IntentHandler extends Activity {
             handlerMessage.what = DialogHandler.MSG_SHOW_COLLECTION_IMPORT_ADD_DIALOG;
         }
         // Store the message in AnkiDroidApp message holder, which is loaded later in AnkiActivity.onResume
-        AnkiDroidApp.setStoredDialogHandlerMessage(handlerMessage);
+        DialogHandler.storeMessage(handlerMessage);
     }
 
     /** Finish Activity using FADE animation **/

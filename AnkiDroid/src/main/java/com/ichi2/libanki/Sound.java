@@ -35,8 +35,8 @@ import android.widget.VideoView;
 import com.ichi2.anki.AbstractFlashcardViewer;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.ReadText;
-import java.io.File;
-import java.io.IOException;
+import com.ichi2.compat.CompatHelper;
+
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -197,7 +197,7 @@ public class Sound {
             // beginning of the sound marker
             // and then appending the html code to add the play button
             String button;
-            if (AnkiDroidApp.SDK_VERSION >= Build.VERSION_CODES.GINGERBREAD_MR1) {
+            if (CompatHelper.getSdkVersion() >= Build.VERSION_CODES.GINGERBREAD_MR1) {
                 button = "<img src='file:///android_res/drawable/inline_play_button.png' width='32' height='32' />";
             } else {
                 button = "<img src='file:///android_asset/media_playback_start2.png' />";
@@ -264,7 +264,7 @@ public class Sound {
         } else {
             // Check if file is video
             final boolean isVideo;
-            if (AnkiDroidApp.SDK_VERSION > 7){
+            if (CompatHelper.isFroyo()){
                 isVideo = ThumbnailUtils.createVideoThumbnail(soundUri.getPath(), MediaStore.Images.Thumbnails.MINI_KIND) != null;
             } else {
                 // Don't bother supporting video on Android 2.1
@@ -312,7 +312,7 @@ public class Sound {
                     sMediaPlayer.setOnCompletionListener(playAllListener);
                 }
                 sMediaPlayer.prepareAsync();
-                AnkiDroidApp.getCompat().requestAudioFocus(sAudioManager);
+                CompatHelper.getCompat().requestAudioFocus(sAudioManager);
             } catch (Exception e) {
                 Timber.e(e, "playSounds - Error reproducing sound %s", soundPath);
                 releaseSound();
@@ -389,7 +389,7 @@ public class Sound {
             sMediaPlayer = null;
         }
         if (sAudioManager != null) {
-            AnkiDroidApp.getCompat().abandonAudioFocus(sAudioManager);
+            CompatHelper.getCompat().abandonAudioFocus(sAudioManager);
             sAudioManager = null;
         }
     }

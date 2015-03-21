@@ -19,6 +19,7 @@
 
 package com.ichi2.anki.multimediacard.fields;
 
+import android.content.Context;
 import android.content.Intent;
 import android.widget.LinearLayout;
 
@@ -54,7 +55,7 @@ public interface IFieldController {
 
 
     // Layout is vertical inside a scroll view already
-    void createUI(LinearLayout layout);
+    void createUI(Context context, LinearLayout layout);
 
 
     // If the controller ever starts an activity for result, this is going to be

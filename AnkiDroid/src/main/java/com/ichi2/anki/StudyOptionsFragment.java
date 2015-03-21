@@ -49,6 +49,7 @@ import com.ichi2.anki.stats.AnkiStatsTaskHandler;
 import com.ichi2.anki.stats.ChartView;
 import com.ichi2.async.CollectionLoader;
 import com.ichi2.async.DeckTask;
+import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Utils;
@@ -513,7 +514,8 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
 
             ChartView chartView = (ChartView) mSmallChart.findViewById(R.id.chart_view_small_chart);
             chartView.setBackgroundColor(Color.BLACK);
-            AnkiStatsTaskHandler.createSmallDueChartChart(serieslist, chartView);
+            Collection col = CollectionHelper.getInstance().getCol(getActivity());
+            AnkiStatsTaskHandler.createSmallDueChartChart(col, serieslist, chartView);
             if (mDeckChart.getVisibility() == View.INVISIBLE) {
                 mDeckChart.setVisibility(View.VISIBLE);
                 mDeckChart.setAnimation(ViewAnimation.fade(ViewAnimation.FADE_IN, 500, 0));
@@ -745,7 +747,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                         if (!mFragmented) {
                             getActivity().setTitle(getResources().getString(R.string.studyoptions_title));
                             List<String> parts = Arrays.asList(fullName.split("::"));
-                            AnkiDroidApp.getCompat().setSubtitle(getActivity(), parts.get(parts.size() - 1));
+                            CompatHelper.getCompat().setSubtitle(getActivity(), parts.get(parts.size() - 1));
                         }
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
@@ -885,7 +887,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     protected void startLoadingCollection() {
         // Initialize the open collection loader
         Timber.d("startLoadingCollection()");
-        if (AnkiDroidApp.getCol() == null) {
+        if (CollectionHelper.getInstance().getCol(getActivity()) == null) {
             showCollectionLoadingDialog();
         }
         getLoaderManager().initLoader(0, null, this);  
@@ -904,7 +906,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         if (col != null) {
             onCollectionLoaded(col);
         } else {
-            AnkiDatabaseManager.closeDatabase(AnkiDroidApp.getCollectionPath());
+            AnkiDatabaseManager.closeDatabase(CollectionHelper.getCollectionPath(getActivity()));
             //showDialog(DIALOG_LOAD_FAILED);
         }
     }

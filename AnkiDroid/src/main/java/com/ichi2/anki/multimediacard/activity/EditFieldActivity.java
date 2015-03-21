@@ -122,7 +122,7 @@ public class EditFieldActivity extends FragmentActivity {
 
         linearLayout.removeAllViews();
 
-        mFieldController.createUI(linearLayout);
+        mFieldController.createUI(this, linearLayout);
 
     }
 

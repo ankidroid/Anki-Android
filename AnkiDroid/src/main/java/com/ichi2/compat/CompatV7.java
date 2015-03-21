@@ -14,6 +14,7 @@ import android.text.SpannableStringBuilder;
 import android.text.style.CharacterStyle;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup.LayoutParams;
 import android.webkit.WebView;
 
@@ -170,4 +171,9 @@ public class CompatV7 implements Compat {
 	
     // Below API level 12, file scheme pages are not restricted, so no adjustment is needed.
     public void enableCookiesForFileSchemePages() { }
+
+    @Override
+    public int getScaledPagingTouchSlop(ViewConfiguration vc) {
+        return vc.getScaledTouchSlop()*2;
+    }
 }

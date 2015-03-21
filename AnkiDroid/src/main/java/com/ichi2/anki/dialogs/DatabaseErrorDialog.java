@@ -8,10 +8,13 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
+
+import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.AnkiDatabaseManager;
-import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.BackupManager;
+import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
+import com.ichi2.compat.CompatHelper;
 import com.ichi2.themes.StyledDialog;
 
 import java.io.File;
@@ -32,6 +35,9 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
     public static final int DIALOG_CONFIRM_DATABASE_CHECK = 6;
     public static final int DIALOG_CONFIRM_RESTORE_BACKUP = 7;
     public static final int DIALOG_FULL_SYNC_FROM_SERVER = 8;
+
+    // public flag which lets us distinguish between inaccessible and corrupt database
+    public static boolean databaseCorruptFlag = false;
 
     public interface DatabaseErrorDialogListener {
         public void showDatabaseErrorDialog(int dialogType);
@@ -167,7 +173,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                 StyledDialog dialog = builder.create();
                 ArrayList<String> options = new ArrayList<String>();
                 ArrayList<Integer> values = new ArrayList<Integer>();
-                if (AnkiDroidApp.getCol() == null) {
+                if (!((AnkiActivity)getActivity()).colIsOpen()) {
                     // retry
                     options.add(res.getString(R.string.backup_retry_opening));
                     values.add(0);
@@ -230,7 +236,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                 return dialog;
 
             case DIALOG_REPAIR_COLLECTION:
-                // Allow user to run BackupManager.repairDeck()
+                // Allow user to run BackupManager.repairCollection()
                 builder.setMessage(getMessage());
                 builder.setIcon(R.drawable.ic_dialog_alert);
                 builder.setPositiveButton(res.getString(R.string.dialog_positive_repair),
@@ -246,7 +252,8 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
 
             case DIALOG_RESTORE_BACKUP:
                 // Allow user to restore one of the backups
-                File[] files = BackupManager.getBackups(new File(AnkiDroidApp.getCollectionPath()));
+                String path = CollectionHelper.getInstance().getCollectionPath(getActivity());
+                File[] files = BackupManager.getBackups(new File(path));
                 mBackups = new File[files.length];
                 for (int i = 0; i < files.length; i++) {
                     mBackups[i] = files[files.length - 1 - i];
@@ -301,8 +308,8 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                AnkiDroidApp.closeCollection(false);
-                                String path = AnkiDroidApp.getCollectionPath();
+                                CollectionHelper.getInstance().closeCollection(false);
+                                String path = CollectionHelper.getInstance().getCollectionPath(getActivity());
                                 AnkiDatabaseManager.closeDatabase(path);
                                 if (BackupManager.moveDatabaseToBrokenFolder(path, false)) {
                                     ((DatabaseErrorDialogListener) getActivity()).startLoadingCollection();
@@ -367,11 +374,11 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
     private String getMessage() {
         switch (getArguments().getInt("dialogType")) {
             case DIALOG_LOAD_FAILED:
-                if (AnkiDroidApp.SDK_VERSION < Build.VERSION_CODES.HONEYCOMB) {
+                if (!CompatHelper.isHoneycomb()) {
                     // Before honeycomb there's no way to know if the db has actually been corrupted
                     // so we show a non-specific message.
                     return res().getString(R.string.open_collection_failed_message, res().getString(R.string.repair_deck));
-                } else if (AnkiDroidApp.sDatabaseCorruptFlag) {
+                } else if (databaseCorruptFlag) {
                     // The sqlite database has been corrupted (DatabaseErrorHandler.onCorrupt() was called)
                     // Show a specific message appropriate for the situation
                     return res().getString(R.string.corrupt_db_message, res().getString(R.string.repair_deck));

@@ -32,6 +32,7 @@ import com.example.android.common.view.SlidingTabLayout;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.stats.*;
 import com.ichi2.anki.widgets.DeckDropDownAdapter;
+import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Stats;
 import org.json.JSONException;
@@ -94,7 +95,7 @@ public class Statistics extends NavigationDrawerActivity implements ActionBar.On
         actionBar.setListNavigationCallbacks(mDropDownAdapter, this);
 
         // Setup Task Handler
-        mTaskHandler = new AnkiStatsTaskHandler();
+        mTaskHandler = new AnkiStatsTaskHandler(col);
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -460,14 +461,15 @@ public class Statistics extends NavigationDrawerActivity implements ActionBar.On
             mIsCreated = true;
             mActivityPager = ((Statistics)getActivity()).getViewPager();
             mActivitySectionPagerAdapter = ((Statistics)getActivity()).getSectionsPagerAdapter();
-            mDeckId = AnkiDroidApp.getCol().getDecks().selected();
+            mDeckId = CollectionHelper.getInstance().getCol(getActivity()).getDecks().selected();
             mIsWholeCollection = AnkiStatsTaskHandler.isWholeCollection();
 
             if(!AnkiStatsTaskHandler.isWholeCollection()) {
                 try {
-                    List<String> parts = Arrays.asList(AnkiDroidApp.getCol().getDecks().current().getString("name").split("::"));
+                    Collection col = CollectionHelper.getInstance().getCol(getActivity());
+                    List<String> parts = Arrays.asList(col.getDecks().current().getString("name").split("::"));
                     if(sIsSubtitle)
-                        AnkiDroidApp.getCompat().setSubtitle(getActivity(), parts.get(parts.size() - 1));
+                        CompatHelper.getCompat().setSubtitle(getActivity(), parts.get(parts.size() - 1));
                     else
                         getActivity().setTitle(parts.get(parts.size() - 1));
                 } catch (JSONException e) {
@@ -475,7 +477,7 @@ public class Statistics extends NavigationDrawerActivity implements ActionBar.On
                 }
             } else {
                 if(sIsSubtitle)
-                    AnkiDroidApp.getCompat().setSubtitle(getActivity(), getResources().getString(R.string.stats_deck_collection));
+                    CompatHelper.getCompat().setSubtitle(getActivity(), getResources().getString(R.string.stats_deck_collection));
                 else
                     getActivity().setTitle(getResources().getString(R.string.stats_deck_collection));
             }
@@ -533,16 +535,17 @@ public class Statistics extends NavigationDrawerActivity implements ActionBar.On
 
             //are height and width checks still necessary without bitmaps?
             if(height != 0 && width != 0){
+                Collection col = CollectionHelper.getInstance().getCol(getActivity());
                 if(mHeight != height || mWidth != width ||
                         mType != (((Statistics)getActivity()).getTaskHandler()).getStatType() ||
-                        mDeckId != AnkiDroidApp.getCol().getDecks().selected() ||
+                        mDeckId != col.getDecks().selected() ||
                         mIsWholeCollection != AnkiStatsTaskHandler.isWholeCollection()){
                     mHeight = height;
                     mWidth = width;
                     mType = (((Statistics)getActivity()).getTaskHandler()).getStatType();
                     mProgressBar.setVisibility(View.VISIBLE);
                     mChart.setVisibility(View.GONE);
-                    mDeckId = AnkiDroidApp.getCol().getDecks().selected();
+                    mDeckId = col.getDecks().selected();
                     mIsWholeCollection = AnkiStatsTaskHandler.isWholeCollection();
                     if(mCreateChartTask != null && !mCreateChartTask.isCancelled()){
                         mCreateChartTask.cancel(true);
@@ -617,13 +620,14 @@ public class Statistics extends NavigationDrawerActivity implements ActionBar.On
             mIsCreated = true;
             mActivityPager = ((Statistics)getActivity()).getViewPager();
             mActivitySectionPagerAdapter = ((Statistics)getActivity()).getSectionsPagerAdapter();
-            mDeckId = AnkiDroidApp.getCol().getDecks().selected();
+            Collection col = CollectionHelper.getInstance().getCol(getActivity());
+            mDeckId = col.getDecks().selected();
             mIsWholeCollection = AnkiStatsTaskHandler.isWholeCollection();
             if(!AnkiStatsTaskHandler.isWholeCollection()) {
                 try {
-                    List<String> parts = Arrays.asList(AnkiDroidApp.getCol().getDecks().current().getString("name").split("::"));
+                    List<String> parts = Arrays.asList(col.getDecks().current().getString("name").split("::"));
                     if(sIsSubtitle)
-                        AnkiDroidApp.getCompat().setSubtitle(getActivity(), parts.get(parts.size() - 1));
+                        CompatHelper.getCompat().setSubtitle(getActivity(), parts.get(parts.size() - 1));
                     else
                         getActivity().setTitle(parts.get(parts.size() - 1));
                 } catch (JSONException e) {
@@ -631,7 +635,7 @@ public class Statistics extends NavigationDrawerActivity implements ActionBar.On
                 }
             } else {
                 if(sIsSubtitle)
-                    AnkiDroidApp.getCompat().setSubtitle(getActivity(), getResources().getString(R.string.stats_deck_collection));
+                    CompatHelper.getCompat().setSubtitle(getActivity(), getResources().getString(R.string.stats_deck_collection));
                 else
                     getActivity().setTitle(getResources().getString(R.string.stats_deck_collection));
             }
@@ -651,15 +655,17 @@ public class Statistics extends NavigationDrawerActivity implements ActionBar.On
 
         @Override
         public void checkAndUpdate() {
-            if(!mIsCreated)
+            if(!mIsCreated) {
                 return;
+            }
+            Collection col = CollectionHelper.getInstance().getCol(getActivity());
             if(mType != (((Statistics)getActivity()).getTaskHandler()).getStatType() ||
-                    mDeckId != AnkiDroidApp.getCol().getDecks().selected() ||
+                    mDeckId != col.getDecks().selected() ||
                     mIsWholeCollection != AnkiStatsTaskHandler.isWholeCollection()){
                 mType = (((Statistics)getActivity()).getTaskHandler()).getStatType();
                 mProgressBar.setVisibility(View.VISIBLE);
                 mWebView.setVisibility(View.GONE);
-                mDeckId = AnkiDroidApp.getCol().getDecks().selected();
+                mDeckId = col.getDecks().selected();
                 mIsWholeCollection = AnkiStatsTaskHandler.isWholeCollection();
                 if(mCreateStatisticsOverviewTask != null && !mCreateStatisticsOverviewTask.isCancelled()){
                     mCreateStatisticsOverviewTask.cancel(true);

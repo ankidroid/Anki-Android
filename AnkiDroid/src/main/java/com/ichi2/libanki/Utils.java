@@ -34,6 +34,7 @@ import android.widget.LinearLayout;
 import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.AnkiFont;
+import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
 
 import org.json.JSONArray;
@@ -151,7 +152,6 @@ public class Utils {
 
     /**
      * Return a string representing a time span (eg '2 days').
-     * @param inFormat: if true, return eg 'in 2 days'
      */
     public static String fmtTimeSpan(int time, int unit) {
         return fmtTimeSpan(time, 0, false, false, unit);
@@ -282,7 +282,7 @@ public class Utils {
 
     /**
      * Strips a text from <style>...</style>, <script>...</script> and <_any_tag_> HTML tags.
-     * @param The HTML text to be cleaned.
+     * @param s The HTML text to be cleaned.
      * @return The text without the aforementioned tags.
      */
     public static String stripHTML(String s) {
@@ -1112,7 +1112,7 @@ public class Utils {
 
     /** Returns a list of files for the installed custom fonts. */
     public static List<AnkiFont> getCustomFonts(Context context) {
-        String deckPath = AnkiDroidApp.getCurrentAnkiDroidDirectory();
+        String deckPath = CollectionHelper.getCurrentAnkiDroidDirectory(context);
         String fontsPath = deckPath + "/fonts/";
         File fontsDir = new File(fontsPath);
         int fontsCount = 0;
@@ -1158,8 +1158,8 @@ public class Utils {
 
 
     /** Returns a list of apkg-files. */
-    public static List<File> getImportableDecks() {
-        String deckPath = AnkiDroidApp.getCurrentAnkiDroidDirectory();
+    public static List<File> getImportableDecks(Context context) {
+        String deckPath = CollectionHelper.getCurrentAnkiDroidDirectory(context);
         File dir = new File(deckPath);
         int deckCount = 0;
         File[] deckList = null;

@@ -36,6 +36,7 @@ import android.view.KeyEvent;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.receiver.SdCardReceiver;
+import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.preferences.StepsPreference;
 import com.ichi2.themes.Themes;
@@ -359,12 +360,12 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
         // This screen doesn't suffer from this bug really as it doesn't have nested
         // PreferenceScreens, but we have change the background for consistency with
         // DeckOptions background.
-        if (AnkiDroidApp.SDK_VERSION <= 10) {
+        if (!CompatHelper.isHoneycomb()) {
             Themes.applyTheme(this, Themes.THEME_ANDROID_DARK);
         }
         super.onCreate(icicle);
 
-        mCol = AnkiDroidApp.getCol();
+        mCol = CollectionHelper.getInstance().getCol(this);
         if (mCol == null) {
             finish();
             return;

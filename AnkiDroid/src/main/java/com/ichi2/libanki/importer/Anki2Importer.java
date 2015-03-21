@@ -22,8 +22,8 @@ import android.database.Cursor;
 
 import com.google.gson.stream.JsonReader;
 import com.ichi2.anki.AnkiDatabaseManager;
-import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.BackupManager;
+import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
 import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Collection;
@@ -107,9 +107,9 @@ public class Anki2Importer {
         publishProgress(false, 0, 0, false);
         try {
             // extract the deck from the zip file
-            String tempDir = AnkiDroidApp.getCurrentAnkiDroidDirectory() + "/tmpzip";
+            String tempDir = new File(new File(mCol.getPath()).getParentFile(), "tmpzip").getAbsolutePath();
             // from anki2.py
-            String colFile = tempDir + "/collection.anki2";
+            String colFile = new File(tempDir, "collection.anki2").getAbsolutePath();
             if (!Utils.unzipFiles(mZip, tempDir, new String[] { "collection.anki2", "media" }, null)
                     || !(new File(colFile)).exists() || !Storage.Collection(colFile).validCollection()) {
                 return -2;

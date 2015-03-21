@@ -21,6 +21,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.media.AudioManager;
 import android.speech.tts.TextToSpeech;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.webkit.WebView;
 
 import com.ichi2.anki.exception.APIVersionException;
@@ -62,4 +63,5 @@ public interface Compat {
     public abstract void abandonAudioFocus(AudioManager audioManager);
     public abstract int parentLayoutSize();
     public abstract void enableCookiesForFileSchemePages();
+    public abstract int getScaledPagingTouchSlop(ViewConfiguration vc);
 }

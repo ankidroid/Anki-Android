@@ -34,6 +34,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.compat.CompatHelper;
 import com.ichi2.themes.Themes;
 
 import org.acra.util.Installation;
@@ -77,7 +78,7 @@ public class Info extends ActionBarActivity {
             @Override
             public void onClick(View arg0) {
                 if (mType == TYPE_ABOUT) {
-                    if (AnkiDroidApp.isKindle()) {
+                    if (CompatHelper.isKindle()) {
                         Intent intent = new Intent("android.intent.action.VIEW",
                                 Uri.parse("http://www.amazon.com/gp/mas/dl/android?p=com.ichi2.anki"));
                         startActivity(intent);

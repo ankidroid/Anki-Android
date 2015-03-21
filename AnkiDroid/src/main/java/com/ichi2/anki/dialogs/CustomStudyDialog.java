@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener;
 import com.ichi2.libanki.Collection;
@@ -82,7 +83,7 @@ public class CustomStudyDialog extends DialogFragment {
                     case CUSTOM_STUDY_NEW:
                         // Get col, exit if not open
                         //TODO: Find a cleaner way to get the col() from StudyOptionsFragment loader
-                        col = AnkiDroidApp.getCol();
+                        col = CollectionHelper.getInstance().getCol(getActivity());
                         if (col == null || col.getDb()== null) {
                             Themes.showThemedToast(getActivity().getBaseContext(), getResources()
                                     .getString(R.string.open_collection_failed_title), false);
@@ -101,7 +102,7 @@ public class CustomStudyDialog extends DialogFragment {
                     case CUSTOM_STUDY_REV:
                         // Get col, exit if not open
                         //TODO: Find a cleaner way to get the col() from StudyOptionsFragment loader
-                        col = AnkiDroidApp.getCol();
+                        col = CollectionHelper.getInstance().getCol(getActivity());
                         if (col == null || col.getDb()== null) {
                             Themes.showThemedToast(getActivity().getBaseContext(), getResources()
                                     .getString(R.string.open_collection_failed_title), false);
@@ -159,7 +160,7 @@ public class CustomStudyDialog extends DialogFragment {
    
     private String getText1() {
         Resources res = AnkiDroidApp.getAppResources();
-        Collection col = AnkiDroidApp.getCol();
+        Collection col = CollectionHelper.getInstance().getCol(getActivity());
         switch (getArguments().getInt("id")) {
             case CUSTOM_STUDY_NEW:
                 return res.getString(R.string.custom_study_new_total_new, col.getSched().totalNewForCurrentDeck());

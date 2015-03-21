@@ -18,7 +18,6 @@
 
 package com.ichi2.anki;
 
-import android.annotation.TargetApi;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -26,26 +25,14 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.os.Build;
 import android.os.Environment;
-import android.os.Message;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.ViewConfiguration;
 
 import com.ichi2.anki.dialogs.AnkiDroidCrashReportDialog;
 import com.ichi2.anki.exception.StorageAccessException;
-import com.ichi2.compat.Compat;
-import com.ichi2.compat.CompatV12;
-import com.ichi2.compat.CompatV15;
-import com.ichi2.compat.CompatV15NookHdOrHdPlus;
-import com.ichi2.compat.CompatV16;
-import com.ichi2.compat.CompatV7;
-import com.ichi2.compat.CompatV7Nook;
-import com.ichi2.compat.CompatV8;
-import com.ichi2.compat.CompatV9;
-import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Storage;
-import com.ichi2.libanki.hooks.Hooks;
+import com.ichi2.compat.CompatHelper;
 import com.ichi2.utils.LanguageUtil;
 
 import org.acra.ACRA;
@@ -55,11 +42,7 @@ import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
 import org.acra.sender.HttpSender;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Locale;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -127,51 +110,18 @@ import timber.log.Timber;
 )
 public class AnkiDroidApp extends Application {
 
-    public static final int SDK_VERSION = android.os.Build.VERSION.SDK_INT;
     public static final String XML_CUSTOM_NAMESPACE = "http://arbitrary.app.namespace/com.ichi2.anki";
     public static final String FEEDBACK_REPORT_ASK = "2";
     public static final String FEEDBACK_REPORT_NEVER = "1";
     public static final String FEEDBACK_REPORT_ALWAYS = "0";
 
-
-
-    /**
-     * Tag for logging messages.
-     */
+    // Tag for logging messages.
     public static final String TAG = "AnkiDroid";
-
-    public static final String COLLECTION_FILENAME = "collection.anki2";
-
-    /**
-     * Singleton instance of this class.
-     */
+    // Singleton instance of this class.
     private static AnkiDroidApp sInstance;
-    private Collection mCurrentCollection;
-    private int mAccessThreadCount = 0;
-    private static final Lock mLock = new ReentrantLock();
-    private static Message sStoredDialogHandlerMessage;
-
-    /**
-     * Global boolean flags
-     */
-    public static boolean sSyncInProgressFlag = false;
-    public static boolean sDatabaseCorruptFlag = false;
-
-    /** Global hooks */
-    private Hooks mHooks;
-
-    /** Compatibility interface, Used to perform operation in a platform specific way. */
-    private Compat mCompat;
-
-    /**
-     * The name of the shared preferences for this class, as supplied to
-     * {@link Context#getSharedPreferences(String, int)}.
-     */
-    public static final String SHARED_PREFS_NAME = AnkiDroidApp.class.getPackage().getName();
-
+    // Constants for gestures
     public static int sSwipeMinDistance = -1;
     public static int sSwipeThresholdVelocity = -1;
-
     private static int DEFAULT_SWIPE_MIN_DISTANCE;
     private static int DEFAULT_SWIPE_THRESHOLD_VELOCITY;
 
@@ -192,7 +142,6 @@ public class AnkiDroidApp extends Application {
     /**
      * On application creation.
      */
-    @TargetApi(Build.VERSION_CODES.FROYO)
     @Override
     public void onCreate() {
         super.onCreate();
@@ -220,49 +169,29 @@ public class AnkiDroidApp extends Application {
         }
         Timber.tag(TAG);
 
-        if (isNookHdOrHdPlus() && SDK_VERSION == 15) {
-            mCompat = new CompatV15NookHdOrHdPlus();
-        } else if (SDK_VERSION >= 16) {
-            mCompat = new CompatV16();
-        } else if (SDK_VERSION >= 15) {
-            mCompat = new CompatV15();
-        } else if (SDK_VERSION >= 12) {
-            mCompat = new CompatV12();
-        } else if (SDK_VERSION >= 9) {
-            mCompat = new CompatV9();
-        } else if (SDK_VERSION >= 8) {
-            mCompat = new CompatV8();
-        } else if (isNook() && SDK_VERSION == 7) {
-            mCompat = new CompatV7Nook();
-        } else {
-            mCompat = new CompatV7();
-        }
 
         sInstance = this;
-        sInstance.mHooks = new Hooks(preferences);
         setLanguage(preferences.getString(Preferences.LANGUAGE, ""));
 
         // Configure WebView to allow file scheme pages to access cookies.
-        mCompat.enableCookiesForFileSchemePages();
+        CompatHelper.getCompat().enableCookiesForFileSchemePages();
 
         // Set good default values for swipe detection
         final ViewConfiguration vc = ViewConfiguration.get(this);
-        if (SDK_VERSION >= 8) {
-            DEFAULT_SWIPE_MIN_DISTANCE = vc.getScaledPagingTouchSlop();
-        } else {
-            DEFAULT_SWIPE_MIN_DISTANCE = vc.getScaledTouchSlop()*2;
-        }
+        DEFAULT_SWIPE_MIN_DISTANCE = CompatHelper.getCompat().getScaledPagingTouchSlop(vc);
         DEFAULT_SWIPE_THRESHOLD_VELOCITY = vc.getScaledMinimumFlingVelocity();
 
         // Create the AnkiDroid directory if missing. Send exception report if inaccessible.
         try {
-            initializeAnkiDroidDirectory(getCurrentAnkiDroidDirectory());
+            String dir = CollectionHelper.getCurrentAnkiDroidDirectory(this);
+            CollectionHelper.initializeAnkiDroidDirectory(dir);
         } catch (StorageAccessException e) {
             Timber.e(e, "Could not initialize AnkiDroid directory");
             if (isSdCardMounted()) {
                 sendExceptionReport(e, "AnkiDroidApp.onCreate");
             }
         }
+
     }
 
 
@@ -274,33 +203,6 @@ public class AnkiDroidApp extends Application {
     }
 
 
-    private boolean isNookHdOrHdPlus() {
-        return isNookHd() || isNookHdPlus();
-    }
-
-    private boolean isNookHdPlus() {
-        return android.os.Build.BRAND.equals("NOOK") && android.os.Build.PRODUCT.equals("HDplus")
-                && android.os.Build.DEVICE.equals("ovation");
-    }
-
-    private boolean isNookHd () {
-        return android.os.Build.MODEL.equalsIgnoreCase("bntv400") && android.os.Build.BRAND.equals("NOOK");
-    }
-
-
-    public static boolean isNook() {
-        return android.os.Build.MODEL.equalsIgnoreCase("nook") || android.os.Build.DEVICE.equalsIgnoreCase("nook");
-    }
-
-
-    public static boolean isChromebook() {
-        return android.os.Build.BRAND.equalsIgnoreCase("chromium") || android.os.Build.MANUFACTURER.equalsIgnoreCase("chromium");
-    }
-
-    public static boolean isKindle() {
-        return Build.BRAND.equalsIgnoreCase("amazon") || Build.MANUFACTURER.equalsIgnoreCase("amazon");
-    }
-
 
     /**
      * Convenience method for accessing Shared preferences
@@ -309,7 +211,7 @@ public class AnkiDroidApp extends Application {
      * @return A SharedPreferences object for this instance of the app.
      */
     public static SharedPreferences getSharedPrefs(Context context) {
-        return context.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE);
+        return PreferenceManager.getDefaultSharedPreferences(context);
     }
 
 
@@ -322,66 +224,6 @@ public class AnkiDroidApp extends Application {
         return sInstance.getCacheDir().getAbsolutePath();
     }
 
-
-    public static String getCollectionPath() {
-        return new File(getCurrentAnkiDroidDirectory(), COLLECTION_FILENAME).getAbsolutePath();
-    }
-
-    /**
-     * Get the absolute path to a directory that is suitable to be the default starting location
-     * for the AnkiDroid folder. This is a folder named "AnkiDroid" at the top level of the
-     * external storage directory.
-     */
-    private static String getDefaultAnkiDroidDirectory() {
-        return new File(Environment.getExternalStorageDirectory(), "AnkiDroid").getAbsolutePath();
-    }
-
-
-    /**
-     * Get the absolute path to the AnkiDroid directory.
-     */
-    public static String getCurrentAnkiDroidDirectory() {
-        SharedPreferences prefs = getSharedPrefs(sInstance.getApplicationContext());
-        return prefs.getString("deckPath", getDefaultAnkiDroidDirectory());
-    }
-
-
-    /**
-     * Create the AnkiDroid directory if it doesn't exist and add a .nomedia file to it if needed.
-     *
-     * The AnkiDroid directory is a user preference stored under the "deckPath" key, and a sensible
-     * default is chosen if the preference hasn't been created yet (i.e., on the first run).
-     *
-     * The presence of a .nomedia file indicates to media scanners that the directory must be
-     * excluded from their search. We need to include this to avoid media scanners including
-     * media files from the collection.media directory. The .nomedia file works at the directory
-     * level, so placing it in the AnkiDroid directory will ensure media scanners will also exclude
-     * the collection.media sub-directory.
-     *
-     * @param path  Directory to initialize
-     * @throws StorageAccessException If no write access to directory
-     */
-    public static void initializeAnkiDroidDirectory(String path) throws StorageAccessException {
-        // Create specified directory if it doesn't exit
-        File dir = new File(path);
-        if (!dir.exists() && !dir.mkdirs()) {
-            throw new StorageAccessException("Failed to create AnkiDroid directory");
-        }
-        if (!dir.canWrite()) {
-            throw new StorageAccessException("No write access to AnkiDroid directory");
-        }
-        // Add a .nomedia file to it if it doesn't exist
-        File nomedia = new File(dir, ".nomedia");
-        if (!nomedia.exists()) {
-            try {
-                nomedia.createNewFile();
-            } catch (IOException e) {
-                throw new StorageAccessException("Failed to create .nomedia file");
-            }
-        }
-    }
-
-
     public static Resources getAppResources() {
         return sInstance.getResources();
     }
@@ -389,19 +231,6 @@ public class AnkiDroidApp extends Application {
 
     public static boolean isSdCardMounted() {
         return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
-    }
-
-    /**
-     * Try to access the current AnkiDroid directory
-     * @return whether or not dir is accessible
-     */
-    public static boolean isCurrentAnkiDroidDirAccessible() {
-        try {
-            initializeAnkiDroidDirectory(getCurrentAnkiDroidDirectory());
-            return true;
-        } catch (StorageAccessException e) {
-            return false;
-        }
     }
 
 
@@ -490,11 +319,6 @@ public class AnkiDroidApp extends Application {
     }
 
 
-    public static Hooks getHooks() {
-        return sInstance.mHooks;
-    }
-
-
     public static boolean initiateGestures(SharedPreferences preferences) {
         Boolean enabled = preferences.getBoolean("gestures", false);
         if (enabled) {
@@ -509,81 +333,6 @@ public class AnkiDroidApp extends Application {
             }
         }
         return enabled;
-    }
-
-
-    public static Compat getCompat() {
-        return sInstance.mCompat;
-    }
-
-
-    public static synchronized Collection openCollection(String path) {
-        return openCollection(path, false);
-    }
-
-
-    public static synchronized Collection openCollection(String path, boolean force) {
-        mLock.lock();
-        Timber.i("openCollection: %s", path);
-        try {
-            if (!colIsOpen() || !sInstance.mCurrentCollection.getPath().equals(path) || force) {
-                if (colIsOpen()) {
-                    // close old collection prior to opening new one
-                    sInstance.mCurrentCollection.close();
-                    sInstance.mAccessThreadCount = 0;
-                }
-                sInstance.mCurrentCollection = Storage.Collection(path, false, true);
-                sInstance.mAccessThreadCount++;
-                Timber.d("Access to collection is requested: collection has been opened");
-            } else {
-                sInstance.mAccessThreadCount++;
-                Timber.d("Access to collection is requested: collection has not been reopened (count: %d)", sInstance.mAccessThreadCount);
-            }
-            return sInstance.mCurrentCollection;
-        } finally {
-            mLock.unlock();
-        }
-    }
-
-
-    public static Collection getCol() {
-        return sInstance.mCurrentCollection;
-    }
-
-
-    public static void closeCollection(boolean save) {
-        mLock.lock();
-        Timber.i("closeCollection");
-        try {
-            if (sInstance.mAccessThreadCount > 0) {
-                sInstance.mAccessThreadCount--;
-            }
-            Timber.d("Access to collection has been closed: (count: %d)", sInstance.mAccessThreadCount);
-            if (sInstance.mAccessThreadCount == 0 && sInstance.mCurrentCollection != null) {
-                Collection col = sInstance.mCurrentCollection;
-                sInstance.mCurrentCollection = null;
-                col.close(save);
-            }
-        } finally {
-            mLock.unlock();
-        }
-
-    }
-
-
-    public static boolean colIsOpen() {
-        return sInstance.mCurrentCollection != null && sInstance.mCurrentCollection.getDb() != null
-                && sInstance.mCurrentCollection.getDb().getDatabase() != null
-                && sInstance.mCurrentCollection.getDb().getDatabase().isOpen();
-    }
-
-
-    public static void setStoredDialogHandlerMessage(Message msg) {
-        sStoredDialogHandlerMessage = msg;
-    }
-
-    public static Message getStoredDialogHandlerMessage() {
-        return sStoredDialogHandlerMessage;
     }
 
 

@@ -26,8 +26,8 @@ import android.util.Pair;
 
 import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.AnkiDb;
-import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.exception.APIVersionException;
+import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.template.Template;
 
 import org.json.JSONArray;
@@ -236,7 +236,7 @@ public class Media {
         // get the file name
         String fname = ofile.getName();
         // make sure we write it in NFC form and return an NFC-encoded reference
-        fname = AnkiDroidApp.getCompat().nfcNormalized(fname);
+        fname = CompatHelper.getCompat().nfcNormalized(fname);
         // remove any dangerous characters
         String base = stripIllegal(fname);
         String root = Utils.removeExtension(base);
@@ -430,7 +430,7 @@ public class Media {
                 // check the refs are in NFC
                 for (String f : noteRefs) {
                     // if they're not, we'll need to fix them first
-                    if (!f.equals(AnkiDroidApp.getCompat().nfcNormalized(f))) {
+                    if (!f.equals(CompatHelper.getCompat().nfcNormalized(f))) {
                         _normalizeNoteRefs(nid);
                         noteRefs = filesInStr(mid, flds);
                         break;
@@ -464,7 +464,7 @@ public class Media {
                 // leading _ says to ignore file
                 continue;
             }
-            File nfcFile = new File(dir(), AnkiDroidApp.getCompat().nfcNormalized(file.getName()));
+            File nfcFile = new File(dir(), CompatHelper.getCompat().nfcNormalized(file.getName()));
             // we enforce NFC fs encoding
             if (local == null) {
                 if (!file.getName().equals(nfcFile.getName())) {
@@ -510,7 +510,7 @@ public class Media {
         String[] flds = note.getFields();
         for (int c = 0; c < flds.length; c++) {
             String fld = flds[c];
-            String nfc = AnkiDroidApp.getCompat().nfcNormalized(fld);
+            String nfc = CompatHelper.getCompat().nfcNormalized(fld);
             if (!nfc.equals(fld)) {
                 note.setField(c, nfc);
             }
@@ -674,7 +674,7 @@ public class Media {
                 continue;
             }
             // check encoding
-            String normf = AnkiDroidApp.getCompat().nfcNormalized(fname);
+            String normf = CompatHelper.getCompat().nfcNormalized(fname);
             if (!fname.equals(normf)) {
                 // wrong filename encoding which will cause sync errors
                 File nf = new File(dir(), normf);
@@ -823,7 +823,7 @@ public class Media {
                 String fname = cur.getString(0);
                 String csum = cur.getString(1);
                 fnames.add(fname);
-                String normname = AnkiDroidApp.getCompat().nfcNormalized(fname);
+                String normname = CompatHelper.getCompat().nfcNormalized(fname);
 
                 if (!TextUtils.isEmpty(csum)) {
                     try {
@@ -890,7 +890,7 @@ public class Media {
                 } else {
                     String name = meta.getString(i.getName());
                     // normalize name for platform
-                    name = AnkiDroidApp.getCompat().nfcNormalized(name);
+                    name = CompatHelper.getCompat().nfcNormalized(name);
                     // save file
                     String destPath = dir().concat(File.separator).concat(name);
                     Utils.writeToFile(z.getInputStream(i), destPath);

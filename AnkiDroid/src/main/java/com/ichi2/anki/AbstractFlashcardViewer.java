@@ -82,6 +82,7 @@ import com.ichi2.anki.exception.APIVersionException;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.reviewer.ReviewerExtRegistry;
 import com.ichi2.async.DeckTask;
+import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
@@ -369,7 +370,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         public void run() {
             Timber.i("AbstractFlashcardViewer:: onEmulatedLongClick");
             // Show hint about lookup function if dictionary available and Webview version supports text selection
-            if (!mDisableClipboard && Lookup.isAvailable() && AnkiDroidApp.SDK_VERSION >= 11) {
+            if (!mDisableClipboard && Lookup.isAvailable() && CompatHelper.isHoneycomb()) {
                 String lookupHint = getResources().getString(R.string.lookup_hint);
                 Themes.showThemedToast(AbstractFlashcardViewer.this, lookupHint, false);
             }
@@ -1138,7 +1139,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             finishNoStorageAvailable();
         }
 
-        if (!AnkiDroidApp.colIsOpen()) {
+        if (!colIsOpen()) {
             Timber.e("onActivityResult -- Collection is not open... aborting");
             return;
         }
@@ -1150,14 +1151,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             if (data!=null && data.hasExtra("reloadRequired")) {
                 getCol().getSched().reset();
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(
-                        mSched, null, 0));
+                        getCol(), mSched, null, 0));
             }
 
             if (resultCode == RESULT_OK) {
                 // content of note was changed so update the note and current card
                 Timber.i("AbstractFlashcardViewer:: Saving card...");
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler, new DeckTask.TaskData(
-                        mSched, mCurrentCard, true));
+                        getCol(), mSched, mCurrentCard, true));
             } else if (resultCode == RESULT_CANCELED && !(data!=null && data.hasExtra("reloadRequired"))) {
                 // nothing was changed by the note editor so just redraw the card
                 fillFlashcard();
@@ -1177,7 +1178,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     protected long getParentDid() {
         long deckID;
         try {
-            deckID = AnkiDroidApp.getCol().getDecks().current().getLong("id");
+            deckID = getCol().getDecks().current().getLong("id");
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -1232,14 +1233,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
 
     protected void undo() {
-        if (AnkiDroidApp.getCol().undoAvailable()) {
+        if (getCol().undoAvailable()) {
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
                 mProgressDialog.setMessage(getResources().getString(R.string.saving_changes));
             } else {
                 mProgressDialog = StyledProgressDialog.show(AbstractFlashcardViewer.this, "",
                         getResources().getString(R.string.saving_changes), true);
             }
-            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mAnswerCardHandler, new DeckTask.TaskData(mSched));
+            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UNDO, mAnswerCardHandler, new DeckTask.TaskData(getCol(), mSched));
         }
     }
 
@@ -1320,7 +1321,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         Timber.i("AbstractFlashcardViewer:: OK button pressed to delete note %d", mCurrentCard.getNid());
                         DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler,
-                                new DeckTask.TaskData(mSched, mCurrentCard, 3));
+                                new DeckTask.TaskData(getCol(), mSched, mCurrentCard, 3));
                     }
                 });
         builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
@@ -1387,8 +1388,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         Sound.stopSounds();
         mCurrentEase = ease;
 
-        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(mSched,
-                mCurrentCard, mCurrentEase));
+        DeckTask.launchDeckTask(DeckTask.TASK_TYPE_ANSWER_CARD, mAnswerCardHandler, new DeckTask.TaskData(
+                getCol(), mSched, mCurrentCard, mCurrentEase));
     }
 
 
@@ -1416,7 +1417,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             findViewById(R.id.flashcard_border).setVisibility(View.VISIBLE);
         }
         // hunt for input issue 720, like android issue 3341
-        if (AnkiDroidApp.SDK_VERSION == 7 && (mCard != null)) {
+        if (CompatHelper.getSdkVersion() == 7 && (mCard != null)) {
             mCard.setFocusableInTouchMode(true);
         }
 
@@ -1511,7 +1512,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         WebView webView = new MyWebView(this);
         webView.setWillNotCacheDrawing(true);
         webView.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_OVERLAY);
-        if (AnkiDroidApp.SDK_VERSION > 11) {
+        if (CompatHelper.isHoneycomb()) {
             // Disable the on-screen zoom buttons for API > 11
             webView.getSettings().setDisplayZoomControls(false);
         }
@@ -1521,11 +1522,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         webView.getSettings().setLoadWithOverviewMode(true);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebChromeClient(new AnkiDroidWebChromeClient());
-        if (AnkiDroidApp.SDK_VERSION > 7) {
+        if (CompatHelper.isFroyo()) {
             webView.setFocusableInTouchMode(false);
         }
         if (mPrefSafeDisplay) {
-            AnkiDroidApp.getCompat().setScrollbarFadingEnabled(webView, false);
+            CompatHelper.getCompat().setScrollbarFadingEnabled(webView, false);
         }
         Timber.d("Focusable = %s, Focusable in touch mode = %s",webView.isFocusable(),webView.isFocusableInTouchMode());
 
@@ -1597,7 +1598,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (mCard != null) {
             mCard.setBackgroundColor(mCurrentBackgroundColor);
         }
-        AnkiDroidApp.getCompat().setActionBarBackground(this,
+        CompatHelper.getCompat().setActionBarBackground(this,
                 invert ? R.color.white_background_night : R.color.actionbar_background);
     }
 
@@ -1898,7 +1899,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         try {
             String[] title = getCol().getDecks().get(mCurrentCard.getDid()).getString("name").split("::");
-            AnkiDroidApp.getCompat().setTitle(this, title[title.length - 1], mInvertedColors);
+            CompatHelper.getCompat().setTitle(this, title[title.length - 1], mInvertedColors);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -1906,7 +1907,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         int[] counts = mSched.counts(mCurrentCard);
 
         int eta = mSched.eta(counts, false);
-        AnkiDroidApp.getCompat().setSubtitle(this,
+        CompatHelper.getCompat().setSubtitle(this,
                 getResources().getQuantityString(R.plurals.reviewer_window_title, eta, eta), mInvertedColors);
 
         SpannableString newCount = new SpannableString(String.valueOf(counts[0]));
@@ -2060,7 +2061,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         matcher = Sound.sSoundPattern.matcher(answerText);
         answerText = matcher.replaceAll("");
         try {
-            return AnkiDroidApp.getCompat().nfcNormalized(answerText);
+            return CompatHelper.getCompat().nfcNormalized(answerText);
         } catch (APIVersionException e) {
             return answerText;
         }
@@ -2078,7 +2079,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             return "";
         }
         try {
-            return AnkiDroidApp.getCompat().nfcNormalized(answer.trim());
+            return CompatHelper.getCompat().nfcNormalized(answer.trim());
         } catch (APIVersionException e) {
             return answer.trim();
         }
@@ -2239,7 +2240,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
             if (SAVE_CARD_CONTENT) {
                 try {
-                    FileOutputStream f = new FileOutputStream(new File(AnkiDroidApp.getCurrentAnkiDroidDirectory(),
+                    FileOutputStream f = new FileOutputStream(new File(CollectionHelper.getCurrentAnkiDroidDirectory(this),
                             "card.html"));
                     try {
                         f.write(mCardContent.toString().getBytes());
@@ -2379,7 +2380,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             mNextCard.setVisibility(View.GONE);
             mCardFrame.addView(mNextCard, 0);
             // hunt for input issue 720, like android issue 3341
-            if (AnkiDroidApp.SDK_VERSION == 7) {
+            if (CompatHelper.getSdkVersion() == 7) {
                 mCard.setFocusableInTouchMode(true);
             }
         } else if (mCard != null) {
@@ -2748,19 +2749,19 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 editCard();
                 break;
             case GESTURE_MARK:
-                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, mMarkCardHandler, new DeckTask.TaskData(mSched,
-                        mCurrentCard, 0));
+                DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD, mMarkCardHandler, new DeckTask.TaskData(
+                        getCol(), mSched, mCurrentCard, 0));
                 break;
             case GESTURE_LOOKUP:
                 lookUpOrSelectText();
                 break;
             case GESTURE_BURY:
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
-                        mSched, mCurrentCard, 0));
+                        getCol(), mSched, mCurrentCard, 0));
                 break;
             case GESTURE_SUSPEND:
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDismissCardHandler, new DeckTask.TaskData(
-                        mSched, mCurrentCard, 1));
+                        getCol(), mSched, mCurrentCard, 1));
                 break;
             case GESTURE_DELETE:
                 showDeleteNoteDialog();
@@ -2800,14 +2801,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         // updateBigWidget(!mCardFrame.isEnabled());
 
         if (saveDeck) {
-            UIUtils.saveCollectionInBackground();
+            UIUtils.saveCollectionInBackground(this);
         }
         finishWithAnimation(ActivityTransitionAnimation.RIGHT);
     }
 
 
     protected void refreshActionBar() {
-        AnkiDroidApp.getCompat().invalidateOptionsMenu(AbstractFlashcardViewer.this);
+        CompatHelper.getCompat().invalidateOptionsMenu(AbstractFlashcardViewer.this);
     }
 
     /** Fixing bug 720: <input> focus, thanks to pablomouzo on android issue 7189 */
@@ -3036,7 +3037,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         @Override
         public Drawable getDrawable(String source) {
-            String path = AnkiDroidApp.getCurrentAnkiDroidDirectory() + "/collection.media/" + source;
+            String path = CollectionHelper.getCurrentAnkiDroidDirectory(AbstractFlashcardViewer.this) + "/collection.media/" + source;
             if ((new File(path)).exists()) {
                 Drawable d = Drawable.createFromPath(path);
                 d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight());

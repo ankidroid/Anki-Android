@@ -19,6 +19,8 @@
 
 package com.ichi2.anki.multimediacard.fields;
 
+import com.ichi2.libanki.Collection;
+
 import java.io.Serializable;
 
 /**
@@ -91,5 +93,5 @@ public interface IField extends Serializable {
     public String getFormattedValue();
 
 
-    void setFormattedString(String value);
+    void setFormattedString(Collection col, String value);
 }

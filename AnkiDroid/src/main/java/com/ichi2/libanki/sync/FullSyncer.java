@@ -78,11 +78,13 @@ public class FullSyncer extends HttpSyncer {
         } catch (IOException e1) {
             return null;
         }
-        String path = AnkiDroidApp.getCollectionPath();
-        if (mCol != null) {
-            mCol.close(false);
-            mCol = null;
+        if (mCol == null) {
+            Timber.e("Collection was unexpectedly null");
+            return null;
         }
+        String path = mCol.getPath();
+        mCol.close(false);
+        mCol = null;
         String tpath = path + ".tmp";
         if (!super.writeToFile(cont, tpath)) {
             return new Object[] { "sdAccessError" };

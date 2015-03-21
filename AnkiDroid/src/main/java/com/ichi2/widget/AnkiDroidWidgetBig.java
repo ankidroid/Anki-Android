@@ -302,7 +302,7 @@
 //
 //            @Override
 //            public void onPostExecute(DeckTask.TaskData result) {
-//                contentService.mCol = result.getCollection();
+//                contentService.mCol = result.getCol();
 //                if (contentService.mCol != null) {
 //                    showDeckSelectionDialog();
 //                } else {

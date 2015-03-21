@@ -24,6 +24,7 @@ import android.speech.tts.TextToSpeech;
 
 import android.widget.Toast;
 
+import com.ichi2.compat.CompatHelper;
 import com.ichi2.themes.StyledDialog;
 
 import java.lang.ref.WeakReference;
@@ -163,7 +164,7 @@ public class ReadText {
                 } else {
                     Toast.makeText(mReviewer.get(), mReviewer.get().getString(R.string.no_tts_available_message), Toast.LENGTH_LONG).show();
                 }
-                AnkiDroidApp.getCompat().setTtsOnUtteranceProgressListener(mTts);
+                CompatHelper.getCompat().setTtsOnUtteranceProgressListener(mTts);
             }
         });
         mTtsParams = new HashMap<String, String>();

@@ -21,6 +21,7 @@ import android.database.SQLException;
 import android.os.AsyncTask;
 
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.MetaDB;
 import com.ichi2.anki.services.NotificationService;
 import com.ichi2.async.BaseAsyncTask;
@@ -189,9 +190,9 @@ public final class WidgetStatus {
             // } else {
             try {
                 if (sSmallWidgetStatus == null) {
-                    Collection col = AnkiDroidApp.openCollection(AnkiDroidApp.getCollectionPath());
+                    Collection col = CollectionHelper.getInstance().getCol(context);
                     mSmallWidgetStatus = col.getSched().progressToday(sDeckCounts, null, true);
-                    AnkiDroidApp.closeCollection(false);
+                    CollectionHelper.getInstance().closeCollection(false);
                 } else {
                     mSmallWidgetStatus = sSmallWidgetStatus;
                 }

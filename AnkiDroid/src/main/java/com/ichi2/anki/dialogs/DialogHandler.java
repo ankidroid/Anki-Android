@@ -1,22 +1,25 @@
 package com.ichi2.anki.dialogs;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
 import com.ichi2.anki.AnkiActivity;
+import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.DeckPicker;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+
+import timber.log.Timber;
 
 
 /**
  * We're not allowed to commit fragment transactions from Loader.onLoadCompleted(),
  * and it's unsafe to commit them from an AsyncTask onComplete event, so we work 
  * around this by using a message handler.
- * 
- * @param DeckPicker activity the main activity
  */
 public class DialogHandler extends Handler {
 
@@ -34,6 +37,7 @@ public class DialogHandler extends Handler {
 
 
     WeakReference<AnkiActivity> mActivity;
+    private static Message sStoredMessage;
     
     public DialogHandler(AnkiActivity activity) {
         // Use weak reference to main activity to prevent leaking the activity when it's closed
@@ -84,7 +88,27 @@ public class DialogHandler extends Handler {
                 }
             };
             dialog.setArgs(msgData.getString("message"));
-            ((AnkiActivity) mActivity.get()).showDialogFragment(dialog);
+            (mActivity.get()).showDialogFragment(dialog);
         }
+    }
+
+    /**
+     * Store a persistent message to static variable
+     * @param message Message to store
+     */
+    public static void storeMessage(Message message) {
+        Timber.d("Storing persistent message");
+        sStoredMessage = message;
+    }
+
+    /**
+     * Read and handle Message which was stored via storeMessage()
+     */
+    public void readMessage() {
+        Timber.d("Reading persistent message");
+        if (sStoredMessage != null) {
+            sendMessage(sStoredMessage);
+        }
+        sStoredMessage = null;
     }
 }

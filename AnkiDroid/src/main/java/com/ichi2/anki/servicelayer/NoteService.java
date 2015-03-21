@@ -19,7 +19,6 @@
 
 package com.ichi2.anki.servicelayer;
 
-import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.exception.APIVersionException;
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
 import com.ichi2.anki.multimediacard.fields.AudioField;
@@ -70,7 +69,7 @@ public class NoteService {
     }
 
 
-    public static void updateMultimediaNoteFromJsonNote(final Note editorNoteSrc, final IMultimediaEditableNote noteDst) {
+    public static void updateMultimediaNoteFromJsonNote(Collection col, final Note editorNoteSrc, final IMultimediaEditableNote noteDst) {
         if (noteDst instanceof MultimediaEditableNote) {
             MultimediaEditableNote mmNote = (MultimediaEditableNote) noteDst;
             String[] values = editorNoteSrc.getFields();
@@ -84,7 +83,7 @@ public class NoteService {
                 } else {
                     field = new TextField();
                 }
-                field.setFormattedString(value);
+                field.setFormattedString(col, value);
                 mmNote.setField(i, field);
             }
             mmNote.setModelId(editorNoteSrc.getMid());
@@ -97,8 +96,8 @@ public class NoteService {
      * Updates the JsonNote field values from MultimediaEditableNote When both notes are using the same Model, it updaes
      * the destination field values with source values. If models are different it throws an Exception
      * 
-     * @param mNoteSrc
-     * @param mEditorNoteDst
+     * @param noteSrc
+     * @param editorNoteDst
      */
     public static void updateJsonNoteFromMultimediaNote(final IMultimediaEditableNote noteSrc, final Note editorNoteDst) {
         if (noteSrc instanceof MultimediaEditableNote) {
@@ -121,9 +120,9 @@ public class NoteService {
      * not already point to a media inside anki media path If both condition satisfies then it copies the file inside
      * the media path and deletes the file referenced by the note
      * 
-     * @param note
+     * @param noteNew
      */
-    public static void saveMedia(final MultimediaEditableNote noteNew) {
+    public static void saveMedia(Collection col, final MultimediaEditableNote noteNew) {
         // if (noteNew.getModelId() == noteOld.getModelId())
         // {
         // int fieldCount = noteNew.getNumberOfFields();
@@ -144,7 +143,7 @@ public class NoteService {
         int fieldCount = noteNew.getNumberOfFields();
         for (int i = 0; i < fieldCount; i++) {
             IField newField = noteNew.getField(i);
-            importMediaToDirectory(newField);
+            importMediaToDirectory(col, newField);
         }
         // }
     }
@@ -155,7 +154,7 @@ public class NoteService {
      * 
      * @param field
      */
-    private static void importMediaToDirectory(IField field) {
+    private static void importMediaToDirectory(Collection col, IField field) {
         String tmpMediaPath = null;
         switch (field.getType()) {
             case AUDIO:
@@ -174,7 +173,6 @@ public class NoteService {
             try {
                 File inFile = new File(tmpMediaPath);
                 if (inFile.exists()) {
-                    Collection col = AnkiDroidApp.getCol();
                     String fname = col.getMedia().addFile(inFile);
                     File outFile = new File(col.getMedia().dir(), fname);
                     if (field.hasTemporaryMedia() && !outFile.getAbsolutePath().equals(tmpMediaPath)) {

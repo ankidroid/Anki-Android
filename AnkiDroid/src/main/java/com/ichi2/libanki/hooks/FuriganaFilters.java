@@ -16,7 +16,7 @@
 
 package com.ichi2.libanki.hooks;
 
-import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.compat.CompatHelper;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -27,7 +27,7 @@ public class FuriganaFilters {
     // Since there is no ruby tag support in Android before 3.0 (SDK version 11), we must use an alternative
     // approach to align the elements. Anki does the same thing in aqt/qt.py for earlier versions of qt.
     // The fallback approach relies on CSS in the file /assets/ruby.css
-    private static final String RUBY = AnkiDroidApp.SDK_VERSION >= 11 ? "<ruby><rb>$1</rb><rt>$2</rt></ruby>"
+    private static final String RUBY = CompatHelper.isHoneycomb() ? "<ruby><rb>$1</rb><rt>$2</rt></ruby>"
             : "<span class='legacy_ruby_rb'><span class='legacy_ruby_rt'>$2</span>$1</span>";
 
 

@@ -21,7 +21,7 @@ import android.content.Context;
 import android.content.Intent;
 
 
-import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.CollectionHelper;
 import com.ichi2.libanki.Collection;
 
 import timber.log.Timber;
@@ -45,7 +45,7 @@ public class SdCardReceiver extends BroadcastReceiver {
             Intent i = new Intent();
             i.setAction(MEDIA_EJECT);
             context.sendBroadcast(i);
-            Collection col = AnkiDroidApp.getCol();
+            Collection col = CollectionHelper.getInstance().getCol(context);
             if (col != null) {
                 col.close();
             }
