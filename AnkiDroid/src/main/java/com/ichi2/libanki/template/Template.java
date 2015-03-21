@@ -165,7 +165,7 @@ public class Template {
 
             String tag = match.group(0);
             String tag_type = match.group(1);
-            String tag_name = match.group(2);
+            String tag_name = match.group(2).trim();
             String replacement;
             if (tag_type == null) {
                 replacement = render_unescaped(tag_name, context);
