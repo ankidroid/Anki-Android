@@ -4,6 +4,7 @@ package com.ichi2.compat;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.appwidget.AppWidgetManager;
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.ColorDrawable;
 import android.media.AudioManager;
@@ -173,12 +174,10 @@ public class CompatV7 implements Compat {
     // Below API level 12, file scheme pages are not restricted, so no adjustment is needed.
     public void enableCookiesForFileSchemePages() { }
 
+    // Below API level 16, widget dimensions cannot be adjusted
     @Override
-    public void adjustSmallWidgetDimensions(RemoteViews views, int id, int left, int top, int right, int bottom, float ts) {
+    public void updateWidgetDimensions(Context context, RemoteViews updateViews, Class<?> cls) {
+
     }
 
-    @Override
-    public int[] getWidgetDimensions(AppWidgetManager manager, int id) {
-        return new int[0];
-    }
 }
