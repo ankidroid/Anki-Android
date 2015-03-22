@@ -1594,6 +1594,21 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
 
     /**
+     * Return true if deck is not a children of a collapsed deck
+     */
+    private boolean deckIsShown(List<Sched.DeckDueTreeNode> nodes, Long current) {
+        for (Sched.DeckDueTreeNode node : nodes) {
+            if (node.did == current) {
+                return true;
+            }
+            if (!getCol().getDecks().get(node.did).optBoolean("collapsed", false) && deckIsShown(node.children, current)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Scroll the deck list so that it is centered on the current deck.
      */
     private void focusDecklistOnDeck(long did) {
@@ -1645,10 +1660,13 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                             res.getQuantityString(R.plurals.deckpicker_title, due, due, time));
                 }
 
-                Long did = getCol().getDecks().current().optLong("id");
-                if (mFocusedDeck == null || !mFocusedDeck.equals(did)) {
-                    focusDecklistOnDeck(did);
-                    mFocusedDeck = did;
+                Long current = getCol().getDecks().current().optLong("id");
+                if (!deckIsShown(nodes, current)) {
+                    // clear selection if deck is hidden
+                    mDeckListView.clearChoices();
+                } else if (mFocusedDeck == null || !mFocusedDeck.equals(current)) {
+                    focusDecklistOnDeck(current);
+                    mFocusedDeck = current;
                 }
 
                 // update widget
