@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="#00FFFFFF"
-        android:clickable="true"
+        android:clickable="false"
         android:focusable="false"
         android:scaleType="fitCenter"
         android:src="@drawable/widget_bg_small"/>
@@ -82,7 +82,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="#00FFFFFF"
-        android:clickable="true"
+        android:clickable="false"
         android:focusable="false"
         android:scaleType="fitCenter"
         android:visibility="gone"
