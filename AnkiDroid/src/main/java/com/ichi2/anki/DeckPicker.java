@@ -1699,7 +1699,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             private void _deckRow(Sched.DeckDueTreeNode node, int depth, int cnt) {
                 HashMap<String, String> m = new HashMap<String, String>();
                 boolean collapsed = getCol().getDecks().get(node.did).optBoolean("collapsed", false);
-                m.put("name", decoratedDeckName(node.names[0], depth, collapsed));
+                m.put("name", decoratedDeckName(node.names[0], depth, collapsed, node.children.size()));
                 m.put("did", Long.toString(node.did));
                 m.put("new", Integer.toString(node.newCount));
                 m.put("lrn", Integer.toString(node.lrnCount));
@@ -1759,15 +1759,22 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
              * (as opposed to additional native UI elements). This includes the amount of indenting
              * for nested decks based on depth and an indicator of collapsed state.
              */
-            private String decoratedDeckName(String name, int depth, boolean collapsed) {
+            private String decoratedDeckName(String name, int depth, boolean collapsed, int children) {
                 if (collapsed) {
-                    name = name + " (+)";
+                    // add arrow pointing right if collapsed
+                    name = "\u25B7 " + name;
+                } else if (children > 0) {
+                    // add arrow pointing down if deck has children
+                    name = "\u25BD " + name;
+                } else {
+                    // add empty spaces
+                    name = "\u2009\u2009\u2009 " + name;
                 }
                 if (depth == 0) {
                     return name;
                 } else {
-                    // Add 4 spaces for every level of nesting and prefix the deck name with an arrow
-                    return new String(new char[depth]).replace("\0", "    ") + "\u21aa" + name;
+                    // Add 4 spaces for every level of nesting
+                    return new String(new char[depth]).replace("\0", "\u2009\u2009\u2009 ") + name;
                 }
             }
         });
