@@ -1706,10 +1706,12 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 m.put("rev", Integer.toString(node.revCount));
                 m.put("dyn", getCol().getDecks().isDyn(node.did) ? "d1" : "d0");
 
-                // Add this node's counts to the totals
-                nNew += node.newCount;
-                nLrn += node.lrnCount;
-                nRev += node.revCount;
+                // Add this node's counts to the totals if it's a parent deck
+                if (depth == 0) {
+                    nNew += node.newCount;
+                    nLrn += node.lrnCount;
+                    nRev += node.revCount;
+                }
 
                 // If the default deck is empty, hide it
                 // We don't hide it if it's the only deck or if it has sub-decks
