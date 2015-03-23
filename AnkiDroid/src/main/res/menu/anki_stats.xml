@@ -4,22 +4,6 @@
       tools:context=".AnkiStatsActivity">
 
     <item
-        android:id="@+id/action_deck_chooser"
-        android:title="@string/stats_select_decks"
-        android:icon="@drawable/ic_action_storage"
-        app:showAsAction="always">
-        <menu>
-            <group android:id="@+id/group1" android:checkableBehavior="single">
-                <item
-                    android:id="@+id/item_deck_current"
-                    android:title="@string/stats_deck_current"/>
-                <item
-                    android:id="@+id/item_deck_life"
-                    android:title="@string/stats_deck_collection"/>
-            </group>
-        </menu>
-        </item>
-    <item
         android:id="@+id/action_time_chooser"
         android:title="@string/stats_select_time_scale"
         android:icon="@drawable/ic_action_time"

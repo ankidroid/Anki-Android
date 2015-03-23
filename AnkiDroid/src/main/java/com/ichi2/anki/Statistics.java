@@ -15,25 +15,29 @@
  ****************************************************************************************/
 package com.ichi2.anki;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import android.support.v4.app.*;
 import android.support.v4.view.*;
 
+import android.support.v7.app.ActionBar;
 import android.view.*;
+import android.view.animation.Animation;
 import android.webkit.WebView;
 import android.widget.*;
 
 import com.example.android.common.view.SlidingTabLayout;
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.NavigationDrawerActivity;
-import com.ichi2.anki.R;
+import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.stats.*;
+import com.ichi2.anki.widgets.DeckDropDownAdapter;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Stats;
 import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -41,7 +45,8 @@ import java.util.Locale;
 import timber.log.Timber;
 
 
-public class Statistics extends NavigationDrawerActivity {
+public class Statistics extends NavigationDrawerActivity implements ActionBar.OnNavigationListener,
+                            DeckDropDownAdapter.SubtitleListener{
 
     public static final int TODAYS_STATS_TAB_POSITION = 0;
     public static final int FORECAST_TAB_POSITION = 1;
@@ -59,6 +64,8 @@ public class Statistics extends NavigationDrawerActivity {
     private SlidingTabLayout mSlidingTabLayout;
     private AnkiStatsTaskHandler mTaskHandler = null;
     private View mMainLayout;
+    private ArrayList<JSONObject> mDropDownDecks;
+    private DeckDropDownAdapter mDropDownAdapter;
     private static boolean sIsSubtitle;
     private static boolean sIsWholeCollectionOnly;
 
@@ -78,6 +85,14 @@ public class Statistics extends NavigationDrawerActivity {
     @Override
     protected void onCollectionLoaded(Collection col) {
         Timber.d("onCollectionLoaded()");
+        // Add drop-down menu to select deck to action bar.
+        mDropDownDecks = getCol().getDecks().allSorted();
+        mDropDownAdapter = new DeckDropDownAdapter(this, mDropDownDecks);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+        actionBar.setListNavigationCallbacks(mDropDownAdapter, this);
+
         // Setup Task Handler
         mTaskHandler = new AnkiStatsTaskHandler();
 
@@ -99,6 +114,27 @@ public class Statistics extends NavigationDrawerActivity {
         // Prepare options menu only after loading everything
         supportInvalidateOptionsMenu();
         mSectionsPagerAdapter.notifyDataSetChanged();
+
+        // set the currently selected deck
+        String currentDeckName;
+        try {
+            currentDeckName = getCol().getDecks().current().getString("name");
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        for (int dropDownDeckIdx = 0; dropDownDeckIdx < mDropDownDecks.size(); dropDownDeckIdx++) {
+            JSONObject deck = mDropDownDecks.get(dropDownDeckIdx);
+            String deckName;
+            try {
+                deckName = deck.getString("name");
+            } catch (JSONException e) {
+                throw new RuntimeException();
+            }
+            if (deckName.equals(currentDeckName)) {
+                actionBar.setSelectedNavigationItem(dropDownDeckIdx + 1);
+                break;
+            }
+        }
     }
 
     @Override
@@ -146,20 +182,6 @@ public class Statistics extends NavigationDrawerActivity {
                 break;
         }
 
-
-
-        if(sIsWholeCollectionOnly){
-            MenuItem deckItem = menu.findItem(R.id.action_deck_chooser);
-            deckItem.setVisible(false);
-        } else {
-            if(AnkiStatsTaskHandler.isWholeCollection()){
-                MenuItem collectionItem = menu.findItem(R.id.item_deck_life);
-                collectionItem.setChecked(true);
-            } else {
-                MenuItem deckOnlyItem = menu.findItem(R.id.item_deck_current);
-                deckOnlyItem.setChecked(true);
-            }
-        }
         return super.onPrepareOptionsMenu(menu);
 
     }
@@ -197,43 +219,46 @@ public class Statistics extends NavigationDrawerActivity {
                     mSectionsPagerAdapter.notifyDataSetChanged();
                 }
                 return true;
-            case R.id.item_deck_current:
-                if (item.isChecked()) item.setChecked(false);
-                else item.setChecked(true);
-                if(AnkiStatsTaskHandler.isWholeCollection()){
-                    AnkiStatsTaskHandler.setIsWholeCollection(false);
-                    try {
-                        List<String> parts = Arrays.asList(AnkiDroidApp.getCol().getDecks().current().getString("name").split("::"));
-                        if(sIsSubtitle)
-                            AnkiDroidApp.getCompat().setSubtitle(this, parts.get(parts.size() - 1));
-                        else
-                            setTitle(parts.get(parts.size() - 1));
-                    } catch (JSONException e) {
-                        throw new RuntimeException(e);
-                    }
-                    mSectionsPagerAdapter.notifyDataSetChanged();
-                }
-                return true;
-            case R.id.item_deck_life:
-                if (item.isChecked()) item.setChecked(false);
-                else item.setChecked(true);
-                if(!AnkiStatsTaskHandler.isWholeCollection()){
-                    AnkiStatsTaskHandler.setIsWholeCollection(true);
-                    if(sIsSubtitle)
-                        AnkiDroidApp.getCompat().setSubtitle(this, getResources().getString(R.string.stats_deck_collection));
-                    else
-                        setTitle(getResources().getString(R.string.stats_deck_collection));
-                    mSectionsPagerAdapter.notifyDataSetChanged();
-                }
-                return true;
             case R.id.action_time_chooser:
                 //showTimeDialog();
                 return true;
-            case R.id.action_deck_chooser:
-                //showDeckDialog();
-                return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(int position, long itemId) {
+        if (position == 0) {
+            AnkiStatsTaskHandler.setIsWholeCollection(true);
+        } else {
+            AnkiStatsTaskHandler.setIsWholeCollection(false);
+            JSONObject deck = mDropDownDecks.get(position - 1);
+            try {
+                getCol().getDecks().select(deck.getLong("id"));
+            } catch (JSONException e) {
+                Timber.e(e, "Could not get ID from deck");
+            }
+        }
+        mSectionsPagerAdapter.notifyDataSetChanged();
+        return true;
+    }
+
+    /**
+     * @return text to be used in the subtitle of the drop-down deck selector
+     */
+    public String getSubtitleText() {
+        return getSelectedNavDrawerTitle();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Timber.d("onBackPressed()");
+        Intent data = new Intent();
+        if (getIntent().hasExtra("selectedDeck")) {
+            data.putExtra("originalDeck", getIntent().getLongExtra("selectedDeck", 0L));
+        }
+        setResult(RESULT_CANCELED, data);
+        finishWithAnimation(ActivityTransitionAnimation.RIGHT);
     }
 
     public AnkiStatsTaskHandler getTaskHandler(){

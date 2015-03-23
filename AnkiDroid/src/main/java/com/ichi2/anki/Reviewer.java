@@ -20,6 +20,7 @@ package com.ichi2.anki;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.util.DisplayMetrics;
@@ -453,6 +454,17 @@ public class Reviewer extends AbstractFlashcardViewer {
                 mHasDrawerSwipeConflicts = true;
                 super.disableDrawerSwipe();
             }
+        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_STATISTICS) {
+            // select original deck if the statistics was opened, which can change the selected deck
+            if (data.hasExtra("originalDeck")) {
+                getCol().getDecks().select(data.getLongExtra("originalDeck", 0L));
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
         }
     }
 }

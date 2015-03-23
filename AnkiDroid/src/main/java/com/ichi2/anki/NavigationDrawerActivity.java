@@ -38,8 +38,6 @@ import android.widget.TextView;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.stats.AnkiStatsTaskHandler;
 
-import java.util.Locale;
-
 import timber.log.Timber;
 
 
@@ -65,6 +63,7 @@ public class NavigationDrawerActivity extends AnkiActivity {
     // Intent request codes
     public static final int REQUEST_PREFERENCES_UPDATE = 100;
     public static final int REQUEST_BROWSE_CARDS = 101;
+    public static final int REQUEST_STATISTICS = 102;
     
     
     // navigation drawer stuff
@@ -148,7 +147,8 @@ public class NavigationDrawerActivity extends AnkiActivity {
                     }
                     AnkiStatsTaskHandler.setIsWholeCollection(selectAllDecksButton);
                     Intent intent = new Intent(this, Statistics.class);
-                    startActivityWithAnimation(intent, ActivityTransitionAnimation.LEFT);
+                    intent.putExtra("selectedDeck", getCol().getDecks().selected());
+                    startActivityForResultWithAnimation(intent, REQUEST_STATISTICS, ActivityTransitionAnimation.LEFT);
                 }
 
                 break;
@@ -170,6 +170,14 @@ public class NavigationDrawerActivity extends AnkiActivity {
             default:
                 break;
         }
+    }
+
+    /**
+     * @return the name of the currently checked item in the navigation drawer
+     */
+    protected String getSelectedNavDrawerTitle() {
+        int position = mDrawerList.getCheckedItemPosition();
+        return mNavigationTitles[position];
     }
 
     protected void deselectAllNavigationItems() {
@@ -265,7 +273,7 @@ public class NavigationDrawerActivity extends AnkiActivity {
         super.onDestroy();
         mNavigationImages.recycle();
     }
-    
+
     public DrawerLayout getDrawerLayout() {
         return mDrawerLayout;
     }
