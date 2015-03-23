@@ -66,8 +66,9 @@
   <string name="backup_restore_select_title">Selecciona copia de seguridad para restaurar</string>
   <string name="backup_restore_no_backups">No hay copias de seguridad de este mazo disponibles en este dispositivo. Si tienes copias de seguridad en tu ordenador de sobremesa, por favor, cópialas manualmente en tu carpeta de AnkiDroid</string>
   <string name="open_collection_failed_title">La colección no se abrió</string>
-  <string name="open_collection_failed_message">Database could not be opened. It\'s either not a real Anki database or has been corrupted.\n\nTouch \'options\' for various options to restore the database, or for more information about repairing corrupted collections see:\n%1$s</string>
-  <string name="corrupt_db_message">Unfortunately your collection has become corrupted.\n\nTouch \'options\' to restore from a backup, or if that does not work, see the following instructions for manually repairing the database:\n%1$s</string>
-  <string name="access_collection_failed_message">An error occurred while accessing your collection. It may have been caused by a harmless bug, or there may be a problem with it. \n\nTry running check database, or restoring from backup by pressing the \'options\' button. If you continue to see this message, please file a bug report:\n%1$s</string>
+  <string name="open_collection_failed_message">No se pudo abrir la base de datos. No se trata de una verdadera base de datos de Anki o bien el archivo está corrupto. \n\nSelecciona \'opciones\' para encontrar opciones para restaurar la base de datos, o para obtener más información sobre reparar colecciones corruptas ver:\n%1$s
+Hide context | Request context</string>
+  <string name="corrupt_db_message">Desafortunadamente tu colección está corrupta. \n\nSelecciona \'opciones\' para restaurarla desde una copia de seguridad, o si eso no funciona, lee las siguientes instrucciones sobre cómo reparar la base de datos manualmente:\n%1$s</string>
+  <string name="access_collection_failed_message">Un error ha ocurrido mientras accedías a tu colección. Puede haber sido causado por un error inofensivo, o puede que haya un problema en ella.  \n\nIntenta usar el revisor de bases de datos, o restaura desde una copia de seguridad presionando el botón \"opciones\".  Si continúa saliendo este mensaje, por favor reporta el error:\n%1$s</string>
   <string name="deck_repair_error">No se pudo reparar la colección</string>
 </resources>

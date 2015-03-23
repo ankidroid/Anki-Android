@@ -119,7 +119,7 @@
   <string name="new_dynamic_deck">Crear mazo filtrado</string>
   <string name="studyoptions_feedback">Sugerencias</string>
   <string name="night_mode">Modo Nocturno</string>
-  <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
+  <string name="directory_inaccessible">El directorio AnkiDroid es inaccesible</string>
   <string-array name="next_review_s">
     <item>1 segundo</item>
     <item>1 minuto</item>
@@ -150,7 +150,7 @@
   <string name="studyoptions_congrats_more_rev">Se ha alcanzado el límite de repasos de hoy, pero todavía hay tarjetas a la espera de ser repasadas. Para una memorización óptima, considera la posibilidad de aumentar el límite diario en las opciones.</string>
   <string name="studyoptions_congrats_more_new">Hay más tarjetas nuevas disponibles, pero el límite diario ha sido alcanzado. Puedes aumentar el límite en las opciones, pero ten en cuenta que esto también aumentará tu carga de trabajo de repasos a corto plazo.</string>
   <string name="studyoptions_congrats_custom">Para estudiar fuera del horario normal, haz click en el botón Estudio Personalizado aquí abajo.</string>
-  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
+  <string name="studyoptions_no_cards_due">Ninguna carta pendiente todavía.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Mañana habrá: %1$d tarjetas para repasar y %2$s.\nTiempo estimado: %3$s</item>
     <item quantity="other">Mañana habrá: %1$d tarjetas para repasar y %2$s.\nTiempo estimado: %3$s</item>

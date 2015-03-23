@@ -23,7 +23,7 @@
   <string-array name="new_version_features">
     <item>Fix some bugs with filtered decks</item>
     <item>Improve importing of shared decks</item>
-    <item>Open settings if AnkiDroid dir inaccesible</item>
+    <item>Otwarcie Ustawień gdy folder AnkiDroid jest niedostępny</item>
     <item>Fix a bug with zooming</item>
     <item>Fix some issues with cloze deletion</item>
     <item>Fix various crashes</item>

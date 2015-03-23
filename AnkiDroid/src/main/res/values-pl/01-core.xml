@@ -119,7 +119,7 @@
   <string name="new_dynamic_deck">Stwórz filtrowaną talię</string>
   <string name="studyoptions_feedback">Informacje zwrotne</string>
   <string name="night_mode">Tryb nocny</string>
-  <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
+  <string name="directory_inaccessible">Katalog AnkiDroid jest niedostępny</string>
   <string-array name="next_review_s">
     <item>1 sekunda</item>
     <item>1 minuta</item>
@@ -187,8 +187,8 @@
   <string name="card_template_editor_back">Back Template</string>
   <string name="card_template_editor_styling">Styling</string>
   <string name="card_template_editor_menu_add_reverse">Add reverse</string>
-  <string name="card_template_editor_menu_delete">Delete</string>
-  <string name="card_template_editor_cant_delete">At least one card type is required.</string>
+  <string name="card_template_editor_menu_delete">Usuń</string>
+  <string name="card_template_editor_cant_delete">Wymagany jest przynajmniej jeden typ karty.</string>
   <plurals name="card_template_editor_confirm_delete">
     <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
     <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>

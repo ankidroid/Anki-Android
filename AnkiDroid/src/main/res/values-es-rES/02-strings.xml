@@ -155,7 +155,7 @@
   <string name="import_log_error">La importación falló</string>
   <string name="import_log_no_apkg">Éste no es un archivo apkg válido</string>
   <string name="import_error_not_apkg_extension">El nombre de archivo %s no tiene la extensión .apkg</string>
-  <string name="import_error_content_provider">The selected file could not be imported automatically by AnkiDroid. Please see the user manual for how to manually import anki files: \n %s</string>
+  <string name="import_error_content_provider">AnkiDroid no ha podido importar automáticamente el archivo seleccionado. Por favor, lee el manual de usuario sobre como importar manualmente anki files:  \n %s</string>
   <string name="import_importing">Importando tarjetas.\nPor favor, espera...</string>
   <string name="export_include_schedule">Incluir programación</string>
   <string name="export_include_media">Incluir multimedia</string>

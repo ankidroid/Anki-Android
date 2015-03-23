@@ -91,7 +91,7 @@
   <string name="contextmenu_deckpicker_reset_reset_message">Réinitialiser la langue</string>
   <string name="contextmenu_deckpicker_optimize_deck">Optimiser la base de données</string>
   <string name="contextmenu_deckpicker_rename_deck">Renommer le paquet</string>
-  <string name="contextmenu_deckpicker_collapse_deck">Cacher les sous-jeux de cartes</string>
+  <string name="contextmenu_deckpicker_collapse_deck">Cacher les sous-paquets</string>
   <string name="contextmenu_deckpicker_inflate_deck">Afficher les sous-jeux de cartes</string>
   <string name="contextmenu_deckpicker_set_custom_dictionary">Définir un dictionnaire personnalisé</string>
   <string name="menu_add">Ajouter</string>

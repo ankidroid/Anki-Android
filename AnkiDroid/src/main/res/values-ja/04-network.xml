@@ -73,7 +73,7 @@
   <string name="password">パスワード</string>
   <string name="password_repeat">パスワードの再入力</string>
   <string name="log_in">ログイン</string>
-  <string name="sign_up_description">AnkiWedのアカウントを持っていますか？無料アカウントを作成できます</string>
+  <string name="sign_up_description">AnkiWeb のアカウントを新規登録（無料）</string>
   <string name="sign_up">サインアップ</string>
   <string name="sign_up_terms"><i>サインアップ</i> をタップして、当社の <a href="https://ankiweb.net/account/terms"> 利用規約</a> への同意を確認します。</string>
   <string name="logged_as">ログイン名</string>

@@ -75,7 +75,7 @@
   <string name="card_unsuspended">撤消卡牌暂停</string>
   <string name="card_suspended">卡牌再次暂停</string>
   <string name="menu_rotate">旋转</string>
-  <string name="menu_import">菜单_导入</string>
+  <string name="menu_import">导入</string>
   <string name="undo">撤销</string>
   <string name="undo_action_review">上次复习</string>
   <string name="undo_action_edit">编辑卡牌记录</string>
