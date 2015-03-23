@@ -2,6 +2,7 @@
 <resources>
     <!-- Be careful with a reordering. It will probably lead to a deletion of already translated strings on crowdin and should therefore only be done only immediately before release -->
     <string-array name="new_version_features">
+        <item>(2.4.3) Fix "unknown field" bug</item>
         <item>Fix some bugs with filtered decks</item>
         <item>Improve importing of shared decks</item>
         <item>Open settings if AnkiDroid dir inaccesible</item>
