@@ -57,6 +57,7 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.TagsDialog;
 import com.ichi2.anki.dialogs.TagsDialog.TagsDialogListener;
 import com.ichi2.anki.receiver.SdCardReceiver;
+import com.ichi2.anki.widgets.DeckDropDownAdapter;
 import com.ichi2.async.DeckTask;
 import com.ichi2.async.DeckTask.TaskData;
 import com.ichi2.libanki.Card;
@@ -81,7 +82,8 @@ import java.util.regex.Pattern;
 
 import timber.log.Timber;
 
-public class CardBrowser extends NavigationDrawerActivity implements ActionBar.OnNavigationListener {
+public class CardBrowser extends NavigationDrawerActivity implements ActionBar.OnNavigationListener,
+            DeckDropDownAdapter.SubtitleListener {
 
     // private List<Long> mCardIds = new ArrayList<Long>();
     private ArrayList<HashMap<String, String>> mCards;
@@ -781,9 +783,15 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
 
     private void updateList() {
         mCardsAdapter.notifyDataSetChanged();
-        int count = getCards().size();
-        mDropDownAdapter.setCardCount(count);
         mDropDownAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * @return text to be used in the subtitle of the drop-down deck selector
+     */
+    public String getSubtitleText() {
+        int count = getCards().size();
+        return getResources().getQuantityString(R.plurals.card_browser_subtitle, count, count);
     }
 
 
@@ -1235,111 +1243,6 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
     }
 
 
-    private static class DeckDropDownViewHolder {
-        public TextView deckNameView;
-        public TextView deckCountsView;
-    }
-
-
-    private final class DeckDropDownAdapter extends BaseAdapter {
-
-        private Context context;
-        private ArrayList<JSONObject> decks;
-        private int count;
-
-
-        public DeckDropDownAdapter(Context context, ArrayList<JSONObject> decks) {
-            this.context = context;
-            this.decks = decks;
-        }
-
-
-        @Override
-        public int getCount() {
-            return decks.size() + 1;
-        }
-
-
-        @Override
-        public Object getItem(int position) {
-            if (position == 0) {
-                return null;
-            } else {
-                return decks.get(position + 1);
-            }
-        }
-
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            DeckDropDownViewHolder viewHolder;
-            TextView deckNameView;
-            TextView deckCountsView;
-            if (convertView == null) {
-                convertView = LayoutInflater.from(context).inflate(R.layout.dropdown_deck_selected_item, parent, false);
-                deckNameView = (TextView) convertView.findViewById(R.id.dropdown_deck_name);
-                deckCountsView = (TextView) convertView.findViewById(R.id.dropdown_deck_counts);
-                viewHolder = new DeckDropDownViewHolder();
-                viewHolder.deckNameView = deckNameView;
-                viewHolder.deckCountsView = deckCountsView;
-                convertView.setTag(viewHolder);
-            } else {
-                viewHolder = (DeckDropDownViewHolder) convertView.getTag();
-                deckNameView = (TextView) viewHolder.deckNameView;
-                deckCountsView = (TextView) viewHolder.deckCountsView;
-            }
-            if (position == 0) {
-                deckNameView.setText(context.getResources().getString(R.string.deck_summary_all_decks));
-            } else {
-                JSONObject deck = decks.get(position - 1);
-                try {
-                    String deckName = deck.getString("name");
-                    deckNameView.setText(deckName);
-                } catch (JSONException ex) {
-                    new RuntimeException();
-                }
-            }
-            deckCountsView.setText(getResources().getQuantityString(R.plurals.card_browser_subtitle, count, count));
-            return convertView;
-        }
-
-
-        @Override
-        public View getDropDownView(int position, View convertView, ViewGroup parent) {
-            TextView deckNameView;
-            if (convertView == null) {
-                convertView = LayoutInflater.from(context).inflate(R.layout.dropdown_deck_item, parent, false);
-                deckNameView = (TextView) convertView.findViewById(R.id.dropdown_deck_name);
-                convertView.setTag(deckNameView);
-            } else {
-                deckNameView = (TextView) convertView.getTag();
-            }
-            if (position == 0) {
-                deckNameView.setText(context.getResources().getString(R.string.deck_summary_all_decks));
-            } else {
-                JSONObject deck = decks.get(position - 1);
-                try {
-                    String deckName = deck.getString("name");
-                    deckNameView.setText(deckName);
-                } catch (JSONException ex) {
-                    new RuntimeException();
-                }
-            }
-            return convertView;
-        }
-
-
-        public void setCardCount(int count) {
-            this.count = count;
-        }
-
-    }
 
     private ArrayList<HashMap<String, String>> getCards() {
         if (mCards == null) {
