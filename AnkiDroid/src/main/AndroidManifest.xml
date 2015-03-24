@@ -317,6 +317,13 @@
         <meta-data
             android:name="com.sec.minimode.icon.landscape.normal"
             android:resource="@drawable/anki" />
+
+        <provider
+            android:name=".provider.CardContentProvider"
+            android:authorities="com.ichi2.anki.flashcards"
+            android:enabled="true"
+            android:exported="true" >
+        </provider>
     </application>
 
 </manifest>
