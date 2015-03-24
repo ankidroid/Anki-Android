@@ -31,7 +31,6 @@ import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
-
 import android.view.KeyEvent;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
@@ -45,7 +44,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -58,11 +56,10 @@ import timber.log.Timber;
 /**
  * Preferences for the current deck.
  */
-public class CramDeckOptions extends PreferenceActivity implements OnSharedPreferenceChangeListener {
+public class FilteredDeckOptions extends PreferenceActivity implements OnSharedPreferenceChangeListener {
 
     private JSONObject mDeck;
     private Collection mCol;
-    private String mPresetSearchSuffix;
     private boolean mAllowCommit = true;
 
     private BroadcastReceiver mUnmountReceiver = null;
@@ -124,7 +121,7 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
 
             @Override
             public boolean commit() {
-                Timber.d("CramDeckOptions - commit() changes back to database");
+                Timber.d("commit() changes back to database");
 
                 try {
                     for (Entry<String, Object> entry : mUpdate.valueSet()) {
@@ -166,14 +163,6 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
                                     if (name.equals("resched")) {
                                         mUpdate.put(name, presetValues.getBoolean(name));
                                         mValues.put(name, Boolean.toString(presetValues.getBoolean(name)));
-                                    } else if (name.equals("search")) {
-                                        if (mPresetSearchSuffix != null) {
-                                            mUpdate.put(name, presetValues.getString(name) + " " + mPresetSearchSuffix);
-                                            mValues.put(name, presetValues.getString(name) + " " + mPresetSearchSuffix);
-                                        } else {
-                                            mUpdate.put(name, presetValues.getString(name));
-                                            mValues.put(name, presetValues.getString(name));
-                                        }
                                     } else {
                                         mUpdate.put(name, presetValues.getString(name));
                                         mValues.put(name, presetValues.getString(name));
@@ -192,8 +181,8 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
                 try {
                     mCol.getDecks().save(mDeck);
                 } catch (RuntimeException e) {
-                    Timber.e(e, "CramDeckOptions - RuntimeException on saving deck");
-                    AnkiDroidApp.sendExceptionReport(e, "CramDeckOptionsSaveDeck");
+                    Timber.e(e, "RuntimeException on saving deck");
+                    AnkiDroidApp.sendExceptionReport(e, "FilteredDeckOptionsSaveDeck");
                     setResult(DeckPicker.RESULT_DB_ERROR);
                     finish();
                 }
@@ -376,18 +365,12 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
         } else {
             mDeck = mCol.getDecks().current();
         }
-        Bundle initialConfig = getIntent().getBundleExtra("cramInitialConfig");
-        if (initialConfig != null) {
-            if (initialConfig.containsKey("searchSuffix")) {
-                mPresetSearchSuffix = initialConfig.getString("searchSuffix");
-            }
-        }
 
         registerExternalStorageListener();
 
         try {
             if (mCol == null || mDeck.getInt("dyn") != 1) {
-                Timber.w("CramDeckOptions - No Collection loaded or deck is not a dyn deck");
+                Timber.w("No Collection loaded or deck is not a dyn deck");
                 finish();
                 return;
             } else {
@@ -489,28 +472,7 @@ public class CramDeckOptions extends PreferenceActivity implements OnSharedPrefe
         newOrderPref.setEntries(R.array.cram_deck_conf_order_labels);
         newOrderPref.setEntryValues(R.array.cram_deck_conf_order_values);
         newOrderPref.setValue(mPref.getString("order", "0"));
-
-        if (mPresetSearchSuffix != null) {
-            EditTextPreference searchPref = (EditTextPreference) findPreference("search");
-            searchPref.setText(mPresetSearchSuffix);
-        }
     }
-
-    public class JSONNameComparator implements Comparator<JSONObject> {
-        @Override
-        public int compare(JSONObject lhs, JSONObject rhs) {
-            String o1;
-            String o2;
-            try {
-                o1 = lhs.getString("name");
-                o2 = rhs.getString("name");
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-            return o1.compareToIgnoreCase(o2);
-        }
-    }
-
 
     /**
      * finish when sd card is ejected

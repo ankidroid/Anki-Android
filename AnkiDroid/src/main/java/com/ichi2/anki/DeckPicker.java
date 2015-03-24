@@ -562,10 +562,10 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 builder3.setPositiveButton(res.getString(R.string.create), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String enteredCramDeckName = mDialogEditText.getText().toString();
+                        String filteredDeckName = mDialogEditText.getText().toString();
                         Timber.i("DeckPicker:: Creating filtered deck...");
-                        long did = getCol().getDecks().newDyn(enteredCramDeckName);
-                        openStudyOptions(did, true);
+                        getCol().getDecks().newDyn(filteredDeckName);
+                        openStudyOptions(true);
                     }
                 });
                 builder3.setNegativeButton(res.getString(R.string.dialog_cancel), null);
@@ -752,7 +752,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             // transactions in a loader's onLoadFinished.
             new Handler().post(new Runnable() {
                 public void run() {
-                    loadStudyOptionsFragment(getCol().getDecks().current().optLong("id"), false);
+                    loadStudyOptionsFragment(false);
                 }
             });
         }
@@ -1505,9 +1505,8 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
      * modify the filter settings before being shown the fragment. The fragment itself will handle
      * rebuilding the deck if the settings change.
      */
-    private void loadStudyOptionsFragment(long deckId, boolean withDeckOptions) {
-        Bundle b = withDeckOptions ? new Bundle() : null;
-        StudyOptionsFragment details = StudyOptionsFragment.newInstance(deckId, b);
+    private void loadStudyOptionsFragment(boolean withDeckOptions) {
+        StudyOptionsFragment details = StudyOptionsFragment.newInstance(withDeckOptions);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.studyoptions_fragment, details);
         ft.commit();
@@ -1570,13 +1569,13 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     }
 
 
-    private void openStudyOptions(long deckId, boolean withDeckOptions) {
+    private void openStudyOptions(boolean withDeckOptions) {
         if (mFragmented) {
             // The fragment will show the study options screen instead of launching a new activity.
-            loadStudyOptionsFragment(deckId, withDeckOptions);
+            loadStudyOptionsFragment(withDeckOptions);
         } else {
             Intent intent = new Intent();
-            intent.putExtra("index", deckId);
+            intent.putExtra("withDeckOptions", withDeckOptions);
             intent.setClass(this, StudyOptionsActivity.class);
             startActivityForResultWithAnimation(intent, SHOW_STUDYOPTIONS, ActivityTransitionAnimation.LEFT);
         }
@@ -1589,7 +1588,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         long did = Long.parseLong(data.get("did"));
         getCol().getDecks().select(did);
         mFocusedDeck = did;
-        openStudyOptions(did, false);
+        openStudyOptions(false);
     }
 
 
@@ -1821,8 +1820,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         // open deck options
         if (getCol().getDecks().isDyn(mContextMenuDid)) {
             // open cram options if filtered deck
-            Intent i = new Intent(DeckPicker.this, CramDeckOptions.class);
-            i.putExtra("cramInitialConfig", (String) null);
+            Intent i = new Intent(DeckPicker.this, FilteredDeckOptions.class);
             i.putExtra("did", mContextMenuDid);
             startActivityWithAnimation(i, ActivityTransitionAnimation.FADE);
         } else {
@@ -1939,7 +1937,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 // new current deck. Otherwise we just update the list normally.
                 if (mFragmented && removingCurrent) {
                     updateDeckList();
-                    openStudyOptions(getCol().getDecks().current().optLong("id"), false);
+                    openStudyOptions(false);
                 } else {
                     updateDeckList();
                 }

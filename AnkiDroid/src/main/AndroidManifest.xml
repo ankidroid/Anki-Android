@@ -174,7 +174,7 @@
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/deckpreferences_title" />
         <activity
-            android:name="com.ichi2.anki.CramDeckOptions"
+            android:name=".FilteredDeckOptions"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:label="@string/deckpreferences_title" />
         <activity
