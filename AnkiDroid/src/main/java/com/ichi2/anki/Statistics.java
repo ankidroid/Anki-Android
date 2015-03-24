@@ -424,7 +424,7 @@ public class Statistics extends NavigationDrawerActivity {
             if ((((Statistics)getActivity()).getTaskHandler()) == null) {
                 // Close statistics if the TaskHandler hasn't been loaded yet
                 Timber.e("Statistics.ChartFragment.onCreateView() TaskHandler not found");
-                getActivity(). finish();
+                getActivity().finish();
                 return rootView;
             }
 

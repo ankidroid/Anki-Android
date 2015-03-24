@@ -1298,7 +1298,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                     } else if (resultType.equals("noChanges")) {
                         // show no changes message, use false flag so we don't show "sync error" as the Dialog title
                         dialogMessage = res.getString(R.string.sync_no_changes_message);
-                       showSyncLogDialog(joinSyncMessages(dialogMessage, syncMessage), false);
+                        showSyncLogDialog(joinSyncMessages(dialogMessage, syncMessage), false);
                     } else if (resultType.equals("clockOff")) {
                         long diff = (Long) result[1];
                         if (diff >= 86100) {
