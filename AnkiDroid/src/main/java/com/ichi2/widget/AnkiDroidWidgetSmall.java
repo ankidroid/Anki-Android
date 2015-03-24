@@ -18,12 +18,15 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.appwidget.AppWidgetProviderInfo;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.os.Bundle;
 import android.os.IBinder;
 
 import android.view.View;
@@ -32,7 +35,6 @@ import android.widget.RemoteViews;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
-
 import timber.log.Timber;
 
 public class AnkiDroidWidgetSmall extends AppWidgetProvider {
@@ -46,6 +48,7 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
         Timber.d("SmallWidget: onUpdate");
         WidgetStatus.update(context);
     }
+
 
 
     @Override
@@ -63,6 +66,14 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
         Timber.d("SmallWidget: Widget disabled");
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
         preferences.edit().putBoolean("widgetSmallEnabled", false).commit();
+    }
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        if (intent.getAction().contentEquals("com.sec.android.widgetapp.APPWIDGET_RESIZE")) {
+            AnkiDroidApp.getCompat().updateWidgetDimensions(context, new RemoteViews(context.getPackageName(), R.layout.widget_small), AnkiDroidWidgetSmall.class);
+        }
+        super.onReceive(context, intent);
     }
 
     public static class UpdateService extends Service {
@@ -92,7 +103,6 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
         private RemoteViews buildUpdate(Context context, boolean updateDueDecksNow) {
             Timber.d("buildUpdate");
 
-            // Resources res = context.getResources();
             RemoteViews updateViews = new RemoteViews(context.getPackageName(), R.layout.widget_small);
 
             boolean mounted = AnkiDroidApp.isSdCardMounted();
@@ -167,16 +177,19 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
             ankiDroidIntent.addCategory(Intent.CATEGORY_LAUNCHER);
             PendingIntent pendingAnkiDroidIntent = PendingIntent.getActivity(context, 0, ankiDroidIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT);
-            updateViews.setOnClickPendingIntent(R.id.ankidroid_widget_small_layout, pendingAnkiDroidIntent);
+            updateViews.setOnClickPendingIntent(R.id.ankidroid_widget_small_button, pendingAnkiDroidIntent);
+
+            AnkiDroidApp.getCompat().updateWidgetDimensions(context, updateViews, AnkiDroidWidgetSmall.class);
 
             return updateViews;
         }
-
 
         @Override
         public IBinder onBind(Intent arg0) {
             Timber.d("onBind");
             return null;
         }
+
     }
+
 }

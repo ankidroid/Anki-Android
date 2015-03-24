@@ -127,7 +127,7 @@ public class NavigationDrawerActivity extends AnkiActivity {
                 if (!(this instanceof DeckPicker)) {
                     Intent deckPicker = new Intent(this, DeckPicker.class);
                     deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);    // opening DeckPicker should clear back history
-                    startActivityWithAnimation(deckPicker, ActivityTransitionAnimation.LEFT);
+                    startActivityWithAnimation(deckPicker, ActivityTransitionAnimation.RIGHT);
                 }
                 break;
             case DRAWER_BROWSER:
@@ -154,7 +154,7 @@ public class NavigationDrawerActivity extends AnkiActivity {
                 break;
             case DRAWER_SETTINGS:
                 mOldColPath = AnkiDroidApp.getCurrentAnkiDroidDirectory();
-                startActivityForResultWithAnimation(new Intent(this, Preferences.class), REQUEST_PREFERENCES_UPDATE, ActivityTransitionAnimation.LEFT);
+                startActivityForResultWithAnimation(new Intent(this, Preferences.class), REQUEST_PREFERENCES_UPDATE, ActivityTransitionAnimation.FADE);
                 break;
             
             case DRAWER_HELP:
