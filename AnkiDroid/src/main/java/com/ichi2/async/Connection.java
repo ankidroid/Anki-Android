@@ -25,12 +25,12 @@ import android.net.Uri;
 import android.os.AsyncTask;
 
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
 import com.ichi2.anki.exception.UnknownHttpResponseException;
 import com.ichi2.anki.exception.UnsupportedSyncException;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
-import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.sync.FullSyncer;
 import com.ichi2.libanki.sync.HttpSyncer;
 import com.ichi2.libanki.sync.MediaSyncer;
@@ -38,34 +38,23 @@ import com.ichi2.libanki.sync.RemoteMediaServer;
 import com.ichi2.libanki.sync.RemoteServer;
 import com.ichi2.libanki.sync.Syncer;
 
-import org.apache.commons.httpclient.contrib.ssl.EasyX509TrustManager;
 import org.apache.http.HttpResponse;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.net.URLConnection;
-import java.security.KeyManagementException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
-
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
 
 import timber.log.Timber;
 
@@ -73,23 +62,15 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
 
     public static final int TASK_TYPE_LOGIN = 0;
     public static final int TASK_TYPE_SYNC = 1;
-    public static final int TASK_TYPE_GET_SHARED_DECKS = 2;
-    public static final int TASK_TYPE_GET_PERSONAL_DECKS = 3;
-    //public static final int TASK_TYPE_SEND_CRASH_REPORT = 4;
     public static final int TASK_TYPE_DOWNLOAD_MEDIA = 5;
     public static final int TASK_TYPE_REGISTER = 6;
     public static final int TASK_TYPE_UPGRADE_DECKS = 7;
-    public static final int TASK_TYPE_DOWNLOAD_SHARED_DECK = 8;
     public static final int CONN_TIMEOUT = 30000;
 
 
     private static Connection sInstance;
     private TaskListener mListener;
     private CancelCallback mCancelCallback;
-
-    public static final int RETURN_TYPE_OUT_OF_MEMORY = -1;
-
-    public static final String CONFLICT_RESOLUTION = "ConflictResolutionRequired";
 
 
     private static Connection launchConnectionTask(TaskListener listener, Payload data) {
@@ -167,22 +148,6 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     }
 
 
-    public static boolean taskIsCancelled() {
-        return sInstance.isCancelled();
-    }
-
-
-    public static void cancelTask() {
-        try {
-            if (sInstance != null && sInstance.getStatus() != AsyncTask.Status.FINISHED) {
-                sInstance.cancel(true);
-            }
-        } catch (Exception e) {
-            return;
-        }
-    }
-
-
     public static Connection login(TaskListener listener, Payload data) {
         data.taskType = TASK_TYPE_LOGIN;
         return launchConnectionTask(listener, data);
@@ -195,38 +160,8 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     }
 
 
-    public static Connection getSharedDecks(TaskListener listener, Payload data) {
-        data.taskType = TASK_TYPE_GET_SHARED_DECKS;
-        return launchConnectionTask(listener, data);
-    }
-
-
-    public static Connection getPersonalDecks(TaskListener listener, Payload data) {
-        data.taskType = TASK_TYPE_GET_PERSONAL_DECKS;
-        return launchConnectionTask(listener, data);
-    }
-
-
     public static Connection sync(TaskListener listener, Payload data) {
         data.taskType = TASK_TYPE_SYNC;
-        return launchConnectionTask(listener, data);
-    }
-
-
-    public static Connection downloadMissingMedia(TaskListener listener, Payload data) {
-        data.taskType = TASK_TYPE_DOWNLOAD_MEDIA;
-        return launchConnectionTask(listener, data);
-    }
-
-
-    public static Connection upgradeDecks(TaskListener listener, Payload data) {
-        data.taskType = TASK_TYPE_UPGRADE_DECKS;
-        return launchConnectionTask(listener, data);
-    }
-
-
-    public static Connection downloadSharedDeck(TaskListener listener, Payload data) {
-        data.taskType = TASK_TYPE_DOWNLOAD_SHARED_DECK;
         return launchConnectionTask(listener, data);
     }
 
@@ -249,15 +184,6 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             case TASK_TYPE_REGISTER:
                 return doInBackgroundRegister(data);
 
-                // case TASK_TYPE_GET_SHARED_DECKS:
-                // return doInBackgroundGetSharedDecks(data);
-                //
-                // case TASK_TYPE_GET_PERSONAL_DECKS:
-                // return doInBackgroundGetPersonalDecks(data);
-                //
-                // case TASK_TYPE_SYNC_ALL_DECKS:
-                // return doInBackgroundSyncAllDecks(data);
-
             case TASK_TYPE_SYNC:
                 return doInBackgroundSync(data);
 
@@ -266,9 +192,6 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
 
             case TASK_TYPE_UPGRADE_DECKS:
                 throw new RuntimeException("Upgrade decks no longer supported");
-
-            case TASK_TYPE_DOWNLOAD_SHARED_DECK:
-                return doInBackgroundDownloadSharedDeck(data);
 
             default:
                 return null;
@@ -393,10 +316,10 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         boolean media = (Boolean) data.data[1];
         String conflictResolution = (String) data.data[2];
         int mediaUsn = (Integer) data.data[3];
+        Collection col = data.col;
 
         boolean colCorruptFullSync = false;
-        Collection col = AnkiDroidApp.getCol();
-        if (!AnkiDroidApp.colIsOpen() || !ok) {
+        if (!CollectionHelper.getInstance().colIsOpen() || !ok) {
             if (conflictResolution != null && conflictResolution.equals("download")) {
                 colCorruptFullSync = true;
             } else {
@@ -405,9 +328,8 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 return data;
             }
         }
-        String path = AnkiDroidApp.getCollectionPath();
         try {
-            AnkiDroidApp.sSyncInProgressFlag = true;
+            CollectionHelper.getInstance().lockCollection();
             HttpSyncer server = new RemoteServer(this, hkey);
             Syncer client = new Syncer(col, server);
 
@@ -455,13 +377,13 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                         if (ret == null) {
                             data.success = false;
                             data.result = new Object[] { "genericError" };
-                            AnkiDroidApp.openCollection(path);
+                            CollectionHelper.getInstance().reopenCollection();   // TODO: is this needed?
                             return data;
                         }
                         if (!ret[0].equals(HttpSyncer.ANKIWEB_STATUS_OK)) {
                             data.success = false;
                             data.result = ret;
-                            AnkiDroidApp.openCollection(path);
+                            CollectionHelper.getInstance().reopenCollection();   // TODO: is this needed?
                             return data;
                         }
                     } else if (conflictResolution.equals("download")) {
@@ -471,19 +393,19 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                         if (ret == null) {
                             data.success = false;
                             data.result = new Object[] { "genericError" };
-                            AnkiDroidApp.openCollection(path);
+                            CollectionHelper.getInstance().reopenCollection();   // TODO: is this needed?
                             return data;
                         }
                         if (!ret[0].equals("success")) {
                             data.success = false;
                             data.result = ret;
                             if (!colCorruptFullSync) {
-                                AnkiDroidApp.openCollection(path);
+                                CollectionHelper.getInstance().reopenCollection();   // TODO: is this needed?
                             }
                             return data;
                         }
                     }
-                    col = AnkiDroidApp.openCollection(path);
+                    col = CollectionHelper.getInstance().reopenCollection();   // TODO: is this needed?
                 } catch (OutOfMemoryError e) {
                     AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync-fullSync");
                     data.success = false;
@@ -577,9 +499,9 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             // Close collection to roll back any sync failures and
             Timber.d("doInBackgroundSync -- closing collection on outer finally statement");
             col.close(false);
-            AnkiDroidApp.sSyncInProgressFlag = false;
+            CollectionHelper.getInstance().unlockCollection();
             Timber.d("doInBackgroundSync -- reopening collection on outer finally statement");
-            AnkiDroidApp.openCollection(AnkiDroidApp.getCollectionPath());
+            CollectionHelper.getInstance().reopenCollection();
         }
 
     }
@@ -747,83 +669,6 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     }
 
 
-    private Payload doInBackgroundDownloadSharedDeck(Payload data) {
-        String url = (String) data.data[0];
-        String colFilename = AnkiDroidApp.getCurrentAnkiDroidDirectory() + "/tmpImportFile.apkg";
-        URL fileUrl;
-        URLConnection conn;
-        InputStream cont = null;
-        try {
-            fileUrl = new URL(url);
-            if (url.startsWith("https")) {
-                SSLContext context = SSLContext.getInstance("TLS");
-                context.init(null, new TrustManager[] { new EasyX509TrustManager(null) }, null);
-                HttpsURLConnection httpsConn = (HttpsURLConnection) fileUrl.openConnection();
-                httpsConn.setSSLSocketFactory(context.getSocketFactory());
-                conn = httpsConn;
-            } else {
-                conn = fileUrl.openConnection();
-            }
-            conn.setConnectTimeout(10000);
-            conn.setReadTimeout(10000);
-            cont = conn.getInputStream();
-        } catch (MalformedURLException e) {
-            Timber.e(e, "doInBackgroundDownloadSharedDeck");
-            data.success = false;
-            return data;
-        } catch (IOException e) {
-            Timber.e(e, "doInBackgroundDownloadSharedDeck");
-            data.success = false;
-            return data;
-        } catch (NoSuchAlgorithmException e) {
-            Timber.e(e, "doInBackgroundDownloadSharedDeck");
-            data.success = false;
-            return data;
-        } catch (KeyStoreException e) {
-            Timber.e(e, "doInBackgroundDownloadSharedDeck");
-            return data;
-        } catch (KeyManagementException e) {
-            Timber.e(e, "doInBackgroundDownloadSharedDeck");
-            data.success = false;
-            return data;
-        }
-        if (cont == null) {
-            data.success = false;
-            return data;
-        }
-        File file = new File(colFilename);
-        OutputStream output = null;
-        try {
-            file.createNewFile();
-            output = new BufferedOutputStream(new FileOutputStream(file));
-            byte[] buf = new byte[Utils.CHUNK_SIZE];
-            int len;
-            int count = 0;
-            while ((len = cont.read(buf)) >= 0) {
-                output.write(buf, 0, len);
-                count += len;
-                publishProgress(new Object[] { count / 1024 });
-            }
-            output.close();
-        } catch (IOException e) {
-            try {
-                if (output != null) {
-                    output.close();
-                }
-            } catch (IOException e1) {
-                // do nothing
-            }
-            // no write access or sd card full
-            file.delete();
-            data.success = false;
-            return data;
-        }
-        data.success = true;
-        data.result = colFilename;
-        return data;
-    }
-
-
     public static boolean isOnline() {
         ConnectivityManager cm = (ConnectivityManager) AnkiDroidApp.getInstance().getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
 
@@ -860,10 +705,18 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         public int returnType;
         public Exception exception;
         public String message;
+        public Collection col;
 
 
         public Payload() {
             data = null;
+            success = true;
+        }
+
+
+        public Payload(Object[] data, Collection col) {
+            this.data = data;
+            this.col = col;
             success = true;
         }
 
@@ -875,6 +728,12 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
 
 
         public Payload(int taskType, Object[] data) {
+            this.taskType = taskType;
+            this.data = data;
+            success = true;
+        }
+
+        public Payload(int taskType, Object[] data, String path) {
             this.taskType = taskType;
             this.data = data;
             success = true;

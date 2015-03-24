@@ -142,14 +142,13 @@ public class AudioField extends FieldBase implements IField {
 
 
     @Override
-    public void setFormattedString(String value) {
+    public void setFormattedString(Collection col, String value) {
         Pattern p = Pattern.compile(PATH_REGEX);
         Matcher m = p.matcher(value);
         String res = "";
         if (m.find()) {
             res = m.group(1);
         }
-        Collection col = AnkiDroidApp.getCol();
         String mediaDir = col.getMedia().dir() + "/";
         setAudioPath(mediaDir + res);
     }

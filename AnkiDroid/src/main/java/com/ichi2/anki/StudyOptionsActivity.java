@@ -31,6 +31,7 @@ import android.view.View;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener;
 import com.ichi2.anki.receiver.SdCardReceiver;
+import com.ichi2.compat.CompatHelper;
 import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
@@ -125,7 +126,7 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
 
         String newLanguage = AnkiDroidApp.getSharedPrefs(this).getString(Preferences.LANGUAGE, "");
         if (AnkiDroidApp.setLanguage(newLanguage)) {
-            AnkiDroidApp.getCompat().invalidateOptionsMenu(this);
+            CompatHelper.getCompat().invalidateOptionsMenu(this);
         }
         getCurrentFragment().restorePreferences();
     }
@@ -157,9 +158,9 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
     @Override
     public void onStop() {
         super.onStop();
-        if (colOpen()) {
+        if (colIsOpen()) {
             WidgetStatus.update(this);
-            UIUtils.saveCollectionInBackground();
+            UIUtils.saveCollectionInBackground(this);
         }
     }
 

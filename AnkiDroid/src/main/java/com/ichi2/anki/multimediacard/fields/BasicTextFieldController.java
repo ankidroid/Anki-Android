@@ -34,12 +34,12 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.multimediacard.activity.LoadPronounciationActivity;
 import com.ichi2.anki.multimediacard.activity.PickStringDialogFragment;
 import com.ichi2.anki.multimediacard.activity.SearchImageActivity;
 import com.ichi2.anki.multimediacard.activity.TranslationActivity;
+import com.ichi2.compat.CompatHelper;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -68,7 +68,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
 
 
     @Override
-    public void createUI(LinearLayout layout) {
+    public void createUI(Context context, LinearLayout layout) {
         mEditText = new EditText(mActivity);
         mEditText.setMinLines(3);
         mEditText.setText(mField.getText());
@@ -200,7 +200,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
                 final ArrayList<String> translationSources = new ArrayList<String>();
                 translationSources.add("Glosbe.com");
                 // Chromebooks do not support dependent apps yet.
-                if (!AnkiDroidApp.isChromebook()) {
+                if (!CompatHelper.isChromebook()) {
                     translationSources.add("ColorDict");
                 }
 
@@ -232,7 +232,6 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
 
 
     /**
-     * @param activity
      * @param layoutTools This creates a button, which will call a dialog, allowing to pick from another note's fields
      *            one, and use it's value in the current one.
      * @param p

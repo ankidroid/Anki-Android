@@ -21,6 +21,7 @@ package com.ichi2.anki.multimediacard.fields;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -36,8 +37,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 
-import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
+import com.ichi2.compat.CompatHelper;
 import com.ichi2.utils.BitmapUtil;
 import com.ichi2.utils.ExifUtil;
 
@@ -77,7 +78,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
 
     @Override
-    public void createUI(LinearLayout layout) {
+    public void createUI(Context context, LinearLayout layout) {
         mImagePreview = new ImageView(mActivity);
 
         DisplayMetrics metrics = getDisplayMetrics();
@@ -115,7 +116,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
                 File storageDir;
                 String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss", Locale.US).format(new Date());
                 try {
-                    if (AnkiDroidApp.SDK_VERSION > 7) {
+                    if (CompatHelper.isFroyo()) {
                         storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
                     } else {
                         storageDir = Environment.getExternalStorageDirectory();
@@ -133,7 +134,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             }
         });
         // Chromebooks do not support camera capture yet.
-        if (AnkiDroidApp.isChromebook()) {
+        if (CompatHelper.isChromebook()) {
             mBtnCamera.setVisibility(View.INVISIBLE);
         }
 

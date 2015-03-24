@@ -28,6 +28,7 @@ import com.ichi2.anki.AnkiDb;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.CardBrowser;
+import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
 import com.ichi2.anki.exception.APIVersionException;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
@@ -397,7 +398,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         Timber.d("doInBackgroundUpdateNote");
         // Save the note
         Sched sched = params[0].getSched();
-        Collection col = AnkiDroidApp.getCol();
+        Collection col = params[0].getCollection();
         Card editCard = params[0].getCard();
         Note editNote = editCard.note();
         boolean fromReviewer = params[0].getBoolean();
@@ -441,12 +442,13 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
 
     private TaskData doInBackgroundAnswerCard(TaskData... params) {
+        Collection col = params[0].getCollection();
         Sched sched = params[0].getSched();
         Card oldCard = params[0].getCard();
         int ease = params[0].getInt();
         Card newCard = null;
         try {
-            AnkiDb ankiDB = AnkiDroidApp.getCol().getDb();
+            AnkiDb ankiDB = col.getDb();
             ankiDB.getDatabase().beginTransaction();
             try {
                 if (oldCard != null) {
@@ -483,8 +485,9 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
     private TaskData doInBackgroundLoadDeckCounts(TaskData... params) {
         Timber.d("doInBackgroundLoadDeckCounts");
+        Collection col = params[0].getCollection();
         try {
-            Object[] o = new Object[] {AnkiDroidApp.getCol().getSched().deckDueTree()};
+            Object[] o = new Object[] {col.getSched().deckDueTree()};
             return new TaskData(o);
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundLoadDeckCounts - error");
@@ -508,7 +511,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
     private TaskData doInBackgroundDismissNote(TaskData... params) {
         Sched sched = params[0].getSched();
-        Collection col = AnkiDroidApp.getCol();
+        Collection col = params[0].getCollection();
         Card card = params[0].getCard();
         Note note = card.note();
         int type = params[0].getInt();
@@ -584,13 +587,14 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
     private TaskData doInBackgroundMarkCard(TaskData... params) {
         Card card = params[0].getCard();
+        Collection col = params[0].getCollection();
         try {
-            AnkiDb ankiDB = AnkiDroidApp.getCol().getDb();
+            AnkiDb ankiDB = col.getDb();
             ankiDB.getDatabase().beginTransaction();
             try {
                 if (card != null) {
                     Note note = card.note();
-                    AnkiDroidApp.getCol().markUndo(Collection.UNDO_MARK_NOTE,
+                    col.markUndo(Collection.UNDO_MARK_NOTE,
                             new Object[] { note.getId(), note.stringTags(), card.getId() });
                     if (note.hasTag("marked")) {
                         note.delTag("marked");
@@ -615,7 +619,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
     private TaskData doInBackgroundUndo(TaskData... params) {
         Sched sched = params[0].getSched();
-        Collection col = AnkiDroidApp.getCol();
+        Collection col = params[0].getCollection();
         try {
             col.getDb().getDatabase().beginTransaction();
             Card newCard;
@@ -695,15 +699,10 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     private TaskData doInBackgroundCheckDatabase(TaskData... params) {
         Timber.d("doInBackgroundCheckDatabase");
         Collection col = params[0].getCollection();
-        // Try to reopen the collection if it's null
-        if (!AnkiDroidApp.colIsOpen()) {
-            Timber.e("doInBackgroundCheckDatabase :: collection not open, trying to reload");
-            AnkiDroidApp.openCollection(AnkiDroidApp.getCollectionPath());
-            col = AnkiDroidApp.getCol();
-            if (col == null) {
-                Timber.e("doInBackgroundCheckDatabase :: collection reload failed");
-                return new TaskData(false);
-            }
+        // Don't proceed if collection closed
+        if (col == null) {
+            Timber.e("doInBackgroundCheckDatabase :: supplied collection was null");
+            return new TaskData(false);
         }
 
         long result = col.fixIntegrity();
@@ -711,7 +710,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             return new TaskData(false);
         } else {
             // Close the collection and we restart the app to reload
-            AnkiDroidApp.closeCollection(true);
+            CollectionHelper.getInstance().closeCollection(true);
             return new TaskData(0, result, true);
         }
     }
@@ -719,12 +718,12 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
 
     private TaskData doInBackgroundRepairDeck(TaskData... params) {
         Timber.d("doInBackgroundRepairDeck");
-        String deckPath = params[0].getString();
+        //String deckPath = params[0].getString();
         Collection col = params[0].getCollection();
         if (col != null) {
             col.close(false);
         }
-        return new TaskData(BackupManager.repairDeck(deckPath));
+        return new TaskData(BackupManager.repairCollection(col));
     }
 
     private TaskData doInBackgroundCloseCollection(TaskData... params) {
@@ -734,7 +733,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             try {
                 WidgetStatus.waitToFinish();
                 String path = col.getPath();
-                AnkiDroidApp.closeCollection(true);
+                CollectionHelper.getInstance().closeCollection(true);
                 BackupManager.performBackupInBackground(path);
             } catch (RuntimeException e) {
                 Timber.e("doInBackgroundCloseCollection: error occurred - collection not properly closed");
@@ -746,7 +745,8 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
     private TaskData doInBackgroundUpdateValuesFromDeck(TaskData... params) {
         Timber.d("doInBackgroundUpdateValuesFromDeck");
         try {
-            Sched sched = params[0].getCollection().getSched();
+            Collection col = params[0].getCollection();
+            Sched sched = col.getSched();
             Object[] obj = params[0].getObjArray();
             boolean reset = (Boolean) obj[0];
             if (reset) {
@@ -760,7 +760,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             double[][] serieslist = null;
             // only calculate stats if necessary
             if ((Boolean) obj[1]) {
-                serieslist = Stats.getSmallDueStats(AnkiDroidApp.getCol());
+                serieslist = Stats.getSmallDueStats(col);
             }
             return new TaskData(new Object[] { counts[0], counts[1], counts[2], totalNewCount, totalCount,
                     progressMature, progressAll, sched.eta(counts), serieslist });
@@ -864,15 +864,15 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
 
         // extract the deck from the zip file
-        String fileDir = AnkiDroidApp.getCurrentAnkiDroidDirectory() + "/tmpzip";
-        File dir = new File(fileDir);
+        String colPath = col.getPath();
+        File dir = new File(new File(colPath).getParentFile(), "tmpzip");
         if (dir.exists()) {
             BackupManager.removeDir(dir);
         }
 
         publishProgress(new TaskData(res.getString(R.string.import_unpacking)));
         // from anki2.py
-        String colFile = fileDir + "/collection.anki2";
+        String colFile = new File(dir, "collection.anki2").getAbsolutePath();
         ZipFile zip;
         try {
             zip = new ZipFile(new File(path), ZipFile.OPEN_READ);
@@ -881,7 +881,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace0");
             return new TaskData(false);
         }
-        if (!Utils.unzipFiles(zip, fileDir, new String[] { "collection.anki2", "media" }, null)
+        if (!Utils.unzipFiles(zip, dir.getAbsolutePath(), new String[] { "collection.anki2", "media" }, null)
                 || !(new File(colFile)).exists()) {
             return new TaskData(-2, null, false);
         }
@@ -908,15 +908,13 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         }
 
         publishProgress(new TaskData(res.getString(R.string.importing_collection)));
-        String colPath;
         if (col != null) {
             // unload collection and trigger a backup
-            colPath = col.getPath();
-            AnkiDroidApp.closeCollection(true);
+            CollectionHelper.getInstance().closeCollection(true);
+            CollectionHelper.getInstance().lockCollection();
             BackupManager.performBackupInBackground(colPath, true);
         }
         // overwrite collection
-        colPath = AnkiDroidApp.getCollectionPath();
         File f = new File(colFile);
         if (!f.renameTo(new File(colPath))) {
             // Exit early if this didn't work
@@ -924,8 +922,8 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         }
         int addedCount = -1;
         try {
-            // open using force close of old collection, as background loader may have reopened the col
-            col = AnkiDroidApp.openCollection(colPath, true);
+            col = CollectionHelper.getInstance().reopenCollection();
+            CollectionHelper.getInstance().unlockCollection();
 
             // because users don't have a backup of media, it's safer to import new
             // data and rely on them running a media db check to get rid of any
@@ -933,7 +931,7 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
             // import media
             HashMap<String, String> nameToNum = new HashMap<String, String>();
             HashMap<String, String> numToName = new HashMap<String, String>();
-            File mediaMapFile = new File(fileDir, "media");
+            File mediaMapFile = new File(dir.getAbsolutePath(), "media");
             if (mediaMapFile.exists()) {
                 JsonReader jr = new JsonReader(new FileReader(mediaMapFile));
                 jr.beginObject();
@@ -1142,9 +1140,10 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         Timber.d("doInBackgroundCheckMedia");
         try {
             // A media check on AnkiDroid will also update the media db
-            AnkiDroidApp.getCol().getMedia().findChanges(true);
+            Collection col = params[0].getCollection();
+            col.getMedia().findChanges(true);
             // Then do the actual check
-            List<List<String>> result = AnkiDroidApp.getCol().getMedia().check();
+            List<List<String>> result = col.getMedia().check();
             return new TaskData(0, new Object[]{result}, true);
         } catch (APIVersionException e) {
             return new TaskData(false);
@@ -1448,14 +1447,16 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         }
 
 
-        public TaskData(Sched sched, Card card, int value) {
+        public TaskData(Collection col, Sched sched, Card card, int value) {
+            mCol = col;
             mSched = sched;
             mCard = card;
             mInteger = value;
         }
 
 
-        public TaskData(Sched sched) {
+        public TaskData(Collection col, Sched sched) {
+            mCol = col;
             mSched = sched;
         }
 
@@ -1466,7 +1467,8 @@ public class DeckTask extends BaseAsyncTask<DeckTask.TaskData, DeckTask.TaskData
         }
 
 
-        public TaskData(Sched sched, Card card, boolean bool) {
+        public TaskData(Collection col, Sched sched, Card card, boolean bool) {
+            mCol = col;
             mSched = sched;
             mBool = bool;
             mCard = card;

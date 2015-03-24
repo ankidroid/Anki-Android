@@ -578,7 +578,7 @@ public class NoteEditor extends AnkiActivity {
         super.onStop();
         if (!isFinishing()) {
             WidgetStatus.update(this);
-            UIUtils.saveCollectionInBackground();
+            UIUtils.saveCollectionInBackground(this);
         }
     }
 
@@ -747,7 +747,7 @@ public class NoteEditor extends AnkiActivity {
             if (mCurrentEditedCard.getDid() != mCurrentDid) {
                 mReloadRequired = true;
                 // remove card from filtered deck first (if relevant)
-                AnkiDroidApp.getCol().getSched().remFromDyn(new long[] { mCurrentEditedCard.getId() });
+                getCol().getSched().remFromDyn(new long[] { mCurrentEditedCard.getId() });
                 // refresh the card object to reflect the database changes in remFromDyn()
                 mCurrentEditedCard.load();
                 // also reload the note object
@@ -1215,14 +1215,15 @@ public class NoteEditor extends AnkiActivity {
                 break;
             case REQUEST_MULTIMEDIA_EDIT:
                 if (resultCode != RESULT_CANCELED) {
+                    Collection col = getCol();
                     Bundle extras = data.getExtras();
                     int index = extras.getInt(EditFieldActivity.EXTRA_RESULT_FIELD_INDEX);
                     IField field = (IField) extras.get(EditFieldActivity.EXTRA_RESULT_FIELD);
                     IMultimediaEditableNote mNote = NoteService.createEmptyNote(mEditorNote.model());
-                    NoteService.updateMultimediaNoteFromJsonNote(mEditorNote, mNote);
+                    NoteService.updateMultimediaNoteFromJsonNote(col, mEditorNote, mNote);
                     mNote.setField(index, field);
                     mEditFields.get(index).setText(field.getFormattedValue());
-                    NoteService.saveMedia((MultimediaEditableNote) mNote);
+                    NoteService.saveMedia(col, (MultimediaEditableNote) mNote);
                     mChanged = true;
                 }
                 break;
@@ -1296,11 +1297,12 @@ public class NoteEditor extends AnkiActivity {
             @Override
             public void onClick(View v) {
                 Timber.i("NoteEditor:: Multimedia button pressed for field %d", index);
+                final Collection col = CollectionHelper.getInstance().getCol(NoteEditor.this);
                 if (mEditorNote.items()[index][1].length() > 0) {
                     // If the field already exists then we start the field editor, which figures out the type
                     // automatically
                     IMultimediaEditableNote mNote = NoteService.createEmptyNote(mEditorNote.model());
-                    NoteService.updateMultimediaNoteFromJsonNote(mEditorNote, mNote);
+                    NoteService.updateMultimediaNoteFromJsonNote(col, mEditorNote, mNote);
                     IField field = mNote.getField(index);
                     startMultimediaFieldEditor(index, mNote, field);
                 } else {
@@ -1312,7 +1314,7 @@ public class NoteEditor extends AnkiActivity {
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
                             IMultimediaEditableNote mNote = NoteService.createEmptyNote(mEditorNote.model());
-                            NoteService.updateMultimediaNoteFromJsonNote(mEditorNote, mNote);
+                            NoteService.updateMultimediaNoteFromJsonNote(col, mEditorNote, mNote);
                             IField field = mNote.getField(index);
                             switch (item.getItemId()) {
                                 case R.id.menu_multimedia_audio:

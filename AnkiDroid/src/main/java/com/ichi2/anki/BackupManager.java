@@ -48,23 +48,11 @@ public class BackupManager {
     public static final int MIN_FREE_SPACE = 10;
     public static final int MIN_BACKUP_COL_SIZE = 10000; // threshold in bytes to backup a col file
 
-    public final static int RETURN_BACKUP_CREATED = 0;
-    public final static int RETURN_ERROR = 1;
-    public final static int RETURN_TODAY_ALREADY_BACKUP_DONE = 2;
-    public final static int RETURN_NOT_ENOUGH_SPACE = 3;
-    public final static int RETURN_DECK_NOT_CHANGED = 4;
-    public final static int RETURN_DECK_RESTORED = 5;
-    public final static int RETURN_NULL = 6;
-    public final static int RETURN_LOW_SYSTEM_SPACE = 7;
-    public final static int RETURN_BACKUP_NEEDED = 8;
-
     public final static String BACKUP_SUFFIX = "backup";
     public final static String BROKEN_DECKS_SUFFIX = "broken";
 
     private static boolean mUseBackups = true;
 
-    /** Number of day after which a backup is done on first non-studyoptions-opening (for safety reasons) */
-    public static final int SAFETY_BACKUP_THRESHOLD = 3;
 
     /** Number of hours after which a backup new backup is created */
     public static final int BACKUP_INTERVAL = 5;
@@ -80,8 +68,8 @@ public class BackupManager {
     }
 
 
-    private static File getBackupDirectory() {
-        File directory = new File(AnkiDroidApp.getCurrentAnkiDroidDirectory(), BACKUP_SUFFIX);
+    private static File getBackupDirectory(File ankidroidDir) {
+        File directory = new File(ankidroidDir, BACKUP_SUFFIX);
         if (!directory.isDirectory()) {
             directory.mkdirs();
         }
@@ -89,8 +77,8 @@ public class BackupManager {
     }
 
 
-    private static File getBrokenDirectory() {
-        File directory = new File(AnkiDroidApp.getCurrentAnkiDroidDirectory(), BROKEN_DECKS_SUFFIX);
+    private static File getBrokenDirectory(File ankidroidDir) {
+        File directory = new File(ankidroidDir, BROKEN_DECKS_SUFFIX);
         if (!directory.isDirectory()) {
             directory.mkdirs();
         }
@@ -113,15 +101,15 @@ public class BackupManager {
     }
 
 
-    public static boolean performBackupInBackground(final String path, int interval, boolean force) {
+    public static boolean performBackupInBackground(final String colPath, int interval, boolean force) {
         SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
         if (!prefs.getBoolean("useBackup", true) && !force) {
             return false;
         }
-        final File collectionFile = new File(path);
-        File[] deckBackups = getBackups(collectionFile);
+        final File colFile = new File(colPath);
+        File[] deckBackups = getBackups(colFile);
         int len = deckBackups.length;
-        if (len > 0 && deckBackups[len - 1].lastModified() == collectionFile.lastModified()) {
+        if (len > 0 && deckBackups[len - 1].lastModified() == colFile.lastModified()) {
             Timber.d("performBackup: No backup necessary due to no collection changes");
             return false;
         }
@@ -148,7 +136,7 @@ public class BackupManager {
 
         String backupFilename;
         try {
-            backupFilename = String.format(Utils.ENGLISH_LOCALE, collectionFile.getName().replace(".anki2", "")
+            backupFilename = String.format(Utils.ENGLISH_LOCALE, colFile.getName().replace(".anki2", "")
                     + "-%s.apkg", df.format(cal.getTime()));
         } catch (UnknownFormatConversionException e) {
             Timber.e(e, "performBackup: error on creating backup filename");
@@ -156,30 +144,31 @@ public class BackupManager {
         }
 
         // Abort backup if destination already exists (extremely unlikely)
-        final File backupFile = new File(getBackupDirectory().getPath(), backupFilename);
+        final File backupFile = new File(getBackupDirectory(colFile.getParentFile()), backupFilename);
         if (backupFile.exists()) {
             Timber.d("performBackup: No new backup created. File already exists");
             return false;
         }
 
         // Abort backup if not enough free space
-        if (getFreeDiscSpace(collectionFile) < collectionFile.length() + (MIN_FREE_SPACE * 1024 * 1024)) {
+        if (getFreeDiscSpace(colFile) < colFile.length() + (MIN_FREE_SPACE * 1024 * 1024)) {
             Timber.e("performBackup: Not enough space on sd card to backup.");
             prefs.edit().putBoolean("noSpaceLeft", true).commit();
             return false;
         }
 
         // Don't bother trying to do backup if the collection is too small to be valid
-        if (collectionFile.length() < MIN_BACKUP_COL_SIZE) {
+        if (colFile.length() < MIN_BACKUP_COL_SIZE) {
             Timber.d("performBackup: No backup created as the collection is too small to be valid");
             return false;
         }
 
 
         // TODO: Probably not a good idea to do the backup while the collection is open
-        if (AnkiDroidApp.colIsOpen()) {
+        if (CollectionHelper.getInstance().colIsOpen()) {
             Timber.w("Collection is already open during backup... we probably shouldn't be doing this");
         }
+        Timber.i("Launching new thread to backup %s to %s", colPath, backupFile.getPath());
 
         // Backup collection as apkg in new thread
         Thread thread = new Thread() {
@@ -189,7 +178,7 @@ public class BackupManager {
                 int BUFFER_SIZE = 1024;
                 byte[] buf = new byte[BUFFER_SIZE];
                 try {
-                    BufferedInputStream bis = new BufferedInputStream(new FileInputStream(path), BUFFER_SIZE);
+                    BufferedInputStream bis = new BufferedInputStream(new FileInputStream(colPath), BUFFER_SIZE);
                     ZipOutputStream zos = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(backupFile)));
                     ZipEntry ze = new ZipEntry("collection.anki2");
                     zos.putNextEntry(ze);
@@ -201,10 +190,10 @@ public class BackupManager {
                     bis.close();
                     // Delete old backup files if needed
                     SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
-                    deleteDeckBackups(path, prefs.getInt("backupMax", 8));
+                    deleteDeckBackups(colPath, prefs.getInt("backupMax", 8));
                     // set timestamp of file in order to avoid creating a new backup unless its changed
-                    backupFile.setLastModified(collectionFile.lastModified());
-                    Timber.i("Backup created succesfully for %s", path);
+                    backupFile.setLastModified(colFile.lastModified());
+                    Timber.i("Backup created succesfully");
                 } catch (FileNotFoundException e1) {
                     e1.printStackTrace();
                 } catch (IOException e) {
@@ -240,10 +229,16 @@ public class BackupManager {
     }
 
 
-
-    public static boolean repairDeck(String deckPath) {
+    /**
+     * Run the sqlite3 command-line-tool (if it exists) on the collection to dump to a text file
+     * and reload as a new database. Recently this command line tool isn't available on many devices
+     *
+     * @param col Collection
+     * @return whether the repair was successful
+     */
+    public static boolean repairCollection(Collection col) {
+        String deckPath = col.getPath();
         File deckFile = new File(deckPath);
-        Collection col = AnkiDroidApp.getCol();
         if (col != null) {
             col.close();
         }
@@ -251,22 +246,22 @@ public class BackupManager {
 
         // repair file
         String execString = "sqlite3 " + deckPath + " .dump | sqlite3 " + deckPath + ".tmp";
-        Timber.i("repairDeck - Execute: " + execString);
+        Timber.i("repairCollection - Execute: " + execString);
         try {
             String[] cmd = { "/system/bin/sh", "-c", execString };
             Process process = Runtime.getRuntime().exec(cmd);
             process.waitFor();
 
             if (!new File(deckPath + ".tmp").exists()) {
-                Timber.e("repairDeck - dump to " + deckPath + ".tmp failed");
+                Timber.e("repairCollection - dump to " + deckPath + ".tmp failed");
                 return false;
             }
 
             if (!moveDatabaseToBrokenFolder(deckPath, false)) {
-                Timber.e("repairDeck - could not move corrupt file to broken folder");
+                Timber.e("repairCollection - could not move corrupt file to broken folder");
                 return false;
             }
-            Timber.i("repairDeck - moved corrupt file to broken folder");
+            Timber.i("repairCollection - moved corrupt file to broken folder");
             File repairedFile = new File(deckPath + ".tmp");
             return repairedFile.renameTo(deckFile);
         } catch (IOException e) {
@@ -285,10 +280,10 @@ public class BackupManager {
         Date value = Utils.genToday(Utils.utcOffset());
         String movedFilename = String.format(Utils.ENGLISH_LOCALE, colFile.getName().replace(".anki2", "")
                 + "-corrupt-%tF.anki2", value);
-        File movedFile = new File(getBrokenDirectory().getPath(), movedFilename);
+        File movedFile = new File(getBrokenDirectory(colFile.getParentFile()), movedFilename);
         int i = 1;
         while (movedFile.exists()) {
-            movedFile = new File(getBrokenDirectory().getPath(), movedFilename.replace(".anki2",
+            movedFile = new File(getBrokenDirectory(colFile.getParentFile()), movedFilename.replace(".anki2",
                     "-" + Integer.toString(i) + ".anki2"));
             i++;
         }
@@ -303,7 +298,7 @@ public class BackupManager {
             File directory = new File(colFile.getParent());
             for (File f : directory.listFiles()) {
                 if (f.getName().startsWith(deckName)) {
-                    if (!f.renameTo(new File(getBrokenDirectory().getPath(), f.getName().replace(deckName,
+                    if (!f.renameTo(new File(getBrokenDirectory(colFile.getParentFile()), f.getName().replace(deckName,
                             movedFilename)))) {
                         return false;
                     }
@@ -315,7 +310,7 @@ public class BackupManager {
 
 
     public static File[] getBackups(File colFile) {
-        File[] files = getBackupDirectory().listFiles();
+        File[] files = getBackupDirectory(colFile.getParentFile()).listFiles();
         if (files == null) {
             files = new File[0];
         }

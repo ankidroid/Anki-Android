@@ -157,10 +157,10 @@ public class MyAccount extends AnkiActivity {
         editor.commit();
         //  force media resync on deauth
         try {
-            AnkiDroidApp.getCol().getMedia().forceResync();
+            getCol().getMedia().forceResync();
         } catch (SQLiteException e) {
             Timber.e("MyAccount.logout()  reinitializing media db due to sqlite error");
-            AnkiDroidApp.getCol().getMedia()._initDB();
+            getCol().getMedia()._initDB();
         }
         setContentView(mLoginToMyAccountView);
     }

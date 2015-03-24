@@ -29,6 +29,9 @@ import android.os.Build;
 
 import android.widget.Toast;
 
+import com.ichi2.anki.dialogs.DatabaseErrorDialog;
+import com.ichi2.compat.CompatHelper;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +59,7 @@ public class AnkiDb {
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public AnkiDb(String ankiFilename) {
         // Since API 11 we can provide a custom error handler which doesn't delete the database on corruption
-        if (AnkiDroidApp.SDK_VERSION >=  Build.VERSION_CODES.HONEYCOMB) {
+        if (CompatHelper.isHoneycomb()) {
             mDatabase = SQLiteDatabase.openDatabase(ankiFilename, null,
                     (SQLiteDatabase.OPEN_READWRITE + SQLiteDatabase.CREATE_IF_NECESSARY)
                             | SQLiteDatabase.NO_LOCALIZED_COLLATORS, new MyDbErrorHandler());
@@ -80,8 +83,8 @@ public class AnkiDb {
         public void onCorruption(SQLiteDatabase db) {
             Timber.e("The database has been corrupted...");
             AnkiDroidApp.sendExceptionReport(new RuntimeException("Database corrupted"), "AnkiDb.MyDbErrorHandler.onCorruption", "Db has been corrupted ");
-            AnkiDroidApp.closeCollection(false);
-            AnkiDroidApp.sDatabaseCorruptFlag = true;
+            CollectionHelper.getInstance().closeCollection(false);
+            DatabaseErrorDialog.databaseCorruptFlag = true;
         }
     }
 
@@ -381,7 +384,7 @@ public class AnkiDb {
 
     /** to be called for each database upon opening */
     private void setWalJournalMode() {
-        if (AnkiDroidApp.SDK_VERSION >= 11) {
+        if (CompatHelper.isHoneycomb()) {
             queryString("PRAGMA journal_mode = WAL");
         } else {
             setDeleteJournalMode();
@@ -401,7 +404,7 @@ public class AnkiDb {
         if (db.inTransaction()) {
             db.endTransaction();
         }
-        AnkiDroidApp.getCompat().disableDatabaseWriteAheadLogging(db);
+        CompatHelper.getCompat().disableDatabaseWriteAheadLogging(db);
     }
 
     /**

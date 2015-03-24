@@ -35,6 +35,8 @@ import android.widget.RemoteViews;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
+import com.ichi2.compat.CompatHelper;
+
 import timber.log.Timber;
 
 public class AnkiDroidWidgetSmall extends AppWidgetProvider {
@@ -71,7 +73,7 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().contentEquals("com.sec.android.widgetapp.APPWIDGET_RESIZE")) {
-            AnkiDroidApp.getCompat().updateWidgetDimensions(context, new RemoteViews(context.getPackageName(), R.layout.widget_small), AnkiDroidWidgetSmall.class);
+            CompatHelper.getCompat().updateWidgetDimensions(context, new RemoteViews(context.getPackageName(), R.layout.widget_small), AnkiDroidWidgetSmall.class);
         }
         super.onReceive(context, intent);
     }
@@ -179,7 +181,7 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
                     PendingIntent.FLAG_UPDATE_CURRENT);
             updateViews.setOnClickPendingIntent(R.id.ankidroid_widget_small_button, pendingAnkiDroidIntent);
 
-            AnkiDroidApp.getCompat().updateWidgetDimensions(context, updateViews, AnkiDroidWidgetSmall.class);
+            CompatHelper.getCompat().updateWidgetDimensions(context, updateViews, AnkiDroidWidgetSmall.class);
 
             return updateViews;
         }

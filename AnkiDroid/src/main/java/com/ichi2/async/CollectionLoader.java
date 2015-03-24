@@ -1,38 +1,26 @@
 package com.ichi2.async;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.support.v4.content.AsyncTaskLoader;
-
 
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.CollectionHelper;
 import com.ichi2.libanki.Collection;
-
-import java.lang.ref.WeakReference;
 
 import timber.log.Timber;
 
 public class CollectionLoader extends AsyncTaskLoader<Collection> {
-    static WeakReference<AnkiActivity> sActivity;
-    
+
     public CollectionLoader(Context context) {
         super(context);
-        try {
-            sActivity = new WeakReference<AnkiActivity>((AnkiActivity) context);    
-        } catch (ClassCastException e) {
-            sActivity = null;
-        }
-        
     }
 
     @Override
     public Collection loadInBackground() {
         // load collection
-        Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
-        String colPath = AnkiDroidApp.getCollectionPath();
         try {
-            return AnkiDroidApp.openCollection(colPath);
+            return CollectionHelper.getInstance().getCol(getContext());
         } catch (RuntimeException e) {
             Timber.e(e, "loadInBackground - RuntimeException on opening collection");
             AnkiDroidApp.sendExceptionReport(e, "CollectionLoader.loadInBackground");
@@ -57,21 +45,13 @@ public class CollectionLoader extends AsyncTaskLoader<Collection> {
     
     @Override
     protected void onStartLoading() {
-        // Don't touch collection if sync in progress
-        if (AnkiDroidApp.sSyncInProgressFlag) {
-            Timber.w("CollectionLoader.onStartLoading() -- sync in progress; don't load collection");
+        // Don't touch collection if lockCollection flag is set
+        if (CollectionHelper.getInstance().isCollectionLocked()) {
+            Timber.w("onStartLoading() :: Another thread has requested to keep the collection closed.");
             return;
         }
-        String colPath = AnkiDroidApp.getCollectionPath();
-        if (AnkiDroidApp.colIsOpen() && AnkiDroidApp.getCol() != null && AnkiDroidApp.getCol().getPath().equals(colPath)) {
-            // deliver current path if open and valid
-            Timber.d("CollectionLoader.onStartLoading() -- deliverResult as col already open");
-            deliverResult(AnkiDroidApp.getCol());
-        } else {
-            // otherwise reload the collection
-            Timber.d("CollectionLoader.onStartLoading() -- force load collection");
-            forceLoad();
-        }        
+        // Since the CollectionHelper only opens if necessary, we can just force every time
+        forceLoad();
     }
     
     @Override
@@ -91,12 +71,11 @@ public class CollectionLoader extends AsyncTaskLoader<Collection> {
     
     private void setProgressMessage(final String message) {
         // Update the text of the opening collection dialog
-        if (sActivity != null && sActivity.get() != null) {
-            sActivity.get().runOnUiThread(new Runnable() {
-                public void run() {
-                    sActivity.get().setOpeningCollectionDialogMessage(message);
-                }
-            });
-        }
+        final AnkiActivity activity = (AnkiActivity) getContext();
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                activity.setOpeningCollectionDialogMessage(message);
+            }
+        });
     }
 }

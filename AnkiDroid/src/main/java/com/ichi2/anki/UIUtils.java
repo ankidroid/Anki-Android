@@ -33,40 +33,9 @@ public class UIUtils {
     }
 
 
-    public static void closeCollectionInBackground() {
-        // note: this code used to be called in the onStop() method of DeckPicker
-        // https://github.com/ankidroid/Anki-Android/blob/d7023159b3599d07e18c308fdaa4bb8f8935fd1d/src/com/ichi2/anki/DeckPicker.java#L1206
-        // it's currently not being used anywhere, in favor of letting the Android kernel automatically close the
-        // collection when it kills the process
-        if (AnkiDroidApp.colIsOpen()) {
-            DeckTask.launchDeckTask(DeckTask.TASK_TYPE_CLOSE_DECK, new DeckTask.TaskListener() {
-                @Override
-                public void onPreExecute() {
-                    Timber.d("closeCollectionInBackground: start");
-                }
 
-
-                @Override
-                public void onPostExecute(TaskData result) {
-                    Timber.d("closesCollectionInBackground: finished");
-                }
-
-
-                @Override
-                public void onProgressUpdate(TaskData... values) {
-                }
-
-
-                @Override
-                public void onCancelled() {
-                }
-            }, new DeckTask.TaskData(AnkiDroidApp.getCol()));
-        }
-    }
-
-
-    public static void saveCollectionInBackground() {
-        if (AnkiDroidApp.colIsOpen()) {
+    public static void saveCollectionInBackground(Context context) {
+        if (CollectionHelper.getInstance().colIsOpen()) {
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SAVE_COLLECTION, new DeckTask.TaskListener() {
                 @Override
                 public void onPreExecute() {
@@ -88,7 +57,7 @@ public class UIUtils {
                 @Override
                 public void onCancelled() {
                 }
-            }, new DeckTask.TaskData(AnkiDroidApp.getCol()));
+            }, new DeckTask.TaskData(CollectionHelper.getInstance().getCol(context)));
         }
     }
 

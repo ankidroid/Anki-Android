@@ -31,6 +31,7 @@ import android.util.Pair;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
+import com.ichi2.libanki.hooks.Hooks;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -1734,7 +1735,8 @@ public class Sched {
                 }
                 // notify UI
                 if (mContextReference != null) {
-                    AnkiDroidApp.getHooks().runHook("leech", card, mContextReference.get());
+                    Context context = mContextReference.get();
+                    Hooks.getInstance(context).runHook("leech", card, context);
                 }
                 return true;
             }

@@ -36,7 +36,6 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
-import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
 import android.view.KeyEvent;
@@ -47,10 +46,12 @@ import com.hlidskialf.android.preference.SeekBarPreference;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.exception.StorageAccessException;
 import com.ichi2.async.DeckTask;
+import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.hooks.ChessFilter;
 import com.ichi2.libanki.hooks.HebrewFixFilter;
+import com.ichi2.libanki.hooks.Hooks;
 import com.ichi2.preferences.NumberRangePreference;
 import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
@@ -85,7 +86,6 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     // private boolean mVeecheckStatus;
     private Collection mCol;
-    private PreferenceManager mPrefMan;
     private CheckBoxPreference keepScreenOnCheckBoxPreference;
     private CheckBoxPreference showAnswerCheckBoxPreference;
     private CheckBoxPreference useBackupPreference;
@@ -127,14 +127,12 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Workaround for bug 4611: http://code.google.com/p/android/issues/detail?id=4611
-        if (AnkiDroidApp.SDK_VERSION <= 10) {
+        if (!CompatHelper.isHoneycomb()) {
             Themes.applyTheme(this, Themes.THEME_ANDROID_DARK);
         }
         super.onCreate(savedInstanceState);
 
-        mCol = AnkiDroidApp.getCol();
-        mPrefMan = getPreferenceManager();
-        mPrefMan.setSharedPreferencesName(AnkiDroidApp.SHARED_PREFS_NAME);
+        mCol = CollectionHelper.getInstance().getCol(this);
 
         addPreferencesFromResource(R.xml.preferences);
 
@@ -158,15 +156,15 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         fixHebrewText = (CheckBoxPreference) getPreferenceScreen().findPreference("fixHebrewText");
         fixArabicText = (CheckBoxPreference) getPreferenceScreen().findPreference("fixArabicText");
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-        if (AnkiDroidApp.SDK_VERSION > 14){
+        if (CompatHelper.getSdkVersion() > 14){
             workarounds.removePreference(inputWorkaround);
             preferences.edit().putBoolean("inputWorkaround", false);
         }
-        if (AnkiDroidApp.SDK_VERSION > 10){
+        if (CompatHelper.isHoneycomb()){
             workarounds.removePreference(longclickWorkaround);
             preferences.edit().putBoolean("longclickWorkaround", false);
         }
-        if (AnkiDroidApp.SDK_VERSION > 8){
+        if (CompatHelper.getSdkVersion() > 8){
             workarounds.removePreference(fixArabicText);
             preferences.edit().putBoolean("fixArabicText", false);
         }
@@ -187,7 +185,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             public boolean onPreferenceChange(Preference preference, final Object newValue) {
                 final String newPath = (String) newValue;
                 try {
-                    AnkiDroidApp.initializeAnkiDroidDirectory(newPath);
+                    CollectionHelper.initializeAnkiDroidDirectory(newPath);
                     return true;
                 } catch (StorageAccessException e) {
                     Timber.e(e, "Could not initialize directory: %s", newPath);
@@ -485,16 +483,16 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 }
             } else if (key.equals("convertFenText")) {
                 if (convertFenText.isChecked()) {
-                    ChessFilter.install(AnkiDroidApp.getHooks());
+                    ChessFilter.install(Hooks.getInstance(getApplicationContext()));
                 } else {
-                    ChessFilter.uninstall(AnkiDroidApp.getHooks());
+                    ChessFilter.uninstall(Hooks.getInstance(getApplicationContext()));
                 }
             } else if (key.equals("fixHebrewText")) {
                 if (fixHebrewText.isChecked()) {
-                    HebrewFixFilter.install(AnkiDroidApp.getHooks());
+                    HebrewFixFilter.install(Hooks.getInstance(getApplicationContext()));
                     showDialog(DIALOG_HEBREW_FONT);
                 } else {
-                    HebrewFixFilter.uninstall(AnkiDroidApp.getHooks());
+                    HebrewFixFilter.uninstall(Hooks.getInstance(getApplicationContext()));
                 }
             } else if (key.equals("showProgress")) {
                 mCol.getConf().put("dueCounts", showProgress.isChecked());
@@ -623,7 +621,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 builder.setTitle(res.getString(R.string.fix_hebrew_text));
                 builder.setCancelable(false);
                 builder.setMessage(res.getString(R.string.fix_hebrew_instructions,
-                        AnkiDroidApp.getCurrentAnkiDroidDirectory()));
+                        CollectionHelper.getCurrentAnkiDroidDirectory(this)));
                 builder.setNegativeButton(R.string.dialog_cancel, null);
                 builder.setPositiveButton(res.getString(R.string.fix_hebrew_download_font), new OnClickListener() {
                     @Override

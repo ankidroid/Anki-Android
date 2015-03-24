@@ -16,7 +16,9 @@
 
 package com.ichi2.libanki.hooks;
 
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 
 import com.ichi2.anki.AnkiDroidApp;
@@ -30,10 +32,18 @@ import java.util.Map;
 import timber.log.Timber;
 
 public class Hooks {
-    private Map<String, List<Hook>> hooks;
+    public static Hooks sInstance;
+    private static Map<String, List<Hook>> hooks;
 
+    public static synchronized Hooks getInstance(Context context) {
+        if (sInstance == null) {
+            sInstance = new Hooks(context);
+        }
+        return sInstance;
+    }
 
-    public Hooks(SharedPreferences prefs) {
+    private Hooks(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
         hooks = new HashMap<String, List<Hook>>();
         // Always-ON hooks
         new FuriganaFilters().install(this);
@@ -122,7 +132,12 @@ public class Hooks {
      * @param arg The input to the filter on hook.
      * @param args Variable arguments to be passed to the method runHook of each function on this hook.
      */
-    public Object runFilter(String hook, Object arg, Object... args) {
+    public static Object runFilter(String hook, Object arg, Object... args) {
+        if (hooks == null) {
+            Timber.e("Hooks object has not been initialized");
+            AnkiDroidApp.sendExceptionReport(new IllegalStateException("Hooks object uninitialized"), "Hooks.runFilter");
+            return arg;
+        }
         List<Hook> _hook = hooks.get(hook);
         String funcName = "";
         if (_hook != null) {

@@ -7,8 +7,8 @@
 TARGET=android-19
 ABI=armeabi-v7a
 DELAY_SECONDS=10  # Wait as many seconds before checking again.
-NOT_RUNNING_TIMEOUT_SECONDS=60  # Fail if not running for that many seconds. 
-RUNNING_TIMEOUT_SECONDS=180  # Fail if running for that many seconds. 
+NOT_RUNNING_TIMEOUT_SECONDS=120  # Fail if not running for that many seconds. 
+RUNNING_TIMEOUT_SECONDS=300  # Fail if running for that many seconds. 
 
 function start_emulator() {
   echo no | 
@@ -16,6 +16,7 @@ function start_emulator() {
       --force \
       --name test \
       --target $TARGET \
+      --sdcard 10M \
       --abi $ABI
   emulator -avd test -no-skin -no-audio -no-window -gpu off &
 }

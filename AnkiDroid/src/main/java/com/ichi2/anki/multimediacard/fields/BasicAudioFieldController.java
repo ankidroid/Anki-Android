@@ -19,15 +19,16 @@
 
 package com.ichi2.anki.multimediacard.fields;
 
+import android.content.Context;
 import android.content.Intent;
 
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
 import com.ichi2.anki.multimediacard.AudioView;
-import com.ichi2.utils.DiskUtil;
+import com.ichi2.libanki.Collection;
 
 import java.io.File;
 import java.io.IOException;
@@ -46,7 +47,7 @@ public class BasicAudioFieldController extends FieldControllerBase implements IF
 
 
     @Override
-    public void createUI(LinearLayout layout) {
+    public void createUI(Context context, LinearLayout layout) {
         origAudioPath = mField.getAudioPath();
 
         boolean bExist = false;
@@ -63,7 +64,9 @@ public class BasicAudioFieldController extends FieldControllerBase implements IF
         if (!bExist) {
             File file = null;
             try {
-                file = File.createTempFile("ankidroid_audiorec", ".3gp", DiskUtil.getStoringDirectory());
+                Collection col = CollectionHelper.getInstance().getCol(context);
+                File storingDirectory = new File(col.getMedia().dir());
+                file = File.createTempFile("ankidroid_audiorec", ".3gp", storingDirectory);
                 tempAudioPath = file.getAbsolutePath();
             } catch (IOException e) {
                 Timber.e("Could not create temporary audio file. " + e.getMessage());

@@ -21,8 +21,6 @@ package com.ichi2.anki.web;
 
 import android.content.Context;
 
-import com.ichi2.utils.DiskUtil;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -141,7 +139,7 @@ public class HttpFetcher {
             urlConnection.setRequestProperty("Accept", "*/*");
             urlConnection.connect();
 
-            File file = File.createTempFile(prefix, extension, DiskUtil.getStoringDirectory());
+            File file = File.createTempFile(prefix, extension, context.getCacheDir());
 
             FileOutputStream fileOutput = new FileOutputStream(file);
             InputStream inputStream = urlConnection.getInputStream();

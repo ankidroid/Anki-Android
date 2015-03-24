@@ -16,6 +16,7 @@ import android.text.SpannableStringBuilder;
 import android.text.style.CharacterStyle;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup.LayoutParams;
 import android.webkit.WebView;
 import android.widget.RemoteViews;
@@ -170,14 +171,19 @@ public class CompatV7 implements Compat {
     public int parentLayoutSize() {
         return LayoutParams.FILL_PARENT;
     }
-	
+
     // Below API level 12, file scheme pages are not restricted, so no adjustment is needed.
     public void enableCookiesForFileSchemePages() { }
+
+    // Below API 9 this method doesn't exist, so use reasonable value
+    @Override
+    public int getScaledPagingTouchSlop(ViewConfiguration vc) {
+        return vc.getScaledTouchSlop()*2;
+    }
 
     // Below API level 16, widget dimensions cannot be adjusted
     @Override
     public void updateWidgetDimensions(Context context, RemoteViews updateViews, Class<?> cls) {
 
     }
-
 }

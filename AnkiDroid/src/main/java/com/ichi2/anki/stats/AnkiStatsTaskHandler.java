@@ -23,7 +23,6 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.Statistics;
 import com.ichi2.anki.R;
 import com.ichi2.libanki.Collection;
@@ -51,9 +50,9 @@ public class AnkiStatsTaskHandler {
     private static Lock sLock = new ReentrantLock();
 
 
-    public AnkiStatsTaskHandler(){
+    public AnkiStatsTaskHandler(Collection collection){
         sInstance = this;
-        mCollectionData = AnkiDroidApp.getCol();
+        mCollectionData = collection;
         sSelectedDeckId = mCollectionData.getDecks().selected();
     }
 
@@ -92,8 +91,8 @@ public class AnkiStatsTaskHandler {
         createSmallTodayOverview.execute(col, view);
         return createSmallTodayOverview;
     }
-    public static CreateSmallDueChart createSmallDueChartChart(double[][] seriesList, View... views){
-        CreateSmallDueChart createChartTask = new CreateSmallDueChart(seriesList);
+    public static CreateSmallDueChart createSmallDueChartChart(Collection col, double[][] seriesList, View... views){
+        CreateSmallDueChart createChartTask = new CreateSmallDueChart(col, seriesList);
         createChartTask.execute(views);
         return createChartTask;
     }
@@ -159,13 +158,14 @@ public class AnkiStatsTaskHandler {
         private ChartView mImageView;
         private double[][] mSeriesList;
         private boolean mIsRunning = false;
+        private Collection mCollection;
 
 
-        public CreateSmallDueChart(double[][] seriesList){
+        public CreateSmallDueChart(Collection col, double[][] seriesList){
             super();
             mIsRunning = true;
             mSeriesList = seriesList;
-
+            mCollection = col;
         }
 
         @Override
@@ -180,7 +180,7 @@ public class AnkiStatsTaskHandler {
                 } else
                     Timber.d("starting CreateSmallDueChart");
                 mImageView = (ChartView) params[0];
-                ChartBuilder chartBuilder = new ChartBuilder(mImageView, AnkiDroidApp.getCol(), sIsWholeCollection, Stats.ChartType.OTHER);
+                ChartBuilder chartBuilder = new ChartBuilder(mImageView, mCollection, sIsWholeCollection, Stats.ChartType.OTHER);
                 return chartBuilder.createSmallDueChart(mSeriesList);
             }finally {
                 sLock.unlock();

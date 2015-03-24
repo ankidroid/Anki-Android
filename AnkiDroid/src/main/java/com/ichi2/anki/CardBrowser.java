@@ -182,7 +182,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                 case CONTEXT_MENU_MARK:
                     DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD,
                             mUpdateCardHandler,
-                            new DeckTask.TaskData(getCol().getSched(), getCol().getCard(Long.parseLong(getCards().get(
+                            new DeckTask.TaskData(getCol(), getCol().getSched(), getCol().getCard(Long.parseLong(getCards().get(
                                     mPositionInCardsList).get("id"))), 0));
                     return;
 
@@ -190,7 +190,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                     DeckTask.launchDeckTask(
                             DeckTask.TASK_TYPE_DISMISS_NOTE,
                             mSuspendCardHandler,
-                            new DeckTask.TaskData(getCol().getSched(), getCol().getCard(Long.parseLong(getCards().get(
+                            new DeckTask.TaskData(getCol(), getCol().getSched(), getCol().getCard(Long.parseLong(getCards().get(
                                     mPositionInCardsList).get("id"))), 1));
                     return;
 
@@ -208,7 +208,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                                     Card card = getCol().getCard(Long.parseLong(getCards().get(mPositionInCardsList).get("id")));
                                     deleteNote(card);
                                     DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDeleteNoteHandler,
-                                                            new DeckTask.TaskData(getCol().getSched(), card, 3));
+                                                            new DeckTask.TaskData(getCol(), getCol().getSched(), card, 3));
                                 }
                             });
                     builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
@@ -423,7 +423,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         super.onStop();
         if (!isFinishing()) {
             WidgetStatus.update(this);
-            UIUtils.saveCollectionInBackground();
+            UIUtils.saveCollectionInBackground(this);
         }
     }
 
@@ -561,7 +561,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         if (requestCode == EDIT_CARD && resultCode != RESULT_CANCELED) {
             Timber.i("CardBrowser:: CardBrowser: Saving card...");
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_UPDATE_FACT, mUpdateCardHandler,
-                    new DeckTask.TaskData(getCol().getSched(), sCardBrowserCard, false));
+                    new DeckTask.TaskData(getCol(), getCol().getSched(), sCardBrowserCard, false));
         } else if (requestCode == ADD_NOTE && resultCode == RESULT_OK) {
             if (mSearchView != null) {
                 mSearchTerms = mSearchView.getQuery().toString();
@@ -771,7 +771,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
 
     private void searchCards() {
         String searchText = mRestrictOnDeck + mSearchTerms;
-        if (colOpen()) {
+        if (colIsOpen()) {
             // clear the existing card list
             getCards().clear();
             // Perform database query to get all card ids / sfld. Shows "filtering cards..." progress message

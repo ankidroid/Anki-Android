@@ -19,6 +19,8 @@
 
 package com.ichi2.anki.multimediacard.fields;
 
+import com.ichi2.libanki.Collection;
+
 /**
  * Text Field implementation.
  */
@@ -127,7 +129,7 @@ public class TextField extends FieldBase implements IField {
 
 
     @Override
-    public void setFormattedString(String value) {
+    public void setFormattedString(Collection col, String value) {
         mText = value;
     }
 }

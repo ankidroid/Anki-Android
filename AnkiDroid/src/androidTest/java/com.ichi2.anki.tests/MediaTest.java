@@ -18,7 +18,6 @@ package com.ichi2.anki.tests;
 import android.test.AndroidTestCase;
 import android.test.suitebuilder.annotation.Suppress;
 
-import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.exception.APIVersionException;
 import com.ichi2.libanki.Collection;
@@ -38,16 +37,9 @@ import com.ichi2.utils.*;
  */
 public class MediaTest extends AndroidTestCase {
     public void testAdd() throws IOException, APIVersionException {
-        // Hack to wait for the main application to be initialized since it runs in a different thread
-        while (AnkiDroidApp.getInstance() == null || AnkiDroidApp.getHooks() == null) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                // do nothing
-            }
-        }
-        Collection d = Shared.getEmptyCol();
-        File dir = Shared.getTestDir(mContext);
+        // open new empty collection
+        Collection d = Shared.getEmptyCol(getContext());
+        File dir = Shared.getTestDir(getContext());
         BackupManager.removeDir(dir);
         dir.mkdirs();
         File path = new File(dir, "foo.jpg");
@@ -69,7 +61,7 @@ public class MediaTest extends AndroidTestCase {
 
 
     public void testStrings() throws IOException {
-        Collection d = Shared.getEmptyCol();
+        Collection d = Shared.getEmptyCol(getContext());
         Long mid = d.getModels().getModels().entrySet().iterator().next().getKey();
         List<String> expected;
         List<String> actual;
@@ -123,11 +115,11 @@ public class MediaTest extends AndroidTestCase {
     }
 
     public void testDeckIntegration() throws IOException, APIVersionException {
-        Collection d = Shared.getEmptyCol();
+        Collection d = Shared.getEmptyCol(getContext());
         // create a media dir
         d.getMedia().dir();
         // Put a file into it
-        File file = new File(Shared.getTestDir(mContext), "fake.png");
+        File file = new File(Shared.getTestDir(getContext()), "fake.png");
         file.createNewFile();
         d.getMedia().addFile(file);
         // add a note which references it
@@ -171,12 +163,12 @@ public class MediaTest extends AndroidTestCase {
     }
 
     public void testChanges() throws IOException, APIVersionException {
-        Collection d = Shared.getEmptyCol();
+        Collection d = Shared.getEmptyCol(getContext());
         assertTrue(d.getMedia()._changed() != null);
         assertTrue(added(d).size() == 0);
         assertTrue(removed(d).size() == 0);
         // add a file
-        File dir = Shared.getTestDir(mContext);
+        File dir = Shared.getTestDir(getContext());
         File path = new File(dir, "foo.jpg");
         FileOutputStream os;
         os = new FileOutputStream(path, false);
@@ -210,7 +202,7 @@ public class MediaTest extends AndroidTestCase {
 
 
     public void testIllegal() throws IOException {
-        Collection d = Shared.getEmptyCol();
+        Collection d = Shared.getEmptyCol(getContext());
         String aString = "a:b|cd\\e/f\0g*h";
         String good = "abcdefgh";
         assertTrue(d.getMedia().stripIllegal(aString).equals(good));

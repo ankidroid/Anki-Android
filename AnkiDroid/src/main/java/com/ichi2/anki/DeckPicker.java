@@ -35,7 +35,6 @@ import android.content.res.Resources;
 import android.database.SQLException;
 import android.graphics.PixelFormat;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -81,6 +80,7 @@ import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.async.DeckTask;
 import com.ichi2.async.DeckTask.TaskData;
+import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Sched;
 import com.ichi2.themes.StyledDialog;
@@ -335,7 +335,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         Timber.d("onCreate()");
         Intent intent = getIntent();
         // Show splashscreen if app first starting
-        if (intent.getCategories()!= null || !AnkiDroidApp.colIsOpen()) {
+        if (intent.getCategories()!= null || !colIsOpen()) {
             showOpeningCollectionDialog();
         }
 
@@ -419,7 +419,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Timber.i("DeckPicker:: Long tapped on deck in position %d", position);
-                if (!AnkiDroidApp.colIsOpen() || mDeckList == null || mDeckList.size() == 0) {
+                if (mDeckList == null || mDeckList.size() == 0) {
                     return true;
                 }
                 mContextMenuDid = Long.parseLong(mDeckList.get(position).get("did"));
@@ -448,7 +448,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         menu.findItem(R.id.action_check_media).setEnabled(sdCardAvailable);
 
         // Show the welcome screen here if col empty to be sure that the action bar exists
-        if (mShowShowcaseView && colOpen() && getCol().isEmpty() && mDeckList!= null && mDeckList.size() <=1) {
+        if (mShowShowcaseView && colIsOpen() && getCol().isEmpty() && mDeckList!= null && mDeckList.size() <=1) {
             mShowShowcaseView = false;
             final Resources res = getResources();
             try {
@@ -470,13 +470,13 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 Timber.e(e, "Error showing ShowcaseView");
                 Themes.showThemedToast(this, res.getString(R.string.add_content_showcase_text), false);
             }
-        } else if (mShowcaseDialog != null && colOpen() && !getCol().isEmpty()) {
+        } else if (mShowcaseDialog != null && colIsOpen() && !getCol().isEmpty()) {
             hideShowcaseView();
         }
 
         // Hide import, export, and restore backup on ChromeOS as users
         // don't have access to the file system.
-        if (AnkiDroidApp.isChromebook()) {
+        if (CompatHelper.isChromebook()) {
             menu.findItem(R.id.action_restore_backup).setVisible(false);
             menu.findItem(R.id.action_import).setVisible(false);
             menu.findItem(R.id.action_export).setVisible(false);
@@ -511,7 +511,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             case R.id.action_shared_decks:
                 Timber.i("DeckPicker:: Get shared deck button pressed");
                 hideShowcaseView();
-                if (colOpen()) {
+                if (colIsOpen()) {
                     addSharedDeck();
                 }
                 return true;
@@ -627,7 +627,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             if (intent != null) {
                 mImportPath = intent.getStringExtra("importPath");
             }
-            if (AnkiDroidApp.colIsOpen() && mImportPath != null) {
+            if (colIsOpen() && mImportPath != null) {
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_IMPORT, mImportAddListener, new TaskData(getCol(),
                         mImportPath, true));
                 mImportPath = null;
@@ -640,7 +640,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     protected void onResume() {
         Timber.d("onResume()");
         super.onResume();
-        if (colOpen() && AnkiDroidApp.isSdCardMounted()) {
+        if (colIsOpen() && AnkiDroidApp.isSdCardMounted()) {
             updateDeckList();
             dismissOpeningCollectionDialog();
         }
@@ -680,9 +680,9 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     protected void onStop() {
         Timber.d("onStop()");
         super.onStop();
-        if (colOpen()) {
+        if (colIsOpen()) {
             WidgetStatus.update(this);
-            UIUtils.saveCollectionInBackground();
+            UIUtils.saveCollectionInBackground(this);
         }
     }
 
@@ -784,12 +784,12 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         if (!AnkiDroidApp.isSdCardMounted()) {
             // SD Card not mounted
             showSdCardNotMountedDialog();
-        } else if (!AnkiDroidApp.isCurrentAnkiDroidDirAccessible()) {
+        } else if (!CollectionHelper.isCurrentAnkiDroidDirAccessible(this)) {
             // AnkiDroid directory inaccessible
             Intent i = new Intent(this, Preferences.class);
             startActivityWithoutAnimation(i);
             Themes.showThemedToast(this, getResources().getString(R.string.directory_inaccessible), false);
-        } else if (!BackupManager.enoughDiscSpace(AnkiDroidApp.getCurrentAnkiDroidDirectory())) {
+        } else if (!BackupManager.enoughDiscSpace(CollectionHelper.getCurrentAnkiDroidDirectory(this))) {
             // Not enough space to do backup
             showDialogFragment(DeckPickerNoSpaceLeftDialog.newInstance());
         } else if (preferences.getBoolean("noSpaceLeft", false)) {
@@ -830,7 +830,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             // Delete the media database made by any version before 2.3 beta due to upgrade errors.
             // It is rebuilt on the next sync or media check
             if (previous < 20300200) {
-                File mediaDb = new File(AnkiDroidApp.getCurrentAnkiDroidDirectory(), "collection.media.ad.db2");
+                File mediaDb = new File(CollectionHelper.getCurrentAnkiDroidDirectory(this), "collection.media.ad.db2");
                 if (mediaDb.exists()) {
                     mediaDb.delete();
                 }
@@ -885,7 +885,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             preferences.edit().putInt("swipeSensitivity", preferences.getInt("swipeSensibility", 100)).commit();
             preferences.edit().putBoolean("gestures", preferences.getBoolean("swipe", false)).commit();
             // set new safeDisplayMode preference based on old behavior
-            boolean safeDisplayMode = preferences.getBoolean("eInkDisplay", false) || AnkiDroidApp.isNook()
+            boolean safeDisplayMode = preferences.getBoolean("eInkDisplay", false) || CompatHelper.isNook()
                     || !preferences.getBoolean("forceQuickUpdate", false);
             preferences.edit().putBoolean("safeDisplay", safeDisplayMode).commit();
             // set overrideFontBehavior based on old overrideFont settings
@@ -1045,7 +1045,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             @Override
             public void onCancelled() {
             }
-        }, new DeckTask.TaskData(AnkiDroidApp.getCol(), AnkiDroidApp.getCollectionPath()));
+        }, new DeckTask.TaskData(getCol(), CollectionHelper.getCollectionPath(this)));
     }
 
 
@@ -1143,7 +1143,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
     @Override
     public void exit() {
-        AnkiDroidApp.closeCollection(false);
+        CollectionHelper.getInstance().closeCollection(false);
         finishWithoutAnimation();
         System.exit(0);
     }
@@ -1197,7 +1197,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         } else {
             Connection.sync(mSyncListener,
                     new Connection.Payload(new Object[] { hkey, preferences.getBoolean("syncFetchesMedia", true),
-                            syncConflictResolution, syncMediaUsn }));
+                            syncConflictResolution, syncMediaUsn }, CollectionHelper.getInstance().getCol(this)));
         }
     }
 
@@ -1656,7 +1656,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                     if (eta != -1) {
                         time = res.getQuantityString(R.plurals.deckpicker_title_minutes, eta, eta);
                     }
-                    AnkiDroidApp.getCompat().setSubtitle(DeckPicker.this,
+                    CompatHelper.getCompat().setSubtitle(DeckPicker.this,
                             res.getQuantityString(R.plurals.deckpicker_title, due, due, time));
                 }
 
@@ -1672,7 +1672,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 // update widget
                 WidgetStatus.update(DeckPicker.this, nodes);
                 // update options menu and clear welcome screen
-                AnkiDroidApp.getCompat().invalidateOptionsMenu(DeckPicker.this);
+                CompatHelper.getCompat().invalidateOptionsMenu(DeckPicker.this);
                 // Update the mini statistics bar as well
                 AnkiStatsTaskHandler.createSmallTodayOverview(getCol(), mTodayTextView);
             }
@@ -1797,7 +1797,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                     return new String(new char[depth]).replace("\0", "\u2009\u2009\u2009 ") + name;
                 }
             }
-        });
+        }, new TaskData(getCol()));
     }
 
 
@@ -1896,7 +1896,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     // Callback to show confirm deck deletion dialog before deleting currently selected deck
     public void confirmDeckDeletion() {
         Resources res = getResources();
-        if (!AnkiDroidApp.colIsOpen() || mDeckList == null || mDeckList.size() == 0) {
+        if (!colIsOpen() || mDeckList == null || mDeckList.size() == 0) {
             return;
         }
         String msg = "";
@@ -1980,7 +1980,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     @Override
     public void onShowcaseViewHide(ShowcaseView showcaseView) {
         // Undim the deck list when ShowcaseView is hidden
-        if (AnkiDroidApp.SDK_VERSION >= Build.VERSION_CODES.HONEYCOMB) {
+        if (CompatHelper.isHoneycomb()) {
             final float alpha = 1f;
             mTodayTextView.setAlpha(alpha);
             mDeckListView.setAlpha(alpha);
@@ -1997,7 +1997,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     @Override
     public void onShowcaseViewShow(ShowcaseView showcaseView) {
         // Dim the deck list when ShowcaseView is shown
-        if (AnkiDroidApp.SDK_VERSION >= Build.VERSION_CODES.HONEYCOMB) {
+        if (CompatHelper.isHoneycomb()) {
             final float alpha = 0.1f;
             mTodayTextView.setAlpha(alpha);
             mDeckListView.setAlpha(alpha);

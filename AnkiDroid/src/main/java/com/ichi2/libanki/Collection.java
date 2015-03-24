@@ -31,6 +31,7 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.libanki.hooks.Hooks;
 import com.ichi2.libanki.template.Template;
 
 import org.json.JSONArray;
@@ -714,9 +715,6 @@ public class Collection {
      *             2 - when previewing in models dialog, all templates
      * @return list of cards
 	 */
-	public List<Card> previewCards(Note note) {
-	    return previewCards(note, 0);
-	}
 	public List<Card> previewCards(Note note, int type) {
 	    ArrayList<JSONObject> cms = null;
 	    if (type == 0) {
@@ -746,7 +744,9 @@ public class Collection {
 	    }
 	    return cards;
 	}
-
+    public List<Card> previewCards(Note note) {
+        return previewCards(note, 0);
+    }
 
     /**
      * Create a new card.
@@ -987,9 +987,9 @@ public class Collection {
                     // the following line differs from libanki // TODO: why?
                     fields.put("FrontSide", d.get("q")); // fields.put("FrontSide", mMedia.stripAudio(d.get("q")));
                 }
-                fields = (Map<String, String>) AnkiDroidApp.getHooks().runFilter("mungeFields", fields, model, data, this);
+                fields = (Map<String, String>) Hooks.runFilter("mungeFields", fields, model, data, this);
                 String html = new Template(format, fields).render();
-                d.put(type, (String) AnkiDroidApp.getHooks().runFilter("mungeQA", html, type, fields, model, data, this));
+                d.put(type, (String) Hooks.runFilter("mungeQA", html, type, fields, model, data, this));
                 // empty cloze?
                 if (type.equals("q") && model.getInt("type") == Consts.MODEL_CLOZE) {
                     if (getModels()._availClozeOrds(model, (String) data[6], false).size() == 0) {
