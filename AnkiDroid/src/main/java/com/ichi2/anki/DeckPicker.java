@@ -1566,7 +1566,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
     private void addSharedDeck() {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getResources().getString(R.string.shared_decks_url)));
-        startActivityWithAnimation(intent, ActivityTransitionAnimation.RIGHT);
+        startActivityWithoutAnimation(intent);
     }
 
 
@@ -1592,6 +1592,21 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         openStudyOptions(did, false);
     }
 
+
+    /**
+     * Return true if deck is not a children of a collapsed deck
+     */
+    private boolean deckIsShown(List<Sched.DeckDueTreeNode> nodes, Long current) {
+        for (Sched.DeckDueTreeNode node : nodes) {
+            if (node.did == current) {
+                return true;
+            }
+            if (!getCol().getDecks().get(node.did).optBoolean("collapsed", false) && deckIsShown(node.children, current)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * Scroll the deck list so that it is centered on the current deck.
@@ -1645,10 +1660,13 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                             res.getQuantityString(R.plurals.deckpicker_title, due, due, time));
                 }
 
-                Long did = getCol().getDecks().current().optLong("id");
-                if (mFocusedDeck == null || !mFocusedDeck.equals(did)) {
-                    focusDecklistOnDeck(did);
-                    mFocusedDeck = did;
+                Long current = getCol().getDecks().current().optLong("id");
+                if (!deckIsShown(nodes, current)) {
+                    // clear selection if deck is hidden
+                    mDeckListView.clearChoices();
+                } else if (mFocusedDeck == null || !mFocusedDeck.equals(current)) {
+                    focusDecklistOnDeck(current);
+                    mFocusedDeck = current;
                 }
 
                 // update widget
@@ -1699,7 +1717,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             private void _deckRow(Sched.DeckDueTreeNode node, int depth, int cnt) {
                 HashMap<String, String> m = new HashMap<String, String>();
                 boolean collapsed = getCol().getDecks().get(node.did).optBoolean("collapsed", false);
-                m.put("name", decoratedDeckName(node.names[0], depth, collapsed));
+                m.put("name", decoratedDeckName(node.names[0], depth, collapsed, node.children.size()));
                 m.put("did", Long.toString(node.did));
                 m.put("new", Integer.toString(node.newCount));
                 m.put("lrn", Integer.toString(node.lrnCount));
@@ -1761,15 +1779,22 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
              * (as opposed to additional native UI elements). This includes the amount of indenting
              * for nested decks based on depth and an indicator of collapsed state.
              */
-            private String decoratedDeckName(String name, int depth, boolean collapsed) {
+            private String decoratedDeckName(String name, int depth, boolean collapsed, int children) {
                 if (collapsed) {
-                    name = name + " (+)";
+                    // add arrow pointing right if collapsed
+                    name = "\u25B7 " + name;
+                } else if (children > 0) {
+                    // add arrow pointing down if deck has children
+                    name = "\u25BD " + name;
+                } else {
+                    // add empty spaces
+                    name = "\u2009\u2009\u2009 " + name;
                 }
                 if (depth == 0) {
                     return name;
                 } else {
-                    // Add 4 spaces for every level of nesting and prefix the deck name with an arrow
-                    return new String(new char[depth]).replace("\0", "    ") + "\u21aa" + name;
+                    // Add 4 spaces for every level of nesting
+                    return new String(new char[depth]).replace("\0", "\u2009\u2009\u2009 ") + name;
                 }
             }
         }, new TaskData(getCol()));

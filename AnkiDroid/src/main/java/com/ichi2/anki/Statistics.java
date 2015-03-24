@@ -16,6 +16,7 @@
 package com.ichi2.anki;
 
 import android.content.Intent;
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -24,7 +25,6 @@ import android.support.v4.view.*;
 
 import android.support.v7.app.ActionBar;
 import android.view.*;
-import android.view.animation.Animation;
 import android.webkit.WebView;
 import android.widget.*;
 
@@ -683,6 +683,22 @@ public class Statistics extends NavigationDrawerActivity implements ActionBar.On
         }
 
 
+
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            Timber.i("Statistics:: Statistics - onBackPressed()");
+            closeStatistics(Activity.RESULT_OK);
+            return true;
+        }
+
+        return super.onKeyDown(keyCode, event);
+    }
+
+    private void closeStatistics(int result) {
+        setResult(result);
+        finishWithAnimation(ActivityTransitionAnimation.RIGHT);
+    }
 }
