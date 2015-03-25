@@ -125,7 +125,8 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
 
     private String mSearchTerms;
 
-    public Bundle mCramInitialConfig = null;
+    // Flag to indicate if the fragment should load the deck options immediately after it loads
+    private boolean mLoadWithDeckOptions;
 
     private boolean mFragmented;
     private Collection mCollection;
@@ -176,7 +177,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                     return;
                 case R.id.studyoptions_options_cram:
                     Timber.i("StudyOptionsFragment:: cram deck options button pressed");
-                    openCramDeckOptions();
+                    openFilteredDeckOptions();
                     return;
                 case R.id.studyoptions_options:
                     Timber.i("StudyOptionsFragment:: deck options button pressed");
@@ -204,33 +205,37 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         }
     };
 
-
-    private void openCramDeckOptions() {
-        openCramDeckOptions(null);
+    private void openFilteredDeckOptions() {
+        openFilteredDeckOptions(false);
     }
 
-
-    private void openCramDeckOptions(Bundle initialConfig) {
-        Intent i = new Intent(getActivity(), CramDeckOptions.class);
-        i.putExtra("cramInitialConfig", initialConfig);
+    /**
+     * Open the FilteredDeckOptions activity to allow the user to modify the parameters of the
+     * filtered deck.
+     * @param defaultConfig If true, signals to the FilteredDeckOptions activity that the filtered
+     *                      deck has no options associated with it yet and should use a default
+     *                      set of values.
+     */
+    private void openFilteredDeckOptions(boolean defaultConfig) {
+        Intent i = new Intent(getActivity(), FilteredDeckOptions.class);
+        i.putExtra("defaultConfig", defaultConfig);
         startActivityForResult(i, DECK_OPTIONS);
         ActivityTransitionAnimation.slide(getActivity(), ActivityTransitionAnimation.FADE);
     }
 
 
-    public static StudyOptionsFragment newInstance(long deckId, Bundle cramInitialConfig) {
+    /**
+     * Get a new instance of the fragment.
+     * @param withDeckOptions If true, the fragment will load a new activity on top of itself
+     *                        which shows the current deck's options. Set to true when programmatically
+     *                        opening a new filtered deck for the first time.
+     */
+    public static StudyOptionsFragment newInstance(boolean withDeckOptions) {
         StudyOptionsFragment f = new StudyOptionsFragment();
-        // Supply index input as an argument.
         Bundle args = new Bundle();
-        args.putLong("deckId", deckId);
-        args.putBundle("cramInitialConfig", cramInitialConfig);
+        args.putBoolean("withDeckOptions", withDeckOptions);
         f.setArguments(args);
         return f;
-    }
-
-
-    public long getShownIndex() {
-        return getArguments().getLong("deckId", 0);
     }
 
 
@@ -252,7 +257,9 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     private void onCollectionLoaded(Collection col) {
         mCollection = col;
         initAllContentViews();
-        mCramInitialConfig = getArguments().getBundle("cramInitialConfig");
+        if (getArguments() != null) {
+            mLoadWithDeckOptions = getArguments().getBoolean("withDeckOptions");
+        }
         refreshInterface(true);
         setHasOptionsMenu(true);
         dismissCollectionLoadingDialog();
@@ -604,8 +611,8 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
 
         // perform some special actions depending on which activity we're returning from
         if (requestCode == DECK_OPTIONS) {
-            if (mCramInitialConfig != null) {
-                mCramInitialConfig = null;
+            if (mLoadWithDeckOptions == true) {
+                mLoadWithDeckOptions = false;
                 try {
                     JSONObject deck = getCol().getDecks().current();
                     if (deck.getInt("dyn") != 0 && deck.has("empty")) {
@@ -754,8 +761,8 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                     }
 
                     // open cram deck option if deck is opened for the first time
-                    if (mCramInitialConfig != null) {
-                        openCramDeckOptions(mCramInitialConfig);
+                    if (mLoadWithDeckOptions == true) {
+                        openFilteredDeckOptions(mLoadWithDeckOptions);
                         return;
                     }
 
