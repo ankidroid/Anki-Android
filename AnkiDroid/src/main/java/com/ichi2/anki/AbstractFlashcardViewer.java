@@ -31,8 +31,6 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -41,21 +39,13 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.os.Vibrator;
 import android.text.ClipboardManager;
-import android.text.Editable;
-import android.text.Html;
-import android.text.Html.TagHandler;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.SpannedString;
 import android.text.TextUtils;
-import android.text.style.StrikethroughSpan;
-import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
-
-import android.util.TypedValue;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -86,7 +76,6 @@ import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
-import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Sched;
 import com.ichi2.libanki.Sound;
 import com.ichi2.libanki.Utils;
@@ -100,16 +89,13 @@ import org.amr.arabic.ArabicUtilities;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.xml.sax.XMLReader;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
-import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -216,9 +202,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private boolean mPrefSafeDisplay;
     protected boolean mPrefUseTimer;
     private boolean mPrefCenterVertically;
-    private boolean mSimpleInterface = false;
-    private boolean mCurrentSimpleInterface = false;
-    private ArrayList<String> mSimpleInterfaceExcludeTags;
 
     // Preferences from the collection
     private boolean mShowNextReviewTime;
@@ -245,7 +228,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private View mLookUpIcon;
     private FrameLayout mCardContainer;
     private WebView mCard;
-    private TextView mSimpleCard;
     private WebView mNextCard;
     private FrameLayout mCardFrame;
     private FrameLayout mTouchLayer;
@@ -301,7 +283,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
      * Swipe Detection
      */
     private GestureDetector gestureDetector;
-    View.OnTouchListener gestureListener;
 
     private boolean mIsXScrolling = false;
     private boolean mIsYScrolling = false;
@@ -342,8 +323,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private String mBaseUrl;
 
     private int mFadeDuration = 300;
-
-    private Method mSetTextIsSelectable = null;
 
     protected Sched mSched;
 
@@ -470,11 +449,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             }
             try {
                 if (event != null) {
-                    if (mCurrentSimpleInterface) {
-                        mSimpleCard.dispatchTouchEvent(event);
-                    } else {
-                        mCard.dispatchTouchEvent(event);
-                    }
+                    mCard.dispatchTouchEvent(event);
                 }
             } catch (NullPointerException e) {
                 Timber.e(e, "Error on dispatching touch event");
@@ -560,6 +535,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         public void onCancelled() {
         }
     };
+
 
     private DeckTask.TaskListener mUpdateCardHandler = new DeckTask.TaskListener() {
         private boolean mNoMoreCards;
@@ -1044,37 +1020,34 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         /** Enhancement 722: Hardware buttons for scrolling, I.Z. */
-        if (!mCurrentSimpleInterface) {
-            if (keyCode == 92) {
+        if (keyCode == 92) {
+            mCard.pageUp(false);
+            if (mDoubleScrolling) {
                 mCard.pageUp(false);
-                if (mDoubleScrolling) {
-                    mCard.pageUp(false);
-                }
-                return true;
             }
-            if (keyCode == 93) {
-                mCard.pageDown(false);
-                if (mDoubleScrolling) {
-                    mCard.pageDown(false);
-                }
-                return true;
-            }
-            if (mScrollingButtons && keyCode == 94) {
-                mCard.pageUp(false);
-                if (mDoubleScrolling) {
-                    mCard.pageUp(false);
-                }
-                return true;
-            }
-            if (mScrollingButtons && keyCode == 95) {
-                mCard.pageDown(false);
-                if (mDoubleScrolling) {
-                    mCard.pageDown(false);
-                }
-                return true;
-            }
+            return true;
         }
-
+        if (keyCode == 93) {
+            mCard.pageDown(false);
+            if (mDoubleScrolling) {
+                mCard.pageDown(false);
+            }
+            return true;
+        }
+        if (mScrollingButtons && keyCode == 94) {
+            mCard.pageUp(false);
+            if (mDoubleScrolling) {
+                mCard.pageUp(false);
+            }
+            return true;
+        }
+        if (mScrollingButtons && keyCode == 95) {
+            mCard.pageDown(false);
+            if (mDoubleScrolling) {
+                mCard.pageDown(false);
+            }
+            return true;
+        }
         return super.onKeyDown(keyCode, event);
     }
 
@@ -1591,10 +1564,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
                 .getColor(R.color.review_count));
         mAnswerField.setTextColor(mForegroundColor);
 
-        if (mSimpleCard != null) {
-            mSimpleCard.setBackgroundColor(mCurrentBackgroundColor);
-            mSimpleCard.setTextColor(mForegroundColor);
-        }
         if (mCard != null) {
             mCard.setBackgroundColor(mCurrentBackgroundColor);
         }
@@ -1780,17 +1749,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
 
-        mSimpleInterface = preferences.getBoolean("simpleInterface", false);
-        if (mSimpleInterface) {
-            String tags = preferences.getString("simpleInterfaceExcludeTags", "").replace(",", " ");
-            mSimpleInterfaceExcludeTags = new ArrayList<String>();
-            for (String t : tags.split(" ")) {
-                if (t.length() > 0) {
-                    mSimpleInterfaceExcludeTags.add(t);
-                }
-            }
-        }
-
         // These are preferences we pull out of the collection instead of SharedPreferences
         try {
             mShowNextReviewTime = getCol().getConf().getBoolean("estTimes");
@@ -1807,63 +1765,18 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (mCurrentCard == null) {
             return;
         }
-        if (mSimpleInterface) {
-            Note note = mCurrentCard.note();
-            mCurrentSimpleInterface = true;
-            for (String s : mSimpleInterfaceExcludeTags) {
-                if (note.hasTag(s)) {
-                    mCurrentSimpleInterface = false;
-                    break;
-                }
+        if (mCard == null) {
+            mCard = createWebView();
+            mCardFrame.addView(mCard);
+            if (!mUseQuickUpdate) {
+                mNextCard = createWebView();
+                mNextCard.setVisibility(View.GONE);
+                mCardFrame.addView(mNextCard, 0);
+                mCard.setBackgroundColor(mCurrentBackgroundColor);
             }
         }
-        if (mCurrentSimpleInterface) {
-            if (mSimpleCard == null) {
-                mSimpleCard = new ScrollTextView(this);
-                Themes.setRegularFont(mSimpleCard);
-                mSimpleCard.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, getResources()
-                        .getDisplayMetrics())
-                        * mDisplayFontSize / 100);
-                mSimpleCard.setGravity(Gravity.CENTER);
-                try {
-                    mSetTextIsSelectable = TextView.class.getMethod("setTextIsSelectable", boolean.class);
-                } catch (Throwable e) {
-                    Timber.w(e, "mSetTextIsSelectable could not be found probably due to a too low Android version (< 3.0)");
-                    mSetTextIsSelectable = null;
-                }
-                if (mSetTextIsSelectable != null) {
-                    try {
-                        mSetTextIsSelectable.invoke(mSimpleCard, true);
-                    } catch (Exception e) {
-                        Timber.e(e.toString());
-                    }
-                }
-                mSimpleCard.setClickable(true);
-                mCardFrame.addView(mSimpleCard);
-
-                mSimpleCard.setBackgroundColor(mCurrentBackgroundColor);
-                mSimpleCard.setTextColor(mForegroundColor);
-            }
-            if (mSimpleCard.getVisibility() != View.VISIBLE || (mCard != null && mCard.getVisibility() == View.VISIBLE)) {
-                mSimpleCard.setVisibility(View.VISIBLE);
-                mCard.setVisibility(View.GONE);
-            }
-        } else {
-            if (mCard == null) {
-                mCard = createWebView();
-                mCardFrame.addView(mCard);
-                if (!mUseQuickUpdate) {
-                    mNextCard = createWebView();
-                    mNextCard.setVisibility(View.GONE);
-                    mCardFrame.addView(mNextCard, 0);
-                    mCard.setBackgroundColor(mCurrentBackgroundColor);
-                }
-            }
-            if (mCard.getVisibility() != View.VISIBLE
-                    || (mSimpleCard != null && mSimpleCard.getVisibility() == View.VISIBLE)) {
-                mSimpleCard.setVisibility(View.GONE);
-                mCard.setVisibility(View.VISIBLE);
-            }
+        if (mCard.getVisibility() != View.VISIBLE) {
+            mCard.setVisibility(View.VISIBLE);
         }
     }
 
@@ -1992,11 +1905,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (mCurrentCard.isEmpty()) {
             displayString = getResources().getString(R.string.empty_card_warning);
         } else {
-            if (mCurrentSimpleInterface) {
-                question = mCurrentCard.qSimple();
-            } else {
-                question = mCurrentCard.q();
-            }
+            question = mCurrentCard.q();
             question = getCol().getMedia().escapeImages(question);
             question = typeAnsQuestionFilter(question);
 
@@ -2005,28 +1914,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
             }
 
             Timber.d("question: '%s'", question);
+            // If the user wants to write the answer
+            if (typeAnswer()) {
+                mAnswerField.setVisibility(View.VISIBLE);
+            }
 
+            displayString = enrichWithQADiv(question, false);
 
-            if (mCurrentSimpleInterface) {
-                mCardContent = convertToSimple(question);
-                if (mCardContent== null || mCardContent.length() == 0) {
-                    SpannableString hint = new SpannableString(getResources().getString(R.string.simple_interface_hint,
-                            R.string.card_details_question));
-                    hint.setSpan(new StyleSpan(Typeface.ITALIC), 0, mCardContent.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                    mCardContent = hint;
-                }
-            } else {
-                // If the user wants to write the answer
-                if (typeAnswer()) {
-                    mAnswerField.setVisibility(View.VISIBLE);
-                }
-
-                displayString = enrichWithQADiv(question, false);
-
-                if (mSpeakText) {
-                    // ReadText.setLanguageInformation(Model.getModel(DeckManager.getMainDeck(),
-                    // mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId());
-                }
+            if (mSpeakText) {
+                // ReadText.setLanguageInformation(Model.getModel(DeckManager.getMainDeck(),
+                // mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId());
             }
         }
 
@@ -2103,47 +2000,30 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         sDisplayAnswer = true;
 
-        String answer;
-        if (mCurrentSimpleInterface) {
-            answer = mCurrentCard.aSimple();
-        } else {
-            answer = mCurrentCard.a();
+        String answer = mCurrentCard.a();
+
+        Sound.stopSounds();
+        answer = getCol().getMedia().escapeImages(answer);
+        if (mPrefFixArabic) {
+            // reshape
+            answer = ArabicUtilities.reshapeSentence(answer, true);
         }
-        String displayString = "";
 
-        if (mCurrentSimpleInterface) {
-            mCardContent = convertToSimple(answer);
-            if (mCardContent== null || mCardContent.length() == 0) {
-                SpannableString hint = new SpannableString(getResources().getString(R.string.simple_interface_hint,
-                        R.string.card_details_answer));
-                hint.setSpan(new StyleSpan(Typeface.ITALIC), 0, mCardContent.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                mCardContent = hint;
-            }
-        } else {
-            Sound.stopSounds();
-            answer = getCol().getMedia().escapeImages(answer);
-            if (mPrefFixArabic) {
-                // reshape
-                answer = ArabicUtilities.reshapeSentence(answer, true);
-            }
-
-            mAnswerField.setVisibility(View.GONE);
-            if (mPrefFixArabic) {
-                // reshape
-                mTypeCorrect = ArabicUtilities.reshapeSentence(mTypeCorrect, true);
-            }
-            // Clean up the user answer and the correct answer
-            String userAnswer = cleanTypedAnswer(mAnswerField.getText().toString());
-            String correctAnswer = cleanCorrectAnswer(mTypeCorrect);
-            Timber.d("correct answer = %s", correctAnswer);
-            Timber.d("user answer = %s", userAnswer);
-
-            answer = typeAnsAnswerFilter(answer, userAnswer, correctAnswer);
-            displayString = enrichWithQADiv(answer, true);
+        mAnswerField.setVisibility(View.GONE);
+        if (mPrefFixArabic) {
+            // reshape
+            mTypeCorrect = ArabicUtilities.reshapeSentence(mTypeCorrect, true);
         }
+        // Clean up the user answer and the correct answer
+        String userAnswer = cleanTypedAnswer(mAnswerField.getText().toString());
+        String correctAnswer = cleanCorrectAnswer(mTypeCorrect);
+        Timber.d("correct answer = %s", correctAnswer);
+        Timber.d("user answer = %s", userAnswer);
+
+        answer = typeAnsAnswerFilter(answer, userAnswer, correctAnswer);
 
         mIsSelecting = false;
-        updateCard(displayString);
+        updateCard(enrichWithQADiv(answer, true));
         showEaseButtons();
         // If the user want to show next question automatically
         if (mPrefUseTimer) {
@@ -2176,83 +2056,78 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private void updateCard(String content) {
         Timber.d("updateCard()");
 
-        if (mCurrentSimpleInterface) {
-            fillFlashcard();
-        } else {
+        // Check whether there is a hard coded font-size in the content and apply the relative font size
+        // Check needs to be done before CSS is applied to content;
+        content = recalculateHardCodedFontSize(content, mDisplayFontSize);
 
-            // Check whether there is a hard coded font-size in the content and apply the relative font size
-            // Check needs to be done before CSS is applied to content;
-            content = recalculateHardCodedFontSize(content, mDisplayFontSize);
-
-            // Add CSS for font color and font size
-            if (mCurrentCard == null) {
-                mCard.getSettings().setDefaultFontSize(calculateDynamicFontSize(content));
-            }
-
-            if (sDisplayAnswer) {
-                // don't add answer sounds multiple times, such as when reshowing card after exiting editor
-                // additionally, this condition reduces computation time
-                if (!mAnswerSoundsAdded) {
-                    String answerSoundSource = removeFrontSideAudio(content);
-                    Sound.addSounds(mBaseUrl, answerSoundSource, Sound.SOUNDS_ANSWER);
-                    mAnswerSoundsAdded = true;
-                }
-            } else {
-                // reset sounds each time first side of card is displayed, which may happen repeatedly without ever
-                // leaving the card (such as when edited)
-                Sound.resetSounds();
-                mAnswerSoundsAdded = false;
-                Sound.addSounds(mBaseUrl, content, Sound.SOUNDS_QUESTION);
-            }
-
-            content = Sound.expandSounds(mBaseUrl, content);
-
-            // In order to display the bold style correctly, we have to change
-            // font-weight to 700
-            content = content.replace("font-weight:600;", "font-weight:700;");
-
-            // CSS class for card-specific styling
-            String cardClass = "card card" + (mCurrentCard.getOrd() + 1);
-
-            if (mPrefCenterVertically) {
-                cardClass += " vertically_centered";
-            }
-
-            Timber.d("content card = \n %s", content);
-            StringBuilder style = new StringBuilder();
-            mExtensions.updateCssStyle(style);
-
-            // Scale images.
-            if (mRelativeImageSize != 100) {
-                style.append(String.format("img { zoom: %s }\n", mRelativeImageSize / 100.0));
-            }
-            Timber.d("::style::", style);
-
-            if (mNightMode) {
-                content = HtmlColors.invertColors(content);
-                cardClass += " night_mode";
-            }
-
-            content = SmpToHtmlEntity(content);
-            mCardContent = new SpannedString(mCardTemplate.replace("::content::", content)
-                    .replace("::style::", style.toString()).replace("::class::", cardClass));
-            Timber.d("base url = %s", mBaseUrl);
-
-            if (SAVE_CARD_CONTENT) {
-                try {
-                    FileOutputStream f = new FileOutputStream(new File(CollectionHelper.getCurrentAnkiDroidDirectory(this),
-                            "card.html"));
-                    try {
-                        f.write(mCardContent.toString().getBytes());
-                    } finally {
-                        f.close();
-                    }
-                } catch (IOException e) {
-                    Timber.d(e, "failed to save card");
-                }
-            }
-            fillFlashcard();
+        // Add CSS for font color and font size
+        if (mCurrentCard == null) {
+            mCard.getSettings().setDefaultFontSize(calculateDynamicFontSize(content));
         }
+
+        if (sDisplayAnswer) {
+            // don't add answer sounds multiple times, such as when reshowing card after exiting editor
+            // additionally, this condition reduces computation time
+            if (!mAnswerSoundsAdded) {
+                String answerSoundSource = removeFrontSideAudio(content);
+                Sound.addSounds(mBaseUrl, answerSoundSource, Sound.SOUNDS_ANSWER);
+                mAnswerSoundsAdded = true;
+            }
+        } else {
+            // reset sounds each time first side of card is displayed, which may happen repeatedly without ever
+            // leaving the card (such as when edited)
+            Sound.resetSounds();
+            mAnswerSoundsAdded = false;
+            Sound.addSounds(mBaseUrl, content, Sound.SOUNDS_QUESTION);
+        }
+
+        content = Sound.expandSounds(mBaseUrl, content);
+
+        // In order to display the bold style correctly, we have to change
+        // font-weight to 700
+        content = content.replace("font-weight:600;", "font-weight:700;");
+
+        // CSS class for card-specific styling
+        String cardClass = "card card" + (mCurrentCard.getOrd() + 1);
+
+        if (mPrefCenterVertically) {
+            cardClass += " vertically_centered";
+        }
+
+        Timber.d("content card = \n %s", content);
+        StringBuilder style = new StringBuilder();
+        mExtensions.updateCssStyle(style);
+
+        // Scale images.
+        if (mRelativeImageSize != 100) {
+            style.append(String.format("img { zoom: %s }\n", mRelativeImageSize / 100.0));
+        }
+        Timber.d("::style::", style);
+
+        if (mNightMode) {
+            content = HtmlColors.invertColors(content);
+            cardClass += " night_mode";
+        }
+
+        content = SmpToHtmlEntity(content);
+        mCardContent = new SpannedString(mCardTemplate.replace("::content::", content)
+                .replace("::style::", style.toString()).replace("::class::", cardClass));
+        Timber.d("base url = %s", mBaseUrl);
+
+        if (SAVE_CARD_CONTENT) {
+            try {
+                FileOutputStream f = new FileOutputStream(new File(CollectionHelper.getCurrentAnkiDroidDirectory(this),
+                        "card.html"));
+                try {
+                    f.write(mCardContent.toString().getBytes());
+                } finally {
+                    f.close();
+                }
+            } catch (IOException e) {
+                Timber.d(e, "failed to save card");
+            }
+        }
+        fillFlashcard();
 
         if (!mConfigurationChanged) {
             playSounds(false); // Play sounds if appropriate
@@ -2367,9 +2242,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     public void fillFlashcard() {
         Timber.d("fillFlashcard()");
         Timber.d("base url = %s", mBaseUrl);
-        if (mCurrentSimpleInterface && mSimpleCard != null) {
-            mSimpleCard.setText(mCardContent);
-        } else if (!mUseQuickUpdate && mCard != null && mNextCard != null) {
+        if (!mUseQuickUpdate && mCard != null && mNextCard != null) {
             mNextCard.setBackgroundColor(mCurrentBackgroundColor);
             mNextCard.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", mCardContent.toString(), "text/html", "utf-8", null);
             mNextCard.setVisibility(View.VISIBLE);
@@ -2417,11 +2290,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (!sDisplayAnswer) {
             updateForNewCard();
         }
-    }
-
-
-    public void showFlashcard(boolean visible) {
-        mCardContainer.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
     }
 
 
@@ -2657,11 +2525,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     private void selectAndCopyText() {
         try {
             KeyEvent shiftPressEvent = new KeyEvent(0, 0, KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_SHIFT_LEFT, 0, 0);
-            if (mCurrentSimpleInterface) {
-                shiftPressEvent.dispatch(mSimpleCard);
-            } else {
-                shiftPressEvent.dispatch(mCard);
-            }
+            shiftPressEvent.dispatch(mCard);
             shiftPressEvent.isShiftPressed();
             mIsSelecting = true;
         } catch (Exception e) {
@@ -2953,109 +2817,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         return gestureDetector.onTouchEvent(event);
-    }
-
-    class ScrollTextView extends TextView {
-
-        public ScrollTextView(Context context) {
-            super(context);
-        }
-
-
-        @Override
-        protected void onScrollChanged(int horiz, int vert, int oldHoriz, int oldVert) {
-            super.onScrollChanged(horiz, vert, oldHoriz, oldVert);
-            if (Math.abs(horiz - oldHoriz) > Math.abs(vert - oldVert)) {
-                mIsXScrolling = true;
-                scrollHandler.removeCallbacks(scrollXRunnable);
-                scrollHandler.postDelayed(scrollXRunnable, 300);
-            } else {
-                mIsYScrolling = true;
-                scrollHandler.removeCallbacks(scrollYRunnable);
-                scrollHandler.postDelayed(scrollYRunnable, 300);
-            }
-        }
-
-        private final Handler scrollHandler = new Handler();
-        private final Runnable scrollXRunnable = new Runnable() {
-            @Override
-            public void run() {
-                mIsXScrolling = false;
-            }
-        };
-        private final Runnable scrollYRunnable = new Runnable() {
-            @Override
-            public void run() {
-                mIsYScrolling = false;
-            }
-        };
-
-    }
-
-    private TagHandler mSimpleInterfaceTagHandler = new TagHandler() {
-
-        @Override
-        public void handleTag(boolean opening, String tag, Editable output, XMLReader xmlReader) {
-            // if (tag.equalsIgnoreCase("div")) {
-            // output.append("\n");
-            // } else
-            if (tag.equalsIgnoreCase("strike") || tag.equals("s")) {
-                int len = output.length();
-                if (opening) {
-                    output.setSpan(new StrikethroughSpan(), len, len, Spanned.SPAN_MARK_MARK);
-                } else {
-                    Object obj = getLast(output, StrikethroughSpan.class);
-                    int where = output.getSpanStart(obj);
-
-                    output.removeSpan(obj);
-
-                    if (where != len) {
-                        output.setSpan(new StrikethroughSpan(), where, len, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                    }
-                }
-            }
-        }
-
-
-        private Object getLast(Editable text, Class kind) {
-            Object[] objs = text.getSpans(0, text.length(), kind);
-
-            if (objs.length == 0) {
-                return null;
-            } else {
-                for (int i = objs.length; i > 0; i--) {
-                    if (text.getSpanFlags(objs[i - 1]) == Spanned.SPAN_MARK_MARK) {
-                        return objs[i - 1];
-                    }
-                }
-                return null;
-            }
-        }
-    };
-
-    private Html.ImageGetter mSimpleInterfaceImagegetter = new Html.ImageGetter() {
-
-        @Override
-        public Drawable getDrawable(String source) {
-            String path = CollectionHelper.getCurrentAnkiDroidDirectory(AbstractFlashcardViewer.this) + "/collection.media/" + source;
-            if ((new File(path)).exists()) {
-                Drawable d = Drawable.createFromPath(path);
-                d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight());
-                return d;
-            } else {
-                return null;
-            }
-        }
-    };
-
-
-    private Spanned convertToSimple(String text) {
-        try {
-            return Html.fromHtml(text, mSimpleInterfaceImagegetter, mSimpleInterfaceTagHandler);
-        } catch (Exception e) {
-            Timber.e(e, "Error converting to simple interface");
-            return null;
-        }
     }
 
 

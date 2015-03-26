@@ -350,18 +350,6 @@
                 android:summary="@string/safe_display_summ"
                 android:title="@string/safe_display" />
             <CheckBoxPreference
-                android:title="@string/pref_simple_interface"
-                android:summary="@string/pref_simple_interface_summ"
-                android:defaultValue="false"
-                android:disableDependentsState="false"
-                android:key="simpleInterface"/>
-            <EditTextPreference
-                android:title="@string/pref_simple_interface_exclude_tags"
-                android:defaultValue="html"
-                android:summary="@string/pref_simple_interface_exclude_tags_summ"
-                android:dependency="simpleInterface"
-                android:key="simpleInterfaceExcludeTags" />
-            <CheckBoxPreference
                 android:defaultValue="true"
                 android:disableDependentsState="false"
                 android:key="useBackup"

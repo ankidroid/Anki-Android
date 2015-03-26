@@ -400,11 +400,6 @@ public class Card implements Cloneable {
     }
 
 
-    public String aSimple() {
-        return _getQA(false).get("a").replaceAll("<hr[^>]*>", "<br>\u2500\u2500\u2500\u2500\u2500<br>");
-    }
-
-
     public String getPureAnswerForReading() {
         String s = _getQA(false).get("a");
         String target = "<hr id=answer>\n\n";
