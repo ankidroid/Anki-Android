@@ -16,25 +16,33 @@
 package com.ichi2.anki;
 
 import android.content.Intent;
-import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import android.support.v4.app.*;
-import android.support.v4.view.*;
-
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.view.*;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.WebView;
-import android.widget.*;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.android.common.view.SlidingTabLayout;
 import com.ichi2.anim.ActivityTransitionAnimation;
-import com.ichi2.anki.stats.*;
+import com.ichi2.anki.stats.AnkiStatsTaskHandler;
+import com.ichi2.anki.stats.ChartView;
 import com.ichi2.anki.widgets.DeckDropDownAdapter;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Stats;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -251,16 +259,6 @@ public class Statistics extends NavigationDrawerActivity implements ActionBar.On
         return getSelectedNavDrawerTitle();
     }
 
-    @Override
-    public void onBackPressed() {
-        Timber.d("onBackPressed()");
-        Intent data = new Intent();
-        if (getIntent().hasExtra("selectedDeck")) {
-            data.putExtra("originalDeck", getIntent().getLongExtra("selectedDeck", 0L));
-        }
-        setResult(RESULT_CANCELED, data);
-        finishWithAnimation(ActivityTransitionAnimation.RIGHT);
-    }
 
     public AnkiStatsTaskHandler getTaskHandler(){
         return mTaskHandler;
@@ -690,15 +688,14 @@ public class Statistics extends NavigationDrawerActivity implements ActionBar.On
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             Timber.i("Statistics:: Statistics - onBackPressed()");
-            closeStatistics(Activity.RESULT_OK);
+            Intent data = new Intent();
+            if (getIntent().hasExtra("selectedDeck")) {
+                data.putExtra("originalDeck", getIntent().getLongExtra("selectedDeck", 0L));
+            }
+            setResult(RESULT_CANCELED, data);
+            finishWithAnimation(ActivityTransitionAnimation.RIGHT);
             return true;
         }
-
         return super.onKeyDown(keyCode, event);
-    }
-
-    private void closeStatistics(int result) {
-        setResult(result);
-        finishWithAnimation(ActivityTransitionAnimation.RIGHT);
     }
 }
