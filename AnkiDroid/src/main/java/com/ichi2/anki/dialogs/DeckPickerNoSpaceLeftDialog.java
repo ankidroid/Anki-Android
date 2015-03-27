@@ -6,9 +6,9 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
-import com.ichi2.themes.StyledDialog;
 
 public class DeckPickerNoSpaceLeftDialog extends DialogFragment {
     public static DeckPickerNoSpaceLeftDialog newInstance() {
@@ -17,25 +17,26 @@ public class DeckPickerNoSpaceLeftDialog extends DialogFragment {
     }
     
     @Override
-    public StyledDialog onCreateDialog(Bundle savedInstanceState) {
+    public MaterialDialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StyledDialog.Builder builder = new StyledDialog.Builder(getActivity());
         Resources res = getResources();
-        builder.setTitle(res.getString(R.string.sd_card_full_title));
-        builder.setMessage(res.getString(R.string.backup_deck_no_space_left));
-        builder.setPositiveButton(res.getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                ((DeckPicker) getActivity()).startLoadingCollection();
-            }
-        });
-        builder.setCancelable(true);
-        builder.setOnCancelListener(new OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface arg0) {
-                ((DeckPicker) getActivity()).startLoadingCollection();
-            }
-        });
-        return builder.create();
+        return new MaterialDialog.Builder(getActivity())
+                .title(res.getString(R.string.sd_card_full_title))
+                .content(res.getString(R.string.backup_deck_no_space_left))
+                .cancelable(true)
+                .positiveText(res.getString(R.string.dialog_ok))
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        ((DeckPicker) getActivity()).startLoadingCollection();
+                    }
+                })
+                .cancelListener(new OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        ((DeckPicker) getActivity()).startLoadingCollection();
+                    }
+                })
+                .show();
     }
 }

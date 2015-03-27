@@ -1,14 +1,15 @@
 
 package com.ichi2.anki.dialogs;
 
-import android.content.DialogInterface;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Message;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
-import com.ichi2.themes.StyledDialog;
+import com.ichi2.themes.Themes;
 
 public class DeckPickerExportCompleteDialog extends AsyncDialogFragment {
     
@@ -22,28 +23,31 @@ public class DeckPickerExportCompleteDialog extends AsyncDialogFragment {
 
 
     @Override
-    public StyledDialog onCreateDialog(Bundle savedInstanceState) {
+    public MaterialDialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         final String exportPath = getArguments().getString("exportPath");
-        StyledDialog.Builder builder = new StyledDialog.Builder(getActivity());
         Resources res = getResources();
-        builder.setTitle(getNotificationTitle());
-        builder.setMessage(getNotificationMessage());
-        builder.setIcon(R.drawable.ic_menu_send);
-        builder.setPositiveButton(res.getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                ((DeckPicker) getActivity()).dismissAllDialogFragments();
-                ((DeckPicker) getActivity()).emailFile(exportPath);
-            }
-        });
-        builder.setNegativeButton(res.getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                ((DeckPicker) getActivity()).dismissAllDialogFragments();
-            }
-        });
-        return builder.create();
+        Drawable icon = res.getDrawable(R.drawable.ic_send_black_36dp);
+        icon.setAlpha(Themes.ALPHA_ICON_ENABLED_DARK);
+        return new MaterialDialog.Builder(getActivity())
+                .title(getNotificationTitle())
+                .content(getNotificationMessage())
+                .icon(icon)
+                .positiveText(res.getString(R.string.dialog_ok))
+                .negativeText(res.getString(R.string.dialog_cancel))
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        ((DeckPicker) getActivity()).dismissAllDialogFragments();
+                        ((DeckPicker) getActivity()).emailFile(exportPath);
+                    }
+
+                    @Override
+                    public void onNegative(MaterialDialog dialog) {
+                        ((DeckPicker) getActivity()).dismissAllDialogFragments();
+                    }
+                })
+                .show();
     }
     
     public String getNotificationTitle() {

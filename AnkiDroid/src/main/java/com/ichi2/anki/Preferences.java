@@ -36,12 +36,16 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.WindowManager.BadTokenException;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.hlidskialf.android.preference.SeekBarPreference;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.exception.StorageAccessException;
@@ -106,7 +110,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private static String[] sShowValueInSummEditText = { "deckPath" };
     private static String[] sShowValueInSummNumRange = { "timeLimit", "learnCutoff" };
     private TreeMap<String, String> mListsToUpdate = new TreeMap<String, String>();
-    private StyledProgressDialog mProgressDialog;
+    private MaterialDialog mProgressDialog;
     private boolean lockCheckAction = false;
     private String dialogMessage;
 
@@ -272,6 +276,20 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         updateNotificationPreference();
     }
 
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+
+        LinearLayout root = (LinearLayout)findViewById(android.R.id.list).getParent().getParent().getParent();
+        Toolbar bar = (Toolbar) LayoutInflater.from(this).inflate(R.layout.settings_toolbar, root, false);
+        root.addView(bar, 0); // insert at top
+        bar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
 
     private void updateNotificationPreference() {
         ListPreference listpref = (ListPreference) getPreferenceScreen().findPreference("minimumCardsDueForNotification");
@@ -639,7 +657,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private DeckTask.TaskListener mDeckOperationHandler = new DeckTask.TaskListener() {
         @Override
         public void onPreExecute() {
-            mProgressDialog = StyledProgressDialog.show(Preferences.this, "", dialogMessage, true);
+            mProgressDialog = StyledProgressDialog.show(Preferences.this, "", dialogMessage, false);
         }
 
 

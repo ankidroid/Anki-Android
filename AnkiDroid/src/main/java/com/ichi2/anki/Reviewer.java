@@ -36,6 +36,7 @@ import android.widget.FrameLayout;
 import com.ichi2.async.DeckTask;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
+import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
 
 import org.json.JSONException;
@@ -197,30 +198,15 @@ public class Reviewer extends AbstractFlashcardViewer {
         getMenuInflater().inflate(R.menu.reviewer, menu);
         Resources res = getResources();
         if (mCurrentCard != null && mCurrentCard.note().hasTag("marked")) {
-            if (mNightMode) {
-                menu.findItem(R.id.action_mark_card).setTitle(R.string.menu_unmark_card).setIcon(R.drawable.ic_menu_marked_dark);
-            } else {
-                menu.findItem(R.id.action_mark_card).setTitle(R.string.menu_unmark_card).setIcon(R.drawable.ic_menu_marked);
-            }
+            menu.findItem(R.id.action_mark_card).setTitle(R.string.menu_unmark_card).setIcon(R.drawable.ic_star_white_24dp);
         } else {
-            if (mNightMode) {
-                menu.findItem(R.id.action_mark_card).setTitle(R.string.menu_mark_card).setIcon(R.drawable.ic_menu_mark_dark);
-            }else {
-                menu.findItem(R.id.action_mark_card).setTitle(R.string.menu_mark_card).setIcon(R.drawable.ic_menu_mark);
-            }
+            menu.findItem(R.id.action_mark_card).setTitle(R.string.menu_mark_card).setIcon(R.drawable.ic_star_outline_white_24dp);
         }
         if (colIsOpen() && getCol().undoAvailable()) {
-            if (mNightMode) {
-                menu.findItem(R.id.action_undo).setEnabled(true).setIcon(R.drawable.ic_menu_revert_dark);
-            } else {
-                menu.findItem(R.id.action_undo).setEnabled(true).setIcon(R.drawable.ic_menu_revert);
-            }
+            menu.findItem(R.id.action_undo).setEnabled(true).getIcon().setAlpha(Themes.ALPHA_ICON_ENABLED_LIGHT);
         } else {
-            if (mNightMode) {
-                menu.findItem(R.id.action_undo).setEnabled(false).setIcon(R.drawable.ic_menu_revert_disabled_dark);
-            } else {
-                menu.findItem(R.id.action_undo).setEnabled(false).setIcon(R.drawable.ic_menu_revert_disabled);
-            }
+            menu.findItem(R.id.action_undo).setEnabled(false).getIcon().setAlpha(
+                    Themes.ALPHA_ICON_DISABLED_LIGHT);
         }
         if (mPrefWhiteboard) {
             // Check if we can forceably squeeze in 3 items into the action bar, if not hide "show whiteboard"

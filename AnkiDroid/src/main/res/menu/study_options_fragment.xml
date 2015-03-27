@@ -3,20 +3,20 @@
     <item
         android:id="@+id/action_undo"
         android:enabled="true"
-        android:icon="@drawable/ic_menu_revert"
+        android:icon="@drawable/ic_undo_white_24dp"
         android:title="@string/undo"
         ankidroid:showAsAction="always"
         android:visibility = "gone" />
     <item
         android:id="@+id/action_add_note_from_study_options"
-        android:icon="@drawable/ic_menu_add"
+        android:icon="@drawable/ic_add_white_24dp"
         android:title="@string/menu_add"
         ankidroid:showAsAction="always"
         android:visible="false" />
         
     <item
         android:id="@+id/action_night_mode"
-        android:icon="@drawable/ic_menu_night"
+        android:icon="@drawable/ic_brightness_5_white_24dp"
         android:title="@string/night_mode"
         ankidroid:showAsAction="always"/>
 

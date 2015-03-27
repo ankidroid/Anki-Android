@@ -15,11 +15,12 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+    <string name="settings">Settings</string>
     <string-array name="navigation_titles">
         <item>Decks</item>
         <item>Card Browser</item>
         <item>Statistics</item>
-        <item>Settings</item>
+        <item>@string/settings</item>
         <item>Help</item>
         <item>Send Feedback</item>
     </string-array>

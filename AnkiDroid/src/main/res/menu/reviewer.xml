@@ -4,7 +4,7 @@
     <item
         android:id="@+id/action_clear_whiteboard"
         android:title="@string/clear_whiteboard"
-        android:icon="@drawable/ic_action_cancel"
+        android:icon="@drawable/ic_clear_white_24dp"
         android:visible="false"
         ankidroid:showAsAction="always"/>
     <item
@@ -16,23 +16,23 @@
     <item
         android:id="@+id/action_undo"
         android:enabled="false"
-        android:icon="@drawable/ic_menu_revert_disabled"
+        android:icon="@drawable/ic_undo_white_24dp"
         android:title="@string/undo"
         ankidroid:showAsAction="always"/>
     <item
         android:id="@+id/action_mark_card"
-        android:icon="@drawable/ic_menu_mark"
+        android:icon="@drawable/ic_star_outline_white_24dp"
         android:title="@string/menu_mark_card"
         ankidroid:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_edit"
-        android:icon="@drawable/ic_menu_edit"
+        android:icon="@drawable/ic_mode_edit_white_24dp"
         android:title="@string/cardeditor_title_edit_card"
         ankidroid:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_replay"
         android:title="@string/replay_audio"
-        android:icon="@drawable/ic_action_replay"
+        android:icon="@drawable/ic_replay_white_24dp"
         ankidroid:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_dismiss"

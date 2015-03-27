@@ -47,6 +47,9 @@
         This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
         needed for upgrades to be offered correctly.
     -->
+    <uses-sdk
+        android:minSdkVersion="7"
+        android:targetSdkVersion="19" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />

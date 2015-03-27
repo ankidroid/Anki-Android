@@ -33,6 +33,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.android.common.view.SlidingTabLayout;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
@@ -61,7 +62,7 @@ public class CardTemplateEditor extends AnkiActivity {
     private TemplatePagerAdapter mTemplateAdapter;
     private ViewPager mViewPager;
     private SlidingTabLayout mSlidingTabLayout;
-    private StyledProgressDialog mProgressDialog;
+    private MaterialDialog mProgressDialog;
     private long mModelId;
     //private long mCardId;
     private boolean mChanged = false;
@@ -77,7 +78,7 @@ public class CardTemplateEditor extends AnkiActivity {
         public void onPreExecute() {
             Resources res = getResources();
             mProgressDialog = StyledProgressDialog
-                    .show(CardTemplateEditor.this, "", res.getString(R.string.saving_model), true);
+                    .show(CardTemplateEditor.this, "", res.getString(R.string.saving_model), false);
         }
 
         @Override
@@ -139,8 +140,8 @@ public class CardTemplateEditor extends AnkiActivity {
         //mCardId = getIntent().getLongExtra("cardId", -1L);
 
         // Disable the home icon
-        getSupportActionBar().setDisplayShowHomeEnabled(false);
-        getSupportActionBar().setDisplayHomeAsUpEnabled (false);
+        //getSupportActionBar().setDisplayShowHomeEnabled(false);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled (false);
 
         startLoadingCollection();
     }
