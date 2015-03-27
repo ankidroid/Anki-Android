@@ -47,12 +47,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
@@ -98,6 +101,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import timber.log.Timber;
 
@@ -367,8 +371,8 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
         mDeckList = new ArrayList<HashMap<String, String>>();
         mDeckListView = (ListView) findViewById(R.id.files);
-        mDeckListAdapter = new SimpleAdapter(this, mDeckList, R.layout.deck_item, new String[] { "name", "new", "lrn",
-                "rev", "sep", "dyn" }, new int[] { R.id.DeckPickerName, R.id.deckpicker_new, R.id.deckpicker_lrn,
+        mDeckListAdapter = new DecklistAdapter(this, mDeckList, R.layout.deck_item, new String[] { "expander", "name", "new", "lrn",
+                "rev", "sep", "dyn" }, new int[] { R.id.DeckPickerExpander, R.id.DeckPickerName, R.id.deckpicker_new, R.id.deckpicker_lrn,
                 R.id.deckpicker_rev, R.id.deckpicker_deck, R.id.DeckPickerName });
         mDeckListAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
             @Override
@@ -386,6 +390,30 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                     } else if (text.equals("cen")) {
                         view.setBackgroundResource(R.drawable.white_deckpicker_center);
                         return true;
+                    }
+                } else if (view.getId() == R.id.DeckPickerExpander) {
+                    if (text.contains("\u25B7") || text.contains("\u25BD")) {
+                        view.setClickable(true);
+                        view.setOnClickListener(new OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                try {
+                                    HashMap<String, String> data = (HashMap<String, String>) mDeckListAdapter.getItem((Integer) v.getTag());
+                                    long did = Long.parseLong(data.get("did"));
+                                    JSONObject deck = getCol().getDecks().get(did);
+                                    if (getCol().getDecks().children(did).size() > 0) {
+                                        deck.put("collapsed", !deck.getBoolean("collapsed"));
+                                        getCol().getDecks().save(deck);
+                                        updateDeckList();
+                                    }
+                                } catch (JSONException e1) {
+                                    // do nothing
+                                }
+                            }
+                        });
+                    } else {
+                        // set textview unclickable if deck has no children
+                        view.setClickable(false);
                     }
                 } else if (view.getId() == R.id.DeckPickerName) {
                     if (text.equals("d0")) {
@@ -1716,7 +1744,8 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             private void _deckRow(Sched.DeckDueTreeNode node, int depth, int cnt) {
                 HashMap<String, String> m = new HashMap<String, String>();
                 boolean collapsed = getCol().getDecks().get(node.did).optBoolean("collapsed", false);
-                m.put("name", decoratedDeckName(node.names[0], depth, collapsed, node.children.size()));
+                m.put("expander", createExpander(depth, collapsed, node.children.size()));
+                m.put("name", node.names[0]);
                 m.put("did", Long.toString(node.did));
                 m.put("new", Integer.toString(node.newCount));
                 m.put("lrn", Integer.toString(node.lrnCount));
@@ -1778,22 +1807,23 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
              * (as opposed to additional native UI elements). This includes the amount of indenting
              * for nested decks based on depth and an indicator of collapsed state.
              */
-            private String decoratedDeckName(String name, int depth, boolean collapsed, int children) {
+            private String createExpander(int depth, boolean collapsed, int children) {
+                String text;
                 if (collapsed) {
-                    // add arrow pointing right if collapsed
-                    name = "\u25B7 " + name;
+                    // set arrow pointing right if collapsed
+                    text = "\u25B7 ";
                 } else if (children > 0) {
-                    // add arrow pointing down if deck has children
-                    name = "\u25BD " + name;
+                    // set arrow pointing down if deck has children
+                    text = "\u25BD ";
                 } else {
-                    // add empty spaces
-                    name = "\u2009\u2009\u2009 " + name;
+                    // set empty spaces
+                    text = "\u2009\u2009\u2009 ";
                 }
                 if (depth == 0) {
-                    return name;
+                    return text;
                 } else {
                     // Add 4 spaces for every level of nesting
-                    return new String(new char[depth]).replace("\0", "\u2009\u2009\u2009 ") + name;
+                    return new String(new char[depth]).replace("\0", "\u2009\u2009\u2009 " + text);
                 }
             }
         }, new TaskData(getCol()));
@@ -2026,4 +2056,34 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     public void createFilteredDeck(JSONArray delays, Object[] terms, Boolean resched) {
         getFragment().createFilteredDeck(delays, terms, resched);
     }
+
+    public class DecklistAdapter extends SimpleAdapter{
+        HashMap<String, String> map = new HashMap<String, String>();
+
+        /**
+         * Constructor
+         *
+         * @param context  The context where the View associated with this SimpleAdapter is running
+         * @param data     A List of Maps. Each entry in the List corresponds to one row in the list. The
+         *                 Maps contain the data for each row, and should include all the entries specified in
+         *                 "from"
+         * @param resource Resource identifier of a view layout that defines the views for this list
+         *                 item. The layout file should include at least those named views defined in "to"
+         * @param from     A list of column names that will be added to the Map associated with each
+         *                 item.
+         * @param to       The views that should display column in the "from" parameter. These should all be
+         *                 TextViews. The first N views in this list are given the values of the first N columns
+         */
+        public DecklistAdapter(Context context, List<? extends Map<String, ?>> data, int resource, String[] from, int[] to) {
+            super(context, data, resource, from, to);
+        }
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View view = super.getView(position, convertView, parent);
+            // set position in listview to expander textview
+            ((RelativeLayout)((LinearLayout) view).getChildAt(0)).getChildAt(0).setTag(position);
+            return view;
+        }
+    }
+
 }
