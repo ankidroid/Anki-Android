@@ -3,8 +3,8 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_marginBottom="1dip"
     android:ellipsize="marquee"
     android:gravity="bottom|center_horizontal"
     android:singleLine="true"
+    android:textColor="@color/white"
     android:textSize="12.5sp" />

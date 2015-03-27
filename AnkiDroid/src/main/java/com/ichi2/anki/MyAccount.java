@@ -33,6 +33,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
@@ -58,7 +59,7 @@ public class MyAccount extends AnkiActivity {
 
     private TextView mUsernameLoggedIn;
 
-    private StyledProgressDialog mProgressDialog;
+    private MaterialDialog mProgressDialog;
     private StyledDialog mNoConnectionAlert;
     private StyledDialog mConnectionErrorAlert;
     private StyledDialog mInvalidUserPassAlert;
@@ -336,7 +337,7 @@ public class MyAccount extends AnkiActivity {
             Timber.d("loginListener.onPreExcecute()");
             if (mProgressDialog == null || !mProgressDialog.isShowing()) {
                 mProgressDialog = StyledProgressDialog.show(MyAccount.this, "",
-                        getResources().getString(R.string.alert_logging_message), true);
+                        getResources().getString(R.string.alert_logging_message), false);
             }
         }
 
@@ -396,7 +397,7 @@ public class MyAccount extends AnkiActivity {
             Timber.d("registerListener.onPreExcecute()");
             if (mProgressDialog == null || !mProgressDialog.isShowing()) {
                 mProgressDialog = StyledProgressDialog.show(MyAccount.this, "",
-                        getResources().getString(R.string.registering_message), true);
+                        getResources().getString(R.string.registering_message), false);
             }
         }
 

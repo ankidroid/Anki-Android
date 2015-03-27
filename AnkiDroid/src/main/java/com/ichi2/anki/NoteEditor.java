@@ -32,6 +32,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.PopupMenu.OnMenuItemClickListener;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.Html;
 import android.text.InputType;
@@ -57,6 +58,7 @@ import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.TagsDialog;
@@ -197,7 +199,7 @@ public class NoteEditor extends AnkiActivity {
     private SimpleAdapter mIntentInformationAdapter;
     private StyledDialog mIntentInformationDialog;
 
-    private StyledProgressDialog mProgressDialog;
+    private MaterialDialog mProgressDialog;
 
     private String[] mSourceText;
 
@@ -213,7 +215,7 @@ public class NoteEditor extends AnkiActivity {
         public void onPreExecute() {
             Resources res = getResources();
             mProgressDialog = StyledProgressDialog
-                    .show(NoteEditor.this, "", res.getString(R.string.saving_facts), true);
+                    .show(NoteEditor.this, "", res.getString(R.string.saving_facts), false);
         }
 
 
@@ -315,6 +317,13 @@ public class NoteEditor extends AnkiActivity {
         Timber.d("onCreate()");
         Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
+        View mainView = getLayoutInflater().inflate(R.layout.note_editor, null);
+        setContentView(mainView);
+
+        Toolbar toolbar = (Toolbar) mainView.findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+        }
 
         Intent intent = getIntent();
         if (savedInstanceState != null) {
@@ -332,7 +341,7 @@ public class NoteEditor extends AnkiActivity {
         }
 
         startLoadingCollection();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
 
@@ -360,8 +369,13 @@ public class NoteEditor extends AnkiActivity {
         registerExternalStorageListener();
         View mainView = getLayoutInflater().inflate(R.layout.note_editor, null);
         setContentView(mainView);
-        Themes.setWallpaper(mainView);
+        //Themes.setWallpaper(mainView);
         Themes.setContentStyle(mainView, Themes.CALLER_CARD_EDITOR);
+
+        Toolbar toolbar = (Toolbar) mainView.findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+        }
 
         mFieldsLayoutContainer = (LinearLayout) findViewById(R.id.CardEditorEditFieldsLayout);
 
@@ -980,21 +994,18 @@ public class NoteEditor extends AnkiActivity {
 
 
     private void showDiscardChangesDialog() {
-        Dialog dialog;
-        Resources res = getResources();
-        StyledDialog.Builder builder = new StyledDialog.Builder(this);
-        builder.setMessage(R.string.discard_unsaved_changes);
-        builder.setPositiveButton(res.getString(R.string.dialog_ok),
-                new DialogInterface.OnClickListener() {
+        new MaterialDialog.Builder(this)
+                .content(R.string.discard_unsaved_changes)
+                .positiveText(R.string.dialog_ok)
+                .negativeText(R.string.dialog_cancel)
+                .callback(new MaterialDialog.ButtonCallback() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onPositive(MaterialDialog dialog) {
                         Timber.i("NoteEditor:: OK button pressed to confirm discard changes");
                         closeNoteEditor();
                     }
-                });
-        builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
-        dialog = builder.create();
-        dialog.show();
+                })
+                .build().show();
     }
 
 
@@ -1469,9 +1480,11 @@ public class NoteEditor extends AnkiActivity {
         Integer dupeCode = mEditorNote.dupeOrEmpty();
         if (dupeCode != null && dupeCode == 2) {
             field.setBackgroundResource(R.drawable.white_edit_text_dupe);
+            field.setTextColor(getResources().getColor(R.color.material_red_500));
             isDupe = true;
         } else {
-            field.setBackgroundResource(R.drawable.white_edit_text);
+            //field.setBackgroundResource(R.drawable.white_edit_text);
+            field.setTextColor(getResources().getColor(R.color.text_color));
             isDupe = false;
         }
         // Put back the old value so we don't interfere with modification detection

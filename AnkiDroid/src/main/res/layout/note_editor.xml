@@ -1,115 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/CardEditorScroll"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:padding="5dp" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/CardEditorLayout"
+    <include layout="@layout/toolbar" />
+
+    <ScrollView
+        android:id="@+id/CardEditorScroll"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:layout_height="fill_parent"
+        android:padding="5dp" >
 
         <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" >
-            <TextView
-                android:id="@+id/CardEditorModelText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="5dip"
-                android:layout_marginRight="5dip"
-                android:clickable="false"
-                android:gravity="left|center_vertical"
-                android:textColor="#000000"
-                android:textStyle="bold"
-                android:text="@string/CardEditorModel" />
-            <Spinner
-                android:id="@+id/note_type_spinner"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" >
-            <TextView
-                android:id="@+id/CardEditorDeckText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="5dip"
-                android:layout_marginRight="5dip"
-                android:clickable="false"
-                android:gravity="left|center_vertical"
-                android:textColor="#000000"
-                android:textStyle="bold"
-                android:text="@string/CardEditorNoteDeck" />
-            <Spinner
-                android:id="@+id/note_deck_spinner"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/CardEditorEditFieldsLayout"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="4dip" />
-
-        <LinearLayout
+            android:id="@+id/CardEditorLayout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
+
+            <!-- Note type selector -->
             <LinearLayout
-                android:id="@+id/CardEditorTagButton"
-                style="?android:attr/buttonStyleSmall"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center" >
-
+                android:orientation="horizontal" >
                 <TextView
-                    android:id="@+id/CardEditorTagText"
+                    android:id="@+id/CardEditorModelText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="8dip"
+                    android:layout_marginRight="8dip"
+                    android:clickable="false"
+                    android:gravity="left|center_vertical"
+                    android:textColor="#000000"
+                    android:textStyle="bold"
+                    android:text="@string/CardEditorModel" />
+                <Spinner
+                    android:id="@+id/note_type_spinner"
+                    style="@style/White.Dropdown"
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/touch_target" />
+            </LinearLayout>
+
+            <!-- Deck selector -->
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+                <TextView
+                    android:id="@+id/CardEditorDeckText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="8dip"
+                    android:layout_marginRight="8dip"
+                    android:clickable="false"
+                    android:gravity="left|center_vertical"
+                    android:textColor="#000000"
+                    android:textStyle="bold"
+                    android:text="@string/CardEditorNoteDeck" />
+                <Spinner
+                    android:id="@+id/note_deck_spinner"
+                    style="@style/White.Dropdown"
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/touch_target" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/CardEditorEditFieldsLayout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/keyline_1" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+                <LinearLayout
+                    android:id="@+id/CardEditorTagButton"
+                    style="?android:attr/buttonStyleSmall"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="5dip"
-                    android:layout_marginRight="5dip"
-                    android:clickable="false"
-                    android:gravity="left|center_vertical"
-                    android:textColor="#000000" />
+                    android:gravity="center" >
+
+                    <TextView
+                        android:id="@+id/CardEditorTagText"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="5dip"
+                        android:layout_marginRight="5dip"
+                        android:clickable="false"
+                        android:gravity="left|center_vertical"
+                        android:textColor="#000000" />
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
             <LinearLayout
-                android:id="@+id/CardEditorCardsButton"
-                style="?android:attr/buttonStyleSmall"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center" >
-
-                <TextView
-                    android:id="@+id/CardEditorCardsText"
+                android:orientation="vertical" >
+                <LinearLayout
+                    android:id="@+id/CardEditorCardsButton"
+                    style="?android:attr/buttonStyleSmall"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="5dip"
-                    android:layout_marginRight="5dip"
-                    android:clickable="false"
-                    android:gravity="left|center_vertical"
-                    android:textColor="#000000" />
+                    android:gravity="center" >
+
+                    <TextView
+                        android:id="@+id/CardEditorCardsText"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="5dip"
+                        android:layout_marginRight="5dip"
+                        android:clickable="false"
+                        android:gravity="left|center_vertical"
+                        android:textColor="#000000" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
 
-</ScrollView>
+    </ScrollView>
+</LinearLayout>

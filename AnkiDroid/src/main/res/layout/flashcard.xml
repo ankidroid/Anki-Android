@@ -24,11 +24,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:attr/colorBackground" >
+
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/main_layout"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="?android:attr/colorBackground" >
+
+        <include layout="@layout/toolbar" />
 
         <!-- Top bar -->
 
@@ -36,10 +39,12 @@
             android:id="@+id/top_bar"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="9dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="4dp"
-            android:gravity="center_vertical" >
+            android:paddingLeft="9dp"
+            android:paddingRight="10dp"
+            android:paddingTop="4dp"
+            android:gravity="center_vertical"
+            android:background="@color/theme_primary_light"
+            android:layout_below="@+id/toolbar">
 
             <TextView
                 android:id="@+id/new_number"
@@ -144,12 +149,6 @@
                 android:src="@drawable/ic_lookup"
                 android:visibility="gone"
                 android:contentDescription="@string/lookup_button_content" />
-
-            <FrameLayout
-                android:id="@+id/flashcard_border"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:visibility="gone" />
         </FrameLayout>
 
         <LinearLayout
@@ -175,117 +174,116 @@
 
             <LinearLayout
                 android:id="@+id/answer_options_layout"
+                android:background="@color/white"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent" >
 
                 <LinearLayout
                     android:id="@+id/flashcard_layout_flip"
-                    style="?android:attr/buttonStyleSmall"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
+                    android:background="@color/white"
                     android:layout_weight="1"
                     android:orientation="vertical" >
 
                     <Button
+                            style="@style/MaterialButton"
                         android:id="@+id/flip_card"
-                        style="?android:attr/buttonStyleSmall"
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:background="@color/transparent"
+                        android:layout_height="56dp"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        android:layout_marginTop="8dp"
                         android:clickable="false"
-                        android:gravity="center"
-                        android:lines="1"
                         android:text="@string/show_answer" />
-
-                    <LinearLayout
-                        android:layout_width="0dip"
-                        android:layout_height="fill_parent"
-                        android:orientation="horizontal" >
-
-                        <include
-                            android:id="@+id/nextTimeflip"
-                            layout="@layout/next_time_textview" />
-
-                        <Button
-                            android:layout_width="0dip"
-                            android:layout_height="wrap_content"
-                            android:background="@color/transparent"
-                            android:lines="1"
-                            android:textSize="14sp" />
-                    </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
+                    style="@style/MaterialButton"
+                    android:background="@drawable/material_button_ease_left"
                     android:id="@+id/flashcard_layout_ease1"
-                    style="?android:attr/buttonStyleSmall"
                     android:layout_width="0dip"
-                    android:layout_height="fill_parent"
+                    android:layout_height="56dp"
                     android:layout_weight="1"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="8dp"
                     android:orientation="vertical"
                     android:visibility="gone" >
 
                     <include
-                        android:id="@+id/nextTime1"
-                        layout="@layout/next_time_textview" />
+                            android:id="@+id/nextTime1"
+                            layout="@layout/flashcard_next_time_textview" />
 
                     <include
-                        android:id="@+id/ease1"
-                        layout="@layout/bottom_button" />
+                            android:id="@+id/ease1"
+                            layout="@layout/flashcard_ease_textview" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/flashcard_layout_ease2"
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="0dip"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:visibility="gone" >
+                        style="@style/MaterialButton"
+                        android:background="@drawable/material_button_ease_middle"
+                        android:id="@+id/flashcard_layout_ease2"
+                        android:layout_width="0dip"
+                        android:layout_height="56dp"
+                        android:layout_weight="1"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginTop="8dp"
+                        android:orientation="vertical"
+                        android:visibility="gone" >
 
                     <include
-                        android:id="@+id/nextTime2"
-                        layout="@layout/next_time_textview"
-                        android:textColor="@color/next_time_usual_color" />
+                            android:id="@+id/nextTime2"
+                            layout="@layout/flashcard_next_time_textview"
+                            android:textColor="@color/next_time_usual_color" />
 
                     <include
-                        android:id="@+id/ease2"
-                        layout="@layout/bottom_button" />
+                            android:id="@+id/ease2"
+                            layout="@layout/flashcard_ease_textview" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/flashcard_layout_ease3"
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="0dip"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:visibility="gone" >
+                        style="@style/MaterialButton"
+                        android:background="@drawable/material_button_ease_middle_green"
+                        android:id="@+id/flashcard_layout_ease3"
+                        android:layout_width="0dip"
+                        android:layout_height="56dp"
+                        android:layout_weight="1"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginTop="8dp"
+                        android:orientation="vertical"
+                        android:visibility="gone" >
 
                     <include
-                        android:id="@+id/nextTime3"
-                        layout="@layout/next_time_textview" />
+                            android:id="@+id/nextTime3"
+                            layout="@layout/flashcard_next_time_textview" />
 
                     <include
-                        android:id="@+id/ease3"
-                        layout="@layout/bottom_button" />
+                            android:id="@+id/ease3"
+                            layout="@layout/flashcard_ease_textview" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/flashcard_layout_ease4"
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="0dip"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:visibility="gone" >
+                        style="@style/MaterialButton"
+                        android:background="@drawable/material_button_ease_right"
+                        android:id="@+id/flashcard_layout_ease4"
+                        android:layout_width="0dip"
+                        android:layout_height="56dp"
+                        android:layout_weight="1"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginRight="4dp"
+                        android:layout_marginTop="8dp"
+                        android:orientation="vertical"
+                        android:visibility="gone" >
 
                     <include
-                        android:id="@+id/nextTime4"
-                        layout="@layout/next_time_textview" />
+                            android:id="@+id/nextTime4"
+                            layout="@layout/flashcard_next_time_textview" />
 
                     <include
-                        android:id="@+id/ease4"
-                        layout="@layout/bottom_button" />
+                            android:id="@+id/ease4"
+                            layout="@layout/flashcard_ease_textview" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

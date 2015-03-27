@@ -19,7 +19,6 @@
 package com.ichi2.anki;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -28,6 +27,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.view.MenuItemCompat;
@@ -53,7 +53,10 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.dialogs.CardBrowserContextMenu;
+import com.ichi2.anki.dialogs.CardBrowserOrderDialog;
 import com.ichi2.anki.dialogs.TagsDialog;
 import com.ichi2.anki.dialogs.TagsDialog.TagsDialogListener;
 import com.ichi2.anki.receiver.SdCardReceiver;
@@ -64,7 +67,6 @@ import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Utils;
-import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.upgrade.Upgrade;
@@ -98,7 +100,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
     private String mSearchTerms;
     private String mRestrictOnDeck;
 
-    private StyledProgressDialog mProgressDialog;
+    private MaterialDialog mProgressDialog;
     public static Card sCardBrowserCard;
     public static boolean sSearchCancelled = false;
 
@@ -108,13 +110,6 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
     private boolean mOrderAsc;
     private int mColumn2Index;
 
-    private static final int CONTEXT_MENU_MARK = 0;
-    private static final int CONTEXT_MENU_SUSPEND = 1;
-    private static final int CONTEXT_MENU_DELETE = 2;
-    private static final int CONTEXT_MENU_DETAILS = 3;
-
-    private static final int DIALOG_ORDER = 0;
-    private static final int DIALOG_CONTEXT_MENU = 1;
     private static final int DIALOG_TAGS = 3;
 
     private static final int BACKGROUND_NORMAL = 0;
@@ -127,7 +122,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
     private static final int DEFAULT_FONT_SIZE_RATIO = 100;
 
     // Should match order of R.array.card_browser_order_labels
-    private static final int CARD_ORDER_NONE = 0;
+    public static final int CARD_ORDER_NONE = 0;
     private static final String[] fSortTypes = new String[] {
         "",
         "noteFld",
@@ -139,7 +134,6 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         "cardEase",
         "cardReps",
         "cardLapses"};
-    String[] mOrderByFields;
     // list of available keys in mCards corresponding to the column names in R.array.browser_column2_headings.
     // Note: the last 6 are currently hidden
     private static final String[] COLUMN_KEYS = {"answer",
@@ -169,24 +163,24 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
      */
     private BroadcastReceiver mUnmountReceiver = null;
 
-    private DialogInterface.OnClickListener mContextMenuListener = new DialogInterface.OnClickListener() {
-
+    private MaterialDialog.ListCallback mContextMenuListener = new MaterialDialog.ListCallback() {
         @Override
-        public void onClick(DialogInterface dialog, int which) {
+        public void onSelection(MaterialDialog materialDialog, View view, int which,
+        CharSequence charSequence) {
             if (getCards().size() == 0) {
                 // Don't do anything if mCards empty
                 searchCards();
                 return;
             }
             switch (which) {
-                case CONTEXT_MENU_MARK:
+                case CardBrowserContextMenu.CONTEXT_MENU_MARK:
                     DeckTask.launchDeckTask(DeckTask.TASK_TYPE_MARK_CARD,
                             mUpdateCardHandler,
                             new DeckTask.TaskData(getCol(), getCol().getSched(), getCol().getCard(Long.parseLong(getCards().get(
                                     mPositionInCardsList).get("id"))), 0));
                     return;
 
-                case CONTEXT_MENU_SUSPEND:
+                case CardBrowserContextMenu.CONTEXT_MENU_SUSPEND:
                     DeckTask.launchDeckTask(
                             DeckTask.TASK_TYPE_DISMISS_NOTE,
                             mSuspendCardHandler,
@@ -194,36 +188,78 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                                     mPositionInCardsList).get("id"))), 1));
                     return;
 
-                case CONTEXT_MENU_DELETE:
+                case CardBrowserContextMenu.CONTEXT_MENU_DELETE:
                     Resources res = getResources();
-                    StyledDialog.Builder builder = new StyledDialog.Builder(CardBrowser.this);
-                    builder.setTitle(res.getString(R.string.delete_card_title));
-                    builder.setIcon(R.drawable.ic_dialog_alert);
-                    builder.setMessage(res.getString(R.string.delete_card_message, getCards().get(mPositionInCardsList)
-                            .get("sfld")));
-                    builder.setPositiveButton(res.getString(R.string.dialog_positive_delete),
-                            new DialogInterface.OnClickListener() {
+                    Drawable icon = res.getDrawable(R.drawable.ic_warning_black_36dp);
+                    icon.setAlpha(Themes.ALPHA_ICON_ENABLED_DARK);
+                    new MaterialDialog.Builder(CardBrowser.this)
+                            .title(res.getString(R.string.delete_card_title))
+                            .icon(icon)
+                            .content(res.getString(R.string.delete_card_message, getCards().get(mPositionInCardsList)
+                                    .get("sfld")))
+                            .positiveText(res.getString(R.string.dialog_positive_delete))
+                            .negativeText(res.getString(R.string.dialog_cancel))
+                            .callback(new MaterialDialog.ButtonCallback() {
                                 @Override
-                                public void onClick(DialogInterface dialog, int which) {
+                                public void onPositive(MaterialDialog dialog) {
                                     Card card = getCol().getCard(Long.parseLong(getCards().get(mPositionInCardsList).get("id")));
                                     deleteNote(card);
                                     DeckTask.launchDeckTask(DeckTask.TASK_TYPE_DISMISS_NOTE, mDeleteNoteHandler,
                                                             new DeckTask.TaskData(getCol(), getCol().getSched(), card, 3));
                                 }
-                            });
-                    builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
-                    builder.create().show();
+                            })
+                            .build().show();
                     return;
 
-                case CONTEXT_MENU_DETAILS:
+                case CardBrowserContextMenu.CONTEXT_MENU_DETAILS:
                     Long cardId = Long.parseLong(getCards().get(mPositionInCardsList).get("id"));
                     Intent previewer = new Intent(CardBrowser.this, Previewer.class);
                     previewer.putExtra("currentCardId", cardId);
                     startActivityWithoutAnimation(previewer);
-                    return;
             }
         }
+    };
 
+
+    private MaterialDialog.ListCallback mOrderDialogListener = new MaterialDialog.ListCallback() {
+        @Override
+        public void onSelection(MaterialDialog materialDialog, View view, int which,
+                CharSequence charSequence) {
+            if (which != mOrder) {
+                mOrder = which;
+                mOrderAsc = false;
+                try {
+                    if (mOrder == 0) {
+                        getCol().getConf().put("sortType", fSortTypes[1]);
+                        AnkiDroidApp.getSharedPrefs(getBaseContext()).edit()
+                                .putBoolean("cardBrowserNoSorting", true)
+                                .commit();
+                    } else {
+                        getCol().getConf().put("sortType", fSortTypes[mOrder]);
+                        AnkiDroidApp.getSharedPrefs(getBaseContext()).edit()
+                                .putBoolean("cardBrowserNoSorting", false)
+                                .commit();
+                    }
+                    // default to descending for non-text fields
+                    if (fSortTypes[mOrder].equals("noteFld")) {
+                        mOrderAsc = true;
+                    }
+                    getCol().getConf().put("sortBackwards", mOrderAsc);
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+                searchCards();
+            } else if (which != CARD_ORDER_NONE) {
+                mOrderAsc = !mOrderAsc;
+                try {
+                    getCol().getConf().put("sortBackwards", mOrderAsc);
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+                Collections.reverse(mCards);
+                updateList();
+            }
+        }
     };
 
 
@@ -279,7 +315,6 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         mActionBar.setListNavigationCallbacks(mDropDownAdapter, this);
 
-        mOrderByFields = res.getStringArray(R.array.card_browser_order_labels);
         try {
             mOrder = CARD_ORDER_NONE;
             String colOrder = getCol().getConf().getString("sortType");
@@ -379,7 +414,13 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
                 mPositionInCardsList = position;
-                showDialog(DIALOG_CONTEXT_MENU);
+                HashMap<String, String> card = mCards.get(mPositionInCardsList);
+                int flags = Integer.parseInt(card.get("flags"));
+                String cardName = card.get("sfld");
+                boolean isMarked = (flags == 2 || flags == 3);
+                boolean isSuspended = (flags == 1 || flags == 3);
+                showDialogFragment(CardBrowserContextMenu
+                        .newInstance(cardName, isMarked, isSuspended, mContextMenuListener));
                 return true;
             }
         });
@@ -520,7 +561,8 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                 return true;
 
             case R.id.action_sort_by_size:
-                showDialog(DIALOG_ORDER);
+                showDialogFragment(CardBrowserOrderDialog
+                        .newInstance(mOrder, mOrderAsc, mOrderDialogListener));
                 return true;
 
             case R.id.action_show_marked:
@@ -632,120 +674,6 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         return dialogFragment;
     }
 
-    @Override
-    protected Dialog onCreateDialog(int id) {
-        StyledDialog dialog = null;
-        Resources res = getResources();
-        StyledDialog.Builder builder = new StyledDialog.Builder(this);
-
-        switch (id) {
-            case DIALOG_ORDER:
-                builder.setTitle(res.getString(R.string.card_browser_change_display_order_title));
-                builder.setMessage(res.getString(R.string.card_browser_change_display_order_reverse));
-                builder.setIcon(android.R.drawable.ic_menu_sort_by_size);
-                builder.setSingleChoiceItems(res.getStringArray(R.array.card_browser_order_labels), mOrder,
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface arg0, int which) {
-                                if (which != mOrder) {
-                                    mOrder = which;
-                                    mOrderAsc = false;
-                                    try {
-                                        if (mOrder == 0) {
-                                            getCol().getConf().put("sortType", fSortTypes[1]);
-                                            AnkiDroidApp.getSharedPrefs(getBaseContext()).edit()
-                                                    .putBoolean("cardBrowserNoSorting", true).commit();
-                                        } else {
-                                            getCol().getConf().put("sortType", fSortTypes[mOrder]);
-                                            AnkiDroidApp.getSharedPrefs(getBaseContext()).edit()
-                                                    .putBoolean("cardBrowserNoSorting", false).commit();
-                                        }
-                                        // default to descending for non-text fields
-                                        if (fSortTypes[mOrder].equals("noteFld")) {
-                                            mOrderAsc = true;
-                                        }
-                                        getCol().getConf().put("sortBackwards", mOrderAsc);
-                                    } catch (JSONException e) {
-                                        throw new RuntimeException(e);
-                                    }
-                                    searchCards();
-                                } else if (which != CARD_ORDER_NONE) {
-                                    mOrderAsc = !mOrderAsc;
-                                    try {
-                                        getCol().getConf().put("sortBackwards", mOrderAsc);
-                                    } catch (JSONException e) {
-                                        throw new RuntimeException(e);
-                                    }
-                                    Collections.reverse(getCards());
-                                    updateList();
-                                }
-                            }
-                        });
-                dialog = builder.create();
-                break;
-
-            case DIALOG_CONTEXT_MENU:
-                // FIXME:
-                String[] entries = new String[4];
-                @SuppressWarnings("unused")
-                MenuItem item;
-                entries[CONTEXT_MENU_MARK] = res.getString(R.string.card_browser_mark_card);
-                entries[CONTEXT_MENU_SUSPEND] = res.getString(R.string.card_browser_suspend_card);
-                entries[CONTEXT_MENU_DELETE] = res.getString(R.string.card_browser_delete_card);
-                entries[CONTEXT_MENU_DETAILS] = res.getString(R.string.card_editor_preview_card);
-                builder.setTitle("contextmenu");
-                // No icon
-                builder.setItems(entries, mContextMenuListener);
-                dialog = builder.create();
-                break;
-        }
-        return dialog;
-    }
-
-
-    @Override
-    protected void onPrepareDialog(int id, Dialog dialog) {
-        Resources res = getResources();
-        StyledDialog ad = (StyledDialog) dialog;
-        switch (id) {
-            case DIALOG_ORDER:
-                for (int i = 0; i < mOrderByFields.length; ++i) {
-                    if (i != CARD_ORDER_NONE && i == mOrder) {
-                        if (mOrderAsc) {
-                            ad.changeListItem(i, mOrderByFields[i] + " (\u25b2)");
-                        } else {
-                            ad.changeListItem(i, mOrderByFields[i] + " (\u25bc)");
-                        }
-                    } else {
-                        ad.changeListItem(i, mOrderByFields[i]);
-                    }
-                }
-                break;
-            case DIALOG_CONTEXT_MENU:
-                if (getCards().size()==0) {
-                    // Don't do anything if mCards empty
-                    Timber.e("Context menu opened for a card, but mCards is empty");
-                    return;
-                }
-                HashMap<String, String> card = getCards().get(mPositionInCardsList);
-                int flags = Integer.parseInt(card.get("flags"));
-                if (flags == 2 || flags == 3) {
-                    ad.changeListItem(CONTEXT_MENU_MARK, res.getString(R.string.card_browser_unmark_card));
-                    Timber.d("Selected Card is currently marked");
-                } else {
-                    ad.changeListItem(CONTEXT_MENU_MARK, res.getString(R.string.card_browser_mark_card));
-                }
-                if (flags == 1 || flags == 3) {
-                    ad.changeListItem(CONTEXT_MENU_SUSPEND, res.getString(R.string.card_browser_unsuspend_card));
-                    Timber.d("Selected Card is currently suspended");
-                } else {
-                    ad.changeListItem(CONTEXT_MENU_SUSPEND, res.getString(R.string.card_browser_suspend_card));
-                }
-                ad.setTitle(card.get("sfld"));
-                break;
-        }
-    }
-
 
     @Override
     public boolean onNavigationItemSelected(int position, long itemId) {
@@ -776,7 +704,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
             getCards().clear();
             // Perform database query to get all card ids / sfld. Shows "filtering cards..." progress message
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SEARCH_CARDS, mSearchCardsHandler, new DeckTask.TaskData(
-                    new Object[] { getCol(), mDeckNames, searchText, ((mOrder == CARD_ORDER_NONE) ? false : true) }));
+                    new Object[] { getCol(), mDeckNames, searchText, ((mOrder != CARD_ORDER_NONE)) }));
         }
     }
 
@@ -908,7 +836,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
             Resources res = getResources();
             if (mProgressDialog == null) {
                 mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "",
-                        res.getString(R.string.saving_changes), true);
+                        res.getString(R.string.saving_changes), false);
             }
         }
 
@@ -944,7 +872,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         public void onPreExecute() {
             Resources res = getResources();
             mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "", res.getString(R.string.saving_changes),
-                    true);
+                    false);
         }
 
 
@@ -979,7 +907,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         public void onPreExecute() {
             Resources res = getResources();
             mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "", res.getString(R.string.saving_changes),
-                    true);
+                    false);
         }
 
 
@@ -1016,7 +944,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
             Resources res = getResources();
             if (mProgressDialog == null) {
                 mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "",
-                        res.getString(R.string.card_browser_filtering_cards), true, true,
+                        res.getString(R.string.card_browser_filtering_cards), true,
                         new DialogInterface.OnCancelListener(){
                             @Override
                             public void onCancel(DialogInterface dialog){
@@ -1026,7 +954,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                             }
                 });
             } else {
-                mProgressDialog.setMessage(res.getString(R.string.card_browser_filtering_cards));
+                mProgressDialog.setContent(res.getString(R.string.card_browser_filtering_cards));
                 mProgressDialog.show();
             }
 

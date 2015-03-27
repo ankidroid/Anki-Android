@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+<item android:drawable="@drawable/material_button_background_left">
+</item>
+<item android:id="@+id/shape_background">
+    <selector>
+        <item android:state_pressed="true">
+            <shape android:shape="rectangle" >
+                <corners android:radius="2dp"
+                         android:bottomLeftRadius="2dp" android:topLeftRadius="2dp"
+                         android:bottomRightRadius="0dp" android:topRightRadius="0dp" />
+
+                <solid android:color="@color/material_red_700" />
+            </shape>
+        </item>
+        <item android:state_focused="true">
+            <shape android:shape="rectangle" >
+                <corners android:radius="2dp"
+                         android:bottomLeftRadius="2dp" android:topLeftRadius="2dp"
+                         android:bottomRightRadius="0dp" android:topRightRadius="0dp" />
+
+                <solid android:color="@color/material_red_600" />
+            </shape>
+        </item>
+        <item>
+            <shape android:shape="rectangle" >
+                <corners android:radius="2dp"
+                         android:bottomLeftRadius="2dp" android:topLeftRadius="2dp"
+                         android:bottomRightRadius="0dp" android:topRightRadius="0dp" />
+
+                <solid android:color="@color/material_red_500" />
+            </shape>
+        </item>
+    </selector>
+</item>
+</layer-list>

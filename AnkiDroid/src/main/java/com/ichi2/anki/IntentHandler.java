@@ -1,7 +1,6 @@
 package com.ichi2.anki;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -10,10 +9,10 @@ import android.os.Message;
 import android.provider.OpenableColumns;
 import android.support.v4.content.IntentCompat;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.DialogHandler;
-import com.ichi2.themes.StyledDialog;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -112,16 +111,17 @@ public class IntentHandler extends Activity {
                 // Don't import the file if it didn't load properly or doesn't have apkg extension
                 //Themes.showThemedToast(this, getResources().getString(R.string.import_log_no_apkg), true);
                 String title = getResources().getString(R.string.import_log_no_apkg);
-                StyledDialog.Builder builder = new StyledDialog.Builder(this);
-                builder.setTitle(title);
-                builder.setMessage(errorMessage);
-                builder.setPositiveButton(getResources().getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finishWithFade();
-                    }
-                });
-                builder.create().show();
+                new MaterialDialog.Builder(this)
+                        .title(title)
+                        .content(errorMessage)
+                        .positiveText(getResources().getString(R.string.dialog_ok))
+                        .callback(new MaterialDialog.ButtonCallback() {
+                            @Override
+                            public void onPositive(MaterialDialog dialog) {
+                                finishWithFade();
+                            }
+                        })
+                        .build().show();
             }
         } else {
             // Launcher intents should start DeckPicker if no other task exists,

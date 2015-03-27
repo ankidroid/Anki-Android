@@ -47,18 +47,22 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.amlcurran.showcaseview.OnShowcaseEventListener;
 import com.github.amlcurran.showcaseview.ShowcaseView;
-import com.github.amlcurran.showcaseview.targets.ActionItemTarget;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener;
 import com.ichi2.anki.dialogs.AsyncDialogFragment;
@@ -83,7 +87,6 @@ import com.ichi2.async.DeckTask.TaskData;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Sched;
-import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
@@ -140,8 +143,8 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     private static final int BROWSE_CARDS = 14;
     private static final int ADD_SHARED_DECKS = 15;
 
-
-    private StyledProgressDialog mProgressDialog;
+    
+    private MaterialDialog mProgressDialog;
     private StyledOpenCollectionDialog mNotMountedDialog;
     private ShowcaseView mShowcaseDialog;
 
@@ -151,6 +154,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     private ArrayList<HashMap<String, String>> mDeckList;
     private ListView mDeckListView;
     private TextView mTodayTextView;
+    private ImageButton mAddButton;
 
     private BroadcastReceiver mUnmountReceiver = null;
 
@@ -226,14 +230,14 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             if (mProgressDialog == null || !mProgressDialog.isShowing()) {
                 mProgressDialog = StyledProgressDialog.show(DeckPicker.this,
                         getResources().getString(R.string.import_title),
-                        getResources().getString(R.string.import_importing), true, false);
+                        getResources().getString(R.string.import_importing), false);
             }
         }
 
 
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
-            mProgressDialog.setMessage(values[0].getString());
+            mProgressDialog.setContent(values[0].getString());
         }
 
 
@@ -275,14 +279,14 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             if (mProgressDialog == null || !mProgressDialog.isShowing()) {
                 mProgressDialog = StyledProgressDialog.show(DeckPicker.this,
                         getResources().getString(R.string.import_title),
-                        getResources().getString(R.string.import_importing), true, false);
+                        getResources().getString(R.string.import_importing), false);
             }
         }
 
 
         @Override
         public void onProgressUpdate(DeckTask.TaskData... values) {
-            mProgressDialog.setMessage(values[0].getString());
+            mProgressDialog.setContent(values[0].getString());
         }
 
 
@@ -296,7 +300,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         @Override
         public void onPreExecute() {
             mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "",
-                    getResources().getString(R.string.export_in_progress), true);
+                    getResources().getString(R.string.export_in_progress), false);
         }
 
 
@@ -342,8 +346,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
 
-        setTitle(getResources().getString(R.string.app_name));
-
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
 
         View mainView = getLayoutInflater().inflate(R.layout.deck_picker, null);
@@ -365,6 +367,8 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             selectNavigationItem(DRAWER_DECK_PICKER);
         }
 
+        setTitle(getResources().getString(R.string.app_name));
+
         mDeckList = new ArrayList<HashMap<String, String>>();
         mDeckListView = (ListView) findViewById(R.id.files);
         mDeckListAdapter = new SimpleAdapter(this, mDeckList, R.layout.deck_item, new String[] { "name", "new", "lrn",
@@ -374,19 +378,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             @Override
             public boolean setViewValue(View view, Object data, String text) {
                 if (view.getId() == R.id.deckpicker_deck) {
-                    if (text.equals("top")) {
-                        view.setBackgroundResource(R.drawable.white_deckpicker_top);
-                        return true;
-                    } else if (text.equals("bot")) {
-                        view.setBackgroundResource(R.drawable.white_deckpicker_bottom);
-                        return true;
-                    } else if (text.equals("ful")) {
-                        view.setBackgroundResource(R.drawable.white_deckpicker_full);
-                        return true;
-                    } else if (text.equals("cen")) {
-                        view.setBackgroundResource(R.drawable.white_deckpicker_center);
-                        return true;
-                    }
+                    return true;
                 } else if (view.getId() == R.id.DeckPickerName) {
                     if (text.equals("d0")) {
                         ((TextView) view).setTextColor(getResources().getColor(R.color.non_dyn_deck));
@@ -431,6 +423,57 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         });
         mDeckListView.setAdapter(mDeckListAdapter);
         mTodayTextView = (TextView) findViewById(R.id.today_stats_text_view);
+        final Resources res = getResources();
+        mAddButton = (ImageButton) findViewById(R.id.fab);
+        mAddButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new MaterialDialog.Builder(DeckPicker.this)
+                        .items(new String[] {res.getString(R.string.menu_add_note),
+                            res.getString(R.string.menu_get_shared_decks),
+                            res.getString(R.string.new_deck)})
+                        .itemsCallback(new MaterialDialog.ListCallback() {
+                            @Override
+                            public void onSelection(MaterialDialog materialDialog, View view, int i,
+                                    CharSequence charSequence) {
+                                switch(i) {
+                                    case 0:
+                                        hideShowcaseView();
+                                        addNote();
+                                        break;
+                                    case 1:
+                                        hideShowcaseView();
+                                        if (colIsOpen())
+                                            addSharedDeck();
+                                        break;
+                                    case 2:
+                                        hideShowcaseView();
+                                        mDialogEditText = new EditText(DeckPicker.this);
+                                        mDialogEditText.setSingleLine(true);
+                                        // mDialogEditText.setFilters(new InputFilter[] { mDeckNameFilter });
+                                        new MaterialDialog.Builder(DeckPicker.this)
+                                                .title(R.string.new_deck)
+                                                .positiveText(R.string.dialog_ok)
+                                                .customView(mDialogEditText, true)
+                                                .callback(new MaterialDialog.ButtonCallback() {
+                                                    @Override
+                                                    public void onPositive(MaterialDialog dialog) {
+                                                        String deckName = mDialogEditText.getText().toString()
+                                                                .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
+                                                        Timber.i("DeckPicker:: Creating new deck...");
+                                                        getCol().getDecks().id(deckName, true);
+                                                        updateDeckList();
+                                                    }
+                                                })
+                                                .negativeText(R.string.dialog_cancel)
+                                                .show();
+                                }
+                            }
+                        })
+                        .build().show();
+            }
+        });
+
         mDeckListView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
         // Show splash screen and load collection
         showStartupScreensAndDialogs(preferences, 0);
@@ -452,8 +495,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             mShowShowcaseView = false;
             final Resources res = getResources();
             try {
-                ActionItemTarget target = new ActionItemTarget(this, R.id.action_add_decks);
-                mShowcaseDialog = new ShowcaseView.Builder(this).setTarget(target)
+                mShowcaseDialog = new ShowcaseView.Builder(this).setTarget(new ViewTarget(findViewById(R.id.fab)))
                         .setContentTitle(res.getString(R.string.studyoptions_welcome_title))
                         .setStyle(R.style.ShowcaseView_Light).setShowcaseEventListener(this)
                         .setOnClickListener(new OnClickListener() {
@@ -466,6 +508,12 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                             }
                         }).setContentText(res.getString(R.string.add_content_showcase_text)).hideOnTouchOutside().build();
                 mShowcaseDialog.setButtonText(getResources().getString(R.string.help_title));
+                RelativeLayout.LayoutParams lps = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                lps.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                lps.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+                int margin = ((Number) (getResources().getDisplayMetrics().density * 12)).intValue();
+                lps.setMargins(margin, margin, margin, margin);
+                mShowcaseDialog.setButtonPosition(lps);
             } catch (Exception e) {
                 Timber.e(e, "Error showing ShowcaseView");
                 Themes.showThemedToast(this, res.getString(R.string.add_content_showcase_text), false);
@@ -519,24 +567,25 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             case R.id.action_new_deck:
                 Timber.i("DeckPicker:: Add deck button pressed");
                 hideShowcaseView();
-                StyledDialog.Builder builder2 = new StyledDialog.Builder(DeckPicker.this);
-                builder2.setTitle(res.getString(R.string.new_deck));
                 mDialogEditText = new EditText(DeckPicker.this);
                 mDialogEditText.setSingleLine(true);
                 // mDialogEditText.setFilters(new InputFilter[] { mDeckNameFilter });
-                builder2.setView(mDialogEditText, false, false);
-                builder2.setPositiveButton(res.getString(R.string.create), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String deckName = mDialogEditText.getText().toString()
-                                .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
-                        Timber.i("DeckPicker:: Creating new deck...");
-                        getCol().getDecks().id(deckName, true);
-                        updateDeckList();
-                    }
-                });
-                builder2.setNegativeButton(res.getString(R.string.dialog_cancel), null);
-                builder2.create().show();
+                new MaterialDialog.Builder(DeckPicker.this)
+                        .title(R.string.new_deck)
+                        .positiveText(R.string.create)
+                        .customView(mDialogEditText, true)
+                        .callback(new MaterialDialog.ButtonCallback() {
+                            @Override
+                            public void onPositive(MaterialDialog dialog) {
+                                String deckName = mDialogEditText.getText().toString()
+                                        .replaceAll("[\'\"\\n\\r\\[\\]\\(\\)]", "");
+                                Timber.i("DeckPicker:: Creating new deck...");
+                                getCol().getDecks().id(deckName, true);
+                                updateDeckList();
+                            }
+                        })
+                        .negativeText(R.string.dialog_cancel)
+                        .show();
                 return true;
 
             case R.id.action_import:
@@ -546,8 +595,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
             case R.id.action_new_filtered_deck:
                 Timber.i("DeckPicker:: New filtered deck button pressed");
-                StyledDialog.Builder builder3 = new StyledDialog.Builder(DeckPicker.this);
-                builder3.setTitle(res.getString(R.string.new_deck));
                 mDialogEditText = new EditText(DeckPicker.this);
                 ArrayList<String> names = getCol().getDecks().allNames();
                 int n = 1;
@@ -558,18 +605,21 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 }
                 mDialogEditText.setText(filteredDeckName);
                 // mDialogEditText.setFilters(new InputFilter[] { mDeckNameFilter });
-                builder3.setView(mDialogEditText, false, false);
-                builder3.setPositiveButton(res.getString(R.string.create), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String filteredDeckName = mDialogEditText.getText().toString();
-                        Timber.i("DeckPicker:: Creating filtered deck...");
-                        getCol().getDecks().newDyn(filteredDeckName);
-                        openStudyOptions(true);
-                    }
-                });
-                builder3.setNegativeButton(res.getString(R.string.dialog_cancel), null);
-                builder3.create().show();
+                new MaterialDialog.Builder(DeckPicker.this)
+                        .title(res.getString(R.string.new_deck))
+                        .customView(mDialogEditText, true)
+                        .positiveText(res.getString(R.string.create))
+                        .negativeText(res.getString(R.string.dialog_cancel))
+                        .callback(new MaterialDialog.ButtonCallback() {
+                            @Override
+                            public void onPositive(MaterialDialog dialog) {
+                                String filteredDeckName = mDialogEditText.getText().toString();
+                                Timber.i("DeckPicker:: Creating filtered deck...");
+                                getCol().getDecks().newDyn(filteredDeckName);
+                                openStudyOptions(true);
+                            }
+                        })
+                        .show();
                 return true;
 
             case R.id.action_check_database:
@@ -1019,7 +1069,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             @Override
             public void onPreExecute() {
                 mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "",
-                        getResources().getString(R.string.backup_repair_deck_progress), true);
+                        getResources().getString(R.string.backup_repair_deck_progress), false);
             }
 
 
@@ -1056,7 +1106,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             @Override
             public void onPreExecute() {
                 mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "",
-                        getResources().getString(R.string.check_db_message), true);
+                        getResources().getString(R.string.check_db_message), false);
             }
 
 
@@ -1100,7 +1150,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             @Override
             public void onPreExecute() {
                 mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "",
-                        getResources().getString(R.string.check_media_message), true);
+                        getResources().getString(R.string.check_media_message), false);
             }
 
 
@@ -1228,7 +1278,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                         .show(DeckPicker.this, getResources().getString(R.string.sync_title),
                                 getResources().getString(R.string.sync_title) + "\n"
                                         + getResources().getString(R.string.sync_up_down_size, countUp, countDown),
-                                true, false);
+                                false);
             }
         }
 
@@ -1260,8 +1310,9 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             }
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
                 // mProgressDialog.setTitle((String) values[0]);
-                mProgressDialog.setMessage(currentMessage + "\n"
-                        + res.getString(R.string.sync_up_down_size, countUp / 1024, countDown / 1024));
+                mProgressDialog.setContent(currentMessage + "\n"
+                        + res
+                        .getString(R.string.sync_up_down_size, countUp / 1024, countDown / 1024));
             }
         }
 
@@ -1808,6 +1859,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 deck.put("collapsed", !deck.getBoolean("collapsed"));
                 getCol().getDecks().save(deck);
                 updateDeckList();
+                dismissAllDialogFragments();
             }
         } catch (JSONException e1) {
             // do nothing
@@ -1848,51 +1900,56 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     // Callback to show dialog to rename the current deck
     public void renameContextMenuDeckDialog() {
         Resources res = getResources();
-        StyledDialog.Builder builder2 = new StyledDialog.Builder(DeckPicker.this);
-        builder2.setTitle(res.getString(R.string.contextmenu_deckpicker_rename_deck));
-
         mDialogEditText = new EditText(DeckPicker.this);
         mDialogEditText.setSingleLine();
         mDialogEditText.setText(getCol().getDecks().name(mContextMenuDid));
         // mDialogEditText.setFilters(new InputFilter[] { mDeckNameFilter });
-        builder2.setView(mDialogEditText, false, false);
-        builder2.setPositiveButton(res.getString(R.string.rename), new DialogInterface.OnClickListener() {
 
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String newName = mDialogEditText.getText().toString().replaceAll("\"", "");
-                Timber.i("DeckPicker:: Renaming deck...", newName);
-                Collection col = getCol();
-                if (col != null) {
-                    if (col.getDecks().rename(col.getDecks().get(mContextMenuDid), newName)) {
-                        for (HashMap<String, String> d : mDeckList) {
-                            if (d.get("did").equals(Long.toString(mContextMenuDid))) {
-                                d.put("name", newName);
+        new MaterialDialog.Builder(DeckPicker.this)
+                .title(res.getString(R.string.contextmenu_deckpicker_rename_deck))
+                .customView(mDialogEditText, true)
+                .positiveText(res.getString(R.string.rename))
+                .negativeText(res.getString(R.string.dialog_cancel))
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        String newName = mDialogEditText.getText().toString().replaceAll("\"", "");
+                        Timber.i("DeckPicker:: Renaming deck...", newName);
+                        Collection col = getCol();
+                        if (col != null) {
+                            if (col.getDecks().rename(col.getDecks().get(mContextMenuDid), newName)) {
+                                for (HashMap<String, String> d : mDeckList) {
+                                    if (d.get("did").equals(Long.toString(mContextMenuDid))) {
+                                        d.put("name", newName);
+                                    }
+                                }
+                                mDeckListAdapter.notifyDataSetChanged();
+                                updateDeckList();
+                            } else {
+                                try {
+                                    Themes.showThemedToast(
+                                            DeckPicker.this,
+                                            getResources().getString(R.string.rename_error,
+                                                    col.getDecks().get(mContextMenuDid).get("name")), false);
+                                } catch (JSONException e) {
+                                    throw new RuntimeException(e);
+                                }
                             }
                         }
-                        mDeckListAdapter.notifyDataSetChanged();
-                        updateDeckList();
-                    } else {
-                        try {
-                            Themes.showThemedToast(
-                                    DeckPicker.this,
-                                    getResources().getString(R.string.rename_error,
-                                            col.getDecks().get(mContextMenuDid).get("name")), false);
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
-                        }
+                        dismissAllDialogFragments();
                     }
-                }
-            }
-        });
-        builder2.setNegativeButton(res.getString(R.string.dialog_cancel), null);
-        builder2.create().show();
-        return;
+
+                    @Override
+                    public void onNegative(MaterialDialog dialog) {
+                        dismissAllDialogFragments();
+                    }
+                })
+                .build().show();
     }
 
 
     // Callback to show confirm deck deletion dialog before deleting currently selected deck
-    public void confirmDeckDeletion() {
+    public void confirmDeckDeletion(DialogFragment parent) {
         Resources res = getResources();
         if (!colIsOpen() || mDeckList == null || mDeckList.size() == 0) {
             return;
@@ -1906,6 +1963,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             msg = String.format(res.getString(R.string.delete_deck_message),
                     "\'" + getCol().getDecks().name(mContextMenuDid) + "\'");
         }
+        //DeckPickerConfirmDeleteDeckDialog.newInstance(msg).show(parent.getChildFragmentManager(), "dialog");
         showDialogFragment(DeckPickerConfirmDeleteDeckDialog.newInstance(msg));
     }
 
@@ -1919,7 +1977,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             @Override
             public void onPreExecute() {
                 mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "",
-                        getResources().getString(R.string.delete_deck), true);
+                        getResources().getString(R.string.delete_deck), false);
                 if (mContextMenuDid == getCol().getDecks().current().optLong("id")) {
                     removingCurrent = true;
                 }

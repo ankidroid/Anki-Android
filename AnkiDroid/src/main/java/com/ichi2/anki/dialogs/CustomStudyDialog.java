@@ -2,7 +2,6 @@
 package com.ichi2.anki.dialogs;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -12,6 +11,7 @@ import android.view.WindowManager.LayoutParams;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
@@ -19,7 +19,6 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
-import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.Themes;
 
 import org.json.JSONArray;
@@ -54,10 +53,9 @@ public class CustomStudyDialog extends DialogFragment {
 
     @SuppressLint("InflateParams")
 	@Override
-    public StyledDialog onCreateDialog(Bundle savedInstanceState) {
+    public MaterialDialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
         Resources res = getActivity().getResources();
-        StyledDialog.Builder builder = new StyledDialog.Builder(getActivity());
         // Set custom view
         View v = getActivity().getLayoutInflater().inflate(R.layout.styled_custom_study_details_dialog, null);
         TextView textView1 = (TextView) v.findViewById(R.id.custom_study_details_text1);
@@ -70,94 +68,96 @@ public class CustomStudyDialog extends DialogFragment {
         // Give EditText focus and show keyboard
         mEditText.setSelectAllOnFocus(true);
         mEditText.requestFocus();
-        builder.setView(v);
-        // Setup buttons
-        builder.setPositiveButton(res.getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Collection col;
-                // Get the value selected by user
-                int n = Integer.parseInt(mEditText.getText().toString());
-                // Set behavior when clicking OK button
-                switch (getArguments().getInt("id")) {
-                    case CUSTOM_STUDY_NEW:
-                        // Get col, exit if not open
-                        //TODO: Find a cleaner way to get the col() from StudyOptionsFragment loader
-                        col = CollectionHelper.getInstance().getCol(getActivity());
-                        if (col == null || col.getDb()== null) {
-                            Themes.showThemedToast(getActivity().getBaseContext(), getResources()
-                                    .getString(R.string.open_collection_failed_title), false);
-                            return;
+
+        MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
+                .customView(v, true)
+                .positiveText(res.getString(R.string.dialog_ok))
+                .negativeText(res.getString(R.string.dialog_cancel))
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        Collection col;
+                        // Get the value selected by user
+                        int n = Integer.parseInt(mEditText.getText().toString());
+                        // Set behavior when clicking OK button
+                        switch (getArguments().getInt("id")) {
+                            case CUSTOM_STUDY_NEW:
+                                // Get col, exit if not open
+                                //TODO: Find a cleaner way to get the col() from StudyOptionsFragment loader
+                                col = CollectionHelper.getInstance().getCol(getActivity());
+                                if (col == null || col.getDb()== null) {
+                                    Themes.showThemedToast(getActivity().getBaseContext(), getResources()
+                                            .getString(R.string.open_collection_failed_title), false);
+                                    return;
+                                }
+                                try {
+                                    AnkiDroidApp.getSharedPrefs(getActivity()).edit().putInt("extendNew", n).commit();
+                                    JSONObject deck = col.getDecks().current();
+                                    deck.put("extendNew", n);
+                                    col.getDecks().save(deck);
+                                    col.getSched().extendLimits(n, 0);
+                                } catch (JSONException e) {
+                                    throw new RuntimeException(e);
+                                }
+                                break;
+                            case CUSTOM_STUDY_REV:
+                                // Get col, exit if not open
+                                //TODO: Find a cleaner way to get the col() from StudyOptionsFragment loader
+                                col = CollectionHelper.getInstance().getCol(getActivity());
+                                if (col == null || col.getDb()== null) {
+                                    Themes.showThemedToast(getActivity().getBaseContext(), getResources()
+                                            .getString(R.string.open_collection_failed_title), false);
+                                    return;
+                                }
+                                try {
+                                    AnkiDroidApp.getSharedPrefs(getActivity()).edit().putInt("extendRev", n).commit();
+                                    JSONObject deck = col.getDecks().current();
+                                    deck.put("extendRev", n);
+                                    col.getDecks().save(deck);
+                                    col.getSched().extendLimits(0, n);
+                                } catch (JSONException e) {
+                                    throw new RuntimeException(e);
+                                }
+                                break;
+                            case CUSTOM_STUDY_FORGOT:
+                                JSONArray ar = new JSONArray();
+                                try {
+                                    ar.put(0, 1);
+                                    ((StudyOptionsListener) getActivity()).createFilteredDeck(ar, new Object[] {
+                                            String.format(Locale.US, "rated:%d:1", n), Consts.DYN_MAX_SIZE, Consts.DYN_RANDOM }, false);
+                                } catch (JSONException e) {
+                                    throw new RuntimeException(e);
+                                }
+                                break;
+                            case CUSTOM_STUDY_AHEAD:
+                                ((StudyOptionsListener) getActivity()).createFilteredDeck(new JSONArray(),
+                                        new Object[] { String.format(Locale.US, "prop:due<=%d", n),Consts.DYN_MAX_SIZE, Consts.DYN_DUE }, true);
+                                break;
+                            case CUSTOM_STUDY_RANDOM:
+                                ((StudyOptionsListener) getActivity()).createFilteredDeck(new JSONArray(),
+                                        new Object[] { "", n, Consts.DYN_RANDOM }, true);
+                                break;
+                            case CUSTOM_STUDY_PREVIEW:
+                                ((StudyOptionsListener) getActivity()).createFilteredDeck(new JSONArray(),
+                                        new Object[] { "is:new added:" + Integer.toString(n), Consts.DYN_MAX_SIZE, Consts.DYN_OLDEST }, false);
+                                break;
+                            default:
+                                break;
                         }
-                        try {
-                            AnkiDroidApp.getSharedPrefs(getActivity()).edit().putInt("extendNew", n).commit();
-                            JSONObject deck = col.getDecks().current();
-                            deck.put("extendNew", n);
-                            col.getDecks().save(deck);
-                            col.getSched().extendLimits(n, 0);
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
-                        }
-                        break;
-                    case CUSTOM_STUDY_REV:
-                        // Get col, exit if not open
-                        //TODO: Find a cleaner way to get the col() from StudyOptionsFragment loader
-                        col = CollectionHelper.getInstance().getCol(getActivity());
-                        if (col == null || col.getDb()== null) {
-                            Themes.showThemedToast(getActivity().getBaseContext(), getResources()
-                                    .getString(R.string.open_collection_failed_title), false);
-                            return;
-                        }
-                        try {
-                            AnkiDroidApp.getSharedPrefs(getActivity()).edit().putInt("extendRev", n).commit();
-                            JSONObject deck = col.getDecks().current();
-                            deck.put("extendRev", n);
-                            col.getDecks().save(deck);
-                            col.getSched().extendLimits(0, n);
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
-                        }
-                        break;
-                    case CUSTOM_STUDY_FORGOT:
-                        JSONArray ar = new JSONArray();
-                        try {
-                            ar.put(0, 1);
-                            ((StudyOptionsListener) getActivity()).createFilteredDeck(ar, new Object[] {
-                                    String.format(Locale.US, "rated:%d:1", n), Consts.DYN_MAX_SIZE, Consts.DYN_RANDOM }, false);
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
-                        }
-                        break;
-                    case CUSTOM_STUDY_AHEAD:
-                        ((StudyOptionsListener) getActivity()).createFilteredDeck(new JSONArray(),
-                                new Object[] { String.format(Locale.US, "prop:due<=%d", n),Consts.DYN_MAX_SIZE, Consts.DYN_DUE }, true);
-                        break;
-                    case CUSTOM_STUDY_RANDOM:
-                        ((StudyOptionsListener) getActivity()).createFilteredDeck(new JSONArray(), 
-                                new Object[] { "", n, Consts.DYN_RANDOM }, true);
-                        break;
-                    case CUSTOM_STUDY_PREVIEW:
-                        ((StudyOptionsListener) getActivity()).createFilteredDeck(new JSONArray(),
-                                new Object[] { "is:new added:" + Integer.toString(n), Consts.DYN_MAX_SIZE, Consts.DYN_OLDEST }, false);
-                        break;
-                    default:
-                        break;                       
-                }
-            }
-        });
-        builder.setNegativeButton(res.getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                ((AnkiActivity) getActivity()).dismissAllDialogFragments();
-            }
-        });
-        // Create dialog
-        StyledDialog d = builder.create();
+                    }
+
+                    @Override
+                    public void onNegative(MaterialDialog dialog) {
+                        ((AnkiActivity) getActivity()).dismissAllDialogFragments();
+                    }
+                })
+                .build();
+
         // Show soft keyboard
-        d.getWindow().setSoftInputMode(LayoutParams.SOFT_INPUT_STATE_VISIBLE);;
-        return d;
+        dialog.getWindow().setSoftInputMode(LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        return dialog;
     }
-   
+
     private String getText1() {
         Resources res = AnkiDroidApp.getAppResources();
         Collection col = CollectionHelper.getInstance().getCol(getActivity());

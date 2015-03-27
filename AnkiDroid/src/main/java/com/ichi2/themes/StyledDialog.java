@@ -42,7 +42,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 
 import java.util.ArrayList;
@@ -352,7 +351,7 @@ public class StyledDialog extends Dialog {
         /**
          * Set the Dialog message from String
          *
-         * @param title
+         * @param message
          * @return
          */
         public Builder setMessage(String message) {
@@ -371,7 +370,7 @@ public class StyledDialog extends Dialog {
         /**
          * Set the Dialog message from resource
          *
-         * @param title
+         * @param message
          * @return
          */
         public Builder setMessage(int message) {
