@@ -35,28 +35,28 @@ function main() {
   # Download the Android SDK and necessary components.
   # http://stackoverflow.com/questions/2766713/android-download-the-android-sdk-components-for-offline-install
   download_and_install \
-    $base_uri/tools_r22.6.3-linux.zip \
+    $base_uri/tools_r24.1.2-linux.zip \
     $root/android
 
   download_and_install \
-    $base_uri/platform-tools_r19.0.2-linux.zip \
+    $base_uri/platform-tools_r22-linux.zip \
     $root/android
 
   download_and_install \
-    $base_uri/build-tools_r19.1-linux.zip \
+    $base_uri/build-tools_r22.0.1-linux.zip \
     $root/android/build-tools
 
   download_and_install \
-    $base_uri/android-19_r03.zip \
+    $base_uri/android-22_r01.zip \
     $root/android/platforms
 
   download_and_install \
-    $base_uri/sysimg_armv7a-19_r02.zip \
-    $root/android/system-images/android-19
+    $base_uri/sys-img/google_apis/sysimg_arm-22_r01.zip \
+    $root/android/system-images/android-22
 
   # Android support repository :: https://dl-ssl.google.com/android/repository/addon.xml
   download_and_install \
-    $base_uri/android_m2repository_r08.zip \
+    $base_uri/android_m2repository_r12.zip \
     $root/android/extras/android
 }
 
