@@ -22,7 +22,7 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -833,4 +833,12 @@ public class Themes {
 
         return new int[] { foregroundColor, nextTimeRecommendedColor };
     }
+
+    public static int getResourceIdFromAttributeId(int attributeID) {
+                TypedValue typedValue = new TypedValue();
+                Resources.Theme theme = mContext.getTheme();
+                theme.resolveAttribute(attributeID, typedValue, true);
+                return typedValue.resourceId;
+    }
+
 }
