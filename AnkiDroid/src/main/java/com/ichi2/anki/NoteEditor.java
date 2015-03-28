@@ -110,17 +110,17 @@ import timber.log.Timber;
  */
 public class NoteEditor extends AnkiActivity {
 
-    public static final String SOURCE_LANGUAGE = "SOURCE_LANGUAGE";
-    public static final String TARGET_LANGUAGE = "TARGET_LANGUAGE";
+//    public static final String SOURCE_LANGUAGE = "SOURCE_LANGUAGE";
+//    public static final String TARGET_LANGUAGE = "TARGET_LANGUAGE";
     public static final String SOURCE_TEXT = "SOURCE_TEXT";
     public static final String TARGET_TEXT = "TARGET_TEXT";
     public static final String EXTRA_CALLER = "CALLER";
     public static final String EXTRA_CARD_ID = "CARD_ID";
     public static final String EXTRA_CONTENTS = "CONTENTS";
     public static final String EXTRA_ID = "ID";
-    public static final String EXTRA_FIELD_INDEX = "multim.card.ed.extra.field.index";
-    public static final String EXTRA_FIELD = "multim.card.ed.extra.field";
-    public static final String EXTRA_WHOLE_NOTE = "multim.card.ed.extra.whole.note";
+//    public static final String EXTRA_FIELD_INDEX = "multim.card.ed.extra.field.index";
+//    public static final String EXTRA_FIELD = "multim.card.ed.extra.field";
+//    public static final String EXTRA_WHOLE_NOTE = "multim.card.ed.extra.whole.note";
 
     //private static final int DIALOG_DECK_SELECT = 0;
     //private static final int DIALOG_MODEL_SELECT = 1;

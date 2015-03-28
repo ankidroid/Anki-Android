@@ -3,7 +3,6 @@ package com.ichi2.compat;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.ColorDrawable;
@@ -24,6 +23,7 @@ import android.widget.RemoteViews;
 import com.ichi2.anki.R;
 import com.ichi2.anki.ReadText;
 import com.ichi2.anki.exception.APIVersionException;
+import com.ichi2.themes.Themes;
 
 import java.util.regex.Pattern;
 
@@ -114,8 +114,8 @@ public class CompatV7 implements Compat {
         ActionBar actionBar = actionBarActivity.getSupportActionBar();
         if (actionBar != null) {
             CharacterStyle span = new ForegroundColorSpan(activity.getResources().getColor(
-                    inverted ? R.color.white : R.color.black));
-            SpannableStringBuilder ssb = new SpannableStringBuilder(title);
+                    Themes.getResourceIdFromAttributeId(R.attr.actionBarTextColor)));
+            SpannableStringBuilder ssb = new SpannableStringBuilder(title);// Is it even necessary to use spannables anymore?
             ssb.setSpan(span, 0, ssb.length(), 0);
             actionBar.setTitle(ssb);
         }
@@ -133,7 +133,7 @@ public class CompatV7 implements Compat {
         if (actionBar != null) {
             if (inverted) {
                 CharacterStyle span = new ForegroundColorSpan(activity.getResources().getColor(
-                        inverted ? R.color.white : R.color.black));
+                        Themes.getResourceIdFromAttributeId(R.attr.actionBarTextColor)));
                 SpannableStringBuilder ssb = new SpannableStringBuilder(title);
                 ssb.setSpan(span, 0, ssb.length(), 0);
                 actionBar.setSubtitle(ssb);
