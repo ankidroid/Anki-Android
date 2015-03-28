@@ -1696,6 +1696,9 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
             @Override
             public void onPostExecute(TaskData result) {
+                if (result == null) {
+                    return;
+                }
                 List<Sched.DeckDueTreeNode> nodes = (List<Sched.DeckDueTreeNode>) result.getObjArray()[0];
                 mDeckList.clear();
                 _renderDeckTree(nodes);
