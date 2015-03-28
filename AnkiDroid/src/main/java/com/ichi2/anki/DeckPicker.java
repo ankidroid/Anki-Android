@@ -892,6 +892,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             // Check if preference upgrade or database check required, otherwise go to new feature screen
             if (previous < AnkiDroidApp.CHECK_DB_AT_VERSION || previous < AnkiDroidApp.CHECK_PREFERENCES_AT_VERSION) {
                 if (previous < AnkiDroidApp.CHECK_PREFERENCES_AT_VERSION) {
+                    CompatHelper.removeHiddenPreferences(this.getApplicationContext());
                     upgradePreferences(previous);
                 }
                 // Integrity check loads asynchronously and then restart deckpicker when finished

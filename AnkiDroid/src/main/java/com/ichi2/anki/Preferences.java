@@ -36,7 +36,9 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
+import android.preference.PreferenceScreen;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -79,6 +81,8 @@ import timber.log.Timber;
 /**
  * Preferences dialog.
  */
+// TODO: change to PreferenceFragment to get rid of the deprecation warnings
+@SuppressWarnings("deprecation")
 public class Preferences extends PreferenceActivity implements OnSharedPreferenceChangeListener {
 
     private static final int DIALOG_BACKUP = 2;
@@ -93,11 +97,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     private CheckBoxPreference showAnswerCheckBoxPreference;
     private CheckBoxPreference useBackupPreference;
     private CheckBoxPreference convertFenText;
-    private CheckBoxPreference inputWorkaround;
-    private CheckBoxPreference longclickWorkaround;
     private CheckBoxPreference fixHebrewText;
-    private CheckBoxPreference fixArabicText;
-    private EditTextPreference collectionPathPreference;
     private Preference syncAccount;
     private static String[] sShowValueInSummList = { LANGUAGE, "dictionary", "reportErrorMode",
             "gestureSwipeUp", "gestureSwipeDown", "gestureSwipeLeft",
@@ -109,7 +109,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             "timeoutAnswerSeconds", "timeoutQuestionSeconds", "backupMax", "dayOffset" };
     private static String[] sShowValueInSummEditText = { "deckPath" };
     private static String[] sShowValueInSummNumRange = { "timeLimit", "learnCutoff" };
-    private TreeMap<String, String> mListsToUpdate = new TreeMap<String, String>();
+    private TreeMap<String, String> mListsToUpdate = new TreeMap<>();
     private MaterialDialog mProgressDialog;
     private boolean lockCheckAction = false;
     private String dialogMessage;
@@ -139,12 +139,12 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
         addPreferencesFromResource(R.xml.preferences);
 
-        collectionPathPreference = (EditTextPreference) getPreferenceScreen().findPreference("deckPath");
+        EditTextPreference collectionPathPreference = (EditTextPreference) getPreferenceScreen().findPreference("deckPath");
         keepScreenOnCheckBoxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("keepScreenOn");
         showAnswerCheckBoxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("timeoutAnswer");
         useBackupPreference = (CheckBoxPreference) getPreferenceScreen().findPreference("useBackup");
         convertFenText = (CheckBoxPreference) getPreferenceScreen().findPreference("convertFenText");
-        syncAccount = (Preference) getPreferenceScreen().findPreference("syncAccount");
+        syncAccount = getPreferenceScreen().findPreference("syncAccount");
         showEstimates = (CheckBoxPreference) getPreferenceScreen().findPreference("showEstimates");
         showProgress = (CheckBoxPreference) getPreferenceScreen().findPreference("showProgress");
         learnCutoff = (NumberRangePreference) getPreferenceScreen().findPreference("learnCutoff");
@@ -153,29 +153,36 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         newSpread = (ListPreference) getPreferenceScreen().findPreference("newSpread");
         dayOffset = (SeekBarPreference) getPreferenceScreen().findPreference("dayOffset");
         // Workaround preferences
+        PreferenceScreen advanced = (PreferenceScreen) getPreferenceScreen().findPreference("pref_screen_advanced");
         PreferenceCategory workarounds = (PreferenceCategory) getPreferenceScreen().findPreference("category_workarounds");
-        inputWorkaround = (CheckBoxPreference) getPreferenceScreen().findPreference("inputWorkaround");
-        longclickWorkaround = (CheckBoxPreference) getPreferenceScreen().findPreference("textSelectionLongclickWorkaround");
+        CheckBoxPreference inputWorkaround = (CheckBoxPreference) getPreferenceScreen().findPreference("inputWorkaround");
+        CheckBoxPreference longclickWorkaround = (CheckBoxPreference) getPreferenceScreen().findPreference("textSelectionLongclickWorkaround");
         fixHebrewText = (CheckBoxPreference) getPreferenceScreen().findPreference("fixHebrewText");
-        fixArabicText = (CheckBoxPreference) getPreferenceScreen().findPreference("fixArabicText");
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-        if (CompatHelper.getSdkVersion() > 14){
-            workarounds.removePreference(inputWorkaround);
-            preferences.edit().putBoolean("inputWorkaround", false);
+        CheckBoxPreference fixArabicText = (CheckBoxPreference) getPreferenceScreen().findPreference("fixArabicText");
+        CheckBoxPreference safeDisplayMode = (CheckBoxPreference) getPreferenceScreen().findPreference("safeDisplay");
+        CompatHelper.removeHiddenPreferences(this.getApplicationContext());
+        if (CompatHelper.getSdkVersion() >= 9){
+            workarounds.removePreference(fixArabicText);
         }
         if (CompatHelper.isHoneycomb()){
             workarounds.removePreference(longclickWorkaround);
-            preferences.edit().putBoolean("longclickWorkaround", false);
         }
-        if (CompatHelper.getSdkVersion() > 8){
-            workarounds.removePreference(fixArabicText);
-            preferences.edit().putBoolean("fixArabicText", false);
+        if (CompatHelper.getSdkVersion() >= 13) {
+            workarounds.removePreference(safeDisplayMode);
         }
+        if (CompatHelper.getSdkVersion() >= 15){
+            workarounds.removePreference(inputWorkaround);
+        }
+        if (CompatHelper.getSdkVersion() >= 16) {
+            workarounds.removePreference(fixHebrewText);
+            advanced.removePreference(workarounds);     // group itself can be hidden for API 16
+        }
+
 
         initializeLanguageDialog();
         
         // Make custom fonts generated when fonts dialog opened
-        Preference fontsPreference = (Preference) getPreferenceScreen().findPreference("font_preference_group");
+        Preference fontsPreference = getPreferenceScreen().findPreference("font_preference_group");
         fontsPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
                 public boolean onPreferenceClick(Preference preference) {
                     initializeCustomFontsDialog();
@@ -199,7 +206,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         });
         
         // About dialog
-        Preference dialogPreference = (Preference) getPreferenceScreen().findPreference("about_dialog_preference");
+        Preference dialogPreference = getPreferenceScreen().findPreference("about_dialog_preference");
         dialogPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
                 public boolean onPreferenceClick(Preference preference) {
                     startActivity(new Intent(Preferences.this, Info.class));
@@ -209,7 +216,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         dialogPreference.setSummary(getResources().getString(R.string.about_version) + " " + AnkiDroidApp.getPkgVersionName());
 
         // Force full sync option
-        Preference fullSyncPreference = (Preference) getPreferenceScreen().findPreference("force_full_sync");
+        Preference fullSyncPreference = getPreferenceScreen().findPreference("force_full_sync");
         fullSyncPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
                 public boolean onPreferenceClick(Preference preference) {
                     if (mCol != null && mCol.getDb()!= null) {
@@ -238,9 +245,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 showProgress.setChecked(conf.getBoolean("dueCounts"));
                 newSpread.setValueIndex(conf.getInt("newSpread"));
                 useCurrent.setValueIndex(conf.optBoolean("addToCur", true) ? 0 : 1);
-            } catch (JSONException e) {
-                throw new RuntimeException();
-            } catch (NumberFormatException e) {
+            } catch (JSONException | NumberFormatException e) {
                 throw new RuntimeException();
             }
         } else {
@@ -413,6 +418,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         }
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     private String replaceStringIfNumeric(String str, String value) {
         try {
             Double.parseDouble(value);
@@ -423,7 +429,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     }
 
     private void initializeLanguageDialog() {
-        Map<String, String> items = new TreeMap<String, String>();
+        Map<String, String> items = new TreeMap<>();
         for (String localeCode : LanguageUtil.APP_LANGUAGES) {
             Locale loc = LanguageUtil.getLocale(localeCode);
             items.put(loc.getDisplayName(), loc.toString());
@@ -486,60 +492,75 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         try {
-            if (key.equals("timeoutAnswer")) {
-                keepScreenOnCheckBoxPreference.setChecked(showAnswerCheckBoxPreference.isChecked());
-            } else if (key.equals(LANGUAGE)) {
-                closePreferences();
-            } else if (key.equals("useBackup")) {
-                if (lockCheckAction) {
-                    lockCheckAction = false;
-                } else if (!useBackupPreference.isChecked()) {
-                    lockCheckAction = true;
-                    useBackupPreference.setChecked(true);
-                    showDialog(DIALOG_BACKUP);
-                }
-            } else if (key.equals("convertFenText")) {
-                if (convertFenText.isChecked()) {
-                    ChessFilter.install(Hooks.getInstance(getApplicationContext()));
-                } else {
-                    ChessFilter.uninstall(Hooks.getInstance(getApplicationContext()));
-                }
-            } else if (key.equals("fixHebrewText")) {
-                if (fixHebrewText.isChecked()) {
-                    HebrewFixFilter.install(Hooks.getInstance(getApplicationContext()));
-                    showDialog(DIALOG_HEBREW_FONT);
-                } else {
-                    HebrewFixFilter.uninstall(Hooks.getInstance(getApplicationContext()));
-                }
-            } else if (key.equals("showProgress")) {
-                mCol.getConf().put("dueCounts", showProgress.isChecked());
-                mCol.setMod();
-            } else if (key.equals("showEstimates")) {
-                mCol.getConf().put("estTimes", showEstimates.isChecked());
-                mCol.setMod();
-            } else if (key.equals("newSpread")) {
-                mCol.getConf().put("newSpread", Integer.parseInt(newSpread.getValue()));
-                mCol.setMod();
-            } else if (key.equals("timeLimit")) {
-                mCol.getConf().put("timeLim", timeLimit.getValue() * 60);
-                mCol.setMod();
-            } else if (key.equals("learnCutoff")) {
-                mCol.getConf().put("collapseTime", learnCutoff.getValue() * 60);
-                mCol.setMod();
-            } else if (key.equals("useCurrent")) {
-                mCol.getConf().put("addToCur", useCurrent.getValue().equals("0"));
-                mCol.setMod();
-            } else if (key.equals("dayOffset")) {
-                int hours = dayOffset.getValue();
-                Calendar date = (Calendar) mStartDate.clone();
-                date.set(Calendar.HOUR_OF_DAY, hours);
-                mCol.setCrt(date.getTimeInMillis() / 1000);
-                mCol.setMod();
-            } else if (key.equals("minimumCardsDueForNotification")) {
-                updateNotificationPreference();
-            } else if (key.equals("reportErrorMode")) {
-                String value = sharedPreferences.getString("reportErrorMode", "");
-                AnkiDroidApp.getInstance().setAcraReportingMode(value);
+            switch (key) {
+                case "timeoutAnswer":
+                    keepScreenOnCheckBoxPreference.setChecked(showAnswerCheckBoxPreference.isChecked());
+                    break;
+                case LANGUAGE:
+                    closePreferences();
+                    break;
+                case "useBackup":
+                    if (lockCheckAction) {
+                        lockCheckAction = false;
+                    } else if (!useBackupPreference.isChecked()) {
+                        lockCheckAction = true;
+                        useBackupPreference.setChecked(true);
+                        showDialog(DIALOG_BACKUP);
+                    }
+                    break;
+                case "convertFenText":
+                    if (convertFenText.isChecked()) {
+                        ChessFilter.install(Hooks.getInstance(getApplicationContext()));
+                    } else {
+                        ChessFilter.uninstall(Hooks.getInstance(getApplicationContext()));
+                    }
+                    break;
+                case "fixHebrewText":
+                    if (fixHebrewText.isChecked()) {
+                        HebrewFixFilter.install(Hooks.getInstance(getApplicationContext()));
+                        showDialog(DIALOG_HEBREW_FONT);
+                    } else {
+                        HebrewFixFilter.uninstall(Hooks.getInstance(getApplicationContext()));
+                    }
+                    break;
+                case "showProgress":
+                    mCol.getConf().put("dueCounts", showProgress.isChecked());
+                    mCol.setMod();
+                    break;
+                case "showEstimates":
+                    mCol.getConf().put("estTimes", showEstimates.isChecked());
+                    mCol.setMod();
+                    break;
+                case "newSpread":
+                    mCol.getConf().put("newSpread", Integer.parseInt(newSpread.getValue()));
+                    mCol.setMod();
+                    break;
+                case "timeLimit":
+                    mCol.getConf().put("timeLim", timeLimit.getValue() * 60);
+                    mCol.setMod();
+                    break;
+                case "learnCutoff":
+                    mCol.getConf().put("collapseTime", learnCutoff.getValue() * 60);
+                    mCol.setMod();
+                    break;
+                case "useCurrent":
+                    mCol.getConf().put("addToCur", useCurrent.getValue().equals("0"));
+                    mCol.setMod();
+                    break;
+                case "dayOffset":
+                    int hours = dayOffset.getValue();
+                    Calendar date = (Calendar) mStartDate.clone();
+                    date.set(Calendar.HOUR_OF_DAY, hours);
+                    mCol.setCrt(date.getTimeInMillis() / 1000);
+                    mCol.setMod();
+                    break;
+                case "minimumCardsDueForNotification":
+                    updateNotificationPreference();
+                    break;
+                case "reportErrorMode":
+                    String value = sharedPreferences.getString("reportErrorMode", "");
+                    AnkiDroidApp.getInstance().setAcraReportingMode(value);
+                    break;
             }
             
             if (Arrays.asList(sShowValueInSummList).contains(key)) {
@@ -557,9 +578,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
             }
         } catch (BadTokenException e) {
             Timber.e(e, "Preferences: BadTokenException on showDialog");
-        } catch (NumberFormatException e) {
-            throw new RuntimeException();
-        } catch (JSONException e) {
+        } catch (NumberFormatException | JSONException e) {
             throw new RuntimeException();
         }
     }
@@ -593,7 +612,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    public boolean onKeyDown(int keyCode, @NonNull KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             Timber.i("Preferences:: onBackPressed()");
             closePreferences();

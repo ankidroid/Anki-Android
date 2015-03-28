@@ -264,12 +264,7 @@ public class Sound {
         } else {
             // Check if file is video
             final boolean isVideo;
-            if (CompatHelper.isFroyo()){
-                isVideo = ThumbnailUtils.createVideoThumbnail(soundUri.getPath(), MediaStore.Images.Thumbnails.MINI_KIND) != null;
-            } else {
-                // Don't bother supporting video on Android 2.1
-                isVideo = false;
-            }
+            isVideo = ThumbnailUtils.createVideoThumbnail(soundUri.getPath(), MediaStore.Images.Thumbnails.MINI_KIND) != null;
             // If video file but no SurfaceHolder provided then ask 
             // AbstractFlashcardViewer to provide a VideoView holder
             if (isVideo && videoView == null && sCallingActivity != null && sCallingActivity.get() != null) {
