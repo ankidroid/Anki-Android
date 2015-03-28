@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="?android:attr/colorBackground" >
 
-    <RelativeLayout
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -16,7 +16,7 @@
             android:id="@+id/studyoptions_frame"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" />
-    </RelativeLayout>
+    </LinearLayout>
 
     <include layout="@layout/navigation_drawer" />
 </android.support.v4.widget.DrawerLayout>
