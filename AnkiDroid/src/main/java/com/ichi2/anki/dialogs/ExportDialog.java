@@ -65,22 +65,25 @@ public class ExportDialog extends DialogFragment {
                 .negativeText(res.getString(R.string.cancel))
                 .cancelable(true)
                 .items(items)
-                .itemsCallbackMultiChoice(new Integer[] {INCLUDE_SCHED}, new MaterialDialog.ListCallbackMulti() {
-                    @Override
-                    public void onSelection(MaterialDialog materialDialog, Integer[] integers,
-                            CharSequence[] charSequences) {
-                        for (int i = 0; i < integers.length; i++) {
-                            switch (integers[i]) {
-                                case INCLUDE_SCHED:
-                                    mIncludeSched = !mIncludeSched;
-                                    break;
-                                case INCLUDE_MEDIA:
-                                    mIncludeMedia = !mIncludeMedia;
-                                    break;
+                .itemsCallbackMultiChoice(new Integer[]{INCLUDE_SCHED},
+                        new MaterialDialog.ListCallbackMultiChoice() {
+                            @Override
+                            public boolean onSelection(MaterialDialog materialDialog,
+                                    Integer[] integers,
+                                    CharSequence[] charSequences) {
+                                for (int i = 0; i < integers.length; i++) {
+                                    switch (integers[i]) {
+                                        case INCLUDE_SCHED:
+                                            mIncludeSched = !mIncludeSched;
+                                            break;
+                                        case INCLUDE_MEDIA:
+                                            mIncludeMedia = !mIncludeMedia;
+                                            break;
+                                    }
+                                }
+                                return true;
                             }
-                        }
-                    }
-                })
+                        })
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {

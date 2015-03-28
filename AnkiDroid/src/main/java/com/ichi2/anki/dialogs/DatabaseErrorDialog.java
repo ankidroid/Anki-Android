@@ -289,28 +289,27 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                             })
                             .items(dates)
                             .itemsCallbackSingleChoice(dates.length,
-                                    new MaterialDialog.ListCallback() {
-                                        @Override
-                                        public void onSelection(MaterialDialog materialDialog,
-                                                View view,
-                                                int which,
-                                                CharSequence charSequence) {
-                                            if (mBackups[which].length() > 0) {
-                                                // restore the backup if it's valid
-                                                ((DatabaseErrorDialogListener) getActivity())
-                                                        .restoreFromBackup(mBackups[which]
-                                                                .getPath());
-                                                dismissAllDialogFragments();
-                                            } else {
-                                                // otherwise show an error dialog
-                                                new MaterialDialog.Builder(getActivity())
-                                                        .title(R.string.backup_error)
-                                                        .content(R.string.backup_invalid_file_error)
-                                                        .positiveText(android.R.string.ok)
-                                                        .show().show();
-                                            }
-                                        }
-                                    });
+                                    new MaterialDialog.ListCallbackSingleChoice() {
+                                @Override
+                                public boolean onSelection(MaterialDialog materialDialog, View view,
+                                        int which, CharSequence charSequence) {
+                                    if (mBackups[which].length() > 0) {
+                                        // restore the backup if it's valid
+                                        ((DatabaseErrorDialogListener) getActivity())
+                                                .restoreFromBackup(mBackups[which]
+                                                        .getPath());
+                                        dismissAllDialogFragments();
+                                    } else {
+                                        // otherwise show an error dialog
+                                        new MaterialDialog.Builder(getActivity())
+                                                .title(R.string.backup_error)
+                                                .content(R.string.backup_invalid_file_error)
+                                                .positiveText(R.string.dialog_ok)
+                                                .build().show();
+                                    }
+                                    return true;
+                                }
+                            });
                 }
                 return builder.show();
 

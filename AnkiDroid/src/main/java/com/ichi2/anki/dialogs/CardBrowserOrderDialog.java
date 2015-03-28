@@ -14,11 +14,11 @@ import android.support.v4.app.DialogFragment;
 
 public class CardBrowserOrderDialog extends DialogFragment {
 
-    private static MaterialDialog.ListCallback mOrderDialogListener;
+    private static MaterialDialog.ListCallbackSingleChoice mOrderDialogListener;
 
 
     public static CardBrowserOrderDialog newInstance(int order, boolean isOrderAsc,
-            MaterialDialog.ListCallback orderDialogListener) {
+            MaterialDialog.ListCallbackSingleChoice orderDialogListener) {
         CardBrowserOrderDialog f = new CardBrowserOrderDialog();
         Bundle args = new Bundle();
         args.putInt("order", order);
@@ -51,7 +51,6 @@ public class CardBrowserOrderDialog extends DialogFragment {
         return new MaterialDialog.Builder(getActivity())
                 .title(res.getString(R.string.card_browser_change_display_order_title))
                 .icon(icon)
-                // TODO: show content line
                 .content(res.getString(R.string.card_browser_change_display_order_reverse))
                 .items(items)
                 .itemsCallbackSingleChoice(getArguments().getInt("order"), mOrderDialogListener)
