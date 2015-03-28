@@ -743,6 +743,9 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver);
         }
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
+        }
         Timber.d("onDestroy()");
     }
 
@@ -1113,7 +1116,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
             @Override
             public void onPostExecute(TaskData result) {
-                if (mProgressDialog.isShowing()) {
+                if (mProgressDialog != null && mProgressDialog.isShowing()) {
                     mProgressDialog.dismiss();
                 }
                 if (result != null && result.getBoolean()) {
@@ -1157,7 +1160,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
             @Override
             public void onPostExecute(TaskData result) {
-                if (mProgressDialog.isShowing()) {
+                if (mProgressDialog != null && mProgressDialog.isShowing()) {
                     mProgressDialog.dismiss();
                 }
                 if (result != null && result.getBoolean()) {
@@ -1326,7 +1329,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             Timber.d("Sync Listener onPostExecute()");
             Resources res = getResources();
             try {
-                if (mProgressDialog != null) {
+                if (mProgressDialog != null && mProgressDialog.isShowing()) {
                     mProgressDialog.dismiss();
                 }
             } catch (IllegalArgumentException e) {
@@ -2001,7 +2004,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                     updateDeckList();
                 }
 
-                if (mProgressDialog.isShowing()) {
+                if (mProgressDialog != null && mProgressDialog.isShowing()) {
                     try {
                         mProgressDialog.dismiss();
                     } catch (Exception e) {
