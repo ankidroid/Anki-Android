@@ -21,6 +21,8 @@
         <!-- Action bar styles -->
         <item name="actionBarStyle">@style/White.ActionBarStyle</item>
         <item name="android:actionBarStyle" tools:targetApi="11">@style/White.ActionBarStyle</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="actionModeBackground">@color/theme_accent</item>
 
         <!-- Dialog styles -->
         <item name="android:alertDialogStyle">@style/White.AlertDialog</item>

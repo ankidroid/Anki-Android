@@ -221,9 +221,10 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
     };
 
 
-    private MaterialDialog.ListCallback mOrderDialogListener = new MaterialDialog.ListCallback() {
+    private MaterialDialog.ListCallbackSingleChoice mOrderDialogListener =
+            new MaterialDialog.ListCallbackSingleChoice() {
         @Override
-        public void onSelection(MaterialDialog materialDialog, View view, int which,
+        public boolean onSelection(MaterialDialog materialDialog, View view, int which,
                 CharSequence charSequence) {
             if (which != mOrder) {
                 mOrder = which;
@@ -259,6 +260,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                 Collections.reverse(mCards);
                 updateList();
             }
+            return true;
         }
     };
 
