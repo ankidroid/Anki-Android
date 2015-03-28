@@ -17,7 +17,10 @@
 package com.ichi2.compat;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
+import android.preference.PreferenceManager;
 
 public class CompatHelper {
     private static CompatHelper sInstance;
@@ -98,5 +101,24 @@ public class CompatHelper {
 
     public static boolean isKindle() {
         return Build.BRAND.equalsIgnoreCase("amazon") || Build.MANUFACTURER.equalsIgnoreCase("amazon");
+    }
+
+    public static void removeHiddenPreferences(Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        if (getSdkVersion() >= 9){
+            preferences.edit().remove("fixArabicText").commit();
+        }
+        if (isHoneycomb()){
+            preferences.edit().remove("longclickWorkaround").commit();
+        }
+        if (getSdkVersion() >= 13) {
+            preferences.edit().remove("safeDisplay").commit();
+        }
+        if (getSdkVersion() >= 15) {
+            preferences.edit().remove("inputWorkaround").commit();
+        }
+        if (getSdkVersion() >= 16) {
+            preferences.edit().remove("fixHebrewText").commit();
+        }
     }
 }
