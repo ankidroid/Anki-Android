@@ -153,8 +153,6 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
 
     private int[] mBackground;
 
-    private boolean mWholeCollection;
-
     private ActionBar mActionBar;
     private DeckDropDownAdapter mDropDownAdapter;
 
@@ -264,6 +262,12 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         }
     };
 
+    /** Returns the navdrawer item that corresponds to this Activity. */
+    @Override
+    protected int getSelfNavDrawerItem() {
+        return DRAWER_BROWSER;
+    }
+
 
     private void onSearch() {
         mSearchTerms = mSearchView.getQuery().toString();
@@ -301,13 +305,9 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         }
         registerExternalStorageListener();
 
-        Intent i = getIntent();
-        mWholeCollection = i.hasExtra("fromDeckpicker") && i.getBooleanExtra("fromDeckpicker", false);
-
         mBackground = Themes.getCardBrowserBackground();
 
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-        Resources res = getResources();
 
         // Add drop-down menu to select deck to action bar.
         mDropDownDecks = getCol().getDecks().allSorted();
@@ -433,7 +433,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         mSearchTerms = "";
 
         // onNavigationItemSelected will be called automatically, replacing onSearch in onCreate.
-        if (!mWholeCollection) {
+        if (!sIsWholeCollection) {
             String currentDeckName;
             try {
                 currentDeckName = getCol().getDecks().current().getString("name");
@@ -485,7 +485,11 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             Timber.i("CardBrowser:: CardBrowser - onBackPressed()");
-            closeCardBrowser(Activity.RESULT_OK);
+            Intent data = new Intent();
+            if (getIntent().hasExtra("selectedDeck")) {
+                data.putExtra("originalDeck", getIntent().getLongExtra("selectedDeck", 0L));
+            }
+            closeCardBrowser(Activity.RESULT_OK, data);
             return true;
         }
 
@@ -683,14 +687,21 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         DeckTask.cancelTask(DeckTask.TASK_TYPE_RENDER_BROWSER_QA);
         
         if (position == 0) {
+            sIsWholeCollection = true;
             mRestrictOnDeck = "";
         } else {
+            sIsWholeCollection = false;
             JSONObject deck = mDropDownDecks.get(position - 1);
             String deckName;
             try {
                 deckName = deck.getString("name");
             } catch (JSONException e) {
                 throw new RuntimeException();
+            }
+            try {
+                getCol().getDecks().select(deck.getLong("id"));
+            } catch (JSONException e) {
+                Timber.e(e, "Could not get ID from deck");
             }
             mRestrictOnDeck = "deck:\"" + deckName + "\" ";
         }
@@ -1020,7 +1031,11 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
 
 
     private void closeCardBrowser(int result) {
-        setResult(result);
+        closeCardBrowser(result, null);
+    }
+
+    private void closeCardBrowser(int result, Intent data) {
+        setResult(result, data);
         finishWithAnimation(ActivityTransitionAnimation.RIGHT);
     }
 

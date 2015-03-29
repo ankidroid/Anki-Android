@@ -6,4 +6,4 @@
       android:gravity="start|center_vertical"
       android:layout_width="match_parent"
       android:background="@color/navdrawer_divider"
-      android:layout_height="2dp" />
+      android:layout_height="1dp" />

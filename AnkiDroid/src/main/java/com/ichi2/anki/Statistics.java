@@ -76,12 +76,16 @@ public class Statistics extends NavigationDrawerActivity implements ActionBar.On
     private ArrayList<JSONObject> mDropDownDecks;
     private DeckDropDownAdapter mDropDownAdapter;
     private static boolean sIsSubtitle;
-    private static boolean sIsWholeCollectionOnly;
+
+    /** Returns the navdrawer item that corresponds to this Activity. */
+    @Override
+    protected int getSelfNavDrawerItem() {
+        return DRAWER_STATISTICS;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Timber.d("onCreate()");
-        sIsWholeCollectionOnly = AnkiStatsTaskHandler.isWholeCollection();  //if it starts with true, do not let user select deck
         sIsSubtitle = true;
         super.onCreate(savedInstanceState);
 
@@ -131,17 +135,22 @@ public class Statistics extends NavigationDrawerActivity implements ActionBar.On
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-        for (int dropDownDeckIdx = 0; dropDownDeckIdx < mDropDownDecks.size(); dropDownDeckIdx++) {
-            JSONObject deck = mDropDownDecks.get(dropDownDeckIdx);
-            String deckName;
-            try {
-                deckName = deck.getString("name");
-            } catch (JSONException e) {
-                throw new RuntimeException();
-            }
-            if (deckName.equals(currentDeckName)) {
-                actionBar.setSelectedNavigationItem(dropDownDeckIdx + 1);
-                break;
+        if (sIsWholeCollection) {
+            actionBar.setSelectedNavigationItem(0);
+        } else {
+            for (int dropDownDeckIdx = 0; dropDownDeckIdx < mDropDownDecks.size();
+                    dropDownDeckIdx++) {
+                JSONObject deck = mDropDownDecks.get(dropDownDeckIdx);
+                String deckName;
+                try {
+                    deckName = deck.getString("name");
+                } catch (JSONException e) {
+                    throw new RuntimeException();
+                }
+                if (deckName.equals(currentDeckName)) {
+                    actionBar.setSelectedNavigationItem(dropDownDeckIdx + 1);
+                    break;
+                }
             }
         }
     }
@@ -150,7 +159,6 @@ public class Statistics extends NavigationDrawerActivity implements ActionBar.On
     protected void onResume() {
         Timber.d("onResume()");
         super.onResume();
-        selectNavigationItem(NavigationDrawerActivity.DRAWER_STATISTICS);
     }
 
     @Override
@@ -238,9 +246,9 @@ public class Statistics extends NavigationDrawerActivity implements ActionBar.On
     @Override
     public boolean onNavigationItemSelected(int position, long itemId) {
         if (position == 0) {
-            AnkiStatsTaskHandler.setIsWholeCollection(true);
+            sIsWholeCollection = true;
         } else {
-            AnkiStatsTaskHandler.setIsWholeCollection(false);
+            sIsWholeCollection = false;
             JSONObject deck = mDropDownDecks.get(position - 1);
             try {
                 getCol().getDecks().select(deck.getLong("id"));
@@ -338,7 +346,6 @@ public class Statistics extends NavigationDrawerActivity implements ActionBar.On
 
         //track current settings for each individual fragment
         protected long mDeckId;
-        protected boolean mIsWholeCollection;
 
         protected ViewPager mActivityPager;
         protected SectionsPagerAdapter mActivitySectionPagerAdapter;
@@ -460,9 +467,8 @@ public class Statistics extends NavigationDrawerActivity implements ActionBar.On
             mActivityPager = ((Statistics)getActivity()).getViewPager();
             mActivitySectionPagerAdapter = ((Statistics)getActivity()).getSectionsPagerAdapter();
             mDeckId = CollectionHelper.getInstance().getCol(getActivity()).getDecks().selected();
-            mIsWholeCollection = AnkiStatsTaskHandler.isWholeCollection();
 
-            if(!AnkiStatsTaskHandler.isWholeCollection()) {
+            if(!sIsWholeCollection) {
                 try {
                     Collection col = CollectionHelper.getInstance().getCol(getActivity());
                     List<String> parts = Arrays.asList(col.getDecks().current().getString("name").split("::"));
@@ -536,15 +542,13 @@ public class Statistics extends NavigationDrawerActivity implements ActionBar.On
                 Collection col = CollectionHelper.getInstance().getCol(getActivity());
                 if(mHeight != height || mWidth != width ||
                         mType != (((Statistics)getActivity()).getTaskHandler()).getStatType() ||
-                        mDeckId != col.getDecks().selected() ||
-                        mIsWholeCollection != AnkiStatsTaskHandler.isWholeCollection()){
+                        mDeckId != col.getDecks().selected()){
                     mHeight = height;
                     mWidth = width;
                     mType = (((Statistics)getActivity()).getTaskHandler()).getStatType();
                     mProgressBar.setVisibility(View.VISIBLE);
                     mChart.setVisibility(View.GONE);
                     mDeckId = col.getDecks().selected();
-                    mIsWholeCollection = AnkiStatsTaskHandler.isWholeCollection();
                     if(mCreateChartTask != null && !mCreateChartTask.isCancelled()){
                         mCreateChartTask.cancel(true);
                     }
@@ -620,8 +624,7 @@ public class Statistics extends NavigationDrawerActivity implements ActionBar.On
             mActivitySectionPagerAdapter = ((Statistics)getActivity()).getSectionsPagerAdapter();
             Collection col = CollectionHelper.getInstance().getCol(getActivity());
             mDeckId = col.getDecks().selected();
-            mIsWholeCollection = AnkiStatsTaskHandler.isWholeCollection();
-            if(!AnkiStatsTaskHandler.isWholeCollection()) {
+            if(!sIsWholeCollection) {
                 try {
                     List<String> parts = Arrays.asList(col.getDecks().current().getString("name").split("::"));
                     if(sIsSubtitle)
@@ -658,13 +661,11 @@ public class Statistics extends NavigationDrawerActivity implements ActionBar.On
             }
             Collection col = CollectionHelper.getInstance().getCol(getActivity());
             if(mType != (((Statistics)getActivity()).getTaskHandler()).getStatType() ||
-                    mDeckId != col.getDecks().selected() ||
-                    mIsWholeCollection != AnkiStatsTaskHandler.isWholeCollection()){
+                    mDeckId != col.getDecks().selected()){
                 mType = (((Statistics)getActivity()).getTaskHandler()).getStatType();
                 mProgressBar.setVisibility(View.VISIBLE);
                 mWebView.setVisibility(View.GONE);
                 mDeckId = col.getDecks().selected();
-                mIsWholeCollection = AnkiStatsTaskHandler.isWholeCollection();
                 if(mCreateStatisticsOverviewTask != null && !mCreateStatisticsOverviewTask.isCancelled()){
                     mCreateStatisticsOverviewTask.cancel(true);
                 }

@@ -333,6 +333,13 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     // ANDROID ACTIVITY METHODS
     // ----------------------------------------------------------------------------
 
+    /** Returns the navdrawer item that corresponds to this Activity. */
+    @Override
+    protected int getSelfNavDrawerItem() {
+        return DRAWER_DECK_PICKER;
+    }
+
+
     /** Called when the activity is first created. */
     @Override
     protected void onCreate(Bundle savedInstanceState) throws SQLException {
@@ -358,6 +365,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
         Themes.setContentStyle(mFragmented ? mainView : mainView.findViewById(R.id.deckpicker_view),
                 Themes.CALLER_DECKPICKER);
+        sIsWholeCollection = !mFragmented;
 
         registerExternalStorageListener();
 
@@ -416,8 +424,11 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 }
                 mContextMenuDid = Long.parseLong(mDeckList.get(position).get("did"));
                 String deckName = getCol().getDecks().name(mContextMenuDid);
-                boolean isCollapsed = getCol().getDecks().get(mContextMenuDid).optBoolean("collapsed", false);
-                showDialogFragment(DeckPickerContextMenu.newInstance(deckName, isCollapsed));
+                boolean hasSubdecks = getCol().getDecks().children(mContextMenuDid).size() > 0;
+                boolean isCollapsed = getCol().getDecks().get(mContextMenuDid).
+                        optBoolean("collapsed", false);
+                showDialogFragment(DeckPickerContextMenu.newInstance(deckName, hasSubdecks,
+                        isCollapsed));
                 return true;
             }
         });
@@ -694,7 +705,8 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             updateDeckList();
             dismissOpeningCollectionDialog();
         }
-        selectNavigationItem(DRAWER_DECK_PICKER);
+        setTitle(getResources().getString(R.string.app_name));
+        sIsWholeCollection = !mFragmented;
     }
 
 

@@ -464,10 +464,12 @@ public class Reviewer extends AbstractFlashcardViewer {
             }
         }
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_STATISTICS) {
-            // select original deck if the statistics was opened, which can change the selected deck
+        if (requestCode == REQUEST_STATISTICS || requestCode == REQUEST_BROWSE_CARDS) {
+            // select original deck if the statistics or card browser were opened,
+            // which can change the selected deck
             if (data.hasExtra("originalDeck")) {
                 getCol().getDecks().select(data.getLongExtra("originalDeck", 0L));
             }

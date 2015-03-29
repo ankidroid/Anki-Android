@@ -249,6 +249,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         restorePreferences();
         mStudyOptionsView = inflater.inflate(R.layout.studyoptions_fragment, container, false);
         mFragmented = getActivity().getClass() != StudyOptionsActivity.class;
+        NavigationDrawerActivity.setIsWholeCollection(false);
         startLoadingCollection();
         return mStudyOptionsView;
     }
@@ -615,6 +616,13 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         }
 
         // perform some special actions depending on which activity we're returning from
+        if (requestCode == STATISTICS || requestCode == BROWSE_CARDS) {
+            // select original deck if the statistics or card browser were opened,
+            // which can change the selected deck
+            if (intent.hasExtra("originalDeck")) {
+                getCol().getDecks().select(intent.getLongExtra("originalDeck", 0L));
+            }
+        }
         if (requestCode == DECK_OPTIONS) {
             if (mLoadWithDeckOptions == true) {
                 mLoadWithDeckOptions = false;
