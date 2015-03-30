@@ -26,11 +26,20 @@
     android:paddingTop="5dip">
 
     <TextView
+        android:id="@+id/DeckPickerExpander"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:layout_alignParentLeft="true"
+        android:textSize="20sp"
+        android:layout_centerVertical="true"/>
+
+    <TextView
         android:id="@+id/DeckPickerName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/DeckPickerExpander"
         android:layout_toLeftOf="@+id/deckpicker_new"
         android:background="@color/transparent"
         android:gravity="left"

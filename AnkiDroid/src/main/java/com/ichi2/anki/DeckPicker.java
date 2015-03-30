@@ -53,6 +53,10 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.SimpleAdapter;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -96,8 +100,10 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import timber.log.Timber;
 
@@ -1837,31 +1843,36 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
      * (as opposed to additional native UI elements). This includes the amount of indenting
      * for nested decks based on depth and an indicator of collapsed state.
      */
-    private String decoratedDeckName(String name, int depth, boolean collapsed, int children) {
+    private String deckExpander(int depth, boolean collapsed, int children) {
+        String s = new String();
         if (collapsed) {
             // add arrow pointing right if collapsed
-            name = "\u25B7 " + name;
+            s = "\u25B7 ";
         } else if (children > 0) {
             // add arrow pointing down if deck has children
-            name = "\u25BD " + name;
+            s = "\u25BD ";
         } else {
             // add empty spaces
-            name = "\u2009\u2009\u2009 " + name;
+            s = "\u2009\u2009\u2009 ";
         }
         if (depth == 0) {
-            return name;
+            return s;
         } else {
             // Add 4 spaces for every level of nesting
-            return new String(new char[depth]).replace("\0", "\u2009\u2009\u2009 ") + name;
+            return new String(new char[depth]).replace("\0", "\u2009\u2009\u2009 ") + s;
         }
     }
 
 
     // Callback to collapse currently selected deck
     public void collapseContextMenuDeck() {
-        try {
-            JSONObject deck = getCol().getDecks().get(mContextMenuDid);
-            if (getCol().getDecks().children(mContextMenuDid).size() > 0) {
+        collapseContextMenuDeck(mContextMenuDid);
+    }
+
+    public void collapseContextMenuDeck(long did) {
+            try {
+            JSONObject deck = getCol().getDecks().get(did);
+            if (getCol().getDecks().children(did).size() > 0) {
                 deck.put("collapsed", !deck.getBoolean("collapsed"));
                 getCol().getDecks().save(deck);
                 updateDeckList();
@@ -2090,6 +2101,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         getFragment().createFilteredDeck(delays, terms, resched);
     }
 
+
     public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
         private LayoutInflater mLayoutInflater;
         private List<Sched.DeckDueTreeNode> mDeckList;
@@ -2099,6 +2111,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         // ViewHolder class to save inflated views for recycling
         public class ViewHolder extends RecyclerView.ViewHolder {
             public RelativeLayout mDeckLayout;
+            public TextView mDeckExpander;
             public TextView mDeckName;
             public TextView mDeckNew, mDeckLearn, mDeckRev;
 
@@ -2106,6 +2119,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 super(v);
 
                 mDeckLayout = (RelativeLayout) v.findViewById(R.id.DeckPickerHoriz);
+                mDeckExpander = (TextView) v.findViewById(R.id.DeckPickerExpander);
                 mDeckName = (TextView) v.findViewById(R.id.DeckPickerName);
                 mDeckNew = (TextView) v.findViewById(R.id.deckpicker_new);
                 mDeckLearn = (TextView) v.findViewById(R.id.deckpicker_lrn);
@@ -2135,8 +2149,23 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
             boolean collapsed = getCol().getDecks().get(node.did).optBoolean("collapsed", false);
 
+            // set expander and make expander clickable if needed
+            holder.mDeckExpander.setText(deckExpander(node.depth, collapsed, node.children.size()));
+            if (node.children.size() > 0) {
+                holder.mDeckExpander.setClickable(false);
+                holder.mDeckExpander.setTag(node.did);
+                holder.mDeckExpander.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        collapseContextMenuDeck((Long) view.getTag());
+                    }
+                });
+            } else {
+                holder.mDeckExpander.setClickable(false);
+            }
+
             // set deck name
-            holder.mDeckName.setText(decoratedDeckName(node.names[0], node.depth, collapsed, node.children.size()));
+            holder.mDeckName.setText(node.names[0]);
 
             // set deck new card count and color
             holder.mDeckNew.setText(String.valueOf(node.newCount));
@@ -2181,3 +2210,4 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         }
     }
 }
+
