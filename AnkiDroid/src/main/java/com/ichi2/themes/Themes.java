@@ -189,18 +189,19 @@ public class Themes {
                 break;
 
             case CALLER_DECKPICKER:
-                ListView lv = (ListView) view.findViewById(R.id.files);
-                switch (mCurrentTheme) {
-                    case THEME_WHITE:
-                        lv.setSelector(R.drawable.white_deckpicker_list_selector);
-                        CompatHelper.getCompat().setOverScrollModeNever(lv);
-                        lv.setFadingEdgeLength(60);
-                        lv.getDivider().setAlpha(ALPHA_DIVIDER);
-                        //lv.setVerticalFadingEdgeEnabled(true);
-                        break;
-                    default:
-                        break;
-                }
+                // TODO
+//                ListView lv = (ListView) view.findViewById(R.id.files);
+//                switch (mCurrentTheme) {
+//                    case THEME_WHITE:
+//                        lv.setSelector(R.drawable.white_deckpicker_list_selector);
+//                        CompatHelper.getCompat().setOverScrollModeNever(lv);
+//                        lv.setFadingEdgeLength(60);
+//                        lv.getDivider().setAlpha(ALPHA_DIVIDER);
+//                        //lv.setVerticalFadingEdgeEnabled(true);
+//                        break;
+//                    default:
+//                        break;
+//                }
                 break;
 
             case CALLER_CARDBROWSER:
@@ -241,9 +242,9 @@ public class Themes {
                 // } else if (view.getId() == R.id.deckpicker_bar_all) {
                 // // view.setBackgroundResource(mProgressbarsDeckpickerYoungColor);
                 // } else
-                if (view.getId() == R.id.deckpicker_deck) {
-                    view.setBackgroundResource(mDeckpickerItemBorder);
-                }
+//                if (view.getId() == R.id.deckpicker_deck) {
+//                    view.setBackgroundResource(mDeckpickerItemBorder);
+//                } // TODO AVP
                 break;
 
             case CALLER_REVIEWER:

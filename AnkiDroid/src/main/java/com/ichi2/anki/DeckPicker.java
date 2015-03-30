@@ -41,22 +41,20 @@ import android.os.Message;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -98,7 +96,6 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -150,9 +147,11 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
     private int mSyncMediaUsn = 0;
 
-    private SimpleAdapter mDeckListAdapter;
-    private ArrayList<HashMap<String, String>> mDeckList;
-    private ListView mDeckListView;
+    private RecyclerView mRecyclerView;
+    private LinearLayoutManager mRecyclerViewLayoutManager;
+    private RecyclerView.Adapter mDeckListAdapter;
+    private List<Sched.DeckDueTreeNode> mDeckList;
+
     private TextView mTodayTextView;
     private ImageButton mAddButton;
 
@@ -165,7 +164,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     int mStatisticType;
 
     boolean mCompletionBarRestrictToActive = false; // set this to true in order to calculate completion bar only for
-                                                    // active cards
+    // active cards
     boolean mShowShowcaseView = false;
     // flag asking user to do a full sync which is used in upgrade path
     boolean mRecommendFullSync = false;
@@ -181,14 +180,33 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     // LISTENERS
     // ----------------------------------------------------------------------------
 
-    private AdapterView.OnItemClickListener mDeckSelHandler = new AdapterView.OnItemClickListener() {
+    private final OnClickListener mDeckClickListener = new OnClickListener() {
         @Override
-        public void onItemClick(AdapterView<?> parent, View v, int p, long id) {
-            Timber.i("DeckPicker:: Selected deck in position %d", p);
-            handleDeckSelection(p);
+        public void onClick(View v) {
+            long deckId = (long) v.getTag();
+            Timber.i("DeckPicker:: Selected deck with id %d", deckId);
+            handleDeckSelection(deckId);
         }
     };
 
+    private final View.OnLongClickListener mDeckLongClickListener = new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View v) {
+            long deckId = (long) v.getTag();
+            Timber.i("DeckPicker:: Long tapped on deck with id %d", deckId);
+            if (mDeckList == null || mDeckList.size() == 0) {
+                return true;
+            }
+            mContextMenuDid = deckId;
+            String deckName = getCol().getDecks().name(mContextMenuDid);
+            boolean hasSubdecks = getCol().getDecks().children(mContextMenuDid).size() > 0;
+            boolean isCollapsed = getCol().getDecks().get(mContextMenuDid).
+                    optBoolean("collapsed", false);
+            showDialogFragment(DeckPickerContextMenu.newInstance(deckName, hasSubdecks,
+                    isCollapsed));
+            return true;
+        }
+    };
 
     DeckTask.TaskListener mImportAddListener = new DeckTask.TaskListener() {
         @SuppressWarnings("unchecked")
@@ -377,62 +395,18 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
         setTitle(getResources().getString(R.string.app_name));
 
-        mDeckList = new ArrayList<HashMap<String, String>>();
-        mDeckListView = (ListView) findViewById(R.id.files);
-        mDeckListAdapter = new SimpleAdapter(this, mDeckList, R.layout.deck_item, new String[] { "name", "new", "lrn",
-                "rev", "sep", "dyn" }, new int[] { R.id.DeckPickerName, R.id.deckpicker_new, R.id.deckpicker_lrn,
-                R.id.deckpicker_rev, R.id.deckpicker_deck, R.id.DeckPickerName });
-        mDeckListAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
-            @Override
-            public boolean setViewValue(View view, Object data, String text) {
-                if (view.getId() == R.id.deckpicker_deck) {
-                    return true;
-                } else if (view.getId() == R.id.DeckPickerName) {
-                    if (text.equals("d0")) {
-                        ((TextView) view).setTextColor(getResources().getColor(R.color.non_dyn_deck));
-                        return true;
-                    } else if (text.equals("d1")) {
-                        ((TextView) view).setTextColor(getResources().getColor(R.color.dyn_deck));
-                        return true;
-                    }
-                } else if (view.getId() == R.id.deckpicker_new) {
-                    // Set the right color, light gray or blue.
-                    ((TextView) view).setTextColor((text.equals("0")) ? getResources().getColor(R.color.zero_count)
-                            : getResources().getColor(R.color.new_count));
-                    return false; // Let SimpleAdapter take care of binding the number to the TextView.
-                } else if (view.getId() == R.id.deckpicker_lrn) {
-                    // ... or red.
-                    ((TextView) view).setTextColor((text.equals("0")) ? getResources().getColor(R.color.zero_count)
-                            : getResources().getColor(R.color.learn_count));
-                    return false;
-                } else if (view.getId() == R.id.deckpicker_rev) {
-                    // ... or green.
-                    ((TextView) view).setTextColor((text.equals("0")) ? getResources().getColor(R.color.zero_count)
-                            : getResources().getColor(R.color.review_count));
-                    return false;
-                }
-                return false;
-            }
-        });
-        mDeckListView.setOnItemClickListener(mDeckSelHandler);
-        mDeckListView.setOnItemLongClickListener(new OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Timber.i("DeckPicker:: Long tapped on deck in position %d", position);
-                if (mDeckList == null || mDeckList.size() == 0) {
-                    return true;
-                }
-                mContextMenuDid = Long.parseLong(mDeckList.get(position).get("did"));
-                String deckName = getCol().getDecks().name(mContextMenuDid);
-                boolean hasSubdecks = getCol().getDecks().children(mContextMenuDid).size() > 0;
-                boolean isCollapsed = getCol().getDecks().get(mContextMenuDid).
-                        optBoolean("collapsed", false);
-                showDialogFragment(DeckPickerContextMenu.newInstance(deckName, hasSubdecks,
-                        isCollapsed));
-                return true;
-            }
-        });
-        mDeckListView.setAdapter(mDeckListAdapter);
+        mDeckList = new ArrayList<>();
+        mRecyclerView = (RecyclerView) findViewById(R.id.files);
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, null, false, true));
+
+        // specify a LinearLayoutManager for the RecyclerView
+        mRecyclerViewLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mRecyclerViewLayoutManager);
+
+        // create and set an adapter for the RecyclerView
+        mDeckListAdapter = new DeckAdapter(mDeckList);
+        mRecyclerView.setAdapter(mDeckListAdapter);
+
         mTodayTextView = (TextView) findViewById(R.id.today_stats_text_view);
         final Resources res = getResources();
         mAddButton = (ImageButton) findViewById(R.id.fab);
@@ -441,12 +415,12 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             public void onClick(View v) {
                 new MaterialDialog.Builder(DeckPicker.this)
                         .items(new String[] {res.getString(R.string.menu_add_note),
-                            res.getString(R.string.menu_get_shared_decks),
-                            res.getString(R.string.new_deck)})
+                                res.getString(R.string.menu_get_shared_decks),
+                                res.getString(R.string.new_deck)})
                         .itemsCallback(new MaterialDialog.ListCallback() {
                             @Override
                             public void onSelection(MaterialDialog materialDialog, View view, int i,
-                                    CharSequence charSequence) {
+                                                    CharSequence charSequence) {
                                 switch(i) {
                                     case 0:
                                         hideShowcaseView();
@@ -484,8 +458,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                         .build().show();
             }
         });
-
-        mDeckListView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+        mTodayTextView = (TextView) findViewById(R.id.today_stats_text_view);
         // Show splash screen and load collection
         showStartupScreensAndDialogs(preferences, 0);
     }
@@ -502,7 +475,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         menu.findItem(R.id.action_check_media).setEnabled(sdCardAvailable);
 
         // Show the welcome screen here if col empty to be sure that the action bar exists
-        if (mShowShowcaseView && colIsOpen() && getCol().isEmpty() && mDeckList!= null && mDeckList.size() <=1) {
+        if (mShowShowcaseView && colIsOpen() && getCol().isEmpty() && mDeckList != null && mDeckList.size() <=1) {
             mShowShowcaseView = false;
             final Resources res = getResources();
             try {
@@ -803,7 +776,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 Message handlerMessage = Message.obtain();
                 handlerMessage.what = DialogHandler.MSG_SHOW_FORCE_FULL_SYNC_DIALOG;
                 Bundle handlerMessageData = new Bundle();
-                handlerMessageData.putString("message", res.getString(R.string.full_sync_confirmation_upgrade) + 
+                handlerMessageData.putString("message", res.getString(R.string.full_sync_confirmation_upgrade) +
                         "\n\n" + res.getString(R.string.full_sync_confirmation));
                 handlerMessage.setData(handlerMessageData);
                 getDialogHandler().sendMessage(handlerMessage);
@@ -1011,7 +984,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         showAsyncDialogFragment(newFragment);
     }
 
-    /** 
+    /**
      *  Show log message after sync, using "Sync Error" as the dialog title, and reload activity
      * @param message
      */
@@ -1020,7 +993,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         showSyncLogDialog(message, true);
     }
 
-    /** 
+    /**
      *  Show log message after sync, and reload activity
      * @param message
      * @param error Show "Sync Error" as dialog title if this flag is set, otherwise use no title
@@ -1249,7 +1222,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
      * The mother of all syncing attempts. This might be called from sync() as first attempt to sync a collection OR
      * from the mSyncConflictResolutionListener if the first attempt determines that a full-sync is required. In the
      * second case, we have passed the mediaUsn that was obtained during the first attempt.
-     * 
+     *
      * @param syncConflictResolution Either "upload" or "download", depending on the user's choice.
      * @param syncMediaUsn The media Usn, as determined during the prior sync() attempt that determined that full
      *            syncing was required.
@@ -1649,10 +1622,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     }
 
 
-    private void handleDeckSelection(int id) {
-        @SuppressWarnings("unchecked")
-        HashMap<String, String> data = (HashMap<String, String>) mDeckListAdapter.getItem(id);
-        long did = Long.parseLong(data.get("did"));
+    private void handleDeckSelection(long did) {
         getCol().getDecks().select(did);
         mFocusedDeck = did;
         openStudyOptions(false);
@@ -1676,14 +1646,67 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
     /**
      * Scroll the deck list so that it is centered on the current deck.
+     *
+     * @param did The deck ID of the deck to select.
      */
-    private void focusDecklistOnDeck(long did) {
-        for (int i = 0; i < mDeckList.size(); i++) {
-            if (Long.parseLong(mDeckList.get(i).get("did")) == did) {
-                mDeckListView.setSelectionFromTop(i, (mDeckListView.getHeight() / 2));
-                break;
+    private void scrollDecklistToDeck(long did) {
+        int position = findDeckPositionWithId(mDeckList, did, 0);
+        if (position > -1) {
+            mRecyclerViewLayoutManager.scrollToPositionWithOffset(position, (mRecyclerView.getHeight() / 2));
+        }
+    }
+
+    /**
+     * Given a list of {@link Sched.DeckDueTreeNode} objects, find the list position matching the id.
+     *
+     * @param nodes The list of {@link Sched.DeckDueTreeNode} objects
+     * @param did The deck id to find
+     * @param position The current deck's position in the list
+     *
+     * @return The position, if found, and -1 otherwise.
+     */
+    private int findDeckPositionWithId(List<Sched.DeckDueTreeNode> nodes, long did, int position) {
+        for (int i=0; i<nodes.size(); i++) {
+            // return the position if the deck ids match
+            if (nodes.get(i).did == did) {
+                // if we're at depth zero, return this loop's value
+                // otherwise return the position (the cardview we want)
+                return (nodes.get(i).depth == 0) ? i : position;
+            }
+
+            // keep searching through this node's children
+            if (nodes.get(i).children.size() > 0) {
+                // if we find the deck id, return this child's parent position
+                int childPosition = findDeckPositionWithId(nodes.get(i).children, did, (nodes.get(i).depth == 0) ? i : position);
+                if (childPosition > -1) {
+                    return childPosition;
+                }
             }
         }
+
+        return -1;
+    }
+
+    /**
+     * Given a list of {@link Sched.DeckDueTreeNode} objects, find the node matching the deck id.
+     *
+     * @param nodes The list of {@link Sched.DeckDueTreeNode} objects
+     * @param did The deck id to find
+     *
+     * @return The {@link Sched.DeckDueTreeNode}, if found, and null otherwise.
+     */
+    private Sched.DeckDueTreeNode findDeckWithId(List<Sched.DeckDueTreeNode> nodes, long did) {
+        for (int i=0; i<nodes.size(); i++) {
+            if (nodes.get(i).did == did) {
+                return nodes.get(i);
+            }
+
+            if (nodes.get(i).children.size() > 0) {
+                return findDeckWithId(nodes.get(i).children, did);
+            }
+        }
+
+        return null;
     }
 
 
@@ -1732,9 +1755,9 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 Long current = getCol().getDecks().current().optLong("id");
                 if (!deckIsShown(nodes, current)) {
                     // clear selection if deck is hidden
-                    mDeckListView.clearChoices();
+//                    mDeckListView.clearChoices(); // TODO AVP
                 } else if (mFocusedDeck == null || !mFocusedDeck.equals(current)) {
-                    focusDecklistOnDeck(current);
+                    scrollDecklistToDeck(current);
                     mFocusedDeck = current;
                 }
 
@@ -1762,7 +1785,17 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
             private void _renderDeckTree(List<Sched.DeckDueTreeNode> nodes, int depth) {
                 for (Sched.DeckDueTreeNode node : nodes) {
-                    _deckRow(node, depth, nodes.size());
+                    // if this node's parent is collapsed, don't add it to the deck list
+                    for (JSONObject parent : getCol().getDecks().parents(node.did)) {
+                        if (parent.optBoolean("collapsed")) {
+                            return;
+                        }
+                    }
+
+                    // add node to deck
+                    mDeckList.add(node);
+
+                    _deckRow(node, depth);
                 }
             }
 
@@ -1778,20 +1811,11 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
              *
              * NOTE: Each row in the list also contains the deck ID (did) which is later fetched
              * to perform operations on the correct deck when the user interacts with the list.
-             *
-             * @param node The row data.
+             *  @param node The row data.
              * @param depth The subdeck level this node is at.
-             * @param cnt The number of decks in the collection.
              */
-            private void _deckRow(Sched.DeckDueTreeNode node, int depth, int cnt) {
-                HashMap<String, String> m = new HashMap<String, String>();
-                boolean collapsed = getCol().getDecks().get(node.did).optBoolean("collapsed", false);
-                m.put("name", decoratedDeckName(node.names[0], depth, collapsed, node.children.size()));
-                m.put("did", Long.toString(node.did));
-                m.put("new", Integer.toString(node.newCount));
-                m.put("lrn", Integer.toString(node.lrnCount));
-                m.put("rev", Integer.toString(node.revCount));
-                m.put("dyn", getCol().getDecks().isDyn(node.did) ? "d1" : "d0");
+            private void _deckRow(Sched.DeckDueTreeNode node, int depth) {
+                node.depth = depth;
 
                 // Add this node's counts to the totals if it's a parent deck
                 if (depth == 0) {
@@ -1800,73 +1824,36 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                     nRev += node.revCount;
                 }
 
-                // If the default deck is empty, hide it
-                // We don't hide it if it's the only deck or if it has sub-decks
-                if (node.did == 1 && cnt > 1 && node.children.size() == 0) {
-                    if (getCol().getDb().queryScalar("select 1 from cards where did = 1", false) == 0) {
-                        return;
-                    }
-                }
-
-                // Add the appropriate separators
-                if (depth == 0 && node.children.size() > 0 && !collapsed) {
-                    // Top-level decks with expanded subdecks have only a top border
-                    m.put("sep", "top");
-                } else if (depth > 0) {
-                    // All subdecks begin with no borders (i.e., thin centered borders)
-                    m.put("sep", "cen");
-                } else {
-                    // Every other deck gets full borders
-                    m.put("sep", "ful");
-                }
-
-                // Parent toggled for collapsing
-                for (JSONObject parent : getCol().getDecks().parents(node.did)) {
-                    if (parent.optBoolean("collapsed")) {
-                        return;
-                    }
-                }
-                // If this deck is the current deck, highlight it in the deck list
-                if (node.did == getCol().getDecks().current().optLong("id")) {
-                    mDeckListView.setItemChecked(mDeckList.size(), true);
-                }
-
-                mDeckList.add(m);
                 _renderDeckTree(node.children, depth + 1);
-
-                // If the deck contained expanded subdecks, ensure the last one has a bottom border
-                if (depth == 0 && node.children.size() > 0 && !collapsed) {
-                    mDeckList.get(mDeckList.size() - 1).put("sep", "bot");
-                }
-            }
-
-
-            /**
-             * Returns the name of the deck to be displayed in the deck list.
-             *
-             * Various properties of a deck are indicated to the user by the deck name in the deck list
-             * (as opposed to additional native UI elements). This includes the amount of indenting
-             * for nested decks based on depth and an indicator of collapsed state.
-             */
-            private String decoratedDeckName(String name, int depth, boolean collapsed, int children) {
-                if (collapsed) {
-                    // add arrow pointing right if collapsed
-                    name = "\u25B7 " + name;
-                } else if (children > 0) {
-                    // add arrow pointing down if deck has children
-                    name = "\u25BD " + name;
-                } else {
-                    // add empty spaces
-                    name = "\u2009\u2009\u2009 " + name;
-                }
-                if (depth == 0) {
-                    return name;
-                } else {
-                    // Add 4 spaces for every level of nesting
-                    return new String(new char[depth]).replace("\0", "\u2009\u2009\u2009 ") + name;
-                }
             }
         }, new TaskData(getCol()));
+    }
+
+
+    /**
+     * Returns the name of the deck to be displayed in the deck list.
+     * <p/>
+     * Various properties of a deck are indicated to the user by the deck name in the deck list
+     * (as opposed to additional native UI elements). This includes the amount of indenting
+     * for nested decks based on depth and an indicator of collapsed state.
+     */
+    private String decoratedDeckName(String name, int depth, boolean collapsed, int children) {
+        if (collapsed) {
+            // add arrow pointing right if collapsed
+            name = "\u25B7 " + name;
+        } else if (children > 0) {
+            // add arrow pointing down if deck has children
+            name = "\u25BD " + name;
+        } else {
+            // add empty spaces
+            name = "\u2009\u2009\u2009 " + name;
+        }
+        if (depth == 0) {
+            return name;
+        } else {
+            // Add 4 spaces for every level of nesting
+            return new String(new char[depth]).replace("\0", "\u2009\u2009\u2009 ") + name;
+        }
     }
 
 
@@ -1937,12 +1924,10 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                         Collection col = getCol();
                         if (col != null) {
                             if (col.getDecks().rename(col.getDecks().get(mContextMenuDid), newName)) {
-                                for (HashMap<String, String> d : mDeckList) {
-                                    if (d.get("did").equals(Long.toString(mContextMenuDid))) {
-                                        d.put("name", newName);
-                                    }
+                                Sched.DeckDueTreeNode node = findDeckWithId(mDeckList, mContextMenuDid);
+                                if (node != null) {
+                                    node.names = new String[]{newName};
                                 }
-                                mDeckListAdapter.notifyDataSetChanged();
                                 updateDeckList();
                             } else {
                                 try {
@@ -1955,7 +1940,8 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                                 }
                             }
                         }
-                        dismissAllDialogFragments();
+                        mDeckListAdapter.notifyDataSetChanged();
+                        updateDeckList();
                     }
 
                     @Override
@@ -2058,7 +2044,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         if (CompatHelper.isHoneycomb()) {
             final float alpha = 1f;
             mTodayTextView.setAlpha(alpha);
-            mDeckListView.setAlpha(alpha);
+            mRecyclerView.setAlpha(alpha);
         }
     }
 
@@ -2075,7 +2061,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         if (CompatHelper.isHoneycomb()) {
             final float alpha = 0.1f;
             mTodayTextView.setAlpha(alpha);
-            mDeckListView.setAlpha(alpha);
+            mRecyclerView.setAlpha(alpha);
         }
     }
 
@@ -2102,5 +2088,96 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     @Override
     public void createFilteredDeck(JSONArray delays, Object[] terms, Boolean resched) {
         getFragment().createFilteredDeck(delays, terms, resched);
+    }
+
+    public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
+        private LayoutInflater mLayoutInflater;
+        private List<Sched.DeckDueTreeNode> mDeckList;
+
+        private boolean mHideDefaultDeck;
+
+        // ViewHolder class to save inflated views for recycling
+        public class ViewHolder extends RecyclerView.ViewHolder {
+            public RelativeLayout mDeckLayout;
+            public TextView mDeckName;
+            public TextView mDeckNew, mDeckLearn, mDeckRev;
+
+            public ViewHolder(View v) {
+                super(v);
+
+                mDeckLayout = (RelativeLayout) v.findViewById(R.id.DeckPickerHoriz);
+                mDeckName = (TextView) v.findViewById(R.id.DeckPickerName);
+                mDeckNew = (TextView) v.findViewById(R.id.deckpicker_new);
+                mDeckLearn = (TextView) v.findViewById(R.id.deckpicker_lrn);
+                mDeckRev = (TextView) v.findViewById(R.id.deckpicker_rev);
+            }
+        }
+
+        public DeckAdapter(List<Sched.DeckDueTreeNode> deckList) {
+            mLayoutInflater = getLayoutInflater();
+            mDeckList = deckList;
+        }
+
+        @Override
+        public DeckAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            // create a new view
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.deck_item, parent, false);
+
+            // return ViewHolder with new view
+            return new ViewHolder(v);
+        }
+
+        // Replace the contents of a view (invoked by the layout manager)
+        @Override
+        public void onBindViewHolder(ViewHolder holder, int position) {
+            // update views for this node
+            Sched.DeckDueTreeNode node = mDeckList.get(position);
+
+            boolean collapsed = getCol().getDecks().get(node.did).optBoolean("collapsed", false);
+
+            // set deck name
+            holder.mDeckName.setText(decoratedDeckName(node.names[0], node.depth, collapsed, node.children.size()));
+
+            // set deck new card count and color
+            holder.mDeckNew.setText(String.valueOf(node.newCount));
+            holder.mDeckNew.setTextColor((node.newCount == 0) ?
+                    getResources().getColor(R.color.zero_count) : getResources().getColor(R.color.new_count));
+
+            // set deck learn card count and color
+            holder.mDeckLearn.setText(String.valueOf(node.lrnCount));
+            holder.mDeckLearn.setTextColor((node.lrnCount == 0) ?
+                    getResources().getColor(R.color.zero_count) : getResources().getColor(R.color.learn_count));
+
+            // set deck review card count and color
+            holder.mDeckRev.setText(String.valueOf(node.revCount));
+            holder.mDeckRev.setTextColor((node.revCount == 0) ?
+                    getResources().getColor(R.color.zero_count) : getResources().getColor(R.color.review_count));
+
+            // store deck ID in layout's tag, for easy retrieval in our click listeners
+            holder.mDeckLayout.setTag(node.did);
+
+            // set click listeners
+            holder.mDeckLayout.setOnClickListener(mDeckClickListener);
+            holder.mDeckLayout.setOnLongClickListener(mDeckLongClickListener);
+
+            // if this deck is the current deck, highlight it
+            if (node.did == getCol().getDecks().current().optLong("id")) {
+//                mDeckListView.setItemChecked(mOldDeckList.size(), true); // TODO
+            }
+        }
+
+        @Override
+        public int getItemCount() {
+            // TODO
+            // If the default deck is empty, hide it
+            // We don't hide it if it's the only deck or if it has sub-decks
+//            if (node.did == 1 && cnt > 1 && node.children.size() == 0) {
+//                if (getCol().getDb().queryScalar("select 1 from cards where did = 1", false) == 0) {
+//                    mHideDefaultDeck = true;
+//                }
+//            }
+
+            return mDeckList.size();
+        }
     }
 }
