@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 ~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
 ~ Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>
 ~
@@ -15,80 +14,72 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/deckpicker_deck"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/DeckPickerHoriz"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingBottom="7dip"
+    android:paddingLeft="10dip"
+    android:paddingRight="5dip"
+    android:paddingTop="5dip">
 
-    <RelativeLayout
-        android:id="@+id/DeckPickerHoriz"
-        android:layout_width="fill_parent"
+    <TextView
+        android:id="@+id/DeckPickerExpander"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="7dip"
-        android:layout_marginLeft="10dip"
-        android:layout_marginRight="5dip"
-        android:layout_marginTop="5dip"
-        android:gravity="center_vertical"
-        android:orientation="horizontal" >
+        android:clickable="true"
+        android:layout_alignParentLeft="true"
+        android:textSize="20sp"
+        android:layout_centerVertical="true"/>
 
-        <TextView
-            android:id="@+id/DeckPickerExpander"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:gravity="left"
-            android:maxLines="2"
-            android:textColor="#000000"
-            android:clickable="true"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+    <TextView
+        android:id="@+id/DeckPickerName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/DeckPickerExpander"
+        android:layout_toLeftOf="@+id/deckpicker_new"
+        android:background="@color/transparent"
+        android:gravity="left"
+        android:maxLines="2"
+        android:textColor="?android:textColorPrimary"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/DeckPickerName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/DeckPickerExpander"
-            android:layout_toLeftOf="@+id/deckpicker_new"
-            android:gravity="left"
-            android:maxLines="2"
-            android:textColor="#000000"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+    <TextView
+        android:id="@+id/deckpicker_new"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/deckpicker_lrn"
+        android:background="@color/transparent"
+        android:gravity="center"
+        android:paddingRight="5dip"
+        android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/deckpicker_new"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/deckpicker_lrn"
-            android:gravity="center"
-            android:paddingRight="5dip"
-            android:textSize="14sp" />
+    <TextView
+        android:id="@+id/deckpicker_lrn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:layout_toLeftOf="@+id/deckpicker_rev"
+        android:background="@color/transparent"
+        android:gravity="center"
+        android:paddingRight="5dip"
+        android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/deckpicker_lrn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center"
-            android:layout_toLeftOf="@+id/deckpicker_rev"
-            android:gravity="center"
-            android:paddingRight="5dip"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/deckpicker_rev"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center"
-            android:layout_marginRight="6dip"
-            android:gravity="center"
-            android:textSize="14sp" />
-    </RelativeLayout>
-
-</LinearLayout>
+    <TextView
+        android:id="@+id/deckpicker_rev"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:layout_marginRight="6dip"
+        android:background="@color/transparent"
+        android:gravity="center"
+        android:textSize="14sp" />
+</RelativeLayout>

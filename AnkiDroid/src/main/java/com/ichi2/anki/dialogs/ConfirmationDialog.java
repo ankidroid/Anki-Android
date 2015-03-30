@@ -1,13 +1,12 @@
 
 package com.ichi2.anki.dialogs;
 
-import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.R;
-import com.ichi2.themes.StyledDialog;
 
 /**
  * This is a reusable convenience class which makes it easy to show a confirmation dialog as a DialogFragment.
@@ -29,32 +28,27 @@ public abstract class ConfirmationDialog extends DialogFragment {
 
 
     @Override
-    public StyledDialog onCreateDialog(Bundle savedInstanceState) {
+    public MaterialDialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Resources res = getActivity().getResources();
-        StyledDialog.Builder builder = new StyledDialog.Builder(getActivity());
-        // Set title if specified
         String title = getArguments().getString("title");
-        if (!title.equals("")) {
-            builder.setTitle(title);
-        }
-        // Set confirmation message
-        builder.setMessage(getArguments().getString("message"));
-        // Set confirmation action
-        builder.setPositiveButton(res.getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                confirm();
-            }
-        });
-        // Set cancel action
-        builder.setNegativeButton(res.getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                cancel();
-            }
-        });
-        return builder.create();
+        return new MaterialDialog.Builder(getActivity())
+                .title(title.equals("") ? res.getString(R.string.app_name) : title)
+                .content(getArguments().getString("message"))
+                .positiveText(res.getString(R.string.dialog_ok))
+                .negativeText(res.getString(R.string.dialog_cancel))
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        confirm();
+                    }
+
+                    @Override
+                    public void onNegative(MaterialDialog dialog) {
+                        cancel();
+                    }
+                })
+                .show();
     }
 
 

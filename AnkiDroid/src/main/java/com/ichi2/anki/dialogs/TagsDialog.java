@@ -29,6 +29,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.themes.StyledDialog;
@@ -129,17 +130,43 @@ public class TagsDialog extends DialogFragment implements OnDismissListener, OnC
         }
 
         Resources res = getResources();
-        StyledDialog.Builder builder = new StyledDialog.Builder(getActivity());
-        builder.setTitle(mTitle);
-        builder.setPositiveButton(res.getString(R.string.select), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                mTagsDialogListener.onPositive(new ArrayList<String>(mStyledDialog.getCheckedItems()), mSelectedOption);
-            }
-        });
-        builder.setNegativeButton(res.getString(R.string.cancel), mNegativeButtonListener);
-        builder.setOnCancelListener(mOnCancelListener);
-        builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity())
+                .title(mTitle)
+                .positiveText(res.getString(R.string.select))
+                .negativeText(res.getString(R.string.dialog_cancel))
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        mTagsDialogListener
+                                .onPositive(new ArrayList<String>(mStyledDialog.getCheckedItems()),
+                                        mSelectedOption);
+                    }
+                })
+                .cancelListener(mOnCancelListener)
+                .dismissListener(new OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        mCurrentTags.clear();
+                        mStyledDialog.updateCheckedItems();
+                        if (mOnDismissListener != null) {
+                            mOnDismissListener.onDismiss(mStyledDialog);
+                        }
+                    }
+                });
+        StyledDialog.Builder builder2 = new StyledDialog.Builder(getActivity());
+        builder2.setTitle(mTitle);
+        builder2.setPositiveButton(res.getString(R.string.select),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mTagsDialogListener
+                                .onPositive(new ArrayList<String>(mStyledDialog.getCheckedItems()),
+                                        mSelectedOption);
+                    }
+                });
+        builder2.setNegativeButton(res.getString(R.string.cancel), mNegativeButtonListener);
+        builder2.setOnCancelListener(mOnCancelListener);
+        builder2.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
                 mCurrentTags.clear();
@@ -149,7 +176,7 @@ public class TagsDialog extends DialogFragment implements OnDismissListener, OnC
                 }
             }
         });
-        builder.setSelectAllListener(new CompoundButton.OnCheckedChangeListener() {
+        builder2.setSelectAllListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 mStyledDialog.setItemListChecked(isChecked);
@@ -158,11 +185,12 @@ public class TagsDialog extends DialogFragment implements OnDismissListener, OnC
             }
         });
         if (customView != null) {
-            builder.setView(customView, false, true);
+            builder.customView(customView, true);
+            builder2.setView(customView, false, true);
         }
-        builder.setShowFilterTags(showFilterTags);
+        builder2.setShowFilterTags(showFilterTags);
 
-        return builder;
+        return builder2;
     }
     
     private View filterByTagContent() {

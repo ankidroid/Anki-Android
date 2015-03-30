@@ -21,7 +21,6 @@ package com.ichi2.anki;
 import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -36,6 +35,7 @@ import android.text.TextUtils;
 
 import android.view.KeyEvent;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.receiver.SdCardReceiver;
@@ -43,7 +43,6 @@ import com.ichi2.async.DeckTask;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.preferences.StepsPreference;
-import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 
@@ -79,7 +78,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
 
         private Map<String, String> mValues = new HashMap<String, String>();
         private Map<String, String> mSummaries = new HashMap<String, String>();
-        private StyledProgressDialog mProgressDialog;
+        private MaterialDialog mProgressDialog;
 
 
         public DeckPreferenceHack() {
@@ -255,22 +254,23 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
                                 } catch (ConfirmModSchemaException e) {
                                     // Libanki determined that a full sync will be required, so confirm with the user before proceeding
                                     // TODO : Use ConfirmationDialog DialogFragment -- not compatible with PreferenceActivity
-                                    StyledDialog.Builder builder = new StyledDialog.Builder(DeckOptions.this);
-                                    builder.setMessage(R.string.full_sync_confirmation);
-                                    builder.setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            mCol.modSchemaNoCheck();
-                                            try {
-                                                remConf();
-                                            } catch (ConfirmModSchemaException e) {
-                                                // This should never be reached as we just forced modSchema
-                                                throw new RuntimeException(e);
-                                            }
-                                        }
-                                    });
-                                    builder.setNegativeButton(R.string.dialog_cancel, null);
-                                    builder.create().show();
+                                    new MaterialDialog.Builder(DeckOptions.this)
+                                            .content(R.string.full_sync_confirmation)
+                                            .positiveText(R.string.dialog_ok)
+                                            .negativeText(R.string.dialog_cancel)
+                                            .callback(new MaterialDialog.ButtonCallback() {
+                                                @Override
+                                                public void onPositive(MaterialDialog dialog) {
+                                                    mCol.modSchemaNoCheck();
+                                                    try {
+                                                        remConf();
+                                                    } catch (ConfirmModSchemaException e) {
+                                                        // This should never be reached as we just forced modSchema
+                                                        throw new RuntimeException(e);
+                                                    }
+                                                }
+                                            })
+                                            .build().show();
                                 }
                             }
                         } else if (key.equals("confSetSubdecks")) {
@@ -367,7 +367,7 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
                 public void onPreExecute() {
                     Resources res = getResources();
                     mProgressDialog = StyledProgressDialog.show(DeckOptions.this, "",
-                            res.getString(R.string.reordering_cards), true);
+                            res.getString(R.string.reordering_cards), false);
                 }
 
 
@@ -519,7 +519,6 @@ public class DeckOptions extends PreferenceActivity implements OnSharedPreferenc
         if (mCol == null) {
             Timber.w("DeckOptions - No Collection loaded");
             finish();
-            return;
         } else {
             mPref = new DeckPreferenceHack();
             mPref.registerOnSharedPreferenceChangeListener(this);

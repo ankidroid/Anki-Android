@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="touch_target">48dp</dimen>
+    <dimen name="default_width">56dp</dimen>
+    <dimen name="keyline_1">16dp</dimen>
+
     <!-- Top margin for action bar subtitles -->
     <dimen name="action_bar_subtitle_top_margin">-3dp</dimen>
+
+    <!-- Match 56dp default ActionBar height on portrait orientation -->
+    <dimen name="nav_drawer_margin_offset">-8dp</dimen>
+
+    <!-- Material design dialogs -->
+    <dimen name="dialog_frame_margin">24dp</dimen>
+    <dimen name="title_frame_margin_bottom">16dp</dimen>
+    <dimen name="content_vertical_padding">8dp</dimen>
+    <dimen name="icon_margin">16dp</dimen>
+
+    <!-- Material design typography -->
+    <dimen name="title_textsize">20sp</dimen>
+    <dimen name="content_textsize">18sp</dimen>
 </resources>

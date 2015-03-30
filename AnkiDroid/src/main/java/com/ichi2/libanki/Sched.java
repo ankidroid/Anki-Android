@@ -52,6 +52,7 @@ import java.util.ListIterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
+import java.util.TreeSet;
 
 import timber.log.Timber;
 
@@ -2603,6 +2604,7 @@ public class Sched {
     public class DeckDueTreeNode implements Comparable {
         public String[] names;
         public long did;
+        public int depth;
         public int revCount;
         public int lrnCount;
         public int newCount;
@@ -2636,8 +2638,8 @@ public class Sched {
 
         @Override
         public String toString() {
-            return String.format("%s, %d, %d, %d, %d, %s",
-                    Arrays.toString(names), did, revCount, lrnCount, newCount, children);
+            return String.format("%s, %d, %d, %d, %d, %d, %s",
+                    Arrays.toString(names), did, depth, revCount, lrnCount, newCount, children);
         }
     }
 }

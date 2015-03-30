@@ -28,6 +28,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener;
 import com.ichi2.anki.receiver.SdCardReceiver;
@@ -88,13 +89,6 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
     private StudyOptionsFragment getCurrentFragment() {
         return (StudyOptionsFragment) getSupportFragmentManager().findFragmentById(R.id.studyoptions_frame);
     }
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        deselectAllNavigationItems();
-    }    
 
 
     @Override

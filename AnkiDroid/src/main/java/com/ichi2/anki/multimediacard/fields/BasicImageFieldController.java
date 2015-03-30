@@ -116,12 +116,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
                 File storageDir;
                 String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss", Locale.US).format(new Date());
                 try {
-                    if (CompatHelper.isFroyo()) {
-                        storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-                    } else {
-                        storageDir = Environment.getExternalStorageDirectory();
-                        storageDir = new File(storageDir.getAbsolutePath() + "/DCIM");
-                    }
+                    storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
                     image = File.createTempFile("img_" + timeStamp, ".jpg", storageDir);
                     mTempCameraImagePath = image.getPath();
                     Uri uriSavedImage = Uri.fromFile(image);

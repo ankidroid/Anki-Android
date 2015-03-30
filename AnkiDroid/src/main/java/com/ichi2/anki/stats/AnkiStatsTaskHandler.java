@@ -23,6 +23,8 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.ichi2.anki.NavigationDrawerActivity;
 import com.ichi2.anki.Statistics;
 import com.ichi2.anki.R;
 import com.ichi2.libanki.Collection;
@@ -45,7 +47,6 @@ public class AnkiStatsTaskHandler {
     private float mStandardTextSize = 10f;
     private int mStatType = Stats.TYPE_MONTH;
 
-    private static boolean sIsWholeCollection = false;
     private static long sSelectedDeckId;
     private static Lock sLock = new ReentrantLock();
 
@@ -62,14 +63,6 @@ public class AnkiStatsTaskHandler {
 
     public static void setsSelectedDeckId(long sSelectedDeckId) {
         AnkiStatsTaskHandler.sSelectedDeckId = sSelectedDeckId;
-    }
-
-    public static void setIsWholeCollection(boolean isWholeCollection){
-        sIsWholeCollection = isWholeCollection;
-    }
-
-    public static boolean isWholeCollection() {
-        return sIsWholeCollection;
     }
 
     public static AnkiStatsTaskHandler getInstance() {
@@ -129,7 +122,8 @@ public class AnkiStatsTaskHandler {
                     Timber.d("starting Create ChartTask, type: %s", mChartType.name());
                 mImageView = (ChartView) params[0];
                 mProgressBar = (ProgressBar) params[1];
-                ChartBuilder chartBuilder = new ChartBuilder(mImageView, mCollectionData, sIsWholeCollection, mChartType);
+                ChartBuilder chartBuilder = new ChartBuilder(mImageView, mCollectionData,
+                        NavigationDrawerActivity.isWholeCollection(), mChartType);
                 return chartBuilder.renderChart(mStatType);
             }finally {
                 sLock.unlock();
@@ -180,7 +174,8 @@ public class AnkiStatsTaskHandler {
                 } else
                     Timber.d("starting CreateSmallDueChart");
                 mImageView = (ChartView) params[0];
-                ChartBuilder chartBuilder = new ChartBuilder(mImageView, mCollection, sIsWholeCollection, Stats.ChartType.OTHER);
+                ChartBuilder chartBuilder = new ChartBuilder(mImageView, mCollection,
+                        NavigationDrawerActivity.isWholeCollection(), Stats.ChartType.OTHER);
                 return chartBuilder.createSmallDueChart(mSeriesList);
             }finally {
                 sLock.unlock();
@@ -229,7 +224,8 @@ public class AnkiStatsTaskHandler {
                 mWebView = (WebView) params[0];
                 mProgressBar = (ProgressBar) params[1];
                 String html = "";
-                InfoStatsBuilder infoStatsBuilder = new InfoStatsBuilder(mWebView, mCollectionData, sIsWholeCollection);
+                InfoStatsBuilder infoStatsBuilder = new InfoStatsBuilder(mWebView, mCollectionData,
+                        NavigationDrawerActivity.isWholeCollection());
                 html = infoStatsBuilder.createInfoHtmlString();
                 return html;
             }finally {

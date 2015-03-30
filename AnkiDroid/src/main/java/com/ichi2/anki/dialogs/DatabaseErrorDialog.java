@@ -1,21 +1,21 @@
 
 package com.ichi2.anki.dialogs;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.res.Resources;
-import android.os.Build;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Message;
+import android.view.View;
+
+import com.afollestad.materialdialogs.MaterialDialog;
 
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
+import com.ichi2.themes.Themes;
 import com.ichi2.compat.CompatHelper;
-import com.ichi2.themes.StyledDialog;
 
 import java.io.File;
 import java.io.IOException;
@@ -89,13 +89,15 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
 
 
     @Override
-    public StyledDialog onCreateDialog(Bundle savedInstanceState) {
+    public MaterialDialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mType = getArguments().getInt("dialogType");
         Resources res = getResources();
-        StyledDialog.Builder builder = new StyledDialog.Builder(getActivity());
-        setCancelable(true);
-        builder.setTitle(getTitle());
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity());
+        builder.cancelable(true)
+                .title(getTitle());
+        Drawable icon_alert = res.getDrawable(R.drawable.ic_warning_black_36dp);
+        icon_alert.setAlpha(Themes.ALPHA_ICON_ENABLED_DARK);
 
         boolean sqliteInstalled = false;
         try {
@@ -110,67 +112,61 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
             case DIALOG_LOAD_FAILED:
                 // Collection failed to load; give user the option of either choosing from repair options, or closing
                 // the activity
-                setCancelable(false);
-                builder.setMessage(getMessage());
-                builder.setIcon(R.drawable.ic_dialog_alert);
-                builder.setPositiveButton(res.getString(R.string.error_handling_options),
-                        new DialogInterface.OnClickListener() {
+                return builder.cancelable(false)
+                        .content(getMessage())
+                        .icon(icon_alert)
+                        .positiveText(res.getString(R.string.error_handling_options))
+                        .negativeText(res.getString(R.string.close))
+                        .callback(new MaterialDialog.ButtonCallback() {
                             @Override
-                            public void onClick(DialogInterface dialog, int which) {
+                            public void onPositive(MaterialDialog dialog) {
                                 ((DatabaseErrorDialogListener) getActivity())
                                         .showDatabaseErrorDialog(DIALOG_ERROR_HANDLING);
                             }
-                        });
-                builder.setNegativeButton(res.getString(R.string.close), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        ((DatabaseErrorDialogListener) getActivity()).exit();
-                    }
-                });
-                return builder.create();
+
+                            @Override
+                            public void onNegative(MaterialDialog dialog) {
+                                ((DatabaseErrorDialogListener) getActivity()).exit();
+                            }
+                        })
+                        .show();
 
             case DIALOG_DB_ERROR:
                 // Database Check failed to execute successfully; give user the option of either choosing from repair
                 // options, submitting an error report, or closing the activity
-                setCancelable(false);
-                builder.setMessage(getMessage());
-                builder.setIcon(R.drawable.ic_dialog_alert);
-                builder.setPositiveButton(res.getString(R.string.error_handling_options),
-                        new DialogInterface.OnClickListener() {
+                MaterialDialog dialog = builder
+                        .cancelable(false)
+                        .content(getMessage())
+                        .icon(icon_alert)
+                        .positiveText(res.getString(R.string.error_handling_options))
+                        .negativeText(res.getString(R.string.answering_error_report))
+                        .neutralText(res.getString(R.string.close))
+                        .callback(new MaterialDialog.ButtonCallback() {
                             @Override
-                            public void onClick(DialogInterface dialog, int which) {
+                            public void onPositive(MaterialDialog dialog) {
                                 ((DatabaseErrorDialogListener) getActivity())
                                         .showDatabaseErrorDialog(DIALOG_ERROR_HANDLING);
                             }
-                        });
-                builder.setNeutralButton(res.getString(R.string.answering_error_report),
-                        new DialogInterface.OnClickListener() {
+
                             @Override
-                            public void onClick(DialogInterface dialog, int which) {
+                            public void onNegative(MaterialDialog dialog) {
                                 ((DatabaseErrorDialogListener) getActivity()).sendErrorReport();
                                 dismissAllDialogFragments();
                             }
-                        });
-                builder.setNegativeButton(res.getString(R.string.close), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        ((DatabaseErrorDialogListener) getActivity()).exit();
-                    }
-                });
-                StyledDialog d = builder.create();
-                // Disable the error report button if there are already unsent error reports
-                d.getButton(DialogInterface.BUTTON_NEUTRAL).setEnabled(
+
+                            @Override
+                            public void onNeutral(MaterialDialog dialog) {
+                                ((DatabaseErrorDialogListener) getActivity()).exit();
+                            }
+                        })
+                        .show();
+                dialog.getCustomView().findViewById(R.id.buttonDefaultNegative).setEnabled(
                         ((DatabaseErrorDialogListener) getActivity()).hasErrorFiles());
-                return d;
+                return dialog;
 
             case DIALOG_ERROR_HANDLING:
                 // The user has asked to see repair options; allow them to choose one of the repair options or go back
                 // to the previous dialog
-                builder.setIcon(R.drawable.ic_dialog_alert);
-                builder.setSingleChoiceItems(new String[] { "1" }, 0, null);
-                builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
-
-                StyledDialog dialog = builder.create();
                 ArrayList<String> options = new ArrayList<String>();
                 ArrayList<Integer> values = new ArrayList<Integer>();
                 if (!((AnkiActivity)getActivity()).colIsOpen()) {
@@ -203,52 +199,57 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                     titles[i] = options.get(i);
                     mRepairValues[i] = values.get(i);
                 }
-                dialog.setItems(titles, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (mRepairValues[which]) {
-                            case 0:
-                                ((DatabaseErrorDialogListener) getActivity()).startLoadingCollection();
-                                return;
-                            case 1:
-                                ((DatabaseErrorDialogListener) getActivity())
-                                        .showDatabaseErrorDialog(DIALOG_CONFIRM_DATABASE_CHECK);
-                                return;
-                            case 2:
-                                ((DatabaseErrorDialogListener) getActivity())
-                                        .showDatabaseErrorDialog(DIALOG_REPAIR_COLLECTION);
-                                return;
-                            case 3:
-                                ((DatabaseErrorDialogListener) getActivity())
-                                        .showDatabaseErrorDialog(DIALOG_RESTORE_BACKUP);
-                                return;
-                            case 4:
-                                ((DatabaseErrorDialogListener) getActivity())
-                                        .showDatabaseErrorDialog(DIALOG_FULL_SYNC_FROM_SERVER);
-                                return;
-                            case 5:
-                                ((DatabaseErrorDialogListener) getActivity())
-                                        .showDatabaseErrorDialog(DIALOG_NEW_COLLECTION);
-                                return;
-                        }
-                    }
-                });
+
+                dialog = builder.icon(icon_alert)
+                        .negativeText(res.getString(R.string.dialog_cancel))
+                        .items(titles)
+                        .itemsCallback(new MaterialDialog.ListCallback() {
+                            @Override
+                            public void onSelection(MaterialDialog materialDialog, View view, int which,
+                                    CharSequence charSequence) {
+                                switch (mRepairValues[which]) {
+                                    case 0:
+                                        ((DatabaseErrorDialogListener) getActivity()).startLoadingCollection();
+                                        return;
+                                    case 1:
+                                        ((DatabaseErrorDialogListener) getActivity())
+                                                .showDatabaseErrorDialog(DIALOG_CONFIRM_DATABASE_CHECK);
+                                        return;
+                                    case 2:
+                                        ((DatabaseErrorDialogListener) getActivity())
+                                                .showDatabaseErrorDialog(DIALOG_REPAIR_COLLECTION);
+                                        return;
+                                    case 3:
+                                        ((DatabaseErrorDialogListener) getActivity())
+                                                .showDatabaseErrorDialog(DIALOG_RESTORE_BACKUP);
+                                        return;
+                                    case 4:
+                                        ((DatabaseErrorDialogListener) getActivity())
+                                                .showDatabaseErrorDialog(DIALOG_FULL_SYNC_FROM_SERVER);
+                                        return;
+                                    case 5:
+                                        ((DatabaseErrorDialogListener) getActivity())
+                                                .showDatabaseErrorDialog(DIALOG_NEW_COLLECTION);
+                                }
+                            }
+                        })
+                        .show();
                 return dialog;
 
             case DIALOG_REPAIR_COLLECTION:
                 // Allow user to run BackupManager.repairCollection()
-                builder.setMessage(getMessage());
-                builder.setIcon(R.drawable.ic_dialog_alert);
-                builder.setPositiveButton(res.getString(R.string.dialog_positive_repair),
-                        new DialogInterface.OnClickListener() {
+                return builder.content(getMessage())
+                        .icon(icon_alert)
+                        .positiveText(res.getString(R.string.dialog_positive_repair))
+                        .negativeText(res.getString(R.string.dialog_cancel))
+                        .callback(new MaterialDialog.ButtonCallback() {
                             @Override
-                            public void onClick(DialogInterface dialog, int which) {
+                            public void onPositive(MaterialDialog dialog) {
                                 ((DatabaseErrorDialogListener) getActivity()).repairDeck();
                                 dismissAllDialogFragments();
                             }
-                        });
-                builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
-                return builder.create();
+                        })
+                        .show();
 
             case DIALOG_RESTORE_BACKUP:
                 // Allow user to restore one of the backups
@@ -259,55 +260,67 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                     mBackups[i] = files[files.length - 1 - i];
                 }
                 if (mBackups.length == 0) {
-                    builder.setTitle(getResources().getString(R.string.backup_restore));
-                    builder.setMessage(getMessage());
-                    builder.setPositiveButton(res.getString(R.string.dialog_ok), new Dialog.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            ((DatabaseErrorDialogListener) getActivity())
-                                    .showDatabaseErrorDialog(DIALOG_ERROR_HANDLING);
-                        }
-                    });
+                    builder.title(res.getString(R.string.backup_restore))
+                            .content(getMessage())
+                            .positiveText(res.getString(R.string.dialog_ok))
+                            .callback(new MaterialDialog.ButtonCallback() {
+                                @Override
+                                public void onPositive(MaterialDialog dialog) {
+                                    ((DatabaseErrorDialogListener) getActivity())
+                                            .showDatabaseErrorDialog(DIALOG_ERROR_HANDLING);
+                                }
+                            });
                 } else {
                     String[] dates = new String[mBackups.length];
                     for (int i = 0; i < mBackups.length; i++) {
                         dates[i] = mBackups[i].getName().replaceAll(
                                 ".*-(\\d{4}-\\d{2}-\\d{2})-(\\d{2})-(\\d{2}).apkg", "$1 ($2:$3 h)");
                     }
-                    builder.setTitle(res.getString(R.string.backup_restore_select_title));
-                    builder.setIcon(android.R.drawable.ic_input_get);
-                    builder.setSingleChoiceItems(dates, dates.length, new DialogInterface.OnClickListener() {
-
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            if (mBackups[which].length() > 0) {
-                                // restore the backup if it's valid
-                                ((DatabaseErrorDialogListener) getActivity()).restoreFromBackup(mBackups[which]
-                                        .getPath());
-                                dismissAllDialogFragments();
-                            } else {
-                                // otherwise show an error dialog
-                                Dialog invalidFileDialog = new AlertDialog.Builder(getActivity())
-                                        .setTitle(R.string.backup_error).setMessage(R.string.backup_invalid_file_error)
-                                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                            }
-                                        }).create();
-                                invalidFileDialog.show();
-                            }
-                        }
-                    });
+                    Drawable icon_input = res.getDrawable(R.drawable.ic_input_black_36dp);
+                    icon_input.setAlpha(Themes.ALPHA_ICON_ENABLED_DARK);
+                    builder.title(res.getString(R.string.backup_restore_select_title))
+                            .icon(icon_input)
+                            .negativeText(res.getString(R.string.dialog_cancel))
+                            .callback(new MaterialDialog.ButtonCallback() {
+                                @Override
+                                public void onNegative(MaterialDialog dialog) {
+                                    dismissAllDialogFragments();
+                                }
+                            })
+                            .items(dates)
+                            .itemsCallbackSingleChoice(dates.length,
+                                    new MaterialDialog.ListCallbackSingleChoice() {
+                                @Override
+                                public boolean onSelection(MaterialDialog materialDialog, View view,
+                                        int which, CharSequence charSequence) {
+                                    if (mBackups[which].length() > 0) {
+                                        // restore the backup if it's valid
+                                        ((DatabaseErrorDialogListener) getActivity())
+                                                .restoreFromBackup(mBackups[which]
+                                                        .getPath());
+                                        dismissAllDialogFragments();
+                                    } else {
+                                        // otherwise show an error dialog
+                                        new MaterialDialog.Builder(getActivity())
+                                                .title(R.string.backup_error)
+                                                .content(R.string.backup_invalid_file_error)
+                                                .positiveText(R.string.dialog_ok)
+                                                .build().show();
+                                    }
+                                    return true;
+                                }
+                            });
                 }
-                return builder.create();
+                return builder.show();
 
             case DIALOG_NEW_COLLECTION:
                 // Allow user to create a new empty collection
-                builder.setMessage(getMessage());
-                builder.setPositiveButton(res.getString(R.string.dialog_positive_create),
-                        new DialogInterface.OnClickListener() {
+                return builder.content(getMessage())
+                        .positiveText(res.getString(R.string.dialog_positive_create))
+                        .negativeText(res.getString(R.string.dialog_cancel))
+                        .callback(new MaterialDialog.ButtonCallback() {
                             @Override
-                            public void onClick(DialogInterface dialog, int which) {
+                            public void onPositive(MaterialDialog dialog) {
                                 CollectionHelper.getInstance().closeCollection(false);
                                 String path = CollectionHelper.getInstance().getCollectionPath(getActivity());
                                 AnkiDatabaseManager.closeDatabase(path);
@@ -319,51 +332,51 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                                 }
                                 dismissAllDialogFragments();
                             }
-                        });
-                builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
-                return builder.create();
+                        })
+                        .show();
 
             case DIALOG_CONFIRM_DATABASE_CHECK:
                 // Confirmation dialog for database check
-                builder.setMessage(getMessage());
-                builder.setPositiveButton(res.getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        ((DatabaseErrorDialogListener) getActivity()).integrityCheck();
-                        dismissAllDialogFragments();
-                    }
-                });
-                builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
-                return builder.create();
+                return builder.content(getMessage())
+                        .positiveText(res.getString(R.string.dialog_ok))
+                        .negativeText(res.getString(R.string.dialog_cancel))
+                        .callback(new MaterialDialog.ButtonCallback() {
+                            @Override
+                            public void onPositive(MaterialDialog dialog) {
+                                ((DatabaseErrorDialogListener) getActivity()).integrityCheck();
+                                dismissAllDialogFragments();
+                            }
+                        })
+                        .show();
 
             case DIALOG_CONFIRM_RESTORE_BACKUP:
                 // Confirmation dialog for backup restore
-                builder.setMessage(getMessage());
-                builder.setPositiveButton(res.getString(R.string.dialog_continue),
-                        new DialogInterface.OnClickListener() {
+                return builder.content(getMessage())
+                        .positiveText(res.getString(R.string.dialog_continue))
+                        .negativeText(res.getString(R.string.dialog_cancel))
+                        .callback(new MaterialDialog.ButtonCallback() {
                             @Override
-                            public void onClick(DialogInterface dialog, int which) {
+                            public void onPositive(MaterialDialog dialog) {
                                 ((DatabaseErrorDialogListener) getActivity())
                                         .showDatabaseErrorDialog(DIALOG_RESTORE_BACKUP);
                             }
-                        });
-                builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
-                return builder.create();
+                        })
+                        .show();
 
             case DIALOG_FULL_SYNC_FROM_SERVER:
                 // Allow user to do a full-sync from the server
-                builder.setMessage(getMessage());
-                builder.setPositiveButton(res.getString(R.string.dialog_positive_overwrite),
-                        new DialogInterface.OnClickListener() {
+                return builder.content(getMessage())
+                        .positiveText(res.getString(R.string.dialog_positive_overwrite))
+                        .negativeText(res.getString(R.string.dialog_cancel))
+                        .callback(new MaterialDialog.ButtonCallback() {
                             @Override
-                            public void onClick(DialogInterface dialog, int which) {                                
+                            public void onPositive(MaterialDialog dialog) {
                                 DatabaseErrorDialogListener activity = (DatabaseErrorDialogListener) getActivity();
                                 activity.sync("download", activity.getSyncMediaUsn());
                                 dismissAllDialogFragments();
                             }
-                        });
-                builder.setNegativeButton(res.getString(R.string.dialog_cancel), null);
-                return builder.create();
+                        })
+                        .show();
 
             default:
                 return null;

@@ -1,14 +1,16 @@
 
 package com.ichi2.anki.dialogs;
 
-import android.content.DialogInterface;
+import android.app.Dialog;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
-import com.ichi2.themes.StyledDialog;
+import com.ichi2.themes.Themes;
 
 public class DeckPickerConfirmDeleteDeckDialog extends DialogFragment {
     public static DeckPickerConfirmDeleteDeckDialog newInstance(String dialogMessage) {
@@ -21,29 +23,31 @@ public class DeckPickerConfirmDeleteDeckDialog extends DialogFragment {
 
 
     @Override
-    public StyledDialog onCreateDialog(Bundle savedInstanceState) {
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StyledDialog.Builder builder = new StyledDialog.Builder(getActivity());
         Resources res = getResources();
-        builder.setTitle(res.getString(R.string.delete_deck_title));
-        builder.setMessage(getArguments().getString("dialogMessage"));
-        builder.setIcon(R.drawable.ic_dialog_alert);
-        builder.setPositiveButton(res.getString(R.string.dialog_positive_delete), new DialogInterface.OnClickListener() {
+        Drawable icon = res.getDrawable(R.drawable.ic_warning_black_36dp);
+        icon.setAlpha(Themes.ALPHA_ICON_ENABLED_DARK);
+        return new MaterialDialog.Builder(getActivity())
+                .title(res.getString(R.string.delete_deck_title))
+                .content(getArguments().getString("dialogMessage"))
+                .icon(icon)
+                .positiveText(res.getString(R.string.dialog_positive_delete))
+                .negativeText(res.getString(R.string.dialog_cancel))
+                .cancelable(true)
+                .callback(new MaterialDialog.ButtonCallback() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onPositive(MaterialDialog dialog) {
                         ((DeckPicker) getActivity()).deleteContextMenuDeck();
                         ((DeckPicker) getActivity()).dismissAllDialogFragments();
                     }
-                });
-        builder.setNegativeButton(res.getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                ((DeckPicker) getActivity()).dismissAllDialogFragments();
-            }
-        });
-        
-        setCancelable(true);
-        return builder.create();
+
+                    @Override
+                    public void onNegative(MaterialDialog dialog) {
+                        ((DeckPicker) getActivity()).dismissAllDialogFragments();
+                    }
+                })
+                .build();
 
     }
 }
