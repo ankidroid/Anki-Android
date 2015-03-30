@@ -952,17 +952,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         // Initialize dictionary lookup feature
         Lookup.initialize(this);
 
-        deselectAllNavigationItems();
+        updateScreenCounts();
         supportInvalidateOptionsMenu();
         dismissOpeningCollectionDialog();
-    }
-
-
-    @Override
-    protected void deselectAllNavigationItems() {
-        super.deselectAllNavigationItems();
-        setTitle();
-        updateScreenCounts();
     }
 
 
@@ -989,7 +981,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         // Set the context for the Sound manager
         Sound.setContext(new WeakReference<Activity>(this));
         // Reset the activity title
-        deselectAllNavigationItems();
+        setTitle();
+        updateScreenCounts();
     }
 
 

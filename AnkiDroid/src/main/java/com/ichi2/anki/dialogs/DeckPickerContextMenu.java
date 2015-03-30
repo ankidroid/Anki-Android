@@ -19,17 +19,19 @@ public class DeckPickerContextMenu extends DialogFragment {
     /**
      * Context Menus
      */
-    private static final int CONTEXT_MENU_COLLAPSE_DECK = 0;
-    private static final int CONTEXT_MENU_RENAME_DECK = 1;
-    private static final int CONTEXT_MENU_DECK_OPTIONS = 2;
-    private static final int CONTEXT_MENU_DELETE_DECK = 3;
-    private static final int CONTEXT_MENU_EXPORT_DECK = 4;
+    private static final int CONTEXT_MENU_RENAME_DECK = 0;
+    private static final int CONTEXT_MENU_DECK_OPTIONS = 1;
+    private static final int CONTEXT_MENU_DELETE_DECK = 2;
+    private static final int CONTEXT_MENU_EXPORT_DECK = 3;
+    private static final int CONTEXT_MENU_COLLAPSE_DECK = 4;
 
 
-    public static DeckPickerContextMenu newInstance(String dialogTitle, boolean isCollapsed) {
+    public static DeckPickerContextMenu newInstance(String dialogTitle, boolean hasSubdecks,
+            boolean isCollapsed) {
         DeckPickerContextMenu f = new DeckPickerContextMenu();
         Bundle args = new Bundle();
         args.putString("dialogTitle", dialogTitle);
+        args.putBoolean("hasSubdecks", hasSubdecks);
         args.putBoolean("isCollapsed", isCollapsed);
         f.setArguments(args);
         return f;
@@ -42,15 +44,19 @@ public class DeckPickerContextMenu extends DialogFragment {
         Resources res = getResources();
         Drawable icon = res.getDrawable(R.drawable.ic_settings_applications_black_36dp);
         icon.setAlpha(Themes.ALPHA_ICON_ENABLED_DARK);
-        String[] entries = new String[5];
-        entries[CONTEXT_MENU_COLLAPSE_DECK] = res.getString(
-                getArguments().getBoolean("isCollapsed") ?
-                        R.string.contextmenu_deckpicker_inflate_deck :
-                        R.string.contextmenu_deckpicker_collapse_deck);
+
+        boolean hasSubdecks = getArguments().getBoolean("hasSubdecks");
+        String[] entries = new String[hasSubdecks ? 5 : 4];
         entries[CONTEXT_MENU_RENAME_DECK] = res.getString(R.string.contextmenu_deckpicker_rename_deck);
         entries[CONTEXT_MENU_DECK_OPTIONS] = res.getString(R.string.study_options);
         entries[CONTEXT_MENU_DELETE_DECK] = res.getString(R.string.contextmenu_deckpicker_delete_deck);
         entries[CONTEXT_MENU_EXPORT_DECK] = res.getString(R.string.export);
+        if (hasSubdecks) {
+            entries[CONTEXT_MENU_COLLAPSE_DECK] = res.getString(
+                    getArguments().getBoolean("isCollapsed") ?
+                            R.string.contextmenu_deckpicker_inflate_deck :
+                            R.string.contextmenu_deckpicker_collapse_deck);
+        }
         return new MaterialDialog.Builder(getActivity())
                 .title(getArguments().getString("dialogTitle"))
                 .icon(icon)

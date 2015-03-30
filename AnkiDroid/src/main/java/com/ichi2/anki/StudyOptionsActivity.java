@@ -92,13 +92,6 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
 
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        deselectAllNavigationItems();
-    }    
-
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // The action bar home/up action should open or close the drawer.
         // ActionBarDrawerToggle will take care of this.
