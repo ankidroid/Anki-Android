@@ -52,3 +52,7 @@ Thumbs.db
 # Crowdin files
 ankidroid.zip
 tools/crowdin_key.txt
+
+.idea/misc.xml
+
+.idea/vcs.xml

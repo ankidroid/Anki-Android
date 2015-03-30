@@ -39,7 +39,7 @@ import timber.log.Timber;
 
 
 public class NavigationDrawerActivity extends AnkiActivity {
-    
+
     /** Navigation Drawer */
     protected CharSequence mTitle;
     protected Boolean mFragmented = false;
@@ -76,7 +76,7 @@ public class NavigationDrawerActivity extends AnkiActivity {
     protected int getSelfNavDrawerItem() {
         return DRAWER_INVALID;
     }
-    
+
     // Navigation drawer initialisation
     protected void initNavigationDrawer(View mainView){
         // Create inherited navigation drawer layout here so that it can be used by parent class
@@ -98,7 +98,7 @@ public class NavigationDrawerActivity extends AnkiActivity {
         // enable ActionBar app icon to behave as action to toggle nav drawer
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        
+
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the sliding drawer and the action bar app icon
         mDrawerToggle = new ActionBarDrawerToggle(
@@ -107,7 +107,7 @@ public class NavigationDrawerActivity extends AnkiActivity {
                 R.drawable.ic_menu_white_24dp,  /* nav drawer image to replace 'Up' caret */
                 R.string.drawer_open,  /* "open drawer" description for accessibility */
                 R.string.drawer_close  /* "close drawer" description for accessibility */
-                ) {
+        ) {
             public void onDrawerClosed(View view) {
                 getSupportActionBar().setTitle(mTitle);
                 supportInvalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
@@ -231,17 +231,17 @@ public class NavigationDrawerActivity extends AnkiActivity {
                 mOldColPath = CollectionHelper.getCurrentAnkiDroidDirectory(this);
                 startActivityForResultWithAnimation(new Intent(this, Preferences.class), REQUEST_PREFERENCES_UPDATE, ActivityTransitionAnimation.FADE);
                 break;
-            
+
             case DRAWER_HELP:
                 Intent helpIntent = new Intent("android.intent.action.VIEW", Uri.parse(AnkiDroidApp.getManualUrl()));
                 startActivityWithoutAnimation(helpIntent);
                 break;
-                
+
             case DRAWER_FEEDBACK:
                 Intent feedbackIntent = new Intent("android.intent.action.VIEW", Uri.parse(AnkiDroidApp.getFeedbackUrl()));
                 startActivityWithoutAnimation(feedbackIntent);
                 break;
-            
+
             default:
                 break;
         }
@@ -287,15 +287,15 @@ public class NavigationDrawerActivity extends AnkiActivity {
     /* Members not related directly to navigation drawer */
 
     @Override
-    protected void onDestroy() {       
+    protected void onDestroy() {
         super.onDestroy();
         mNavigationImages.recycle();
     }
-    
+
     public ActionBarDrawerToggle getDrawerToggle() {
         return mDrawerToggle;
     }
-    
+
     /**
      * This function locks the navigation drawer closed in regards to swipes,
      * but continues to allowed it to be opened via it's indicator button. This
@@ -306,11 +306,11 @@ public class NavigationDrawerActivity extends AnkiActivity {
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         }
     }
-    
+
     /**
      * This function allows swipes to open the navigation drawer. This
      * function in a noop if the drawer hasn't been initialized.
-     */    
+     */
     protected void enableDrawerSwipe() {
         if (mDrawerLayout != null) {
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
