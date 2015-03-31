@@ -136,17 +136,7 @@ public class Info extends ActionBarActivity {
                 break;
 
             case TYPE_NEW_VERSION:
-                sb.append(res.getString(R.string.new_version_message));
-                sb.append("<ul>");
-                String[] features = res.getStringArray(R.array.new_version_features);
-                for(String feature : features) {
-                    sb.append("<li>");
-                    sb.append(feature);
-                    sb.append("</li>");
-                }
-                sb.append("</ul>");
-                sb.append("</body></html>");
-                webView.loadDataWithBaseURL("", sb.toString(), "text/html", "utf-8", null);
+                webView.loadUrl(res.getString(R.string.changelog_url));
                 break;
 
             default:

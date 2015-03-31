@@ -30,6 +30,14 @@
         <item>Fora</item>
         <item>Nciku (Web)</item>
     </string-array>
+    <string-array name="navigation_titles">
+        <item>@string/decks</item>
+        <item>@string/card_browser</item>
+        <item>@string/statistics</item>
+        <item>@string/settings</item>
+        <item>@string/help</item>
+        <item>@string/send_feedback</item>
+    </string-array>
     <string-array name="dictionary_values">
         <item>0</item>
         <item>1</item>
@@ -117,6 +125,7 @@
     <string name="shared_decks_url">https://ankiweb.net/shared/decks/</string>
     <string name="repair_deck">http://ankisrs.net/docs/manual.html#corrupt-collections</string>
     <string name="resetpw_url">http://ankiweb.net/account/resetpw</string>
+    <string name="changelog_url">https://ankidroid.org/docs/changelog.html</string>
 
     <string-array name="leech_action_values">
         <item>0</item>
