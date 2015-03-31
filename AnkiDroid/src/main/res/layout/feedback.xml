@@ -25,7 +25,7 @@
 
     <CheckBox
         android:id="@+id/alwaysReportCheckbox"
-        android:text="@+string/feedback_report_automatically"
+        android:text="@string/feedback_report_automatically"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:paddingTop="15dp"
@@ -44,7 +44,7 @@
             android:id="@+id/tvFeedbackDisclaimer"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@+string/feedback_disclaimer" />
+            android:text="@string/feedback_disclaimer" />
     </ScrollView>
 
 </LinearLayout>
