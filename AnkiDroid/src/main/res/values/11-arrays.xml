@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!--
 ~ Copyright (c) 2009 Casey Link <unnamedrambler@gmail.com>
 ~
@@ -13,8 +13,7 @@
 ~
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
-<resources>
+--><resources>
     <string name="settings">Settings</string>
     <string-array name="navigation_titles">
         <item>Decks</item>
