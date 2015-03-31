@@ -51,14 +51,6 @@
     <item quantity="one">%1$d wiko</item>
     <item quantity="other">%1$d wikons</item>
   </plurals>
-  <string name="widget_medium">AnkiDroid midjata</string>
   <string name="widget_small">AnkiDroid leitil</string>
-  <string name="widget_big">AnkiDroid mikil</string>
-  <string name="widget_big_restrictions_dialog">In sumaize aggweine widjait fremwaurkis Androidis þana widjait þatainei bokos inuh frisahtins/swogins ataugiþ.</string>
-  <string name="open_in_reviewer">Usluk wikon in AnkiDroid</string>
-  <plurals name="widget_big_eta">
-    <item quantity="one">Wenigga ƕeila: %d min.</item>
-    <item quantity="other">Wenigga ƕeila: %d min.</item>
-  </plurals>
   <string name="widget_big_tomorrow_due">Nauh du maurgina:</string>
 </resources>

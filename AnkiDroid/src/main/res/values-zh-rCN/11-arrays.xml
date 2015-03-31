@@ -35,14 +35,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="navigation_titles">
-    <item>牌组</item>
-    <item>卡牌浏览器</item>
-    <item>统计</item>
-    <item>设置</item>
-    <item>帮助</item>
-    <item>反馈</item>
-  </string-array>
   <string-array name="newCardSchedulingLabels">
     <item>穿插在复习中</item>
     <item>复习后</item>

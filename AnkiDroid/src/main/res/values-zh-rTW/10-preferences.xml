@@ -138,7 +138,6 @@
   <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink and older devices using custom fonts may require this.</string>
   <string name="vertical_centering">Center align</string>
   <string name="vertical_centering_summ">Center the content of cards vertically</string>
-  <string name="pref_cat_backup">備份</string>
   <string name="pref_backup">使用備份</string>
   <string name="pref_backup_summ">Automatically create backups before opening a deck (once a day)</string>
   <string name="pref_backup_max">Max number of backups</string>
@@ -163,11 +162,6 @@
   <string name="input_workaround_summ">Workaround for focusing problems on HTML input boxes. Causes problems on several devices.</string>
   <string name="pref_keep_screen_on">Keep screen on</string>
   <string name="pref_keep_screen_on_summ">Disable screen timeout</string>
-  <string name="pref_simple_interface">Simple interface</string>
-  <string name="pref_simple_interface_summ">加快卡片出現的時間，不過不支援 HTML 所有的功能</string>
-  <string name="pref_simple_interface_exclude_tags">Tags to exclude</string>
-  <string name="pref_simple_interface_exclude_tags_summ">不要在這些標籤上使用簡單介面: XXX</string>
-  <string name="write_answers_message">You should define for every deck a field to compare the written answer with. You can do this via Anki Desktop (deck properties -&gt; edit model -&gt; card layout).\n\nIf no compare field is set, your written answer will always be compared with the whole card answer</string>
   <string name="fix_arabic_text">改善顯示阿拉伯文</string>
   <string name="fix_arabic_text_summ">Partial workaround for limited support of Arabic by Android platform. When activated it is not possible to modify cards.</string>
   <string name="convert_fen_text">支援國際象棋記譜法</string>
@@ -175,17 +169,6 @@
   <string name="filter_google_translate_summ">僅保存原文和譯文</string>
   <string name="convert_fen_text_summ">Draw chessboard from Forsyth–Edwards Notation. The notation must be enclosed in [fen][/fen] tags.</string>
   <string name="studyoptions_limit_select_tags">選擇標籤</string>
-  <string name="studyoptions_limit_tags_active">有：%1$s</string>
-  <string name="studyoptions_limit_tags_inactive">除了：%1$s</string>
-  <string name="studyoptions_limit_button_text">限制</string>
-  <string name="studyoptions_limit_dialog_title">學習限制</string>
-  <string name="studyoptions_session">回合</string>
-  <string name="studyoptions_tag">依標籤</string>
-  <string name="studyoptions_tag_new">按標籤顯示新卡片：</string>
-  <string name="studyoptions_tag_rev">依標籤顯示複習卡:</string>
-  <string name="studyoptions_new_cards_per_day">每天新卡片上限：</string>
-  <string name="studyoptions_max_fail_card">失敗卡上限</string>
-  <string name="deck_conf_deck_name">牌組名稱</string>
   <string name="deck_conf_deck_description">牌組的描述</string>
   <string name="deck_conf_group">Options group</string>
   <plurals name="deck_conf_group_summ">
@@ -244,7 +227,6 @@
   <string name="pref_browser_editor_font_summ">XXX</string>
   <string name="deck_conf_cram_filter">篩選器</string>
   <string name="deck_conf_cram_options">選項</string>
-  <string name="deck_conf_cram_preset">預設</string>
   <string name="deck_conf_cram_search">搜尋</string>
   <string name="deck_conf_cram_limit">上限為</string>
   <string name="deck_conf_cram_order">依條件選擇卡片</string>

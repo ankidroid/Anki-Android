@@ -39,30 +39,12 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="error_ok">Zgłaszaj błędy</string>
-  <string name="error_cancel">Nie zgłaszaj błędów</string>
   <string name="error_reporting_choice">Tryb raportowania błędów</string>
   <string name="error_reporting_choice_summary">Błędy mogą być zgłaszane automatycznie, nigdy nie zgłaszane, lub może zostać wyświetlony monit</string>
-  <string name="feedback_disclaimer">Disclaimer: We don\'t collect any personal information such as your email address, phone number, or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves and the steps which led up to them occuring.</string>
   <string name="feedback_title">Opinie</string>
-  <string name="feedback_send_feedback">Wyślij nam swoją opinię</string>
-  <string name="feedback_send_feedback_and_errors">Wyślij błędy i swoje opinie</string>
-  <string name="feedback_message_sent_success">Dziękujemy za informacje!</string>
-  <string name="feedback_message_sent_failure">Nie można wysłać informacji, kod %1$s</string>
-  <string name="feedback_keep_latest">Zachowaj ostatni błąd</string>
-  <string name="feedback_clear_all">Wyczyść wszystkie błędy</string>
   <string name="feedback_default_text">Wpisz swoje uwagi lub opisz błędy, które chcesz zgłosić.</string>
-  <string name="feedback_error_reply_new">Nieznany problem, zgłoszony nowy błąd</string>
-  <string name="feedback_error_reply_known">Problem został już wcześniej wykryty. Prosimy o uzupełnienie szczegółów w systemie śledzenia błędów AnkiDroid.</string>
-  <string name="feedback_error_reply_issue_unknown">Problem %1$d, status nieznany</string>
-  <string name="feedback_error_reply_issue_status">Problem %1$d, status: %2$s</string>
-  <string name="feedback_error_reply_issue_fixed_dev">Problem %1$d, poprawiony, lecz nie włączony jeszcze do oficjalnej wersji</string>
-  <string name="feedback_error_reply_issue_fixed_prod">Problem %1$d, poprawiony w najnowszej wersji</string>
-  <string name="feedback_error_reply_malformed">Zgłoszony błąd, brak odpowiedzi</string>
-  <string name="feedback_error_reply_failed">Wysłanie nieudane</string>
-  <string name="feedback_auto_toast_text">AnkiDroid has encountered a problem; a report is being sent to the developers&#8230;</string>
-  <string name="feedback_manual_toast_text">AnkiDroid has encountered a problem; a report is being generated&#8230;</string>
+  <string name="feedback_auto_toast_text">Wystąpił problem w AnkiDroid. Wysyłanie raportu do programistów&#8230;</string>
+  <string name="feedback_manual_toast_text">AnkiDroid napotkał problem; trwa generowanie raportu&#8230;</string>
   <string name="feedback_copy_debug">Copy debug info</string>
-  <string name="feedback_report">Report</string>
-  <string name="feedback_report_automatically">Send error reports automatically</string>
+  <string name="feedback_report">Zgłoś</string>
 </resources>

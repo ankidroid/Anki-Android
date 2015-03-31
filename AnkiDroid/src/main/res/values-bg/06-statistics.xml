@@ -39,7 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="statistics_menu">Statistics</string>
   <string name="statistics_young">Young</string>
   <string name="statistics_mature">Mature</string>
   <string name="statistics_young_and_learn">Young+Learn</string>
@@ -48,7 +47,6 @@
   <string name="statistics_relearn">Relearn</string>
   <string name="statistics_learn">Learn</string>
   <string name="statistics_cram">Cram</string>
-  <string name="statistics_type_title">Statistics</string>
   <string name="stats_cards">Cards</string>
   <string name="stats_cards_intervals">Cards with given Interval</string>
   <string name="stats_cumulative_cards">Cumulative Cards</string>
@@ -65,7 +63,6 @@
   <string name="stats_period_month">1 month</string>
   <string name="stats_period_year">1 year</string>
   <string name="stats_period_lifetime">deck life</string>
-  <string name="stats_deck_current">deck</string>
   <string name="stats_deck_collection">collection</string>
   <string name="stats_time_of_day">Time of Day</string>
   <string name="stats_day_of_week">Day of Week</string>
@@ -77,37 +74,7 @@
   <string name="stats_today_type_breakdown">Learn: &lt;b&gt;%1$s&lt;/b&gt;, Review: &lt;b&gt;%2$s&lt;/b&gt;, Relearn: &lt;b&gt;%3$s&lt;/b&gt;, Filtered: &lt;b&gt;%4$s&lt;/b&gt;</string>
   <string name="stats_today_mature_cards">Correct answers on mature cards: %1$d/%2$d (%3$.1f%%)</string>
   <string name="stats_today_no_mature_cards">No mature cards were studied today.</string>
-  <string name="statistics_period_x_axis_minutes">Минути</string>
-  <string name="statistics_new_cards">Нови карти</string>
-  <string name="statistics_failed_cards">Неуспешни карти</string>
-  <string name="statistics_fullscreen">Превключване на цял екран</string>
-  <string name="calculating_statistics">Calculating statistics&#8230;</string>
-  <string name="deck_summary_cards">Брой на карти:</string>
-  <string name="deck_summary_notes">Number of notes:</string>
-  <string name="deck_summary_cards_mature">Стари карти:</string>
-  <string name="deck_summary_cards_young">Нови карти:</string>
-  <string name="deck_summary_cards_unseen">Непознати карти:</string>
-  <string name="deck_summary_card_age">Възраст на Карта</string>
-  <string name="deck_summary_average_interval">Среден интервал:&lt;b&gt;%.1f&lt;/b&gt; дни</string>
-  <string name="deck_summary_answers_correct">Правилни отговори</string>
-  <string name="deck_summary_answers_mature">Стари карти: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; %2$s (%3$d of %4$d)</string>
-  <string name="deck_summary_answers_young">Нови карти: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d от %4$d)</string>
-  <string name="deck_summary_answers_firstseen">Видяно за първи път: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d of %4$d)</string>
-  <string name="deck_summary_reviews">Отзиви:</string>
-  <string name="deck_summary_news">Нови карти:</string>
-  <string name="deck_summary_average_week">Средно, преглеждано миналата седмица</string>
-  <string name="deck_summary_average_month">Средна преглеждано последния месец</string>
-  <string name="deck_summary_average_year">Средно, за миналата година</string>
-  <string name="deck_summary_average_total">Средно преглеждано</string>
-  <string name="deck_summary_forecast">Прогноза</string>
-  <string name="deck_summary_tomorrow_due">Утре поради: &lt;b&gt;%d&lt;/b&gt; карти</string>
-  <string name="deck_summary_tomorrow_new">Утре нови: &lt;b&gt;%d&lt;/b&gt; карти</string>
-  <string name="deck_summary_tomorrow_time">Оставащо време за утре: &lt;b&gt;%d&lt;/b&gt; мин.</string>
-  <string name="deck_summary_finished_in">Нови карти, завършва в: &lt;b&gt; %d &lt;/b&gt; дни</string>
-  <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; карти/ден</string>
-  <string name="deck_summary_deck_age">Възраст на колодата: &lt;b&gt; %d &lt;/b&gt; дни</string>
   <string name="deck_summary_all_decks">Всички колоди</string>
-  <string name="stats_select_decks">Select deck</string>
   <string name="stats_select_time_scale">Select timescale</string>
   <string-array name="next_review_in_s">
     <item>в 1 секунда</item>

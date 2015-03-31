@@ -51,14 +51,6 @@
     <item quantity="one">%1$d deck</item>
     <item quantity="other">%1$d pachete</item>
   </plurals>
-  <string name="widget_medium">AnkiDroid Mediu</string>
   <string name="widget_small">AnkiDroid Mic</string>
-  <string name="widget_big">AnkiDroid Mare</string>
-  <string name="widget_big_restrictions_dialog">Din cauza unor restricţii impuse de Android widget-framework, acest widget poate afişa numai text, fără imagini, sunete etc.</string>
-  <string name="open_in_reviewer">Deschide pachetul în AnkiDroid</string>
-  <plurals name="widget_big_eta">
-    <item quantity="one">Estimated time: %d min.</item>
-    <item quantity="other">Timp estimat: %d min.</item>
-  </plurals>
   <string name="widget_big_tomorrow_due">Scadente pe mâine:</string>
 </resources>

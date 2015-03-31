@@ -48,8 +48,6 @@
   <string name="CardEditorTags">Теги: %1$s</string>
   <string name="CardEditorCards">Карты: %1$s</string>
   <string name="add_new_filter_tags">Добавить / Отфильтровать метки</string>
-  <string name="note_type">Тип заметки</string>
-  <string name="card_type">Тип карты</string>
   <string name="filter_tags">Отфильтровать метки</string>
   <string name="sdcard_missing_message">SD-карта недоступна, т.к. она (и ваш аппарат) используется как USB-хранилище. Отключите режим USB-хранилище вашего аппарата для доступа к колоде.</string>
   <string name="enable_whiteboard">Включить доску</string>
@@ -58,8 +56,6 @@
   <string name="hide_whiteboard">Скрыть доску</string>
   <string name="clear_whiteboard">Очистка доски</string>
   <string name="replay_audio">Воспроизведение аудио</string>
-  <string name="cram_edit_warning">Редактирование карты заблокировано во время \`Зубрёжки\`</string>
-  <string name="suspend_leeches">Откладывать \"приставучие\"</string>
   <string name="leech_suspend_notification">Карта помечена как \"приставучая\" и отложена</string>
   <string name="leech_notification">Карта помечена как \"приставучая\"</string>
   <string name="corrupt_font">Повреждённый файл шрифта %s</string>
@@ -80,10 +76,8 @@
   <string name="cardeditor_title_edit_card">Изменить заметку</string>
   <string name="discard_unsaved_changes">Закрыть и использовать текущий вход?</string>
   <string name="factadder_saving_error">Ошибка при сохранении заметки</string>
-  <string name="pref_lang_support">Язык</string>
   <string name="saving_facts">Сохранение заметки</string>
   <string name="saving_model">Сохранение модели</string>
-  <string name="deck">Колода</string>
   <string name="add">Добавить</string>
   <string name="close">Закрыть</string>
   <string name="select">Выбрать</string>
@@ -100,13 +94,8 @@
     <item quantity="other">%1$d минут</item>
   </plurals>
   <string name="studyoptions_welcome_title">Добро пожаловать в AnkiDroid</string>
-  <string name="studyoptions_no_external_storage_title">Нет доступа к внешнему хранилищу</string>
-  <string name="studyoptions_no_external_storage_message">AnkiDroid не может получить доступ к карте памяти SD для работы с колодами. Убедитесь, что SD-карта подключена и попробуйте еще раз.</string>
   <string name="fact_adder_intent_title">AnkiDroid Карта</string>
-  <string name="deckpicker_select_dictionary_title">Выбрать словарь</string>
-  <string name="deckpicker_select_dictionary_default">По умолчанию</string>
   <string name="card_editor_add_card">Добавить заметку</string>
-  <string name="card_editor_reset">Сброс</string>
   <string name="card_editor_copy_card">Копировать карту</string>
   <string name="card_editor_reset_card">Сбросить прогресс</string>
   <string name="card_editor_reschedule_card">Изменить расписание карты</string>
@@ -120,14 +109,11 @@
     <item quantity="other">%d карт добавлено</item>
   </plurals>
   <string name="help_title">Справка</string>
-  <string name="help_online">Онлайн помощь</string>
-  <string name="help_faq">Вопросы и ответы</string>
   <string name="check_db">Проверка базы данных</string>
   <string name="check_media">Проверить медиа</string>
   <string name="check_db_message">Проверка базы данных. \nПожалуйста подождите...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Пустая карта. Запустите «Инструменты&gt;Пустые карты...» на настольном клиенте.</string>
   <string name="unknown_type_field_warning">Тип ответа: неизвестное поле %s</string>
-  <string name="simple_interface_hint">Пустой %s. Попробуйте отключить простой интерфейс.</string>
   <string name="delete_deck">Удаление колоды...\nПожалуйста подождите...</string>
   <string-array name="dynOrderLabels">
     <item>Старейшие появляться первыми</item>
@@ -138,17 +124,12 @@
     <item>Порядок просмотра добавлен</item>
     <item>Соответствующий порядок</item>
   </string-array>
-  <string name="menu_cardbrowser">Редактор карт</string>
   <string name="show_hint">Показать %s</string>
-  <string name="pref_lang_other">Языковые настройки</string>
-  <string name="pref_font_UI">Шрифт пользовательского интерфейса</string>
   <string name="info_rate">Оценка AnkiDroid</string>
   <string name="col_load_failed">Сбой загрузки коллекции.\nНажмите кнопку назад, чтобы закрыть AnkiDroid.</string>
   <string name="import_title">Импорт карт</string>
   <string name="import_select_title">Выбрать файл для импорта</string>
-  <string name="import_message">Вы хотите добавить данные файла %s в Вашу коллекцию, или заменить Вашу коллекции этими данными?</string>
   <string name="import_message_add">Добавить</string>
-  <string name="import_message_replace">Заменить</string>
   <string name="import_message_replace_confirm">Удалить Вашу существующую коллекцию и заменить её данными файла %s. Вы уверены?</string>
   <string name="import_message_add_confirm">Добавить \"%s\" в коллекцию? Это может занять много времени</string>
   <string name="import_log_success">Успешно импортированы %d карты</string>
@@ -170,13 +151,8 @@
   <string name="study_options">Опции колоды</string>
   <string name="custom_study">Дополнительное обучение</string>
   <string name="dyn_deck_desc">Это специальная колода для изучения вне нормального расписания. Карты будут автоматически возвращены в их изначальную колоду после их просмотра. Удаление этой колоды из списка колод возвратит все оставшиеся карты в их изначальную колоду.</string>
-  <string name="exit_wizard">Выход из мастера</string>
   <string name="steps_error">Шаги должны быть числами больше 0</string>
   <string name="steps_min_error">Требуется по крайней мере один шаг</string>
-  <string name="custom_study_invalid_number">Недопустимое число</string>
-  <string name="template_error">Ошибка шаблона:</string>
-  <string name="template_error_detail">В шаблоне этой карты присутствует ошибка.</string>
-  <string name="template_error_fix">Используйте редактор карт в настольной версии Anki, чтобы исправить эту ошибку.</string>
   <string name="sched_end">(конец)</string>
   <string name="sched_unbury_button">Чтобы увидеть их снова, нажмите кнопку \"Отменить сдвиг\".</string>
   <string name="sched_has_buried">Некоторые связанные или скрытые карты были отложены до следующей сессии.</string>

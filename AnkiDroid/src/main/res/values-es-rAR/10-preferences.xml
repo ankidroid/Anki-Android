@@ -138,7 +138,6 @@
   <string name="safe_display_summ">Deshabilitar todas las animaciones y usar un método más seguro para dibujar las tarjetas. Los dispositivos de tinta electrónica y dispositivos más viejos que utilizan fuentes personalizadas pueden requerir esta opción.</string>
   <string name="vertical_centering">Alinear al centro</string>
   <string name="vertical_centering_summ">Centra verticalmente el contenido de las tarjetas</string>
-  <string name="pref_cat_backup">Copias de seguridad</string>
   <string name="pref_backup">Usar copias de seguridad</string>
   <string name="pref_backup_summ">Crear copias de seguridad automáticamente antes de abrir un mazo (una vez al día)</string>
   <string name="pref_backup_max">Número máximo de copias de seguridad</string>
@@ -163,11 +162,6 @@
   <string name="input_workaround_summ">Solución para focalizar problemas en cuadros de entrada de HTML. Genera problemas en muchos dispositivos.</string>
   <string name="pref_keep_screen_on">Mantener la pantalla encendida</string>
   <string name="pref_keep_screen_on_summ">Desactivar el tiempo de espera de pantalla</string>
-  <string name="pref_simple_interface">Interfaz simple</string>
-  <string name="pref_simple_interface_summ">Acelera el despliegue de las tarjetas pero no soporta todas las características html</string>
-  <string name="pref_simple_interface_exclude_tags">Etiquetas a excluir</string>
-  <string name="pref_simple_interface_exclude_tags_summ">No utilizar la interfaz sencilla para estas etiquetas: XXX</string>
-  <string name="write_answers_message">Debe definir para cada mazo un campo que le permita comparar las respuestas escritas entre sí. Puede hacer esto mediante Anki Desktop (propiedades del mazo -&gt; editar modelo -&gt; tipo de tarjeta.)\n\nSi no se ha configurado un campo de comparación su respuesta escrita será comparada con toda la respuesta de la tarjeta</string>
   <string name="fix_arabic_text">Mejorar la visualización del árabe</string>
   <string name="fix_arabic_text_summ">Solución parcial para el soporte limitado de Árabe por la plataforma Android. Cuando se activa no es posible modificar las tarjetas.</string>
   <string name="convert_fen_text">Soporte para notación de ajedrez</string>
@@ -175,17 +169,6 @@
   <string name="filter_google_translate_summ">Guardar solamente la palabra fuente y la traducción</string>
   <string name="convert_fen_text_summ">Dibujar un tablero de ajedrez a partir de la notación de Edward Forsyth. La notación debe estar enmarcada en una etiqueta que contenga [fen][/fen].</string>
   <string name="studyoptions_limit_select_tags">Seleccionar etiquetas</string>
-  <string name="studyoptions_limit_tags_active">Con: %1$s</string>
-  <string name="studyoptions_limit_tags_inactive">Sin: %1$s</string>
-  <string name="studyoptions_limit_button_text">Límite</string>
-  <string name="studyoptions_limit_dialog_title">Limitar estudio</string>
-  <string name="studyoptions_session">Sesión</string>
-  <string name="studyoptions_tag">Por etiqueta</string>
-  <string name="studyoptions_tag_new">Mostrar nuevas tarjetas ordenadas por etiqueta:</string>
-  <string name="studyoptions_tag_rev">Mostrar tarjetas para revisión ordenadas por etiqueta:</string>
-  <string name="studyoptions_new_cards_per_day">Nuevas tarjetas por día</string>
-  <string name="studyoptions_max_fail_card">Máximo de tarjetas falladas</string>
-  <string name="deck_conf_deck_name">Nombre del mazo</string>
   <string name="deck_conf_deck_description">Descripción del mazo</string>
   <string name="deck_conf_group">Grupo de opciones</string>
   <plurals name="deck_conf_group_summ">
@@ -244,7 +227,6 @@
   <string name="pref_browser_editor_font_summ">XXX</string>
   <string name="deck_conf_cram_filter">Filtro</string>
   <string name="deck_conf_cram_options">Opciones</string>
-  <string name="deck_conf_cram_preset">Ajuste preestablecido</string>
   <string name="deck_conf_cram_search">Buscar</string>
   <string name="deck_conf_cram_limit">Limitar a</string>
   <string name="deck_conf_cram_order">Tarjetas seleccionadas por</string>

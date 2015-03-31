@@ -51,14 +51,6 @@
     <item quantity="one">%1$d deck</item>
     <item quantity="other">%1$d τράπουλες</item>
   </plurals>
-  <string name="widget_medium">AnkiDroid Μεσαίο</string>
   <string name="widget_small">AnkiDroid Μικρό</string>
-  <string name="widget_big">AnkiDroid Μεγάλο</string>
-  <string name="widget_big_restrictions_dialog">Λόγω ορισμένων περιορισμών του Android widget αυτό το widget μπορεί να δείξει μόνο κείμενο κι όχι εικόνες/ήχους κλπ.</string>
-  <string name="open_in_reviewer">Άνοιγμα τράπουλας στο AnkiDroid</string>
-  <plurals name="widget_big_eta">
-    <item quantity="one">Estimated time: %d min.</item>
-    <item quantity="other">Εκτιμώμενος χρόνος: %d λεπτά</item>
-  </plurals>
   <string name="widget_big_tomorrow_due">Δέουσες αύριο:</string>
 </resources>

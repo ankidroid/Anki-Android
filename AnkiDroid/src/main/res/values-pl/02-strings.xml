@@ -48,8 +48,6 @@
   <string name="CardEditorTags">Etykiety: %1$s</string>
   <string name="CardEditorCards">Cards: %1$s</string>
   <string name="add_new_filter_tags">Dodaj/filtruj tagi</string>
-  <string name="note_type">Typ notatki</string>
-  <string name="card_type">Typ karty</string>
   <string name="filter_tags">Filtruj tagi</string>
   <string name="sdcard_missing_message">Karta SD jest niedostępna, ponieważ jest ona używana jako pamięć masowa USB. Odłącz USB, aby uzyskać dostęp do Twoich talii.</string>
   <string name="enable_whiteboard">Włącz tablicę</string>
@@ -58,8 +56,6 @@
   <string name="hide_whiteboard">Ukryj tablicę</string>
   <string name="clear_whiteboard">Wyczyść tablicę</string>
   <string name="replay_audio">Odtwórz dźwięk</string>
-  <string name="cram_edit_warning">Edycja kart nie jest dozwolona podczas wkuwania</string>
-  <string name="suspend_leeches">Zawieś pijawki</string>
   <string name="leech_suspend_notification">Karta oznaczona jako pijawka i zawieszona</string>
   <string name="leech_notification">Karta oznaczona jako pijawka</string>
   <string name="corrupt_font">Uszkodzony plik czcionki %s</string>
@@ -80,10 +76,8 @@
   <string name="cardeditor_title_edit_card">Edytuj notatkę</string>
   <string name="discard_unsaved_changes">Zamknąć i utracić bieżący wkład?</string>
   <string name="factadder_saving_error">Błąd podczas zapisywania notatki</string>
-  <string name="pref_lang_support">Język</string>
   <string name="saving_facts">Zapisywanie notatki</string>
   <string name="saving_model">Saving model</string>
-  <string name="deck">Talia</string>
   <string name="add">Dodaj</string>
   <string name="close">Zamknij</string>
   <string name="select">Wybierz</string>
@@ -100,13 +94,8 @@
     <item quantity="other">%1$d minut</item>
   </plurals>
   <string name="studyoptions_welcome_title">Witamy w AnkiDroidzie</string>
-  <string name="studyoptions_no_external_storage_title">Brak zewnętrznej pamięci masowej</string>
-  <string name="studyoptions_no_external_storage_message">Brak zewnętrznej pamięci masowej. AnkiDroid potrzebuje dostępu do karty SD, aby móc wczytać Twoje talie. Sprawdź, czy karta SD jest zamontowana i spróbuj ponownie.</string>
   <string name="fact_adder_intent_title">Karta AnkiDroida</string>
-  <string name="deckpicker_select_dictionary_title">Wybierz słownik</string>
-  <string name="deckpicker_select_dictionary_default">Domyślny</string>
   <string name="card_editor_add_card">Dodaj notatkę</string>
-  <string name="card_editor_reset">Reset</string>
   <string name="card_editor_copy_card">Kopiuj kartę</string>
   <string name="card_editor_reset_card">Resetuj postępy</string>
   <string name="card_editor_reschedule_card">Ponownie ustal czas dla karty</string>
@@ -120,14 +109,11 @@
     <item quantity="other">dodanych %d kart</item>
   </plurals>
   <string name="help_title">Pomoc</string>
-  <string name="help_online">Pomoc online</string>
-  <string name="help_faq">FAQ</string>
   <string name="check_db">Sprawdź bazę danych</string>
   <string name="check_media">Sprawdź media</string>
   <string name="check_db_message">Sprawdzanie bazy danych.\nProszę czekać...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Pusta karta. Uruchom \"Narzędzia &gt; puste karty...\" w programie w wersji na PC.</string>
   <string name="unknown_type_field_warning">Wpisz odpowiedź: nieznane pole %s</string>
-  <string name="simple_interface_hint">Pusty %s. Pamiętaj, że prosty interfejs nie może pokazywać zdjęć i odtwarzać dźwięków itp.</string>
   <string name="delete_deck">Usuwanie talii...\nProszę czekać...</string>
   <string-array name="dynOrderLabels">
     <item>Najstarszy jako pierwszy</item>
@@ -138,17 +124,12 @@
     <item>Kolejność dodana</item>
     <item>W kolejności do przejrzenia</item>
   </string-array>
-  <string name="menu_cardbrowser">Przeglądarka kart</string>
   <string name="show_hint">Pokaż %s</string>
-  <string name="pref_lang_other">Opcje języka</string>
-  <string name="pref_font_UI">Niestandardowa czcionka</string>
   <string name="info_rate">Oceń AnkiDroid</string>
   <string name="col_load_failed">Ładowanie kolekcji nie powiodło się.\nNaciśnij \"Back\" aby zamknąć AnkiDroid.</string>
   <string name="import_title">Importuj karty</string>
   <string name="import_select_title">Wybierz plik do importu</string>
-  <string name="import_message">Czy chcesz dodać zawartość pliku %s do swojej kolekcji, albo zastąpić swoją kolekcję?</string>
   <string name="import_message_add">Dodaj</string>
-  <string name="import_message_replace">Zastąp</string>
   <string name="import_message_replace_confirm">Istniejąca kolekcja zostanie usunięta i zastąpiona danymi z pliku %s. Czy na pewno?</string>
   <string name="import_message_add_confirm">Dodać \"%s\" do kolekcji? To może trwać bardzo długo</string>
   <string name="import_log_success">Pomyślnie zaimportowano %d kart</string>
@@ -170,13 +151,8 @@
   <string name="study_options">Opcje talii</string>
   <string name="custom_study">Nauka niestandardowa</string>
   <string name="dyn_deck_desc">To jest specjalna talia do nauki poza normalnym trybem. Karty automatycznie powrócą do oryginalnych talii po ich przejrzeniu. Usunięcie tej talii z listy spowoduje przywrócenie pozostałych w niej kart do oryginalnych talii.</string>
-  <string name="exit_wizard">Zakończ kreator</string>
   <string name="steps_error">Kroki muszą być liczbą większą niż 0</string>
   <string name="steps_min_error">Przynajmniej jeden krok jest wymagany</string>
-  <string name="custom_study_invalid_number">Nieprawidłowy numer</string>
-  <string name="template_error">Błąd szablonu:</string>
-  <string name="template_error_detail">W szablonie tej karty jest błąd.</string>
-  <string name="template_error_fix">Proszę użyć edytora kart w aplikacji na komputerze aby poprawić błąd.</string>
   <string name="sched_end">(koniec)</string>
   <string name="sched_unbury_button">Aby zobaczyć je teraz, naciśnij przycisk Odkop.</string>
   <string name="sched_has_buried">Niektóre związane lub zakopane karty zostały odroczone do następnej sesji.</string>

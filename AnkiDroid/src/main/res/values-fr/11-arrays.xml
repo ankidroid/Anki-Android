@@ -35,14 +35,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="navigation_titles">
-    <item>Paquets</item>
-    <item>Navigateur de cartes</item>
-    <item>Statistiques</item>
-    <item>Paramètres</item>
-    <item>Aide</item>
-    <item>Envoyer un commentaire</item>
-  </string-array>
   <string-array name="newCardSchedulingLabels">
     <item>Disperser les cartes inédites dans le paquet</item>
     <item>Après les cartes déjà vues</item>

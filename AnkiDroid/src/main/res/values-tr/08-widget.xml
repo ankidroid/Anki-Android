@@ -51,14 +51,6 @@
     <item quantity="one">%1$d deste</item>
     <item quantity="other">%1$d deste</item>
   </plurals>
-  <string name="widget_medium">AnkiDroid Orta</string>
   <string name="widget_small">AnkiDroid Küçük</string>
-  <string name="widget_big">AnkiDroid Büyük</string>
-  <string name="widget_big_restrictions_dialog">Android\'in widget çerçevesinin bazı kısıtlamalarından dolayı bu bileşen yalnızca metin gösterebilir, resim/ses vb. gösterilmez.</string>
-  <string name="open_in_reviewer">Desteyi AnkiDroid\'de aç</string>
-  <plurals name="widget_big_eta">
-    <item quantity="one">Tahminî süre: %d dk.</item>
-    <item quantity="other">Tahminî süre: %d dk.</item>
-  </plurals>
   <string name="widget_big_tomorrow_due">Yarın çalışılacak:</string>
 </resources>

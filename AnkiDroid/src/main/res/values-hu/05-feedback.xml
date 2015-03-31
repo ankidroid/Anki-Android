@@ -39,30 +39,12 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="error_ok">Hibák jelentése</string>
-  <string name="error_cancel">Ne jelentsen hibákat</string>
   <string name="error_reporting_choice">Hibák jelentése</string>
   <string name="error_reporting_choice_summary">A hibákat lehet automatikusan jelenteni, soha, vagy rákérdezhetek</string>
-  <string name="feedback_disclaimer">Disclaimer: We don\'t collect any personal information such as your email address, phone number, or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves and the steps which led up to them occuring.</string>
   <string name="feedback_title">Visszajelzés</string>
-  <string name="feedback_send_feedback">Küldd el a véleményed</string>
-  <string name="feedback_send_feedback_and_errors">Hibák és visszajelzés küldése</string>
-  <string name="feedback_message_sent_success">A visszajelzést megkaptuk, köszönjük!</string>
-  <string name="feedback_message_sent_failure">Nem lehet visszajelzést küldeni, kód %1$s</string>
-  <string name="feedback_keep_latest">Tartsa meg a legújabb hibát</string>
-  <string name="feedback_clear_all">Hibák törlése</string>
   <string name="feedback_default_text">Írd be a visszajelzésedet, vagy a jelentett hiba természetére vonatkozó információkat.</string>
-  <string name="feedback_error_reply_new">Ismeretlen hiba, új bug iktatva</string>
-  <string name="feedback_error_reply_known">Korábban észlelt probléma. A részleteket szívesen látjuk az AnkiDroid helpdeskjén.</string>
-  <string name="feedback_error_reply_issue_unknown">Hiba %1$d, ismeretlen állapot</string>
-  <string name="feedback_error_reply_issue_status">Hiba %1$d, állapot: %2$s</string>
-  <string name="feedback_error_reply_issue_fixed_dev">Hiba %1$d, rögzített, de nem közzétett</string>
-  <string name="feedback_error_reply_issue_fixed_prod">Hiba %1$d, a legfrissebb verzióban javítva</string>
-  <string name="feedback_error_reply_malformed">Iktatott hiba, nincs válasz</string>
-  <string name="feedback_error_reply_failed">Nem sikerült elküldeni</string>
   <string name="feedback_auto_toast_text">AnkiDroid has encountered a problem; a report is being sent to the developers&#8230;</string>
   <string name="feedback_manual_toast_text">AnkiDroid has encountered a problem; a report is being generated&#8230;</string>
   <string name="feedback_copy_debug">Copy debug info</string>
   <string name="feedback_report">Report</string>
-  <string name="feedback_report_automatically">Send error reports automatically</string>
 </resources>

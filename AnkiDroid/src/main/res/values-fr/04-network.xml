@@ -41,30 +41,14 @@
 -->
 <resources>
   <string name="youre_offline">Vous n\'êtes pas connecté à Internet</string>
-  <string name="currently_downloading">En cours de téléchargement</string>
-  <string name="starting_download">Démarrage du téléchargement&#8230;</string>
-  <string name="downloading">Téléchargement en cours...</string>
-  <string name="paused">Arrêté</string>
-  <string name="downloaded">Téléchargé</string>
   <string name="sync_error">Erreur de synchronisation</string>
   <string name="vague_error">Erreur</string>
-  <string name="cancelling">Annulation...</string>
-  <string name="connection_error_return_message">Une erreur réseau s\'est produite. Réessayer ou annuler et revenir à l\'écran précédent.</string>
   <string name="retry">Réessayer</string>
   <string name="cancel">Annuler</string>
-  <string name="download_overwrite">Écraser</string>
-  <string name="download_cancel">Annuler le téléchargement</string>
-  <string name="shared_decks">Paquets partagés</string>
   <string name="loading_shared_decks">Chargement des paquets partagés disponibles...</string>
   <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Conditions générales</a></string>
-  <string name="cancel_download">Annuler le téléchargement</string>
-  <string name="resume_download">Reprendre le téléchargement</string>
-  <string name="pause_download">Suspendre le téléchargement</string>
-  <string name="duplicate_download">Ce jeu de cartes est déjà en cours de téléchargement</string>
   <string name="menu_get_shared_decks">Télécharger des paquets partagés</string>
-  <string name="download_button_return">Retour</string>
   <string name="connection_error_message">Une erreur réseau s\'est produite.</string>
-  <string name="sync_log_db_error">Une erreur s\'est produite dans la base de données.</string>
   <string name="not_logged_in_title">Se connecter à AnkiWeb</string>
   <string name="login_create_account_message">Vous devez vous connecter à un compte AnkiWeb. Vous pourrez en créer un à la prochaine étape.</string>
   <string name="no_email_client">Aucun client de messagerie disponible</string>
@@ -80,11 +64,7 @@
   <string name="log_out">Se déconnecter</string>
   <string name="alert_logging_message">Connexion, patientez s\'il vous plaît ...</string>
   <string name="invalid_username_password">Votre adresse électronique ou mot de passe est invalide.</string>
-  <string name="login_generic_error">Échec de l\'ouverture de session.</string>
   <string name="reset_password">Réinitialiser le mot de passe</string>
-  <string name="download_finished">Téléchargement terminé</string>
-  <string name="personaldeckpicker_title">Ouvrir un paquet en ligne</string>
-  <string name="shareddeckpicker_title">Sélectionnez le paquet que vous voulez télécharger</string>
   <string name="downloaddeck_search">Recherche</string>
   <string name="preferences_title">Préférences</string>
   <string name="deckpreferences_title">Options pour XXX</string>
@@ -97,7 +77,6 @@
   <string name="sync_preparing_full_sync_message">Préparation de la synchronisation complète&#8230;</string>
   <string name="sync_uploading_message">Envoi en cours&#8230;</string>
   <string name="sync_downloading_message">Téléchargement...</string>
-  <string name="sync_reload_message">Rechargement de la collection...</string>
   <string name="sync_title">Synchronisation</string>
   <string name="sync_downloading_media">Téléchargement du média %1$d/%2$d...</string>
   <string name="sync_log_uploading_message">Synchronisation complète depuis la version locale</string>
@@ -105,11 +84,9 @@
   <string name="sync_log_clocks_unsynchronized">L\'heure sur votre appareil est incorrecte de %1$d secondes %2$s; La synchronisation requiert que votre horloge et le fuseau horaire soient définis correctement afin d\'éviter les erreurs. Veuillez vous assurer que les date, heure et fuseau horaire sur votre appareil sont correctement réglés, puis resynchronisez.</string>
   <string name="sync_log_clocks_unsynchronized_tz">, le fuseau horaire de l\'appareil est peut-être erroné</string>
   <string name="sync_log_clocks_unsynchronized_date">, la date de l\'appareil est peut-être erronée</string>
-  <string name="sync_log_old_version">Le protocole de synchronisation a changé, veuillez mettre à jour AnkiDroid. Voir %s</string>
   <string name="sync_conflict_title">Conflit de synchronisation</string>
   <string name="sync_no_changes_message">Aucun changement trouvé.</string>
   <string name="sync_database_acknowledge">Collection synchronisée</string>
-  <string name="sync_log_error_fix">Une erreur de synchronisation a eu lieu%s.\n\nSi cette erreur survient à chaque fois, vous pouvez effectuer une synchronisation complète, qui résoudra probablement le problème. Sachez que cela va remplacer soit votre collection locale soit celle sur AnkiWeb.\nSi vous voulez vraiment effectuer une synchronisation complète, choisissez si vous souhaitez envoyer votre collection locale ou télécharger celle du serveur.</string>
   <string name="sync_log_error_specific">Erreur de synchronisation, type:%1$s, message:%2$s</string>
   <string name="sync_corrupt_database">Votre base de données est corrompue. Veuillez la réparer avant de tenter à nouveau de synchroniser.\n\nVoir %s pour plus d\'informations sur la réparation de votre base de données.</string>
   <string name="sync_too_busy">Serveur trop occupé. Réessayez plus tard.</string>
@@ -130,10 +107,6 @@
   <string name="sync_check_upload_file">Vérification du fichier avant l\'envoi&#8230;</string>
   <string name="sync_check_download_file">Vérification du fichier téléchargé...</string>
   <string name="sync_media_find">Recherche des médias modifiés...</string>
-  <string name="sync_media_remove">Gestion des médias supprimés...</string>
-  <string name="sync_media_from_server">Réception des médias depuis le serveur...</string>
-  <string name="sync_media_to_server">Envoi des médias au serveur...</string>
-  <string name="sync_media_sanity_check">Vérification du nombre de médias...</string>
   <string name="sync_media_no_changes">Pas de changements des fichiers médias</string>
   <string name="sync_media_success">Médias synchronisés avec succès.</string>
   <string name="sync_media_changes_count">%d modifications de médias à envoyer</string>
@@ -146,22 +119,6 @@
   <string name="register_title">Créer un compte</string>
   <string name="register_mismatch">Le couple nom d\'utilisateur/mot de passe ne correspond pas ou est vide. Veuillez réessayer.</string>
   <string name="registering_message">Compte en cours de création. \nVeuillez patienter...</string>
-  <string name="upgrade_decks_zipping">Compression des paquets pour l\'envoi.\nVeuillez patienter...</string>
-  <string name="upgrade_decks_upload">Envoi compressé des paquets&#8230;\nVous pouvez annuler en appuyant sur retour.</string>
-  <string name="upgrade_decks_waiting">En attente, position dans la file : %s\nVeuillez patienter...</string>
-  <string name="upgrade_decks_upgrade_started">Mise à niveau démarrée\nVeuillez patienter&#8230;</string>
-  <string name="upgrade_decks_downloading">Téléchargement de la collection mise à niveau\nVous pouvez annuler en appuyant sur retour. \nVeuillez patienter&#8230;</string>
-  <string name="upgrade_decks_media">Copie des anciens médias vers le nouvel emplacement des médias.\nVeuillez patienter...</string>
-  <string name="upgrade_decks_message">Il n\'y a aucune collection Anki 2.0 disponible mais un ou plusieurs paquets dans l\'ancien format Anki 1.2 ont été trouvés: %sAfin d\'utiliser vos paquets avec la nouvelle version de AnkiDroid ils doivent d\'abord être convertis en une unique collection au format  Anki-2.0. Il existe trois possibilités pour cela :</string>
-  <string name="upgrade_decks_message_pos1">En utilisant Anki Desktop 2.0, vos paquets seront convertis au premier lancement. Vous pourrez ensuite synchroniser sur AnkiWeb ou simplement copier la nouvelle collection sur votre appareil mobile. Copiez les paquets de votre répertoire AnkiDroid (%s) vers votre répertoire d\'Anki Desktop 1.2 sur votre ordinateur (si vous ne les avez pas synchronisés) et démarrez Anki Desktop 2.0.</string>
-  <string name="upgrade_decks_message_pos2">Si vous déjà synchronisé vos paquets sur ankiweb, vous aurez juste besoin vous connecter une fois à %s et vos paquets seront convertis là-bas. Après cela, vous pourrez simplement synchroniser la nouvelle collection sur votre appareil mobile.</string>
-  <string name="upgrade_decks_message_pos3">En troisième possibilité, vos paquets peuvent être convertis directement par AnkiDroid et AnkiWeb. Si vous cliquez sur le bouton mise à jour ci-dessous, vos paquets seront compressés et envoyés vers AnkiWeb. La collection ainsie convertie sera ensuite automatiquement téléchargée et ouverte. Il n\'est pas nécessaire de s\'enregistrer sur le site mais veillez à utiliser une connexion wifi de préférence, afin d\'éviter de générer trop de trafic sur votre connexion mobile. Si les paquets compressés pèsent plus de 50mo, ils vous sera impossible d\'utiliser cette méthode. Dans ce cas, référez vous aux autres possibilités. Si les médias de vos paquets sont stockés dans des répertoires personnalisés ou dans un dossier Dropbox, il peut être nécessaire de les déplacer à la main vers leur nouvelle destination.</string>
-  <string name="upgrade_decks_message_finish">Si vous continuez simplement, une nouvelle collection sera créée sans prendre en compte vos anciens paquets.</string>
-  <string name="upgrade_required">Vos paquets sur AnkiWeb sont encore dans l\'ancien format Anki 1.2. Connectez vous ici : %s pour que vos paquets soient automatiquement convertis dans le nouveau format.</string>
-  <string name="upgrade_decks_button">Mise à jour</string>
-  <string name="upgrade_decks_failed">Ces paquets ne peuvent être mis à jour\n%sVeuillez les ouvrir dans Anki Desktop et effectuez une vérification de la base de données. Après cela, vous pourrez les importer via Anki Desktop.</string>
-  <string name="upgrade_decks_media_failed">La copie des médias dans le nouveau dossier de média (%1$s) a échoué pour ces paquets :\n%2$sVeuillez déplacer manuellement les fichiers médias.</string>
-  <string name="download_deck">Téléchargement du paquet (%d Ko). \nPatience&#8230;</string>
   <string name="sync_sanity_local">Local</string>
   <string name="sync_sanity_remote">Distant</string>
   <string name="force_full_sync_title">Forcer synchronisation complète</string>

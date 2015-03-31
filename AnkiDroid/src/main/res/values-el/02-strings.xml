@@ -48,8 +48,6 @@
   <string name="CardEditorTags">Ετικέτες:%1$s</string>
   <string name="CardEditorCards">Cards: %1$s</string>
   <string name="add_new_filter_tags">Add/filter tags</string>
-  <string name="note_type">Τύπος σημείωσης</string>
-  <string name="card_type">Card type</string>
   <string name="filter_tags">Filter tags</string>
   <string name="sdcard_missing_message">Η SD κάρτα δεν είναι διαθέσιμη επειδή χρησιμοποιείται για αποθήκευση μέσω USB. Αποσυνδέστε την USB για να αποκτήσετε πρόσβαση στις τράπουλές σας.</string>
   <string name="enable_whiteboard">Enable whiteboard</string>
@@ -58,8 +56,6 @@
   <string name="hide_whiteboard">Απόκρυψη πίνακα</string>
   <string name="clear_whiteboard">Καθαρίσμός πίνακα</string>
   <string name="replay_audio">Replay audio</string>
-  <string name="cram_edit_warning">Η επεξεργασία καρτών δεν επιτρέπεται κατά την εντατική μελέτη</string>
-  <string name="suspend_leeches">Αναστείλετε κάρτες βδέλλες</string>
   <string name="leech_suspend_notification">Η κάρτα χαρακτηρίστηκε βδέλλα και αναστάλθηκε</string>
   <string name="leech_notification">Κάρτα σημαδεμένη ως βδέλλα</string>
   <string name="corrupt_font">Κατεστραμμένο αρχείο γραμματοσειράς %s</string>
@@ -80,10 +76,8 @@
   <string name="cardeditor_title_edit_card">Σύνταξη Σημείωσης</string>
   <string name="discard_unsaved_changes">Close and lose current input?</string>
   <string name="factadder_saving_error">Σφάλμα κατά την αποθήκευση σημείωσης</string>
-  <string name="pref_lang_support">Γλώσσα</string>
   <string name="saving_facts">Αποθήκευση σημείωσης</string>
   <string name="saving_model">Saving model</string>
-  <string name="deck">Τράπουλα</string>
   <string name="add">Προσθήκη</string>
   <string name="close">Κλείσιμο</string>
   <string name="select">Επιλέξτε</string>
@@ -100,13 +94,8 @@
     <item quantity="other">%1$d minutes</item>
   </plurals>
   <string name="studyoptions_welcome_title">Καλώς ήρθατε στο AnkiDroid</string>
-  <string name="studyoptions_no_external_storage_title">Μη διαθέσιμη εξωτερική αποθήκευση</string>
-  <string name="studyoptions_no_external_storage_message">Δεν υπάρχει διαθέσιμη εξωτερική αποθήκευση αυτή τη στιγμή. Το AnkiDroid χρειάζεται να έχει πρόσβαση στην κάρτα SD σας για να διαβάσει και να φορτώσει τις Anki τράπουλές σας. Ελέγξτε ότι η κάρτα SD σας είναι τοποθετημένη και προσπαθήστε ξανά.</string>
   <string name="fact_adder_intent_title">Κάρτα AnkiDroid</string>
-  <string name="deckpicker_select_dictionary_title">Επιλογή Λεξικού</string>
-  <string name="deckpicker_select_dictionary_default">Προεπιλογή</string>
   <string name="card_editor_add_card">Προσθήκη σημείωσης</string>
-  <string name="card_editor_reset">Επαναφορά</string>
   <string name="card_editor_copy_card">Αντιγραφή κάρτας</string>
   <string name="card_editor_reset_card">Διαγραφή προόδου</string>
   <string name="card_editor_reschedule_card">Reschedule card</string>
@@ -120,14 +109,11 @@
     <item quantity="other">%d κάρτες προστέθηκαν</item>
   </plurals>
   <string name="help_title">Βοήθεια</string>
-  <string name="help_online">Online βοήθεια</string>
-  <string name="help_faq">Συχνές ερωτήσεις</string>
   <string name="check_db">Έλεγχος βάσης δεδομένων</string>
   <string name="check_media">Check media</string>
   <string name="check_db_message">Έλεγχος βάσης δεδομένων.\nΠαρακαλούμε περιμένετε...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
   <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
-  <string name="simple_interface_hint">Κενό %s. Έχετε το νου σας ότι το απλό interface δεν υποστηρίζει εικόνες/ήχους κτλ.</string>
   <string name="delete_deck">Διαγραφή τράπουλας...\nΠαρακαλούμε περιμένετε.</string>
   <string-array name="dynOrderLabels">
     <item>Πρώτα οι παλαιότερα ειδωμένες</item>
@@ -138,17 +124,12 @@
     <item>Κατά σειρά προσθήκης</item>
     <item>Κατά σειρά οφειλής</item>
   </string-array>
-  <string name="menu_cardbrowser">Ευρετήριο καρτών</string>
   <string name="show_hint">Show %s</string>
-  <string name="pref_lang_other">Προτιμήσεις Γλώσσας</string>
-  <string name="pref_font_UI">Προσαρμοσμένη γραμματοσειρά διαπροσωπίας</string>
   <string name="info_rate">Αξιολογείστε το AnkiDroid</string>
   <string name="col_load_failed">Η φόρτωση της συλλογής απέτυχε.\nΠιέστε πίσω, για να κλείσετε το AnkiDroid.</string>
   <string name="import_title">Εισαγωγή καρτών</string>
   <string name="import_select_title">Choose a file to import</string>
-  <string name="import_message">Θέλετε να προσθέσετε το περιεχόμενο του αρχείου %s στη συλλογή σας, ή να αντικαταστήσετε τη συλλογή σας με αυτό;</string>
   <string name="import_message_add">Προσθήκη</string>
-  <string name="import_message_replace">Αντικατάσταση</string>
   <string name="import_message_replace_confirm">Αυτό θα διαγράψει την υπάρχουσα συλλογή σας και θα την αντικαταστήσει με τα δεδομένα του αρχείου %s. Είστε σίγουροι?</string>
   <string name="import_message_add_confirm">Add \"%s\" to collection? This may take a long time</string>
   <string name="import_log_success">Εισήχθησαν με επιτυχία %d κάρτες</string>
@@ -170,13 +151,8 @@
   <string name="study_options">Deck options</string>
   <string name="custom_study">Προσαρμοσμένη μελέτη</string>
   <string name="dyn_deck_desc">Αυτή είναι μια ειδική τράπουλα για μάθηση εκτός του κανονικού προγράμματος. Οι κάρτες θα επιστραφούν αυτόματα στην αρχική τους τράπουλα μετά την επανάληψή τους. Η διαγραφή αυτής της τράπουλας από τη λίστα τραπουλών θα επιστρέψει όλες τις κάρτες στην αρχική τους τράπουλα.</string>
-  <string name="exit_wizard">Έξοδος απο τον οδηγό</string>
   <string name="steps_error">Steps must be numbers greater than 0</string>
   <string name="steps_min_error">At least one step is required</string>
-  <string name="custom_study_invalid_number">Invalid number</string>
-  <string name="template_error">Template error</string>
-  <string name="template_error_detail">The card template contains an error</string>
-  <string name="template_error_fix">Use the card editor on the desktop client to fix it.</string>
   <string name="sched_end">(end)</string>
   <string name="sched_unbury_button">To see them now, touch the \"Unbury\" button.</string>
   <string name="sched_has_buried">Some related or buried cards were delayed until tomorrow.</string>

@@ -138,7 +138,6 @@
   <string name="safe_display_summ">Wyłącz wszystkie animacje i użyj bezpieczniejszej metody rysowania kart. E-ink i starsze urządzenia używając standardowych fontów mogą tego wymagać.</string>
   <string name="vertical_centering">Wycentruj</string>
   <string name="vertical_centering_summ">Wycentruj w pionie zawartość kart</string>
-  <string name="pref_cat_backup">Kopie bezpieczeństwa</string>
   <string name="pref_backup">Twórz kopie</string>
   <string name="pref_backup_summ">Automatycznie twórz kopię zapasową przed otwarciem talii (raz dziennie)</string>
   <string name="pref_backup_max">Maksymalna liczba kopii zapasowych</string>
@@ -163,11 +162,6 @@
   <string name="input_workaround_summ">Obejście problemu nieaktywnych pól tekstowych HTML na niektórych urządzeniach.</string>
   <string name="pref_keep_screen_on">Utrzymuj włączony ekran</string>
   <string name="pref_keep_screen_on_summ">Zablokuj wyłącznik czasowy ekranu</string>
-  <string name="pref_simple_interface">Prosty interfejs</string>
-  <string name="pref_simple_interface_summ">Przyspiesza wyświetlanie kart, ale nie obsługuje wszystkich możliwości HTML</string>
-  <string name="pref_simple_interface_exclude_tags">Tagi do wyłączenia</string>
-  <string name="pref_simple_interface_exclude_tags_summ">Nie włącza prostego interfejsu dla tych tagów: XXX</string>
-  <string name="write_answers_message">Dla każdej talii należy zdefiniować pole, które porównywane będzie z wpisywaną odpowiedzią. Można to zrobić w wersji desktopowej Anki (Własności talii -&gt; Edytuj model -&gt; Układ karty).\n\nJeśli nie zdefiniowano takiego pola, wpisywana odpowiedź będzie zawsze porównywana z całym polem odpowiedzi karty</string>
   <string name="fix_arabic_text">Popraw wyświetlanie arabskiego</string>
   <string name="fix_arabic_text_summ">Częściowe obejście problemu z ograniczoną obsługą arabskiego przez Androida. Kiedy jest włączone, niemożliwa jest edycja kart.</string>
   <string name="convert_fen_text">Obsługa notacji szachowej</string>
@@ -175,17 +169,6 @@
   <string name="filter_google_translate_summ">Po prostu zapisz słowo źródłowe i tłumaczenie</string>
   <string name="convert_fen_text_summ">Rysuj szachownicę z notacji Forsytha-Edwardsa. Notacja musi być w znacznikach [fen][/fen].</string>
   <string name="studyoptions_limit_select_tags">Wybierz etykiety</string>
-  <string name="studyoptions_limit_tags_active">Z: %1$s</string>
-  <string name="studyoptions_limit_tags_inactive">Bez: %1$s</string>
-  <string name="studyoptions_limit_button_text">Limit</string>
-  <string name="studyoptions_limit_dialog_title">Limit nauki</string>
-  <string name="studyoptions_session">Sesja</string>
-  <string name="studyoptions_tag">Wg. etykiety</string>
-  <string name="studyoptions_tag_new">Pokaż nowe karty według etykiety:</string>
-  <string name="studyoptions_tag_rev">Pokaż karty według etykiety:</string>
-  <string name="studyoptions_new_cards_per_day">Nowe karty na dzień</string>
-  <string name="studyoptions_max_fail_card">Maks. ilość źle rozwiązanych kart</string>
-  <string name="deck_conf_deck_name">Nazwa talii</string>
   <string name="deck_conf_deck_description">Opis talii</string>
   <string name="deck_conf_group">Grupa opcji</string>
   <plurals name="deck_conf_group_summ">
@@ -244,7 +227,6 @@
   <string name="pref_browser_editor_font_summ">XXX</string>
   <string name="deck_conf_cram_filter">Filtrowanie</string>
   <string name="deck_conf_cram_options">Opcje</string>
-  <string name="deck_conf_cram_preset">Ustawienia domyślne</string>
   <string name="deck_conf_cram_search">Szukaj</string>
   <string name="deck_conf_cram_limit">Ogranicz do</string>
   <string name="deck_conf_cram_order">karty zaznaczone przez</string>

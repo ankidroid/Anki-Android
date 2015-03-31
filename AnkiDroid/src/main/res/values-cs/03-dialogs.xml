@@ -47,9 +47,7 @@
   <string name="delete_deck_title">Smazat balíček</string>
   <string name="delete_deck_message">Jste si jistý, že si přejete odstranit všechny karty v %s?</string>
   <string name="delete_cram_deck_message">Jste si jistý, že si přejete poslat všechny karty z balíčku %s zpátky do původního balíčku?</string>
-  <string name="delete_deck_confirm">Smazat</string>
   <string name="new_version_message">Nové funkce:</string>
-  <string name="no_tts_available_title">Předčítání</string>
   <string name="no_tts_available_message">Žádný jazyk k předčítání není k dispozici</string>
   <string name="initializing_tts">Inicializuji TTS&#8230;</string>
   <string name="tts_no_tts">Nemluv</string>
@@ -60,14 +58,7 @@
     <item><![CDATA[Ne jen vývojáři mohou pomoci, např. můžete pomoci s <a href="%1$s">překladem</a> AnkiDroid, aktualizovat wiki dokumentaci a náhledy obrazovek, <a href="%2$s">finančně přispět</a> na program Anki, nebo psát do blogu o AnkiDroidu!]]></item>
     <item><![CDATA[AnkiDroid je publikován pod <a href="%1$s">GNU-GPL v3 licencí</a> a zdrojové kódy jsou dostupné <a href="%2$s">zde</a>.]]></item>
   </string-array>
-  <string name="dont_show_again">Již nezobrazovat</string>
-  <string name="notify_ticker">Aktualizace aplikace</string>
-  <string name="notify_title">AnkiDroid aktualizován</string>
-  <string name="notify_message">Stáhnout novou verzi</string>
-  <string name="notification_title">Potvrdit aktualizaci AnkiDroidu</string>
   <string name="preview_title">Náhled</string>
-  <string name="notification_message">Nová verze Ankidroidu je k dispozici v Android Marketu.\n\nChcete ji nainstalovat?</string>
-  <string name="notification_stop">Již mě na tuto aktualizaci neupozorňujte</string>
   <string name="reset_card_dialog_title">Obnovit pokrok v učení</string>
   <string name="reset_card_dialog_message">Tato karta bude umístěna na konec fronty s novými kartami.</string>
   <string name="reset_card_dialog_acknowledge">Obnovit kartu</string>
@@ -90,36 +81,7 @@
   <string name="custom_study_ahead">Opakovat dopředu o x dnů:</string>
   <string name="custom_study_random">Vybrat náhodně x karet z balíčku:</string>
   <string name="custom_study_preview">Zkoušení nových karet přidaných v posledních x dnech:</string>
-  <string name="custom_study_tags">Zadané štítky:</string>
   <string name="rebuild_custom_study_deck">Obnovování uživatelského balíčku.\nProsím čekejte...</string>
-  <string name="deck_upgrade_title">Upgrade balíčku</string>
-  <string name="deck_upgrade_rename_warning">Uvědomte si, že se bude exportovat vaše současná kolekce do souboru s názvem \'%1$s\' a vytvoří novou z vašich starých anki 1.x souborů. Pokud chcete, můžete importovat uvedený apkg soubor ručně znovu po dokončení průvodce. Opravdu chcete pokračovat?</string>
-  <string name="deck_upgrade_major_warning"><![CDATA[Toto je významná aktualizace Ankidroid a aktualizace bude trvat 10-20 minut.<br><br>Chcete pokračovat nyní nebo později?<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en">Více informací</a>]]></string>
-  <string name="deck_upgrade_start_again_to_upgrade_toast">Prosím spusťte Ankidroid znovu, až budete mít čas na aktualizaci!</string>
-  <string name="deck_upgrade_recommended_method"><![CDATA[Doporučená metoda pro aktualizaci je synchronizace s PC a aktualizace s verzí Anki pro PC. <br><br>K dispozici je také alternativní metoda, kde můžete aktualizovat přes internet, pokud nemáte přístup k počítači a váše kolekce není příliš velká.]]></string>
-  <string name="deck_upgrade_more_options_exit">Můžete ukončit průvodce aktualizací bez importování vašich starých karet klepnutím na ukončovací tlačítko níže.</string>
-  <string name="deck_upgrade_more_options_new_collection">Mžete vytvořit novou prázdnou kolekci klepnutím na tlačítko níže.</string>
-  <string name="deck_upgrade_more_options_downgrade"><![CDATA[<br><br>Pokud chcete přejít zpět na AnkiDroid 1 tak prosím čtěte <a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Continuing_to_use_AnkiDroid_1.1.3">these instructions</a>.]]></string>
-  <string name="deck_upgrade_create_new_collection">Vytvořit novou kolekci</string>
-  <string name="deck_upgrade_create_new_collection_title">Vytvořit novou kolekci</string>
-  <string name="deck_upgrade_create_new_collection_button">Nová kolekce</string>
-  <string name="deck_upgrade_not_import_warning">Opravdu toto chcete provést? Stará data nebudou importovány.</string>
-  <string name="deck_upgrade_via_web"><![CDATA[<b> Tato upgradovací metoda se nedoporučuje pokud jste použili multimediální soubory, nebo pokud máte velkou kolekci! </b><br><br>Vaše Anki1 balíčky budou zazipovány a nahrány na AnkiWeb. Převedená kolekce bude poté stažena.<br><br>Berte prosím na vědomí, že je vyžadováno stabilní připojení k internetu a že limit pro soubory je 50MB.<br><br> Uživatelům Anki Desktop se se silně doporučuje použít upgradovací metodu na PC.<br><br>Stále ještě chcete pokračovat?]]></string>
-  <string name="deck_upgrade_via_anki_desktop"><![CDATA[Pokud v současné době máte aktuální verzi vašich AnkiDroid kolekcí v softwaru Anki desktop, můžete upgradovat tam a pak stáhnout aktualizovanou kolekci pomocí synchronizace s AnkiWeb.<br><br>Případně můžete zkopírovat AnkiDroid kolekci do PC pomocí USB. Na PC proveďte upgrade kolekce a zkopírujte ji zpět do AnkiDroid.]]></string>
-  <string name="deck_upgrade_auto_upgrade"><![CDATA[Prosím nainstalujte si a spusťte Anki Desktop ve verzi 2.0.4 nebo vyšší pro upgrade vaší kolekce, poté synchronizujte upgradovanou kolekci s AnkiWebem a stiskněte tlačítko "Stáhnout".<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_2:_Using_AnkiWeb_sync">Více podrobností o upgradu naleznete na AnkiWebu</a>]]></string>
-  <string name="deck_upgrade_manual"><![CDATA[Prosím překopírujte všechny vaše *.anki soubory (a všechny složky *.media) z AnkiDroid složky do vaší Anki Desktop složky, poté nainstalujte a spusťte Anki Desktop ve verzi 2.0.4 nebo vyšší pro upgrade kolekce.<br><br>Po dokončení upgradu, exportujte prosím kolekci "collection.apkg" z Anki2 do složky AnkiDroid a stiskněte dole tlačítko pro import.<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_1:_Using_USB_(recommended)">Pro více informací o upgradu použijte USB.</a>]]></string>
-  <string name="upgrade_deck_cancelled_title">Aktualizace byla zrušena</string>
-  <string name="upgrade_deck_cancelled_description">Pokus o upgrade byl zrušen, zkuste to prosím znovu některou z dostupných upgradovacích metod.</string>
-  <string name="upgrade_deck_web_upgrade_failed">Upgradační proces byl neúspěšný. Prosím zkuste to znovu, nebo vyberte jinou upgradační metodu</string>
-  <string name="upgrade_deck_web_upgrade_exceeds">Celková kompresní velikost vašich Anki1 balíčku překročí limit, který server dokáže zpracovat (50 MB), zkuste upgradovat jinou metodou.</string>
-  <string name="upgrade_deck_web_upgrade_sdcard">Upgrade byl dokončen, ale došlo k chybě při rozbalování kolekce, ujistěte se, že máte na disku dostatek volného místa (potřeba %1$d mb) a zkuste to znovu, nebo zkuste provést upgrade jinou metodou.</string>
-  <string name="export_progress_title">Export kolekce</string>
-  <string name="export_progress_exporting">Export kolekce, prosím čekejte&#8230;</string>
-  <string name="upgrade_deck_export_successful">Vaše stará kolekce byla úspěšně exportována, pokračuji v procesu upgradu.</string>
-  <string name="upgrade_deck_export_error">Chyba během exportu do vaší staré kolekce. Chcete přesto pokračovat s upgradačním procesem (vaše stará kolekce bude ztracena)?</string>
-  <string name="upgrade_deck_sync_from_ankiweb">Synchronizace z AnkiWeb</string>
-  <string name="upgrade_deck_have_you_synced">Jste si jist, že máte aktualizovanou vaší kolekci včetně Anki Desktop 2 a synchronizovanou s AnkiWebem?</string>
-  <string name="upgrade_deck_dont_upgrade">Neprovádět Upgrade</string>
   <string name="import_unpacking">Rozbalování archivu.\nProsím čekejte&#8230;</string>
   <string name="importing_collection">Importování kolekce.\nProsím čekejte&#8230;</string>
   <string name="import_media_count">Import multimediálních souborů %1$d%%\nProsím čekejte&#8230;</string>
@@ -132,7 +94,6 @@
   <string name="dialog_cancel">Zrušit</string>
   <string name="dialog_ok">Ok</string>
   <string name="dialog_continue">Pokračovat</string>
-  <string name="dialog_neutral_later">Později</string>
   <string name="dialog_positive_create">Vytvořit</string>
   <string name="dialog_positive_delete">Odstranit</string>
   <string name="dialog_positive_disable">Zakázat</string>
@@ -142,14 +103,8 @@
   <string name="dialog_positive_replace">Nahradit</string>
   <string name="dialog_positive_reset">Obnovit</string>
   <string name="dialog_positive_restore">Obnovit</string>
-  <string name="dialog_positive_save">Uložit</string>
   <string name="dialog_positive_set">Nastavit</string>
-  <string name="add_button_content">Přidat&#8230;</string>
-  <string name="card_browser_button_content">Prohlížeč karet</string>
   <string name="lookup_button_content">Vyhledat</string>
-  <string name="statistics_button_content">Statistiky</string>
-  <string name="dialog_collection_path_title">Složka neexistuje</string>
-  <string name="dialog_collection_path_text">Zadaná složka neexistuje, chcete ji vytvořit?</string>
   <string name="dialog_collection_path_not_dir">Zadaná cesta není platný adresář</string>
   <string name="check_media_title">Zkontrolovat multimédia?</string>
   <string name="check_media_warning">Toto může trvat dlouhou dobu u velké sbírky multimedií</string>

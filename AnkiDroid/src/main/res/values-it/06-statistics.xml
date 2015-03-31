@@ -39,7 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="statistics_menu">Statistiche</string>
   <string name="statistics_young">Giovani</string>
   <string name="statistics_mature">Mature</string>
   <string name="statistics_young_and_learn">Giovani+Impara</string>
@@ -48,7 +47,6 @@
   <string name="statistics_relearn">Reimpara</string>
   <string name="statistics_learn">Impara</string>
   <string name="statistics_cram">Studio focalizzato</string>
-  <string name="statistics_type_title">Statistiche</string>
   <string name="stats_cards">Carte</string>
   <string name="stats_cards_intervals">Carte con intervallo specifico</string>
   <string name="stats_cumulative_cards">Carte cumulate</string>
@@ -65,7 +63,6 @@
   <string name="stats_period_month">1 mese</string>
   <string name="stats_period_year">1 anno</string>
   <string name="stats_period_lifetime">vita del mazzo</string>
-  <string name="stats_deck_current">mazzo</string>
   <string name="stats_deck_collection">collezione</string>
   <string name="stats_time_of_day">Ora del giorno</string>
   <string name="stats_day_of_week">Giorno della settimana</string>
@@ -77,37 +74,7 @@
   <string name="stats_today_type_breakdown">Impara: &lt;b&gt;%1$s&lt;/b&gt;, Ripeti: &lt;b&gt;%2$s&lt;/b&gt;, Reimpara: &lt;b&gt;%3$s&lt;/b&gt;, Filtrate: &lt;b&gt;%4$s&lt;/b&gt;</string>
   <string name="stats_today_mature_cards">Carte mature corrette: %1$d/%2$d (%3$.1f%%)</string>
   <string name="stats_today_no_mature_cards">Oggi non è stata studiata nessuna carta matura.</string>
-  <string name="statistics_period_x_axis_minutes">Minuti</string>
-  <string name="statistics_new_cards">Carte nuove</string>
-  <string name="statistics_failed_cards">Carte sbagliate</string>
-  <string name="statistics_fullscreen">Schermo intero</string>
-  <string name="calculating_statistics">Calcolo statistiche.\nAttendi...</string>
-  <string name="deck_summary_cards">Numero di carte:</string>
-  <string name="deck_summary_notes">Numero di note:</string>
-  <string name="deck_summary_cards_mature">Carte mature:</string>
-  <string name="deck_summary_cards_young">Carte giovani:</string>
-  <string name="deck_summary_cards_unseen">Carte non viste:</string>
-  <string name="deck_summary_card_age">Età delle carte</string>
-  <string name="deck_summary_average_interval">Intervallo medio: &lt;b&gt;%.1f&lt;/b&gt; giorni</string>
-  <string name="deck_summary_answers_correct">Risposte corrette</string>
-  <string name="deck_summary_answers_mature">Carte mature: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; %2$s (%3$d of %4$d)</string>
-  <string name="deck_summary_answers_young">Carte giovani: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d of %4$d)</string>
-  <string name="deck_summary_answers_firstseen">Visti la prima volta: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d of %4$d)</string>
-  <string name="deck_summary_reviews">Ripetizioni:</string>
-  <string name="deck_summary_news">Carte nuove:</string>
-  <string name="deck_summary_average_week">Media visti l\'ultima settimana</string>
-  <string name="deck_summary_average_month">Media visti l\'ultimo mese</string>
-  <string name="deck_summary_average_year">Media visti l\'ultimo anno</string>
-  <string name="deck_summary_average_total">Media visti</string>
-  <string name="deck_summary_forecast">Previsioni</string>
-  <string name="deck_summary_tomorrow_due">Da fare domani: &lt;b&gt;%d&lt;/b&gt; carte</string>
-  <string name="deck_summary_tomorrow_new">Domani nuove: &lt;b&gt;%d&lt;/b&gt; carte</string>
-  <string name="deck_summary_tomorrow_time">Durata stimata domani: &lt;b&gt;%d&lt;/b&gt; min.</string>
-  <string name="deck_summary_finished_in">Carte nuove finite in: &lt;b&gt;%d&lt;/b&gt; giorni</string>
-  <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; carte/giorno</string>
-  <string name="deck_summary_deck_age">Età del mazzo: &lt;b&gt;%d&lt;/b&gt; giorni</string>
   <string name="deck_summary_all_decks">Tutti i mazzi</string>
-  <string name="stats_select_decks">Seleziona il mazzo</string>
   <string name="stats_select_time_scale">Seleziona la scala cronologica</string>
   <string-array name="next_review_in_s">
     <item>in 1 secondo</item>

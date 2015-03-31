@@ -39,11 +39,13 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="app_name">AnkiDroid</string>
-  <string name="app_name_anki">Anki</string>
-  <string name="app_name_droid">Droid</string>
+  <string name="decks">Decks</string>
+  <string name="card_browser">Card Browser</string>
+  <string name="statistics">Statistics</string>
+  <string name="settings">Settings</string>
+  <string name="help">Help</string>
+  <string name="send_feedback">Send Feedback</string>
   <string name="studyoptions_title">Innstillinger</string>
-  <string name="studyoptions_deck_name">Navn på kortstokk</string>
   <string name="studyoptions_due_today">Forfaller i dag:</string>
   <string name="studyoptions_new_total">Totalt nye kort:</string>
   <string name="studyoptions_total_cards">Totalt antall kort:</string>
@@ -57,10 +59,6 @@
     <item quantity="one">%d min.</item>
     <item quantity="other">%d min.</item>
   </plurals>
-  <plurals name="deckpicker_due">
-    <item quantity="one">%1$d av %2$d i kø</item>
-    <item quantity="other">%1$d av %2$d gjenstår</item>
-  </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">%d minutt igjen</item>
     <item quantity="other">%d minutter igjen</item>
@@ -72,9 +70,6 @@
   <string name="ease3_successive">Bra</string>
   <string name="ease3_learning">Lett</string>
   <string name="studyoptions_congrats_undo">Angre %s</string>
-  <string name="card_unsuspended">Gjorde om suspendering av kort</string>
-  <string name="card_suspended">Kort suspendert på nytt</string>
-  <string name="menu_rotate">Roter</string>
   <string name="menu_import">Importer</string>
   <string name="undo">Angre</string>
   <string name="undo_action_review">siste gjennomgang</string>
@@ -86,30 +81,19 @@
   <string name="undo_action_mark">merk notat</string>
   <string name="unbury">Unbury</string>
   <string name="finish_operation">Avslutter forrige handling (sannsynligvis sikkerhetskopiering).\nVennligst vent...</string>
-  <string name="contextmenu_deckpicker_download_missing_media">Last ned manglende mediafiler</string>
-  <string name="contextmenu_deckpicker_reset_language_assignments">Tilbakestill språkinnstillinger</string>
-  <string name="contextmenu_deckpicker_reset_reset_message">Tilbakestill språk</string>
-  <string name="contextmenu_deckpicker_optimize_deck">Optimaliser database</string>
   <string name="contextmenu_deckpicker_rename_deck">Gi nytt navn til kortstokk</string>
   <string name="contextmenu_deckpicker_collapse_deck">Hide subdecks</string>
   <string name="contextmenu_deckpicker_inflate_deck">Show subdecks</string>
-  <string name="contextmenu_deckpicker_set_custom_dictionary">Sett egendefinert ordliste</string>
   <string name="menu_add">Add</string>
   <string name="menu_add_note">Add note</string>
-  <string name="menu_download_deck">Last ned kortstokk</string>
-  <string name="menu_download_shared_deck">Delt kortstokk</string>
   <string name="menu_my_account">Synkroniser konto</string>
-  <string name="menu_preferences">Innstillinger</string>
-  <string name="menu_about">Om</string>
   <string name="menu_dismiss_note">Hide / Delete</string>
   <string name="menu_bury_card">Bury card</string>
   <string name="menu_bury_note">Begrav notat</string>
   <string name="menu_suspend_card">Suspender kort</string>
   <string name="menu_suspend_note">Utsett notat</string>
-  <string name="menu_save_note">Save note</string>
   <string name="menu_delete_note">Slett notat</string>
   <string name="delete_note_message">Slette dette notatet med alle kortene?\n%s</string>
-  <string name="menu_edit_card">Rediger kort</string>
   <string name="menu_select">Merk tekst</string>
   <string name="menu_search">Oppslag i %1$s</string>
   <string name="menu_mark_card">Merk kort</string>
@@ -117,7 +101,6 @@
   <string name="new_deck">Create deck</string>
   <string name="create">Opprett</string>
   <string name="new_dynamic_deck">Create filtered deck</string>
-  <string name="studyoptions_feedback">Tilbakemelding</string>
   <string name="night_mode">Nattmodus</string>
   <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
   <string-array name="next_review_s">
@@ -136,9 +119,7 @@
     <item>%s måneder</item>
     <item>%s år</item>
   </string-array>
-  <string name="visit">Besøk</string>
   <string name="later">Senere</string>
-  <string name="download">Last ned</string>
   <string name="open_collection">Åpner samlingen. \nVennligst vent...</string>
   <string name="rebuild_cram_deck">Bygger om pugge-kortstokk.\nVennligst vent...</string>
   <string name="rebuild_cram_label">Gjenoppbygg</string>
@@ -151,37 +132,10 @@
   <string name="studyoptions_congrats_more_new">Det finnes flere nye kort tilgjengelig, men den daglige grensen er nådd. Du kan øke grensen i innstillingene, men vær oppmerksom på at dette også vil øke den kortsiktige mengden av kort til repetering.</string>
   <string name="studyoptions_congrats_custom">To study outside of the normal schedule, touch the \"Custom study\" button below</string>
   <string name="studyoptions_no_cards_due">No cards are due yet.</string>
-  <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
-    <item quantity="other">I morgen blir det: %1$d kort å gå gjennomg og %2$s.\n Estimert tid: %3$s</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">%1$d new card</item>
-    <item quantity="other">%1$d nye kort</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">Estimated time: %1$d min.</item>
-    <item quantity="other">Estimert tid: %1$d min.</item>
-  </plurals>
   <string name="sd_card_not_mounted">SD card not mounted.\n\nYou can store your collection in the internal memory too, though it\'s not recommended as you cannot access the file that easily. You can activate this in the preferences (open them by touching this text).</string>
-  <string name="studyoptions_options">Alternativer</string>
-  <string name="empty_cloze_warning">Vennligst rediger notatet og legg til noen innfyllingsfelt. (%1$s)</string>
-  <string name="help_cloze">Hjelp</string>
   <string name="button_sync">Synkroniser</string>
-  <string name="restart">Restart</string>
-  <string name="do_nothing">Do nothing</string>
-  <string name="more_options">More options</string>
-  <string name="now">Now</string>
-  <string name="back">Back</string>
-  <string name="ankiweb">AnkiWeb</string>
-  <string name="usb">USB</string>
-  <string name="_import">Import</string>
   <string name="export">Export</string>
-  <string name="confirm">Confirm</string>
-  <string name="internet">Internet</string>
-  <string name="pc">PC</string>
   <string name="nothing">Nothing</string>
-  <string name="title_activity_graphical_activity">Statistical chart</string>
   <string name="title_activity_template_editor">Card Types for %s</string>
   <string name="card_template_editor_front">Front Template</string>
   <string name="card_template_editor_back">Back Template</string>

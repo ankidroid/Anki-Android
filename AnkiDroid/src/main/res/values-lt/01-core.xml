@@ -39,11 +39,13 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="app_name">AnkiDroid</string>
-  <string name="app_name_anki">Anki</string>
-  <string name="app_name_droid">Droid</string>
+  <string name="decks">Decks</string>
+  <string name="card_browser">Card Browser</string>
+  <string name="statistics">Statistics</string>
+  <string name="settings">Settings</string>
+  <string name="help">Help</string>
+  <string name="send_feedback">Send Feedback</string>
   <string name="studyoptions_title">Mokymosi nustatymai</string>
-  <string name="studyoptions_deck_name">Malkos pavadinimas</string>
   <string name="studyoptions_due_today">Šiandien laukia:</string>
   <string name="studyoptions_new_total">Viso naujų kortelių:</string>
   <string name="studyoptions_total_cards">Iš viso kortų:</string>
@@ -57,10 +59,6 @@
     <item quantity="one">%d min.</item>
     <item quantity="other">%d min.</item>
   </plurals>
-  <plurals name="deckpicker_due">
-    <item quantity="one">%1$d of %2$d due</item>
-    <item quantity="other">Laukia %1$d iš %2$d</item>
-  </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">%d minute left</item>
     <item quantity="other">Liko %d min</item>
@@ -72,9 +70,6 @@
   <string name="ease3_successive">Gerai</string>
   <string name="ease3_learning">Lengvai</string>
   <string name="studyoptions_congrats_undo">Atšaukti %s</string>
-  <string name="card_unsuspended">Kortelės sustabdymas atšauktas</string>
-  <string name="card_suspended">Kortelė iš naujo sustabdyta</string>
-  <string name="menu_rotate">Pasukti</string>
   <string name="menu_import">Importuoti</string>
   <string name="undo">Atšaukti</string>
   <string name="undo_action_review">last review</string>
@@ -86,30 +81,19 @@
   <string name="undo_action_mark">pastabos pažimėjimą</string>
   <string name="unbury">Ištraukti</string>
   <string name="finish_operation">Užbaigiamas ankstesnis veiksmas (tikriausiai kuriama atsarginė kopija).\n Prašau palaukti...</string>
-  <string name="contextmenu_deckpicker_download_missing_media">Atsiųsti trūkstamas medijas</string>
-  <string name="contextmenu_deckpicker_reset_language_assignments">Atkurti kalbų priskyrimus</string>
-  <string name="contextmenu_deckpicker_reset_reset_message">Atkurti kalbą</string>
-  <string name="contextmenu_deckpicker_optimize_deck">Optimizuoti duomenų bazę</string>
   <string name="contextmenu_deckpicker_rename_deck">Pervadinti malką</string>
   <string name="contextmenu_deckpicker_collapse_deck">Hide subdecks</string>
   <string name="contextmenu_deckpicker_inflate_deck">Show subdecks</string>
-  <string name="contextmenu_deckpicker_set_custom_dictionary">Nustatyti vartotojo žodyną</string>
   <string name="menu_add">Pridėti</string>
   <string name="menu_add_note">Pridėti pastabą</string>
-  <string name="menu_download_deck">Atsiųsti malką</string>
-  <string name="menu_download_shared_deck">Bendroji malka</string>
   <string name="menu_my_account">Sinchronizacijos paskyra</string>
-  <string name="menu_preferences">Nustatymai</string>
-  <string name="menu_about">Apie</string>
   <string name="menu_dismiss_note">Paslėpti/ištrinti</string>
   <string name="menu_bury_card">Nukišti kortelę</string>
   <string name="menu_bury_note">Paslėpti pastabą</string>
   <string name="menu_suspend_card">Sustabdyti kortelę</string>
   <string name="menu_suspend_note">Sustabdyti pastabą</string>
-  <string name="menu_save_note">Išsaugoti pastabą</string>
   <string name="menu_delete_note">Šalinti pastabą</string>
   <string name="delete_note_message">Tikrai šalinti šią pastabą ir visas jos korteles?\n%s</string>
-  <string name="menu_edit_card">Pakeisti kortelę</string>
   <string name="menu_select">Žymėti tekstą</string>
   <string name="menu_search">Ieškoti čia: %1$s</string>
   <string name="menu_mark_card">Pažymėti kortelę</string>
@@ -117,7 +101,6 @@
   <string name="new_deck">Sukurti malką</string>
   <string name="create">Sukurti</string>
   <string name="new_dynamic_deck">Sukurti malką su filtrais</string>
-  <string name="studyoptions_feedback">Atsiliepimas</string>
   <string name="night_mode">Naktinis režimas</string>
   <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
   <string-array name="next_review_s">
@@ -136,9 +119,7 @@
     <item>%s mėn</item>
     <item>%s m.</item>
   </string-array>
-  <string name="visit">Lankyti</string>
   <string name="later">Vėliau</string>
-  <string name="download">Atsiųsti</string>
   <string name="open_collection">Kolekcija atidaroma.\n Prašau palaukti...</string>
   <string name="rebuild_cram_deck">Rebuilding cram deck&#8230;</string>
   <string name="rebuild_cram_label">Atstatyti</string>
@@ -151,37 +132,10 @@
   <string name="studyoptions_congrats_more_new">Today\'s limit has been reached. There are more new cards available; you can increase the limit in the options, but this will increase your short-term review workload.</string>
   <string name="studyoptions_congrats_custom">To study outside of the normal schedule, touch the \"Custom study\" button below</string>
   <string name="studyoptions_no_cards_due">No cards are due yet.</string>
-  <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
-    <item quantity="other">Rytoj lauks %1$d kortelė ir %2$s.\n Apskaičiuotas laikas: %3$s</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">%1$d new card</item>
-    <item quantity="other">%1$d nauja(os) korta(os)</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">Estimated time: %1$d min.</item>
-    <item quantity="other">Apskaičiuotas laikas: %1$d min.</item>
-  </plurals>
   <string name="sd_card_not_mounted">SD card not mounted.\n\nYou can store your collection in the internal memory too, though it\'s not recommended as you cannot access the file that easily. You can activate this in the preferences (open them by touching this text).</string>
-  <string name="studyoptions_options">Parinktys</string>
-  <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
-  <string name="help_cloze">pagalba</string>
   <string name="button_sync">Sinchronizuoti</string>
-  <string name="restart">Paleisti iš naujo</string>
-  <string name="do_nothing">Nieko nedaryti</string>
-  <string name="more_options">Daugiau parinkčių</string>
-  <string name="now">Dabar</string>
-  <string name="back">Atgal</string>
-  <string name="ankiweb">AnkiWeb</string>
-  <string name="usb">USB</string>
-  <string name="_import">Importuoti</string>
   <string name="export">Eksportuoti</string>
-  <string name="confirm">Patvirtinti</string>
-  <string name="internet">Internetas</string>
-  <string name="pc">PC</string>
   <string name="nothing">Nothing</string>
-  <string name="title_activity_graphical_activity">Statistical chart</string>
   <string name="title_activity_template_editor">Card Types for %s</string>
   <string name="card_template_editor_front">Front Template</string>
   <string name="card_template_editor_back">Back Template</string>

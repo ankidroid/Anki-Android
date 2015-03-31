@@ -138,7 +138,6 @@
   <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink and older devices using custom fonts may require this.</string>
   <string name="vertical_centering">Center align</string>
   <string name="vertical_centering_summ">Center the content of cards vertically</string>
-  <string name="pref_cat_backup">Backups</string>
   <string name="pref_backup">Use backups</string>
   <string name="pref_backup_summ">Automatically create backups before opening a deck (once a day)</string>
   <string name="pref_backup_max">Max number of backups</string>
@@ -163,11 +162,6 @@
   <string name="input_workaround_summ">Workaround for focusing problems on HTML input boxes. Causes problems on several devices.</string>
   <string name="pref_keep_screen_on">Keep screen on</string>
   <string name="pref_keep_screen_on_summ">Disable screen timeout</string>
-  <string name="pref_simple_interface">Simple interface</string>
-  <string name="pref_simple_interface_summ">Grăbește afișarea cardurilor, dar nu suportă toate caracteristicile html</string>
-  <string name="pref_simple_interface_exclude_tags">Tags to exclude</string>
-  <string name="pref_simple_interface_exclude_tags_summ">Do not use simple interface for these tags: XXX</string>
-  <string name="write_answers_message">You should define for every deck a field to compare the written answer with. You can do this via Anki Desktop (deck properties -&gt; edit model -&gt; card layout).\n\nIf no compare field is set, your written answer will always be compared with the whole card answer</string>
   <string name="fix_arabic_text">Îmbunătăţeste afişarea caracterelor arabice</string>
   <string name="fix_arabic_text_summ">Partial workaround for limited support of Arabic by Android platform. When activated it is not possible to modify cards.</string>
   <string name="convert_fen_text">Suport de notaţie şah</string>
@@ -175,17 +169,6 @@
   <string name="filter_google_translate_summ">Just save source word and translation</string>
   <string name="convert_fen_text_summ">Draw chessboard from Forsyth–Edwards Notation. The notation must be enclosed in [fen][/fen] tags.</string>
   <string name="studyoptions_limit_select_tags">Selectaţi Tag-uri</string>
-  <string name="studyoptions_limit_tags_active">Cu: %1$s</string>
-  <string name="studyoptions_limit_tags_inactive">Fără: %1$s</string>
-  <string name="studyoptions_limit_button_text">Limită</string>
-  <string name="studyoptions_limit_dialog_title">Limita de învăţare</string>
-  <string name="studyoptions_session">Sesiune</string>
-  <string name="studyoptions_tag">După tag</string>
-  <string name="studyoptions_tag_new">Arată cardurile noi după tag-uri:</string>
-  <string name="studyoptions_tag_rev">Arată cardurile de recapitulat după tag-uri:</string>
-  <string name="studyoptions_new_cards_per_day">Carduri noi pe zi</string>
-  <string name="studyoptions_max_fail_card">Max fail cards</string>
-  <string name="deck_conf_deck_name">Nume Pachet</string>
   <string name="deck_conf_deck_description">Descriere pachet</string>
   <string name="deck_conf_group">Options group</string>
   <plurals name="deck_conf_group_summ">
@@ -244,7 +227,6 @@
   <string name="pref_browser_editor_font_summ">XXX</string>
   <string name="deck_conf_cram_filter">Filtru</string>
   <string name="deck_conf_cram_options">Opţiuni</string>
-  <string name="deck_conf_cram_preset">Preset</string>
   <string name="deck_conf_cram_search">Căutare</string>
   <string name="deck_conf_cram_limit">Limitează la</string>
   <string name="deck_conf_cram_order">carduri selectate de</string>

@@ -44,8 +44,6 @@
     <item quantity="other">%d cards shown</item>
   </plurals>
   <string name="card_browser_all_decks">All decks</string>
-  <string name="card_browser_load">Loading cards&#8230;</string>
-  <string name="card_browser_cardloading_error">Error on loading cards. This is probably related to your device\'s memory restrictions. Try again with a smaller deck.</string>
   <string name="card_browser_delete_card">Usnim melein</string>
   <string name="card_browser_suspend_card">Beidnei karta</string>
   <string name="card_browser_unsuspend_card">Unbeidnei karta</string>
@@ -54,36 +52,20 @@
   <string name="delete_card_title">Usnim melein?</string>
   <string name="delete_card_message">Usnim allos kartos þizos meleinais?\nGasokeistaþ: %s</string>
   <string name="card_browser_show_marked">Filter marked</string>
-  <string name="card_browser_field">Change card browser field</string>
-  <string name="card_browser_field_title">Change card browser field</string>
   <string name="card_browser_show_suspended">Filter suspended</string>
   <string name="card_browser_search_by_tag">Filter by tag</string>
   <string name="card_browser_tags_shown">Tags: %1$s</string>
   <string name="card_browser_change_display_order">Inmaidei ataugjando wikon</string>
   <string name="card_browser_change_display_order_title">Walei ataugjando wikon</string>
   <string name="card_browser_change_display_order_reverse">Select a field twice to reverse</string>
-  <string name="card_browser_order_reverse">(reverse)</string>
   <string name="card_details_question">Fraihna</string>
   <string name="card_details_answer">Andahafts</string>
   <string name="card_details_due">Nauh</string>
-  <string name="card_details_last_due">Last due</string>
-  <string name="card_details_now">Nu</string>
-  <string name="card_details_interval">Ƕeila</string>
-  <string name="card_details_ease">Ease</string>
-  <string name="card_details_average_time">Average time</string>
-  <string name="card_details_total_time">Alla ƕeila</string>
-  <string name="card_details_yes_count">Ja raþjo</string>
-  <string name="card_details_no_count">Ne raþjo</string>
-  <string name="card_details_added">Biaukana</string>
-  <string name="card_details_changed">Inmaideina</string>
   <string name="card_details_tags">Tags</string>
-  <string name="card_details_model">Note type</string>
-  <string name="card_browser_sorting_cards">Atgaraihtjand kartos&#8230;</string>
   <string name="card_browser_filtering_cards">Skaidand kartos&#8230; \nAtsnarpei ibuks knuppa fraqiþan</string>
-  <string name="card_details_card_model">Kartawlits</string>
   <string-array name="card_browser_order_labels">
     <item>Ni wiko (adriza)</item>
-    <item>Bi gasokistaþ</item>
+    <item>By sort field</item>
     <item>Bi skapida ƕeila</item>
     <item>Bi inmaidida ƕeila</item>
     <item>Bi inmaidnida ƕeila</item>

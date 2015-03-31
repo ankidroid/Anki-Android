@@ -35,14 +35,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="navigation_titles">
-    <item>Kaardipakid</item>
-    <item>Card Browser</item>
-    <item>Statistika</item>
-    <item>Seaded</item>
-    <item>Abi</item>
-    <item>Saada tagasisidet</item>
-  </string-array>
   <string-array name="newCardSchedulingLabels">
     <item>Spread out through reviews</item>
     <item>After reviews</item>

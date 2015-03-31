@@ -35,14 +35,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="navigation_titles">
-    <item>Desteler</item>
-    <item>Kart Tarayıcısı</item>
-    <item>İstatistikler</item>
-    <item>Ayarlar</item>
-    <item>Yardım</item>
-    <item>Geribildirim Gönder</item>
-  </string-array>
   <string-array name="newCardSchedulingLabels">
     <item>Gözden geçirme boyunca dağıt</item>
     <item>Gözden geçirmeden sonra</item>

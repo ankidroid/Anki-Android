@@ -48,8 +48,6 @@
   <string name="CardEditorTags">Štítky: %1$s</string>
   <string name="CardEditorCards">Cards: %1$s</string>
   <string name="add_new_filter_tags">Pridať/filtrovať štítky</string>
-  <string name="note_type">Typ poznámky</string>
-  <string name="card_type">Typ karty</string>
   <string name="filter_tags">Filtrovať štítky</string>
   <string name="sdcard_missing_message">SD karta je nedostupná, pretože sa používa ako USB úložisko. Pre prístup k vašim balíčkom odpojte USB.</string>
   <string name="enable_whiteboard">Enable whiteboard</string>
@@ -58,8 +56,6 @@
   <string name="hide_whiteboard">Schovať tabuľu</string>
   <string name="clear_whiteboard">Vyčistiť tabuľu</string>
   <string name="replay_audio">Prehrať zvuk</string>
-  <string name="cram_edit_warning">Úprava kariet nie je počas drvenia sa povolená</string>
-  <string name="suspend_leeches">Dať pijavice bokom</string>
   <string name="leech_suspend_notification">Karta označená ako pijavica a odložená bokom</string>
   <string name="leech_notification">Karta označená ako pijavica</string>
   <string name="corrupt_font">Poškodený súbor písma %s</string>
@@ -80,10 +76,8 @@
   <string name="cardeditor_title_edit_card">Upraviť poznámku</string>
   <string name="discard_unsaved_changes">Close and lose current input?</string>
   <string name="factadder_saving_error">Chyba pri ukladaní poznámky</string>
-  <string name="pref_lang_support">Jazyk</string>
   <string name="saving_facts">Ukladám poznámku</string>
   <string name="saving_model">Saving model</string>
-  <string name="deck">Balíček</string>
   <string name="add">Pridať</string>
   <string name="close">Zavrieť</string>
   <string name="select">Vybrať</string>
@@ -100,14 +94,8 @@
     <item quantity="other">%1$d minút</item>
   </plurals>
   <string name="studyoptions_welcome_title">Vitajte v AnkiDroid</string>
-  <string name="studyoptions_no_external_storage_title">Žiadne externé úložisko k dispozícii</string>
-  <string name="studyoptions_no_external_storage_message">Žiadne externé úložisko momentálne nie je k dispozícii. AnkiDroid potrebuje mať prístup na SD kartu, aby mohol čítať a nahrať vaše Anki balíčky. Skontrolujte, že vaša SD karta je pripojená a skúste znova.</string>
   <string name="fact_adder_intent_title">AnkiDroid karta</string>
-  <string name="deckpicker_select_dictionary_title">Vybrať slovník</string>
-  <string name="deckpicker_select_dictionary_default">Pôvodné nastavenie
-</string>
   <string name="card_editor_add_card">Pridať poznámku</string>
-  <string name="card_editor_reset">Obnoviť</string>
   <string name="card_editor_copy_card">Kopírovať kartu</string>
   <string name="card_editor_reset_card">Vynulovať pokrok</string>
   <string name="card_editor_reschedule_card">Reschedule card</string>
@@ -121,14 +109,11 @@
     <item quantity="other">%d kariet pridaných</item>
   </plurals>
   <string name="help_title">Pomocník</string>
-  <string name="help_online">Pomocník online</string>
-  <string name="help_faq">FAQ</string>
   <string name="check_db">Kontrola databázy</string>
   <string name="check_media">Check media</string>
   <string name="check_db_message">Kontrolujem databázu.\nProsím počkajte...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Prázdna karta. Spustite \"Nástroje&gt;Prázdne karty...\" v klientovi pre PC.</string>
   <string name="unknown_type_field_warning">Tip odpovede: neznáme pole %s</string>
-  <string name="simple_interface_hint">Prázdne %s. Majte na pamäti, že v jednoduchom rozhraní nie je možné zobraziť obrázky/zvuky atď.</string>
   <string name="delete_deck">Odstraňujem balíček...\nProsím počkajte.</string>
   <string-array name="dynOrderLabels">
     <item>Od najdávnejšie zobrazených</item>
@@ -139,17 +124,12 @@
     <item>Zoradiť podľa pridania</item>
     <item>Zoradiť podľa času opakovania</item>
   </string-array>
-  <string name="menu_cardbrowser">Prehliadač kariet</string>
   <string name="show_hint">Show %s</string>
-  <string name="pref_lang_other">Nastavenia jazyka</string>
-  <string name="pref_font_UI">Font vlastného UI</string>
   <string name="info_rate">Ohodnotiť AnkiDroid</string>
   <string name="col_load_failed">Nahrávanie zbierky zlyhalo.\nProsím stlačte späť a zavrite AnkiDroid.</string>
   <string name="import_title">Import kariet</string>
   <string name="import_select_title">Choose a file to import</string>
-  <string name="import_message">Chcete pridať obsah súboru %s do vašej zbierky, alebo ním nahradiť vašu zbierku?</string>
   <string name="import_message_add">Pridať</string>
-  <string name="import_message_replace">Nahradiť</string>
   <string name="import_message_replace_confirm">Týmto vymažete vašu existujúcu zbierku a nahradíte ju dátami zo súboru %s. Ste si istý?</string>
   <string name="import_message_add_confirm">Add \"%s\" to collection? This may take a long time</string>
   <string name="import_log_success">Úspešne importovaných %d kariet</string>
@@ -171,13 +151,8 @@
   <string name="study_options">Nastavenia balíčku</string>
   <string name="custom_study">Vlastné štúdium</string>
   <string name="dyn_deck_desc">Toto je špeciálny balíček na štúdium mimo bežného plánu. Karty sa automaticky vrátia do ich pôvodných balíčkov po tom čo si ich zopakujete. Po odstránení tohto balíčka zo zoznamu balíčkov sa všetky zostávajúce karty vrátia do ich pôvodných balíčkov.</string>
-  <string name="exit_wizard">Ukončiť sprievodcu</string>
   <string name="steps_error">Kroky musia byť čísla väčšie ako 0</string>
   <string name="steps_min_error">Je nutné zadať aspoň jeden krok</string>
-  <string name="custom_study_invalid_number">Neplatné číslo</string>
-  <string name="template_error">Chyba šablóny:</string>
-  <string name="template_error_detail">V šablóne tejto karty je chyba.</string>
-  <string name="template_error_fix">Prosím opravte túto chybu použitím editoru kariet v pc verzii Anki.</string>
   <string name="sched_end">(koniec)</string>
   <string name="sched_unbury_button">Ak ich chcete vidieť teraz, kliknite na tlačidlo Vyhrabať.</string>
   <string name="sched_has_buried">Niektoré súvisiace alebo zahrabané karty boli posunuté na neskôr.</string>

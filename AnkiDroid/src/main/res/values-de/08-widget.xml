@@ -51,14 +51,6 @@
     <item quantity="one">%1$d Stapel</item>
     <item quantity="other">%1$d Stapel</item>
   </plurals>
-  <string name="widget_medium">AnkiDroid Mittel</string>
   <string name="widget_small">AnkiDroid Klein</string>
-  <string name="widget_big">AnkiDroid Groß</string>
-  <string name="widget_big_restrictions_dialog">Aufgrund von Einschränkungen des Android-Frameworks kann das Widget nur Text aber keine Bilder/Sounds o.ä. anzeigen</string>
-  <string name="open_in_reviewer">Stapel in AnkiDroid öffnen</string>
-  <plurals name="widget_big_eta">
-    <item quantity="one">Geschätzte Zeit: %d Min.</item>
-    <item quantity="other">Geschätzte Zeit: %d Min.</item>
-  </plurals>
   <string name="widget_big_tomorrow_due">Morgen fällig:</string>
 </resources>

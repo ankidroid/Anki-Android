@@ -51,14 +51,6 @@
     <item quantity="one">%1$d deck</item>
     <item quantity="other">%1$d دسته</item>
   </plurals>
-  <string name="widget_medium">آنکی دروید متوسط</string>
   <string name="widget_small">آنکی دروید کوچک</string>
-  <string name="widget_big">آنکی دروید بزرگ</string>
-  <string name="widget_big_restrictions_dialog"> با توجه به برخی محدودیتهای چهارچوب ویجت آنکی دروید فقط متن کارتهای موعد مرور نمایش داده می شود و امکان نمایش تصویر ، صدا و غیره وجود ندارد.</string>
-  <string name="open_in_reviewer">دسته را در آنکی دروید بازکن</string>
-  <plurals name="widget_big_eta">
-    <item quantity="one">Estimated time: %d min.</item>
-    <item quantity="other">زمان تخمینی: %d دقیقه.</item>
-  </plurals>
   <string name="widget_big_tomorrow_due">موعد مرور فردا:</string>
 </resources>

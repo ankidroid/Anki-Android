@@ -48,8 +48,6 @@
   <string name="CardEditorTags">Žymos: %1$s</string>
   <string name="CardEditorCards">Cards: %1$s</string>
   <string name="add_new_filter_tags">Pridėti/filtruoti žymas</string>
-  <string name="note_type">Pastabos tipas</string>
-  <string name="card_type">Kortelės tipas</string>
   <string name="filter_tags">Filtruoti žymas</string>
   <string name="sdcard_missing_message">SD kortelė yra nepasiekiama, nes jis yra naudojama kaip USB laikmena. Atjunkite USB, jei norite naudoti savo rinkinius.</string>
   <string name="enable_whiteboard">Enable whiteboard</string>
@@ -58,8 +56,6 @@
   <string name="hide_whiteboard">Paslėpti baltą lentą</string>
   <string name="clear_whiteboard">Išvalyti lentą</string>
   <string name="replay_audio">Pagroti dar kartą</string>
-  <string name="cram_edit_warning">Card editing not allowed while cramming</string>
-  <string name="suspend_leeches">Suspend leeches</string>
   <string name="leech_suspend_notification">Card marked as leech and suspended</string>
   <string name="leech_notification">Card marked as leech</string>
   <string name="corrupt_font">Corrupt font file %s</string>
@@ -80,10 +76,8 @@
   <string name="cardeditor_title_edit_card">Keisti pastabą</string>
   <string name="discard_unsaved_changes">Close and lose current input?</string>
   <string name="factadder_saving_error">Klaida įrašant pastabą</string>
-  <string name="pref_lang_support">Kalba</string>
   <string name="saving_facts">Įrašoma pastaba</string>
   <string name="saving_model">Saving model</string>
-  <string name="deck">Malka</string>
   <string name="add">Pridėti</string>
   <string name="close">Užverti</string>
   <string name="select">Pasirinkti</string>
@@ -100,13 +94,8 @@
     <item quantity="other">%1$d minutė(s)</item>
   </plurals>
   <string name="studyoptions_welcome_title">Sveiki atvykę į AnkiDroid</string>
-  <string name="studyoptions_no_external_storage_title">No external storage available</string>
-  <string name="studyoptions_no_external_storage_message">No external storage is currently available. AnkiDroid needs to have access to the SD card in order to read and load your Anki decks. Check that your SD card is mounted and try again.</string>
   <string name="fact_adder_intent_title">AnkiDroid kortelė</string>
-  <string name="deckpicker_select_dictionary_title">Pasirinkti žodyną</string>
-  <string name="deckpicker_select_dictionary_default">Numatytasis</string>
   <string name="card_editor_add_card">Pridėti pastabą</string>
-  <string name="card_editor_reset">Atstatyti</string>
   <string name="card_editor_copy_card">Kopijuoti kortelę</string>
   <string name="card_editor_reset_card">Atkurti pažangą</string>
   <string name="card_editor_reschedule_card">Reschedule card</string>
@@ -120,14 +109,11 @@
     <item quantity="other">%d pridėtos kortelės</item>
   </plurals>
   <string name="help_title">Pagalba</string>
-  <string name="help_online">Pagalba internete</string>
-  <string name="help_faq">DUK</string>
   <string name="check_db">Patikrinti duomenų bazę</string>
   <string name="check_media">Check media</string>
   <string name="check_db_message">Tikrinama duomenų bazė&#8230;</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
   <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
-  <string name="simple_interface_hint">Empty %s. Try switching off simple interface.</string>
   <string name="delete_deck">Ištrinama malka&#8230;</string>
   <string-array name="dynOrderLabels">
     <item>Pirmiau senesnės</item>
@@ -138,17 +124,12 @@
     <item>Pridėjimo tvarka</item>
     <item>Order due</item>
   </string-array>
-  <string name="menu_cardbrowser">Kortelių naršyklė</string>
   <string name="show_hint">Rodyti %s</string>
-  <string name="pref_lang_other">Kalbos nustatymai</string>
-  <string name="pref_font_UI">Vartotojo šriftas</string>
   <string name="info_rate">Įvertinti AnkiDroid</string>
   <string name="col_load_failed">Collection loading failed.\nPress back to close AnkiDroid.</string>
   <string name="import_title">Importuoti korteles</string>
   <string name="import_select_title">Pasirinkite failą importavimui</string>
-  <string name="import_message">Add content of file %s to your collection or replace your collection with it?</string>
   <string name="import_message_add">Pridėti</string>
-  <string name="import_message_replace">Pakeisti</string>
   <string name="import_message_replace_confirm">Tai ištrins dabartinę jūsų kolekciją ir pakeis %s failo duomenimis</string>
   <string name="import_message_add_confirm">Add \"%s\" to collection? This may take a long time</string>
   <string name="import_log_success">Imported %d cards</string>
@@ -170,13 +151,8 @@
   <string name="study_options">Deck options</string>
   <string name="custom_study">Custom study</string>
   <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
-  <string name="exit_wizard">Baigti vediklį</string>
   <string name="steps_error">Steps must be numbers greater than 0</string>
   <string name="steps_min_error">At least one step is required</string>
-  <string name="custom_study_invalid_number">Invalid number</string>
-  <string name="template_error">Template error</string>
-  <string name="template_error_detail">The card template contains an error</string>
-  <string name="template_error_fix">Use the card editor on the desktop client to fix it.</string>
   <string name="sched_end">(pabaiga)</string>
   <string name="sched_unbury_button">To see them now, touch the \"Unbury\" button.</string>
   <string name="sched_has_buried">Some related or buried cards were delayed until tomorrow.</string>

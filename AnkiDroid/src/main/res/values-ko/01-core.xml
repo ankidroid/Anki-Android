@@ -39,11 +39,13 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="app_name">AnkiDroid</string>
-  <string name="app_name_anki">Anki</string>
-  <string name="app_name_droid">Droid</string>
+  <string name="decks">Decks</string>
+  <string name="card_browser">Card Browser</string>
+  <string name="statistics">Statistics</string>
+  <string name="settings">Settings</string>
+  <string name="help">Help</string>
+  <string name="send_feedback">Send Feedback</string>
   <string name="studyoptions_title">Study Options</string>
-  <string name="studyoptions_deck_name">덱 이름</string>
   <string name="studyoptions_due_today">오늘 학습할 카드:</string>
   <string name="studyoptions_new_total">전체 새 카드:</string>
   <string name="studyoptions_total_cards">전체 카드:</string>
@@ -57,10 +59,6 @@
     <item quantity="one">%d min.</item>
     <item quantity="other">%d분.</item>
   </plurals>
-  <plurals name="deckpicker_due">
-    <item quantity="one">%1$d of %2$d due</item>
-    <item quantity="other">%2$d개 중 %1$d개 남음</item>
-  </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">%d minute left</item>
     <item quantity="other">%d분 남음</item>
@@ -72,9 +70,6 @@
   <string name="ease3_successive">괜찮음</string>
   <string name="ease3_learning">쉬움</string>
   <string name="studyoptions_congrats_undo">%s 취소</string>
-  <string name="card_unsuspended">카드가 다시 활성화 됨</string>
-  <string name="card_suspended">카드가 다시 비활성화됨</string>
-  <string name="menu_rotate">화면 회전</string>
   <string name="menu_import">Import</string>
   <string name="undo">실행 취소</string>
   <string name="undo_action_review">last review</string>
@@ -86,30 +81,19 @@
   <string name="undo_action_mark">노트 표시</string>
   <string name="unbury">Unbury</string>
   <string name="finish_operation">이전 작업을 완료 중입니다. (백업 생성 중일 가능성이 큽니다).\n잠시만 기다려주세요...</string>
-  <string name="contextmenu_deckpicker_download_missing_media">누락된 미디어 다운로드</string>
-  <string name="contextmenu_deckpicker_reset_language_assignments">언어 재설정하기</string>
-  <string name="contextmenu_deckpicker_reset_reset_message">언어 재설정</string>
-  <string name="contextmenu_deckpicker_optimize_deck">데이터베이스 최적화</string>
   <string name="contextmenu_deckpicker_rename_deck">덱 이름 바꾸기</string>
   <string name="contextmenu_deckpicker_collapse_deck">Hide subdecks</string>
   <string name="contextmenu_deckpicker_inflate_deck">Show subdecks</string>
-  <string name="contextmenu_deckpicker_set_custom_dictionary">사용자 정의 사전 설정</string>
   <string name="menu_add">Add</string>
   <string name="menu_add_note">Add note</string>
-  <string name="menu_download_deck">덱 다운로드</string>
-  <string name="menu_download_shared_deck">공유된 덱</string>
   <string name="menu_my_account">계정 동기화</string>
-  <string name="menu_preferences">환경 설정</string>
-  <string name="menu_about">Ankidroid 정보</string>
   <string name="menu_dismiss_note">Hide / Delete</string>
   <string name="menu_bury_card">Bury card</string>
   <string name="menu_bury_note">노트 나중에 보기</string>
   <string name="menu_suspend_card">카드 비활성화하기</string>
   <string name="menu_suspend_note">노트 미뤄두기</string>
-  <string name="menu_save_note">Save note</string>
   <string name="menu_delete_note">노트 삭제하기</string>
   <string name="delete_note_message">다음 노트와 그 노트의 모든 카드를 정말로 삭제하시겠습니까?\n%s</string>
-  <string name="menu_edit_card">카드 편집하기</string>
   <string name="menu_select">텍스트 선택</string>
   <string name="menu_search">%1$s에서 찾아보기</string>
   <string name="menu_mark_card">카드 표시해두기</string>
@@ -117,7 +101,6 @@
   <string name="new_deck">Create deck</string>
   <string name="create">만들기</string>
   <string name="new_dynamic_deck">Create filtered deck</string>
-  <string name="studyoptions_feedback">피드백</string>
   <string name="night_mode">야간 모드</string>
   <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
   <string-array name="next_review_s">
@@ -136,9 +119,7 @@
     <item>%s개월</item>
     <item>%s년</item>
   </string-array>
-  <string name="visit">방문하기</string>
   <string name="later">나중에</string>
-  <string name="download">다운로드</string>
   <string name="open_collection">컬렉션을 여는 중입니다.\n잠시만 기다려 주세요...</string>
   <string name="rebuild_cram_deck">벼락치기 덱을 다시 섞는 중입니다.\n잠시만 기다려 주세요...</string>
   <string name="rebuild_cram_label">재생성</string>
@@ -154,37 +135,10 @@
 </string>
   <string name="studyoptions_congrats_custom">평상시 일정을 넘어 더 공부하려면, 맞춤 학습 버튼을 누르십시오.</string>
   <string name="studyoptions_no_cards_due">No cards are due yet.</string>
-  <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
-    <item quantity="other">내일의 학습 일정: 복습할 카드 %1$d개 및 %2$s.\n 예상 소요 시간: %3$s</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">%1$d new card</item>
-    <item quantity="other">%1$d개의 새로운 카드</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">Estimated time: %1$d min.</item>
-    <item quantity="other">예상 소요 시간: %1$d분.</item>
-  </plurals>
   <string name="sd_card_not_mounted">SD카드가 삽입되지 않았습니다.\n\n내장 메모리에 컬렉션을 저장할 수 있지만, 파일에 쉽게 접근할 수 없으므로 권장되지 않습니다. 환경 설정에서 이를 활성화할 수 있습니다 (이 텍스트를 눌러서 설정 창을 엽니다).</string>
-  <string name="studyoptions_options">학습 옵션</string>
-  <string name="empty_cloze_warning">이 노트를 편집하여서 cloze 빈칸을 추가하세요. (%1$s)</string>
-  <string name="help_cloze">도움말</string>
   <string name="button_sync">동기화</string>
-  <string name="restart">다시 시작</string>
-  <string name="do_nothing">아무 것도 하지 않기</string>
-  <string name="more_options">더 많은 옵션</string>
-  <string name="now">지금</string>
-  <string name="back">뒤로가기</string>
-  <string name="ankiweb">AnkiWeb</string>
-  <string name="usb">USB</string>
-  <string name="_import">가져오기</string>
   <string name="export">Export</string>
-  <string name="confirm">확정</string>
-  <string name="internet">인터넷</string>
-  <string name="pc">PC</string>
   <string name="nothing">Nothing</string>
-  <string name="title_activity_graphical_activity">Statistical chart</string>
   <string name="title_activity_template_editor">Card Types for %s</string>
   <string name="card_template_editor_front">Front Template</string>
   <string name="card_template_editor_back">Back Template</string>

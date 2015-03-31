@@ -39,11 +39,13 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="app_name">AnkiDroid</string>
-  <string name="app_name_anki">Anki</string>
-  <string name="app_name_droid">Droid</string>
+  <string name="decks">Decks</string>
+  <string name="card_browser">Card Browser</string>
+  <string name="statistics">Statistics</string>
+  <string name="settings">Settings</string>
+  <string name="help">Help</string>
+  <string name="send_feedback">Send Feedback</string>
   <string name="studyoptions_title">Study Options</string>
-  <string name="studyoptions_deck_name">Ime kompleta</string>
   <string name="studyoptions_due_today">Do danes:</string>
   <string name="studyoptions_new_total">Skupaj novih kartic:</string>
   <string name="studyoptions_total_cards">Skupaj kartic:</string>
@@ -57,10 +59,6 @@
     <item quantity="one">%d min.</item>
     <item quantity="other">%d min.</item>
   </plurals>
-  <plurals name="deckpicker_due">
-    <item quantity="one">%1$d of %2$d due</item>
-    <item quantity="other">%1$d of %2$d do</item>
-  </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">%d minute left</item>
     <item quantity="other">preostalo je še %d minut</item>
@@ -72,9 +70,6 @@
   <string name="ease3_successive">Dobro</string>
   <string name="ease3_learning">Lahko</string>
   <string name="studyoptions_congrats_undo">Razveljavi %s</string>
-  <string name="card_unsuspended">Preklicano pridržanje kartice</string>
-  <string name="card_suspended">Kartica ponovno pridržana</string>
-  <string name="menu_rotate">Obrni</string>
   <string name="menu_import">Import</string>
   <string name="undo">Razveljavi</string>
   <string name="undo_action_review">last review</string>
@@ -86,30 +81,19 @@
   <string name="undo_action_mark">označi zapisek</string>
   <string name="unbury">Unbury</string>
   <string name="finish_operation">Končujem predhodnjo operacijo (zelo verjetno izdelavo varnostne kopije).\nProsimo počakajte...</string>
-  <string name="contextmenu_deckpicker_download_missing_media">Prenesi manjkajoče podatke</string>
-  <string name="contextmenu_deckpicker_reset_language_assignments">Ponastavi Dodelitve jezika</string>
-  <string name="contextmenu_deckpicker_reset_reset_message">Ponastavi jezik</string>
-  <string name="contextmenu_deckpicker_optimize_deck">Optimiraj podatkovno bazo</string>
   <string name="contextmenu_deckpicker_rename_deck">Preimenuj komplet</string>
   <string name="contextmenu_deckpicker_collapse_deck">Hide subdecks</string>
   <string name="contextmenu_deckpicker_inflate_deck">Show subdecks</string>
-  <string name="contextmenu_deckpicker_set_custom_dictionary">Nastavi slovar po meri</string>
   <string name="menu_add">Add</string>
   <string name="menu_add_note">Add note</string>
-  <string name="menu_download_deck">Prenesi komplet</string>
-  <string name="menu_download_shared_deck">Skupni komplet</string>
   <string name="menu_my_account">Sinhroniziraj račun</string>
-  <string name="menu_preferences">Nastavitve</string>
-  <string name="menu_about">O programu</string>
   <string name="menu_dismiss_note">Hide / Delete</string>
   <string name="menu_bury_card">Bury card</string>
   <string name="menu_bury_note">Prikrij zapisek</string>
   <string name="menu_suspend_card">Pridrži kartico</string>
   <string name="menu_suspend_note">Pridrži zapisek</string>
-  <string name="menu_save_note">Save note</string>
   <string name="menu_delete_note">Izbriši zapisek</string>
   <string name="delete_note_message">Res želite izbrisati ta zapisek in vse vezane kartice?\n%s</string>
-  <string name="menu_edit_card">Uredi kartico</string>
   <string name="menu_select">Označi besedilo</string>
   <string name="menu_search">Poišči v %1$s</string>
   <string name="menu_mark_card">Označi kartico</string>
@@ -117,7 +101,6 @@
   <string name="new_deck">Create deck</string>
   <string name="create">Ustvari</string>
   <string name="new_dynamic_deck">Create filtered deck</string>
-  <string name="studyoptions_feedback">Povratna informacija</string>
   <string name="night_mode">Nočni način</string>
   <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
   <string-array name="next_review_s">
@@ -136,9 +119,7 @@
     <item>%s mesecev</item>
     <item>%s let</item>
   </string-array>
-  <string name="visit">Obišči</string>
   <string name="later">Pozneje</string>
-  <string name="download">Prenos</string>
   <string name="open_collection">Odpiram zbirko.\nProsimo počakajte...</string>
   <string name="rebuild_cram_deck">Gradim natrpan komplet.\nProsimo počakajte...</string>
   <string name="rebuild_cram_label">Izgradi</string>
@@ -151,37 +132,10 @@
   <string name="studyoptions_congrats_more_new">Kartic ni več na voljo, čeprav dnevna omejitev ni bila dosežena. Med možnostmi lahko povečate omejitev, toda prosim imejte v mislih, da boste s tem povečali obremenitev pri kratkoročnem pregledu.</string>
   <string name="studyoptions_congrats_custom">Za učenje izven običajnega urnika kliknite spodnji gumb Učenje po meri.</string>
   <string name="studyoptions_no_cards_due">No cards are due yet.</string>
-  <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
-    <item quantity="other">Jutri bo: %1$d kartic za pregled in %2$s.\n Predviden čas: %3$s</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">%1$d new card</item>
-    <item quantity="other">%1$d novih kartic</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">Estimated time: %1$d min.</item>
-    <item quantity="other">Predviden čas: %1$d min.</item>
-  </plurals>
   <string name="sd_card_not_mounted">Spominska SD kartica ni dostopna.\n\nVašo zbirko lahko shranite tudi v pomnilnik naprave, vendar pa to zaradi nerodnejšega dostopa do teh datotek ni priporočeno. Možnost lahko vključite prek Nastavitev (dostopne s klikom na to besedilo).</string>
-  <string name="studyoptions_options">Možnosti</string>
-  <string name="empty_cloze_warning">Prosim, uredite ta zapis in dodajte nekaj zabrisanih polj. (%1$s)</string>
-  <string name="help_cloze">pomoč</string>
   <string name="button_sync">Sinhroniziraj</string>
-  <string name="restart">Ponovi</string>
-  <string name="do_nothing">Ne naradi ničesar</string>
-  <string name="more_options">Več možnosti</string>
-  <string name="now">Zdaj</string>
-  <string name="back">Nazaj</string>
-  <string name="ankiweb">AnkiWeb</string>
-  <string name="usb">USB</string>
-  <string name="_import">Uvozi</string>
   <string name="export">Export</string>
-  <string name="confirm">Potrdi</string>
-  <string name="internet">Internet</string>
-  <string name="pc">Osebni računalnik</string>
   <string name="nothing">Nothing</string>
-  <string name="title_activity_graphical_activity">Statistical chart</string>
   <string name="title_activity_template_editor">Card Types for %s</string>
   <string name="card_template_editor_front">Front Template</string>
   <string name="card_template_editor_back">Back Template</string>

@@ -35,14 +35,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="navigation_titles">
-    <item>Mazos</item>
-    <item>Explorador de tarjetas</item>
-    <item>Estadísticas</item>
-    <item>Configuración</item>
-    <item>Ayuda</item>
-    <item>Enviar comentarios</item>
-  </string-array>
   <string-array name="newCardSchedulingLabels">
     <item>Diseminar entre los repasos</item>
     <item>Luego de los repasos</item>

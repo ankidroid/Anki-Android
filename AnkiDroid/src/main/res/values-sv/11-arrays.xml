@@ -35,14 +35,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="navigation_titles">
-    <item>Kortlekar</item>
-    <item>Kortbläddrare</item>
-    <item>Statistik</item>
-    <item>Inställningar</item>
-    <item>Hjälp</item>
-    <item>Skicka feedback</item>
-  </string-array>
   <string-array name="newCardSchedulingLabels">
     <item>Fördela bland repetitioner</item>
     <item>Efter repetition</item>

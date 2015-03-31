@@ -35,14 +35,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="navigation_titles">
-    <item>Sets</item>
-    <item>Kaartbrowser</item>
-    <item>Statistieken</item>
-    <item>Instellingen</item>
-    <item>Help</item>
-    <item>Feedback versturen</item>
-  </string-array>
   <string-array name="newCardSchedulingLabels">
     <item>Spreid uit over herhalingen</item>
     <item>Na herhalingen</item>

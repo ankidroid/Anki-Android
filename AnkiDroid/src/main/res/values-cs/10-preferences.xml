@@ -138,7 +138,6 @@
   <string name="safe_display_summ">Zakázat všechny animace a použít bezpečnější metodu pro vykreslení karty. E-ink a starší zařízení pro použití vlastních písem toto může vyžadovat.</string>
   <string name="vertical_centering">Zarovnání na střed</string>
   <string name="vertical_centering_summ">Obsah karet vycentrovat svisle na střed</string>
-  <string name="pref_cat_backup">Zálohy</string>
   <string name="pref_backup">Použit zálohování</string>
   <string name="pref_backup_summ">Automaticky vytvořit zálohu před otevřením balíčku (jednou denně)</string>
   <string name="pref_backup_max">Maximální počet záloh</string>
@@ -163,11 +162,6 @@
   <string name="input_workaround_summ">Řešení problémů s HTML vstupními poli. Způsobuje problémy na některých zařízeních.</string>
   <string name="pref_keep_screen_on">Nevypínat obrazovku</string>
   <string name="pref_keep_screen_on_summ">Nepovolit zhasnutí displeje</string>
-  <string name="pref_simple_interface">Jednoduché rozhraní</string>
-  <string name="pref_simple_interface_summ">Urychluje zobrazení karet, ale nepodporuje všechny funkce html</string>
-  <string name="pref_simple_interface_exclude_tags">Štítky pro vyloučení</string>
-  <string name="pref_simple_interface_exclude_tags_summ">Nepoužívat jednoduché rozhraní pro tyto štítky: XXX</string>
-  <string name="write_answers_message">Měli byste definovat pro každý balíček pole pro porovnání písemné odpovědi. Lze provést prostřednictvím Anki pro PC (deck properties -&gt; edit model -&gt; card layout).\n\nJestliže není nastaveno žádné pole, písemná odpověď bude vždy porovnána s celou kartou odpovědi</string>
   <string name="fix_arabic_text">Zlepšit arabské zobrazení</string>
   <string name="fix_arabic_text_summ">Částečné řešení pro omezenou podporu arabštiny v Androidu. Při aktivaci není možné měnit karty.</string>
   <string name="convert_fen_text">Podpora šachovnicového zápisu</string>
@@ -175,17 +169,6 @@
   <string name="filter_google_translate_summ">Uložit původní slovo a překlad</string>
   <string name="convert_fen_text_summ">Vykreslení šachovnice z Forsyth Edwards Notation. Zápis musí být uzavřen mezi značky [fen][/fen].</string>
   <string name="studyoptions_limit_select_tags">Výběr štítků</string>
-  <string name="studyoptions_limit_tags_active">S: %1$s</string>
-  <string name="studyoptions_limit_tags_inactive">Bez: %1$s</string>
-  <string name="studyoptions_limit_button_text">Limit</string>
-  <string name="studyoptions_limit_dialog_title">Limit učení</string>
-  <string name="studyoptions_session">Sezení</string>
-  <string name="studyoptions_tag">Štítky</string>
-  <string name="studyoptions_tag_new">Zobrazit nové karty podle štítků:</string>
-  <string name="studyoptions_tag_rev">Zobrazit opakované karty podle štítků:</string>
-  <string name="studyoptions_new_cards_per_day">Nových karet na den</string>
-  <string name="studyoptions_max_fail_card">Max. chybně zodpovězených karet </string>
-  <string name="deck_conf_deck_name">Jméno balíčku</string>
   <string name="deck_conf_deck_description">Popis balíčku</string>
   <string name="deck_conf_group">Skupina nastavení</string>
   <plurals name="deck_conf_group_summ">
@@ -244,7 +227,6 @@
   <string name="pref_browser_editor_font_summ">XXX</string>
   <string name="deck_conf_cram_filter">Filtr</string>
   <string name="deck_conf_cram_options">Možnosti</string>
-  <string name="deck_conf_cram_preset">Předvolené</string>
   <string name="deck_conf_cram_search">Hledat</string>
   <string name="deck_conf_cram_limit">Omezit na</string>
   <string name="deck_conf_cram_order">vybrané karty</string>

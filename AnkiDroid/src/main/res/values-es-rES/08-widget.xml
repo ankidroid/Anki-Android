@@ -51,14 +51,6 @@
     <item quantity="one">%1$d mazo</item>
     <item quantity="other">%1$d mazos</item>
   </plurals>
-  <string name="widget_medium">AnkiDroid Medio</string>
   <string name="widget_small">AnkiDroid Pequeño</string>
-  <string name="widget_big">AnkiDroid Grande</string>
-  <string name="widget_big_restrictions_dialog">Debido a algunas restricciones en los marcos de widgets de Android este widget sólo puede mostrar texto, pero no imágenes/sonidos etc.</string>
-  <string name="open_in_reviewer">Abrir mazo en Ankidroid</string>
-  <plurals name="widget_big_eta">
-    <item quantity="one">Tiempo estimado: %d min.</item>
-    <item quantity="other">Tiempo estimado: %d min.</item>
-  </plurals>
   <string name="widget_big_tomorrow_due">Programadas mañana:</string>
 </resources>

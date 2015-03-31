@@ -138,7 +138,6 @@
   <string name="safe_display_summ">Bütün animasyonları devredışı bırak ve kartları çizmek için daha güvenli yöntem kullan. E-ink ve farklı fontlar kullanan eski cihazlar için gerekli olabilir.</string>
   <string name="vertical_centering">Ortaya hizala</string>
   <string name="vertical_centering_summ">Kartların içeriğini dikey olarak ortala</string>
-  <string name="pref_cat_backup">Yedekler</string>
   <string name="pref_backup">Yedekleri kullan</string>
   <string name="pref_backup_summ">Desteyi açmadan önce otomatik olarak yedek oluştur (günde bir kere)</string>
   <string name="pref_backup_max">En fazla yedek sayısı</string>
@@ -163,11 +162,6 @@
   <string name="input_workaround_summ">HTML giriş kutularında odaklama sorunları için geçici çözüm. Bazı cihazlarda sorunlara yol açar.</string>
   <string name="pref_keep_screen_on">Ekranı açık tut</string>
   <string name="pref_keep_screen_on_summ">Ekran zaman aşımını devredışı bırak</string>
-  <string name="pref_simple_interface">Basit arayüz</string>
-  <string name="pref_simple_interface_summ">Kart gösterimini hızlandır fakat tüm html özellikleri desteklemez</string>
-  <string name="pref_simple_interface_exclude_tags">Dışarda bırakılacak etiketler</string>
-  <string name="pref_simple_interface_exclude_tags_summ">Şu etiketler için basit arayüzü kullanma: XXX</string>
-  <string name="write_answers_message">Her deste için yazılan yanıtın karşılaştırılacağı bir alan tanımlamalısınız. Bunu Anki Masaüstü\'yle yapabilirsiniz. (deste özellikleri -&gt; model düzenle -&gt; kart düzeni)\n\nEğer karşılaştırma alanı ayarlanmamışsa, yazılan yanıtınız her zaman bütün kart yanıtıyla karşılaştırılacaktır.</string>
   <string name="fix_arabic_text">Arapça görünümünü geliştir</string>
   <string name="fix_arabic_text_summ">Android platformunun kısıtlı Arapça desteği için kısmî geçici çözüm. Etkinleştirildiğinde kartlar değiştirilemez.</string>
   <string name="convert_fen_text">Satranç gösterimi desteği</string>
@@ -175,17 +169,6 @@
   <string name="filter_google_translate_summ">Yalnızca kaynak sözcük ve çeviriyi kaydet</string>
   <string name="convert_fen_text_summ">Forsyth Edwards Notasyonundan satranç tahtası çiz. Notasyon [fen][/fen] etiketi içine alınmış olmalıdır.</string>
   <string name="studyoptions_limit_select_tags">Etiketleri Seçin</string>
-  <string name="studyoptions_limit_tags_active">%1$s içeren</string>
-  <string name="studyoptions_limit_tags_inactive">%1$s içermeyen</string>
-  <string name="studyoptions_limit_button_text">Sınırla</string>
-  <string name="studyoptions_limit_dialog_title">Öğrenmeyi Sınırla</string>
-  <string name="studyoptions_session">Oturum</string>
-  <string name="studyoptions_tag">Etikete Göre</string>
-  <string name="studyoptions_tag_new">Yeni kartları etikete göre göster:</string>
-  <string name="studyoptions_tag_rev">Gözden geçirilen kartları etikete göre göster:</string>
-  <string name="studyoptions_new_cards_per_day">Gün başına yeni kart sayısı</string>
-  <string name="studyoptions_max_fail_card">En fazla başarısız kart sayısı</string>
-  <string name="deck_conf_deck_name">Deste adı</string>
   <string name="deck_conf_deck_description">Deste tanımı</string>
   <string name="deck_conf_group">Seçenek grubu</string>
   <plurals name="deck_conf_group_summ">
@@ -244,7 +227,6 @@
   <string name="pref_browser_editor_font_summ">XXX</string>
   <string name="deck_conf_cram_filter">Filtre</string>
   <string name="deck_conf_cram_options">Seçenekler</string>
-  <string name="deck_conf_cram_preset">Önayar</string>
   <string name="deck_conf_cram_search">Arama</string>
   <string name="deck_conf_cram_limit">Sınırla:</string>
   <string name="deck_conf_cram_order">kart seçme ölçütü:</string>

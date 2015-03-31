@@ -47,9 +47,7 @@
   <string name="delete_deck_title">حذف دسته</string>
   <string name="delete_deck_message">شما مایل به حذف تمام کارت در %s هستید؟</string>
   <string name="delete_cram_deck_message">آیا مایلید که همه کارتهای موجود در %s  را به دسته اصلی خودتان برگردانید؟</string>
-  <string name="delete_deck_confirm">آن را حذف کنید</string>
   <string name="new_version_message">ویژگی های جدید:</string>
-  <string name="no_tts_available_title">متن به گفتار</string>
   <string name="no_tts_available_message">زبان متن به گفتار در دسترس نیست</string>
   <string name="initializing_tts">Initializing TTS&#8230;</string>
   <string name="tts_no_tts">حرف نزن</string>
@@ -60,14 +58,7 @@
     <item><![CDATA[غیر از برنامه نویسان نیز سایر اشخاص می توانند کمک کنند , بعنوان نمونه به وسیله <a href="%1$s">ترجمه</a> آنکی دروید, بروزرسانی دانشنامه و عکس های برنامه, <a href="%2$s">اهداء کردن</a> برای نرم افزار کامپیوتر آنکی ، یا بلاگ درباره آنکی دروید!]]></item>
     <item><![CDATA[نرم افزار آنکی دروید تحت <a href="%1$s">GNU-GPL v3 license</a> و کدهای آن در دسترس است <a href="%2$s">اینجا</a>.]]></item>
   </string-array>
-  <string name="dont_show_again">دوباره نشان نده</string>
-  <string name="notify_ticker">به روز رسانی برنامه</string>
-  <string name="notify_title">به روز رسانی آنکی دروید</string>
-  <string name="notify_message">دانلود نسخه جدید</string>
-  <string name="notification_title">تایید به روز رسانی آنکی دروید</string>
   <string name="preview_title">پیش نمایش</string>
-  <string name="notification_message">یک نسخه جدید از آنکی دروید در بازار اندروید موجود است.\n\nآیا می خواهید آن را نصب کنید؟</string>
-  <string name="notification_stop">دوباره این به روز رسانی را به من اطلاع نده</string>
   <string name="reset_card_dialog_title">بازنشانی پیشرفت کارت</string>
   <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue.</string>
   <string name="reset_card_dialog_acknowledge">Card reset</string>
@@ -90,37 +81,7 @@
   <string name="custom_study_ahead">مرور پیش از موعد تا x روز:</string>
   <string name="custom_study_random">انتخاب x کارت تصادفی از دسته:</string>
   <string name="custom_study_preview">پیش نمایش کارت های جدید اضافه شده در  x روز گذشته:</string>
-  <string name="custom_study_tags">برچسب ها را وارد کنید:</string>
   <string name="rebuild_custom_study_deck">ساخت مجدد دسته مطالعه سفارشی.\nلطفا صبر کنید...</string>
-  <string name="deck_upgrade_title">به روز رسانی دسته</string>
-  <string name="deck_upgrade_rename_warning">مطلع باشید که مجموعه فعلی شما به فایلی به نام \'%1$s\' صادر خواهد شد و یک دسته جدید از فایلهای آنکی 1.x ایجاد خواهد کرد.اگر بخواهید می توانید دوباره بصورت دستی فایل با پسوند apkg را بعد از کامل شدن سهل آموز  وارد نمایید. آیا مایلید ادامه دهید؟</string>
-  <string name="deck_upgrade_major_warning"><![CDATA[این یک ماژول به روز رسانی آنکی دروید است و عملیات به روز رسانی حداقل 10 الی 20 دقیقه زمان می برد.<br><br> عملیات الان انجام شود یا بعدا؟<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en">اطلاعات بیشتر</a>]]></string>
-  <string name="deck_upgrade_start_again_to_upgrade_toast">وقتیکه به روز رسانی به پایان رسید آنکی دروید را دوباره شروع کن!</string>
-  <string name="deck_upgrade_recommended_method"><![CDATA[روش به روز رسانی توصیه شده این است که با یک کامپیوتر همگامسازی کنید و با نسخه رومیزی آنکی به روز رسانی نمایید.<br><br>روش دیگر به روز رسانی زمانی که به یک کامپیوتر دسترسی ندارید و حجم مجموعه تان زیاد بزرگ نیست این است که از طریق اینترنت به روز رسانی نمایید
-.]]></string>
-  <string name="deck_upgrade_more_options_exit">شما می توانید بدون وارد کردن کارتهای قدیمی خود از طریق کلیک کردن بر روی دکمه خروج زیر از سهل آموز به روز رسانی خارج شوید.</string>
-  <string name="deck_upgrade_more_options_new_collection">با کلیک بر روی زیر می توانید یک مجموعه خالی جدید بسازید.</string>
-  <string name="deck_upgrade_more_options_downgrade"><![CDATA[<br><br>اگر می خواهید به نسخه 1 آنکی دروید برگردید لطفا بخوانید <a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Continuing_to_use_AnkiDroid_1.1.3">این دستور العمل را</a>.]]></string>
-  <string name="deck_upgrade_create_new_collection">ساختن مجموعه جدید</string>
-  <string name="deck_upgrade_create_new_collection_title">ایجاد مجموعه جدید</string>
-  <string name="deck_upgrade_create_new_collection_button">مجموعه جدید</string>
-  <string name="deck_upgrade_not_import_warning">آیا برای انجام این کار مطمئن هستید؟ داده های قدیمی شما وارد نمی شوند.</string>
-  <string name="deck_upgrade_via_web"><![CDATA[<b>اگر از فایلهای چند رسانه ای یا با حجم زیاد در مجموعه تان استفاده می کنید این روش به روز رسانی توصیه نمی شود!</b><br><br>دسته های آنکی 1 شما فشرده شده و به آنکی وب بارگذاری می شود و پس از تبدیل، مجموعه بارگیری خواهد شد.<br><br>توجه داشته باشید که اتصال اینترنتی ثابت نیاز دارید و فایلتان در حدود 50 مگابایت باشد.<br><br>کاربران نسخه رومیزی آنکی را قویا به استفاده از روش کامپیوتر جهت به روز رسانی تشویق می کنیم.<br><br>آیا هنوز مایلید ادامه دهید؟]]></string>
-  <string name="deck_upgrade_via_anki_desktop"><![CDATA[اگر شما در حال حاضر نسخه به روز مجموعه آنکی دروید را در آنکی رومیزی دارید، می توانید از این طریق به روز رسانی نموده و سپس مجموعه به روز شده را از طریق همگامسازی با آنکی وب بارگیری نمایید.<br><br>شما می توانید پی در پی مجموعه آنکی دروید خویش را با استفاده از یو اس بی به کامپیوترتان کپی کرده و پس از به روز رسانی مجددا به آنکی دروید برگردانید.]]></string>
-  <string name="deck_upgrade_auto_upgrade"><![CDATA[برای به روز رسانی مجموعه تان لطفا نسخه2.0.4 یا بالاتر آنکی رومیزی (نسخه کامپیوتر)را نصب و اجرا کنید سپس مجموعه به روز شده را با آنکی وب همگامسازی نموده و دکمه دانلود یا بارگیری را فشار دهید. <br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_2:_Using_AnkiWeb_sync">برای کسب اطلاعات بیشتر در مورد به روز رسانی با آنکی وب به این آدرس مراجعه نمایید</a>]]></string>
-  <string name="deck_upgrade_manual"><![CDATA[برای به روز رسانی مجموعه تان لطفا همه فایلهای با پسوند آنکی  (و عمه پوشه های  حاوی فایلهای چند رسانه ای)را از پوشه آنکی دروید (گوشی اندرویدی)به پوشه آنکی رومیزی (واقع در کامپیوتر) کپی کرده و نسخه 2.0.4 یا بالاتر آنکی رومیزی را نصب و اجرا کنید..<br><br>وقتی به روز رسانی کامل شد،مجموعه تان را از آنکی 2 برون ریز (اکسپرت) کرده و فایل مجموعه با پسوند .apkg را به پوشه آنکی دروید (دستگاه) کپی کنید<br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_1:_Using_USB_(recommended)">برای کسب اطلاعات بیشتر در مورد به روز رسانی با یو اس بی به این آدرس مراجهه نمایید.</a>]]></string>
-  <string name="upgrade_deck_cancelled_title">به روز رسانی لغو شد</string>
-  <string name="upgrade_deck_cancelled_description">تلاش برای به روز رسانی لغو شد ، سعی نمایید از روش دیگری برای  به روز رسانی استفاده کنید.</string>
-  <string name="upgrade_deck_web_upgrade_failed">روند انجام به روز رسانی ناموفق بود. لطفا دوباره سعی کنید یا روش دیگر به روز رسانی را انتخاب نمایید</string>
-  <string name="upgrade_deck_web_upgrade_exceeds">مجموع اندازه دسته های آنکی 1 فشرده شده شما بیش از مقدار توان سرویس دهنده  (50 مگابایت) است. جهت به روز رسانی با روش دیگری اقدام کنید.</string>
-  <string name="upgrade_deck_web_upgrade_sdcard">به روز رسانی به پایان رسید, اما هنگام باز کردن مجموعه خطاهایی وجود داشت, لطفا مطمئن شوید که فصای کافی بر روی هارد دیسک تان وجود دارد (مورد احتیاج %1$d مگابایت)و دوباره سعی کنید , یا از طریق روش دیگری به روز رسانی نمایید.</string>
-  <string name="export_progress_title">صدور مجموعه</string>
-  <string name="export_progress_exporting">در حال صدور مجموعه، لطفا صبر کنید&#8230;</string>
-  <string name="upgrade_deck_export_successful">در جریان روند به روز رسانی ،مجموعه قدیمی شما با موفقیت صادر شد.</string>
-  <string name="upgrade_deck_export_error">در طول مدت صدور مجموعه قدیمی شما خطا رخ داد. آیا به هر حال مایل به ادامه انجام به روز رسانی هستید (مجموعه قدیمی شما از دست خواهد رفت)؟</string>
-  <string name="upgrade_deck_sync_from_ankiweb">همگامسازی از آنکی وب</string>
-  <string name="upgrade_deck_have_you_synced">آیا برای انجام به روز رسانی از طریق نسخه رومیزی آنکی2 و همگامسازی با آنکی وب مطمئنید؟</string>
-  <string name="upgrade_deck_dont_upgrade">به روز رسانی نکنید</string>
   <string name="import_unpacking">در حال باز کردن آرشیو.\nلطفا صبر کنید&#8230;</string>
   <string name="importing_collection">در حال ورود مجموعه.\nلطفا صبر کنید&#8230;</string>
   <string name="import_media_count">در حال وارد کردن فایلهای جند رسانه ای %1$d%%\nلطفا صبر کنید&#8230;</string>
@@ -133,7 +94,6 @@
   <string name="dialog_cancel">لغو</string>
   <string name="dialog_ok">تایید</string>
   <string name="dialog_continue">ادامه</string>
-  <string name="dialog_neutral_later">بعدا</string>
   <string name="dialog_positive_create">ایجاد</string>
   <string name="dialog_positive_delete">حذف</string>
   <string name="dialog_positive_disable">غیر فعال کردن</string>
@@ -143,14 +103,8 @@
   <string name="dialog_positive_replace">جایگزین کردن</string>
   <string name="dialog_positive_reset">تنظیم مجدد</string>
   <string name="dialog_positive_restore">بازگرداني</string>
-  <string name="dialog_positive_save">ذخیره</string>
   <string name="dialog_positive_set">Set</string>
-  <string name="add_button_content">Add&#8230;</string>
-  <string name="card_browser_button_content">Card browser</string>
   <string name="lookup_button_content">Look up</string>
-  <string name="statistics_button_content">Statistics</string>
-  <string name="dialog_collection_path_title">Folder does not exit</string>
-  <string name="dialog_collection_path_text">The folder you specified does not exist, would you like to create it?</string>
   <string name="dialog_collection_path_not_dir">The path specified was not a valid directory</string>
   <string name="check_media_title">Check media?</string>
   <string name="check_media_warning">This may take a long time with large media collections</string>

@@ -39,11 +39,13 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="app_name">AnkiDroid</string>
-  <string name="app_name_anki">Anki</string>
-  <string name="app_name_droid">Droid</string>
+  <string name="decks">Decks</string>
+  <string name="card_browser">Card Browser</string>
+  <string name="statistics">Statistics</string>
+  <string name="settings">Settings</string>
+  <string name="help">Help</string>
+  <string name="send_feedback">Send Feedback</string>
   <string name="studyoptions_title">Study Options</string>
-  <string name="studyoptions_deck_name">اسم القاعدة</string>
   <string name="studyoptions_due_today">المستحق اليوم:</string>
   <string name="studyoptions_new_total">مجموع البطاقات الجديدة:</string>
   <string name="studyoptions_total_cards">مجموع البطاقات:</string>
@@ -57,10 +59,6 @@
     <item quantity="one">%d min.</item>
     <item quantity="other">%d دقيقة.</item>
   </plurals>
-  <plurals name="deckpicker_due">
-    <item quantity="one">%1$d of %2$d due</item>
-    <item quantity="other">تنتظر المراجعة%1$d من أصل %2$d</item>
-  </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">%d minute left</item>
     <item quantity="other">%d دقائق بقيت</item>
@@ -72,9 +70,6 @@
   <string name="ease3_successive">جيد</string>
   <string name="ease3_learning">سهل</string>
   <string name="studyoptions_congrats_undo">تراجع عن%s</string>
-  <string name="card_unsuspended">فك تعليق البطاقة</string>
-  <string name="card_suspended">بطاقة معاد تعليقها</string>
-  <string name="menu_rotate">تدوير</string>
   <string name="menu_import">Import</string>
   <string name="undo">تراجع</string>
   <string name="undo_action_review">last review</string>
@@ -86,30 +81,19 @@
   <string name="undo_action_mark">علم الملاحظة</string>
   <string name="unbury">Unbury</string>
   <string name="finish_operation">الانتهاء من العملية السابقة ( الأكثر احتمالاً إنشاء النسخة الاحتياطية).\n يرجى الانتظار...</string>
-  <string name="contextmenu_deckpicker_download_missing_media">حمل الوسائط المفقودة</string>
-  <string name="contextmenu_deckpicker_reset_language_assignments">أعد تعيين تخصيصات اللغة</string>
-  <string name="contextmenu_deckpicker_reset_reset_message">إعادة تعيين اللغة</string>
-  <string name="contextmenu_deckpicker_optimize_deck">تحسين قاعدة البيانات</string>
   <string name="contextmenu_deckpicker_rename_deck">أعد تسمية الرزمة</string>
   <string name="contextmenu_deckpicker_collapse_deck">Hide subdecks</string>
   <string name="contextmenu_deckpicker_inflate_deck">Show subdecks</string>
-  <string name="contextmenu_deckpicker_set_custom_dictionary">عين قاموس مخصص</string>
   <string name="menu_add">Add</string>
   <string name="menu_add_note">Add note</string>
-  <string name="menu_download_deck">حمل رزمة</string>
-  <string name="menu_download_shared_deck">رزمة مشتركة</string>
   <string name="menu_my_account">حساب المزامنة</string>
-  <string name="menu_preferences">تفضيلات</string>
-  <string name="menu_about">حول</string>
   <string name="menu_dismiss_note">Hide / Delete</string>
   <string name="menu_bury_card">Bury card</string>
   <string name="menu_bury_note">أخف الملاحظة</string>
   <string name="menu_suspend_card">علق البطاقة</string>
   <string name="menu_suspend_note">ملاحظة التعليق</string>
-  <string name="menu_save_note">Save note</string>
   <string name="menu_delete_note">ملاحظة الحذف</string>
   <string name="delete_note_message">هل تريد حقا حذف هذه الملاحظة و جميع بطاقاتها؟\n%s</string>
-  <string name="menu_edit_card">حرر البطاقة</string>
   <string name="menu_select">حدد نصا</string>
   <string name="menu_search">البحث في %1$s</string>
   <string name="menu_mark_card">علم البطاقة</string>
@@ -117,7 +101,6 @@
   <string name="new_deck">Create deck</string>
   <string name="create">إنشاء</string>
   <string name="new_dynamic_deck">Create filtered deck</string>
-  <string name="studyoptions_feedback">مرئياتك</string>
   <string name="night_mode">وضع ليلي</string>
   <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
   <string-array name="next_review_s">
@@ -136,9 +119,7 @@
     <item>أشهر%s</item>
     <item>سنوات%s</item>
   </string-array>
-  <string name="visit">قم بزيارة</string>
   <string name="later">في وقت لاحق</string>
-  <string name="download">تحميل</string>
   <string name="open_collection">فتح المجموعة.\nالرجاء الانتظار...</string>
   <string name="rebuild_cram_deck">إعادة بناء حزمة المراجعة المركزة.\n يرجى الانتظار...</string>
   <string name="rebuild_cram_label">إعادة بناء</string>
@@ -151,37 +132,10 @@
   <string name="studyoptions_congrats_more_new">هناك المزيد من البطاقات الجديدة المتاحة، ولكن وصلت إلى الحد الأقصى اليومي. يمكنك زيادة الحد الأقصى في الخيارات، ولكن يرجى أن تضع في الاعتبار أن ذلك سيزيد من عبء العمل الخاص بك للمراجعة قصيرة المدى.</string>
   <string name="studyoptions_congrats_custom">للدراسة خارج الجدول الزمني العادي، انقر فوق الزر \"مخصص الدراسة\" أدناه.</string>
   <string name="studyoptions_no_cards_due">No cards are due yet.</string>
-  <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
-    <item quantity="other">غدا سيكون هناك: %1$d بطاقات للمراجعة و %2$s.\n الوقت المقدر: %3$s</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">%1$d new card</item>
-    <item quantity="other">%1$d بطاقات جديدة</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">Estimated time: %1$d min.</item>
-    <item quantity="other">الوقت المقدر:%1$d دقيقة.</item>
-  </plurals>
   <string name="sd_card_not_mounted">بطاقة SD لا يمكن تخزين mounted.\n\nYou في جمع الخاصة بك في الذاكرة الداخلية جداً، على الرغم من أن من غير المستحسن كما لا يمكن الوصول إلى الملف بسهولة. يمكنك تنشيط هذا في التفضيلات (فتحها بواسطة النقر فوق هذا النص).</string>
-  <string name="studyoptions_options">خيارات</string>
-  <string name="empty_cloze_warning">الرجاء تحرير هذه المذكرة، وإضافة بعض الفراغات للنصوص محذوفة. (%1$s)</string>
-  <string name="help_cloze">مساعدة</string>
   <string name="button_sync">مزامنة</string>
-  <string name="restart">إعادة تشغيل</string>
-  <string name="do_nothing">لا تفعل شيئاً</string>
-  <string name="more_options">المزيد من الخيارات</string>
-  <string name="now">الآن</string>
-  <string name="back">عودة</string>
-  <string name="ankiweb">AnkiWeb</string>
-  <string name="usb">الناقل التسلسلي العام</string>
-  <string name="_import">استيراد</string>
   <string name="export">Export</string>
-  <string name="confirm">تأكيد</string>
-  <string name="internet">شبكة الإنترنت</string>
-  <string name="pc">كمبيوتر</string>
   <string name="nothing">Nothing</string>
-  <string name="title_activity_graphical_activity">Statistical chart</string>
   <string name="title_activity_template_editor">Card Types for %s</string>
   <string name="card_template_editor_front">Front Template</string>
   <string name="card_template_editor_back">Back Template</string>

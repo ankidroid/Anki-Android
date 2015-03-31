@@ -35,14 +35,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="navigation_titles">
-    <item>دسته ها</item>
-    <item>مرورگر کارت</item>
-    <item>آمار</item>
-    <item>تنظیمات</item>
-    <item>کمک</item>
-    <item>ارسال بازخورد</item>
-  </string-array>
   <string-array name="newCardSchedulingLabels">
     <item>توسعه از طریق بررسی</item>
     <item>پس از مرور</item>

@@ -35,14 +35,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="navigation_titles">
-    <item>Колоди</item>
-    <item>Переглядач карт</item>
-    <item>Статистика</item>
-    <item>Параметри</item>
-    <item>Допомога</item>
-    <item>Надіслати відгук</item>
-  </string-array>
   <string-array name="newCardSchedulingLabels">
     <item>Розподілити по переглядах</item>
     <item>Після переглядів</item>

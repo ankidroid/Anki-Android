@@ -35,14 +35,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="navigation_titles">
-    <item>Balíčky</item>
-    <item>Prehliadač kariet</item>
-    <item>Štatistiky</item>
-    <item>Nastavenia</item>
-    <item>Pomocník</item>
-    <item>Odoslať hodnotenie</item>
-  </string-array>
   <string-array name="newCardSchedulingLabels">
     <item>Rozložiť medzi opakovania</item>
     <item>Po opakovaniach</item>

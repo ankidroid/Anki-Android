@@ -39,13 +39,9 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="backup_collection">Tworzenie kopii zapasowej.\nProszę czekać...</string>
   <string name="backup_deck_no_space_left">Kopia nie została utworzona z powodu braku miejsca na karcie SD\n\nZwolnij trochę miejsca lub zmniejsz liczbę kopii/talii.</string>
   <string name="sd_space_warning">Na karcie SD zostało mniej niż %d MB wolnego miejsca.\nZwolnij trochę miejsca, aby uniknąć utraty danych.</string>
-  <string name="backup_deck_success">Kopia pomyślnie utworzona.</string>
-  <string name="backup_manager_title">Zarządzanie kopiami zapasowymi</string>
   <string name="backup_delete">Usuwanie kopii.\nProszę czekać...</string>
-  <string name="contextmenu_deckpicker_remove_backups">Usuń kopię</string>
   <string name="backup_restore">Przywróć kopię zapasową</string>
   <string name="backup_new_collection">Nowa kolekcja</string>
   <string name="backup_del_collection">Usuń kolekcje i utworz nową</string>
@@ -59,10 +55,7 @@
   <string name="backup_repair_deck">Napraw</string>
   <string name="backup_repair_deck_progress">Naprawianie bazy danych.\nProszę czekać...</string>
   <string name="backup_error">Błąd</string>
-  <string name="backup_restore_error">Nie można przywrócić kolekcji</string>
   <string name="backup_invalid_file_error">Wybrany plik kopii zapasowej był nieprawidłowy</string>
-  <string name="backup_restore_if_missing">Przywróć brakującą kolekcję...</string>
-  <string name="backup_restore_deck">Przywracanie kolekcji.\nProszę czekać...</string>
   <string name="backup_restore_select_title">Wybierz kopię do odtworzenia.</string>
   <string name="backup_restore_no_backups">Brak kopii zapasowych dla tej kolekcji na urządzeniu. Jeśli masz kopię zapasową na swoim komputerze stacjonarnym, przenieś ją ręcznie do folderu AnkiDroid.</string>
   <string name="open_collection_failed_title">Nie udało się otworzyć kolekcji</string>

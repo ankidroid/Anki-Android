@@ -35,14 +35,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="navigation_titles">
-    <item>Stapel</item>
-    <item>Kartenübersicht</item>
-    <item>Statistik</item>
-    <item>Einstellungen</item>
-    <item>Hilfe</item>
-    <item>Rückmeldung senden</item>
-  </string-array>
   <string-array name="newCardSchedulingLabels">
     <item>Über Wiederholungen verteilen</item>
     <item>Nach Wiederholungen</item>

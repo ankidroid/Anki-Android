@@ -39,7 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="statistics_menu">Estadísticas</string>
   <string name="statistics_young">Jóvenes</string>
   <string name="statistics_mature">Maduras</string>
   <string name="statistics_young_and_learn">Joven+aprender</string>
@@ -48,7 +47,6 @@
   <string name="statistics_relearn">Volver a aprender</string>
   <string name="statistics_learn">Aprendido</string>
   <string name="statistics_cram">Empollado</string>
-  <string name="statistics_type_title">Estadísticas</string>
   <string name="stats_cards">Tarjetas</string>
   <string name="stats_cards_intervals">Tarjetas con intervalo dado</string>
   <string name="stats_cumulative_cards">Tarjetas acumuladas</string>
@@ -65,7 +63,6 @@
   <string name="stats_period_month">1 mes</string>
   <string name="stats_period_year">1 año</string>
   <string name="stats_period_lifetime">vida del mazo</string>
-  <string name="stats_deck_current">mazo</string>
   <string name="stats_deck_collection">Colección</string>
   <string name="stats_time_of_day">Hora del día</string>
   <string name="stats_day_of_week">Día de la semana</string>
@@ -77,37 +74,7 @@
   <string name="stats_today_type_breakdown">Aprender: &lt;b&gt;%1$s&lt;/b&gt;, Revisar: &lt;b&gt;%2$s&lt;/b&gt;, Reaprender: &lt;b&gt;%3$s&lt;/b&gt;, Filtradas: &lt;b&gt;%4$s&lt;/b&gt;</string>
   <string name="stats_today_mature_cards">Respuestas correctas en tarjetas maduras: %1$d/%2$d (%3$.1f%%)</string>
   <string name="stats_today_no_mature_cards">No se han estudiado tarjetas maduras hoy.</string>
-  <string name="statistics_period_x_axis_minutes">Minutos</string>
-  <string name="statistics_new_cards">Tarjetas nuevas</string>
-  <string name="statistics_failed_cards">Tarjetas falladas</string>
-  <string name="statistics_fullscreen">Activar Pantalla Completa</string>
-  <string name="calculating_statistics">Calculando estadísticas.\nPor favor, espera...</string>
-  <string name="deck_summary_cards">Número de tarjetas:</string>
-  <string name="deck_summary_notes">Número de notas:</string>
-  <string name="deck_summary_cards_mature">Tarjetas maduras:</string>
-  <string name="deck_summary_cards_young">Tarjetas jóvenes:</string>
-  <string name="deck_summary_cards_unseen">Tarjetas no vistas:</string>
-  <string name="deck_summary_card_age">Edad de tarjeta</string>
-  <string name="deck_summary_average_interval">Intervalo promedio: &lt;b&gt;%.1f&lt;/b&gt; días</string>
-  <string name="deck_summary_answers_correct">Respuestas correctas</string>
-  <string name="deck_summary_answers_mature">Tarjetas maduras: &lt;b&gt;%1$.1f%2$s&lt;/b&gt;%2$s (%3$d de %4$d)</string>
-  <string name="deck_summary_answers_young">Tarjetas jóvenes: &lt;b&gt;%1$.1f%2$s&lt;/b&gt; (%3$d de %4$d)</string>
-  <string name="deck_summary_answers_firstseen">Vista por primera vez: &lt;b&gt;%1$.1f%2$s&lt;/b&gt; (%3$d of %4$d)</string>
-  <string name="deck_summary_reviews">Repasos:</string>
-  <string name="deck_summary_news">Tarjetas nuevas:</string>
-  <string name="deck_summary_average_week">Media de vistas la semana pasada</string>
-  <string name="deck_summary_average_month">Media de vistas el mes pasado</string>
-  <string name="deck_summary_average_year">Media de vistas el año pasado</string>
-  <string name="deck_summary_average_total">Media de vistas globales</string>
-  <string name="deck_summary_forecast">Previsión</string>
-  <string name="deck_summary_tomorrow_due">Programadas para mañana: &lt;b&gt;%d&lt;/b&gt; tarjetas</string>
-  <string name="deck_summary_tomorrow_new">Nuevas para mañana: &lt;b&gt;%d&lt;/b&gt; tarjetas</string>
-  <string name="deck_summary_tomorrow_time">Tiempo estimado para mañana: &lt;b&gt;%d&lt;/b&gt; min.</string>
-  <string name="deck_summary_finished_in">Nuevas tarjetas terminadas en: &lt;b&gt;%d&lt;/b&gt; días</string>
-  <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; tarjetas/día</string>
-  <string name="deck_summary_deck_age">Edad del mazo: &lt;b&gt;%d&lt;/b&gt; días</string>
   <string name="deck_summary_all_decks">Todos los mazos</string>
-  <string name="stats_select_decks">Seleccione mazo</string>
   <string name="stats_select_time_scale">Seleccione Calendario</string>
   <string-array name="next_review_in_s">
     <item>en 1 segundo</item>

@@ -39,7 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="statistics_menu">Statistieken</string>
   <string name="statistics_young">Jong</string>
   <string name="statistics_mature">Rijp</string>
   <string name="statistics_young_and_learn">Jong+Leren</string>
@@ -48,7 +47,6 @@
   <string name="statistics_relearn">Opnieuw leren</string>
   <string name="statistics_learn">Leren</string>
   <string name="statistics_cram">Blokken</string>
-  <string name="statistics_type_title">Statistieken</string>
   <string name="stats_cards">Kaarten</string>
   <string name="stats_cards_intervals">Kaarten met gegeven interval</string>
   <string name="stats_cumulative_cards">Cumulatieve kaarten</string>
@@ -65,7 +63,6 @@
   <string name="stats_period_month">1 maand</string>
   <string name="stats_period_year">1 jaar</string>
   <string name="stats_period_lifetime">setleven</string>
-  <string name="stats_deck_current">set</string>
   <string name="stats_deck_collection">collectie</string>
   <string name="stats_time_of_day">Tijd van de dag</string>
   <string name="stats_day_of_week">Dag van de week</string>
@@ -77,37 +74,7 @@
   <string name="stats_today_type_breakdown">Leer: &lt;b&gt;%1$s&lt;/b&gt;, Overhoor: &lt;b&gt;%2$s&lt;/b&gt;, Leer opnieuw: &lt;b&gt;%3$s&lt;/b&gt;, Gefilterd: &lt;b&gt;%4$s&lt;/b&gt;</string>
   <string name="stats_today_mature_cards">Correcte antwoorden op rijpe kaarten: %1$d/%2$d (%3$.1f%%)</string>
   <string name="stats_today_no_mature_cards">Geen rijpe kaarten zijn vandaag bestudeerd.</string>
-  <string name="statistics_period_x_axis_minutes">Minuten</string>
-  <string name="statistics_new_cards">Nieuwe kaarten</string>
-  <string name="statistics_failed_cards">Foute kaarten</string>
-  <string name="statistics_fullscreen">Volledig scherm</string>
-  <string name="calculating_statistics">Statistieken berekenen.\nEven geduld...</string>
-  <string name="deck_summary_cards">Aantal kaarten:</string>
-  <string name="deck_summary_notes">Aantal memos:</string>
-  <string name="deck_summary_cards_mature">Rijpe kaarten:</string>
-  <string name="deck_summary_cards_young">Jonge kaarten:</string>
-  <string name="deck_summary_cards_unseen">Ongeziene kaarten </string>
-  <string name="deck_summary_card_age">Kaart ouderdom</string>
-  <string name="deck_summary_average_interval">Gemiddelde interval: &lt;b&gt;%.1f&lt;/b&gt; dagen</string>
-  <string name="deck_summary_answers_correct">Juiste antwoorden</string>
-  <string name="deck_summary_answers_mature">Rijpe kaarten: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; %2$s (%3$d of %4$d)</string>
-  <string name="deck_summary_answers_young">Jonge kaarten: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d of %4$d)</string>
-  <string name="deck_summary_answers_firstseen">Eén keer gezien: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d of %4$d)</string>
-  <string name="deck_summary_reviews">Overhoringen:</string>
-  <string name="deck_summary_news">Nieuwe kaarten:</string>
-  <string name="deck_summary_average_week">Gemiddelde (deze week)</string>
-  <string name="deck_summary_average_month">Gemiddelde (deze maand)</string>
-  <string name="deck_summary_average_year">Gemiddelde (dit jaar)</string>
-  <string name="deck_summary_average_total">Gemiddelde (sinds begin)</string>
-  <string name="deck_summary_forecast">Prognose</string>
-  <string name="deck_summary_tomorrow_due">Morgen te doen: &lt;b&gt;%d&lt;/b&gt; kaarten</string>
-  <string name="deck_summary_tomorrow_new">Morgen nieuw: &lt;b&gt;%d&lt;/b&gt; kaarten</string>
-  <string name="deck_summary_tomorrow_time">Geschatte leertijd morgen: &lt;b&gt;%d&lt;/b&gt; minuten</string>
-  <string name="deck_summary_finished_in">Nieuwe kaarten voldaan in: &lt;b&gt;%d&lt;/b&gt; dagen</string>
-  <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; kaarten/dag</string>
-  <string name="deck_summary_deck_age">Set ouderdom: &lt;b&gt;%d&lt;/b&gt; dagen</string>
   <string name="deck_summary_all_decks">Alle leersets</string>
-  <string name="stats_select_decks">Kies set</string>
   <string name="stats_select_time_scale">Kies tijdschaal</string>
   <string-array name="next_review_in_s">
     <item>in 1 seconde</item>

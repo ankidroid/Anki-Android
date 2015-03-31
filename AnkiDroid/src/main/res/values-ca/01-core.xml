@@ -39,11 +39,13 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="app_name">AnkiDroid</string>
-  <string name="app_name_anki">Anki</string>
-  <string name="app_name_droid">Droid</string>
+  <string name="decks">Decks</string>
+  <string name="card_browser">Card Browser</string>
+  <string name="statistics">Statistics</string>
+  <string name="settings">Settings</string>
+  <string name="help">Help</string>
+  <string name="send_feedback">Send Feedback</string>
   <string name="studyoptions_title">Study Options</string>
-  <string name="studyoptions_deck_name">Nom del paquet</string>
   <string name="studyoptions_due_today">Venç avui:</string>
   <string name="studyoptions_new_total">Total de noves fitxes:</string>
   <string name="studyoptions_total_cards">Total de fitxes:</string>
@@ -57,10 +59,6 @@
     <item quantity="one">%d min.</item>
     <item quantity="other">%d min.</item>
   </plurals>
-  <plurals name="deckpicker_due">
-    <item quantity="one">%1$d of %2$d due</item>
-    <item quantity="other">%1$d de %2$d pendents</item>
-  </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">%d minute left</item>
     <item quantity="other">queden %d minuts</item>
@@ -72,9 +70,6 @@
   <string name="ease3_successive">Correcte</string>
   <string name="ease3_learning">Fàcil</string>
   <string name="studyoptions_congrats_undo">Desfés %s</string>
-  <string name="card_unsuspended">S\'ha desfet la suspensió de la fitxa</string>
-  <string name="card_suspended">Fitxa suspesa de nou</string>
-  <string name="menu_rotate">Gira</string>
   <string name="menu_import">Import</string>
   <string name="undo">Desfés</string>
   <string name="undo_action_review">last review</string>
@@ -86,30 +81,19 @@
   <string name="undo_action_mark">Marca la nota</string>
   <string name="unbury">Unbury</string>
   <string name="finish_operation">S\'està acabant l\'operació anterior (probablement la creació de la còpia de seguretat). \nEspereu...</string>
-  <string name="contextmenu_deckpicker_download_missing_media">Baixa els media que falten</string>
-  <string name="contextmenu_deckpicker_reset_language_assignments">Reinicia les assignacions de tots el idiomes</string>
-  <string name="contextmenu_deckpicker_reset_reset_message">Restableix l\'idioma</string>
-  <string name="contextmenu_deckpicker_optimize_deck">Optimitza la base de dades</string>
   <string name="contextmenu_deckpicker_rename_deck">Canvia el nom del paquet</string>
   <string name="contextmenu_deckpicker_collapse_deck">Hide subdecks</string>
   <string name="contextmenu_deckpicker_inflate_deck">Show subdecks</string>
-  <string name="contextmenu_deckpicker_set_custom_dictionary">Diccionari personalitzat</string>
   <string name="menu_add">Add</string>
   <string name="menu_add_note">Add note</string>
-  <string name="menu_download_deck">Baixa el paquet</string>
-  <string name="menu_download_shared_deck">Paquet compartit</string>
   <string name="menu_my_account">Compte de sincronització</string>
-  <string name="menu_preferences">Preferències</string>
-  <string name="menu_about">Quant a</string>
   <string name="menu_dismiss_note">Hide / Delete</string>
   <string name="menu_bury_card">Bury card</string>
   <string name="menu_bury_note">Enterra la nota</string>
   <string name="menu_suspend_card">Suspèn la fitxa</string>
   <string name="menu_suspend_note">Suspen la nota</string>
-  <string name="menu_save_note">Save note</string>
   <string name="menu_delete_note">Suprimeix la nota</string>
   <string name="delete_note_message">Segur que voleu suprimir aquesta nota i tots les seves fitxes?\n%s</string>
-  <string name="menu_edit_card">Edita la fitxa</string>
   <string name="menu_select">Selecciona text</string>
   <string name="menu_search">Cerca-ho a %1$s</string>
   <string name="menu_mark_card">Marca la fitxa</string>
@@ -117,7 +101,6 @@
   <string name="new_deck">Create deck</string>
   <string name="create">Genera</string>
   <string name="new_dynamic_deck">Create filtered deck</string>
-  <string name="studyoptions_feedback">Comentaris</string>
   <string name="night_mode">Mode Nit</string>
   <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
   <string-array name="next_review_s">
@@ -136,9 +119,7 @@
     <item>%s mesos</item>
     <item>%s anys</item>
   </string-array>
-  <string name="visit">Visita</string>
   <string name="later">Més tard</string>
-  <string name="download">Descarrega</string>
   <string name="open_collection">S\'està obrint la col·lecció.\nUn moment si us plau...</string>
   <string name="rebuild_cram_deck">S\'està reconstruïnt el paquet cram \nEspereu...</string>
   <string name="rebuild_cram_label">Reconstrueix</string>
@@ -151,37 +132,10 @@
   <string name="studyoptions_congrats_more_new">Hi ha més fitxes noves, però s\'ha assolit el límit diari. Podeu augmentar el límit a les opcions, però si us plau, tingueu en compte que això farà augmentar la càrrega de treball de la revisió a curt termini.</string>
   <string name="studyoptions_congrats_custom">Per a estudiar fora de la planificació normal, cliqueu al botó Estudi a Mida d\'aquí sota.</string>
   <string name="studyoptions_no_cards_due">No cards are due yet.</string>
-  <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
-    <item quantity="other">Demà hi haurà: %1$d fitxes per revisar i %2$s.\n Temps aproximat: %3$s</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">%1$d new card</item>
-    <item quantity="other">%1$d fitxes noves</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">Estimated time: %1$d min.</item>
-    <item quantity="other">Temps estimat: %1$d min.</item>
-  </plurals>
   <string name="sd_card_not_mounted">La targeta SD no està muntada.\n\n També podeu desar la vostra col·lecció a la memòria interna, tot i que no es recomana, ja que no podreu accedir al fitxer tan fàcilment. Podeu habilitar aquesta opció a les preferències (obriu-les clicant aquest text).</string>
-  <string name="studyoptions_options">Opcions</string>
-  <string name="empty_cloze_warning">Si us plau editeu aquesta nota i afegiu algunes supressions cloze. (%1$s)</string>
-  <string name="help_cloze">ajuda</string>
   <string name="button_sync">Sincronització</string>
-  <string name="restart">Reinicia</string>
-  <string name="do_nothing">No facis res</string>
-  <string name="more_options">Més opcions</string>
-  <string name="now">Ara</string>
-  <string name="back">Torna</string>
-  <string name="ankiweb">AnkiWeb</string>
-  <string name="usb">USB</string>
-  <string name="_import">Importa</string>
   <string name="export">Export</string>
-  <string name="confirm">Confirma</string>
-  <string name="internet">Internet</string>
-  <string name="pc">PC</string>
   <string name="nothing">Nothing</string>
-  <string name="title_activity_graphical_activity">Statistical chart</string>
   <string name="title_activity_template_editor">Card Types for %s</string>
   <string name="card_template_editor_front">Front Template</string>
   <string name="card_template_editor_back">Back Template</string>

@@ -39,11 +39,13 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="app_name">AnkiDroid</string>
-  <string name="app_name_anki">Anki</string>
-  <string name="app_name_droid">Droid</string>
+  <string name="decks">Paquets</string>
+  <string name="card_browser">Navigateur de cartes</string>
+  <string name="statistics">Statistiques</string>
+  <string name="settings">Paramètres</string>
+  <string name="help">Aide</string>
+  <string name="send_feedback">Envoyer un commentaire</string>
   <string name="studyoptions_title">Options d\'étude</string>
-  <string name="studyoptions_deck_name">Nom du paquet</string>
   <string name="studyoptions_due_today">Prévues aujourd’hui :</string>
   <string name="studyoptions_new_total">Cartes inédites :</string>
   <string name="studyoptions_total_cards">Total cartes :</string>
@@ -57,10 +59,6 @@
     <item quantity="one">%d min.</item>
     <item quantity="other">%d minute.</item>
   </plurals>
-  <plurals name="deckpicker_due">
-    <item quantity="one">%1$d de %2$d dû</item>
-    <item quantity="other">%1$d parmi %2$d dûes</item>
-  </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">%d minute restante</item>
     <item quantity="other">%d min. restantes</item>
@@ -72,9 +70,6 @@
   <string name="ease3_successive">Bon</string>
   <string name="ease3_learning">Facile</string>
   <string name="studyoptions_congrats_undo">Annuler %s</string>
-  <string name="card_unsuspended">Suspension de la carte annulée</string>
-  <string name="card_suspended">Carte re-suspendue</string>
-  <string name="menu_rotate">Changer d\'orientation</string>
   <string name="menu_import">Importer</string>
   <string name="undo">Annuler</string>
   <string name="undo_action_review">Dernière révision</string>
@@ -86,30 +81,19 @@
   <string name="undo_action_mark">marquer la note</string>
   <string name="unbury">Déterrer</string>
   <string name="finish_operation">Opération précédente en cours d\'achèvement (probablement une sauvegarde). \nVeuillez patienter&#8230;</string>
-  <string name="contextmenu_deckpicker_download_missing_media">Télécharger les médias manquants</string>
-  <string name="contextmenu_deckpicker_reset_language_assignments">Réinitialiser les affectations de langue</string>
-  <string name="contextmenu_deckpicker_reset_reset_message">Réinitialiser la langue</string>
-  <string name="contextmenu_deckpicker_optimize_deck">Optimiser la base de données</string>
   <string name="contextmenu_deckpicker_rename_deck">Renommer le paquet</string>
-  <string name="contextmenu_deckpicker_collapse_deck">Cacher les sous-jeux de cartes</string>
+  <string name="contextmenu_deckpicker_collapse_deck">Cacher les sous-paquets</string>
   <string name="contextmenu_deckpicker_inflate_deck">Afficher les sous-jeux de cartes</string>
-  <string name="contextmenu_deckpicker_set_custom_dictionary">Définir un dictionnaire personnalisé</string>
   <string name="menu_add">Ajouter</string>
   <string name="menu_add_note">Ajouter une note</string>
-  <string name="menu_download_deck">Télécharger le paquet</string>
-  <string name="menu_download_shared_deck">Paquet partagé</string>
   <string name="menu_my_account">Compte de synchronisation</string>
-  <string name="menu_preferences">Préférences</string>
-  <string name="menu_about">À propos</string>
   <string name="menu_dismiss_note">Masquer / Supprimer</string>
   <string name="menu_bury_card">Ecarter la carte</string>
   <string name="menu_bury_note">Enterrer la note</string>
   <string name="menu_suspend_card">Suspendre la carte</string>
   <string name="menu_suspend_note">Suspendre la note</string>
-  <string name="menu_save_note">Sauvegarder la note</string>
   <string name="menu_delete_note">Supprimer la note</string>
   <string name="delete_note_message">Voulez-vous vraiment supprimer cette note et toutes ses cartes ?\n%s</string>
-  <string name="menu_edit_card">Modifier la carte</string>
   <string name="menu_select">Sélectionner le texte</string>
   <string name="menu_search">Trouvé en %1$s</string>
   <string name="menu_mark_card">Marquer la carte</string>
@@ -117,7 +101,6 @@
   <string name="new_deck">Créer un jeu de cartes</string>
   <string name="create">Créer</string>
   <string name="new_dynamic_deck">Créer un paquet filtré</string>
-  <string name="studyoptions_feedback">Commentaires</string>
   <string name="night_mode">Mode nuit</string>
   <string name="directory_inaccessible">Le répertoire d\'AnkiDroid est inaccessible</string>
   <string-array name="next_review_s">
@@ -136,9 +119,7 @@
     <item>%s mois</item>
     <item>%s années</item>
   </string-array>
-  <string name="visit">Visiter</string>
   <string name="later">Plus tard</string>
-  <string name="download">Télécharger</string>
   <string name="open_collection">Chargement de la collection.\nVeuillez patienter&#8230;</string>
   <string name="rebuild_cram_deck">Reconstruction du paquet de bachotage.\nVeuillez patienter&#8230;</string>
   <string name="rebuild_cram_label">Réparer</string>
@@ -151,37 +132,10 @@
   <string name="studyoptions_congrats_more_new">Il reste des nouvelles cartes disponibles, mais la limite journalière a été atteinte. Vous pouvez augmenter cette limite dans les options, mais gardez à l\'esprit que cela augmentera votre charge de travail à court terme.</string>
   <string name="studyoptions_congrats_custom">Pour étudier en dehors des horaires normaux, cliquez sur le bouton d\'étude personnalisée ci-dessous.</string>
   <string name="studyoptions_no_cards_due">Aucune carte à relire actuellement.</string>
-  <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Demain, il y aura : %1$d carte à revoir et %2$s.\n Durée estimée : %3$s</item>
-    <item quantity="other">Demain, il y aura %2$s cartes nouvelles et %1$d à revoir.\n Durée estimée : %3$s</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">%1$d nouvelle carte</item>
-    <item quantity="other">%1$d nouvelles cartes</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">Durée estimée : %1$d min.</item>
-    <item quantity="other">Durée estimée : %1$d min.</item>
-  </plurals>
   <string name="sd_card_not_mounted">La carte SD n\'est pas montée.\n\nVous pouvez également sauvegarder votre collection dans la mémoire interne bien que cela ne soit pas recommandé car cela rendrait plus difficile l\'accès au fichier. Vous pouvez activer cela dans les préférences (accédez-y en cliquant sur ce texte).</string>
-  <string name="studyoptions_options">Options</string>
-  <string name="empty_cloze_warning">N’oubliez pas le texte à trous. (%1$s)</string>
-  <string name="help_cloze">aide</string>
   <string name="button_sync">Synchroniser</string>
-  <string name="restart">Redémarrer</string>
-  <string name="do_nothing">Ne rien faire</string>
-  <string name="more_options">Options supplémentaires</string>
-  <string name="now">Maintenant</string>
-  <string name="back">Retour</string>
-  <string name="ankiweb">AnkiWeb</string>
-  <string name="usb">USB</string>
-  <string name="_import">Importer</string>
   <string name="export">Exporter</string>
-  <string name="confirm">Confirmer</string>
-  <string name="internet">Toile</string>
-  <string name="pc">PC</string>
   <string name="nothing">Rien</string>
-  <string name="title_activity_graphical_activity">Graphique statistique</string>
   <string name="title_activity_template_editor">Types de carte pour %s</string>
   <string name="card_template_editor_front">Modèle du recto</string>
   <string name="card_template_editor_back">Modèle Back</string>

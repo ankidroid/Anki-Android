@@ -39,11 +39,13 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="app_name">אנקידרויד</string>
-  <string name="app_name_anki">אנקי</string>
-  <string name="app_name_droid">דריוד</string>
+  <string name="decks">Decks</string>
+  <string name="card_browser">Card Browser</string>
+  <string name="statistics">Statistics</string>
+  <string name="settings">Settings</string>
+  <string name="help">Help</string>
+  <string name="send_feedback">Send Feedback</string>
   <string name="studyoptions_title">אפשרויות לימידה</string>
-  <string name="studyoptions_deck_name">:שם הדק</string>
   <string name="studyoptions_due_today">להיום:</string>
   <string name="studyoptions_new_total">סה\"כ כרטיסים חדשים:</string>
   <string name="studyoptions_total_cards">סה\"כ הכרטיסים:</string>
@@ -57,10 +59,6 @@
     <item quantity="one">%d min.</item>
     <item quantity="other">דקות %d</item>
   </plurals>
-  <plurals name="deckpicker_due">
-    <item quantity="one">%1$d of %2$d due</item>
-    <item quantity="other">%1$d of %2$d due</item>
-  </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">%d minute left</item>
     <item quantity="other">נותרו %d דקות</item>
@@ -72,9 +70,6 @@
   <string name="ease3_successive">טוב</string>
   <string name="ease3_learning">קל</string>
   <string name="studyoptions_congrats_undo">בטל את ה%s</string>
-  <string name="card_unsuspended">השהית הכרטיס בוטלה</string>
-  <string name="card_suspended">קלף הוחזר</string>
-  <string name="menu_rotate">סבב</string>
   <string name="menu_import">Import</string>
   <string name="undo">בטל</string>
   <string name="undo_action_review">תירגול אחרון</string>
@@ -86,30 +81,19 @@
   <string name="undo_action_mark">לסמן רשומה</string>
   <string name="unbury">לחלץ</string>
   <string name="finish_operation">מסיים פעולה קודמת (כנראה גיבוי)\nנא להמטין...</string>
-  <string name="contextmenu_deckpicker_download_missing_media">להוריד מדיה חסרה</string>
-  <string name="contextmenu_deckpicker_reset_language_assignments">לאפס הקצאות שפה</string>
-  <string name="contextmenu_deckpicker_reset_reset_message">לאפס שפה</string>
-  <string name="contextmenu_deckpicker_optimize_deck">אופטימיזציה של בסיס הנתונים</string>
   <string name="contextmenu_deckpicker_rename_deck">שינוי שם חפיסת רשומות</string>
   <string name="contextmenu_deckpicker_collapse_deck">הסתר תת-חפיסות</string>
   <string name="contextmenu_deckpicker_inflate_deck">הראה תת-חפיסות</string>
-  <string name="contextmenu_deckpicker_set_custom_dictionary">הגדר מילון אישי</string>
   <string name="menu_add">הוסף</string>
   <string name="menu_add_note">הוסף הערה</string>
-  <string name="menu_download_deck">להוריד חפיסת רשומות</string>
-  <string name="menu_download_shared_deck">חפיסת רשומות משותפת</string>
   <string name="menu_my_account">סינכרון חשבון</string>
-  <string name="menu_preferences">העדפות</string>
-  <string name="menu_about">אודות</string>
   <string name="menu_dismiss_note">Hide / Delete</string>
   <string name="menu_bury_card">לקבור קלף</string>
   <string name="menu_bury_note">לקבור הערה</string>
   <string name="menu_suspend_card">השהה כרטיס</string>
   <string name="menu_suspend_note">לעצור הערה</string>
-  <string name="menu_save_note">שמור הערה</string>
   <string name="menu_delete_note">למחוק הערה</string>
   <string name="delete_note_message">אתה בטוח שברצונך למחוק את הערה זאת וכל קלפיה?‏\n%s</string>
-  <string name="menu_edit_card">ערוך כרטיס</string>
   <string name="menu_select">בחירת טקסט</string>
   <string name="menu_search">Lookup in %1$s</string>
   <string name="menu_mark_card">מארק כרטיס</string>
@@ -117,7 +101,6 @@
   <string name="new_deck">צור חפיסה</string>
   <string name="create">צור</string>
   <string name="new_dynamic_deck">צור חפיסה מסוננת</string>
-  <string name="studyoptions_feedback">משוב</string>
   <string name="night_mode">מצב לילה</string>
   <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
   <string-array name="next_review_s">
@@ -136,9 +119,7 @@
     <item>חודשים %s</item>
     <item>שנים %s</item>
   </string-array>
-  <string name="visit">בקר</string>
   <string name="later">מאוחר יותר</string>
-  <string name="download">הורד</string>
   <string name="open_collection">פותח אוסף.‏\nנא להמתין...‏</string>
   <string name="rebuild_cram_deck">השיקום cram הסיפון. \nPlease רגע...</string>
   <string name="rebuild_cram_label">בונה מחדש</string>
@@ -151,37 +132,10 @@
   <string name="studyoptions_congrats_more_new">Today\'s limit has been reached. There are more new cards available; you can increase the limit in the options, but this will increase your short-term review workload.</string>
   <string name="studyoptions_congrats_custom">To study outside of the normal schedule, touch the \"Custom study\" button below</string>
   <string name="studyoptions_no_cards_due">No cards are due yet.</string>
-  <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
-    <item quantity="other">Tomorrow there will be: %1$d cards to review and %2$s.\n Estimated time: %3$s</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">%1$d new card</item>
-    <item quantity="other">%1$d כרטיסים חדשים</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">Estimated time: %1$d min.</item>
-    <item quantity="other">זמן משוער: %1$d דקות.</item>
-  </plurals>
   <string name="sd_card_not_mounted">SD card not mounted.\n\nYou can store your collection in the internal memory too, though it\'s not recommended as you cannot access the file that easily. You can activate this in the preferences (open them by touching this text).</string>
-  <string name="studyoptions_options">אפשרויות</string>
-  <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
-  <string name="help_cloze">עזרה</string>
   <string name="button_sync">סנכרן</string>
-  <string name="restart">התחל מחדש</string>
-  <string name="do_nothing">עשה כלום</string>
-  <string name="more_options">אפשרויות נוספות</string>
-  <string name="now">עכשיו</string>
-  <string name="back">חזור</string>
-  <string name="ankiweb">AnkiWeb</string>
-  <string name="usb">USB</string>
-  <string name="_import">ייבא</string>
   <string name="export">Export</string>
-  <string name="confirm">אשר</string>
-  <string name="internet">אינטרנט</string>
-  <string name="pc">מחשב</string>
   <string name="nothing">Nothing</string>
-  <string name="title_activity_graphical_activity">Statistical chart</string>
   <string name="title_activity_template_editor">Card Types for %s</string>
   <string name="card_template_editor_front">Front Template</string>
   <string name="card_template_editor_back">Back Template</string>

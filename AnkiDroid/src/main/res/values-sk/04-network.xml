@@ -41,30 +41,14 @@
 -->
 <resources>
   <string name="youre_offline">Pracujete v režime offline</string>
-  <string name="currently_downloading">Práve sťahujem</string>
-  <string name="starting_download">Začínam sťahovanie...</string>
-  <string name="downloading">Sťahujem ...</string>
-  <string name="paused">Pozastavené</string>
-  <string name="downloaded">Stiahnuté</string>
   <string name="sync_error">Sync Error</string>
   <string name="vague_error">Chyba</string>
-  <string name="cancelling">Zrušenie...</string>
-  <string name="connection_error_return_message">Vyskytla sa chyba siete. Skúste znova, alebo postup zrušte a vráťte sa na predchádzajúcu obrazovku.</string>
   <string name="retry">Skúsiť znova</string>
   <string name="cancel">Zrušiť</string>
-  <string name="download_overwrite">Prepísať</string>
-  <string name="download_cancel">Zrušiť preberanie</string>
-  <string name="shared_decks">Zdieľané balíčky</string>
   <string name="loading_shared_decks">Načítavam dostupné zdieľané balíčky...</string>
   <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms"> Obchodné podmienky</a></string>
-  <string name="cancel_download">Zrušiť preberanie</string>
-  <string name="resume_download">Obnoviť preberanie</string>
-  <string name="pause_download">Pozastaviť preberanie</string>
-  <string name="duplicate_download">Tento balíček sa už sťahuje</string>
   <string name="menu_get_shared_decks">Stiahnuť zdieľané balíčky</string>
-  <string name="download_button_return">Návrat</string>
   <string name="connection_error_message">Vyskytla sa chyba siete.</string>
-  <string name="sync_log_db_error">Vyskytla sa chyba databázy.</string>
   <string name="not_logged_in_title">Prihlásiť sa do AnkiWeb</string>
   <string name="login_create_account_message">Musíte sa prihlásiť na účet AnkiWeb. Účet môžete vytvoriť v ďalšom kroku.</string>
   <string name="no_email_client">No email client available</string>
@@ -80,11 +64,7 @@
   <string name="log_out">Odhlásiť</string>
   <string name="alert_logging_message">Prebieha prihlasovanie, počkajte prosím...</string>
   <string name="invalid_username_password">Neplatná e-mailová adresa alebo heslo.</string>
-  <string name="login_generic_error">Nepodarilo sa prihlásiť.</string>
   <string name="reset_password">Obnoviť heslo</string>
-  <string name="download_finished">Preberanie dokončené</string>
-  <string name="personaldeckpicker_title">Otvoriť online balíček</string>
-  <string name="shareddeckpicker_title">Vyberte balíček, ktorý chcete sitahnuť</string>
   <string name="downloaddeck_search">Hľadať</string>
   <string name="preferences_title">Predvoľby</string>
   <string name="deckpreferences_title">Možnosti pre XXX</string>
@@ -97,7 +77,6 @@
   <string name="sync_preparing_full_sync_message">Pripravuje sa úplná synchronizácia...</string>
   <string name="sync_uploading_message">Nahrávanie...</string>
   <string name="sync_downloading_message">Sťahovanie...</string>
-  <string name="sync_reload_message">Znovu nahrávam zbierku...</string>
   <string name="sync_title">Synchronizácia</string>
   <string name="sync_downloading_media">Sťahovanie médií %1$d/%2$d...</string>
   <string name="sync_log_uploading_message">Úplná synchronizácia z miestnej zbierky</string>
@@ -105,11 +84,9 @@
   <string name="sync_log_clocks_unsynchronized">Čas vo vašom prístroji je nepresný o %1$d sekúnd%2$s; Synchronizácia vyžaduje, aby váš čas aj časové pásmo boli nastavené správne, aby sa predišlo chybám. Prosím uistite sa, že dátum, čas a časové pásmo na vašom zariadení sú nastavené správne, potom synchronizáciu zopakujte.</string>
   <string name="sync_log_clocks_unsynchronized_tz">, časové pásmo zariadenia pravdepodobne nie je správne</string>
   <string name="sync_log_clocks_unsynchronized_date">, dátum zariadenia pravdepodobne nie je správny</string>
-  <string name="sync_log_old_version">Zmenil sa protokol synchronizácie, prosím aktualizujte na najnovšiu verziu AnkiDroid. Pozrite si %s</string>
   <string name="sync_conflict_title">Konflikt synchronizácie</string>
   <string name="sync_no_changes_message">Nenašli sa žiadne zmeny.</string>
   <string name="sync_database_acknowledge">Kolekcia synchronizovaná</string>
-  <string name="sync_log_error_fix">Počas synchronizácie nastala chyba%s.\n\nAk sa to stáva pravidelne, môžete vykonať úplnú synchronizáciu, ktorá pravdepodobne problém odstráni. Buďte si ale vedomý toho, že tým prepíšete buď vašu miestnu zbierku, alebo tú na AnkiWeb.\nAk chcete skutočne vykonať úplnú synchronizáciu, prosím zvoľte, či chcete nahrať vašu miestnu zbierku, alebo stiahnuť tú zo servera.</string>
   <string name="sync_log_error_specific">Chyba synchronizácie, typ: %1$s, správa: %2$s</string>
   <string name="sync_corrupt_database">Vaša databáza je poškodená. Prosím opravte ju pred opätovným pokusom o synchronizáciu.\n\nPozrite si %s pre informácie o oprave databázy.</string>
   <string name="sync_too_busy">Server je príliš zaneprázdnený. Skúste to znova neskôr.</string>
@@ -130,10 +107,6 @@
   <string name="sync_check_upload_file">Kontrola súboru pred nahrávaním...</string>
   <string name="sync_check_download_file">Kontrolujem stiahnutý súbor...</string>
   <string name="sync_media_find">Hľadám zmenené médiá...</string>
-  <string name="sync_media_remove">Spracovávam odstránené médiá...</string>
-  <string name="sync_media_from_server">Získavam médiá zo servera...</string>
-  <string name="sync_media_to_server">Odosielam médiá na server...</string>
-  <string name="sync_media_sanity_check">Kontrolujem médiá...</string>
   <string name="sync_media_no_changes">Žiadne zmeny mediálnych súborov.</string>
   <string name="sync_media_success">Mediá boli úspešne synchronizované.</string>
   <string name="sync_media_changes_count">%d media changes to upload</string>
@@ -146,22 +119,6 @@
   <string name="register_title">Registrovať účet</string>
   <string name="register_mismatch">Zopakovanie užívateľského mena/hesla sa nezhoduje alebo je prázdne. Zadajte znova prosím.</string>
   <string name="registering_message">Vytváram účet.\nProsím počkajte...</string>
-  <string name="upgrade_decks_zipping">Komprimujem balíčky pre nahrávanie.\nProsím počkajte...</string>
-  <string name="upgrade_decks_upload">Nahrávam komprimované balíčky\nMôžete to zrušiť stlačením späť.\nProsím počkajte...</string>
-  <string name="upgrade_decks_waiting">Čakám, pozícia v rade: %s\nProsím počkajte...</string>
-  <string name="upgrade_decks_upgrade_started">Aktualizácia sa začala\nProsím počkajte...</string>
-  <string name="upgrade_decks_downloading">Preberanie aktualizovanej zbierky\nMôžete to zrušiť stlačením späť.\nProsím počkajte...</string>
-  <string name="upgrade_decks_media">Kopírujem staré mediálne súbory do nového umiestnenia médií.\nProsím počkajte...</string>
-  <string name="upgrade_decks_message">K dispozícii nie je žiadna Anki 2.0 zbierka, ale bol nájdený jeden alebo viac balíčkov v starom Anki 1.2 formáte:%sAk chcete používať vaše balíčky v novej verzii AnkiDroid, najskôr musia byť skonvertované do novej zbierky v novom Anki-2.0 formáte. Existujú tri možnosti:</string>
-  <string name="upgrade_decks_message_pos1">Pri použití pc verzie Anki Desktop 2.0 budú vaše balíčky skonvertované pri prvom spustení. Môžete ich potom synchronizovať cez AnkiWeb, alebo iba skopírovať vašu novú zbierku na vaše mobilné zariadenie. Skopírujte vaše balíčky z vášho AnkiDroid adresára (%s) do vášho Anki Desktop 1.2 adresára vo vašom počítači (ak ste ich predtým nesynchronizovali) a spustite Anki Desktop 2.0.</string>
-  <string name="upgrade_decks_message_pos2">Ak už synchronizujete vaše balíčky cez AnkiWeb, budete sa potrebovať iba prihlásiť na %s a vaše balíčky budú skonvertované tam. Potom môžete jednoducho synchronizovať novú zbierku do vášho mobilného zariadenia.</string>
-  <string name="upgrade_decks_message_pos3">Treťou možnosťou je skonvertovať vaše balíčky pomocou samotného AnkiDroid a AnkiWeb. Ak kliknete na tlačidlo aktualizovať nižšie, vaše balíčky budú zbalené a nahraté na AnkiWeb. Potom sa automaticky stiahne a otvorí skonvertovaná zbierka. Nepotrebujete k tomu žiadnu registráciu, ale vezmite na vedomie, že by bolo lepšie použiť wifi pripojenie, aby ste zabránili príliš veľkému prenosu dát cez vaše mobilné pripojenie. Ak sú komprimované balíčky väčšie ako 50 mb, tento spôsob nie je možné použiť. Prosím obráťte sa v tomto prípade na ostatné možnosti. Ak sú mediálne súbory vašich balíčkov uložené vo vlastných priečinkoch alebo v Dropbox priečinku, môžete ich skopírovať do nového umiestnenia ručne.</string>
-  <string name="upgrade_decks_message_finish">Ak budete pokračovať, bude vytvorená nová zbierka bez ohľadu na vaše staré balíčky.</string>
-  <string name="upgrade_required">Vaše balíčky na AnkiWeb sú stále v starom formáte Anki 1.2. Navštívte prosím %s a prihláste sa. Vaše balíčky potom budú automaticky skonvertované do nového formátu.</string>
-  <string name="upgrade_decks_button">Aktualizovať</string>
-  <string name="upgrade_decks_failed">Tieto balíčky sa nepodarilo aktualizovať:\n%sProsím otvorte ich v pc verzii Anki Desktop a spustite kontrolu databázy. Potom ich môžete importovať cez pc verziu Anki Desktop.</string>
-  <string name="upgrade_decks_media_failed">Kopírovanie mediálnych súborov do nového priečinka médií (%1$s) zlyhalo pre tieto balíčky:\n%2$sProsím presuňte tieto mediálne súbory ručne.</string>
-  <string name="download_deck">Sťahujem balíček (%d kb).\nProsím počkajte...</string>
   <string name="sync_sanity_local">Miestnu</string>
   <string name="sync_sanity_remote">Vzdialenú</string>
   <string name="force_full_sync_title">Force full sync</string>

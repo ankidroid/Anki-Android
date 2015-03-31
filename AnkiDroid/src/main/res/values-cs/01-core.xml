@@ -39,11 +39,13 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="app_name">AnkiDroid</string>
-  <string name="app_name_anki">Anki</string>
-  <string name="app_name_droid">Droid</string>
+  <string name="decks">Decks</string>
+  <string name="card_browser">Card Browser</string>
+  <string name="statistics">Statistics</string>
+  <string name="settings">Settings</string>
+  <string name="help">Help</string>
+  <string name="send_feedback">Send Feedback</string>
   <string name="studyoptions_title">Možnosti studia</string>
-  <string name="studyoptions_deck_name">Jméno balíčku</string>
   <string name="studyoptions_due_today">Dnes k zopakování:</string>
   <string name="studyoptions_new_total">Celkem nových karet:</string>
   <string name="studyoptions_total_cards">Celkem karet:</string>
@@ -57,10 +59,6 @@
     <item quantity="one">%d min.</item>
     <item quantity="other">%d min.</item>
   </plurals>
-  <plurals name="deckpicker_due">
-    <item quantity="one">zbývá %1$d / %2$d</item>
-    <item quantity="other">zbývá %1$d / %2$d</item>
-  </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">Zbývá %d minuta</item>
     <item quantity="other">Zbývá %d minut</item>
@@ -72,9 +70,6 @@
   <string name="ease3_successive">Dobré</string>
   <string name="ease3_learning">Snadné</string>
   <string name="studyoptions_congrats_undo">Zpět %s</string>
-  <string name="card_unsuspended">Zrušeno vyřazení karty</string>
-  <string name="card_suspended">Zrušeno pozastavení karty</string>
-  <string name="menu_rotate">Otočit</string>
   <string name="menu_import">Import</string>
   <string name="undo">Vrátit zpět</string>
   <string name="undo_action_review">poslední opakování</string>
@@ -86,30 +81,19 @@
   <string name="undo_action_mark">označit poznámku</string>
   <string name="unbury">Zruš odložení</string>
   <string name="finish_operation">Dokončování předchozí operace (nejpravděpodobněji vytváření zálohy). \nProsím čekejte...</string>
-  <string name="contextmenu_deckpicker_download_missing_media">Stáhnout chybějící multimédia</string>
-  <string name="contextmenu_deckpicker_reset_language_assignments">Obnovit přiřazení jazyka</string>
-  <string name="contextmenu_deckpicker_reset_reset_message">Obnovení jazyka</string>
-  <string name="contextmenu_deckpicker_optimize_deck">Optimalizovat databázi</string>
   <string name="contextmenu_deckpicker_rename_deck">Přejmenovat balíček</string>
   <string name="contextmenu_deckpicker_collapse_deck">Sbalit balíček</string>
   <string name="contextmenu_deckpicker_inflate_deck">Rozbalit balíček</string>
-  <string name="contextmenu_deckpicker_set_custom_dictionary">Nastavit vlastní slovník</string>
   <string name="menu_add">Přidat</string>
   <string name="menu_add_note">Přidat poznámku</string>
-  <string name="menu_download_deck">Stáhnout balíček</string>
-  <string name="menu_download_shared_deck">Sdílený balíček</string>
   <string name="menu_my_account">Synchronizovat účet</string>
-  <string name="menu_preferences">Nastavení</string>
-  <string name="menu_about">O aplikaci</string>
   <string name="menu_dismiss_note">Skrýt / Vymazat</string>
   <string name="menu_bury_card">Přeskočit kartu</string>
   <string name="menu_bury_note">Přeskočit poznámku</string>
   <string name="menu_suspend_card">Pozastavit kartu</string>
   <string name="menu_suspend_note">Pozastavit poznámku</string>
-  <string name="menu_save_note">Uložit poznámku</string>
   <string name="menu_delete_note">Odstranit poznámku</string>
   <string name="delete_note_message">Opravdu smazat poznámku a všechny její karty?\n%s</string>
-  <string name="menu_edit_card">Upravit kartu</string>
   <string name="menu_select">Vybrat text</string>
   <string name="menu_search">Vyhledat v %1$s</string>
   <string name="menu_mark_card">Označit kartu</string>
@@ -117,7 +101,6 @@
   <string name="new_deck">Vytvořit balíček</string>
   <string name="create">Vytvořit</string>
   <string name="new_dynamic_deck">Vytvořit filtrovaný balíček</string>
-  <string name="studyoptions_feedback">Feedback</string>
   <string name="night_mode">Noční režim</string>
   <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
   <string-array name="next_review_s">
@@ -136,9 +119,7 @@
     <item>%s měsíců</item>
     <item>%s roků</item>
   </string-array>
-  <string name="visit">Navštívit</string>
   <string name="later">Později</string>
-  <string name="download">Stáhnout</string>
   <string name="open_collection">Otevírání kolekce.\nProsím čekejte...</string>
   <string name="rebuild_cram_deck">Rekonstrukce balíčku šprtání.\nProsím čekejte...</string>
   <string name="rebuild_cram_label">Znovu sestavit</string>
@@ -151,37 +132,10 @@
   <string name="studyoptions_congrats_more_new">Existuje více nových karet, ale byl dosažen denní limit. Můžete zvýšit tento limit v Nastavení, ale mějte na paměti, že se krátkodobě zvýší vaše zátěž na opakování.</string>
   <string name="studyoptions_congrats_custom">Pro studium mimo normální plán klepněte na tlačítko \'Vlastní učení\'.</string>
   <string name="studyoptions_no_cards_due">No cards are due yet.</string>
-  <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Zítra bude: %1$d karta k zopakování a %2$s.\n Odhadovaný čas: %3$s</item>
-    <item quantity="other">Zítra bude: %1$d karet k zopakování a %2$s.\n Odhadovaný čas: %3$s</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">%1$d nová karta</item>
-    <item quantity="other">%1$d nových karet</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">Odhadovaný čas: %1$d min.</item>
-    <item quantity="other">Odhadovaný čas: %1$d min.</item>
-  </plurals>
   <string name="sd_card_not_mounted">Paměťová karta není vložena.\n\n Svou kolekci si přesto můžete uložit do interní paměti, avšak toto není doporučeno, protože dostupnost tohoto souboru není tak snadná. Tuto volbu aktivujete v nastavení (které otevřete kliknutím na tento text).</string>
-  <string name="studyoptions_options">Možnosti</string>
-  <string name="empty_cloze_warning">Prosím upravte tuto poznámku a přidejte nějaké doplňovačky.(%1$s)</string>
-  <string name="help_cloze">Nápověda</string>
   <string name="button_sync">Synchronizovat</string>
-  <string name="restart">Restartovat</string>
-  <string name="do_nothing">Nedělat nic</string>
-  <string name="more_options">Další možnosti</string>
-  <string name="now">Nyní</string>
-  <string name="back">Zpět</string>
-  <string name="ankiweb">AnkiWeb</string>
-  <string name="usb">USB</string>
-  <string name="_import">Importovat</string>
   <string name="export">Export</string>
-  <string name="confirm">Potvrdit</string>
-  <string name="internet">Internet</string>
-  <string name="pc">PC</string>
   <string name="nothing">Nothing</string>
-  <string name="title_activity_graphical_activity">Statistický graf</string>
   <string name="title_activity_template_editor">Typy karet pro %s</string>
   <string name="card_template_editor_front">Šablona lícu</string>
   <string name="card_template_editor_back">Šablona rubu</string>

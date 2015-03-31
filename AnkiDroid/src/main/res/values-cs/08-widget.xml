@@ -51,14 +51,6 @@
     <item quantity="one">%1$d balíček</item>
     <item quantity="other">%1$d balíčků</item>
   </plurals>
-  <string name="widget_medium">AnkiDroid Střední</string>
   <string name="widget_small">AnkiDroid Malý</string>
-  <string name="widget_big">AnkiDroid velký</string>
-  <string name="widget_big_restrictions_dialog">Vzhledem k určitým omezením zobrazování widgetů v Android může tento widget zobrazovat pouze text, ale ne žádné obrázky,zvuky ap.</string>
-  <string name="open_in_reviewer">Otevři balíček v AnkiDroid</string>
-  <plurals name="widget_big_eta">
-    <item quantity="one">Odhadovaný čas: %d min.</item>
-    <item quantity="other">Odhadovaný čas: %d min.</item>
-  </plurals>
   <string name="widget_big_tomorrow_due">Zítra k opakování:</string>
 </resources>

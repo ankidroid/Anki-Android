@@ -39,7 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="statistics_menu">Statistik</string>
   <string name="statistics_young">Unga</string>
   <string name="statistics_mature">Mogna</string>
   <string name="statistics_young_and_learn">Unga+Nyinlärda</string>
@@ -48,7 +47,6 @@
   <string name="statistics_relearn">Studera igen</string>
   <string name="statistics_learn">Studera</string>
   <string name="statistics_cram">Råplugg</string>
-  <string name="statistics_type_title">Statistik</string>
   <string name="stats_cards">Kort</string>
   <string name="stats_cards_intervals">Kort med givet intervall</string>
   <string name="stats_cumulative_cards">Sammanlagda kort</string>
@@ -65,7 +63,6 @@
   <string name="stats_period_month">1 månad</string>
   <string name="stats_period_year">1 år</string>
   <string name="stats_period_lifetime">kortlekens livslängd</string>
-  <string name="stats_deck_current">kortlek</string>
   <string name="stats_deck_collection">samling</string>
   <string name="stats_time_of_day">Tid på dagen</string>
   <string name="stats_day_of_week">Veckodag</string>
@@ -77,37 +74,7 @@
   <string name="stats_today_type_breakdown">Att lära: &lt;b&gt;%1$s&lt;/b&gt;, Att repetera: &lt;b&gt;%2$s&lt;/b&gt;, Att lära om: &lt;b&gt;%3$s&lt;/b&gt;, Filtrerade: &lt;b&gt;%4$s&lt;/b&gt;</string>
   <string name="stats_today_mature_cards">Korrekta svar på mogna kort: %1$d/%2$d (%3$.1f%%)</string>
   <string name="stats_today_no_mature_cards">Inga mogna kort studerades idag.</string>
-  <string name="statistics_period_x_axis_minutes">Minuter</string>
-  <string name="statistics_new_cards">Nya kort</string>
-  <string name="statistics_failed_cards">Misslyckade kort</string>
-  <string name="statistics_fullscreen">Fullskärm på/av</string>
-  <string name="calculating_statistics">Beräknar statistik.\nVar god vänta...</string>
-  <string name="deck_summary_cards">Antal kort:</string>
-  <string name="deck_summary_notes">Antal noter:</string>
-  <string name="deck_summary_cards_mature">Mogna kort:</string>
-  <string name="deck_summary_cards_young">Unga kort:</string>
-  <string name="deck_summary_cards_unseen">Osedda kort:</string>
-  <string name="deck_summary_card_age">Kort-ålder</string>
-  <string name="deck_summary_average_interval">Genomsnittligt intervall: &lt;b&gt;%.1f&lt;/b&gt; dagar</string>
-  <string name="deck_summary_answers_correct">Korrekta svar</string>
-  <string name="deck_summary_answers_mature">Mogna kort: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; %2$s (%3$d av %4$d)</string>
-  <string name="deck_summary_answers_young">Unga kort: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d av %4$d)</string>
-  <string name="deck_summary_answers_firstseen">Sedd första gången: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d av %4$d)</string>
-  <string name="deck_summary_reviews">Repetitioner:</string>
-  <string name="deck_summary_news">Nya kort:</string>
-  <string name="deck_summary_average_week">Genomsnittligt sedda senaste veckan</string>
-  <string name="deck_summary_average_month">Genomsnittligt sedda senaste månaden</string>
-  <string name="deck_summary_average_year">Genomsnittligt sedda senaste året</string>
-  <string name="deck_summary_average_total">Genomsnittligt sedda någonsin</string>
-  <string name="deck_summary_forecast">Prognos</string>
-  <string name="deck_summary_tomorrow_due">I kö i morgon: &lt;b&gt;%d&lt;/b&gt; kort</string>
-  <string name="deck_summary_tomorrow_new">Nya i morgon: &lt;b&gt;%d&lt;/b&gt; kort</string>
-  <string name="deck_summary_tomorrow_time">Beräknad tid i morgon: &lt;b&gt;%d&lt;/b&gt; min.</string>
-  <string name="deck_summary_finished_in">Nya kort avklarade om: &lt;b&gt;%d&lt;/b&gt; dagar</string>
-  <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; kort/dag</string>
-  <string name="deck_summary_deck_age">Kortleksålder: &lt;b&gt;%d&lt;/b&gt; dagar</string>
   <string name="deck_summary_all_decks">Alla kortlekar</string>
-  <string name="stats_select_decks">Välj kortlek</string>
   <string name="stats_select_time_scale">Välj tidsram</string>
   <string-array name="next_review_in_s">
     <item>om 1 sekund</item>

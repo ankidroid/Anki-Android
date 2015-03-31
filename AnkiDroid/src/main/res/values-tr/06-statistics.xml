@@ -39,7 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="statistics_menu">İstatistikler</string>
   <string name="statistics_young">Genç</string>
   <string name="statistics_mature">Olgun</string>
   <string name="statistics_young_and_learn">Genç+Öğrenilen</string>
@@ -48,7 +47,6 @@
   <string name="statistics_relearn">Yeniden öğren</string>
   <string name="statistics_learn">Öğren</string>
   <string name="statistics_cram">İnekleme</string>
-  <string name="statistics_type_title">İstatistikler</string>
   <string name="stats_cards">Kart</string>
   <string name="stats_cards_intervals">Verilen aralıktaki kartlar</string>
   <string name="stats_cumulative_cards">Toplam Kart</string>
@@ -65,7 +63,6 @@
   <string name="stats_period_month">1 ay</string>
   <string name="stats_period_year">1 yıl</string>
   <string name="stats_period_lifetime">Deste ömrü</string>
-  <string name="stats_deck_current">Deste</string>
   <string name="stats_deck_collection">koleksiyon</string>
   <string name="stats_time_of_day">Saat</string>
   <string name="stats_day_of_week">Gün</string>
@@ -77,37 +74,7 @@
   <string name="stats_today_type_breakdown">Öğrenme: &lt;b&gt;%1$s&lt;/b&gt;, Tekrarlama: &lt;b&gt;%2$s&lt;/b&gt;, Yeniden Öğrenme: &lt;b&gt;%3$s&lt;/b&gt;, Süzülmüş: &lt;b&gt;%4$s&lt;/b&gt;</string>
   <string name="stats_today_mature_cards">Olgun kartlarda doğru yanıtlar: %1$d/%2$d (%3$.1f%%)</string>
   <string name="stats_today_no_mature_cards">Bugün olgun bir kart çalışılmadı.</string>
-  <string name="statistics_period_x_axis_minutes">Dakika</string>
-  <string name="statistics_new_cards">Yeni kart</string>
-  <string name="statistics_failed_cards">Başarısız kart:</string>
-  <string name="statistics_fullscreen">Tam Ekrana Geç</string>
-  <string name="calculating_statistics">İstatistikler hesaplanıyor.\nLütfen bekleyin...</string>
-  <string name="deck_summary_cards">Kart sayısı:</string>
-  <string name="deck_summary_notes">Not sayısı:</string>
-  <string name="deck_summary_cards_mature">Olgun kart:</string>
-  <string name="deck_summary_cards_young">Genç kart:</string>
-  <string name="deck_summary_cards_unseen">Bakılmamış kart:</string>
-  <string name="deck_summary_card_age">Kart yaşı</string>
-  <string name="deck_summary_average_interval">Ortalama aralık: &lt;b&gt;%.1f&lt;/b&gt; gün</string>
-  <string name="deck_summary_answers_correct">Doğru Yanıtlar</string>
-  <string name="deck_summary_answers_mature">Olgun kart: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; %2$s (%4$d\'in %3$d\'i)</string>
-  <string name="deck_summary_answers_young">Genç kart: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%4$d\'in %3$d\'i)</string>
-  <string name="deck_summary_answers_firstseen">İlk bakış: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%4$d\'in %3$d\'i)</string>
-  <string name="deck_summary_reviews">Çalışma:</string>
-  <string name="deck_summary_news">Yeni kart:</string>
-  <string name="deck_summary_average_week">Geçen hafta ortalama bakılan</string>
-  <string name="deck_summary_average_month">Geçen ay ortalama bakılan</string>
-  <string name="deck_summary_average_year">Geçen yıl ortalama bakılan</string>
-  <string name="deck_summary_average_total">Şimdiye kadar ortalama bakılan</string>
-  <string name="deck_summary_forecast">Tahmin</string>
-  <string name="deck_summary_tomorrow_due">Yarın çıkacak: &lt;b&gt;%d&lt;/b&gt; kart</string>
-  <string name="deck_summary_tomorrow_new">Yarın yeni: &lt;b&gt;%d&lt;/b&gt; kart</string>
-  <string name="deck_summary_tomorrow_time">Yarınki tahmini süre: &lt;b&gt;%d&lt;/b&gt; dk.</string>
-  <string name="deck_summary_finished_in">Yeni kartlar bitirildi: &lt;b&gt;%d&lt;/b&gt; gün</string>
-  <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; kart/gün</string>
-  <string name="deck_summary_deck_age">Deste yaşı: &lt;b&gt;%d&lt;/b&gt; gün</string>
   <string name="deck_summary_all_decks">Tüm desteler</string>
-  <string name="stats_select_decks">Deste seçin</string>
   <string name="stats_select_time_scale">Zaman ölçeği seçin</string>
   <string-array name="next_review_in_s">
     <item>1 saniye sonra</item>

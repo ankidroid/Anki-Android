@@ -138,7 +138,6 @@
   <string name="safe_display_summ">Ota kaikki animaatiot pois käytöstä ja käytä turvallisempaa menetelmää korttien piirtämiseen. E-ink laitteet ja vanhat laitteet joissa käytetään erikoisempia kirjasintyyppejä voivat vaatia tämän.</string>
   <string name="vertical_centering">Tasaa keskelle</string>
   <string name="vertical_centering_summ">Keskitä korttien sisältö pystysuunnassa</string>
-  <string name="pref_cat_backup">Varmuuskopiot</string>
   <string name="pref_backup">Käytä varmuuskopioita</string>
   <string name="pref_backup_summ">Luo varmuuskopio automaattisesti ennen pakan avaamista (kerran päivässä)</string>
   <string name="pref_backup_max">Varmuuskopioiden enimmäismäärä</string>
@@ -163,11 +162,6 @@
   <string name="input_workaround_summ">Korjaus fokusointiongelmiin HTML-tekstinsyöttölaatikoissa. Aiheuttaa ongelmia useilla laitteilla.</string>
   <string name="pref_keep_screen_on">Pidä näyttö päällä</string>
   <string name="pref_keep_screen_on_summ">Poista näytön aikakatkaisu</string>
-  <string name="pref_simple_interface">Yksinkertainen käyttöliittymä</string>
-  <string name="pref_simple_interface_summ">Nopeuttaa korttien näyttöä, mutta ei tue kaikkia HTML:n ominaisuuksia</string>
-  <string name="pref_simple_interface_exclude_tags">Ei näitä tunnisteita</string>
-  <string name="pref_simple_interface_exclude_tags_summ">Älä käytä yksinkertaista käyttöliittymää näille tunnisteille: XXX</string>
-  <string name="write_answers_message">Jokaiselle pakalle pitää määritellä kenttä, johon kirjoitettua vastausta verrataan. Voit tehdä tämän Ankin työpöytäversiolla (pakan ominaisuudet -&gt; muokkaa mallia -&gt; kortin asettelu).\n\nJos verrattavaa kenttää ei ole määritelty, kirjoitettua vastausta verrataan aina koko kortin vastaukseen</string>
   <string name="fix_arabic_text">Parantaa arabiankielistä näyttöä</string>
   <string name="fix_arabic_text_summ">Osittainen korjaus joka mahdollistaa rajoitetun tuen arabiankielelle Androidissa. Korttien muokkaaminen ei ole mahdollista, kun tämä on valittu.</string>
   <string name="convert_fen_text">Tuki shakkinotaatiolle</string>
@@ -175,17 +169,6 @@
   <string name="filter_google_translate_summ">Tallenna vain lähdesana ja käännös</string>
   <string name="convert_fen_text_summ">Piirrä shakkilauta Forsyth-Edwards-notaatiolla. Tekstin pitää olla ympäröity [fen][/fen] tunnisteilla.</string>
   <string name="studyoptions_limit_select_tags">Valitse tunnisteet</string>
-  <string name="studyoptions_limit_tags_active">Kanssa: %1$s</string>
-  <string name="studyoptions_limit_tags_inactive">Ilman: %1$s</string>
-  <string name="studyoptions_limit_button_text">Raja</string>
-  <string name="studyoptions_limit_dialog_title">Opiskelun raja</string>
-  <string name="studyoptions_session">Istunto</string>
-  <string name="studyoptions_tag">Tunnisteen perusteella</string>
-  <string name="studyoptions_tag_new">Näytä uudet kortit tunnisteesta:</string>
-  <string name="studyoptions_tag_rev">Näytä tarkastelun kortit tunnisteesta:</string>
-  <string name="studyoptions_new_cards_per_day">Uusia kortteja per päivä</string>
-  <string name="studyoptions_max_fail_card">Epäonnistuneiden korttien maksimimäärä</string>
-  <string name="deck_conf_deck_name">Pakan nimi</string>
   <string name="deck_conf_deck_description">Pakan kuvaus</string>
   <string name="deck_conf_group">Asetusryhmä</string>
   <plurals name="deck_conf_group_summ">
@@ -244,7 +227,6 @@
   <string name="pref_browser_editor_font_summ">XXX</string>
   <string name="deck_conf_cram_filter">Suodatin</string>
   <string name="deck_conf_cram_options">Asetukset</string>
-  <string name="deck_conf_cram_preset">Esiasetukset</string>
   <string name="deck_conf_cram_search">Haku</string>
   <string name="deck_conf_cram_limit">Rajoita</string>
   <string name="deck_conf_cram_order">korttia valittu</string>

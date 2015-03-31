@@ -48,8 +48,6 @@
   <string name="CardEditorTags">タグ: %1$s</string>
   <string name="CardEditorCards">カード:%1$s</string>
   <string name="add_new_filter_tags">タグフィルター / 新規タグ追加</string>
-  <string name="note_type">ノートタイプ</string>
-  <string name="card_type">カードタイプ</string>
   <string name="filter_tags">タグフィルター (前方一致検索)</string>
   <string name="sdcard_missing_message">USBストレージとして使用されているので、SDカードは使用できません。単語帳にアクセスするには、USBを切断してください。</string>
   <string name="enable_whiteboard">ホワイトボードを有効にする</string>
@@ -58,8 +56,6 @@
   <string name="hide_whiteboard">ホワイトボードを隠す</string>
   <string name="clear_whiteboard">ホワイトボードの内容を全て消去</string>
   <string name="replay_audio">音声をリプレイ</string>
-  <string name="cram_edit_warning">総復習中はカードの編集はできません</string>
-  <string name="suspend_leeches">無駄（習得困難）カードの延期</string>
   <string name="leech_suspend_notification">このカードは \"leech\" （無駄）というタグが付けられ、保留されました</string>
   <string name="leech_notification">このカードに \"leech\" （無駄）というタグを付けました</string>
   <string name="corrupt_font">使用できないフォントファイル %s</string>
@@ -80,10 +76,8 @@
   <string name="cardeditor_title_edit_card">ノートの編集</string>
   <string name="discard_unsaved_changes">閉じて現在の入力を破棄しますか？</string>
   <string name="factadder_saving_error">ノートの保存エラー</string>
-  <string name="pref_lang_support">使用言語</string>
   <string name="saving_facts">カードの保存</string>
   <string name="saving_model">ノートタイプ保存中</string>
-  <string name="deck">単語帳</string>
   <string name="add">追加</string>
   <string name="close">閉じる</string>
   <string name="select">選択</string>
@@ -100,13 +94,8 @@
     <item quantity="other">%1$d 分</item>
   </plurals>
   <string name="studyoptions_welcome_title">AnkiDroid へようこそ</string>
-  <string name="studyoptions_no_external_storage_title">外部メモリーが接続されていません</string>
-  <string name="studyoptions_no_external_storage_message">外部メモリーが接続されていません。SDカードがマウントされているかどうか、確認してください。</string>
   <string name="fact_adder_intent_title">AnkiDroid カード</string>
-  <string name="deckpicker_select_dictionary_title">辞書を選択してください</string>
-  <string name="deckpicker_select_dictionary_default">標準設定</string>
   <string name="card_editor_add_card">ノートを追加</string>
-  <string name="card_editor_reset">リセット</string>
   <string name="card_editor_copy_card">カードをコピー</string>
   <string name="card_editor_reset_card">学習進行状況をリセット</string>
   <string name="card_editor_reschedule_card">スケジュールを変更</string>
@@ -120,14 +109,11 @@
     <item quantity="other">%d カード追加されました。</item>
   </plurals>
   <string name="help_title">ヘルプ</string>
-  <string name="help_online">オンラインヘルプ</string>
-  <string name="help_faq">よくある質問</string>
   <string name="check_db">データベースをチェック</string>
   <string name="check_media">メディアをチェック</string>
   <string name="check_db_message">データを確認中です\nしばらくお待ちください</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">空のカード。\"ツール &gt; 空のカード...\"をデスクトップ クライアントで実行。</string>
   <string name="unknown_type_field_warning">タイピングして答えを入力: 不明なフィールド %s</string>
-  <string name="simple_interface_hint">%s が空です。 簡単なインターフェースでは写真を表示したり、音を出したりはできません。</string>
   <string name="delete_deck">単語帳を削除中です\nしばらくお待ちください</string>
   <string-array name="dynOrderLabels">
     <item>古いものを先頭に</item>
@@ -138,17 +124,12 @@
     <item>追加順に</item>
     <item>学習予定日時順に</item>
   </string-array>
-  <string name="menu_cardbrowser">ブラウザー</string>
   <string name="show_hint">%s を表示</string>
-  <string name="pref_lang_other">使用言語の選択</string>
-  <string name="pref_font_UI">使用フォントの設定</string>
   <string name="info_rate">AnkiDroidを評価</string>
   <string name="col_load_failed">コレクションの読み込みに失敗しました\n Backボタンを押して AnkiDroid を終了してください</string>
   <string name="import_title">カードのインポート</string>
   <string name="import_select_title">インポートするファイルを選択</string>
-  <string name="import_message">ファイル%s の内容を、コレクションに追加、または、置き換えますか？</string>
   <string name="import_message_add">追加</string>
-  <string name="import_message_replace">置換え</string>
   <string name="import_message_replace_confirm">このコレクションは削除され、ファイル中のデータに置き換えられます%s. よろしいでしょうか？</string>
   <string name="import_message_add_confirm">\"%s\" をコレクションに追加しますか？長い時間が必要な場合があります。</string>
   <string name="import_log_success">%d 枚のカードを読み込みました</string>
@@ -170,13 +151,8 @@
   <string name="study_options">単語帳オプション</string>
   <string name="custom_study">カスタム学習</string>
   <string name="dyn_deck_desc">指定された検索条件で抽出されたカードを集めたカスタム単語帳です。通常の復習スケジュールとは別にカードを学習することができます。復習後、または、単語帳を削除すると、各カードは元の単語帳に戻されます。</string>
-  <string name="exit_wizard">ウィザードの終了</string>
   <string name="steps_error">学習ステップはゼロより大きな数字</string>
   <string name="steps_min_error">少なくとも 1 つの学習ステップが必要です。</string>
-  <string name="custom_study_invalid_number">無効な数字</string>
-  <string name="template_error">テンプレート のエラー:</string>
-  <string name="template_error_detail">このカードのテンプレートの中にエラーがあります</string>
-  <string name="template_error_fix">このエラーを修正するために、PC上のAnkiDesktopでカードの編集をしてください</string>
   <string name="sched_end">（終了）</string>
   <string name="sched_unbury_button">それらのカードを今すぐ表示するには、「延期を解除」ボタンをタップしてください。</string>
   <string name="sched_has_buried">関連カード、延期カードの学習は明日まで延期されます。</string>

@@ -48,8 +48,6 @@
   <string name="CardEditorTags">Štítky: %1$s</string>
   <string name="CardEditorCards">Karty: %1$s</string>
   <string name="add_new_filter_tags">Přidat/Filtrovat štítky</string>
-  <string name="note_type">Typ poznámky</string>
-  <string name="card_type">Typ karty</string>
   <string name="filter_tags">Filtrovat tagy</string>
   <string name="sdcard_missing_message">SD karta je nedostupná, protože se používá jako úložiště USB. Odpojte USB pro přístup ke svým balíkům.</string>
   <string name="enable_whiteboard">Povolit Tabuly</string>
@@ -58,8 +56,6 @@
   <string name="hide_whiteboard">Skrýt tabuli</string>
   <string name="clear_whiteboard">Smazat tabuli</string>
   <string name="replay_audio">Přehrát audio</string>
-  <string name="cram_edit_warning">Úprava karet není během šprtání povolena</string>
-  <string name="suspend_leeches">Vyřadit pijavice</string>
   <string name="leech_suspend_notification">Karta označena jako pijavice a vyřazena</string>
   <string name="leech_notification">Karta byla označena jako pijavice</string>
   <string name="corrupt_font">Poškozený soubor písma %s</string>
@@ -80,10 +76,8 @@
   <string name="cardeditor_title_edit_card">Upravit poznámku</string>
   <string name="discard_unsaved_changes">Zavřít a ztratit stávající vstup?</string>
   <string name="factadder_saving_error">Chyba při ukládání poznámky</string>
-  <string name="pref_lang_support">Jazyk</string>
   <string name="saving_facts">Ukládání poznámky</string>
   <string name="saving_model">Ukládání modelu</string>
-  <string name="deck">Balíček</string>
   <string name="add">Přidat</string>
   <string name="close">Zavřít</string>
   <string name="select">Vybrat</string>
@@ -100,13 +94,8 @@
     <item quantity="other">%1$d minut</item>
   </plurals>
   <string name="studyoptions_welcome_title">Vítejte v AnkiDroid</string>
-  <string name="studyoptions_no_external_storage_title">Není k dispozici externí paměť</string>
-  <string name="studyoptions_no_external_storage_message">Žádná externí paměť není momentálně k dispozici. AnkiDroid potřebuje přistupovat k SD kartě, aby mohl načíst Anki balíčky. Zkontrolujte, zda je vaše SD karta připojena a akci opakujte.</string>
   <string name="fact_adder_intent_title">AnkiDroid karta</string>
-  <string name="deckpicker_select_dictionary_title">Výběr slovníku</string>
-  <string name="deckpicker_select_dictionary_default">Výchozí</string>
   <string name="card_editor_add_card">Přidat poznámku</string>
-  <string name="card_editor_reset">Obnovit</string>
   <string name="card_editor_copy_card">Kopírovat kartu</string>
   <string name="card_editor_reset_card">Obnovit proces učení</string>
   <string name="card_editor_reschedule_card">Přeplánovat kartu</string>
@@ -120,14 +109,11 @@
     <item quantity="other">přidáno %d karet</item>
   </plurals>
   <string name="help_title">Nápověda</string>
-  <string name="help_online">Online nápověda</string>
-  <string name="help_faq">Nejčastější dotazy</string>
   <string name="check_db">Zkontrolovat databázi</string>
   <string name="check_media">Zkontrolovat multimédia</string>
   <string name="check_db_message">Kontrola databáze.\nProsím čekejte...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Prázdná karta. Spusťte \"Nástroje&gt;Prázdné karty...\" v klientovi pro PC.</string>
   <string name="unknown_type_field_warning">Zápis odpovědi: neznámé pole %s</string>
-  <string name="simple_interface_hint">Prázdné %s. Mějte na paměti, že jednoduché rozhraní nemůže zobrazit obrázky/zvuky atd.</string>
   <string name="delete_deck">Odstraňování balíčku...\nProsím čekejte.</string>
   <string-array name="dynOrderLabels">
     <item>Nejstarší první</item>
@@ -138,17 +124,12 @@
     <item>V pořádí přidání</item>
     <item>V pořadí zkoušení</item>
   </string-array>
-  <string name="menu_cardbrowser">Prohlížeč karet</string>
   <string name="show_hint">Zobrazit %s</string>
-  <string name="pref_lang_other">Předvolby jazyka</string>
-  <string name="pref_font_UI">Vlastní písmo</string>
   <string name="info_rate">Ohodnotit AnkiDroid</string>
   <string name="col_load_failed">Načítání kolekce se nezdařilo.\nStiskněte zpět pro zavření AnkiDroid.</string>
   <string name="import_title">Import karet</string>
   <string name="import_select_title">Vyberte soubor k importu</string>
-  <string name="import_message">Chcete přidat obsah souboru %s do své kolekce, nebo kolekci nahradit?</string>
   <string name="import_message_add">Přidat</string>
-  <string name="import_message_replace">Nahradit</string>
   <string name="import_message_replace_confirm">Tímto vymažete vaši stávající kolekci a nahradíte jí daty ze souboru %s. Jste si jistý?</string>
   <string name="import_message_add_confirm">Přidat \"%s\" do kolekce? To může trvat dlouhou dobu</string>
   <string name="import_log_success">Importováno %d karet</string>
@@ -170,13 +151,8 @@
   <string name="study_options">Nastavení balíčku</string>
   <string name="custom_study">Vlastní učení</string>
   <string name="dyn_deck_desc">Toto je speciální balíček pro studium mimo normální plán. Karty se automaticky po opakování vrátí do svého původního balíčku. Odstraněním tohoto balíčku ze seznamu se všechny zbývající karty vrátí to jejich původního balíčku.</string>
-  <string name="exit_wizard">Ukončit průvodce</string>
   <string name="steps_error">Kroky musí být číslo větší než 0</string>
   <string name="steps_min_error">Je požadován alespoň jeden krok</string>
-  <string name="custom_study_invalid_number">Neplatné číslo</string>
-  <string name="template_error">Chyba šablony:</string>
-  <string name="template_error_detail">V šabloně této karty je chyba.</string>
-  <string name="template_error_fix">Pro opravu chyby použijte editor karet v Anki pro stolní počítače.</string>
   <string name="sched_end">(konec)</string>
   <string name="sched_unbury_button">Pro jejich zobrazení klikněte na tlačítko \'Zruš odložení\'.</string>
   <string name="sched_has_buried">Některé související nebo pozastavené karty byly odloženy do pozdější relace.</string>

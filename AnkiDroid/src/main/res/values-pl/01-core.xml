@@ -39,11 +39,13 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="app_name">AnkiDroid</string>
-  <string name="app_name_anki">Anki</string>
-  <string name="app_name_droid">Droid</string>
+  <string name="decks">Talie</string>
+  <string name="card_browser">Przeglądanie kart</string>
+  <string name="statistics">Statystyki</string>
+  <string name="settings">Ustawienia</string>
+  <string name="help">Pomoc</string>
+  <string name="send_feedback">Prześlij opinię</string>
   <string name="studyoptions_title">Opcje nauki</string>
-  <string name="studyoptions_deck_name">Nazwa talii</string>
   <string name="studyoptions_due_today">Na dziś:</string>
   <string name="studyoptions_new_total">Łącznie nowych kart:</string>
   <string name="studyoptions_total_cards">Łącznie kart:</string>
@@ -57,10 +59,6 @@
     <item quantity="one">%d minut.</item>
     <item quantity="other">%d min.</item>
   </plurals>
-  <plurals name="deckpicker_due">
-    <item quantity="one">%1$d z %2$d do przejrzenia</item>
-    <item quantity="other">%1$d z %2$d zaległych</item>
-  </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">Pozostało %d minut</item>
     <item quantity="other">Pozostało minut: %d</item>
@@ -72,9 +70,6 @@
   <string name="ease3_successive">Dobrze</string>
   <string name="ease3_learning">Łatwo</string>
   <string name="studyoptions_congrats_undo">Cofnij %s</string>
-  <string name="card_unsuspended">Karta reaktywowana</string>
-  <string name="card_suspended">Karta zawieszona</string>
-  <string name="menu_rotate">Obrót</string>
   <string name="menu_import">Importuj</string>
   <string name="undo">Cofnij</string>
   <string name="undo_action_review">ostatnia powtórka</string>
@@ -86,30 +81,19 @@
   <string name="undo_action_mark">wyróżnienie notatki</string>
   <string name="unbury">Odkop</string>
   <string name="finish_operation">Kończenie poprzedniej operacji (najprawdopodobniej tworzenie kopii zapasowej).\nProszę czekać...</string>
-  <string name="contextmenu_deckpicker_download_missing_media">Pobierz brakujące media</string>
-  <string name="contextmenu_deckpicker_reset_language_assignments">Zresetuj przypisanie języka</string>
-  <string name="contextmenu_deckpicker_reset_reset_message">Reset języka</string>
-  <string name="contextmenu_deckpicker_optimize_deck">Optymalizacja bazy danych</string>
   <string name="contextmenu_deckpicker_rename_deck">Zmień nazwę talii</string>
   <string name="contextmenu_deckpicker_collapse_deck">Ukryj sub-talie</string>
   <string name="contextmenu_deckpicker_inflate_deck">Pokaż sub-talie</string>
-  <string name="contextmenu_deckpicker_set_custom_dictionary">Ustaw własny słownik</string>
   <string name="menu_add">Dodaj</string>
   <string name="menu_add_note">Dodaj notatkę</string>
-  <string name="menu_download_deck">Pobierz talię</string>
-  <string name="menu_download_shared_deck">Udostępniona talia</string>
   <string name="menu_my_account">Synchronizacja konta</string>
-  <string name="menu_preferences">Ustawienia</string>
-  <string name="menu_about">O programie</string>
   <string name="menu_dismiss_note">Ukryj / Usuń</string>
   <string name="menu_bury_card">Zakop kartę</string>
   <string name="menu_bury_note">Ukryj notatkę</string>
   <string name="menu_suspend_card">Zawieś kartę</string>
   <string name="menu_suspend_note">Zawieś notatkę</string>
-  <string name="menu_save_note">Zapisz notatkę</string>
   <string name="menu_delete_note">Usuń notatkę</string>
   <string name="delete_note_message">Jesteś pewny, że chcesz usunąć tę notatkę i wszystkie jej karty?\n%s</string>
-  <string name="menu_edit_card">Edytuj kartę</string>
   <string name="menu_select">Zaznacz tekst</string>
   <string name="menu_search">Wyszukiwanie w %1$s</string>
   <string name="menu_mark_card">Wyróżnij kartę</string>
@@ -117,9 +101,8 @@
   <string name="new_deck">Stwórz talię</string>
   <string name="create">Utwórz</string>
   <string name="new_dynamic_deck">Stwórz filtrowaną talię</string>
-  <string name="studyoptions_feedback">Informacje zwrotne</string>
   <string name="night_mode">Tryb nocny</string>
-  <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
+  <string name="directory_inaccessible">Katalog AnkiDroid jest niedostępny</string>
   <string-array name="next_review_s">
     <item>1 sekunda</item>
     <item>1 minuta</item>
@@ -136,9 +119,7 @@
     <item>%s miesięcy</item>
     <item>%s lat</item>
   </string-array>
-  <string name="visit">Odwiedź</string>
   <string name="later">Później</string>
-  <string name="download">Pobierz</string>
   <string name="open_collection">Otwieranie kolekcji.\nProszę czekać...</string>
   <string name="rebuild_cram_deck">Przebudowywanie talii.\nProszę czekać...</string>
   <string name="rebuild_cram_label">Odbuduj</string>
@@ -150,48 +131,21 @@
   <string name="studyoptions_congrats_more_rev">Dzisiejszy limit powtórek został wyczerpany, ale wciąż pozostają karty do przejrzenia. Dla optymalnego zapamiętywania proszę rozważyć zwiększenie dziennego limitu w ustawieniach.</string>
   <string name="studyoptions_congrats_more_new">Pozostało więcej kart do przejrzenia, ale dzienny limit został osiągnięty. Możesz zwiększyć limit w opcjach, ale miej na uwadze, że zwiększy to ilość powtórzeń w najbliższych dniach.</string>
   <string name="studyoptions_congrats_custom">Aby kontynuować naukę poza zwykłym schematem kliknij przycisk Nauki Niestandardowej poniżej.</string>
-  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
-  <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Jutro będzie %1$d kart do przejrzenia oraz %2$s.\n Szacowany czas: %3$s</item>
-    <item quantity="other">Jutro będzie %1$d kart do powtórki i %2$s.\n Szacowany czas: %3$s</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">%1$d nowa karta</item>
-    <item quantity="other">%1$d nowych kart</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">Szacowany czas: %1$d minut.</item>
-    <item quantity="other">Szacowany czas: %1$d min.</item>
-  </plurals>
+  <string name="studyoptions_no_cards_due">Nie ma żadnych kart do przejrzenia.</string>
   <string name="sd_card_not_mounted">Karta SD nie jest zamontowana.\n\nMożesz również przechowywać swoją kolekcję w pamięci wewnętrznej, jednak nie jest to zalecane, gdyż dostęp do tych plików nie będzie łatwy. Opcję tę możesz włączyć w ustawieniach (kliknij ten tekst).</string>
-  <string name="studyoptions_options">Opcje</string>
-  <string name="empty_cloze_warning">Edytuj tę notatkę i dodaj jakieś luki w tekście. (%1$s)</string>
-  <string name="help_cloze">pomoc</string>
   <string name="button_sync">Synchronizuj</string>
-  <string name="restart">Zrestartuj</string>
-  <string name="do_nothing">Nic nie rób</string>
-  <string name="more_options">Więcej opcji</string>
-  <string name="now">Teraz</string>
-  <string name="back">Wstecz</string>
-  <string name="ankiweb">AnkiWeb</string>
-  <string name="usb">USB</string>
-  <string name="_import">Importuj</string>
   <string name="export">Eksportuj</string>
-  <string name="confirm">Potwierdź</string>
-  <string name="internet">Internet</string>
-  <string name="pc">PC</string>
-  <string name="nothing">Nothing</string>
-  <string name="title_activity_graphical_activity">Statystyczny wykres</string>
-  <string name="title_activity_template_editor">Card Types for %s</string>
-  <string name="card_template_editor_front">Front Template</string>
-  <string name="card_template_editor_back">Back Template</string>
-  <string name="card_template_editor_styling">Styling</string>
-  <string name="card_template_editor_menu_add_reverse">Add reverse</string>
-  <string name="card_template_editor_menu_delete">Delete</string>
-  <string name="card_template_editor_cant_delete">At least one card type is required.</string>
+  <string name="nothing">Nic</string>
+  <string name="title_activity_template_editor">Typy kart dla %s</string>
+  <string name="card_template_editor_front">Szablon przodu</string>
+  <string name="card_template_editor_back">Szablon tyłu</string>
+  <string name="card_template_editor_styling">Styl</string>
+  <string name="card_template_editor_menu_add_reverse">Dodaj odwrotność</string>
+  <string name="card_template_editor_menu_delete">Usuń</string>
+  <string name="card_template_editor_cant_delete">Wymagany jest przynajmniej jeden typ karty.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
-    <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
+    <item quantity="one">Usunąć typ karty \'%2$s\' i jego kartę %1$d?</item>
+    <item quantity="other">Usunąć typ karty \'%2$s\' i jego karty %1$d?</item>
   </plurals>
-  <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create a new card type first.</string>
+  <string name="card_template_editor_would_delete_note">Usunięcie typu karty może spowodować usunięcie jednej lub większej ilości notatek. Proszę o utworzenie najpierw nowej karty.</string>
 </resources>

@@ -51,14 +51,6 @@
     <item quantity="one">%1$d kortlek</item>
     <item quantity="other">%1$d kortlekar</item>
   </plurals>
-  <string name="widget_medium">AnkiDroid Medium</string>
   <string name="widget_small">AnkiDroid Liten</string>
-  <string name="widget_big">AnkiDroid Stor</string>
-  <string name="widget_big_restrictions_dialog">På grund av vissa begränsningar i widgetar för Android kan denna widget bara visa text men inga bilder/ljud m.m.</string>
-  <string name="open_in_reviewer">Öppna kortlek i AnkiDroid</string>
-  <plurals name="widget_big_eta">
-    <item quantity="one">Beräknad tid: %d min.</item>
-    <item quantity="other">Beräknad tid: %d min.</item>
-  </plurals>
   <string name="widget_big_tomorrow_due">Kort i kö imorgon:</string>
 </resources>

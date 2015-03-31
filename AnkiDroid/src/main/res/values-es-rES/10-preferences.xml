@@ -138,7 +138,6 @@
   <string name="safe_display_summ">Deshabilitar todas las animaciones y usar un método más seguro para dibujar las tarjetas. Los dispositivos de tinta electrónica y dispositivos más viejos que utilizan fuentes personalizadas pueden requerir esta opción.</string>
   <string name="vertical_centering">Alinear al centro</string>
   <string name="vertical_centering_summ">Centra verticalmente el contenido de las tarjetas</string>
-  <string name="pref_cat_backup">Copias de seguridad</string>
   <string name="pref_backup">Utilizar copias de seguridad</string>
   <string name="pref_backup_summ">Crear copias de seguridad automáticamente antes de abrir un mazo (una vez al día)</string>
   <string name="pref_backup_max">Número máximo de copias de seguridad</string>
@@ -163,11 +162,6 @@
   <string name="input_workaround_summ">Solución temporal para centrarse en los problemas de los HTML Input Boxes. Causa problemas en varios dispositivos.</string>
   <string name="pref_keep_screen_on">Mantener la pantalla encendida</string>
   <string name="pref_keep_screen_on_summ">Desactivar el tiempo de espera de pantalla</string>
-  <string name="pref_simple_interface">Interfaz simple</string>
-  <string name="pref_simple_interface_summ">Aumenta la velocidad de visualización de las tarjetas, pero no soporta todas las características html</string>
-  <string name="pref_simple_interface_exclude_tags">Etiquetas a excluir</string>
-  <string name="pref_simple_interface_exclude_tags_summ">No utilizar la interfaz simple para estas etiquetas: XXX</string>
-  <string name="write_answers_message">Debe definir un campo para comparar la respuesta escrita para cada mazo. Puedes hacerlo vía Anki Desktop (propiedades de mazo -&gt; Editar modelo -&gt; layout de tarjeta).\n\n Si no se encuentra ningún campo de comparación, su respuesta por escrito siempre se comparará con la respuesta de toda la tarjeta</string>
   <string name="fix_arabic_text">Mejorar la visualización del árabe</string>
   <string name="fix_arabic_text_summ">Solución parcial para un soporte limitado al árabe por la plataforma Android. Cuando se activa no es posible modificar las tarjetas.</string>
   <string name="convert_fen_text">Soporte para notación de ajedrez</string>
@@ -175,17 +169,6 @@
   <string name="filter_google_translate_summ">Guardar solamente la traducción y la palabra de origen</string>
   <string name="convert_fen_text_summ">Tablero de dibujo de notación de Forsyth-Edwards. La notación debe adjuntar etiquetas del [fen][/fen].</string>
   <string name="studyoptions_limit_select_tags">Seleccionar etiquetas</string>
-  <string name="studyoptions_limit_tags_active">Incluir: %1$s</string>
-  <string name="studyoptions_limit_tags_inactive">Excluir: %1$s</string>
-  <string name="studyoptions_limit_button_text">Limitar</string>
-  <string name="studyoptions_limit_dialog_title">Limitar el Estudio</string>
-  <string name="studyoptions_session">Por Sesión</string>
-  <string name="studyoptions_tag">Por Etiquetas</string>
-  <string name="studyoptions_tag_new">Mostrar nuevas tarjetas por etiquetas:</string>
-  <string name="studyoptions_tag_rev">Mostrar repasos por etiquetas:</string>
-  <string name="studyoptions_new_cards_per_day">Tarjetas nuevas por día</string>
-  <string name="studyoptions_max_fail_card">Max tarjetas falladas</string>
-  <string name="deck_conf_deck_name">Nombre del mazo</string>
   <string name="deck_conf_deck_description">Descripción del mazo</string>
   <string name="deck_conf_group">Grupo de opciones</string>
   <plurals name="deck_conf_group_summ">
@@ -244,7 +227,6 @@
   <string name="pref_browser_editor_font_summ">XXX</string>
   <string name="deck_conf_cram_filter">Filtrar</string>
   <string name="deck_conf_cram_options">Opciones</string>
-  <string name="deck_conf_cram_preset">Predeterminado</string>
   <string name="deck_conf_cram_search">Buscar</string>
   <string name="deck_conf_cram_limit">Limitar a</string>
   <string name="deck_conf_cram_order">tarjetas seleccionadas por</string>

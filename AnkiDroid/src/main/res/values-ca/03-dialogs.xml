@@ -47,9 +47,7 @@
   <string name="delete_deck_title">Suprimeix el paquet</string>
   <string name="delete_deck_message">Esteu segur que voleu suprimir totes les fitxes de %s?</string>
   <string name="delete_cram_deck_message">Esteu segur que voleu enviar totes les fitxes de %s als seus paquets inicials?</string>
-  <string name="delete_deck_confirm">Suprimeix</string>
   <string name="new_version_message">Noves funcions:</string>
-  <string name="no_tts_available_title">Síntesi de veu</string>
   <string name="no_tts_available_message">No hi ha idiomes de síntesi de veu disponibles</string>
   <string name="initializing_tts">Initializing TTS&#8230;</string>
   <string name="tts_no_tts">No parlis</string>
@@ -60,14 +58,7 @@
     <item><![CDATA[Els no desenvolupadors també podeu ajudar, per exemple <a href="%1$s">amb la traducció</a> d\'AnkiDroid, l\'actualització de la wiki i de les captures de pantalla, <a href="%2$s">col·labora amb</a> l\'Anki taula d\'Escriptori, o critant l\'AnkiDroid al vostre blog!]]></item>
     <item><![CDATA[AnkiDroid és publica sota la <a href="%1$s">llicència GNU GPL v3</a> i el codi font està disponible <a href="%2$s">aquí</a>.]]></item>
   </string-array>
-  <string name="dont_show_again">No ho tornis a mostrar</string>
-  <string name="notify_ticker">Actualització de l\'aplicació</string>
-  <string name="notify_title">S\'ha actualitzat l\'Ankidroid</string>
-  <string name="notify_message">Baixeu la nova versió</string>
-  <string name="notification_title">Confirmeu l\'actualització d\'Ankidroid</string>
   <string name="preview_title">Preview</string>
-  <string name="notification_message">Hi ha una nova versió d\'Ankidroid disponible al Mercat.\n\nLa voleu baixar?</string>
-  <string name="notification_stop">No tornis a avisar-me d\'aquesta actualització</string>
   <string name="reset_card_dialog_title">Reinicia el progrés de les fitxes</string>
   <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue.</string>
   <string name="reset_card_dialog_acknowledge">Card reset</string>
@@ -90,36 +81,7 @@
   <string name="custom_study_ahead">Revisió de x dies endavant:</string>
   <string name="custom_study_random">Tria aleatòriament x fitxes del paquet:</string>
   <string name="custom_study_preview">Mostra les fitxes noves afegides en els últims x dies:</string>
-  <string name="custom_study_tags">Entreu les etiquetes:</string>
   <string name="rebuild_custom_study_deck">S\'està reconstruïnt el paquet d\'estudi personalitzat. \nUn moment si us plau...</string>
-  <string name="deck_upgrade_title">Actualitza el paquet</string>
-  <string name="deck_upgrade_rename_warning">Tingueu en compte que amb això s\'exportarà la col·lecció actual a un fitxer anomenat \"%1$s\" i es crearà una nova amb els fitxers antics de l\'anki 1. x. Si voleu, podeu importar de forma manual l\'arxiu citat apkg després de completar l\'auxiliar. Segur que voleu continuar?</string>
-  <string name="deck_upgrade_major_warning"><![CDATA[Això és una important actualització de l\'Ankidroid i el procés d\'actualització portarà com a mínim uns 10-20 minuts. <br><br>voleu continuar ara o més endavant? <br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en"> Més informació</a>]]></string>
-  <string name="deck_upgrade_start_again_to_upgrade_toast">Si us plau, reinicieu l\'Ankidroid quan tingueu temps d\'actualitzar-ho!</string>
-  <string name="deck_upgrade_recommended_method"><![CDATA[El mètode d\'actualització recomanat és sincronitzar amb un Ordinador i actualització amb la versió d\'Anki per a l\'escriptori. <br><br>Hi ha també un mètode alternatiu per actualitzar per internet si no teniu accés a un PC, i la vostra col. lecció no és massa gran.]]></string>
-  <string name="deck_upgrade_more_options_exit">Podeu sortir de l\'auxiliar d\'actualització sense importar les vostres fitxes antigues fent clic al botó de sortida de sota.</string>
-  <string name="deck_upgrade_more_options_new_collection">Podeu crear una nova col·lecció buida fent clic a continuació.</string>
-  <string name="deck_upgrade_more_options_downgrade"><![CDATA[<br><br>Si voleu tornar a la versió anterior d\'AnkiDroid 1 llavors si us plau llegiu <a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Continuing_to_use_AnkiDroid_1.1.3"> aquestes instruccions</a>.]]></string>
-  <string name="deck_upgrade_create_new_collection">Nova col·lecció</string>
-  <string name="deck_upgrade_create_new_collection_title">Nova col·lecció</string>
-  <string name="deck_upgrade_create_new_collection_button">New collection</string>
-  <string name="deck_upgrade_not_import_warning">Esteu segur que voleu fer això? Les dades antigues no es poden importar.</string>
-  <string name="deck_upgrade_via_web"><![CDATA[<b>Aquest mètode d\'actualització no es recomana si utilitzeu arxius de media, o teniu una gran col lecció!</b><br><br>El vostres paquets d\'Anki1 es comprimiran en zip i es pujaran a AnkiWeb, i llavors es baixara la col·lecció convertida. <br><br>Si us plau penseu que cal una connexió a internet estable, i que hi ha un límit de 50 mb a la mida dels arxius.<br><br>Es recomana seriosament als usuaris d\'Anki d\'escriptori que utilitzin el mètode d\'actualització basat en PC. <br><br>Encara voleu continuar?]]></string>
-  <string name="deck_upgrade_via_anki_desktop"><![CDATA[Si teniu una versió actualitzada de la vostra col lecció de AnkiDroid en el programari d\'Escriptori de l\'Anki, podeu actualitzar des d\'allà i llavors descarregar la vostra col·lecció actualitzada sincronitzant-la amb AnkiWeb.<br><br>Com a alternativa, podeu copiar la vostra col·lecció d\'AnkiDroid al vostre PC mitjançant USB, i a continuació, actualitzar la col. lecció i còpiar-la de nou a l\'AnkiDroid actualització.]]></string>
-  <string name="deck_upgrade_auto_upgrade"><![CDATA[<![CDATA[si us plau, instal leu la versió 2.0.4 d\'\'Escriptori de l\'Anki o superior per actualitzar la vostra col lecció, i sincronitzeu la vostra col. lecció ya actualitzada amb AnkiWeb i premeu el botó "Descarrega". <br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_2:_Using_AnkiWeb_sync">Informació més detallada sobre l\'actualització amb l\'AnkiWeb</a>]] >]]></string>
-  <string name="deck_upgrade_manual"><![CDATA[Copieu si us plau tots els vostres fitxers *.anki (i les carpetes de *.media) de la vostra carpeta d\'AnkiDroid a la vostra carpeta de l\'Anki d\'escriptori i després instal·leu l\'Anki d\'escriptori versió 2.0.4 o superior per actualitzar la vostra col lecció. <br><br>Quan s\'hagi acabat l\'actualització, si us plau exporteu la vostra col·lecció d\'Anki2 i copiar l\'arxiu de la col·leccio.apkg a la vostra carpeta de l\'AnkiDroid i premeu el botó Importa de sota. <br><br><a href="http://code.google.com/p/ankidroid/wiki/Upgrading?wl=en#Option_1:_Using_USB_(recommended)"> Més informació detallada sobre l\'actualització utilitzant USB.</a>]]></string>
-  <string name="upgrade_deck_cancelled_title">S\'ha anul·lat l\'actualització</string>
-  <string name="upgrade_deck_cancelled_description">S\'ha cancel·lat l\'intent d\'actualització, si us plau proveu algun altre dels mètodes d\'actualització disponibles.</string>
-  <string name="upgrade_deck_web_upgrade_failed">El procés d\'actualització no ha tingut èxit. Si us plau proveu-ho de nou, o trieu un altre mètode d\'actualització</string>
-  <string name="upgrade_deck_web_upgrade_exceeds">La mida total dels paquets comprimits d\'Anki1 supera el límit que el servidor pot processar (50 mb), si us plau, proveu d\'actualitzar amb un mètode diferent.</string>
-  <string name="upgrade_deck_web_upgrade_sdcard">L\'actualització s\'ha acabat, però hi ha hagut un error en desempaquetar la col·lecció resultant, assegureu-vos que teniu prou espai de disc (calen %1$d mb) i torneu-ho a intentar, o proveu d\'actualitzar amb un mètode diferent.</string>
-  <string name="export_progress_title">Exporta la col·lecció</string>
-  <string name="export_progress_exporting">S\'està exportant la col·lecció, un moment si us plau...</string>
-  <string name="upgrade_deck_export_successful">S\'ha exportat correctament la vostra col·lecció, el procés d\'actualització continúa.</string>
-  <string name="upgrade_deck_export_error">Hi ha hagut un error en exportar la vostra col lecció. Voleu continuar amb el procés d\'actualització de tota manera (es perdrà la vostra antiga col. lecció)?</string>
-  <string name="upgrade_deck_sync_from_ankiweb">Sincronitza-ho amb AnkiWeb</string>
-  <string name="upgrade_deck_have_you_synced">Esteu segur que heu actualitzat la vostre col·lecció amb l\'Anki de l\'Escriptori versió 2 i que l\'heu sincronitzada amb AnkiWeb?</string>
-  <string name="upgrade_deck_dont_upgrade">No ho actualitzis</string>
   <string name="import_unpacking">S\'està desempaquetant l\'arxiu. \nUn moment si us plau...</string>
   <string name="importing_collection">S\'està important la col. lecció. \nUn moment si us plau ...</string>
   <string name="import_media_count">S\'estant importació els continguts multimèdia %1$d%%\nun moment si us plau...</string>
@@ -132,7 +94,6 @@
   <string name="dialog_cancel">Cancel</string>
   <string name="dialog_ok">OK</string>
   <string name="dialog_continue">Continue</string>
-  <string name="dialog_neutral_later">Later</string>
   <string name="dialog_positive_create">Create</string>
   <string name="dialog_positive_delete">Delete</string>
   <string name="dialog_positive_disable">Disable</string>
@@ -142,14 +103,8 @@
   <string name="dialog_positive_replace">Replace</string>
   <string name="dialog_positive_reset">Reset</string>
   <string name="dialog_positive_restore">Restore</string>
-  <string name="dialog_positive_save">Save</string>
   <string name="dialog_positive_set">Set</string>
-  <string name="add_button_content">Add&#8230;</string>
-  <string name="card_browser_button_content">Card browser</string>
   <string name="lookup_button_content">Look up</string>
-  <string name="statistics_button_content">Statistics</string>
-  <string name="dialog_collection_path_title">Folder does not exit</string>
-  <string name="dialog_collection_path_text">The folder you specified does not exist, would you like to create it?</string>
   <string name="dialog_collection_path_not_dir">The path specified was not a valid directory</string>
   <string name="check_media_title">Check media?</string>
   <string name="check_media_warning">This may take a long time with large media collections</string>

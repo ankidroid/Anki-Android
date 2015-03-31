@@ -41,30 +41,14 @@
 -->
 <resources>
   <string name="youre_offline">Çevrimdışısınız</string>
-  <string name="currently_downloading">Şu anda indirilenler</string>
-  <string name="starting_download">İndirme başlatılıyor...</string>
-  <string name="downloading">İndiriliyor...</string>
-  <string name="paused">Durduruldu</string>
-  <string name="downloaded">İndirildi</string>
   <string name="sync_error">Eşitleme hatası</string>
   <string name="vague_error">Hata</string>
-  <string name="cancelling">İptâl ediliyor&#8230;</string>
-  <string name="connection_error_return_message">Bir ağ hatası meydana geldi. Yeniden deneyin, veya iptâl edip önceki ekrana dönün.</string>
   <string name="retry">Yeniden Dene</string>
   <string name="cancel">İptâl</string>
-  <string name="download_overwrite">Üzerine Yaz</string>
-  <string name="download_cancel">İndirmeyi iptâl et</string>
-  <string name="shared_decks">Paylaşılan Desteler</string>
   <string name="loading_shared_decks">Mevcut paylaşılan desteler yükleniyor...</string>
   <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Kayıtlar ve Koşullar</a></string>
-  <string name="cancel_download">İndirmeyi iptâl et</string>
-  <string name="resume_download">İndirmeye Devam Et</string>
-  <string name="pause_download">İndirmeyi Durdur</string>
-  <string name="duplicate_download">Bu deste zaten iniyor</string>
   <string name="menu_get_shared_decks">Paylaşılan desteler edin</string>
-  <string name="download_button_return">Geri dön</string>
   <string name="connection_error_message">Bir ağ hatası meydana geldi.</string>
-  <string name="sync_log_db_error">Bir veritabanı hatası meydana geldi.</string>
   <string name="not_logged_in_title">AnkiWeb\'e giriş yap</string>
   <string name="login_create_account_message">Bir AnkiWeb hesabına giriş yapmanız gerekiyor. Sonraki adımda bir tane oluşturabilirsiniz.</string>
   <string name="no_email_client">E-posta istemcisi yok</string>
@@ -80,11 +64,7 @@
   <string name="log_out">Çıkış yap</string>
   <string name="alert_logging_message">Giriş yapılıyor, lütfen bekleyin...</string>
   <string name="invalid_username_password">Geçersiz eposta adresi veya şifre</string>
-  <string name="login_generic_error">Giriş başarısız.</string>
   <string name="reset_password">Parolayı Sıfırla</string>
-  <string name="download_finished">İndirme bitti</string>
-  <string name="personaldeckpicker_title">Online Deste Aç</string>
-  <string name="shareddeckpicker_title">İndirmek istediğiniz desteyi seçin</string>
   <string name="downloaddeck_search">Arama</string>
   <string name="preferences_title">Tercihler</string>
   <string name="deckpreferences_title">XXX Seçenekleri</string>
@@ -97,7 +77,6 @@
   <string name="sync_preparing_full_sync_message">Tam eşitlemeye hazırlanıyor...</string>
   <string name="sync_uploading_message">Karşıya yükleniyor...</string>
   <string name="sync_downloading_message">İndiriliyor...</string>
-  <string name="sync_reload_message">Koleksiyon yeniden yükleniyor...</string>
   <string name="sync_title">Senkronizasyon</string>
   <string name="sync_downloading_media">Medya indiriliyor %1$d/%2$d...</string>
   <string name="sync_log_uploading_message">Yerelden tam senkronizasyon</string>
@@ -105,11 +84,9 @@
   <string name="sync_log_clocks_unsynchronized">Cihazınızdaki saat %1$d saniye%2$s hatalı. Telefonunuzdaki tarih, zaman ve zaman diliminin doğru ayarlandığından emin olup yeniden senkronize edin.</string>
   <string name="sync_log_clocks_unsynchronized_tz">, muhtemelen cihazınızın saat dilimi yanlış</string>
   <string name="sync_log_clocks_unsynchronized_date">, muhtemelen cihazınızın tarihi yanlış</string>
-  <string name="sync_log_old_version">Senkronizasyon protokolü değişti, lütfen son AnkiDroid\'e güncelleyin. %s\'e bakın.</string>
   <string name="sync_conflict_title">Senkronizasyon çatışması</string>
   <string name="sync_no_changes_message">Değişiklik bulunmuyor.</string>
   <string name="sync_database_acknowledge">Koleksiyon senkronize edildi</string>
-  <string name="sync_log_error_fix">Bir eşitleme hatası meydana geldi%s.\n\nEğer bu sürekli oluyorsa, bir tam eşitleme yapmak sorunu muhtemelen giderir. Bunun ya yerel koleksiyonunuzun ya da AnkiWeb\'dekinin üzerine yazacağını bilin.\nEğer gerçekten tam eşitleme yapmak istiyorsanız, lütfen yerel koleksiyonunuzu karşıya yüklemek mi yoksa sunucudan indirmek mi istediğinizi seçin.</string>
   <string name="sync_log_error_specific">Eşitleme hatası, türü: %1$s, ileti: %2$s</string>
   <string name="sync_corrupt_database">Veritabanınız bozuk. Lütfen eşitlemeyi yeniden denemeden önce onu düzeltin.\n\nVeritabanınızı onarmak hakkında bilgi için %s bakın.</string>
   <string name="sync_too_busy">Sunucu çok meşgul. Daha sonra yeniden deneyin.</string>
@@ -130,10 +107,6 @@
   <string name="sync_check_upload_file">Yüklemeden önce dosya kontrol ediliyor...</string>
   <string name="sync_check_download_file">İndirilen dosya kontrol ediliyor...</string>
   <string name="sync_media_find">Değiştirilmiş medya bulunuyor...</string>
-  <string name="sync_media_remove">Silinmiş medya işleniyor...</string>
-  <string name="sync_media_from_server">Medya sunucudan alınıyor...</string>
-  <string name="sync_media_to_server">Medya sunucuya gönderiliyor...</string>
-  <string name="sync_media_sanity_check">Medya sayıları kontrol ediliyor...</string>
   <string name="sync_media_no_changes">Medya dosyalarında değişiklik yok.</string>
   <string name="sync_media_success">Medya başarıyla eşitlendi.</string>
   <string name="sync_media_changes_count">%d ortam yüklenmek için değiştirildi</string>
@@ -146,22 +119,6 @@
   <string name="register_title">Üye ol</string>
   <string name="register_mismatch">Kullanıcı adı/şifre tekrarı uyuşmuyor veya boş. Lütfen yeniden girin.</string>
   <string name="registering_message">Hesap oluşturuluyor.\nLütfen bekleyin...</string>
-  <string name="upgrade_decks_zipping">Desteler yükleme için sıkıştırılıyor.\nLütfen bekleyin...</string>
-  <string name="upgrade_decks_upload">Sıkıştırılmış desteler karşıya yükleniyor\nGeriye basarak iptâl edebilirsiniz.</string>
-  <string name="upgrade_decks_waiting">Bekleniyor, sıradaki yeriniz: %s\nLütfen bekleyin...</string>
-  <string name="upgrade_decks_upgrade_started">Yükseltme başladı\nLütfen bekleyin...</string>
-  <string name="upgrade_decks_downloading">Yükseltilen koleksiyon indiriliyor\nGeriye basarak iptâl edebilirsiniz.</string>
-  <string name="upgrade_decks_media">Eski medya dosyaları yeni medya konumuna kopyalanıyor.\nLütfen bekleyin...</string>
-  <string name="upgrade_decks_message">Mevcut Anki 2.0 koleksiyonu yok ama eski Anki 1.2 formatında bir veya daha fazla deste bulundu:%s Destelerinizi AnkiDroid\'in yeni sürümüyle kullanmak için ilk önce yeni Anki 2.0 formatında tek bir koleksiyona dönüştürülmeleri gerekiyor. Bunu yapmanın üç yolu var:</string>
-  <string name="upgrade_decks_message_pos1">Anki Desktop 2.0\'ı kullanarak, desteleriniz ilk açışınızda dönüştürülecek. Ardından yeni koleksiyonu AnkiWeb üzerinden eşitleyebilir veya doğrudan cihazınıza kopyalayabilirsiniz. Destelerinizi AnkiDroid dizininizden (%s) bilgisayarınızdaki Anki Masaüstü 1.2 dizinine kopyalayıp (eğer zaten eşleştirmediyseniz) Anki Masaüstü 2.0\'ı açın.</string>
-  <string name="upgrade_decks_message_pos2">Eğer destelerinizi AnkiWeb üzerinden zaten eşitliyorsanız, destelerinizin biçimlendirilmesi için yalnızca %s adresine bir kez giriş yapmanız yeterli. Daha sonra yeni koleksiyonu mobil cihazınıza eşitleyin.</string>
-  <string name="upgrade_decks_message_pos3">Üçüncü bir olasılık olarak, destelerinizi doğrudan AnkiDroid ve AnkiWeb yoluyla dönüştürtebilirsiniz. Aşağıdaki \"Yükselt\" düğmesine tıklarsanız, desteleriniz paketlenip AnkiWeb\'e yüklenecek. Ardından dönüştürülen koleksiyon otomatik olarak indirilecek ve açılacak. Bunun için bir üyelik gerekmez ama şebeke bağlantınızdan fazla internet harcanmaması için WiFi bağlantısı kullanmanız önerilir. Eğer sıkıştırılmış desteler 50 MB\'tan daha büyükse, bu yolu kullanamazsınız. Bu durumda lütfen diğer seçenekleri kullanın. Eğer destenizdeki medya dosyaları kişisel klasörlerde veya Dropbox klasörünüzde saklanıyorsa, yeni konuma elle kopyalanmaları gerekebilir.</string>
-  <string name="upgrade_decks_message_finish">Devam ederseniz eski desteleriniz göz önüne alınmadan yeni bir koleksiyon oluşturulacak.</string>
-  <string name="upgrade_required">AnkiWeb\'deki desteleriniz hâlâ eski Anki 1.2 biçiminde. Lütfen %s adresine gidin ve giriş yapın. Desteleriniz otomatik olarak yeni biçime dönüştürülecek.</string>
-  <string name="upgrade_decks_button">Yükselt</string>
-  <string name="upgrade_decks_failed">Şu desteler yükseltilemedi:\n%s Bunları lütfen Anki Masaüstü\'nde açıp bir veritabanı kontrolü yapın. Sonrasında Anki Masaüstü\'yle cihazınıza aktarabilirsiniz.</string>
-  <string name="upgrade_decks_media_failed">Medya dosyalarını yeni medya klasörüne (%1$s) kopyalama şu desteler için başarısız oldu:\n%2$s Lütfen medya dosyalarını elle taşıyın.</string>
-  <string name="download_deck">Deste indiriliyor (%d KB)\nLütfen bekleyin...</string>
   <string name="sync_sanity_local">Yerel</string>
   <string name="sync_sanity_remote">Sunucu</string>
   <string name="force_full_sync_title">Zorunlu tam senkronizasyon</string>

@@ -39,13 +39,9 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="backup_collection">Criando backup. \nPor favor espere...</string>
   <string name="backup_deck_no_space_left">Última ação de backup não pode ser executada devido à falta de espaço no seu cartão sd.\n\nLibere algum espaço ou diminua a profundidade do backup.</string>
   <string name="sd_space_warning">Menos de %d mb de espaço livres no seu cartão sd. \nLibere algum espaço para evitar perda de dados.</string>
-  <string name="backup_deck_success">Backup criado com sucesso</string>
-  <string name="backup_manager_title">Gerenciador de backup</string>
   <string name="backup_delete">Apagando backups. \nPor favor espere...</string>
-  <string name="contextmenu_deckpicker_remove_backups">Remover backups</string>
   <string name="backup_restore">Restaurar do backup</string>
   <string name="backup_new_collection">Nova coleção</string>
   <string name="backup_del_collection">Deletar coleção e cria uma nova</string>
@@ -59,10 +55,7 @@
   <string name="backup_repair_deck">Consertar</string>
   <string name="backup_repair_deck_progress">Consertando banco de dados.\nPor favor aguarde...</string>
   <string name="backup_error">Erro</string>
-  <string name="backup_restore_error">Coleção não pôde ser restaurada</string>
   <string name="backup_invalid_file_error">O arquivo de backup selecionado era inválido</string>
-  <string name="backup_restore_if_missing">Restaurando coleção caso esteja faltando...</string>
-  <string name="backup_restore_deck">Restaurando coleção. \n Por favor aguarde...</string>
   <string name="backup_restore_select_title">Selecione o backup para restaurar</string>
   <string name="backup_restore_no_backups">Sem backups disponíveis para esta coleção neste aparelho Se você tiver backups em seu computador, favor copia-los manualmente para a pasta do AnkiDroid</string>
   <string name="open_collection_failed_title">Coleção não aberta</string>

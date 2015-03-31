@@ -138,7 +138,6 @@
   <string name="safe_display_summ">Desativar todas as animações e usar modo mais seguro para desenhar as fichas. Dispositivos e-ink ou mais antigos usando tipos de letra personalizados poderão necessitar desta opção.</string>
   <string name="vertical_centering">Alinhar ao centro</string>
   <string name="vertical_centering_summ">Centrar conteúdo das fichas verticalmente</string>
-  <string name="pref_cat_backup">Backups</string>
   <string name="pref_backup">Usar cópias de segurança</string>
   <string name="pref_backup_summ">Criar cópias de segurança automaticamente antes de abrir um baralho (diariamente)</string>
   <string name="pref_backup_max">Número máximo de cópias de segurança</string>
@@ -163,11 +162,6 @@
   <string name="input_workaround_summ">Solução alternativa para problemas de focus em caixas de entrada de texto HTML. Causa problemas em vários dispositivos.</string>
   <string name="pref_keep_screen_on">Manter o ecrã aceso</string>
   <string name="pref_keep_screen_on_summ">Desativar o tempo limite de ecrã</string>
-  <string name="pref_simple_interface">Interface simples</string>
-  <string name="pref_simple_interface_summ">Acelera a exibição do cartão mas não suporta todos os recursos do html</string>
-  <string name="pref_simple_interface_exclude_tags">Etiquetas a excluir</string>
-  <string name="pref_simple_interface_exclude_tags_summ">Não use interface simplificada para essas etiquetas: XXX</string>
-  <string name="write_answers_message">Para cada baralho, deverá definir um campo com o qual comparar a resposta introduzida. Pode fazer isso através do Anki Desktop (propriedades do baralho -&gt; editar modelo -&gt; layout da ficha).\n\nSe nenhum campo para comparação for definido, a sua resposta será sempre comparada com a resposta inteira presente na ficha</string>
   <string name="fix_arabic_text">Melhora a exibição da língua Árabe</string>
   <string name="fix_arabic_text_summ">Solução alternativa parcial para suporte limitado da língua Árabe na plataforma Android. Quando activada, não é possível alterar fichas.</string>
   <string name="convert_fen_text">Suporte para notação de xadrez</string>
@@ -175,17 +169,6 @@
   <string name="filter_google_translate_summ">Guardar somente a palavra original e a tradução</string>
   <string name="convert_fen_text_summ">Desenhar tabuleiro de xadrez a partir da Notação Forsyth–Edwards. A notação tem que estar entre os delimitadores [fen][/fen].</string>
   <string name="studyoptions_limit_select_tags">Selecione as etiquetas</string>
-  <string name="studyoptions_limit_tags_active">Com: %1$s</string>
-  <string name="studyoptions_limit_tags_inactive">Sem: %1$s</string>
-  <string name="studyoptions_limit_button_text">Limite</string>
-  <string name="studyoptions_limit_dialog_title">Limite de aprendizagem</string>
-  <string name="studyoptions_session">Sessão</string>
-  <string name="studyoptions_tag">Por etiqueta</string>
-  <string name="studyoptions_tag_new">Mostrar novas fichas por etiqueta:</string>
-  <string name="studyoptions_tag_rev">Mostrar fichas de revisão por etiqueta:</string>
-  <string name="studyoptions_new_cards_per_day">Novas fichas por dia</string>
-  <string name="studyoptions_max_fail_card">Máximo de falhas</string>
-  <string name="deck_conf_deck_name">Nome do baralho</string>
   <string name="deck_conf_deck_description">Descrição do baralho</string>
   <string name="deck_conf_group">Grupo de opções</string>
   <plurals name="deck_conf_group_summ">
@@ -244,7 +227,6 @@
   <string name="pref_browser_editor_font_summ">XXX</string>
   <string name="deck_conf_cram_filter">Filtro</string>
   <string name="deck_conf_cram_options">Opções</string>
-  <string name="deck_conf_cram_preset">Predefinição</string>
   <string name="deck_conf_cram_search">Pesquisa</string>
   <string name="deck_conf_cram_limit">Limitar a</string>
   <string name="deck_conf_cram_order">Fichas selecionadas por</string>

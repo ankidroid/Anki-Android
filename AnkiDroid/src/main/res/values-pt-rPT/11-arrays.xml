@@ -35,14 +35,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="navigation_titles">
-    <item>Baralhos</item>
-    <item>Navegador de fichas</item>
-    <item>Estatísticas</item>
-    <item>Configurações</item>
-    <item>Ajuda</item>
-    <item>Enviar Comentários</item>
-  </string-array>
   <string-array name="newCardSchedulingLabels">
     <item>Espalhar entre as revisões</item>
     <item>Após as revisões</item>

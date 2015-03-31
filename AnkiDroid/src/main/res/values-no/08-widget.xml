@@ -51,14 +51,6 @@
     <item quantity="one">%1$d deck</item>
     <item quantity="other">%1$d kortstokker</item>
   </plurals>
-  <string name="widget_medium">AnkiDroid Medium</string>
   <string name="widget_small">AnkiDroid liten</string>
-  <string name="widget_big">AnkiDroid stor</string>
-  <string name="widget_big_restrictions_dialog">På grunn av noen begrensninger i Android\'s widgetrammeverk kan denne widgeten bare vise tekst, men ingen bilder/lyder osv.</string>
-  <string name="open_in_reviewer">stokk i AnkiDroid</string>
-  <plurals name="widget_big_eta">
-    <item quantity="one">Estimated time: %d min.</item>
-    <item quantity="other">Estimert tid: %d minutter.</item>
-  </plurals>
   <string name="widget_big_tomorrow_due">I morgen gjenstår:</string>
 </resources>

@@ -48,8 +48,6 @@
   <string name="CardEditorTags">Etiquetas: %1$s</string>
   <string name="CardEditorCards">Cards: %1$s</string>
   <string name="add_new_filter_tags">Adicionar/filtrar etiquetas</string>
-  <string name="note_type">Tipo de nota</string>
-  <string name="card_type">Tipo de ficha</string>
   <string name="filter_tags">Filtrar etiquetas</string>
   <string name="sdcard_missing_message">O cartão SD está indisponível porque está sendo usado como armazenamento USB. Desconecte o USB para aceder aos seus baralhos</string>
   <string name="enable_whiteboard">Ativar quadro</string>
@@ -58,8 +56,6 @@
   <string name="hide_whiteboard">Esconder quadro</string>
   <string name="clear_whiteboard">Limpar quadro</string>
   <string name="replay_audio">Tocar som novamente</string>
-  <string name="cram_edit_warning">Edição de fichas não permitida durante \"Estudo Focado\"</string>
-  <string name="suspend_leeches">Suspender sanguessugas</string>
   <string name="leech_suspend_notification">Ficha marcada como sanguessuga e suspensa</string>
   <string name="leech_notification">Ficha marcada como sanguessuga</string>
   <string name="corrupt_font">Ficheiro de tipo de letra corrompido %s</string>
@@ -80,10 +76,8 @@
   <string name="cardeditor_title_edit_card">Editar nota</string>
   <string name="discard_unsaved_changes">Fechar e perder a entrada atual?</string>
   <string name="factadder_saving_error">Erro ao guardar nota</string>
-  <string name="pref_lang_support">Língua</string>
   <string name="saving_facts">A guardar nota</string>
   <string name="saving_model">Saving model</string>
-  <string name="deck">Baralho</string>
   <string name="add">Adicionar</string>
   <string name="close">Fechar</string>
   <string name="select">Selecionar</string>
@@ -100,13 +94,8 @@
     <item quantity="other">%1$d minutos</item>
   </plurals>
   <string name="studyoptions_welcome_title">Bem-vindo ao AnkiDroid</string>
-  <string name="studyoptions_no_external_storage_title">Nenhum armazenamento externo disponível</string>
-  <string name="studyoptions_no_external_storage_message">Nenhum armazenamento externo está disponível neste momento. AnkiDroid precisa de ter acesso ao cartão SD para ler e carregar os seus baralhos. Verifique se o cartão SD está montado e tente novamente.</string>
   <string name="fact_adder_intent_title">Cartão AnkiDroid</string>
-  <string name="deckpicker_select_dictionary_title">Selecionar dicionário</string>
-  <string name="deckpicker_select_dictionary_default">Padrão</string>
   <string name="card_editor_add_card">Adicionar nota</string>
-  <string name="card_editor_reset">Redefinir</string>
   <string name="card_editor_copy_card">Copiar cartão</string>
   <string name="card_editor_reset_card">Redefinir progresso</string>
   <string name="card_editor_reschedule_card">Reagendar ficha</string>
@@ -120,14 +109,11 @@
     <item quantity="other">%d fichas adicionadas</item>
   </plurals>
   <string name="help_title">Ajuda</string>
-  <string name="help_online">Ajuda online</string>
-  <string name="help_faq">FAQ</string>
   <string name="check_db">Verificar base de dados</string>
   <string name="check_media">Verificar multimédia</string>
   <string name="check_db_message">Verificando a base de dados.\nEspere um momento&#8230;</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Ficha vazia. Execute \"Ferramentas&gt;Fichas Vazias...\" na aplicação para PC.</string>
   <string name="unknown_type_field_warning">Escreva a resposta: campo desconhecido %s</string>
-  <string name="simple_interface_hint">%s Vazio. Tente desativar a interface simples.</string>
   <string name="delete_deck">A eliminar baralho.\nEspere um momento&#8230;</string>
   <string-array name="dynOrderLabels">
     <item>Mais antigos primeiro</item>
@@ -138,17 +124,12 @@
     <item>Ordem de adição</item>
     <item>Ordem de revisão</item>
   </string-array>
-  <string name="menu_cardbrowser">Navegador de cartões</string>
   <string name="show_hint">Mostrar %s</string>
-  <string name="pref_lang_other">Preferências de idioma</string>
-  <string name="pref_font_UI">Tipo de letra do IU personalizado</string>
   <string name="info_rate">Avaliar o Ankidroid</string>
   <string name="col_load_failed">Carregamento da coleção falhou. \nPrima Voltar para fechar o AnkiDroid.</string>
   <string name="import_title">Importar fichas</string>
   <string name="import_select_title">Escolha um ficheiro para importar</string>
-  <string name="import_message">Você gostaria de adicionar o conteúdo do ficheiro %s para a sua coleção, ou substituir a sua coleção por ele?</string>
   <string name="import_message_add">Adicionar</string>
-  <string name="import_message_replace">Substituir</string>
   <string name="import_message_replace_confirm">Isto irá apagar a sua coleção existente substituindo-a pelos dados do ficheiro %s</string>
   <string name="import_message_add_confirm">Adicionar \"%s\" à coleção? Tal poderá demorar bastante tempo</string>
   <string name="import_log_success">%d fichas importadas</string>
@@ -170,13 +151,8 @@
   <string name="study_options">Opções de baralho</string>
   <string name="custom_study">Estudo personalizado</string>
   <string name="dyn_deck_desc">Este é um baralho especial para estudar fora do horário normal. As fichas irão automaticamente voltar para os seus baralhos originais após a revisão. Eliminando este baralho da lista de baralhos irá enviar as fichas restantes para o seu baralho original.</string>
-  <string name="exit_wizard">Saír do assistente</string>
   <string name="steps_error">Número de passos deve ser maior que 0</string>
   <string name="steps_min_error">É necessário pelo menos um passo</string>
-  <string name="custom_study_invalid_number">Número inválido</string>
-  <string name="template_error">Erro no modelo</string>
-  <string name="template_error_detail">O modelo de ficha contém um erro</string>
-  <string name="template_error_fix">Use o editor de fichas na aplicação para PC para corrigi-lo.</string>
   <string name="sched_end">(fim)</string>
   <string name="sched_unbury_button">Para vê-las agora, toque no botão \"Desenterrar\".</string>
   <string name="sched_has_buried">Algumas fichas relacionadas ou enterradas foram adiadas para amanhã.</string>

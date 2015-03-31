@@ -48,8 +48,6 @@
   <string name="CardEditorTags">برچسب ها: %1$s</string>
   <string name="CardEditorCards">Cards: %1$s</string>
   <string name="add_new_filter_tags">افزودن/فیلترکردن برچسب ها</string>
-  <string name="note_type">نوع یادداشت</string>
-  <string name="card_type">نوع کارت</string>
   <string name="filter_tags">فیلترکردن برچسب ها</string>
   <string name="sdcard_missing_message">کارت حافظه در دسترس نیست زیرا حافظه یواس بی در حال استفاده است.اتصال را برای دسترسی به دسته های کارت قطع نمایید.</string>
   <string name="enable_whiteboard">فعال سازی تخته سفید</string>
@@ -58,8 +56,6 @@
   <string name="hide_whiteboard">پنهان کردن تخته سفید</string>
   <string name="clear_whiteboard">پاک کردن تخته سفید</string>
   <string name="replay_audio">بازپخش صوت</string>
-  <string name="cram_edit_warning">ویراستار کارت تا وقتی شتاب یادگیری فعال باشد اجازه ندارد</string>
-  <string name="suspend_leeches">تعلیق کارت های مزاحم</string>
   <string name="leech_suspend_notification">کارت به عنوان مزاحم مشخص و تعلیق شده است</string>
   <string name="leech_notification">کارت به عنوان مزاحم مشخص شده است</string>
   <string name="corrupt_font">فونت فایل خراب %s</string>
@@ -80,10 +76,8 @@
   <string name="cardeditor_title_edit_card">ویرایش یادداشت</string>
   <string name="discard_unsaved_changes">آیا می خواهید خارج شوید؟ورودی ها از بین خواهد رفت.</string>
   <string name="factadder_saving_error">خطای ذخیره سازی یادداشت</string>
-  <string name="pref_lang_support">زبان</string>
   <string name="saving_facts">ذخیره یادداشت</string>
   <string name="saving_model">Saving model</string>
-  <string name="deck">دسته کارت</string>
   <string name="add">اضافه کردن</string>
   <string name="close">بستن</string>
   <string name="select">انتخاب</string>
@@ -100,13 +94,8 @@
     <item quantity="other">%1$d دقیقه</item>
   </plurals>
   <string name="studyoptions_welcome_title">به آنکی دروید خوش آمدید</string>
-  <string name="studyoptions_no_external_storage_title">حافظه خارجی در دسترس نیست</string>
-  <string name="studyoptions_no_external_storage_message">حافظه خارجی در حال حاضر در دسترس نیست. آنکی دروید برای خواندن و بارگذاری دسته های آنکی به رم حافظه احتیاج دارد. بررسی کنید که رم حافظه در جایش قرار گرفته باشد و دوباره سعی کنید.</string>
   <string name="fact_adder_intent_title">کارت آنکی دروید</string>
-  <string name="deckpicker_select_dictionary_title">انتخاب واژه نامه</string>
-  <string name="deckpicker_select_dictionary_default">پیش فرض</string>
   <string name="card_editor_add_card">افزودن یادداشت</string>
-  <string name="card_editor_reset">تنظیم مجدد</string>
   <string name="card_editor_copy_card">کپی کارت</string>
   <string name="card_editor_reset_card">تنظیم مجدد پیشرفت</string>
   <string name="card_editor_reschedule_card">برنا مه ریزی دوباره کارت</string>
@@ -120,14 +109,11 @@
     <item quantity="other">کارت های %d اضافه شده</item>
   </plurals>
   <string name="help_title">کمک</string>
-  <string name="help_online">راهنمای آنلاین</string>
-  <string name="help_faq">پرسش و پاسخ</string>
   <string name="check_db">بررسی پایگاه داده</string>
   <string name="check_media">بررسی رسانه ها</string>
   <string name="check_db_message">بررسی پایگاه داده.\nلطفا صبر کنید...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">کارت خالی.\"ابزارها &gt; کارت های خالی...\" را در نسخه ی رومیزی اجرا کنید.</string>
   <string name="unknown_type_field_warning">پاسخ دهید:فیلد نامشخص %s</string>
-  <string name="simple_interface_hint">خالی %s. به خاطر داشته باشید که رابط کاربری ساده نمی تواند تصاویر/صداو غیره را نمایش  دهد.</string>
   <string name="delete_deck">حذف دسته کارت...\nلطفا صبر کنید.</string>
   <string-array name="dynOrderLabels">
     <item>اول قدیمی ها دیده می شود</item>
@@ -138,17 +124,12 @@
     <item>سفارش اضافه شده</item>
     <item>سفارش منقضی</item>
   </string-array>
-  <string name="menu_cardbrowser">مرورگر کارت</string>
   <string name="show_hint">%s را نمایش بده</string>
-  <string name="pref_lang_other">تنظیمات زبان</string>
-  <string name="pref_font_UI">فونت دلخواه برای ظاهر برنامه</string>
   <string name="info_rate">امتیازدهی به آنکی دروید</string>
   <string name="col_load_failed">عدم موفقیت در بارگذاری مجموعه.\nبرای بستن آنکی دروید دکمه برگشت را فشار دهید.</string>
   <string name="import_title">درون ریزی کارتها</string>
   <string name="import_select_title">Choose a file to import</string>
-  <string name="import_message">آیا شما مایلید محتویات پوشه%s به مجموعه خود اضافه نمایید, یا آن را با مجموعه خود جابجا می کنید?</string>
   <string name="import_message_add">اضافه کردن</string>
-  <string name="import_message_replace">جایگزین کردن</string>
   <string name="import_message_replace_confirm">با این کار مجموعه کنونی شما پاک شده و با داده های پرونده%sجایگزین خواهد شد. آیا مطمئنید؟</string>
   <string name="import_message_add_confirm">آیا می خواهید \"%s\" را به مجموعه اضافه کنید ؟ ممکن است زمان زیادی طول بکشد</string>
   <string name="import_log_success">باموفقیت وارد شد %d کارتهای</string>
@@ -170,13 +151,8 @@
   <string name="study_options">Deck options</string>
   <string name="custom_study">مطالعه بر اساس تنظیمات دلخواه</string>
   <string name="dyn_deck_desc">این یک دسته ویژه برای مطالعه در خارج از زمان بندی عادی می باشد.بعد از مرور کارتها آنها بطور خودکار به دسته های اصلی برگردانده خواهد شد.حذف کردن این دسته از لیست دسته ها سبب می شود که همه کارتهای باقیمانده نیز به دسته اصلی برگردانده شود.</string>
-  <string name="exit_wizard">خروج از سهل آموز</string>
   <string name="steps_error">مراحل باید با اعداد بزرگتر از 0 شماره گذاری گردند</string>
   <string name="steps_min_error">حداقل یک مرحله لازم است</string>
-  <string name="custom_study_invalid_number">عدد نامعتبر</string>
-  <string name="template_error">خطای قالب:</string>
-  <string name="template_error_detail">خطایی در قالب این کارت وجود دارد.</string>
-  <string name="template_error_fix">لطفا برای بر طرف کردن مشکل از ویرایشگر کارت در نسخه دسکتاپ استفاده کنید.</string>
   <string name="sched_end">(پایان)</string>
   <string name="sched_unbury_button">برای دیدن آنها در حال حاضر، دکمه Unbury بزنید.</string>
   <string name="sched_has_buried">تعدادی از کارت های مرتبط یا مخفی شده تا نشست بعدی نمایش داده نخواهند شد.</string>

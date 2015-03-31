@@ -35,14 +35,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="navigation_titles">
-    <item>Колоды</item>
-    <item>Обозреватель карт</item>
-    <item>Статистика</item>
-    <item>Установки</item>
-    <item>Помощь</item>
-    <item>Отправить отзыв</item>
-  </string-array>
   <string-array name="newCardSchedulingLabels">
     <item>Перемешать с другими</item>
     <item>После просмотра</item>

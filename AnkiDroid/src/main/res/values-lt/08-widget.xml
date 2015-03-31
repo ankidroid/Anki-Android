@@ -51,14 +51,6 @@
     <item quantity="one">%1$d deck</item>
     <item quantity="other">%1$d decks</item>
   </plurals>
-  <string name="widget_medium">AnkiDroid Vidutinis</string>
   <string name="widget_small">AnkiDroid Mažas</string>
-  <string name="widget_big">AnkiDroid Didelis</string>
-  <string name="widget_big_restrictions_dialog">Due to some restrictions of Android\'s widget framework this widget can only show text but no images/sounds etc.</string>
-  <string name="open_in_reviewer">Open deck in AnkiDroid</string>
-  <plurals name="widget_big_eta">
-    <item quantity="one">Estimated time: %d min.</item>
-    <item quantity="other">Apskaičiuotas laikas: %d min.</item>
-  </plurals>
   <string name="widget_big_tomorrow_due">Rytoj laukia:</string>
 </resources>

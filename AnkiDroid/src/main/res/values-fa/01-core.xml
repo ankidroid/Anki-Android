@@ -39,11 +39,13 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="app_name">آنکی دروید</string>
-  <string name="app_name_anki">آنکی</string>
-  <string name="app_name_droid">ربات</string>
+  <string name="decks">Decks</string>
+  <string name="card_browser">Card Browser</string>
+  <string name="statistics">Statistics</string>
+  <string name="settings">Settings</string>
+  <string name="help">Help</string>
+  <string name="send_feedback">Send Feedback</string>
   <string name="studyoptions_title">تنظیمات مطالعه</string>
-  <string name="studyoptions_deck_name">نام دسته کارت</string>
   <string name="studyoptions_due_today">موعد مقرر امروز:</string>
   <string name="studyoptions_new_total">کل کارت های جدید:</string>
   <string name="studyoptions_total_cards">کل کارتها:</string>
@@ -57,10 +59,6 @@
     <item quantity="one">%d دقیقه.</item>
     <item quantity="other">%d دقیقه</item>
   </plurals>
-  <plurals name="deckpicker_due">
-    <item quantity="one">%1$d از %2$d تکالبف</item>
-    <item quantity="other">%1$d از %2$d تکالبف</item>
-  </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">دقیقه مانده است %d</item>
     <item quantity="other">دقیقه مانده است %d</item>
@@ -72,9 +70,6 @@
   <string name="ease3_successive">خوب</string>
   <string name="ease3_learning">آسان</string>
   <string name="studyoptions_congrats_undo">تصحصح عمل  %s</string>
-  <string name="card_unsuspended">تعلیق کارت رفع شد</string>
-  <string name="card_suspended">کارت مجددا تعلیق شد</string>
-  <string name="menu_rotate">چرخش</string>
   <string name="menu_import">اضافه کردن</string>
   <string name="undo">تصحیح عمل قبلی</string>
   <string name="undo_action_review">آخرین بازنگری</string>
@@ -86,30 +81,19 @@
   <string name="undo_action_mark">علامتگذاری یادداشت</string>
   <string name="unbury">نمایش در نشست جاری</string>
   <string name="finish_operation">اتمام عملیات قبلی (به احتمال زیاد پشتیبان گیری). \nلطفا صبر کنید...</string>
-  <string name="contextmenu_deckpicker_download_missing_media">دانلود رسانه گم شده</string>
-  <string name="contextmenu_deckpicker_reset_language_assignments">تنظیم مجدد زبان تخصیصی</string>
-  <string name="contextmenu_deckpicker_reset_reset_message">تنظیم مجدد زبان</string>
-  <string name="contextmenu_deckpicker_optimize_deck">بهینه سازی پایگاه داده ها</string>
   <string name="contextmenu_deckpicker_rename_deck">تغییر نام دسته</string>
   <string name="contextmenu_deckpicker_collapse_deck">مخفی کردن زیردسته</string>
   <string name="contextmenu_deckpicker_inflate_deck">نمایش زیردسته</string>
-  <string name="contextmenu_deckpicker_set_custom_dictionary">تعیین واژه نامه سفارشی</string>
   <string name="menu_add">افزودن</string>
   <string name="menu_add_note">افزودن یادداشت</string>
-  <string name="menu_download_deck">دانلود دسته</string>
-  <string name="menu_download_shared_deck">دسته ی به اشتراک گذاشته شده</string>
   <string name="menu_my_account">همگام سازی حساب</string>
-  <string name="menu_preferences">تنظیمات</string>
-  <string name="menu_about">درباره</string>
   <string name="menu_dismiss_note">پنهان/حذف کردن</string>
   <string name="menu_bury_card">مخفی کردن کارت</string>
   <string name="menu_bury_note">مخفی کردن یادداشت</string>
   <string name="menu_suspend_card">تعلیق کارت</string>
   <string name="menu_suspend_note">تعلیق یادداشت</string>
-  <string name="menu_save_note">ذخیره سازی یادداشت</string>
   <string name="menu_delete_note">حذف یادداشت</string>
   <string name="delete_note_message">مطمئنید می خواهید این یادداشت و همه کارتهایش را پاک کنید؟\n%s</string>
-  <string name="menu_edit_card">ویرایش کارت</string>
   <string name="menu_select">انتخاب متن</string>
   <string name="menu_search">جستجو در %1$s</string>
   <string name="menu_mark_card">علامت گذاری کارت</string>
@@ -117,7 +101,6 @@
   <string name="new_deck">ایجاد دسته</string>
   <string name="create">ساختن</string>
   <string name="new_dynamic_deck">ایجاد دسته فیلتر شده</string>
-  <string name="studyoptions_feedback">بازخورد</string>
   <string name="night_mode">حالت شب</string>
   <string name="directory_inaccessible">AnkiDroid فهرست غیر قابل دسترس است</string>
   <string-array name="next_review_s">
@@ -136,9 +119,7 @@
     <item>%s ماه</item>
     <item>%s سال</item>
   </string-array>
-  <string name="visit">مشاهده شده</string>
   <string name="later">بعدا</string>
-  <string name="download">دانلود</string>
   <string name="open_collection">باز کردن مجموعه.\nلطفا صبر کنید...</string>
   <string name="rebuild_cram_deck">درحال بازسازی دسته کارت آزمون.\nلطفا صبر کنید...</string>
   <string name="rebuild_cram_label">بازسازی</string>
@@ -151,37 +132,10 @@
   <string name="studyoptions_congrats_more_new">کارتهای جدید بیشتری موجودند، ولی شما به حد تعیین شده روزانه مرور رسیده اید. شما می توانید این حد را در بخش گزینه ها افزایش دهید، ولی لطفا به یاد داشته باشید که بار کاری مرور کوتاه مدت شما افزایش خواهد یافت.</string>
   <string name="studyoptions_congrats_custom">جهت مطالعه خارج از برنامه ، بر روی دکمه مطالعه سفارشی زیر کلیک کنید.</string>
   <string name="studyoptions_no_cards_due">هیچ کارتی دریافت نشده است </string>
-  <plurals name="studyoptions_congrats_message">
-    <item quantity="one">فردا %1$d کارت برای مرور خواهید داشت و %2$s. \n زمان برآورد شده: %3$s</item>
-    <item quantity="other">فردا %1$d کارت برای مرور خواهید داشت و %2$s. \n زمان برآورد شده: %3$s</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">%1$d کارت جدید</item>
-    <item quantity="other">%1$d کارت های جدید</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">زمان برآورد شده : %1$d دقیقه.</item>
-    <item quantity="other">زمان برآورد شده : %1$d دقیقه</item>
-  </plurals>
   <string name="sd_card_not_mounted">کارت حافظه قرار داده نشده است.\n\nشما می توانید مجموعه تان را روی حافظه داخلی نیز ذخیره کنید, البته این عمل توصیه نمی شود. زیرا دستیابی به فایل ها به آسانی صورت نخواهد گرفت. در تنظیمات می توانید آن را فعال کنید (با کلیک بر روی این متن آنها را باز کنید).</string>
-  <string name="studyoptions_options">گزینه ها</string>
-  <string name="empty_cloze_warning">لطفا این یادداشت را ویرایش کنید و برخی کلمات جا افتاده را اضافه کنید. (%1$s)</string>
-  <string name="help_cloze">راهنما</string>
   <string name="button_sync">همگام سازی</string>
-  <string name="restart">راه اندازی مجدد</string>
-  <string name="do_nothing">کاری نکن</string>
-  <string name="more_options">گزینه های بیشتر</string>
-  <string name="now">حالا</string>
-  <string name="back">بازگشت</string>
-  <string name="ankiweb">آنکی وب</string>
-  <string name="usb">یو اس بی</string>
-  <string name="_import">وارد کردن</string>
   <string name="export">ارسال کردن</string>
-  <string name="confirm">تایید</string>
-  <string name="internet">اینترنت</string>
-  <string name="pc">رایانه</string>
   <string name="nothing">هیچ </string>
-  <string name="title_activity_graphical_activity">نمودار آماری</string>
   <string name="title_activity_template_editor">Card Types for %s</string>
   <string name="card_template_editor_front">Front Template</string>
   <string name="card_template_editor_back">Back Template</string>

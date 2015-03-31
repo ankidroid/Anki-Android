@@ -44,8 +44,6 @@
     <item quantity="other">%d kort visas</item>
   </plurals>
   <string name="card_browser_all_decks">Alla kortlekar</string>
-  <string name="card_browser_load">Laddar kort.\nVar god vänta...</string>
-  <string name="card_browser_cardloading_error">Fel vid laddning av kort. Detta är troligen relaterat till enhetens minnesbegränsningar. Försök igen med en mindre kortlek</string>
   <string name="card_browser_delete_card">Radera not</string>
   <string name="card_browser_suspend_card">Åsidosätt kort</string>
   <string name="card_browser_unsuspend_card">Återaktivera kort</string>
@@ -54,36 +52,20 @@
   <string name="delete_card_title">Radera not</string>
   <string name="delete_card_message">Vill du verkligen radera samtliga kort från denna not?\nSökfält: %s</string>
   <string name="card_browser_show_marked">Filtrera markerade</string>
-  <string name="card_browser_field">Ändra kortbläddrar-fält</string>
-  <string name="card_browser_field_title">Ändra kortbläddrar-fält</string>
   <string name="card_browser_show_suspended">Filtrera åsidosatta</string>
   <string name="card_browser_search_by_tag">Filtrera efter etikett</string>
   <string name="card_browser_tags_shown">Etiketter: %1$s</string>
   <string name="card_browser_change_display_order">Ändra visningsordning</string>
   <string name="card_browser_change_display_order_title">Välj visningsordning</string>
   <string name="card_browser_change_display_order_reverse">Välj ett fält två gånger för att vända.</string>
-  <string name="card_browser_order_reverse">(baksida)</string>
   <string name="card_details_question">Fråga</string>
   <string name="card_details_answer">Svar</string>
   <string name="card_details_due">I kö</string>
-  <string name="card_details_last_due">Senast i kö</string>
-  <string name="card_details_now">Nu</string>
-  <string name="card_details_interval">Intervall</string>
-  <string name="card_details_ease">Lätthet</string>
-  <string name="card_details_average_time">Genomsnittlig tid</string>
-  <string name="card_details_total_time">Total tid</string>
-  <string name="card_details_yes_count">Antal ja</string>
-  <string name="card_details_no_count">Antal nej</string>
-  <string name="card_details_added">Tillagt</string>
-  <string name="card_details_changed">Ändrat</string>
   <string name="card_details_tags">Etiketter</string>
-  <string name="card_details_model">Nottyp</string>
-  <string name="card_browser_sorting_cards">Sorterar kort.\nVar god vänta...</string>
   <string name="card_browser_filtering_cards">Filtrerar kort&#8230; \nTryck på bakåtknappen för att avbryta</string>
-  <string name="card_details_card_model">Kortmodell</string>
   <string-array name="card_browser_order_labels">
     <item>Ingen sortering (snabbare)</item>
-    <item>Via sökfält</item>
+    <item>By sort field</item>
     <item>Efter tid skapad</item>
     <item>Efter senast redigerad</item>
     <item>Efter senast förändrad</item>

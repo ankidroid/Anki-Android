@@ -39,27 +39,25 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="app_name">AnkiDroid</string>
-  <string name="app_name_anki">Anki</string>
-  <string name="app_name_droid">Droid</string>
+  <string name="decks">単語帳</string>
+  <string name="card_browser">ブラウザー</string>
+  <string name="statistics">統計情報</string>
+  <string name="settings">設定</string>
+  <string name="help">ヘルプ</string>
+  <string name="send_feedback">フィードバックを送信</string>
   <string name="studyoptions_title">学習オプション</string>
-  <string name="studyoptions_deck_name">単語帳名</string>
-  <string name="studyoptions_due_today">今日の学習目標:</string>
+  <string name="studyoptions_due_today">今日の課題:</string>
   <string name="studyoptions_new_total">新規カードの枚数:</string>
   <string name="studyoptions_total_cards">カードの総数:</string>
   <string name="studyoptions_eta">推定学習時間 (分):</string>
   <string name="studyoptions_start">学習開始</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">現在の学習目標: %1$d枚 (%2$s)</item>
-    <item quantity="other">現在の学習目標: %1$d枚 (%2$s)</item>
+    <item quantity="one">現在の課題: %1$d枚 (%2$s)</item>
+    <item quantity="other">現在の課題: %1$d枚 (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
     <item quantity="one">%d分</item>
     <item quantity="other">%d分</item>
-  </plurals>
-  <plurals name="deckpicker_due">
-    <item quantity="one">%1$d 学習目標　全体 %2$d 枚</item>
-    <item quantity="other">%1$d 学習目標　全体 %2$d 枚</item>
   </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">残り %d 分</item>
@@ -72,44 +70,30 @@
   <string name="ease3_successive">普通</string>
   <string name="ease3_learning">簡単</string>
   <string name="studyoptions_congrats_undo">%s を元に戻す</string>
-  <string name="card_unsuspended">カードの保留を解除</string>
-  <string name="card_suspended">カードが保留されました</string>
-  <string name="menu_rotate">表示画面の回転</string>
   <string name="menu_import">インポート</string>
   <string name="undo">元に戻す</string>
   <string name="undo_action_review">最後の復習</string>
   <string name="undo_action_edit">ノートの編集</string>
-  <string name="undo_action_bury">ノートの延期</string>
-  <string name="undo_action_suspend_card">カードの保留</string>
-  <string name="undo_action_suspend_note">ノートの保留</string>
+  <string name="undo_action_bury">ノートを延期</string>
+  <string name="undo_action_suspend_card">カードを保留</string>
+  <string name="undo_action_suspend_note">ノートを保留</string>
   <string name="undo_action_delete">ノートの削除</string>
   <string name="undo_action_mark">ノートにマークをつける</string>
   <string name="unbury">延期を解除</string>
   <string name="finish_operation">以前の操作を継続します（バックアップ作成など）\n</string>
-  <string name="contextmenu_deckpicker_download_missing_media">不足しているメディアをダウンロードします</string>
-  <string name="contextmenu_deckpicker_reset_language_assignments">言語設定のリセット</string>
-  <string name="contextmenu_deckpicker_reset_reset_message">言語設定のリセット</string>
-  <string name="contextmenu_deckpicker_optimize_deck">データベースを最適化します</string>
   <string name="contextmenu_deckpicker_rename_deck">単語帳の名前の変更</string>
   <string name="contextmenu_deckpicker_collapse_deck">単語帳折りたたみ</string>
   <string name="contextmenu_deckpicker_inflate_deck">単語帳展開</string>
-  <string name="contextmenu_deckpicker_set_custom_dictionary">カスタム辞書設定</string>
   <string name="menu_add">追加</string>
   <string name="menu_add_note">ノートを追加</string>
-  <string name="menu_download_deck">単語帳をダウンロード</string>
-  <string name="menu_download_shared_deck">共有の単語帳</string>
   <string name="menu_my_account">アカウントの設定と同期</string>
-  <string name="menu_preferences">設定</string>
-  <string name="menu_about">このプログラムについて</string>
   <string name="menu_dismiss_note">延期、保留、削除</string>
-  <string name="menu_bury_card">カードの延期</string>
-  <string name="menu_bury_note">ノートの延期</string>
-  <string name="menu_suspend_card">カードの保留</string>
+  <string name="menu_bury_card">カードを延期</string>
+  <string name="menu_bury_note">ノートを延期</string>
+  <string name="menu_suspend_card">カードを保留</string>
   <string name="menu_suspend_note">ノートの保留</string>
-  <string name="menu_save_note">ノート形式の保存</string>
-  <string name="menu_delete_note">ノートの削除</string>
-  <string name="delete_note_message">このノートと、このノートから作られた全てのカードを削除してもよろしいですか？\n%s</string>
-  <string name="menu_edit_card">カードの編集</string>
+  <string name="menu_delete_note">ノートを削除</string>
+  <string name="delete_note_message">このカードのノートを削除してよろしいですか？　このノートから作られたカードが全て削除されます。\n%s</string>
   <string name="menu_select">テキスト選択</string>
   <string name="menu_search">%1$sで探す</string>
   <string name="menu_mark_card">カードをマーク</string>
@@ -117,7 +101,6 @@
   <string name="new_deck">単語帳を作成</string>
   <string name="create">作成</string>
   <string name="new_dynamic_deck">フィルター単語帳を作成</string>
-  <string name="studyoptions_feedback">フィードバック</string>
   <string name="night_mode">ナイトモード</string>
   <string name="directory_inaccessible">AnkiDroid ディレクトリにアクセスできません</string>
   <string-array name="next_review_s">
@@ -136,9 +119,7 @@
     <item>%sヶ月</item>
     <item>%s年</item>
   </string-array>
-  <string name="visit">訪問</string>
   <string name="later">後で</string>
-  <string name="download">ダウンロード</string>
   <string name="open_collection">コレクションを開いています\n</string>
   <string name="rebuild_cram_deck">フィルター単語帳を再構築しています</string>
   <string name="rebuild_cram_label">再構築</string>
@@ -146,42 +127,15 @@
   <string name="empty_cram_deck">カードを元の単語帳へ戻します。</string>
   <string name="custom_study_deck_name">カスタム学習セッション</string>
   <string name="custom_study_deck_exists">最初に、既存のカスタム学習の単語帳の名称変更を行ってください。</string>
-  <string name="studyoptions_congrats_finished">おめでとうございます！ 今日の目標を達成しました</string>
+  <string name="studyoptions_congrats_finished">おめでとうございます！ 今日の課題を達成しました</string>
   <string name="studyoptions_congrats_more_rev">予定日に達した復習カードがまだ他にも残っていますが、一日あたりの復習カード枚数の上限に達しています。上限は「単語帳オプション」内の設定で上げられます。</string>
   <string name="studyoptions_congrats_more_new">新規カードがまだ他にも残っていますが、一日あたりの新規カード枚数の上限に達しています。上限は「単語帳オプション」内の設定で上げられます。（ただしそれに伴って短期的に学習の負担が増えますのでご注意ください。）</string>
   <string name="studyoptions_congrats_custom">通常のスケジュール以外で学習するには、「カスタム学習」ボタンをタップしてください。</string>
   <string name="studyoptions_no_cards_due">学習予定時刻に達したカードがまだありません</string>
-  <plurals name="studyoptions_congrats_message">
-    <item quantity="one">明日は %1$d 枚の復習カードがあります。%2$s.\n 必要な時間　%3$s</item>
-    <item quantity="other">明日は %1$d 枚のカードがあります。そして復習カードは %2$s.\n 必要な時間は%3$s</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">%1$d の新規カード</item>
-    <item quantity="other">%1$d枚の新カード</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">推定学習時間: %1$d 分</item>
-    <item quantity="other">推定学習時間: %1$d 分</item>
-  </plurals>
   <string name="sd_card_not_mounted">外部SDカードが見つかりません\n\n内部メモリーにコレクションを格納できますが、簡単にアクセスできませんので、お勧めできません。内部メモリーは環境設定でアクティブにすることができます。(このテキストをタップして環境設定を開きます)</string>
-  <string name="studyoptions_options">オプション</string>
-  <string name="empty_cloze_warning">ノートを編集して「穴埋め問題」を追加してください。(%1$s)</string>
-  <string name="help_cloze">ヘルプ</string>
   <string name="button_sync">同期</string>
-  <string name="restart">再スタート</string>
-  <string name="do_nothing">何もしない</string>
-  <string name="more_options">詳細オプション</string>
-  <string name="now">直ちに</string>
-  <string name="back">戻る</string>
-  <string name="ankiweb">AnkiWeb</string>
-  <string name="usb">USB</string>
-  <string name="_import">読み込み</string>
   <string name="export">エクスポート(書き出し)</string>
-  <string name="confirm">確認</string>
-  <string name="internet">インターネット</string>
-  <string name="pc">PC</string>
   <string name="nothing">Nothing</string>
-  <string name="title_activity_graphical_activity">統計グラフ</string>
   <string name="title_activity_template_editor">%sのカードタイプ</string>
   <string name="card_template_editor_front">表面のテンプレート</string>
   <string name="card_template_editor_back">裏面のテンプレート</string>

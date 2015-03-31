@@ -39,7 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="statistics_menu">Статистика</string>
   <string name="statistics_young">Млади</string>
   <string name="statistics_mature">Развијени</string>
   <string name="statistics_young_and_learn">Младе + учење</string>
@@ -48,7 +47,6 @@
   <string name="statistics_relearn">Поновно учење</string>
   <string name="statistics_learn">Учење</string>
   <string name="statistics_cram">Штребање</string>
-  <string name="statistics_type_title">Статистика</string>
   <string name="stats_cards">Картице</string>
   <string name="stats_cards_intervals">Карте са задатим интервалом</string>
   <string name="stats_cumulative_cards">Општа количина карата</string>
@@ -65,7 +63,6 @@
   <string name="stats_period_month">1 месец</string>
   <string name="stats_period_year">1 година</string>
   <string name="stats_period_lifetime">Ток шпила</string>
-  <string name="stats_deck_current">шпил</string>
   <string name="stats_deck_collection">колекција</string>
   <string name="stats_time_of_day">Време дана</string>
   <string name="stats_day_of_week">Дан у недељи</string>
@@ -77,37 +74,7 @@
   <string name="stats_today_type_breakdown">Изучено: &lt;b&gt;%1$s&lt;/b&gt;, Прегледано: &lt;b&gt;%2$s&lt;/b&gt;, Поновљено: &lt;b&gt;%3$s&lt;/b&gt;, Филтрирано: &lt;b&gt;%4$s&lt;/b&gt;</string>
   <string name="stats_today_mature_cards">Тачни одговори за развијене картице:  %1$d/%2$d (%3$.1f%%)</string>
   <string name="stats_today_no_mature_cards">Ниједна развијена карта данас није научена.</string>
-  <string name="statistics_period_x_axis_minutes">Минута</string>
-  <string name="statistics_new_cards">Нове картице</string>
-  <string name="statistics_failed_cards">Тешке картице</string>
-  <string name="statistics_fullscreen">Пуноекрански режим</string>
-  <string name="calculating_statistics">Прорачун статистике.\nМолим сачекајте...</string>
-  <string name="deck_summary_cards">Број каратица:</string>
-  <string name="deck_summary_notes">Број бележака:</string>
-  <string name="deck_summary_cards_mature">Развијене картице:</string>
-  <string name="deck_summary_cards_young">Младе картице:</string>
-  <string name="deck_summary_cards_unseen">Непрегледане картице:</string>
-  <string name="deck_summary_card_age">Старост каратица</string>
-  <string name="deck_summary_average_interval">Средњи интервал: &lt;b&gt;%.1f&lt;/b&gt; дана</string>
-  <string name="deck_summary_answers_correct">Тачни одговори</string>
-  <string name="deck_summary_answers_mature">Развијене карте: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; %2$s (%3$d од %4$d)</string>
-  <string name="deck_summary_answers_young">Младе карте: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d од %4$d)</string>
-  <string name="deck_summary_answers_firstseen">Прегледане први пут: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d од %4$d)</string>
-  <string name="deck_summary_reviews">Понављања:</string>
-  <string name="deck_summary_news">Нове картице:</string>
-  <string name="deck_summary_average_week">Просечно за последњу недељу</string>
-  <string name="deck_summary_average_month">Просечно за последњи месец</string>
-  <string name="deck_summary_average_year">Просечно за последњу годину</string>
-  <string name="deck_summary_average_total">Просечно за све време</string>
-  <string name="deck_summary_forecast">Прогноза</string>
-  <string name="deck_summary_tomorrow_due">Сутра понављања: &lt;b&gt;%d&lt;/b&gt; картица</string>
-  <string name="deck_summary_tomorrow_new">Сутра нових: &lt;b&gt;%d&lt;/b&gt; картица</string>
-  <string name="deck_summary_tomorrow_time">Предвиђено време сутра: &lt;b&gt;%d&lt;/b&gt; мин.</string>
-  <string name="deck_summary_finished_in">Нове карте ће бити прегледане за: &lt;b&gt;%d&lt;/b&gt; дана</string>
-  <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; картица/дана</string>
-  <string name="deck_summary_deck_age">Старост шпила: &lt;b&gt;%d&lt;/b&gt; дана</string>
   <string name="deck_summary_all_decks">Сви шпилови</string>
-  <string name="stats_select_decks">Изаберите шпил</string>
   <string name="stats_select_time_scale">Изаберите временски рок</string>
   <string-array name="next_review_in_s">
     <item>кроз 1 секунд</item>

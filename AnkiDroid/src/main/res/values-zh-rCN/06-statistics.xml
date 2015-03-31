@@ -39,7 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="statistics_menu">统计信息</string>
   <string name="statistics_young">有待熟悉</string>
   <string name="statistics_mature">熟悉</string>
   <string name="statistics_young_and_learn">有待熟悉+学习</string>
@@ -48,7 +47,6 @@
   <string name="statistics_relearn">重新学习</string>
   <string name="statistics_learn">学习</string>
   <string name="statistics_cram">强记模式</string>
-  <string name="statistics_type_title">统计信息</string>
   <string name="stats_cards">卡牌</string>
   <string name="stats_cards_intervals">卡片间隔</string>
   <string name="stats_cumulative_cards">累积卡片</string>
@@ -65,7 +63,6 @@
   <string name="stats_period_month">1 个月</string>
   <string name="stats_period_year">1 年</string>
   <string name="stats_period_lifetime">所有时间</string>
-  <string name="stats_deck_current">牌组</string>
   <string name="stats_deck_collection">集合</string>
   <string name="stats_time_of_day">时间</string>
   <string name="stats_day_of_week">星期</string>
@@ -77,37 +74,7 @@
   <string name="stats_today_type_breakdown">学习：&lt;b&gt;%1$s&lt;/b&gt;，复习：&lt;b&gt;%2$s&lt;/b&gt;，重新学习：&lt;b&gt;%3$s&lt;/b&gt;, 过滤：&lt;b&gt;%4$s&lt;/b&gt;</string>
   <string name="stats_today_mature_cards">熟悉卡牌回答正确率：%1$d/%2$d (%3$.1f%%)</string>
   <string name="stats_today_no_mature_cards">今天未学习熟悉类型的卡牌</string>
-  <string name="statistics_period_x_axis_minutes">分钟</string>
-  <string name="statistics_new_cards">新卡牌</string>
-  <string name="statistics_failed_cards">失败的卡牌</string>
-  <string name="statistics_fullscreen">全屏显示</string>
-  <string name="calculating_statistics">计算统计信息。 \n 请稍候...</string>
-  <string name="deck_summary_cards">卡牌数量：</string>
-  <string name="deck_summary_notes">卡牌记录的数量：</string>
-  <string name="deck_summary_cards_mature">熟悉的卡牌:</string>
-  <string name="deck_summary_cards_young">有待熟悉的卡牌:</string>
-  <string name="deck_summary_cards_unseen">未学习卡牌：</string>
-  <string name="deck_summary_card_age">卡牌年龄</string>
-  <string name="deck_summary_average_interval">平均间隔: &lt;b&gt;%.1f&lt;/b&gt; 天</string>
-  <string name="deck_summary_answers_correct">正确的答案</string>
-  <string name="deck_summary_answers_mature">成熟卡牌: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; %2$s (%3$d of %4$d)</string>
-  <string name="deck_summary_answers_young">有待熟悉的卡牌：&lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d of %4$d)</string>
-  <string name="deck_summary_answers_firstseen">首次复习: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d of %4$d)</string>
-  <string name="deck_summary_reviews">复习：</string>
-  <string name="deck_summary_news">新卡牌：</string>
-  <string name="deck_summary_average_week">上周平均复习量</string>
-  <string name="deck_summary_average_month">上个月的平均复习量</string>
-  <string name="deck_summary_average_year">去年平均复习水平</string>
-  <string name="deck_summary_average_total">平均复习量</string>
-  <string name="deck_summary_forecast">预测</string>
-  <string name="deck_summary_tomorrow_due">明天到期：&lt;b&gt;%d&lt;/b&gt; 张</string>
-  <string name="deck_summary_tomorrow_new">明天新卡牌: &lt;b&gt;%d&lt;/b&gt; 张</string>
-  <string name="deck_summary_tomorrow_time">预计明天耗时：&lt;b&gt;%d&lt;/b&gt; 分钟.</string>
-  <string name="deck_summary_finished_in">新卡牌完成于：&lt;b&gt;%d&lt;/b&gt; 天内。</string>
-  <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; 张卡牌/天</string>
-  <string name="deck_summary_deck_age">牌组年龄： &lt;b&gt;%d&lt;/b&gt;天</string>
   <string name="deck_summary_all_decks">所有牌组</string>
-  <string name="stats_select_decks">选择牌组</string>
   <string name="stats_select_time_scale">选择时间段</string>
   <string-array name="next_review_in_s">
     <item>在 1 秒内</item>

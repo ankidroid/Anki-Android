@@ -48,8 +48,6 @@
   <string name="CardEditorTags">Etichette: %1$s</string>
   <string name="CardEditorCards">Carte : %1$s</string>
   <string name="add_new_filter_tags">Aggiungi/filtra etichette</string>
-  <string name="note_type">Tipo di nota</string>
-  <string name="card_type">Tipo di carta</string>
   <string name="filter_tags">Filtra etichette</string>
   <string name="sdcard_missing_message">La scheda SD non è disponibile, perché è usata come unità USB. Scollegare l\'USB per accedere ai mazzi.</string>
   <string name="enable_whiteboard">Abilita la lavagna</string>
@@ -58,8 +56,6 @@
   <string name="hide_whiteboard">Nascondi lavagna</string>
   <string name="clear_whiteboard">Pulisci lavagna</string>
   <string name="replay_audio">Riproduci audio</string>
-  <string name="cram_edit_warning">Non è permesso modificare una carta durante lo studio focalizzato</string>
-  <string name="suspend_leeches">Sospendi le sanguisughe</string>
   <string name="leech_suspend_notification">Carta contrassegnata come sanguisuga e sospesa</string>
   <string name="leech_notification">Carta contrassegnata come sanguisuga</string>
   <string name="corrupt_font">File dei caratteri corrotto %s</string>
@@ -80,10 +76,8 @@
   <string name="cardeditor_title_edit_card">Modifica nota</string>
   <string name="discard_unsaved_changes">Chiudi e perdi input?</string>
   <string name="factadder_saving_error">Errore salvataggio nota</string>
-  <string name="pref_lang_support">Lingua</string>
   <string name="saving_facts">Salvataggio nota</string>
   <string name="saving_model">Salvo il modello</string>
-  <string name="deck">Mazzo</string>
   <string name="add">Aggiungi</string>
   <string name="close">Chiudi</string>
   <string name="select">Seleziona</string>
@@ -100,13 +94,8 @@
     <item quantity="other">%1$d minuti</item>
   </plurals>
   <string name="studyoptions_welcome_title">Benvenuto in AnkiDroid</string>
-  <string name="studyoptions_no_external_storage_title">Nessuna scheda di archiviazione esterna disponibile</string>
-  <string name="studyoptions_no_external_storage_message">La memoria esterna non è disponibile. AnkiDroid deve avere accesso alla scheda SD per leggere e caricare i mazzi. Controlla che la scheda SD sia correttamente al suo posto e prova ancora.</string>
   <string name="fact_adder_intent_title">Carta AnkiDroid</string>
-  <string name="deckpicker_select_dictionary_title">Seleziona dizionario</string>
-  <string name="deckpicker_select_dictionary_default">Predefinito</string>
   <string name="card_editor_add_card">Aggiungi nota</string>
-  <string name="card_editor_reset">Reimposta</string>
   <string name="card_editor_copy_card">Copia carta</string>
   <string name="card_editor_reset_card">Reimposta progresso</string>
   <string name="card_editor_reschedule_card">Rischedula</string>
@@ -120,14 +109,11 @@
     <item quantity="other">%d carte aggiunte</item>
   </plurals>
   <string name="help_title">Aiuto</string>
-  <string name="help_online">Aiuto online</string>
-  <string name="help_faq">FAQ</string>
   <string name="check_db">Controlla database</string>
   <string name="check_media">Controlla file multimediali</string>
   <string name="check_db_message">Controllo database.\nAttendi...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Carta vuota. Esegui \"Strumenti&gt;Carte vuote...\" con la versione desktop.</string>
   <string name="unknown_type_field_warning">Digita la risposta: campo sconosciuto %s</string>
-  <string name="simple_interface_hint">Vuoto %s. Tieni presente che l\'interfaccia semplice non può mostrare immagini/suoni ecc.</string>
   <string name="delete_deck">Eliminazione mazzo...\nAttendi.</string>
   <string-array name="dynOrderLabels">
     <item>Più vecchie visualizzate per prime</item>
@@ -138,17 +124,12 @@
     <item>Ordine di aggiunta</item>
     <item>Ordine di scadenza</item>
   </string-array>
-  <string name="menu_cardbrowser">Browser delle carte</string>
   <string name="show_hint">Mostra %s</string>
-  <string name="pref_lang_other">Preferenze lingua</string>
-  <string name="pref_font_UI">Carattere interfaccia utente personalizzato</string>
   <string name="info_rate">Valuta AnkiDroid</string>
   <string name="col_load_failed">Caricamento della collezione fallito.\nPremi indietro per chiudere AnkiDroid.</string>
   <string name="import_title">Importa carte</string>
   <string name="import_select_title">Scegli un file da importare</string>
-  <string name="import_message">Vuoi aggiungere il contenuto del file %s alla tua collezione, o sostituire la tua collezione con esso?</string>
   <string name="import_message_add">Aggiungi</string>
-  <string name="import_message_replace">Sostituisci</string>
   <string name="import_message_replace_confirm">La tua collezione esistente verrà eliminata e sostituita con i dati del file %s. Sei sicuro?</string>
   <string name="import_message_add_confirm">Aggiungere \"%s\" alla collezione? Può richiedere molto tempo</string>
   <string name="import_log_success">Importato %d carte con successo</string>
@@ -170,13 +151,8 @@
   <string name="study_options">Opzioni del mazzo</string>
   <string name="custom_study">Studio personalizzato</string>
   <string name="dyn_deck_desc">Questo è un mazzo speciale per studiare al di fuori della pianificazione normale. Le carte ritorneranno automaticamente nel mazzo originale dopo che le hai ripetute. L\'eliminazione di questo mazzo dall\'elenco dei mazzi riporterà tutte le carte rimanenti nel loro mazzo originale.</string>
-  <string name="exit_wizard">Esci dalla procedura guidata</string>
   <string name="steps_error">I passi devono essere un numero maggiore di 0</string>
   <string name="steps_min_error">Almeno un passo è necessario</string>
-  <string name="custom_study_invalid_number">Numero non valido</string>
-  <string name="template_error">Errore del modello:</string>
-  <string name="template_error_detail">C\'è un errore nel modello di questa carta.</string>
-  <string name="template_error_fix">Utilizza l\'editor delle carte sul programma desktop per correggere l\'errore.</string>
   <string name="sched_end">(fine)</string>
   <string name="sched_unbury_button">Per vederle ora, tocca il pulsante Disseppellisci.</string>
   <string name="sched_has_buried">Alcune carte correlate o seppellite sono state rinviate ad una prossima sessione.</string>

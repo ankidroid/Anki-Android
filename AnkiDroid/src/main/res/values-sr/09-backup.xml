@@ -39,13 +39,9 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="backup_collection">Креирање резервне копије.\nМолим сачекајте...</string>
   <string name="backup_deck_no_space_left">Последње резервно копирање није урађено због недостатка места на sd карти.\n\nОслободите место или снизите дубину резервног копирања.</string>
   <string name="sd_space_warning">Остало је мање од %d mb на вашој sd карти.\nОчистите мало карту, да бисте избегли губитак података.</string>
-  <string name="backup_deck_success">Резервна копија је успешно креирана</string>
-  <string name="backup_manager_title">Резервно копирање</string>
   <string name="backup_delete">Брисање резервне копије.\nМолим сачекајте...</string>
-  <string name="contextmenu_deckpicker_remove_backups">Уклањање резервне копије</string>
   <string name="backup_restore">Обнављање из резервне копије</string>
   <string name="backup_new_collection">Нова колекција</string>
   <string name="backup_del_collection">Брисање колекције и креирање нове</string>
@@ -59,10 +55,7 @@
   <string name="backup_repair_deck">Обнављање</string>
   <string name="backup_repair_deck_progress">Обнављање базе података.\nМолим сачекајте...</string>
   <string name="backup_error">Грешка</string>
-  <string name="backup_restore_error">Колекција не може бити обновљена</string>
   <string name="backup_invalid_file_error">Изабрана резервна датотека није исправна</string>
-  <string name="backup_restore_if_missing">Обнављање недостајуће колекције...</string>
-  <string name="backup_restore_deck">Обнављање колекције.\nМолим сачекајте...</string>
   <string name="backup_restore_select_title">Изаберите резервну копију за обнављање</string>
   <string name="backup_restore_no_backups">Нема резервних копија ове колекције на том уређају. Ако имате резервне копије на рачунару, копирајте их ручно у радну фасциклу програма AnkiDroid</string>
   <string name="open_collection_failed_title">Колекција није отворена</string>

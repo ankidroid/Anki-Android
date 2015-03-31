@@ -48,8 +48,6 @@
   <string name="CardEditorTags">תגיות: %1$s</string>
   <string name="CardEditorCards">Cards: %1$s</string>
   <string name="add_new_filter_tags">הוסף/סנן תגיות</string>
-  <string name="note_type">סוג הערה</string>
-  <string name="card_type">סוג קלף</string>
   <string name="filter_tags">סנן תגיות</string>
   <string name="sdcard_missing_message">כרטיס SD לא זמין כיוון שהוא בשימוש כאיחסון USB. נא לנתק את ה־USB כדי לגשת לחפיסות שלך.</string>
   <string name="enable_whiteboard">לאפשר ציור</string>
@@ -58,8 +56,6 @@
   <string name="hide_whiteboard">הסתר לוח ציור</string>
   <string name="clear_whiteboard">נקה לוח ציור</string>
   <string name="replay_audio">החזר שמע</string>
-  <string name="cram_edit_warning">עריכת כרטיסים אסורה בזמן דחיסה</string>
-  <string name="suspend_leeches">עלוקות מושעות</string>
   <string name="leech_suspend_notification">כרטיס מסומן כעלוקה ומושעה</string>
   <string name="leech_notification">כרטיס מסומן כעלוקה</string>
   <string name="corrupt_font">קובץ גופן %s פגום</string>
@@ -80,10 +76,8 @@
   <string name="cardeditor_title_edit_card">ערוך הערה</string>
   <string name="discard_unsaved_changes">סגור ולאבד קלט הנוכחי?</string>
   <string name="factadder_saving_error">שגיאה בשמירת הערה</string>
-  <string name="pref_lang_support">שפה</string>
   <string name="saving_facts">שמירת הערה</string>
   <string name="saving_model">Saving model</string>
-  <string name="deck">חפיסה</string>
   <string name="add">הוסף</string>
   <string name="close">סגור</string>
   <string name="select">בחר</string>
@@ -100,13 +94,8 @@
     <item quantity="other">%1$d minutes</item>
   </plurals>
   <string name="studyoptions_welcome_title">בריך הבא לאנקידריוד</string>
-  <string name="studyoptions_no_external_storage_title">No external storage available</string>
-  <string name="studyoptions_no_external_storage_message">No external storage is currently available. AnkiDroid needs to have access to the SD card in order to read and load your Anki decks. Check that your SD card is mounted and try again.</string>
   <string name="fact_adder_intent_title">קלף אנקידרויד</string>
-  <string name="deckpicker_select_dictionary_title">בחר מילון</string>
-  <string name="deckpicker_select_dictionary_default">ברירת מחדל</string>
   <string name="card_editor_add_card">הוסף הערה</string>
-  <string name="card_editor_reset">איפוס</string>
   <string name="card_editor_copy_card">העתק כרטיס</string>
   <string name="card_editor_reset_card">איפוס התקדמות</string>
   <string name="card_editor_reschedule_card">תזמן קלף מחדש</string>
@@ -120,14 +109,11 @@
     <item quantity="other">%d cards added</item>
   </plurals>
   <string name="help_title">עזרה</string>
-  <string name="help_online">עזרה מקוונת</string>
-  <string name="help_faq">שאלות נפוצות</string>
   <string name="check_db">בדוק מסד הנתונים</string>
   <string name="check_media">בדוק מדיה</string>
   <string name="check_db_message">מסד הנתונים בתהליך בדיקה&#8230;</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
   <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
-  <string name="simple_interface_hint">Empty %s. Try switching off simple interface.</string>
   <string name="delete_deck">Deleting deck&#8230;</string>
   <string-array name="dynOrderLabels">
     <item>Oldest seen first</item>
@@ -138,17 +124,12 @@
     <item>Order added</item>
     <item>Order due</item>
   </string-array>
-  <string name="menu_cardbrowser">Card browser</string>
   <string name="show_hint">Show %s</string>
-  <string name="pref_lang_other">Language preferences</string>
-  <string name="pref_font_UI">Custom UI font</string>
   <string name="info_rate">Rate AnkiDroid</string>
   <string name="col_load_failed">Collection loading failed.\nPress back to close AnkiDroid.</string>
   <string name="import_title">ייבוא קלפים</string>
   <string name="import_select_title">בחר קובץ לייבוא</string>
-  <string name="import_message">Add content of file %s to your collection or replace your collection with it?</string>
   <string name="import_message_add">הוסף</string>
-  <string name="import_message_replace">החלף</string>
   <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s</string>
   <string name="import_message_add_confirm">Add \"%s\" to collection? This may take a long time</string>
   <string name="import_log_success">Imported %d cards</string>
@@ -170,13 +151,8 @@
   <string name="study_options">אפשרויות החפיסה</string>
   <string name="custom_study">לימוד מותאם אישית</string>
   <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
-  <string name="exit_wizard">יציאה מהאשף</string>
   <string name="steps_error">Steps must be numbers greater than 0</string>
   <string name="steps_min_error">לפחות שלב אחד נדרש</string>
-  <string name="custom_study_invalid_number">מספר לא תקין</string>
-  <string name="template_error">שגיאת תבנית</string>
-  <string name="template_error_detail">התבנית הקלף מכיל שגיאה</string>
-  <string name="template_error_fix">Use the card editor on the desktop client to fix it.</string>
   <string name="sched_end">(סיום)</string>
   <string name="sched_unbury_button">To see them now, touch the \"Unbury\" button.</string>
   <string name="sched_has_buried">Some related or buried cards were delayed until tomorrow.</string>

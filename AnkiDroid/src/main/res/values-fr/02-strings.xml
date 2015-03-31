@@ -48,8 +48,6 @@
   <string name="CardEditorTags">Marqueurs : %1$s</string>
   <string name="CardEditorCards">Cartes : %1$s</string>
   <string name="add_new_filter_tags">Ajouter/filtrer étiquettes</string>
-  <string name="note_type">Type de note</string>
-  <string name="card_type">Type de carte</string>
   <string name="filter_tags">Filtrer les étiquettes</string>
   <string name="sdcard_missing_message">La carte SD est indisponible car elle sert de mémoire USB. Déconnectez l’USB pour accéder à vos paquets.</string>
   <string name="enable_whiteboard">Activer le tableau blanc</string>
@@ -58,8 +56,6 @@
   <string name="hide_whiteboard">Masquer le tableau blanc</string>
   <string name="clear_whiteboard">Effacer le tableau blanc</string>
   <string name="replay_audio">Rejouer le son</string>
-  <string name="cram_edit_warning">L\'édition de cartes n\'est pas autorisées pendant le bachotage</string>
-  <string name="suspend_leeches">Masquer les cartes encombrantes</string>
   <string name="leech_suspend_notification">La carte a été marquée « pénible » et est masquée</string>
   <string name="leech_notification">Carte marquée « encombrante »</string>
   <string name="corrupt_font">Fichier de police corrompu %s</string>
@@ -80,10 +76,8 @@
   <string name="cardeditor_title_edit_card">Modifier la note</string>
   <string name="discard_unsaved_changes">Fermer et perdre la saisie en cours ?</string>
   <string name="factadder_saving_error">Erreur à l\'enregistrement de la note</string>
-  <string name="pref_lang_support">Langue</string>
   <string name="saving_facts">Enregistrer la note</string>
   <string name="saving_model">Sauvegarde du modèle</string>
-  <string name="deck">Paquet</string>
   <string name="add">Ajouter</string>
   <string name="close">Fermer</string>
   <string name="select">Sélectionner</string>
@@ -100,13 +94,8 @@
     <item quantity="other">%1$d minutes</item>
   </plurals>
   <string name="studyoptions_welcome_title">Bienvenue sur AnkiDroid</string>
-  <string name="studyoptions_no_external_storage_title">Aucune mémoire externe disponible</string>
-  <string name="studyoptions_no_external_storage_message">Pour l\'instant, aucun stockage externe n\'est disponible. Or, AnkiDroid a besoin d’un accès à la carte SD de vos paquets Anki afin de les lire et les charger. Vérifiez que votre carte SD est montée et essayez à nouveau.</string>
   <string name="fact_adder_intent_title">Carte AnkiDroid</string>
-  <string name="deckpicker_select_dictionary_title">Sélectionner un dictionnaire</string>
-  <string name="deckpicker_select_dictionary_default">Par défaut</string>
   <string name="card_editor_add_card">Ajouter une note</string>
-  <string name="card_editor_reset">Réinitialiser</string>
   <string name="card_editor_copy_card">Copier la carte</string>
   <string name="card_editor_reset_card">Remettre les compteurs à 0</string>
   <string name="card_editor_reschedule_card">Replanifier la carte</string>
@@ -120,14 +109,11 @@
     <item quantity="other">%d cartes ajoutées</item>
   </plurals>
   <string name="help_title">Aide</string>
-  <string name="help_online">Aide en ligne</string>
-  <string name="help_faq">FAQ</string>
   <string name="check_db">Vérification de la base de données</string>
   <string name="check_media">Vérifier les médias</string>
   <string name="check_db_message">Vérification de la base de données. \nVeuillez patienter&#8230;</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Carte vide. Lancer \"Outil&gt;Cartes vides...\" sur le client PC.</string>
   <string name="unknown_type_field_warning">Taper la réponse : champ inconnu %s</string>
-  <string name="simple_interface_hint">%s vide. Gardez à l\'esprit que l\'interface simplifiée ne peut afficher ni d\'images, ni de sons, etc.</string>
   <string name="delete_deck">Suppression du paquet&#8230;\nVeuillez patienter.</string>
   <string-array name="dynOrderLabels">
     <item>Des plus au moins anciennes</item>
@@ -138,17 +124,12 @@
     <item>Selon l\'ordre de leur ajout</item>
     <item>Les plus urgentes d’abord</item>
   </string-array>
-  <string name="menu_cardbrowser">Éventail de cartes</string>
   <string name="show_hint">Afficher %s</string>
-  <string name="pref_lang_other">Préférences linguistiques</string>
-  <string name="pref_font_UI">Police pour l’interface utilisateur</string>
   <string name="info_rate">Noter AnkiDroid</string>
   <string name="col_load_failed">Le chargement de la collection à échoué.\nAppuyez sur retour pour fermer AnkiDroid.</string>
   <string name="import_title">Importer des cartes</string>
   <string name="import_select_title">Choisir un fichier à importer</string>
-  <string name="import_message">Voulez-vous ajouter le contenu du fichier %s à votre collection ou bien la remplacer par son contenu ?</string>
   <string name="import_message_add">Ajouter</string>
-  <string name="import_message_replace">Remplacer</string>
   <string name="import_message_replace_confirm">Ceci va supprimer votre collection existante et la remplacer par les données du fichier %s. Êtes-vous d\'accord ?</string>
   <string name="import_message_add_confirm">Ajouter \"%s\" à la collection ? Ceci peut être long</string>
   <string name="import_log_success">%d cartes importées avec succès</string>
@@ -170,13 +151,8 @@
   <string name="study_options">Option des paquets</string>
   <string name="custom_study">Étude personnalisée</string>
   <string name="dyn_deck_desc">Ceci est un paquet pour l\'étude en dehors des horaires normaux. Les cartes reviendront automatiquement à leur paquet d\'origine après leur révision. La suppression de ce paquet remettra toutes les cartes restantes dans leur paquet d\'origine.</string>
-  <string name="exit_wizard">Quitter l\'assistant</string>
   <string name="steps_error">Les pas souvent être des nombres supérieurs à 0</string>
   <string name="steps_min_error">Au moins un pas est requis</string>
-  <string name="custom_study_invalid_number">Nombre non valide</string>
-  <string name="template_error">Erreur dans le modèle:</string>
-  <string name="template_error_detail">Il y a une erreur dans le modèle de cette carte.</string>
-  <string name="template_error_fix">Utilisez l\'éditeur de carte du client PC to corriger l\'erreur.</string>
   <string name="sched_end">(fin)</string>
   <string name="sched_unbury_button">Pour les voir maintenant, appuyer sur le bouton Déterrer.</string>
   <string name="sched_has_buried">Certaines cartes enterrées ou différées ont été reportées à une prochaine séance.</string>

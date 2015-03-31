@@ -51,14 +51,6 @@
     <item quantity="one">%1$d deck</item>
     <item quantity="other">%1$d колоди</item>
   </plurals>
-  <string name="widget_medium">AnkiDroid среден</string>
   <string name="widget_small">AnkiDroid малък</string>
-  <string name="widget_big">AnkiDroid голям</string>
-  <string name="widget_big_restrictions_dialog">Поради някои ограничения на Андроид  рамката на тази джаджа може да показва само текста, но без изображения/звуци и т.н.</string>
-  <string name="open_in_reviewer">Отвори колода в AnkiDroid</string>
-  <plurals name="widget_big_eta">
-    <item quantity="one">Estimated time: %d min.</item>
-    <item quantity="other">Приблизително време: %d мин.</item>
-  </plurals>
   <string name="widget_big_tomorrow_due">Утре поради:</string>
 </resources>

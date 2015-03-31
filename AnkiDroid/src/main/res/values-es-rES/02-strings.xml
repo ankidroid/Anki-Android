@@ -48,8 +48,6 @@
   <string name="CardEditorTags">Etiquetas: %1$s</string>
   <string name="CardEditorCards">Tarjetas: %1$s</string>
   <string name="add_new_filter_tags">Añadir/filtrar etiquetas</string>
-  <string name="note_type">Tipo de Nota</string>
-  <string name="card_type">Tipo de tarjeta</string>
   <string name="filter_tags">Filtrar etiquetas</string>
   <string name="sdcard_missing_message">La tarjeta SD no se encuentra disponible porque está siendo usada como almacenamiento via USB. Desconecta el USB para acceder a tus mazos.</string>
   <string name="enable_whiteboard">Habilitar pizarra</string>
@@ -58,8 +56,6 @@
   <string name="hide_whiteboard">Ocultar Pizarra</string>
   <string name="clear_whiteboard">Limpiar Pizarra</string>
   <string name="replay_audio">Repetir audio</string>
-  <string name="cram_edit_warning">No se permite editar tarjetas mientras empollas</string>
-  <string name="suspend_leeches">Suspender Sanguijuelas</string>
   <string name="leech_suspend_notification">Tarjeta marcada como sanguijuela y suspendida</string>
   <string name="leech_notification">Tarjeta marcada como sanguijuela</string>
   <string name="corrupt_font">Archivo de fuentes corrupto %s</string>
@@ -80,10 +76,8 @@
   <string name="cardeditor_title_edit_card">Editar Nota</string>
   <string name="discard_unsaved_changes">¿Cerrar y perder la entrada de actual?</string>
   <string name="factadder_saving_error">Error al guardar la nota</string>
-  <string name="pref_lang_support">Idioma</string>
   <string name="saving_facts">Guardando nota</string>
   <string name="saving_model">Guardando el modelo</string>
-  <string name="deck">Mazo</string>
   <string name="add">Añadir</string>
   <string name="close">Cerrar</string>
   <string name="select">Seleccionar</string>
@@ -100,13 +94,8 @@
     <item quantity="other">%1$d minutos</item>
   </plurals>
   <string name="studyoptions_welcome_title">Bienvenido a AnkiDroid</string>
-  <string name="studyoptions_no_external_storage_title">Almacenamiento externo no disponible</string>
-  <string name="studyoptions_no_external_storage_message">Almacenamiento externo no disponible actualmente. AnkiDroid necesita tener acceso a la tarjeta de memoria para leer y cargar tus mazos. Comprueba que la tarjeta de memoria está conectada e inténtalo de nuevo.</string>
   <string name="fact_adder_intent_title">Tarjeta de AnkiDroid</string>
-  <string name="deckpicker_select_dictionary_title">Seleccionar diccionario</string>
-  <string name="deckpicker_select_dictionary_default">Por defecto</string>
   <string name="card_editor_add_card">Añadir nota</string>
-  <string name="card_editor_reset">Restablecer</string>
   <string name="card_editor_copy_card">Copiar tarjeta</string>
   <string name="card_editor_reset_card">Reiniciar cuenta de progreso</string>
   <string name="card_editor_reschedule_card">Reprogramar tarjeta</string>
@@ -120,14 +109,11 @@
     <item quantity="other">Se han añadido %d tarjeta(s)</item>
   </plurals>
   <string name="help_title">Ayuda</string>
-  <string name="help_online">Ayuda en línea</string>
-  <string name="help_faq">Preguntas más frecuentes</string>
   <string name="check_db">Comprobar base de datos</string>
   <string name="check_media">Comprobar medio</string>
   <string name="check_db_message">Comprobando base de datos.\nPor favor, espera...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Tarjeta vacía. Ejecute \"Herramientas&gt;Tarjetas vacías...\" en el cliente de escritorio.</string>
   <string name="unknown_type_field_warning">Escribir respuesta: campo %s desconocido</string>
-  <string name="simple_interface_hint">Vaciar %s. Ten en cuenta que la interfaz simple no puede mostrar imágenes/sonidos etc.</string>
   <string name="delete_deck">Eliminando mazo...\nPor favor, espera.</string>
   <string-array name="dynOrderLabels">
     <item>Vistas hace más tiempo primero</item>
@@ -138,24 +124,19 @@
     <item>Orden añadidas</item>
     <item>Orden programadas</item>
   </string-array>
-  <string name="menu_cardbrowser">Explorador de tarjetas</string>
   <string name="show_hint">Mostrar %s</string>
-  <string name="pref_lang_other">Preferencias de Idioma</string>
-  <string name="pref_font_UI">Fuente de interfaz de usuario personalizada</string>
   <string name="info_rate">Puntúa AnkiDroid</string>
   <string name="col_load_failed">Error al cargar la colección.\nPulsa el botón volver para cerrar AnkiDroid.</string>
   <string name="import_title">Importar Tarjetas</string>
   <string name="import_select_title">Elija un archivo para importar</string>
-  <string name="import_message">¿Deseas añadir el contenido del archivo %s a tu colección, o reemplazar la colección con él?</string>
   <string name="import_message_add">Añadir</string>
-  <string name="import_message_replace">Reemplazar</string>
   <string name="import_message_replace_confirm">Esto eliminará tu colección actual y la reemplazará con los datos del archivo %s. ¿Estás seguro?</string>
   <string name="import_message_add_confirm">¿Añadir \"%s\" a la colección? Esto puede llevar mucho tiempo</string>
   <string name="import_log_success">Se importaron con éxito %d tarjetas</string>
   <string name="import_log_error">La importación falló</string>
   <string name="import_log_no_apkg">Éste no es un archivo apkg válido</string>
   <string name="import_error_not_apkg_extension">El nombre de archivo %s no tiene la extensión .apkg</string>
-  <string name="import_error_content_provider">The selected file could not be imported automatically by AnkiDroid. Please see the user manual for how to manually import anki files: \n %s</string>
+  <string name="import_error_content_provider">AnkiDroid no ha podido importar automáticamente el archivo seleccionado. Por favor, lee el manual de usuario sobre como importar manualmente anki files:  \n %s</string>
   <string name="import_importing">Importando tarjetas.\nPor favor, espera...</string>
   <string name="export_include_schedule">Incluir programación</string>
   <string name="export_include_media">Incluir multimedia</string>
@@ -170,13 +151,8 @@
   <string name="study_options">Opciones de mazo</string>
   <string name="custom_study">Estudio personalizado</string>
   <string name="dyn_deck_desc">Este es un mazo especial para estudiar fuera del programa normal. Las tarjetas serán devueltas automáticamente a sus mazos originales después de que las repases. Borrar este mazo de la lista de mazos devolverá todas las tarjetas restantes a su mazo original.</string>
-  <string name="exit_wizard">Salir del Asistente</string>
   <string name="steps_error">Pasos tiene que ser un número mayor que 0</string>
   <string name="steps_min_error">Se requiere al menos un paso</string>
-  <string name="custom_study_invalid_number">Número no válido</string>
-  <string name="template_error">Error de plantilla:</string>
-  <string name="template_error_detail">Hay un error en la plantilla de esta tarjeta.</string>
-  <string name="template_error_fix">Utilice el editor de tarjeta en el cliente de escritorio para corregir el error.</string>
   <string name="sched_end">(fin)</string>
   <string name="sched_unbury_button">Para verlos ahora, pulse el botón Desenterrar.</string>
   <string name="sched_has_buried">Algunas tarjetas relacionadas o enterradas fueron postergadas para una sesión posterior.</string>

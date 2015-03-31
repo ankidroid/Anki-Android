@@ -39,11 +39,13 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="app_name">AnkiDroid</string>
-  <string name="app_name_anki">Anki</string>
-  <string name="app_name_droid">Droid</string>
+  <string name="decks">Decks</string>
+  <string name="card_browser">Card Browser</string>
+  <string name="statistics">Statistics</string>
+  <string name="settings">Settings</string>
+  <string name="help">Help</string>
+  <string name="send_feedback">Send Feedback</string>
   <string name="studyoptions_title">Study Options</string>
-  <string name="studyoptions_deck_name">Назва колоди</string>
   <string name="studyoptions_due_today">На сьогодні:</string>
   <string name="studyoptions_new_total">Всього нових карток:</string>
   <string name="studyoptions_total_cards">Всього карток:</string>
@@ -57,10 +59,6 @@
     <item quantity="one">%d min.</item>
     <item quantity="other">%d хв.</item>
   </plurals>
-  <plurals name="deckpicker_due">
-    <item quantity="one">%1$d of %2$d due</item>
-    <item quantity="other">повт. %1$d з %2$d</item>
-  </plurals>
   <plurals name="reviewer_window_title">
     <item quantity="one">%d minute left</item>
     <item quantity="other">%d хвилин залишилося</item>
@@ -72,9 +70,6 @@
   <string name="ease3_successive">Добре</string>
   <string name="ease3_learning">Легко</string>
   <string name="studyoptions_congrats_undo">Відмінити %s</string>
-  <string name="card_unsuspended">Відкладення картки скасовано</string>
-  <string name="card_suspended">Картка знову відкладена</string>
-  <string name="menu_rotate">Повернути</string>
   <string name="menu_import">Import</string>
   <string name="undo">Відмінити</string>
   <string name="undo_action_review">last review</string>
@@ -86,30 +81,19 @@
   <string name="undo_action_mark">Відмітити примітку</string>
   <string name="unbury">Скасувати зрушення</string>
   <string name="finish_operation">Завершення попередньої операції (найбільш ймовірно, створення резервної копії). \n Будь ласка, зачекайте...</string>
-  <string name="contextmenu_deckpicker_download_missing_media">Завантажити відсутні медіа-файли</string>
-  <string name="contextmenu_deckpicker_reset_language_assignments">Скинути мовні завдання</string>
-  <string name="contextmenu_deckpicker_reset_reset_message">Скинути мову</string>
-  <string name="contextmenu_deckpicker_optimize_deck">Оптимізувати базу даних</string>
   <string name="contextmenu_deckpicker_rename_deck">Перейменувати колоду</string>
   <string name="contextmenu_deckpicker_collapse_deck">Приховати вкладені колоди</string>
   <string name="contextmenu_deckpicker_inflate_deck">Показати вкладені колоди</string>
-  <string name="contextmenu_deckpicker_set_custom_dictionary">Встановити словник користувача</string>
   <string name="menu_add">Додати</string>
   <string name="menu_add_note">Додати примітку</string>
-  <string name="menu_download_deck">Завантажити колоду</string>
-  <string name="menu_download_shared_deck">Спільна колода</string>
   <string name="menu_my_account">Змінити обліковий запис</string>
-  <string name="menu_preferences">Налаштування</string>
-  <string name="menu_about">Про програму</string>
   <string name="menu_dismiss_note">Hide / Delete</string>
   <string name="menu_bury_card">Поховати картку</string>
   <string name="menu_bury_note">Сховати Примітку</string>
   <string name="menu_suspend_card">Відкласти картку</string>
   <string name="menu_suspend_note">Призупинити Примітку</string>
-  <string name="menu_save_note">Зберегти примітку</string>
   <string name="menu_delete_note">Видалити Примітку</string>
   <string name="delete_note_message">Дійсно видалити цю примітку і усі зв\'язані з нею картки?\n%s</string>
-  <string name="menu_edit_card">Редагувати картку</string>
   <string name="menu_select">Виділити текст</string>
   <string name="menu_search">Пошук у %1$s</string>
   <string name="menu_mark_card">Помітити картку</string>
@@ -117,7 +101,6 @@
   <string name="new_deck">Створити колоду</string>
   <string name="create">Створити</string>
   <string name="new_dynamic_deck">Створити фільтровану колоду</string>
-  <string name="studyoptions_feedback">Відгук</string>
   <string name="night_mode">Нічний режим</string>
   <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
   <string-array name="next_review_s">
@@ -136,9 +119,7 @@
     <item>%s місяців</item>
     <item>%s років</item>
   </string-array>
-  <string name="visit">Відвідати</string>
   <string name="later">Пізніше</string>
-  <string name="download">Завантажити</string>
   <string name="open_collection">Відкриття колекції.\n Будь ласка, зачекайте...</string>
   <string name="rebuild_cram_deck">Перебудова колоди для Зубріння.\n Будь ласка, зачекайте...</string>
   <string name="rebuild_cram_label">Перебудувати</string>
@@ -151,37 +132,10 @@
   <string name="studyoptions_congrats_more_new">Доступно більше нових карток але денний ліміт вичерпано. Ви можете збільшити ліміт в налаштуваннях, але, будь-ласка, зверніть увагу що це збільшить навантаження.</string>
   <string name="studyoptions_congrats_custom">Для навчання за межами нормального разкладу клацніть на \"Додатковий Трейнінг\" внизу.</string>
   <string name="studyoptions_no_cards_due">No cards are due yet.</string>
-  <plurals name="studyoptions_congrats_message">
-    <item quantity="one">Tomorrow there will be: %1$d card to review and %2$s.\n Estimated time: %3$s</item>
-    <item quantity="other">Завтра буде: %1$d карток повторити та %2$d.\nПриблизний час: %3$s</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_new_cards">
-    <item quantity="one">%1$d new card</item>
-    <item quantity="other">%1$d нових карт</item>
-  </plurals>
-  <plurals name="studyoptions_congrats_eta">
-    <item quantity="one">Estimated time: %1$d min.</item>
-    <item quantity="other">Залишилось часу приблизно: %1$d хв.</item>
-  </plurals>
   <string name="sd_card_not_mounted">Карта памяті не вставлена.\n\nВи можете зберігати ваші колоди і у внутрішній памяті, але це не рекомендується так як ви не будете мати до них доступу. Ви можете активувати цей режим в налаштуваннях (клікніть тут).</string>
-  <string name="studyoptions_options">Параметри</string>
-  <string name="empty_cloze_warning">Будь ласка, відредагуйте цю примітку та додайте пропуски.(%1$s)</string>
-  <string name="help_cloze">допомога</string>
   <string name="button_sync">Синхронізувати</string>
-  <string name="restart">Перезапустити</string>
-  <string name="do_nothing">Нічого не робити</string>
-  <string name="more_options">Додаткові параметри</string>
-  <string name="now">Зараз</string>
-  <string name="back">Назад</string>
-  <string name="ankiweb">AnkiWeb</string>
-  <string name="usb">USB</string>
-  <string name="_import">Імпорт</string>
   <string name="export">Export</string>
-  <string name="confirm">Підтвердити</string>
-  <string name="internet">Інтернет</string>
-  <string name="pc">ПК</string>
   <string name="nothing">Nothing</string>
-  <string name="title_activity_graphical_activity">Статистична діаграма</string>
   <string name="title_activity_template_editor">Card Types for %s</string>
   <string name="card_template_editor_front">Front Template</string>
   <string name="card_template_editor_back">Back Template</string>

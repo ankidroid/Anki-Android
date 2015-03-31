@@ -51,14 +51,6 @@
     <item quantity="one">%1$d deck</item>
     <item quantity="other">%1$d paquets</item>
   </plurals>
-  <string name="widget_medium">AnkiDroid Mitg</string>
   <string name="widget_small">AnkiDroid Petit</string>
-  <string name="widget_big">AnkiDroid gran</string>
-  <string name="widget_big_restrictions_dialog">A causa d\'algunes restriccions del marc de treball del giny d\'Android, aquest giny només pot mostrar text però no imatges/sons etc.</string>
-  <string name="open_in_reviewer">Obre el paquet amb AnkiDroid</string>
-  <plurals name="widget_big_eta">
-    <item quantity="one">Estimated time: %d min.</item>
-    <item quantity="other">Temps aproximat: %d min.</item>
-  </plurals>
   <string name="widget_big_tomorrow_due">Previst per demà:</string>
 </resources>

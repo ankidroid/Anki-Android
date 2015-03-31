@@ -44,8 +44,6 @@
     <item quantity="other">%d cards shown</item>
   </plurals>
   <string name="card_browser_all_decks">Всі колоди</string>
-  <string name="card_browser_load">Завантаження карток.\nБудь ласка, зачекайте...</string>
-  <string name="card_browser_cardloading_error">Помилка завантаження карток. Ймовірно це пов’язано з обмеженнями пам’яті на вашому пристрої. Спробуйте знову з меншою колодою</string>
   <string name="card_browser_delete_card">Видалити запис</string>
   <string name="card_browser_suspend_card">Відкласти картку</string>
   <string name="card_browser_unsuspend_card">Відмінити відкладення картки</string>
@@ -54,36 +52,20 @@
   <string name="delete_card_title">Видалити запис</string>
   <string name="delete_card_message">Дійсно видалити всі картки цього запису?\nПошукове поле: %s</string>
   <string name="card_browser_show_marked">Фільтрувати позначені</string>
-  <string name="card_browser_field">Змінити поле CardBrowser</string>
-  <string name="card_browser_field_title">Змінити поле CardBrowser</string>
   <string name="card_browser_show_suspended">Фільтрувати відкладені</string>
   <string name="card_browser_search_by_tag">Фільтрувати за міткою</string>
   <string name="card_browser_tags_shown">Мітки: %1$s</string>
   <string name="card_browser_change_display_order">Змінити порядок відображення</string>
   <string name="card_browser_change_display_order_title">Вибрати порядок відображення</string>
   <string name="card_browser_change_display_order_reverse">Виберіть поле двічі щоб обміняти.</string>
-  <string name="card_browser_order_reverse">(обмін)</string>
   <string name="card_details_question">Питання</string>
   <string name="card_details_answer">Вілповідь</string>
   <string name="card_details_due">До повторення</string>
-  <string name="card_details_last_due">Остання черга</string>
-  <string name="card_details_now">Зараз</string>
-  <string name="card_details_interval">Інтервал</string>
-  <string name="card_details_ease">Легкість</string>
-  <string name="card_details_average_time">Середній час</string>
-  <string name="card_details_total_time">Загальний час</string>
-  <string name="card_details_yes_count">Лічильник Так</string>
-  <string name="card_details_no_count">Лічильник Ні</string>
-  <string name="card_details_added">Додано</string>
-  <string name="card_details_changed">Змінено</string>
   <string name="card_details_tags">Мітки</string>
-  <string name="card_details_model">Тип запису</string>
-  <string name="card_browser_sorting_cards">Сортування карток.\nБудь ласка, зачекайте...</string>
   <string name="card_browser_filtering_cards">Фільтрація карт... \nНатискніть кнопку назад, щоб скасувати</string>
-  <string name="card_details_card_model">Модель картки</string>
   <string-array name="card_browser_order_labels">
     <item>Без сортування (швидше)</item>
-    <item>Пошуковим полем</item>
+    <item>By sort field</item>
     <item>По часу створення</item>
     <item>По часу зміни</item>
     <item>По часу зміни</item>

@@ -35,14 +35,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="navigation_titles">
-    <item>Talie</item>
-    <item>Przeglądanie kart</item>
-    <item>Statystyki</item>
-    <item>Ustawienia</item>
-    <item>Pomoc</item>
-    <item>Prześlij opinię</item>
-  </string-array>
   <string-array name="newCardSchedulingLabels">
     <item>Rozprosz pomiędzy powtórkami</item>
     <item>Po powtórkach</item>

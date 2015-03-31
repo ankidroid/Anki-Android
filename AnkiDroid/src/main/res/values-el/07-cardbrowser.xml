@@ -44,8 +44,6 @@
     <item quantity="other">%d cards shown</item>
   </plurals>
   <string name="card_browser_all_decks">Όλες οι τράπουλες</string>
-  <string name="card_browser_load">Φόρτωση καρτών.\nΠαρακαλούμε περιμένετε...</string>
-  <string name="card_browser_cardloading_error">Σφάλμα κατά τη φόρτωση καρτών. Αυτό πιθανώς σχετίζεται με τη περιορισμένη μνήμη της συσκευή σας. Δοκιμάστε ξανά με μικρότερο μέγεθος τράπουλας</string>
   <string name="card_browser_delete_card">Διαγραφή σημείωσης</string>
   <string name="card_browser_suspend_card">Αναστολή κάρτας</string>
   <string name="card_browser_unsuspend_card">Επαναφορά κάρτας</string>
@@ -54,36 +52,20 @@
   <string name="delete_card_title">Διαγραφή σημείωσης</string>
   <string name="delete_card_message">Είστε βέβαιοι για τη διαγραφή αυτής της σημείωσης;\nΑναζήτηση πεδίου: %s</string>
   <string name="card_browser_show_marked">Δείξε μαρκαρισμένες</string>
-  <string name="card_browser_field">Αλλαγή στηλών λίστας</string>
-  <string name="card_browser_field_title">Αλλαγή στηλών λίστας</string>
   <string name="card_browser_show_suspended">Δείξε ανεσταλμένες</string>
   <string name="card_browser_search_by_tag">Δείξε κατά ετικέτα</string>
   <string name="card_browser_tags_shown">Ετικέτες: %1$s</string>
   <string name="card_browser_change_display_order">Αλλαγή σειράς εμφάνισης</string>
   <string name="card_browser_change_display_order_title">Επιλέξτε τη σειρά εμφάνισης</string>
   <string name="card_browser_change_display_order_reverse">Επιλέξτε ένα πεδίο δύο φορές για να αντιστρέψετε.</string>
-  <string name="card_browser_order_reverse">(αντίστροφα)</string>
   <string name="card_details_question">Ερώτηση</string>
   <string name="card_details_answer">Απάντηση</string>
   <string name="card_details_due">Δέον χρόνος</string>
-  <string name="card_details_last_due">Τελευταία δέουσα</string>
-  <string name="card_details_now">Τώρα</string>
-  <string name="card_details_interval">Χρονικό διάστημα</string>
-  <string name="card_details_ease">Ευκολία</string>
-  <string name="card_details_average_time">Μέσος χρόνος</string>
-  <string name="card_details_total_time">Συνολικός χρόνος</string>
-  <string name="card_details_yes_count">Ναι καταμέτρηση</string>
-  <string name="card_details_no_count">Όχι καταμέτρηση</string>
-  <string name="card_details_added">Προστέθηκε</string>
-  <string name="card_details_changed">Άλλαξε</string>
   <string name="card_details_tags">Ετικέτες</string>
-  <string name="card_details_model">Τύπος σημείωσης</string>
-  <string name="card_browser_sorting_cards">Ταξινόμηση καρτών.\nΠαρακαλώ περιμένετε...</string>
   <string name="card_browser_filtering_cards">Filtering cards&#8230; \nPress back button to cancel</string>
-  <string name="card_details_card_model">Υπόδειγμα κάρτα</string>
   <string-array name="card_browser_order_labels">
     <item>Χωρίς ταξινόμηση (γρήγορο)</item>
-    <item>Με το πεδίο αναζήτησης</item>
+    <item>By sort field</item>
     <item>Με το χρόνο δημιουργίας</item>
     <item>Με το χρόνο σύνταξης</item>
     <item>Με το χρόνο αλλαγής</item>

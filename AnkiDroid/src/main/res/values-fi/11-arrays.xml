@@ -35,14 +35,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="navigation_titles">
-    <item>Pakat</item>
-    <item>Selaa kortteja</item>
-    <item>Tilastot</item>
-    <item>Asetukset</item>
-    <item>Ohje</item>
-    <item>Anna palautetta</item>
-  </string-array>
   <string-array name="newCardSchedulingLabels">
     <item>Jaa kertauksien kesken</item>
     <item>Tarkastelun jälkeen</item>

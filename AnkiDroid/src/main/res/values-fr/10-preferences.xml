@@ -138,7 +138,6 @@
   <string name="safe_display_summ">Désactiver toutes les animations et utiliser le mode sécurisé pour afficher les cartes. L\'encre électronique et les anciens appareils qui utilisent des polices personnalisées peuvent nécessiter ceci.</string>
   <string name="vertical_centering">Aligner au centre</string>
   <string name="vertical_centering_summ">Centrer verticalement le contenu des cartes</string>
-  <string name="pref_cat_backup">Sauvegardes</string>
   <string name="pref_backup">Utiliser les sauvegardes</string>
   <string name="pref_backup_summ">Créer une sauvegarde automatiquement avant d\'ouvrir un paquet (une fois par jour)</string>
   <string name="pref_backup_max">Nombre de sauvegarde max</string>
@@ -163,11 +162,6 @@
   <string name="input_workaround_summ">Solution de contournement pour le focus HTML sur les zones de texte. Pose problèmes sur plusieurs appareils.</string>
   <string name="pref_keep_screen_on">Garder l\'écran allumé</string>
   <string name="pref_keep_screen_on_summ">Désactiver l\'extinction aromatique de l\'écran</string>
-  <string name="pref_simple_interface">Interface simplifiée</string>
-  <string name="pref_simple_interface_summ">Accélère l\'affichage de la carte, mais supporte peu le HTML</string>
-  <string name="pref_simple_interface_exclude_tags">Étiquettes à exclure</string>
-  <string name="pref_simple_interface_exclude_tags_summ">Ne pas utiliser l\'interface simplifiée pour ces tags : XXX</string>
-  <string name="write_answers_message">Pour chaque paquet, vous devriez définir un champ à comparer à la réponse écrite. Vous pouvez le faire via Anki Desktop (propriétés du paquet -&gt; éditer le modèle -&gt; layout de carte).\n\nSi aucun champ de comparaison n\'est défini, votre réponse écrite sera toujours comparée avec la réponse entière de la carte</string>
   <string name="fix_arabic_text">Améliorer l\'affichage de l\'arabe</string>
   <string name="fix_arabic_text_summ">Solution partielle pour la prise en charge limitée de la langue arabe par la plateforme Android. Quand activé, il n\'est pas possible de modifier les cartes.</string>
   <string name="convert_fen_text">Support de la notation algébrique (échecs)</string>
@@ -175,17 +169,6 @@
   <string name="filter_google_translate_summ">Enregistrer uniquement le mot source et sa traduction</string>
   <string name="convert_fen_text_summ">Échiquier avec la notation Forsyth-Edwards Notation. La notation doit être placée entre des balises [fen][/fen].</string>
   <string name="studyoptions_limit_select_tags">Sélectionner les balises</string>
-  <string name="studyoptions_limit_tags_active">Avec : %1$s</string>
-  <string name="studyoptions_limit_tags_inactive">Sans : %1$s</string>
-  <string name="studyoptions_limit_button_text">Limite</string>
-  <string name="studyoptions_limit_dialog_title">Limiter l\'apprentissage</string>
-  <string name="studyoptions_session">Session</string>
-  <string name="studyoptions_tag">Par label</string>
-  <string name="studyoptions_tag_new">Afficher les nouvelles cartes par label:</string>
-  <string name="studyoptions_tag_rev">Afficher les cartes à réviser par label:</string>
-  <string name="studyoptions_new_cards_per_day">Nouvelles cartes par jour </string>
-  <string name="studyoptions_max_fail_card">Maximum de cartes échouées</string>
-  <string name="deck_conf_deck_name">Nom du paquet</string>
   <string name="deck_conf_deck_description">Description du paquet</string>
   <string name="deck_conf_group">Groupe d\'option</string>
   <plurals name="deck_conf_group_summ">
@@ -244,7 +227,6 @@
   <string name="pref_browser_editor_font_summ">XXX</string>
   <string name="deck_conf_cram_filter">Révision</string>
   <string name="deck_conf_cram_options">Options</string>
-  <string name="deck_conf_cram_preset">Réglage prédéfini</string>
   <string name="deck_conf_cram_search">Recherche</string>
   <string name="deck_conf_cram_limit">Limiter à</string>
   <string name="deck_conf_cram_order">Cartes sélectionnées par</string>

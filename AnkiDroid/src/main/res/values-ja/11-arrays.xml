@@ -35,14 +35,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="navigation_titles">
-    <item>単語帳</item>
-    <item>ブラウザー</item>
-    <item>統計情報</item>
-    <item>設定</item>
-    <item>ヘルプ</item>
-    <item>フィードバックを送信</item>
-  </string-array>
   <string-array name="newCardSchedulingLabels">
     <item>復習中に新規カードを混ぜる</item>
     <item>復習の後で</item>

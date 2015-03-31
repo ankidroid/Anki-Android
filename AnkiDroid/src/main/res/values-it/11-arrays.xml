@@ -35,14 +35,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="navigation_titles">
-    <item>Mazzi</item>
-    <item>Browser delle carte</item>
-    <item>Statistiche</item>
-    <item>Impostazioni</item>
-    <item>Guida</item>
-    <item>Invia commenti</item>
-  </string-array>
   <string-array name="newCardSchedulingLabels">
     <item>Distribuisci sulla sequenza di ripetizione</item>
     <item>Dopo le ripetizioni</item>

@@ -51,14 +51,6 @@
     <item quantity="one">%1$d pakka</item>
     <item quantity="other">%1$d korttipakkaa</item>
   </plurals>
-  <string name="widget_medium">Android normaali</string>
   <string name="widget_small">Android pieni</string>
-  <string name="widget_big">Android suuri</string>
-  <string name="widget_big_restrictions_dialog">Android-ympäristön rajoitusten vuoksi tämä elementti voi näyttää vain tekstiä, ei kuviä, ääntä ym.</string>
-  <string name="open_in_reviewer">Avaa pakka AnkiDroidissa</string>
-  <plurals name="widget_big_eta">
-    <item quantity="one">Arvioitu kesto: %d min.</item>
-    <item quantity="other">Arvioitu kesto: %d min.</item>
-  </plurals>
   <string name="widget_big_tomorrow_due">Huomenna opiskeltava:</string>
 </resources>

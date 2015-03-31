@@ -39,7 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="statistics_menu">Statistik</string>
   <string name="statistics_young">Junge</string>
   <string name="statistics_mature">Alte</string>
   <string name="statistics_young_and_learn">Junge Karten</string>
@@ -48,7 +47,6 @@
   <string name="statistics_relearn">Erneut gelernte</string>
   <string name="statistics_learn">Gelernte</string>
   <string name="statistics_cram">Gepaukte</string>
-  <string name="statistics_type_title">Statistik</string>
   <string name="stats_cards">Karten</string>
   <string name="stats_cards_intervals">Karten mit gegebenem Intervall</string>
   <string name="stats_cumulative_cards">Wiederholungen insgesamt</string>
@@ -65,7 +63,6 @@
   <string name="stats_period_month">1 Monat</string>
   <string name="stats_period_year">1 Jahr</string>
   <string name="stats_period_lifetime">Lebensdauer des Stapels</string>
-  <string name="stats_deck_current">Stapel</string>
   <string name="stats_deck_collection">Sammlung</string>
   <string name="stats_time_of_day">Tageszeit</string>
   <string name="stats_day_of_week">Wochentag</string>
@@ -77,37 +74,7 @@
   <string name="stats_today_type_breakdown">Neu: &lt;b&gt;%1$s&lt;/b&gt;, wiederholt: &lt;b&gt;%2$s&lt;/b&gt;, erneut gelernt: &lt;b&gt;%3$s&lt;/b&gt;, ausgewählte Karten: &lt;b&gt;%4$s&lt;/b&gt;</string>
   <string name="stats_today_mature_cards">Richtige Antworten bei alten Karten: %1$d/%2$d (%3$.1f%%)</string>
   <string name="stats_today_no_mature_cards">Heute wurden keine alten Karten wiederholt.</string>
-  <string name="statistics_period_x_axis_minutes">Minuten</string>
-  <string name="statistics_new_cards">Neue Karten</string>
-  <string name="statistics_failed_cards">Falsch beantwortete Karten</string>
-  <string name="statistics_fullscreen">Vollbildmodus ein/aus</string>
-  <string name="calculating_statistics">Berechne Statistik&#8230;</string>
-  <string name="deck_summary_cards">Kartenanzahl:</string>
-  <string name="deck_summary_notes">Anzahl an Notizen:</string>
-  <string name="deck_summary_cards_mature">Alte Karten:</string>
-  <string name="deck_summary_cards_young">Junge Karten</string>
-  <string name="deck_summary_cards_unseen">Neue Karten</string>
-  <string name="deck_summary_card_age">Kartenalter</string>
-  <string name="deck_summary_average_interval">Durchschnittliches Intervall: &lt;b&gt;%.1f&lt;/b&gt; Tage</string>
-  <string name="deck_summary_answers_correct">Richtige Antworten</string>
-  <string name="deck_summary_answers_mature">Alte Karten: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; %2$s (%3$d von %4$d)</string>
-  <string name="deck_summary_answers_young">Junge Karten: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d von %4$d)</string>
-  <string name="deck_summary_answers_firstseen">Zum ersten Mal gesehen: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d von %4$d)</string>
-  <string name="deck_summary_reviews">Wiederholungen:</string>
-  <string name="deck_summary_news">Neue Karten:</string>
-  <string name="deck_summary_average_week">Durchschnitt letzte Woche</string>
-  <string name="deck_summary_average_month">Durchschnitt letzter Monat</string>
-  <string name="deck_summary_average_year">Durchschnitt letztes Jahr</string>
-  <string name="deck_summary_average_total">Durchschnitt insgesamt</string>
-  <string name="deck_summary_forecast">Prognose</string>
-  <string name="deck_summary_tomorrow_due">Morgen fällig: &lt;b&gt;%d&lt;/b&gt; Karten</string>
-  <string name="deck_summary_tomorrow_new">Morgen neu: &lt;b&gt;%d&lt;/b&gt; Karten</string>
-  <string name="deck_summary_tomorrow_time">Geschätzte Zeit morgen: &lt;b&gt;%d&lt;/b&gt; Min.</string>
-  <string name="deck_summary_finished_in">Neue Karten aufgebraucht in: &lt;b&gt;%d&lt;/b&gt; Tagen</string>
-  <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; Karten/Tag</string>
-  <string name="deck_summary_deck_age">Stapelalter: &lt;b&gt;%d&lt;/b&gt; Tage</string>
   <string name="deck_summary_all_decks">Alle Stapel</string>
-  <string name="stats_select_decks">Stapel wählen</string>
   <string name="stats_select_time_scale">Zeitrahmen wählen</string>
   <string-array name="next_review_in_s">
     <item>in 1 Sekunde</item>

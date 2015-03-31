@@ -48,8 +48,6 @@
   <string name="CardEditorTags">Etiketter: %1$s</string>
   <string name="CardEditorCards">Cards: %1$s</string>
   <string name="add_new_filter_tags">Add/filter tags</string>
-  <string name="note_type">Notattype</string>
-  <string name="card_type">Card type</string>
   <string name="filter_tags">Filter tags</string>
   <string name="sdcard_missing_message">SD-kortet er utilgjengelig fordi den brukes som USB-lagring. Frakoble USB for å å få tilgang til dine kortstokker.</string>
   <string name="enable_whiteboard">Enable whiteboard</string>
@@ -58,8 +56,6 @@
   <string name="hide_whiteboard">Skjul tavle</string>
   <string name="clear_whiteboard">Rens tavle</string>
   <string name="replay_audio">Replay audio</string>
-  <string name="cram_edit_warning">Kortredigering ikke tillatt under pugging</string>
-  <string name="suspend_leeches">Deaktiver igler</string>
   <string name="leech_suspend_notification">Kort merket som igle og deaktivert</string>
   <string name="leech_notification">Kort merket som igle</string>
   <string name="corrupt_font">Ugyldig font-fil %s</string>
@@ -80,10 +76,8 @@
   <string name="cardeditor_title_edit_card">Rediger notat</string>
   <string name="discard_unsaved_changes">Close and lose current input?</string>
   <string name="factadder_saving_error">Feil under lagring av notat</string>
-  <string name="pref_lang_support">Språk</string>
   <string name="saving_facts">Lagrer notat</string>
   <string name="saving_model">Saving model</string>
-  <string name="deck">Kortstokk</string>
   <string name="add">Legg til</string>
   <string name="close">Lukk</string>
   <string name="select">Velg</string>
@@ -100,13 +94,8 @@
     <item quantity="other">%1$d minutes</item>
   </plurals>
   <string name="studyoptions_welcome_title">Velkommen til AnkiDroid</string>
-  <string name="studyoptions_no_external_storage_title">Ingen ekstern lagringsplass tilgjengelig</string>
-  <string name="studyoptions_no_external_storage_message">Ingen ekstern lagring er tilgjengelig for øyeblikket. AnkiDroid må ha tilgang til SD-kortet for å kunne lese og laste dine Anki-kortstokker. Kontroller at SD-kortet er montert, og prøv på nytt.</string>
   <string name="fact_adder_intent_title">AnkiDroid-kort</string>
-  <string name="deckpicker_select_dictionary_title">Velg ordliste</string>
-  <string name="deckpicker_select_dictionary_default">Standard</string>
   <string name="card_editor_add_card">Legg til notat</string>
-  <string name="card_editor_reset">Tilbakestill</string>
   <string name="card_editor_copy_card">Kopier kort</string>
   <string name="card_editor_reset_card">Tilbakestill fremdrift</string>
   <string name="card_editor_reschedule_card">Reschedule card</string>
@@ -120,14 +109,11 @@
     <item quantity="other">%d kort lagt til</item>
   </plurals>
   <string name="help_title">Hjelp</string>
-  <string name="help_online">Online hjelp</string>
-  <string name="help_faq">FAQ</string>
   <string name="check_db">Kontroller database</string>
   <string name="check_media">Check media</string>
   <string name="check_db_message">Undersøker database.\nVennligst vent...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
   <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
-  <string name="simple_interface_hint">Tom %s. Husk at at enkelt grensesnitt ikke kan vise bilder/lyder osv.</string>
   <string name="delete_deck">Sletter kortstokk...\nVennligst vent.</string>
   <string-array name="dynOrderLabels">
     <item>Eldste først</item>
@@ -138,17 +124,12 @@
     <item>Rekkefølge lagt til</item>
     <item>Rekkefølge klar</item>
   </string-array>
-  <string name="menu_cardbrowser">Kortutforsker</string>
   <string name="show_hint">Show %s</string>
-  <string name="pref_lang_other">Spåkinnstillinger</string>
-  <string name="pref_font_UI">Tilpasset tekst</string>
   <string name="info_rate">Bedøm AnkiDroid</string>
   <string name="col_load_failed">Henting av samling mislykkes.\nVelg tilbake for å lukke AnkiDroid.</string>
   <string name="import_title">Importer kort</string>
   <string name="import_select_title">Choose a file to import</string>
-  <string name="import_message">Add content of file %s to your collection or replace your collection with it?</string>
   <string name="import_message_add">Add</string>
-  <string name="import_message_replace">Replace</string>
   <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s</string>
   <string name="import_message_add_confirm">Add \"%s\" to collection? This may take a long time</string>
   <string name="import_log_success">Importerte %d kort problemfritt</string>
@@ -170,13 +151,8 @@
   <string name="study_options">Deck options</string>
   <string name="custom_study">Custom study</string>
   <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
-  <string name="exit_wizard">Exit Wizard</string>
   <string name="steps_error">Steps must be numbers greater than 0</string>
   <string name="steps_min_error">At least one step is required</string>
-  <string name="custom_study_invalid_number">Invalid number</string>
-  <string name="template_error">Template error</string>
-  <string name="template_error_detail">The card template contains an error</string>
-  <string name="template_error_fix">Use the card editor on the desktop client to fix it.</string>
   <string name="sched_end">(end)</string>
   <string name="sched_unbury_button">To see them now, touch the \"Unbury\" button.</string>
   <string name="sched_has_buried">Some related or buried cards were delayed until tomorrow.</string>

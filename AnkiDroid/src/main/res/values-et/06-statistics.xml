@@ -39,7 +39,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="statistics_menu">Statistika</string>
   <string name="statistics_young">Young</string>
   <string name="statistics_mature">Mature</string>
   <string name="statistics_young_and_learn">Young+Learn</string>
@@ -48,7 +47,6 @@
   <string name="statistics_relearn">Relearn</string>
   <string name="statistics_learn">Learn</string>
   <string name="statistics_cram">Cram</string>
-  <string name="statistics_type_title">Statistika</string>
   <string name="stats_cards">Kaardid</string>
   <string name="stats_cards_intervals">Cards with given Interval</string>
   <string name="stats_cumulative_cards">Cumulative Cards</string>
@@ -65,7 +63,6 @@
   <string name="stats_period_month">1 month</string>
   <string name="stats_period_year">1 year</string>
   <string name="stats_period_lifetime">deck life</string>
-  <string name="stats_deck_current">deck</string>
   <string name="stats_deck_collection">collection</string>
   <string name="stats_time_of_day">Time of Day</string>
   <string name="stats_day_of_week">Day of Week</string>
@@ -77,37 +74,7 @@
   <string name="stats_today_type_breakdown">Learn: &lt;b&gt;%1$s&lt;/b&gt;, Review: &lt;b&gt;%2$s&lt;/b&gt;, Relearn: &lt;b&gt;%3$s&lt;/b&gt;, Filtered: &lt;b&gt;%4$s&lt;/b&gt;</string>
   <string name="stats_today_mature_cards">Correct answers on mature cards: %1$d/%2$d (%3$.1f%%)</string>
   <string name="stats_today_no_mature_cards">No mature cards were studied today.</string>
-  <string name="statistics_period_x_axis_minutes">Minutit</string>
-  <string name="statistics_new_cards">Uued kaardid</string>
-  <string name="statistics_failed_cards">Failed cards</string>
-  <string name="statistics_fullscreen">Lülita täisekraanile</string>
-  <string name="calculating_statistics">Arvutab statistikat&#8230;</string>
-  <string name="deck_summary_cards">Kaartide arv:</string>
-  <string name="deck_summary_notes">Number of notes:</string>
-  <string name="deck_summary_cards_mature">Mature cards:</string>
-  <string name="deck_summary_cards_young">Young cards:</string>
-  <string name="deck_summary_cards_unseen">Unseen cards:</string>
-  <string name="deck_summary_card_age">Kaardi vanus</string>
-  <string name="deck_summary_average_interval">Average interval: &lt;b&gt;%.1f&lt;/b&gt; days</string>
-  <string name="deck_summary_answers_correct">Õiged vastused</string>
-  <string name="deck_summary_answers_mature">Mature cards: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; %2$s (%3$d of %4$d)</string>
-  <string name="deck_summary_answers_young">Young cards: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d of %4$d)</string>
-  <string name="deck_summary_answers_firstseen">Seen the first time: &lt;b&gt;%1$.1f %2$s&lt;/b&gt; (%3$d of %4$d)</string>
-  <string name="deck_summary_reviews">Reviews:</string>
-  <string name="deck_summary_news">New cards:</string>
-  <string name="deck_summary_average_week">Average seen last week</string>
-  <string name="deck_summary_average_month">Average seen last month</string>
-  <string name="deck_summary_average_year">Average seen last year</string>
-  <string name="deck_summary_average_total">Average seen ever</string>
-  <string name="deck_summary_forecast">Forecast</string>
-  <string name="deck_summary_tomorrow_due">Tomorrow due: &lt;b&gt;%d&lt;/b&gt; cards</string>
-  <string name="deck_summary_tomorrow_new">Tomorrow new: &lt;b&gt;%d&lt;/b&gt; cards</string>
-  <string name="deck_summary_tomorrow_time">Estimated time tomorrow: &lt;b&gt;%d&lt;/b&gt; min.</string>
-  <string name="deck_summary_finished_in">New cards finished in: &lt;b&gt;%d&lt;/b&gt; days</string>
-  <string name="deck_summary_cards_per_day">&lt;b&gt;%.1f&lt;/b&gt; cards/day</string>
-  <string name="deck_summary_deck_age">Deck age: &lt;b&gt;%d&lt;/b&gt; days</string>
   <string name="deck_summary_all_decks">Kõik kaardipakid</string>
-  <string name="stats_select_decks">Select deck</string>
   <string name="stats_select_time_scale">Select timescale</string>
   <string-array name="next_review_in_s">
     <item>in 1 second</item>

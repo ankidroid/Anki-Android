@@ -51,14 +51,6 @@
     <item quantity="one">%1$d baralho</item>
     <item quantity="other">%1$d baralhos</item>
   </plurals>
-  <string name="widget_medium">AnkiDroid médio</string>
   <string name="widget_small">AnkiDroid pequeno</string>
-  <string name="widget_big">AnkiDroid grande</string>
-  <string name="widget_big_restrictions_dialog">Devido a algumas restrições da plataforma de widgets do Android, este widget só pode mostrar texto e não imagens, sons, etc.</string>
-  <string name="open_in_reviewer">Abrir baralho no AnkiDroid</string>
-  <plurals name="widget_big_eta">
-    <item quantity="one">Tempo estimado: %d min.</item>
-    <item quantity="other">Tempo estimado: %d min.</item>
-  </plurals>
   <string name="widget_big_tomorrow_due">Agendadas amanhã:</string>
 </resources>

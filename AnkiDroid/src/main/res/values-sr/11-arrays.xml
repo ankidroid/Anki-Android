@@ -35,14 +35,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="navigation_titles">
-    <item>Шпилови</item>
-    <item>Прегледач картица</item>
-    <item>Статистика</item>
-    <item>Подешавања</item>
-    <item>Помоћ</item>
-    <item>Пошалјите предлог</item>
-  </string-array>
   <string-array name="newCardSchedulingLabels">
     <item>Помешај по прегледу</item>
     <item>После прегледа</item>

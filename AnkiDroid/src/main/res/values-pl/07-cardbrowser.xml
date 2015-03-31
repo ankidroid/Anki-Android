@@ -44,8 +44,6 @@
     <item quantity="other">%d kart pokazanych</item>
   </plurals>
   <string name="card_browser_all_decks">Wszystkie talie</string>
-  <string name="card_browser_load">Ładowanie kart.\nProszę czekać...</string>
-  <string name="card_browser_cardloading_error">Błąd podczas wczytywania kart. Możliwą przyczyną jest ograniczenie pamięci na urządzeniu. Spróbuj ponownie z mniejszą talią</string>
   <string name="card_browser_delete_card">Usuń notatkę</string>
   <string name="card_browser_suspend_card">Zawieś kartę</string>
   <string name="card_browser_unsuspend_card">Odwieś kartę</string>
@@ -54,36 +52,20 @@
   <string name="delete_card_title">Usuń notatkę</string>
   <string name="delete_card_message">Naprawdę usunąć wszystkie karty tej notatki?\nPole wyszukiwania: %s</string>
   <string name="card_browser_show_marked">Odfiltruj zaznaczone</string>
-  <string name="card_browser_field">Zmień pole przeglądarki kart</string>
-  <string name="card_browser_field_title">Zmień pole przeglądarki kart</string>
   <string name="card_browser_show_suspended">Odfiltruj zawieszone</string>
   <string name="card_browser_search_by_tag">Filtruj po etykiecie</string>
   <string name="card_browser_tags_shown">Etykiety: %1$s</string>
   <string name="card_browser_change_display_order">Zmień kolejność wyświetlania</string>
   <string name="card_browser_change_display_order_title">Wybierz kolejność wyświetlania</string>
   <string name="card_browser_change_display_order_reverse">Zaznacz pole podwójnie aby odwrócić.</string>
-  <string name="card_browser_order_reverse">(odwróć)</string>
   <string name="card_details_question">Pytanie</string>
   <string name="card_details_answer">Odpowiedź</string>
   <string name="card_details_due">Do przejrzenia</string>
-  <string name="card_details_last_due">Ostatnia do przejrzenia</string>
-  <string name="card_details_now">Teraz</string>
-  <string name="card_details_interval">Odstęp</string>
-  <string name="card_details_ease">Łatwość</string>
-  <string name="card_details_average_time">Średni czas</string>
-  <string name="card_details_total_time">Całkowity czas</string>
-  <string name="card_details_yes_count">Licznik \"tak\"</string>
-  <string name="card_details_no_count">Licznik \"nie\"</string>
-  <string name="card_details_added">Dodano</string>
-  <string name="card_details_changed">Zmieniono</string>
   <string name="card_details_tags">Etykiety</string>
-  <string name="card_details_model">Typ notatki</string>
-  <string name="card_browser_sorting_cards">Sortowanie kart.\nProszę czekać...</string>
   <string name="card_browser_filtering_cards">Filtrowanie kart&#8230; \nAby przerwać, wciśnij przycisk powrotu</string>
-  <string name="card_details_card_model">Model karty</string>
   <string-array name="card_browser_order_labels">
     <item>Bez sortowania (szybciej)</item>
-    <item>Wg pola wyszukiwania</item>
+    <item>By sort field</item>
     <item>Wg utworzenia</item>
     <item>Wg zmodyfikowania</item>
     <item>Według czasu zmiany</item>

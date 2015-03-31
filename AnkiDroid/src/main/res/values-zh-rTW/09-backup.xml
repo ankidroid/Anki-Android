@@ -39,13 +39,9 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="backup_collection">建立備份中。\n請稍候...</string>
   <string name="backup_deck_no_space_left">無法執行上一次的備份，因為記憶卡中沒有足夠空間。\n\n請釋放一些空間或是減少備份的量。</string>
   <string name="sd_space_warning">記憶卡少於%d mb的空間. 請釋放一些空間以避免資料遺失. </string>
-  <string name="backup_deck_success">備份檔案已經成功建立</string>
-  <string name="backup_manager_title">備份檔管理員</string>
   <string name="backup_delete">刪除備份中\n請稍後...</string>
-  <string name="contextmenu_deckpicker_remove_backups">移除備份</string>
   <string name="backup_restore">從備份還原</string>
   <string name="backup_new_collection">新的收藏</string>
   <string name="backup_del_collection">刪除收藏，並建立新的收藏</string>
@@ -59,10 +55,7 @@
   <string name="backup_repair_deck">修復</string>
   <string name="backup_repair_deck_progress">修復資料庫中\n請稍後...</string>
   <string name="backup_error">Error</string>
-  <string name="backup_restore_error">無法還原收藏</string>
   <string name="backup_invalid_file_error">The selected backup file was invalid</string>
-  <string name="backup_restore_if_missing">若失去集合，正恢復中&#8230;</string>
-  <string name="backup_restore_deck">正在還原收藏\n請稍後...</string>
   <string name="backup_restore_select_title">請選擇要還原的備份檔案</string>
   <string name="backup_restore_no_backups">裝置上沒有可用來還原收藏的備份檔案，如果你的電腦上有備份檔，請手動複製到你的 AnkiDroid 資料夾裡。</string>
   <string name="open_collection_failed_title">無法打開您的收藏</string>
