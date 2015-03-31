@@ -34,15 +34,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="multimedia_editor_languages_russian">روسی</string>
-  <string name="multimedia_editor_languages_german">آلمانی</string>
-  <string name="multimedia_editor_languages_nepali">نپالی</string>
-  <string name="multimedia_editor_languages_slovak">اسلوواک</string>
-  <string name="multimedia_editor_languages_french">فرانسوی</string>
-  <string name="multimedia_editor_languages_spanish">اسپانیایی</string>
-  <string name="multimedia_editor_languages_mandarin">ماندارین</string>
-  <string name="multimedia_editor_languages_portuguese">پرتقالی</string>
-  <string name="multimedia_editor_languages_english">انگلیسی</string>
   <string name="multimedia_editor_popup_image">افزودن تصویر</string>
   <string name="multimedia_editor_popup_audio">ضبط صدا</string>
   <string name="multimedia_editor_popup_text">ویرایش‌گر پیشرفته</string>
@@ -83,13 +74,6 @@
   <string name="multimedia_editor_text_field_editing_no_text">ابتدا کمی متن وارد کنید</string>
   <string name="multimedia_editor_text_field_editing_many_words">واژه‌نامه معمولا یک کلمه را می‌پذیرد</string>
   <string name="multimedia_editor_text_field_editing_clone_source">کپی از</string>
-  <string name="multimedia_editor_activity_note_type">نوع یادداشت</string>
-  <string name="multimedia_editor_activity_deck">دسته</string>
-  <string name="multimedia_editor_activity_edit_button">ویرایش</string>
-  <string name="multimedia_editor_activity_swap_button">جابجایی</string>
-  <string name="multimedia_editor_activity_delete_question">کل یادداشت حذف شود؟</string>
-  <string name="multimedia_editor_activity_delete_confirm">حذف کن</string>
-  <string name="multimedia_editor_activity_delete_reject">نگه‌دار</string>
   <string name="multimedia_editor_image_field_editing_galery">گالری</string>
   <string name="multimedia_editor_image_field_editing_photo">دوربین</string>
   <string name="multimedia_editor_general_downloading">در حال دریافت</string>
@@ -105,7 +89,6 @@
   <string name="multimedia_editor_audio_view_playing_failed">پخش به مشکل خورد</string>
   <string name="title_activity_edit_text">ویرایش فیلد</string>
   <string name="title_activity_translation">ترجمه</string>
-  <string name="title_activity_audio_recorder">ضبط صوت</string>
   <string name="title_activity_load_pronounciation">تلفظ</string>
   <string name="title_activity_search_image">جستجوی تصویری گوگل</string>
 </resources>

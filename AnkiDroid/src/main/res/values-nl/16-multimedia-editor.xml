@@ -34,15 +34,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="multimedia_editor_languages_russian">Russisch</string>
-  <string name="multimedia_editor_languages_german">Duits</string>
-  <string name="multimedia_editor_languages_nepali">Nepalees</string>
-  <string name="multimedia_editor_languages_slovak">Slowaaks</string>
-  <string name="multimedia_editor_languages_french">Frans</string>
-  <string name="multimedia_editor_languages_spanish">Spaans</string>
-  <string name="multimedia_editor_languages_mandarin">Mandarijn</string>
-  <string name="multimedia_editor_languages_portuguese">Portugees</string>
-  <string name="multimedia_editor_languages_english">Engels</string>
   <string name="multimedia_editor_popup_image">Afbeelding toevoegen</string>
   <string name="multimedia_editor_popup_audio">Audio opnemen</string>
   <string name="multimedia_editor_popup_text">Geadvanceerde editor</string>
@@ -83,13 +74,6 @@
   <string name="multimedia_editor_text_field_editing_no_text">Input some text first</string>
   <string name="multimedia_editor_text_field_editing_many_words">Dictionary usually expects one word</string>
   <string name="multimedia_editor_text_field_editing_clone_source">Pak van</string>
-  <string name="multimedia_editor_activity_note_type">Memotype</string>
-  <string name="multimedia_editor_activity_deck">Set</string>
-  <string name="multimedia_editor_activity_edit_button">Bewerken</string>
-  <string name="multimedia_editor_activity_swap_button">Wisselen</string>
-  <string name="multimedia_editor_activity_delete_question">Verwijder de hele memo?</string>
-  <string name="multimedia_editor_activity_delete_confirm">Verwijderen</string>
-  <string name="multimedia_editor_activity_delete_reject">Bewaar</string>
   <string name="multimedia_editor_image_field_editing_galery">Galerij</string>
   <string name="multimedia_editor_image_field_editing_photo">Camera</string>
   <string name="multimedia_editor_general_downloading">Downloaden</string>
@@ -105,7 +89,6 @@
   <string name="multimedia_editor_audio_view_playing_failed">Playing failed</string>
   <string name="title_activity_edit_text">Veld wijzigen</string>
   <string name="title_activity_translation">Vertaling</string>
-  <string name="title_activity_audio_recorder">Audio recorder</string>
   <string name="title_activity_load_pronounciation">Uitspraak</string>
   <string name="title_activity_search_image">Google Image Search</string>
 </resources>

@@ -34,15 +34,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="multimedia_editor_languages_russian">Ryska</string>
-  <string name="multimedia_editor_languages_german">Tyska</string>
-  <string name="multimedia_editor_languages_nepali">Nepali</string>
-  <string name="multimedia_editor_languages_slovak">Slovakiska</string>
-  <string name="multimedia_editor_languages_french">Franska</string>
-  <string name="multimedia_editor_languages_spanish">Spanska</string>
-  <string name="multimedia_editor_languages_mandarin">Mandarin</string>
-  <string name="multimedia_editor_languages_portuguese">Portugisiska</string>
-  <string name="multimedia_editor_languages_english">Engelska</string>
   <string name="multimedia_editor_popup_image">Lägg till bild</string>
   <string name="multimedia_editor_popup_audio">Spela in ljud</string>
   <string name="multimedia_editor_popup_text">Avancerad redigering</string>
@@ -83,13 +74,6 @@
   <string name="multimedia_editor_text_field_editing_no_text">Skriv något först</string>
   <string name="multimedia_editor_text_field_editing_many_words">Ordböcker förväntar sig vanligtvis ett ord</string>
   <string name="multimedia_editor_text_field_editing_clone_source">Ta från</string>
-  <string name="multimedia_editor_activity_note_type">Nottyp</string>
-  <string name="multimedia_editor_activity_deck">Kortlek</string>
-  <string name="multimedia_editor_activity_edit_button">Redigera</string>
-  <string name="multimedia_editor_activity_swap_button">Byt plats</string>
-  <string name="multimedia_editor_activity_delete_question">Ta bort hela noten?</string>
-  <string name="multimedia_editor_activity_delete_confirm">Ta bort</string>
-  <string name="multimedia_editor_activity_delete_reject">Behåll</string>
   <string name="multimedia_editor_image_field_editing_galery">Galleri</string>
   <string name="multimedia_editor_image_field_editing_photo">Kamera</string>
   <string name="multimedia_editor_general_downloading">Laddar ner</string>
@@ -105,7 +89,6 @@
   <string name="multimedia_editor_audio_view_playing_failed">Uppspelning misslyckades</string>
   <string name="title_activity_edit_text">Redigeringsfält</string>
   <string name="title_activity_translation">Översättning</string>
-  <string name="title_activity_audio_recorder">Ljudinspelare</string>
   <string name="title_activity_load_pronounciation">Uttal</string>
   <string name="title_activity_search_image">Google Bildsökning</string>
 </resources>

@@ -34,15 +34,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="multimedia_editor_languages_russian">Russisch</string>
-  <string name="multimedia_editor_languages_german">Deutsch</string>
-  <string name="multimedia_editor_languages_nepali">Nepalesisch</string>
-  <string name="multimedia_editor_languages_slovak">Slowakisch</string>
-  <string name="multimedia_editor_languages_french">Französisch</string>
-  <string name="multimedia_editor_languages_spanish">Spanisch</string>
-  <string name="multimedia_editor_languages_mandarin">Mandarin-Chinesisch</string>
-  <string name="multimedia_editor_languages_portuguese">Portugiesisch</string>
-  <string name="multimedia_editor_languages_english">Englisch</string>
   <string name="multimedia_editor_popup_image">Bild hinzufügen</string>
   <string name="multimedia_editor_popup_audio">Audio aufnehmen</string>
   <string name="multimedia_editor_popup_text">Erweiterter Editor</string>
@@ -83,13 +74,6 @@
   <string name="multimedia_editor_text_field_editing_no_text">Zuerst etwas Text eingeben</string>
   <string name="multimedia_editor_text_field_editing_many_words">Wörterbücher erwarten normalerweise ein einzelnes Wort</string>
   <string name="multimedia_editor_text_field_editing_clone_source">Übernehme von</string>
-  <string name="multimedia_editor_activity_note_type">Notiztyp</string>
-  <string name="multimedia_editor_activity_deck">Stapel</string>
-  <string name="multimedia_editor_activity_edit_button">Bearbeiten</string>
-  <string name="multimedia_editor_activity_swap_button">Tauschen</string>
-  <string name="multimedia_editor_activity_delete_question">Die ganze Notiz löschen?</string>
-  <string name="multimedia_editor_activity_delete_confirm">Löschen</string>
-  <string name="multimedia_editor_activity_delete_reject">Behalten</string>
   <string name="multimedia_editor_image_field_editing_galery">Gallerie</string>
   <string name="multimedia_editor_image_field_editing_photo">Kamera</string>
   <string name="multimedia_editor_general_downloading">Lade herunter</string>
@@ -105,7 +89,6 @@
   <string name="multimedia_editor_audio_view_playing_failed">Abspielen fehlgeschlagen</string>
   <string name="title_activity_edit_text">Bearbeite Feld</string>
   <string name="title_activity_translation">Übersetzung</string>
-  <string name="title_activity_audio_recorder">Tonaufnahme</string>
   <string name="title_activity_load_pronounciation">Aussprache</string>
   <string name="title_activity_search_image">Google-Bildsuche</string>
 </resources>

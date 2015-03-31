@@ -34,15 +34,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="multimedia_editor_languages_russian">Venäjä</string>
-  <string name="multimedia_editor_languages_german">Saksa</string>
-  <string name="multimedia_editor_languages_nepali">Nepali</string>
-  <string name="multimedia_editor_languages_slovak">Slovakki</string>
-  <string name="multimedia_editor_languages_french">Ranska</string>
-  <string name="multimedia_editor_languages_spanish">Espanja</string>
-  <string name="multimedia_editor_languages_mandarin">Mandariinikiina</string>
-  <string name="multimedia_editor_languages_portuguese">Portugali</string>
-  <string name="multimedia_editor_languages_english">Englanti</string>
   <string name="multimedia_editor_popup_image">Lisää kuva</string>
   <string name="multimedia_editor_popup_audio">Tallenna ääntä</string>
   <string name="multimedia_editor_popup_text">Kehittyneempi editori</string>
@@ -83,13 +74,6 @@
   <string name="multimedia_editor_text_field_editing_no_text">Kirjoita hieman tekstiä ensin</string>
   <string name="multimedia_editor_text_field_editing_many_words">Sanakirjat yleensä odottavat yhtä sanaa</string>
   <string name="multimedia_editor_text_field_editing_clone_source">Ota täältä:</string>
-  <string name="multimedia_editor_activity_note_type">Merkinnän tyyppi</string>
-  <string name="multimedia_editor_activity_deck">Pakka</string>
-  <string name="multimedia_editor_activity_edit_button">Muokkaa</string>
-  <string name="multimedia_editor_activity_swap_button">Vaihda</string>
-  <string name="multimedia_editor_activity_delete_question">Poista koko merkintä?</string>
-  <string name="multimedia_editor_activity_delete_confirm">Poista</string>
-  <string name="multimedia_editor_activity_delete_reject">Säilytä</string>
   <string name="multimedia_editor_image_field_editing_galery">Galleria</string>
   <string name="multimedia_editor_image_field_editing_photo">Kamera</string>
   <string name="multimedia_editor_general_downloading">Ladataan</string>
@@ -105,7 +89,6 @@
   <string name="multimedia_editor_audio_view_playing_failed">Toisto epäonnistui</string>
   <string name="title_activity_edit_text">Muokkauskenttä</string>
   <string name="title_activity_translation">Käännös</string>
-  <string name="title_activity_audio_recorder">Äänentallennin</string>
   <string name="title_activity_load_pronounciation">Ääntäminen</string>
   <string name="title_activity_search_image">Googlen kuvahaku</string>
 </resources>

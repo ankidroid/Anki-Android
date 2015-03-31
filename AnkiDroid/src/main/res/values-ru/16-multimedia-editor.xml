@@ -34,15 +34,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="multimedia_editor_languages_russian">Русский</string>
-  <string name="multimedia_editor_languages_german">Немецкий</string>
-  <string name="multimedia_editor_languages_nepali">Непальский</string>
-  <string name="multimedia_editor_languages_slovak">Словацкий</string>
-  <string name="multimedia_editor_languages_french">Французский</string>
-  <string name="multimedia_editor_languages_spanish">Испанский</string>
-  <string name="multimedia_editor_languages_mandarin">Мандаринский</string>
-  <string name="multimedia_editor_languages_portuguese">Португальский</string>
-  <string name="multimedia_editor_languages_english">Английский</string>
   <string name="multimedia_editor_popup_image">Добавить изображение</string>
   <string name="multimedia_editor_popup_audio">Записать аудио</string>
   <string name="multimedia_editor_popup_text">Расширенный редактор</string>
@@ -83,13 +74,6 @@
   <string name="multimedia_editor_text_field_editing_no_text">Сперва введите текст</string>
   <string name="multimedia_editor_text_field_editing_many_words">Словарь обычно ожидает одно слово</string>
   <string name="multimedia_editor_text_field_editing_clone_source">Принять от</string>
-  <string name="multimedia_editor_activity_note_type">Тип заметки</string>
-  <string name="multimedia_editor_activity_deck">Колода</string>
-  <string name="multimedia_editor_activity_edit_button">Редактировать</string>
-  <string name="multimedia_editor_activity_swap_button">Обмен</string>
-  <string name="multimedia_editor_activity_delete_question">Удалить всю заметку?</string>
-  <string name="multimedia_editor_activity_delete_confirm">Удалить</string>
-  <string name="multimedia_editor_activity_delete_reject">Оставить</string>
   <string name="multimedia_editor_image_field_editing_galery">Галерея</string>
   <string name="multimedia_editor_image_field_editing_photo">Камера</string>
   <string name="multimedia_editor_general_downloading">Загрузка</string>
@@ -105,7 +89,6 @@
   <string name="multimedia_editor_audio_view_playing_failed">Проигрывание не удалось</string>
   <string name="title_activity_edit_text">Поле редактирования</string>
   <string name="title_activity_translation">Перевод</string>
-  <string name="title_activity_audio_recorder">Запись аудио</string>
   <string name="title_activity_load_pronounciation">Произношение</string>
   <string name="title_activity_search_image">Google Image Search</string>
 </resources>
