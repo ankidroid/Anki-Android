@@ -27,7 +27,7 @@ languages = ['ar', 'bg', 'ca', 'cs', 'de', 'el', 'es-AR', 'es-ES', 'et', 'fa', '
 # languages which are localized for more than one region
 localizedRegions = ['es', 'pt', 'zh']
 
-fileNames = ['01-core', '02-strings', '03-dialogs', '04-network', '05-feedback', '06-statistics', '07-cardbrowser', '08-widget', '09-backup', '10-preferences', '11-arrays', '13-newfeatures', '14-marketdescription', '15-markettitle', '16-multimedia-editor']
+fileNames = ['01-core', '02-strings', '03-dialogs', '04-network', '05-feedback', '06-statistics', '07-cardbrowser', '08-widget', '09-backup', '10-preferences', '11-arrays', '14-marketdescription', '15-markettitle', '16-multimedia-editor']
 anyError = False
 titleFile = 'docs/marketing/localized_description/ankidroid-titles.txt'
 titleString = 'AnkiDroid Flashcards'
