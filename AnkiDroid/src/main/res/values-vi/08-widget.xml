@@ -42,23 +42,23 @@
   <string name="widget_minimum_cards_due_notification_ticker_title">Những thẻ tới hạn</string>
   <string name="widget_minimum_cards_due_notification_ticker_text">Hạn của bài AnkiDroid</string>
   <string name="widget_no_cards_due">Không có thẻ tới hạn</string>
-  <string name="widget_loading">Widget loading&#8230;</string>
+  <string name="widget_loading">Đang tải widget...</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">%1$d card due in %2$s</item>
-    <item quantity="other">%1$d cards due in %2$s</item>
+    <item quantity="one">%1$d thẻ theo như trong %2$s</item>
+    <item quantity="other">%1$d các thẻ theo như trong %2$s</item>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="one">%1$d deck</item>
-    <item quantity="other">%1$d decks</item>
+    <item quantity="one">%1$d chủ đề</item>
+    <item quantity="other">%1$d các chủ đề</item>
   </plurals>
-  <string name="widget_medium">AnkiDroid medium</string>
-  <string name="widget_small">AnkiDroid small</string>
-  <string name="widget_big">AnkiDroid big</string>
-  <string name="widget_big_restrictions_dialog">Due to some restrictions of Android\'s widget framework this widget can only show text but no images/sounds etc.</string>
-  <string name="open_in_reviewer">Open deck in AnkiDroid</string>
+  <string name="widget_medium">Phương tiện truyền thông AnkiDroid</string>
+  <string name="widget_small">AnkiDroid nhỏ</string>
+  <string name="widget_big">AnkiDroid lớn</string>
+  <string name="widget_big_restrictions_dialog">Do một số hạn chế của Android của khung widget mà widget này chỉ có thể hiển thị văn bản nhưng không có hình ảnh/âm thanh vv.</string>
+  <string name="open_in_reviewer">Mở chủ đề trong AnkiDroid</string>
   <plurals name="widget_big_eta">
-    <item quantity="one">Estimated time: %d min.</item>
-    <item quantity="other">Estimated time: %d min.</item>
+    <item quantity="one">Thời gian ước tính:  %d phút.</item>
+    <item quantity="other">Thời gian ước tính:  %d phút.</item>
   </plurals>
-  <string name="widget_big_tomorrow_due">Tomorrow due:</string>
+  <string name="widget_big_tomorrow_due">Theo ngày mai:</string>
 </resources>

@@ -150,7 +150,7 @@
   <string name="studyoptions_congrats_more_rev">Dzisiejszy limit powtórek został wyczerpany, ale wciąż pozostają karty do przejrzenia. Dla optymalnego zapamiętywania proszę rozważyć zwiększenie dziennego limitu w ustawieniach.</string>
   <string name="studyoptions_congrats_more_new">Pozostało więcej kart do przejrzenia, ale dzienny limit został osiągnięty. Możesz zwiększyć limit w opcjach, ale miej na uwadze, że zwiększy to ilość powtórzeń w najbliższych dniach.</string>
   <string name="studyoptions_congrats_custom">Aby kontynuować naukę poza zwykłym schematem kliknij przycisk Nauki Niestandardowej poniżej.</string>
-  <string name="studyoptions_no_cards_due">No cards are due yet.</string>
+  <string name="studyoptions_no_cards_due">Nie ma żadnych kart do przejrzenia.</string>
   <plurals name="studyoptions_congrats_message">
     <item quantity="one">Jutro będzie %1$d kart do przejrzenia oraz %2$s.\n Szacowany czas: %3$s</item>
     <item quantity="other">Jutro będzie %1$d kart do powtórki i %2$s.\n Szacowany czas: %3$s</item>
@@ -180,18 +180,18 @@
   <string name="confirm">Potwierdź</string>
   <string name="internet">Internet</string>
   <string name="pc">PC</string>
-  <string name="nothing">Nothing</string>
+  <string name="nothing">Nic</string>
   <string name="title_activity_graphical_activity">Statystyczny wykres</string>
-  <string name="title_activity_template_editor">Card Types for %s</string>
-  <string name="card_template_editor_front">Front Template</string>
-  <string name="card_template_editor_back">Back Template</string>
-  <string name="card_template_editor_styling">Styling</string>
-  <string name="card_template_editor_menu_add_reverse">Add reverse</string>
+  <string name="title_activity_template_editor">Typy kart dla %s</string>
+  <string name="card_template_editor_front">Szablon przodu</string>
+  <string name="card_template_editor_back">Szablon tyłu</string>
+  <string name="card_template_editor_styling">Styl</string>
+  <string name="card_template_editor_menu_add_reverse">Dodaj odwrotność</string>
   <string name="card_template_editor_menu_delete">Usuń</string>
   <string name="card_template_editor_cant_delete">Wymagany jest przynajmniej jeden typ karty.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
-    <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
+    <item quantity="one">Usunąć typ karty \'%2$s\' i jego kartę %1$d?</item>
+    <item quantity="other">Usunąć typ karty \'%2$s\' i jego karty %1$d?</item>
   </plurals>
-  <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create a new card type first.</string>
+  <string name="card_template_editor_would_delete_note">Usunięcie typu karty może spowodować usunięcie jednej lub większej ilości notatek. Proszę o utworzenie najpierw nowej karty.</string>
 </resources>

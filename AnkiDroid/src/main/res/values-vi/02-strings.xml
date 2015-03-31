@@ -42,18 +42,18 @@
   <string name="drawer_open">Mở ngăn kéo</string>
   <string name="drawer_close">Đóng ngăn kéo</string>
   <string name="CardEditorLaterMessage">Lưu thông tin cho sau này</string>
-  <string name="CardEditorCardDeck">Card deck:</string>
-  <string name="CardEditorNoteDeck">Deck:</string>
-  <string name="CardEditorModel">Type:</string>
+  <string name="CardEditorCardDeck">Chủ đề thẻ:</string>
+  <string name="CardEditorNoteDeck">Chủ đề:</string>
+  <string name="CardEditorModel">Loại:</string>
   <string name="CardEditorTags">Từ khóa: %1$s</string>
-  <string name="CardEditorCards">Cards: %1$s</string>
+  <string name="CardEditorCards">Thẻ: %1$s</string>
   <string name="add_new_filter_tags">Thêm/ Loại bỏ các Tag đánh dấu</string>
   <string name="note_type">Kiểu ghi chú</string>
   <string name="card_type">Kiểu Thẻ</string>
   <string name="filter_tags">các bộ lọc đánh dấu</string>
   <string name="sdcard_missing_message">Thẻ SD hiện đang được sử dụng như một ổ lưu trữ USB. Hãy ngắt kết nối USB để có thể truy cập được vào các tập thẻ của bạn.</string>
-  <string name="enable_whiteboard">Enable whiteboard</string>
-  <string name="disable_whiteboard">Disable whiteboard</string>
+  <string name="enable_whiteboard">Bật  bảng whiteboard</string>
+  <string name="disable_whiteboard">Tắt bảng whiteboard</string>
   <string name="show_whiteboard">Hiện Bảng viết</string>
   <string name="hide_whiteboard">Ẩn bảng viết</string>
   <string name="clear_whiteboard">Xóa bảng viết</string>
@@ -64,7 +64,7 @@
   <string name="leech_notification">Bài được đánh dấu như đã tải về</string>
   <string name="corrupt_font">Lỗi font dữ liệu %s</string>
   <string-array name="browser_column1_headings">
-    <item>Sort field</item>
+    <item>Trường loại </item>
   </string-array>
   <string-array name="browser_column2_headings">
     <item>Trả lời</item>
@@ -78,25 +78,25 @@
   </string-array>
   <string name="cardeditor_title_add_note">Thêm ghi chú</string>
   <string name="cardeditor_title_edit_card">Sửa ghi chú</string>
-  <string name="discard_unsaved_changes">Close and lose current input?</string>
+  <string name="discard_unsaved_changes">Đóng lại và mất đầu vào hiện tại?</string>
   <string name="factadder_saving_error">Lỗi khi lưu lưu ý</string>
   <string name="pref_lang_support">Ngôn ngữ</string>
   <string name="saving_facts">Lưu ghi chú</string>
-  <string name="saving_model">Saving model</string>
+  <string name="saving_model">Tiết kiệm các mô hình</string>
   <string name="deck">Bài</string>
   <string name="add">Thêm</string>
   <string name="close">Đóng</string>
   <string name="select">Chọn</string>
   <string name="saving_changes">Đang lưu các sửa đồi...</string>
   <string name="reordering_cards">Đang sắp sếp lại các thẻ...</string>
-  <string name="field_remapping">%1$s (from \'%2$s\')</string>
-  <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
+  <string name="field_remapping">%1$s (từ \'%2$s\')</string>
+  <string name="confirm_map_cards_to_nothing">Bất kỳ thẻ để không có gì sẽ bị xóa. Nếu một chú thích đã không lưu giữ trong các thẻ, nó sẽ bị mất. Bạn có chắc bạn muốn tiếp tục không?</string>
   <plurals name="timebox_reached">
-    <item quantity="one">%1$d card studied in %2$s</item>
+    <item quantity="one">%1$d Các thẻ đã học trong %2$s</item>
     <item quantity="other">%1$d Các thẻ đã được học trong %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
-    <item quantity="one">%1$d minute</item>
+    <item quantity="one">%1$d phút</item>
     <item quantity="other">%1$d phút</item>
   </plurals>
   <string name="studyoptions_welcome_title">Chào mừng đến với AnkiDroid</string>
@@ -109,21 +109,21 @@
   <string name="card_editor_reset">Thiết lập lại</string>
   <string name="card_editor_copy_card">Sao chép thẻ</string>
   <string name="card_editor_reset_card">Thiết lập lại quá trình học</string>
-  <string name="card_editor_reschedule_card">Reschedule card</string>
+  <string name="card_editor_reschedule_card">Lên lịch lại với thẻ</string>
   <string name="card_editor_preview_card">Xem lại</string>
   <string name="error_insufficient_memory">Không thể thao tác vì không đủ bộ nhớ trên thiết bị của bạn</string>
   <string name="rename">Đổi tên</string>
   <string name="rename_error">Không thể đổi tên tập thẻ %s</string>
   <string name="default_conf_delete_error">Nhóm tùy chọn mặc định không thể được gỡ bỏ</string>
   <plurals name="factadder_cards_added">
-    <item quantity="one">%d card added</item>
+    <item quantity="one">%d thẻ đã thêm</item>
     <item quantity="other">Đã thêm vào %d thẻ</item>
   </plurals>
   <string name="help_title">Trợ giúp</string>
   <string name="help_online">Trợ giúp trực tuyến</string>
   <string name="help_faq">CÂU HỎI THƯỜNG GẶP</string>
   <string name="check_db">Kiểm tra cơ sở dữ liệu</string>
-  <string name="check_media">Check media</string>
+  <string name="check_media">Kiểm tra các phương tiện truyền thông</string>
   <string name="check_db_message">Đang kiểm tra cơ sở dữ liệu. \n Xin đợi chút...</string>
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Thẻ rỗng. Chạy \"công cụ &gt; Làm trống các thẻ...\" trên máy tính để bàn.</string>
   <string name="unknown_type_field_warning">Nhập câu trả lời: không biết trường %s</string>
@@ -139,32 +139,32 @@
     <item>Thêm giới hạn</item>
   </string-array>
   <string name="menu_cardbrowser">Trình duyệt Thẻ</string>
-  <string name="show_hint">Show %s</string>
+  <string name="show_hint">Hiển thị %s</string>
   <string name="pref_lang_other">Các tùy chọn ngôn ngữ</string>
   <string name="pref_font_UI">Tùy chỉnh Font chữ</string>
   <string name="info_rate">Đánh giá AnkiDroid, Yêu bạn quá đê!</string>
   <string name="col_load_failed">Tải dữ liệu bị lỗi.\nẤn quay lại để đóng AnkiDroid</string>
   <string name="import_title">Nhập Các Thẻ</string>
-  <string name="import_select_title">Choose a file to import</string>
+  <string name="import_select_title">Chọn một tệp để chuyển nhập</string>
   <string name="import_message">Bạn có muốn thêm nội dung của tệp %s vào Dữ liệu của bạn, hoặc thay thế dữ liệu của bạn không?</string>
   <string name="import_message_add">Thêm</string>
   <string name="import_message_replace">Thay thế</string>
   <string name="import_message_replace_confirm">Bạn có chắc không. ĐIều này sẽ xóa toàn bộ dữ liệu hiện có, và thay thế bằng dữ liệu của file %s.</string>
-  <string name="import_message_add_confirm">Add \"%s\" to collection? This may take a long time</string>
+  <string name="import_message_add_confirm">Thêm \"%s\" vào bộ sưu tập? Điều này có thể mất một một khoảng thời gian </string>
   <string name="import_log_success">Hoàn thiện nhập dữ liệu %d Các thẻ</string>
   <string name="import_log_error">Nhập thất bại</string>
   <string name="import_log_no_apkg">Đây không phải tập tin apkg hợp lệ</string>
-  <string name="import_error_not_apkg_extension">Filename %s does not have .apkg extension</string>
-  <string name="import_error_content_provider">The selected file could not be imported automatically by AnkiDroid. Please see the user manual for how to manually import anki files: \n %s</string>
+  <string name="import_error_not_apkg_extension">Tên tập tin %s không có phần mở rộng .apkg</string>
+  <string name="import_error_content_provider">Tệp đã chọn không có thể được nhập khẩu tự động bởi AnkiDroid. Xin vui lòng xem hướng dẫn sử dụng để làm thế nào để chuyển nhập thủ công anki tập tin: \n %s</string>
   <string name="import_importing">Đang nhập thẻ.\nXin chờ chút...</string>
-  <string name="export_include_schedule">Include scheduling</string>
-  <string name="export_include_media">Include media</string>
-  <string name="confirm_apkg_export">Export collection as apkg file?</string>
-  <string name="confirm_apkg_export_deck">Export \"%s\" as apkg file?</string>
-  <string name="export_in_progress">Exporting apkg file&#8230;</string>
-  <string name="export_successful_title">Email apkg?</string>
-  <string name="export_successful">File \"%s\" was exported. Do you want to email it?</string>
-  <string name="export_unsuccessful">Error exporting collection</string>
+  <string name="export_include_schedule">Bao gồm việc lập kế hoạch</string>
+  <string name="export_include_media">Bao gồm các phương tiện truyền thông</string>
+  <string name="confirm_apkg_export">Xuất khẩu các bộ sưu tập dưới dạng tệp apkg?</string>
+  <string name="confirm_apkg_export_deck">Xuất khẩu \"%s\" dưới dạng tệp apkg?</string>
+  <string name="export_in_progress">Xuất khẩu tập tin apkg...</string>
+  <string name="export_successful_title">Gửi email cho apkg?</string>
+  <string name="export_successful">Tập tin \"%s\" đã được xuất khẩu. Bạn có muốn gửi email cho nó?</string>
+  <string name="export_unsuccessful">Lỗi xuất chuyển bộ sưu tập</string>
   <string name="import_hint">Để nhập thẻ, đặt tập tin apkg vào đường dẫn %s và bấm ok</string>
   <string name="upgrade_import_no_file_found">Không tìm thấy %1$s tập tin có thể nhập</string>
   <string name="study_options">Tùy chọn Bài</string>
@@ -180,8 +180,8 @@
   <string name="sched_end">(kết thúc)</string>
   <string name="sched_unbury_button">Để nhìn thấy chúng bây giờ, hãy nhấp vào nút Hồi phục.</string>
   <string name="sched_has_buried">Một số Thẻ liên quan hoặc bị chôn vùi bị trì hoãn cho đến ngày mai.</string>
-  <string name="tag_editor_add_hint">Use tick mark on the right to add new tag</string>
-  <string name="tag_editor_add_feedback">Press \"%2$s\" button to confirm adding \"%1$s\"</string>
-  <string name="lookup_hint">After copying the text, tap anywhere on the flashcard to show the search icon</string>
-  <string name="add_content_showcase_text">To get started, tap the + button to add some new study material.\n\n Press \'Help\' to see the manual.</string>
+  <string name="tag_editor_add_hint">Sử dụng dấu hiệu đánh dấu ở bên phải để thêm từ khóa mới</string>
+  <string name="tag_editor_add_feedback">Bấm nút \"%2$s\" nút để xác nhận thêm \"%1$s\"</string>
+  <string name="lookup_hint">Sau khi sao chép văn bản, bấm vào bất cứ nơi nào trên flashcard để hiển thị biểu tượng tìm kiếm</string>
+  <string name="add_content_showcase_text">Để bắt đầu, hãy nhấp vào các nút (+) để thêm mới một số thứ cần học tập.\n\n Bấm vào \'Trợ giúp\' để xem hướng dẫn sử dụng.</string>
 </resources>
