@@ -27,7 +27,7 @@
                 android:layout_weight="2"
                 android:orientation="vertical" >
 
-                <ListView
+                <android.support.v7.widget.RecyclerView
                     android:id="@+id/files"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
