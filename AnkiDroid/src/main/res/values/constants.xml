@@ -101,14 +101,6 @@
         <item>16</item>
         <item>17</item>
     </string-array>
-    <string-array name="theme_values">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-    </string-array>
-
     <string name="link_anki">http://ankisrs.net</string>
     <string name="link_forum">http://groups.google.com/group/anki-android</string>
     <string name="link_wiki">http://code.google.com/p/ankidroid/wiki/Index</string>
@@ -139,42 +131,10 @@
         <item>0</item>
         <item>1</item>
     </string-array>
-    <string-array name="rev_order_values">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-    </string-array>
-
     <string name="deck_conf_percent">XXX \%%</string>
 
-    <string-array name="zeemote_action_values">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
-        <item>7</item>
-        <item>8</item>
-        <item>9</item>
-        <item>10</item>
-        <item>11</item>
-        <item>12</item>
-        <item>13</item>
-        <item>14</item>
-    </string-array>
     <string-array name="cram_deck_conf_order_values">
         <item>0</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
-        <item>7</item>
-    </string-array>
-    <string-array name="custom_study_options_values">
         <item>1</item>
         <item>2</item>
         <item>3</item>
