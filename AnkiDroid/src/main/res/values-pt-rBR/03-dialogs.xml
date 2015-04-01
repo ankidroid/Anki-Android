@@ -47,7 +47,6 @@
   <string name="delete_deck_title">Excluir Deck</string>
   <string name="delete_deck_message">Tem certeza que deseja excluir todas os cartões em %s?</string>
   <string name="delete_cram_deck_message">Você tem certeza de que deseja enviar todos os cartões em %s para os seus decks originais?</string>
-  <string name="new_version_message">Novos Recursos:</string>
   <string name="no_tts_available_message">Nenhum idioma de texto para fala disponível</string>
   <string name="initializing_tts">Inicializando TTS&#8230;</string>
   <string name="tts_no_tts">Não fale</string>

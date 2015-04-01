@@ -86,12 +86,12 @@
   <string name="field_remapping">%1$s (from \'%2$s\')</string>
   <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
   <plurals name="timebox_reached">
-    <item quantity="one">%1$d kortti opiskeltu ajassa %2$s</item>
-    <item quantity="other">%1$d korttia opiskeltu ajassa %2$s</item>
+    <item quantity="one">%1$d card studied in %2$s</item>
+    <item quantity="other">%1$d cards studied in %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
-    <item quantity="one">%1$d minuutti</item>
-    <item quantity="other">%1$d minuuttia</item>
+    <item quantity="one">%1$d minute</item>
+    <item quantity="other">%1$d minutes</item>
   </plurals>
   <string name="studyoptions_welcome_title">Tervetuloa AnkiDroidiin</string>
   <string name="fact_adder_intent_title">AnkiDroid-kortti</string>
@@ -105,8 +105,8 @@
   <string name="rename_error">Pakkaa %s ei voitu nimetä uudelleen</string>
   <string name="default_conf_delete_error">Oletusasetusryhmää ei voi poistaa</string>
   <plurals name="factadder_cards_added">
-    <item quantity="one">%d korttia lisätty</item>
-    <item quantity="other">%d korttia lisätty</item>
+    <item quantity="one">%d card added</item>
+    <item quantity="other">%d cards added</item>
   </plurals>
   <string name="help_title">Ohje</string>
   <string name="check_db">Tarkasta tietokanta</string>
@@ -115,15 +115,6 @@
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Tyhjä kortti. Aja \"Työkalut&gt;Tyhjät kortit\" työpöytäsovelluksessa.</string>
   <string name="unknown_type_field_warning">Kirjoita vastaus: tuntematon kenttä %s</string>
   <string name="delete_deck">Poistetaan pakkaa&#8230;</string>
-  <string-array name="dynOrderLabels">
-    <item>Vanhin ensin</item>
-    <item>Satunnainen</item>
-    <item>Kasvavin välein</item>
-    <item>Vähentyvin välein</item>
-    <item>Eniten virheitä</item>
-    <item>Lisäysjärjestyksessä</item>
-    <item>Näytä kertausjärjestyksessä</item>
-  </string-array>
   <string name="show_hint">Näytä %s</string>
   <string name="info_rate">Arvostele AnkiDroid</string>
   <string name="col_load_failed">Kokoelman lataaminen epäonnistui.\nPaina Takaisin-painiketta sulkeaksesi AnkiDroidin.</string>

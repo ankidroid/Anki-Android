@@ -172,8 +172,8 @@
   <string name="deck_conf_deck_description">Pakan kuvaus</string>
   <string name="deck_conf_group">Asetusryhmä</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n%2$d pakka käyttää tätä ryhmää</item>
-    <item quantity="other">%1$s\n%2$d pakkaa käyttää tätä ryhmää</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <string name="deck_conf_new_cards">Uusia kortteja</string>
   <string name="deck_conf_rev_cards">Kertauksia</string>
@@ -218,8 +218,8 @@
   <string name="deck_conf_remove_message">Poista nykyinen asetusryhmä?</string>
   <string name="deck_conf_set_subdecks">Aseta kaikille alipakoille</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">%s alipakka käyttää tätä ryhmää</item>
-    <item quantity="other">%s alipakkaa käyttää tätä ryhmää</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Aseta kaikille alipakoille</string>
   <string name="deck_conf_set_subdecks_message">Aseta nykyinen asetusryhmä kaikille tämän pakan alipakoille?</string>

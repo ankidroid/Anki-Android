@@ -52,16 +52,22 @@
   <string name="studyoptions_eta">Процењено време (мин):</string>
   <string name="studyoptions_start">Започни учење</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%1$d карата за (%2$s)</item>
-    <item quantity="other">%1$d карата за (%2$s)</item>
+    <item quantity="one"/>
+    <item quantity="few"/>
+    <item quantity="many"/>
+    <item quantity="other"/>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one">%d мин.</item>
-    <item quantity="other">%d мин.</item>
+    <item quantity="one"/>
+    <item quantity="few"/>
+    <item quantity="many"/>
+    <item quantity="other"/>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%d минута остало</item>
-    <item quantity="other">%d минута остало</item>
+    <item quantity="one"/>
+    <item quantity="few"/>
+    <item quantity="many"/>
+    <item quantity="other"/>
   </plurals>
   <string name="type_answer_hint">Унесите одговор</string>
   <string name="show_answer">Прикажи одговор</string>
@@ -144,8 +150,10 @@
   <string name="card_template_editor_menu_delete">Избриши</string>
   <string name="card_template_editor_cant_delete">Потребан је бар један тип.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">Да избришем тип карте \'%2$s\' и све %1$d његове карте?</item>
-    <item quantity="other">Избриши тип карти \'%2$s\' и све %1$d његове карте?</item>
+    <item quantity="one"/>
+    <item quantity="few"/>
+    <item quantity="many"/>
+    <item quantity="other"/>
   </plurals>
   <string name="card_template_editor_would_delete_note">Брисање тог типа карата довешће до брисања једног или неколико белешки. Направите прво нови тип карата.</string>
 </resources>

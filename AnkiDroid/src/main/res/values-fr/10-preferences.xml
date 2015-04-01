@@ -172,8 +172,8 @@
   <string name="deck_conf_deck_description">Description du paquet</string>
   <string name="deck_conf_group">Groupe d\'option</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n%2$d paquets utilisent ce groupe</item>
-    <item quantity="other">%1$s\n%2$d paquets utilisent ce groupe</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <string name="deck_conf_new_cards">Nouvelles cartes</string>
   <string name="deck_conf_rev_cards">Révisions</string>
@@ -218,8 +218,8 @@
   <string name="deck_conf_remove_message">Supprimer le groupe d\'option actuel ?</string>
   <string name="deck_conf_set_subdecks">Définir pour tous les sous-paquets</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">%s sous-paquets utiliseront ce groupe</item>
-    <item quantity="other">%s sous-paquets utilisent ce groupe</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Définir pour tous les sous-paquets</string>
   <string name="deck_conf_set_subdecks_message">Définir ce groupe d\'option pour tous les sous-paquets de ce paquet ?</string>

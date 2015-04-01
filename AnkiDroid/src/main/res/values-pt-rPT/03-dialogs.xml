@@ -47,7 +47,6 @@
   <string name="delete_deck_title">Eliminar baralho?</string>
   <string name="delete_deck_message">Tem certeza que deseja eliminar todas as fichas em %s?</string>
   <string name="delete_cram_deck_message">Tem certeza de que deseja enviar todas as fichas em %s para os seus baralhos originais?</string>
-  <string name="new_version_message">Novas funcionalidades:</string>
   <string name="no_tts_available_message">Nenhum idioma para sintetização de voz disponível</string>
   <string name="initializing_tts">Inicializando o sintetizador de voz&#8230;</string>
   <string name="tts_no_tts">Não fale</string>

@@ -52,16 +52,19 @@
   <string name="studyoptions_eta">Szacowany czas (min):</string>
   <string name="studyoptions_start">Ucz się teraz</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%1$d oczekująca na przejrzenie karta (%2$s)</item>
-    <item quantity="other">%1$d oczekujących na przejrzenie kart (%2$s)</item>
+    <item quantity="one"/>
+    <item quantity="few"/>
+    <item quantity="other"/>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one">%d minut.</item>
-    <item quantity="other">%d min.</item>
+    <item quantity="one"/>
+    <item quantity="few"/>
+    <item quantity="other"/>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">Pozostało %d minut</item>
-    <item quantity="other">Pozostało minut: %d</item>
+    <item quantity="one"/>
+    <item quantity="few"/>
+    <item quantity="other"/>
   </plurals>
   <string name="type_answer_hint">Podaj odpowiedź</string>
   <string name="show_answer">Pokaż odpowiedź</string>
@@ -144,8 +147,9 @@
   <string name="card_template_editor_menu_delete">Usuń</string>
   <string name="card_template_editor_cant_delete">Wymagany jest przynajmniej jeden typ karty.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">Usunąć typ karty \'%2$s\' i jego kartę %1$d?</item>
-    <item quantity="other">Usunąć typ karty \'%2$s\' i jego karty %1$d?</item>
+    <item quantity="one"/>
+    <item quantity="few"/>
+    <item quantity="other"/>
   </plurals>
   <string name="card_template_editor_would_delete_note">Usunięcie typu karty może spowodować usunięcie jednej lub większej ilości notatek. Proszę o utworzenie najpierw nowej karty.</string>
 </resources>

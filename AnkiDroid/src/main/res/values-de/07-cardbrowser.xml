@@ -40,8 +40,8 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="one">%d Karte angezeigt</item>
-    <item quantity="other">%d Karten angezeigt</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <string name="card_browser_all_decks">Alle Stapel</string>
   <string name="card_browser_delete_card">Notiz löschen</string>
@@ -65,7 +65,7 @@
   <string name="card_browser_filtering_cards">Filtere Karten&#8230; \nAbbrechen mit \"Zurück\"</string>
   <string-array name="card_browser_order_labels">
     <item>Keine Sortierung (schneller)</item>
-    <item>By sort field</item>
+    <item>Nach Sortierfeld</item>
     <item>Nach Erstellungsdatum</item>
     <item>Nach Änderungsdatum</item>
     <item>Nach letzter Veränderung</item>

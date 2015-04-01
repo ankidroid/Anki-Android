@@ -35,43 +35,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="newCardSchedulingLabels">
-    <item>Spreid uit over herhalingen</item>
-    <item>Na herhalingen</item>
-    <item>Voor herhalingen</item>
-  </string-array>
   <string-array name="error_reporting_choice_labels">
     <item>Altijd rapporteren</item>
     <item>Nooit rapporteren</item>
     <item>Mij vragen</item>
-  </string-array>
-  <string-array name="cram_review_order_labels">
-    <item>laatst gewijzigde eerst tonen</item>
-    <item>In volgorde van toevoeging tonen</item>
-    <item>In willekeurige volgorde tonen</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_order">
-    <item>Nieuwe kaarten in willekeurige volgorde</item>
-    <item>Nieuwe kaarten in volgorde toegevoegd</item>
-    <item>Nieuwe kaarten in omgekeerde volgorde toegevoegd</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_schedule">
-    <item>Verspreid nieuwe kaarten over overhoringen</item>
-    <item>Nieuwe kaarten als laatste leren</item>
-    <item>Eerst beginnen met nieuwe kaarten</item>
-  </string-array>
-  <string-array name="studyoptions_more_rev_card_order">
-    <item>Overhoor kaarten met de grootste intervaltijd</item>
-    <item>Overhoor kaarten met de kleinste intervaltijd</item>
-    <item>Overhoor kaarten die als eerste herhaald moeten worden</item>
-    <item>Overhoor in willekeurige volgorde</item>
-  </string-array>
-  <string-array name="studyoptions_more_fail_card_option">
-    <item>Toon niet-gelukte kaarten snel weer</item>
-    <item>Toon niet-gelukte kaarten op het einde</item>
-    <item>Toon niet-gelukte kaarten binnen 10 minuten</item>
-    <item>Toon niet-gelukte kaarten binnen 8 uur</item>
-    <item>Toon vragen die je niet weet binnen 3 dagen opnieuw</item>
   </string-array>
   <string-array name="gestures_labels">
     <item>Geen actie</item>
@@ -91,12 +58,6 @@
     <item>Kaart verwijderen</item>
     <item>Media afspelen</item>
     <item>Leren afbreken</item>
-  </string-array>
-  <string-array name="theme_labels">
-    <item>Android Donker</item>
-    <item>Android (klein)</item>
-    <item>Blauw</item>
-    <item>Wit</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Kaart uitstellen</item>

@@ -40,8 +40,9 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="one">%d card shown</item>
-    <item quantity="other">%d cards shown</item>
+    <item quantity="one"/>
+    <item quantity="few"/>
+    <item quantity="other"/>
   </plurals>
   <string name="card_browser_all_decks">All decks</string>
   <string name="card_browser_delete_card">Delete note</string>

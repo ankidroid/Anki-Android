@@ -16,7 +16,6 @@ import android.text.style.CharacterStyle;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.ViewConfiguration;
-import android.view.ViewGroup.LayoutParams;
 import android.webkit.WebView;
 import android.widget.RemoteViews;
 
@@ -35,17 +34,6 @@ public class CompatV7 implements Compat {
     // Only match text that is entirely ASCII.
     private static final Pattern fASCII = Pattern.compile("^\\p{ASCII}*$");
     
-    /*
-     *  Return the input string. Not doing the NFD normalization may cause problems with syncing media to Macs
-     *  where the file name contains diacritics, as file names are decomposed on HFS file systems.
-     *
-     * @param txt Text to be normalized
-     * @return The input text, not NFD normalized.
-    */
-    public String nfdNormalized(String txt) {
-        return txt;
-    }
-
 
     /*
      *  Return the input string. Not doing the NFC normalization may cause a typed answer to be displayed as
@@ -168,9 +156,6 @@ public class CompatV7 implements Compat {
     public void abandonAudioFocus(AudioManager audioManager) {
     }
 
-    public int parentLayoutSize() {
-        return LayoutParams.FILL_PARENT;
-    }
 
     // Below API level 12, file scheme pages are not restricted, so no adjustment is needed.
     public void enableCookiesForFileSchemePages() { }

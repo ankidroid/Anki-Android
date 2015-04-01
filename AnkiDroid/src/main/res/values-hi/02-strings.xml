@@ -87,11 +87,11 @@
   <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
   <plurals name="timebox_reached">
     <item quantity="one">%1$d card studied in %2$s</item>
-    <item quantity="other">%1$d  कार्ड का अध्ययन में %2$s</item>
+    <item quantity="other">%1$d cards studied in %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
     <item quantity="one">%1$d minute</item>
-    <item quantity="other">%1$d मिनट</item>
+    <item quantity="other">%1$d minutes</item>
   </plurals>
   <string name="studyoptions_welcome_title">AnkiDroid में आपका स्वागत है</string>
   <string name="fact_adder_intent_title">AnkiDroid कार्ड</string>
@@ -106,7 +106,7 @@
   <string name="default_conf_delete_error">डिफ़ॉल्ट विकल्प समूह निकाला नहीं जा सकता</string>
   <plurals name="factadder_cards_added">
     <item quantity="one">%d card added</item>
-    <item quantity="other">%d कार्ड में जोड़ा</item>
+    <item quantity="other">%d cards added</item>
   </plurals>
   <string name="help_title">मदद</string>
   <string name="check_db">डेटाबेस की जाँच करें</string>
@@ -115,15 +115,6 @@
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
   <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
   <string name="delete_deck">हटाने deck...\nPlease रुको।</string>
-  <string-array name="dynOrderLabels">
-    <item>सबसे पुराना देखा पहले</item>
-    <item>यादृच्छिक</item>
-    <item>अंतरालों में वृद्धि</item>
-    <item>अंतरालों को कम</item>
-    <item>अधिकांश चूकें</item>
-    <item>आदेश में जोड़ा</item>
-    <item>कारण आदेश</item>
-  </string-array>
   <string name="show_hint">Show %s</string>
   <string name="info_rate">दर AnkiDroid</string>
   <string name="col_load_failed">संग्रह लोड करने में विफल। \nPress वापस AnkiDroid को बंद करने के लिए।</string>

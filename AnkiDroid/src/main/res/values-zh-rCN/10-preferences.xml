@@ -172,8 +172,7 @@
   <string name="deck_conf_deck_description">牌组说明</string>
   <string name="deck_conf_group">选项组</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n%2$d 牌组使用此选项组</item>
-    <item quantity="other">%1$s\n%2$d 牌组使用此选项组</item>
+    <item quantity="other"/>
   </plurals>
   <string name="deck_conf_new_cards">新卡牌</string>
   <string name="deck_conf_rev_cards">复习</string>
@@ -218,8 +217,7 @@
   <string name="deck_conf_remove_message">删除当前选项组吗？</string>
   <string name="deck_conf_set_subdecks">设置为所有子牌组的选项</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">%s 子牌组将使用此选项组</item>
-    <item quantity="other">%s 子牌组将使用此选项组</item>
+    <item quantity="other"/>
   </plurals>
   <string name="deck_conf_set_subdecks_title">设置为所有子牌组的选项</string>
   <string name="deck_conf_set_subdecks_message">将当前牌组的所有子牌组，设置为此选项组?</string>

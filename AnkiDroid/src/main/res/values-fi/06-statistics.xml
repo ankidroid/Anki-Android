@@ -122,15 +122,6 @@
   <string name="stats_weekly_breakdown">Viikottain</string>
   <string name="stats_answer_buttons">Vastauspainikkeet</string>
   <string name="stats_cards_types">Korttien tyypit</string>
-  <string-array name="stats_period">
-    <item>Kuukausi</item>
-    <item>Vuosi</item>
-    <item>kaikki</item>
-  </string-array>
-  <string-array name="stats_range">
-    <item>kokoelma</item>
-    <item>nykyinen pakka</item>
-  </string-array>
   <string-array name="stats_day_time_strings">
     <item>4:00</item>
     <item>10:00</item>
@@ -161,11 +152,11 @@
     <item>4</item>
   </string-array>
   <plurals name="stats_today_cards">
-    <item quantity="one">Opiskelit tänään &lt;b&gt;%1$d kortin&lt;/b&gt; ajassa &lt;b&gt;%2$s&lt;/b&gt;.</item>
-    <item quantity="other">Opiskelit tänään &lt;b&gt;%1$d korttia&lt;/b&gt; ajassa &lt;b&gt;%2$s&lt;/b&gt;.</item>
+    <item quantity="one">Studied &lt;b&gt;%1$d card&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
+    <item quantity="other">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
   </plurals>
   <plurals name="stats_today_cards_not_bold">
-    <item quantity="one">Opiskelit tänään %1$d kortin ajassa %2$s.</item>
-    <item quantity="other">Opiskelit tänään %1$d korttia ajassa %2$s.</item>
+    <item quantity="one">Studied %1$d card in %2$s today.</item>
+    <item quantity="other">Studied %1$d cards in %2$s today.</item>
   </plurals>
 </resources>

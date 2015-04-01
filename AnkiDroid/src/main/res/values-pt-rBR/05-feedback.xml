@@ -41,10 +41,12 @@
 <resources>
   <string name="error_reporting_choice">Modo de informação de erro</string>
   <string name="error_reporting_choice_summary">Erros podem ser informados automaticamente, nunca informados ou por você solicitado</string>
+  <string name="feedback_disclaimer">Disclaimer: We don\'t collect any personal information such as your email address, phone number, or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves and the steps which led up to them occurring.</string>
   <string name="feedback_title">Comentários</string>
   <string name="feedback_default_text">Por favor, envie seu comentário ou informações sobre os erros que está relatando.</string>
   <string name="feedback_auto_toast_text">AnkiDroid has encountered a problem; a report is being sent to the developers&#8230;</string>
   <string name="feedback_manual_toast_text">AnkiDroid has encountered a problem; a report is being generated&#8230;</string>
   <string name="feedback_copy_debug">Copy debug info</string>
   <string name="feedback_report">Report</string>
+  <string name="feedback_report_automatically">Send error reports automatically</string>
 </resources>

@@ -40,8 +40,8 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="one">%d carte mostrate</item>
-    <item quantity="other">%d carte mostrate</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <string name="card_browser_all_decks">Tutti i mazzi</string>
   <string name="card_browser_delete_card">Elimina nota</string>
@@ -65,7 +65,7 @@
   <string name="card_browser_filtering_cards">Filtro le carte... \nPremi il pulsante indietro per annullare</string>
   <string-array name="card_browser_order_labels">
     <item>Nessun ordinamento (più veloce)</item>
-    <item>By sort field</item>
+    <item>Per campo di ordinamento</item>
     <item>Per data di creazione</item>
     <item>Per data di modifica</item>
     <item>Per data di cambiamento</item>

@@ -172,8 +172,8 @@
   <string name="deck_conf_deck_description">Stapelbeschreibung</string>
   <string name="deck_conf_group">Optionengruppe</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n%2$d Stapel verwendet diese Gruppe</item>
-    <item quantity="other">%1$s\n%2$d Stapel verwenden diese Gruppe</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <string name="deck_conf_new_cards">Neue Karten</string>
   <string name="deck_conf_rev_cards">Wiederholungen</string>
@@ -218,8 +218,8 @@
   <string name="deck_conf_remove_message">Aktuelle Optionsgruppe löschen?</string>
   <string name="deck_conf_set_subdecks">Auf alle Unterstapel anwenden</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">%s Unterstapel wird diese Gruppe verwenden</item>
-    <item quantity="other">%s Unterstapel werden diese Gruppe verwenden</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Auf alle Unterstapel anwenden</string>
   <string name="deck_conf_set_subdecks_message">Aktuelle Optionsgruppe für alle Unterstapel dieses Stapels festlegen?</string>

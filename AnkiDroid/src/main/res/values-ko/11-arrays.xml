@@ -35,43 +35,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="newCardSchedulingLabels">
-    <item>복습중 학습하기</item>
-    <item>복습 후</item>
-    <item>복습전</item>
-  </string-array>
   <string-array name="error_reporting_choice_labels">
     <item>항상 보고하기</item>
     <item>보고하지 않기</item>
     <item>오류 보고전 묻기</item>
-  </string-array>
-  <string-array name="cram_review_order_labels">
-    <item>오래된 순서대로 보기</item>
-    <item>순서대로 보기</item>
-    <item>무작위 순서로 보기</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_order">
-    <item>무작위 순서로 새카드 학습</item>
-    <item>추가한 순서대로 새카드 학습</item>
-    <item>추가한 역순으로 새카드 학습</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_schedule">
-    <item>복습 중 새카드 보기</item>
-    <item>복습 후 새카드 보기</item>
-    <item>새카드부터 복습하기</item>
-  </string-array>
-  <string-array name="studyoptions_more_rev_card_order">
-    <item>가장 긴 간격부터 카드 복습</item>
-    <item>가장 짧은 간격부터 카드 복습</item>
-    <item>순서대로 복습</item>
-    <item>무작위로 복습</item>
-  </string-array>
-  <string-array name="studyoptions_more_fail_card_option">
-    <item>방금 틀린 카드 표시</item>
-    <item>마지막에 틀린 카드 표시</item>
-    <item>10분 안에 틀린 카드 표시</item>
-    <item>8시간 안에 틀린 카드 표시</item>
-    <item>3일 안에 틀린 카드 표시</item>
   </string-array>
   <string-array name="gestures_labels">
     <item>동작 없음</item>
@@ -91,12 +58,6 @@
     <item>카드 삭제</item>
     <item>Play media</item>
     <item>Abort learning</item>
-  </string-array>
-  <string-array name="theme_labels">
-    <item>안드로이드 블랙</item>
-    <item>안드로이드 화이트</item>
-    <item>파랑</item>
-    <item>화이트</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>카드 미루기</item>

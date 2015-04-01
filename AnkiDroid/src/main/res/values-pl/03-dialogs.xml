@@ -47,7 +47,6 @@
   <string name="delete_deck_title">Skasuj talię</string>
   <string name="delete_deck_message">Czy na pewno usunąć wszystkie karty w %s?</string>
   <string name="delete_cram_deck_message">Czy na pewno chcesz wysłać wszystkie karty w %s z powrotem do ich pierwotnych talii?</string>
-  <string name="new_version_message">Nowe funkcje:</string>
   <string name="no_tts_available_message">Brak dostępnego języka zamiany tekstu na mowę</string>
   <string name="initializing_tts">Inicjowanie TTS&#8230;</string>
   <string name="tts_no_tts">Nie mów</string>

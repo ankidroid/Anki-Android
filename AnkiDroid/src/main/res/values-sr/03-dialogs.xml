@@ -47,7 +47,6 @@
   <string name="delete_deck_title">Избриши шпил</string>
   <string name="delete_deck_message">Да ли сте сигурни да желите да избришете све картице у %s?</string>
   <string name="delete_cram_deck_message">Да ли сте сигурни да желите да пошаљете све картице из %s у њихове оригиналне шпилове?</string>
-  <string name="new_version_message">Нове могућности:</string>
   <string name="no_tts_available_message">Функција претварања текста у говор није доступна</string>
   <string name="initializing_tts">Иницијализација синтезе говора&#8230;</string>
   <string name="tts_no_tts">Не изговарај</string>

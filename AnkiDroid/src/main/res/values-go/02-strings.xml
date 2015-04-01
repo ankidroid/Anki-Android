@@ -115,15 +115,6 @@
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Lausa karta. Brukei \"Tols&gt;Lausos Kartos...\" ana daisktaup klient.</string>
   <string name="unknown_type_field_warning">Melei andahaft: unkunþs staþs %s</string>
   <string name="delete_deck">Wiko usnimand&#8230;</string>
-  <string-array name="dynOrderLabels">
-    <item>Oldest seen first</item>
-    <item>Random</item>
-    <item>Increasing intervals</item>
-    <item>Decreasing intervals</item>
-    <item>Most lapses</item>
-    <item>Wiko biaukana</item>
-    <item>Order due</item>
-  </string-array>
   <string name="show_hint">Ataugei %s</string>
   <string name="info_rate">Rate AnkiDroid</string>
   <string name="col_load_failed">Collection loading failed.\nPress back to close AnkiDroid.</string>

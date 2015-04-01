@@ -122,15 +122,6 @@
   <string name="stats_weekly_breakdown">Weekly Breakdown</string>
   <string name="stats_answer_buttons">Answer Buttons</string>
   <string name="stats_cards_types">Cards Types</string>
-  <string-array name="stats_period">
-    <item>1 mes</item>
-    <item>1 any</item>
-    <item>Tot</item>
-  </string-array>
-  <string-array name="stats_range">
-    <item>col·lecció</item>
-    <item>paquet actual</item>
-  </string-array>
   <string-array name="stats_day_time_strings">
     <item>4AM</item>
     <item>10AM</item>

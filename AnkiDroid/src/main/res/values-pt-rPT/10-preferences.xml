@@ -172,8 +172,8 @@
   <string name="deck_conf_deck_description">Descrição do baralho</string>
   <string name="deck_conf_group">Grupo de opções</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n%2$d baralho usa este grupo</item>
-    <item quantity="other">%1$s\n%2$d baralhos usam este grupo</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <string name="deck_conf_new_cards">Novas fichas</string>
   <string name="deck_conf_rev_cards">Revisões</string>
@@ -218,8 +218,8 @@
   <string name="deck_conf_remove_message">Remover o grupo de opções actual?</string>
   <string name="deck_conf_set_subdecks">Definir para todos os sub-baralhos</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">Sub-baralho %s utilizará este grupo</item>
-    <item quantity="other">Sub-baralhos %s utilizarão este grupo</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Definir para todos os sub-baralhos</string>
   <string name="deck_conf_set_subdecks_message">Definir o atual grupo de opções para todos os sub-baralhos deste baralho?</string>

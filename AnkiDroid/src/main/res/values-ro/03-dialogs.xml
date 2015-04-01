@@ -47,7 +47,6 @@
   <string name="delete_deck_title">Sterge carte</string>
   <string name="delete_deck_message">Sigur ștergeți toate cărțile din %s?</string>
   <string name="delete_cram_deck_message">Sunteţi sigur că doriţi să trimiteţi toate cardurile în %s înapoi în pachetele lor originale?</string>
-  <string name="new_version_message">Noile caracteristici:</string>
   <string name="no_tts_available_message">No text-to-speech language available</string>
   <string name="initializing_tts">Initializing TTS&#8230;</string>
   <string name="tts_no_tts">Nu vorbi</string>

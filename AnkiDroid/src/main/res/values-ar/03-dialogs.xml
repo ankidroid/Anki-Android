@@ -47,7 +47,6 @@
   <string name="delete_deck_title">احذف رزمة</string>
   <string name="delete_deck_message">هل أنت متأكد من رغبتك في حذف كل البطاقات في%s؟</string>
   <string name="delete_cram_deck_message">هل أنت متأكد من رغبتك في إرسال جميع البطاقات في %s مرة أخرى إلى هذه حالتها الأصلية؟</string>
-  <string name="new_version_message">الميزات الجديدة:</string>
   <string name="no_tts_available_message">لا تتوفر  لغة لنطق النصوص</string>
   <string name="initializing_tts">Initializing TTS&#8230;</string>
   <string name="tts_no_tts">لا تنطق</string>

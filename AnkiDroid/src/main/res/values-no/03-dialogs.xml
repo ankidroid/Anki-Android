@@ -47,7 +47,6 @@
   <string name="delete_deck_title">Slett kortstokk</string>
   <string name="delete_deck_message">Vil du virkelig slette alle kortene i %s?</string>
   <string name="delete_cram_deck_message">Send all cards in %s back to their original decks?</string>
-  <string name="new_version_message">Nye funksjoner:</string>
   <string name="no_tts_available_message">Ingen \"tekst til tale\"-språk tilgjengelige</string>
   <string name="initializing_tts">Initializing TTS&#8230;</string>
   <string name="tts_no_tts">Ikke snakk</string>

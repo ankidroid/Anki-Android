@@ -172,8 +172,8 @@
   <string name="deck_conf_deck_description">Deck description</string>
   <string name="deck_conf_group">Options group</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n%2$d deck uses this group</item>
-    <item quantity="other">%1$s\n%2$d decks use this group</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <string name="deck_conf_new_cards">New cards</string>
   <string name="deck_conf_rev_cards">Reviews</string>
@@ -218,8 +218,8 @@
   <string name="deck_conf_remove_message">Remove current options group?</string>
   <string name="deck_conf_set_subdecks">Set for all subdecks</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">%s subdeck will use this group</item>
-    <item quantity="other">%s subdecks will use this group</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Set for all subdecks</string>
   <string name="deck_conf_set_subdecks_message">Set current options group for all of this deck\'s subdecks?</string>

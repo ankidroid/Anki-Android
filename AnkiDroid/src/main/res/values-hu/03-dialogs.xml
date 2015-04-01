@@ -47,7 +47,6 @@
   <string name="delete_deck_title">Pakli törlése</string>
   <string name="delete_deck_message">Biztos, hogy törlöd a %s pakli összes kártyáját?</string>
   <string name="delete_cram_deck_message">Biztosan szeretnéd, hogy a %s kártyái visszakerüljenek az eredeti paklijukba?</string>
-  <string name="new_version_message">Új funkciók:</string>
   <string name="no_tts_available_message">Nincs rendelkezésre álló szövegfelolvasási nyelv</string>
   <string name="initializing_tts">TTS indítása&#8230;</string>
   <string name="tts_no_tts">Ne beszélj</string>

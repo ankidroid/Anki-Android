@@ -86,12 +86,14 @@
   <string name="field_remapping">%1$s (из \'%2$s\')</string>
   <string name="confirm_map_cards_to_nothing">Не сопоставленные карты будут удалены. Заметки, оставшиеся без карт, будут утеряны. Продолжить?</string>
   <plurals name="timebox_reached">
-    <item quantity="one">Карт изучено: %1$d за %2$s</item>
-    <item quantity="other">%1$d карты изучено за %2$s</item>
+    <item quantity="one">%1$d card studied in %2$s</item>
+    <item quantity="few">%1$d cards studied in %2$s</item>
+    <item quantity="other">%1$d cards studied in %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
-    <item quantity="one">Минут: %1$d</item>
-    <item quantity="other">%1$d минут</item>
+    <item quantity="one">%1$d minute</item>
+    <item quantity="few">%1$d minutes</item>
+    <item quantity="other">%1$d minutes</item>
   </plurals>
   <string name="studyoptions_welcome_title">Добро пожаловать в AnkiDroid</string>
   <string name="fact_adder_intent_title">AnkiDroid Карта</string>
@@ -105,8 +107,9 @@
   <string name="rename_error">Колода %s не может быть переименована</string>
   <string name="default_conf_delete_error">Невозможно удалить параметры по умолчанию</string>
   <plurals name="factadder_cards_added">
-    <item quantity="one">Карт добавлено: %d</item>
-    <item quantity="other">%d карт добавлено</item>
+    <item quantity="one">%d card added</item>
+    <item quantity="few">%d cards added</item>
+    <item quantity="other">%d cards added</item>
   </plurals>
   <string name="help_title">Справка</string>
   <string name="check_db">Проверка базы данных</string>
@@ -115,15 +118,6 @@
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Пустая карта. Запустите «Инструменты&gt;Пустые карты...» на настольном клиенте.</string>
   <string name="unknown_type_field_warning">Тип ответа: неизвестное поле %s</string>
   <string name="delete_deck">Удаление колоды...\nПожалуйста подождите...</string>
-  <string-array name="dynOrderLabels">
-    <item>Старейшие появляться первыми</item>
-    <item>Случайно</item>
-    <item>По увеличению интервалов</item>
-    <item>По уменьшению интервалов</item>
-    <item>Наибольшие периоды</item>
-    <item>Порядок просмотра добавлен</item>
-    <item>Соответствующий порядок</item>
-  </string-array>
   <string name="show_hint">Показать %s</string>
   <string name="info_rate">Оценка AnkiDroid</string>
   <string name="col_load_failed">Сбой загрузки коллекции.\nНажмите кнопку назад, чтобы закрыть AnkiDroid.</string>

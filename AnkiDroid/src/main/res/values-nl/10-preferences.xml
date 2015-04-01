@@ -172,8 +172,8 @@
   <string name="deck_conf_deck_description">Omschrijving van de leerset</string>
   <string name="deck_conf_group">Optiesgroep</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n%2$d deck uses this group</item>
-    <item quantity="other">%1$s\n%2$d sets gebruikt in deze groep</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <string name="deck_conf_new_cards">Nieuwe kaarten</string>
   <string name="deck_conf_rev_cards">Overhoringen</string>
@@ -218,8 +218,8 @@
   <string name="deck_conf_remove_message">Huidige set aan instellingen verwijderen?</string>
   <string name="deck_conf_set_subdecks">Instellen voor alle subsets</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">%s subdeck will use this group</item>
-    <item quantity="other">%s subset zal gebruikmaken van deze groep</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Instellen voor alle subsets</string>
   <string name="deck_conf_set_subdecks_message">Huidige set aan instellingen laten gelden voor alle subsets van deze set?</string>

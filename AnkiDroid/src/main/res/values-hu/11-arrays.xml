@@ -35,43 +35,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="newCardSchedulingLabels">
-    <item>Ismétlés közben szétszórva</item>
-    <item>Az ismétlések után</item>
-    <item>Az ismétlések előtt</item>
-  </string-array>
   <string-array name="error_reporting_choice_labels">
     <item>Mindig jelentsen</item>
     <item>Soha ne jelentsen</item>
     <item>Kérdezzen meg</item>
-  </string-array>
-  <string-array name="cram_review_order_labels">
-    <item>Legrégebben módosítottat mutat először</item>
-    <item>Hozzáadás sorrendje szerint mutat</item>
-    <item>Véletlenszerű sorrendben mutat</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_order">
-    <item>Új kártyák véletlenszerű sorrendben</item>
-    <item>Új kártyák hozzáadás sorrendjében</item>
-    <item>Új kártyák hozzáadással ellentétes sorrendben</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_schedule">
-    <item>Új kártyák elosztása ismétlés közben</item>
-    <item>Új kártyák ismétlés után</item>
-    <item>Új kártyák ismétlés előtt</item>
-  </string-array>
-  <string-array name="studyoptions_more_rev_card_order">
-    <item>Kártyák ismétlése a leghosszabb intervallumtól</item>
-    <item>Kártyák ismétlése a legrövidebb intervallumtól</item>
-    <item>Kártyák ismétlése esedékesség sorrendjében</item>
-    <item>Kártyák ismétlése véletlenszerű sorrendben</item>
-  </string-array>
-  <string-array name="studyoptions_more_fail_card_option">
-    <item>A tévesztett kártyákat mielőbb mutasd</item>
-    <item>A tévesztett kártyákat a végén mutasd</item>
-    <item>A tévesztett kártyákat 10 perc múlva mutasd</item>
-    <item>A tévesztett kártyákat 8 óra múlva mutasd</item>
-    <item>A tévesztett kártyákat 3 nap múlva mutasd</item>
   </string-array>
   <string-array name="gestures_labels">
     <item>Nincs művelet</item>
@@ -91,12 +58,6 @@
     <item>Kártya törlése</item>
     <item>Play media</item>
     <item>Abort learning</item>
-  </string-array>
-  <string-array name="theme_labels">
-    <item>Android Sötét</item>
-    <item>Android Világos</item>
-    <item>Kék</item>
-    <item>Fehér</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Kártya felfüggesztése</item>

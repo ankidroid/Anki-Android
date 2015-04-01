@@ -40,8 +40,8 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="one">%d kart gösteriliyor</item>
-    <item quantity="other">%d kart gösteriliyor</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <string name="card_browser_all_decks">Bütün desteler</string>
   <string name="card_browser_delete_card">Notu sil</string>

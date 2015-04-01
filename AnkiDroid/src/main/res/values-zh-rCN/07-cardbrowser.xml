@@ -40,8 +40,7 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="one">共%d张卡牌</item>
-    <item quantity="other">共%d张卡牌</item>
+    <item quantity="other"/>
   </plurals>
   <string name="card_browser_all_decks">所有牌组</string>
   <string name="card_browser_delete_card">删除卡牌记录</string>

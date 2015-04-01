@@ -9,9 +9,8 @@ android:
     - extra-android-m2repository
     - sys-img-armeabi-v7a-android-22
 branches:
-  only:
-    - /^release-[0-9.]*$/
-    - /^develop$/
+  except:
+    - master
 
 # Emulator Management: Create, Start and Wait
 before_script:

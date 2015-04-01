@@ -45,12 +45,11 @@
   <string name="widget_loading">Зареждане на джаджа...</string>
   <plurals name="widget_cards_in_decks_due">
     <item quantity="one">%1$d card due in %2$s</item>
-    <item quantity="other">%1$d карти поради в %2$s</item>
+    <item quantity="other">%1$d cards due in %2$s</item>
   </plurals>
   <plurals name="widget_decks">
     <item quantity="one">%1$d deck</item>
-    <item quantity="other">%1$d колоди</item>
+    <item quantity="other">%1$d decks</item>
   </plurals>
   <string name="widget_small">AnkiDroid малък</string>
-  <string name="widget_big_tomorrow_due">Утре поради:</string>
 </resources>

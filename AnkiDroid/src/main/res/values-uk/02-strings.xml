@@ -87,11 +87,13 @@
   <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
   <plurals name="timebox_reached">
     <item quantity="one">%1$d card studied in %2$s</item>
-    <item quantity="other">%1$d карт вивчено за %2$s</item>
+    <item quantity="few">%1$d cards studied in %2$s</item>
+    <item quantity="other">%1$d cards studied in %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
     <item quantity="one">%1$d minute</item>
-    <item quantity="other">%1$d хвилин</item>
+    <item quantity="few">%1$d minutes</item>
+    <item quantity="other">%1$d minutes</item>
   </plurals>
   <string name="studyoptions_welcome_title">Ласкаво просимо в AnkiDroid</string>
   <string name="fact_adder_intent_title">Картка AnkiDroid</string>
@@ -106,7 +108,8 @@
   <string name="default_conf_delete_error">Неможливо видалити групу з типовими параметрами</string>
   <plurals name="factadder_cards_added">
     <item quantity="one">%d card added</item>
-    <item quantity="other">додано %d карток</item>
+    <item quantity="few">%d cards added</item>
+    <item quantity="other">%d cards added</item>
   </plurals>
   <string name="help_title">Допомога</string>
   <string name="check_db">Перевірити базу даних</string>
@@ -115,15 +118,6 @@
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Порожня картка. Запустіть \"Інструменти &gt; порожні карти...\" на стільничному клієнті.</string>
   <string name="unknown_type_field_warning">Введіть відповідь: невідоме поле %s</string>
   <string name="delete_deck">Видалення колоди...\n Будь ласка, зачекайте.</string>
-  <string-array name="dynOrderLabels">
-    <item>Найстарші спочатку</item>
-    <item>Випадковий порядок</item>
-    <item>Зростаючий інтервал</item>
-    <item>Спадний інтервал</item>
-    <item>Найбільші недоліки</item>
-    <item>Порядок доданий</item>
-    <item>Порядок черги</item>
-  </string-array>
   <string name="show_hint">Show %s</string>
   <string name="info_rate">Оцініть AnkiDroid</string>
   <string name="col_load_failed">Не вдалося завантажити колекцію.\nНатисніть назад для закриття AnkiDroid.</string>

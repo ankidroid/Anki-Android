@@ -9,4 +9,5 @@
             android:background="?attr/colorPrimary"
             android:layout_alignParentTop="true"
             app:theme="@style/Theme_White_Toolbar"
-            app:popupTheme="@style/Theme_White"/>
+            app:popupTheme="@style/Theme_White"
+    />

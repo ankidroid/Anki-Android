@@ -47,7 +47,6 @@
   <string name="delete_deck_title">덱 삭제</string>
   <string name="delete_deck_message">%s에 있는 모든 카드를 정말로 삭제하시겠습니까?</string>
   <string name="delete_cram_deck_message">정말로 %s에 있는 모든 카드들을 원래의 덱으로 되돌려 보내시겠습니까?</string>
-  <string name="new_version_message">새로운 특징:</string>
   <string name="no_tts_available_message">문장 읽어주기 기능을 사용할 수 없음</string>
   <string name="initializing_tts">Initializing TTS&#8230;</string>
   <string name="tts_no_tts">말하지 마십시오</string>

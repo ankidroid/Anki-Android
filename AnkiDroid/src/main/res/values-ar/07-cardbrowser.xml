@@ -40,8 +40,12 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="one">%d card shown</item>
-    <item quantity="other">%d cards shown</item>
+    <item quantity="zero"/>
+    <item quantity="one"/>
+    <item quantity="two"/>
+    <item quantity="few"/>
+    <item quantity="many"/>
+    <item quantity="other"/>
   </plurals>
   <string name="card_browser_all_decks">كل الرزم</string>
   <string name="card_browser_delete_card">احذف الملاحظة</string>

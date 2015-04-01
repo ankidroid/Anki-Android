@@ -59,7 +59,6 @@ public class Syncer {
     long mRMod;
     long mRScm;
     int mMaxUsn;
-    int mMediaUsn;
     long mLMod;
     long mLScm;
     int mMinUsn;
@@ -115,7 +114,6 @@ public class Syncer {
                 int rts = rMeta.getInt("ts");
                 mRMod = rMeta.getLong("mod");
                 mMaxUsn = rMeta.getInt("usn");
-                mMediaUsn = rMeta.getInt("musn");
                 // skip uname, AnkiDroid already stores and shows it
                 Timber.i("Sync: building local meta data");
                 JSONObject lMeta = meta();
@@ -305,33 +303,32 @@ public class Syncer {
     public JSONObject sanityCheck() {
         JSONObject result = new JSONObject();
         try {
-            if (mCol.getDb().queryScalar("SELECT count() FROM cards WHERE nid NOT IN (SELECT id FROM notes)", false) != 0) {
+            if (mCol.getDb().queryScalar("SELECT count() FROM cards WHERE nid NOT IN (SELECT id FROM notes)") != 0) {
                 Timber.e("Sync - SanityCheck: there are cards without mother notes");
                 result.put("client", "missing notes");
                 return result;
             }
-            if (mCol.getDb().queryScalar("SELECT count() FROM notes WHERE id NOT IN (SELECT DISTINCT nid FROM cards)",
-                    false) != 0) {
+            if (mCol.getDb().queryScalar("SELECT count() FROM notes WHERE id NOT IN (SELECT DISTINCT nid FROM cards)") != 0) {
                 Timber.e("Sync - SanityCheck: there are notes without cards");
                 result.put("client", "missing cards");
                 return result;
             }
-            if (mCol.getDb().queryScalar("SELECT count() FROM cards WHERE usn = -1", false) != 0) {
+            if (mCol.getDb().queryScalar("SELECT count() FROM cards WHERE usn = -1") != 0) {
                 Timber.e("Sync - SanityCheck: there are unsynced cards");
                 result.put("client", "cards had usn = -1");
                 return result;
             }
-            if (mCol.getDb().queryScalar("SELECT count() FROM notes WHERE usn = -1", false) != 0) {
+            if (mCol.getDb().queryScalar("SELECT count() FROM notes WHERE usn = -1") != 0) {
                 Timber.e("Sync - SanityCheck: there are unsynced notes");
                 result.put("client", "notes had usn = -1");
                 return result;
             }
-            if (mCol.getDb().queryScalar("SELECT count() FROM revlog WHERE usn = -1", false) != 0) {
+            if (mCol.getDb().queryScalar("SELECT count() FROM revlog WHERE usn = -1") != 0) {
                 Timber.e("Sync - SanityCheck: there are unsynced revlogs");
                 result.put("client", "revlog had usn = -1");
                 return result;
             }
-            if (mCol.getDb().queryScalar("SELECT count() FROM graves WHERE usn = -1", false) != 0) {
+            if (mCol.getDb().queryScalar("SELECT count() FROM graves WHERE usn = -1") != 0) {
                 Timber.e("Sync - SanityCheck: there are unsynced graves");
                 result.put("client", "graves had usn = -1");
                 return result;
@@ -899,11 +896,6 @@ public class Syncer {
 
     private void mergeConf(JSONObject conf) {
         mCol.setConf(conf);
-    }
-
-
-    public int getmMediaUsn() {
-        return mMediaUsn;
     }
 
 }

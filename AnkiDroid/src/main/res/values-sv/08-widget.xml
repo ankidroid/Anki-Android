@@ -44,13 +44,12 @@
   <string name="widget_no_cards_due">Inga kort i kö</string>
   <string name="widget_loading">Widget laddas...</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">%1$d kort att göra inom %2$s</item>
-    <item quantity="other">%1$d kort i kö om %2$s</item>
+    <item quantity="one">%1$d card due in %2$s</item>
+    <item quantity="other">%1$d cards due in %2$s</item>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="one">%1$d kortlek</item>
-    <item quantity="other">%1$d kortlekar</item>
+    <item quantity="one">%1$d deck</item>
+    <item quantity="other">%1$d decks</item>
   </plurals>
   <string name="widget_small">AnkiDroid Liten</string>
-  <string name="widget_big_tomorrow_due">Kort i kö imorgon:</string>
 </resources>

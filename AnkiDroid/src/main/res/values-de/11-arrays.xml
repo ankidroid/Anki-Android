@@ -35,43 +35,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="newCardSchedulingLabels">
-    <item>Über Wiederholungen verteilen</item>
-    <item>Nach Wiederholungen</item>
-    <item>Vor Wiederholungen</item>
-  </string-array>
   <string-array name="error_reporting_choice_labels">
     <item>Immer melden</item>
     <item>Niemals melden</item>
     <item>Nachfragen</item>
-  </string-array>
-  <string-array name="cram_review_order_labels">
-    <item>Älteste zuerst</item>
-    <item>In der Reihenfolge des Hinzufügens</item>
-    <item>In umgekehrter Reihenfolge des Hinzufügens</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_order">
-    <item>Neue Karten in zufälliger Reihenfolge</item>
-    <item>Neue Karten in Reihenfolge des Hinzufügens</item>
-    <item>Neue Karten in umgekehrter Reihenfolge des Hinzufügens</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_schedule">
-    <item>Neue Karten über Wiederholungen verteilen</item>
-    <item>Neue Karten nach Wiederholungen</item>
-    <item>Neue Karten vor Wiederholungen</item>
-  </string-array>
-  <string-array name="studyoptions_more_rev_card_order">
-    <item>Karten mit größtem Intervall zuerst</item>
-    <item>Karten mit kleinstem Intervall zuerst</item>
-    <item>Karten in Fälligkeitsreihenfolge</item>
-    <item>Karten in Zufallsreihenfolge</item>
-  </string-array>
-  <string-array name="studyoptions_more_fail_card_option">
-    <item>Zeige nicht gewusste Karten bald</item>
-    <item>Zeige nicht gewusste Karten am Schluss</item>
-    <item>Zeige nicht gewusste Karten in 10 Minuten</item>
-    <item>Zeige nicht gewusste Karten in 8 Stunden</item>
-    <item>Zeige nicht gewusste Karten in 3 Tagen</item>
   </string-array>
   <string-array name="gestures_labels">
     <item>Keine Aktion</item>
@@ -91,12 +58,6 @@
     <item>Karte löschen</item>
     <item>Medien abspielen</item>
     <item>Lernen beenden</item>
-  </string-array>
-  <string-array name="theme_labels">
-    <item>Android Dunkel</item>
-    <item>Android Hell</item>
-    <item>Blau</item>
-    <item>Weiß</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Karte dauerhaft aussetzen</item>

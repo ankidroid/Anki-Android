@@ -106,7 +106,7 @@
   <string name="default_conf_delete_error">The default options group can\'t be removed</string>
   <plurals name="factadder_cards_added">
     <item quantity="one">%d card added</item>
-    <item quantity="other">%d κάρτες προστέθηκαν</item>
+    <item quantity="other">%d cards added</item>
   </plurals>
   <string name="help_title">Βοήθεια</string>
   <string name="check_db">Έλεγχος βάσης δεδομένων</string>
@@ -115,15 +115,6 @@
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
   <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
   <string name="delete_deck">Διαγραφή τράπουλας...\nΠαρακαλούμε περιμένετε.</string>
-  <string-array name="dynOrderLabels">
-    <item>Πρώτα οι παλαιότερα ειδωμένες</item>
-    <item>Τυχαία</item>
-    <item>Κατά αυξανόμενα διαστήματα</item>
-    <item>Κατά μειωνόμενα διαστήματα</item>
-    <item>Αυτές με περισσότερες ολισθήσεις</item>
-    <item>Κατά σειρά προσθήκης</item>
-    <item>Κατά σειρά οφειλής</item>
-  </string-array>
   <string name="show_hint">Show %s</string>
   <string name="info_rate">Αξιολογείστε το AnkiDroid</string>
   <string name="col_load_failed">Η φόρτωση της συλλογής απέτυχε.\nΠιέστε πίσω, για να κλείσετε το AnkiDroid.</string>

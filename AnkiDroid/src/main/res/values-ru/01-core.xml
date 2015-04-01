@@ -52,16 +52,19 @@
   <string name="studyoptions_eta">Вероятно займёт (мин):</string>
   <string name="studyoptions_start">Начать обучение</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%1$d карт за (%2$s)</item>
-    <item quantity="other">%1$d карт за (%2$s)</item>
+    <item quantity="one"/>
+    <item quantity="few"/>
+    <item quantity="other"/>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one">%d мин.</item>
-    <item quantity="other">%d мин.</item>
+    <item quantity="one"/>
+    <item quantity="few"/>
+    <item quantity="other"/>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%d минут осталось</item>
-    <item quantity="other">%d минут осталось</item>
+    <item quantity="one"/>
+    <item quantity="few"/>
+    <item quantity="other"/>
   </plurals>
   <string name="type_answer_hint">Напечатайте ответ</string>
   <string name="show_answer">Показать ответ</string>
@@ -144,8 +147,9 @@
   <string name="card_template_editor_menu_delete">Удалить</string>
   <string name="card_template_editor_cant_delete">Требуется по крайней мере один тип.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">Удалить тип карты «%2$s» и %1$d его карту?</item>
-    <item quantity="other">Удалить тип карты «%2$s» и все %1$d его карты?</item>
+    <item quantity="one"/>
+    <item quantity="few"/>
+    <item quantity="other"/>
   </plurals>
   <string name="card_template_editor_would_delete_note"> Удаление этого типа карт приведет к удалению одного
         или нескольких примечаний, создайте сначала новый тип карт.</string>
