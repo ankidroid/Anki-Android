@@ -315,7 +315,6 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         String hkey = (String) data.data[0];
         boolean media = (Boolean) data.data[1];
         String conflictResolution = (String) data.data[2];
-        int mediaUsn = (Integer) data.data[3];
         Collection col = data.col;
 
         boolean colCorruptFullSync = false;
@@ -340,7 +339,6 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 publishProgress(R.string.sync_prepare_syncing);
                 Object[] ret = client.sync(this);
                 data.message = client.getSyncMsg();
-                mediaUsn = client.getmMediaUsn();
                 if (ret == null) {
                     data.success = false;
                     data.result = new Object[] { "genericError" };
@@ -350,8 +348,6 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 if (!retCode.equals("noChanges") && !retCode.equals("success")) {
                     data.success = false;
                     data.result = ret;
-                    // note mediaUSN for later
-                    data.data = new Object[] { mediaUsn };
                     // Check if there was a sanity check error
                     if (retCode.equals("sanityCheckError")) {
                         // Force full sync next time
@@ -410,7 +406,6 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync-fullSync");
                     data.success = false;
                     data.result = new Object[] { "OutOfMemoryError" };
-                    data.data = new Object[] { mediaUsn };
                     return data;
                 } catch (RuntimeException e) {
                     if (timeoutOccured(e)) {
@@ -420,7 +415,6 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                         data.result = new Object[] { "IOException" };
                     }
                     data.success = false;
-                    data.data = new Object[] { mediaUsn };
                     return data;
                 }
             }
@@ -480,7 +474,6 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             Integer code = e.getResponseCode();
             String msg = e.getLocalizedMessage();
             data.result = new Object[] { "error", code , msg };
-            data.data = new Object[] { mediaUsn };
             return data;
         } catch (Exception e) {
             // Global error catcher.
