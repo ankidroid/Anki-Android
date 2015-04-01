@@ -27,7 +27,6 @@ import android.graphics.Typeface;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.StyleSpan;
-
 import android.util.Pair;
 
 import com.ichi2.anki.AnkiDroidApp;
@@ -42,10 +41,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -1245,7 +1242,7 @@ public class Sched {
     private int _cntFnRev(long did, int lim) {
         return mCol.getDb().queryScalar(
                 "SELECT count() FROM (SELECT id FROM cards WHERE did = " + did + " AND queue = 2 and due <= " + mToday
-                        + " LIMIT " + lim + ")");
+                        + " LIMIT " + lim + ")", false);
     }
 
 
