@@ -27,6 +27,7 @@ android {
     }   
     lintOptions {
         abortOnError false
+        disable 'TypographyEllipsis'
     }
 }
 
