@@ -840,7 +840,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                                 sbQuery.append("SELECT count(*) FROM cards WHERE did IN ");
                                 sbQuery.append(Utils.ids2str(collection.getDecks().active()));
                                 sbQuery.append(" AND queue = 0");
-                                final int fullNewCount = collection.getDb().queryScalar(sbQuery.toString(), false);
+                                final int fullNewCount = collection.getDb().queryScalar(sbQuery.toString());
                                 if (fullNewCount > 0) {
                                     Runnable setNewTotalText = new Runnable() {
                                         @Override

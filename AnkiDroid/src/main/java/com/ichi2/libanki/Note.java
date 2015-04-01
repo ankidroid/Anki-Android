@@ -136,7 +136,7 @@ public class Note implements Cloneable {
         String fields = joinedFields();
         if (mod == null && mCol.getDb().queryScalar(String.format(Locale.US,
                 "select 1 from notes where id = ? and tags = ? and flds = ?",
-                mId, tags, fields), false) > 0) {
+                mId, tags, fields)) > 0) {
             return;
         }
         long csum = Utils.fieldChecksum(mFields[0]);
@@ -302,7 +302,7 @@ public class Note implements Cloneable {
      * have we been added yet?
      */
     private void _preFlush() {
-        mNewlyAdded = mCol.getDb().queryScalar("SELECT 1 FROM cards WHERE nid = " + mId, false) == 0;
+        mNewlyAdded = mCol.getDb().queryScalar("SELECT 1 FROM cards WHERE nid = " + mId) == 0;
     }
 
 

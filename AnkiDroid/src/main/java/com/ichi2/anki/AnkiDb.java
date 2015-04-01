@@ -134,31 +134,20 @@ public class AnkiDb {
      * @param query The raw SQL query to use.
      * @return The integer result of the query.
      */
-    public int queryScalar(String query) throws SQLException {
-        return queryScalar(query, true);
-    }
-
-
-    public int queryScalar(String query, boolean throwException) throws SQLException {
+    public int queryScalar(String query) {
         Cursor cursor = null;
         int scalar;
         try {
             cursor = mDatabase.rawQuery(query, null);
             if (!cursor.moveToNext()) {
-                if (throwException) {
-                    throw new SQLException("No result for query: " + query);
-                } else {
-                    return 0;
-                }
+                return 0;
             }
-
             scalar = cursor.getInt(0);
         } finally {
             if (cursor != null) {
                 cursor.close();
             }
         }
-
         return scalar;
     }
 
@@ -179,22 +168,13 @@ public class AnkiDb {
     }
 
 
-    public long queryLongScalar(String query) throws SQLException {
-        return queryLongScalar(query, true);
-    }
-
-
-    public long queryLongScalar(String query, boolean throwException) throws SQLException {
+    public long queryLongScalar(String query) {
         Cursor cursor = null;
         long scalar;
         try {
             cursor = mDatabase.rawQuery(query, null);
             if (!cursor.moveToNext()) {
-                if (throwException) {
-                    throw new SQLException("No result for query: " + query);
-                } else {
-                    return 0;
-                }
+                return 0;
             }
             scalar = cursor.getLong(0);
         } finally {

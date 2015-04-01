@@ -19,11 +19,9 @@ package com.ichi2.libanki.importer;
 import android.content.res.Resources;
 import android.database.Cursor;
 
-
 import com.google.gson.stream.JsonReader;
 import com.ichi2.anki.AnkiDatabaseManager;
 import com.ichi2.anki.BackupManager;
-import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
 import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Collection;
@@ -744,7 +742,7 @@ public class Anki2Importer {
         try {
             // make sure new position is correct
             mDst.getConf().put("nextPos",
-                    mDst.getDb().queryLongScalar("SELECT max(due) + 1 FROM cards WHERE type = 0", false));
+                    mDst.getDb().queryLongScalar("SELECT max(due) + 1 FROM cards WHERE type = 0"));
             mDst.save();
         } catch (JSONException e) {
             throw new RuntimeException(e);
