@@ -1599,10 +1599,10 @@ public class Sched {
         mCol.log(mCol.getDb().queryColumn(Long.class, "select id from cards where " + lim, 0));
         // move out of cram queue
         mCol.getDb().execute(
-                "UPDATE cards SET did = odid, queue = (CASE WHEN type = 1 THEN 0 "
-                        + "ELSE type END), type = (CASE WHEN type = 1 THEN 0 ELSE type END), "
-                        + "due = odue, odue = 0, odid = 0, usn = ?, mod = ? where " + lim,
-                new Object[] { mCol.usn(), Utils.intNow() });
+                "update cards set did = odid, queue = (case when type = 1 then 0 " +
+                "else type end), type = (case when type = 1 then 0 else type end), " +
+                "due = odue, odue = 0, odid = 0, usn = ? where " + lim,
+                new Object[] { mCol.usn() });
     }
 
 
@@ -1664,7 +1664,7 @@ public class Sched {
         int u = mCol.usn();
         for (long c = 0; c < ids.size(); c++) {
             // start at -100000 so that reviews are all due
-            data.add(new Object[] { did, -100000 + c, t, u, ids.get((int) c) });
+            data.add(new Object[] { did, -100000 + c, u, ids.get((int) c) });
         }
         // due reviews stay in the review queue. careful: can't use "odid or did", as sqlite converts to boolean
         String queue = "(CASE WHEN type = 2 AND (CASE WHEN odue THEN odue <= " + mToday +
@@ -1672,7 +1672,7 @@ public class Sched {
         mCol.getDb().executeMany(
                 "UPDATE cards SET odid = (CASE WHEN odid THEN odid ELSE did END), " +
                         "odue = (CASE WHEN odue THEN odue ELSE due END), did = ?, queue = " +
-                        queue + ", due = ?, mod = ?, usn = ? WHERE id = ?", data);
+                        queue + ", due = ?, usn = ? WHERE id = ?", data);
     }
 
 
