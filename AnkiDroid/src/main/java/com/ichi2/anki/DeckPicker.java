@@ -153,8 +153,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     private StyledOpenCollectionDialog mNotMountedDialog;
     private ShowcaseView mShowcaseDialog;
 
-    private int mSyncMediaUsn = 0;
-
     private SimpleAdapter mDeckListAdapter;
     private ArrayList<HashMap<String, String>> mDeckList;
     private ListView mDeckListView;
@@ -1264,21 +1262,18 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     // Sync with Anki Web
     @Override
     public void sync() {
-        sync(null, 0);
+        sync(null);
     }
 
 
     /**
      * The mother of all syncing attempts. This might be called from sync() as first attempt to sync a collection OR
-     * from the mSyncConflictResolutionListener if the first attempt determines that a full-sync is required. In the
-     * second case, we have passed the mediaUsn that was obtained during the first attempt.
+     * from the mSyncConflictResolutionListener if the first attempt determines that a full-sync is required.
      * 
      * @param syncConflictResolution Either "upload" or "download", depending on the user's choice.
-     * @param syncMediaUsn The media Usn, as determined during the prior sync() attempt that determined that full
-     *            syncing was required.
      */
     @Override
-    public void sync(String syncConflictResolution, int syncMediaUsn) {
+    public void sync(String syncConflictResolution) {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         String hkey = preferences.getString("hkey", "");
         if (hkey.length() == 0) {
@@ -1286,15 +1281,10 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         } else {
             Connection.sync(mSyncListener,
                     new Connection.Payload(new Object[] { hkey, preferences.getBoolean("syncFetchesMedia", true),
-                            syncConflictResolution, syncMediaUsn }));
+                            syncConflictResolution }));
         }
     }
 
-
-    @Override
-    public int getSyncMediaUsn() {
-        return mSyncMediaUsn;
-    }
 
     private Connection.TaskListener mSyncListener = new Connection.TaskListener() {
 
@@ -1404,12 +1394,9 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                         }
                         showSyncLogDialog(joinSyncMessages(dialogMessage, syncMessage));
                     } else if (resultType.equals("fullSync")) {
-                        if (data.data != null && data.data.length >= 1 && data.data[0] instanceof Integer) {
-                            mSyncMediaUsn = (Integer) data.data[0];
-                        }
                         if (getCol().isEmpty()) {
                             // don't prompt user to resolve sync conflict if local collection empty
-                            sync("download", mSyncMediaUsn);
+                            sync("download");
                             // TODO: Also do reverse check to see if AnkiWeb collection is empty if Anki Desktop
                             // implements it
                         } else {

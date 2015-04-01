@@ -59,7 +59,6 @@ public class Syncer {
     long mRMod;
     long mRScm;
     int mMaxUsn;
-    int mMediaUsn;
     long mLMod;
     long mLScm;
     int mMinUsn;
@@ -115,7 +114,6 @@ public class Syncer {
                 int rts = rMeta.getInt("ts");
                 mRMod = rMeta.getLong("mod");
                 mMaxUsn = rMeta.getInt("usn");
-                mMediaUsn = rMeta.getInt("musn");
                 // skip uname, AnkiDroid already stores and shows it
                 Timber.i("Sync: building local meta data");
                 JSONObject lMeta = meta();
@@ -899,11 +897,6 @@ public class Syncer {
 
     private void mergeConf(JSONObject conf) {
         mCol.setConf(conf);
-    }
-
-
-    public int getmMediaUsn() {
-        return mMediaUsn;
     }
 
 }

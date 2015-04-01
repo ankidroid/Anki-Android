@@ -33,10 +33,7 @@ public class SyncErrorDialog extends AsyncDialogFragment {
         public void sync();
 
 
-        public void sync(String conflict, int syncMediaUsn);
-
-
-        public int getSyncMediaUsn();
+        public void sync(String conflict);
 
 
         public Collection getCol();
@@ -127,7 +124,7 @@ public class SyncErrorDialog extends AsyncDialogFragment {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 SyncErrorDialogListener activity = (SyncErrorDialogListener) getActivity();
-                                activity.sync("upload", activity.getSyncMediaUsn());
+                                activity.sync("upload");
                                 dismissAllDialogFragments();
                             }
                         });
@@ -141,7 +138,7 @@ public class SyncErrorDialog extends AsyncDialogFragment {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 SyncErrorDialogListener activity = (SyncErrorDialogListener) getActivity();
-                                activity.sync("download", activity.getSyncMediaUsn());
+                                activity.sync("download");
                                 dismissAllDialogFragments();
                             }
                         });
@@ -173,7 +170,7 @@ public class SyncErrorDialog extends AsyncDialogFragment {
                         new Dialog.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                ((SyncErrorDialogListener) getActivity()).sync("upload", 0);
+                                ((SyncErrorDialogListener) getActivity()).sync("upload");
                                 dismissAllDialogFragments();
                             }
                         });
@@ -186,7 +183,7 @@ public class SyncErrorDialog extends AsyncDialogFragment {
                         new Dialog.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                ((SyncErrorDialogListener) getActivity()).sync("download", 0);
+                                ((SyncErrorDialogListener) getActivity()).sync("download");
                                 dismissAllDialogFragments();
                             }
                         });
