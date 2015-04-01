@@ -47,7 +47,6 @@
   <string name="delete_deck_title">Odstrániť balíček</string>
   <string name="delete_deck_message">Naozaj chcete odstrániť všetky karty v %s?</string>
   <string name="delete_cram_deck_message">Naozaj chcete vrátiť všetky karty v %s späť do ich pôvodných balíčkov?</string>
-  <string name="new_version_message">Nové funkcie:</string>
   <string name="no_tts_available_message">Žiaden TTS jazyk nie je k dispozícii</string>
   <string name="initializing_tts">Initializing TTS&#8230;</string>
   <string name="tts_no_tts">Nehovoriť</string>

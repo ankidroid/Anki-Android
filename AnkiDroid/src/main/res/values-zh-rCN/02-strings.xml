@@ -86,12 +86,10 @@
   <string name="field_remapping">%1$s (from \'%2$s\')</string>
   <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
   <plurals name="timebox_reached">
-    <item quantity="one">在%2$s中学习了%1$d个卡牌</item>
-    <item quantity="other">在%2$s中学习了%1$d个卡牌</item>
+    <item quantity="other">%1$d cards studied in %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
-    <item quantity="one">%1$d分钟</item>
-    <item quantity="other">%1$d分钟</item>
+    <item quantity="other">%1$d minutes</item>
   </plurals>
   <string name="studyoptions_welcome_title">欢迎进入 AnkiDroid</string>
   <string name="fact_adder_intent_title">AnkiDroid卡牌</string>
@@ -105,8 +103,7 @@
   <string name="rename_error">牌组 %s 无法重命名</string>
   <string name="default_conf_delete_error">不能删除默认的选项组</string>
   <plurals name="factadder_cards_added">
-    <item quantity="one">%d张卡牌已添加</item>
-    <item quantity="other">%d张卡牌已添加</item>
+    <item quantity="other">%d cards added</item>
   </plurals>
   <string name="help_title">帮助</string>
   <string name="check_db">检查数据库</string>
@@ -115,15 +112,6 @@
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">空卡牌。在桌面客户端上运行”工具 &gt; 空卡...\"。</string>
   <string name="unknown_type_field_warning">键入答案： 未知的字段 %s</string>
   <string name="delete_deck">删除牌组...\n请等待.</string>
-  <string-array name="dynOrderLabels">
-    <item>优先显示老卡牌</item>
-    <item>随机</item>
-    <item>增加时间间隔</item>
-    <item>减少时间间隔</item>
-    <item>错误最多的</item>
-    <item>添加的顺序</item>
-    <item>到期的顺序</item>
-  </string-array>
   <string name="show_hint">显示 %s</string>
   <string name="info_rate">评价AnkiDroid</string>
   <string name="col_load_failed">加载集合失败。\n 按返回键，关闭AnkiDroid。</string>

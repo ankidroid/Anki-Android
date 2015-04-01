@@ -52,16 +52,13 @@
   <string name="studyoptions_eta">预计所需时间（分钟）：</string>
   <string name="studyoptions_start">开始学习</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%1$d张卡牌待复习 (%2$s)</item>
-    <item quantity="other">%1$d张卡牌待复习 (%2$s)</item>
+    <item quantity="other"/>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one">%d分钟</item>
-    <item quantity="other">%d分钟</item>
+    <item quantity="other"/>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%d分钟剩余</item>
-    <item quantity="other">%d分钟剩余</item>
+    <item quantity="other"/>
   </plurals>
   <string name="type_answer_hint">输入答案</string>
   <string name="show_answer">显示答案</string>
@@ -144,8 +141,7 @@
   <string name="card_template_editor_menu_delete">删除</string>
   <string name="card_template_editor_cant_delete">At least one card type is required.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
-    <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
+    <item quantity="other"/>
   </plurals>
   <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create a new card type first.</string>
 </resources>

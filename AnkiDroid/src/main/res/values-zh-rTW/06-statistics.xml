@@ -122,15 +122,6 @@
   <string name="stats_weekly_breakdown">Weekly Breakdown</string>
   <string name="stats_answer_buttons">Answer Buttons</string>
   <string name="stats_cards_types">Cards Types</string>
-  <string-array name="stats_period">
-    <item>1 個月</item>
-    <item>1 年</item>
-    <item>全部</item>
-  </string-array>
-  <string-array name="stats_range">
-    <item>收藏</item>
-    <item>目前的牌組</item>
-  </string-array>
   <string-array name="stats_day_time_strings">
     <item>4AM</item>
     <item>10AM</item>
@@ -161,11 +152,9 @@
     <item>4</item>
   </string-array>
   <plurals name="stats_today_cards">
-    <item quantity="one">Studied &lt;b&gt;%1$d card&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
     <item quantity="other">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
   </plurals>
   <plurals name="stats_today_cards_not_bold">
-    <item quantity="one">Studied %1$d card in %2$s today.</item>
     <item quantity="other">Studied %1$d cards in %2$s today.</item>
   </plurals>
 </resources>

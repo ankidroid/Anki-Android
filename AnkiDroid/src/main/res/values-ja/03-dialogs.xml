@@ -47,7 +47,6 @@
   <string name="delete_deck_title">単語帳を削除</string>
   <string name="delete_deck_message">%s の中のすべてのカードを削除してもよろしいですか。</string>
   <string name="delete_cram_deck_message"> %s のすべてのカードを元の単語帳に戻してもよろしいですか？</string>
-  <string name="new_version_message">新機能:</string>
   <string name="no_tts_available_message">テキスト読み上げ可能な言語がありません</string>
   <string name="initializing_tts">テキスト読み上げ機能を初期化しています.</string>
   <string name="tts_no_tts">音声なし</string>

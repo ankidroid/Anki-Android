@@ -35,43 +35,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="newCardSchedulingLabels">
-    <item>Sebar dalam reviu</item>
-    <item>Selepas reviu</item>
-    <item>Sebelum reviu</item>
-  </string-array>
   <string-array name="error_reporting_choice_labels">
     <item>Selalu lapor</item>
     <item>Jangan lapor</item>
     <item>Tanya saya</item>
-  </string-array>
-  <string-array name="cram_review_order_labels">
-    <item>Tunjuk dulu yang lama berubah</item>
-    <item>Tunjuk berturut ditambah</item>
-    <item>Tunjuk secara rawak</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_order">
-    <item>Kad baru secara rawak</item>
-    <item>Kad baru ditambah secara berturut</item>
-    <item>Kad baru ditambah dalam urutan terbalik</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_schedule">
-    <item>Menyebar kad baru melalui reviu</item>
-    <item>Kad baru selepas reviu</item>
-    <item>Kad baru sebelum ulangkaji</item>
-  </string-array>
-  <string-array name="studyoptions_more_rev_card_order">
-    <item>Belajar kad yang paling lama ditinggal</item>
-    <item>Tinjauan kad dari interval terkecil</item>
-    <item>Tinjauan kad dalam turutan</item>
-    <item>Tinjauan kad secara rawak</item>
-  </string-array>
-  <string-array name="studyoptions_more_fail_card_option">
-    <item>Tunjukkan kad gagal segera</item>
-    <item>Tunjukkan kad gagal pada akhir</item>
-    <item>Tunjukkan kad gagal dalam 10 minit</item>
-    <item>Tunjukkan kad gagal dalam 8 jam</item>
-    <item>Tunjuk kad gagal dalam 3 hari</item>
   </string-array>
   <string-array name="gestures_labels">
     <item>Tiada tindakan</item>
@@ -91,12 +58,6 @@
     <item>Padam kad</item>
     <item>Play media</item>
     <item>Abort learning</item>
-  </string-array>
-  <string-array name="theme_labels">
-    <item>Android Gelap</item>
-    <item>Android Cahaya</item>
-    <item>Biru</item>
-    <item>Putih</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Tangguhkan kartu</item>

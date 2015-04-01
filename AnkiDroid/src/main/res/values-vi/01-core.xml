@@ -52,16 +52,13 @@
   <string name="studyoptions_eta">Thời gian ước tính (phút):</string>
   <string name="studyoptions_start">Bắt đầu học</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">Thẻ %1$d theo như (%2$s)</item>
-    <item quantity="other">Các thẻ %1$d theo như (%2$s)</item>
+    <item quantity="other"/>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one">%d phút.</item>
-    <item quantity="other">%d phút</item>
+    <item quantity="other"/>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%d số phút còn lại</item>
-    <item quantity="other">còn %d phút</item>
+    <item quantity="other"/>
   </plurals>
   <string name="type_answer_hint">Trả lời</string>
   <string name="show_answer">Hiện đáp án</string>
@@ -144,8 +141,7 @@
   <string name="card_template_editor_menu_delete">Xóa</string>
   <string name="card_template_editor_cant_delete">Tối thiểu cần có một loại thẻ.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">Xóa loại thẻ \'%2$s\', và thẻ %1$d đi kèm?</item>
-    <item quantity="other">Xóa loại thẻ \'%2$s\', và các thẻ %1$d đi kèm?</item>
+    <item quantity="other"/>
   </plurals>
   <string name="card_template_editor_would_delete_note">Việc xóa bỏ loại thẻ này có thể dẫn tới một hay nhiều ghi chú sẽ bị xóa. Trước tiên xin vui lòng tạo một loại thẻ mới.</string>
 </resources>

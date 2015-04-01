@@ -172,8 +172,10 @@
   <string name="deck_conf_deck_description">Опис шпила</string>
   <string name="deck_conf_group">Група опције</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n%2$d шпил користи ову групу</item>
-    <item quantity="other">%1$s\n%2$d шпилова користи ову групу</item>
+    <item quantity="one"/>
+    <item quantity="few"/>
+    <item quantity="many"/>
+    <item quantity="other"/>
   </plurals>
   <string name="deck_conf_new_cards">Нове картице</string>
   <string name="deck_conf_rev_cards">Понављања</string>
@@ -218,8 +220,10 @@
   <string name="deck_conf_remove_message">Да уклоним текућу групу опција?</string>
   <string name="deck_conf_set_subdecks">Задај за све групе подшпилова</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">%s подшпил ће да користи ову групу</item>
-    <item quantity="other">%s подшпил ће користити ову групу</item>
+    <item quantity="one"/>
+    <item quantity="few"/>
+    <item quantity="many"/>
+    <item quantity="other"/>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Задај за све групе шпилова</string>
   <string name="deck_conf_set_subdecks_message">Да задам текућу групу опција за све подшпилове ових шпилова?</string>

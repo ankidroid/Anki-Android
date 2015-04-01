@@ -172,8 +172,7 @@
   <string name="deck_conf_deck_description">Deck description</string>
   <string name="deck_conf_group">Options group</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n%2$d deck uses this group</item>
-    <item quantity="other">%1$s\n%2$d decks use this group</item>
+    <item quantity="other"/>
   </plurals>
   <string name="deck_conf_new_cards">New cards</string>
   <string name="deck_conf_rev_cards">Reviews</string>
@@ -218,8 +217,7 @@
   <string name="deck_conf_remove_message">Loại bỏ hiện tại tùy chọn nhóm?</string>
   <string name="deck_conf_set_subdecks">Thiết lập cho tất cả chủ đề phụ</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">%s chủ đề phụ sẽ sử dụng nhóm này</item>
-    <item quantity="other">%s các chủ đề phụ sẽ sử dụng nhóm này</item>
+    <item quantity="other"/>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Thiết lập cho tất cả chủ đề phụ</string>
   <string name="deck_conf_set_subdecks_message">Thiết lập hiện tại tùy chọn nhóm cho tất cả chủ đề phụ này?</string>

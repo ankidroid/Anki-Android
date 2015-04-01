@@ -47,7 +47,6 @@
   <string name="delete_deck_title">Suprimeix el paquet</string>
   <string name="delete_deck_message">Esteu segur que voleu suprimir totes les fitxes de %s?</string>
   <string name="delete_cram_deck_message">Esteu segur que voleu enviar totes les fitxes de %s als seus paquets inicials?</string>
-  <string name="new_version_message">Noves funcions:</string>
   <string name="no_tts_available_message">No hi ha idiomes de síntesi de veu disponibles</string>
   <string name="initializing_tts">Initializing TTS&#8230;</string>
   <string name="tts_no_tts">No parlis</string>

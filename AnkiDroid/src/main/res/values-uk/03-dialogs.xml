@@ -47,7 +47,6 @@
   <string name="delete_deck_title">Видалити колоду</string>
   <string name="delete_deck_message">Ви певні, що хочете видалити всі картки в %s?</string>
   <string name="delete_cram_deck_message">Ви впевнені що хочете відправити всі карти з %s назад до їх початкових колод?</string>
-  <string name="new_version_message">Нові особливості:</string>
   <string name="no_tts_available_message">Відсутня мова для перетворення тексту в мовлення</string>
   <string name="initializing_tts">Initializing TTS&#8230;</string>
   <string name="tts_no_tts">Не говорити</string>

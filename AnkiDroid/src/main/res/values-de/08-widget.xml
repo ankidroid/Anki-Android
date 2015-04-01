@@ -44,12 +44,12 @@
   <string name="widget_no_cards_due">Keine fälligen Karten</string>
   <string name="widget_loading">Widget wird geladen&#8230;</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">%1$d Karte fällig in %2$s</item>
-    <item quantity="other">%1$d Karten in %2$s fällig</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="one">%1$d Stapel</item>
-    <item quantity="other">%1$d Stapel</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <string name="widget_small">AnkiDroid Klein</string>
   <string name="widget_big_tomorrow_due">Morgen fällig:</string>

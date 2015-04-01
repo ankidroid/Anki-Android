@@ -52,16 +52,13 @@
   <string name="studyoptions_eta">زمان برآورد شده (دقیقه):</string>
   <string name="studyoptions_start">مرور کردن</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%1$dزمان مرور کارت (%2$s)</item>
-    <item quantity="other">%1$dزمان مرور کارت ها (%2$s)</item>
+    <item quantity="other"/>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one">%d دقیقه.</item>
-    <item quantity="other">%d دقیقه</item>
+    <item quantity="other"/>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">دقیقه مانده است %d</item>
-    <item quantity="other">دقیقه مانده است %d</item>
+    <item quantity="other"/>
   </plurals>
   <string name="type_answer_hint">پاسخ را تایپ کنید</string>
   <string name="show_answer">نمایش پاسخ</string>
@@ -144,8 +141,7 @@
   <string name="card_template_editor_menu_delete">Delete</string>
   <string name="card_template_editor_cant_delete">حداقل یک کارت وارد کنید.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
-    <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
+    <item quantity="other"/>
   </plurals>
   <string name="card_template_editor_would_delete_note">پاکسازی این نوع کارت ممکن است منجر به پاک شدن یک یا تعدادی یادداشت شود.لطفاً در ابتدا یک نوع کارت بسازید. </string>
 </resources>

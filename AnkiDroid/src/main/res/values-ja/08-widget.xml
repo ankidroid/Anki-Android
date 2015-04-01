@@ -44,12 +44,10 @@
   <string name="widget_no_cards_due">学習予定日時に達したカードはありません</string>
   <string name="widget_loading">ウィジェットをロード中...</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">%2$s枚中%1$d枚が学習予定日時に達しています</item>
-    <item quantity="other">%2$s枚中%1$d枚が学習予定日時に達しています</item>
+    <item quantity="other"/>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="one">%1$d 単語帳</item>
-    <item quantity="other">%1$dつの単語帳</item>
+    <item quantity="other"/>
   </plurals>
   <string name="widget_small">AnkiDroid 小</string>
   <string name="widget_big_tomorrow_due">明日が学習予定日のカード:</string>

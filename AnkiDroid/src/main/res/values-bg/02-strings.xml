@@ -106,7 +106,7 @@
   <string name="default_conf_delete_error">The default options group can\'t be removed</string>
   <plurals name="factadder_cards_added">
     <item quantity="one">%d card added</item>
-    <item quantity="other">%d карти добавени</item>
+    <item quantity="other">%d cards added</item>
   </plurals>
   <string name="help_title">Помощ</string>
   <string name="check_db">Check database</string>
@@ -115,15 +115,6 @@
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
   <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
   <string name="delete_deck">Deleting deck&#8230;</string>
-  <string-array name="dynOrderLabels">
-    <item>Oldest seen first</item>
-    <item>Random</item>
-    <item>Increasing intervals</item>
-    <item>Decreasing intervals</item>
-    <item>Most lapses</item>
-    <item>Order added</item>
-    <item>Order due</item>
-  </string-array>
   <string name="show_hint">Show %s</string>
   <string name="info_rate">Rate AnkiDroid</string>
   <string name="col_load_failed">Collection loading failed.\nPress back to close AnkiDroid.</string>

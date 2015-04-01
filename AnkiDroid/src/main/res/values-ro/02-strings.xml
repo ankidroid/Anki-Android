@@ -87,11 +87,13 @@
   <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
   <plurals name="timebox_reached">
     <item quantity="one">%1$d card studied in %2$s</item>
-    <item quantity="other">%1$d carduri studiate în %2$s</item>
+    <item quantity="few">%1$d cards studied in %2$s</item>
+    <item quantity="other">%1$d cards studied in %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
     <item quantity="one">%1$d minute</item>
-    <item quantity="other">%1$d minute</item>
+    <item quantity="few">%1$d minutes</item>
+    <item quantity="other">%1$d minutes</item>
   </plurals>
   <string name="studyoptions_welcome_title">Bine ati venit la AnkiDroid</string>
   <string name="fact_adder_intent_title">Card de AnkiDroid</string>
@@ -106,7 +108,8 @@
   <string name="default_conf_delete_error">Grupul de opţiuni implicite nu pot fi eliminate</string>
   <plurals name="factadder_cards_added">
     <item quantity="one">%d card added</item>
-    <item quantity="other">%d carduri de adăugat</item>
+    <item quantity="few">%d cards added</item>
+    <item quantity="other">%d cards added</item>
   </plurals>
   <string name="help_title">ajutor</string>
   <string name="check_db">Selectare bază de date</string>
@@ -115,15 +118,6 @@
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
   <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
   <string name="delete_deck">Ştergerea pachet...\nVa rugam aşteptaţi.</string>
-  <string-array name="dynOrderLabels">
-    <item>Cel mai vechi văzut primul</item>
-    <item>Aleator</item>
-    <item>Intervale in creştere</item>
-    <item>Intervale in descreştere</item>
-    <item>Cele mai multe probleme</item>
-    <item>Insiruire adăugata</item>
-    <item>Insiruire de facut</item>
-  </string-array>
   <string name="show_hint">Show %s</string>
   <string name="info_rate">Dati o nota pentru AnkiDroid</string>
   <string name="col_load_failed">Incărcarea colectiei nu a reușit. \nApasati Inapoi pentru a închide AnkiDroid.</string>

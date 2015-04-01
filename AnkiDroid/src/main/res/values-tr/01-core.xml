@@ -52,16 +52,16 @@
   <string name="studyoptions_eta">Tahminî süre (dk):</string>
   <string name="studyoptions_start">Çalışmaya Başla</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%1$d kart çalışılacak (%2$s)</item>
-    <item quantity="other">%1$d kart çalışılacak (%2$s)</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one">%d dk.</item>
-    <item quantity="other">%d dk.</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%d dakika kaldı</item>
-    <item quantity="other">%d dakika kaldı</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <string name="type_answer_hint">Yanıtı yazın</string>
   <string name="show_answer">Yanıtı Göster</string>
@@ -144,8 +144,8 @@
   <string name="card_template_editor_menu_delete">Sil</string>
   <string name="card_template_editor_cant_delete">En az bir kart türü gerekiyor.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">\'%2$s\' kart tipi ve %1$d kartı silinsin mi?</item>
-    <item quantity="other">\'%2$s\' kart tipi ve %1$d kartı silinsin mi?</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <string name="card_template_editor_would_delete_note"> Bu kart tipini kaldırmak bir veya daha fazla notun silinmesine neden olur. Lütfen önce yeni bir kart türü oluşturun.</string>
 </resources>

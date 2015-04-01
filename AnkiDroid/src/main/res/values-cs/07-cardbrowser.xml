@@ -40,8 +40,9 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="one">zobrazena %d karta</item>
-    <item quantity="other">zobrazeno %d karet</item>
+    <item quantity="one"/>
+    <item quantity="few"/>
+    <item quantity="other"/>
   </plurals>
   <string name="card_browser_all_decks">Všechny balíčky</string>
   <string name="card_browser_delete_card">Odstranit poznámku</string>

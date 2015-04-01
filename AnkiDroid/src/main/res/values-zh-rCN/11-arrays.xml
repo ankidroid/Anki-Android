@@ -35,43 +35,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="newCardSchedulingLabels">
-    <item>穿插在复习中</item>
-    <item>复习后</item>
-    <item>复习前</item>
-  </string-array>
   <string-array name="error_reporting_choice_labels">
     <item>总是发送报告</item>
     <item>从不发送报告</item>
     <item>询问我</item>
-  </string-array>
-  <string-array name="cram_review_order_labels">
-    <item>按修改顺序先显示</item>
-    <item>按添加顺序显示</item>
-    <item>按随机顺序显示</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_order">
-    <item>按随机顺序学习新卡牌</item>
-    <item>按添加顺序学习新卡牌</item>
-    <item>按与添加相反的顺序学习新卡牌</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_schedule">
-    <item>复习与学习新卡牌穿插进行</item>
-    <item>先复习再显示新卡牌</item>
-    <item>先显示新卡牌再复习</item>
-  </string-array>
-  <string-array name="studyoptions_more_rev_card_order">
-    <item>复习间隔最长的卡牌先复习</item>
-    <item>复习间隔最短的卡牌先复习</item>
-    <item>按到期顺序复习卡牌</item>
-    <item>按随机顺序复习卡牌</item>
-  </string-array>
-  <string-array name="studyoptions_more_fail_card_option">
-    <item>立即显示失败的卡牌</item>
-    <item>最后显示失败的卡片</item>
-    <item>10分钟后显示失败的卡牌</item>
-    <item>8小时后显示失败的卡牌</item>
-    <item>3天后显示失败的卡牌</item>
   </string-array>
   <string-array name="gestures_labels">
     <item>不采取行动</item>
@@ -91,12 +58,6 @@
     <item>删除卡牌</item>
     <item>播放媒体</item>
     <item>终止学习</item>
-  </string-array>
-  <string-array name="theme_labels">
-    <item>Android 暗色</item>
-    <item>Android 亮色</item>
-    <item>蓝色</item>
-    <item>白</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>暂停卡牌</item>

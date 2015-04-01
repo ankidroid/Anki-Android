@@ -86,12 +86,10 @@
   <string name="field_remapping">%1$s (from \'%2$s\')</string>
   <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
   <plurals name="timebox_reached">
-    <item quantity="one">%1$d card studied in %2$s</item>
-    <item quantity="other">%1$d kartu dipelajari dalam %2$s</item>
+    <item quantity="other">%1$d cards studied in %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
-    <item quantity="one">%1$d minute</item>
-    <item quantity="other">%1$d menit</item>
+    <item quantity="other">%1$d minutes</item>
   </plurals>
   <string name="studyoptions_welcome_title">Selamat Datang ke AnkiDroid</string>
   <string name="fact_adder_intent_title">Kad AnkiDroid</string>
@@ -105,8 +103,7 @@
   <string name="rename_error">Dek %s tidak dapat diganti namanya</string>
   <string name="default_conf_delete_error">Kelompok pilihan default tidak dapat dihapus</string>
   <plurals name="factadder_cards_added">
-    <item quantity="one">%d card added</item>
-    <item quantity="other">%d kartu ditambahkan</item>
+    <item quantity="other">%d cards added</item>
   </plurals>
   <string name="help_title">Bantuan</string>
   <string name="check_db">Periksa database</string>
@@ -115,15 +112,6 @@
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
   <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
   <string name="delete_deck">Menghapus dek...\nSilahkan menunggu.</string>
-  <string-array name="dynOrderLabels">
-    <item>Tertua pertama dilihat</item>
-    <item>Acak</item>
-    <item>Meningkatkan interval</item>
-    <item>Mengurangi interval</item>
-    <item>Most lapses</item>
-    <item>Urutan ditambahkan</item>
-    <item>Urut berdasarkan</item>
-  </string-array>
   <string name="show_hint">Show %s</string>
   <string name="info_rate">Beri peringkat AnkiDroid</string>
   <string name="col_load_failed">Gagal memuat koleksi. \nTekan kembali untuk menutup AnkiDroid.</string>

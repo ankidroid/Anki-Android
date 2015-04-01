@@ -47,7 +47,6 @@
   <string name="delete_deck_title">Διαγραφή Τράπουλας</string>
   <string name="delete_deck_message">Είστε βέβαιοι ότι θέλετε να διαγράψετε όλες τις κάρτες στο %s?</string>
   <string name="delete_cram_deck_message">Είστε βέβαιοι ότι θέλετε να στείλετε όλες τις κάρτες της %s πίσω στο αρχικές τους τράπουλες;</string>
-  <string name="new_version_message">Νέες δυνατότητες:</string>
   <string name="no_tts_available_message">Δεν είναι διαθέσιμη η μετατροπής κειμένου σε ομιλία</string>
   <string name="initializing_tts">Initializing TTS&#8230;</string>
   <string name="tts_no_tts">Σίγαση</string>

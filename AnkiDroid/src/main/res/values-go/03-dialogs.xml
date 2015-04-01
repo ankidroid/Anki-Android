@@ -47,7 +47,6 @@
   <string name="delete_deck_title">Usnim wikon?</string>
   <string name="delete_deck_message">Usnim allos kartos in %s?</string>
   <string name="delete_cram_deck_message">Sandei allos kartos in %s ibuks du frumistom wikom izo?</string>
-  <string name="new_version_message">Niujos mahteis:</string>
   <string name="no_tts_available_message">Bokos-du-gwaurdja razda nist</string>
   <string name="initializing_tts">Initializing TTS&#8230;</string>
   <string name="tts_no_tts">Ni rodei</string>

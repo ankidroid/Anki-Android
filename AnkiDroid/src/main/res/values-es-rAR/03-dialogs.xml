@@ -47,7 +47,6 @@
   <string name="delete_deck_title">Eliminar mazo</string>
   <string name="delete_deck_message">¿Está seguro de eliminar todas las tarjetas en %s?</string>
   <string name="delete_cram_deck_message">¿Está seguro de que desea enviar todas las tarjetas en %s de vuelta a sus mazos originales?</string>
-  <string name="new_version_message">Nuevas características:</string>
   <string name="no_tts_available_message">No hay un idioma de texto-a-voz disponible</string>
   <string name="initializing_tts">Inicializando TTS&#8230;</string>
   <string name="tts_no_tts">No hable</string>

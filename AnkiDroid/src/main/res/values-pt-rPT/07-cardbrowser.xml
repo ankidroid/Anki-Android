@@ -40,8 +40,8 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="one">%d ficha mostrada</item>
-    <item quantity="other">%d fichas mostradas</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <string name="card_browser_all_decks">Todos os baralhos</string>
   <string name="card_browser_delete_card">Eliminar nota</string>

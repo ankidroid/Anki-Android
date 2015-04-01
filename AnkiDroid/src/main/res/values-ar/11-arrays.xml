@@ -35,43 +35,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="newCardSchedulingLabels">
-    <item>انشر خلال المراجعات</item>
-    <item>بعد المراجعات</item>
-    <item>قبل المراجعات</item>
-  </string-array>
   <string-array name="error_reporting_choice_labels">
     <item>أرسل التقرير دائماً</item>
     <item>لا ترسل التقرير بتاتاً</item>
     <item>إسألني</item>
-  </string-array>
-  <string-array name="cram_review_order_labels">
-    <item>أظهر التعديل الأقدم أولاً</item>
-    <item>اعرض في ترتيب الإضافة</item>
-    <item>اعرض في ترتيب عشوائي</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_order">
-    <item>البطاقات الجديدة في ترتيب عشوائي</item>
-    <item>البطاقات الجديدة حسب ترتيب الإضافة</item>
-    <item>البطاقات الجديدة المضافة في ترتيب عكسي</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_schedule">
-    <item>انشر البطاقات الجديدة خلال المراجعات</item>
-    <item>البطاقات الجديدة بعد المراجعات</item>
-    <item>بطاقات جديدة قبل المراجعات</item>
-  </string-array>
-  <string-array name="studyoptions_more_rev_card_order">
-    <item>راجع البطاقات حسب الفاصل الزمني لأكبر</item>
-    <item>راجع البطاقات من الفاصل الزمني الأصغر</item>
-    <item>راجع البطاقات حسب ترتيب الاستحقاق</item>
-    <item>راجع البطاقات في ترتيب عشوائي</item>
-  </string-array>
-  <string-array name="studyoptions_more_fail_card_option">
-    <item>أظهر البطاقات الفاشلة في أقرب وقت</item>
-    <item>أظهر البطاقات الفاشلة في النهاية</item>
-    <item>أظهر البطاقات الفاشلة في 10 دقائق</item>
-    <item>إظهار البطاقات الفاشلة في غضون 8 ساعات</item>
-    <item>أظهر البطاقات الفاشلة في 3 أيام</item>
   </string-array>
   <string-array name="gestures_labels">
     <item>بدون اجراء</item>
@@ -91,12 +58,6 @@
     <item>احذف البطاقة</item>
     <item>Play media</item>
     <item>Abort learning</item>
-  </string-array>
-  <string-array name="theme_labels">
-    <item>أندرويد داكن</item>
-    <item>أندرويد فاتح</item>
-    <item>أزرق</item>
-    <item>أبيض</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>علق البطاقة</item>

@@ -35,43 +35,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="newCardSchedulingLabels">
-    <item>Раздели чрез отзивите</item>
-    <item>След отзива</item>
-    <item>Преди отзива</item>
-  </string-array>
   <string-array name="error_reporting_choice_labels">
     <item>Винаги докладвай</item>
     <item>Никога не докладвай</item>
     <item>Попитай ме</item>
-  </string-array>
-  <string-array name="cram_review_order_labels">
-    <item>Покажи последно модифицираните първи</item>
-    <item>Покажи в ред, добавени</item>
-    <item>Покажи в случаен ред</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_order">
-    <item>Нови карти в случаен ред</item>
-    <item>Нови карти добавени</item>
-    <item>Нови карти, които са добавени в обратен ред</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_schedule">
-    <item>Раздели нови карти според отзива</item>
-    <item>Нови карти след отзивите</item>
-    <item>Нови карти преди прегледи</item>
-  </string-array>
-  <string-array name="studyoptions_more_rev_card_order">
-    <item>Преглед на карти от най-големия интервал</item>
-    <item>Преглед на картите от най-малък интервал</item>
-    <item>Преглед на картите в ред поради</item>
-    <item>Преглед на картите в случаен ред</item>
-  </string-array>
-  <string-array name="studyoptions_more_fail_card_option">
-    <item>Покажи неуспешни карти скоро</item>
-    <item>Покажи сбърканите карти в края</item>
-    <item>Покажи сбърканите карти в 10 минути</item>
-    <item>Покажи неуспешни карти след осем часа</item>
-    <item>Покажи неуспешни карти в 3 дни</item>
   </string-array>
   <string-array name="gestures_labels">
     <item>Няма действие</item>
@@ -91,12 +58,6 @@
     <item>Изтриване на карта</item>
     <item>Play media</item>
     <item>Abort learning</item>
-  </string-array>
-  <string-array name="theme_labels">
-    <item>Тъмно андроид</item>
-    <item>Андроида светло</item>
-    <item>Синьо</item>
-    <item>Бяло</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Suspend card</item>

@@ -172,8 +172,8 @@
   <string name="deck_conf_deck_description">Descripción del mazo</string>
   <string name="deck_conf_group">Grupo de opciones</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n%2$d mazos utilizan este grupo</item>
-    <item quantity="other">%1$s\n%2$d mazos utilizan este grupo</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <string name="deck_conf_new_cards">Nuevas tarjetas</string>
   <string name="deck_conf_rev_cards">Revisiones</string>
@@ -218,8 +218,8 @@
   <string name="deck_conf_remove_message">¿Remover el grupo de opciones actuales?</string>
   <string name="deck_conf_set_subdecks">Aplicar a todos los submazos</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">%s submazos utilizarán este grupo</item>
-    <item quantity="other">%s submazos utilizarán este grupo</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Aplicar a todos los submazos</string>
   <string name="deck_conf_set_subdecks_message">¿Aplicar el grupo de opciones actuales a todos los submazos de este mazo?</string>

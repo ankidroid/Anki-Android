@@ -86,12 +86,10 @@
   <string name="field_remapping">%1$s (từ \'%2$s\')</string>
   <string name="confirm_map_cards_to_nothing">Bất kỳ thẻ để không có gì sẽ bị xóa. Nếu một chú thích đã không lưu giữ trong các thẻ, nó sẽ bị mất. Bạn có chắc bạn muốn tiếp tục không?</string>
   <plurals name="timebox_reached">
-    <item quantity="one">%1$d Các thẻ đã học trong %2$s</item>
-    <item quantity="other">%1$d Các thẻ đã được học trong %2$s</item>
+    <item quantity="other">%1$d cards studied in %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
-    <item quantity="one">%1$d phút</item>
-    <item quantity="other">%1$d phút</item>
+    <item quantity="other">%1$d minutes</item>
   </plurals>
   <string name="studyoptions_welcome_title">Chào mừng đến với AnkiDroid</string>
   <string name="fact_adder_intent_title">Thẻ AnkiDroid</string>
@@ -105,8 +103,7 @@
   <string name="rename_error">Không thể đổi tên tập thẻ %s</string>
   <string name="default_conf_delete_error">Nhóm tùy chọn mặc định không thể được gỡ bỏ</string>
   <plurals name="factadder_cards_added">
-    <item quantity="one">%d thẻ đã thêm</item>
-    <item quantity="other">Đã thêm vào %d thẻ</item>
+    <item quantity="other">%d cards added</item>
   </plurals>
   <string name="help_title">Trợ giúp</string>
   <string name="check_db">Kiểm tra cơ sở dữ liệu</string>
@@ -115,15 +112,6 @@
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Thẻ rỗng. Chạy \"công cụ &gt; Làm trống các thẻ...\" trên máy tính để bàn.</string>
   <string name="unknown_type_field_warning">Nhập câu trả lời: không biết trường %s</string>
   <string name="delete_deck">Đang xóa Bài...\nĐợi chút nhé.</string>
-  <string-array name="dynOrderLabels">
-    <item>Từ đã xem lâu nhất</item>
-    <item>Ngẫu nhiên</item>
-    <item>Tăng khoảng thời gian</item>
-    <item>Giảm khoảng thời gian</item>
-    <item>Các từ sai nhiều nhất</item>
-    <item>Yêu cầu thêm</item>
-    <item>Thêm giới hạn</item>
-  </string-array>
   <string name="show_hint">Hiển thị %s</string>
   <string name="info_rate">Đánh giá AnkiDroid, Yêu bạn quá đê!</string>
   <string name="col_load_failed">Tải dữ liệu bị lỗi.\nẤn quay lại để đóng AnkiDroid</string>

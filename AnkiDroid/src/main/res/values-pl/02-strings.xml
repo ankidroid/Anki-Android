@@ -86,12 +86,14 @@
   <string name="field_remapping">%1$s (from \'%2$s\')</string>
   <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
   <plurals name="timebox_reached">
-    <item quantity="one">%1$d karta przerobiona w %2$s</item>
-    <item quantity="other">%1$d karta przerobiona w %2$s</item>
+    <item quantity="one">%1$d card studied in %2$s</item>
+    <item quantity="few">%1$d cards studied in %2$s</item>
+    <item quantity="other">%1$d cards studied in %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
-    <item quantity="one">%1$d minutę</item>
-    <item quantity="other">%1$d minut</item>
+    <item quantity="one">%1$d minute</item>
+    <item quantity="few">%1$d minutes</item>
+    <item quantity="other">%1$d minutes</item>
   </plurals>
   <string name="studyoptions_welcome_title">Witamy w AnkiDroidzie</string>
   <string name="fact_adder_intent_title">Karta AnkiDroida</string>
@@ -105,8 +107,9 @@
   <string name="rename_error">Nie można zmienić nazwy talii %s</string>
   <string name="default_conf_delete_error">Nie można usunąć domyślnej grupy ustawień</string>
   <plurals name="factadder_cards_added">
-    <item quantity="one">%d karta dodana</item>
-    <item quantity="other">dodanych %d kart</item>
+    <item quantity="one">%d card added</item>
+    <item quantity="few">%d cards added</item>
+    <item quantity="other">%d cards added</item>
   </plurals>
   <string name="help_title">Pomoc</string>
   <string name="check_db">Sprawdź bazę danych</string>
@@ -115,15 +118,6 @@
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Pusta karta. Uruchom \"Narzędzia &gt; puste karty...\" w programie w wersji na PC.</string>
   <string name="unknown_type_field_warning">Wpisz odpowiedź: nieznane pole %s</string>
   <string name="delete_deck">Usuwanie talii...\nProszę czekać...</string>
-  <string-array name="dynOrderLabels">
-    <item>Najstarszy jako pierwszy</item>
-    <item>Losowo</item>
-    <item>Zwiększane interwały</item>
-    <item>Zmniejszane interwały</item>
-    <item>Najwięcej pomyłek</item>
-    <item>Kolejność dodana</item>
-    <item>W kolejności do przejrzenia</item>
-  </string-array>
   <string name="show_hint">Pokaż %s</string>
   <string name="info_rate">Oceń AnkiDroid</string>
   <string name="col_load_failed">Ładowanie kolekcji nie powiodło się.\nNaciśnij \"Back\" aby zamknąć AnkiDroid.</string>

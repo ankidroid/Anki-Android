@@ -172,8 +172,8 @@
   <string name="deck_conf_deck_description">Deste tanımı</string>
   <string name="deck_conf_group">Seçenek grubu</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n%2$d deste bu grubu kullanıyor</item>
-    <item quantity="other">%1$s\n%2$d deste bu grubu kullanıyor</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <string name="deck_conf_new_cards">Yeni kartlar</string>
   <string name="deck_conf_rev_cards">Çalışma</string>
@@ -218,8 +218,8 @@
   <string name="deck_conf_remove_message">Şu anki seçenek grubu kaldırılsın mı?</string>
   <string name="deck_conf_set_subdecks">Bütün altdesteler için ayarla</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">%s altdeste bu grubu kullanacak</item>
-    <item quantity="other">%s altdeste bu grubu kullanacak</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Bütün altdesteler için ayarla</string>
   <string name="deck_conf_set_subdecks_message">Şu anki seçenek grubu bu destenin bütün altdesteleri için ayarlansın mı?</string>

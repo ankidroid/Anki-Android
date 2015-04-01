@@ -47,7 +47,6 @@
   <string name="delete_deck_title">למחוק את החפיסה?‏</string>
   <string name="delete_deck_message">מחוק כל הקלפים ב־ %s?‏</string>
   <string name="delete_cram_deck_message">שלח כל הקלפים ב־ %s חזרה לחפיסות המקוריות?‏</string>
-  <string name="new_version_message">תכונות חדשות:‏</string>
   <string name="no_tts_available_message">אין שום שפת לכתוב-אל-דיבור זמין</string>
   <string name="initializing_tts">מאתחל מנוע כתוב-אל-דיבור...‏</string>
   <string name="tts_no_tts">אל תדבר.‏</string>

@@ -86,12 +86,10 @@
   <string name="field_remapping">%1$s (\'%2$s\'から)</string>
   <string name="confirm_map_cards_to_nothing">Nothing に設定したカードは削除されます。ノートにカードが残っていない場合は、そのノートが失われます。それでも処理を続行しますか。</string>
   <plurals name="timebox_reached">
-    <item quantity="one">%1$d カードを %2$s で勉強</item>
-    <item quantity="other">%1$d カードを %2$s で勉強</item>
+    <item quantity="other">%1$d cards studied in %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
-    <item quantity="one">%1$d 分</item>
-    <item quantity="other">%1$d 分</item>
+    <item quantity="other">%1$d minutes</item>
   </plurals>
   <string name="studyoptions_welcome_title">AnkiDroid へようこそ</string>
   <string name="fact_adder_intent_title">AnkiDroid カード</string>
@@ -105,8 +103,7 @@
   <string name="rename_error">単語帳 %s の名前を変更できません。</string>
   <string name="default_conf_delete_error">標準オプショングループを削除することはできません。</string>
   <plurals name="factadder_cards_added">
-    <item quantity="one">%d　枚のカードの追加</item>
-    <item quantity="other">%d カード追加されました。</item>
+    <item quantity="other">%d cards added</item>
   </plurals>
   <string name="help_title">ヘルプ</string>
   <string name="check_db">データベースをチェック</string>
@@ -115,15 +112,6 @@
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">空のカード。\"ツール &gt; 空のカード...\"をデスクトップ クライアントで実行。</string>
   <string name="unknown_type_field_warning">タイピングして答えを入力: 不明なフィールド %s</string>
   <string name="delete_deck">単語帳を削除中です\nしばらくお待ちください</string>
-  <string-array name="dynOrderLabels">
-    <item>古いものを先頭に</item>
-    <item>ランダム</item>
-    <item>間隔が小さい順</item>
-    <item>間隔が大きい順</item>
-    <item>忘却回数が多い順</item>
-    <item>追加順に</item>
-    <item>学習予定日時順に</item>
-  </string-array>
   <string name="show_hint">%s を表示</string>
   <string name="info_rate">AnkiDroidを評価</string>
   <string name="col_load_failed">コレクションの読み込みに失敗しました\n Backボタンを押して AnkiDroid を終了してください</string>

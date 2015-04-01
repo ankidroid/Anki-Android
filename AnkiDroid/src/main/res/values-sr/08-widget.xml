@@ -44,12 +44,16 @@
   <string name="widget_no_cards_due">Нема картица за учење</string>
   <string name="widget_loading">Виџет се учитава...</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">%1$d картица следи за %2$s</item>
-    <item quantity="other">данас %1$d од %2$s</item>
+    <item quantity="one"/>
+    <item quantity="few"/>
+    <item quantity="many"/>
+    <item quantity="other"/>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="one">%1$d шпил</item>
-    <item quantity="other">%1$d шпилова</item>
+    <item quantity="one"/>
+    <item quantity="few"/>
+    <item quantity="many"/>
+    <item quantity="other"/>
   </plurals>
   <string name="widget_small">АнкиДројд мало</string>
   <string name="widget_big_tomorrow_due">Сутра ће бити:</string>

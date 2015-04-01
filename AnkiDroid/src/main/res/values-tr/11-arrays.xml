@@ -35,43 +35,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="newCardSchedulingLabels">
-    <item>Gözden geçirme boyunca dağıt</item>
-    <item>Gözden geçirmeden sonra</item>
-    <item>Gözden geçirmeden önce</item>
-  </string-array>
   <string-array name="error_reporting_choice_labels">
     <item>Her zaman bildir</item>
     <item>Hiçbir zaman bildirme</item>
     <item>Bana sor</item>
-  </string-array>
-  <string-array name="cram_review_order_labels">
-    <item>İlk önce en eski değiştirilmişler</item>
-    <item>Ekleniş sırasına göre</item>
-    <item>Rastgele sırada göster</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_order">
-    <item>Yeni kartlar rastgele sırada</item>
-    <item>Ekleniş sırasına göre yeni kartlar</item>
-    <item>Ekleniş sıralarının tersinde yeni karlar</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_schedule">
-    <item>Yeni kartları gözden geçirme boyunca dağıt</item>
-    <item>Yeni kartlar en sonda</item>
-    <item>İlk önce yeni kartlar</item>
-  </string-array>
-  <string-array name="studyoptions_more_rev_card_order">
-    <item>En uzun aralıktan başlayarak görüntüle</item>
-    <item>En kısa aralıktan başlayarak görüntüle</item>
-    <item>Çıkış sırasına göre görüntüle</item>
-    <item>Rastgele sırada görüntüle</item>
-  </string-array>
-  <string-array name="studyoptions_more_fail_card_option">
-    <item>Başarısız kartları yakında göster</item>
-    <item>Başarısız kartları sonda göster</item>
-    <item>Başarısız kartları 10 dakika sonra göster</item>
-    <item>Başarısız kartları 8 saat sonra göster</item>
-    <item>Başarısız kartları 3 gün sonra göster</item>
   </string-array>
   <string-array name="gestures_labels">
     <item>Eylem yok</item>
@@ -91,12 +58,6 @@
     <item>Kartı sil</item>
     <item>Medyayı oynat</item>
     <item>Öğrenmeyi durdur</item>
-  </string-array>
-  <string-array name="theme_labels">
-    <item>Android Koyu</item>
-    <item>Android Açık</item>
-    <item>Mavi</item>
-    <item>Beyaz</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Kartı askıya al</item>

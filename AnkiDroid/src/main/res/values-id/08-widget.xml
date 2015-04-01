@@ -44,12 +44,10 @@
   <string name="widget_no_cards_due">Tiada kad lewat</string>
   <string name="widget_loading">Wijet dipasang...</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">%1$d card due in %2$s</item>
-    <item quantity="other">%1$d kad tamat tempoh dalam %2$s</item>
+    <item quantity="other"/>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="one">%1$d deck</item>
-    <item quantity="other">%1$d dek</item>
+    <item quantity="other"/>
   </plurals>
   <string name="widget_small">AnkiDroid Kecil</string>
   <string name="widget_big_tomorrow_due">Tomorrow due:</string>

@@ -172,8 +172,8 @@
   <string name="deck_conf_deck_description">Descrizione del mazzo</string>
   <string name="deck_conf_group">Gruppo di opzioni</string>
   <plurals name="deck_conf_group_summ">
-    <item quantity="one">%1$s\n%2$d mazzi utilizzano questo gruppo</item>
-    <item quantity="other">%1$s\n%2$d mazzi utilizzano questo gruppo</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <string name="deck_conf_new_cards">Carte nuove</string>
   <string name="deck_conf_rev_cards">Ripetizioni</string>
@@ -218,8 +218,8 @@
   <string name="deck_conf_remove_message">Rimuovere il gruppo di opzioni attuale?</string>
   <string name="deck_conf_set_subdecks">Imposta per tutti i sottomazzi</string>
   <plurals name="deck_conf_set_subdecks_summ">
-    <item quantity="one">%s sottomazzi utilizzeranno questo gruppo</item>
-    <item quantity="other">%s sottomazzi utilizzeranno questo gruppo</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <string name="deck_conf_set_subdecks_title">Imposta per tutti i sottomazzi</string>
   <string name="deck_conf_set_subdecks_message">Impostare il gruppo di opzioni attuale per tutti i sottomazzi di questo mazzo?</string>

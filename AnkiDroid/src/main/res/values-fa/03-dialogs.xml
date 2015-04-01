@@ -47,7 +47,6 @@
   <string name="delete_deck_title">حذف دسته</string>
   <string name="delete_deck_message">شما مایل به حذف تمام کارت در %s هستید؟</string>
   <string name="delete_cram_deck_message">آیا مایلید که همه کارتهای موجود در %s  را به دسته اصلی خودتان برگردانید؟</string>
-  <string name="new_version_message">ویژگی های جدید:</string>
   <string name="no_tts_available_message">زبان متن به گفتار در دسترس نیست</string>
   <string name="initializing_tts">Initializing TTS&#8230;</string>
   <string name="tts_no_tts">حرف نزن</string>

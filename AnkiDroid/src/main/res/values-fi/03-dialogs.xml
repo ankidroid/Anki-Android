@@ -47,7 +47,6 @@
   <string name="delete_deck_title">Poista korttipakka?</string>
   <string name="delete_deck_message">Haluatko varmasti poistaa kaikki kortit pakasta %s?</string>
   <string name="delete_cram_deck_message">Haluatko varmasti lähettää kaikki pakan %s kortit niiden alkuperäisiin pakkoihin?</string>
-  <string name="new_version_message">Uusia ominaisuuksia:</string>
   <string name="no_tts_available_message">Yhtään puhesyntetisaattorin tukemaa kieltä ei ole käytettävissä</string>
   <string name="initializing_tts">Initializing TTS&#8230;</string>
   <string name="tts_no_tts">Älä puhu</string>

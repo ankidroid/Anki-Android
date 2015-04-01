@@ -86,11 +86,19 @@
   <string name="field_remapping">%1$s (from \'%2$s\')</string>
   <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
   <plurals name="timebox_reached">
+    <item quantity="zero">%1$d cards studied in %2$s</item>
     <item quantity="one">%1$d card studied in %2$s</item>
+    <item quantity="two">%1$d cards studied in %2$s</item>
+    <item quantity="few">%1$d cards studied in %2$s</item>
+    <item quantity="many">%1$d cards studied in %2$s</item>
     <item quantity="other">%1$d cards studied in %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
+    <item quantity="zero">%1$d minutes</item>
     <item quantity="one">%1$d minute</item>
+    <item quantity="two">%1$d minutes</item>
+    <item quantity="few">%1$d minutes</item>
+    <item quantity="many">%1$d minutes</item>
     <item quantity="other">%1$d minutes</item>
   </plurals>
   <string name="studyoptions_welcome_title">مرحباً بكم مع آنكيدرويد</string>
@@ -105,8 +113,12 @@
   <string name="rename_error">الرزمة %s لا يمكن إعادة تسميتها</string>
   <string name="default_conf_delete_error">The default options group can\'t be removed</string>
   <plurals name="factadder_cards_added">
+    <item quantity="zero">%d cards added</item>
     <item quantity="one">%d card added</item>
-    <item quantity="other">أضيف %d بطاقة</item>
+    <item quantity="two">%d cards added</item>
+    <item quantity="few">%d cards added</item>
+    <item quantity="many">%d cards added</item>
+    <item quantity="other">%d cards added</item>
   </plurals>
   <string name="help_title">تعليمات</string>
   <string name="check_db">افحص قاعدة البيانات</string>
@@ -115,15 +127,6 @@
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Empty card. Run \"Tools&gt;Empty Cards...\" on the desktop client.</string>
   <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
   <string name="delete_deck">حذف الرزمة...\nالرجاء الانتظار.</string>
-  <string-array name="dynOrderLabels">
-    <item>الأقدم تشاهد أولا</item>
-    <item>عشوائي</item>
-    <item>زيادة الفترات</item>
-    <item>تقليل الفترات</item>
-    <item>أكثر الأخطاء</item>
-    <item>الترتيب أضيف</item>
-    <item>ترتيب الاستحقاق</item>
-  </string-array>
   <string name="show_hint">Show %s</string>
   <string name="info_rate">قيم أنكيدرويد</string>
   <string name="col_load_failed">فشل تحميل المجموعة-\nاضغط تراجع لإغلاق أنكيدرويد.</string>

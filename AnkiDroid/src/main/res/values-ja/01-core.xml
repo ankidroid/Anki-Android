@@ -52,16 +52,13 @@
   <string name="studyoptions_eta">推定学習時間 (分):</string>
   <string name="studyoptions_start">学習開始</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">現在の課題: %1$d枚 (%2$s)</item>
-    <item quantity="other">現在の課題: %1$d枚 (%2$s)</item>
+    <item quantity="other"/>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one">%d分</item>
-    <item quantity="other">%d分</item>
+    <item quantity="other"/>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">残り %d 分</item>
-    <item quantity="other">残り %d 分</item>
+    <item quantity="other"/>
   </plurals>
   <string name="type_answer_hint">回答の入力</string>
   <string name="show_answer">答えの表示</string>
@@ -144,8 +141,7 @@
   <string name="card_template_editor_menu_delete">削除</string>
   <string name="card_template_editor_cant_delete">カードは少なくとも１種類必要です。</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">カードタイプ \'%2$s\' とそのカード  %1$d 枚を削除しますか？</item>
-    <item quantity="other">カードタイプ \'%2$s\' とそのカード %1$d 枚を削除しますか？</item>
+    <item quantity="other"/>
   </plurals>
   <string name="card_template_editor_would_delete_note">このカードタイプを削除すると、一つ以上のノートも削除することになります。まずは新しいカードタイプを追加してください。</string>
 </resources>

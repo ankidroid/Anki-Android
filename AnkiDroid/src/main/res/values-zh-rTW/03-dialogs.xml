@@ -47,7 +47,6 @@
   <string name="delete_deck_title">刪除牌組</string>
   <string name="delete_deck_message">您確定要刪除所有%s中的卡片嗎?</string>
   <string name="delete_cram_deck_message">您確定要將 %s 裡的所有卡片送回它們原本的牌組？</string>
-  <string name="new_version_message">新功能：</string>
   <string name="no_tts_available_message">沒有可用的朗讀語言</string>
   <string name="initializing_tts">Initializing TTS&#8230;</string>
   <string name="tts_no_tts">不要發音</string>

@@ -86,12 +86,16 @@
   <string name="field_remapping">%1$s (од \'%2$s\')</string>
   <string name="confirm_map_cards_to_nothing">Немапиране карте ће бити избрисане. Напомене, које немају своје карте, биће изгубљене. Да продужим?</string>
   <plurals name="timebox_reached">
-    <item quantity="one">%1$d картица проучена у %2$s</item>
-    <item quantity="other">%1$d картице проучене у %2$s</item>
+    <item quantity="one">%1$d card studied in %2$s</item>
+    <item quantity="few">%1$d cards studied in %2$s</item>
+    <item quantity="many">%1$d cards studied in %2$s</item>
+    <item quantity="other">%1$d cards studied in %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
-    <item quantity="one">%1$d минут</item>
-    <item quantity="other">%1$d минута</item>
+    <item quantity="one">%1$d minute</item>
+    <item quantity="few">%1$d minutes</item>
+    <item quantity="many">%1$d minutes</item>
+    <item quantity="other">%1$d minutes</item>
   </plurals>
   <string name="studyoptions_welcome_title">Добро дошли у AnkiDroid</string>
   <string name="fact_adder_intent_title">AnkiDroid картица</string>
@@ -105,8 +109,10 @@
   <string name="rename_error">Шпил %s не може бити преименован</string>
   <string name="default_conf_delete_error">Подразумеване опције се не могу уклонити</string>
   <plurals name="factadder_cards_added">
-    <item quantity="one">%d картица додата</item>
-    <item quantity="other">%d картица је додато</item>
+    <item quantity="one">%d card added</item>
+    <item quantity="few">%d cards added</item>
+    <item quantity="many">%d cards added</item>
+    <item quantity="other">%d cards added</item>
   </plurals>
   <string name="help_title">Помоћ</string>
   <string name="check_db">Провера базе података</string>
@@ -115,15 +121,6 @@
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Празна картица. Покрените \"Алати&gt;Празне картице...\" на радној површини.</string>
   <string name="unknown_type_field_warning">Врста одговора: непознато поље %s</string>
   <string name="delete_deck">Брисање шпила...\nМолим сачекајте.</string>
-  <string-array name="dynOrderLabels">
-    <item>Најстарије виђене прво</item>
-    <item>Насумице</item>
-    <item>По увећању размака</item>
-    <item>По умањењу размака</item>
-    <item>Највеће истеклих</item>
-    <item>Додат редослед прегледа</item>
-    <item>У редоследу додавања</item>
-  </string-array>
   <string name="show_hint">Прикажи %s</string>
   <string name="info_rate">Оцени AnkiDroid</string>
   <string name="col_load_failed">Прекид учитавања колекције.\nПритисните дугме назад, да бисте затворили AnkiDroid.</string>

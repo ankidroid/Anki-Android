@@ -44,12 +44,12 @@
   <string name="widget_no_cards_due">Ni kartos</string>
   <string name="widget_loading">Widjait atbairada&#8230;</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">Nauh %1$d kartos in %2$s</item>
-    <item quantity="other">Nauh %1$d kartos in %2$s</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="one">%1$d wiko</item>
-    <item quantity="other">%1$d wikons</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <string name="widget_small">AnkiDroid leitil</string>
   <string name="widget_big_tomorrow_due">Nauh du maurgina:</string>

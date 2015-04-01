@@ -47,7 +47,6 @@
   <string name="delete_deck_title">Desteyi Sil</string>
   <string name="delete_deck_message">%s içindeki bütün kartları silmek istediğinize emin misiniz?</string>
   <string name="delete_cram_deck_message">Tüm kartları orijinal destelerine %s geri göndermek istediğinizden emin misiniz?</string>
-  <string name="new_version_message">Yeni Özellikler:</string>
   <string name="no_tts_available_message">Mevcut metin okuma dili yok</string>
   <string name="initializing_tts">TTS başlatılıyor&#8230;</string>
   <string name="tts_no_tts">Konuşma</string>

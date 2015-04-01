@@ -86,12 +86,12 @@
   <string name="field_remapping">%1$s (from \'%2$s\')</string>
   <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
   <plurals name="timebox_reached">
-    <item quantity="one">%1$d ficha estudada em %2$s</item>
-    <item quantity="other">%1$d fichas estudadas em %2$s</item>
+    <item quantity="one">%1$d card studied in %2$s</item>
+    <item quantity="other">%1$d cards studied in %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
-    <item quantity="one">%1$d minuto</item>
-    <item quantity="other">%1$d minutos</item>
+    <item quantity="one">%1$d minute</item>
+    <item quantity="other">%1$d minutes</item>
   </plurals>
   <string name="studyoptions_welcome_title">Bem-vindo ao AnkiDroid</string>
   <string name="fact_adder_intent_title">Cartão AnkiDroid</string>
@@ -105,8 +105,8 @@
   <string name="rename_error">Baralho %s não pôde ser renomeado</string>
   <string name="default_conf_delete_error">O grupo de opções padrão não pode ser removido</string>
   <plurals name="factadder_cards_added">
-    <item quantity="one">%d ficha adicionada</item>
-    <item quantity="other">%d fichas adicionadas</item>
+    <item quantity="one">%d card added</item>
+    <item quantity="other">%d cards added</item>
   </plurals>
   <string name="help_title">Ajuda</string>
   <string name="check_db">Verificar base de dados</string>
@@ -115,15 +115,6 @@
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Ficha vazia. Execute \"Ferramentas&gt;Fichas Vazias...\" na aplicação para PC.</string>
   <string name="unknown_type_field_warning">Escreva a resposta: campo desconhecido %s</string>
   <string name="delete_deck">A eliminar baralho.\nEspere um momento&#8230;</string>
-  <string-array name="dynOrderLabels">
-    <item>Mais antigos primeiro</item>
-    <item>Aleatório</item>
-    <item>Intervalos crescentes</item>
-    <item>Intervalos decrescentes</item>
-    <item>Mais falhados</item>
-    <item>Ordem de adição</item>
-    <item>Ordem de revisão</item>
-  </string-array>
   <string name="show_hint">Mostrar %s</string>
   <string name="info_rate">Avaliar o Ankidroid</string>
   <string name="col_load_failed">Carregamento da coleção falhou. \nPrima Voltar para fechar o AnkiDroid.</string>

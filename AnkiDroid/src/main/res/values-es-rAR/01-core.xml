@@ -52,16 +52,16 @@
   <string name="studyoptions_eta">Tiempo estimado (min):</string>
   <string name="studyoptions_start">Estudiar ahora</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%1$d tarjeta programada (%2$s)</item>
-    <item quantity="other">%1$d tarjetas programadas (%2$s)</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one">%d min.</item>
-    <item quantity="other">%d min.</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">%d minutos restantes</item>
-    <item quantity="other">Restan %d minutos</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <string name="type_answer_hint">Escribir respuesta</string>
   <string name="show_answer">Mostrar Respuesta</string>
@@ -144,8 +144,8 @@
   <string name="card_template_editor_menu_delete">Eliminar</string>
   <string name="card_template_editor_cant_delete">Se requiere al menos un tipo de nota.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">¿Eliminar el tipo de tarjeta \'%2$s\' y su tarjeta %1$d?</item>
-    <item quantity="other">Eliminar el tipo de tarjeta \'%2$s\' y sus tarjetas %1$d?</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <string name="card_template_editor_would_delete_note">Eliminar este tipo de tarjeta podría causar la eliminación de una o más notas. Por favor, cree primero un nuevo tipo de tarjeta.</string>
 </resources>

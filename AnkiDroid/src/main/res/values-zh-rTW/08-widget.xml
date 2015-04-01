@@ -44,12 +44,10 @@
   <string name="widget_no_cards_due">無卡片到期</string>
   <string name="widget_loading">載入桌面小工具中...</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">%1$d card due in %2$s</item>
-    <item quantity="other">%1$d張卡片於%2$s到期</item>
+    <item quantity="other"/>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="one">%1$d deck</item>
-    <item quantity="other">%1$d個牌組</item>
+    <item quantity="other"/>
   </plurals>
   <string name="widget_small">AnkiDroid 小型</string>
   <string name="widget_big_tomorrow_due">明天到期:</string>

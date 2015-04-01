@@ -44,12 +44,12 @@
   <string name="widget_no_cards_due">Nessuna carta scaduta</string>
   <string name="widget_loading">Widget caricamento...</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">%1$d carte dovute in %2$s</item>
-    <item quantity="other">%1$d carte scadute in %2$s</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="one">%1$d mazzo</item>
-    <item quantity="other">%1$d corsi</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <string name="widget_small">AnkiDroid piccolo</string>
   <string name="widget_big_tomorrow_due">Scadono domani:</string>

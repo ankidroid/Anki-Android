@@ -52,16 +52,16 @@
   <string name="studyoptions_eta">Geschätzte Zeit (Min.):</string>
   <string name="studyoptions_start">Jetzt lernen</string>
   <plurals name="deckpicker_title">
-    <item quantity="one">%1$d Karte fällig (%2$s)</item>
-    <item quantity="other">%1$d Karten fällig (%2$s)</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one">%d Min.</item>
-    <item quantity="other">%d Min.</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one">noch %d Minute</item>
-    <item quantity="other">noch %d Minuten</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <string name="type_answer_hint">Antwort eingeben</string>
   <string name="show_answer">Antwort anzeigen</string>
@@ -144,8 +144,8 @@
   <string name="card_template_editor_menu_delete">Löschen</string>
   <string name="card_template_editor_cant_delete">Mindestens ein Kartentyp wird benötigt</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one">Kartentyp \"%2$s\" und seine %1$d Karte löschen?</item>
-    <item quantity="other">Kartentyp \"%2$s\" und seine %1$d Karten löschen?</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <string name="card_template_editor_would_delete_note">Kartentyp kann nicht gelöscht werden, da dadurch mindestens eine Notiz gelöscht würde</string>
 </resources>

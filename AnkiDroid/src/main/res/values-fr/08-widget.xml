@@ -44,12 +44,12 @@
   <string name="widget_no_cards_due">Pas de cartes dûes</string>
   <string name="widget_loading">Chargement du widget...</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">%1$d carte dûe dans %2$s</item>
-    <item quantity="other">%1$d cartes dûes parmi %2$s</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="one">%1$d paquet</item>
-    <item quantity="other">%1$d jeux de cartes</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <string name="widget_small">AnkiDroid petit</string>
   <string name="widget_big_tomorrow_due">Révisions prévues demain :</string>

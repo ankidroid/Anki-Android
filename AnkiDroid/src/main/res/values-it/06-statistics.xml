@@ -122,15 +122,6 @@
   <string name="stats_weekly_breakdown">Ripartizione settimanale</string>
   <string name="stats_answer_buttons">Pulsanti di risposta</string>
   <string name="stats_cards_types">Tipi di carte</string>
-  <string-array name="stats_period">
-    <item>1 mese</item>
-    <item>1 anno</item>
-    <item>tutto</item>
-  </string-array>
-  <string-array name="stats_range">
-    <item>collezione</item>
-    <item>mazzo attuale</item>
-  </string-array>
   <string-array name="stats_day_time_strings">
     <item>04:00</item>
     <item>10:00</item>
@@ -161,11 +152,11 @@
     <item>4</item>
   </string-array>
   <plurals name="stats_today_cards">
-    <item quantity="one">Oggi hai studiato &lt;b&gt;%1$d carta&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt;.</item>
-    <item quantity="other">Oggi hai studiato &lt;b&gt;%1$d carte&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt;.</item>
+    <item quantity="one">Studied &lt;b&gt;%1$d card&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
+    <item quantity="other">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
   </plurals>
   <plurals name="stats_today_cards_not_bold">
-    <item quantity="one">Oggi hai studiato %1$d carta in %2$s.</item>
-    <item quantity="other">Oggi hai studiato %1$d carte in %2$s.</item>
+    <item quantity="one">Studied %1$d card in %2$s today.</item>
+    <item quantity="other">Studied %1$d cards in %2$s today.</item>
   </plurals>
 </resources>

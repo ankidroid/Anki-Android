@@ -47,7 +47,6 @@
   <string name="delete_deck_title">Hapus Dek</string>
   <string name="delete_deck_message">Apakah Anda yakin akan menghapus semua kartu di %s?</string>
   <string name="delete_cram_deck_message">Apakah Anda yakin akan mengembalikan semua kartu di %s kembali ke dek asli mereka?</string>
-  <string name="new_version_message">Fitur baru:</string>
   <string name="no_tts_available_message">Tiada teks-kepada-bahasa tersedia</string>
   <string name="initializing_tts">Initializing TTS&#8230;</string>
   <string name="tts_no_tts">Jangan sebut</string>

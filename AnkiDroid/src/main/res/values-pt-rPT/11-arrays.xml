@@ -35,43 +35,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="newCardSchedulingLabels">
-    <item>Espalhar entre as revisões</item>
-    <item>Após as revisões</item>
-    <item>Antes das revisões</item>
-  </string-array>
   <string-array name="error_reporting_choice_labels">
     <item>Enviar relatório sempre</item>
     <item>Nunca enviar relatório</item>
     <item>Pergunte-me</item>
-  </string-array>
-  <string-array name="cram_review_order_labels">
-    <item>Mostrar com modificações mais antigas primeiro</item>
-    <item>Mostrar pela ordem de adição</item>
-    <item>Mostrar em ordem aleatória</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_order">
-    <item>Novas fichas em ordem aleatória</item>
-    <item>Novas fichas na ordem de adição</item>
-    <item>Novas fichas em ordem inversa de adição</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_schedule">
-    <item>Espalhar fichas novas entre as revisões</item>
-    <item>Fichas novas depois das revisões</item>
-    <item>Fichas novas antes das revisões</item>
-  </string-array>
-  <string-array name="studyoptions_more_rev_card_order">
-    <item>Rever fichas com maior intervalo</item>
-    <item>Rever fichas com menor intervalo</item>
-    <item>Rever fichas pela ordem de agendamento</item>
-    <item>Rever fichas em ordem aleatória</item>
-  </string-array>
-  <string-array name="studyoptions_more_fail_card_option">
-    <item>Mostrar fichas falhadas logo</item>
-    <item>Mostrar fichas falhadas no final</item>
-    <item>Mostrar fichas falhadas em 10 minutos</item>
-    <item>Mostrar fichas falhadas em 8 horas</item>
-    <item>Mostrar fichas falhadas em 3 dias</item>
   </string-array>
   <string-array name="gestures_labels">
     <item>Nenhuma ação</item>
@@ -91,12 +58,6 @@
     <item>Apagar ficha</item>
     <item>Reproduzir multimédia</item>
     <item>Abortar a aprendizagem</item>
-  </string-array>
-  <string-array name="theme_labels">
-    <item>Android dark</item>
-    <item>Android light</item>
-    <item>Azul</item>
-    <item>Branco</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Suspender ficha</item>

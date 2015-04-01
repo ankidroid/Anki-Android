@@ -35,43 +35,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string-array name="newCardSchedulingLabels">
-    <item>Rozprostřít v průběhu opakování</item>
-    <item>Po opakování</item>
-    <item>Před opakováním</item>
-  </string-array>
   <string-array name="error_reporting_choice_labels">
     <item>Vždy hlásit</item>
     <item>Nikdy nehlásit</item>
     <item>Zeptat se mě</item>
-  </string-array>
-  <string-array name="cram_review_order_labels">
-    <item>Zobrazit poslední upravenou nejdříve</item>
-    <item>Zobrazit v pořadí přidání</item>
-    <item>Zobrazit v náhodném pořadí</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_order">
-    <item>Nové karty v náhodném pořadí</item>
-    <item>Nové karty v pořadí přidání</item>
-    <item>Nové karty v opačném pořadí než v jakém byly přidány</item>
-  </string-array>
-  <string-array name="studyoptions_more_new_card_schedule">
-    <item>Rozprostřít nové karty skrz opakování</item>
-    <item>Nové karty až po opakování</item>
-    <item>Nové karty před opakováním</item>
-  </string-array>
-  <string-array name="studyoptions_more_rev_card_order">
-    <item>Opakovat karty s největším intervalem</item>
-    <item>Opakovat karty s nejkratšího intervalu</item>
-    <item>Opakovat karty v pořadí přidání</item>
-    <item>Opakovat karty v náhodném pořadí</item>
-  </string-array>
-  <string-array name="studyoptions_more_fail_card_option">
-    <item>Zobrazit špatně zodpovězené karty brzo</item>
-    <item>Zobrazit špatně zodpovězené karty na konci</item>
-    <item>Zobrazit špatně zodpovězené karty za 10 minut</item>
-    <item>Zobrazit špatně zodpovězené karty za 8 hodin</item>
-    <item>Zobrazit špatně zodpovězené karty za 3 dny</item>
   </string-array>
   <string-array name="gestures_labels">
     <item>Žádná akce</item>
@@ -91,12 +58,6 @@
     <item>Smazat kartu</item>
     <item>Přehrát multimédia</item>
     <item>Přerušit učení</item>
-  </string-array>
-  <string-array name="theme_labels">
-    <item>Android Tmavé</item>
-    <item>Android Světlé</item>
-    <item>Modré</item>
-    <item>Bílé</item>
   </string-array>
   <string-array name="leech_action_labels">
     <item>Odložit kartu</item>

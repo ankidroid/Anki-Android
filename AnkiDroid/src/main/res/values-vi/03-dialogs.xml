@@ -47,7 +47,6 @@
   <string name="delete_deck_title">Xóa tập thẻ</string>
   <string name="delete_deck_message">Xóa tất cả các thẻ trong %s?</string>
   <string name="delete_cram_deck_message">Gửi tất cả các thẻ trong %s quay lại bài ban đầu?</string>
-  <string name="new_version_message">Tính năng mới:</string>
   <string name="no_tts_available_message">Không có chức năng chuyển chữ - thành - lời thoại</string>
   <string name="initializing_tts">Khởi tạo TTS&#8230;</string>
   <string name="tts_no_tts">Không phát âm</string>

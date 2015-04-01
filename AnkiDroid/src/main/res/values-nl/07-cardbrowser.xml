@@ -40,8 +40,8 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="one">%d kaart weergegeven</item>
-    <item quantity="other">%d kaarten weergegeven</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <string name="card_browser_all_decks">Alle leersets</string>
   <string name="card_browser_delete_card">Memo verwijderen</string>

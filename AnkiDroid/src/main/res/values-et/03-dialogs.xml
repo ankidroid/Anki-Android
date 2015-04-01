@@ -47,7 +47,6 @@
   <string name="delete_deck_title">Kustuta kaardipakk?</string>
   <string name="delete_deck_message">Delete all cards in %s?</string>
   <string name="delete_cram_deck_message">Send all cards in %s back to their original decks?</string>
-  <string name="new_version_message">Uued funktsioonid:</string>
   <string name="no_tts_available_message">No text-to-speech language available</string>
   <string name="initializing_tts">Initializing TTS&#8230;</string>
   <string name="tts_no_tts">Ära räägi</string>

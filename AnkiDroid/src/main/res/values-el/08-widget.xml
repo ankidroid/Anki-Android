@@ -44,12 +44,12 @@
   <string name="widget_no_cards_due">Δεν απομένουν επαναλήψεις</string>
   <string name="widget_loading">Φόρτωση widget...</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">%1$d card due in %2$s</item>
-    <item quantity="other">%1$d δέουσες κάρτες στο %2$s</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="one">%1$d deck</item>
-    <item quantity="other">%1$d τράπουλες</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <string name="widget_small">AnkiDroid Μικρό</string>
   <string name="widget_big_tomorrow_due">Δέουσες αύριο:</string>

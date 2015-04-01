@@ -47,7 +47,6 @@
   <string name="delete_deck_title">Verwijder set</string>
   <string name="delete_deck_message">Weet je zeker dat je alle kaarten in %s wilt verwijderen?</string>
   <string name="delete_cram_deck_message">Weet u zeker dat u alle kaarten in %s terug wenst te zenden naar hun oorspronkelijke sets?</string>
-  <string name="new_version_message">Nieuwe functies:</string>
   <string name="no_tts_available_message">Geen tekst-naar-spraak taal beschikbaar</string>
   <string name="initializing_tts">Initializing TTS&#8230;</string>
   <string name="tts_no_tts">Niet spreken</string>

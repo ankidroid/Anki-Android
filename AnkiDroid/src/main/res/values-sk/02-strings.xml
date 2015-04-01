@@ -86,12 +86,14 @@
   <string name="field_remapping">%1$s (from \'%2$s\')</string>
   <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
   <plurals name="timebox_reached">
-    <item quantity="one">%1$d karta skúšaná v %2$s</item>
-    <item quantity="other">%1$d kariet preštudovaných za %2$s</item>
+    <item quantity="one">%1$d card studied in %2$s</item>
+    <item quantity="few">%1$d cards studied in %2$s</item>
+    <item quantity="other">%1$d cards studied in %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
-    <item quantity="one">%1$d minuta</item>
-    <item quantity="other">%1$d minút</item>
+    <item quantity="one">%1$d minute</item>
+    <item quantity="few">%1$d minutes</item>
+    <item quantity="other">%1$d minutes</item>
   </plurals>
   <string name="studyoptions_welcome_title">Vitajte v AnkiDroid</string>
   <string name="fact_adder_intent_title">AnkiDroid karta</string>
@@ -105,8 +107,9 @@
   <string name="rename_error">Balíček %s nebolo možné premenovať</string>
   <string name="default_conf_delete_error">Predvolenú skupinu nastavení nie je možné odstrániť</string>
   <plurals name="factadder_cards_added">
-    <item quantity="one">%d karta pridaná</item>
-    <item quantity="other">%d kariet pridaných</item>
+    <item quantity="one">%d card added</item>
+    <item quantity="few">%d cards added</item>
+    <item quantity="other">%d cards added</item>
   </plurals>
   <string name="help_title">Pomocník</string>
   <string name="check_db">Kontrola databázy</string>
@@ -115,15 +118,6 @@
   <string name="empty_card_warning" tools:ignore="TypographyEllipsis">Prázdna karta. Spustite \"Nástroje&gt;Prázdne karty...\" v klientovi pre PC.</string>
   <string name="unknown_type_field_warning">Tip odpovede: neznáme pole %s</string>
   <string name="delete_deck">Odstraňujem balíček...\nProsím počkajte.</string>
-  <string-array name="dynOrderLabels">
-    <item>Od najdávnejšie zobrazených</item>
-    <item>Náhodne</item>
-    <item>Rastúce intervaly</item>
-    <item>Klesajúce intervaly</item>
-    <item>Najviac zabudnutí</item>
-    <item>Zoradiť podľa pridania</item>
-    <item>Zoradiť podľa času opakovania</item>
-  </string-array>
   <string name="show_hint">Show %s</string>
   <string name="info_rate">Ohodnotiť AnkiDroid</string>
   <string name="col_load_failed">Nahrávanie zbierky zlyhalo.\nProsím stlačte späť a zavrite AnkiDroid.</string>

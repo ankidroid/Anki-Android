@@ -44,12 +44,12 @@
   <string name="widget_no_cards_due">No hi ha fitxes pendents</string>
   <string name="widget_loading">S\'està carregant el giny ...</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one">%1$d card due in %2$s</item>
-    <item quantity="other">%1$d fitxes estaràn pendents en %2$s</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="one">%1$d deck</item>
-    <item quantity="other">%1$d paquets</item>
+    <item quantity="one"/>
+    <item quantity="other"/>
   </plurals>
   <string name="widget_small">AnkiDroid Petit</string>
   <string name="widget_big_tomorrow_due">Previst per demà:</string>
