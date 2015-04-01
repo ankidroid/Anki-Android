@@ -26,7 +26,6 @@
     <string name="delete_deck_title">Delete deck?</string>
     <string name="delete_deck_message">Delete all cards in %s?</string>
     <string name="delete_cram_deck_message">Send all cards in %s back to their original decks?</string>
-    <string name="new_version_message">New features:</string>
     <string name="no_tts_available_message">No text-to-speech language available</string>
     <string name="initializing_tts">Initializing TTS…</string>
     <string name="tts_no_tts">Don\'t speak</string>
