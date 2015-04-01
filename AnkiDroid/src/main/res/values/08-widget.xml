@@ -35,6 +35,4 @@
     </plurals>
 
     <string name="widget_small">AnkiDroid small</string>
-    <string name="widget_big_tomorrow_due">Tomorrow due:</string>
-
-</resources>
+    </resources>
