@@ -243,7 +243,11 @@ public class AnkiDroidApp extends Application {
         setLanguage(preferences.getString(Preferences.LANGUAGE, ""));
 
         // Configure WebView to allow file scheme pages to access cookies.
-        mCompat.enableCookiesForFileSchemePages();
+        try {
+            mCompat.enableCookiesForFileSchemePages();
+        } catch (RuntimeException e) {
+            Timber.e(e, "Could not enable cookies");
+        }
 
         // Set good default values for swipe detection
         final ViewConfiguration vc = ViewConfiguration.get(this);
