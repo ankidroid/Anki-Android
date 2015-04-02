@@ -44,11 +44,10 @@
   <string name="widget_no_cards_due">복습할 카드 없음</string>
   <string name="widget_loading">위젯 로드중...</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="other"/>
+    <item quantity="other">%1$d cards due in %2$s</item>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="other"/>
+    <item quantity="other">%1$d decks</item>
   </plurals>
   <string name="widget_small">작은 화면 AnkiDroid</string>
-  <string name="widget_big_tomorrow_due">내일 학습예정:</string>
 </resources>

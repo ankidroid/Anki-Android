@@ -44,15 +44,14 @@
   <string name="widget_no_cards_due">Nici un card scadent</string>
   <string name="widget_loading">Widget-ul se încarcă...</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one"/>
-    <item quantity="few"/>
-    <item quantity="other"/>
+    <item quantity="one">%1$d card due in %2$s</item>
+    <item quantity="few">%1$d cards due in %2$s</item>
+    <item quantity="other">%1$d cards due in %2$s</item>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="one"/>
-    <item quantity="few"/>
-    <item quantity="other"/>
+    <item quantity="one">%1$d deck</item>
+    <item quantity="few">%1$d decks</item>
+    <item quantity="other">%1$d decks</item>
   </plurals>
   <string name="widget_small">AnkiDroid Mic</string>
-  <string name="widget_big_tomorrow_due">Scadente pe mâine:</string>
 </resources>

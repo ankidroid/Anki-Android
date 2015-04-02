@@ -44,11 +44,10 @@
   <string name="widget_no_cards_due">بدون کارتهای موعد مرور</string>
   <string name="widget_loading">بارگذاری ویدجت...</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="other"/>
+    <item quantity="other">%1$d cards due in %2$s</item>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="other"/>
+    <item quantity="other">%1$d decks</item>
   </plurals>
   <string name="widget_small">آنکی دروید کوچک</string>
-  <string name="widget_big_tomorrow_due">موعد مرور فردا:</string>
 </resources>

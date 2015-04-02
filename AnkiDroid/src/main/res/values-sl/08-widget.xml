@@ -44,17 +44,16 @@
   <string name="widget_no_cards_due">No cards due</string>
   <string name="widget_loading">Widget loading&#8230;</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="one"/>
-    <item quantity="two"/>
-    <item quantity="few"/>
-    <item quantity="other"/>
+    <item quantity="one">%1$d card due in %2$s</item>
+    <item quantity="two">%1$d cards due in %2$s</item>
+    <item quantity="few">%1$d cards due in %2$s</item>
+    <item quantity="other">%1$d cards due in %2$s</item>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="one"/>
-    <item quantity="two"/>
-    <item quantity="few"/>
-    <item quantity="other"/>
+    <item quantity="one">%1$d deck</item>
+    <item quantity="two">%1$d decks</item>
+    <item quantity="few">%1$d decks</item>
+    <item quantity="other">%1$d decks</item>
   </plurals>
   <string name="widget_small">AnkiDroid small</string>
-  <string name="widget_big_tomorrow_due">Tomorrow due:</string>
 </resources>

@@ -44,21 +44,20 @@
   <string name="widget_no_cards_due">لا شيء للمراجعة</string>
   <string name="widget_loading">تحميل الودجة...</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="zero"/>
-    <item quantity="one"/>
-    <item quantity="two"/>
-    <item quantity="few"/>
-    <item quantity="many"/>
-    <item quantity="other"/>
+    <item quantity="zero">%1$d cards due in %2$s</item>
+    <item quantity="one">%1$d card due in %2$s</item>
+    <item quantity="two">%1$d cards due in %2$s</item>
+    <item quantity="few">%1$d cards due in %2$s</item>
+    <item quantity="many">%1$d cards due in %2$s</item>
+    <item quantity="other">%1$d cards due in %2$s</item>
   </plurals>
   <plurals name="widget_decks">
-    <item quantity="zero"/>
-    <item quantity="one"/>
-    <item quantity="two"/>
-    <item quantity="few"/>
-    <item quantity="many"/>
-    <item quantity="other"/>
+    <item quantity="zero">%1$d decks</item>
+    <item quantity="one">%1$d deck</item>
+    <item quantity="two">%1$d decks</item>
+    <item quantity="few">%1$d decks</item>
+    <item quantity="many">%1$d decks</item>
+    <item quantity="other">%1$d decks</item>
   </plurals>
   <string name="widget_small">آنكيدرويد صغير</string>
-  <string name="widget_big_tomorrow_due">ينتظر المراجعة غدا:</string>
 </resources>

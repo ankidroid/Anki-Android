@@ -86,12 +86,12 @@
   <string name="field_remapping">%1$s (di \'%2$s\')</string>
   <string name="confirm_map_cards_to_nothing">Verranno eliminate eventuali carte senza connessione. Se una nota non ha nessuna carta rimanente, sarà perduta. Sei sicuro di voler continuare?</string>
   <plurals name="timebox_reached">
-    <item quantity="one">%1$d card studied in %2$s</item>
-    <item quantity="other">%1$d cards studied in %2$s</item>
+    <item quantity="one">%1$d carta studiata in %2$s</item>
+    <item quantity="other">%1$d carte studiate in %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
-    <item quantity="one">%1$d minute</item>
-    <item quantity="other">%1$d minutes</item>
+    <item quantity="one">%1$d minuto</item>
+    <item quantity="other">%1$d minuti</item>
   </plurals>
   <string name="studyoptions_welcome_title">Benvenuto in AnkiDroid</string>
   <string name="fact_adder_intent_title">Carta AnkiDroid</string>
@@ -105,8 +105,8 @@
   <string name="rename_error">Mazzo %s potrebbe non essere rinominato</string>
   <string name="default_conf_delete_error">Il gruppo di opzioni predefinito non può essere rimosso</string>
   <plurals name="factadder_cards_added">
-    <item quantity="one">%d card added</item>
-    <item quantity="other">%d cards added</item>
+    <item quantity="one">%d carta aggiunta</item>
+    <item quantity="other">%d carte aggiunte</item>
   </plurals>
   <string name="help_title">Aiuto</string>
   <string name="check_db">Controlla database</string>
