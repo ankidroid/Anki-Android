@@ -61,10 +61,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
         public void integrityCheck();
 
 
-        public int getSyncMediaUsn();
-
-
-        public void sync(String conflict, int mediaUsn);
+        public void sync(String conflict);
 
 
         public void exit();
@@ -372,7 +369,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                             @Override
                             public void onPositive(MaterialDialog dialog) {
                                 DatabaseErrorDialogListener activity = (DatabaseErrorDialogListener) getActivity();
-                                activity.sync("download", activity.getSyncMediaUsn());
+                                activity.sync("download");
                                 dismissAllDialogFragments();
                             }
                         })
