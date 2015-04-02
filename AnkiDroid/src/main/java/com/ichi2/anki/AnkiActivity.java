@@ -298,6 +298,7 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
         // save transaction to the back stack
         ft.addToBackStack("dialog");
         newFragment.show(ft, "dialog");
+        getSupportFragmentManager().executePendingTransactions();
     }
 
 
