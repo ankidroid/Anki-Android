@@ -39,7 +39,6 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.stats.AnkiStatsTaskHandler;
 import com.ichi2.anki.stats.ChartView;
 import com.ichi2.anki.widgets.DeckDropDownAdapter;
-import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Stats;
 
@@ -473,7 +472,7 @@ public class Statistics extends NavigationDrawerActivity implements ActionBar.On
                     Collection col = CollectionHelper.getInstance().getCol(getActivity());
                     List<String> parts = Arrays.asList(col.getDecks().current().getString("name").split("::"));
                     if(sIsSubtitle)
-                        CompatHelper.getCompat().setSubtitle(getActivity(), parts.get(parts.size() - 1));
+                        UIUtils.setSubtitle(getActivity(), parts.get(parts.size() - 1));
                     else
                         getActivity().setTitle(parts.get(parts.size() - 1));
                 } catch (JSONException e) {
@@ -481,7 +480,7 @@ public class Statistics extends NavigationDrawerActivity implements ActionBar.On
                 }
             } else {
                 if(sIsSubtitle)
-                    CompatHelper.getCompat().setSubtitle(getActivity(), getResources().getString(R.string.stats_deck_collection));
+                    UIUtils.setSubtitle(getActivity(), getResources().getString(R.string.stats_deck_collection));
                 else
                     getActivity().setTitle(getResources().getString(R.string.stats_deck_collection));
             }
@@ -628,7 +627,7 @@ public class Statistics extends NavigationDrawerActivity implements ActionBar.On
                 try {
                     List<String> parts = Arrays.asList(col.getDecks().current().getString("name").split("::"));
                     if(sIsSubtitle)
-                        CompatHelper.getCompat().setSubtitle(getActivity(), parts.get(parts.size() - 1));
+                        UIUtils.setSubtitle(getActivity(), parts.get(parts.size() - 1));
                     else
                         getActivity().setTitle(parts.get(parts.size() - 1));
                 } catch (JSONException e) {
@@ -636,7 +635,7 @@ public class Statistics extends NavigationDrawerActivity implements ActionBar.On
                 }
             } else {
                 if(sIsSubtitle)
-                    CompatHelper.getCompat().setSubtitle(getActivity(), getResources().getString(R.string.stats_deck_collection));
+                    UIUtils.setSubtitle(getActivity(), getResources().getString(R.string.stats_deck_collection));
                 else
                     getActivity().setTitle(getResources().getString(R.string.stats_deck_collection));
             }

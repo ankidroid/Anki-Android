@@ -51,7 +51,6 @@ import com.ichi2.anki.stats.AnkiStatsTaskHandler;
 import com.ichi2.anki.stats.ChartView;
 import com.ichi2.async.CollectionLoader;
 import com.ichi2.async.DeckTask;
-import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Utils;
@@ -767,7 +766,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                         if (!mFragmented) {
                             getActivity().setTitle(getResources().getString(R.string.studyoptions_title));
                             List<String> parts = Arrays.asList(fullName.split("::"));
-                            CompatHelper.getCompat().setSubtitle(getActivity(), parts.get(parts.size() - 1));
+                            UIUtils.setSubtitle(getActivity(), parts.get(parts.size() - 1));
                         }
                     } catch (JSONException e) {
                         throw new RuntimeException(e);

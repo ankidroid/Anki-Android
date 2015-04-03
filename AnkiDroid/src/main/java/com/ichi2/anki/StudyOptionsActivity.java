@@ -23,7 +23,6 @@ import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,7 +31,6 @@ import android.view.View;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener;
 import com.ichi2.anki.receiver.SdCardReceiver;
-import com.ichi2.compat.CompatHelper;
 import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
@@ -119,7 +117,7 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
 
         String newLanguage = AnkiDroidApp.getSharedPrefs(this).getString(Preferences.LANGUAGE, "");
         if (AnkiDroidApp.setLanguage(newLanguage)) {
-            CompatHelper.getCompat().invalidateOptionsMenu(this);
+            supportInvalidateOptionsMenu();
         }
         getCurrentFragment().restorePreferences();
     }
