@@ -19,12 +19,10 @@
 package com.ichi2.anki;
 
 import android.os.Bundle;
-
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 
 import timber.log.Timber;
@@ -50,7 +48,7 @@ public class Previewer extends AbstractFlashcardViewer {
 
     @Override
     protected void setTitle() {
-        CompatHelper.getCompat().setTitle(this, getResources().getString(R.string.preview_title), mInvertedColors);
+        UIUtils.setTitle(this, getResources().getString(R.string.preview_title));
     }
 
 

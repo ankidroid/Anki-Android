@@ -1735,7 +1735,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                     if (eta != -1) {
                         time = res.getQuantityString(R.plurals.deckpicker_title_minutes, eta, eta);
                     }
-                    CompatHelper.getCompat().setSubtitle(DeckPicker.this,
+                    UIUtils.setSubtitle(DeckPicker.this,
                             res.getQuantityString(R.plurals.deckpicker_title, due, due, time));
                 }
 
@@ -1751,7 +1751,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 // update widget
                 WidgetStatus.update(DeckPicker.this, nodes);
                 // update options menu and clear welcome screen
-                CompatHelper.getCompat().invalidateOptionsMenu(DeckPicker.this);
+                supportInvalidateOptionsMenu();
                 // Update the mini statistics bar as well
                 AnkiStatsTaskHandler.createSmallTodayOverview(getCol(), mTodayTextView);
             }

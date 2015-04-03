@@ -29,6 +29,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.net.Uri;
@@ -37,6 +38,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 import android.os.Vibrator;
+import android.support.v7.app.ActionBar;
 import android.text.ClipboardManager;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -1490,7 +1492,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebChromeClient(new AnkiDroidWebChromeClient());
         webView.setFocusableInTouchMode(false);
-        CompatHelper.getCompat().setScrollbarFadingEnabled(webView, false);
+        webView.setScrollbarFadingEnabled(false);
         Timber.d("Focusable = %s, Focusable in touch mode = %s",webView.isFocusable(),webView.isFocusableInTouchMode());
 
         webView.setWebViewClient(new WebViewClient() {
@@ -1556,8 +1558,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         if (mCard != null) {
             mCard.setBackgroundColor(mCurrentBackgroundColor);
         }
-        CompatHelper.getCompat().setActionBarBackground(this,
-                invert ? R.color.white_background_night : R.color.theme_primary);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setBackgroundDrawable(new ColorDrawable(res.getColor(
+                    invert ? R.color.white_background_night : R.color.theme_primary)));
+        }
     }
 
 
@@ -1794,7 +1800,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         try {
             String[] title = getCol().getDecks().get(mCurrentCard.getDid()).getString("name").split("::");
-            CompatHelper.getCompat().setTitle(this, title[title.length - 1], mInvertedColors);
+            UIUtils.setTitle(this, title[title.length - 1]);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -1802,7 +1808,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
         int[] counts = mSched.counts(mCurrentCard);
 
         int eta = mSched.eta(counts, false);
-        CompatHelper.getCompat().setSubtitle(this,
+        UIUtils.setSubtitle(this,
                 getResources().getQuantityString(R.plurals.reviewer_window_title, eta, eta), mInvertedColors);
 
         SpannableString newCount = new SpannableString(String.valueOf(counts[0]));
@@ -2630,7 +2636,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
 
     protected void refreshActionBar() {
-        CompatHelper.getCompat().invalidateOptionsMenu(AbstractFlashcardViewer.this);
+        supportInvalidateOptionsMenu();
     }
 
     /** Fixing bug 720: <input> focus, thanks to pablomouzo on android issue 7189 */

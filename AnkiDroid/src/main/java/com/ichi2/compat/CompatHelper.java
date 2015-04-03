@@ -38,12 +38,8 @@ public class CompatHelper {
             mCompat = new CompatV12();
         } else if (getSdkVersion() >= 9) {
             mCompat = new CompatV9();
-        } else if (getSdkVersion() >= 8) {
-            mCompat = new CompatV8();
-        } else if (isNook() && getSdkVersion() == 7) {
-            mCompat = new CompatV7Nook();
         } else {
-            mCompat = new CompatV7();
+            mCompat = new CompatV8();
         }
     }
 
@@ -52,10 +48,6 @@ public class CompatHelper {
         return Build.VERSION.SDK_INT;
     }
 
-    /** Determine if the device is running API level 8 or higher. */
-    public static boolean isFroyo() {
-        return getSdkVersion() >= Build.VERSION_CODES.FROYO;
-    }
 
     /** Determine if the device is running API level 11 or higher. */
     public static boolean isHoneycomb() {

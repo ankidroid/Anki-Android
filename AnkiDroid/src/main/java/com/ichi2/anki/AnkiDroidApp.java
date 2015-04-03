@@ -178,7 +178,7 @@ public class AnkiDroidApp extends Application {
 
         // Set good default values for swipe detection
         final ViewConfiguration vc = ViewConfiguration.get(this);
-        DEFAULT_SWIPE_MIN_DISTANCE = CompatHelper.getCompat().getScaledPagingTouchSlop(vc);
+        DEFAULT_SWIPE_MIN_DISTANCE = vc.getScaledPagingTouchSlop();
         DEFAULT_SWIPE_THRESHOLD_VELOCITY = vc.getScaledMinimumFlingVelocity();
 
         // Create the AnkiDroid directory if missing. Send exception report if inaccessible.
