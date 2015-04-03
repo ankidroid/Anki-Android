@@ -13,6 +13,9 @@
         ankidroid:actionViewClass="android.support.v7.widget.SearchView"
         ankidroid:showAsAction="always|collapseActionView"/>
     <item
+        android:id="@+id/action_list_my_searches"
+        android:title="@string/card_browser_list_my_searches"/>
+    <item
         android:id="@+id/action_sort_by_size"
         android:title="@string/card_browser_change_display_order"/>
     <item
