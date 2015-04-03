@@ -129,7 +129,7 @@ public class NavigationDrawerActivity extends AnkiActivity {
         mNavDrawerItems.add(DRAWER_STATISTICS);
 
         mNavDrawerItems.add(DRAWER_SEPARATOR);
-
+        
         mNavDrawerItems.add(DRAWER_SETTINGS);
         mNavDrawerItems.add(DRAWER_HELP);
         mNavDrawerItems.add(DRAWER_FEEDBACK);
