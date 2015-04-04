@@ -33,7 +33,6 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.SearchView;
-
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -56,6 +55,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.CardBrowserContextMenu;
+import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog;
 import com.ichi2.anki.dialogs.CardBrowserOrderDialog;
 import com.ichi2.anki.dialogs.TagsDialog;
 import com.ichi2.anki.dialogs.TagsDialog.TagsDialogListener;
@@ -78,6 +78,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -99,6 +100,8 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
     private MultiColumnListAdapter mCardsAdapter;
     private String mSearchTerms;
     private String mRestrictOnDeck;
+
+    private MenuItem mSearchItem;
 
     private MaterialDialog mProgressDialog;
     public static Card sCardBrowserCard;
@@ -259,6 +262,21 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                 updateList();
             }
             return true;
+        }
+    };
+
+    private MaterialDialog.ListCallback mMySearchDialogListener =
+            new MaterialDialog.ListCallback() {
+        @Override
+        public void onSelection(MaterialDialog materialDialog, View view, int which,
+                                   CharSequence text) {
+            JSONObject savedFiltersObj = getCol().getConf().optJSONObject("savedFilters");
+            if (savedFiltersObj != null) {
+                mSearchTerms = savedFiltersObj.optString(text.toString());
+                mSearchView.setQuery(mSearchTerms, false);
+                searchCards();
+                MenuItemCompat.expandActionView(mSearchItem);
+            }
         }
     };
 
@@ -506,8 +524,8 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.card_browser, menu);
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-        MenuItemCompat.setOnActionExpandListener(searchItem, new MenuItemCompat.OnActionExpandListener() {
+        mSearchItem = menu.findItem(R.id.action_search);
+        MenuItemCompat.setOnActionExpandListener(mSearchItem, new MenuItemCompat.OnActionExpandListener() {
             @Override
             public boolean onMenuItemActionExpand(MenuItem item) {
                 return true;
@@ -523,7 +541,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                 return true;
             }
         });
-        mSearchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        mSearchView = (SearchView) MenuItemCompat.getActionView(mSearchItem);
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextChange(String newText) {
@@ -565,6 +583,17 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                 startActivityForResultWithAnimation(intent, ADD_NOTE, ActivityTransitionAnimation.LEFT);
                 return true;
 
+            case R.id.action_list_my_searches:
+                JSONObject savedFiltersObj = getCol().getConf().optJSONObject("savedFilters");
+                ArrayList<String> savedFilters = new ArrayList<String>();
+                if (savedFiltersObj != null) {
+                    Iterator<String> it = savedFiltersObj.keys();
+                    while (it.hasNext()) {
+                        savedFilters.add(it.next());
+                    }
+                }
+                showDialogFragment(CardBrowserMySearchesDialog.newInstance(savedFilters, mMySearchDialogListener));
+                return true;
             case R.id.action_sort_by_size:
                 showDialogFragment(CardBrowserOrderDialog
                         .newInstance(mOrder, mOrderAsc, mOrderDialogListener));
