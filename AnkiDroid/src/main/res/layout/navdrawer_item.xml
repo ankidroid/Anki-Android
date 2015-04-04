@@ -25,7 +25,7 @@
             android:layout_gravity="start|center_vertical"
             android:gravity="start|center_vertical"
             android:fontFamily="@string/font_fontFamily_medium"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:textColor="@color/navdrawer_text_color"/>
 
 </LinearLayout>
