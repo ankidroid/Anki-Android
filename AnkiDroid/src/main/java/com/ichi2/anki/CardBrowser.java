@@ -288,7 +288,6 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         Themes.setContentStyle(mainView, Themes.CALLER_CARDBROWSER);
         
         initNavigationDrawer(mainView);
-        selectNavigationItem(DRAWER_BROWSER);
         
         startLoadingCollection();
     }

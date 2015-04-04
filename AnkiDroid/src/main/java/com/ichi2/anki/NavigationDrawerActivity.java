@@ -109,12 +109,10 @@ public class NavigationDrawerActivity extends AnkiActivity {
                 R.string.drawer_close  /* "close drawer" description for accessibility */
         ) {
             public void onDrawerClosed(View view) {
-                getSupportActionBar().setTitle(mTitle);
                 supportInvalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
 
             public void onDrawerOpened(View drawerView) {
-                getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
                 supportInvalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };

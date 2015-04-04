@@ -48,15 +48,4 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
     </style>
-
-    <!-- Toolbar theme -->
-    <style name="Theme_White_Toolbar" parent="Theme_White">
-        <!-- Color of the title text in the Toolbar -->
-        <item name="android:textColorPrimary">?attr/actionBarTextColor</item>  <!-- Share the same color with other components that may occupy the action bar -->
-        <item name="android:textColorPrimaryInverse">?attr/actionBarTextColor</item>
-        <!-- Color of the text of action items in the Toolbar -->
-        <item name="actionMenuTextColor">@color/white</item>
-        <!-- Color of the menu overflow icon (three vertical dots) -->
-        <item name="android:textColorSecondary">@color/white</item>
-    </style>
 </resources>

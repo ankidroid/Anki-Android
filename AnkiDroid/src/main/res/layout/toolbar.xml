@@ -8,5 +8,7 @@
             android:minHeight="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             android:layout_alignParentTop="true"
-            app:theme="@style/Theme_White_Toolbar"
-            app:popupTheme="@style/Theme_White"/>
+            app:navigationContentDescription="@string/abc_action_bar_up_description"
+            app:navigationIcon="?attr/homeAsUpIndicator"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
