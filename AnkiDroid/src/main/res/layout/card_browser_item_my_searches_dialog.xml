@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:paddingBottom="5dp"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:gravity="left|center_vertical"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/card_browser_my_search_remove_button">
+        <TextView android:id="@+id/card_browser_my_search_name_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:textSize="16sp"/>
+        <TextView android:id="@+id/card_browser_my_search_terms_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"/>
+    </LinearLayout>
+    <ImageButton android:id="@+id/card_browser_my_search_remove_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_remove_circle_grey600_36dp"
+        android:background="@color/transparent"/>
+
+</RelativeLayout>
