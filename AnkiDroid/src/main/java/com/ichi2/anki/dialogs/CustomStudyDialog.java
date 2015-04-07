@@ -16,6 +16,7 @@ import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
+import com.ichi2.anki.StudyOptionsFragment;
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
@@ -38,9 +39,10 @@ public class CustomStudyDialog extends DialogFragment {
     public static final int CUSTOM_STUDY_TAGS = 6;
     
     private EditText mEditText;
+    private CustomStudyDialogListener mCustomStudyDialogListener = null;
 
     public interface CustomStudyDialogListener {
-        public void dismissSimpleMessageDialog(boolean reload);
+        void onPositive(int option);
     }
 
     public static CustomStudyDialog newInstance(int id) {
@@ -80,7 +82,8 @@ public class CustomStudyDialog extends DialogFragment {
                         // Get the value selected by user
                         int n = Integer.parseInt(mEditText.getText().toString());
                         // Set behavior when clicking OK button
-                        switch (getArguments().getInt("id")) {
+                        int choice = getArguments().getInt("id");
+                        switch (choice) {
                             case CUSTOM_STUDY_NEW:
                                 // Get col, exit if not open
                                 //TODO: Find a cleaner way to get the col() from StudyOptionsFragment loader
@@ -144,6 +147,7 @@ public class CustomStudyDialog extends DialogFragment {
                             default:
                                 break;
                         }
+                        mCustomStudyDialogListener.onPositive(choice);
                     }
 
                     @Override
@@ -209,5 +213,9 @@ public class CustomStudyDialog extends DialogFragment {
             default:
                 return "";
         }
+    }
+
+    public void setCustomStudyDialogListener(CustomStudyDialogListener listener) {
+        mCustomStudyDialogListener = listener;
     }
 }
