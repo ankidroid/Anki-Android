@@ -399,7 +399,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                 .itemsCallback(new MaterialDialog.ListCallback() {
                     @Override
                     public void onSelection(MaterialDialog materialDialog, View view, int which,
-                            CharSequence charSequence) {
+                                            CharSequence charSequence) {
                         DialogFragment dialogFragment;
                         if (which == CustomStudyDialog.CUSTOM_STUDY_TAGS) {
                             /*
@@ -411,7 +411,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                                     TagsDialog.TYPE_CUSTOM_STUDY_TAGS, new ArrayList<String>(),
                                     new ArrayList<String>(getCol().getTags().all()));
 
-                            ((TagsDialog)dialogFragment).setTagsDialogListener(new TagsDialogListener() {
+                            ((TagsDialog) dialogFragment).setTagsDialogListener(new TagsDialogListener() {
                                 @Override
                                 public void onPositive(List<String> selectedTags, int option) {
                                     /*
@@ -444,13 +444,24 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
                                         sb.append(")"); // Only if we added anything to the tag list
                                     }
                                     mSearchTerms = sb.toString();
-                                    createFilteredDeck(new JSONArray(), new Object[] { mSearchTerms, Consts.DYN_MAX_SIZE,
-                                            Consts.DYN_RANDOM }, false);
+                                    createFilteredDeck(new JSONArray(), new Object[]{mSearchTerms, Consts.DYN_MAX_SIZE,
+                                            Consts.DYN_RANDOM}, false);
                                 }
                             });
                         } else {
                             // Show CustomStudyDialog for all options other than the tags dialog
                             dialogFragment = CustomStudyDialog.newInstance(which);
+                            // If we increase limits, refresh the interface to reflect the new counts
+                            ((CustomStudyDialog) dialogFragment).setCustomStudyDialogListener(
+                                    new CustomStudyDialog.CustomStudyDialogListener() {
+                                        @Override
+                                        public void onPositive(int option) {
+                                            if (option == CustomStudyDialog.CUSTOM_STUDY_NEW ||
+                                                    option == CustomStudyDialog.CUSTOM_STUDY_REV) {
+                                                refreshInterfaceAndDecklist(true);
+                                            }
+                                        }
+                                    });
                         }
                         // Show the DialogFragment via Activity
                         ((AnkiActivity) getActivity()).showDialogFragment(dialogFragment);
