@@ -12,6 +12,10 @@
         android:title="@string/downloaddeck_search"
         ankidroid:actionViewClass="android.support.v7.widget.SearchView"
         ankidroid:showAsAction="always|collapseActionView"/>
+
+    <item
+        android:id="@+id/action_save_search"
+        android:title="@string/card_browser_list_my_searches_save"/>
     <item
         android:id="@+id/action_list_my_searches"
         android:title="@string/card_browser_list_my_searches"/>

@@ -38,9 +38,12 @@
     <string name="card_browser_search_by_tag">Filter by tag</string>
     <string name="card_browser_tags_shown">Tags: %1$s</string>
     <string name="card_browser_list_my_searches">My searches</string>
+    <string name="card_browser_list_my_searches_save">Save search</string>
     <string name="card_browser_list_my_searches_title">Choose a saved search</string>
-    <string name="card_browser_list_my_searches_empty_title">No saved searches</string>
-    <string name="card_browser_list_my_searches_empty">New search terms can only be created on the desktop client.</string>
+    <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
+    <string name="card_browser_list_my_searches_new_search_error_empty_name">You can\'t save a search without a name.</string>
+    <string name="card_browser_list_my_searches_new_search_error_dup">Name already exists!</string>
+    <string name="card_browser_list_my_searches_remove_content">Delete \"%1$s\"?</string>
     <string name="card_browser_change_display_order">Change display order</string>
     <string name="card_browser_change_display_order_title">Choose display order</string>
     <string name="card_browser_change_display_order_reverse">Select a field twice to reverse</string>

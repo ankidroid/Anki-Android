@@ -33,6 +33,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.SearchView;
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -102,6 +103,8 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
     private String mRestrictOnDeck;
 
     private MenuItem mSearchItem;
+    private MenuItem mSaveSearchItem;
+    private MenuItem mMySearchesItem;
 
     private MaterialDialog mProgressDialog;
     public static Card sCardBrowserCard;
@@ -265,17 +268,66 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         }
     };
 
-    private MaterialDialog.ListCallback mMySearchDialogListener =
-            new MaterialDialog.ListCallback() {
+    private CardBrowserMySearchesDialog.MySearchesDialogListener mMySearchesDialogListener =
+            new CardBrowserMySearchesDialog.MySearchesDialogListener() {
         @Override
-        public void onSelection(MaterialDialog materialDialog, View view, int which,
-                                   CharSequence text) {
+        public void OnSelection(String searchName) {
             JSONObject savedFiltersObj = getCol().getConf().optJSONObject("savedFilters");
             if (savedFiltersObj != null) {
-                mSearchTerms = savedFiltersObj.optString(text.toString());
+                mSearchTerms = savedFiltersObj.optString(searchName);
                 mSearchView.setQuery(mSearchTerms, false);
-                searchCards();
                 MenuItemCompat.expandActionView(mSearchItem);
+                searchCards();
+            }
+        }
+
+        @Override
+        public void OnRemoveSearch(String searchName) {
+            try {
+                JSONObject savedFiltersObj = getCol().getConf().optJSONObject("savedFilters");
+                if (savedFiltersObj != null && savedFiltersObj.has(searchName)) {
+                    savedFiltersObj.remove(searchName);
+                    getCol().getConf().put("savedFilters", savedFiltersObj);
+                    getCol().flush();
+                    if (savedFiltersObj.length() == 0) {
+                        mMySearchesItem.setVisible(false);
+                    }
+                }
+
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        @Override
+        public void OnSaveSearch(String searchName, String searchTerms) {
+            if (TextUtils.isEmpty(searchName)) {
+                Themes.showThemedToast(CardBrowser.this,
+                        getString(R.string.card_browser_list_my_searches_new_search_error_empty_name), true);
+                return;
+            }
+            try {
+                JSONObject savedFiltersObj = getCol().getConf().optJSONObject("savedFilters");
+                boolean should_save = false;
+                if (savedFiltersObj == null) {
+                    savedFiltersObj = new JSONObject();
+                    savedFiltersObj.put(searchName, searchTerms);
+                    should_save = true;
+                } else if (!savedFiltersObj.has(searchName)) {
+                    savedFiltersObj.put(searchName, searchTerms);
+                    should_save = true;
+                } else {
+                    Themes.showThemedToast(CardBrowser.this,
+                            getString(R.string.card_browser_list_my_searches_new_search_error_dup), true);
+                }
+                if (should_save) {
+                    getCol().getConf().put("savedFilters", savedFiltersObj);
+                    getCol().flush();
+                    mSearchView.setQuery("", false);
+                    mMySearchesItem.setVisible(true);
+                }
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
             }
         }
     };
@@ -524,6 +576,11 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.card_browser, menu);
+        mSaveSearchItem = menu.findItem(R.id.action_save_search);
+        mSaveSearchItem.setVisible(false); //the searchview's query always starts empty.
+        mMySearchesItem = menu.findItem(R.id.action_list_my_searches);
+        JSONObject savedFiltersObj = getCol().getConf().optJSONObject("savedFilters");
+        mMySearchesItem.setVisible(savedFiltersObj != null && savedFiltersObj.length() > 0);
         mSearchItem = menu.findItem(R.id.action_search);
         MenuItemCompat.setOnActionExpandListener(mSearchItem, new MenuItemCompat.OnActionExpandListener() {
             @Override
@@ -545,6 +602,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextChange(String newText) {
+                mSaveSearchItem.setVisible(!TextUtils.isEmpty(newText));
                 return true;
             }
 
@@ -583,16 +641,24 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                 startActivityForResultWithAnimation(intent, ADD_NOTE, ActivityTransitionAnimation.LEFT);
                 return true;
 
+            case R.id.action_save_search:
+                String searchTerms = mSearchView.getQuery().toString();
+                showDialogFragment(CardBrowserMySearchesDialog.newInstance(null, mMySearchesDialogListener,
+                        searchTerms, CardBrowserMySearchesDialog.CARD_BROWSER_MY_SEARCHES_TYPE_SAVE));
+                return true;
+
             case R.id.action_list_my_searches:
                 JSONObject savedFiltersObj = getCol().getConf().optJSONObject("savedFilters");
-                ArrayList<String> savedFilters = new ArrayList<String>();
+                HashMap<String, String> savedFilters = new HashMap<String, String>();
                 if (savedFiltersObj != null) {
                     Iterator<String> it = savedFiltersObj.keys();
                     while (it.hasNext()) {
-                        savedFilters.add(it.next());
+                        String searchName = it.next();
+                        savedFilters.put(searchName, savedFiltersObj.optString(searchName));
                     }
                 }
-                showDialogFragment(CardBrowserMySearchesDialog.newInstance(savedFilters, mMySearchDialogListener));
+                showDialogFragment(CardBrowserMySearchesDialog.newInstance(savedFilters, mMySearchesDialogListener,
+                        "", CardBrowserMySearchesDialog.CARD_BROWSER_MY_SEARCHES_TYPE_LIST));
                 return true;
             case R.id.action_sort_by_size:
                 showDialogFragment(CardBrowserOrderDialog
@@ -736,7 +802,6 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         searchCards();
         return true;
     }
-
 
     private void searchCards() {
         String searchText = mRestrictOnDeck + mSearchTerms;
