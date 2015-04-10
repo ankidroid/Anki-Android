@@ -804,7 +804,12 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
     }
 
     private void searchCards() {
-        String searchText = mRestrictOnDeck + mSearchTerms;
+        String searchText;
+        if (mSearchTerms.contains("deck:")) {
+            searchText = mSearchTerms;
+        } else {
+            searchText = mRestrictOnDeck + mSearchTerms;
+        }
         if (colIsOpen()) {
             // clear the existing card list
             getCards().clear();
