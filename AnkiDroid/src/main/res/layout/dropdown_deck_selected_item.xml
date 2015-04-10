@@ -10,6 +10,8 @@
         android:layout_height="wrap_content"
         android:textColor="?attr/actionBarTextColor"
         android:singleLine="true"
+        android:drawablePadding="16dp"
+        android:drawableRight="@drawable/spinner_triangle"
         style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" />
     <TextView
         android:id="@+id/dropdown_deck_counts"
