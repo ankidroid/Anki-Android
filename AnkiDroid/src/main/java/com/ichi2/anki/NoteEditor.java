@@ -28,6 +28,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.widget.PopupMenu;
@@ -317,13 +318,6 @@ public class NoteEditor extends AnkiActivity {
         Timber.d("onCreate()");
         Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
-        View mainView = getLayoutInflater().inflate(R.layout.note_editor, null);
-        setContentView(mainView);
-
-        Toolbar toolbar = (Toolbar) mainView.findViewById(R.id.toolbar);
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-        }
 
         Intent intent = getIntent();
         if (savedInstanceState != null) {
@@ -341,7 +335,6 @@ public class NoteEditor extends AnkiActivity {
         }
 
         startLoadingCollection();
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
 
@@ -369,7 +362,6 @@ public class NoteEditor extends AnkiActivity {
         registerExternalStorageListener();
         View mainView = getLayoutInflater().inflate(R.layout.note_editor, null);
         setContentView(mainView);
-        //Themes.setWallpaper(mainView);
         Themes.setContentStyle(mainView, Themes.CALLER_CARD_EDITOR);
 
         Toolbar toolbar = (Toolbar) mainView.findViewById(R.id.toolbar);
@@ -1478,13 +1470,14 @@ public class NoteEditor extends AnkiActivity {
         updateField(field);
         // 1 is empty, 2 is dupe, null is neither.
         Integer dupeCode = mEditorNote.dupeOrEmpty();
+        // Change bottom line color of text field
         if (dupeCode != null && dupeCode == 2) {
-            field.setBackgroundResource(R.drawable.white_edit_text_dupe);
-            field.setTextColor(getResources().getColor(R.color.material_red_500));
+            field.getBackground().setColorFilter(getResources().getColor(R.color.material_red_500),
+                    PorterDuff.Mode.SRC_ATOP);
             isDupe = true;
         } else {
-            //field.setBackgroundResource(R.drawable.white_edit_text);
-            field.setTextColor(getResources().getColor(R.color.text_color));
+            field.getBackground().setColorFilter(getResources().getColor(R.color.text_color),
+                    PorterDuff.Mode.SRC_ATOP);
             isDupe = false;
         }
         // Put back the old value so we don't interfere with modification detection
