@@ -178,7 +178,7 @@ public class CardTemplateEditor extends AnkiActivity {
         setTitle(getResources().getString(R.string.title_activity_template_editor, col.getModels().get(mModelId).optString("name")));
         // Close collection opening dialog if needed
         Timber.i("CardTemplateEditor:: Card template editor successfully started for model id %d", mModelId);
-        dismissOpeningCollectionDialog();
+        hideProgressBar();
     }
 
 

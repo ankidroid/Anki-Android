@@ -54,7 +54,6 @@ import com.ichi2.async.DeckTask;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Utils;
-import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 
@@ -131,7 +130,6 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
 
     private boolean mFragmented;
     private Collection mCollection;
-    private StyledOpenCollectionDialog mOpenCollectionDialog;
 
     private Thread mFullNewCountThread = null;
 
@@ -263,7 +261,7 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
         }
         refreshInterface(true);
         setHasOptionsMenu(true);
-        dismissCollectionLoadingDialog();
+        ((AnkiActivity) getActivity()).hideProgressBar();
         // rebuild action bar so that Showcase works correctly
         if (mFragmented) {
             ((DeckPicker) getActivity()).reloadShowcaseView();
@@ -917,9 +915,8 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     protected void startLoadingCollection() {
         // Initialize the open collection loader
         Timber.d("startLoadingCollection()");
-        if (CollectionHelper.getInstance().getCol(getActivity()) == null) {
-            showCollectionLoadingDialog();
-        }
+        AnkiActivity activity = (AnkiActivity) getActivity();
+        activity.showProgressBar();
         getLoaderManager().initLoader(0, null, this);  
     }
 
@@ -945,22 +942,5 @@ public class StudyOptionsFragment extends Fragment implements LoaderManager.Load
     @Override
     public void onLoaderReset(Loader<Collection> arg0) {
         // We don't currently retain any references, so no need to free any data here
-    }
-
-    // Open collection dialog
-    public void showCollectionLoadingDialog() {
-        if (mOpenCollectionDialog == null || !mOpenCollectionDialog.isShowing()) {
-            mOpenCollectionDialog = StyledOpenCollectionDialog.show(getActivity(), getResources().getString(R.string.open_collection), 
-                    new OnCancelListener() {@Override public void onCancel(DialogInterface arg0) {}}
-            );
-        }
-    }
-
-
-    // Dismiss progress dialog
-    public void dismissCollectionLoadingDialog() {
-        if (mOpenCollectionDialog != null && mOpenCollectionDialog.isShowing()) {
-            mOpenCollectionDialog.dismiss();
-        }
     }
 }

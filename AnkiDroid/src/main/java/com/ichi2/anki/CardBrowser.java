@@ -523,7 +523,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                 }
             }
         }
-        dismissOpeningCollectionDialog();
+        hideProgressBar();
     }
 
 

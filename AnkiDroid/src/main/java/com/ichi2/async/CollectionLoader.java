@@ -67,15 +67,4 @@ public class CollectionLoader extends AsyncTaskLoader<Collection> {
         Timber.d("CollectionLoader.onReset()");
         onStopLoading();
     }
-    
-    
-    private void setProgressMessage(final String message) {
-        // Update the text of the opening collection dialog
-        final AnkiActivity activity = (AnkiActivity) getContext();
-        activity.runOnUiThread(new Runnable() {
-            public void run() {
-                activity.setOpeningCollectionDialogMessage(message);
-            }
-        });
-    }
 }

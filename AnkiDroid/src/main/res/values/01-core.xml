@@ -107,7 +107,6 @@
     </string-array>
 
     <string name="later">Later</string>
-    <string name="open_collection">Opening collection…</string>
     <string name="rebuild_cram_deck">Rebuilding cram deck…</string>
     <string name="rebuild_cram_label">Rebuild</string>
     <string name="empty_cram_label">Empty</string>
@@ -120,7 +119,7 @@
     <string name="studyoptions_congrats_custom">To study outside of the normal schedule, touch the \"Custom study\" button below</string>
     <string name="studyoptions_no_cards_due">No cards are due yet.</string>
 
-    <string name="sd_card_not_mounted">SD card not mounted.\n\nYou can store your collection in the internal memory too, though it\'s not recommended as you cannot access the file that easily. You can activate this in the preferences (open them by touching this text).</string>
+    <string name="sd_card_not_mounted">Device storage not mounted</string>
     <string name="button_sync">Sync</string>
     <string name="export">Export</string>
     <string name="nothing">Nothing</string>
