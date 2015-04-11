@@ -63,6 +63,7 @@ import com.ichi2.themes.StyledDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.LanguageUtil;
+import com.ichi2.utils.VersionUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -213,7 +214,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                     return true;
                 }
             });
-        dialogPreference.setSummary(getResources().getString(R.string.about_version) + " " + AnkiDroidApp.getPkgVersionName());
+        dialogPreference.setSummary(getResources().getString(R.string.about_version) + " " + VersionUtils.getPkgVersionName());
 
         // Force full sync option
         Preference fullSyncPreference = getPreferenceScreen().findPreference("force_full_sync");

@@ -234,59 +234,6 @@ public class AnkiDroidApp extends Application {
     }
 
 
-    /**
-     * Get package name as defined in the manifest.
-     */
-    public static String getAppName() {
-        String pkgName = TAG;
-        Context context = sInstance.getApplicationContext();
-
-        try {
-            PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-            pkgName = context.getString(pInfo.applicationInfo.labelRes);
-        } catch (PackageManager.NameNotFoundException e) {
-            Timber.e(e, "Couldn't find package named %s", context.getPackageName());
-        }
-
-        return pkgName;
-    }
-
-
-    /**
-     * Get the package versionName as defined in the manifest.
-     */
-    public static String getPkgVersionName() {
-        String pkgVersion = "?";
-        if (sInstance != null) {
-            Context context = sInstance.getApplicationContext();
-
-            try {
-                PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-                pkgVersion = pInfo.versionName;
-            } catch (PackageManager.NameNotFoundException e) {
-                Timber.e(e, "Couldn't find package named %s", context.getPackageName());
-            }
-        }
-
-        return pkgVersion;
-    }
-
-
-    /**
-     * Get the package versionCode as defined in the manifest.
-     */
-    public static int getPkgVersionCode() {
-        Context context = sInstance.getApplicationContext();
-        try {
-            PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-            return pInfo.versionCode;
-        } catch (PackageManager.NameNotFoundException e) {
-            Timber.e(e, "Couldn't find package named %s", context.getPackageName());
-        }
-        return 0;
-    }
-
-
     public static void sendExceptionReport(Throwable e, String origin) {
         sendExceptionReport(e, origin, null);
     }

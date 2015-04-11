@@ -22,25 +22,26 @@
     android:layout_centerVertical="true"
     android:orientation="vertical" >
 
+    <include layout="@layout/toolbar" />
+
+
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="4dip"
         android:layout_weight="1"
         android:fadingEdge="vertical"
-        android:gravity="center" >
+        android:gravity="center">
 
         <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
             android:fadingEdge="vertical" >
-
             <WebView
                 android:id="@+id/info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical" />
-
             <RelativeLayout
                 android:id="@+id/info_loading_layer"
                 android:layout_width="fill_parent"
@@ -55,6 +56,7 @@
                     android:layout_gravity="center"
                     android:text="@string/loading_shared_decks" />
             </RelativeLayout>
+            <include layout="@layout/progress_bar" />
         </FrameLayout>
     </RelativeLayout>
 
@@ -94,5 +96,4 @@
             android:layout_weight="1"
             android:text="@string/dialog_continue" />
     </LinearLayout>
-
 </LinearLayout>

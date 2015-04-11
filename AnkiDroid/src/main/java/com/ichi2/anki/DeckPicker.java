@@ -85,6 +85,7 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Sched;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
+import com.ichi2.utils.VersionUtils;
 import com.ichi2.widget.WidgetStatus;
 
 import org.json.JSONArray;
@@ -820,14 +821,14 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             preferences.edit().putBoolean("noSpaceLeft", false).commit();
         } else if (preferences.getString("lastVersion", "").equals("")) {
             // Fresh install
-            preferences.edit().putString("lastVersion", AnkiDroidApp.getPkgVersionName()).commit();
+            preferences.edit().putString("lastVersion", VersionUtils.getPkgVersionName()).commit();
             startLoadingCollection();
-        } else if (skip < 2 && !preferences.getString("lastVersion", "").equals(AnkiDroidApp.getPkgVersionName())) {
+        } else if (skip < 2 && !preferences.getString("lastVersion", "").equals(VersionUtils.getPkgVersionName())) {
             // AnkiDroid is being updated and a collection already exists. We check if we are upgrading
             // to a version that contains additions to the database integrity check routine that we would
             // like to run on all collections. A missing version number is assumed to be a fresh
             // installation of AnkiDroid and we don't run the check.
-            int current = AnkiDroidApp.getPkgVersionCode();
+            int current = VersionUtils.getPkgVersionCode();
             int previous;
             if (!preferences.contains("lastUpgradeVersion")) {
                 // Fresh install
@@ -878,14 +879,20 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
             } else {
                 // If no changes are required we go to the new features activity
                 // There the "lastVersion" is set, so that this code is not reached again
-                Intent infoIntent = new Intent(this, Info.class);
-                infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION);
+                if (VersionUtils.isReleaseVersion()) {
+                    Intent infoIntent = new Intent(this, Info.class);
+                    infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION);
 
-                if (skip != 0) {
-                    startActivityForResultWithAnimation(infoIntent, SHOW_INFO_NEW_VERSION,
-                            ActivityTransitionAnimation.LEFT);
+                    if (skip != 0) {
+                        startActivityForResultWithAnimation(infoIntent, SHOW_INFO_NEW_VERSION,
+                                ActivityTransitionAnimation.LEFT);
+                    } else {
+                        startActivityForResultWithoutAnimation(infoIntent, SHOW_INFO_NEW_VERSION);
+                    }
                 } else {
-                    startActivityForResultWithoutAnimation(infoIntent, SHOW_INFO_NEW_VERSION);
+                    // Don't show new features dialog for development builds
+                    preferences.edit().putString("lastVersion", VersionUtils.getPkgVersionName()).commit();
+                    showStartupScreensAndDialogs(preferences, 2);
                 }
             }
         } else {

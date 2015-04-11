@@ -26,6 +26,7 @@ import com.ichi2.async.Connection;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Utils;
+import com.ichi2.utils.VersionUtils;
 
 import org.apache.http.HttpResponse;
 import org.json.JSONArray;
@@ -64,7 +65,7 @@ public class RemoteMediaServer extends HttpSyncer {
             mPostVars = new HashMap<String, Object>();
             mPostVars.put("k", mHKey);
             mPostVars.put("v",
-                    String.format(Locale.US, "ankidroid,%s,%s", AnkiDroidApp.getPkgVersionName(), Utils.platDesc()));
+                    String.format(Locale.US, "ankidroid,%s,%s", VersionUtils.getPkgVersionName(), Utils.platDesc()));
 
             HttpResponse resp = super.req("begin", super.getInputStream(Utils.jsonToString(new JSONObject())));
             JSONObject jresp = new JSONObject(super.stream2String(resp.getEntity().getContent()));
