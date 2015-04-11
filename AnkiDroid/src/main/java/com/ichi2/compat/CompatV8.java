@@ -14,6 +14,8 @@ import com.ichi2.anki.exception.APIVersionException;
 
 import java.util.regex.Pattern;
 
+import timber.log.Timber;
+
 /** Implementation of {@link Compat} for SDK level 7 */
 @TargetApi(8)
 public class CompatV8 implements Compat {
@@ -80,7 +82,9 @@ public class CompatV8 implements Compat {
 
 
     // Below API level 12, file scheme pages are not restricted, so no adjustment is needed.
-    public void enableCookiesForFileSchemePages() { }
+    public void enableCookiesForFileSchemePages() {
+        Timber.w("Cookies not supported in API version %d", CompatHelper.getSdkVersion());
+    }
 
 
     // Below API level 16, widget dimensions cannot be adjusted
