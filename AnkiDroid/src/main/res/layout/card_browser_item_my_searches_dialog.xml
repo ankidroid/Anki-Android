@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:src="@drawable/ic_remove_circle_grey600_36dp"
+        android:src="@drawable/ic_remove_circle_grey600_24dp"
         android:background="@color/transparent"/>
 
 </RelativeLayout>
