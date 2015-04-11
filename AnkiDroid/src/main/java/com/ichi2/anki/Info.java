@@ -1,6 +1,7 @@
 /***************************************************************************************
  * Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>                           *
  * Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
+ * Copyright (c) 2015 Tim Rae <perceptualchaos2@gmail.com>                              *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -23,12 +24,14 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.ClipboardManager;
 import android.text.method.LinkMovementMethod;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
@@ -36,6 +39,7 @@ import android.widget.TextView;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.themes.Themes;
+import com.ichi2.utils.VersionUtils;
 
 import org.acra.util.Installation;
 
@@ -45,7 +49,7 @@ import timber.log.Timber;
  * Shows an about box, which is a small HTML page.
  */
 
-public class Info extends ActionBarActivity {
+public class Info extends AnkiActivity {
 
     public static final String TYPE_EXTRA = "infoType";
 
@@ -64,12 +68,25 @@ public class Info extends ActionBarActivity {
         WebView webView;
 
         mType = getIntent().getIntExtra(TYPE_EXTRA, TYPE_ABOUT);
-        setTitle(String.format("%s v%s", AnkiDroidApp.getAppName(), AnkiDroidApp.getPkgVersionName()));
-        setContentView(R.layout.info);
 
+        setContentView(R.layout.info);
+        final View mainView = findViewById(android.R.id.content);
+        Toolbar toolbar = (Toolbar) mainView.findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+        }
+
+        setTitle(String.format("%s v%s", VersionUtils.getAppName(), VersionUtils.getPkgVersionName()));
         webView = (WebView) findViewById(R.id.info);
-        webView.setBackgroundColor(res.getColor(Themes.getBackgroundColor()));
-        Themes.setWallpaper((View) webView.getParent().getParent().getParent());
+        webView.setWebChromeClient(new WebChromeClient() {
+            public void onProgressChanged(WebView view, int progress)
+            {
+                // Hide the progress indicator when the page has finished loaded
+                if(progress == 100) {
+                    mainView.findViewById(R.id.progress_bar).setVisibility(View.GONE);
+                }
+            }
+        });
 
         TextView termsAndConditionsView = (TextView) findViewById(R.id.info_terms_and_conditions);
         termsAndConditionsView.setMovementMethod(LinkMovementMethod.getInstance());
@@ -92,7 +109,7 @@ public class Info extends ActionBarActivity {
                 switch (mType) {
                     case TYPE_NEW_VERSION:
                         AnkiDroidApp.getSharedPrefs(Info.this.getBaseContext()).edit()
-                                .putString("lastVersion", AnkiDroidApp.getPkgVersionName()).commit();
+                                .putString("lastVersion", VersionUtils.getPkgVersionName()).commit();
                         break;
                 }
                 finishWithAnimation();
@@ -136,13 +153,26 @@ public class Info extends ActionBarActivity {
                 break;
 
             case TYPE_NEW_VERSION:
-                webView.loadUrl(res.getString(R.string.changelog_url));
+                getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                webView.loadUrl("file:///android_asset/changelog.html");
+                //webView.loadUrl("https://ankidroid.org/docs/changelog.html");
                 break;
 
             default:
                 finish();
                 break;
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                finishWithAnimation();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 
@@ -159,14 +189,7 @@ public class Info extends ActionBarActivity {
 
 
     private void finishWithAnimation() {
-        finishWithAnimation(true);
-    }
-
-
-    private void finishWithAnimation(boolean left) {
-        finish();
-        ActivityTransitionAnimation.slide(Info.this, left ? ActivityTransitionAnimation.LEFT
-                : ActivityTransitionAnimation.RIGHT);
+        finishWithAnimation(ActivityTransitionAnimation.LEFT);
     }
 
 
@@ -177,7 +200,7 @@ public class Info extends ActionBarActivity {
     public String copyDebugInfo() {
         StringBuilder sb = new StringBuilder();
         // AnkiDroid Version
-        sb.append("AnkiDroid Version = ").append(AnkiDroidApp.getPkgVersionName()).append("\n\n");
+        sb.append("AnkiDroid Version = ").append(VersionUtils.getPkgVersionName()).append("\n\n");
         // Android SDK
         sb.append("Android Version = " + Build.VERSION.RELEASE).append("\n\n");
         // ACRA install ID

@@ -22,6 +22,7 @@ import com.ichi2.anki.exception.UnknownHttpResponseException;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Utils;
+import com.ichi2.utils.VersionUtils;
 
 import org.apache.http.HttpResponse;
 import org.json.JSONException;
@@ -80,7 +81,7 @@ public class RemoteServer extends HttpSyncer {
             JSONObject jo = new JSONObject();
             jo.put("v", Consts.SYNC_VER);
             jo.put("cv",
-                    String.format(Locale.US, "ankidroid,%s,%s", AnkiDroidApp.getPkgVersionName(), Utils.platDesc()));
+                    String.format(Locale.US, "ankidroid,%s,%s", VersionUtils.getPkgVersionName(), Utils.platDesc()));
             return super.req("meta", super.getInputStream(Utils.jsonToString(jo)));
         } catch (JSONException e) {
             throw new RuntimeException(e);

@@ -33,6 +33,7 @@ import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.libanki.hooks.Hooks;
 import com.ichi2.libanki.template.Template;
+import com.ichi2.utils.VersionUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -139,7 +140,7 @@ public class Collection {
         mDb = db;
         mPath = path;
         _openLog();
-        log(path, AnkiDroidApp.getPkgVersionName());
+        log(path, VersionUtils.getPkgVersionName());
         mServer = server;
         mLastSave = Utils.now();
         clearUndo();
