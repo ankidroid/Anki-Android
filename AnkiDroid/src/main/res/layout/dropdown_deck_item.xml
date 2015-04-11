@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Reference: appcompat's support_simple_spinner_dropdown_item -->
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/dropdown_deck_name"
-    style="?attr/spinnerDropDownItemStyle"
+    style="?android:attr/spinnerDropDownItemStyle"
     android:layout_width="match_parent"
     android:layout_height="?attr/dropdownListPreferredItemHeight"
     android:singleLine="true" />

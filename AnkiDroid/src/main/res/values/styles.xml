@@ -56,11 +56,6 @@
         <item name="android:listSelector">@drawable/white_list_selector_background</item>
     </style>
 
-    <style name="White.ActionBarStyle" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
-        <item name="android:background">@color/actionbar_background</item>
-        <item name="background">@color/actionbar_background</item>
-    </style>
-
     <!-- Widget Elements -->
     <style name="Widget.ProgressBar.Horizontal" parent="@android:style/Widget.ProgressBar.Horizontal">
         <item name="android:progressDrawable">@drawable/progress_horizontal</item>
