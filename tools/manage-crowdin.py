@@ -86,12 +86,12 @@ def updateMasterFile(fn):
 
 
 try:
-        try:
-            p = os.path.join(expanduser("~"), "src", "crowdin_key.txt")
-            print(p)
-            c = open(p,"r+")
-        except IOError as e0:
-            c = open("tools/crowdin_key.txt","r+")
+    try:
+        p = os.path.join(expanduser("~"), "src", "crowdin_key.txt")
+        print(p)
+        c = open(p,"r+")
+    except IOError as e0:
+        c = open("tools/crowdin_key.txt","r+")
     CROWDIN_KEY = c.readline();
     c.close()
 except IOError as e:
@@ -108,7 +108,8 @@ if sel == 'm':
             updateMasterFile(files[n])
     else:
         updateMasterFile(fn)
-
+else:
+    print "nothing to do"
 '''
 elif sel == 't':
     # Update Translations:
@@ -146,5 +147,3 @@ elif sel == 'r':
     c.close()
     print b.getvalue()
 '''
-else:
-    print "nothing to do"
