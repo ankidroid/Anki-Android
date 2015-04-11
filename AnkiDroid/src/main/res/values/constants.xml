@@ -21,8 +21,6 @@
     -->
     <!-- App name -->
     <string name="app_name">AnkiDroid</string>
-    <string name="app_name_anki">Anki</string>
-    <string name="app_name_droid">Droid</string>
     <!-- Used in deck preferences -->
     <string-array name="dictionary_labels">
         <item>None</item>

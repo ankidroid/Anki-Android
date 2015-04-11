@@ -38,20 +38,6 @@
     
     <style name="Theme.CrashReportDialog" parent="@android:style/Theme.Dialog" />
 
-    <style name="White.Spinner">
-        <item name="android:indeterminate">true</item>
-        <item name="android:indeterminateDrawable">@drawable/white_spinner</item>
-        <item name="android:indeterminateDuration">2000</item>
-        <item name="android:indeterminateOnly">true</item>
-    </style>
-
-    <style name="White.Spinner.White">
-        <item name="android:indeterminate">true</item>
-        <item name="android:indeterminateDrawable">@drawable/white_white_spinner</item>
-        <item name="android:indeterminateDuration">2000</item>
-        <item name="android:indeterminateOnly">true</item>
-    </style>
-
     <style name="White.Widget.ListView" parent="@android:style/Widget.ListView">
         <item name="android:listSelector">@drawable/white_list_selector_background</item>
     </style>

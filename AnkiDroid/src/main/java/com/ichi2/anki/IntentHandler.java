@@ -37,7 +37,7 @@ public class IntentHandler extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.styled_open_collection_dialog);
+        setContentView(R.layout.progress_bar);
         Intent intent = getIntent();
         Timber.v(intent.toString());
         Intent reloadIntent = new Intent(this, DeckPicker.class);

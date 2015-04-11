@@ -25,8 +25,6 @@ import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -85,7 +83,6 @@ import com.ichi2.async.DeckTask.TaskData;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Sched;
-import com.ichi2.themes.StyledOpenCollectionDialog;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.widget.WidgetStatus;
@@ -142,7 +139,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
     
     private MaterialDialog mProgressDialog;
-    private StyledOpenCollectionDialog mNotMountedDialog;
     private ShowcaseView mShowcaseDialog;
 
     private RecyclerView mRecyclerView;
@@ -159,9 +155,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
     private EditText mDialogEditText;
 
-    int mStatisticType;
-
-    boolean mCompletionBarRestrictToActive = false; // set this to true in order to calculate completion bar only for
     // active cards
     boolean mShowShowcaseView = false;
     // flag asking user to do a full sync which is used in upgrade path
@@ -277,7 +270,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                     showSimpleMessageDialog(res.getString(R.string.import_log_no_apkg));
                 }
                 updateDeckList();
-                dismissOpeningCollectionDialog();
+                hideProgressBar();
             } else {
                 showSimpleMessageDialog(res.getString(R.string.import_log_no_apkg), true);
             }
@@ -361,11 +354,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     protected void onCreate(Bundle savedInstanceState) throws SQLException {
         Timber.d("onCreate()");
         Intent intent = getIntent();
-        // Show splashscreen if app first starting
-        if (intent.getCategories()!= null || !colIsOpen()) {
-            showOpeningCollectionDialog();
-        }
-
         Themes.applyTheme(this);
         super.onCreate(savedInstanceState);
 
@@ -636,7 +624,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
         super.onActivityResult(requestCode, resultCode, intent);
 
         if (resultCode == RESULT_MEDIA_EJECTED) {
-            showSdCardNotMountedDialog();
+            onSdCardNotMounted();
             return;
         } else if (resultCode == RESULT_DB_ERROR) {
             handleDbError();
@@ -672,9 +660,9 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     protected void onResume() {
         Timber.d("onResume()");
         super.onResume();
-        if (colIsOpen() && AnkiDroidApp.isSdCardMounted()) {
+        if (colIsOpen()) {
             updateDeckList();
-            dismissOpeningCollectionDialog();
+            hideProgressBar();
         }
         setTitle(getResources().getString(R.string.app_name));
         sIsWholeCollection = !mFragmented;
@@ -792,7 +780,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 }
             });
         }
-        dismissOpeningCollectionDialog();
+        hideProgressBar();
         // Show the ShowcaseView tutorial unless in tablet mode (which shows it after loading StudyOptionsFragment)
         if (!mFragmented) {
             reloadShowcaseView();
@@ -802,8 +790,6 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
     @Override
     protected void onCollectionLoadError() {
-        // Show dialogs for handling collection load error
-        setOpeningCollectionDialogMessage(getResources().getString(R.string.col_load_failed));
         getDialogHandler().sendEmptyMessage(DialogHandler.MSG_SHOW_COLLECTION_LOADING_ERROR_DIALOG);
     }
 
@@ -818,8 +804,8 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
     private void showStartupScreensAndDialogs(SharedPreferences preferences, int skip) {
         if (!AnkiDroidApp.isSdCardMounted()) {
-            // SD Card not mounted
-            showSdCardNotMountedDialog();
+            // SD card not mounted
+            onSdCardNotMounted();
         } else if (!CollectionHelper.isCurrentAnkiDroidDirAccessible(this)) {
             // AnkiDroid directory inaccessible
             Intent i = new Intent(this, Preferences.class);
@@ -1020,24 +1006,9 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
     }
 
 
-    public void showSdCardNotMountedDialog() {
-        if (mNotMountedDialog == null || !mNotMountedDialog.isShowing()) {
-            mNotMountedDialog = StyledOpenCollectionDialog.show(DeckPicker.this,
-                    getResources().getString(R.string.sd_card_not_mounted), new OnCancelListener() {
-
-                        @Override
-                        public void onCancel(DialogInterface arg0) {
-                            finishWithAnimation();
-                        }
-                    }, new View.OnClickListener() {
-
-                        @Override
-                        public void onClick(View v) {
-                            startActivityForResultWithoutAnimation(new Intent(DeckPicker.this, Preferences.class),
-                                    NavigationDrawerActivity.REQUEST_PREFERENCES_UPDATE);
-                        }
-                    });
-        }
+    public void onSdCardNotMounted() {
+        Themes.showThemedToast(this, getResources().getString(R.string.sd_card_not_mounted), false);
+        finishWithoutAnimation();
     }
 
 
@@ -1550,7 +1521,7 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
 
 
     /**
-     * Show/dismiss dialog when sd card is ejected/remounted (collection is saved by SdCardReceiver)
+     * Show a message when the SD card is ejected
      */
     private void registerExternalStorageListener() {
         if (mUnmountReceiver == null) {
@@ -1558,11 +1529,8 @@ public class DeckPicker extends NavigationDrawerActivity implements OnShowcaseEv
                 @Override
                 public void onReceive(Context context, Intent intent) {
                     if (intent.getAction().equals(SdCardReceiver.MEDIA_EJECT)) {
-                        showSdCardNotMountedDialog();
+                        onSdCardNotMounted();
                     } else if (intent.getAction().equals(SdCardReceiver.MEDIA_MOUNT)) {
-                        if (mNotMountedDialog != null && mNotMountedDialog.isShowing()) {
-                            mNotMountedDialog.dismiss();
-                        }
                         startLoadingCollection();
                     }
                 }

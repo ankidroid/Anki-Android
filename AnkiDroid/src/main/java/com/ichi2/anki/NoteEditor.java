@@ -582,8 +582,8 @@ public class NoteEditor extends AnkiActivity {
             Timber.i("NoteEditor:: Edit note activity successfully started with card id %d", mCurrentEditedCard.getId());
         }
        
-        // Close collection opening dialog if needed
-        dismissOpeningCollectionDialog();
+        // Hide opening collection progress indicator
+        hideProgressBar();
     }
 
 

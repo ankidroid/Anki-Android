@@ -956,7 +956,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity {
 
         updateScreenCounts();
         supportInvalidateOptionsMenu();
-        dismissOpeningCollectionDialog();
+        hideProgressBar();
     }
 
 
