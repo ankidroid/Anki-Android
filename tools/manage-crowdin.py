@@ -110,6 +110,7 @@ if sel == 'm':
         updateMasterFile(fn)
 else:
     print "nothing to do"
+
 '''
 elif sel == 't':
     # Update Translations:

@@ -1,41 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<RelativeLayout   xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_height="fill_parent"
+    android:foregroundGravity="center">
+
+    <include layout="@layout/toolbar" />
 
     <LinearLayout
         android:id="@+id/logged_text"
-        style="?android:attr/buttonStyleSmall"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/logout_button"
-        android:layout_centerHorizontal="true"
         android:layout_marginBottom="15dp"
         android:gravity="center"
-        android:orientation="horizontal" >
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:layout_centerInParent="true"
+        >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/logged_as"
-            android:textColor="#000000"
-            android:textSize="20sp" />
+            android:textSize="@dimen/md_title_textsize"
+            android:layout_margin="@dimen/content_vertical_padding"/>
 
         <TextView
             android:id="@+id/username_logged_in"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="6dp"
-            android:textColor="#000000"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textSize="@dimen/md_title_textsize"
+            android:textStyle="bold"
+            android:layout_margin="@dimen/content_vertical_padding"/>
+
+        <Button
+            android:id="@+id/logout_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:textColor="?attr/actionBarTextColor"
+            android:singleLine="true"
+            android:textSize="@dimen/md_title_textsize"
+            android:layout_gravity="center"
+            android:padding="10dp"
+            android:text="@string/log_out"
+            android:layout_margin="@dimen/content_vertical_padding"
+            />
+
     </LinearLayout>
-
-    <Button
-        android:id="@+id/logout_button"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="@string/log_out" />
-
 </RelativeLayout>
+
+
