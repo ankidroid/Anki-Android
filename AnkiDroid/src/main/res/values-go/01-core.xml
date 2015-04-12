@@ -52,16 +52,16 @@
   <string name="studyoptions_eta">Beidanda ƕeila (min):</string>
   <string name="studyoptions_start">Laiseins</string>
   <plurals name="deckpicker_title">
-    <item quantity="one"/>
-    <item quantity="other"/>
+    <item quantity="one">%1$d card due (%2$s)</item>
+    <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one"/>
-    <item quantity="other"/>
+    <item quantity="one">%d min.</item>
+    <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one"/>
-    <item quantity="other"/>
+    <item quantity="one">%d minute left</item>
+    <item quantity="other">%d minutes left</item>
   </plurals>
   <string name="type_answer_hint">Melei andahaft</string>
   <string name="show_answer">Ataugei andahaft</string>
@@ -120,7 +120,6 @@
     <item>%s jera</item>
   </string-array>
   <string name="later">Spediza</string>
-  <string name="open_collection">Uslukands wiko&#8230;</string>
   <string name="rebuild_cram_deck">Aftra gatimrjand fulla wikon&#8230;</string>
   <string name="rebuild_cram_label">Gatimrei aftra</string>
   <string name="empty_cram_label">Laus</string>
@@ -132,7 +131,7 @@
   <string name="studyoptions_congrats_more_new">Marka bigitana himma daga. Ni ju sind niujos kartos; magt biaukan marka in mahtim, akei þata biaukiþ þeinana sprautana waurst.</string>
   <string name="studyoptions_congrats_custom">Du laisjan inuh naurmalana wikon, atsnarpei \"Anþara laiseins\" undaro knuppai</string>
   <string name="studyoptions_no_cards_due">Ni karta binah gakiusan.</string>
-  <string name="sd_card_not_mounted">SD karta nist.\n\nMagt gafastanuh wikon þeina in inagamaudeinai, aþþan ni anafilham unte ni magt feila azeto ganiman. Magt þata gasigljan in waleinim (usluk ija atsnarpjan þos bokos).</string>
+  <string name="sd_card_not_mounted">Device storage not mounted</string>
   <string name="button_sync">Galeik</string>
   <string name="export">Usbair</string>
   <string name="nothing">Ni waihts</string>
@@ -144,8 +143,8 @@
   <string name="card_template_editor_menu_delete">Usnim</string>
   <string name="card_template_editor_cant_delete">Mais þau ain kartahaidus ganauhiþ.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one"/>
-    <item quantity="other"/>
+    <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
+    <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
   </plurals>
   <string name="card_template_editor_would_delete_note"> Usniman þis kartahaidaus tawidedi aina fawanda aiþþau 
         managizo fawandaizo meleine. Skapei þata frumist niujata kartahaidu.</string>

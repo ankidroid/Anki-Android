@@ -52,19 +52,19 @@
   <string name="studyoptions_eta">Paredzētais laiks (min):</string>
   <string name="studyoptions_start">Study</string>
   <plurals name="deckpicker_title">
-    <item quantity="zero"/>
-    <item quantity="one"/>
-    <item quantity="other"/>
+    <item quantity="zero">%1$d cards due (%2$s)</item>
+    <item quantity="one">%1$d card due (%2$s)</item>
+    <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="zero"/>
-    <item quantity="one"/>
-    <item quantity="other"/>
+    <item quantity="zero">%d min.</item>
+    <item quantity="one">%d min.</item>
+    <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="zero"/>
-    <item quantity="one"/>
-    <item quantity="other"/>
+    <item quantity="zero">%d minutes left</item>
+    <item quantity="one">%d minute left</item>
+    <item quantity="other">%d minutes left</item>
   </plurals>
   <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">Parādīt atbildi</string>
@@ -123,7 +123,6 @@
     <item>%s gadi</item>
   </string-array>
   <string name="later">Vēlāk</string>
-  <string name="open_collection">Atveras kolekcija.\nLūdzu uzgaidiet...</string>
   <string name="rebuild_cram_deck">Atjaunoju piepildīto deku.\nLūdzu uzgaidiet...</string>
   <string name="rebuild_cram_label">Atjaunot</string>
   <string name="empty_cram_label">Tukšs</string>
@@ -135,7 +134,7 @@
   <string name="studyoptions_congrats_more_new">Ir pieejamas vairākas jaunas kārtis, bet dienas limits ir sasniegts. Jūs vara palielināt šo limitu iestatījumos, bet ņemiet vērā, ka tas palielinās Jūsu īstermiņa pārskatīšanas darba slodzi.</string>
   <string name="studyoptions_congrats_custom">Lai studētu ārpus normālā darba laika, nospiediet uz Pielāgotā Pētījuma pogas zemāk.</string>
   <string name="studyoptions_no_cards_due">No cards are due yet.</string>
-  <string name="sd_card_not_mounted">SD karte nav pievienota.\n\nJūs varat saglabāt savu kolekciju iekšējā atmiņā, tomēr tas nav ieteicams jo nevarat vieglā veidā piekļūt failam. Jūs varat ieslēgt šo iespēju iestatījumos (atveriet tos uzspiežot uz šī teksta).</string>
+  <string name="sd_card_not_mounted">Device storage not mounted</string>
   <string name="button_sync">Sinhronizācija</string>
   <string name="export">Export</string>
   <string name="nothing">Nothing</string>
@@ -147,9 +146,9 @@
   <string name="card_template_editor_menu_delete">Delete</string>
   <string name="card_template_editor_cant_delete">At least one card type is required.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="zero"/>
-    <item quantity="one"/>
-    <item quantity="other"/>
+    <item quantity="zero">Delete the \'%2$s\' card type, and its %1$d cards?</item>
+    <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
+    <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
   </plurals>
   <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create a new card type first.</string>
 </resources>

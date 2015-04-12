@@ -52,16 +52,16 @@
   <string name="studyoptions_eta">Uppskattad tid (min):</string>
   <string name="studyoptions_start">Plugga nu</string>
   <plurals name="deckpicker_title">
-    <item quantity="one"/>
-    <item quantity="other"/>
+    <item quantity="one">%1$d card due (%2$s)</item>
+    <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one"/>
-    <item quantity="other"/>
+    <item quantity="one">%d min.</item>
+    <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one"/>
-    <item quantity="other"/>
+    <item quantity="one">%d minute left</item>
+    <item quantity="other">%d minutes left</item>
   </plurals>
   <string name="type_answer_hint">Skriv svar</string>
   <string name="show_answer">Visa svar</string>
@@ -120,7 +120,6 @@
     <item>%s år</item>
   </string-array>
   <string name="later">Senare</string>
-  <string name="open_collection">Öppnar samling.\nVar god vänta...</string>
   <string name="rebuild_cram_deck">Återskapar kortlek för råplugg.\nVänligen vänta...</string>
   <string name="rebuild_cram_label">Återskapa</string>
   <string name="empty_cram_label">Töm</string>
@@ -132,7 +131,7 @@
   <string name="studyoptions_congrats_more_new">Det finns fler nya kort, men den dagliga gränsen har uppnåtts. Du kan höja gränsen i inställningarna, men kom ihåg att detta också ökar antalet repetitioner på kort sikt.</string>
   <string name="studyoptions_congrats_custom">Välj knappen Anpassade studier nedan för att studera utanför det normala schemat.</string>
   <string name="studyoptions_no_cards_due">Inga kort i kö.</string>
-  <string name="sd_card_not_mounted">SD-kort ej monterat.\n\nDu kan lagra din samling på det interna minnet också, men det är inte rekommenderat eftersom du inte kan komma åt filen så enkelt. Du kan aktivera detta i inställningarna (klicka på denna text för att öppna dem).</string>
+  <string name="sd_card_not_mounted">Device storage not mounted</string>
   <string name="button_sync">Synkronisera</string>
   <string name="export">Exportera</string>
   <string name="nothing">Inget</string>
@@ -144,8 +143,8 @@
   <string name="card_template_editor_menu_delete">Ta bort</string>
   <string name="card_template_editor_cant_delete">Minst en korttyp krävs.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one"/>
-    <item quantity="other"/>
+    <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
+    <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
   </plurals>
   <string name="card_template_editor_would_delete_note">Att ta bort det här kortet skulle göra att en eller flera anteckningar tas bort. Vänligen skapa en ny korttyp först.</string>
 </resources>

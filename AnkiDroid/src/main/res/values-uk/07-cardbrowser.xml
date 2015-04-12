@@ -40,9 +40,9 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="one"/>
-    <item quantity="few"/>
-    <item quantity="other"/>
+    <item quantity="one">%d card shown</item>
+    <item quantity="few">%d cards shown</item>
+    <item quantity="other">%d cards shown</item>
   </plurals>
   <string name="card_browser_all_decks">Всі колоди</string>
   <string name="card_browser_delete_card">Видалити запис</string>
@@ -56,6 +56,13 @@
   <string name="card_browser_show_suspended">Фільтрувати відкладені</string>
   <string name="card_browser_search_by_tag">Фільтрувати за міткою</string>
   <string name="card_browser_tags_shown">Мітки: %1$s</string>
+  <string name="card_browser_list_my_searches">My searches</string>
+  <string name="card_browser_list_my_searches_save">Save search</string>
+  <string name="card_browser_list_my_searches_title">Choose a saved search</string>
+  <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
+  <string name="card_browser_list_my_searches_new_search_error_empty_name">You can\'t save a search without a name.</string>
+  <string name="card_browser_list_my_searches_new_search_error_dup">Name already exists!</string>
+  <string name="card_browser_list_my_searches_remove_content">Delete \"%1$s\"?</string>
   <string name="card_browser_change_display_order">Змінити порядок відображення</string>
   <string name="card_browser_change_display_order_title">Вибрати порядок відображення</string>
   <string name="card_browser_change_display_order_reverse">Виберіть поле двічі щоб обміняти.</string>

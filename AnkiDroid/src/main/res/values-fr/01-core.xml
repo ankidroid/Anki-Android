@@ -52,16 +52,16 @@
   <string name="studyoptions_eta">Temps estimé (min):</string>
   <string name="studyoptions_start">Réviser</string>
   <plurals name="deckpicker_title">
-    <item quantity="one"/>
-    <item quantity="other"/>
+    <item quantity="one">%1$d card due (%2$s)</item>
+    <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one"/>
-    <item quantity="other"/>
+    <item quantity="one">%d min.</item>
+    <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one"/>
-    <item quantity="other"/>
+    <item quantity="one">%d minute left</item>
+    <item quantity="other">%d minutes left</item>
   </plurals>
   <string name="type_answer_hint">Taper la réponse</string>
   <string name="show_answer">Afficher la réponse</string>
@@ -120,7 +120,6 @@
     <item>%s années</item>
   </string-array>
   <string name="later">Plus tard</string>
-  <string name="open_collection">Chargement de la collection.\nVeuillez patienter&#8230;</string>
   <string name="rebuild_cram_deck">Reconstruction du paquet de bachotage.\nVeuillez patienter&#8230;</string>
   <string name="rebuild_cram_label">Réparer</string>
   <string name="empty_cram_label">Vide</string>
@@ -132,7 +131,7 @@
   <string name="studyoptions_congrats_more_new">Il reste des nouvelles cartes disponibles, mais la limite journalière a été atteinte. Vous pouvez augmenter cette limite dans les options, mais gardez à l\'esprit que cela augmentera votre charge de travail à court terme.</string>
   <string name="studyoptions_congrats_custom">Pour étudier en dehors des horaires normaux, cliquez sur le bouton d\'étude personnalisée ci-dessous.</string>
   <string name="studyoptions_no_cards_due">Aucune carte à relire actuellement.</string>
-  <string name="sd_card_not_mounted">La carte SD n\'est pas montée.\n\nVous pouvez également sauvegarder votre collection dans la mémoire interne bien que cela ne soit pas recommandé car cela rendrait plus difficile l\'accès au fichier. Vous pouvez activer cela dans les préférences (accédez-y en cliquant sur ce texte).</string>
+  <string name="sd_card_not_mounted">Device storage not mounted</string>
   <string name="button_sync">Synchroniser</string>
   <string name="export">Exporter</string>
   <string name="nothing">Rien</string>
@@ -144,8 +143,8 @@
   <string name="card_template_editor_menu_delete">Supprimer</string>
   <string name="card_template_editor_cant_delete">Il faut au moins un type de carte.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one"/>
-    <item quantity="other"/>
+    <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
+    <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
   </plurals>
   <string name="card_template_editor_would_delete_note"> Retirer ce type de carte provoquerait la suppression 
         d\'une ou de plusieurs notes. Veuillez d\'abord créer un nouveau type de carte.</string>

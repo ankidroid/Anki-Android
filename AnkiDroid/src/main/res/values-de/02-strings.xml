@@ -86,12 +86,12 @@
   <string name="field_remapping">%1$s (von \'%2$s\')</string>
   <string name="confirm_map_cards_to_nothing">Alle Karten, die auf keine abgebildet werden, werden gelöscht. Notizen, bei denen keine Karten übrig bleiben, gehen verloren. Fortfahren?</string>
   <plurals name="timebox_reached">
-    <item quantity="one">%1$d card studied in %2$s</item>
-    <item quantity="other">%1$d cards studied in %2$s</item>
+    <item quantity="one">%1$d Karte gelernt in %2$s</item>
+    <item quantity="other">%1$d Karten gelernt in %2$s</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
-    <item quantity="one">%1$d minute</item>
-    <item quantity="other">%1$d minutes</item>
+    <item quantity="one">%1$d Minute</item>
+    <item quantity="other">%1$d Minuten</item>
   </plurals>
   <string name="studyoptions_welcome_title">Willkommen bei AnkiDroid</string>
   <string name="fact_adder_intent_title">AnkiDroid Karte</string>
@@ -105,8 +105,8 @@
   <string name="rename_error">Stapel %s konnte nicht umbenannt werden</string>
   <string name="default_conf_delete_error">Die Standard-Optionengruppe kann nicht gelöscht werden</string>
   <plurals name="factadder_cards_added">
-    <item quantity="one">%d card added</item>
-    <item quantity="other">%d cards added</item>
+    <item quantity="one">%d Karte hinzugefügt</item>
+    <item quantity="other">%d Karten hinzugefügt</item>
   </plurals>
   <string name="help_title">Hilfe</string>
   <string name="check_db">Datenbank überprüfen</string>

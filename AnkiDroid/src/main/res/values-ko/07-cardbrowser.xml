@@ -40,7 +40,7 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="other"/>
+    <item quantity="other">%d cards shown</item>
   </plurals>
   <string name="card_browser_all_decks">모든 덱</string>
   <string name="card_browser_delete_card">노트 삭제</string>
@@ -54,6 +54,13 @@
   <string name="card_browser_show_suspended">비활성화된 카드 필터링</string>
   <string name="card_browser_search_by_tag">태그별 필터링</string>
   <string name="card_browser_tags_shown">태그: %1$s</string>
+  <string name="card_browser_list_my_searches">My searches</string>
+  <string name="card_browser_list_my_searches_save">Save search</string>
+  <string name="card_browser_list_my_searches_title">Choose a saved search</string>
+  <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
+  <string name="card_browser_list_my_searches_new_search_error_empty_name">You can\'t save a search without a name.</string>
+  <string name="card_browser_list_my_searches_new_search_error_dup">Name already exists!</string>
+  <string name="card_browser_list_my_searches_remove_content">Delete \"%1$s\"?</string>
   <string name="card_browser_change_display_order">표시 순서 변경</string>
   <string name="card_browser_change_display_order_title">표시 순서를 선택하세요</string>
   <string name="card_browser_change_display_order_reverse">순서를 바꾸기 위해서 필드를 두번 선택하세요.</string>

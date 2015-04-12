@@ -52,16 +52,16 @@
   <string name="studyoptions_eta">Tidsestimat (min.):</string>
   <string name="studyoptions_start">Studer nå</string>
   <plurals name="deckpicker_title">
-    <item quantity="one"/>
-    <item quantity="other"/>
+    <item quantity="one">%1$d card due (%2$s)</item>
+    <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one"/>
-    <item quantity="other"/>
+    <item quantity="one">%d min.</item>
+    <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one"/>
-    <item quantity="other"/>
+    <item quantity="one">%d minute left</item>
+    <item quantity="other">%d minutes left</item>
   </plurals>
   <string name="type_answer_hint">Skriv svar</string>
   <string name="show_answer">Vis svaret</string>
@@ -120,7 +120,6 @@
     <item>%s år</item>
   </string-array>
   <string name="later">Senere</string>
-  <string name="open_collection">Åpner samlingen. \nVennligst vent...</string>
   <string name="rebuild_cram_deck">Bygger om pugge-kortstokk.\nVennligst vent...</string>
   <string name="rebuild_cram_label">Gjenoppbygg</string>
   <string name="empty_cram_label">Tøm</string>
@@ -132,7 +131,7 @@
   <string name="studyoptions_congrats_more_new">Det finnes flere nye kort tilgjengelig, men den daglige grensen er nådd. Du kan øke grensen i innstillingene, men vær oppmerksom på at dette også vil øke den kortsiktige mengden av kort til repetering.</string>
   <string name="studyoptions_congrats_custom">To study outside of the normal schedule, touch the \"Custom study\" button below</string>
   <string name="studyoptions_no_cards_due">No cards are due yet.</string>
-  <string name="sd_card_not_mounted">SD card not mounted.\n\nYou can store your collection in the internal memory too, though it\'s not recommended as you cannot access the file that easily. You can activate this in the preferences (open them by touching this text).</string>
+  <string name="sd_card_not_mounted">Device storage not mounted</string>
   <string name="button_sync">Synkroniser</string>
   <string name="export">Export</string>
   <string name="nothing">Nothing</string>
@@ -144,8 +143,8 @@
   <string name="card_template_editor_menu_delete">Delete</string>
   <string name="card_template_editor_cant_delete">At least one card type is required.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one"/>
-    <item quantity="other"/>
+    <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
+    <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
   </plurals>
   <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create a new card type first.</string>
 </resources>

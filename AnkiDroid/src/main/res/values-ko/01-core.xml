@@ -52,13 +52,13 @@
   <string name="studyoptions_eta">예상 소요 시간 (분):</string>
   <string name="studyoptions_start">Study</string>
   <plurals name="deckpicker_title">
-    <item quantity="other"/>
+    <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="other"/>
+    <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="other"/>
+    <item quantity="other">%d minutes left</item>
   </plurals>
   <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">정답 보기</string>
@@ -117,7 +117,6 @@
     <item>%s년</item>
   </string-array>
   <string name="later">나중에</string>
-  <string name="open_collection">컬렉션을 여는 중입니다.\n잠시만 기다려 주세요...</string>
   <string name="rebuild_cram_deck">벼락치기 덱을 다시 섞는 중입니다.\n잠시만 기다려 주세요...</string>
   <string name="rebuild_cram_label">재생성</string>
   <string name="empty_cram_label">비우기</string>
@@ -132,7 +131,7 @@
 </string>
   <string name="studyoptions_congrats_custom">평상시 일정을 넘어 더 공부하려면, 맞춤 학습 버튼을 누르십시오.</string>
   <string name="studyoptions_no_cards_due">No cards are due yet.</string>
-  <string name="sd_card_not_mounted">SD카드가 삽입되지 않았습니다.\n\n내장 메모리에 컬렉션을 저장할 수 있지만, 파일에 쉽게 접근할 수 없으므로 권장되지 않습니다. 환경 설정에서 이를 활성화할 수 있습니다 (이 텍스트를 눌러서 설정 창을 엽니다).</string>
+  <string name="sd_card_not_mounted">Device storage not mounted</string>
   <string name="button_sync">동기화</string>
   <string name="export">Export</string>
   <string name="nothing">Nothing</string>
@@ -144,7 +143,7 @@
   <string name="card_template_editor_menu_delete">Delete</string>
   <string name="card_template_editor_cant_delete">At least one card type is required.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="other"/>
+    <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
   </plurals>
   <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create a new card type first.</string>
 </resources>

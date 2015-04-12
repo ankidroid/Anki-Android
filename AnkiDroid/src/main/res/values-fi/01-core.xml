@@ -52,16 +52,16 @@
   <string name="studyoptions_eta">Arvioitu aika (min):</string>
   <string name="studyoptions_start">Opiskele nyt</string>
   <plurals name="deckpicker_title">
-    <item quantity="one"/>
-    <item quantity="other"/>
+    <item quantity="one">%1$d card due (%2$s)</item>
+    <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one"/>
-    <item quantity="other"/>
+    <item quantity="one">%d min.</item>
+    <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one"/>
-    <item quantity="other"/>
+    <item quantity="one">%d minute left</item>
+    <item quantity="other">%d minutes left</item>
   </plurals>
   <string name="type_answer_hint">Kirjoita vastaus</string>
   <string name="show_answer">Näytä vastaus</string>
@@ -120,7 +120,6 @@
     <item>%s vuotta</item>
   </string-array>
   <string name="later">Myöhemmin</string>
-  <string name="open_collection">Avataan kokoelmaa&#8230;</string>
   <string name="rebuild_cram_deck">Kasataan pänttäyspakkaa&#8230;</string>
   <string name="rebuild_cram_label">Rakenna uudelleen</string>
   <string name="empty_cram_label">Tyhjä</string>
@@ -132,7 +131,7 @@
   <string name="studyoptions_congrats_more_new">Pakassa on lisää uusia kortteja, mutta päivittäinen raja on täyttynyt. Voit korottaa rajaa asetuksista, mutta huomioi, että tämä lisää lyhytaikaisen läpikäynnin työmäärää.</string>
   <string name="studyoptions_congrats_custom">Opiskellaksesi normaalin aikataulun ulkopuolella, napsauta alapuolella olevaa Mukautettu opiskelu -painiketta.</string>
   <string name="studyoptions_no_cards_due">No cards are due yet.</string>
-  <string name="sd_card_not_mounted">SD-korttia ei löydy.\n\nVoit tallentaa kokoelmasi myös sisäiseen muistiin, mutta se ei ole suositeltavaa, koska et pääse käsiksi kokoelmatiedostoon niin helposti. Voit aktivoida sisäisen muistin asetuksista, joihin pääset tätä tekstiä napauttamalla.</string>
+  <string name="sd_card_not_mounted">Device storage not mounted</string>
   <string name="button_sync">Synkronoi</string>
   <string name="export">Vie</string>
   <string name="nothing">Nothing</string>
@@ -144,8 +143,8 @@
   <string name="card_template_editor_menu_delete">Delete</string>
   <string name="card_template_editor_cant_delete">At least one card type is required.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one"/>
-    <item quantity="other"/>
+    <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
+    <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
   </plurals>
   <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create a new card type first.</string>
 </resources>

@@ -152,11 +152,11 @@
     <item>4</item>
   </string-array>
   <plurals name="stats_today_cards">
-    <item quantity="one">Studied &lt;b&gt;%1$d card&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
-    <item quantity="other">Studied &lt;b&gt;%1$d cards&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today.</item>
+    <item quantity="one">&lt;b&gt;%1$d cartão&lt;/b&gt; estudado em &lt;b&gt;%2$s&lt;/b&gt; hoje.</item>
+    <item quantity="other">&lt;b&gt;%1$d cartões&lt;/b&gt; estudados em &lt;b&gt;%2$s&lt;/b&gt; hoje.</item>
   </plurals>
   <plurals name="stats_today_cards_not_bold">
-    <item quantity="one">Studied %1$d card in %2$s today.</item>
-    <item quantity="other">Studied %1$d cards in %2$s today.</item>
+    <item quantity="one">%1$d cartão estudado em %2$s hoje.</item>
+    <item quantity="other">%1$d cartões estudados em %2$s hoje.</item>
   </plurals>
 </resources>

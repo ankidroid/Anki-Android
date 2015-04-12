@@ -52,13 +52,13 @@
   <string name="studyoptions_eta">估計時間(分鐘):</string>
   <string name="studyoptions_start">Study</string>
   <plurals name="deckpicker_title">
-    <item quantity="other"/>
+    <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="other"/>
+    <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="other"/>
+    <item quantity="other">%d minutes left</item>
   </plurals>
   <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">看答案</string>
@@ -117,7 +117,6 @@
     <item>%s年</item>
   </string-array>
   <string name="later">晚點</string>
-  <string name="open_collection">開啟收藏中。\n請稍後...</string>
   <string name="rebuild_cram_deck">正在重建填鴨式牌組。\n請稍後...</string>
   <string name="rebuild_cram_label">重建</string>
   <string name="empty_cram_label">清空</string>
@@ -130,7 +129,7 @@
   <string name="studyoptions_congrats_more_new">牌組裡還有其他新的卡片，只是您已經達到今天的進度了。您可以在選項中增加每日卡片數量上限，但請注意，這將會加重你短期的復習量。</string>
   <string name="studyoptions_congrats_custom">如果要有額外的學習進度，請按下方的「自訂學習」按鈕。</string>
   <string name="studyoptions_no_cards_due">No cards are due yet.</string>
-  <string name="sd_card_not_mounted">SD卡尚未掛載。\n\n你可以將你的收藏存放在內部記憶體，但不建議如此做，因為你無法輕易存取該檔案。你可以在偏好設定裡啟用此選項（點一下此文字以開啟）。</string>
+  <string name="sd_card_not_mounted">Device storage not mounted</string>
   <string name="button_sync">同步</string>
   <string name="export">Export</string>
   <string name="nothing">Nothing</string>
@@ -142,7 +141,7 @@
   <string name="card_template_editor_menu_delete">Delete</string>
   <string name="card_template_editor_cant_delete">At least one card type is required.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="other"/>
+    <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
   </plurals>
   <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create a new card type first.</string>
 </resources>

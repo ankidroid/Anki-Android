@@ -44,7 +44,7 @@
   <string name="widget_no_cards_due">学習予定日時に達したカードはありません</string>
   <string name="widget_loading">ウィジェットをロード中...</string>
   <plurals name="widget_cards_in_decks_due">
-    <item quantity="other">%1$d cards due in %2$s</item>
+    <item quantity="other">%2$s枚中%1$d枚が学習予定日時に達しています</item>
   </plurals>
   <plurals name="widget_decks">
     <item quantity="other">%1$d decks</item>

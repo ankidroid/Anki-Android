@@ -52,22 +52,22 @@
   <string name="studyoptions_eta">Predviden čas (min):</string>
   <string name="studyoptions_start">Study</string>
   <plurals name="deckpicker_title">
-    <item quantity="one"/>
-    <item quantity="two"/>
-    <item quantity="few"/>
-    <item quantity="other"/>
+    <item quantity="one">%1$d card due (%2$s)</item>
+    <item quantity="two">%1$d cards due (%2$s)</item>
+    <item quantity="few">%1$d cards due (%2$s)</item>
+    <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one"/>
-    <item quantity="two"/>
-    <item quantity="few"/>
-    <item quantity="other"/>
+    <item quantity="one">%d min.</item>
+    <item quantity="two">%d min.</item>
+    <item quantity="few">%d min.</item>
+    <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one"/>
-    <item quantity="two"/>
-    <item quantity="few"/>
-    <item quantity="other"/>
+    <item quantity="one">%d minute left</item>
+    <item quantity="two">%d minutes left</item>
+    <item quantity="few">%d minutes left</item>
+    <item quantity="other">%d minutes left</item>
   </plurals>
   <string name="type_answer_hint">Type answer</string>
   <string name="show_answer">Prikaži odgovor</string>
@@ -126,7 +126,6 @@
     <item>%s let</item>
   </string-array>
   <string name="later">Pozneje</string>
-  <string name="open_collection">Odpiram zbirko.\nProsimo počakajte...</string>
   <string name="rebuild_cram_deck">Gradim natrpan komplet.\nProsimo počakajte...</string>
   <string name="rebuild_cram_label">Izgradi</string>
   <string name="empty_cram_label">Prazen</string>
@@ -138,7 +137,7 @@
   <string name="studyoptions_congrats_more_new">Kartic ni več na voljo, čeprav dnevna omejitev ni bila dosežena. Med možnostmi lahko povečate omejitev, toda prosim imejte v mislih, da boste s tem povečali obremenitev pri kratkoročnem pregledu.</string>
   <string name="studyoptions_congrats_custom">Za učenje izven običajnega urnika kliknite spodnji gumb Učenje po meri.</string>
   <string name="studyoptions_no_cards_due">No cards are due yet.</string>
-  <string name="sd_card_not_mounted">Spominska SD kartica ni dostopna.\n\nVašo zbirko lahko shranite tudi v pomnilnik naprave, vendar pa to zaradi nerodnejšega dostopa do teh datotek ni priporočeno. Možnost lahko vključite prek Nastavitev (dostopne s klikom na to besedilo).</string>
+  <string name="sd_card_not_mounted">Device storage not mounted</string>
   <string name="button_sync">Sinhroniziraj</string>
   <string name="export">Export</string>
   <string name="nothing">Nothing</string>
@@ -150,10 +149,10 @@
   <string name="card_template_editor_menu_delete">Delete</string>
   <string name="card_template_editor_cant_delete">At least one card type is required.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one"/>
-    <item quantity="two"/>
-    <item quantity="few"/>
-    <item quantity="other"/>
+    <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
+    <item quantity="two">Delete the \'%2$s\' card type, and its %1$d cards?</item>
+    <item quantity="few">Delete the \'%2$s\' card type, and its %1$d cards?</item>
+    <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
   </plurals>
   <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create a new card type first.</string>
 </resources>

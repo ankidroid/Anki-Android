@@ -40,7 +40,7 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="other"/>
+    <item quantity="other">%d枚のカード</item>
   </plurals>
   <string name="card_browser_all_decks">すべての単語帳</string>
   <string name="card_browser_delete_card">ノートを削除</string>
@@ -54,6 +54,13 @@
   <string name="card_browser_show_suspended">保留カードの抽出</string>
   <string name="card_browser_search_by_tag">タグによる抽出</string>
   <string name="card_browser_tags_shown">タグ: %1$s</string>
+  <string name="card_browser_list_my_searches">My searches</string>
+  <string name="card_browser_list_my_searches_save">Save search</string>
+  <string name="card_browser_list_my_searches_title">Choose a saved search</string>
+  <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
+  <string name="card_browser_list_my_searches_new_search_error_empty_name">You can\'t save a search without a name.</string>
+  <string name="card_browser_list_my_searches_new_search_error_dup">Name already exists!</string>
+  <string name="card_browser_list_my_searches_remove_content">Delete \"%1$s\"?</string>
   <string name="card_browser_change_display_order">表示順を変更する</string>
   <string name="card_browser_change_display_order_title">表示順を選択します</string>
   <string name="card_browser_change_display_order_reverse">昇順、降順の切り替えは ▼(▲) をタップしてください</string>
@@ -64,7 +71,7 @@
   <string name="card_browser_filtering_cards">カードを抽出しています&#8230; \nキャンセルする場合はBackボタンをタップしてください</string>
   <string-array name="card_browser_order_labels">
     <item>並び替えなし（高速）</item>
-    <item>By sort field</item>
+    <item>ソートフィールド順</item>
     <item>作成時刻順</item>
     <item>編集時刻順</item>
     <item>変更時刻順</item>

@@ -40,8 +40,8 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="one"/>
-    <item quantity="other"/>
+    <item quantity="one">%d carta mostrata</item>
+    <item quantity="other">%d carte mostrate</item>
   </plurals>
   <string name="card_browser_all_decks">Tutti i mazzi</string>
   <string name="card_browser_delete_card">Elimina nota</string>
@@ -55,6 +55,13 @@
   <string name="card_browser_show_suspended">Filtra sospese</string>
   <string name="card_browser_search_by_tag">Filtra per etichetta</string>
   <string name="card_browser_tags_shown">Etichette: %1$s</string>
+  <string name="card_browser_list_my_searches">Le mie ricerche</string>
+  <string name="card_browser_list_my_searches_save">Salva ricerca</string>
+  <string name="card_browser_list_my_searches_title">Scegli una ricerca salvata</string>
+  <string name="card_browser_list_my_searches_new_name">Nome per la ricerca corrente</string>
+  <string name="card_browser_list_my_searches_new_search_error_empty_name">Non puoi salvare una ricerca senza un nome.</string>
+  <string name="card_browser_list_my_searches_new_search_error_dup">Nome già esistente!</string>
+  <string name="card_browser_list_my_searches_remove_content">Eliminare \"%1$s\"?</string>
   <string name="card_browser_change_display_order">Modifica ordine visualizzazione</string>
   <string name="card_browser_change_display_order_title">Scegli ordine visualizzazione</string>
   <string name="card_browser_change_display_order_reverse">Seleziona due volte un campo per invertirlo.</string>

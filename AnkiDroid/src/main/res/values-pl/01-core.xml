@@ -52,19 +52,19 @@
   <string name="studyoptions_eta">Szacowany czas (min):</string>
   <string name="studyoptions_start">Ucz się teraz</string>
   <plurals name="deckpicker_title">
-    <item quantity="one"/>
-    <item quantity="few"/>
-    <item quantity="other"/>
+    <item quantity="one">%1$d card due (%2$s)</item>
+    <item quantity="few">%1$d cards due (%2$s)</item>
+    <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one"/>
-    <item quantity="few"/>
-    <item quantity="other"/>
+    <item quantity="one">%d min.</item>
+    <item quantity="few">%d min.</item>
+    <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one"/>
-    <item quantity="few"/>
-    <item quantity="other"/>
+    <item quantity="one">%d minute left</item>
+    <item quantity="few">%d minutes left</item>
+    <item quantity="other">%d minutes left</item>
   </plurals>
   <string name="type_answer_hint">Podaj odpowiedź</string>
   <string name="show_answer">Pokaż odpowiedź</string>
@@ -123,7 +123,6 @@
     <item>%s lat</item>
   </string-array>
   <string name="later">Później</string>
-  <string name="open_collection">Otwieranie kolekcji.\nProszę czekać...</string>
   <string name="rebuild_cram_deck">Przebudowywanie talii.\nProszę czekać...</string>
   <string name="rebuild_cram_label">Odbuduj</string>
   <string name="empty_cram_label">Wyczyść</string>
@@ -135,7 +134,7 @@
   <string name="studyoptions_congrats_more_new">Pozostało więcej kart do przejrzenia, ale dzienny limit został osiągnięty. Możesz zwiększyć limit w opcjach, ale miej na uwadze, że zwiększy to ilość powtórzeń w najbliższych dniach.</string>
   <string name="studyoptions_congrats_custom">Aby kontynuować naukę poza zwykłym schematem kliknij przycisk Nauki Niestandardowej poniżej.</string>
   <string name="studyoptions_no_cards_due">Nie ma żadnych kart do przejrzenia.</string>
-  <string name="sd_card_not_mounted">Karta SD nie jest zamontowana.\n\nMożesz również przechowywać swoją kolekcję w pamięci wewnętrznej, jednak nie jest to zalecane, gdyż dostęp do tych plików nie będzie łatwy. Opcję tę możesz włączyć w ustawieniach (kliknij ten tekst).</string>
+  <string name="sd_card_not_mounted">Device storage not mounted</string>
   <string name="button_sync">Synchronizuj</string>
   <string name="export">Eksportuj</string>
   <string name="nothing">Nic</string>
@@ -147,9 +146,9 @@
   <string name="card_template_editor_menu_delete">Usuń</string>
   <string name="card_template_editor_cant_delete">Wymagany jest przynajmniej jeden typ karty.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one"/>
-    <item quantity="few"/>
-    <item quantity="other"/>
+    <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
+    <item quantity="few">Delete the \'%2$s\' card type, and its %1$d cards?</item>
+    <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
   </plurals>
   <string name="card_template_editor_would_delete_note">Usunięcie typu karty może spowodować usunięcie jednej lub większej ilości notatek. Proszę o utworzenie najpierw nowej karty.</string>
 </resources>

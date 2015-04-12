@@ -52,22 +52,22 @@
   <string name="studyoptions_eta">Процењено време (мин):</string>
   <string name="studyoptions_start">Започни учење</string>
   <plurals name="deckpicker_title">
-    <item quantity="one"/>
-    <item quantity="few"/>
-    <item quantity="many"/>
-    <item quantity="other"/>
+    <item quantity="one">%1$d card due (%2$s)</item>
+    <item quantity="few">%1$d cards due (%2$s)</item>
+    <item quantity="many">%1$d cards due (%2$s)</item>
+    <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one"/>
-    <item quantity="few"/>
-    <item quantity="many"/>
-    <item quantity="other"/>
+    <item quantity="one">%d min.</item>
+    <item quantity="few">%d min.</item>
+    <item quantity="many">%d min.</item>
+    <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one"/>
-    <item quantity="few"/>
-    <item quantity="many"/>
-    <item quantity="other"/>
+    <item quantity="one">%d minute left</item>
+    <item quantity="few">%d minutes left</item>
+    <item quantity="many">%d minutes left</item>
+    <item quantity="other">%d minutes left</item>
   </plurals>
   <string name="type_answer_hint">Унесите одговор</string>
   <string name="show_answer">Прикажи одговор</string>
@@ -126,7 +126,6 @@
     <item>%s година</item>
   </string-array>
   <string name="later">Касније</string>
-  <string name="open_collection">Отварање колекције.\nМолим сачекајте...</string>
   <string name="rebuild_cram_deck">Обнова слагања шпила.\nМолим сачекајте...</string>
   <string name="rebuild_cram_label">Ремонтуј</string>
   <string name="empty_cram_label">Очисти</string>
@@ -138,7 +137,7 @@
   <string name="studyoptions_congrats_more_new">Постоје нове карте, али дневни лимит је научен. Можете да повећате лимит, али имајте на уму, да ће то увећати и обим понављања следећих дана.</string>
   <string name="studyoptions_congrats_custom">Да бисте променили уобичајени распоред учења картица, кликните \"Допунско учење\" испод.</string>
   <string name="studyoptions_no_cards_due">Нема редне карте.</string>
-  <string name="sd_card_not_mounted">Меморијска карта није монтирана.\n\nМожете чувати вашу колекцију у унутрашњој меморији, али се то не препоручује, јер ће вам бити теже да дођете до датотеке. Можете да активирате ову опцију у подешавањима (да бисте их отворили, кликните на овај текст).</string>
+  <string name="sd_card_not_mounted">Device storage not mounted</string>
   <string name="button_sync">Синхронизујте</string>
   <string name="export">Извози</string>
   <string name="nothing">Ништа</string>
@@ -150,10 +149,10 @@
   <string name="card_template_editor_menu_delete">Избриши</string>
   <string name="card_template_editor_cant_delete">Потребан је бар један тип.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one"/>
-    <item quantity="few"/>
-    <item quantity="many"/>
-    <item quantity="other"/>
+    <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
+    <item quantity="few">Delete the \'%2$s\' card type, and its %1$d cards?</item>
+    <item quantity="many">Delete the \'%2$s\' card type, and its %1$d cards?</item>
+    <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
   </plurals>
   <string name="card_template_editor_would_delete_note">Брисање тог типа карата довешће до брисања једног или неколико белешки. Направите прво нови тип карата.</string>
 </resources>

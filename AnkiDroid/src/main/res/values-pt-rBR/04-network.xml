@@ -125,5 +125,5 @@
   <string name="force_full_sync_summary">Na próxima sincronização, forçar alterações em uma direção</string>
   <string name="full_sync_confirmation">A alteração solicitada exigirá um envio completo do banco de dados na próxima vez que você sincronizar sua coleção. Todas as revisões e demais alterações realizadas em outro dispositivo que ainda não foram sincronizadas aqui serão perdidas. Continuar?</string>
   <string name="full_sync_confirmation_upgrade">Devido a um bug na versão anteriormente instalada do AnkiDroid, é recomendado forçar uma sincronização completa.</string>
-  <string name="sync_error_501_upgrade_required">Please upgrade to the latest version of AnkiDroid</string>
+  <string name="sync_error_501_upgrade_required">Por favor atualize para a última versão do AnkiDroid</string>
 </resources>

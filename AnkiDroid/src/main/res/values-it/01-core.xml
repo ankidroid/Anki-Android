@@ -52,16 +52,16 @@
   <string name="studyoptions_eta">Tempo stimato (min):</string>
   <string name="studyoptions_start">Studia ora</string>
   <plurals name="deckpicker_title">
-    <item quantity="one"/>
-    <item quantity="other"/>
+    <item quantity="one">%1$d carta da ripetere (%2$s)</item>
+    <item quantity="other">%1$d carte da ripetere (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one"/>
-    <item quantity="other"/>
+    <item quantity="one">%d min.</item>
+    <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one"/>
-    <item quantity="other"/>
+    <item quantity="one">resta %d minuto</item>
+    <item quantity="other">restano %d minuti</item>
   </plurals>
   <string name="type_answer_hint">Digita la risposta</string>
   <string name="show_answer">Mostra la risposta</string>
@@ -120,7 +120,6 @@
     <item>%s anni</item>
   </string-array>
   <string name="later">Più tardi</string>
-  <string name="open_collection">Apertura collezione.\nAttendi...</string>
   <string name="rebuild_cram_deck">Ricreo mazzo per lo studio focalizzato.\nAttendi...</string>
   <string name="rebuild_cram_label">Ricrea</string>
   <string name="empty_cram_label">Svuota</string>
@@ -132,7 +131,7 @@
   <string name="studyoptions_congrats_more_new">Ci sono ulteriori carte nuove disponibili, ma il limite giornaliero è stato raggiunto. Puoi aumentare il limite nelle opzioni, ma ricordati che ciò aumenterà il tuo carico di lavoro per le ripetizioni a breve termine.</string>
   <string name="studyoptions_congrats_custom">Per studiare al di fuori della programmazione normale, clicca sul pulsante \'Studio Personalizzato\' qui sotto.</string>
   <string name="studyoptions_no_cards_due">Nessuna carta da ripetere ora.</string>
-  <string name="sd_card_not_mounted">La scheda SD non è montata.\n\nPuoi salvare la tua collezione anche nella memoria interna, ma non è consigliabile poiché non puoi accedere al file così facilmente. È possibile attivare questo nelle preferenze (aprile cliccando su questo testo).</string>
+  <string name="sd_card_not_mounted">Dispositivo archiviazione non montato</string>
   <string name="button_sync">Sincronizza</string>
   <string name="export">Esportare</string>
   <string name="nothing">Niente</string>
@@ -144,8 +143,8 @@
   <string name="card_template_editor_menu_delete">Elimina</string>
   <string name="card_template_editor_cant_delete">È necessario almeno un tipo di carta.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one"/>
-    <item quantity="other"/>
+    <item quantity="one">Eliminare il tipo di carta \'%2$s\', e la sua carta %1$d?</item>
+    <item quantity="other">Eliminare il tipo di carta \'%2$s\', e le sue carte %1$d?</item>
   </plurals>
   <string name="card_template_editor_would_delete_note">Rimuovendo questo tipo di carta, verrebbero eliminate una o più note. Crea dapprima un nuovo tipo di carta.</string>
 </resources>

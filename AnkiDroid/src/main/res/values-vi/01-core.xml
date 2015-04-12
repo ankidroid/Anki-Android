@@ -52,13 +52,13 @@
   <string name="studyoptions_eta">Thời gian ước tính (phút):</string>
   <string name="studyoptions_start">Bắt đầu học</string>
   <plurals name="deckpicker_title">
-    <item quantity="other"/>
+    <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="other"/>
+    <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="other"/>
+    <item quantity="other">%d minutes left</item>
   </plurals>
   <string name="type_answer_hint">Trả lời</string>
   <string name="show_answer">Hiện đáp án</string>
@@ -117,7 +117,6 @@
     <item>%s năm</item>
   </string-array>
   <string name="later">Sau</string>
-  <string name="open_collection">Đang mở dữ liệu. \n Đợi chút nhé...</string>
   <string name="rebuild_cram_deck">Đang tạo thẻ Bài. \n Đợi chút nhé...</string>
   <string name="rebuild_cram_label">Xây dựng lại</string>
   <string name="empty_cram_label">Rỗng</string>
@@ -129,7 +128,7 @@
   <string name="studyoptions_congrats_more_new">Không có thẻ mới, nhưng bạn đã đạt giới hạn hàng ngày. Bạn có thể tăng giới hạn trong các tùy chọn, nhưng vui lòng nhớ rằng điều này sẽ làm tăng khối lượng  công việc của bạn.</string>
   <string name="studyoptions_congrats_custom">Để học bên ngoài thời gian biểu, hãy chọn vào nút Lựa chọn việc học.</string>
   <string name="studyoptions_no_cards_due">Không có thẻ nào do chưa tạo đúng.</string>
-  <string name="sd_card_not_mounted">Thẻ nhớ SD không được tìm thấy. \n\n Bạn có thể lưu trữ thư viện trên bộ nhớ điện thoại, dù không tốt bằng, do việc truy nhập dữ liệu khó khăn. Bạn có thể thay đổi trong mục tùy chọn (mở bằng cách nhấn vào Chữ).</string>
+  <string name="sd_card_not_mounted">Device storage not mounted</string>
   <string name="button_sync">Đồng bộ</string>
   <string name="export">Xuất</string>
   <string name="nothing">không có gì</string>
@@ -141,7 +140,7 @@
   <string name="card_template_editor_menu_delete">Xóa</string>
   <string name="card_template_editor_cant_delete">Tối thiểu cần có một loại thẻ.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="other"/>
+    <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
   </plurals>
   <string name="card_template_editor_would_delete_note">Việc xóa bỏ loại thẻ này có thể dẫn tới một hay nhiều ghi chú sẽ bị xóa. Trước tiên xin vui lòng tạo một loại thẻ mới.</string>
 </resources>

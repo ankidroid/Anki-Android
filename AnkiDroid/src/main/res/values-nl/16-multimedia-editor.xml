@@ -34,8 +34,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="multimedia_editor_popup_image">Afbeelding toevoegen</string>
-  <string name="multimedia_editor_popup_audio">Audio opnemen</string>
+  <string name="multimedia_editor_popup_image">Voeg afbeelding toe</string>
+  <string name="multimedia_editor_popup_audio">Neem audio op</string>
   <string name="multimedia_editor_popup_text">Geadvanceerde editor</string>
   <string name="multimedia_editor_trans_poweredglosbe">Aangedreven door glosbe.com</string>
   <string name="multimedia_editor_trans_from">Van</string>
@@ -49,18 +49,18 @@
   <string name="multimedia_editor_pron_load">Laad</string>
   <string name="multimedia_editor_pron_looking_up">Opzoeken van uitspraak</string>
   <string name="multimedia_editor_pron_pronunciation_failed">Uitspraak mislukt</string>
-  <string name="multimedia_editor_word_search_try_lower_case">Try using only lower case characters</string>
+  <string name="multimedia_editor_word_search_try_lower_case">Probeer alleen kleine letters te gebruiken</string>
   <string name="multimedia_editor_poweredbeolingus">Aangedreven door Beolingus</string>
   <string name="multimedia_editor_imgs_saving_image">Afbeelding opslaan</string>
   <string name="multimedia_editor_imgs_loading_image">Afbeelding laden</string>
-  <string name="multimedia_editor_imgs_no_results">Search returned no results</string>
+  <string name="multimedia_editor_imgs_no_results">Zoekopdracht heeft geen resultaten opgeleverd</string>
   <string name="multimedia_editor_imgs_images_found">Afbeeldingen gevonden</string>
-  <string name="multimedia_editor_imgs_pow_by_google">Powered by Google Image Search</string>
+  <string name="multimedia_editor_imgs_pow_by_google">Mogelijk gemaakt door Google Afbeeldingen</string>
   <string name="multimedia_editor_imgs_prev">&lt;&lt;</string>
   <string name="multimedia_editor_imgs_next">&gt;&gt;</string>
   <string name="multimedia_editor_imgs_pick">Kies</string>
-  <string name="multimedia_editor_imgs_failed">Image search failed</string>
-  <string name="multimedia_editor_imgs_searching_for_images">Searching for images</string>
+  <string name="multimedia_editor_imgs_failed">Afbeeldingen zoeken mislukt</string>
+  <string name="multimedia_editor_imgs_searching_for_images">Afbeeldingen aan het zoeken</string>
   <string name="multimedia_editor_field_editing_text">Tekst</string>
   <string name="multimedia_editor_field_editing_image">Afbeelding</string>
   <string name="multimedia_editor_field_editing_audio">Audio</string>
@@ -71,24 +71,24 @@
   <string name="multimedia_editor_text_field_editing_clear">Wissen</string>
   <string name="multimedia_editor_text_field_editing_clone">Kloon van</string>
   <string name="multimedia_editor_text_field_editing_translate">Vertaling</string>
-  <string name="multimedia_editor_text_field_editing_no_text">Input some text first</string>
-  <string name="multimedia_editor_text_field_editing_many_words">Dictionary usually expects one word</string>
+  <string name="multimedia_editor_text_field_editing_no_text">Voer eerst tekst in</string>
+  <string name="multimedia_editor_text_field_editing_many_words">Woordenboek verwacht meestal één woord</string>
   <string name="multimedia_editor_text_field_editing_clone_source">Pak van</string>
   <string name="multimedia_editor_image_field_editing_galery">Galerij</string>
   <string name="multimedia_editor_image_field_editing_photo">Camera</string>
   <string name="multimedia_editor_general_downloading">Downloaden</string>
   <string name="multimedia_editor_general_done">Klaar</string>
-  <string name="multimedia_editor_error_word_not_found">The word was not found</string>
+  <string name="multimedia_editor_error_word_not_found">Woord is niet gevonden</string>
   <string name="multimedia_editor_trans_getting_failure">Vertaling verkrijgen mislukt</string>
-  <string name="multimedia_editor_searching_word">Searching the word</string>
+  <string name="multimedia_editor_searching_word">Woord aan het zoeken</string>
   <string name="multimedia_editor_progress_wait_title">Wachten</string>
   <string name="multimedia_editor_something_wrong">Er is iets fout gegaan</string>
-  <string name="multimedia_editor_attach_mm_content">\"Attach multimedia content to the note</string>
-  <string name="multimedia_editor_attach_media">\"Attach media</string>
+  <string name="multimedia_editor_attach_mm_content">\"Voeg multi-media toe aan de notitie</string>
+  <string name="multimedia_editor_attach_media">\"Voeg media toe</string>
   <string name="multimedia_editor_audio_view_recording_failed">Opname mislukt</string>
-  <string name="multimedia_editor_audio_view_playing_failed">Playing failed</string>
+  <string name="multimedia_editor_audio_view_playing_failed">Afspelen mislukt</string>
   <string name="title_activity_edit_text">Veld wijzigen</string>
   <string name="title_activity_translation">Vertaling</string>
   <string name="title_activity_load_pronounciation">Uitspraak</string>
-  <string name="title_activity_search_image">Google Image Search</string>
+  <string name="title_activity_search_image">Google Afbeeldingen</string>
 </resources>

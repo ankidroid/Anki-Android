@@ -40,7 +40,7 @@
 -->
 <resources>
   <plurals name="card_browser_subtitle">
-    <item quantity="other"/>
+    <item quantity="other">%d cards shown</item>
   </plurals>
   <string name="card_browser_all_decks">所有牌組</string>
   <string name="card_browser_delete_card">刪除筆記</string>
@@ -54,6 +54,13 @@
   <string name="card_browser_show_suspended">篩選出擱置的卡片</string>
   <string name="card_browser_search_by_tag">按標籤篩選</string>
   <string name="card_browser_tags_shown">標籤：%1$s</string>
+  <string name="card_browser_list_my_searches">My searches</string>
+  <string name="card_browser_list_my_searches_save">Save search</string>
+  <string name="card_browser_list_my_searches_title">Choose a saved search</string>
+  <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
+  <string name="card_browser_list_my_searches_new_search_error_empty_name">You can\'t save a search without a name.</string>
+  <string name="card_browser_list_my_searches_new_search_error_dup">Name already exists!</string>
+  <string name="card_browser_list_my_searches_remove_content">Delete \"%1$s\"?</string>
   <string name="card_browser_change_display_order">更改顯示順序</string>
   <string name="card_browser_change_display_order_title">選擇顯示順序</string>
   <string name="card_browser_change_display_order_reverse">點兩下欄位來反向順序排列</string>

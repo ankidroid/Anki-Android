@@ -52,16 +52,16 @@
   <string name="studyoptions_eta">Tiempo estimado (min):</string>
   <string name="studyoptions_start">Estudiar</string>
   <plurals name="deckpicker_title">
-    <item quantity="one"/>
-    <item quantity="other"/>
+    <item quantity="one">%1$d card due (%2$s)</item>
+    <item quantity="other">%1$d cards due (%2$s)</item>
   </plurals>
   <plurals name="deckpicker_title_minutes">
-    <item quantity="one"/>
-    <item quantity="other"/>
+    <item quantity="one">%d min.</item>
+    <item quantity="other">%d min.</item>
   </plurals>
   <plurals name="reviewer_window_title">
-    <item quantity="one"/>
-    <item quantity="other"/>
+    <item quantity="one">%d minute left</item>
+    <item quantity="other">%d minutes left</item>
   </plurals>
   <string name="type_answer_hint">Escribir respuesta</string>
   <string name="show_answer">Mostrar respuesta</string>
@@ -120,7 +120,6 @@
     <item>%s años</item>
   </string-array>
   <string name="later">Más tarde</string>
-  <string name="open_collection">Abriendo colección.\nPor favor, espera...</string>
   <string name="rebuild_cram_deck">Reconstruyendo mazo de estudio intensivo.\nPor favor, espera...</string>
   <string name="rebuild_cram_label">Reconstruir</string>
   <string name="empty_cram_label">Vaciar</string>
@@ -132,7 +131,7 @@
   <string name="studyoptions_congrats_more_new">Hay más tarjetas nuevas disponibles, pero el límite diario ha sido alcanzado. Puedes aumentar el límite en las opciones, pero ten en cuenta que esto también aumentará tu carga de trabajo de repasos a corto plazo.</string>
   <string name="studyoptions_congrats_custom">Para estudiar fuera del horario normal, haz click en el botón Estudio Personalizado aquí abajo.</string>
   <string name="studyoptions_no_cards_due">Ninguna carta pendiente todavía.</string>
-  <string name="sd_card_not_mounted">No hay tarjeta SD insertada.\n\nTambién puedes almacenar tu colección en la memoria interna, aunque no es recomendable ya que no se puede acceder al archivo tan fácilmente. Esto se puede activar en las preferencias (ábrelas haciendo click en este texto).</string>
+  <string name="sd_card_not_mounted">Device storage not mounted</string>
   <string name="button_sync">Sincronizar</string>
   <string name="export">Exportar</string>
   <string name="nothing">Nada</string>
@@ -144,8 +143,8 @@
   <string name="card_template_editor_menu_delete">Eliminar</string>
   <string name="card_template_editor_cant_delete">Por lo menos un tipo de tarjeta es requerido.</string>
   <plurals name="card_template_editor_confirm_delete">
-    <item quantity="one"/>
-    <item quantity="other"/>
+    <item quantity="one">Delete the \'%2$s\' card type, and its %1$d card?</item>
+    <item quantity="other">Delete the \'%2$s\' card type, and its %1$d cards?</item>
   </plurals>
   <string name="card_template_editor_would_delete_note"> Eliminar este tipo de tarjeta podría causar que una o más notas se eliminen. Por favor, cree un nuevo tipo de tarjeta primero.</string>
 </resources>

@@ -86,10 +86,10 @@
   <string name="field_remapping">%1$s (\'%2$s\'から)</string>
   <string name="confirm_map_cards_to_nothing">Nothing に設定したカードは削除されます。ノートにカードが残っていない場合は、そのノートが失われます。それでも処理を続行しますか。</string>
   <plurals name="timebox_reached">
-    <item quantity="other">%1$d cards studied in %2$s</item>
+    <item quantity="other">%1$d カードを %2$s で勉強</item>
   </plurals>
   <plurals name="timebox_reached_minutes">
-    <item quantity="other">%1$d minutes</item>
+    <item quantity="other">%1$d分</item>
   </plurals>
   <string name="studyoptions_welcome_title">AnkiDroid へようこそ</string>
   <string name="fact_adder_intent_title">AnkiDroid カード</string>
@@ -103,7 +103,7 @@
   <string name="rename_error">単語帳 %s の名前を変更できません。</string>
   <string name="default_conf_delete_error">標準オプショングループを削除することはできません。</string>
   <plurals name="factadder_cards_added">
-    <item quantity="other">%d cards added</item>
+    <item quantity="other">%d　枚のカードの追加</item>
   </plurals>
   <string name="help_title">ヘルプ</string>
   <string name="check_db">データベースをチェック</string>
