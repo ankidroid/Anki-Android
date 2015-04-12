@@ -26,6 +26,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.method.LinkMovementMethod;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
@@ -80,6 +81,7 @@ public class MyAccount extends AnkiActivity {
                 mToolbar = (Toolbar) mLoggedIntoMyAccountView.findViewById(R.id.toolbar);
                 if (mToolbar!= null) {
                     mToolbar.setTitle(getString(R.string.sync_account));  // This can be cleaned up if all three main layouts are guaranteed to share the same toolbar object
+                    setSupportActionBar(mToolbar);
                 }
                 setContentView(mLoggedIntoMyAccountView);
                 break;
@@ -88,6 +90,7 @@ public class MyAccount extends AnkiActivity {
                 mToolbar = (Toolbar) mLoginToMyAccountView.findViewById(R.id.toolbar);
                 if (mToolbar!= null) {
                     mToolbar.setTitle(getString(R.string.sync_account));  // This can be cleaned up if all three main layouts are guaranteed to share the same toolbar object
+                    setSupportActionBar(mToolbar);
                 }
                 setContentView(mLoginToMyAccountView);
                 break;
@@ -96,6 +99,7 @@ public class MyAccount extends AnkiActivity {
                 mToolbar = (Toolbar) mRegisterView.findViewById(R.id.toolbar);
                 if (mToolbar!= null) {
                     mToolbar.setTitle(getString(R.string.sync_account));  // This can be cleaned up if all three main layouts are guaranteed to share the same toolbar object
+                    setSupportActionBar(mToolbar);
                 }
                 setContentView(mRegisterView);
                 break;
@@ -467,6 +471,7 @@ public class MyAccount extends AnkiActivity {
             }
         }
     };
+
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

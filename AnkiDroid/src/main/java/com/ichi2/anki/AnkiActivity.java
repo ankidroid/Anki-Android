@@ -19,6 +19,7 @@ import android.support.v4.content.IntentCompat;
 import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBarActivity;
 
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.animation.Animation;
@@ -47,6 +48,19 @@ public class AnkiActivity extends ActionBarActivity implements LoaderManager.Loa
         ((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE)).cancel(SIMPLE_NOTIFICATION_ID);
         // Show any pending dialogs which were stored persistently
         mHandler.readMessage();
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Timber.i("Home button pressed");
+                finishWithoutAnimation();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 
