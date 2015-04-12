@@ -825,6 +825,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         if (colIsOpen()) {
             // clear the existing card list
             getCards().clear();
+            mCardsAdapter.notifyDataSetChanged();
             // Perform database query to get all card ids / sfld. Shows "filtering cards..." progress message
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SEARCH_CARDS, mSearchCardsHandler, new DeckTask.TaskData(
                     new Object[] { getCol(), mDeckNames, searchText, ((mOrder != CARD_ORDER_NONE)) }));
@@ -1065,6 +1066,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         @Override
         public void onPreExecute() {
             Resources res = getResources();
+            sSearchCancelled = false;
             if (mProgressDialog == null) {
                 mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "",
                         res.getString(R.string.card_browser_filtering_cards), true,
@@ -1168,7 +1170,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 int startIdx = listView.getFirstVisiblePosition();
                 int numVisible = listView.getLastVisiblePosition() - startIdx;
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_RENDER_BROWSER_QA, mRenderQAHandler, new DeckTask.TaskData(
-                        new Object[] { getCol(), getCards(), startIdx-5 , startIdx+2*numVisible}));
+                        new Object[] { getCol(), getCards(), startIdx - 5 , 2*numVisible + 5}));
             }
         }
     }
