@@ -164,12 +164,9 @@ public class EditFieldActivity extends AnkiActivity {
                 done();
                 return true;
 
-            case android.R.id.home:
-                Timber.i("Home button pressed");
-                finishWithoutAnimation();
-                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
 
