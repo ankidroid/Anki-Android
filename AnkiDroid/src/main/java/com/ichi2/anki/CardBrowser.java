@@ -86,8 +86,8 @@ import java.util.regex.Pattern;
 
 import timber.log.Timber;
 
-public class CardBrowser extends NavigationDrawerActivity implements ActionBar.OnNavigationListener,
-            DeckDropDownAdapter.SubtitleListener {
+public class CardBrowser extends NavigationDrawerActivity implements
+        DeckDropDownAdapter.SubtitleListener {
 
     // private List<Long> mCardIds = new ArrayList<Long>();
     private ArrayList<HashMap<String, String>> mCards;
@@ -161,6 +161,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
 
     private ActionBar mActionBar;
     private DeckDropDownAdapter mDropDownAdapter;
+    private Spinner mActionBarSpinner;
 
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
@@ -383,8 +384,20 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         mDropDownAdapter = new DeckDropDownAdapter(this, mDropDownDecks);
         mActionBar = getSupportActionBar();
         mActionBar.setDisplayShowTitleEnabled(false);
-        mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-        mActionBar.setListNavigationCallbacks(mDropDownAdapter, this);
+        mActionBarSpinner = (Spinner) findViewById(R.id.toolbar_spinner);
+        mActionBarSpinner.setAdapter(mDropDownAdapter);
+        mActionBarSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectDropDownItem(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // do nothing
+            }
+        });
+        mActionBarSpinner.setVisibility(View.VISIBLE);
 
         try {
             mOrder = CARD_ORDER_NONE;
@@ -501,7 +514,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         // initialize mSearchTerms to a default value
         mSearchTerms = "";
 
-        // onNavigationItemSelected will be called automatically, replacing onSearch in onCreate.
+        // set the currently selected deck
         if (!sIsWholeCollection) {
             String currentDeckName;
             try {
@@ -518,7 +531,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                     throw new RuntimeException();
                 }
                 if (deckName.equals(currentDeckName)) {
-                    mActionBar.setSelectedNavigationItem(dropDownDeckIdx + 1);
+                    selectDropDownItem(dropDownDeckIdx + 1);
                     break;
                 }
             }
@@ -775,11 +788,11 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
     }
 
 
-    @Override
-    public boolean onNavigationItemSelected(int position, long itemId) {
+    public void selectDropDownItem(int position) {
         // cancel rendering the question and answer, which has shared access to mCards
         DeckTask.cancelTask(DeckTask.TASK_TYPE_RENDER_BROWSER_QA);
-        
+
+        mActionBarSpinner.setSelection(position);
         if (position == 0) {
             sIsWholeCollection = true;
             mRestrictOnDeck = "";
@@ -800,7 +813,6 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
             mRestrictOnDeck = "deck:\"" + deckName + "\" ";
         }
         searchCards();
-        return true;
     }
 
     private void searchCards() {
@@ -813,6 +825,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         if (colIsOpen()) {
             // clear the existing card list
             getCards().clear();
+            mCardsAdapter.notifyDataSetChanged();
             // Perform database query to get all card ids / sfld. Shows "filtering cards..." progress message
             DeckTask.launchDeckTask(DeckTask.TASK_TYPE_SEARCH_CARDS, mSearchCardsHandler, new DeckTask.TaskData(
                     new Object[] { getCol(), mDeckNames, searchText, ((mOrder != CARD_ORDER_NONE)) }));
@@ -1053,6 +1066,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
         @Override
         public void onPreExecute() {
             Resources res = getResources();
+            sSearchCancelled = false;
             if (mProgressDialog == null) {
                 mProgressDialog = StyledProgressDialog.show(CardBrowser.this, "",
                         res.getString(R.string.card_browser_filtering_cards), true,
@@ -1156,7 +1170,7 @@ public class CardBrowser extends NavigationDrawerActivity implements ActionBar.O
                 int startIdx = listView.getFirstVisiblePosition();
                 int numVisible = listView.getLastVisiblePosition() - startIdx;
                 DeckTask.launchDeckTask(DeckTask.TASK_TYPE_RENDER_BROWSER_QA, mRenderQAHandler, new DeckTask.TaskData(
-                        new Object[] { getCol(), getCards(), startIdx-5 , startIdx+2*numVisible}));
+                        new Object[] { getCol(), getCards(), startIdx - 5 , 2*numVisible + 5}));
             }
         }
     }
