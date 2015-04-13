@@ -197,7 +197,6 @@ public class Statistics extends NavigationDrawerActivity implements
         if (mTaskHandler == null) {
             return true;
         }
-        //hide deck/collection selector when comming from deck picker without a selected deck
         switch (mTaskHandler.getStatType()){
             case Stats.TYPE_MONTH:
                 MenuItem monthItem = menu.findItem(R.id.item_time_month);
